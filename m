@@ -1,160 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-46472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F1F5A218A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:09:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5B3CA218BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:17:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A28721619B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:09:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E84B43A596B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:17:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FD9019A28D;
-	Wed, 29 Jan 2025 08:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B83DA19CD19;
+	Wed, 29 Jan 2025 08:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nrUOAPAv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HBkaxvLB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857302F29;
-	Wed, 29 Jan 2025 08:09:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AB0190665
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 08:17:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738138167; cv=none; b=ONjjUYpNmcnOyY5Qx2OK3Y1P6xWGCkq/NMx0mXrBl1iPVb2FMMurk0BtmO/Hzd3uoHvPRzo07EdVd73AkLKFWqvjAgCEJzfvCv2ZFcRTQSaUUUt+RinWp0tIBh5xtSWnimWUT1KLOPr76b7/dI9bd25EIls/kT4hoxBvMKDVKQ4=
+	t=1738138637; cv=none; b=f6QIMfEOdS6WqoHd99owhLAqmNhNhAfQRU5Psx78BSVFu3N1VRpkHrZiEA1W/KIoe1keiKmGJ5qA6oZCaK0zx/Mu6Orpg+88wgYPkPl9qmDuX1DNvQE6RXT+NM86tICD6dPwZgEnkrMb4XYk5bn8xqZpsVv+Y0Cm+je+myRIDAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738138167; c=relaxed/simple;
-	bh=S+Qt8eFziu1bSo3XwsdBGdzJI+QLVguG9aumZqsL7Ow=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YDZU9hEjBIsaCVA5LDxGMzUmrI3ka43tXDBqxdwe1ubVlqMHS7UJqpFK6DZO94srxPBRn0wKvB6Fto/IbUGeMLku4H+UNFuMxch585uF5xmN95saP+U+y3mwes4GNW3o8nJWL5PjcjfzdqCMtm9LI9DKWpkEtxEUFexRB/Nf4uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nrUOAPAv; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ef28f07dbaso9117021a91.2;
-        Wed, 29 Jan 2025 00:09:25 -0800 (PST)
+	s=arc-20240116; t=1738138637; c=relaxed/simple;
+	bh=pr1H+qOgtFwlwxokFPKqAcNjsp+sUyK9zu3FmkZcpp4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GgCcPSphmAFCSET7k9oVwbl3/d+Fh08sbDgl9pi9wHJq1x6qaBX2wVAEoDLDZJGaptDT7W+eV9d6NbzZaSFX951Prq3asw5AG95MMkbTizV7sn2Gj5UCWvBkYzrDx/c8m6B9Y+Uf1z1KtUp3m7uZ0F7cxJfKr6/JUg/TOTHCmqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HBkaxvLB; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-38a34e8410bso3280607f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 00:17:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738138165; x=1738742965; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ye4JntaIkIF7a+w6DTbO0kIk9MLJPFfMjPP4/iHk7/A=;
-        b=nrUOAPAvB6agyOhwK3sVMmUK0ian9HxPvyOq+9NnumkvhjRK+TLGhvaX3mOBO05bEC
-         DqoEef7AIRJ0DPffJSYZwzl6lAAH4HBRu/R+nUnvyXBz+uWKVtTc1ZTir7/OE5YqLYbp
-         OI7s4dbym/cjOcn4YMheIdqibS0zrpU5gY8mtpUJPYm6bwVm1id+0kcLkPs9Jq371322
-         cT8nLlZECTh51Qo6L+2Pc7jesSLRrGd4NSDU5Z6oIB0/kgQi0WHSPIwp9Qti/x8aFBpW
-         8Degp502Dk5YDosEvsUwUJDAvU7HvhTkHagIB0pMzUuvE4j63W5IK4AVX4UopZ/hQIYU
-         vxjQ==
+        d=linaro.org; s=google; t=1738138633; x=1738743433; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=w/+D0OekWy0GxppkPj3fPY5hpDHIrRe8OroWwhzjF34=;
+        b=HBkaxvLBJhMmCK3yUgCz3m/QDVXTid8Uy2V8IfwlzGeweJWVgITLHkQONXC6IsGcp1
+         2BwOrb0ECzoqkZoAtcspSuNrDvSMZn/WvE4Kf0K5wXwr52hMdtZnzuIcSfwKa1+F3ywQ
+         a8mgtoW3mrs0mXywpeWVNxnwFV+w0KB9liW6wNXusDw7gqxvY7CZ7fr6rhFw4d0i/5Z1
+         Vo33bz1TVX7FcBBLb95Dd0HUky6tzy6eUU3CDPnmO8Boju/LBrVtO1Z0yilyxSrO7yfx
+         uo8o1NlExBLObaOV6SWt0zRbnDYcehD+UgaWdEwXVm4zzf30GZIpJouYpkp7vIef8Xen
+         iP6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738138165; x=1738742965;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ye4JntaIkIF7a+w6DTbO0kIk9MLJPFfMjPP4/iHk7/A=;
-        b=UGcNgB1zE/Qt06jtqyvduowTNM13L2E2zhJgBdccrEeih67ZuUWlrYUjIRV4Ds0/yZ
-         1eU/mNYwqy/h+KeGpAe/Y+Nb5iHv42R9+kGDhjzr7Lfo7h8eQ9UygaqQDUIIsTVVd8GF
-         alnkGGGZ7HvauRLJ3uA6r6z5q22J/UVbQ+7MRuE2yUD8aj7hNsRPyJHdBCbAGAzbWNPl
-         2nKtvZt8BaQkYq44IR4Axn37wea6yCIuFDg7Re2FIotqvdKE/Nzc9qOU8jboU3fzaoIE
-         i9ky14SEnxvbb5BSfO+7kkFfbkA8leD8rF/bqOvv2sQ8Ab5Bqt/j9mPhiuTFQXG/XI+O
-         V5XQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUcr0eQdITddbyVtEoOsddajH8ID2IXq6oVNo+PpJOO9f1Eds4RLjzwnFtQ5wMZIDMTYG8+87zWtCCnkrqE@vger.kernel.org, AJvYcCV+c/65GqldXg8nVzBwTJSWh+HfsSI3vlL70UPFzY0B7i3BN4Hdc2JE7quP0qxLlvc+TNQ6Yihy9695lnt2@vger.kernel.org
-X-Gm-Message-State: AOJu0YxX2XDW1wnKtaPZE951+IFZI2qDX3+yrOOBBD+fCzgX3AXuqb3B
-	iUtmK2VWycLaYnxU9VSbxGdr/tn7GZHcExWV3CnFUsJ1Dq6ivSmJx1Hqmq4lcAjc9sIg8ZQASDk
-	TIMdv1u0JrfmwFwK324qR5T8TMcw=
-X-Gm-Gg: ASbGncukvIJetOx9Uv/hBEERRtl/xeVvIyoX8wUfgMbD/QnXbW0YIZwQ5GYeIeqgNSQ
-	y/EYEoQhy6ffcqSFiDF7/qUcLYv7yZeAH2oq9M7JjxKw1UqhLk8y4NsX/m3BHLhILb5K/hGQ=
-X-Google-Smtp-Source: AGHT+IFL/+Ix8PJzhRPGezz0BS/aPmM+Mu6yVPfAQpJZPpemGpHRcd0USeaMTeXX7cwj2kNE9lfyVb+Qeot2NIY7ikQ=
-X-Received: by 2002:a62:f20c:0:b0:72f:d7ce:5003 with SMTP id
- d2e1a72fcca58-72fd7ce50abmr734741b3a.22.1738138164688; Wed, 29 Jan 2025
- 00:09:24 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738138633; x=1738743433;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w/+D0OekWy0GxppkPj3fPY5hpDHIrRe8OroWwhzjF34=;
+        b=sPBZrv2wS+FpP9aDNGxRL9/binwNZQtRuEtpMDvARL9CVyLSiRCIxjn+oyyNf3KbC6
+         M2ZlhnGh50T3XVS6K0L5jP38viEwvxiSM+Z/Nvbu06Mix1U33O8pHxkxa1py65eEE64r
+         aSV0MAVddDEaRuOUPoR/4PRM5DUlheWb92pWOg88rcwBc/wLytAAjkG2eBXNsD1I2SpF
+         AXZMzn93+ne05+dAW7e+TIVBCratyB8yuazMHgi4q+bwArmQZsYyeqz6ZopCKGdn8z30
+         RFloMzxAFyGkmbNTs6t8oUQlsfHQfVMA+JLPQxMZhLIWdP203gbP5UP206B86lEcA1lU
+         ssPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVJJqRHAsqps3iVWFq23fLfD3Sp370WgbKTaYI8yiGrF621vRXpkRW8FygahZNRr2fupAxB6gUB0ue/yyFR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxd3ioD9ttWwPKtwAxSUEwC+LAjs+yaXTV3QyoU96DmKxXV/5ga
+	l4PrvsPPnn1oiG0gDAY7afTS/J+Fg7el+PJzHM4IHes1rpXjc0U+aEvy2ypegko=
+X-Gm-Gg: ASbGncueDoz7eUH+jBPA1B88PDb4I7tUZdkqWyAS3PofHAunlJcfzzcN+m1N3mW+xT8
+	wHgqBrc+F7p/kZqbiu9bKROQikzXEiEN+DBkO6A4wuEn3MCQ0stRcq9AhfKThs0tXJSlk2v3mDT
+	urnhyPjP3WrrHTfqu7gOAhx22bcEITfgvORkHBE3iKsyFIVW3rlbJEz4sB0OUapmu7JMfC+5to5
+	1Vsr3zSTurfsQXof1cocfilwMB3CRbVur+OIbcWLOjQEfqW79OtNE4t9ygcP6IFGKoPryMI1Jth
+	DIxaE6hP1KhPZ01tjiZbyw==
+X-Google-Smtp-Source: AGHT+IHpJGqcr8Tk2T0wQuKtYNeP2wWRWN3r3xQi/6+WJha95RSeRs0NLgQ4Lr414eJF3CjQLmMLnw==
+X-Received: by 2002:adf:fa8a:0:b0:385:e1eb:a7af with SMTP id ffacd0b85a97d-38c520be00dmr1356231f8f.48.1738138632801;
+        Wed, 29 Jan 2025 00:17:12 -0800 (PST)
+Received: from linaro.org ([77.64.147.194])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc24d51sm13637275e9.14.2025.01.29.00.17.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jan 2025 00:17:12 -0800 (PST)
+Date: Wed, 29 Jan 2025 09:17:05 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Luca Weiss <luca@lucaweiss.eu>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] remoteproc: qcom_q6v5_pas: Use resource with CX PD
+ for MSM8226
+Message-ID: <Z5nkARIwmd3tBypA@linaro.org>
+References: <20250128-pas-singlepd-v1-0-85d9ae4b0093@lucaweiss.eu>
+ <20250128-pas-singlepd-v1-1-85d9ae4b0093@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250128142927.103290-2-phasta@kernel.org>
-In-Reply-To: <20250128142927.103290-2-phasta@kernel.org>
-From: Christian Gmeiner <christian.gmeiner@gmail.com>
-Date: Wed, 29 Jan 2025 09:09:12 +0100
-X-Gm-Features: AWEUYZk3uXItrn_mY6Y0468bmDyISJSZEOiGbSbsZd4jSdwj-_i30tdpr-sVXDQ
-Message-ID: <CAH9NwWcokvvJSRQ_kbV+jiH+ag-SA+Y87n6Bw34s8GP3vop4og@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/sched: Use struct for drm_sched_init() params
-To: Philipp Stanner <phasta@kernel.org>
-Cc: Alex Deucher <alexander.deucher@amd.com>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Lucas Stach <l.stach@pengutronix.de>, Russell King <linux+etnaviv@armlinux.org.uk>, 
-	Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>, 
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Karol Herbst <kherbst@redhat.com>, 
-	Lyude Paul <lyude@redhat.com>, Danilo Krummrich <dakr@redhat.com>, 
-	Boris Brezillon <boris.brezillon@collabora.com>, Rob Herring <robh@kernel.org>, 
-	Steven Price <steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, 
-	Matthew Brost <matthew.brost@intel.com>, Melissa Wen <mwen@igalia.com>, 
-	=?UTF-8?B?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>, 
-	Lucas De Marchi <lucas.demarchi@intel.com>, 
-	=?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, 
-	Rodrigo Vivi <rodrigo.vivi@intel.com>, Sunil Khatri <sunil.khatri@amd.com>, 
-	Lijo Lazar <lijo.lazar@amd.com>, Hawking Zhang <Hawking.Zhang@amd.com>, 
-	Mario Limonciello <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>, 
-	Yunxiang Li <Yunxiang.Li@amd.com>, amd-gfx@lists.freedesktop.org, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, lima@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	nouveau@lists.freedesktop.org, intel-xe@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250128-pas-singlepd-v1-1-85d9ae4b0093@lucaweiss.eu>
 
->
-> drm_sched_init() has a great many parameters and upcoming new
-> functionality for the scheduler might add even more. Generally, the
-> great number of parameters reduces readability and has already caused
-> one missnaming in:
->
-> commit 6f1cacf4eba7 ("drm/nouveau: Improve variable name in nouveau_sched=
-_init()").
->
-> Introduce a new struct for the scheduler init parameters and port all
-> users.
->
-> Signed-off-by: Philipp Stanner <phasta@kernel.org>
+On Tue, Jan 28, 2025 at 10:53:59PM +0100, Luca Weiss wrote:
+> MSM8226 requires the CX power domain, so use the msm8996_adsp_resource
+> which has cx under proxy_pd_names and is otherwise equivalent.
+> 
+> Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> Fixes: fb4f07cc9399 ("remoteproc: qcom: pas: Add MSM8226 ADSP support")
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+
+Not sure if Reviewed-by makes sense if I already did Suggested-by, but
+anyway:
+
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+
 > ---
-> Changes in v2:
->   - Point out that the hang-limit is deprecated. (Christian)
->   - Initialize the structs to 0 at declaration. (Planet Earth)
->   - Don't set stuff explicitly to 0 / NULL. (Tvrtko)
->   - Make the structs const where possible. (Boris)
->   - v3d: Use just 1, universal, function for sched-init. (Ma=C3=ADra)
-> ---
->  drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 18 ++++--
->  drivers/gpu/drm/etnaviv/etnaviv_sched.c    | 20 +++----
->  drivers/gpu/drm/imagination/pvr_queue.c    | 18 ++++--
->  drivers/gpu/drm/lima/lima_sched.c          | 16 +++--
->  drivers/gpu/drm/msm/msm_ringbuffer.c       | 17 +++---
->  drivers/gpu/drm/nouveau/nouveau_sched.c    | 15 +++--
->  drivers/gpu/drm/panfrost/panfrost_job.c    | 20 ++++---
->  drivers/gpu/drm/panthor/panthor_mmu.c      | 16 +++--
->  drivers/gpu/drm/panthor/panthor_sched.c    | 29 +++++----
->  drivers/gpu/drm/scheduler/sched_main.c     | 50 ++++++----------
->  drivers/gpu/drm/v3d/v3d_sched.c            | 68 +++++++++-------------
->  drivers/gpu/drm/xe/xe_execlist.c           | 16 +++--
->  drivers/gpu/drm/xe/xe_gpu_scheduler.c      | 17 +++++-
->  include/drm/gpu_scheduler.h                | 37 ++++++++++--
->  14 files changed, 206 insertions(+), 151 deletions(-)
->
-
-etnaviv changes are
-
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-
---=20
-greets
---
-Christian Gmeiner, MSc
-
-https://christian-gmeiner.info/privacypolicy
+>  drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 88e7b84f223c0222a01e2a246a848f2889ac00b3..aca44bb6522f00cb525c4b816040445287444434 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -1319,7 +1319,7 @@ static const struct adsp_data sm8650_mpss_resource = {
+>  };
+>  
+>  static const struct of_device_id adsp_of_match[] = {
+> -	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
+> +	{ .compatible = "qcom,msm8226-adsp-pil", .data = &msm8996_adsp_resource},
+>  	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
+>  	{ .compatible = "qcom,msm8974-adsp-pil", .data = &adsp_resource_init},
+>  	{ .compatible = "qcom,msm8996-adsp-pil", .data = &msm8996_adsp_resource},
+> 
+> -- 
+> 2.48.1
+> 
 
