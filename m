@@ -1,190 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-46468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2730CA217FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:23:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39A2EA21863
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:56:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A71543A6B66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 07:23:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D04E3A3F2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 07:56:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9AFA192590;
-	Wed, 29 Jan 2025 07:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B496193084;
+	Wed, 29 Jan 2025 07:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JWJ2Xg8J"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="cHFMtaPw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9695C179BC;
-	Wed, 29 Jan 2025 07:23:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4432F30;
+	Wed, 29 Jan 2025 07:56:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738135401; cv=none; b=mERMxDbeTd2CxoQX4PY1pQenjSpdztM+McT/q5b7LHyc6ECCP2yfbeBPRXj8f1W8q85Pd+zhJuLvKuV3HIfesdWpe3r5HOyh5umA3Xhkjgq7gcJJVOgcIR0RYSuvBdk4sCo1gcFDN3aTr5TZJ4Xr6nAdIh4oIWwJYVFimJLdIR0=
+	t=1738137400; cv=none; b=q8O6m83aGOLdGzX7fpN5Sbgbjs0liGLt3JZ9iq39oaDVVLI+19a960/f7CloFSUA+gcPKhYIGm1575o+z3ZQ72HFbLgYoOqS0EUrAb8b03gxJeRV3QGEnUk6r4RjTfhtYdWdFkOEVA/pwRFpyS5HfYc6UlGdsZsxpzdaLc9riVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738135401; c=relaxed/simple;
-	bh=kR13aShW7NSxrR47PS4dl1AYXDYzkrNK0af2e/a3Hus=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f6tAdfEIewI7RjRMsrANq/6OzQ6/+8EXihSXBwiq9Z0UORZNouP3tGdJgaulY17CHl42YSGAXu9iD1EwwGZEmCQNoXyU4oYp9v41HZbKG1INgMYahsLuBF1c0JasEFebg0H/DqbkcroRUnve35F6JtUe1TW/92cMCW5Il0yKU3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JWJ2Xg8J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA529C4CED3;
-	Wed, 29 Jan 2025 07:23:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738135401;
-	bh=kR13aShW7NSxrR47PS4dl1AYXDYzkrNK0af2e/a3Hus=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JWJ2Xg8JcLOAYf56B0Pt6w3kBd7kuhHJRetiuZpQQRvf9h/ZBJNUnlTg2jWc7Dy3F
-	 5yh6j0NQ7MFxYx3szDV2SnahgOleuKwxdSPz+zO6RcLsfbbP9dj4MYkkwCLHFnYNmy
-	 DaQ5Ahx/o7VD4ZvjMaGR37zckQvH3kKKI+bGVTYBqTmI0zLgHYfg4Q9oCxg2F8YXDw
-	 CtHgAcztTQIyaYyIDn86XVYRymAS16MVaNKIzJskFlpr+n2sBwUHTyU7/yYtzmzjtY
-	 ZSCQvluc74hrmKxh6Bf3mQHMj+A2bmilCfp8pwBVhXjnF9DpfT5UOd9rQU/OceIO5I
-	 Ou95L5rdLdong==
-Message-ID: <a4e13c9e-f554-4095-8708-e6755ea11e56@kernel.org>
-Date: Wed, 29 Jan 2025 08:23:12 +0100
+	s=arc-20240116; t=1738137400; c=relaxed/simple;
+	bh=19sEJS+53AlbqeBhPbuS7SYhGlp/8T6jB4GpD7XiRY8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UddQR1gr3X+Z0fBuwsWgQ+bacdsD+2PHNOhPTxLuxBCW0twyecxdqL++xC13VPlbjcgbSdpxWKvvTVFcFKX6pwMgyQ0zfiQb5UnDwFwb9FGDMhKMsMqbpcfTPUQXZbgmhIKr3DLhFm2VzZkNiQC275R/o3xQeFknceBdpQcbeds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=cHFMtaPw; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1738137395;
+	bh=19sEJS+53AlbqeBhPbuS7SYhGlp/8T6jB4GpD7XiRY8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=cHFMtaPwEtJJohVUPCH6Et+AIUsnVFlO6ztoiormkpgexr6boLAcTU1pvnfAUwksC
+	 YJNapUOtdv/TN0Pmsfw1w37033fOk93jrclbjHUibfryhHaypdKHisEwsXlZo3vjV9
+	 96tuBqGkeBnhZ6JVqSRYOJqQeWowDfpPqLvpcyHKFwuhFGCgO6pSHTi0Al1yDmWrD1
+	 CD55jozrm4o+D54LPa/j9JC63LKGtSxhEFzZh4YeNpu3usGnEfAC5S2N3p2GuGtkGT
+	 tYGRVinZcMFrGtxM0vcsozFAwmtA1IfRtZk0w1MAyUNi5n8X67s+oFh5+sWT4VQ/Gw
+	 N9Dfq08lCF3OQ==
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bbrezillon)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 3433F17E0848;
+	Wed, 29 Jan 2025 08:56:34 +0100 (CET)
+Date: Wed, 29 Jan 2025 08:56:25 +0100
+From: Boris Brezillon <boris.brezillon@collabora.com>
+To: Christian Gmeiner <christian.gmeiner@gmail.com>
+Cc: Philipp Stanner <phasta@kernel.org>, Alex Deucher
+ <alexander.deucher@amd.com>, Christian =?UTF-8?B?S8O2bmln?=
+ <christian.koenig@amd.com>, Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie
+ <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Lucas Stach
+ <l.stach@pengutronix.de>, Russell King <linux+etnaviv@armlinux.org.uk>,
+ Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu
+ <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>, Sean Paul
+ <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>, Marijn Suijten
+ <marijn.suijten@somainline.org>, Karol Herbst <kherbst@redhat.com>, Lyude
+ Paul <lyude@redhat.com>, Danilo Krummrich <dakr@redhat.com>, Rob Herring
+ <robh@kernel.org>, Steven Price <steven.price@arm.com>, Liviu Dudau
+ <liviu.dudau@arm.com>, Matthew Brost <matthew.brost@intel.com>, Melissa Wen
+ <mwen@igalia.com>, =?UTF-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Lucas De
+ Marchi <lucas.demarchi@intel.com>, Thomas =?UTF-8?B?SGVsbHN0csO2bQ==?=
+ <thomas.hellstrom@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>,
+ Sunil Khatri <sunil.khatri@amd.com>, Lijo Lazar <lijo.lazar@amd.com>,
+ Hawking Zhang <Hawking.Zhang@amd.com>, Mario Limonciello
+ <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>, Yunxiang Li
+ <Yunxiang.Li@amd.com>, amd-gfx@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ etnaviv@lists.freedesktop.org, lima@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ nouveau@lists.freedesktop.org, intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH v2] drm/sched: Use struct for drm_sched_init() params
+Message-ID: <20250129085625.502ab114@collabora.com>
+In-Reply-To: <CAH9NwWeTVv3kABmADJD8mNcE1Psq2ToLfzjO4HzbSfJ4+gkxDw@mail.gmail.com>
+References: <20250128142927.103290-2-phasta@kernel.org>
+	<CAH9NwWeTVv3kABmADJD8mNcE1Psq2ToLfzjO4HzbSfJ4+gkxDw@mail.gmail.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] dt-bindings: serial: Add support for selecting
- data transfer mode
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andi.shyti@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- gregkh@linuxfoundation.org, jirislaby@kernel.org, broonie@kernel.or,
- andersson@kernel.org, konradybcio@kernel.org, johan+linaro@kernel.org,
- dianders@chromium.org, agross@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-spi@vger.kernel.org, quic_msavaliy@quicinc.com,
- quic_anupkulk@quicinc.com
-References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
- <20250124105309.295769-5-quic_vdadhani@quicinc.com>
- <10060d39-87a4-4565-a2a6-80c93ac2266a@kernel.org>
- <dudqd2y42wy6iq2k73aphd5ol4mtq7z4c54zhd27rl745rrw5x@p3oummf2jke7>
- <374e16d6-46aa-4bdf-85e9-bc2e33c38057@kernel.org>
- <v5n7wn3saiymi2ncgi35drzdjfeaa4ng2ftia6ggex6oh74ocg@7vuskxosh726>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <v5n7wn3saiymi2ncgi35drzdjfeaa4ng2ftia6ggex6oh74ocg@7vuskxosh726>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On 29/01/2025 03:21, Dmitry Baryshkov wrote:
-> On Mon, Jan 27, 2025 at 05:24:21PM +0100, Krzysztof Kozlowski wrote:
->> On 27/01/2025 15:27, Dmitry Baryshkov wrote:
->>> On Mon, Jan 27, 2025 at 08:02:12AM +0100, Krzysztof Kozlowski wrote:
->>>> On 24/01/2025 11:53, Viken Dadhaniya wrote:
->>>>> Data transfer mode is fixed by TrustZone (TZ), which currently restricts
->>>>> developers from modifying the transfer mode from the APPS side.
->>>>>
->>>>> Document the 'qcom,xfer-mode' properties to select the data transfer mode,
->>>>> either GPI DMA (Generic Packet Interface) or non-GPI mode (PIO/CPU DMA).
->>>>>
->>>>> UART controller can operate in one of two modes based on the
->>>>> 'qcom,xfer-mode' property, and the firmware is loaded accordingly.
->>>>>
->>>>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->>>>> ---
->>>>>
->>>>> v1 -> v2:
->>>>>
->>>>> - Drop 'qcom,load-firmware' property and add 'firmware-name' property in
->>>>>   qup common driver.
->>>>> - Update commit log.
->>>>>
->>>>> v1 Link: https://lore.kernel.org/linux-kernel/20241204150326.1470749-4-quic_vdadhani@quicinc.com/
->>>>> ---
->>>>> ---
->>>>>  .../devicetree/bindings/serial/qcom,serial-geni-qcom.yaml | 8 ++++++++
->>>>>  1 file changed, 8 insertions(+)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
->>>>> index dd33794b3534..383773b32e47 100644
->>>>> --- a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
->>>>> +++ b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
->>>>> @@ -56,6 +56,13 @@ properties:
->>>>>    reg:
->>>>>      maxItems: 1
->>>>>  
->>>>> +  qcom,xfer-mode:
->>>>> +    description: Set the value to 1 for non-GPI (FIFO/CPU DMA) mode and 3 for GPI DMA mode.
->>>>> +      The default mode is FIFO.
->>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
->>>>> +    enum: [1, 3]
->>>>> +
->>>>> +
->>>>
->>>> Just one blank line, but anyway, this property should not be in three
->>>> places. Do you really expect that each of serial engines within one
->>>> GeniQUP will be configured differently by TZ?
->>>
->>> Yes, each SE is configured separately and it's quite frequent when
->>> different SEs have different DMA configuration.
->>
->> Well, I checked at sm8550 and sm8650 and each pair of SE - which shares
->> resources - has the same DMAs, so I would not call it frequent. Care to
->> bring an example where same serial engines have different DMAs and
->> different TZ? We do not talk about single QUP.
+On Tue, 28 Jan 2025 22:49:47 +0100
+Christian Gmeiner <christian.gmeiner@gmail.com> wrote:
+
+> >  int etnaviv_sched_init(struct etnaviv_gpu *gpu)
+> >  {
+> > -       int ret;
+> > +       const struct drm_sched_init_args args = {  
 > 
-> Well, I don't have access to the latest sm8550 / sm8650 devcfg sources.
-> I checked the RB5 ones. As far as I understand out of 14 enabled SEs
-> only two are configured for the GSI DMA, others should use FIFO / SE
-> DMA. Same applies to the SM8250 MTP devices. Checking the RB1 / RB2
-> setup also shows 3 out of 6 SEs being set for GSI.
+> Why not declare it as static const struct drm_sched_init_args args = { ?
 
-But they are the same serial engines. Again, we do not talk here about
-QUP, but serial engines.
+Because some bits in there are not static, in this particular case,
+gpu->dev is not static for instance.
 
-Best regards,
-Krzysztof
+> This question applies to all similar occurrences in the patch.
+> 
+> > +               .ops = &etnaviv_sched_ops,
+> > +               .num_rqs = DRM_SCHED_PRIORITY_COUNT,
+> > +               .credit_limit = etnaviv_hw_jobs_limit,
+> > +               .hang_limit = etnaviv_job_hang_limit,
+> > +               .timeout = msecs_to_jiffies(500),
+> > +               .name = dev_name(gpu->dev),
+> > +               .dev = gpu->dev
+> > +       };
+> >
+> > -       ret = drm_sched_init(&gpu->sched, &etnaviv_sched_ops, NULL,
+> > -                            DRM_SCHED_PRIORITY_COUNT,
+> > -                            etnaviv_hw_jobs_limit, etnaviv_job_hang_limit,
+> > -                            msecs_to_jiffies(500), NULL, NULL,
+> > -                            dev_name(gpu->dev), gpu->dev);
+> > -       if (ret)
+> > -               return ret;
+> > -
+> > -       return 0;
+> > +       return drm_sched_init(&gpu->sched, &args);
+> >  }
 
