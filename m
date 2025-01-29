@@ -1,285 +1,330 @@
-Return-Path: <linux-arm-msm+bounces-46519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E42E6A21FC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:54:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3AB5A21FFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 16:08:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1084D3A329D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:54:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 476B81680B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:08:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19391167DAC;
-	Wed, 29 Jan 2025 14:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB10E1D90A5;
+	Wed, 29 Jan 2025 15:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="Kr81Qjcg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nwtVijav"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fanzine2.igalia.com (fanzine.igalia.com [178.60.130.6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C007E9;
-	Wed, 29 Jan 2025 14:54:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.60.130.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD14F1B423C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 15:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738162491; cv=none; b=oxhRaRPKh37JXsBg0lyxsQixsX1AJFv0S1sjK1Ojwx6pCbBZ3x2BF1B3OC8G18OAjfq1EqbMQPoxmZ8ZOMqxoOKZGOYVz5gZ07ByH1xkxF3y8Mkdc6LJHVeimQUmrs/+gx/wgJwCzBbOpIX8JKJ0cAdNEPSNQyo3uu42uNXcXTM=
+	t=1738163300; cv=none; b=Yitkbk8KI4Ap8bPBwkuld3yjkKUqsTOAXafHtG82dlYzJ8OwETAWWjyKGEvZiEVnPiB1FH6YqoQ0dgn8OQEUDjXw4XzV/WAOF6erNiPdZo5SNpeEJeiPgcoAOx9TD2EbQT6EWq1kCTC6GQBcou30AxlyqM0chltk+t0jEaeDrmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738162491; c=relaxed/simple;
-	bh=eLUdR+qMoTgqI7AboQcdV13FxEITJ7IEW70DFv2JrUM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=APlEtMdjAvSr9tC+GFogCa0diVP3a1tXWX5Ut7FtWDOf4/aL4eeJbR4BNoGCjRPq2XVxVzMI3LfbkCPxt9W3DF5CCEOMpsGFnZbHWtX5zN3Tu1sgCRhTvAsv8q8ncI6Jv+5cmt8GX20cHETIiNEj5QhWS5vyEFF8O79mu5+1HhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Kr81Qjcg; arc=none smtp.client-ip=178.60.130.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ATdtI6Dd3DoUOYZ07wKSkHu7Owxf4k55Pq91Q66IojI=; b=Kr81QjcgK6UcWQra5TY/YKkye5
-	gxtg82HR7U34vK8NxfC9/BT4IxNPjjQrc0uhiNUyrv0fdLE6HpwrjFwtUGF59YB7uKNYOrpRl9ZyT
-	Xd2DpdST9ZiJTU/CEeBz7h0AH6hQIqCYNGVp9icPhR3guTEkX5MjRFUm/YJWgYhRTUr6z/SMnD9Bd
-	RzVpevEoWEkTluuTEn14W1AImKGAewSb6JZ9qf8zllJ3pJt+gE5YPZEx4/AS8z399cyCPRgG8cHRt
-	neJZKUOvfdu4n9a4/09nP5Oa/ihfliclagdSPdhu85WE6FMofNcFJ6+3ksV+0/h7FcMLziY/Y4AQV
-	GCU5uudg==;
-Received: from [187.36.213.55] (helo=[192.168.1.103])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1td9S5-000ck3-Qz; Wed, 29 Jan 2025 15:54:07 +0100
-Message-ID: <d3ab5057-22fe-43d5-baea-4dec091fb303@igalia.com>
-Date: Wed, 29 Jan 2025 11:53:47 -0300
+	s=arc-20240116; t=1738163300; c=relaxed/simple;
+	bh=QJk/y35AN758snCIGT5lwTN72HdUsNszcu5pu5zpxCo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=CH408nby/QlBhc3oXwjlIEFHcv45KOs0hkcS6dR/3anmnyOJHnijwe44F6IB9dHRj2JI0HtRJ1LVUzWX8xshY4qLF2/5TDhnXKugOuRSgR19lqWtUc1HJXvoWdNeReolfqhHiWSVPY2yaOm8q+5SSSONkJ2x9sZn7bRWnIdxOEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nwtVijav; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-388cae9eb9fso4176381f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 07:08:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738163297; x=1738768097; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2CYRb3v3Cd5U02FZotlhRzeAbSddoQoKFeq32vyUsjI=;
+        b=nwtVijavNZkeomO6rziHJKrdhB2CSjhIJN7ANLCAYBBG4E7KetNaIC1dgG/JvAkM6p
+         Yl26MmB3xXM9KgL5BRw2K5HFQUTiXCy/8JxJ06c44n+t2uVBjP4eWlKnEI9AL9o2Bgho
+         5WiqQu7QhFbj1/7XvOjabAjT7Bd+1puzh22SmxMLL+yr99mk8XAwAa3uaWs7E2FwmX1M
+         W5aeq6yPNLk1F/SFFp15m+Tibl/4kC/Nf8ekR3AFIKGGEgt8AWdq/rcoWWDYIFvaFoXm
+         PoTxOJHAohL9D8abU1wldp8Hl/IKagw1OqeEE4cWV1/OnmPle6UgGBSaPKRoE1YEvMa2
+         yYsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738163297; x=1738768097;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2CYRb3v3Cd5U02FZotlhRzeAbSddoQoKFeq32vyUsjI=;
+        b=nlTXqw4hCULwnXYb9zHwK5apeNf7YPlhzAHLtiVGQd3t/aXqowcJWq490GO+JdTcLs
+         LNEAMLKLS4+xszdbnJng+SwJSSpRNBdo3KF9giYhAg8rpRIfSMBMx0PoaK5VIhKp8m4d
+         3V7hTUKKKNhA5mXVIkksOPsIt+wIpM8Caw5m2snx2SPdpIcrEhDYI89Ngdhilz1pl+4h
+         p4S60OrKNr5WsEE5sxf+/QUUPFg8bsuw6m6St8Fh/lkGExcU4VZagcCdisgBqwu43Twj
+         sp11kOcYBcJii24BCsWLackOsbxHa/1M3Li1ZCTLJvV27DPPcTpClJKQ1qX7havqZhHk
+         tasA==
+X-Gm-Message-State: AOJu0YwDHW0KlCdchPkzAnJuwmL4EA9UYxxBBYMBd/g92WrqkJbZBq+f
+	g234YfT+yOB2+N5ztSFvTlWOa4ZJfBiaVCbwhvzdeZlfpqQ1fWaPjFE+pzzOuls=
+X-Gm-Gg: ASbGncsZqsZsF1SuKP46SwYq7aRa+lzgjlOTQ4oeI+PDO4a+3GY2w2nbWENf5Mxjii7
+	MKkZFuZ3sRXdMixW6JYbHpvAux3AcwJdprrEKYzUfz+OizQZV0dGjTK2i06pl3jvAMXPOpq0qnl
+	bX/cWrNn6CuSpALEIZ36Tpe4n3pZdUdXWEKnqGDyDjn56Ct7CELy5PwgzmKoV3ToTcJX1drU8XZ
+	Fd2YZntyx4qFBwoM2VTRqDwBMa8IpMlwhwiucz08B47psO2mM/ejoK2hMHNS7G/+PEAzsHsN0xw
+	5G5uNkGARetlYN/yb3wGVt2PTtrrH6lEp0ba
+X-Google-Smtp-Source: AGHT+IE7tnyp1BSUltFDXXRCRiqoj51wxvf9f6x8qK5ob4tr7y38tljmGCcys/yA6u7yk0W8JQZNrw==
+X-Received: by 2002:a05:6000:d43:b0:386:2aba:a7f6 with SMTP id ffacd0b85a97d-38c520b9643mr2343166f8f.49.1738163296975;
+        Wed, 29 Jan 2025 07:08:16 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1c3994sm17011531f8f.81.2025.01.29.07.08.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jan 2025 07:08:16 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Wed, 29 Jan 2025 16:08:15 +0100
+Subject: [PATCH v2] arm64: dts: qcom: sm8650: add all 8 coresight ETE nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/sched: Use struct for drm_sched_init() params
-To: phasta@kernel.org, Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>,
- Russell King <linux+etnaviv@armlinux.org.uk>,
- Christian Gmeiner <christian.gmeiner@gmail.com>,
- Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
- Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@redhat.com>,
- Boris Brezillon <boris.brezillon@collabora.com>,
- Rob Herring <robh@kernel.org>, Steven Price <steven.price@arm.com>,
- Liviu Dudau <liviu.dudau@arm.com>, Matthew Brost <matthew.brost@intel.com>,
- Melissa Wen <mwen@igalia.com>, Lucas De Marchi <lucas.demarchi@intel.com>,
- =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>, Sunil Khatri <sunil.khatri@amd.com>,
- Lijo Lazar <lijo.lazar@amd.com>, Hawking Zhang <Hawking.Zhang@amd.com>,
- Mario Limonciello <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>,
- Yunxiang Li <Yunxiang.Li@amd.com>
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, etnaviv@lists.freedesktop.org,
- lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org
-References: <20250128142927.103290-2-phasta@kernel.org>
- <f8c9a876-4616-454d-a816-bb3c90960245@igalia.com>
- <c5c3791df54b7ae4ba1a31159a4beda0b44d00cf.camel@mailbox.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>
-In-Reply-To: <c5c3791df54b7ae4ba1a31159a4beda0b44d00cf.camel@mailbox.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250129-topic-sm8650-upstream-add-all-coresight-cpus-v2-1-c62549307e01@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAF5EmmcC/53NQQ6DIBCF4asY1p0GUKl21Xs0LiiMOokKATRtj
+ Hcv9Qhd/m/xvp1FDISR3YudBdwokltyyEvBzKiXAYFsbia5rLmQLSTnyUCcG1VzWH1MAfUM2lr
+ Q0wTGBYw0jAmMXyPoshKN4upV1hXLlz5gT++Te3a5R4rJhc+pb+K3/gltAgS0qm2VLW+2b/Ax0
+ aKDu7owsO44ji9SXFDO6QAAAA==
+X-Change-ID: 20250129-topic-sm8650-upstream-add-all-coresight-cpus-a3418606b354
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4302;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=QJk/y35AN758snCIGT5lwTN72HdUsNszcu5pu5zpxCo=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnmkRfk/CLYC29WNARvYq24dlh+YrvybckuSrD2woD
+ htVCi5GJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ5pEXwAKCRB33NvayMhJ0VibEA
+ CmcW3qfqDRfZgnngVTM6jSGaSTMA7bkLj1GUAYueTfpwWA90xLz4S4OgMBLGZKAO7PJJKLvJe8vtTh
+ IPG0lsrVMBFOY8hNUzGx8o603lhAUa4kewCOp7WIXUCe2RjPB22fvS0MuyD/3Z3aZFyMGYmd2jIaMC
+ PdztpNZIeVpKDazzDZT8skZxRL9czQ+Ol6EdOOsffcI5BB4EHeVwC/fOAjmFxtfveAODFxRfyRViB8
+ xQysMH38dcl4FBxuq+y26Mc3nOK6IRxOv/YkOwP5B9NfczbTNNygGGG7/I5CmceE1ukIkWi/DB9dMZ
+ w9aChnLn1kgbwQ/CyCAxYTohc8QHS+0yGbdV4Ri0PSO2C5L2zxXHVI0px3NjqVSAKvwM8Dp54U3yWY
+ B5tblVVq1c2euLIJFgouUmtZMlRSjhKUTVrnYzo57oHKmYTBKITEw63hq71ew0xfZA9hbhaGT1VDTZ
+ IBxJGb6zz+jedmPyCFBHxm+5Eb/iMzB6J9i+9GE6MVuJUmoGKv0lR5YqwmUZ6hsEZHxiwBp4Dc1Qo+
+ 4ByKUuoGEvaQOOyVF7HPwb3x5oLZzesiltkaQSSxvmvqBBpv6Max9zgq3nGgX876Ce3CgjDXgI5TZD
+ GOJ/IjInYSraNF5Fq0lk3eVSEkgdQIUhm6RCeMoqUQJwGQr3V4ZvsfXZRzcg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Hi Philipp,
+Only CPU0 Embedded Trace Extension (ETE) was added, but there's one
+for all 8 CPUs, so add the missing ones.
 
-On 29/01/25 09:39, Philipp Stanner wrote:
-> On Wed, 2025-01-29 at 07:53 -0300, Maíra Canal wrote:
->> Hi Philipp,
->>
->> On 28/01/25 11:29, Philipp Stanner wrote:
->>> drm_sched_init() has a great many parameters and upcoming new
->>> functionality for the scheduler might add even more. Generally, the
->>> great number of parameters reduces readability and has already
->>> caused
->>> one missnaming in:
->>>
->>> commit 6f1cacf4eba7 ("drm/nouveau: Improve variable name in
->>> nouveau_sched_init()").
->>>
->>> Introduce a new struct for the scheduler init parameters and port
->>> all
->>> users.
->>>
->>> Signed-off-by: Philipp Stanner <phasta@kernel.org>
->>> ---
->>> Changes in v2:
->>>     - Point out that the hang-limit is deprecated. (Christian)
->>>     - Initialize the structs to 0 at declaration. (Planet Earth)
->>>     - Don't set stuff explicitly to 0 / NULL. (Tvrtko)
->>>     - Make the structs const where possible. (Boris)
->>>     - v3d: Use just 1, universal, function for sched-init. (Maíra)
->>> ---
->>>    drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 18 ++++--
->>>    drivers/gpu/drm/etnaviv/etnaviv_sched.c    | 20 +++----
->>>    drivers/gpu/drm/imagination/pvr_queue.c    | 18 ++++--
->>>    drivers/gpu/drm/lima/lima_sched.c          | 16 +++--
->>>    drivers/gpu/drm/msm/msm_ringbuffer.c       | 17 +++---
->>>    drivers/gpu/drm/nouveau/nouveau_sched.c    | 15 +++--
->>>    drivers/gpu/drm/panfrost/panfrost_job.c    | 20 ++++---
->>>    drivers/gpu/drm/panthor/panthor_mmu.c      | 16 +++--
->>>    drivers/gpu/drm/panthor/panthor_sched.c    | 29 +++++----
->>>    drivers/gpu/drm/scheduler/sched_main.c     | 50 ++++++----------
->>>    drivers/gpu/drm/v3d/v3d_sched.c            | 68 +++++++++--------
->>> -----
->>>    drivers/gpu/drm/xe/xe_execlist.c           | 16 +++--
->>>    drivers/gpu/drm/xe/xe_gpu_scheduler.c      | 17 +++++-
->>>    include/drm/gpu_scheduler.h                | 37 ++++++++++--
->>>    14 files changed, 206 insertions(+), 151 deletions(-)
->>>
->>
->> [...]
->>
->>> diff --git a/drivers/gpu/drm/panthor/panthor_sched.c
->>> b/drivers/gpu/drm/panthor/panthor_sched.c
->>> index 5844a7f639e0..44713cfdcd74 100644
->>> --- a/drivers/gpu/drm/panthor/panthor_sched.c
->>> +++ b/drivers/gpu/drm/panthor/panthor_sched.c
->>> @@ -3284,6 +3284,22 @@ static struct panthor_queue *
->>>    group_create_queue(struct panthor_group *group,
->>>    		   const struct drm_panthor_queue_create *args)
->>>    {
->>> +	const struct drm_sched_init_args sched_args = {
->>> +		.ops = &panthor_queue_sched_ops,
->>> +		.submit_wq = group->ptdev->scheduler->wq,
->>> +		.num_rqs = 1,
->>> +		/*
->>> +		 * The credit limit argument tells us the total
->>> number of
->>> +		 * instructions across all CS slots in the
->>> ringbuffer, with
->>> +		 * some jobs requiring twice as many as others,
->>> depending on
->>> +		 * their profiling status.
->>> +		 */
->>> +		.credit_limit = args->ringbuf_size / sizeof(u64),
->>> +		.timeout = msecs_to_jiffies(JOB_TIMEOUT_MS),
->>> +		.timeout_wq = group->ptdev->reset.wq,
->>> +		.name = "panthor-queue",
->>> +		.dev = group->ptdev->base.dev
->>> +	};
->>>    	struct drm_gpu_scheduler *drm_sched;
->>>    	struct panthor_queue *queue;
->>>    	int ret;
->>> @@ -3354,17 +3370,8 @@ group_create_queue(struct panthor_group
->>> *group,
->>>    	if (ret)
->>>    		goto err_free_queue;
->>>    
->>> -	/*
->>> -	 * Credit limit argument tells us the total number of
->>> instructions
->>> -	 * across all CS slots in the ringbuffer, with some jobs
->>> requiring
->>> -	 * twice as many as others, depending on their profiling
->>> status.
->>> -	 */
->>> -	ret = drm_sched_init(&queue->scheduler,
->>> &panthor_queue_sched_ops,
->>> -			     group->ptdev->scheduler->wq, 1,
->>> -			     args->ringbuf_size / sizeof(u64),
->>> -			     0, msecs_to_jiffies(JOB_TIMEOUT_MS),
->>> -			     group->ptdev->reset.wq,
->>> -			     NULL, "panthor-queue", group->ptdev-
->>>> base.dev);
->>> +
->>
->> Please don't use multiple blank lines.
->>
->>> +	ret = drm_sched_init(&queue->scheduler, &sched_args);
->>>    	if (ret)
->>>    		goto err_free_queue;
->>>    
->>> diff --git a/drivers/gpu/drm/scheduler/sched_main.c
->>> b/drivers/gpu/drm/scheduler/sched_main.c
->>> index a48be16ab84f..6295b2654a7c 100644
->>> --- a/drivers/gpu/drm/scheduler/sched_main.c
->>> +++ b/drivers/gpu/drm/scheduler/sched_main.c
->>> @@ -1244,40 +1244,24 @@ static void drm_sched_run_job_work(struct
->>> work_struct *w)
->>>     * drm_sched_init - Init a gpu scheduler instance
->>>     *
->>>     * @sched: scheduler instance
->>> - * @ops: backend operations for this scheduler
->>> - * @submit_wq: workqueue to use for submission. If NULL, an
->>> ordered wq is
->>> - *	       allocated and used
->>> - * @num_rqs: number of runqueues, one for each priority, up to
->>> DRM_SCHED_PRIORITY_COUNT
->>> - * @credit_limit: the number of credits this scheduler can hold
->>> from all jobs
->>> - * @hang_limit: number of times to allow a job to hang before
->>> dropping it
->>> - * @timeout: timeout value in jiffies for the scheduler
->>> - * @timeout_wq: workqueue to use for timeout work. If NULL, the
->>> system_wq is
->>> - *		used
->>> - * @score: optional score atomic shared with other schedulers
->>> - * @name: name used for debugging
->>> - * @dev: target &struct device
->>> + * @args: scheduler initialization arguments
->>>     *
->>>     * Return 0 on success, otherwise error code.
->>>     */
->>> -int drm_sched_init(struct drm_gpu_scheduler *sched,
->>> -		   const struct drm_sched_backend_ops *ops,
->>> -		   struct workqueue_struct *submit_wq,
->>> -		   u32 num_rqs, u32 credit_limit, unsigned int
->>> hang_limit,
->>> -		   long timeout, struct workqueue_struct
->>> *timeout_wq,
->>> -		   atomic_t *score, const char *name, struct
->>> device *dev)
->>> +int drm_sched_init(struct drm_gpu_scheduler *sched, const struct
->>> drm_sched_init_args *args)
->>>    {
->>>    	int i;
->>>    
->>> -	sched->ops = ops;
->>> -	sched->credit_limit = credit_limit;
->>> -	sched->name = name;
->>> -	sched->timeout = timeout;
->>> -	sched->timeout_wq = timeout_wq ? : system_wq;
->>> -	sched->hang_limit = hang_limit;
->>> -	sched->score = score ? score : &sched->_score;
->>> -	sched->dev = dev;
->>> +	sched->ops = args->ops;
->>> +	sched->credit_limit = args->credit_limit;
->>> +	sched->name = args->name;
->>> +	sched->timeout = args->timeout;
->>> +	sched->timeout_wq = args->timeout_wq ? : system_wq;
->>> +	sched->hang_limit = args->hang_limit;
->>> +	sched->score = args->score ? args->score : &sched->_score;
->>
->> Could we keep it consistent and use the Elvis Operator here as well?
->> Just like `sched->timeout_wq`.
-> 
-> This is literally just the old code.
-> 
-> And if at all, this insanely stupid GCC extension should not be used.
-> It's one of the typical compiler people rampages that make the C
-> language so terrible.
+Fixes: 256e6937e48a ("arm64: dts: qcom: sm8650: Add coresight nodes")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- fixed the 7/8 cpu wording
+- added the sm8650 prefix
+- add review tag
+- Link to v1: https://lore.kernel.org/r/20250129-topic-sm8650-upstream-add-all-coresight-cpus-v1-1-96996d37df8e@linaro.org
+---
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 163 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 161 insertions(+), 2 deletions(-)
 
-Not a problem to me, we can remove the Elvis Operator from `sched-
- >timeout_wq`. My idea is just to do things consistently in variable
-assignment.
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 86684cb9a9325618ddb74458621cf4bbdc1cc0d1..d925d5e2c8182d522dd5b8e1fa0e253f5de2f7a7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -365,7 +365,7 @@ cluster_sleep_1: cluster-sleep-1 {
+ 		};
+ 	};
+ 
+-	ete0 {
++	ete-0 {
+ 		compatible = "arm,embedded-trace-extension";
+ 
+ 		cpu = <&cpu0>;
+@@ -379,15 +379,174 @@ ete0_out_funnel_ete: endpoint {
+ 		};
+ 	};
+ 
++	ete-1 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu1>;
++
++		out-ports {
++			port {
++				ete1_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete1>;
++				};
++			};
++		};
++	};
++
++	ete-2 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu2>;
++
++		out-ports {
++			port {
++				ete2_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete2>;
++				};
++			};
++		};
++	};
++
++	ete-3 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu3>;
++
++		out-ports {
++			port {
++				ete3_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete3>;
++				};
++			};
++		};
++	};
++
++	ete-4 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu4>;
++
++		out-ports {
++			port {
++				ete4_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete4>;
++				};
++			};
++		};
++	};
++
++	ete-5 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu5>;
++
++		out-ports {
++			port {
++				ete5_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete5>;
++				};
++			};
++		};
++	};
++
++	ete-6 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu6>;
++
++		out-ports {
++			port {
++				ete6_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete6>;
++				};
++			};
++		};
++	};
++
++	ete-7 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu7>;
++
++		out-ports {
++			port {
++				ete7_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete7>;
++				};
++			};
++		};
++	};
++
+ 	funnel-ete {
+ 		compatible = "arm,coresight-static-funnel";
+ 
+ 		in-ports {
+-			port {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
+ 				funnel_ete_in_ete0: endpoint {
+ 					remote-endpoint = <&ete0_out_funnel_ete>;
+ 				};
+ 			};
++
++			port@1 {
++				reg = <1>;
++
++				funnel_ete_in_ete1: endpoint {
++					remote-endpoint = <&ete1_out_funnel_ete>;
++				};
++			};
++
++			port@2 {
++				reg = <2>;
++
++				funnel_ete_in_ete2: endpoint {
++					remote-endpoint = <&ete2_out_funnel_ete>;
++				};
++			};
++
++			port@3 {
++				reg = <3>;
++
++				funnel_ete_in_ete3: endpoint {
++					remote-endpoint = <&ete3_out_funnel_ete>;
++				};
++			};
++
++			port@4 {
++				reg = <4>;
++
++				funnel_ete_in_ete4: endpoint {
++					remote-endpoint = <&ete4_out_funnel_ete>;
++				};
++			};
++
++			port@5 {
++				reg = <5>;
++
++				funnel_ete_in_ete5: endpoint {
++					remote-endpoint = <&ete5_out_funnel_ete>;
++				};
++			};
++
++			port@6 {
++				reg = <6>;
++
++				funnel_ete_in_ete6: endpoint {
++					remote-endpoint = <&ete6_out_funnel_ete>;
++				};
++			};
++
++			port@7 {
++				reg = <7>;
++
++				funnel_ete_in_ete7: endpoint {
++					remote-endpoint = <&ete7_out_funnel_ete>;
++				};
++			};
+ 		};
+ 
+ 		out-ports {
 
-Best Regards,
-- Maíra
+---
+base-commit: da7e6047a6264af16d2cb82bed9b6caa33eaf56a
+change-id: 20250129-topic-sm8650-upstream-add-all-coresight-cpus-a3418606b354
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
