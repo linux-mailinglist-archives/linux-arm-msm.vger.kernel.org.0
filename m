@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-46551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CCB0A22427
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 19:45:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B879A2245F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 20:07:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE2801885494
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 18:45:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B3AEF1886379
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 19:07:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E026D1E260D;
-	Wed, 29 Jan 2025 18:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0980F1E1C1F;
+	Wed, 29 Jan 2025 19:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iuDDCjO7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gYEMHpCi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A559C1E2007;
-	Wed, 29 Jan 2025 18:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67BA184;
+	Wed, 29 Jan 2025 19:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738176302; cv=none; b=thcpK0I9nKtkNrcf+ytN0CybFdk5/A+qRx6fi/eN6iOOnsc0fLTgsPeU/pwN3joQLU6D1SjtFlXHsFDRFln0+29743LBq8VZEQ0i1A5qOKrGxRdrkudgW59YLSuS+v3FK+RR6qNX56fwIAvFBS9IxPIApZCanQ4CmpeAOcOjX20=
+	t=1738177623; cv=none; b=AtcGjJdY0fC32KjfW/QWWhmusJbnHBqWkTq4dluAz/zr3rrcrmP11OQRBX5JiL7PaM1nFgs+AVNVhFkuHZ2XO+u9JGld3hJMGJNBzFMb2ZW7wZOBVH7+D+MEP61J7+gIg/aXORR9+m25OUzKINZA6ZcUBiP9xexNp9RQm5fQL4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738176302; c=relaxed/simple;
-	bh=XI5EV5L/ep/hcn58yFNkRkgtLi2iD6V1JUusRcU+1vs=;
+	s=arc-20240116; t=1738177623; c=relaxed/simple;
+	bh=4Xgv8XTj20pMCc6eGNnYcSqAkrc58lNk8TOYUAdyfdA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TkW0EW4hKIzfnf0j6o/bfFa5KYZnO3V0pG9inrHfaLRUwptZOtsg/sy4EzDiOmOD/7DsiEKqdqHoPiPLfUeZSdkmUTvz302/wudlh9HsixFjSNsyup4im6XUIv7MLODUMJN3IFj4Lfe7LQjD2ZV6hYF5VluQypQJe69b8VzNXw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iuDDCjO7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC0EC4CED1;
-	Wed, 29 Jan 2025 18:44:57 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=U4h8rlNRWfbsEg3fDZitRu3QMqkEEKwM0ajzPNRpFvEC12O4xYv+6JThye0ggADMf/B6oE/X5+gaXXPe0frHkVY0yiUC2krZOEGHvqBvqPW6GtNXGwRasvjD49ITTgKvJQ62vuOCAipQtDcOb9d/HNK9Q76Cux8ETUzZ3mKO8Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gYEMHpCi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A934CC4CED1;
+	Wed, 29 Jan 2025 19:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738176302;
-	bh=XI5EV5L/ep/hcn58yFNkRkgtLi2iD6V1JUusRcU+1vs=;
+	s=k20201202; t=1738177623;
+	bh=4Xgv8XTj20pMCc6eGNnYcSqAkrc58lNk8TOYUAdyfdA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iuDDCjO7+zBZVuKBv+v05G8LKwOe49ZY1aFcC+wYkQywOwL+I6rIwl/nEqqzindk4
-	 fK8Nhzo80xJYuob9VaOukXyFL9EbpDDr+7DD07E3atOYF14odALvrbhl5mdHWqdomM
-	 3kjhqfLyexv/1gfIMwCDcl5ehYBqoQv0uKhob22oH1ba+3vmGW7cDrX/pwQqMPRXHw
-	 6clKJnUknYk+5Ff0sTeUkPQrFx2wsLbgzrc5w7axL5EUBR6asvITMn1L2WC134NuMg
-	 YIHWLPyqqBTpFb+tUPWYtznnhutdjjkgiYSaIb7zB9HlLRxHywmhCBQMbfc+dPwlvy
-	 NyKYqyuYG8jNQ==
-Message-ID: <9c573fff-31e6-4319-b8d1-527a3487cc20@kernel.org>
-Date: Wed, 29 Jan 2025 19:44:54 +0100
+	b=gYEMHpCiXY5QuxyywwTXKimwwAHEKYjf9w3dBo8orkHo5LUd7NrMpInaWgHEl0EMQ
+	 7WocpXpB6nWO6AC2x8Byn4Mx2vwSppSRZAhM7Yvou9vpCLDPrzEn+dHpsry6Y2iT9/
+	 w0J61Bp3jccqXro1/o33ZHWgNPZCA6g5QMay8bRdqA87Mr4Wam7bmah/lV1OYlb3P8
+	 aNe/FYBputMBTMLQZMRbaCZPPqlyZxUeTz7gF5daOOy8YFbe1O9OAgTDbsy3HElLyB
+	 GMxh5xkpHL9BBuQct8SKOC+vo0psU3rgK1Ci4wNY8i9MHTXN76koOmnxC5qUIt1/lh
+	 2bmUM56kcgjng==
+Message-ID: <55c5cef2-3cfb-408c-8c78-4bfd5ee19a29@kernel.org>
+Date: Wed, 29 Jan 2025 20:06:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom,wcnss-pil: Add support
- for single power-domain platforms
-To: Luca Weiss <luca@lucaweiss.eu>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-sdm660: Add missing SDCC block resets
+To: Alexey Minnekhanov <alexeymin@postmarketos.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Stephan Gerhold <stephan.gerhold@linaro.org>,
- =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250129-wcnss-singlepd-v1-0-b01a6ba0b1bd@lucaweiss.eu>
- <20250129-wcnss-singlepd-v1-1-b01a6ba0b1bd@lucaweiss.eu>
-Content-Language: en-US
+ <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Craig Tatlor <ctatlor97@gmail.com>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20250129171842.1588526-1-alexeymin@postmarketos.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -107,42 +107,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250129-wcnss-singlepd-v1-1-b01a6ba0b1bd@lucaweiss.eu>
+In-Reply-To: <20250129171842.1588526-1-alexeymin@postmarketos.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 29/01/2025 18:51, Luca Weiss wrote:
-> From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+On 29/01/2025 18:18, Alexey Minnekhanov wrote:
+> This will allow linux to properly reset eMMC/SD blocks.
 > 
-> Support platforms such as MSM8226 and MSM8974 with only one power rail
-> (CX) modelled as power domain while MX and PX are regulators.
+> Fixes: f2a76a2955c0 ("clk: qcom: Add Global Clock controller (GCC) driver for SDM660")
 > 
-> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> [luca: reword commit message]
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+
+No line breaks between tags (see `git log`).
+
+> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
 > ---
->  Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> index 8e033b22d28cfa8203234f744b3b408e976e20c3..d3c71bcf0f02122eb0dae214f135d8d7f71a9600 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> @@ -69,9 +69,11 @@ properties:
->        CX regulator to be held on behalf of the booting of the WCNSS core.
->  
->    power-domains:
-> +    minItems: 1
->      maxItems: 2
->  
->    power-domain-names:
-> +    minItems: 1
 
+>  include/dt-bindings/clock/qcom,gcc-sdm660.h | 2 ++
 
-This should be further narrowed in allOf:if:then per each variant,
-because now you say that all devices here can have only one power
-domain... unless the compatibles do not allow that, but then explain in
-commit msg.
+That's a separate patch. Always.
 
 Best regards,
 Krzysztof
