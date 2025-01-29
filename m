@@ -1,122 +1,264 @@
-Return-Path: <linux-arm-msm+bounces-46527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F2D4A221B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 17:25:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 496C0A221F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 17:43:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0D563A2E2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 16:25:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6FC7C1887388
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 16:43:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1B6BA50;
-	Wed, 29 Jan 2025 16:25:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k0gWxZq1"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D0881DF248;
+	Wed, 29 Jan 2025 16:43:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3805B33981
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 16:25:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43FBE143722;
+	Wed, 29 Jan 2025 16:43:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738167920; cv=none; b=LV4oeXrpzn8irSCxuTbLK8eLW8piK2fSjOzqiJqUjEp7jL2fiDuApriEvVJZLJHpeCfG+aOMn6aPNobyYTsBDenMxZ3LyEY0kT0IDi8sX9RICYSlCMfnZX7JN/I75qGNqeREQ7xNShBbf5rvQI6OBTMZJmmSoQac+PVvfGhu5sw=
+	t=1738169021; cv=none; b=C+CSGZbX+CDNUsbRUYaKG72sMOcT801mjvehs9aQejmk6TbwfjN/CiVu5di+YajSakPJ8z6aEiTKAm9vKUVkawca5+hk0XKccjNtZyJ3b6aM2r0vEDvutFeKDOZElNosl/Qc1Xf3G8NgMp9YpfOeKHIpe///9WEUB1T091iGtak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738167920; c=relaxed/simple;
-	bh=eTe7u4R9tM7SfXPBUlFg06jXBlzWIenc8aOm26K9+hA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nCumteF5OHWR/OcLsrqeF7acKaxNc3pUQUdtIH5JRHnQ00jvsr2K7h/m+4Snh/gkY6jAGAp2jYYZRtZPEbQDGRRrcu9bs9ux9M0rh1fpgw2xXxitgQCzCObYHMBnAi4+OWLKcvWT1yZmtHSis1w0+sG9F7o8QgtOBoaPqFymU3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k0gWxZq1; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5401bd6cdb4so7586278e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 08:25:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738167916; x=1738772716; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QO/x1oTf7a0srTFjfunlm88nqvMdqFvIe3oraA8GH6U=;
-        b=k0gWxZq1KnD9iBxzzd0wh5Y/Fmy9nTalgJZxGJ1ddHsiAULIVVPvUiPm8haRfHyXgJ
-         I3wWFnUiLIxQfBiNTyI2ldTqoaCDEWKGtb9jws5wdsah0fFgRod7Nvf7zNH+G0jOlcIZ
-         7p1pDn7wwloaMKn3WIRqAcrrhgqmPh2+bIt67fG1/c0xUua0I1DJWuO0/IoPCKxvgKVz
-         mCN3/oHPD3XRVedzxmg7i9qORjMK2Vw/POC+UTAz/Lzk47/TYkswkn8xRIX5fIpTnt3G
-         cgIE4pl0uaSqbm8YtQVpY2BWZAkKHq73xwMwLlU+hvIPeQMLChLwSB1aY9VpQ4lYp52w
-         RyiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738167916; x=1738772716;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QO/x1oTf7a0srTFjfunlm88nqvMdqFvIe3oraA8GH6U=;
-        b=j0Ept+LFHPoLGiRTOF34WUrL/vrwXMBleVNI6IebHVgTOrSLtIMDNg1jEQlNh7vO2k
-         FwGq6LjkeXxq0NKi3tWZywMTK/yT3EhuhrORGOrwf859NuEmq5X8upeQ/+uAw9pakKRn
-         5rSKcuQzg20crhqsZHxbAPoDw/pud97ZawO2TK2NoRiupOQYeSreJ5v0ojDJgP7gNs8C
-         21CgQ5PcbDlDD0nwHFf2EDPEpeQysG2NRtmGWboTLC1WQUO7R0plA/QtO38xZUrpWvnl
-         sKa4lMQ6rvxpB4yg+yrgR5IgPT1pPvRyURUI1mPo+73sT8l/stADrKm79PVszTcAn9eh
-         Gbew==
-X-Forwarded-Encrypted: i=1; AJvYcCU4L7RpHE/m+qYp2aMqi17HVROXPaqciYEwFPDhVEBvOC7xpIyc1Jinm5f1yCgcVAXpVRxUb9sUQyMxTysj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUs+U/NfUoJUgMmZJaPI3Tyh/zAv2CMSMI69D06CWEA8QQ+/kA
-	AIA+YOQxjRHs9d1lojbp4Z0SsyhfVBGsH9i7WK47D61V4wX16Hw5+54wKR4tkWo=
-X-Gm-Gg: ASbGnct+zQKBldQsc15C1WABK0c8Vp9SHAOAcEZpP38hUFE1Nz8p9M6Jf4THZ7u2efo
-	oqLYhYbAmGskYfeFOSDJpwlQJh/YHjk+5bP3tW4LP2D51KfJ/nxPo2xK5a3soDFDfJUpaWAJ9Rc
-	TEOHep3cklMfTRaK2qZmXOhCEJuTmNpn2WQTV808YuNcPxuw2V2Br9oUu1iW4y3NuykJGLHtKwa
-	iQktpY3UyDNvg70lfdVUoJfSnqJXuo5AnhthXbLhL94R3ssSefIlJAJn0bEDgMYOmJL+kO9TDTJ
-	m9wxY2PcwO8a6QWIB5knf2jyrdhvIb7R2AiVKhskm7LoKPHLzxY8PbaACQvDigd9YnSChbA=
-X-Google-Smtp-Source: AGHT+IET0XFFm4nQy05VSjs4EMucd01BjcVOGhckKXNaEyF8FTW0tgtOo7C/7RncS5097j7cJOotMg==
-X-Received: by 2002:ac2:4c86:0:b0:540:2188:763c with SMTP id 2adb3069b0e04-543e4c31246mr1146851e87.37.1738167916238;
-        Wed, 29 Jan 2025 08:25:16 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c83682f4sm2001573e87.113.2025.01.29.08.25.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2025 08:25:15 -0800 (PST)
-Date: Wed, 29 Jan 2025 18:25:13 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: dispcc-sm8750: Drop incorrect
- CLK_SET_RATE_PARENT on byte intf parent
-Message-ID: <ktwnhspd2krxwzcswrqj7ffoyhdzplplosy3f6bu6gqrzi5uxj@i5xqxthpha4n>
-References: <20250129154519.209791-1-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1738169021; c=relaxed/simple;
+	bh=fjFyNPumIO1qQ7Xqj2v2TIlZ56VfvMhBycV9WzRUiyw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tEQMANqHDPL8KW5IUoMafkznFduRkhEavMFXuP8MD/eNL34BfH487wUDZ2hVet2A3Gt51bnbs5Jw5eIGnbqqn+c+06UC8URO5nquy8F89fcc4XZP26V8EKec22TF643nJrVc8Bpa+68RKgGMA5wzywFI1IxAetqM67CYDGsYD2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9F175497;
+	Wed, 29 Jan 2025 08:44:04 -0800 (PST)
+Received: from [10.1.196.57] (eglon.cambridge.arm.com [10.1.196.57])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2AD2A3F63F;
+	Wed, 29 Jan 2025 08:43:36 -0800 (PST)
+Message-ID: <e6820d63-a8da-4ebb-b078-741ab3fcd262@arm.com>
+Date: Wed, 29 Jan 2025 16:43:26 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250129154519.209791-1-krzysztof.kozlowski@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/5] arm64: errata: Assume that unknown CPUs _are_
+ vulnerable to Spectre BHB
+To: Douglas Anderson <dianders@chromium.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>
+Cc: Roxana Bradescu <roxabee@google.com>, Julius Werner
+ <jwerner@chromium.org>, bjorn.andersson@oss.qualcomm.com,
+ Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ Florian Fainelli <florian.fainelli@broadcom.com>,
+ linux-arm-kernel@lists.infradead.org, Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Scott Bauer <sbauer@quicinc.com>, stable@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250107200715.422172-1-dianders@chromium.org>
+ <20250107120555.v4.2.I2040fa004dafe196243f67ebcc647cbedbb516e6@changeid>
+Content-Language: en-GB
+From: James Morse <james.morse@arm.com>
+In-Reply-To: <20250107120555.v4.2.I2040fa004dafe196243f67ebcc647cbedbb516e6@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 29, 2025 at 04:45:19PM +0100, Krzysztof Kozlowski wrote:
-> The parent of disp_cc_mdss_byte0_intf_clk clock should not propagate up
-> the rates, because this messes up entire clock hierarchy when setting
-> clock rates in MSM DSI driver.
-> 
-> The dsi_link_clk_set_rate_6g() first sets entire clock hierarchy rates
-> via dev_pm_opp_set_rate() on byte clock and then sets individual clock
-> rates, like pixel and byte_intf clocks, to proper frequencies.  Having
-> CLK_SET_RATE_PARENT caused that entire tree was re-calced and the byte
-> clock received halved frequency.  Drop CLK_SET_RATE_PARENT to fix this
-> and align with SM8550 and SM8650.
-> 
-> Fixes: f1080d8dab0f ("clk: qcom: dispcc-sm8750: Add SM8750 Display clock controller")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Fix for v6.14-rcX.
-> ---
->  drivers/clk/qcom/dispcc-sm8750.c | 2 --
->  1 file changed, 2 deletions(-)
-> 
+Hi Doug,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 07/01/2025 20:05, Douglas Anderson wrote:
+> The code for detecting CPUs that are vulnerable to Spectre BHB was
+> based on a hardcoded list of CPU IDs that were known to be affected.
+> Unfortunately, the list mostly only contained the IDs of standard ARM
+> cores. The IDs for many cores that are minor variants of the standard
+> ARM cores (like many Qualcomm Kyro CPUs) weren't listed. This led the
+> code to assume that those variants were not affected.
+> 
+> Flip the code on its head and instead assume that a core is vulnerable
+> if it doesn't have CSV2_3 but is unrecognized as being safe. This
+> involves creating a "Spectre BHB safe" list.
+> 
+> As of right now, the only CPU IDs added to the "Spectre BHB safe" list
+> are ARM Cortex A35, A53, A55, A510, and A520. This list was created by
+> looking for cores that weren't listed in ARM's list [1] as per review
+> feedback on v2 of this patch [2]. Additionally Brahma A53 is added as
+> per mailing list feedback [3].
+> 
+> NOTE: this patch will not actually _mitigate_ anyone, it will simply
+> cause them to report themselves as vulnerable. If any cores in the
+> system are reported as vulnerable but not mitigated then the whole
+> system will be reported as vulnerable though the system will attempt
+> to mitigate with the information it has about the known cores.
 
--- 
-With best wishes
-Dmitry
+> arch/arm64/include/asm/spectre.h |   1 -
+> arch/arm64/kernel/proton-pack.c  | 203 ++++++++++++++++---------------
+> 2 files changed, 102 insertions(+), 102 deletions(-)
+
+This is a pretty hefty diff-stat for adding a list of six CPUs. It looks like there are
+multiple things going on here: I think you're adding the 'safe' list of CPUs, then
+removing the list of firmware-mitigated list, then removing some indentation to do the
+mitigation detection differently. Any chance this can be split up?
+(I'm not sure about the last chunk - it breaks automatic backporting)
+
+
+> diff --git a/arch/arm64/kernel/proton-pack.c b/arch/arm64/kernel/proton-pack.c
+> index e149efadff20..17aa836fe46d 100644
+> --- a/arch/arm64/kernel/proton-pack.c
+> +++ b/arch/arm64/kernel/proton-pack.c
+
+
+> +static u8 spectre_bhb_loop_affected(void)
+>  {
+>  	u8 k = 0;
+> -	static u8 max_bhb_k;
+> -
+> -	if (scope == SCOPE_LOCAL_CPU) {
+> -		static const struct midr_range spectre_bhb_k32_list[] = {
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
+> -			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
+> -			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
+> -			{},
+> -		};
+> -		static const struct midr_range spectre_bhb_k24_list[] = {
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
+> -			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
+> -			MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+> -			{},
+> -		};
+> -		static const struct midr_range spectre_bhb_k11_list[] = {
+> -			MIDR_ALL_VERSIONS(MIDR_AMPERE1),
+> -			{},
+> -		};
+> -		static const struct midr_range spectre_bhb_k8_list[] = {
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
+> -			MIDR_ALL_VERSIONS(MIDR_CORTEX_A57),
+> -			{},
+> -		};
+> -
+> -		if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
+> -			k = 32;
+> -		else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
+> -			k = 24;
+> -		else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k11_list))
+> -			k = 11;
+> -		else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k8_list))
+> -			k =  8;
+> -
+> -		max_bhb_k = max(max_bhb_k, k);
+> -	} else {
+> -		k = max_bhb_k;
+> -	}
+> +
+> +	static const struct midr_range spectre_bhb_k32_list[] = {
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
+> +		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
+> +		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
+> +		{},
+> +	};
+> +	static const struct midr_range spectre_bhb_k24_list[] = {
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
+> +		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
+> +		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+> +		{},
+> +	};
+> +	static const struct midr_range spectre_bhb_k11_list[] = {
+> +		MIDR_ALL_VERSIONS(MIDR_AMPERE1),
+> +		{},
+> +	};
+> +	static const struct midr_range spectre_bhb_k8_list[] = {
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A57),
+> +		{},
+> +	};
+> +
+> +	if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
+> +		k = 32;
+> +	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
+> +		k = 24;
+> +	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k11_list))
+> +		k = 11;
+> +	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k8_list))
+> +		k =  8;
+>  
+>  	return k;
+>  }
+
+This previous hunk reduces the indent to remove the static variable from inside the
+function. Your patch-1 can be picked up automatically by stable branches, but after this
+change, that will have to be done by hand. Arm have recently updated that table of CPUs
+with extra entries (thanks for picking those up!) - but now that patch can't be easily
+applied to older kernels.
+I suspect making the reporting assuming-vulnerable may make other CPUs come out of the
+wood work too...
+
+Could we avoid changing this unless we really need to?
+
+
+As background, the idea is that CPUs that are newer than the kernel will discover the need
+for mitigation from firmware. That sucks for performance, but it can be improved once the
+kernel is updated to know about the 'local' workaround.
+
+
+> @@ -955,6 +956,8 @@ static bool supports_ecbhb(int scope)
+>  						    ID_AA64MMFR1_EL1_ECBHB_SHIFT);
+>  }
+>  
+> +static u8 max_bhb_k;
+> +
+>  bool is_spectre_bhb_affected(const struct arm64_cpu_capabilities *entry,
+>  			     int scope)
+>  {
+> @@ -963,16 +966,18 @@ bool is_spectre_bhb_affected(const struct arm64_cpu_capabilities *entry,
+>  	if (supports_csv2p3(scope))
+>  		return false;
+>  
+> -	if (supports_clearbhb(scope))
+> -		return true;
+> -
+> -	if (spectre_bhb_loop_affected(scope))
+> -		return true;
+> +	if (is_spectre_bhb_safe(scope))
+> +		return false;
+>  
+> -	if (is_spectre_bhb_fw_affected(scope))
+> -		return true;
+> +	/*
+> +	 * At this point the core isn't known to be "safe" so we're going to
+> +	 * assume it's vulnerable. We still need to update `max_bhb_k` though,
+> +	 * but only if we aren't mitigating with clearbhb though.
+
++	or firmware.
+
+
+> +	 */
+> +	if (scope == SCOPE_LOCAL_CPU && !supports_clearbhb(SCOPE_LOCAL_CPU))
+> +		max_bhb_k = max(max_bhb_k, spectre_bhb_loop_affected());
+
+CPUs that need a firmware mitigation will get in here too. Its probably harmless as
+they'll report '0' as their k value... but you went to the trouble to weed out the CPUs
+that support the clearbhb instruction ...
+
+For the change described in the commit message, isn't it enough to replace the final
+'return false' with 'return !is_spectre_bhb_safe(scope)' ?
+
+
+>  
+> -	return false;
+> +	return true;
+>  }
+
+
+Thanks,
+
+James
 
