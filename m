@@ -1,251 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-46491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B4E8A21B04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 11:35:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1438A21B11
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 11:40:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2D4AF7A1F5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 10:34:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C932E3A52A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 10:40:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0330019E96B;
-	Wed, 29 Jan 2025 10:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85BD61A8412;
+	Wed, 29 Jan 2025 10:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OdqfWA4T"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C9n6nArz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E6478F58
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 10:35:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D44419E96B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 10:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738146945; cv=none; b=U9BgN+cwAiSBZVcHm8YFh+PrzoZ5mhXkfTnQ76yfm2PUo5m7s8680SBPj4VRqj/jVylQogobDC1Uayul/tNDVPqWRlrzm2ukQ4ja4eDz1vRD4muEHdF5vgZ71861LziU5Ez67m9M9UzQjFDH5fySpoxPu/RplMB1jF2BbjjHnNM=
+	t=1738147208; cv=none; b=EqCDkgLJwPlcaez/Kd4m2qImdN2phWJeygUiVPv5i9+BrMUwXTN5q09HBN3zoirYn67bvB2+bFB3W8HJEIvUeeBrxyL2AfPMRmAPAAeacCPn2V+thzSclFgwuIpLohMRbeyAtx6D66f+YVYwnuk9xJUugSC5wMkCHntwhTU2wDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738146945; c=relaxed/simple;
-	bh=twmUkLBkPuToL8cbrBRV9sHLZQJyjXemmck/wmAoUrg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a8O9Cffadx76K/Y8lWccRRy/gFKBK2AW1JUiSkWmNGKw5MSh6ixOtVoH4DwSHE+del1HRrAG5iqK1PfizeN9D3Lx9IorEZKti7Jy+Rn3h8iMskh4rj4GO96iO41jPMQP15J9R+7RuzBq8QfFPaH+TfFTnBa20cl/wTSdFF9RDTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OdqfWA4T; arc=none smtp.client-ip=209.85.221.53
+	s=arc-20240116; t=1738147208; c=relaxed/simple;
+	bh=mkABl06z1mub5kESdYBg1Z1sYWdChKW32AVtVofREAI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iLxqvQ+i7AEwIALMPAq6yJAeSZ2rS4MnXCx+JiaJV5rJc4yTCdvKKFnFnfhK/8iXvMqAtJ2D3WMdgQpfrLFdBr1SnHABgivy5T4BtYd25LQngiZXwbhF8PLY1Knh04VPvhAawYv0GKfJYew4UlcE3i4WjwnaaHDoq6kOFMjmNlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C9n6nArz; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385de59c1a0so3855557f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 02:35:43 -0800 (PST)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-54020b0dcd2so582882e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 02:40:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738146942; x=1738751742; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oYPTNkU1oXcU63qUP69dE6PMjwC9Rly3gS0x3zHD7xU=;
-        b=OdqfWA4TavlegS6mY9pnDcMFKR9TfECrVy1qNcKz+HKDRd8epdsqOTQp9j+7zoecqx
-         lMQn+BKB1JwIdW5ctaK5JimZt799EbZ5Wmm/mnKqCYnY+lynFeHdi/eMf9/1vwGgq4lK
-         29mySFoCTmM1bCX5q8Xj3fhAk2/dBjP3hqfl0Xe7sacjjGtesixpDsd6gYzJx++t3De2
-         Rs2/4Qd8hyy2f0nCf8/CRU3hUIDFVIEgSPxVNrUV6gyE/VJWVKqA/4Iu1aCXiKU7hU1D
-         Jlh1+50EX1j3GL3mfG4EwBBjn2kFBegc4VgyiR1ulNQXm7boxtNcRMES2WXOtB4dJWrr
-         IMyg==
+        d=linaro.org; s=google; t=1738147204; x=1738752004; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vyooTYkohgYua0GBErn7xjGDeIZbWcfbmQSP4ECylwA=;
+        b=C9n6nArzbSgdzzanHLNZ1WiMsegoYw/ZEkO+7Qt6YQ1dvB1kywH0cHejb9AmK9rBTp
+         LCWeIOxaFlzjkURPCPC7YO44oGhDZySSxk7lf7u9524RPj352WzoKCduaywwZxorveCW
+         /TOrIMlxowVkJD0oFMOdHZaex8PsFib5+2ZCan17DT5xDio9ZzqapDaLm8dmbHnGzCDJ
+         K/DKNzinUGCBk8B3cQu+FaCpHwgCJnlht+ry8PjW6FlkgFEl0A/8MB8ctCr4W3ywxxDf
+         WG4UZ465bclu8o6b+QQFbja9WLRgFeXqZSwE5C2P1f/chiQAGFYlgUBzt/c0u0BtPOHk
+         lQCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738146942; x=1738751742;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oYPTNkU1oXcU63qUP69dE6PMjwC9Rly3gS0x3zHD7xU=;
-        b=Dv5GkEViro2F9k7+Yd6upE/LZL6xqENQ11nyDmvJhlBI4BN7QsHv0yY7rwWJ0Ymls5
-         s2IaMhktKMeo4xZjyId2ERayxDcdhiiq0ff7ilwPVcJvVlkBWgUi51wHJpBXS/KmPSPc
-         4uZBtKohWHptbSbBDzobssg4xHYDP0SOptX4Kd6EpR0j7z9htKNkO1Va4gqbYuMLTaH1
-         C1zG/t9b6E4z7AheAgbhtbCWH7BklZ/b7cYSmfvil+EaHRDGwNFNgkw6FIGQE+5d3gkE
-         ba4k3IipGIlwEb81i3AiaSE+7vFpIzTbG/NBGrA7IUyRVnLdzUN2c1R9MHmUxGmDzrFI
-         7u9g==
-X-Forwarded-Encrypted: i=1; AJvYcCXZFZy5XoSHXF+Uh8x4NqfoI9en4ysu643SWkMb9J6+qkyS0K1o2hIczZ421255/u0t8sPg/t50tA5oygef@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy12lrO92UkYD3hhbUh0lvjYhq4PKqHb5/xc6NO+bafkH98M05/
-	CFGnXkL5r4jcXEUv3mYj0k4ym2prbpuYI9ZBeoMWKanBQcOcdJa5b+MpX3ofULQ=
-X-Gm-Gg: ASbGncs7IqImX9xZ33BboIOY1cewvFKy4fenWfutAJC/y5eU7K9q0esubSpy0NTGNl/
-	psTUx7LMp3PY1fKdb+3ffAVh7igRNNhvjmqJSyZjLUFBdXoy1V8Kp4D0YR8iNv65DNtjpKWZmeR
-	77K0Rp6qvQpSoCkyW2wtNnbR9Auie1y2zYIBRjuImrXcWbu4CYURvQn8DaK9OsHHj2FQQxdXQP+
-	S4mvLppE/Ie/vIozeG8nzvfeg1047j27wSBc8wivzYnutp1tqlAunxJh9Jigy2zlxv9SVuniCyd
-	s195+xA5aOPENBfQlvWQfnq7ug==
-X-Google-Smtp-Source: AGHT+IEw8x4QitkXPvA/KMOW1uNnZVD9kQCqkDsmI+tFIUapbqvmdppAq+d0EJl8EjcOlLoePYWIWQ==
-X-Received: by 2002:a05:6000:18a9:b0:38a:1b94:ecc1 with SMTP id ffacd0b85a97d-38c5195f9c8mr2292172f8f.25.1738146942076;
-        Wed, 29 Jan 2025 02:35:42 -0800 (PST)
-Received: from [192.168.68.163] ([145.224.90.107])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1c3558sm16493301f8f.84.2025.01.29.02.35.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2025 02:35:41 -0800 (PST)
-Message-ID: <070c70ac-c76b-4d1a-acb6-d29cc85967b9@linaro.org>
-Date: Wed, 29 Jan 2025 10:35:40 +0000
+        d=1e100.net; s=20230601; t=1738147204; x=1738752004;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vyooTYkohgYua0GBErn7xjGDeIZbWcfbmQSP4ECylwA=;
+        b=TU0r49lw4MGX94172LSq4lPCaKE9MTHlBn3wXF7SDXD+5cGdSa3yz5jRChDtfFAH00
+         3qI5cbMN7LLpTXFXiOawt/5jpkoysDk37hv5oMuCSnqa9LijtO/HD5hMn0pxzli6sxZN
+         wjUr3fkD6YScIfpb8vIVRJBXKgu9bdjbjoLw+ivk9b8agRPkzsThV9H6dLsGcijAkQ/S
+         T/n5R75Sd1yKaOUbn0zBdEq7al6AwFhevrZLgyf8oNxOBF9831RxpN/Pf1cIZ0z8AXFM
+         dfP+jqo9r1vxLBP86FroeJJOS3dpk7384O/uq3xzaXPzpXZajb6OqPuvy6zSumAPFZFR
+         FESg==
+X-Forwarded-Encrypted: i=1; AJvYcCWYzT56YCD2yA4ZzmsKtkYRchewf+aO4/JMJqe8/G1DCsdhTIqi72eR5NpNuauo6ZkRiuzQ2LphHwbkdOxk@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxKzb4ohmfj6IrZdiDNbm5ksXVumTXWYdORqESnQrlDCi5J0r5
+	VNX3OsACL35kMVqW6w70+IXxhnHCW+YHGklaUCEUII61yuJjkHzHHXi0VCYG5rg=
+X-Gm-Gg: ASbGnctx0Hn+oD3N71N/Azwc6/dzYQNFkHIw/Y3Md8pjp9d/y0OIdHxK3Q/0tKdtBFe
+	UggOdzl13H15FHwfGcvmdf9fkkw8myzRUyj5L/YKQXiLvrGn0AQtacDUkKBEdLA2N1LRwEdnZCE
+	gBJmZh/kZH3g9PfsNMflKvGDDYC6MHSCNUR/kQiil7C4RgurSaG9YncHFKO9DvURhEiu0GOlv+X
+	QJ86M2Vjuhqh3w6gcdTlaEphPcmGw2PcZ04M+sxXz6VhUiSM5hYf26GmGcQCdWFwUUGIWQgaH+y
+	qlRcq9xodhL1KjSjyLM7YPGbJ72BktSQHn3PT+EMMwRvLCZQKK5qWThEaqy2KieLx5BiIdE=
+X-Google-Smtp-Source: AGHT+IEz2Qy0OdKT7BD14guLqtxkS8/XNT3Iqa+7CbyOJev2OlqK+JoJiYooOG6A556WOHQP1LCrpQ==
+X-Received: by 2002:a05:6512:1293:b0:542:99a7:b415 with SMTP id 2adb3069b0e04-543e4a112b7mr1169518e87.0.1738147204528;
+        Wed, 29 Jan 2025 02:40:04 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c83799d7sm1955517e87.170.2025.01.29.02.40.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jan 2025 02:40:04 -0800 (PST)
+Date: Wed, 29 Jan 2025 12:40:01 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de
+Subject: Re: [PATCH v2 4/5] misc: fastrpc: Add polling mode support for
+ fastRPC driver
+Message-ID: <an4cvztdkqmrt7w2iaziihlxf4tbox65ze362v2lmycjnqg26y@jizjmh2ki34z>
+References: <20250127044239.578540-1-quic_ekangupt@quicinc.com>
+ <20250127044239.578540-5-quic_ekangupt@quicinc.com>
+ <hgox77a7e6zzriltwhzzciau6u2pmil4y3rl5o2l6zkp4fmlmp@q2dai5fxcvtq>
+ <49295da9-82d4-45a0-a2a4-fdaa6600c70d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 5/6] Coresight: Add Coresight TMC Control Unit driver
-To: Jie Gan <quic_jiegan@quicinc.com>
-Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Jinlong Mao <quic_jinlmao@quicinc.com>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
- <mike.leach@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-References: <20250124072537.1801030-1-quic_jiegan@quicinc.com>
- <20250124072537.1801030-6-quic_jiegan@quicinc.com>
- <44bd0d5e-a232-49c3-ba2f-e63e2f2c99be@linaro.org>
- <b3d9e4f0-cca8-45a5-a5b7-239cdeed2751@quicinc.com>
-Content-Language: en-US
-From: James Clark <james.clark@linaro.org>
-In-Reply-To: <b3d9e4f0-cca8-45a5-a5b7-239cdeed2751@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <49295da9-82d4-45a0-a2a4-fdaa6600c70d@quicinc.com>
 
-
-
-On 29/01/2025 12:46 am, Jie Gan wrote:
+On Wed, Jan 29, 2025 at 11:12:16AM +0530, Ekansh Gupta wrote:
 > 
 > 
-> On 1/28/2025 7:55 PM, James Clark wrote:
->>
->>
->> On 24/01/2025 7:25 am, Jie Gan wrote:
->>> The Coresight TMC Control Unit hosts miscellaneous configuration 
->>> registers
->>> which control various features related to TMC ETR sink.
->>>
->>> Based on the trace ID, which is programmed in the related CTCU ATID
->>> register of a specific ETR, trace data with that trace ID gets into
->>> the ETR buffer, while other trace data gets dropped.
->>>
->>> Enabling source device sets one bit of the ATID register based on
->>> source device's trace ID.
->>> Disabling source device resets the bit according to the source
->>> device's trace ID.
->>>
->>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/Kconfig          |  12 +
->>>   drivers/hwtracing/coresight/Makefile         |   1 +
->>>   drivers/hwtracing/coresight/coresight-ctcu.c | 276 +++++++++++++++++++
->>>   drivers/hwtracing/coresight/coresight-ctcu.h |  30 ++
->>>   include/linux/coresight.h                    |   3 +-
->>>   5 files changed, 321 insertions(+), 1 deletion(-)
->>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
->>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
->>  >
->>
->> [...]
->>
->>> +/*
->>> + * ctcu_set_etr_traceid: Retrieve the ATID offset and trace ID.
->>> + *
->>> + * Returns 0 indicates success. None-zero result means failure.
->>> + */
->>> +static int ctcu_set_etr_traceid(struct coresight_device *csdev, 
->>> struct coresight_path *cs_path,
->>> +                bool enable)
->>> +{
->>> +    struct coresight_device *sink = coresight_get_sink(cs_path->path);
->>> +    struct ctcu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->>> +    u8 trace_id = cs_path->trace_id;
->>> +    int port_num;
->>> +
->>> +    if ((sink == NULL) || !IS_VALID_CS_TRACE_ID(trace_id) || 
->>> IS_ERR_OR_NULL(drvdata)) {
->>> +        dev_err(&csdev->dev, "Invalid parameters\n");
->>> +        return -EINVAL;
->>> +    }
->>> +
->>> +    port_num = ctcu_get_active_port(sink, csdev);
->>> +    if (port_num < 0)
->>> +        return -EINVAL;
->>> +
->>> +    /*
->>> +     * Skip the disable session if more than one TPDM device that
->>> +     * connected to the same TPDA device has been enabled.
->>> +     */
->>> +    if (enable)
->>> +        atomic_inc(&drvdata->traceid_refcnt[port_num][trace_id]);
->>> +    else {
->>> +        if (atomic_dec_return(&drvdata->traceid_refcnt[port_num] 
->>> [trace_id]) > 0) {
->>> +            dev_dbg(&csdev->dev, "Skip the disable session\n");
->>> +            return 0;
->>> +        }
->>> +    }
->>> +
->>> +    dev_dbg(&csdev->dev, "traceid is %d\n", cs_path->trace_id);
->>> +
->>> +    return __ctcu_set_etr_traceid(csdev, trace_id, port_num, enable);
->>
->> Hi Jie,
->>
->> Using atomic_dec_return() here doesn't prevent 
->> __ctcu_set_etr_traceid() from running concurrent enable and disables. 
->> Once you pass the atomic_dec_return() a second call to enable it will 
->> mess it up.
->>
->> I think you need a spinlock around the whole thing and then the 
->> refcounts don't need to be atomics.
->>
-> Hi, James
-> Thanks for comment. I may not fully tested my codes here. What I was 
-> thinking is there's no way the refcnt could become a negative number 
-> under current framework. So I just added spinlock in 
-> __ctcu_set_etr_traceid() to ensure concurrent sessions correctly 
-> manipulate the register.
 > 
-> As the trace_id related to the bit of the ATID register, I think the 
-> concurrent processes are working fine with spinlock around read/write 
-> register.
+> On 1/29/2025 4:59 AM, Dmitry Baryshkov wrote:
+> > On Mon, Jan 27, 2025 at 10:12:38AM +0530, Ekansh Gupta wrote:
+> >> For any remote call to DSP, after sending an invocation message,
+> >> fastRPC driver waits for glink response and during this time the
+> >> CPU can go into low power modes. Adding a polling mode support
+> >> with which fastRPC driver will poll continuously on a memory
+> >> after sending a message to remote subsystem which will eliminate
+> >> CPU wakeup and scheduling latencies and reduce fastRPC overhead.
+> >> With this change, DSP always sends a glink response which will
+> >> get ignored if polling mode didn't time out.
+> > Is there a chance to implement actual async I/O protocol with the help
+> > of the poll() call instead of hiding the polling / wait inside the
+> > invoke2?
 > 
-> I may not fully got your point here. Please help me to correct it.
+> This design is based on the implementation on DSP firmware as of today:
+> Call flow: https://github.com/quic-ekangupt/fastrpc/blob/invokev2/Docs/invoke_v2.md#5-polling-mode
 > 
-> Thanks,
-> Jie
-> 
-> 
+> Can you please give some reference to the async I/O protocol that you've
+> suggested? I can check if it can be implemented here.
 
-No it can't become negative, but the refcount can be a different state 
-to the one that was actually written:
+As with the typical poll() call implementation:
+- write some data using ioctl
+- call poll() / select() to wait for the data to be processed
+- read data using another ioctl
 
+Getting back to your patch. from you commit message it is not clear,
+which SoCs support this feature. Reminding you that we are supporting
+all kinds of platforms, including the ones that are EoLed by Qualcomm.
 
-   CPU0                             CPU1
-   ----                             ----
-   ctcu_set_etr_traceid(enable)
-                                    ctcu_set_etr_traceid(disable)
-   atomic_inc()
-   recount == 1
-                                    atomic_dec()
-                                    recount == 0
-
-                                    __ctcu_set_etr_traceid(disable)
-                                    Lock and write disable state to
-                                    device
-
-   __ctcu_set_etr_traceid(enable)
-   Lock and write enable state to
-   device
+Next, you wrote that in-driver polling eliminates CPU wakeup and
+scheduling. However this should also increase power consumption. Is
+there any measurable difference in the latencies, granted that you
+already use ioctl() syscall, as such there will be two context switches.
+What is the actual impact?
 
 
-As you can see this leaves the device in an enabled state but the 
-refcount is 0.
-
-This is also quite large if you use atomic types:
-
-  /* refcnt for each traceid of each sink */
-  atomic_t traceid_refcnt[ATID_MAX_NUM][CORESIGHT_TRACE_ID_RES_TOP];
-
-Presumably you can't have the refcount for each ID be higher than the 
-max number of TPDMs connected? If you make the locked area a bit wider 
-you don't need atomic types and also solve the above problem. So you 
-could do u8, or DECLARE_BITMAP() and bitmap_read() etc to read 3 bit 
-values. Or however wide it needs to be.
-
+-- 
+With best wishes
+Dmitry
 
