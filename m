@@ -1,251 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-46444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A1A9A21685
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 03:31:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10874A216DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 04:23:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 70934188544E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 02:31:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48F4C18886D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 03:23:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5B29823DE;
-	Wed, 29 Jan 2025 02:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E9521A08B1;
+	Wed, 29 Jan 2025 03:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KYby6jB7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a65PK4Nr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4BC2D627
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 02:30:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D17619D8BC;
+	Wed, 29 Jan 2025 03:21:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738117861; cv=none; b=BKGOm0MfpEanqKkzkA3yQ80kNXYPBUJBMhgZSd7bnZvqYwBRxQWN3PIpTYRi6kxl91Egn5hZl1xBKyr6/ejPAESBwkPKzyEkeDKpjI+LtoSOmukcecVcksfwrXreGa2esL1ls7YWMZmrRaNRVx6XeZwnPBGuQBB2HSqmswv2gjk=
+	t=1738120898; cv=none; b=beLaLX/t+qiWAhrC5VnV5yl6cEIMIBUM7B3IdXRmj+BKM2DanvbVUiwYv34RLvudLfE2pq3Gc/2MCUVRHy8yJXtbpbMwWsLkyf00GbhNKD++DQ53bJ0VmVlSPt6NuyRV+GtY2R1h0RXAyAUCYrxw+Z2LdtZXbO8VwkRF1FLEhSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738117861; c=relaxed/simple;
-	bh=A5VajVGVILVmm6TPzJNNXCbTkkxXbO/J7eIt3AyuFw0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fPMcHUKkgbxYtMc07KWrPTmJy9jrxYaw1GWleVWBM+i+33QC66bRQKXDtTkG5BkrIKa285i8k9zWARhLS+7sFLfS2mXFuyDwYCUCbOg0NotaCpoUkyYyO0QLFFnhXr2zCTs6DbCp4tIV05oaIJSx/LuqaXrzfC6v/9MzSfl1j/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KYby6jB7; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2ee9b1a2116so1486737a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 18:30:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738117859; x=1738722659; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XSly2TaNffKLGTngVYEFGfP2OiXY7SuVwdUXwB6ys4U=;
-        b=KYby6jB7fc2kcNqxjdkf7my3lQCSX+eDISK91iaHRk9gkPDAGE3MxGyCnhhjxQuWei
-         7xHF0w+Yz1L3eDsEVMqxDK6KMRUbaDMCLduawsIL1pwUaVYaY/ZYnbeZIDCiBNu1GE+C
-         RFZkKNskBa0bwwykNUJceqQrU+SY0zxy1ANCGk0jXJ0bqSc3/S/Y+PRPRfMxPVTMxi9e
-         OBrkOTnr126ap2/LnImk8Gre0LnVe4+tjxrxXp3oVhKxDF5eIRSHCWUmQpXFNPVxHzuX
-         eaYF+ZGrZb/wsc/vo2p3WqdiWMiMT4VTfH2+mx0WYiYQSIwk12ncGChztVKRPk5OCBpI
-         gzfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738117859; x=1738722659;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XSly2TaNffKLGTngVYEFGfP2OiXY7SuVwdUXwB6ys4U=;
-        b=kLZFdU4qoQXQcZm/Y/GyMG7hWt6aaIqEWWdBLht9fJr4AvJ4IIMo0EFHCzg2yecbHT
-         zqmxTAAFSiG6kc0zS6PRCPWYZeqw5sjICycUg0JIqa65d55KrLjR/gpshyOB2CAHxXxK
-         TO94MbOKHKWMh6xE5LxPDWzWt5xYwtgWUhCczLwnyZigR4zFi8FlDtzRPgCdU6Qa0r2V
-         taBW6Nq0cKiC+xwhtUxSBiEPU1zeLm/ZSKRJvrIi3zAY3lp8FjoQewi76KsggJzEAN2V
-         GyHjuntBfRwRyCEff8f/8wbIKKYs9vKsLNHHZ8FBiKx55uGBIXvwCP0nV1uZITMDCoyr
-         V36Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXpJC+WuG8sidVAwcoG1MQXYGu/w9ttgBvcIUyMLa2bHfrSP9putezqnHNPAdHwrWVxNZsRSUCl2/biEyVy@vger.kernel.org
-X-Gm-Message-State: AOJu0YzN3U/79SS780i8gPAbeB0XVZaqWHI39xUZCdA/9/3dcDEuYi8f
-	Jqra2AIup6K1Wp/m5bwhWPJhC0Q6Y8Hn+ZklIT4InaayHsYyTcxfh1IPHqg5LNI2qUxFvrahHfT
-	nihdYGgrCk3UXXlxh0LL7wOnIYaM=
-X-Gm-Gg: ASbGncuvTQ2Ytaym1fpejX5k6BIVXdFjDt6vZVKjB1BGnbX164VEAhdk4p6iOstzVK8
-	MWCA4k+5W1KycfSKdpLK/aAPOhzUcEnXflOyvCaQzbvLqzhzf7GfxFHXLPGKqdfpVWeuXaKme
-X-Google-Smtp-Source: AGHT+IEjgYmsQ4btVO6NoeAtHUBYo6uBU9FQXTRAoppwQkfpqn+YG0TztYlkbmmr8DweH3LafBf4eykvGJwllpwO6II=
-X-Received: by 2002:a05:6a00:3920:b0:72a:83e4:42e2 with SMTP id
- d2e1a72fcca58-72fd0bcee41mr883477b3a.2.1738117859086; Tue, 28 Jan 2025
- 18:30:59 -0800 (PST)
+	s=arc-20240116; t=1738120898; c=relaxed/simple;
+	bh=XU4u2es1ezNJOo7+PB0gE5PqAiINjSX03uyQMjBN7rs=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=ZwUNiiVmdA82/1ijvHTVdoTqY/pJKiM5k70nx1YlLJEoNmyXxY2l5pu6QFEcJxmXrE7q0hiSsY+JRvD05PPURGUxqj8KHAAdABhqZXknoCuxLd+p7Rkl4HpD0yBIC5IIxV9bGS80DXVxjdn9zZxY2yl1Xlo0Ikd6occWMWucqTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a65PK4Nr; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50T2rjQt020269;
+	Wed, 29 Jan 2025 03:21:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=WxOYr4uKvh6+xszG6Lbm4+
+	VbuRRBnC+hzUnO98ReB2Q=; b=a65PK4Nroo7iefJBt/EqGn0B7402Ff2U8OlbDs
+	4r/Ccv69S522wTnRaF35NNjPslJhWAf14GyjCB5IReNbI4Dx2NgTWCplx9bYeGRd
+	bs5uwVF4z5sDrYvIGVzUIW/MxU9E4EtnjArt2MqnajuITLUzs6pHPdu/BlemuAW5
+	+aMVWmLiob1P6hy6eOnIoKwIxgPEiZc9sp4avkqEVk/8QDiEqnwMYe7Op4/hTXTJ
+	z0jXrE7DpuXxkf1eq6d1KKPPg+6Xfa9LCkfhT10iGnyPvBEpG0DHKpaTB1VwbRho
+	SI6S4h/b9RO+PCRWFUfA5RHGPYOzCHraem1k9wBxyas70AfA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44fbxvg12r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 03:21:23 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50T3L5Db012876
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 03:21:05 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 28 Jan 2025 19:21:05 -0800
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH v5 00/14] drm/msm/dpu: Add Concurrent Writeback Support for
+ DPU 10.x+
+Date: Tue, 28 Jan 2025 19:20:32 -0800
+Message-ID: <20250128-concurrent-wb-v5-0-6464ca5360df@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
- <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
- <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com> <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
- <Z5KXwNPrdirVUn8Z@hu-guptap-hyd.qualcomm.com> <CACu1E7GOS+_biN=AuQwYK47ApRPFGygyD+U5X9d_4ReXKrzbfw@mail.gmail.com>
- <Z5i6GQDd5apN+a10@hu-guptap-hyd.qualcomm.com> <CAF6AEGstcrAJDBpPm-uQ+zSDVEhDJ4AQhCTDT-z9_8Nq0e35WQ@mail.gmail.com>
- <CACu1E7HErZAL=-GVQfKUAUK5bgK-X0qejt5os3f2UhkeZ1ptMQ@mail.gmail.com> <CAF6AEGsUjp+fp1_cN7SGYTh5WSQrU2mm92QsqA5rcSY1OtA8VQ@mail.gmail.com>
-In-Reply-To: <CAF6AEGsUjp+fp1_cN7SGYTh5WSQrU2mm92QsqA5rcSY1OtA8VQ@mail.gmail.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 28 Jan 2025 21:30:48 -0500
-X-Gm-Features: AWEUYZnXKpZmksZEDv9wE4ehxlAcfC2ZYtvFlEvNuv90BQMKMLlkT9uISLaRedQ
-Message-ID: <CACu1E7FyHwJ2mp5u3rDganYj80eDq3QJzLRFzxD9E9O7hEDiag@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with stall-on-fault
-To: Rob Clark <robdclark@gmail.com>
-Cc: Prakash Gupta <quic_guptap@quicinc.com>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAICemWcC/2WR3W6EIBBGX8VwXRr+FPCq79HsBeBQSaO24No2G
+ 9+9s2tSU738hpwT5psbKZATFNJWN5JhSSVNI4b6qSKhd+Mb0NRhJoIJxRpuaJjGcM0Zxpl+eWp
+ 11whpdLS1IMh8ZIjp++F7vWDuU5mn/PPQL/w+3UxG2INp4ZTRmgnPGwcCvH/5vKaQxvAcpoHcX
+ YvYeSvUkRfIa6NstIyBaeSZl388Z7w58hJ5J2WI1ltpZH3m1c6LM6+QjyDw2WqnI/vPr1s5GXB
+ a0rw1tFfcVpuWWep8n0a3vNNh6qDATLFQqpVpVOQdMNO1uAjavCuAfxiGNLcV7suls6HjeIfLu
+ v4CFeA/VNgBAAA=
+X-Change-ID: 20240618-concurrent-wb-97d62387f952
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        <quic_abhinavk@quicinc.com>, Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Simona Vetter <simona@ffwll.ch>,
+        Simona Vetter <simona.vetter@ffwll.ch>
+CC: <quic_ebharadw@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@chromium.org>,
+        =?utf-8?q?Ville_Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+        "Jessica
+ Zhang" <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.15-dev-1b0d6
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1738120865; l=7565;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=XU4u2es1ezNJOo7+PB0gE5PqAiINjSX03uyQMjBN7rs=;
+ b=UI15W8AUFERCSdROrFf9L4vkhzDCmviUho4UsxWBYJEUg5ovvHdcIjHjcltY37KyTxXGFny32
+ /JtW14WUtdIA/Emh+kBs3o1v8EJFLKkfcTQpSjrgqmD/ky28j73++vl
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: eooI556Ph9gcLsUZPiE9vthqN4N0r-V1
+X-Proofpoint-ORIG-GUID: eooI556Ph9gcLsUZPiE9vthqN4N0r-V1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 phishscore=0 suspectscore=0 mlxscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501290026
 
-On Tue, Jan 28, 2025 at 9:21=E2=80=AFPM Rob Clark <robdclark@gmail.com> wro=
-te:
->
-> On Tue, Jan 28, 2025 at 2:15=E2=80=AFPM Connor Abbott <cwabbott0@gmail.co=
-m> wrote:
-> >
-> > On Tue, Jan 28, 2025 at 5:10=E2=80=AFPM Rob Clark <robdclark@gmail.com>=
- wrote:
-> > >
-> > > On Tue, Jan 28, 2025 at 3:08=E2=80=AFAM Prakash Gupta <quic_guptap@qu=
-icinc.com> wrote:
-> > > >
-> > > > On Thu, Jan 23, 2025 at 03:14:16PM -0500, Connor Abbott wrote:
-> > > > > On Thu, Jan 23, 2025 at 2:26=E2=80=AFPM Prakash Gupta <quic_gupta=
-p@quicinc.com> wrote:
-> > > > > >
-> > > > > > On Thu, Jan 23, 2025 at 09:00:17AM -0500, Connor Abbott wrote:
-> > > > > > > On Thu, Jan 23, 2025 at 6:10=E2=80=AFAM Prakash Gupta <quic_g=
-uptap@quicinc.com> wrote:
-> > > > > > > >
-> > > > > > > > On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wro=
-te:
-> > > > > > > > The context would remain stalled till we write to CBn_RESUM=
-E. Which is done
-> > > > > > > > in qcom_adreno_smmu_resume_translation(). For a stalled con=
-text further
-> > > > > > > > transactions are not processed and we shouldn't see further=
- faults and
-> > > > > > > > or fault inerrupts. Do you observe faults with stalled cont=
-ext?
-> > > > > > >
-> > > > > > > Yes. I've observed that on MMU-500 writing RESUME before the =
-interrupt
-> > > > > > > has been cleared doesn't clear SS. This happened with v2 in t=
-he case
-> > > > > > > where there was already a devcoredump and drm/msm called
-> > > > > > > qcom_adreno_smmu_resume_translation() immediately from its fa=
-ult
-> > > > > > > handler, and we'd get a storm of unhandled interrupts until i=
-t was
-> > > > > > > disabled. Given that the architecture spec says we're suppose=
-d to
-> > > > > > > clear the interrupt first this may have been an attempt to "h=
-elp"
-> > > > > > > developers.
-> > > > > > >
-> > > > > >
-> > > > > > Just to clarify, present sequence is:
-> > > > > > 1. context fault with stall enable. FSR.SS set.
-> > > > > > 2. Report fault to client
-> > > > > > 3. resume/terminate stalled transaction
-> > > > > > 4. clear FSR
-> > > > > >
-> > > > > > At what point when you try #2->#3->#4 or #4->#2->#3 sequence, i=
-s FSR.SS
-> > > > > > cleared and interrupt storm is observed.
-> > > > >
-> > > > > With #2->#3->#4 FSR.SS is *not* cleared and there is a subsequent
-> > > > > interrupt storm with only FSR.SS asserted. With #4->#2->#3 there =
-is no
-> > > > > interrupt storm. From this we conclude that MMU-500 does not clea=
-r
-> > > > > FSR.SS unless #4 happens before #3.
-> > > > >
-> > > > Thanks Connor for clarification. I get your point now. I think it's
-> > > > expected interrupt storm with #2->#3->#4 sequence is expected.  Wit=
-h
-> > > > CONFIG_ARM_SMMU_QCOM_DEBUG enabled, context fault follows the seque=
-nce of
-> > > > #1->#2->#4->#3, which is spec recommended.
-> > > >
-> > > > so, common fault handler can be modified to follow the same sequenc=
-e, but I
-> > > > have concern regarding clearing FSR before reporting fault to clien=
-t.
-> > > > qcom_adreno_smmu_get_fault_info() is an example I gave but other cl=
-ient
-> > > > handler may have similar expecation of fault register not changed b=
-efore
-> > > > client fault handler is called.
-> > >
-> > > Simple solution would be to move the clearing of FSR to after the
-> > > fault is reported.  It doesn't really matter if it is before or after=
-,
-> > > as long as it happens before the irq handler returns, AFAIU.  And
-> > > drm/msm will collect the fault info from the irq handler.
-> >
-> > As I said in the earlier mail: "From this we conclude that MMU-500
-> > does not clear FSR.SS unless #4 happens before #3." #4 is clearing FSR
-> > and #3 is writing RESUME. So no, unfortunately it does actually matter
-> > and we get a storm of unhandled IRQs if we don't clear FSR first. Your
-> > solution is what v2 did and it didn't work.
->
-> So, just clear FSR also in the resume path
+DPU supports a single writeback session running concurrently with primary
+display when the CWB mux is configured properly. This series enables
+clone mode for DPU driver and adds support for programming the CWB mux
+in cases where the hardware has dedicated CWB pingpong blocks. Currently,
+the CWB hardware blocks have only been added to the SM8650
+hardware catalog and only DSI has been exposed as a possible_clone of WB.
 
-Then we'd run the risk of incorrectly accepting a second fault if it
-happens immediately after we resume. Not terrible for our use-case
-where we only really need the first fault to be accurate and we
-disable stall-on-fault afterwards, but if you ever leave it on then it
-would result in another interrupt storm.
+This changes are split into two parts:
 
-Connor
+The first part of the series will pull in Dmitry's patches to refactor
+the DPU resource manager to be based off of CRTC instead of encoder.
+This includes some changes (noted in the relevant commits) by me and
+Abhinav to fix some issues with getting the global state and refactoring
+the CDM allocation to work with Dmitry's changes.
 
->
-> BR,
-> -R
->
-> > Connor
-> >
-> > >
-> > > BR,
-> > > -R
-> > >
-> > > > > > The way CFIE disable is helping
-> > > > > > with current patch indicates write FSR is unstalling context an=
-d subsequent
-> > > > > > transactions are faulted.
-> > > > >
-> > > > > No, it does not indicate that. The interrupt storm happens even w=
-hen
-> > > > > there is exactly one context fault, and when the interrupt storm
-> > > > > happens *only* FSR.SS is asserted. I've verified this with debug
-> > > > > prints. Once more, MMU-500 will assert an interrupt when only FSR=
-.SS
-> > > > > is asserted. This has nothing to do with subsequent transactions.
-> > > > >
-> > > > > > Do you stop getting interrupt storm after write
-> > > > > > RESUME.
-> > > > >
-> > > > > Yes, as long as the write to RESUME happens after all other bits =
-in
-> > > > > FSR are cleared.
-> > > > >
-> > > > > > If you can mention your SCTLR configuration and FSR state in te=
-st
-> > > > > > sequence, it would be clearer.
-> > > > >
-> > > > > SCTLR has both HUPCF and CFCFG enabled.
-> > > > >
-> > > > > >
-> > > > > > An aside, If reducing delay between FSR and RESUME write helps =
-then both
-> > > > > > can be done as part of qcom_adreno_smmu_resume_translation(). T=
-his will
-> > > > > > follow spec recommendation and also make sure fault registers a=
-re not
-> > > > > > cleared before reporting fault to client.
-> > > > I think this sequence should address the issue you are observing.
-> > > >
-> > > > > >
-> > > > > > Thanks,
-> > > > > > Prakash
+The second part of the series will add support for CWB by doing the
+following:
+
+1) Add the CWB mux to the hardware catalog and clarify the pingpong
+   block index enum to specifiy which pingpong blocks are dedicated to
+   CWB only and which ones are general use pingpong blocks
+2) Add support for configuring the CWB mux via dpu_hw_cwb ops
+3) Add pending flush support for CWB
+4) Add support for validating clone mode in the DPU CRTC and setting up
+   CWB within the encoder
+5) Adjust the encoder trigger flush, trigger start, and kickoff order to
+   accomodate clone mode
+6) Adjust when the frame done timer is started for clone mode
+7) Define the possible clones for DPU encoders so that WB encoders can
+   be cloned by non-WB encoders
+
+The feature was tested on SM8650 using IGT's kms_writeback test with the
+following change [1] and dumping the writeback framebuffer when in clone
+mode. I haven't gotten the chance to test it on DP yet, but I've
+validated both single and dual LM on DSI.
+
+To test CWB with IGT, you'll need to apply this series [1] and run the
+following command to dump the writeback buffer:
+
+IGT_FRAME_DUMP_PATH=<dump path> FRAME_PNG_FILE_NAME=<file name> \
+./build/tests/kms_writeback -d [--run-subtest dump-valid-clones] \
+
+You can also do CRC validation by running this command:
+
+./build/tests/kms_writeback [--run-subtest dump-valid-clones]
+
+NOTE: this series depends on Dmitry's modeset fixes [2]
+
+[1] https://patchwork.freedesktop.org/series/137933/
+[2] https://patchwork.freedesktop.org/series/142905/
+
+---
+Changes in v5:
+- Rebased onto MSM modeset fixes series (Dmitry)
+- Reordered RM refactor patches to prevent breaking CI and to avoid
+  breaking when partially applied (Dmitry)
+- Switch CWB resource reservation to reserve CWB mux first (Dmitry)
+- Reworded commit messages to be clearer (Dmitry)
+- Change CDM check to fail only if both DP and WB outputs are
+  requesting the CDM block simultaneously (Dmitry)
+- Use helper to grab dsc config in dpu_encoder_update_topology
+- Link to v4: https://lore.kernel.org/r/20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com
+
+Changes in v4:
+- Rebased onto latest msm-next
+- Added kunit tests for framework changes
+- Skip valid clone check for encoders that don't have any possible clones set
+  (this is to avoid failing kunit tests, specifically the HDMI state helper tests)
+- Link to v3: https://lore.kernel.org/r/20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com
+
+Changes in v3:
+- Dropped support for CWB on DP connectors for now
+- Dropped unnecessary PINGPONG array in *_setup_cwb()
+- Add a check to make sure CWB and CDM aren't supported simultaneously
+  (Dmitry)
+- Document cwb_enabled checks in dpu_crtc_get_topology() (Dmitry)
+- Moved implementation of drm_crtc_in_clone_mode() to drm_crtc.c (Jani)
+- Dropped duplicate error message for reserving CWB resources (Dmitry)
+- Added notes in framework changes about posting a separate series to
+  add proper KUnit tests (Maxime)
+- Added commit message note addressing Sima's comment on handling
+  mode_changed (Dmitry)
+- Formatting fixes (Dmitry)
+- Added proper kerneldocs (Dmitry)
+- Renamed dpu_encoder_helper_get_cwb() -> *_get_cwb_mask() (Dmitry)
+- Capitalize all instances of "pingpong" in comments (Dmitry)
+- Link to v2: https://lore.kernel.org/r/20240924-concurrent-wb-v2-0-7849f900e863@quicinc.com
+
+Changes in v2:
+- Moved CWB hardware programming to its own dpu_hw_cwb abstraction
+  (Dmitry)
+- Reserve and get assigned CWB muxes using RM API and KMS global state
+  (Dmitry)
+- Dropped requirement to have only one CWB session at a time
+- Moved valid clone mode check to DRM framework (Dmitry and Ville)
+- Switch to default CWB tap point to LM as the DSPP
+- Dropped printing clone mode status in atomic state (Dmitry)
+- Call dpu_vbif_clear_errors() before dpu_encoder_kickoff() (Dmitry)
+- Squashed setup_input_ctrl() and setup_input_mode() into a single
+  dpu_hw_cwb op (Dmitry)
+- Moved function comment docs to correct place and fixed wording of
+  comments/commit messages (Dmitry)
+- Grabbed old CRTC state using proper drm_atomic_state API in
+  dpu_crtc_atomic_check() (Dmitry)
+- Split HW catalog changes of adding the CWB mux block and changing the
+  dedicated CWB pingpong indices into 2 separate commits (Dmitry)
+- Moved clearing the dpu_crtc_state.num_mixers to "drm/msm/dpu: fill
+  CRTC resources in dpu_crtc.c" (Dmitry)
+- Fixed alignment and other formatting issues (Dmitry)
+- Link to v1: https://lore.kernel.org/r/20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com
+
+---
+Dmitry Baryshkov (3):
+      drm/msm/dpu: fill CRTC resources in dpu_crtc.c
+      drm/msm/dpu: move resource allocation to CRTC
+      drm/msm/dpu: switch RM to use crtc_id rather than enc_id for allocation
+
+Jessica Zhang (11):
+      drm/msm/dpu: Add CWB to msm_display_topology
+      drm/msm/dpu: Require modeset if clone mode status changes
+      drm/msm/dpu: Fail atomic_check if multiple outputs request CDM block
+      drm/msm/dpu: Reserve resources for CWB
+      drm/msm/dpu: Configure CWB in writeback encoder
+      drm/msm/dpu: Support CWB in dpu_hw_ctl
+      drm/msm/dpu: Adjust writeback phys encoder setup for CWB
+      drm/msm/dpu: Start frame done timer after encoder kickoff
+      drm/msm/dpu: Skip trigger flush and start for CWB
+      drm/msm/dpu: Reorder encoder kickoff for CWB
+      drm/msm/dpu: Set possible clones for all encoders
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           | 229 +++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h           |   3 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 416 ++++++++++++---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  16 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |   7 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  16 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  30 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  15 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  27 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  13 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             | 293 ++++++++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |  14 +-
+ 13 files changed, 752 insertions(+), 329 deletions(-)
+---
+base-commit: 86313a9cd152330c634b25d826a281c6a002eb77
+change-id: 20240618-concurrent-wb-97d62387f952
+prerequisite-change-id: 20241209-abhinavk-modeset-fix-74864f1de08d:v3
+prerequisite-patch-id: a197a0cd4647cb189ea20a96583ea78d0c98b638
+prerequisite-patch-id: 112c8f1795cbed989beb02b72561854c0ccd59dd
+
+Best regards,
+-- 
+Jessica Zhang <quic_jesszhan@quicinc.com>
+
 
