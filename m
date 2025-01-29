@@ -1,63 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-46507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 967ADA21D7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:02:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E0DCA21DF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:39:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9E31162493
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 13:02:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CA2E165C02
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 13:39:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57AC3D517;
-	Wed, 29 Jan 2025 13:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9698C13D51E;
+	Wed, 29 Jan 2025 13:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZP5dGRTb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U4u/oFdO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463668479;
-	Wed, 29 Jan 2025 13:02:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D29086250
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 13:39:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738155777; cv=none; b=at7791Y1XkjpK5UFO/2EJJGfsQYGjgZ6+Q3NAqvTFcgUN3iO72GJx1ZNyzaZ4lNYT3QwH1LAQshdM18nmHD6/48flM0TDm1jsUn5PV5PP9WzeRh7GlsihWdYq0ypZoDW9Mc8hj49VzbSyYeVDiZW23UsVJC1moer+AibU9N0wh4=
+	t=1738157965; cv=none; b=DcTk6NNaPN7ZldOQQSe5aBKcpi/ZNg/GukUmpH7QyNy0qFxlYrF1Pl0GU7JDeJFo1tO8CxPDuSZRGa5oOMr/cJXou/aC1GXom/y8Oj5Y3R5LxwmAuaufesgP0eSDUQXvKTTxtzTdSWc8LF/CJKuKgr2MEi1xx4TQFJP7qrJ4hU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738155777; c=relaxed/simple;
-	bh=nei847z82ZvA5YDY9HBxfC05+SnORikp8oHJF/fm2G8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nvPkqSikoS2UYw9QKMZRqsgcYQFm/nM40ZAONZmqPCK2lGZhikjzDc5FV8pJq7PFLOgYXnmRyDwpR9N1kDseXOr8geNsUY1XNEtFxRT1TfTCzAc4sPzIYTyf8/ZyvlG89mAe3F7HCIbVBz3GSTGXLUQ8y97wivQ21/l/ySNQq9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZP5dGRTb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50T4WeQd018791;
-	Wed, 29 Jan 2025 13:02:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ftSzZxQWxFuySK8miUP6zEBfv5FfrAKGgH7tosFe5+Q=; b=ZP5dGRTbHvz+1l1a
-	EIyfBpPA1uW8K9Yz8EKj1eXcqGmyxga6HnYaFPlImzMoJlbufWM+HOl972zOdbSJ
-	fOi052peQIgEhFUealWbyvN6N/WmgQRJO8LOYFsz1kKILaHgAs0z4yQduDaeTJ/7
-	qc4FlJupmGqdZ9wdqbwfIJSiIvkSAWrPGDOo5t1VGeXkWXFNxfwUBRArjSLwWEBz
-	qu8k2iirP75NBl0ivX4Amwu4z2CLVKkjoXAcGdaUYJM7tpLNN9eFBqVjqlLWXSVJ
-	A9DErxJ/dCSo6KIO0DNVWTY9ay+lDeKdPmoNvpIYIbo3SOXWfJTk7VbE/GCBeUAu
-	4cVpUQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44fdd8ru64-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Jan 2025 13:02:32 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50TD2VPj004680
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Jan 2025 13:02:31 GMT
-Received: from [10.133.33.43] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 Jan
- 2025 05:02:25 -0800
-Message-ID: <29bbb602-61fd-44e1-afb5-f158c8d61c97@quicinc.com>
-Date: Wed, 29 Jan 2025 21:02:22 +0800
+	s=arc-20240116; t=1738157965; c=relaxed/simple;
+	bh=CDcRRXN0ifiuQSEQoQDUdUPg9kOvhCH+/uhLp/TkVuI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=jD7vxoxbZPjFZxqoxUZMQKcn2oO5exfOVxFPedQ6NR6KVJpQCccpFAD95gD1Jxfj0gqDokOAlVAAWqgBLF+1raQA61laNz3TXiKgPLk7PDs/26j3R9Iujm+09/NJIdsZwRJ0dXWqo7m9LtH5nzHTc8Ee8i4mHym/Ki+kHP5sc7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U4u/oFdO; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43634b570c1so48912285e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 05:39:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738157962; x=1738762762; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Y+K0sidwnuxavvy1AkJKNcWdrNuKvpIiQ4qgOISO6jE=;
+        b=U4u/oFdOcU3ycHMXhF9GP21Cx82wSVvJQVoRDBMAhyFSOmJLIL40dhZZlVMLrwZWfV
+         OHxxNp/MYmQaLQIRQ/tXK3hvkWxC4b6zfbLqoOG7KP9IN4p7PWc4ThKGTwRqAdNlDoyo
+         25XVLJiapWWyFcHnXNfVxHGF/ZhdUCUXPj6hfsQYB0YkosxX4PrMPMrCvSgGc+tRrGBa
+         Ci2H1X0e+wWYrOI+hPfRTnjugZVYqxVDOrBqG1fcLW5s1JYKaM7ETur3NJnRYdZQjHGR
+         0ymbm5TRHoP4fJtSzRAm2Qz0XH6aVJeLCq5YptiCNLlcuRJg+KAI6RRJxsunM0xRjRAc
+         3pRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738157962; x=1738762762;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Y+K0sidwnuxavvy1AkJKNcWdrNuKvpIiQ4qgOISO6jE=;
+        b=FBkw+9mS6RHbLs+CAjTVMMfPOicrEV7wwXDoth21UUlQnYaJ73+kyNhYIYVHQC0RBI
+         3pN//3aecYMsti5lDDMX4SroN83yCtc2wNORr0cZg64Iqprls5LOza+/wimxZMrMv9l2
+         qDF4dtKBFMtMc5EA3gnqqd37frsc9eOqADiQttouH1CTkQKAluXmDQmNIPiSdcobsPR2
+         49JE8pRdFB4JFzw8bEN/VlAilEipY83+TJEkM7+En4lc9vzuzxlirMXPV77lAeBDf3aD
+         d8PX35B3VoliVtQO7LLSkh15iwdfOKfofUhPXQWv9DDmrb1Nl6yYz7O1z6s/CjJs/xRK
+         BnyA==
+X-Gm-Message-State: AOJu0YxyB9JEMljs2MViM88WSnc/p4WdFuGi52d3QtJY7RMEN2XLzL0k
+	QWKIOJx54mG3MBSPbbe/1XET7H0z/2SHqe3ebz5WzwFC43gMIc4AOybcmdjFGUY=
+X-Gm-Gg: ASbGncsAhYzHQkHyMWeqN1kCT/65qcTqSjgmzvqyjpMqHFHDMR6F6bUBeqokHvJFoRP
+	SaT3M+76EkiaDCdxpUBaYQYTTrLe8+3BG54QRWreWKJ4UeoEX9r6L46hFjMXKAgdcAY0OOslqs9
+	TICjtXpr5JpPYFpHFHF5zhFaSxCAlBQ3obRZBvBZKMcy3Vw+uDEX4HI5/atvIRATp8LOgju4yl2
+	tbdPws9qcDZWJri1tdMqA55B93FLxNEU79Sfu+keMLSoUKORYdB5hL4u3WlFNQfTyNG8nBo0TVX
+	Yz5tcatcqJOkQmNCVbKbS/nzAOAHdOAvM11wWIERyd1p7oseUi10x34+rCFhGtSP1otK
+X-Google-Smtp-Source: AGHT+IEhSvgjfruwhcex+wivH//fD/wuaybIS2/hD16jD5+lAolzYLPk996GstOlH4QsZAZmUZU1Kg==
+X-Received: by 2002:a5d:47ab:0:b0:38a:87cc:fb2c with SMTP id ffacd0b85a97d-38c5195f506mr2941224f8f.18.1738157961709;
+        Wed, 29 Jan 2025 05:39:21 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:b25e:a614:863b:566e? ([2a01:e0a:982:cbb0:b25e:a614:863b:566e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1c3f8asm16757481f8f.86.2025.01.29.05.39.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jan 2025 05:39:21 -0800 (PST)
+Message-ID: <df4baaa2-0c31-4ecd-9c48-9a2cbf1ece4d@linaro.org>
+Date: Wed, 29 Jan 2025 14:39:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,210 +82,267 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 5/6] Coresight: Add Coresight TMC Control Unit driver
-To: James Clark <james.clark@linaro.org>
-CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao
-	<quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-References: <20250124072537.1801030-1-quic_jiegan@quicinc.com>
- <20250124072537.1801030-6-quic_jiegan@quicinc.com>
- <44bd0d5e-a232-49c3-ba2f-e63e2f2c99be@linaro.org>
- <b3d9e4f0-cca8-45a5-a5b7-239cdeed2751@quicinc.com>
- <070c70ac-c76b-4d1a-acb6-d29cc85967b9@linaro.org>
-Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <070c70ac-c76b-4d1a-acb6-d29cc85967b9@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RO6md8-g_kwg4T9YiqP0oydXCedLsqFP
-X-Proofpoint-GUID: RO6md8-g_kwg4T9YiqP0oydXCedLsqFP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-29_01,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- clxscore=1015 spamscore=0 phishscore=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=999 priorityscore=1501 impostorscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501290106
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] arm64: dts: qcom: add all 7 coresight ETE nodes
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250129-topic-sm8650-upstream-add-all-coresight-cpus-v1-1-96996d37df8e@linaro.org>
+ <D7EJURP1JU6R.1TNVVAGA939RR@fairphone.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <D7EJURP1JU6R.1TNVVAGA939RR@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 29/01/2025 13:18, Luca Weiss wrote:
+> Hi Neil,
+> 
+> On Wed Jan 29, 2025 at 10:54 AM CET, Neil Armstrong wrote:
+>> Only CPU0 Embedded Trace Extension (ETE) was added, but there's one
+>> for all 7 CPUs, so add the missing ones.
+>>
+>> Fixes: 256e6937e48a ("arm64: dts: qcom: sm8650: Add coresight nodes")
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> The subject line is missing "sm8650"
 
+Damn, thx, I'll fix for v2
 
-On 1/29/2025 6:35 PM, James Clark wrote:
-> 
-> 
-> On 29/01/2025 12:46 am, Jie Gan wrote:
->>
->>
->> On 1/28/2025 7:55 PM, James Clark wrote:
->>>
->>>
->>> On 24/01/2025 7:25 am, Jie Gan wrote:
->>>> The Coresight TMC Control Unit hosts miscellaneous configuration 
->>>> registers
->>>> which control various features related to TMC ETR sink.
->>>>
->>>> Based on the trace ID, which is programmed in the related CTCU ATID
->>>> register of a specific ETR, trace data with that trace ID gets into
->>>> the ETR buffer, while other trace data gets dropped.
->>>>
->>>> Enabling source device sets one bit of the ATID register based on
->>>> source device's trace ID.
->>>> Disabling source device resets the bit according to the source
->>>> device's trace ID.
->>>>
->>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->>>> ---
->>>>   drivers/hwtracing/coresight/Kconfig          |  12 +
->>>>   drivers/hwtracing/coresight/Makefile         |   1 +
->>>>   drivers/hwtracing/coresight/coresight-ctcu.c | 276 +++++++++++++++ 
->>>> ++++
->>>>   drivers/hwtracing/coresight/coresight-ctcu.h |  30 ++
->>>>   include/linux/coresight.h                    |   3 +-
->>>>   5 files changed, 321 insertions(+), 1 deletion(-)
->>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
->>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
->>>  >
->>>
->>> [...]
->>>
->>>> +/*
->>>> + * ctcu_set_etr_traceid: Retrieve the ATID offset and trace ID.
->>>> + *
->>>> + * Returns 0 indicates success. None-zero result means failure.
->>>> + */
->>>> +static int ctcu_set_etr_traceid(struct coresight_device *csdev, 
->>>> struct coresight_path *cs_path,
->>>> +                bool enable)
->>>> +{
->>>> +    struct coresight_device *sink = coresight_get_sink(cs_path->path);
->>>> +    struct ctcu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->>>> +    u8 trace_id = cs_path->trace_id;
->>>> +    int port_num;
->>>> +
->>>> +    if ((sink == NULL) || !IS_VALID_CS_TRACE_ID(trace_id) || 
->>>> IS_ERR_OR_NULL(drvdata)) {
->>>> +        dev_err(&csdev->dev, "Invalid parameters\n");
->>>> +        return -EINVAL;
->>>> +    }
->>>> +
->>>> +    port_num = ctcu_get_active_port(sink, csdev);
->>>> +    if (port_num < 0)
->>>> +        return -EINVAL;
->>>> +
->>>> +    /*
->>>> +     * Skip the disable session if more than one TPDM device that
->>>> +     * connected to the same TPDA device has been enabled.
->>>> +     */
->>>> +    if (enable)
->>>> +        atomic_inc(&drvdata->traceid_refcnt[port_num][trace_id]);
->>>> +    else {
->>>> +        if (atomic_dec_return(&drvdata->traceid_refcnt[port_num] 
->>>> [trace_id]) > 0) {
->>>> +            dev_dbg(&csdev->dev, "Skip the disable session\n");
->>>> +            return 0;
->>>> +        }
->>>> +    }
->>>> +
->>>> +    dev_dbg(&csdev->dev, "traceid is %d\n", cs_path->trace_id);
->>>> +
->>>> +    return __ctcu_set_etr_traceid(csdev, trace_id, port_num, enable);
->>>
->>> Hi Jie,
->>>
->>> Using atomic_dec_return() here doesn't prevent 
->>> __ctcu_set_etr_traceid() from running concurrent enable and disables. 
->>> Once you pass the atomic_dec_return() a second call to enable it will 
->>> mess it up.
->>>
->>> I think you need a spinlock around the whole thing and then the 
->>> refcounts don't need to be atomics.
->>>
->> Hi, James
->> Thanks for comment. I may not fully tested my codes here. What I was 
->> thinking is there's no way the refcnt could become a negative number 
->> under current framework. So I just added spinlock in 
->> __ctcu_set_etr_traceid() to ensure concurrent sessions correctly 
->> manipulate the register.
->>
->> As the trace_id related to the bit of the ATID register, I think the 
->> concurrent processes are working fine with spinlock around read/write 
->> register.
->>
->> I may not fully got your point here. Please help me to correct it.
->>
->> Thanks,
->> Jie
->>
->>
-> 
-> No it can't become negative, but the refcount can be a different state 
-> to the one that was actually written:
-> 
-> 
->    CPU0                             CPU1
->    ----                             ----
->    ctcu_set_etr_traceid(enable)
->                                     ctcu_set_etr_traceid(disable)
->    atomic_inc()
->    recount == 1
->                                     atomic_dec()
->                                     recount == 0
-> 
->                                     __ctcu_set_etr_traceid(disable)
->                                     Lock and write disable state to
->                                     device
-> 
->    __ctcu_set_etr_traceid(enable)
->    Lock and write enable state to
->    device
-> 
-> 
-> As you can see this leaves the device in an enabled state but the 
-> refcount is 0.
-Yes, you are right. I didnt consider this scenario. We definitely need 
-spinlock here.
+Neil
 
 > 
-> This is also quite large if you use atomic types:
+> Regards
+> Luca
 > 
->   /* refcnt for each traceid of each sink */
->   atomic_t traceid_refcnt[ATID_MAX_NUM][CORESIGHT_TRACE_ID_RES_TOP];
-> 
-> Presumably you can't have the refcount for each ID be higher than the 
-> max number of TPDMs connected? If you make the locked area a bit wider 
-> you don't need atomic types and also solve the above problem. So you 
-> could do u8, or DECLARE_BITMAP() and bitmap_read() etc to read 3 bit 
-> values. Or however wide it needs to be.
-The original purpose of using atomic here is trying to narrow the locked 
-area.
-
-I think u8 is ok here.
-u8 traceid_refcnt[ATID_MAX_NUM][CORESIGHT_TRACE_ID_RES_TOP] will cost 
-224 bytes, I think it's acceptable here.
-
-Thanks,
-Jie
-
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 163 ++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 161 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> index 86684cb9a9325618ddb74458621cf4bbdc1cc0d1..d925d5e2c8182d522dd5b8e1fa0e253f5de2f7a7 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> @@ -365,7 +365,7 @@ cluster_sleep_1: cluster-sleep-1 {
+>>   		};
+>>   	};
+>>   
+>> -	ete0 {
+>> +	ete-0 {
+>>   		compatible = "arm,embedded-trace-extension";
+>>   
+>>   		cpu = <&cpu0>;
+>> @@ -379,15 +379,174 @@ ete0_out_funnel_ete: endpoint {
+>>   		};
+>>   	};
+>>   
+>> +	ete-1 {
+>> +		compatible = "arm,embedded-trace-extension";
+>> +
+>> +		cpu = <&cpu1>;
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				ete1_out_funnel_ete: endpoint {
+>> +					remote-endpoint = <&funnel_ete_in_ete1>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	ete-2 {
+>> +		compatible = "arm,embedded-trace-extension";
+>> +
+>> +		cpu = <&cpu2>;
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				ete2_out_funnel_ete: endpoint {
+>> +					remote-endpoint = <&funnel_ete_in_ete2>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	ete-3 {
+>> +		compatible = "arm,embedded-trace-extension";
+>> +
+>> +		cpu = <&cpu3>;
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				ete3_out_funnel_ete: endpoint {
+>> +					remote-endpoint = <&funnel_ete_in_ete3>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	ete-4 {
+>> +		compatible = "arm,embedded-trace-extension";
+>> +
+>> +		cpu = <&cpu4>;
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				ete4_out_funnel_ete: endpoint {
+>> +					remote-endpoint = <&funnel_ete_in_ete4>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	ete-5 {
+>> +		compatible = "arm,embedded-trace-extension";
+>> +
+>> +		cpu = <&cpu5>;
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				ete5_out_funnel_ete: endpoint {
+>> +					remote-endpoint = <&funnel_ete_in_ete5>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	ete-6 {
+>> +		compatible = "arm,embedded-trace-extension";
+>> +
+>> +		cpu = <&cpu6>;
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				ete6_out_funnel_ete: endpoint {
+>> +					remote-endpoint = <&funnel_ete_in_ete6>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	ete-7 {
+>> +		compatible = "arm,embedded-trace-extension";
+>> +
+>> +		cpu = <&cpu7>;
+>> +
+>> +		out-ports {
+>> +			port {
+>> +				ete7_out_funnel_ete: endpoint {
+>> +					remote-endpoint = <&funnel_ete_in_ete7>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>>   	funnel-ete {
+>>   		compatible = "arm,coresight-static-funnel";
+>>   
+>>   		in-ports {
+>> -			port {
+>> +			#address-cells = <1>;
+>> +			#size-cells = <0>;
+>> +
+>> +			port@0 {
+>> +				reg = <0>;
+>> +
+>>   				funnel_ete_in_ete0: endpoint {
+>>   					remote-endpoint = <&ete0_out_funnel_ete>;
+>>   				};
+>>   			};
+>> +
+>> +			port@1 {
+>> +				reg = <1>;
+>> +
+>> +				funnel_ete_in_ete1: endpoint {
+>> +					remote-endpoint = <&ete1_out_funnel_ete>;
+>> +				};
+>> +			};
+>> +
+>> +			port@2 {
+>> +				reg = <2>;
+>> +
+>> +				funnel_ete_in_ete2: endpoint {
+>> +					remote-endpoint = <&ete2_out_funnel_ete>;
+>> +				};
+>> +			};
+>> +
+>> +			port@3 {
+>> +				reg = <3>;
+>> +
+>> +				funnel_ete_in_ete3: endpoint {
+>> +					remote-endpoint = <&ete3_out_funnel_ete>;
+>> +				};
+>> +			};
+>> +
+>> +			port@4 {
+>> +				reg = <4>;
+>> +
+>> +				funnel_ete_in_ete4: endpoint {
+>> +					remote-endpoint = <&ete4_out_funnel_ete>;
+>> +				};
+>> +			};
+>> +
+>> +			port@5 {
+>> +				reg = <5>;
+>> +
+>> +				funnel_ete_in_ete5: endpoint {
+>> +					remote-endpoint = <&ete5_out_funnel_ete>;
+>> +				};
+>> +			};
+>> +
+>> +			port@6 {
+>> +				reg = <6>;
+>> +
+>> +				funnel_ete_in_ete6: endpoint {
+>> +					remote-endpoint = <&ete6_out_funnel_ete>;
+>> +				};
+>> +			};
+>> +
+>> +			port@7 {
+>> +				reg = <7>;
+>> +
+>> +				funnel_ete_in_ete7: endpoint {
+>> +					remote-endpoint = <&ete7_out_funnel_ete>;
+>> +				};
+>> +			};
+>>   		};
+>>   
+>>   		out-ports {
+>>
+>> ---
+>> base-commit: da7e6047a6264af16d2cb82bed9b6caa33eaf56a
+>> change-id: 20250129-topic-sm8650-upstream-add-all-coresight-cpus-a3418606b354
+>>
+>> Best regards,
 > 
 
 
