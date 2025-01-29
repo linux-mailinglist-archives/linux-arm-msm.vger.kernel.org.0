@@ -1,80 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-46518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CB6CA21F9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:50:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E42E6A21FC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:54:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D8ACE7A04A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:49:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1084D3A329D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:54:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCCF9191F95;
-	Wed, 29 Jan 2025 14:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19391167DAC;
+	Wed, 29 Jan 2025 14:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IBeWAfYP"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="Kr81Qjcg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine.igalia.com [178.60.130.6])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EC9DDCD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 14:49:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C007E9;
+	Wed, 29 Jan 2025 14:54:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.60.130.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738162201; cv=none; b=WGMu8WeWuLZVbm5OsleWIA+OvnFERGkViYYoINM28UltP3ZyOKGhlbpaCtcXyPVEcbnnb3AytKwJImKYbaoipy0sDS647l/dKf3i12EjYcZfAgyx5YSjDZhJBrdPw5OjmZFa57HvZvg0R4JAxWm5KRr9ijSJqyi13Ma29G/6hT0=
+	t=1738162491; cv=none; b=oxhRaRPKh37JXsBg0lyxsQixsX1AJFv0S1sjK1Ojwx6pCbBZ3x2BF1B3OC8G18OAjfq1EqbMQPoxmZ8ZOMqxoOKZGOYVz5gZ07ByH1xkxF3y8Mkdc6LJHVeimQUmrs/+gx/wgJwCzBbOpIX8JKJ0cAdNEPSNQyo3uu42uNXcXTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738162201; c=relaxed/simple;
-	bh=lLLcH3XazQrtZsg1ZCyMplitTfwlmomyxcM2IHoUijs=;
+	s=arc-20240116; t=1738162491; c=relaxed/simple;
+	bh=eLUdR+qMoTgqI7AboQcdV13FxEITJ7IEW70DFv2JrUM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bauuOPbMlXhYr4gvCZpOzLmtVBMQqeBVlf5c87kqknUY8OVg9WzSJheGtor0S55G9Qsz8li9cVKvRgqVVgk1jKxX+0PASBEVaiKXRu+y/o01DDyAdfVhzHTMllFnte8kF/t/UMLsogkEEqvISffwgKXm0ydeO2GcAwOcCx6YGdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IBeWAfYP; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43616c12d72so10626165e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 06:49:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738162198; x=1738766998; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=V/n482OJOD7YjQStqqcw/7H8YB/93aB4xiCe5kU4AIA=;
-        b=IBeWAfYPDCnbTHkONQrQZNxqzvQCNZRd1DuyifX1ZNLukhxU3EhF55g/860LT5a8WS
-         yjd/Qe6OUVHq9vxj87EpLY85ddb/+gAGO0vkh4ZBUmGXbrji+fRQtPH3LpipxQu3DDgB
-         xhzOFUozJIQdVdkgrjByyvWyhnBpv7KwOvs+d5b7MZgt+PZJLHEgI+pyDebIJUdP1d1P
-         DdXHyhlVfPZjWF/O/Yt2Moe9P1CywCZ3IU+IusWuNh4ksruXDPYv3xk+GHOeZHyJfawp
-         I/IBll/VIRU5Jufgtp/bL+5evr6wumZRKGUSHFu49ZAM+RvYgPZanGWyircc9PHkAJyV
-         AFLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738162198; x=1738766998;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V/n482OJOD7YjQStqqcw/7H8YB/93aB4xiCe5kU4AIA=;
-        b=maZNyKyr73vwJL+4MN1lRs2j/eT3OFM1K9STkOEnjbN4LzGXCs8yVevLSWaVdz+nLG
-         HQ7S+xI+gtx05tKU4u+OCb9sxI2afDRQx+W6Umpk9syORpC89vod91zKYjX86/h6psJV
-         MY2KimzT/6JVsKmTGSDDNaRAUcYDU7K+D2EEq2Pd1kebuQ/Qn0/i0M9EwRepK4Z6inJ2
-         LvZ8sy/L1iGp9GfR1JQN3XLCcAIzVKc4DVFvzty2vo+NWUgzzIEFjD2MnqFcbCEcKkTa
-         R6yvaYqpqpaOu4nh/UZRCEtTVFIIdrV4Z7RQUlBhiyeFtyZu6s258BTjIC82r4wbdtPs
-         oSEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWzBu9GYzcgPwp7IzwjondKg/DYM299xZ6NPUpVcTDqoAhFF6V1+aQbOMIaLFNPxk/Cv2m771rf/TvyZfuF@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMksy1YsddSH4cceP4hJAn0eVqB+uWPT0jr6UMIB42Jk9Iv1RL
-	4OtXXBpEC7ubAs4WUoEMy8MCAwsU/fuisa/a6Kg6jx9nCXJAVNLii8MPkPYioYo=
-X-Gm-Gg: ASbGncu+9zp0BHHrZyb8mWZ0X3J0H+Hn+p2h1JDLgSIXKY4zZ7faLzIpbUBJPrwDUrz
-	FcDIvoTq4XSUx8zyLKGHlSgfU28DzGopt8HRaf7zgOUW/FCVpzgTPQTT+bu/0YbWYb0gh89XTD8
-	n0RJyiyKKJTzWFSO7c0qNg+XMCrUBtvRU8paPPlehbxJfuTgDcnpSyWzK/CsT9KvqIDCWkydBK9
-	K8ZbHGXFAsUHmJ1cMhX9GmI1/2yCmrQW8EPUvGUxEcQoMw1XprA1Xgx0cGXA/e3yiyM45TRFxoB
-	BGZoK/KXVBCb5ROHxX6owe9AAUewsvcBOw==
-X-Google-Smtp-Source: AGHT+IHDci9L/6AsBEeiuG6BZgyEOBnEPboPoD7HxDCRuBXGZTBAXC+3TfunwokyNjk3QSqkQJSPhg==
-X-Received: by 2002:a05:600c:19d2:b0:42c:bfd6:9d2f with SMTP id 5b1f17b1804b1-438dc3a3ea6mr10969925e9.1.1738162198082;
-        Wed, 29 Jan 2025 06:49:58 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.98])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1bb0c9sm17494486f8f.78.2025.01.29.06.49.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2025 06:49:57 -0800 (PST)
-Message-ID: <4a27c3f2-6b36-42bf-b323-2cfb0014ca58@linaro.org>
-Date: Wed, 29 Jan 2025 15:49:55 +0100
+	 In-Reply-To:Content-Type; b=APlEtMdjAvSr9tC+GFogCa0diVP3a1tXWX5Ut7FtWDOf4/aL4eeJbR4BNoGCjRPq2XVxVzMI3LfbkCPxt9W3DF5CCEOMpsGFnZbHWtX5zN3Tu1sgCRhTvAsv8q8ncI6Jv+5cmt8GX20cHETIiNEj5QhWS5vyEFF8O79mu5+1HhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Kr81Qjcg; arc=none smtp.client-ip=178.60.130.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=ATdtI6Dd3DoUOYZ07wKSkHu7Owxf4k55Pq91Q66IojI=; b=Kr81QjcgK6UcWQra5TY/YKkye5
+	gxtg82HR7U34vK8NxfC9/BT4IxNPjjQrc0uhiNUyrv0fdLE6HpwrjFwtUGF59YB7uKNYOrpRl9ZyT
+	Xd2DpdST9ZiJTU/CEeBz7h0AH6hQIqCYNGVp9icPhR3guTEkX5MjRFUm/YJWgYhRTUr6z/SMnD9Bd
+	RzVpevEoWEkTluuTEn14W1AImKGAewSb6JZ9qf8zllJ3pJt+gE5YPZEx4/AS8z399cyCPRgG8cHRt
+	neJZKUOvfdu4n9a4/09nP5Oa/ihfliclagdSPdhu85WE6FMofNcFJ6+3ksV+0/h7FcMLziY/Y4AQV
+	GCU5uudg==;
+Received: from [187.36.213.55] (helo=[192.168.1.103])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1td9S5-000ck3-Qz; Wed, 29 Jan 2025 15:54:07 +0100
+Message-ID: <d3ab5057-22fe-43d5-baea-4dec091fb303@igalia.com>
+Date: Wed, 29 Jan 2025 11:53:47 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,97 +56,230 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] drm/msm/dsi/phy: Program clock inverters in correct
- register
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+Subject: Re: [PATCH v2] drm/sched: Use struct for drm_sched_init() params
+To: phasta@kernel.org, Alex Deucher <alexander.deucher@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>,
+ Russell King <linux+etnaviv@armlinux.org.uk>,
+ Christian Gmeiner <christian.gmeiner@gmail.com>,
+ Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
+ Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250129115504.40080-1-krzysztof.kozlowski@linaro.org>
- <kdnbhw2ng2kuhm2ynlmtxz4bnq6j243ktqwfvr4mgrr6w5uy7d@4j6cictf4tpu>
+ Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
+ Danilo Krummrich <dakr@redhat.com>,
+ Boris Brezillon <boris.brezillon@collabora.com>,
+ Rob Herring <robh@kernel.org>, Steven Price <steven.price@arm.com>,
+ Liviu Dudau <liviu.dudau@arm.com>, Matthew Brost <matthew.brost@intel.com>,
+ Melissa Wen <mwen@igalia.com>, Lucas De Marchi <lucas.demarchi@intel.com>,
+ =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Sunil Khatri <sunil.khatri@amd.com>,
+ Lijo Lazar <lijo.lazar@amd.com>, Hawking Zhang <Hawking.Zhang@amd.com>,
+ Mario Limonciello <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>,
+ Yunxiang Li <Yunxiang.Li@amd.com>
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, etnaviv@lists.freedesktop.org,
+ lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org
+References: <20250128142927.103290-2-phasta@kernel.org>
+ <f8c9a876-4616-454d-a816-bb3c90960245@igalia.com>
+ <c5c3791df54b7ae4ba1a31159a4beda0b44d00cf.camel@mailbox.org>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <kdnbhw2ng2kuhm2ynlmtxz4bnq6j243ktqwfvr4mgrr6w5uy7d@4j6cictf4tpu>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>
+In-Reply-To: <c5c3791df54b7ae4ba1a31159a4beda0b44d00cf.camel@mailbox.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 29/01/2025 15:31, Dmitry Baryshkov wrote:
-> On Wed, Jan 29, 2025 at 12:55:04PM +0100, Krzysztof Kozlowski wrote:
->> Since SM8250 all downstream sources program clock inverters in
->> PLL_CLOCK_INVERTERS_1 register and leave the PLL_CLOCK_INVERTERS as
->> reset value (0x0).  The most recent Hardware Programming Guide for 3 nm,
->> 4 nm, 5 nm and 7 nm PHYs also mention PLL_CLOCK_INVERTERS_1.
+Hi Philipp,
+
+On 29/01/25 09:39, Philipp Stanner wrote:
+> On Wed, 2025-01-29 at 07:53 -0300, Maíra Canal wrote:
+>> Hi Philipp,
 >>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> On 28/01/25 11:29, Philipp Stanner wrote:
+>>> drm_sched_init() has a great many parameters and upcoming new
+>>> functionality for the scheduler might add even more. Generally, the
+>>> great number of parameters reduces readability and has already
+>>> caused
+>>> one missnaming in:
+>>>
+>>> commit 6f1cacf4eba7 ("drm/nouveau: Improve variable name in
+>>> nouveau_sched_init()").
+>>>
+>>> Introduce a new struct for the scheduler init parameters and port
+>>> all
+>>> users.
+>>>
+>>> Signed-off-by: Philipp Stanner <phasta@kernel.org>
+>>> ---
+>>> Changes in v2:
+>>>     - Point out that the hang-limit is deprecated. (Christian)
+>>>     - Initialize the structs to 0 at declaration. (Planet Earth)
+>>>     - Don't set stuff explicitly to 0 / NULL. (Tvrtko)
+>>>     - Make the structs const where possible. (Boris)
+>>>     - v3d: Use just 1, universal, function for sched-init. (Maíra)
+>>> ---
+>>>    drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 18 ++++--
+>>>    drivers/gpu/drm/etnaviv/etnaviv_sched.c    | 20 +++----
+>>>    drivers/gpu/drm/imagination/pvr_queue.c    | 18 ++++--
+>>>    drivers/gpu/drm/lima/lima_sched.c          | 16 +++--
+>>>    drivers/gpu/drm/msm/msm_ringbuffer.c       | 17 +++---
+>>>    drivers/gpu/drm/nouveau/nouveau_sched.c    | 15 +++--
+>>>    drivers/gpu/drm/panfrost/panfrost_job.c    | 20 ++++---
+>>>    drivers/gpu/drm/panthor/panthor_mmu.c      | 16 +++--
+>>>    drivers/gpu/drm/panthor/panthor_sched.c    | 29 +++++----
+>>>    drivers/gpu/drm/scheduler/sched_main.c     | 50 ++++++----------
+>>>    drivers/gpu/drm/v3d/v3d_sched.c            | 68 +++++++++--------
+>>> -----
+>>>    drivers/gpu/drm/xe/xe_execlist.c           | 16 +++--
+>>>    drivers/gpu/drm/xe/xe_gpu_scheduler.c      | 17 +++++-
+>>>    include/drm/gpu_scheduler.h                | 37 ++++++++++--
+>>>    14 files changed, 206 insertions(+), 151 deletions(-)
+>>>
 >>
->> ---
+>> [...]
 >>
->> Not tested except my work-in-progress oon SM8750. Not sure what is the
->> impact, so also no Fixes tag.
+>>> diff --git a/drivers/gpu/drm/panthor/panthor_sched.c
+>>> b/drivers/gpu/drm/panthor/panthor_sched.c
+>>> index 5844a7f639e0..44713cfdcd74 100644
+>>> --- a/drivers/gpu/drm/panthor/panthor_sched.c
+>>> +++ b/drivers/gpu/drm/panthor/panthor_sched.c
+>>> @@ -3284,6 +3284,22 @@ static struct panthor_queue *
+>>>    group_create_queue(struct panthor_group *group,
+>>>    		   const struct drm_panthor_queue_create *args)
+>>>    {
+>>> +	const struct drm_sched_init_args sched_args = {
+>>> +		.ops = &panthor_queue_sched_ops,
+>>> +		.submit_wq = group->ptdev->scheduler->wq,
+>>> +		.num_rqs = 1,
+>>> +		/*
+>>> +		 * The credit limit argument tells us the total
+>>> number of
+>>> +		 * instructions across all CS slots in the
+>>> ringbuffer, with
+>>> +		 * some jobs requiring twice as many as others,
+>>> depending on
+>>> +		 * their profiling status.
+>>> +		 */
+>>> +		.credit_limit = args->ringbuf_size / sizeof(u64),
+>>> +		.timeout = msecs_to_jiffies(JOB_TIMEOUT_MS),
+>>> +		.timeout_wq = group->ptdev->reset.wq,
+>>> +		.name = "panthor-queue",
+>>> +		.dev = group->ptdev->base.dev
+>>> +	};
+>>>    	struct drm_gpu_scheduler *drm_sched;
+>>>    	struct panthor_queue *queue;
+>>>    	int ret;
+>>> @@ -3354,17 +3370,8 @@ group_create_queue(struct panthor_group
+>>> *group,
+>>>    	if (ret)
+>>>    		goto err_free_queue;
+>>>    
+>>> -	/*
+>>> -	 * Credit limit argument tells us the total number of
+>>> instructions
+>>> -	 * across all CS slots in the ringbuffer, with some jobs
+>>> requiring
+>>> -	 * twice as many as others, depending on their profiling
+>>> status.
+>>> -	 */
+>>> -	ret = drm_sched_init(&queue->scheduler,
+>>> &panthor_queue_sched_ops,
+>>> -			     group->ptdev->scheduler->wq, 1,
+>>> -			     args->ringbuf_size / sizeof(u64),
+>>> -			     0, msecs_to_jiffies(JOB_TIMEOUT_MS),
+>>> -			     group->ptdev->reset.wq,
+>>> -			     NULL, "panthor-queue", group->ptdev-
+>>>> base.dev);
+>>> +
+>>
+>> Please don't use multiple blank lines.
+>>
+>>> +	ret = drm_sched_init(&queue->scheduler, &sched_args);
+>>>    	if (ret)
+>>>    		goto err_free_queue;
+>>>    
+>>> diff --git a/drivers/gpu/drm/scheduler/sched_main.c
+>>> b/drivers/gpu/drm/scheduler/sched_main.c
+>>> index a48be16ab84f..6295b2654a7c 100644
+>>> --- a/drivers/gpu/drm/scheduler/sched_main.c
+>>> +++ b/drivers/gpu/drm/scheduler/sched_main.c
+>>> @@ -1244,40 +1244,24 @@ static void drm_sched_run_job_work(struct
+>>> work_struct *w)
+>>>     * drm_sched_init - Init a gpu scheduler instance
+>>>     *
+>>>     * @sched: scheduler instance
+>>> - * @ops: backend operations for this scheduler
+>>> - * @submit_wq: workqueue to use for submission. If NULL, an
+>>> ordered wq is
+>>> - *	       allocated and used
+>>> - * @num_rqs: number of runqueues, one for each priority, up to
+>>> DRM_SCHED_PRIORITY_COUNT
+>>> - * @credit_limit: the number of credits this scheduler can hold
+>>> from all jobs
+>>> - * @hang_limit: number of times to allow a job to hang before
+>>> dropping it
+>>> - * @timeout: timeout value in jiffies for the scheduler
+>>> - * @timeout_wq: workqueue to use for timeout work. If NULL, the
+>>> system_wq is
+>>> - *		used
+>>> - * @score: optional score atomic shared with other schedulers
+>>> - * @name: name used for debugging
+>>> - * @dev: target &struct device
+>>> + * @args: scheduler initialization arguments
+>>>     *
+>>>     * Return 0 on success, otherwise error code.
+>>>     */
+>>> -int drm_sched_init(struct drm_gpu_scheduler *sched,
+>>> -		   const struct drm_sched_backend_ops *ops,
+>>> -		   struct workqueue_struct *submit_wq,
+>>> -		   u32 num_rqs, u32 credit_limit, unsigned int
+>>> hang_limit,
+>>> -		   long timeout, struct workqueue_struct
+>>> *timeout_wq,
+>>> -		   atomic_t *score, const char *name, struct
+>>> device *dev)
+>>> +int drm_sched_init(struct drm_gpu_scheduler *sched, const struct
+>>> drm_sched_init_args *args)
+>>>    {
+>>>    	int i;
+>>>    
+>>> -	sched->ops = ops;
+>>> -	sched->credit_limit = credit_limit;
+>>> -	sched->name = name;
+>>> -	sched->timeout = timeout;
+>>> -	sched->timeout_wq = timeout_wq ? : system_wq;
+>>> -	sched->hang_limit = hang_limit;
+>>> -	sched->score = score ? score : &sched->_score;
+>>> -	sched->dev = dev;
+>>> +	sched->ops = args->ops;
+>>> +	sched->credit_limit = args->credit_limit;
+>>> +	sched->name = args->name;
+>>> +	sched->timeout = args->timeout;
+>>> +	sched->timeout_wq = args->timeout_wq ? : system_wq;
+>>> +	sched->hang_limit = args->hang_limit;
+>>> +	sched->score = args->score ? args->score : &sched->_score;
+>>
+>> Could we keep it consistent and use the Elvis Operator here as well?
+>> Just like `sched->timeout_wq`.
 > 
-> I'd say,
+> This is literally just the old code.
 > 
-> Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> I didn't fully test this, but according to msm-4.14, msm-4.19 and
-> display drivers techpack this change is required on all 7nm- PHYs
-> (including the SM8150).
+> And if at all, this insanely stupid GCC extension should not be used.
+> It's one of the typical compiler people rampages that make the C
+> language so terrible.
 
-Thanks.
+Not a problem to me, we can remove the Elvis Operator from `sched-
+ >timeout_wq`. My idea is just to do things consistently in variable
+assignment.
 
-This was suggested to me in non-public talks so let's add original
-credits as well:
+Best Regards,
+- Maíra
 
-Reported-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-Best regards,
-Krzysztof
 
