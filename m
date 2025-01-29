@@ -1,194 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-46478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32FB5A21909
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:29:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAB31A2190A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:29:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 57D8E3A40BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:29:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F10616254F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:29:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6C6933981;
-	Wed, 29 Jan 2025 08:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0982119DFB4;
+	Wed, 29 Jan 2025 08:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e7zXH1e1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ptEUo2jF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5795191F95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8471990D9
 	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 08:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738139355; cv=none; b=rIvKeuu92nCEGu1HgpFE9vwZQCyJLVvS8jGhkXrdWTVpx/WLT2RD3yasIgoSW6tkCqD/UM5gzj8V0DfQRsoS0CzwYGcK/YdsuQVlv/7DaeZVC/1WmjhcodM3TlIR77agZ7/UC4Nnq1C27mx6AO5UsLB3Kt/RM2FtGDkzHmNsbqA=
+	t=1738139355; cv=none; b=Pj7Y4IirRON7suf1hFzAjwKtJTpBa3zsEG7HVbRFQ0zeJfGSOPjollGHUtuQ46Ql6lJ8CaIQ2QxBU/zn7TZVXjAGN3ykl1UZqz763qOZnZU26IPC0Qr04pD0aAcJUR5XIBKiwmU5E0sVPeTF409SL57tzRXq9Y5ODpHL7/HdDKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1738139355; c=relaxed/simple;
-	bh=Qj1Qiix889YPzXYdzBdu6+p6yUTG+1RD4rG0Dcj1ddg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=nLTmwt6Rdbvdi6zipd3uM0iHd9pXr+r6JAGvAD+vs2/u9H2cebKfMLSBZqYYbGWem5gKfROlojSzfVlwZPINYK+ZvIH5jW4ighWCkpqCDuQwMIwmIVOx4qX6CS3jbPuw6f8QP2lbszXgFqOkv8kang5FgibB3yCl0A9WVfPOdaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e7zXH1e1; arc=none smtp.client-ip=209.85.221.53
+	bh=t47Jt1mJr1ZEFW3Sbh3At1ibcmQelq74M+OiamMuqx4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pk5uqU8em6rBSMbhapj2l8jAz9F2UMK0a89mVYwY6+3JF3QSyX2LufqHzxDI7yicP/PjrCZgmFOIK3XNbFS4Fy4NCTptgkEEehrYcv6NVdKAJ+uMdRQTSmdZiUaWnhkQY+vJkL2d4rUr22djNekk2kZKx3atWnzSG/Ch9IwPKj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ptEUo2jF; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385e27c75f4so5686135f8f.2
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3862ca8e0bbso5739811f8f.0
         for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 00:29:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1738139352; x=1738744152; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KQNYCdG1yalzr+nhTkmask1WyrAuIEflxT0cAB6dcWI=;
-        b=e7zXH1e126AfaYtdBEp9qU6i+kHbX7Xaksi6mDi8DEySIXTRsfi4mfv7ytmWn0bnia
-         We0CkNhUh6DEvrgMXTj0nzA+dTamA6lclyIiXlM56ia4FOlD951HnPtz9GDfdEd0scYD
-         Q8/QEi9V8fzjzPvQZlBYUBP0O5yE4kR6ERS7Vl4PpKm2z15hCIs7VNDHMmh8BIMG+jdc
-         gTcrITDLlVnhhBR7rnJeE0jo9zkzsOh++dU2qRhn3nSMT1lxXMhtYpOgAqm/Zz+1RIzs
-         ct7uZaYQwafp38QPtemhjNbk5EqFtOWvar+tZnSZbTize8RidXVw9t7+e+KndBBsZFiM
-         1OZQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kKiksHSFuAAjrakcNqTPfUehHuQhbKFuHBvvbO2o0v0=;
+        b=ptEUo2jFg7bnBrlJwWiyKNa6GnR4yXrjz9PkLWn304dBegxHttXz3v1KM3Ples3Vzt
+         fX20EuTjq5b9q9WhzOr3liyHuTTaY98fh69+MPqIR9EifT7phY4H31WjTGfnrPVePFua
+         Iwn2bVbZDJ8KXO19naNpIe6R683DvStBwbEozvXU8m/j8W1b2czjpwSSygiWlJaEL7EU
+         ZPjSp7LLOoV6z6l2WD9vaRgB+hyK1L0+c8W2pv1FmNfjZclAqixh08XvatPuq3sdQ6Td
+         H5/d2ls8Y3L9vPNcxr/8OlrZYDQ2xzGvMpXIJDQN0RMBj7Shqu3oRdeJRe/f9Kve/i2f
+         pdOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1738139352; x=1738744152;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=KQNYCdG1yalzr+nhTkmask1WyrAuIEflxT0cAB6dcWI=;
-        b=leE6FXXORh5XsQeUllXOUshy36W5SuYH475g5827j8P3EaavgATkYqzLd+qU+aUhv/
-         oLYwrpIBcevqr7Lya8tPmZE8s0CR6R7wEktr7827SU235JU+UxQUqwWqt4fKaoXAbQBT
-         ncKA+jhz23nLq3PmbL3qIoiWXgwOz7XchvAT1voVN5k+rJ4G6cnlXVZJk234+V4feuHu
-         r/qU2+N1Oxs49uImezMgZGBoQBsLdiRFEzwOuZTnaj2Eh9LkQpvI2XQtx7A7XCRBQQ6k
-         K6RF2etl+GrKtZwn/upf1zRUG5+qEXbx4Vzc1Vy4ye4zn/QhoRLiAUyG7hcRYFvC2n+w
-         Vmlw==
-X-Forwarded-Encrypted: i=1; AJvYcCVyoo7MhTKuwKWjjoi9zkQKv58ZnlkDmoCDxzMhrbVQRGM+QXsQS/MeSnjX+fP8hLZgs3Mwi7KgIDR50L0F@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3e+zaWO1vLV1s3bJksh8sPP4XI6hiCiaBdlGYtsX6ya8XRTII
-	HxAM9uvoa6fLx8SBFY4MK2aoAGYBsFPi5oABN+FzVwptfosRxxjz0fq/yYaRTgY=
-X-Gm-Gg: ASbGnctfDt0Q9I5FF/+ASVel/KWmpYxDdsj+V3C0Zdt1KFgrsmGHZY8MeZvvvQMU9YX
-	Mxf+2y3dQc4DXxpb+ekGAG2cix3xmAFsODIa/H3WUaR5ADxzuWuVoncSOTEBhYE9bKxU2HY3SML
-	1lsDdZeIkL6zxhcL359os/16B+1ce/ZGlKNo+wxOWDbCaO31MypnEtIf0u9yIV2TaG1v2Li+JJo
-	1oH/55OmBZQDqU5Peb/HFI+o6L2lKHl5iNOEBhVZzI1KS4Lp2a5H+jNxdiLEiQ826S5TPbFXKVp
-	wtwu2QMFpzHwWbGqjYY2Ls+MRZvl+JojVTxjQvZgbL1lRRKObwLwVzbzj94RhYdwHToW
-X-Google-Smtp-Source: AGHT+IFAr02Y7e6yIfhkFOqiUS1YKF/uSP0j+bSryAqDn2OKuFT4ZAHdeqJksqWGEDwv/Ztk59DZlA==
-X-Received: by 2002:a5d:47cf:0:b0:38b:eb7b:316 with SMTP id ffacd0b85a97d-38c520bb8bdmr1512622f8f.47.1738139351871;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kKiksHSFuAAjrakcNqTPfUehHuQhbKFuHBvvbO2o0v0=;
+        b=cQ2g4LotCGkTceGgzee+dtROxXrrMAYcHOAM9ZDlTGIRqFgHF8CYEcJ9AnKpHDenh0
+         WwAz/EijwPvn2jrEiFUm/h2POUC2olJ1mQoxPz0bofc6oBOfTMw2On/0RclYkU2BsZDr
+         1ry/xcCKDJp/zdWNNsDWDEZLkalyAIE0XjmdyQpW+/C2PmXbc2z+UPdbN906i4rbfV9X
+         LLBIyx1wUpyUGL/SEDNYNMEtTEHgeOy0GXOoz1ZH1DEplGPAD2eXOiBCAQAIrutSB329
+         rkUaf8rESDQ8SisBYMSi52p4oH9P/Bj0jZrceMQKnBGak79KMu815iCiwJAnobA6nhP+
+         dA/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVJUtUqjGk0eHlu1HpM2b07In5kBVjRx/a5iXzJni2I485+ioY52b6QpEo5pdqHzwbwvHBpoPQUvJBYZC/B@vger.kernel.org
+X-Gm-Message-State: AOJu0YwGQ6rpheiNf2L8wM/f+WN+KVk3Z8frA1jCHPz0XaGPsrBN5I9w
+	bxCat0ZhHKgS9rQk+k9X5Bez+oQwPmaPUEJ/QsM8JIUCla4E940GZZ7Ll4w8SIg=
+X-Gm-Gg: ASbGncuPWV1ASDz2abz23wBFPlifXNRWF4UQEgI0wY1Ed8ZBnz980Hy/0A5XrVAukpZ
+	GqohzUiE6f1er+JnUUKzHjDG2iX0nTISVYU4G5+6Hw5fgGARe4rs+w5gBwWSIP9wiBlkuSm9gUG
+	N+nd16OqMNqU9P3YDfvqXnyI2a2jwAWVVBdkxZTGLztX2yJjdAmHUBrKIfnIz5Jd/ESdJYGhqVC
+	2ZmdTQyOb6aVrDE5608zgVD4W8GRHCvo7AuJM3fRkW4od1wA0lPBRa79mSaWFhw5NtSYEi1nFS+
+	lA4ymYxj4E0vAg3RWpJGmcfS
+X-Google-Smtp-Source: AGHT+IEXDkM8D6MT76Uvcn8vTyUyCQaCHOWf8pXTJKZqe7zTUpPIwe72VxUoj9vIWkt8vhTwJeGC8Q==
+X-Received: by 2002:a5d:5f56:0:b0:385:d7f9:f157 with SMTP id ffacd0b85a97d-38c51e957b9mr1485041f8f.36.1738139352191;
+        Wed, 29 Jan 2025 00:29:12 -0800 (PST)
+Received: from linaro.org ([86.123.96.125])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc2c4ddsm13950595e9.17.2025.01.29.00.29.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 29 Jan 2025 00:29:11 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:b25e:a614:863b:566e? ([2a01:e0a:982:cbb0:b25e:a614:863b:566e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a17d697sm16047435f8f.29.2025.01.29.00.29.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2025 00:29:11 -0800 (PST)
-Message-ID: <df1f825f-66a4-4bab-9ca4-90d594f2cb36@linaro.org>
-Date: Wed, 29 Jan 2025 09:29:10 +0100
+Date: Wed, 29 Jan 2025 10:29:10 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH RFC] soc: qcom: pmic_glink: Fix device access from worker
+ during suspend
+Message-ID: <Z5nm1kQk5nXwSRvt@linaro.org>
+References: <20250110-soc-qcom-pmic-glink-fix-device-access-on-worker-while-suspended-v1-1-e32fd6bf322e@linaro.org>
+ <Z4UENSdocAo4uNjg@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] phy: qcom: qmp-pcie: Add PHY register retention
- support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Manivannan Sadhasivam <mani@kernel.org>, Qiang Yu <quic_qianyu@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>, vkoul@kernel.org,
- kishon@kernel.org, p.zabel@pengutronix.de, abel.vesa@linaro.org,
- manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20250121094140.4006801-1-quic_wenbyao@quicinc.com>
- <20250121094140.4006801-3-quic_wenbyao@quicinc.com>
- <CAA8EJppXQpDrdXzJsTE7HWs=POt7yFAw0JVZFabN6Ks3fhZiWQ@mail.gmail.com>
- <a2cc5a5a-6cbd-7564-a8df-8af2a652de2f@quicinc.com>
- <ya27ma6iah7ts6sj35payj6ek4z7m6y5v4pnxd6wtqrp3cbyta@ypvrzwa4bnfv>
- <188a9efd-718e-4ac5-b89a-29f2713e1dba@quicinc.com>
- <20250124070829.oar3hlkshkpam57d@thinkpad>
- <88c29161-17a8-40c6-a94b-c894de15ca37@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <88c29161-17a8-40c6-a94b-c894de15ca37@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z4UENSdocAo4uNjg@hovoldconsulting.com>
 
-On 25/01/2025 14:10, Konrad Dybcio wrote:
-> On 24.01.2025 8:08 AM, Manivannan Sadhasivam wrote:
->> + Mayank (with whom I discussed this topic internally)
->>
->> On Fri, Jan 24, 2025 at 02:22:01PM +0800, Qiang Yu wrote:
->>>
->>> On 1/22/2025 5:43 PM, Dmitry Baryshkov wrote:
->>>> On Wed, Jan 22, 2025 at 03:17:39PM +0800, Wenbin Yao (Consultant) wrote:
->>>>> On 1/21/2025 6:36 PM, Dmitry Baryshkov wrote:
->>>>>> On Tue, 21 Jan 2025 at 11:43, Wenbin Yao <quic_wenbyao@quicinc.com> wrote:
->>>>>>> From: Qiang Yu <quic_qianyu@quicinc.com>
->>>>>>>
->>>>>>> Currently, BCR reset and PHY register setting are mandatory for every port
->>>>>>> before link training. However, some QCOM PCIe PHYs support no_csr reset.
->>>>>>> Different than BCR reset that is used to reset entire PHY including
->>>>>>> hardware and register, once no_csr reset is toggled, only PHY hardware will
->>>>>>> be reset but PHY registers will be retained,
->>>>>> I'm sorry, I can't parse this.
->>>>> The difference between no_csr reset and bcr reset is that no_csr reset
->>>>> doesn't reset the phy registers. If a phy is enabled in UEFI, its registers
->>>>> are programed. After Linux boot up, the registers will not be reset but
->>>>> keep the value programmed by UEFI if we only do no_csr reset, so we can
->>>>> skip phy setting.
->>>> Please fix capitalization of the abbreviations (PHY, BCR) and add
->>>> similar text to the commit message.
->>>>
->>>>>>> which means PHY setting can
->>>>>>> be skipped during PHY init if PCIe link was enabled in booltloader and only
->>>>>>> no_csr is toggled after that.
->>>>>>>
->>>>>>> Hence, determine whether the PHY has been enabled in bootloader by
->>>>>>> verifying QPHY_START_CTRL register. If it is programmed and no_csr reset is
->>>>>>> present, skip BCR reset and PHY register setting, so that PCIe link can be
->>>>>>> established with no_csr reset only.
->>>>>> This doesn't tell us why we want to do so. The general rule is not to
->>>>>> depend on the bootloaders at all. The reason is pretty simple: it is
->>>>>> hard to update bootloaders, while it is relatively easy to update the
->>>>>> kernel. If the hardware team issues any kind of changes to the
->>>>>> programming tables, the kernel will get them earlier than the
->>>>>> bootloader.
+On 25-01-13 13:16:53, Johan Hovold wrote:
+> On Fri, Jan 10, 2025 at 05:29:51PM +0200, Abel Vesa wrote:
+> > The pmic_glink_altmode_worker() currently gets scheduled on the system_wq.
+> > When the system is suspended (s2idle), the fact that the worker can be
+> > scheduled to run while devices are still suspended provesto be a problem
+> > when a Type-C retimer, switch or mux that is controlled over a bus like
+> > I2C, because the I2C controller is suspended.
+> > 
+> > This has been proven to be the case on the X Elite boards where such
+> > retimers (ParadeTech PS8830) are used in order to handle Type-C
+> > orientation and altmode configuration. The following warning is thrown:
+> > 
+> > [   35.134876] i2c i2c-4: Transfer while suspended
+> > [   35.143865] WARNING: CPU: 0 PID: 99 at drivers/i2c/i2c-core.h:56 __i2c_transfer+0xb4/0x57c [i2c_core]
+> > [   35.352879] Workqueue: events pmic_glink_altmode_worker [pmic_glink_altmode]
+> > [   35.360179] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+> > [   35.455242] Call trace:
+> > [   35.457826]  __i2c_transfer+0xb4/0x57c [i2c_core] (P)
+> > [   35.463086]  i2c_transfer+0x98/0xf0 [i2c_core]
+> > [   35.467713]  i2c_transfer_buffer_flags+0x54/0x88 [i2c_core]
+> > [   35.473502]  regmap_i2c_write+0x20/0x48 [regmap_i2c]
+> > [   35.478659]  _regmap_raw_write_impl+0x780/0x944
+> > [   35.483401]  _regmap_bus_raw_write+0x60/0x7c
+> > [   35.487848]  _regmap_write+0x134/0x184
+> > [   35.491773]  regmap_write+0x54/0x78
+> > [   35.495418]  ps883x_set+0x58/0xec [ps883x]
+> > [   35.499688]  ps883x_sw_set+0x60/0x84 [ps883x]
+> > [   35.504223]  typec_switch_set+0x48/0x74 [typec]
+> > [   35.508952]  pmic_glink_altmode_worker+0x44/0x1fc [pmic_glink_altmode]
+> > [   35.515712]  process_scheduled_works+0x1a0/0x2d0
+> > [   35.520525]  worker_thread+0x2a8/0x3c8
+> > [   35.524449]  kthread+0xfc/0x184
+> > [   35.527749]  ret_from_fork+0x10/0x20
+> > 
+> > The solution here is to schedule the altmode worker on the system_freezable_wq
+> > instead of the system_wq. This will result in the altmode worker not being
+> > scheduled to run until the devices are resumed first, which will give the
+> > controllers like I2C a chance to resume before the transfer is requested.
+> > 
+> > Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
+> > Cc: stable@vger.kernel.org    # 6.3
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > 
-> We're assuming that if a product has shipped, the sequences used to power up
-> the PHY in the bootloader (e.g. for NVMe) are already good.
+> You forgot to include:
 > 
-> If some tragedy happens and an erratum is needed, we can always introduce a
-> small override with the existing driver infrastructure (i.e. adding a new
-> entry with a couple registers worth of programming sequence, leaving the other
-> values in tact)
+> Reported-by: Johan Hovold <johan+linaro@kernel.org>	
+> Link: https://lore.kernel.org/lkml/Z1CCVjEZMQ6hJ-wK@hovoldconsulting.com/
 
-Assuming Linux will be always ran directly after the bootloader is a wild assumption.
+Oups, sorry. Will fix in the next version.
 
-Yes, we should make use the noscr if the PHY is always programmed, but we should be
-always able to reprogram the PHY entirely to recover a faulty programmation.
+> 
+> Johan
 
-Neil
+Thanks for reviewing.
 
-
-<snip>
-
+Abel
 
