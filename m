@@ -1,79 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-46512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D267A21EBF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:12:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A743A21EEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:19:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9A53C3A9728
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:11:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBECB161AE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:19:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E79C51DACB8;
-	Wed, 29 Jan 2025 14:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 516C02114;
+	Wed, 29 Jan 2025 14:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VDyvcZPW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VrAY/R+Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDAF1917F9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 14:07:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3420313BAE4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 14:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738159679; cv=none; b=oF0XIwMvxEBMpmMUHgFSPo8y16mOHJ6p4mRpZ019j7XiJUvTOkMomxQ2criGt30CZzV1JFieE2EO4pKCkk1q17delY18pe4PhWjMtVXmeI1az0QIbCHZqKcbvWv8/9dTLrCnGMvBEgGNwhznNKDnhfqWkZfKprJzZV0Us0Cs8u0=
+	t=1738160392; cv=none; b=Q0CY0gMgRoMBFtX21wO9wTekQaTToXGIkztwHQf/YofoAJKhSAkVHJ3xRit65CfF9c9wGBi/AMmaDFzbGZ318GYPgZnUPHtfsX6ToSvs1d5N+B3vNVNzCd+vcUmMKn+mANGAxFVwK5fNQu1VJfH65kZ+/L3x4XjHSd3friQEHB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738159679; c=relaxed/simple;
-	bh=7yKZJGEuZnKFh0A4V/iVgZ8ZSrBZxlrwEP8NyfcAutg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cLtRlF7+dZUMkEJFg/lsnT8bbGT7ahWnMYjQsdBgqcfJx4htOEHm62/pLgHMpASM1byNpyV80O67szkpzfnM1SpYbEzgmv+FPfkRGgaWZuKGBYQD03k7acBU+iAoFg0s6dsJVX0T6lXOmK8vEem/l2qNh5dRenhY7KBFY+XNdhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VDyvcZPW; arc=none smtp.client-ip=209.85.221.52
+	s=arc-20240116; t=1738160392; c=relaxed/simple;
+	bh=GbMQsn6f1MC9o8VysCSV6IsYO9q1ZfEqJn64kT3F9JY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mWFL0vLR/vK6QLAJ1tfflQUd1BMb5OGbDjXCcaF3eIlp37FjQfH59FWq32zYlhWLyzIGNGyhEOdR3dOQXdtNAVR0LF1w2AsCYstNu4CIKmpOYUvZu9gICB56iW2JyjwYkqodpipHw/BqUQU1wMWr1f/IE7N5v02WLsmM/HPn5co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VrAY/R+Y; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-385ddcfc97bso5794415f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 06:07:56 -0800 (PST)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-385e1fcb0e1so3672163f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 06:19:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738159675; x=1738764475; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dkuuWKeJYmtkm56YSgRvcU4oboHFdcC4bjctcTZXYsw=;
-        b=VDyvcZPWtRUf+s3xFoB4rddxr+Q7z1kzP4pjvjikZxSWbB/lYcERhajeNwVXncW6AZ
-         LclA6ox90JGsrYnKHrJE2d2HBrHAPtVd4MUmakES7pAluKQKIx9gS4AniQJhkestrn3o
-         cuLA3qDeNbyzn09PrbphPLDuGVt/9zpAmFsYXBQ63h3rJIos/ou+Z0PTfR+BEFXDC9Mz
-         OwVumVAxdpz9UfwAItFiqftG3VsVB+vBKJ8+eVpJprhWbE3opay41JG1KGMHq3OVeYaa
-         MewfLjonDdluAgXwZ9X+HUqAjuUtU8fUUgPJgT3cRxpNih+Iwk35yxH4UVWGzFGp/6gQ
-         xy5A==
+        d=linaro.org; s=google; t=1738160388; x=1738765188; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VNkXY/Z9afVp7P31w960TY/rx2CirLfuJn7N45XT28A=;
+        b=VrAY/R+Yg0vwGBlxOTjclJ/uwqgxaOU3hI0EgjoBMHs6eKpjrEHic353mglxL/4nkm
+         JJk+05Rje2djUkuKS9F3wTfD4Z64R5EpSrl7o78dNwrZuKCCY8213wtgKCfLckJ8dkEH
+         KI86ngTyVUG1rIaQ8Q/DQnYBpWH8d7LE1QfEhtAVHD9h8rIVRLuOay9ODyYWS/zto/a6
+         XiCG9WyLPw49z1nOdp6CSX3Xur0BdMCK4sVHaoIq4WmprbghhGrZLzPaMWrdkLwJd+Ub
+         vVPa3vC/tcm6CL5c3Edga3FkW4IGoSd90Jzv61nEFAyXuE45D0BVZYkT7zGXBwDc0b82
+         9Ajg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738159675; x=1738764475;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dkuuWKeJYmtkm56YSgRvcU4oboHFdcC4bjctcTZXYsw=;
-        b=RJUUsM3AllWfyfn0WLlZcdgscpnNJbejS8DZVXZWe7cLMohj+er64uajWhvwLGZcSq
-         Q3a7GNswBW6ZzpeNhYEe5GdxNZ0M3UeRo63UX4pzNAkRFbas6pSIxa9ng+Q6tQe7Nb4T
-         OyuzHfizIdw1QOmE488nLg9/068ML07eq6C3lp1bQ0DrSzvrOTsSVLgqzExt3fOP/ZoC
-         XeVCgKbGKvtcziURTRwlZw7HqGitjzdlKoXXR7pdARgip07Zh1qt8aAERLFzeJhp3vi8
-         wVDNaBvjAGuOVxREehccYhnJzKJ95i95JBDwCsYEiIciNy5AO/YpPbDLHJhd+np91mL5
-         aDNg==
-X-Forwarded-Encrypted: i=1; AJvYcCWoAoi7P8Go/xrBmhvsvOqb+eJvntXZ7FNelNPY1Hrsn07pRAdI6x6xwg1ySWC/xt0Me55+xYc3dsu+qfCk@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVcl7pJ3Mqg9nLSJUU2c1dMzepDTObTDRCVIyPGCGkemlryJ3x
-	+8OH4ijrKsNpgcxOiocXYOFZ2eJ/Pfu2wucfHqsY4uNxQz9w699EaAIEymw4SKQ=
-X-Gm-Gg: ASbGncskQKVysIXIJDB0Qg4w1Z4JJftOLL+qEdEXWl7VJUQFf2ePngd4iGkon9HOC/T
-	ZHD06D08Ebf9J8s3Amoe2SuGwsaY7CsgcJxPt1yRTeNsx8BcG0HVt8coRGdLEsqz6+YOxZEJ+MB
-	twVNk9GGIXsypPlZMTf7McKVo4Z7rk/Lz/TtMJZY3AXQYxTEz8vo4rRxxUN5V8cF6XJOccB8gzT
-	XuSLWyNmCf4BF63UKBLE6ZK8TB44GndC6bIQ44xmGmotEu7lLh+3A+Du5JAQuRZwuCTLimID2X1
-	RmATrl5FfF7jGFfrbsSBMH2cofKjrWCEPizs
-X-Google-Smtp-Source: AGHT+IHfaiytgwBKkLFsb74qxfBwYXhML0vsZSRUcqxi74NrfeZsxJrNuB1BToWwWaD5gvoZ47QV1g==
-X-Received: by 2002:a05:6000:1f85:b0:38a:3732:4462 with SMTP id ffacd0b85a97d-38c520af328mr3030005f8f.48.1738159674943;
-        Wed, 29 Jan 2025 06:07:54 -0800 (PST)
-Received: from [192.168.68.163] ([145.224.90.107])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a17d5d4sm16929484f8f.21.2025.01.29.06.07.53
+        d=1e100.net; s=20230601; t=1738160388; x=1738765188;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VNkXY/Z9afVp7P31w960TY/rx2CirLfuJn7N45XT28A=;
+        b=f1kEFKYp3vpYqzqRJLUxLoMX8xxxkTOBwEA/uaSVxSLHU+weftaOv8iZ5qB8nbiqxD
+         2K0m9gogJU8Si+eBKIbRbLzDR1kLHdT1DUk4cGuguVmW4uHUrUMyFsqZqcBDKQofpvbg
+         bp72hXxrbHzQzE/3+PKDRwaeaLWn68kfqc6sDCgwSEJtWFmgWQI/8nh9ZeKQUOgJ4QPa
+         D0jXAc2OEl0A9TYLz3w/xu9fcYAGoBHg7uap5zc6CfHxTz91X9awhIeo8I5nQIaVBsOf
+         YJpvCsbg+QbvtXlV1P7Kox5lEX99Q36/DPDwomzO0v1C5awfyQVtITUjCJ/aApwZp2tI
+         3zDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV3xopBwyWOXHtxCqFjm7hVIxQl3wPMyVB9tq04BbwAWwC9sWnWGU/guEMtSPVC8GQczm9I4FMvV69PQX/v@vger.kernel.org
+X-Gm-Message-State: AOJu0YzV8pkP8sRZOyx7rE7E0U9GKaH6+9OuLHlC7uxoxoVlnBO+m21N
+	HpaVHXU1oiuCI7VQCHQCW1cKA/HzNSCONwjCqR0+R36YJlTBuVfmPCExFMsmLIA=
+X-Gm-Gg: ASbGncsG44K7vXWDuJZpt+bBTJnZhRL7kajwfIsk+3x+5FQw46OHSllkG+LGrAMGY8C
+	Vv3Zcwnq90y4uOzUc74oQEgg+lF8kBZW9fzXSbApEFuf7O+hjcZsIgqZjOQVtRBPJKB369gdaH7
+	soJ/pD/Vwt02e2SgRx47G53gOAPoVq024nJLqPc1GHwR2UhJkO1EtHUSXVlM3sD7uaN3Fkt6Bes
+	V+RIEL2Vp6RWtQxv+XpbWQiAp2EedhWm3XEnNr+i205PV43zxJOD5FakGTLUYCyA7eIKsSPStXL
+	V989WQ3uV3mvTqrk5Q4Wp/Ld6PyKNd3zDEz+SrkI1dxiZ/T3a/0A8vZxr9LxXuoSDlrj
+X-Google-Smtp-Source: AGHT+IFT4IjQXt/DQ9q9I2HHCXNkkUwuSMn9d1HV3Tr7TQI1A0DqK2XOk+03beC7sPfdknUnenKicA==
+X-Received: by 2002:a05:6000:4008:b0:386:459e:655d with SMTP id ffacd0b85a97d-38c51952173mr2830648f8f.20.1738160388344;
+        Wed, 29 Jan 2025 06:19:48 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:b25e:a614:863b:566e? ([2a01:e0a:982:cbb0:b25e:a614:863b:566e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1ca723sm17085908f8f.101.2025.01.29.06.19.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2025 06:07:54 -0800 (PST)
-Message-ID: <90f53256-8c75-4b43-aac6-5cb9084efe1c@linaro.org>
-Date: Wed, 29 Jan 2025 14:07:53 +0000
+        Wed, 29 Jan 2025 06:19:47 -0800 (PST)
+Message-ID: <d36b497e-4717-4c25-8090-a20efd09f782@linaro.org>
+Date: Wed, 29 Jan 2025 15:19:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,198 +83,164 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 5/6] Coresight: Add Coresight TMC Control Unit driver
-To: Jie Gan <quic_jiegan@quicinc.com>
-Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Jinlong Mao <quic_jinlmao@quicinc.com>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
- <mike.leach@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-References: <20250124072537.1801030-1-quic_jiegan@quicinc.com>
- <20250124072537.1801030-6-quic_jiegan@quicinc.com>
- <44bd0d5e-a232-49c3-ba2f-e63e2f2c99be@linaro.org>
- <b3d9e4f0-cca8-45a5-a5b7-239cdeed2751@quicinc.com>
- <070c70ac-c76b-4d1a-acb6-d29cc85967b9@linaro.org>
- <29bbb602-61fd-44e1-afb5-f158c8d61c97@quicinc.com>
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 2/2] phy: qcom: qmp-pcie: Add PHY register retention
+ support
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Manivannan Sadhasivam <mani@kernel.org>, Qiang Yu <quic_qianyu@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>, vkoul@kernel.org,
+ kishon@kernel.org, p.zabel@pengutronix.de, abel.vesa@linaro.org,
+ manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+References: <20250121094140.4006801-1-quic_wenbyao@quicinc.com>
+ <20250121094140.4006801-3-quic_wenbyao@quicinc.com>
+ <CAA8EJppXQpDrdXzJsTE7HWs=POt7yFAw0JVZFabN6Ks3fhZiWQ@mail.gmail.com>
+ <a2cc5a5a-6cbd-7564-a8df-8af2a652de2f@quicinc.com>
+ <ya27ma6iah7ts6sj35payj6ek4z7m6y5v4pnxd6wtqrp3cbyta@ypvrzwa4bnfv>
+ <188a9efd-718e-4ac5-b89a-29f2713e1dba@quicinc.com>
+ <20250124070829.oar3hlkshkpam57d@thinkpad>
+ <88c29161-17a8-40c6-a94b-c894de15ca37@oss.qualcomm.com>
+ <df1f825f-66a4-4bab-9ca4-90d594f2cb36@linaro.org>
+ <d928e662-07ac-4255-8d6f-adeaefb3db46@oss.qualcomm.com>
+ <9d489930-9d2d-4b71-9b21-9c7918257b7c@linaro.org>
+ <aaf02ae5-4ae8-4571-934f-2c95de9d7e4f@oss.qualcomm.com>
 Content-Language: en-US
-From: James Clark <james.clark@linaro.org>
-In-Reply-To: <29bbb602-61fd-44e1-afb5-f158c8d61c97@quicinc.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <aaf02ae5-4ae8-4571-934f-2c95de9d7e4f@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-
-
-On 29/01/2025 1:02 pm, Jie Gan wrote:
-> 
-> 
-> On 1/29/2025 6:35 PM, James Clark wrote:
->>
->>
->> On 29/01/2025 12:46 am, Jie Gan wrote:
->>>
->>>
->>> On 1/28/2025 7:55 PM, James Clark wrote:
->>>>
->>>>
->>>> On 24/01/2025 7:25 am, Jie Gan wrote:
->>>>> The Coresight TMC Control Unit hosts miscellaneous configuration 
->>>>> registers
->>>>> which control various features related to TMC ETR sink.
+On 29/01/2025 14:55, Konrad Dybcio wrote:
+> On 29.01.2025 2:41 PM, neil.armstrong@linaro.org wrote:
+>> On 29/01/2025 12:29, Konrad Dybcio wrote:
+>>> On 29.01.2025 9:29 AM, neil.armstrong@linaro.org wrote:
+>>>> On 25/01/2025 14:10, Konrad Dybcio wrote:
+>>>>> On 24.01.2025 8:08 AM, Manivannan Sadhasivam wrote:
+>>>>>> + Mayank (with whom I discussed this topic internally)
+>>>>>>
+>>>>>> On Fri, Jan 24, 2025 at 02:22:01PM +0800, Qiang Yu wrote:
+>>>>>>>
+>>>>>>> On 1/22/2025 5:43 PM, Dmitry Baryshkov wrote:
+>>>>>>>> On Wed, Jan 22, 2025 at 03:17:39PM +0800, Wenbin Yao (Consultant) wrote:
+>>>>>>>>> On 1/21/2025 6:36 PM, Dmitry Baryshkov wrote:
+>>>>>>>>>> On Tue, 21 Jan 2025 at 11:43, Wenbin Yao <quic_wenbyao@quicinc.com> wrote:
+>>>>>>>>>>> From: Qiang Yu <quic_qianyu@quicinc.com>
+>>>>>>>>>>>
+>>>>>>>>>>> Currently, BCR reset and PHY register setting are mandatory for every port
+>>>>>>>>>>> before link training. However, some QCOM PCIe PHYs support no_csr reset.
+>>>>>>>>>>> Different than BCR reset that is used to reset entire PHY including
+>>>>>>>>>>> hardware and register, once no_csr reset is toggled, only PHY hardware will
+>>>>>>>>>>> be reset but PHY registers will be retained,
+>>>>>>>>>> I'm sorry, I can't parse this.
+>>>>>>>>> The difference between no_csr reset and bcr reset is that no_csr reset
+>>>>>>>>> doesn't reset the phy registers. If a phy is enabled in UEFI, its registers
+>>>>>>>>> are programed. After Linux boot up, the registers will not be reset but
+>>>>>>>>> keep the value programmed by UEFI if we only do no_csr reset, so we can
+>>>>>>>>> skip phy setting.
+>>>>>>>> Please fix capitalization of the abbreviations (PHY, BCR) and add
+>>>>>>>> similar text to the commit message.
+>>>>>>>>
+>>>>>>>>>>> which means PHY setting can
+>>>>>>>>>>> be skipped during PHY init if PCIe link was enabled in booltloader and only
+>>>>>>>>>>> no_csr is toggled after that.
+>>>>>>>>>>>
+>>>>>>>>>>> Hence, determine whether the PHY has been enabled in bootloader by
+>>>>>>>>>>> verifying QPHY_START_CTRL register. If it is programmed and no_csr reset is
+>>>>>>>>>>> present, skip BCR reset and PHY register setting, so that PCIe link can be
+>>>>>>>>>>> established with no_csr reset only.
+>>>>>>>>>> This doesn't tell us why we want to do so. The general rule is not to
+>>>>>>>>>> depend on the bootloaders at all. The reason is pretty simple: it is
+>>>>>>>>>> hard to update bootloaders, while it is relatively easy to update the
+>>>>>>>>>> kernel. If the hardware team issues any kind of changes to the
+>>>>>>>>>> programming tables, the kernel will get them earlier than the
+>>>>>>>>>> bootloader.
 >>>>>
->>>>> Based on the trace ID, which is programmed in the related CTCU ATID
->>>>> register of a specific ETR, trace data with that trace ID gets into
->>>>> the ETR buffer, while other trace data gets dropped.
+>>>>> We're assuming that if a product has shipped, the sequences used to power up
+>>>>> the PHY in the bootloader (e.g. for NVMe) are already good.
 >>>>>
->>>>> Enabling source device sets one bit of the ATID register based on
->>>>> source device's trace ID.
->>>>> Disabling source device resets the bit according to the source
->>>>> device's trace ID.
->>>>>
->>>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->>>>> ---
->>>>>   drivers/hwtracing/coresight/Kconfig          |  12 +
->>>>>   drivers/hwtracing/coresight/Makefile         |   1 +
->>>>>   drivers/hwtracing/coresight/coresight-ctcu.c | 276 ++++++++++++++ 
->>>>> + ++++
->>>>>   drivers/hwtracing/coresight/coresight-ctcu.h |  30 ++
->>>>>   include/linux/coresight.h                    |   3 +-
->>>>>   5 files changed, 321 insertions(+), 1 deletion(-)
->>>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
->>>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
->>>>  >
+>>>>> If some tragedy happens and an erratum is needed, we can always introduce a
+>>>>> small override with the existing driver infrastructure (i.e. adding a new
+>>>>> entry with a couple registers worth of programming sequence, leaving the other
+>>>>> values in tact)
 >>>>
->>>> [...]
->>>>
->>>>> +/*
->>>>> + * ctcu_set_etr_traceid: Retrieve the ATID offset and trace ID.
->>>>> + *
->>>>> + * Returns 0 indicates success. None-zero result means failure.
->>>>> + */
->>>>> +static int ctcu_set_etr_traceid(struct coresight_device *csdev, 
->>>>> struct coresight_path *cs_path,
->>>>> +                bool enable)
->>>>> +{
->>>>> +    struct coresight_device *sink = coresight_get_sink(cs_path- 
->>>>> >path);
->>>>> +    struct ctcu_drvdata *drvdata = dev_get_drvdata(csdev- 
->>>>> >dev.parent);
->>>>> +    u8 trace_id = cs_path->trace_id;
->>>>> +    int port_num;
->>>>> +
->>>>> +    if ((sink == NULL) || !IS_VALID_CS_TRACE_ID(trace_id) || 
->>>>> IS_ERR_OR_NULL(drvdata)) {
->>>>> +        dev_err(&csdev->dev, "Invalid parameters\n");
->>>>> +        return -EINVAL;
->>>>> +    }
->>>>> +
->>>>> +    port_num = ctcu_get_active_port(sink, csdev);
->>>>> +    if (port_num < 0)
->>>>> +        return -EINVAL;
->>>>> +
->>>>> +    /*
->>>>> +     * Skip the disable session if more than one TPDM device that
->>>>> +     * connected to the same TPDA device has been enabled.
->>>>> +     */
->>>>> +    if (enable)
->>>>> +        atomic_inc(&drvdata->traceid_refcnt[port_num][trace_id]);
->>>>> +    else {
->>>>> +        if (atomic_dec_return(&drvdata->traceid_refcnt[port_num] 
->>>>> [trace_id]) > 0) {
->>>>> +            dev_dbg(&csdev->dev, "Skip the disable session\n");
->>>>> +            return 0;
->>>>> +        }
->>>>> +    }
->>>>> +
->>>>> +    dev_dbg(&csdev->dev, "traceid is %d\n", cs_path->trace_id);
->>>>> +
->>>>> +    return __ctcu_set_etr_traceid(csdev, trace_id, port_num, enable);
->>>>
->>>> Hi Jie,
->>>>
->>>> Using atomic_dec_return() here doesn't prevent 
->>>> __ctcu_set_etr_traceid() from running concurrent enable and 
->>>> disables. Once you pass the atomic_dec_return() a second call to 
->>>> enable it will mess it up.
->>>>
->>>> I think you need a spinlock around the whole thing and then the 
->>>> refcounts don't need to be atomics.
->>>>
->>> Hi, James
->>> Thanks for comment. I may not fully tested my codes here. What I was 
->>> thinking is there's no way the refcnt could become a negative number 
->>> under current framework. So I just added spinlock in 
->>> __ctcu_set_etr_traceid() to ensure concurrent sessions correctly 
->>> manipulate the register.
+>>>> Assuming Linux will be always ran directly after the bootloader is a wild assumption.
 >>>
->>> As the trace_id related to the bit of the ATID register, I think the 
->>> concurrent processes are working fine with spinlock around read/write 
->>> register.
+>>> Situations like
 >>>
->>> I may not fully got your point here. Please help me to correct it.
+>>> [normal boot chain] -> [... (resets the PHY and doesn't reprogram it)] -> Linux
 >>>
->>> Thanks,
->>> Jie
->>>
->>>
+>>> are both so unlikely and so intentional-by-the-user that it doesn't seem
+>>> worth considering really.
 >>
->> No it can't become negative, but the refcount can be a different state 
->> to the one that was actually written:
+>> In embedded/mobile/edge world, definitely, in compute/PC-like market, not really.
 >>
->>
->>    CPU0                             CPU1
->>    ----                             ----
->>    ctcu_set_etr_traceid(enable)
->>                                     ctcu_set_etr_traceid(disable)
->>    atomic_inc()
->>    recount == 1
->>                                     atomic_dec()
->>                                     recount == 0
->>
->>                                     __ctcu_set_etr_traceid(disable)
->>                                     Lock and write disable state to
->>                                     device
->>
->>    __ctcu_set_etr_traceid(enable)
->>    Lock and write enable state to
->>    device
->>
->>
->> As you can see this leaves the device in an enabled state but the 
->> refcount is 0.
-> Yes, you are right. I didnt consider this scenario. We definitely need 
-> spinlock here.
+>> You'll have people add some custom bootloaders, hypervisors, who knows what...
 > 
->>
->> This is also quite large if you use atomic types:
->>
->>   /* refcnt for each traceid of each sink */
->>   atomic_t traceid_refcnt[ATID_MAX_NUM][CORESIGHT_TRACE_ID_RES_TOP];
->>
->> Presumably you can't have the refcount for each ID be higher than the 
->> max number of TPDMs connected? If you make the locked area a bit wider 
->> you don't need atomic types and also solve the above problem. So you 
->> could do u8, or DECLARE_BITMAP() and bitmap_read() etc to read 3 bit 
->> values. Or however wide it needs to be.
-> The original purpose of using atomic here is trying to narrow the locked 
-> area.
-> 
-> I think u8 is ok here.
-> u8 traceid_refcnt[ATID_MAX_NUM][CORESIGHT_TRACE_ID_RES_TOP] will cost 
-> 224 bytes, I think it's acceptable here.
-> 
-> Thanks,
-> Jie
-> 
+> I see, however you actually have to intentionally assert the non-NO_CSR PHY
+> reset from said custom bootloaders, hypervisors and whoknowswhats for the
+> programmed sequence to be erased. So I have no idea what the issue is here.
 
-Yep u8 sounds ok then
+I won't argue further, but you know as I do that relying on the bootloader state
+is a dangerous game, and we already rely a lot for dsp stuff and we have
+a lot lot of issue related to the UEFI implementation already on production
+devices.
 
+I'm not against the nocsr stuff, which can be a big win for boot time, but
+honestly not adding a few registers in table seems risky enough, and we should
+probably delay this experiment until we are sure the nocsr stuff works fine.
+
+Neil
+
+> 
+> Konrad
+> 
+>>
+>>>
+>>> If whatever sits in the middle *must* hard-reset the phy, it can save the
+>>> register state beforehand and restore them after the reset
+>>>
+>>>> Yes, we should make use the noscr if the PHY is always programmed, but we should be
+>>>> always able to reprogram the PHY entirely to recover a faulty programmation.
+>>>
+>>> We aren't considering any possibility of faulty programming - it's either
+>>> programmed, or not. And if the values configured by the bootloader are wrong,
+>>> the device's firmware is considered faulty.
+>>>
+>>> Most devices probably follow the exact same magic values as our reference
+>>> boards (though these values relate to analog characteristics, so perhaps not
+>>> *all* of them, which is another argument for keeping the BL state) and these
+>>> are extensively tested internally before any production devices make it out
+>>> the door. Any updates deep into the product life are most likely just "nice
+>>> to have"s and not anything critical, and as I've mentioned, we can still have
+>>> overrides with the current logic inside this driver.
+>>>
+>>> Konrad
+>>
 
 
