@@ -1,87 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-46500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CE81A21C38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 12:29:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BC3F4A21C64
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 12:39:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 881B8161FCB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 11:29:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B977166DE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 11:39:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 594D519DF60;
-	Wed, 29 Jan 2025 11:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BD4C1BCA07;
+	Wed, 29 Jan 2025 11:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Vy8/RZuh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WjJ4fjQ+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2959186615
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 11:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8871B4240;
+	Wed, 29 Jan 2025 11:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738150192; cv=none; b=HYDL7Jt5uRzJwlG5SlaoS1s39wvCjFQOk0sZAxGbCcC2ZIGXdd1+/LaeH4mfQKXfQ9osCFtA2EvwjAyjhl2ZAGsoDvMP0TcylS9oINWTDF7DbDM4W0A0IROJURbQi2khY5C06jX66yXbVZRcs3JT+cnERvYTmgdaxc7NsWv664Y=
+	t=1738150758; cv=none; b=I0COBllpP9jfo8MN82ykaBrmrWmFQgp6X2HOJ1BmMUQ8yoPYqgcSHsL5OjIZuisnuvVjlFIS4P8SnmICM8dYoiBblPY5tbF1lomMEjGxkyeuiUA/izkyC0K0Nw17mJROVTlxun/xEt0ii+YKmM0IFLhu1jxDLJelW/8fBizL2DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738150192; c=relaxed/simple;
-	bh=3s886Jw7KGXuHd6mFj5w9paPQmLHIEJE2yq98VVa5HE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QdVRb36JDjLRc8xBGKDt8LMLKa4vpbsHT/bzz9zk2swHW8iWTNr/pUMhVvLnPX8ZsG8g2rsax5Zd/xENFQUzKmBkNIjTEjtNfr8/CGUtQaqaACrCgmJ2yj6b0H3kayFw5NaaW/QuXDKEOqy95LbvF9/gIxe+VMbvcS/cFsvS7zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Vy8/RZuh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1738150758; c=relaxed/simple;
+	bh=1KO4PKSeBa/wOcgXgtlAXJdpsQmWbVb9ItVDU4f+eIo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=PEzqAtYvMfdhjnbFzoUAlL2KrTstfnTo9KKk0f0xyiSS9OSc23d32F9BeqLH9vzPUepgajHHao7X6xVQmVrEMB+Tf+/zWqcZUdzwNLcncfZDO++xAX/K+K/9HiubG9oPL/EOLlNX/cKAxVcvvWyvkffrIczUdWlbfuZG8hxrtyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WjJ4fjQ+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50T6SLei009997
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 11:29:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50T6RVmS008605;
+	Wed, 29 Jan 2025 11:39:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	i9PrfLAmZgIMy86J/BuBNlzLt3qqCa2AcRVAnqXESEw=; b=Vy8/RZuhDVNhraUs
-	ot/qrCqm0JWxEceWKB8RNHxPkb/aj15NWXMCVQCyQLYtS8scUB7QejOgsyNDQbiZ
-	3AZGk5YK7btmmxhK9Ir91jZpL6mydaX+oiuOrcz1nnaPsKeOKm7PKn3GboJRxmWU
-	23l4jaKDE3Qw8JLa/3bpYU05xpawqGhvOet1SRr9feqUXF7zS410O9P8AdtgrQSx
-	7YcmXntDvQh0q2KEcDRbBdgSUMAk+B7o/Q9kGCdNutJXq+GFt+BrgEMMlWDCqM3g
-	H+mFgNB25GrqOtMlNR241Wf5yRw7k+UfhFAVcjAVeMjiPjQ9LOqVMIlsNdWYQcvy
-	7kOr8g==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ff33rftf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 11:29:49 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7be6f20f0a4so102035085a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 03:29:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738150188; x=1738754988;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i9PrfLAmZgIMy86J/BuBNlzLt3qqCa2AcRVAnqXESEw=;
-        b=ExKqVyV1/ad3e6prnsOzQAqn3xLSu3mw4vBCnc6of+NvAQokcYCQUGuedCdW1fredM
-         6T2f3nG7dSeP1Ders7HM0jDD0baSGt1B/XfX31m1GOAQGOKyWegQq/SBjb9v39hsxkZs
-         cIUr6vBYKI1OQHxnG/kfMnyrsEyKh4Vb9cIq2fja2aP59qSAgsys7DHKFB3l8tBWtB1C
-         xs+gNamnQ8PUZXI/rfWGnL7msNfRX+J+x7WBMq6S4b+LBtBL0OkQPOyggSc4E2Nns5rH
-         d9bY9yqHfi45tD6K2WeqQWvtnZYN2nmLB8oU/8JPMGJ/fAfJfe8k2Ely8k7rmNtnXdJk
-         P66w==
-X-Forwarded-Encrypted: i=1; AJvYcCVNVRXjibwCD9xFvNQD5peig6kH9gpWSztjNMAgQi8gXZ59amuN19XwA9RsCiKewh5tlHxZ2bOlnT/212Jr@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMX730RK3vzTwcdGpJrwjkNmzzJiZJlN0Tl72/1RZx5JngqaY8
-	fhPSc5Vqz0gfBv2Ke8WQRZN2Pb+4yfaXQhya0ZCd0z4c6kRIUEwVg28iPSpjmN4r9F1ijvfbz/K
-	YIlMFCjf0FUM5JY7DFR8dgqfDx3Wj3u/6F/1W1WtdVjZEaC7Stvi0WCDJH3L57aDi
-X-Gm-Gg: ASbGncvhJxHai7zLbzHrnjaJE7MNOMCUgUkegjhniZihK3Us6wOJmLrDE70Ojr6aMWJ
-	vWbgMftHhiExa7iebOXpN6FK8LVr8hyW37LEss6nm2H2IVXYfVjP2ZpxSuCpIQvBw+VXu2aYWmj
-	Mvltx/vHCNv1fVSc+O8sbp0rJsBlQdmGyF+WJ1s/279Q/S0+p2KkkRn5WjYrL2thvBlthELUI31
-	ZSLFMTwvsBsN+9vxcXIpxvqxRccwoCEL4pfm3Sdyh2k7yuuyN0JZ0gMflN6/1ETQ1srENadi+Lg
-	aEGBrmRXFL+8rTrejjn6Hszo/uTuLR7nPfvEvGcVVcy2x9sDGibeyf9/RIc=
-X-Received: by 2002:a05:620a:44cf:b0:7b6:e6a4:9668 with SMTP id af79cd13be357-7bffcda31f7mr141973985a.14.1738150188146;
-        Wed, 29 Jan 2025 03:29:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHynGvu6Ug8OraeY+OA2aupmuSuiuP/SB6khBf0TMgvAsKh45ahlHKh8fb7ty74dKqVRcTTRg==
-X-Received: by 2002:a05:620a:44cf:b0:7b6:e6a4:9668 with SMTP id af79cd13be357-7bffcda31f7mr141971985a.14.1738150187750;
-        Wed, 29 Jan 2025 03:29:47 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dc186283efsm8669980a12.18.2025.01.29.03.29.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2025 03:29:46 -0800 (PST)
-Message-ID: <d928e662-07ac-4255-8d6f-adeaefb3db46@oss.qualcomm.com>
-Date: Wed, 29 Jan 2025 12:29:42 +0100
+	pVswfK75J9JQHVTow+F698JUXgONDdZzraWpwNgthYM=; b=WjJ4fjQ+2Cf75xOE
+	zbCZNsuMVHEwNOTClDY6jpEjn3mS+QWDJrENIc/RGYqfURSxQ8abi6ljTfvFUcn1
+	tqz0xif5nCUuSe3JxXR9ju+dR3CX6p4oLlhqs58GnBGjDHQ3I3YvOVv7fFDs7yLN
+	y+gsclIq9PqpseHsobGbPCjAd4Z/nP6w/mW9k3MLKm3/eCBHbq8Yn4jGyU5H1hqG
+	vFpAR0mcJPSx6N5PB4QQZqN+1m0VH+mk3jNOONJMKt1jEbKEvaO1qLWInMdNsrKd
+	/rvRkbsHbHfjCrgXG2xACpc70+R1GiqqJ10O4r9Whp+873/LHmpd13aJAoWzWaXX
+	faqZ6g==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ff33rgay-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 11:39:12 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50TBdBhq027239
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 11:39:11 GMT
+Received: from [10.151.37.100] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 Jan
+ 2025 03:39:06 -0800
+Message-ID: <3fb4768e-2592-4db3-9475-888a5ef6a169@quicinc.com>
+Date: Wed, 29 Jan 2025 17:09:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,31 +65,30 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] phy: qcom: qmp-pcie: Add PHY register retention
- support
-To: neil.armstrong@linaro.org, Manivannan Sadhasivam <mani@kernel.org>,
-        Qiang Yu <quic_qianyu@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>, vkoul@kernel.org,
-        kishon@kernel.org, p.zabel@pengutronix.de, abel.vesa@linaro.org,
-        manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20250121094140.4006801-1-quic_wenbyao@quicinc.com>
- <20250121094140.4006801-3-quic_wenbyao@quicinc.com>
- <CAA8EJppXQpDrdXzJsTE7HWs=POt7yFAw0JVZFabN6Ks3fhZiWQ@mail.gmail.com>
- <a2cc5a5a-6cbd-7564-a8df-8af2a652de2f@quicinc.com>
- <ya27ma6iah7ts6sj35payj6ek4z7m6y5v4pnxd6wtqrp3cbyta@ypvrzwa4bnfv>
- <188a9efd-718e-4ac5-b89a-29f2713e1dba@quicinc.com>
- <20250124070829.oar3hlkshkpam57d@thinkpad>
- <88c29161-17a8-40c6-a94b-c894de15ca37@oss.qualcomm.com>
- <df1f825f-66a4-4bab-9ca4-90d594f2cb36@linaro.org>
+Subject: Re: [PATCH 2/4] clk: qcom: apss-ipq5424: Add ipq5424 apss clock
+ controller
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+CC: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <konradybcio@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+References: <20250127093128.2611247-1-quic_srichara@quicinc.com>
+ <20250127093128.2611247-3-quic_srichara@quicinc.com>
+ <Z5iL0p6AaY2G9s1v@hu-varada-blr.qualcomm.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <df1f825f-66a4-4bab-9ca4-90d594f2cb36@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <Z5iL0p6AaY2G9s1v@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 6yrWBktOpuKodGKpkP_a-1FPaRsccbLa
-X-Proofpoint-GUID: 6yrWBktOpuKodGKpkP_a-1FPaRsccbLa
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: sWLadYXPopthMRh2WyvwQZRTgY_BQcT5
+X-Proofpoint-GUID: sWLadYXPopthMRh2WyvwQZRTgY_BQcT5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
@@ -121,84 +96,400 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspect
  phishscore=0 impostorscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
  clxscore=1015 adultscore=0 priorityscore=1501 mlxlogscore=999
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501290093
+ engine=8.19.0-2411120000 definitions=main-2501290094
 
-On 29.01.2025 9:29 AM, neil.armstrong@linaro.org wrote:
-> On 25/01/2025 14:10, Konrad Dybcio wrote:
->> On 24.01.2025 8:08 AM, Manivannan Sadhasivam wrote:
->>> + Mayank (with whom I discussed this topic internally)
->>>
->>> On Fri, Jan 24, 2025 at 02:22:01PM +0800, Qiang Yu wrote:
->>>>
->>>> On 1/22/2025 5:43 PM, Dmitry Baryshkov wrote:
->>>>> On Wed, Jan 22, 2025 at 03:17:39PM +0800, Wenbin Yao (Consultant) wrote:
->>>>>> On 1/21/2025 6:36 PM, Dmitry Baryshkov wrote:
->>>>>>> On Tue, 21 Jan 2025 at 11:43, Wenbin Yao <quic_wenbyao@quicinc.com> wrote:
->>>>>>>> From: Qiang Yu <quic_qianyu@quicinc.com>
->>>>>>>>
->>>>>>>> Currently, BCR reset and PHY register setting are mandatory for every port
->>>>>>>> before link training. However, some QCOM PCIe PHYs support no_csr reset.
->>>>>>>> Different than BCR reset that is used to reset entire PHY including
->>>>>>>> hardware and register, once no_csr reset is toggled, only PHY hardware will
->>>>>>>> be reset but PHY registers will be retained,
->>>>>>> I'm sorry, I can't parse this.
->>>>>> The difference between no_csr reset and bcr reset is that no_csr reset
->>>>>> doesn't reset the phy registers. If a phy is enabled in UEFI, its registers
->>>>>> are programed. After Linux boot up, the registers will not be reset but
->>>>>> keep the value programmed by UEFI if we only do no_csr reset, so we can
->>>>>> skip phy setting.
->>>>> Please fix capitalization of the abbreviations (PHY, BCR) and add
->>>>> similar text to the commit message.
->>>>>
->>>>>>>> which means PHY setting can
->>>>>>>> be skipped during PHY init if PCIe link was enabled in booltloader and only
->>>>>>>> no_csr is toggled after that.
->>>>>>>>
->>>>>>>> Hence, determine whether the PHY has been enabled in bootloader by
->>>>>>>> verifying QPHY_START_CTRL register. If it is programmed and no_csr reset is
->>>>>>>> present, skip BCR reset and PHY register setting, so that PCIe link can be
->>>>>>>> established with no_csr reset only.
->>>>>>> This doesn't tell us why we want to do so. The general rule is not to
->>>>>>> depend on the bootloaders at all. The reason is pretty simple: it is
->>>>>>> hard to update bootloaders, while it is relatively easy to update the
->>>>>>> kernel. If the hardware team issues any kind of changes to the
->>>>>>> programming tables, the kernel will get them earlier than the
->>>>>>> bootloader.
->>
->> We're assuming that if a product has shipped, the sequences used to power up
->> the PHY in the bootloader (e.g. for NVMe) are already good.
->>
->> If some tragedy happens and an erratum is needed, we can always introduce a
->> small override with the existing driver infrastructure (i.e. adding a new
->> entry with a couple registers worth of programming sequence, leaving the other
->> values in tact)
+
+
+On 1/28/2025 1:18 PM, Varadarajan Narayanan wrote:
+
+>> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+>> index b09dbdc210eb..db15514e7367 100644
+>> --- a/drivers/clk/qcom/Makefile
+>> +++ b/drivers/clk/qcom/Makefile
+>> @@ -28,6 +28,7 @@ obj-$(CONFIG_CLK_X1E80100_GPUCC) += gpucc-x1e80100.o
+>>   obj-$(CONFIG_CLK_X1E80100_TCSRCC) += tcsrcc-x1e80100.o
+>>   obj-$(CONFIG_CLK_QCM2290_GPUCC) += gpucc-qcm2290.o
+>>   obj-$(CONFIG_IPQ_APSS_PLL) += apss-ipq-pll.o
+>> +obj-$(CONFIG_IPQ_APSS_5424) += apss-ipq5424.o
+>>   obj-$(CONFIG_IPQ_APSS_6018) += apss-ipq6018.o
+>>   obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
+>>   obj-$(CONFIG_IPQ_GCC_5018) += gcc-ipq5018.o
+>> diff --git a/drivers/clk/qcom/apss-ipq5424.c b/drivers/clk/qcom/apss-ipq5424.c
+>> new file mode 100644
+>> index 000000000000..2bd6ee7575dc
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/apss-ipq5424.c
+>> @@ -0,0 +1,373 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
 > 
-> Assuming Linux will be always ran directly after the bootloader is a wild assumption.
+> 2025
+> 
+ok.
 
-Situations like
+>> + */
+>> +
+>> +#include <linux/clk.h>
+>> +#include <linux/clk-provider.h>
+>> +#include <linux/err.h>
+>> +#include <linux/kernel.h>
+>> +#include <linux/module.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/regmap.h>
+>> +
+>> +#include <dt-bindings/clock/qcom,apss-ipq.h>
+>> +#include <dt-bindings/arm/qcom,ids.h>
+>> +
+>> +#include "clk-alpha-pll.h"
+>> +#include "clk-branch.h"
+>> +#include "clk-rcg.h"
+>> +#include "clk-regmap.h"
+>> +#include "common.h"
+>> +
+>> +#define GPLL0_CLK_RATE		800000000
+>> +#define CPU_NOM_CLK_RATE	1416000000
+>> +#define CPU_TURBO_CLK_RATE	1800000000
+>> +#define L3_NOM_CLK_RATE		984000000
+>> +#define L3_TURBO_CLK_RATE	1272000000
+>> +
+>> +enum {
+>> +	P_XO,
+>> +	P_GPLL0,
+>> +	P_APSS_PLL_EARLY,
+>> +	P_L3_PLL,
+>> +};
+>> +
+>> +struct apss_clk {
+>> +	struct notifier_block cpu_clk_notifier;
+>> +	struct clk_hw *hw;
+>> +	struct device *dev;
+>> +	struct clk *l3_clk;
+>> +};
+>> +
+>> +/*
+>> + * IPQ5424 Huayra PLL offsets are different from the one mentioned in the
+>> + * clk-alpha-pll.c, hence define the IPQ5424 offsets here
+>> + */
+> 
+> This seems to be same as clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_HUAYRA_2290]
+> in clk-alpha-pll.c. Please see if that can be used here.
+> 
+ok
 
-[normal boot chain] -> [... (resets the PHY and doesn't reprogram it)] -> Linux
+>> +static const u8 ipq5424_pll_offsets[][PLL_OFF_MAX_REGS] = {
+>> +	[CLK_ALPHA_PLL_TYPE_HUAYRA] =  {
+>> +		[PLL_OFF_L_VAL] = 0x04,
+>> +		[PLL_OFF_ALPHA_VAL] = 0x08,
+>> +		[PLL_OFF_USER_CTL] = 0x0c,
+>> +		[PLL_OFF_CONFIG_CTL] = 0x10,
+>> +		[PLL_OFF_CONFIG_CTL_U] = 0x14,
+>> +		[PLL_OFF_CONFIG_CTL_U1] = 0x18,
+>> +		[PLL_OFF_TEST_CTL] = 0x1c,
+>> +		[PLL_OFF_TEST_CTL_U] = 0x20,
+>> +		[PLL_OFF_TEST_CTL_U1] = 0x24,
+>> +		[PLL_OFF_STATUS] = 0x38,
+>> +	},
+>> +};
+>> +
+>> +static struct clk_alpha_pll ipq5424_apss_pll = {
+>> +	.offset = 0x0,
+>> +	.regs = ipq5424_pll_offsets[CLK_ALPHA_PLL_TYPE_HUAYRA],
+>> +	.flags = SUPPORTS_DYNAMIC_UPDATE,
+>> +	.clkr = {
+>> +		.enable_reg = 0x0,
+>> +		.enable_mask = BIT(0),
+>> +		.hw.init = &(struct clk_init_data){
+>> +			.name = "apss_pll",
+>> +			.parent_data = &(const struct clk_parent_data) {
+>> +				.fw_name = "xo-board-clk",
+>> +			},
+>> +			.parent_names = (const char *[]){ "xo-board-clk"},
+>> +			.num_parents = 1,
+>> +			.ops = &clk_alpha_pll_huayra_ops,
+>> +		},
+>> +	},
+>> +};
+>> +
+>> +static const struct clk_parent_data parents_apss_silver_clk_src[] = {
+>> +	{ .fw_name = "xo-board-clk" },
+>> +	{ .fw_name = "gpll0" },
+>> +	{ .hw = &ipq5424_apss_pll.clkr.hw },
+>> +};
+>> +
+>> +static const struct parent_map parents_apss_silver_clk_src_map[] = {
+>> +	{ P_XO, 0 },
+>> +	{ P_GPLL0, 4 },
+>> +	{ P_APSS_PLL_EARLY, 5 },
+>> +};
+>> +
+>> +static const struct freq_tbl ftbl_apss_clk_src[] = {
+>> +	F(GPLL0_CLK_RATE, P_GPLL0, 1, 0, 0),
+>> +	F(CPU_NOM_CLK_RATE, P_APSS_PLL_EARLY, 1, 0, 0),
+>> +	F(CPU_TURBO_CLK_RATE, P_APSS_PLL_EARLY, 1, 0, 0),
+>> +	{ }
+>> +};
+>> +
+>> +static struct clk_rcg2 apss_silver_clk_src = {
+>> +	.cmd_rcgr = 0x0080,
+>> +	.freq_tbl = ftbl_apss_clk_src,
+>> +	.hid_width = 5,
+>> +	.parent_map = parents_apss_silver_clk_src_map,
+>> +	.clkr.hw.init = &(struct clk_init_data){
+>> +		.name = "apss_silver_clk_src",
+>> +		.parent_data = parents_apss_silver_clk_src,
+>> +		.num_parents = ARRAY_SIZE(parents_apss_silver_clk_src),
+>> +		.ops = &clk_rcg2_ops,
+>> +		.flags = CLK_SET_RATE_PARENT,
+>> +	},
+>> +};
+>> +
+>> +static struct clk_branch apss_silver_core_clk = {
+>> +	.halt_reg = 0x008c,
+>> +	.clkr = {
+>> +		.enable_reg = 0x008c,
+>> +		.enable_mask = BIT(0),
+>> +		.hw.init = &(struct clk_init_data){
+>> +			.name = "apss_silver_core_clk",
+>> +			.parent_hws = (const struct clk_hw *[]){
+>> +				&apss_silver_clk_src.clkr.hw },
+>> +			.num_parents = 1,
+>> +			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+>> +			.ops = &clk_branch2_ops,
+>> +		},
+>> +	},
+>> +};
+>> +
+>> +static struct clk_alpha_pll ipq5424_l3_pll = {
+>> +	.offset = 0x10000,
+>> +	.regs = ipq5424_pll_offsets[CLK_ALPHA_PLL_TYPE_HUAYRA],
+>> +	.flags = SUPPORTS_DYNAMIC_UPDATE,
+>> +	.clkr = {
+>> +		.enable_reg = 0x0,
+>> +		.enable_mask = BIT(0),
+>> +		.hw.init = &(struct clk_init_data){
+>> +			.name = "l3_pll",
+>> +			.parent_data = &(const struct clk_parent_data) {
+>> +				.fw_name = "xo-board-clk",
+>> +			},
+>> +			.parent_names = (const char *[]){ "xo-board-clk"},
+>> +			.num_parents = 1,
+>> +			.ops = &clk_alpha_pll_huayra_ops,
+>> +		},
+>> +	},
+>> +};
+>> +
+>> +static const struct clk_parent_data parents_l3_clk_src[] = {
+>> +	{ .fw_name = "xo-board-clk" },
+>> +	{ .fw_name = "gpll0" },
+>> +	{ .hw = &ipq5424_l3_pll.clkr.hw },
+>> +};
+>> +
+>> +static const struct parent_map parents_l3_clk_src_map[] = {
+>> +	{ P_XO, 0 },
+>> +	{ P_GPLL0, 4 },
+>> +	{ P_L3_PLL, 5 },
+>> +};
+>> +
+>> +static const struct freq_tbl ftbl_l3_clk_src[] = {
+>> +	F(GPLL0_CLK_RATE, P_GPLL0, 1, 0, 0),
+>> +	F(L3_NOM_CLK_RATE, P_L3_PLL, 1, 0, 0),
+>> +	F(L3_TURBO_CLK_RATE, P_L3_PLL, 1, 0, 0),
+>> +	{ }
+>> +};
+>> +
+>> +static struct clk_rcg2 l3_clk_src = {
+>> +	.cmd_rcgr = 0x10080,
+>> +	.freq_tbl = ftbl_l3_clk_src,
+>> +	.hid_width = 5,
+>> +	.parent_map = parents_l3_clk_src_map,
+>> +	.clkr.hw.init = &(struct clk_init_data){
+>> +		.name = "l3_clk_src",
+>> +		.parent_data = parents_l3_clk_src,
+>> +		.num_parents = ARRAY_SIZE(parents_l3_clk_src),
+>> +		.ops = &clk_rcg2_ops,
+>> +		.flags = CLK_SET_RATE_PARENT,
+>> +	},
+>> +};
+>> +
+>> +static struct clk_branch l3_core_clk = {
+>> +	.halt_reg = 0x1008c,
+>> +	.clkr = {
+>> +		.enable_reg = 0x1008c,
+>> +		.enable_mask = BIT(0),
+>> +		.hw.init = &(struct clk_init_data){
+>> +			.name = "l3_clk",
+>> +			.parent_hws = (const struct clk_hw *[]){
+>> +				&l3_clk_src.clkr.hw },
+>> +			.num_parents = 1,
+>> +			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+>> +			.ops = &clk_branch2_ops,
+>> +		},
+>> +	},
+>> +};
+>> +
+>> +static const struct regmap_config apss_ipq5424_regmap_config = {
+>> +	.reg_bits       = 32,
+>> +	.reg_stride     = 4,
+>> +	.val_bits       = 32,
+>> +	.max_register   = 0x20000,
+>> +	.fast_io        = true,
+>> +};
+>> +
+>> +static struct clk_regmap *apss_ipq5424_clks[] = {
+>> +	[APSS_PLL_EARLY] = &ipq5424_apss_pll.clkr,
+>> +	[APSS_SILVER_CLK_SRC] = &apss_silver_clk_src.clkr,
+>> +	[APSS_SILVER_CORE_CLK] = &apss_silver_core_clk.clkr,
+>> +	[L3_PLL] = &ipq5424_l3_pll.clkr,
+>> +	[L3_CLK_SRC] = &l3_clk_src.clkr,
+>> +	[L3_CORE_CLK] = &l3_core_clk.clkr,
+>> +
+>> +};
+>> +
+>> +static const struct qcom_cc_desc apss_ipq5424_desc = {
+>> +	.config = &apss_ipq5424_regmap_config,
+>> +	.clks = apss_ipq5424_clks,
+>> +	.num_clks = ARRAY_SIZE(apss_ipq5424_clks),
+>> +};
+>> +
+>> +static const struct alpha_pll_config apss_pll_config = {
+>> +	.l = 0x3b,
+>> +	.config_ctl_val = 0x08200920,
+>> +	.config_ctl_hi_val = 0x05008001,
+>> +	.config_ctl_hi1_val = 0x04000000,
+>> +	.test_ctl_val = 0x0,
+>> +	.test_ctl_hi_val = 0x0,
+>> +	.test_ctl_hi1_val = 0x0,
+>> +	.user_ctl_val = 0x1,
+>> +	.early_output_mask = BIT(3),
+>> +	.aux2_output_mask = BIT(2),
+>> +	.aux_output_mask = BIT(1),
+>> +	.main_output_mask = BIT(0),
+>> +};
+>> +
+>> +static const struct alpha_pll_config l3_pll_config = {
+>> +	.l = 0x29,
+>> +	.config_ctl_val = 0x08200920,
+>> +	.config_ctl_hi_val = 0x05008001,
+>> +	.config_ctl_hi1_val = 0x04000000,
+>> +	.test_ctl_val = 0x0,
+>> +	.test_ctl_hi_val = 0x0,
+>> +	.test_ctl_hi1_val = 0x0,
+>> +	.user_ctl_val = 0x1,
+>> +	.early_output_mask = BIT(3),
+>> +	.aux2_output_mask = BIT(2),
+>> +	.aux_output_mask = BIT(1),
+>> +	.main_output_mask = BIT(0),
+>> +};
+>> +
+>> +static unsigned long get_l3_clk_from_tbl(unsigned long rate)
+>> +{
+>> +	struct clk_rcg2 *l3_rcg2 = container_of(&l3_clk_src.clkr, struct clk_rcg2, clkr);
+>> +	u8 max_clk = sizeof(ftbl_apss_clk_src) / sizeof(struct freq_tbl);
+>> +	u8 loop;
+>> +
+>> +	for (loop = 0; loop < max_clk; loop++)
+>> +		if (ftbl_apss_clk_src[loop].freq == rate)
+>> +			return l3_rcg2->freq_tbl[loop].freq;
+>> +	return 0;
+>> +}
+>> +
+>> +static int cpu_clk_notifier_fn(struct notifier_block *nb, unsigned long action,
+>> +			       void *data)
+>> +{
+>> +	struct apss_clk *apss_ipq5424_cfg = container_of(nb, struct apss_clk, cpu_clk_notifier);
+>> +	struct clk_notifier_data *cnd = (struct clk_notifier_data *)data;
+>> +	struct device *dev = apss_ipq5424_cfg->dev;
+>> +	unsigned long rate = 0, l3_rate;
+>> +	int err = 0;
+> 
+> No need to init 'err' here.
+> 
+ok
 
-are both so unlikely and so intentional-by-the-user that it doesn't seem
-worth considering really.
+>> +
+>> +	dev_dbg(dev, "action:%ld old_rate:%ld new_rate:%ld\n", action,
+>> +		cnd->old_rate, cnd->new_rate);
+>> +
+>> +	switch (action) {
+>> +	case PRE_RATE_CHANGE:
+>> +		if (cnd->old_rate < cnd->new_rate)
+>> +			rate = cnd->new_rate;
+>> +	break;
+>> +	case POST_RATE_CHANGE:
+>> +		if (cnd->old_rate > cnd->new_rate)
+>> +			rate = cnd->new_rate;
+>> +	break;
+>> +	};
+>> +
+>> +	if (!rate)
+>> +		goto notif_ret;
+>> +
+>> +	l3_rate = get_l3_clk_from_tbl(rate);
+>> +	if (!l3_rate) {
+>> +		dev_err(dev, "Failed to get l3 clock rate from l3_tbl\n");
+>> +		return NOTIFY_BAD;
+>> +	}
+>> +
+>> +	err = clk_set_rate(apss_ipq5424_cfg->l3_clk, l3_rate);
+>> +	if (err) {
+>> +		dev_err(dev, "Failed to set l3 clock rate(%ld) err(%d)\n", l3_rate, err);
+>> +		return NOTIFY_BAD;
+>> +	}
+>> +
+>> +notif_ret:
+>> +	return NOTIFY_OK;
+>> +}
+>> +
+>> +static int apss_ipq5424_probe(struct platform_device *pdev)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	struct apss_clk *apss_ipq5424_cfg;
+>> +	struct regmap *regmap;
+>> +	void __iomem *base;
+>> +	int ret;
+>> +
+>> +	apss_ipq5424_cfg = devm_kzalloc(&pdev->dev, sizeof(struct apss_clk), GFP_KERNEL);
+>> +	if (IS_ERR_OR_NULL(apss_ipq5424_cfg))
+>> +		return PTR_ERR(apss_ipq5424_cfg);
+>> +
+>> +	base = devm_platform_ioremap_resource(pdev, 0);
+>> +	if (IS_ERR(base))
+>> +		return PTR_ERR(base);
+>> +
+>> +	regmap = devm_regmap_init_mmio(dev, base, &apss_ipq5424_regmap_config);
+>> +	if (!regmap)
+>> +		return PTR_ERR(regmap);
+>> +
+>> +	clk_alpha_pll_configure(&ipq5424_l3_pll, regmap, &l3_pll_config);
+>> +
+>> +	clk_alpha_pll_configure(&ipq5424_apss_pll, regmap, &apss_pll_config);
+>> +
+>> +	ret = qcom_cc_really_probe(dev, &apss_ipq5424_desc, regmap);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	dev_dbg(&pdev->dev, "Registered APSS & L3 clock provider\n");
+>> +
+>> +	apss_ipq5424_cfg->dev = dev;
+>> +	apss_ipq5424_cfg->hw = &apss_silver_clk_src.clkr.hw;
+>> +	apss_ipq5424_cfg->cpu_clk_notifier.notifier_call = cpu_clk_notifier_fn;
+>> +
+>> +	apss_ipq5424_cfg->l3_clk = clk_hw_get_clk(&l3_core_clk.clkr.hw, "l3_clk");
+>> +	if (IS_ERR(apss_ipq5424_cfg->l3_clk)) {
+>> +		dev_err(&pdev->dev, "Failed to get L3 clk, %ld\n",
+>> +			PTR_ERR(apss_ipq5424_cfg->l3_clk));
+>> +		return PTR_ERR(apss_ipq5424_cfg->l3_clk);
+>> +	}
+>> +
+>> +	ret = devm_clk_notifier_register(&pdev->dev, apss_ipq5424_cfg->hw->clk,
+>> +					 &apss_ipq5424_cfg->cpu_clk_notifier);
+> 
+> Use return devm_clk_notifier_register(...) and below lines can be skipped.
+> 
+ok
 
-If whatever sits in the middle *must* hard-reset the phy, it can save the
-register state beforehand and restore them after the reset
-
-> Yes, we should make use the noscr if the PHY is always programmed, but we should be
-> always able to reprogram the PHY entirely to recover a faulty programmation.
-
-We aren't considering any possibility of faulty programming - it's either
-programmed, or not. And if the values configured by the bootloader are wrong,
-the device's firmware is considered faulty.
-
-Most devices probably follow the exact same magic values as our reference
-boards (though these values relate to analog characteristics, so perhaps not
-*all* of them, which is another argument for keeping the BL state) and these
-are extensively tested internally before any production devices make it out
-the door. Any updates deep into the product life are most likely just "nice
-to have"s and not anything critical, and as I've mentioned, we can still have
-overrides with the current logic inside this driver.
-
-Konrad
+Regards,
+  Sricharan
 
