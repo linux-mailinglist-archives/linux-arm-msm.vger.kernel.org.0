@@ -1,112 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-46471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45ECEA21872
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:00:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F1F5A218A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:09:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F27D1886318
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:00:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A28721619B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:09:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5115192D63;
-	Wed, 29 Jan 2025 07:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FD9019A28D;
+	Wed, 29 Jan 2025 08:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="AWkLzdHh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nrUOAPAv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FDE19AD8C;
-	Wed, 29 Jan 2025 07:59:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857302F29;
+	Wed, 29 Jan 2025 08:09:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738137598; cv=none; b=PwWkpUh+Cx1s3ogN51IMO+/Ifbb0f8jZhzRE80MXMV6k56SkQENvEojEXgn6uqVUIcLZ1htAiW825KORV2RQRb03av4FeTDIJQcr3ouSMNgRHajiUvfgRnis9Y94T83isxmENeWYDg9bsNkSIZg7IUkCnC1HDQWX++pJwkErre0=
+	t=1738138167; cv=none; b=ONjjUYpNmcnOyY5Qx2OK3Y1P6xWGCkq/NMx0mXrBl1iPVb2FMMurk0BtmO/Hzd3uoHvPRzo07EdVd73AkLKFWqvjAgCEJzfvCv2ZFcRTQSaUUUt+RinWp0tIBh5xtSWnimWUT1KLOPr76b7/dI9bd25EIls/kT4hoxBvMKDVKQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738137598; c=relaxed/simple;
-	bh=nL0TTQtq4gD/ROKa9lhyxiBPOLnQoLFl6/akVgzIKJU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=neTcsCryICyLWyzQbm/qDd6oIUqtY7o0WvXfeFQkdmP58nk/T+3dIu+x6B4YG7trQVjNDV8JixK7SWoyZu0bQM1w2kUThJyyZmE3DJv0xuyuqr8q7OuVZqQE6tMYY0oRn+nGE1kWVoKnb8f3l3+ytI9WbB2uNoBqxTnp4pB51FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=AWkLzdHh; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1738137594;
-	bh=nL0TTQtq4gD/ROKa9lhyxiBPOLnQoLFl6/akVgzIKJU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=AWkLzdHhcpG+P+emxJ33qjiIXsOdHkZjFZ5t8MlnATlGHZ1pxJ9JO2jJDuelpG7eK
-	 GztXnDeB+r1xB7ReDJ45is59RCpk06uG2/wnCgtXk7LaS44Lv22L7QsBxIB+AxSZnw
-	 HE6k9VGNUILnzdS3rMVmDGH+i0igR7NlMmIV4lDC+2Rb9rfwlwR3hMAsqx5C2Qa+2F
-	 Xf88SwKOv8KLBDlxsM6J4RiftfvuUnf2m+ml1uj0wnp2h9ga7J5k5tbvg66hrAWfsh
-	 1u75N87rA1MD03z9aMpYPIeTNMaeIaIxW96GaAWRcUqu582tRU8h3xdGnAZEPTMC57
-	 QZkRFsHTTL2Eg==
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bbrezillon)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 3DA8C17E0FCA;
-	Wed, 29 Jan 2025 08:59:53 +0100 (CET)
-Date: Wed, 29 Jan 2025 08:59:46 +0100
-From: Boris Brezillon <boris.brezillon@collabora.com>
-To: Philipp Stanner <phasta@kernel.org>
-Cc: Alex Deucher <alexander.deucher@amd.com>, Christian =?UTF-8?B?S8O2bmln?=
- <christian.koenig@amd.com>, Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie
- <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Lucas Stach
- <l.stach@pengutronix.de>, Russell King <linux+etnaviv@armlinux.org.uk>,
- Christian Gmeiner <christian.gmeiner@gmail.com>, Frank Binns
- <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>, Maarten
- Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu
- <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>, Sean Paul
- <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, Marijn Suijten
- <marijn.suijten@somainline.org>, Karol Herbst <kherbst@redhat.com>, Lyude
- Paul <lyude@redhat.com>, Danilo Krummrich <dakr@redhat.com>, Rob Herring
- <robh@kernel.org>, Steven Price <steven.price@arm.com>, Liviu Dudau
- <liviu.dudau@arm.com>, Matthew Brost <matthew.brost@intel.com>, Melissa Wen
- <mwen@igalia.com>, =?UTF-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Lucas De
- Marchi <lucas.demarchi@intel.com>, Thomas =?UTF-8?B?SGVsbHN0csO2bQ==?=
- <thomas.hellstrom@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Sunil Khatri <sunil.khatri@amd.com>, Lijo Lazar <lijo.lazar@amd.com>,
- Hawking Zhang <Hawking.Zhang@amd.com>, Mario Limonciello
- <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>, Yunxiang Li
- <Yunxiang.Li@amd.com>, amd-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- etnaviv@lists.freedesktop.org, lima@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- nouveau@lists.freedesktop.org, intel-xe@lists.freedesktop.org
-Subject: Re: [PATCH v2] drm/sched: Use struct for drm_sched_init() params
-Message-ID: <20250129085946.69e5ebf2@collabora.com>
-In-Reply-To: <20250128142927.103290-2-phasta@kernel.org>
-References: <20250128142927.103290-2-phasta@kernel.org>
-Organization: Collabora
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1738138167; c=relaxed/simple;
+	bh=S+Qt8eFziu1bSo3XwsdBGdzJI+QLVguG9aumZqsL7Ow=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YDZU9hEjBIsaCVA5LDxGMzUmrI3ka43tXDBqxdwe1ubVlqMHS7UJqpFK6DZO94srxPBRn0wKvB6Fto/IbUGeMLku4H+UNFuMxch585uF5xmN95saP+U+y3mwes4GNW3o8nJWL5PjcjfzdqCMtm9LI9DKWpkEtxEUFexRB/Nf4uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nrUOAPAv; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ef28f07dbaso9117021a91.2;
+        Wed, 29 Jan 2025 00:09:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738138165; x=1738742965; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ye4JntaIkIF7a+w6DTbO0kIk9MLJPFfMjPP4/iHk7/A=;
+        b=nrUOAPAvB6agyOhwK3sVMmUK0ian9HxPvyOq+9NnumkvhjRK+TLGhvaX3mOBO05bEC
+         DqoEef7AIRJ0DPffJSYZwzl6lAAH4HBRu/R+nUnvyXBz+uWKVtTc1ZTir7/OE5YqLYbp
+         OI7s4dbym/cjOcn4YMheIdqibS0zrpU5gY8mtpUJPYm6bwVm1id+0kcLkPs9Jq371322
+         cT8nLlZECTh51Qo6L+2Pc7jesSLRrGd4NSDU5Z6oIB0/kgQi0WHSPIwp9Qti/x8aFBpW
+         8Degp502Dk5YDosEvsUwUJDAvU7HvhTkHagIB0pMzUuvE4j63W5IK4AVX4UopZ/hQIYU
+         vxjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738138165; x=1738742965;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ye4JntaIkIF7a+w6DTbO0kIk9MLJPFfMjPP4/iHk7/A=;
+        b=UGcNgB1zE/Qt06jtqyvduowTNM13L2E2zhJgBdccrEeih67ZuUWlrYUjIRV4Ds0/yZ
+         1eU/mNYwqy/h+KeGpAe/Y+Nb5iHv42R9+kGDhjzr7Lfo7h8eQ9UygaqQDUIIsTVVd8GF
+         alnkGGGZ7HvauRLJ3uA6r6z5q22J/UVbQ+7MRuE2yUD8aj7hNsRPyJHdBCbAGAzbWNPl
+         2nKtvZt8BaQkYq44IR4Axn37wea6yCIuFDg7Re2FIotqvdKE/Nzc9qOU8jboU3fzaoIE
+         i9ky14SEnxvbb5BSfO+7kkFfbkA8leD8rF/bqOvv2sQ8Ab5Bqt/j9mPhiuTFQXG/XI+O
+         V5XQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUcr0eQdITddbyVtEoOsddajH8ID2IXq6oVNo+PpJOO9f1Eds4RLjzwnFtQ5wMZIDMTYG8+87zWtCCnkrqE@vger.kernel.org, AJvYcCV+c/65GqldXg8nVzBwTJSWh+HfsSI3vlL70UPFzY0B7i3BN4Hdc2JE7quP0qxLlvc+TNQ6Yihy9695lnt2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxX2XDW1wnKtaPZE951+IFZI2qDX3+yrOOBBD+fCzgX3AXuqb3B
+	iUtmK2VWycLaYnxU9VSbxGdr/tn7GZHcExWV3CnFUsJ1Dq6ivSmJx1Hqmq4lcAjc9sIg8ZQASDk
+	TIMdv1u0JrfmwFwK324qR5T8TMcw=
+X-Gm-Gg: ASbGncukvIJetOx9Uv/hBEERRtl/xeVvIyoX8wUfgMbD/QnXbW0YIZwQ5GYeIeqgNSQ
+	y/EYEoQhy6ffcqSFiDF7/qUcLYv7yZeAH2oq9M7JjxKw1UqhLk8y4NsX/m3BHLhILb5K/hGQ=
+X-Google-Smtp-Source: AGHT+IFL/+Ix8PJzhRPGezz0BS/aPmM+Mu6yVPfAQpJZPpemGpHRcd0USeaMTeXX7cwj2kNE9lfyVb+Qeot2NIY7ikQ=
+X-Received: by 2002:a62:f20c:0:b0:72f:d7ce:5003 with SMTP id
+ d2e1a72fcca58-72fd7ce50abmr734741b3a.22.1738138164688; Wed, 29 Jan 2025
+ 00:09:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20250128142927.103290-2-phasta@kernel.org>
+In-Reply-To: <20250128142927.103290-2-phasta@kernel.org>
+From: Christian Gmeiner <christian.gmeiner@gmail.com>
+Date: Wed, 29 Jan 2025 09:09:12 +0100
+X-Gm-Features: AWEUYZk3uXItrn_mY6Y0468bmDyISJSZEOiGbSbsZd4jSdwj-_i30tdpr-sVXDQ
+Message-ID: <CAH9NwWcokvvJSRQ_kbV+jiH+ag-SA+Y87n6Bw34s8GP3vop4og@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/sched: Use struct for drm_sched_init() params
+To: Philipp Stanner <phasta@kernel.org>
+Cc: Alex Deucher <alexander.deucher@amd.com>, 
+	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Lucas Stach <l.stach@pengutronix.de>, Russell King <linux+etnaviv@armlinux.org.uk>, 
+	Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Karol Herbst <kherbst@redhat.com>, 
+	Lyude Paul <lyude@redhat.com>, Danilo Krummrich <dakr@redhat.com>, 
+	Boris Brezillon <boris.brezillon@collabora.com>, Rob Herring <robh@kernel.org>, 
+	Steven Price <steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, 
+	Matthew Brost <matthew.brost@intel.com>, Melissa Wen <mwen@igalia.com>, 
+	=?UTF-8?B?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>, 
+	Lucas De Marchi <lucas.demarchi@intel.com>, 
+	=?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, 
+	Rodrigo Vivi <rodrigo.vivi@intel.com>, Sunil Khatri <sunil.khatri@amd.com>, 
+	Lijo Lazar <lijo.lazar@amd.com>, Hawking Zhang <Hawking.Zhang@amd.com>, 
+	Mario Limonciello <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>, 
+	Yunxiang Li <Yunxiang.Li@amd.com>, amd-gfx@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, lima@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	nouveau@lists.freedesktop.org, intel-xe@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, 28 Jan 2025 15:29:27 +0100
-Philipp Stanner <phasta@kernel.org> wrote:
-
+>
 > drm_sched_init() has a great many parameters and upcoming new
 > functionality for the scheduler might add even more. Generally, the
 > great number of parameters reduces readability and has already caused
 > one missnaming in:
->=20
+>
 > commit 6f1cacf4eba7 ("drm/nouveau: Improve variable name in nouveau_sched=
 _init()").
->=20
+>
 > Introduce a new struct for the scheduler init parameters and port all
 > users.
->=20
+>
 > Signed-off-by: Philipp Stanner <phasta@kernel.org>
 > ---
 > Changes in v2:
@@ -125,15 +139,22 @@ _init()").
 >  drivers/gpu/drm/panfrost/panfrost_job.c    | 20 ++++---
 >  drivers/gpu/drm/panthor/panthor_mmu.c      | 16 +++--
 >  drivers/gpu/drm/panthor/panthor_sched.c    | 29 +++++----
-
-Panfrost and panthor changes are
-
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-
 >  drivers/gpu/drm/scheduler/sched_main.c     | 50 ++++++----------
 >  drivers/gpu/drm/v3d/v3d_sched.c            | 68 +++++++++-------------
 >  drivers/gpu/drm/xe/xe_execlist.c           | 16 +++--
 >  drivers/gpu/drm/xe/xe_gpu_scheduler.c      | 17 +++++-
 >  include/drm/gpu_scheduler.h                | 37 ++++++++++--
 >  14 files changed, 206 insertions(+), 151 deletions(-)
+>
+
+etnaviv changes are
+
+Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+
+--=20
+greets
+--
+Christian Gmeiner, MSc
+
+https://christian-gmeiner.info/privacypolicy
 
