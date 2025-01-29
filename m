@@ -1,402 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-46477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF6B4A218FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:27:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32FB5A21909
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:29:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 31098162A51
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:27:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 57D8E3A40BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 08:29:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33617194096;
-	Wed, 29 Jan 2025 08:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6C6933981;
+	Wed, 29 Jan 2025 08:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XQ7kFf/n"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e7zXH1e1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D557219992D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 08:27:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5795191F95
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 08:29:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738139257; cv=none; b=iFhwm4UGXQsHudm0qHh2YojlI2L/+nXNQXSMG8WsPQUGtfb6uGWvLiX5VFyyktevqAnc5wCZpz5dbAZaZX8B9h3i4uf7TEcXTGPnk6BPrI0kMWLX1a3YNUatmtoq4nUP1u01zB4zBxOb2p9FBPonn3sf4YGB2b5JEOs6R8AbpzQ=
+	t=1738139355; cv=none; b=rIvKeuu92nCEGu1HgpFE9vwZQCyJLVvS8jGhkXrdWTVpx/WLT2RD3yasIgoSW6tkCqD/UM5gzj8V0DfQRsoS0CzwYGcK/YdsuQVlv/7DaeZVC/1WmjhcodM3TlIR77agZ7/UC4Nnq1C27mx6AO5UsLB3Kt/RM2FtGDkzHmNsbqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738139257; c=relaxed/simple;
-	bh=jbFN3FLwQk/97n2wjzQR/BR2z8Y5CDZXPSM5L2M3+dM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RnScqxjQttu11Cv/IlN7sZb5j48JDA9wwMXQEyAWdgd28Hd7lVPUrSBiEH0DqKwjuxsZNHYZ4r8B3kWmUpYD1mk5oxcFgFollY2kiu1i7zoN2vF/qo2BocJrM3X5Ii2bQFsyoLDJ240jL52Z+MuiH6+EwjT7V6TaZILGgNFWk/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XQ7kFf/n; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1738139355; c=relaxed/simple;
+	bh=Qj1Qiix889YPzXYdzBdu6+p6yUTG+1RD4rG0Dcj1ddg=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=nLTmwt6Rdbvdi6zipd3uM0iHd9pXr+r6JAGvAD+vs2/u9H2cebKfMLSBZqYYbGWem5gKfROlojSzfVlwZPINYK+ZvIH5jW4ighWCkpqCDuQwMIwmIVOx4qX6CS3jbPuw6f8QP2lbszXgFqOkv8kang5FgibB3yCl0A9WVfPOdaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e7zXH1e1; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4361815b96cso44242515e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 00:27:34 -0800 (PST)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385e27c75f4so5686135f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 00:29:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738139253; x=1738744053; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vhQFBIJ8kvnHH7JrMdeXTDl9F+4hBg2i8+ptBD6seKs=;
-        b=XQ7kFf/nXaWgVmKgjnKLSULuwsT1clx9iWu/KxwLGAJWp4ho5ejXUD2BKJ3E8Ft36p
-         7jJJ7bXkvUfoGl1mJMDutCqNmoAi8/0Fv6UugGRspCAYGxBpXb8Rtgke+/FUOKELn8ae
-         Vjx6AghvjxqdTmO/JbqrKK8uBrO5lgKycSWXu5Ayq0gQ3Jr4Hjarge8R6nqMF92rTA0q
-         STPIWI36Nxzdnj/WdSQo3NDwzSM5eOWcPI6yc2qNze2g2kArcNYAfmSldIIA61fnh3Tx
-         lstreUDmYnjAGMMMMKx/3t5fuqy2CiuX1MtUakgoUvXXXV+s/+g7tEK6R/v2Inpnj3KK
-         HFgw==
+        d=linaro.org; s=google; t=1738139352; x=1738744152; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KQNYCdG1yalzr+nhTkmask1WyrAuIEflxT0cAB6dcWI=;
+        b=e7zXH1e126AfaYtdBEp9qU6i+kHbX7Xaksi6mDi8DEySIXTRsfi4mfv7ytmWn0bnia
+         We0CkNhUh6DEvrgMXTj0nzA+dTamA6lclyIiXlM56ia4FOlD951HnPtz9GDfdEd0scYD
+         Q8/QEi9V8fzjzPvQZlBYUBP0O5yE4kR6ERS7Vl4PpKm2z15hCIs7VNDHMmh8BIMG+jdc
+         gTcrITDLlVnhhBR7rnJeE0jo9zkzsOh++dU2qRhn3nSMT1lxXMhtYpOgAqm/Zz+1RIzs
+         ct7uZaYQwafp38QPtemhjNbk5EqFtOWvar+tZnSZbTize8RidXVw9t7+e+KndBBsZFiM
+         1OZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738139253; x=1738744053;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vhQFBIJ8kvnHH7JrMdeXTDl9F+4hBg2i8+ptBD6seKs=;
-        b=MTbxuhO4Ks+vYjua9lCJED3eTJLDOKY4VYT1ukNH8MM1QQrLqHS/emocHPMJcMdp46
-         Ogf/fyiOFhpiYupW9EdT2PTDZdFhVnVQcStpxZTAAhP4+NLHa59YV+bsQGHGV8AbWHDO
-         28j4putfUKDJAAqgNh1MJKnDjEpkjRBCv2jpE4NB2I/h2bkTxrB0JwRBCapPw0mBvmNX
-         1TUXna1Ftz5OSeQPJUI0pW08QF6hBkYj09aBO0VesHMhEXfMRUXkupXuk603z9ythzqF
-         kGWBT2FeV/fZeti/1XWzOmj2h/NNHshrHAu0LixMD9klSUxTSpEWP2wpyjGPYwEtifG1
-         +YRA==
-X-Forwarded-Encrypted: i=1; AJvYcCURRRU6yOzb4w+2dBv7RkvyLVKaY5kWWo6W7tuSzX6EWZ5TvdOgBn4RDbxCdV2x5KUeiFMv54GBNKbqmbM1@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzqlnhg+nBk9oyJpMW0578IlGio2wtkXoa4C2E4rXLtKZGbj49S
-	Gq7bFRFuooqfY6Bh3ng8RvXN2+qcX30hw97SJRfOwbfDS3OVrBnJfNKWvYt5ElE=
-X-Gm-Gg: ASbGncvYDNRwX37jBufJI+uZlew98JAWzgXHuVJzrHLBbnobwXe1o5W5NH2qEL0RDRl
-	PurZdmNwDFHOIny3wCEXCT+nNzLpD3eC2uV6Mca5c3KGXBj8sM2x4cGPUX0V6ZouZZk0JY/KOsv
-	j3bB1+1CgnXy+jDv1og3lP8mBQ00JpHCtByQ96XgsKol+2NhZBpcV14tRXaFsAPT9M0aj/DiPI8
-	u9KTW1gPVNuiGP/L/Oo0107T4Gpjh9WCcR76Le38lS6O5M9OlaeZ1geF9+OWRVrqSxcvcrZ0H1p
-	36w6CehIFQDWgbEk0sycDQ==
-X-Google-Smtp-Source: AGHT+IGZsU7GllkCu3Gh1OhbhjD1M01Dpo3iCvB2uGOrmjONcJ2TsbWHIx6gOm4dxW70pjtOGqx+kw==
-X-Received: by 2002:a05:600c:468d:b0:434:f270:a513 with SMTP id 5b1f17b1804b1-438dc429eb0mr16415325e9.29.1738139252906;
-        Wed, 29 Jan 2025 00:27:32 -0800 (PST)
-Received: from linaro.org ([77.64.147.194])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a17d5d4sm16071284f8f.21.2025.01.29.00.27.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2025 00:27:32 -0800 (PST)
-Date: Wed, 29 Jan 2025 09:27:27 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Matti =?iso-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 05/13] remoteproc: qcom_q6v5_mss: Add modem support on
- MSM8226
-Message-ID: <Z5nmb2gvWauVtkRc@linaro.org>
-References: <20250129-msm8226-modem-v4-0-2b02ed7b7f1c@lucaweiss.eu>
- <20250129-msm8226-modem-v4-5-2b02ed7b7f1c@lucaweiss.eu>
+        d=1e100.net; s=20230601; t=1738139352; x=1738744152;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=KQNYCdG1yalzr+nhTkmask1WyrAuIEflxT0cAB6dcWI=;
+        b=leE6FXXORh5XsQeUllXOUshy36W5SuYH475g5827j8P3EaavgATkYqzLd+qU+aUhv/
+         oLYwrpIBcevqr7Lya8tPmZE8s0CR6R7wEktr7827SU235JU+UxQUqwWqt4fKaoXAbQBT
+         ncKA+jhz23nLq3PmbL3qIoiWXgwOz7XchvAT1voVN5k+rJ4G6cnlXVZJk234+V4feuHu
+         r/qU2+N1Oxs49uImezMgZGBoQBsLdiRFEzwOuZTnaj2Eh9LkQpvI2XQtx7A7XCRBQQ6k
+         K6RF2etl+GrKtZwn/upf1zRUG5+qEXbx4Vzc1Vy4ye4zn/QhoRLiAUyG7hcRYFvC2n+w
+         Vmlw==
+X-Forwarded-Encrypted: i=1; AJvYcCVyoo7MhTKuwKWjjoi9zkQKv58ZnlkDmoCDxzMhrbVQRGM+QXsQS/MeSnjX+fP8hLZgs3Mwi7KgIDR50L0F@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz3e+zaWO1vLV1s3bJksh8sPP4XI6hiCiaBdlGYtsX6ya8XRTII
+	HxAM9uvoa6fLx8SBFY4MK2aoAGYBsFPi5oABN+FzVwptfosRxxjz0fq/yYaRTgY=
+X-Gm-Gg: ASbGnctfDt0Q9I5FF/+ASVel/KWmpYxDdsj+V3C0Zdt1KFgrsmGHZY8MeZvvvQMU9YX
+	Mxf+2y3dQc4DXxpb+ekGAG2cix3xmAFsODIa/H3WUaR5ADxzuWuVoncSOTEBhYE9bKxU2HY3SML
+	1lsDdZeIkL6zxhcL359os/16B+1ce/ZGlKNo+wxOWDbCaO31MypnEtIf0u9yIV2TaG1v2Li+JJo
+	1oH/55OmBZQDqU5Peb/HFI+o6L2lKHl5iNOEBhVZzI1KS4Lp2a5H+jNxdiLEiQ826S5TPbFXKVp
+	wtwu2QMFpzHwWbGqjYY2Ls+MRZvl+JojVTxjQvZgbL1lRRKObwLwVzbzj94RhYdwHToW
+X-Google-Smtp-Source: AGHT+IFAr02Y7e6yIfhkFOqiUS1YKF/uSP0j+bSryAqDn2OKuFT4ZAHdeqJksqWGEDwv/Ztk59DZlA==
+X-Received: by 2002:a5d:47cf:0:b0:38b:eb7b:316 with SMTP id ffacd0b85a97d-38c520bb8bdmr1512622f8f.47.1738139351871;
+        Wed, 29 Jan 2025 00:29:11 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:b25e:a614:863b:566e? ([2a01:e0a:982:cbb0:b25e:a614:863b:566e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a17d697sm16047435f8f.29.2025.01.29.00.29.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jan 2025 00:29:11 -0800 (PST)
+Message-ID: <df1f825f-66a4-4bab-9ca4-90d594f2cb36@linaro.org>
+Date: Wed, 29 Jan 2025 09:29:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250129-msm8226-modem-v4-5-2b02ed7b7f1c@lucaweiss.eu>
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 2/2] phy: qcom: qmp-pcie: Add PHY register retention
+ support
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Manivannan Sadhasivam <mani@kernel.org>, Qiang Yu <quic_qianyu@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>, vkoul@kernel.org,
+ kishon@kernel.org, p.zabel@pengutronix.de, abel.vesa@linaro.org,
+ manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+References: <20250121094140.4006801-1-quic_wenbyao@quicinc.com>
+ <20250121094140.4006801-3-quic_wenbyao@quicinc.com>
+ <CAA8EJppXQpDrdXzJsTE7HWs=POt7yFAw0JVZFabN6Ks3fhZiWQ@mail.gmail.com>
+ <a2cc5a5a-6cbd-7564-a8df-8af2a652de2f@quicinc.com>
+ <ya27ma6iah7ts6sj35payj6ek4z7m6y5v4pnxd6wtqrp3cbyta@ypvrzwa4bnfv>
+ <188a9efd-718e-4ac5-b89a-29f2713e1dba@quicinc.com>
+ <20250124070829.oar3hlkshkpam57d@thinkpad>
+ <88c29161-17a8-40c6-a94b-c894de15ca37@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <88c29161-17a8-40c6-a94b-c894de15ca37@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 29, 2025 at 12:35:37AM +0100, Luca Weiss wrote:
-> Add support for the external power block headswitch register needed by
-> MSM8226 and some other qcom platforms.
+On 25/01/2025 14:10, Konrad Dybcio wrote:
+> On 24.01.2025 8:08 AM, Manivannan Sadhasivam wrote:
+>> + Mayank (with whom I discussed this topic internally)
+>>
+>> On Fri, Jan 24, 2025 at 02:22:01PM +0800, Qiang Yu wrote:
+>>>
+>>> On 1/22/2025 5:43 PM, Dmitry Baryshkov wrote:
+>>>> On Wed, Jan 22, 2025 at 03:17:39PM +0800, Wenbin Yao (Consultant) wrote:
+>>>>> On 1/21/2025 6:36 PM, Dmitry Baryshkov wrote:
+>>>>>> On Tue, 21 Jan 2025 at 11:43, Wenbin Yao <quic_wenbyao@quicinc.com> wrote:
+>>>>>>> From: Qiang Yu <quic_qianyu@quicinc.com>
+>>>>>>>
+>>>>>>> Currently, BCR reset and PHY register setting are mandatory for every port
+>>>>>>> before link training. However, some QCOM PCIe PHYs support no_csr reset.
+>>>>>>> Different than BCR reset that is used to reset entire PHY including
+>>>>>>> hardware and register, once no_csr reset is toggled, only PHY hardware will
+>>>>>>> be reset but PHY registers will be retained,
+>>>>>> I'm sorry, I can't parse this.
+>>>>> The difference between no_csr reset and bcr reset is that no_csr reset
+>>>>> doesn't reset the phy registers. If a phy is enabled in UEFI, its registers
+>>>>> are programed. After Linux boot up, the registers will not be reset but
+>>>>> keep the value programmed by UEFI if we only do no_csr reset, so we can
+>>>>> skip phy setting.
+>>>> Please fix capitalization of the abbreviations (PHY, BCR) and add
+>>>> similar text to the commit message.
+>>>>
+>>>>>>> which means PHY setting can
+>>>>>>> be skipped during PHY init if PCIe link was enabled in booltloader and only
+>>>>>>> no_csr is toggled after that.
+>>>>>>>
+>>>>>>> Hence, determine whether the PHY has been enabled in bootloader by
+>>>>>>> verifying QPHY_START_CTRL register. If it is programmed and no_csr reset is
+>>>>>>> present, skip BCR reset and PHY register setting, so that PCIe link can be
+>>>>>>> established with no_csr reset only.
+>>>>>> This doesn't tell us why we want to do so. The general rule is not to
+>>>>>> depend on the bootloaders at all. The reason is pretty simple: it is
+>>>>>> hard to update bootloaders, while it is relatively easy to update the
+>>>>>> kernel. If the hardware team issues any kind of changes to the
+>>>>>> programming tables, the kernel will get them earlier than the
+>>>>>> bootloader.
 > 
-> Co-developed-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+> We're assuming that if a product has shipped, the sequences used to power up
+> the PHY in the bootloader (e.g. for NVMe) are already good.
+> 
+> If some tragedy happens and an erratum is needed, we can always introduce a
+> small override with the existing driver infrastructure (i.e. adding a new
+> entry with a couple registers worth of programming sequence, leaving the other
+> values in tact)
 
-Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Assuming Linux will be always ran directly after the bootloader is a wild assumption.
 
-> ---
->  drivers/remoteproc/qcom_q6v5_mss.c | 117 ++++++++++++++++++++++++++++++++++++-
->  1 file changed, 116 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index 2c80d7fe39f8e308eb12e79415a551b5009b3fe4..6f590f9128409b4aa427ab6bde1a9c4a966b3d15 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -134,6 +134,11 @@
->  #define BOOT_FSM_TIMEOUT                10000
->  #define BHS_CHECK_MAX_LOOPS             200
->  
-> +/* External power block headswitch */
-> +#define EXTERNAL_BHS_ON			BIT(0)
-> +#define EXTERNAL_BHS_STATUS		BIT(4)
-> +#define EXTERNAL_BHS_TIMEOUT_US		50
-> +
->  struct reg_info {
->  	struct regulator *reg;
->  	int uV;
-> @@ -161,6 +166,7 @@ struct rproc_hexagon_res {
->  	bool has_mba_logs;
->  	bool has_spare_reg;
->  	bool has_qaccept_regs;
-> +	bool has_ext_bhs_reg;
->  	bool has_ext_cntl_regs;
->  	bool has_vq6;
->  };
-> @@ -180,6 +186,7 @@ struct q6v5 {
->  	u32 halt_nc;
->  	u32 halt_vq6;
->  	u32 conn_box;
-> +	u32 ext_bhs;
->  
->  	u32 qaccept_mdm;
->  	u32 qaccept_cx;
-> @@ -237,6 +244,7 @@ struct q6v5 {
->  	bool has_mba_logs;
->  	bool has_spare_reg;
->  	bool has_qaccept_regs;
-> +	bool has_ext_bhs_reg;
->  	bool has_ext_cntl_regs;
->  	bool has_vq6;
->  	u64 mpss_perm;
-> @@ -246,6 +254,7 @@ struct q6v5 {
->  };
->  
->  enum {
-> +	MSS_MSM8226,
->  	MSS_MSM8909,
->  	MSS_MSM8916,
->  	MSS_MSM8953,
-> @@ -415,6 +424,34 @@ static void q6v5_pds_disable(struct q6v5 *qproc, struct device **pds,
->  	}
->  }
->  
-> +static int q6v5_external_bhs_enable(struct q6v5 *qproc)
-> +{
-> +	u32 val;
-> +	int ret = 0;
-> +
-> +	/*
-> +	 * Enable external power block headswitch and wait for it to
-> +	 * stabilize
-> +	 */
-> +	regmap_set_bits(qproc->conn_map, qproc->ext_bhs, EXTERNAL_BHS_ON);
-> +
-> +	ret = regmap_read_poll_timeout(qproc->conn_map, qproc->ext_bhs,
-> +				       val, val & EXTERNAL_BHS_STATUS,
-> +				       1, EXTERNAL_BHS_TIMEOUT_US);
-> +
-> +	if (ret) {
-> +		dev_err(qproc->dev, "External BHS timed out\n");
-> +		ret = -ETIMEDOUT;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static void q6v5_external_bhs_disable(struct q6v5 *qproc)
-> +{
-> +	regmap_clear_bits(qproc->conn_map, qproc->ext_bhs, EXTERNAL_BHS_ON);
-> +}
-> +
->  static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, u64 *current_perm,
->  				   bool local, bool remote, phys_addr_t addr,
->  				   size_t size)
-> @@ -1112,11 +1149,17 @@ static int q6v5_mba_load(struct q6v5 *qproc)
->  		goto disable_proxy_clk;
->  	}
->  
-> +	if (qproc->has_ext_bhs_reg) {
-> +		ret = q6v5_external_bhs_enable(qproc);
-> +		if (ret < 0)
-> +			goto disable_vdd;
-> +	}
-> +
->  	ret = q6v5_clk_enable(qproc->dev, qproc->reset_clks,
->  			      qproc->reset_clk_count);
->  	if (ret) {
->  		dev_err(qproc->dev, "failed to enable reset clocks\n");
-> -		goto disable_vdd;
-> +		goto disable_ext_bhs;
->  	}
->  
->  	ret = q6v5_reset_deassert(qproc);
-> @@ -1214,6 +1257,9 @@ static int q6v5_mba_load(struct q6v5 *qproc)
->  disable_reset_clks:
->  	q6v5_clk_disable(qproc->dev, qproc->reset_clks,
->  			 qproc->reset_clk_count);
-> +disable_ext_bhs:
-> +	if (qproc->has_ext_bhs_reg)
-> +		q6v5_external_bhs_disable(qproc);
->  disable_vdd:
->  	q6v5_regulator_disable(qproc, qproc->active_regs,
->  			       qproc->active_reg_count);
-> @@ -1281,6 +1327,8 @@ static void q6v5_mba_reclaim(struct q6v5 *qproc)
->  			 qproc->reset_clk_count);
->  	q6v5_clk_disable(qproc->dev, qproc->active_clks,
->  			 qproc->active_clk_count);
-> +	if (qproc->has_ext_bhs_reg)
-> +		q6v5_external_bhs_disable(qproc);
->  	q6v5_regulator_disable(qproc, qproc->active_regs,
->  			       qproc->active_reg_count);
->  
-> @@ -1750,6 +1798,23 @@ static int q6v5_init_mem(struct q6v5 *qproc, struct platform_device *pdev)
->  		qproc->qaccept_axi = args.args[2];
->  	}
->  
-> +	if (qproc->has_ext_bhs_reg) {
-> +		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
-> +						       "qcom,ext-bhs-reg",
-> +						       1, 0, &args);
-> +		if (ret < 0) {
-> +			dev_err(&pdev->dev, "failed to parse ext-bhs-reg index 0\n");
-> +			return -EINVAL;
-> +		}
-> +
-> +		qproc->conn_map = syscon_node_to_regmap(args.np);
-> +		of_node_put(args.np);
-> +		if (IS_ERR(qproc->conn_map))
-> +			return PTR_ERR(qproc->conn_map);
-> +
-> +		qproc->ext_bhs = args.args[0];
-> +	}
-> +
->  	if (qproc->has_ext_cntl_regs) {
->  		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
->  						       "qcom,ext-regs",
-> @@ -2021,6 +2086,7 @@ static int q6v5_probe(struct platform_device *pdev)
->  	platform_set_drvdata(pdev, qproc);
->  
->  	qproc->has_qaccept_regs = desc->has_qaccept_regs;
-> +	qproc->has_ext_bhs_reg = desc->has_ext_bhs_reg;
->  	qproc->has_ext_cntl_regs = desc->has_ext_cntl_regs;
->  	qproc->has_vq6 = desc->has_vq6;
->  	qproc->has_spare_reg = desc->has_spare_reg;
-> @@ -2174,6 +2240,7 @@ static const struct rproc_hexagon_res sc7180_mss = {
->  	.has_mba_logs = true,
->  	.has_spare_reg = true,
->  	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = false,
->  	.has_vq6 = false,
->  	.version = MSS_SC7180,
-> @@ -2202,6 +2269,7 @@ static const struct rproc_hexagon_res sc7280_mss = {
->  	.has_mba_logs = true,
->  	.has_spare_reg = false,
->  	.has_qaccept_regs = true,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = true,
->  	.has_vq6 = true,
->  	.version = MSS_SC7280,
-> @@ -2233,6 +2301,7 @@ static const struct rproc_hexagon_res sdm660_mss = {
->  	.has_mba_logs = false,
->  	.has_spare_reg = false,
->  	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = false,
->  	.has_vq6 = false,
->  	.version = MSS_SDM660,
-> @@ -2268,6 +2337,7 @@ static const struct rproc_hexagon_res sdm845_mss = {
->  	.has_mba_logs = false,
->  	.has_spare_reg = false,
->  	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = false,
->  	.has_vq6 = false,
->  	.version = MSS_SDM845,
-> @@ -2299,6 +2369,7 @@ static const struct rproc_hexagon_res msm8998_mss = {
->  	.has_mba_logs = false,
->  	.has_spare_reg = false,
->  	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = false,
->  	.has_vq6 = false,
->  	.version = MSS_MSM8998,
-> @@ -2337,6 +2408,7 @@ static const struct rproc_hexagon_res msm8996_mss = {
->  	.has_mba_logs = false,
->  	.has_spare_reg = false,
->  	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = false,
->  	.has_vq6 = false,
->  	.version = MSS_MSM8996,
-> @@ -2371,6 +2443,7 @@ static const struct rproc_hexagon_res msm8909_mss = {
->  	.has_mba_logs = false,
->  	.has_spare_reg = false,
->  	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = false,
->  	.has_vq6 = false,
->  	.version = MSS_MSM8909,
-> @@ -2416,6 +2489,7 @@ static const struct rproc_hexagon_res msm8916_mss = {
->  	.has_mba_logs = false,
->  	.has_spare_reg = false,
->  	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = false,
->  	.has_vq6 = false,
->  	.version = MSS_MSM8916,
-> @@ -2451,6 +2525,7 @@ static const struct rproc_hexagon_res msm8953_mss = {
->  	.has_mba_logs = false,
->  	.has_spare_reg = false,
->  	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = false,
->  	.has_vq6 = false,
->  	.version = MSS_MSM8953,
-> @@ -2503,13 +2578,53 @@ static const struct rproc_hexagon_res msm8974_mss = {
->  	.has_mba_logs = false,
->  	.has_spare_reg = false,
->  	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
->  	.has_ext_cntl_regs = false,
->  	.has_vq6 = false,
->  	.version = MSS_MSM8974,
->  };
->  
-> +static const struct rproc_hexagon_res msm8226_mss = {
-> +	.hexagon_mba_image = "mba.b00",
-> +	.proxy_supply = (struct qcom_mss_reg_res[]) {
-> +		{
-> +			.supply = "pll",
-> +			.uA = 100000,
-> +		},
-> +		{
-> +			.supply = "mx",
-> +			.uV = 1050000,
-> +		},
-> +		{}
-> +	},
-> +	.proxy_clk_names = (char*[]){
-> +		"xo",
-> +		NULL
-> +	},
-> +	.active_clk_names = (char*[]){
-> +		"iface",
-> +		"bus",
-> +		"mem",
-> +		NULL
-> +	},
-> +	.proxy_pd_names = (char*[]){
-> +		"cx",
-> +		NULL
-> +	},
-> +	.need_mem_protection = false,
-> +	.has_alt_reset = false,
-> +	.has_mba_logs = false,
-> +	.has_spare_reg = false,
-> +	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = true,
-> +	.has_ext_cntl_regs = false,
-> +	.has_vq6 = false,
-> +	.version = MSS_MSM8226,
-> +};
-> +
->  static const struct of_device_id q6v5_of_match[] = {
->  	{ .compatible = "qcom,q6v5-pil", .data = &msm8916_mss},
-> +	{ .compatible = "qcom,msm8226-mss-pil", .data = &msm8226_mss},
->  	{ .compatible = "qcom,msm8909-mss-pil", .data = &msm8909_mss},
->  	{ .compatible = "qcom,msm8916-mss-pil", .data = &msm8916_mss},
->  	{ .compatible = "qcom,msm8953-mss-pil", .data = &msm8953_mss},
-> 
-> -- 
-> 2.48.1
-> 
+Yes, we should make use the noscr if the PHY is always programmed, but we should be
+always able to reprogram the PHY entirely to recover a faulty programmation.
+
+Neil
+
+
+<snip>
+
 
