@@ -1,180 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-46547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2939CA22369
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 18:53:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B384A2239F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 19:10:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 57F8B3A48FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 17:52:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EF47E7A21A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 18:09:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60E6D1E0DE6;
-	Wed, 29 Jan 2025 17:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E48D1DE2DF;
+	Wed, 29 Jan 2025 18:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="lZdWbKAN"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="UPQeY7k/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982B21DF728;
-	Wed, 29 Jan 2025 17:52:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613461917D9;
+	Wed, 29 Jan 2025 18:10:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738173122; cv=none; b=BqqlnWvVMxXbF9usC5Fvx0yZktZvcyUm61SS6OIwbrsCGyrLwFVpWx7utN6NaQLM4qhW/tB4iDIylCIgKiAnEogpgpq359SkMutq/42pY2vmnLzR4nhZaPoZaYMPyyHThdcm3yRrObJDdMQLvjssUbgBQK5A9rWHcAxzcoc23LI=
+	t=1738174220; cv=none; b=Bz/3oF/C1FWukqtlz5682MwyMJEzsz+r6P8QMfE/lFg5szkdoOKiuMS7+463rQeU9gDJcpKys8v4B/iJs08Vcde1wJ3navoNazWf3LFgibiWUz/O9DbOZgCPDyR1uo/iaKZogKmxB086eiK6J/MqogKMeLvLWtV12jD3iIVvues=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738173122; c=relaxed/simple;
-	bh=zpiAXyILf067I4whMC+frV0pjFcZkvxHyV76lqWCAAQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hIQHdpWMiUpPDggQU+UAgmHMh5KtgroayVuZnlOq7INIBHjJjjOHGE9hFFWk8XRAxl3kJDL+//t5sSdLKqhR3qB90tb0QGsgTI2t9C8OLJlt6DUCSaGhCV8zpv7KdjnzQgR5QRhmMvMY1Oca3Kjf9mwYaX6k8yiW8PV/tAcPZGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=lZdWbKAN; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1738173118; bh=zpiAXyILf067I4whMC+frV0pjFcZkvxHyV76lqWCAAQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=lZdWbKANpvXf7F9MTh9ki/AIGtlVy6tvWjhMYDDnubh/v3qC78u3kbwLZjlXLzCpd
-	 pLdLwQx2pBy2GaTs0YhVExXanhpHwLsKdRkMe3BE21rStjJTXOd3omGonc556qkHcN
-	 PKrGdHCg+NbZyoIKuwtjpCrYkgb/9AtoyQWAZvn8=
-From: Luca Weiss <luca@lucaweiss.eu>
-Date: Wed, 29 Jan 2025 18:51:44 +0100
-Subject: [PATCH 2/2] remoteproc: qcom_wcnss: Handle platforms with only
- single power domain
+	s=arc-20240116; t=1738174220; c=relaxed/simple;
+	bh=gMOapHYKVwtDoMIzCsesAyRHGCdSk9BOTKS4hZgV0s8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eNhNO7CoSjBjEde26TrphL61lvtm3cINtZJUqQDlkBB850WSaBJgJew98vdwTzQxMhWfrbhwikXrzZe+4GM5V0nAvAmkI+52hWd8eSG+MgTcGxKJUdofXxXyy3gZDNvxFLP9YfQb0By7qYebvnAr32bDsqhL0NKVh2VC9H5Idrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=UPQeY7k/; arc=none smtp.client-ip=217.72.192.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1738174203; x=1738779003;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=0gH4fty1iZLIvHJirTG78ZCFfaqlvNXj5sdZpZQlg7Q=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=UPQeY7k/+i15z5WYoVjxYADFcT9h4llHSrRGTt3wzITZNGDA+zO2ursUO1rhfwB2
+	 soXz6WJNDTHyGq14f22nqLCLhZD5/MaI35NbtoTEAHutQkakXCEuxrvloBVXA8mbp
+	 6szvL2282pVVCUWUsQEduUshF8oN0gHw0Z49Ga1I1EDO4hmu/KLUqiakW2WkCNeER
+	 BAymj6um/ruBZ67D5EEh20ZEdVuZslDSYRagqDvPAaCu7zoJkxCceYIIJNMbB1Jag
+	 cYSdgaFaoBds27qfmtnqRjlUy1NNOAEdvA6jWXDXRmf1rJP6Ko2h/MEGiTo5y0oBI
+	 x1gwfAkMI0P8e9hDUw==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.152] ([62.226.41.231]) by mrelayeu.kundenserver.de
+ (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1MIdaF-1tixGI0eZR-006Tag; Wed, 29 Jan 2025 19:10:03 +0100
+Message-ID: <044ce59c-0e88-4af0-a1c4-85e5d845fc04@oldschoolsolutions.biz>
+Date: Wed, 29 Jan 2025 19:10:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250129-wcnss-singlepd-v1-2-b01a6ba0b1bd@lucaweiss.eu>
-References: <20250129-wcnss-singlepd-v1-0-b01a6ba0b1bd@lucaweiss.eu>
-In-Reply-To: <20250129-wcnss-singlepd-v1-0-b01a6ba0b1bd@lucaweiss.eu>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Stephan Gerhold <stephan.gerhold@linaro.org>, 
- =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca@lucaweiss.eu>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3011; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=bnl2z9mRN3zuirTMKAM0nt9n9bUo3DVXiWm61cywUqU=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnmmq963npVto5IWdNrks/vO79yDWF0IEzgZsN0
- un9f3kXMR2JAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ5pqvQAKCRBy2EO4nU3X
- VgHREACCeSC4+NNiSlMIcNwGj+V4Mix4ymuRw6MMmKehV4n9qLEgUB75xXdvL0T3uUVZiDPqeaF
- SJKGjkhNEpZS5cGd4vBf+bLmfCRvS9GhZYnShRPaD3GT3b8YR4V5sThRnRnlTembM+hdRzGXghG
- zKVjffM7fmnXBq30QOObvNViUy+rNfOZAr5j1War3vWAUw6PvpLUUMwk0WcbIgDj5hJNWmz4GPt
- fWZPbrSDBBeD/0lk9GD72mGeDKSvVRBrQiKNDf2gii2YqjBMbxMqC8Tjzq4XlPvC8/YsqKN585F
- j+wTSdctMjzpTC+TVuE7AAnUbU08Lb6TJDonH/Y+45e10D/3IHVsq2AiBxQ1fOaq/QsICZr2gvZ
- Yc/LuTrpUxo8dODLlrG/dmGBNQNEtpWdV89fDhMbwWn3FtFQzrlkbb6Sxy4fUGvLybzQcYTKQyO
- Kh+18SxiFETNm5Qe0RUSpRjoCCJwCL3oW2ZnpffmySZsjqM0Pb+TIdD1+yeVh7C5I7cluEQrVEI
- hNPWr6M02NUslffY0WHFr+U8L/E8G3VK85tmZhk0w0tB0t9L71nZNyRt7mmSn77CZxQOTtUK7nU
- hvSuIFZSFlO62OCcajeFOsitnUyb/VRE9JTSdRzQzBLB3nR2XsOiMKwHW4WfumwhH47TLEbHtdD
- ZZi8lH7Srr2U6Vg==
-X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] X1P42100 DT and PCIe PHY bits
+To: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
+Content-Language: en-US
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:rgS6R69+EMZL6buCYSYarAw9vHwG1EFkx8Mhk7T/U3FkPpv/fzc
+ 8qmgijp2hnWTkMPFrZBXf+iIqnXtK+xp9m8Bjv0S7gs93PuoUrVtcvo6hB5/s+2NFOOc/vR
+ vuJ9PsiVgQtsNoFL7UVkOV8vNHd2wBURfQA0blb0k3k8gIv4DhFbev8vImSgumvP6yyYQph
+ H7s80zEyT8LhH2TH5aX5w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:OvsIYLMQuZg=;tMcbzYeFgKIQxJjLWn+8RXX3qjr
+ spyXhKax0GKN1gsZXCWNYe3vcWhV6VfqcRsvepDGVZU6no1WoK9snvsht1b4+HZ7Buhm74X7z
+ 1CThnypK/QcR7dga0xMpPRZrm8jWAk2ZPy9jfnfr1LcDo1rl59pf8T32mY6mvV1ucnq1Rgvts
+ tBz1OmWLy35suheqTZja4GsjX7QDzPcVmXJlP9ZV3xkcT3aCGqDCMMbEw/6rX+yE4CZRMVu5I
+ /HSQ4dMXnaQMMVmYfkLVToFNjBc/cVWGkDyC+TLrBZbND6YhNPm/8p0OyIQF3ArsWNfJxmdgO
+ IO5oK50RGfA0YC7Azm2OnPuH6w4VoyMrE52vCEPmwabo5q/eKq/MPwJjJgJcnfqHaGRmcQIIz
+ c7Lj5q1ps2jOcy70jTyOKO/fpO8KJlb0Rbve3Q95G3h8wfWC0Xcc7IXqzNZokhbZmaajNg4MX
+ Jzz4ksbh5QgmHAMT514pN1rmeekCp5DtJ5C769FJAwYGC+vTsGIwOwCHtvk02xK7wN/Yt8tMv
+ HC+iqkvx3MqkcmgkrAQKxKD3MZmfCjXSYMq5fJMN29S3oZ8PgcN48gCiD0bAn4QGidHqDvQJX
+ YCGQ+ZCif3Zc5e9nCcS65K6JlN9WMCY/WXElR11Q+jp6G+TIhTQ3HuU+UCcILsrQGMpRkfiYw
+ iokHENdkNuc1tU1TlLj8RPgsXxrAuYOncePB4wHpoOlruVAhlwikzQjaJD39BY2m+uViPt1jK
+ YCSLHnL3WF5USJBRE/Xj7lSNlnY1nEHvtWG82R1/KVq4bfoNxZVvby1UkaJYxut2dVrg8ukS9
+ Ds4sfxY9XBAunGZoGQcDH57/shDSM0F89owI24+Hij4IiwV90j13H0gcs2I8ZCVxfOJ7Y4Ndj
+ gq/vPVHldigxaqgPWZKoHE9YMA4P4RHhWAN0QQev+5UhSxbR963AoOgDONqyecyCQUexIqAj0
+ wIjdvlwGk0wHKQwqdFZC5fPMhqCeLkIMoIzcQc1TnUwTJVTa+wtxkSucAvZvOsMQy3hjCwqWI
+ 7S5VDppJ4DREya4I8j7Ye32LHrrabSbUmluca9ZpJ91WLQLRn1xqhoS0TQQS5A/030Lf4oVgC
+ SmUdLtS1tWamSzF9G+AJawyskAokC9QfGYtpwIA3CXOBrsbM7ORgQXh36iBszM22bphmCU58t
+ INQw8eIivAmhcnrBAn5xtBh8vmrateD3NFIZegsw/xA==
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+On 25.01.25 04:31, Konrad Dybcio wrote:
+> X1P42100 is a(n indirect) derivative of X1E80100 - the silicon is
+> actually different and it's not a fused down part.
+>
+> Introduce the DTS bits required to support it by mostly reusing the
+> X1E SoC and CRD DTSIs. The most notable differences from our software
+> PoV are a different GPU (support for which will be added later), 4
+> less CPUs and some nuances in the PCIe hardware.
+>
+> This series very strictly depends on the NOCSR PCIe PHY reset patches.
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+> Konrad Dybcio (6):
+>        dt-bindings: phy: qcom,qmp-pcie: Add X1P42100 PCIe Gen4x4 PHY
+>        dt-bindings: phy: qcom,qmp-pcie: Drop reset number constraints
+>        phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
+>        arm64: dts: qcom: x1e80100: Wire up PCIe PHY NOCSR resets
+>        arm64: dts: qcom: Commonize X1 CRD DTSI
+>        arm64: dts: qcom: Add X1P42100 SoC and CRD
+>
+>   .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   |   26 +-
+>   arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+>   .../dts/qcom/{x1e80100-crd.dts =3D> x1-crd.dtsi}     |    7 -
+>   arch/arm64/boot/dts/qcom/x1e80100-crd.dts          | 1270 +-----------=
+--------
+>   arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi       |    2 +-
+>   arch/arm64/boot/dts/qcom/x1e80100.dtsi             |   44 +-
+>   arch/arm64/boot/dts/qcom/x1p42100-crd.dts          |   17 +
+>   arch/arm64/boot/dts/qcom/x1p42100.dtsi             |   81 ++
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           |   18 +
+>   9 files changed, 148 insertions(+), 1318 deletions(-)
+> ---
+> base-commit: d7dfdec72fb32629d1affc32ff37a66a7fd1fb53
+> change-id: 20250125-topic-x1p4_dts-3b9509bce3a3
+> prerequisite-message-id: 20250121094140.4006801-1-quic_wenbyao@quicinc.c=
+om
+> prerequisite-patch-id: 719a1c1319a8f25be57f1e9bc68887684ff0d7cd
+> prerequisite-patch-id: 44ff71b8033fc91867a83a2f8f063fd0d9951d5e
+>
+> Best regards,
 
-Both MSM8974 and MSM8226 have only CX as power domain with MX & PX being
-handled as regulators. Handle this case by reodering pd_names to have CX
-first, and handling that the driver core will already attach a single
-power domain internally.
+Hi Konrad,
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-[luca: minor changes]
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
----
- drivers/remoteproc/qcom_wcnss.c | 32 +++++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+I applied the series, and its successfully tested on Lenovo Thinkbook 16
+G7 QOY.=C2=A0[1] Thank you!
 
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index a7bb9da27029db23f3759b19e423fab11b8430e4..4658ffb9bb13dfd52ecb23e85e0ad2d36af0cc80 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -117,10 +117,10 @@ static const struct wcnss_data pronto_v1_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
- 
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddcx", .super_turbo = true},
-+		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -131,10 +131,10 @@ static const struct wcnss_data pronto_v2_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
- 
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddcx", .super_turbo = true },
-+		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -397,8 +397,17 @@ static irqreturn_t wcnss_stop_ack_interrupt(int irq, void *dev)
- static int wcnss_init_pds(struct qcom_wcnss *wcnss,
- 			  const char * const pd_names[WCNSS_MAX_PDS])
- {
-+	struct device *dev = wcnss->dev;
- 	int i, ret;
- 
-+	/* Handle single power domain */
-+	if (dev->pm_domain) {
-+		wcnss->pds[0] = dev;
-+		wcnss->num_pds = 1;
-+		pm_runtime_enable(dev);
-+		return 0;
-+	}
-+
- 	for (i = 0; i < WCNSS_MAX_PDS; i++) {
- 		if (!pd_names[i])
- 			break;
-@@ -418,8 +427,15 @@ static int wcnss_init_pds(struct qcom_wcnss *wcnss,
- 
- static void wcnss_release_pds(struct qcom_wcnss *wcnss)
- {
-+	struct device *dev = wcnss->dev;
- 	int i;
- 
-+	/* Handle single power domain */
-+	if (wcnss->num_pds == 1 && dev->pm_domain) {
-+		pm_runtime_disable(dev);
-+		return;
-+	}
-+
- 	for (i = 0; i < wcnss->num_pds; i++)
- 		dev_pm_domain_detach(wcnss->pds[i], false);
- }
-@@ -437,9 +453,11 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
- 	 * the regulators for the power domains. For old device trees we need to
- 	 * reserve extra space to manage them through the regulator interface.
- 	 */
--	if (wcnss->num_pds)
--		info += num_pd_vregs;
--	else
-+	if (wcnss->num_pds) {
-+		info += wcnss->num_pds;
-+		/* Handle single power domain case */
-+		num_vregs += num_pd_vregs - wcnss->num_pds;
-+	} else
- 		num_vregs += num_pd_vregs;
- 
- 	bulk = devm_kcalloc(wcnss->dev,
+[1]
+https://github.com/jglathe/linux_ms_dev_kit/commits/jg/ubuntu-qcom-x1e-6.1=
+3/
 
--- 
-2.48.1
+Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+with best regards
+
+Jens
 
 
