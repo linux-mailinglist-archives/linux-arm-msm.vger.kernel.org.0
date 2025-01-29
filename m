@@ -1,214 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-46499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4250DA21C26
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 12:27:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CE81A21C38
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 12:29:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 74AE51887A0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 11:27:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 881B8161FCB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 11:29:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F8481BEF87;
-	Wed, 29 Jan 2025 11:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 594D519DF60;
+	Wed, 29 Jan 2025 11:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vWj29di4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Vy8/RZuh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088251B424A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 11:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2959186615
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 11:29:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738150060; cv=none; b=otz5mCzNf7uZ/CX2Ku0RV1IGwnYeIkOewOdnS4XXo9pN3d36WOPsWudcCz7pAulMXRywlKqlxN5g46TrwI+2p4HjnAZcmNZ2Z2+vfngd0LWVaYlN0INo0EHL0gaoRrm87GL/zrAeYtT7wAiHBy9EBAQkHhF/cSiPv/t7akIVm0g=
+	t=1738150192; cv=none; b=HYDL7Jt5uRzJwlG5SlaoS1s39wvCjFQOk0sZAxGbCcC2ZIGXdd1+/LaeH4mfQKXfQ9osCFtA2EvwjAyjhl2ZAGsoDvMP0TcylS9oINWTDF7DbDM4W0A0IROJURbQi2khY5C06jX66yXbVZRcs3JT+cnERvYTmgdaxc7NsWv664Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738150060; c=relaxed/simple;
-	bh=QbzMdo5twuN8qHdUuuA8eKAEXsCU81mC2eMowoF6pkE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sVvD9tX33+odcb/hDy/VUAbP7W9CIRTX+/Dk3kVj/877LvDd97jCyYUILw6LAMzGrme904fK5P+1zXS2VGS3C85pSMZE9RYHxGh0ojF32lfgodrW2OL+QetgfjlHpz3Vf1n+0T9qlKUI70FonXJiL5dqEgQtTDtczbnlVLr0Fps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vWj29di4; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-54298ec925bso7779715e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 03:27:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738150055; x=1738754855; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MdMhtxP5R+RhzbtYpl+nDYBC1VN7c30OWolTsuKS8Es=;
-        b=vWj29di4IP3TNXPK3gzSGQuOHcrcyYXppym3TmeABM4iG0x+wofmD7dneNKRhlwC22
-         b4Zt3GIghhTTyRBgkkyWEjSBoc3SfZ46puJujWzyT2YhdH8bGM9IW5A1eCDh6UN+0Vb+
-         QvuveqUYT2tb8o+f+t5bmK+YQFtI/uo3uKW/GAx45jA5nkIKwr25nuBLTHYc9zLX12s/
-         fQY4Q8Uy0DPakT6CUqY+ZXyYrb/1qJtkEzM6KgdbIh5NR9pv1f+ZFQXVNh9S9vSidxAv
-         7VimNHfALmxYe8V9DB0p+dDlsqwJa7fCI8FHGHKVIQJ/tyh/r21t6Rftoz4x0SRVsd1Q
-         pg4Q==
+	s=arc-20240116; t=1738150192; c=relaxed/simple;
+	bh=3s886Jw7KGXuHd6mFj5w9paPQmLHIEJE2yq98VVa5HE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QdVRb36JDjLRc8xBGKDt8LMLKa4vpbsHT/bzz9zk2swHW8iWTNr/pUMhVvLnPX8ZsG8g2rsax5Zd/xENFQUzKmBkNIjTEjtNfr8/CGUtQaqaACrCgmJ2yj6b0H3kayFw5NaaW/QuXDKEOqy95LbvF9/gIxe+VMbvcS/cFsvS7zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Vy8/RZuh; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50T6SLei009997
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 11:29:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	i9PrfLAmZgIMy86J/BuBNlzLt3qqCa2AcRVAnqXESEw=; b=Vy8/RZuhDVNhraUs
+	ot/qrCqm0JWxEceWKB8RNHxPkb/aj15NWXMCVQCyQLYtS8scUB7QejOgsyNDQbiZ
+	3AZGk5YK7btmmxhK9Ir91jZpL6mydaX+oiuOrcz1nnaPsKeOKm7PKn3GboJRxmWU
+	23l4jaKDE3Qw8JLa/3bpYU05xpawqGhvOet1SRr9feqUXF7zS410O9P8AdtgrQSx
+	7YcmXntDvQh0q2KEcDRbBdgSUMAk+B7o/Q9kGCdNutJXq+GFt+BrgEMMlWDCqM3g
+	H+mFgNB25GrqOtMlNR241Wf5yRw7k+UfhFAVcjAVeMjiPjQ9LOqVMIlsNdWYQcvy
+	7kOr8g==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ff33rftf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 11:29:49 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7be6f20f0a4so102035085a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 03:29:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738150055; x=1738754855;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MdMhtxP5R+RhzbtYpl+nDYBC1VN7c30OWolTsuKS8Es=;
-        b=hD7rr1FKaFk0+ut3RQzuek08ONLEl9uE/NMRKoEKH5KNWddg1t4toL+wGCOz/79awl
-         XTZgFYxeZUnD1VXwyggBfLWZAPyjw5M/oH/iYSp1lTG6o3ykfDQPvr1henwXaORMXMYS
-         EX0kJVSrRoo+G1VfXaMftlhOKuYrLA6JqJJiEka4X3RWyHFAGHk/z02sk6rz4AkCMd9z
-         MwNDxhgy7Av47gC4Hwo85XxQgx3GnS2qwEid/o1qA/ihdXNW7yuupXTCR6KPWov7HCQS
-         uNyucFdLcMMdxvMFOZVjoSAOcrIEa9ayHB36RG447nmGSgTBgAPKqSSe/qzQa1t8WvuY
-         +aog==
-X-Forwarded-Encrypted: i=1; AJvYcCWw7y7eBKPwBJzq2GHKYkx264s6XcK75QpqWnJYutGeXbYwKTp2A/XkQuotE4gEY28K+kVqcUuh9bCvOVBw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+5Dvs8OZmFL5z8OYWSb5VmXjp+YaS3DcoddGPiunrBfC479XC
-	RaP08cXkdh/4Vn/uyUv4iYCpdn2J7xOIl4qu7Bvt12qY7FbJfqfitjcQlKLzN9g=
-X-Gm-Gg: ASbGncv6TEqXzJSfWnUnn/l8VZ8uYBWaJd8TUqG3pv9JEn1TibtxdMflU2APq4E/Otx
-	eRT+LHnc+eactU+1lzNG95um/C2UujuBDJO16DJJ5Yor5a1VI9ZSIwKGH9zl1STJM9xiWjsAzP5
-	0bkjz30aDCsHeBnrzo4rWcJleSFIX7jhVvA0zCCeTDCH7CNV0MevDmzdKmkYwazemKkpoFNKAlX
-	yELlGBCfyJWwZ91yvMlHhTUVx3PBmKTozEng3+qEwUZ092Fyn3xfDnxF6Ajx8JCQjvPN8+LD+w6
-	Rfy38nJvkY5VoqIpYw3CJPzneJk1HQ07wEarJ44qujmZhtusKtzw8O8DV6Id3/f4HOubjgs=
-X-Google-Smtp-Source: AGHT+IFtlc94QWGgPJciAfKJd6iML1fdimMywpw4Q1xwQVsFRb8X3q+yuNtr1tZBr1nfLKPhKsx6OQ==
-X-Received: by 2002:a05:6512:148:b0:540:2ff1:3c7c with SMTP id 2adb3069b0e04-543e4bdff2amr733639e87.7.1738150054904;
-        Wed, 29 Jan 2025 03:27:34 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c837949esm1965905e87.160.2025.01.29.03.27.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2025 03:27:33 -0800 (PST)
-Date: Wed, 29 Jan 2025 13:27:32 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: quic_vgarodia@quicinc.com, quic_abhinavk@quicinc.com, 
-	mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org, p.zabel@pengutronix.de, 
-	hverkuil@xs4all.nl, sebastian.fricke@collabora.com, bryan.odonoghue@linaro.org, 
-	neil.armstrong@linaro.org, nicolas@ndufresne.ca, u.kleine-koenig@baylibre.com, 
-	stefan.schmidt@linaro.org, lujianhua000@gmail.com, linux-arm-msm@vger.kernel.org, 
-	linux-media@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	krzysztof.kozlowski@linaro.org, johan@kernel.org
-Subject: Re: [RFC PATCH v10 1/2] media: iris: introduce helper module to
- select video driver
-Message-ID: <dl5gxjxvajoq3tszujqrew7ynvepufcr2qj7ztj7ksgv2fxtdt@zaeqtxuwbayb>
-References: <20250128080429.3911091-1-quic_dikshita@quicinc.com>
- <20250128080429.3911091-2-quic_dikshita@quicinc.com>
- <sb3beoyhnlcdfjbm37ogpdoph7m4fecpbuu3myglnpzblpnqhw@wdyskeps3uuh>
- <45c3676a-aafe-59e8-910d-af82031c24a6@quicinc.com>
+        d=1e100.net; s=20230601; t=1738150188; x=1738754988;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i9PrfLAmZgIMy86J/BuBNlzLt3qqCa2AcRVAnqXESEw=;
+        b=ExKqVyV1/ad3e6prnsOzQAqn3xLSu3mw4vBCnc6of+NvAQokcYCQUGuedCdW1fredM
+         6T2f3nG7dSeP1Ders7HM0jDD0baSGt1B/XfX31m1GOAQGOKyWegQq/SBjb9v39hsxkZs
+         cIUr6vBYKI1OQHxnG/kfMnyrsEyKh4Vb9cIq2fja2aP59qSAgsys7DHKFB3l8tBWtB1C
+         xs+gNamnQ8PUZXI/rfWGnL7msNfRX+J+x7WBMq6S4b+LBtBL0OkQPOyggSc4E2Nns5rH
+         d9bY9yqHfi45tD6K2WeqQWvtnZYN2nmLB8oU/8JPMGJ/fAfJfe8k2Ely8k7rmNtnXdJk
+         P66w==
+X-Forwarded-Encrypted: i=1; AJvYcCVNVRXjibwCD9xFvNQD5peig6kH9gpWSztjNMAgQi8gXZ59amuN19XwA9RsCiKewh5tlHxZ2bOlnT/212Jr@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMX730RK3vzTwcdGpJrwjkNmzzJiZJlN0Tl72/1RZx5JngqaY8
+	fhPSc5Vqz0gfBv2Ke8WQRZN2Pb+4yfaXQhya0ZCd0z4c6kRIUEwVg28iPSpjmN4r9F1ijvfbz/K
+	YIlMFCjf0FUM5JY7DFR8dgqfDx3Wj3u/6F/1W1WtdVjZEaC7Stvi0WCDJH3L57aDi
+X-Gm-Gg: ASbGncvhJxHai7zLbzHrnjaJE7MNOMCUgUkegjhniZihK3Us6wOJmLrDE70Ojr6aMWJ
+	vWbgMftHhiExa7iebOXpN6FK8LVr8hyW37LEss6nm2H2IVXYfVjP2ZpxSuCpIQvBw+VXu2aYWmj
+	Mvltx/vHCNv1fVSc+O8sbp0rJsBlQdmGyF+WJ1s/279Q/S0+p2KkkRn5WjYrL2thvBlthELUI31
+	ZSLFMTwvsBsN+9vxcXIpxvqxRccwoCEL4pfm3Sdyh2k7yuuyN0JZ0gMflN6/1ETQ1srENadi+Lg
+	aEGBrmRXFL+8rTrejjn6Hszo/uTuLR7nPfvEvGcVVcy2x9sDGibeyf9/RIc=
+X-Received: by 2002:a05:620a:44cf:b0:7b6:e6a4:9668 with SMTP id af79cd13be357-7bffcda31f7mr141973985a.14.1738150188146;
+        Wed, 29 Jan 2025 03:29:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHynGvu6Ug8OraeY+OA2aupmuSuiuP/SB6khBf0TMgvAsKh45ahlHKh8fb7ty74dKqVRcTTRg==
+X-Received: by 2002:a05:620a:44cf:b0:7b6:e6a4:9668 with SMTP id af79cd13be357-7bffcda31f7mr141971985a.14.1738150187750;
+        Wed, 29 Jan 2025 03:29:47 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dc186283efsm8669980a12.18.2025.01.29.03.29.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jan 2025 03:29:46 -0800 (PST)
+Message-ID: <d928e662-07ac-4255-8d6f-adeaefb3db46@oss.qualcomm.com>
+Date: Wed, 29 Jan 2025 12:29:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <45c3676a-aafe-59e8-910d-af82031c24a6@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] phy: qcom: qmp-pcie: Add PHY register retention
+ support
+To: neil.armstrong@linaro.org, Manivannan Sadhasivam <mani@kernel.org>,
+        Qiang Yu <quic_qianyu@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>, vkoul@kernel.org,
+        kishon@kernel.org, p.zabel@pengutronix.de, abel.vesa@linaro.org,
+        manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+References: <20250121094140.4006801-1-quic_wenbyao@quicinc.com>
+ <20250121094140.4006801-3-quic_wenbyao@quicinc.com>
+ <CAA8EJppXQpDrdXzJsTE7HWs=POt7yFAw0JVZFabN6Ks3fhZiWQ@mail.gmail.com>
+ <a2cc5a5a-6cbd-7564-a8df-8af2a652de2f@quicinc.com>
+ <ya27ma6iah7ts6sj35payj6ek4z7m6y5v4pnxd6wtqrp3cbyta@ypvrzwa4bnfv>
+ <188a9efd-718e-4ac5-b89a-29f2713e1dba@quicinc.com>
+ <20250124070829.oar3hlkshkpam57d@thinkpad>
+ <88c29161-17a8-40c6-a94b-c894de15ca37@oss.qualcomm.com>
+ <df1f825f-66a4-4bab-9ca4-90d594f2cb36@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <df1f825f-66a4-4bab-9ca4-90d594f2cb36@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 6yrWBktOpuKodGKpkP_a-1FPaRsccbLa
+X-Proofpoint-GUID: 6yrWBktOpuKodGKpkP_a-1FPaRsccbLa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ phishscore=0 impostorscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 mlxlogscore=999
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501290093
 
-On Wed, Jan 29, 2025 at 03:23:22PM +0530, Dikshita Agarwal wrote:
+On 29.01.2025 9:29 AM, neil.armstrong@linaro.org wrote:
+> On 25/01/2025 14:10, Konrad Dybcio wrote:
+>> On 24.01.2025 8:08 AM, Manivannan Sadhasivam wrote:
+>>> + Mayank (with whom I discussed this topic internally)
+>>>
+>>> On Fri, Jan 24, 2025 at 02:22:01PM +0800, Qiang Yu wrote:
+>>>>
+>>>> On 1/22/2025 5:43 PM, Dmitry Baryshkov wrote:
+>>>>> On Wed, Jan 22, 2025 at 03:17:39PM +0800, Wenbin Yao (Consultant) wrote:
+>>>>>> On 1/21/2025 6:36 PM, Dmitry Baryshkov wrote:
+>>>>>>> On Tue, 21 Jan 2025 at 11:43, Wenbin Yao <quic_wenbyao@quicinc.com> wrote:
+>>>>>>>> From: Qiang Yu <quic_qianyu@quicinc.com>
+>>>>>>>>
+>>>>>>>> Currently, BCR reset and PHY register setting are mandatory for every port
+>>>>>>>> before link training. However, some QCOM PCIe PHYs support no_csr reset.
+>>>>>>>> Different than BCR reset that is used to reset entire PHY including
+>>>>>>>> hardware and register, once no_csr reset is toggled, only PHY hardware will
+>>>>>>>> be reset but PHY registers will be retained,
+>>>>>>> I'm sorry, I can't parse this.
+>>>>>> The difference between no_csr reset and bcr reset is that no_csr reset
+>>>>>> doesn't reset the phy registers. If a phy is enabled in UEFI, its registers
+>>>>>> are programed. After Linux boot up, the registers will not be reset but
+>>>>>> keep the value programmed by UEFI if we only do no_csr reset, so we can
+>>>>>> skip phy setting.
+>>>>> Please fix capitalization of the abbreviations (PHY, BCR) and add
+>>>>> similar text to the commit message.
+>>>>>
+>>>>>>>> which means PHY setting can
+>>>>>>>> be skipped during PHY init if PCIe link was enabled in booltloader and only
+>>>>>>>> no_csr is toggled after that.
+>>>>>>>>
+>>>>>>>> Hence, determine whether the PHY has been enabled in bootloader by
+>>>>>>>> verifying QPHY_START_CTRL register. If it is programmed and no_csr reset is
+>>>>>>>> present, skip BCR reset and PHY register setting, so that PCIe link can be
+>>>>>>>> established with no_csr reset only.
+>>>>>>> This doesn't tell us why we want to do so. The general rule is not to
+>>>>>>> depend on the bootloaders at all. The reason is pretty simple: it is
+>>>>>>> hard to update bootloaders, while it is relatively easy to update the
+>>>>>>> kernel. If the hardware team issues any kind of changes to the
+>>>>>>> programming tables, the kernel will get them earlier than the
+>>>>>>> bootloader.
+>>
+>> We're assuming that if a product has shipped, the sequences used to power up
+>> the PHY in the bootloader (e.g. for NVMe) are already good.
+>>
+>> If some tragedy happens and an erratum is needed, we can always introduce a
+>> small override with the existing driver infrastructure (i.e. adding a new
+>> entry with a couple registers worth of programming sequence, leaving the other
+>> values in tact)
 > 
-> 
-> On 1/28/2025 9:44 PM, Dmitry Baryshkov wrote:
-> > On Tue, Jan 28, 2025 at 01:34:28PM +0530, Dikshita Agarwal wrote:
-> >> Introduce a helper module with a kernel param to select between
-> >> venus and iris drivers for platforms supported by both drivers.
-> >>
-> >> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> >> ---
-> >>  drivers/media/platform/qcom/Makefile          |  1 +
-> >>  drivers/media/platform/qcom/iris/iris_core.h  |  1 +
-> >>  drivers/media/platform/qcom/iris/iris_probe.c |  3 +
-> >>  drivers/media/platform/qcom/venus/core.c      |  5 ++
-> >>  .../platform/qcom/video_drv_helper/Makefile   |  4 ++
-> >>  .../qcom/video_drv_helper/video_drv_helper.c  | 70 +++++++++++++++++++
-> >>  .../qcom/video_drv_helper/video_drv_helper.h  | 11 +++
-> >>  7 files changed, 95 insertions(+)
-> >>  create mode 100644 drivers/media/platform/qcom/video_drv_helper/Makefile
-> >>  create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
-> >>  create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h
-> >>
-> >> diff --git a/drivers/media/platform/qcom/Makefile b/drivers/media/platform/qcom/Makefile
-> >> index ea2221a202c0..15accde3bd67 100644
-> >> --- a/drivers/media/platform/qcom/Makefile
-> >> +++ b/drivers/media/platform/qcom/Makefile
-> >> @@ -2,3 +2,4 @@
-> >>  obj-y += camss/
-> >>  obj-y += iris/
-> >>  obj-y += venus/
-> >> +obj-y += video_drv_helper/
-> >> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
-> >> index 37fb4919fecc..7108e751ff88 100644
-> >> --- a/drivers/media/platform/qcom/iris/iris_core.h
-> >> +++ b/drivers/media/platform/qcom/iris/iris_core.h
-> >> @@ -107,5 +107,6 @@ struct iris_core {
-> >>  
-> >>  int iris_core_init(struct iris_core *core);
-> >>  void iris_core_deinit(struct iris_core *core);
-> >> +extern bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
-> > 
-> > s/extern //g
-> > 
-> >>  
-> >>  #endif
-> >> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-> >> index 954cc7c0cc97..276461ade811 100644
-> >> --- a/drivers/media/platform/qcom/iris/iris_probe.c
-> >> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
-> >> @@ -196,6 +196,9 @@ static int iris_probe(struct platform_device *pdev)
-> >>  	u64 dma_mask;
-> >>  	int ret;
-> >>  
-> >> +	if (!video_drv_should_bind(&pdev->dev, true))
-> >> +		return -ENODEV;
-> >> +
-> >>  	core = devm_kzalloc(&pdev->dev, sizeof(*core), GFP_KERNEL);
-> >>  	if (!core)
-> >>  		return -ENOMEM;
-> >> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> >> index 77d48578ecd2..b38be7812efe 100644
-> >> --- a/drivers/media/platform/qcom/venus/core.c
-> >> +++ b/drivers/media/platform/qcom/venus/core.c
-> >> @@ -369,12 +369,17 @@ static int venus_add_dynamic_nodes(struct venus_core *core)
-> >>  static void venus_remove_dynamic_nodes(struct venus_core *core) {}
-> >>  #endif
-> >>  
-> >> +extern bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
-> > 
-> > Use #include instead.
-> > 
-> >> +
-> >>  static int venus_probe(struct platform_device *pdev)
-> >>  {
-> >>  	struct device *dev = &pdev->dev;
-> >>  	struct venus_core *core;
-> >>  	int ret;
-> >>  
-> >> +	if (!video_drv_should_bind(&pdev->dev, false))
-> >> +		return -ENODEV;
-> >> +
-> >>  	core = devm_kzalloc(dev, sizeof(*core), GFP_KERNEL);
-> >>  	if (!core)
-> >>  		return -ENOMEM;
-> >> diff --git a/drivers/media/platform/qcom/video_drv_helper/Makefile b/drivers/media/platform/qcom/video_drv_helper/Makefile
-> >> new file mode 100644
-> >> index 000000000000..82567e0392fb
-> >> --- /dev/null
-> >> +++ b/drivers/media/platform/qcom/video_drv_helper/Makefile
-> >> @@ -0,0 +1,4 @@
-> >> +# Makefile for Video driver helper
-> >> +
-> >> +obj-m := video_drv_helper.o
-> > 
-> > Always built as a module? And what if iris or venus are built into the
-> > kernel?
-> iris and venus are always built as module,
+> Assuming Linux will be always ran directly after the bootloader is a wild assumption.
 
-This is not correct.
+Situations like
 
-> and if we are adding the
-> dependency of this module on IRIS && VENUS then this can't be Y I think.
+[normal boot chain] -> [... (resets the PHY and doesn't reprogram it)] -> Linux
 
-It surely can. Moreover, if one doesn't enable both Iris and Venus, this
-module is completely unnecessary.
+are both so unlikely and so intentional-by-the-user that it doesn't seem
+worth considering really.
 
-> > Add a normal Kconfig symbol, tristate, no Kconfig string. Use depends on
-> > IRIS && VENUS (and maybe default y) to let it be built only if both
-> > drivers are enabled.
+If whatever sits in the middle *must* hard-reset the phy, it can save the
+register state beforehand and restore them after the reset
 
--- 
-With best wishes
-Dmitry
+> Yes, we should make use the noscr if the PHY is always programmed, but we should be
+> always able to reprogram the PHY entirely to recover a faulty programmation.
+
+We aren't considering any possibility of faulty programming - it's either
+programmed, or not. And if the values configured by the bootloader are wrong,
+the device's firmware is considered faulty.
+
+Most devices probably follow the exact same magic values as our reference
+boards (though these values relate to analog characteristics, so perhaps not
+*all* of them, which is another argument for keeping the BL state) and these
+are extensively tested internally before any production devices make it out
+the door. Any updates deep into the product life are most likely just "nice
+to have"s and not anything critical, and as I've mentioned, we can still have
+overrides with the current logic inside this driver.
+
+Konrad
 
