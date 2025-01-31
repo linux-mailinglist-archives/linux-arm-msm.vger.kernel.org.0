@@ -1,251 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-46595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42426A23C84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 11:53:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40F2AA23C9B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 12:03:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A31AD167A67
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 10:53:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C0AF188964A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 11:03:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C5711B87D4;
-	Fri, 31 Jan 2025 10:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3367D1B6D1B;
+	Fri, 31 Jan 2025 11:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="YJeHLBXS"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="dXsI0frC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2056.outbound.protection.outlook.com [40.107.94.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67C71B6D11
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 10:53:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738320809; cv=none; b=h9e+rD77rMohkoOl/w7ruKvc3Ejd81DCNUzPLdi+Oen3UW0h9dk3Zm6oUxXZ42k23ke6BuDUWCIXS2CchGKDQf3690Y1Y5CebVJnqaYm11CwAyTS+MxswnRjm+hmlZirSDjmDSh0pwBqlHBDiwLDTyGSPc0KqbPAB0v8zGzgVhk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738320809; c=relaxed/simple;
-	bh=zEAI6wqxFiFSme+Oa+LCjOIU5RX47W2joo/3qRV1tA8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CURgEgfdKQWACCxZK+X840vUP0Zv3Q8XTC0nqgQl9Lt9eEsP78e7ZWf7ztOq1nj9d2oKnJiJDGYbu1roVbyEo6iioo2DHedkLlTxKPD6u9omilBhcOXGOHVYxtHWWnMsphxRvC0yQLCfNCIVNRpdGIzT247rZ7HbDbOlggpIHic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=YJeHLBXS; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1738320806;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=EBOeMd/Uw84ugc+90pxaNmttHpWVqjhi2vJvmo6LbbQ=;
-	b=YJeHLBXSpC4cDjmutRf3CF65UlnaJN0aB3UdGeN4Ge+cqlbPE3/9q/Us9bdZrrQ7V1WnUN
-	ZPynv7lVO9aXjO3BDkxN0co4amp9j6z1xdUx8YmeWgJ6eyUIkzryIumEbuVHiN5YhsnHoi
-	0pGmIdDfv8dYX2ljzBJKYeMpKqwIZzA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-583-yno0XfpPMeeQXAIblVGdhw-1; Fri, 31 Jan 2025 05:53:23 -0500
-X-MC-Unique: yno0XfpPMeeQXAIblVGdhw-1
-X-Mimecast-MFC-AGG-ID: yno0XfpPMeeQXAIblVGdhw
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-385e3cbf308so790980f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 02:53:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738320802; x=1738925602;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=EBOeMd/Uw84ugc+90pxaNmttHpWVqjhi2vJvmo6LbbQ=;
-        b=aEIYFGkmVzJb6x2eXpd1Qb6Tzw6ZCnK1mmNxZ4BevaFDmBh5k27LGIk2OtNmctYU0u
-         t3PLmVmb17rEATTFGGvcApKyPub0re/My6lM7QrfIzu1mnMDdpMthW/n2i6ODJsJ6j32
-         VpzkxkxMkk8NDIyMSBoBoJpR6RJgB7NIR9MYSYvi8jyY7niosjgLsqgDfteMlejLIQWl
-         2Xk0wD0ai5YLmL76qxw2xMH0OMAZSkVMy+Jz+H3r9v8NTBA508nk8a7A15xtatxIi2sG
-         NAcPGQ9VvGtuw/8xuimg+YUevl5SpHv3owUj3p+nN0ISCYBZbjoPs8c1K42RCyanYoSI
-         GwIA==
-X-Forwarded-Encrypted: i=1; AJvYcCUtuhthNLTD4z6n2r7iCOykuLNFWapP4VX5cPA96CRkp2B2t0viGwlNh5c7NofXI358WHIHazV0KZHS2HyU@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXnUdjZUw0JprvbY87QCvI1Bnx/j/Cjhgf2xxAw9dr8crRQ6UA
-	7o0kAaaWwfPPDpCgnk8SOA/AXneAxbDqpktmA51V/k73HEf10V9NBqCo6RaOF/qU73saJXAS/lf
-	3ndRgKff8shKVCGZi9jJbnQWshO3+YuN4SU87QCCS15kdoVIVuitiHD2kN6ICkcw=
-X-Gm-Gg: ASbGnct6GtnTecM1AG81eCrcah3jpsPqYJw81d/vQWavfUQ8aRPzQwwbTTFOmNG91bk
-	+n2CMfW1KQ1fV3Koik8lSn4xw5jD+w81lwYFG82d82zSbMcpJzbEt/lD4vDAdrEmLWBI3uoUWpy
-	zyzJXROEhNY/EKJz64+HSIUKHpvoP+3K/MjlbSyww4Uz4Nm8Toqh6ckgVIEBhPYTqtUpK0AWiZC
-	qt282Iqp2BNGz+aAVcdbVkY5vSaY6EGdmweZCnzncfo1Jiph9boGDg70WRx3VpgmbTPzCHmI1TB
-	gYv+kMNe053miCNEj79D8PeTpRHUudi10Di+ggd0ocZqIaXE3+HMy23UhI1dLUV+gueMNJKV/uZ
-	oqN82qker1kSycrtj9MYSUwYUcGmqYHe6
-X-Received: by 2002:a5d:6952:0:b0:385:e105:d884 with SMTP id ffacd0b85a97d-38c52097015mr8037636f8f.46.1738320802041;
-        Fri, 31 Jan 2025 02:53:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHOcJIHOsjy097++YR3Moup2HvJer0xLkIF+W/DHf3drFPLam8Bv2f+8i19U9MgQ9V+2wGuOg==
-X-Received: by 2002:a5d:6952:0:b0:385:e105:d884 with SMTP id ffacd0b85a97d-38c52097015mr8037579f8f.46.1738320801616;
-        Fri, 31 Jan 2025 02:53:21 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70a:1c00:b8d4:bc62:e7ed:ec0e? (p200300cbc70a1c00b8d4bc62e7edec0e.dip0.t-ipconnect.de. [2003:cb:c70a:1c00:b8d4:bc62:e7ed:ec0e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438e23dea58sm50657605e9.15.2025.01.31.02.52.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Jan 2025 02:52:47 -0800 (PST)
-Message-ID: <1ce8fd8e-893b-4867-b690-298bb3048d75@redhat.com>
-Date: Fri, 31 Jan 2025 11:52:43 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579B4322E;
+	Fri, 31 Jan 2025 11:03:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.56
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1738321430; cv=fail; b=gPMLqf76NvJkglZUnsjlnkW7Wlv6tXz4WY9R24RIz08vjUVf+LF6VWUGLCMMzkufzFaIVXNQ0uFIDiyYBMv0IrKQozGDaW9n/P0hs3+/26pFjgL4bwtgAJrzKQA499GzAzK7bsdyMXnZ4xHxJAT0f244p/SBznovizDdT4pRh10=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1738321430; c=relaxed/simple;
+	bh=l00MDAwi5Ehc7XRTtoxvdtzQMExGa8Q/B5tFfyJtizU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RxeeD2qv7x8Xc+rdJlLmAZO+snYTrPURAzWS+OrGN3/wNY8XFv9yM7ipSxqx714LdHrvL2zaNn7NChG4p7VmoSCFF3m8Dn9tM8q2FQyT8CjkzE2x7incXdWsgNXup/mJDrH754vquoEG6nOA+SUrKxr7HFqKJyJqM6sAKYNyiRs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=dXsI0frC; arc=fail smtp.client-ip=40.107.94.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OvZoWoYHygQu7kjhnH/0YoO8RO4s9xB4C3TH4Qy+tjIi0CtPWtsK3zud1tDRFmdVfd1v6iau0ECG4CzZ6vekUDJzKm+TJhF46Nq0NqmTrX7KwvxIJkX2bDMBQDFQDmieG2iQDfWMoc4Xxn8TGDSrUT5wI8EZ8OjjTHsyImuDso3eT65jwwEBPKO2B+Zcca2srdOGyipgdxaO9Zh168z4bJ7nG7UUfRUZxume3rnJbX1gjAokKgaiu5FcxOrhv6JpZEOo64hMwbufjV8drS7Q/LfLVs5tmvi6+62TDEKhyxu5soukvOefJexm9FODrBywl7Y9HaTzVdO2l4y8GnreLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8VAGDIpQcJp40PqoDAVHv40LV5uDu0hKJbH7NwMRjaM=;
+ b=iXIsCy5bjeMYnHa7ENaDSsdLgh03Nn74XAcEVPeOVlx3HPrkWqKqT5JP32j9WBDgkd2j7qNc1fGLzg4Y8lfNbzvwWh9gCZeKtrqPav28jcl6i1c5IowIW3kNI7DvmmpFULuiOeTnyMpxXTG+r7a7k85w0ZlkEGxnSVwY8oDnQiUsdW7PvKUQRVz9JzKCdvOlF0mO1sRL7mmivJwIUG6pDLS2XmCnfhmGM8cWIqPgsQCy5TYrR4/9bW8kF6hr+rLHunwzI8rdG0yANZwbX8EGqOSHwdpnVt3DBcKqVowjyvsnU9j+qTTj/gyb8sDPNmdd3k1G6ej0u3/uQWC3Hzdmmg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.freedesktop.org smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8VAGDIpQcJp40PqoDAVHv40LV5uDu0hKJbH7NwMRjaM=;
+ b=dXsI0frCQkDC4ecWWMF1quaC++5bdVOPn62xd73q2K1mXV0TYG7h/gxVU5Ki6+Gr3t/MFivEyKLlAV8WuwxWuBELcWYTwhk4F2iM+3Y92wrQA4nJT325DRUF7hm7Jlm0hyyX/pPnMR6LFpdMUh+o0a7Z3P8LwiutiolByAFG7JY=
+Received: from BYAPR05CA0009.namprd05.prod.outlook.com (2603:10b6:a03:c0::22)
+ by CY8PR12MB7514.namprd12.prod.outlook.com (2603:10b6:930:92::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.20; Fri, 31 Jan
+ 2025 11:03:46 +0000
+Received: from CO1PEPF000044F0.namprd05.prod.outlook.com
+ (2603:10b6:a03:c0:cafe::de) by BYAPR05CA0009.outlook.office365.com
+ (2603:10b6:a03:c0::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.18 via Frontend Transport; Fri,
+ 31 Jan 2025 11:03:46 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CO1PEPF000044F0.mail.protection.outlook.com (10.167.241.70) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8398.14 via Frontend Transport; Fri, 31 Jan 2025 11:03:44 +0000
+Received: from patedamande.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 31 Jan
+ 2025 05:03:40 -0600
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+To:
+CC: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	<amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
+	<etnaviv@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+	<intel-xe@lists.freedesktop.org>, <lima@lists.freedesktop.org>,
+	<linaro-mm-sig@lists.linaro.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-media@vger.kernel.org>, <nouveau@lists.freedesktop.org>
+Subject: [PATCH v7 0/7] Improve gpu_scheduler trace events + uAPI
+Date: Fri, 31 Jan 2025 12:02:58 +0100
+Message-ID: <20250131110328.706695-1-pierre-eric.pelloux-prayer@amd.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 04/11] KVM: guest_memfd: Add KVM capability to
- check if guest_memfd is shared
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
- vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
- mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com,
- liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
-References: <20250129172320.950523-1-tabba@google.com>
- <20250129172320.950523-5-tabba@google.com>
- <dec9250c-aec5-43c4-aaf4-736b14fc3186@redhat.com>
- <CA+EHjTxNPRSVQj3rewnbRvr+=4LPVFkxgUrru7saTDtJ+ghCdg@mail.gmail.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <CA+EHjTxNPRSVQj3rewnbRvr+=4LPVFkxgUrru7saTDtJ+ghCdg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044F0:EE_|CY8PR12MB7514:EE_
+X-MS-Office365-Filtering-Correlation-Id: 87ffd7f7-c1b1-4227-f93a-08dd41e6ee35
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|82310400026|36860700013|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?STNkSExJc3FZUjFDeW5zdDQyWVV4RURITzdZcm8veVJSWmdpY2lmQ0MxR0hn?=
+ =?utf-8?B?OWYwMjhBeWlvaXZkUzYzdU1FRnpic3BkUnIzZGpscG5vNWYwNUVFNEZUSHd6?=
+ =?utf-8?B?enhkTVJ4N3Y3RnpSUjlFUnUrc09SWEQ2UnMraEw3MnpKSmJWNk83MC8wV3FV?=
+ =?utf-8?B?QzR5dlhGRkxZdC9JbEg5RmZka0xTb3l4WmxHM3U4V0tKRFBHOE1IT1lNMUI0?=
+ =?utf-8?B?Ris1OFJtQ0cwZ1kvdkVvYlB5QURjaEw3TFhLM0VKVCsraDFNaXV1dnE3cnBo?=
+ =?utf-8?B?bDZhcHFSYlkybjRRSDB3ZnI3a05BanFXbjBqYlhLRGR1MUNQaGlSV0xEZzJP?=
+ =?utf-8?B?TWdPSzlDbHRrVisyRXFlT0ZDTlhEZm5EZWJ5WnZ3d0RyWGpjL2k4UFY2OUhq?=
+ =?utf-8?B?dTU1ZWdIUEFRTFRMRjF4TmQwWnY5Wk9oa01LcGxaUlNnelFod1FhUUtERUo0?=
+ =?utf-8?B?NkFrallRcXo2UEQvdGRJTGJDZmErUndiaDhtNnBNTmpJbVVod0lVWFJ1ZUw5?=
+ =?utf-8?B?clBhRWFuUmtrNVZPWFVPNEJnQUdUc1RsQ1NFcWNEVTg3S1R0ZmZyTDNMTklP?=
+ =?utf-8?B?VmpuZ0d0Sk1XWnozdm5aOGhLQkI1S2ZER2ExdHpHS3hWL2VvNXZqS0VsSUg1?=
+ =?utf-8?B?SEhDQ0QybXo0Sjl1YlZiSzY1TnMrMEtVME0xN0NUeVYzbEhUcncwcG5FMzFn?=
+ =?utf-8?B?WjNpRGZzcHg5T1drTTNqTXBKMkc4VjgwWnRYRHhzZmhDNFZ0L3Y2aVFKek5U?=
+ =?utf-8?B?OGM5WFdocEZydnF2aEdWbThxS28zK05DYVNqMUJVWFFXRHhPOGVvTXQ4V01F?=
+ =?utf-8?B?ZGFmV0pWQ1F1SWxLazl3NmROdGQrSVpDVHRQTG1jU04ya0NYdGM4MEdGVzdu?=
+ =?utf-8?B?NWdqckRoVE1mcUZ3NmdwK1A2TlEzTUxlQ21vaUdZYUJmQ0xGa0NqZDlLQkxs?=
+ =?utf-8?B?d1BwSHliOTQrbTNJcmFMTG8rREwwMVc0MnRzUnVIelNKN2l6bUZ6RDNMTXF0?=
+ =?utf-8?B?c2kwVy80R1ZVMlJzVmxBUmo4cnNiemFqYTdDLzFyUS9MckJIVUU4Y3RtcEhJ?=
+ =?utf-8?B?RjFtK0s1cEJwY1JaTjZ1OFpmb0NGbWhDN3ExNjJpenZLMUZpbk5WOWd1WjdW?=
+ =?utf-8?B?MGg5ZjZzaDdpVlJOMG9GazIySlV1ZjUwMXZmSWU3enZ2dzBMUXdpcFdYb2N2?=
+ =?utf-8?B?TE11N2hBTHMzdVBVZ2E4WGtRQXRBcHFCQURTY1FId1R6V3FndDhwTmZOQXZK?=
+ =?utf-8?B?QTRocGNoR0gwRHdnaG9TRmlLNkEzSEZFN0xUd3pKS2MyUVg0dFhPbTdHOUwz?=
+ =?utf-8?B?SmI5d2ZEeWJVQTMrL2R5djVPMlZwb1hQSktYTzB0SFhIR3ByeHJueCtCL2pl?=
+ =?utf-8?B?QlM3eXBBSlNBSWVFVW1jb0ZGSEZYUm9wTTdxNXlBZHp2cW0xVDVUckJBR0c5?=
+ =?utf-8?B?WEVWSi9sMEhuVjhSaEUzUzhyZUlodlR6RUF1emlRR3dna2Vubkhxc0dZWTc5?=
+ =?utf-8?B?UHB0d29iWmhJZGJCaEkzbHExWVVsVjBGTmJNU2JMb2EwekNVOVBud2llcHNT?=
+ =?utf-8?B?aXpMQ3FkVVc1QVQzOWVtazRhcVlRNFp6VTRteGVZRStDS1NrSzJ4Q3dpWGt3?=
+ =?utf-8?B?WFYwazZjaVNTdFo1WjA3M2QyVTdrVmpMb2V4NTJqNkU1S0VpSlh0YndFSERk?=
+ =?utf-8?B?L1kwZmMyYkNSVWZrY1lpNGhjdWY0bVNIeCtuNW83YlloQzc1c0tTSDQrZTBK?=
+ =?utf-8?B?UEpjSDNhUzFNRnB2dXhVQ1BkTml4eFFZM2I5c2VMQmxOd3NiQSttcTVwWjQ2?=
+ =?utf-8?B?eGJPa1JLNTZnVm11SDI5cDJMZm84aVB3QWcvS3FrOFFxamMwWlVkVVlVOTA3?=
+ =?utf-8?B?UUxMcDFDWjI4ZlIyQ3dpKzFHRFBWN1R2WmhPLzhpaytKaExwc244V3ZYcmNk?=
+ =?utf-8?Q?NYDY5FrYiMI=3D?=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(7416014)(82310400026)(36860700013)(1800799024);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jan 2025 11:03:44.9557
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 87ffd7f7-c1b1-4227-f93a-08dd41e6ee35
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF000044F0.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7514
 
-On 31.01.25 10:52, Fuad Tabba wrote:
-> Hi David,
-> 
-> On Fri, 31 Jan 2025 at 09:11, David Hildenbrand <david@redhat.com> wrote:
->>
->> On 29.01.25 18:23, Fuad Tabba wrote:
->>> Add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which indicates
->>> that the VM supports shared memory in guest_memfd, or that the
->>> host can create VMs that support shared memory. Supporting shared
->>> memory implies that memory can be mapped when shared with the
->>> host.
->>>
->>> For now, this checks only whether the VM type supports sharing
->>> guest_memfd backed memory. In the future, it will be expanded to
->>> check whether the specific memory address is shared with the
->>> host.
->>>
->>> Signed-off-by: Fuad Tabba <tabba@google.com>
->>> ---
->>>    include/uapi/linux/kvm.h |  1 +
->>>    virt/kvm/guest_memfd.c   | 13 +++++++++++++
->>>    virt/kvm/kvm_main.c      |  4 ++++
->>>    3 files changed, 18 insertions(+)
->>>
->>> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
->>> index 502ea63b5d2e..3ac805c5abf1 100644
->>> --- a/include/uapi/linux/kvm.h
->>> +++ b/include/uapi/linux/kvm.h
->>> @@ -933,6 +933,7 @@ struct kvm_enable_cap {
->>>    #define KVM_CAP_PRE_FAULT_MEMORY 236
->>>    #define KVM_CAP_X86_APIC_BUS_CYCLES_NS 237
->>>    #define KVM_CAP_X86_GUEST_MODE 238
->>> +#define KVM_CAP_GMEM_SHARED_MEM 239
->>>
->>>    struct kvm_irq_routing_irqchip {
->>>        __u32 irqchip;
->>> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
->>> index 86441581c9ae..4e1144ed3446 100644
->>> --- a/virt/kvm/guest_memfd.c
->>> +++ b/virt/kvm/guest_memfd.c
->>> @@ -308,6 +308,13 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
->>>    }
->>>
->>>    #ifdef CONFIG_KVM_GMEM_SHARED_MEM
->>> +static bool kvm_gmem_is_shared(struct file *file, pgoff_t pgoff)
->>
->> I assume you want to call this something like:
->>
->> kvm_gmem_folio_is_shared
->> kvm_gmem_offset_is_shared
->> kvm_gmem_range_is_shared
->> ...
->>
->> To make it clearer that you are only checking one piece and not the
->> whole thing.
->>
->> But then, I wonder if that could be handled in kvm_gmem_get_folio(),
->> and e.g., specified via a flag?
->>
->> kvm_gmem_get_folio(inode, vmf->pgoff, KVM_GMEM_GF_SHARED);
->>
->> Maybe existing callers would want to pass KVM_GMEM_GF_PRIVATE, and the
->> ones that "don't care" don't pas anything?
-> 
-> I agree that naming this function to make it clearer would be a good
-> idea. That said, I think with the patches I removed, it doesn't even
-> need to be exposed at all, even looking at future patches --- it has
-> no callers other than kvm_gmem_fault(). Therefore, I don't think we
-> need to add a flag to kvm_gmem_get_folio().
-> 
-> I'll have a closer look while preparing the respin and fix it either way.
+Hi,
 
-Okay, having some indication in the name that we only want a shared 
-folio etc. might make sense.
+The initial goal of this series was to improve the drm and amdgpu
+trace events to be able to expose more of the inner workings of
+the scheduler and drivers to developers via tools.
+
+Then, the series evolved to become focused only on gpu_scheduler.
+The changes around vblank events will be part of a different
+series, as well as the amdgpu ones.
+
+Moreover Sima suggested to make some trace events stable uAPI,
+so tools can rely on them long term.
+
+The first patches extend and cleanup the gpu scheduler events.
+
+The last one adds a documentation entry in drm-uapi.rst.
+
+Changes since v6:
+* Addressed comments from Philipp, Tvrtko, Steven
+* The commit storing drm_client_id in sched_fence adds an extra
+field which looks like a duplicate of the owner field. Currently
+amdgpu uses the owner field with some magic values, so we have to
+have 2 separate fields for now, but ultimately one could be removed.
+Similarly storing the drm_client_id in the sched_entity is not
+really possible as there's nothing preventing a driver to use a
+sched_entity with multiple drm_file instances.
+
+
+Useful links:
+- userspace tool using the updated events:
+https://gitlab.freedesktop.org/tomstdenis/umr/-/merge_requests/37
+- v6:
+https://lists.freedesktop.org/archives/dri-devel/2024-November/477644.html
+
+Pierre-Eric Pelloux-Prayer (7):
+  drm/debugfs: output client_id in in drm_clients_info
+  drm/sched: store the drm client_id in drm_sched_fence
+  drm/sched: add device name to the drm_sched_process_job event
+  drm/sched: cleanup gpu_scheduler trace events
+  drm/sched: trace dependencies for gpu jobs
+  drm/sched: add the drm_client_id to the drm_sched_run/exec_job events
+  drm/doc: document some tracepoints as uAPI
+
+ Documentation/gpu/drm-uapi.rst                |  19 +++
+ drivers/accel/amdxdna/aie2_ctx.c              |   3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c    |   2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c        |   3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c       |   8 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.h       |   3 +-
+ drivers/gpu/drm/drm_debugfs.c                 |  10 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c  |   2 +-
+ drivers/gpu/drm/imagination/pvr_job.c         |   2 +-
+ drivers/gpu/drm/imagination/pvr_queue.c       |   5 +-
+ drivers/gpu/drm/imagination/pvr_queue.h       |   2 +-
+ drivers/gpu/drm/lima/lima_gem.c               |   2 +-
+ drivers/gpu/drm/lima/lima_sched.c             |   6 +-
+ drivers/gpu/drm/lima/lima_sched.h             |   3 +-
+ drivers/gpu/drm/msm/msm_gem_submit.c          |   8 +-
+ drivers/gpu/drm/nouveau/nouveau_sched.c       |   3 +-
+ drivers/gpu/drm/panfrost/panfrost_drv.c       |   2 +-
+ drivers/gpu/drm/panthor/panthor_drv.c         |   3 +-
+ drivers/gpu/drm/panthor/panthor_mmu.c         |   2 +-
+ drivers/gpu/drm/panthor/panthor_sched.c       |   5 +-
+ drivers/gpu/drm/panthor/panthor_sched.h       |   3 +-
+ .../gpu/drm/scheduler/gpu_scheduler_trace.h   | 123 ++++++++++++++----
+ drivers/gpu/drm/scheduler/sched_entity.c      |   8 +-
+ drivers/gpu/drm/scheduler/sched_fence.c       |   4 +-
+ drivers/gpu/drm/scheduler/sched_main.c        |   8 +-
+ drivers/gpu/drm/v3d/v3d_submit.c              |   2 +-
+ drivers/gpu/drm/xe/xe_sched_job.c             |   3 +-
+ include/drm/gpu_scheduler.h                   |  12 +-
+ 28 files changed, 192 insertions(+), 64 deletions(-)
 
 -- 
-Cheers,
-
-David / dhildenb
+2.47.1
 
 
