@@ -1,356 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-46593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 845ABA23B48
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 10:22:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8A06A23BA9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 10:53:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFAF1188A152
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 09:23:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4399D7A3BA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 09:52:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92CC61AE850;
-	Fri, 31 Jan 2025 09:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 916BB199384;
+	Fri, 31 Jan 2025 09:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RTErgEUN"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XLfdP+nu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52DD1991CD;
-	Fri, 31 Jan 2025 09:22:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D521A199223
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 09:52:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738315339; cv=none; b=u5sucQTiaATxdWl1c3VXHW7JE8yXLSxdHxC2Is3WGjL1RdQhfmNGrdbUecnxzrNe8KQRw6ol1Xq5DCF1yFP/xscRKuSV55+RYw5xGzJsKLP3/GT+13gQF0FpGvPFGFM/vQVvIzapgdp732hq3X8zJ1OFtVFLvIsD815oOmryKWI=
+	t=1738317180; cv=none; b=Gt0XSH+tK6av8ejImqvcN7YCNbo9cgXZjqrr7Gh6xgx3mxzD8kdXZSvYb/br7rsn7mCoi2sbUQ1y8G1zwyc5rgS1L2Qjp0Q0ZZ9+2uMluz1rcLqhxvi0KPgQbfi5KrPkHmjCcGU+FzBmkIZ++e+/eYh6suiafqiXG1i16GtsKjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738315339; c=relaxed/simple;
-	bh=MTePTFZO0fJY5+8Rwq04Zyp4iZ/qTd/L+xe/WvK/kzw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVy9A0Wazwk/Cd2jT8ub9XzUUZi4xnaugy02Gl4m+FNS0NfGsG77taF6Wr0KCbOwr3KpLST7pCG1gegxOoil3uhTaK4F8mhWi6OrLeQaSKlCQnHxmr3kzxseM6JU+C4DI5bOvlP1sFZGiI0mbOeHolfVw60YiNVJlBnBejP/Mfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RTErgEUN; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2156e078563so25000055ad.2;
-        Fri, 31 Jan 2025 01:22:17 -0800 (PST)
+	s=arc-20240116; t=1738317180; c=relaxed/simple;
+	bh=+mzkNMBqCN7Ggaah1/eSkSRR48229bsZYcJq/plje/Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r91Ub0QmNVAZhmXY1GT8mAdBFV+/D/PLvndLeoQ3IkROpDLXUxAWA7exokxh1O3pZWxORSweTOt7DTm8ioNnFD4YhwAo4L3zjUZSsAEYp5Vl6kcm3yzllQa/z4va4N1itZgesFDMTuztKG92x6BFs1VjNpYtlP4Y/6ZzgTD/beY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XLfdP+nu; arc=none smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-467896541e1so200721cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 01:52:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738315337; x=1738920137; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U6kosElOaSMZSNtX69a/Hsyj1tzL+5G6ZJzdXAObE/E=;
-        b=RTErgEUNinzmXF71IRalxjSZr4mjorhGH4d9VNmtYaU/4niXC+X0/+kFO9geuQQQcR
-         tJrP65LT40seJSzrtQhgshf5R0XB0IP6XCqnCCdww1nwrnBeMdUhwEu09GzdhO2Voqrv
-         IbUj4EXQfw13RpBsaniTWNKIl5n45xSvjHUTc854zGXEJYyvU03BBtlHLyFKn+JCe0Sh
-         rHzQd25tdvdRi+o+uZlX8kb8660TNFcTpRhS2OCkQE7RHpVhAF9ocDkbu7M+MxiXp3G+
-         s3vtOZIbEiax+ZjuUD8Xlx8257nj9FLrLSahSz1CWwLLX9ZYM7OQQoK4QuZzwydCiNeq
-         VhWg==
+        d=google.com; s=20230601; t=1738317178; x=1738921978; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=UawzW5CPcYtdM6GH7BYIss2GyrQD0NJhGUPZxp+W9Lc=;
+        b=XLfdP+nu72zrstlUDxEqd1bWXa5XrLzZvi/YnfjpCQs+jP7tU4x7tAtsgitIAZI1QX
+         eE4o+rFXCJ59i3Hb8qCktU0wyzwCtmK8UzscaRUezIqD3jp/kUtkClce3vna7jteKZQA
+         J43jhofUn4J8HjEIyV1zf69f2gGJKG/I0HBBHgAMb9Vm90iY4aRtFCSZjw3zMwAuyHhk
+         RdS51SLCHWAdN9ZFGCE5Xb1+ylGc6e+whLypais2zRFC3+/qL0wE6DN9XdzNV3u8eYvQ
+         mPZ7o1EhWTDWslG+qWIx2ZsCJ6lzmwO3LJWMk0NFsAKt6Hgl5gaILl8YvHxanhOwbRKh
+         Ogaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738315337; x=1738920137;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=U6kosElOaSMZSNtX69a/Hsyj1tzL+5G6ZJzdXAObE/E=;
-        b=w1o4EqQc3A0vUQBScZj5w/W4a9DJME0ZmVEL9LtwCMxtzmfaTf+GNPFYBg69gF+LMx
-         DoZ/HTJa32saVtEieg1rlJBafGyy0f3SF7qQEeDZRJhdH85pFSDtafL/jESRhxBRW8Ss
-         ZWxeIKe9ycBAViPmR9mPItt3IF57gkYDyXlBzRGjjG1vSzDbMICy6PKx87ViU0G95UwG
-         9pzME5USHAf7kRha30no2H2RUrYOGxgGX0koaBgBsyw92Q7jf3JwwyvKPpjgxw8MRqES
-         M8zOZxjWSgdo7nWMyrf3t0TeE8C4Pb1ZDIW6ngJDw4cGIKHYD7LPCDudPHX5olawUh1n
-         ZxpA==
-X-Forwarded-Encrypted: i=1; AJvYcCV06P4RXEqF5UIT1z4i5akH9YIM5lD45gCmc7Cm5eWw0B85kGvJQjMNNL6JEpzNMtYc2kdyLa5Uq65o/8wE@vger.kernel.org, AJvYcCWc0aW1si1xMNtpIEBOXtpWsyE2Gb9OUbeZB4lAKbbc05taKP5/GvfUVKdugkisUxR0DEdUUR/tPtolkSg=@vger.kernel.org, AJvYcCX+IIuBNDQShVGbxBawoPA+zX7dXum1PvwSFqgcwap8EXI7GLB3UoWfb178MZ7dvOZzmha1AuEONWTIrSXJWwRJydd2cg==@vger.kernel.org, AJvYcCXzQI2R0+0ti+USgwa/rGSMnckfXfOUOHrWZ8i9pfyYU3ODqiDbXQElP36n4o3vAFeOhTNdOKu9NOMxS88V@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkdafyDgSg4H9JGxDEPknukgFp4+kwExbaYVn+eJLjdnu/M6Y5
-	GxhKy8SaPuYoIq2zJrTLCCPgMlE8N1BpRQN9wlL085hx1v0KbsPj
-X-Gm-Gg: ASbGnctSs2fqTapGrUARgbOzICHd9UvjH7DzdGqtNHCV6SH7T79Miu7hdUmpf1k1ae2
-	nJ6CHunjTBDA8UBYgeezTrngx47ruwtgihxR8QmLdvYa4dLSVwO2Klu1iCgwGpDMD0zkg38oDgS
-	w/Sr6Yx6Jfq4ZW3h55dG+5kwCK4T44pj4BGYT6AoVMyqz5YUDQfEHPajnZQY5caOGqgA0RXP/LX
-	vad+e9HOigY2O9dJ9AgtJqYQEAUGO/0BVyhlf+8ujMSRO2o0RQcn3QE0Hc97vz8DwfpULV4BTgH
-	pU0fszIFLlqeygEV
-X-Google-Smtp-Source: AGHT+IFRiqNQj7MxLr4NO504ORq8PNY5pGBppS/wd9xq7E5Gec4ceQ4SYgJmZodMRIS6ANJgN1z9jQ==
-X-Received: by 2002:a17:902:d488:b0:215:5bd8:9f92 with SMTP id d9443c01a7336-21dd7c46302mr169334755ad.5.1738315336989;
-        Fri, 31 Jan 2025 01:22:16 -0800 (PST)
-Received: from SC8280XP.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f83bf93ef3sm5366629a91.30.2025.01.31.01.22.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jan 2025 01:22:16 -0800 (PST)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=83=C2=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Jean Delvare <jdelvare@suse.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Cc: devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	linux-hwmon@vger.kernel.org,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH RESEND v6 3/3] arm64: dts: qcom: gaokun3: Add Embedded Controller node
-Date: Fri, 31 Jan 2025 17:21:39 +0800
-Message-ID: <20250131092139.6065-4-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250131092139.6065-1-mitltlatltl@gmail.com>
-References: <20250131092139.6065-1-mitltlatltl@gmail.com>
+        d=1e100.net; s=20230601; t=1738317178; x=1738921978;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UawzW5CPcYtdM6GH7BYIss2GyrQD0NJhGUPZxp+W9Lc=;
+        b=lf/jwNnaYyOowCArX5oOYRRGAHGtI8Dsce9azosulxhx1aWlAByfh6i76dOOfwIF3/
+         +e23b4Sl6ASd5ZmXzzmou/vaEmTUpF+ZWbw7VID22C7lUZu9TeGN6XC9+AxiK/0Paap9
+         r2HO9aBXxEmf90TD56IEFap6fP4tbHLdY9a/OZ6zjEvI8Krnwu9kx6cn+rLpnPIDBoY/
+         x48poguwZK6TvfIYiaucDNxiQT0NIdFQHXm2IRbuTeRqCs9+y0D4+dQV+jlkpEyEyM0k
+         AGloB46Je61IQBKSO5FHHHBLqMMu4P6nQBJ5ascc6yN2eKOeUxqO6b0oCcOG7XWbSGNA
+         71eA==
+X-Forwarded-Encrypted: i=1; AJvYcCXphUJxLFClHUcpy+YM6LtDAJBwn4FDiIwx5IfBTCQWI0WSx345Q58fd8dTlV38aJxIbn7y2przjXO8Gd3q@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMhHA+qMdv2LCxKAcdV7pentnodIm0RPkkBLFycTa1IZuEqWfI
+	vNckqLHqFfGiMusD6cxfSSzqR6kouGa61HgUHwIeMC1moffjWhuDnUhYi3oXB6NzrIHB03gvfWe
+	G23JMvKMNHfyMnsY/Dg0IQ1cVDBk6oEjrGq4F
+X-Gm-Gg: ASbGncspcOfeP5ONcYeHG75zeJKk0N3KHbpQfjswNBFDixOkBFZrgoAbGGTambPjibI
+	yimO9SfXtSkgBdKufsln329bgWLZiLK3YUjN1C64czv5Bb8PsI3O/DWS+s5Y4nnlWKFKOpeE=
+X-Google-Smtp-Source: AGHT+IHw2/pm+wt3pDfV/0nZHjZa9XIHeveNb1Io3hA0ha9qSZ0lsE6/QYxNYjRfLslznM/jNXQ7bTXExGmMRIWq9kI=
+X-Received: by 2002:ac8:574e:0:b0:467:7f81:ade0 with SMTP id
+ d75a77b69052e-46feaf58398mr2654171cf.24.1738317176624; Fri, 31 Jan 2025
+ 01:52:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250129172320.950523-1-tabba@google.com> <20250129172320.950523-5-tabba@google.com>
+ <dec9250c-aec5-43c4-aaf4-736b14fc3186@redhat.com>
+In-Reply-To: <dec9250c-aec5-43c4-aaf4-736b14fc3186@redhat.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Fri, 31 Jan 2025 09:52:19 +0000
+X-Gm-Features: AWEUYZnPcV2FFT5MsVgc54HfoLZMgko7nZwj2dYxSg0x6zp73B1it2_kEv8_Abo
+Message-ID: <CA+EHjTxNPRSVQj3rewnbRvr+=4LPVFkxgUrru7saTDtJ+ghCdg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 04/11] KVM: guest_memfd: Add KVM capability to
+ check if guest_memfd is shared
+To: David Hildenbrand <david@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-The Embedded Controller in the Huawei Matebook E Go is accessible on &i2c15
-and provides battery and adapter status, port orientation status, as well
-as HPD event notifications for two USB Type-C port, etc.
+Hi David,
 
-Add the EC to the device tree and describe the relationship among
-the type-c connectors, role switches, orientation switches and the QMP
-combo PHY.
+On Fri, 31 Jan 2025 at 09:11, David Hildenbrand <david@redhat.com> wrote:
+>
+> On 29.01.25 18:23, Fuad Tabba wrote:
+> > Add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which indicates
+> > that the VM supports shared memory in guest_memfd, or that the
+> > host can create VMs that support shared memory. Supporting shared
+> > memory implies that memory can be mapped when shared with the
+> > host.
+> >
+> > For now, this checks only whether the VM type supports sharing
+> > guest_memfd backed memory. In the future, it will be expanded to
+> > check whether the specific memory address is shared with the
+> > host.
+> >
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > ---
+> >   include/uapi/linux/kvm.h |  1 +
+> >   virt/kvm/guest_memfd.c   | 13 +++++++++++++
+> >   virt/kvm/kvm_main.c      |  4 ++++
+> >   3 files changed, 18 insertions(+)
+> >
+> > diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+> > index 502ea63b5d2e..3ac805c5abf1 100644
+> > --- a/include/uapi/linux/kvm.h
+> > +++ b/include/uapi/linux/kvm.h
+> > @@ -933,6 +933,7 @@ struct kvm_enable_cap {
+> >   #define KVM_CAP_PRE_FAULT_MEMORY 236
+> >   #define KVM_CAP_X86_APIC_BUS_CYCLES_NS 237
+> >   #define KVM_CAP_X86_GUEST_MODE 238
+> > +#define KVM_CAP_GMEM_SHARED_MEM 239
+> >
+> >   struct kvm_irq_routing_irqchip {
+> >       __u32 irqchip;
+> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > index 86441581c9ae..4e1144ed3446 100644
+> > --- a/virt/kvm/guest_memfd.c
+> > +++ b/virt/kvm/guest_memfd.c
+> > @@ -308,6 +308,13 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
+> >   }
+> >
+> >   #ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> > +static bool kvm_gmem_is_shared(struct file *file, pgoff_t pgoff)
+>
+> I assume you want to call this something like:
+>
+> kvm_gmem_folio_is_shared
+> kvm_gmem_offset_is_shared
+> kvm_gmem_range_is_shared
+> ...
+>
+> To make it clearer that you are only checking one piece and not the
+> whole thing.
+>
+> But then, I wonder if that could be handled in kvm_gmem_get_folio(),
+> and e.g., specified via a flag?
+>
+> kvm_gmem_get_folio(inode, vmf->pgoff, KVM_GMEM_GF_SHARED);
+>
+> Maybe existing callers would want to pass KVM_GMEM_GF_PRIVATE, and the
+> ones that "don't care" don't pas anything?
 
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 163 ++++++++++++++++++
- 1 file changed, 163 insertions(+)
+I agree that naming this function to make it clearer would be a good
+idea. That said, I think with the patches I removed, it doesn't even
+need to be exposed at all, even looking at future patches --- it has
+no callers other than kvm_gmem_fault(). Therefore, I don't think we
+need to add a flag to kvm_gmem_get_folio().
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-index 09b95f89e..1667c7157 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-@@ -28,6 +28,7 @@ / {
- 
- 	aliases {
- 		i2c4 = &i2c4;
-+		i2c15 = &i2c15;
- 		serial1 = &uart2;
- 	};
- 
-@@ -216,6 +217,40 @@ map1 {
- 		};
- 	};
- 
-+	usb0-sbu-mux {
-+		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-+
-+		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&usb0_sbu_default>;
-+		pinctrl-names = "default";
-+
-+		orientation-switch;
-+
-+		port {
-+			usb0_sbu_mux: endpoint {
-+				remote-endpoint = <&ucsi0_sbu>;
-+			};
-+		};
-+	};
-+
-+	usb1-sbu-mux {
-+		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-+
-+		select-gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&usb1_sbu_default>;
-+		pinctrl-names = "default";
-+
-+		orientation-switch;
-+
-+		port {
-+			usb1_sbu_mux: endpoint {
-+				remote-endpoint = <&ucsi1_sbu>;
-+			};
-+		};
-+	};
-+
- 	wcn6855-pmu {
- 		compatible = "qcom,wcn6855-pmu";
- 
-@@ -584,6 +619,97 @@ touchscreen@4f {
- 
- };
- 
-+&i2c15 {
-+	clock-frequency = <400000>;
-+
-+	pinctrl-0 = <&i2c15_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+
-+	embedded-controller@38 {
-+		compatible = "huawei,gaokun3-ec";
-+		reg = <0x38>;
-+
-+		interrupts-extended = <&tlmm 107 IRQ_TYPE_LEVEL_LOW>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					ucsi0_hs_in: endpoint {
-+						remote-endpoint = <&usb_0_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					ucsi0_ss_in: endpoint {
-+						remote-endpoint = <&usb_0_qmpphy_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					ucsi0_sbu: endpoint {
-+						remote-endpoint = <&usb0_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+
-+		connector@1 {
-+			compatible = "usb-c-connector";
-+			reg = <1>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					ucsi1_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					ucsi1_ss_in: endpoint {
-+						remote-endpoint = <&usb_1_qmpphy_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					ucsi1_sbu: endpoint {
-+						remote-endpoint = <&usb1_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &mdss0 {
- 	status = "okay";
- };
-@@ -1004,6 +1130,10 @@ &usb_0_dwc3 {
- 	dr_mode = "host";
- };
- 
-+&usb_0_dwc3_hs {
-+	remote-endpoint = <&ucsi0_hs_in>;
-+};
-+
- &usb_0_hsphy {
- 	vdda-pll-supply = <&vreg_l9d>;
- 	vdda18-supply = <&vreg_l1c>;
-@@ -1025,6 +1155,10 @@ &usb_0_qmpphy_dp_in {
- 	remote-endpoint = <&mdss0_dp0_out>;
- };
- 
-+&usb_0_qmpphy_out {
-+	remote-endpoint = <&ucsi0_ss_in>;
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
-@@ -1033,6 +1167,10 @@ &usb_1_dwc3 {
- 	dr_mode = "host";
- };
- 
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&ucsi1_hs_in>;
-+};
-+
- &usb_1_hsphy {
- 	vdda-pll-supply = <&vreg_l4b>;
- 	vdda18-supply = <&vreg_l1c>;
-@@ -1054,6 +1192,10 @@ &usb_1_qmpphy_dp_in {
- 	remote-endpoint = <&mdss0_dp1_out>;
- };
- 
-+&usb_1_qmpphy_out {
-+	remote-endpoint = <&ucsi1_ss_in>;
-+};
-+
- &usb_2 {
- 	status = "okay";
- };
-@@ -1177,6 +1319,13 @@ i2c4_default: i2c4-default-state {
- 		bias-disable;
- 	};
- 
-+	i2c15_default: i2c15-default-state {
-+		pins = "gpio36", "gpio37";
-+		function = "qup15";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
- 	mode_pin_active: mode-pin-state {
- 		pins = "gpio26";
- 		function = "gpio";
-@@ -1301,6 +1450,20 @@ tx-pins {
- 		};
- 	};
- 
-+	usb0_sbu_default: usb0-sbu-state {
-+		pins = "gpio164";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	usb1_sbu_default: usb1-sbu-state {
-+		pins = "gpio47";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
- 	wcd_default: wcd-default-state {
- 		reset-pins {
- 			pins = "gpio106";
--- 
-2.47.1
+I'll have a closer look while preparing the respin and fix it either way.
 
+Thanks,
+/fuad
+
+
+
+> --
+> Cheers,
+>
+> David / dhildenb
+>
 
