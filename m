@@ -1,183 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-46600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50003A23E2F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 14:12:41 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F21EA23F61
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 16:03:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 946A37A02FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 13:11:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84BBB16989D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 15:03:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D46EA1C3F2B;
-	Fri, 31 Jan 2025 13:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D00B71E5020;
+	Fri, 31 Jan 2025 15:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qv0Vx60V"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tDPeVVNm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DF91C461F;
-	Fri, 31 Jan 2025 13:12:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19801E47C7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 15:03:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738329155; cv=none; b=EuD9dq5jPmy2EyPgvawfy00Im4RLjC8sK3R/HXGMb+Tsoeq6nS6wdnyn1kPY7O0cYd5XU2SJn9UjfHowXAFP17vxyKlYvwS4K2uU8+KTZ6zsrjmvNn4/SYF4Wm23mnH4l2ZfxHqOo5SLUS6rSJN5rE0nYGl6h7bfEimFu4RwngA=
+	t=1738335803; cv=none; b=Fee5mtqxMymMBtl5x94lA2mY/ycg2w8VNEIvDs7iKWan6jbQszItoQhRlOWm3hEj9FHoDNuufHKAbv+LXjRdsniIZRYBzNAoAn6O4ug2wQlju3w0s18KK81B2nsAC6YabeB4Uf7WTJuqZDCXnJ6kH0sgTirIDyJDjupjvQF9big=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738329155; c=relaxed/simple;
-	bh=BbyKo5qgSbKGRwmdExkn+VWyTR4nHKaDT3omlcynxiA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nOGZwhJLLIyr1IJzEdjPfsrsoD0Q4BGayxdO90vgzD51S6h1O1l2ZlWlxU0Ckhj4BFLNKAW1wstc0TwO3K4h5VLlhX6nk5yXSwoXZQSMy/WfMbT68AxLkvbGtgDJ9XrFIT3UtpdtUOPZQeaWIreGAiW300yjhckUfTOxZlnu6SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qv0Vx60V; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-438a39e659cso13956365e9.2;
-        Fri, 31 Jan 2025 05:12:33 -0800 (PST)
+	s=arc-20240116; t=1738335803; c=relaxed/simple;
+	bh=SQxyJFMg3gBp7lSoZ7WOgJA3LdW1+oWZENbqGdTJsCI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ht1Vc1MUwhmR2tnOjgvdsxZFfXEKliSJvJ2maUD+CXnSLo31RlevowZol59d8FMhEx+k6S+0LDWJ3MuPudQ9ppAWPB5xBILLv6G56vOoM2xwJTfyGTIlRvqUB7Cl96ae3QCbH+nfzapMoWLowOVMc94xqtUFTsKhCZqSLDO+cM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tDPeVVNm; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43616c12d72so2958235e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 07:03:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738329152; x=1738933952; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8Qf5Ag+gkCkodLzQTGh44JB0E7mlh4X9B+GfpD3S+A8=;
-        b=Qv0Vx60VBM+8Zsw4WGl7PyVC0YU6tX1x0vigQSLoVhDY0TAngmkyCNQL/9WRSSVZrT
-         F1403CJERgUejvs4XuzXi6/fSS6Fy/zwVkFUe9wPTYtB3THJGDLq4TiXjGWjFS5tghAw
-         MZJBNrP7jjrRdhT2xbYsxD7d/4J4OXqj2mK9lZTRQAHSFnBY6rq8sL7io8ZoVRHAVnjj
-         aWTTn5EcgbHf7ZU3/oGmqt5W9fyk6IPrbq86Gnj6wbvdMlOHA3V9jP9pLuRFTba2h9h9
-         YzXAaevDIwq1wGtf7O5wHpOBBJQSyX27wZqEifiCDaSXXBiu8lJCw4nvpJjzx6bycMh4
-         arkA==
+        d=linaro.org; s=google; t=1738335800; x=1738940600; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KfhNXlBVSPOAhrzoDNzwgTxVG2wC1I3quOzSh7mjUbE=;
+        b=tDPeVVNmgSW5lSe7p46HqNV8r/PJCVKKPPzEg000C1XAAKYAP8f6xoX78PTDTaz4lK
+         SH+CI5ZyGx2gqXH5bgViLiza+63WjWtD5xXCG3dw/iHekPnGSaKRFOkVh2EamTsommr5
+         mb9c/9W3n+Jhb3T1vjvF3HhSVNKQwy8pupSbfDP6ctjmu+L8fN5FWimI214KXjl+rPu5
+         pBIxoHOLiHtlFLfzLjF7VcPEkMbwVO3UxzBfIESLczySjXnJ6MC9//UOhFpES1LuPwxf
+         zVqNFoGYwbERlYrPNZKbOHOL8bXfaDVb5Y305Cus5biH0M9imwXsxe0nH7F0s1ymrjTD
+         zBVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738329152; x=1738933952;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Qf5Ag+gkCkodLzQTGh44JB0E7mlh4X9B+GfpD3S+A8=;
-        b=AnNyP5ewAoXZcbqjo/S0EiLIB/Y+3YhC8b4OlR+myAsRSnk8hzVKnlVVNWVExXCFTA
-         KBUSmOQJ8SC9b2w/Tiaaqj1HPZ1IH7DmlIagr4Ko139ZMITJhinnqyYsexKP0tcoInA2
-         y8N2GfcIhiMO4gVQnt1olYFKjgufr6jM4XmAgatpdM0dk7JU8Ftui0mMIZP4kRsQT+hb
-         QVO6cks/fmwpPsg0peIX8Qg6BsMXqtUyyZQ0QM02RA+vgOscThJjgYILaVIPcQSw/2xF
-         heirOK0fXij+/mcOxyXvCbUaeGfyFyp9NmUdURDPRIH+YGE/24MhymPKLJ0aN3gLAwC1
-         CzAw==
-X-Forwarded-Encrypted: i=1; AJvYcCUO0pyiEMyWQzYnPo0j0vc6OlOmS6cKXNCZSjGNxQuol4ga4KYaOYtG4PVQTVSbcMaL7O0GsRk8FcoyO2wy@vger.kernel.org, AJvYcCWQ4azVwjJVMlYImcxZokRqRXr0TxqK2ecP+xl6uDXNjfmpp1lHKKzoE5WYaYTJMZJVnDvn5BC7SzXH@vger.kernel.org, AJvYcCWeRSYX5AizuAj5ViqjUbh3flRWZtnD8dMJNbLMen/sTYdJh34CTh4fdsRwIniG9hLzkJNShRuNvErvTikh@vger.kernel.org, AJvYcCX/o/JmKx1TYbPOhEJvkf9TUrjfGPtbQr7NrYtKpNwdDtVTtnDv1Xn6AppT7FLkv3Pl4dS7t47g+yAAEg8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyzXFEwucEpSQ1VXBPBphcmU1ZNqJc9adYPeLrOSMPuw6hCOvy1
-	pwjT4bxWzy8lxG6tF0I6M9zS3Iy93YnvL4h42KoOlc5AyeNkS9kY1scvhxY7
-X-Gm-Gg: ASbGnctUl3C6AZ309HPMGF5DvA79Pe+NRacZSmO+A2VJC0XjAjVQ0dorQaqQnft3BAG
-	Oz55F87wI4GLwEYyul3XgF4wYvNeQzeGns3xpvIYPootW/Q2Oc+qSiuXqHL0BrlqE31j1OIZjCw
-	jJqZFR/O/4aDVhXCL3a2PBeuI2DS2jLNbf96eUIufsG/uvS+xMgMV+tfe/it6J21tpc4k6kjVW3
-	yvQoEU1XsquQjrS7A8tfxnF9epqw0k1kCcTGueYCBlbaG59R5mv6/wN9pjhKu/BtlFZR7nppZ/G
-	gY+w+2HyS7ZGXoJLRFdc1OuW9lt8akkN/oyuN5BPtq+m
-X-Google-Smtp-Source: AGHT+IGKBtM8zdX0f/k9fSlmikQgi6UfU2qNH1ycY66SNDkJyOrXViqSqC8f4KUEz2AE7pAcFmrXww==
-X-Received: by 2002:a5d:59a6:0:b0:385:f1f2:13f1 with SMTP id ffacd0b85a97d-38c51951c51mr9664356f8f.22.1738329150361;
-        Fri, 31 Jan 2025 05:12:30 -0800 (PST)
-Received: from [10.254.108.83] (munvpn.amd.com. [165.204.72.6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc263f0sm90055545e9.9.2025.01.31.05.12.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Jan 2025 05:12:29 -0800 (PST)
-Message-ID: <0b20e88a-9009-4fa2-b5cb-ab78ce834587@gmail.com>
-Date: Fri, 31 Jan 2025 14:12:28 +0100
+        d=1e100.net; s=20230601; t=1738335800; x=1738940600;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KfhNXlBVSPOAhrzoDNzwgTxVG2wC1I3quOzSh7mjUbE=;
+        b=GiBr/NnjfZLd+n1wh0iuYZyDh/hfgklWvy3LhpN3c67D5z4ugJ1TfF39y+pX1FxVdF
+         smmxv5axif6XK/fP2WYCEHhMOB8VRC+wKcdg2Ng6+9F6L9LyoaGjyXfAUkRo4qyuGRcK
+         jF0AWRtZIriq4qm1YZi8S72MOn4GN0m95X2f/C2cf/rDuIrp8CIGGkWjBpjoaJ9flvlE
+         UOkY0gZUux2N9fCcGB5G03Uups21uwmYoLqr/8UOKVPKmR2iznpbDi97mG16DMzmxvR4
+         fUvZ93Xe0Np4k8vZuXG6uYGYSYdeaWIYpZkjK0DjYJgtuFrOQRUea0/BVtGR6k8Yjg31
+         3ZQg==
+X-Gm-Message-State: AOJu0YzszpOd7YB6VV/W02HcCo9PjnnXZA5Hm4RbbZ4af+7XJPZhIXt/
+	DAB/wSA0WALqMUEWrqnQr0X1A6BZGXz0vBPL/RE4SRpZ2BtvGTTa9ql/i0UFYNM=
+X-Gm-Gg: ASbGncvmzs3abyPfisCxXDdmM4eC60IhhoVNoQ0CgbLgZ6mrTofSxL9Ii/DwybDYGVb
+	sycT0Oc34AWNQEHmuEK8mB4cKRnqB5XTxz1vNkT+Kp+LPXX+LylNpprbzdX8JZiYbR6aqjz6OxX
+	jK6R7VQPr8tkWIXdDjatKrQN19tuM+AL+VfpZ1QZssXLEaz/gzRBuHK45Hk+GoUE7MoJlgzeONe
+	D7Y4in8scrtu9bcLarfr/5aQahn8a/r8qrZO3sxahLtwd/mTTTKtE3kvSY7pyUsP1fzlDvWfPjJ
+	aQ0KucDQ1qOHc60Gwq9k3kZRIg2qpSM=
+X-Google-Smtp-Source: AGHT+IHPnGgkYwPUj2l4BkoTVGjO/72Nk1bxY7vDjxwIQ8mRGo6Er8pjlk+fnyU5cwhkesYBHWv1gg==
+X-Received: by 2002:a05:600c:1d1c:b0:436:1b94:2deb with SMTP id 5b1f17b1804b1-438dc40d358mr40451075e9.5.1738335799159;
+        Fri, 31 Jan 2025 07:03:19 -0800 (PST)
+Received: from [127.0.1.1] ([178.197.218.144])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438e245efbcsm56679925e9.33.2025.01.31.07.03.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jan 2025 07:03:18 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/3] drm/msm/dsi/phy: Improvements around concurrent
+ PHY_CMN_CLK_CFG[01]
+Date: Fri, 31 Jan 2025 16:02:49 +0100
+Message-Id: <20250131-drm-msm-phy-pll-cfg-reg-v1-0-3b99efeb2e8d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/7] Improve gpu_scheduler trace events + uAPI
-To: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- etnaviv@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, lima@lists.freedesktop.org,
- linaro-mm-sig@lists.linaro.org, linux-arm-msm@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, nouveau@lists.freedesktop.org
-References: <20250131110328.706695-1-pierre-eric.pelloux-prayer@amd.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>
-In-Reply-To: <20250131110328.706695-1-pierre-eric.pelloux-prayer@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABnmnGcC/x3MQQqAIBBA0avErBvIwqKuEi0sRxvIkhGiiO6et
+ HyL/x9IJEwJhuIBoZMTH3uGKgtYVrN7QrbZUFe1rlSj0ErAkALG9ca4bbg4j0IeO9Kz08b01rW
+ Q6yjk+PrP4/S+H0K0N1dpAAAA
+X-Change-ID: 20250131-drm-msm-phy-pll-cfg-reg-7e5bf5aa9df6
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=803;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=SQxyJFMg3gBp7lSoZ7WOgJA3LdW1+oWZENbqGdTJsCI=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnnOYoQAt8mGdV1azM597UlAhPWf3yQDkl9Y9b7
+ +P29C0qprOJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ5zmKAAKCRDBN2bmhouD
+ 1wN5D/wPgFY8s6XvDVg8qIUESZsJ85X1ukKvm5xiUKKhSk6LNd25wzI2LLR241KBwwU1xqTSWvV
+ 5BEwKUIccSvpZNlD2aCBoH+A+hEAmYM84+NqCz9+EuXMlffywHmRDE6QUmm7i02dQMW9aRAaLy2
+ 70n2GZruBTHyQ5R9ttVmHH/dpeBjh0jPCPznP7KvLTovqAY5BkhvYt6NcxZZjqSzt5JbZci8WGz
+ QSe/Gs4rNwHdo6NCjCWehEJSnQBz7Ba/NVAFics6s7zzg6C0hjUrC4FqxGsQg/XT6UW9uWQ+dRp
+ C2qdO7ksoZ64/04Ohb6Tr1xvqVDY6ciiygYsz2nYyirXVT1rclvA4nwFrTGGXl5deq5F2ImELF0
+ R9fvTukuk/XlNN7KeHJEoIXtJDgaXXUNodvajVujqGO5qcYst4v2MIHe/dyJxZWtnJ8PpcX7oIi
+ dDKZaDGxREgamftrJ6IprEv4wzw3lSU2qNBoyR/oQualH/HozYiPfa6sSOxD4EriuqdbjsMZdSX
+ XjCGeAs+nUJpOdqhfkbk3AVXs+Ot+9xQKk0CkbxZei0kZQIpvOBeiP8wtzm+3xvRMSvxl7uJQ7V
+ AZeYI/0o7WK1NFTJxrFNIeT/EpZYTWb6XxcZQQVMlHLijOkkJDYQ86b23l0tcBOmCpQY1PqcBUx
+ KH0mkZJwbxoR9MA==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-I can't see patch #1 in my inbox for some reason, but I already know 
-what it does from your repository.
+Calling these improvements, not fixes, because I don't think we ever hit
+actual concurrency issue.  Although if we ever hit it, it would be very
+tricky to debug and find the cause.
 
-Feel free to add Reviewed-by: Christian König <christian.koenig@amd.com> 
-to the entire series.
+Best regards,
+Krzysztof
 
-Regards,
-Christian.
+---
+Krzysztof Kozlowski (3):
+      drm/msm/dsi/phy: Protect PHY_CMN_CLK_CFG0 updated from driver side
+      drm/msm/dsi/phy: Protect PHY_CMN_CLK_CFG1 against clock driver
+      drm/msm/dsi/phy: Do not overwite PHY_CMN_CLK_CFG1 when choosing bitclk source
 
-Am 31.01.25 um 12:02 schrieb Pierre-Eric Pelloux-Prayer:
-> Hi,
->
-> The initial goal of this series was to improve the drm and amdgpu
-> trace events to be able to expose more of the inner workings of
-> the scheduler and drivers to developers via tools.
->
-> Then, the series evolved to become focused only on gpu_scheduler.
-> The changes around vblank events will be part of a different
-> series, as well as the amdgpu ones.
->
-> Moreover Sima suggested to make some trace events stable uAPI,
-> so tools can rely on them long term.
->
-> The first patches extend and cleanup the gpu scheduler events.
->
-> The last one adds a documentation entry in drm-uapi.rst.
->
-> Changes since v6:
-> * Addressed comments from Philipp, Tvrtko, Steven
-> * The commit storing drm_client_id in sched_fence adds an extra
-> field which looks like a duplicate of the owner field. Currently
-> amdgpu uses the owner field with some magic values, so we have to
-> have 2 separate fields for now, but ultimately one could be removed.
-> Similarly storing the drm_client_id in the sched_entity is not
-> really possible as there's nothing preventing a driver to use a
-> sched_entity with multiple drm_file instances.
->
->
-> Useful links:
-> - userspace tool using the updated events:
-> https://gitlab.freedesktop.org/tomstdenis/umr/-/merge_requests/37
-> - v6:
-> https://lists.freedesktop.org/archives/dri-devel/2024-November/477644.html
->
-> Pierre-Eric Pelloux-Prayer (7):
->    drm/debugfs: output client_id in in drm_clients_info
->    drm/sched: store the drm client_id in drm_sched_fence
->    drm/sched: add device name to the drm_sched_process_job event
->    drm/sched: cleanup gpu_scheduler trace events
->    drm/sched: trace dependencies for gpu jobs
->    drm/sched: add the drm_client_id to the drm_sched_run/exec_job events
->    drm/doc: document some tracepoints as uAPI
->
->   Documentation/gpu/drm-uapi.rst                |  19 +++
->   drivers/accel/amdxdna/aie2_ctx.c              |   3 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c    |   2 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c        |   3 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_job.c       |   8 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_job.h       |   3 +-
->   drivers/gpu/drm/drm_debugfs.c                 |  10 +-
->   drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c  |   2 +-
->   drivers/gpu/drm/imagination/pvr_job.c         |   2 +-
->   drivers/gpu/drm/imagination/pvr_queue.c       |   5 +-
->   drivers/gpu/drm/imagination/pvr_queue.h       |   2 +-
->   drivers/gpu/drm/lima/lima_gem.c               |   2 +-
->   drivers/gpu/drm/lima/lima_sched.c             |   6 +-
->   drivers/gpu/drm/lima/lima_sched.h             |   3 +-
->   drivers/gpu/drm/msm/msm_gem_submit.c          |   8 +-
->   drivers/gpu/drm/nouveau/nouveau_sched.c       |   3 +-
->   drivers/gpu/drm/panfrost/panfrost_drv.c       |   2 +-
->   drivers/gpu/drm/panthor/panthor_drv.c         |   3 +-
->   drivers/gpu/drm/panthor/panthor_mmu.c         |   2 +-
->   drivers/gpu/drm/panthor/panthor_sched.c       |   5 +-
->   drivers/gpu/drm/panthor/panthor_sched.h       |   3 +-
->   .../gpu/drm/scheduler/gpu_scheduler_trace.h   | 123 ++++++++++++++----
->   drivers/gpu/drm/scheduler/sched_entity.c      |   8 +-
->   drivers/gpu/drm/scheduler/sched_fence.c       |   4 +-
->   drivers/gpu/drm/scheduler/sched_main.c        |   8 +-
->   drivers/gpu/drm/v3d/v3d_submit.c              |   2 +-
->   drivers/gpu/drm/xe/xe_sched_job.c             |   3 +-
->   include/drm/gpu_scheduler.h                   |  12 +-
->   28 files changed, 192 insertions(+), 64 deletions(-)
->
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 50 ++++++++++++++++++++-----------
+ 1 file changed, 33 insertions(+), 17 deletions(-)
+---
+base-commit: 375ef7b3d85d8b0fa72092642582ca5b95a64e67
+change-id: 20250131-drm-msm-phy-pll-cfg-reg-7e5bf5aa9df6
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
