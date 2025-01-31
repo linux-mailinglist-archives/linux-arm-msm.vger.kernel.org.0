@@ -1,275 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-46620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E56AEA242E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 19:44:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16DE6A24375
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 20:42:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 61A8D164CD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 18:44:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 69DD73A8675
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 19:42:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7F111F2389;
-	Fri, 31 Jan 2025 18:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 419D21F2C47;
+	Fri, 31 Jan 2025 19:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e4QjTOBv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l2hCWztk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F4A1F2369;
-	Fri, 31 Jan 2025 18:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094651F2C22;
+	Fri, 31 Jan 2025 19:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738349085; cv=none; b=puR278EfusnL0WK77JQN5Enk9By4HaSd0/dnGDp9+2bq+aKSV8V8RDhX4FP9BNi40mxeWq9VKr8oMB0PP5y+uPrL6vlSs8o25huc1sLcyxJSY6KrIoDf0t/NV21KrYxHO8sMHXHna1aYw2ixzPLEET0Cd2dMxCC+rH5T+cYYBkI=
+	t=1738352520; cv=none; b=o1OJej17Iz1XUizBCNzAe0Q0TIvGzgjFL0RIzX1znVzNQfldEjELVfiElkb6NZK0LCMEbDbcdZLHnzmNtXulp2b9MharPQmZN+KhUTqw3qkSsRDg2wYzeQIjA1+Q3WbSuznPLxDnSBkJBdypX0DuGOuBTT6GwhMUnUO3IHY+OH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738349085; c=relaxed/simple;
-	bh=QT6yDDpY3Aww1TZHRbkusavKjiT2Q9VMyx4Q74lPHuQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=CS6fQ02f2Py2u6nmQIEZMRpKUUw9+t908uB6vJmqeBT3Dw2XQc+jWQ95pub/K4Fv3l2wEflZaI7GIbnaQtYbBkEZF0ZfQOiooobOPTwuy7Ys7BFJVlT86bRWIRV4ZEd+saZfg6GTsaFA5cLJuzzzYfKKMiQBykTDbd/8M1hSBrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e4QjTOBv; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50VDKtfP005587;
-	Fri, 31 Jan 2025 18:44:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0twvhun7z2cIKk/n1CtvBtho/njMeo2PoMa8LvH8kYQ=; b=e4QjTOBv/4sr3TPC
-	4nqtzTexrgEuUSE+xHxGSmftHpeU4zn4ekk1v+DJNIBejxVzoKVJTkiJfzOCki3F
-	T7kYzXy2VwV9SIga4EP+eCpBIOrLqMZYByw6SKo1IS6q35LBLfNzPSaZrjlHdlfl
-	813jK9QJkAP0NpZTpJJpR0o1sJI3D2aiVrADymbyMYuJq3NPZYYc8t5NFSZjiRLt
-	u0f5LP+Pv2FQX41XdQNM4doSU+kFUcqFkUTNDu424EuTSmPkW9fbrWAWRmSJ/SRf
-	Scz02zeGwFiz+2cmNefz/c4t+QaGWJnVBSgPafLmxx4pcYbM2s7Qxp9VfJct84/z
-	7F0DdQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44gyasrra3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 Jan 2025 18:44:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50VIiV4j024830
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 Jan 2025 18:44:31 GMT
-Received: from [10.110.122.89] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 31 Jan
- 2025 10:44:29 -0800
-Message-ID: <f1344e49-61b6-4115-ae88-55b4a3cfed28@quicinc.com>
-Date: Fri, 31 Jan 2025 10:44:28 -0800
+	s=arc-20240116; t=1738352520; c=relaxed/simple;
+	bh=1xU/Je09gCwCuPzB0Q1Mj+G9AQti/vFGzb82p88OmVs=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=Sg9NIY6bIekZSkcM0eOoULbMZasTpOpZL+XG+VmcZn8OqU4xhTZZm2krAkXRH4zaIJbFMOXqDkN/lTjQeH4k3+nIBC8YT1ljxVyG+gfCDw2L0yIF+aOK7S+HnXqORURVc5Sbb2lFpiH1jXfIoEBs2frqXk/VLVJbFc9hCQI37Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l2hCWztk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D837C4CEDF;
+	Fri, 31 Jan 2025 19:41:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738352519;
+	bh=1xU/Je09gCwCuPzB0Q1Mj+G9AQti/vFGzb82p88OmVs=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=l2hCWztkzTUo1PSkezz6W8LPyv2kjgso2CHrb0j/EVht9In4VMrHrvsOmn1VWS23Y
+	 NxZLxcPByzvG39pSQL6A62V6y8GnKMGvIU8RPrgXzRv+CKNYb2xiHZGgJ5HhpvPMqa
+	 y+I3leTPlDOwBy8LekQhDeGGOlDREzi96PnX1tlyEhIS9u6HiJWvDkjo04c3H5tTp5
+	 9Yt7K4hRUx53ID8tjffqjMkG3UUFQmzqgCaSQV6yCVS0QkHe8KZn0A2tmeN7eI/ikA
+	 P4cqqVgF6ikwzEcLaL48prqNNL0yc6XK7RWwP93s6aPUSWdtE9mY7yFxHOeiYDnUov
+	 Ps88USTzo49gA==
+Date: Fri, 31 Jan 2025 13:41:58 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v10 1/2] media: iris: introduce helper module to
- select video driver
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        <quic_vgarodia@quicinc.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <p.zabel@pengutronix.de>
-CC: <hverkuil@xs4all.nl>, <sebastian.fricke@collabora.com>,
-        <bryan.odonoghue@linaro.org>, <dmitry.baryshkov@linaro.org>,
-        <neil.armstrong@linaro.org>, <nicolas@ndufresne.ca>,
-        <u.kleine-koenig@baylibre.com>, <stefan.schmidt@linaro.org>,
-        <lujianhua000@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <johan@kernel.org>
-References: <20250128080429.3911091-1-quic_dikshita@quicinc.com>
- <20250128080429.3911091-2-quic_dikshita@quicinc.com>
- <5070e1f1-914b-4654-88ef-3566e3eee9ca@kernel.org>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <5070e1f1-914b-4654-88ef-3566e3eee9ca@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tEc-4Nmb_kDLf9XNfuZYvKLBfWuV2sH-
-X-Proofpoint-ORIG-GUID: tEc-4Nmb_kDLf9XNfuZYvKLBfWuV2sH-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-31_06,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 mlxscore=0 clxscore=1011
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2501310141
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: krzk+dt@kernel.org, quic_kamalw@quicinc.com, daniel.lezcano@linaro.org, 
+ quic_skakitap@quicinc.com, rafael@kernel.org, lars@metafoo.de, 
+ cros-qcom-dts-watchers@chromium.org, anjelique.melendez@oss.qualcomm.com, 
+ jic23@kernel.org, agross@kernel.org, dmitry.baryshkov@linaro.org, 
+ lee@kernel.org, konradybcio@kernel.org, amitk@kernel.org, 
+ linux-iio@vger.kernel.org, neil.armstrong@linaro.org, sboyd@kernel.org, 
+ andersson@kernel.org, david.collins@oss.qualcomm.com, 
+ thara.gopinath@gmail.com, devicetree@vger.kernel.org, 
+ linux-pm@vger.kernel.org, rui.zhang@intel.com, 
+ linux-arm-msm@vger.kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com, 
+ linux-kernel@vger.kernel.org, lukasz.luba@arm.com, conor+dt@kernel.org
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+In-Reply-To: <20250131183242.3653595-2-jishnu.prakash@oss.qualcomm.com>
+References: <20250131183242.3653595-1-jishnu.prakash@oss.qualcomm.com>
+ <20250131183242.3653595-2-jishnu.prakash@oss.qualcomm.com>
+Message-Id: <173835251464.3936394.5738804093745596757.robh@kernel.org>
+Subject: Re: [PATCH V5 1/5] dt-bindings: iio/adc: Move QCOM ADC bindings to
+ iio/adc folder
 
 
+On Sat, 01 Feb 2025 00:02:38 +0530, Jishnu Prakash wrote:
+> There are several files containing QCOM ADC macros for channel names
+> right now in the include/dt-bindings/iio folder. Since all of these
+> are specifically for adc, move the files to the
+> include/dt-bindings/iio/adc folder.
+> 
+> Also update all affected devicetree and driver files to fix compilation
+> errors seen with this move and update documentation files to fix
+> dtbinding check errors for the same.
+> 
+> Acked-by: Lee Jones <lee@kernel.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+> ---
+> Changes since v4:
+> - Updated some more devicetree files requiring this change.
+> 
+> Changes since v3:
+> - Updated files affected by adc file path change in /arch/arm, which
+>   were missed earlier. Updated some more new devicetree files requiring
+>   this change in /arch/arm64.
+> 
+> Changes since v2:
+> - Updated some more new devicetree files requiring this change.
+> 
+>  .../devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml       | 8 ++++----
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 2 +-
+>  .../devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml  | 2 +-
+>  .../devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml    | 6 +++---
+>  arch/arm/boot/dts/qcom/pm8226.dtsi                        | 2 +-
+>  arch/arm/boot/dts/qcom/pm8941.dtsi                        | 2 +-
+>  arch/arm/boot/dts/qcom/pma8084.dtsi                       | 2 +-
+>  arch/arm/boot/dts/qcom/pmx55.dtsi                         | 2 +-
+>  arch/arm64/boot/dts/qcom/pm4125.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm6125.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm6150.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm6150l.dtsi                     | 2 +-
+>  arch/arm64/boot/dts/qcom/pm660.dtsi                       | 2 +-
+>  arch/arm64/boot/dts/qcom/pm660l.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm7250b.dtsi                     | 2 +-
+>  arch/arm64/boot/dts/qcom/pm8150.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm8150b.dtsi                     | 2 +-
+>  arch/arm64/boot/dts/qcom/pm8150l.dtsi                     | 2 +-
+>  arch/arm64/boot/dts/qcom/pm8916.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm8937.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm8950.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm8953.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm8994.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pm8998.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pmi632.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/pmi8950.dtsi                     | 2 +-
+>  arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi                 | 2 +-
+>  arch/arm64/boot/dts/qcom/pmp8074.dtsi                     | 2 +-
+>  arch/arm64/boot/dts/qcom/pms405.dtsi                      | 2 +-
+>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts        | 4 ++--
+>  arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts          | 4 ++--
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts                   | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi                  | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi                | 4 ++--
+>  arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi               | 2 +-
+>  arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts      | 2 +-
+>  .../arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
+>  arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 2 +-
+>  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi              | 6 +++---
+>  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts         | 2 +-
+>  arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts      | 6 +++---
+>  arch/arm64/boot/dts/qcom/sm8450-hdk.dts                   | 8 ++++----
+>  drivers/iio/adc/qcom-spmi-adc5.c                          | 2 +-
+>  drivers/iio/adc/qcom-spmi-vadc.c                          | 2 +-
+>  include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm7325.h | 2 +-
+>  include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350.h | 2 +-
+>  .../dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350b.h    | 2 +-
+>  .../dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmk8350.h    | 2 +-
+>  .../dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735a.h    | 2 +-
+>  .../dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735b.h    | 2 +-
+>  .../dt-bindings/iio/{ => adc}/qcom,spmi-adc7-smb139x.h    | 2 +-
+>  include/dt-bindings/iio/{ => adc}/qcom,spmi-vadc.h        | 0
+>  52 files changed, 66 insertions(+), 66 deletions(-)
+>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm7325.h (98%)
+>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350.h (98%)
+>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350b.h (99%)
+>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmk8350.h (97%)
+>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735a.h (95%)
+>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735b.h (95%)
+>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-smb139x.h (93%)
+>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-vadc.h (100%)
+> 
 
-On 1/29/2025 2:44 AM, Krzysztof Kozlowski wrote:
-> On 28/01/2025 09:04, Dikshita Agarwal wrote:
->> Introduce a helper module with a kernel param to select between
->> venus and iris drivers for platforms supported by both drivers.
->>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> ---
->>   drivers/media/platform/qcom/Makefile          |  1 +
->>   drivers/media/platform/qcom/iris/iris_core.h  |  1 +
->>   drivers/media/platform/qcom/iris/iris_probe.c |  3 +
->>   drivers/media/platform/qcom/venus/core.c      |  5 ++
->>   .../platform/qcom/video_drv_helper/Makefile   |  4 ++
->>   .../qcom/video_drv_helper/video_drv_helper.c  | 70 +++++++++++++++++++
->>   .../qcom/video_drv_helper/video_drv_helper.h  | 11 +++
->>   7 files changed, 95 insertions(+)
->>   create mode 100644 drivers/media/platform/qcom/video_drv_helper/Makefile
->>   create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
->>   create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h
->>
->> diff --git a/drivers/media/platform/qcom/Makefile b/drivers/media/platform/qcom/Makefile
->> index ea2221a202c0..15accde3bd67 100644
->> --- a/drivers/media/platform/qcom/Makefile
->> +++ b/drivers/media/platform/qcom/Makefile
->> @@ -2,3 +2,4 @@
->>   obj-y += camss/
->>   obj-y += iris/
->>   obj-y += venus/
->> +obj-y += video_drv_helper/
->> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
->> index 37fb4919fecc..7108e751ff88 100644
->> --- a/drivers/media/platform/qcom/iris/iris_core.h
->> +++ b/drivers/media/platform/qcom/iris/iris_core.h
->> @@ -107,5 +107,6 @@ struct iris_core {
->>   
->>   int iris_core_init(struct iris_core *core);
->>   void iris_core_deinit(struct iris_core *core);
->> +extern bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
->>   
->>   #endif
->> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
->> index 954cc7c0cc97..276461ade811 100644
->> --- a/drivers/media/platform/qcom/iris/iris_probe.c
->> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
->> @@ -196,6 +196,9 @@ static int iris_probe(struct platform_device *pdev)
->>   	u64 dma_mask;
->>   	int ret;
->>   
->> +	if (!video_drv_should_bind(&pdev->dev, true))
->> +		return -ENODEV;
-> 
-> Wouldn't it mark the probe as failed and cause dmesg regressions?
-> 
->> +
->>   	core = devm_kzalloc(&pdev->dev, sizeof(*core), GFP_KERNEL);
->>   	if (!core)
->>   		return -ENOMEM;
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index 77d48578ecd2..b38be7812efe 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -369,12 +369,17 @@ static int venus_add_dynamic_nodes(struct venus_core *core)
->>   static void venus_remove_dynamic_nodes(struct venus_core *core) {}
->>   #endif
->>   
->> +extern bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
-> 
-> You just defined it in the header. Why is this here?
-> 
->> +
->>   static int venus_probe(struct platform_device *pdev)
->>   {
->>   	struct device *dev = &pdev->dev;
->>   	struct venus_core *core;
->>   	int ret;
->>   
->> +	if (!video_drv_should_bind(&pdev->dev, false))
->> +		return -ENODEV;
-> 
-> Same problems - d,esg regression.
-> 
->> +
->>   	core = devm_kzalloc(dev, sizeof(*core), GFP_KERNEL);
->>   	if (!core)
->>   		return -ENOMEM;
->> diff --git a/drivers/media/platform/qcom/video_drv_helper/Makefile b/drivers/media/platform/qcom/video_drv_helper/Makefile
->> new file mode 100644
->> index 000000000000..82567e0392fb
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/video_drv_helper/Makefile
->> @@ -0,0 +1,4 @@
-> 
-> Missing SPDX
-> 
->> +# Makefile for Video driver helper
->> +
->> +obj-m := video_drv_helper.o
->> +
->> diff --git a/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
->> new file mode 100644
->> index 000000000000..9009c2906e54
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
->> @@ -0,0 +1,70 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#include <linux/device.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +
->> +#include "video_drv_helper.h"
->> +
->> +/* The venus driver supports only hfi gen1 to communicate with the firmware while
-> 
-> Use Linux generic coding style comment, not netdev.
-> 
->> + * the iris driver supports both hfi gen1 and hfi gen2.
->> + * The support of hfi gen1 is added to the iris driver with the intention that
->> + * it can support old gen1 interface based firmware, while enabling gen2 based future SOCs.
->> + * With this, the plan is to migrate older SOCs from venus to iris.
->> + * As of now, since the iris driver supports only entry level features and doesn't have
->> + * feature parity with the venus driver, a runtime-selection is provided to user via
->> + * module parameter 'prefer_venus' to select the driver.
->> + * This selection is available only for the SoCs which are supported by both venus
->> + * and iris eg: SM8250.
->> + * When the feature parity is achieved, the plan is to switch the default to point to
->> + * the iris driver, then gradually start removing platforms from venus.
->> + * Hardware supported by only venus - 8916, 8996, SDM660, SDM845, SC7180, SC7280
->> + * Hardware supported by only iris - SM8550
->> + * Hardware supported by both venus and iris - SM8250
->> + */
->> +
->> +#if !IS_REACHABLE(CONFIG_VIDEO_QCOM_VENUS) || !IS_REACHABLE(CONFIG_VIDEO_QCOM_IRIS)
->> +bool video_drv_should_bind(struct device *dev, bool is_iris_driver)
->> +{
->> +	/* If just a single driver is enabled, use it no matter what */
->> +	return true;
->> +}
->> +
->> +#else
->> +static bool prefer_venus = true;
->> +MODULE_PARM_DESC(prefer_venus, "Select whether venus or iris driver should be preferred");
->> +module_param(prefer_venus, bool, 0444);
-> 
-> 
-> The choice of driver is by module blacklisting, not by failing probes.
-> 
-> I don't understand why this patchset is needed and neither commit msg
-> nor above longer code comment explain me that. Just blacklist the module.
-> 
-> Best regards,
-> Krzysztof
+My bot found errors running 'make dt_binding_check' on your patch:
 
-Summarizing the discussion with myself, Krzysztof and Dmitry:
+yamllint warnings/errors:
 
-1) module blacklisting solution will not be ideal if users want to have 
-both venus and iris or either of them built-in
+dtschema/dtc warnings/errors:
+In file included from Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dts:80:
+./scripts/dtc/include-prefixes/dt-bindings/iio/adc/qcom,spmi-adc7-pmk8350.h:13:10: fatal error: dt-bindings/iio/adc/qcom,spmi-vadc.h: No such file or directory
+   13 | #include <dt-bindings/iio/adc/qcom,spmi-vadc.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.dtbs:131: Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1506: dt_binding_check] Error 2
+make: *** [Makefile:251: __sub-make] Error 2
 
-2) with current approach, one of the probes (either venus or iris) will 
-certainly fail as video_drv_should_bind() will fail for one of them. 
-This can be considered as a regression and should not happen.
+doc reference errors (make refcheckdocs):
 
-Solution: If the user prefers iris driver and iris driver has not probed 
-yet, and if venus tries to probe ahead of iris we keep -EDEFERing till 
-iris probes and succeeds. Vice-versa when the preference is venus as well.
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250131183242.3653595-2-jishnu.prakash@oss.qualcomm.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
