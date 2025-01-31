@@ -1,87 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-46599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 470EDA23E08
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 13:56:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50003A23E2F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 14:12:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28397169191
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 12:56:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 946A37A02FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 13:11:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E1511DFF0;
-	Fri, 31 Jan 2025 12:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D46EA1C3F2B;
+	Fri, 31 Jan 2025 13:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jgN5Y0x9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qv0Vx60V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D311C4A02
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 12:56:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DF91C461F;
+	Fri, 31 Jan 2025 13:12:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738328181; cv=none; b=G2KPOHp1ImjUBFmkiRbPBpASU2v/ZBgfOf+dde2HLdb+DOtFs3g6qBpu3IF4soyfVu/BL8YbGlz8nT4/8kpga/tqMpBWKVQJwZXdtqHjrh7tE+5T3k6/x48+n+oq14kvlg5E6JTLIclfz3I+99beydh3PUtJtnDDTubAn/t//a8=
+	t=1738329155; cv=none; b=EuD9dq5jPmy2EyPgvawfy00Im4RLjC8sK3R/HXGMb+Tsoeq6nS6wdnyn1kPY7O0cYd5XU2SJn9UjfHowXAFP17vxyKlYvwS4K2uU8+KTZ6zsrjmvNn4/SYF4Wm23mnH4l2ZfxHqOo5SLUS6rSJN5rE0nYGl6h7bfEimFu4RwngA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738328181; c=relaxed/simple;
-	bh=UsFe8VlEZCmQ0sbihU2b0JFZi9Ej2TKBlU/qdva3I+o=;
+	s=arc-20240116; t=1738329155; c=relaxed/simple;
+	bh=BbyKo5qgSbKGRwmdExkn+VWyTR4nHKaDT3omlcynxiA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UgcTmGOXUMlgWhbDd8LMQ+D0KExGjQ9jvAggR2So2CUXEPUUU9kqtKA4nvgV241y3AmWCWG6BEROoZ31oZqx0M4ovNfuwXXc1dhz/T4DQu947xjsgo9EAbX6UllD2AEixtPsa7ICMrLUg1rEqdyf9XcNnOZ3JPsP790+AjKEtkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jgN5Y0x9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50V9bXZw016199
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 12:56:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	plPbCbgdcFippG/lsXp/DeHtnj+WORRPmcLa8nmWJkc=; b=jgN5Y0x96Go1UduD
-	qPTkezkZNl4TjSCDabOLqPG5SZpYJING4ZSY53LpGiqCD/dhk9v1GP59UPmwgzNg
-	+bXi/QmM5eFMpVyQIzOnRDDEFF5U4dQHmTgDPFRpZ2Vp2U8HGDZGWoFCL2Urw4az
-	p4lNBIpcgnxP17yQXy1fqHgJ62AuhkgMjI73j+9z157Q5D0gqPuecRaUixIg+IgL
-	tT1YM/zKcW7hYfzJWOHsUqd5VEcQN21F35FpUGyXHLRK8hisiJe0mxdFHarc1WP2
-	uWAICI+NeTRDsDgFmpPfDCyd07xNij4TExRPYphccjqkMmxeZSIvNfRAWXppEIJ8
-	iOk2Tw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44gv24gepe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 12:56:18 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6e20cb2ce4bso5246866d6.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2025 04:56:18 -0800 (PST)
+	 In-Reply-To:Content-Type; b=nOGZwhJLLIyr1IJzEdjPfsrsoD0Q4BGayxdO90vgzD51S6h1O1l2ZlWlxU0Ckhj4BFLNKAW1wstc0TwO3K4h5VLlhX6nk5yXSwoXZQSMy/WfMbT68AxLkvbGtgDJ9XrFIT3UtpdtUOPZQeaWIreGAiW300yjhckUfTOxZlnu6SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qv0Vx60V; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-438a39e659cso13956365e9.2;
+        Fri, 31 Jan 2025 05:12:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738329152; x=1738933952; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8Qf5Ag+gkCkodLzQTGh44JB0E7mlh4X9B+GfpD3S+A8=;
+        b=Qv0Vx60VBM+8Zsw4WGl7PyVC0YU6tX1x0vigQSLoVhDY0TAngmkyCNQL/9WRSSVZrT
+         F1403CJERgUejvs4XuzXi6/fSS6Fy/zwVkFUe9wPTYtB3THJGDLq4TiXjGWjFS5tghAw
+         MZJBNrP7jjrRdhT2xbYsxD7d/4J4OXqj2mK9lZTRQAHSFnBY6rq8sL7io8ZoVRHAVnjj
+         aWTTn5EcgbHf7ZU3/oGmqt5W9fyk6IPrbq86Gnj6wbvdMlOHA3V9jP9pLuRFTba2h9h9
+         YzXAaevDIwq1wGtf7O5wHpOBBJQSyX27wZqEifiCDaSXXBiu8lJCw4nvpJjzx6bycMh4
+         arkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738328177; x=1738932977;
+        d=1e100.net; s=20230601; t=1738329152; x=1738933952;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=plPbCbgdcFippG/lsXp/DeHtnj+WORRPmcLa8nmWJkc=;
-        b=aGkossgv6jqFN4PrYESTzmkuCtePKvUkkHq56hunEZIMCmH+mBn0E/CnJwSjK3v7uI
-         p1kB0ADXIWm702nWVPBJfKDJA0Bve1+U2/gq3gIZbgaMBHomFN710RVG++ViU75F0kFW
-         ZJ5JVbfz0tC/YRNk7aMdPCDXAneZNH2VbcLpNfHTm9ZcS7AXlFtfze6lJWkpkMTD4OUp
-         hT3Y64XdvmwQ0v1vAlZoratQJpMwDxSUBMqq1gapNVVJ/EAZ6t3XjX9Lzl3RUN0+L4pt
-         M4MiF/gX9wdSoY5GaqfhS0r5HDzjL38MsoKHJkSgucgxczqDR0jn3/EiEk4gg60B3B1V
-         2z5g==
-X-Forwarded-Encrypted: i=1; AJvYcCVnNDoYLq6ToSwuvJ1iOf80fhMBEjHvQ4iIBaZQ4Z8ZzmZV7Mwn+sRhKd69xIdCzgh8rZ5ikCPJPfhMpkbj@vger.kernel.org
-X-Gm-Message-State: AOJu0YxtE0qjL1o82XLfLUDfmbQ4a/j+2JNJ5pCGr/kAIGbdZTKn04o0
-	O6JQ3DteSs2uNZcqb/OfC/klKEBb2bX3egHlhR9yGwQYZoTfzPU3c6t4RHjWqRcG9PlBlB0j9hi
-	L3m8o6wVkL4guFOQn5g/VGxD4qE9U0vlCyMcmB0dzWOPurSpzLXr4UWrNusLwqb1k1mkQifYs
-X-Gm-Gg: ASbGncut326C3l4YBEUXVviDEh5pCBcoYpWxiHsPEd6dakKfgnNRmioTaQuLDG6YB8Q
-	MLPSD25mLP6Qgz+egKCIx4LzyB6wJmr08kQ1gSRLDVWUpLMeKDllNHQZNf9wDqtMgSJcOr7HfOU
-	mSVoMtujNdDHTo93eG9J/cRiOFqGZvJbiQa86x/iWlYyszlcBwW/e3/V10LZF9lvgHahn7iREtX
-	HayCU+FJe1m0LWVU5LPAL+QUfL2I1jF8lHeK6HJpTL5OslZ6/DdWWVb/3LwAQyjRcSpiU4yAsYh
-	8G7Jz/ews0FqBoBqQxbBKefgwa1fFYKMdC6sGucwPLQ5w24kDgMM0ChIEgI=
-X-Received: by 2002:a05:620a:43a5:b0:7a9:b8d1:a26 with SMTP id af79cd13be357-7c009b37be4mr397853785a.9.1738328177123;
-        Fri, 31 Jan 2025 04:56:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFGm9+/5z7jb7xy21B+AJ8JUsYwxTcI6SmhkN7nHUwGclLh3z290C8ViPSJPsRA1U3ApIjkHg==
-X-Received: by 2002:a05:620a:43a5:b0:7a9:b8d1:a26 with SMTP id af79cd13be357-7c009b37be4mr397852185a.9.1738328176714;
-        Fri, 31 Jan 2025 04:56:16 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab6e4a31531sm291583566b.141.2025.01.31.04.56.15
+        bh=8Qf5Ag+gkCkodLzQTGh44JB0E7mlh4X9B+GfpD3S+A8=;
+        b=AnNyP5ewAoXZcbqjo/S0EiLIB/Y+3YhC8b4OlR+myAsRSnk8hzVKnlVVNWVExXCFTA
+         KBUSmOQJ8SC9b2w/Tiaaqj1HPZ1IH7DmlIagr4Ko139ZMITJhinnqyYsexKP0tcoInA2
+         y8N2GfcIhiMO4gVQnt1olYFKjgufr6jM4XmAgatpdM0dk7JU8Ftui0mMIZP4kRsQT+hb
+         QVO6cks/fmwpPsg0peIX8Qg6BsMXqtUyyZQ0QM02RA+vgOscThJjgYILaVIPcQSw/2xF
+         heirOK0fXij+/mcOxyXvCbUaeGfyFyp9NmUdURDPRIH+YGE/24MhymPKLJ0aN3gLAwC1
+         CzAw==
+X-Forwarded-Encrypted: i=1; AJvYcCUO0pyiEMyWQzYnPo0j0vc6OlOmS6cKXNCZSjGNxQuol4ga4KYaOYtG4PVQTVSbcMaL7O0GsRk8FcoyO2wy@vger.kernel.org, AJvYcCWQ4azVwjJVMlYImcxZokRqRXr0TxqK2ecP+xl6uDXNjfmpp1lHKKzoE5WYaYTJMZJVnDvn5BC7SzXH@vger.kernel.org, AJvYcCWeRSYX5AizuAj5ViqjUbh3flRWZtnD8dMJNbLMen/sTYdJh34CTh4fdsRwIniG9hLzkJNShRuNvErvTikh@vger.kernel.org, AJvYcCX/o/JmKx1TYbPOhEJvkf9TUrjfGPtbQr7NrYtKpNwdDtVTtnDv1Xn6AppT7FLkv3Pl4dS7t47g+yAAEg8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyzXFEwucEpSQ1VXBPBphcmU1ZNqJc9adYPeLrOSMPuw6hCOvy1
+	pwjT4bxWzy8lxG6tF0I6M9zS3Iy93YnvL4h42KoOlc5AyeNkS9kY1scvhxY7
+X-Gm-Gg: ASbGnctUl3C6AZ309HPMGF5DvA79Pe+NRacZSmO+A2VJC0XjAjVQ0dorQaqQnft3BAG
+	Oz55F87wI4GLwEYyul3XgF4wYvNeQzeGns3xpvIYPootW/Q2Oc+qSiuXqHL0BrlqE31j1OIZjCw
+	jJqZFR/O/4aDVhXCL3a2PBeuI2DS2jLNbf96eUIufsG/uvS+xMgMV+tfe/it6J21tpc4k6kjVW3
+	yvQoEU1XsquQjrS7A8tfxnF9epqw0k1kCcTGueYCBlbaG59R5mv6/wN9pjhKu/BtlFZR7nppZ/G
+	gY+w+2HyS7ZGXoJLRFdc1OuW9lt8akkN/oyuN5BPtq+m
+X-Google-Smtp-Source: AGHT+IGKBtM8zdX0f/k9fSlmikQgi6UfU2qNH1ycY66SNDkJyOrXViqSqC8f4KUEz2AE7pAcFmrXww==
+X-Received: by 2002:a5d:59a6:0:b0:385:f1f2:13f1 with SMTP id ffacd0b85a97d-38c51951c51mr9664356f8f.22.1738329150361;
+        Fri, 31 Jan 2025 05:12:30 -0800 (PST)
+Received: from [10.254.108.83] (munvpn.amd.com. [165.204.72.6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc263f0sm90055545e9.9.2025.01.31.05.12.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Jan 2025 04:56:16 -0800 (PST)
-Message-ID: <e9fb5ee4-9ded-44e7-bbfb-cb2f897015b5@oss.qualcomm.com>
-Date: Fri, 31 Jan 2025 13:56:14 +0100
+        Fri, 31 Jan 2025 05:12:29 -0800 (PST)
+Message-ID: <0b20e88a-9009-4fa2-b5cb-ab78ce834587@gmail.com>
+Date: Fri, 31 Jan 2025 14:12:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,43 +81,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] clk: qcom: gcc-sdm660: Add missing SDCC block
- resets
-To: Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        Craig Tatlor <ctatlor97@gmail.com>, Rob Herring <robh@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20250129212328.1627891-1-alexeymin@postmarketos.org>
- <20250129212328.1627891-2-alexeymin@postmarketos.org>
+Subject: Re: [PATCH v7 0/7] Improve gpu_scheduler trace events + uAPI
+To: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ etnaviv@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, lima@lists.freedesktop.org,
+ linaro-mm-sig@lists.linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org, nouveau@lists.freedesktop.org
+References: <20250131110328.706695-1-pierre-eric.pelloux-prayer@amd.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250129212328.1627891-2-alexeymin@postmarketos.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: -Pic7NasRlmz2Dm_ZhGbKRGMsFJjFAYP
-X-Proofpoint-GUID: -Pic7NasRlmz2Dm_ZhGbKRGMsFJjFAYP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-31_04,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 suspectscore=0 spamscore=0 mlxscore=0 phishscore=0
- impostorscore=0 clxscore=1015 malwarescore=0 priorityscore=1501
- mlxlogscore=830 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2501310099
+From: =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>
+In-Reply-To: <20250131110328.706695-1-pierre-eric.pelloux-prayer@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 29.01.2025 10:23 PM, Alexey Minnekhanov wrote:
-> This will allow linux to properly reset eMMC/SD blocks.
-> 
-> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-> Fixes: f2a76a2955c0 ("clk: qcom: Add Global Clock controller (GCC) driver for SDM660")
-> ---
+I can't see patch #1 in my inbox for some reason, but I already know 
+what it does from your repository.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Feel free to add Reviewed-by: Christian König <christian.koenig@amd.com> 
+to the entire series.
 
-Konrad
+Regards,
+Christian.
+
+Am 31.01.25 um 12:02 schrieb Pierre-Eric Pelloux-Prayer:
+> Hi,
+>
+> The initial goal of this series was to improve the drm and amdgpu
+> trace events to be able to expose more of the inner workings of
+> the scheduler and drivers to developers via tools.
+>
+> Then, the series evolved to become focused only on gpu_scheduler.
+> The changes around vblank events will be part of a different
+> series, as well as the amdgpu ones.
+>
+> Moreover Sima suggested to make some trace events stable uAPI,
+> so tools can rely on them long term.
+>
+> The first patches extend and cleanup the gpu scheduler events.
+>
+> The last one adds a documentation entry in drm-uapi.rst.
+>
+> Changes since v6:
+> * Addressed comments from Philipp, Tvrtko, Steven
+> * The commit storing drm_client_id in sched_fence adds an extra
+> field which looks like a duplicate of the owner field. Currently
+> amdgpu uses the owner field with some magic values, so we have to
+> have 2 separate fields for now, but ultimately one could be removed.
+> Similarly storing the drm_client_id in the sched_entity is not
+> really possible as there's nothing preventing a driver to use a
+> sched_entity with multiple drm_file instances.
+>
+>
+> Useful links:
+> - userspace tool using the updated events:
+> https://gitlab.freedesktop.org/tomstdenis/umr/-/merge_requests/37
+> - v6:
+> https://lists.freedesktop.org/archives/dri-devel/2024-November/477644.html
+>
+> Pierre-Eric Pelloux-Prayer (7):
+>    drm/debugfs: output client_id in in drm_clients_info
+>    drm/sched: store the drm client_id in drm_sched_fence
+>    drm/sched: add device name to the drm_sched_process_job event
+>    drm/sched: cleanup gpu_scheduler trace events
+>    drm/sched: trace dependencies for gpu jobs
+>    drm/sched: add the drm_client_id to the drm_sched_run/exec_job events
+>    drm/doc: document some tracepoints as uAPI
+>
+>   Documentation/gpu/drm-uapi.rst                |  19 +++
+>   drivers/accel/amdxdna/aie2_ctx.c              |   3 +-
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c    |   2 +-
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c        |   3 +-
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_job.c       |   8 +-
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_job.h       |   3 +-
+>   drivers/gpu/drm/drm_debugfs.c                 |  10 +-
+>   drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c  |   2 +-
+>   drivers/gpu/drm/imagination/pvr_job.c         |   2 +-
+>   drivers/gpu/drm/imagination/pvr_queue.c       |   5 +-
+>   drivers/gpu/drm/imagination/pvr_queue.h       |   2 +-
+>   drivers/gpu/drm/lima/lima_gem.c               |   2 +-
+>   drivers/gpu/drm/lima/lima_sched.c             |   6 +-
+>   drivers/gpu/drm/lima/lima_sched.h             |   3 +-
+>   drivers/gpu/drm/msm/msm_gem_submit.c          |   8 +-
+>   drivers/gpu/drm/nouveau/nouveau_sched.c       |   3 +-
+>   drivers/gpu/drm/panfrost/panfrost_drv.c       |   2 +-
+>   drivers/gpu/drm/panthor/panthor_drv.c         |   3 +-
+>   drivers/gpu/drm/panthor/panthor_mmu.c         |   2 +-
+>   drivers/gpu/drm/panthor/panthor_sched.c       |   5 +-
+>   drivers/gpu/drm/panthor/panthor_sched.h       |   3 +-
+>   .../gpu/drm/scheduler/gpu_scheduler_trace.h   | 123 ++++++++++++++----
+>   drivers/gpu/drm/scheduler/sched_entity.c      |   8 +-
+>   drivers/gpu/drm/scheduler/sched_fence.c       |   4 +-
+>   drivers/gpu/drm/scheduler/sched_main.c        |   8 +-
+>   drivers/gpu/drm/v3d/v3d_submit.c              |   2 +-
+>   drivers/gpu/drm/xe/xe_sched_job.c             |   3 +-
+>   include/drm/gpu_scheduler.h                   |  12 +-
+>   28 files changed, 192 insertions(+), 64 deletions(-)
+>
+
 
