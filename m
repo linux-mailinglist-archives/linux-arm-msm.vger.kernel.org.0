@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-46629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F04C1A247E8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 10:18:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75F80A247ED
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 10:19:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E724166129
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 09:18:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 12A013A8220
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 09:19:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0380815383E;
-	Sat,  1 Feb 2025 09:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E5A5156885;
+	Sat,  1 Feb 2025 09:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Oh3SUEs6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MI40yARE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF10614EC55
-	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Feb 2025 09:18:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F4F1552ED
+	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Feb 2025 09:18:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738401510; cv=none; b=ZRWswN7p3bLt6YjMUQgsYL2pP8r5u0y9N8V9auuB71fu7L6emzO41RuJF3DvOAEzJ4hqI5tTQpTHmH4t0/oN88E93XG2FVXi6nz7DzTbnJ3yiXpjjXSCqrFoAPgq6BLgkk09VsCJBk0VzZ7HwY63OczT64kVWFZVhtcM1n4JK3M=
+	t=1738401513; cv=none; b=VARHPvxDI0Ou1snpUdAhh0WEXvNHRCpTqfjHjoDDuTR10VR46c2stsJFcKUZARXekfk0+HS7LS4ItHuScPP228MWwEsvuFbnDo/roPsR5bjI5wHcoMRYc7EO0Q/biag2Rc+tUnns4fh4JjGP5nLOgbSjrTKA04Do0PB8ZkfzDaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738401510; c=relaxed/simple;
-	bh=JHBVtVHMkSJ6nIaRKycINz9lZG2/fh0enAbh7ip1B+E=;
+	s=arc-20240116; t=1738401513; c=relaxed/simple;
+	bh=o+8DevsM1iaqcb/GhD2I1DkFB8Jlc7QezSs3Fq1Rsw8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eHXC3NzFbnILNbWmL0nYAPMHygeTo9OsHHr7UKcxq/wy1x97NRNN3ycL6ai9VJAMxovvezR5vf+EYkUj6qh1IJGWNhqswbfcY7Itzd6j1k6RmkRW3G5fjLH6hTpCW0Vi7qcyMAhwxtCSOYgObJHj5oCuASMyl33YvJF7uk0pyJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Oh3SUEs6; arc=none smtp.client-ip=209.85.167.46
+	 In-Reply-To:To:Cc; b=EB4SNpygsBsN3IPDFbbv/ywMU9kkH5G2L0E8F5jEJKZKNUf/a1fYs5ymRtNwGYU+PG/lZT/VhGMrfJOgp5nZwDZvQOx1BKov2DLvB+OOlS2R9FiF6fZySuFETW85Ov2+Kzfa/1So2onNFsyJtdafBlpxoGCaccwnu2L6fMBAzv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MI40yARE; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5401d3ea5a1so2411097e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Feb 2025 01:18:28 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-54025432becso2939138e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Feb 2025 01:18:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738401507; x=1739006307; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738401509; x=1739006309; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ay7LZgt0wPUvvJsOjnpqFHGqHQqwfsSCz5W1wjgPoaY=;
-        b=Oh3SUEs66kEFi5EcrOROk3Fyx7k2/o1etfFirV/XlTYr7XxfL2zh7anjBN1l17WBTp
-         Lmh8p/8XRVPUOOry4KTS5j0DbTK73I02ImYCERIxc/BoKb4Q1odIqofywNEPiz9aj/QX
-         pYX/78Lskk1ePvvmq/r+TTA9s3CsRHOGgK3TZJOIp8k1L+G3Ucx/UJlBZam1EVilbYmO
-         qo6b+Me4GKhVwYzJLTVOa1jUwD50lN9AldihNQcknDg7EHO6Wv9t7UWT39hDcHE40s3N
-         lJHGYN9VeXpI4bpZciY2s+e22LgQ5BgqYMqKrBwDUKZaI3ipatXFGDeRA9to83wEmN8s
-         2dTw==
+        bh=+lgLGZWjFpK9B/4WeyffioCfDC0xJ+bQNU5Gxwj0GUw=;
+        b=MI40yARECCOLXnqu9OVdXKHnDoA1JI1t1ZoZ9cCoyCOnwmje7DtbsxGKq099ZxHtmV
+         ov+hw829L4aYNSu8vIx4/djIEGniT+f+YDDKsBaYy+qoxBpsdx52e3awGV4jnaeL90hJ
+         fH0TD8TbOR0NcD6W1d8/IHXCssE8haoyxdMQsx05cv9kZmDO9rj388Xf0VLW+uaHRZFv
+         krZXiOxvzoPvh4cvyBvntq+Pyf8OnqhpqkLCwsHFlGI+lIKgqvwAIDHSzh+fTAandIFU
+         YULY9HNL4ifyzemfT4wimNa4R6kcWMaFdRtOEpRE4z3G7YJmuVj07pchreKPT/BfjGQ9
+         EIWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738401507; x=1739006307;
+        d=1e100.net; s=20230601; t=1738401509; x=1739006309;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ay7LZgt0wPUvvJsOjnpqFHGqHQqwfsSCz5W1wjgPoaY=;
-        b=dnY3O+DW9s12t5jABmlM09kzE6lybedfQn71O7/PE0WTGdSH0HpF5Ks78KZKSB48CT
-         sGadoTlyk/qRHLRF+KwiZ7yXMoVEsGbxCdjX4mmnKOpDIeIS9feSq85ml1HX/vcEICAh
-         i54RVpbXHNisYop6eIX2pXMAzc/Wz4GcKw9WfX0sPmVlpnd0Tn+9zQ86p+XGpWm5Tek6
-         zfBgt3Mp/lZDnoPw7xuS92oq9Ik5GVlp4MjSHTm46ddCL8421XSKZDKqiU5MC+MZ5RhR
-         HOqNkQvt1KOdhqjwMvzNJI78bamAyI2IubQyGkCZ8jFiDAkthnQRP88M39k3F8PfKc7c
-         seew==
-X-Forwarded-Encrypted: i=1; AJvYcCXtfS3kV9IIVdZOCVaNz5nyqVLY6uJdWkX+jWTnKm+1GLy83dH3KUEim/aKEsol5Lk6LNnOQAsKEzs+Eoww@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywz8X0hhgnKS1QLx+yx3bnMYLTHuIF5bm6EHTlRR04GC14Ed4tS
-	RDv3cPhqxJujTOrKThN3EwfrA1LrJqT/w7nK0cj49oZPuPNwvsNL86Kb7IG1Tps=
-X-Gm-Gg: ASbGncuGi4qmgc1Laa7f7muYKaqkDNTB+f1Aggi/hKe8iatFvEYWwIsB5Lb13PrHnGA
-	reTSdLxCY3c1x5H6Tvi5Gn+NZYCIzciwlGOC5cRyXKfNHS5PMVk16TOfsKbehSta0WUX02Ms4FX
-	kMsXVuCgo7q8ZMuJ5CiUKLuU4ttzQFuSHaEeJq5ArjtSgfxDqdn17YVvoUJyVbcb46L1hUSKP1n
-	p4Dw47VMNw237VN7KfcSl+Rwf6o7QDTx0zA3FRQgKGrvIAyqE+THrat6j2N+KMjTrsTdLFZWMiR
-	I3zJ6r3XCm0jQRJgGWebf8I=
-X-Google-Smtp-Source: AGHT+IFkJxOGVqXAOjXLLsl9uwJy8xobyzU4KMYN10bp0kjV1CIg4vw8ZJbsBnUxGl8PJNf19B7UJQ==
-X-Received: by 2002:a05:6512:3f1f:b0:543:f1db:d1d8 with SMTP id 2adb3069b0e04-543f1dbd214mr1679499e87.11.1738401506949;
-        Sat, 01 Feb 2025 01:18:26 -0800 (PST)
+        bh=+lgLGZWjFpK9B/4WeyffioCfDC0xJ+bQNU5Gxwj0GUw=;
+        b=Yqs3ecNfkYjKsn/gT/sOIltE2i8FSBoeGVoJ6mstZ7Pe5RAuCT+uHBVmfbLWzRVGek
+         zGbFmhM2aYVu1d7gPuQeQCPPoi39DEBcQKiHW9Gzu1sfY+ZujK1Lb6A6TdcoVS+TcQ8v
+         mNHFcOj20/HzAYgjLslqc/Au205Dnqd6NQ8L1pAUg4WgtL0OFWLfsmbuaF4oW9N029rM
+         4SET3JXtpisvK+D2pZSsY754bhvpY5OV1ZjMq1wGMkawHfkO13IzlMuU3aZk8q58c4Oq
+         UdNXktzajRbYmk6PsdlSw6KXQ1HjfaSwAgEnLa5e/o2/JSKgw+WTS0sh42dsMv3rxK8e
+         AkFw==
+X-Forwarded-Encrypted: i=1; AJvYcCUNdIJ4qOAgoZ9eNeaBMY38qZBy7c9sh0IBKCnBXE1C787JvBGaXMF3xB3l9W/9OxgpMSQl5ArzE6p86POV@vger.kernel.org
+X-Gm-Message-State: AOJu0Yydc7dWaC5dnk6jmSbaTQZ5D30htUd+mHf9drdLwEQNJ3RzMbdm
+	uQdVglV31GvG//gC2Wz94VdNw2NSfeV8AQhzDx2K1bJwyWYNUcg3fr/dotgTvVcz/GjsWNXW9Dk
+	vAhHFufXY
+X-Gm-Gg: ASbGncvwjFea5BhBvvxDTqoPSxuYGaOLOmAvG/Ziip8tedZjUvhteCXzhJ80b32rpOR
+	YkD5Laemi+VPVl0ULr+7pIT+pSmJroIePNXKwGv3aRYSCuKdXrqGmEotwx5FLyS4k/fUESq9dJ/
+	q1LUqUlf+8o5eQFr8Wv0NOvm8L3yxY4ibJK5CVg8hktEWGLnIa4YDQrvPlNwkpnU5eODDOnkXvl
+	b8xlLghxP4bNspxYJqq37A1AXAc/Gm57Q6P3wXw221VytHWdoh+xCPpGxeW2IshocxbgPW2HvlM
+	Umw1cXWssUGAFt/RbxgmZZQ=
+X-Google-Smtp-Source: AGHT+IGr4PwaiWR7G1QCP3Rr9SzVohcwWvRF8e/2VShv5xpdY9BeXClPPRYD1JGD0VZo1re6hr0Inw==
+X-Received: by 2002:a05:6512:2254:b0:542:91a5:301b with SMTP id 2adb3069b0e04-543e4c310d1mr4040893e87.38.1738401509447;
+        Sat, 01 Feb 2025 01:18:29 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543ebe0ff47sm711234e87.93.2025.02.01.01.18.24
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543ebe0ff47sm711234e87.93.2025.02.01.01.18.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Feb 2025 01:18:25 -0800 (PST)
+        Sat, 01 Feb 2025 01:18:28 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 01 Feb 2025 11:18:13 +0200
-Subject: [PATCH 2/4] Bluetooth: qca: add WCN3950 support
+Date: Sat, 01 Feb 2025 11:18:14 +0200
+Subject: [PATCH 3/4] arm64: dts: qcom: qcm2290: add UART3 device
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250201-rb1-bt-v1-2-ae896c4923d8@linaro.org>
+Message-Id: <20250201-rb1-bt-v1-3-ae896c4923d8@linaro.org>
 References: <20250201-rb1-bt-v1-0-ae896c4923d8@linaro.org>
 In-Reply-To: <20250201-rb1-bt-v1-0-ae896c4923d8@linaro.org>
 To: Marcel Holtmann <marcel@holtmann.org>, 
@@ -97,210 +98,53 @@ To: Marcel Holtmann <marcel@holtmann.org>,
 Cc: linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6227;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1329;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=JHBVtVHMkSJ6nIaRKycINz9lZG2/fh0enAbh7ip1B+E=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnnebbfXMcGG7r7nfSFMIHWVHTcM3WC2Lqz92/O
- hAOQZU60amJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ53m2wAKCRCLPIo+Aiko
- 1aQzB/91Ydm79pJoeY19onpUPcHHgL1bo5G0a9EmSEnLUTahFmvjijmuHXvWCqWDlmhmZ4VwYGU
- 3rQKWiGVwVK0hE/O8a9utiX+qMfbhidpVdOTTHcUarkYVTbczNSSQAhOLlrcbzY76UGtOBomhcX
- TVyf8U31M4RV11hhMhGqKufnMaxAgOB2utgxZ712TnwYUxF7WnibIUaeR7g+yo58otBy/SHPVTI
- JSfHz1aQnvS351UJZ23eQ2WdE0dVOcmwqonCSWw1nkmNiWsjfYL+25HQbyPKDRX2BwLNWTNkJkM
- a42st0p0lg5sd7fqxnC8shx9V8mRSPWmr085HcJ9R9HJeSp4
+ bh=o+8DevsM1iaqcb/GhD2I1DkFB8Jlc7QezSs3Fq1Rsw8=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnnebbd7G2yReQbJB4c/wrZaIA6CoRAPgUuFieQ
+ tWdrRc1SsGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ53m2wAKCRCLPIo+Aiko
+ 1c6yCACtxVgMqIZxd540jUuEN0xogW1bn7YdDq8a36W8k8iYMfglPHfCdbsbvR5ORyyxOtcOitH
+ /UXevzq2g6CJEM0HUyhPMKDxwrnWBMxy+jxeuetcFlJFCwVHtsmHYVZkvAHjtldryICWi4cgl5v
+ /NiNZxOxk4V8Eg/FiqN1YrDuIQPiFWC+3Ub3CODDTIoI84TufYsQhWbyj11yzzXYG4f9jM9kPMH
+ Da86bu8uRQdRodDB9HgeiNRQJsbPs6GW4J1uXClgiaDOnDeuXrr4ABxH0kbXM1gA7WfCfxSqaGt
+ 8luBUZiaUUmNhGcHwFvURYJaCNP4tDv/LuwwqTNRDch/j/XY
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-WCN3950 is another example of the WCN39xx BT/WiFI family of chips. It
-requires different firmware files and has different current
-requirements, so add it as a separate SoC type.
+On QCM2290-based devices the SE3 is used for the Bluetooth chips. Add
+corresponding device node.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/bluetooth/btqca.c   |  9 +++++++++
- drivers/bluetooth/btqca.h   |  1 +
- drivers/bluetooth/hci_qca.c | 25 +++++++++++++++++++++++++
- 3 files changed, 35 insertions(+)
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index cdf09d9a9ad27c080f27c5fe8d61d76085e1fd2c..4d259d8447774ac7adfcc44d7cfb5bf41774289c 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -821,6 +821,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/crbtfw%02x.tlv", rom_ver);
- 			break;
-+		case QCA_WCN3950:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/cmbtfw%02x.tlv", rom_ver);
-+			break;
- 		case QCA_WCN3988:
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/apbtfw%02x.tlv", rom_ver);
-@@ -891,6 +895,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 					 "qca/crnv%02x.bin", rom_ver);
- 			}
- 			break;
-+		case QCA_WCN3950:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/cmnv%02x.bin", rom_ver);
-+			break;
- 		case QCA_WCN3988:
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/apnv%02x.bin", rom_ver);
-@@ -948,6 +956,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	 * VsMsftOpCode.
- 	 */
- 	switch (soc_type) {
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index 9d28c88002257bae31249457b98a5df1df26efe4..10ba8ebfe80fa43827e5c05f9ad643ecb2cea872 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -145,6 +145,7 @@ enum qca_btsoc_type {
- 	QCA_INVALID = -1,
- 	QCA_AR3002,
- 	QCA_ROME,
-+	QCA_WCN3950,
- 	QCA_WCN3988,
- 	QCA_WCN3990,
- 	QCA_WCN3998,
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 0ac2168f1dc4f8ae2f7a3b2912e7f5b5b8115cac..b39889ce0e8ff9d97f72eb8e70cb9c6825984c82 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -623,6 +623,7 @@ static int qca_open(struct hci_uart *hu)
- 		qcadev = serdev_device_get_drvdata(hu->serdev);
+diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+index f0746123e594d5ce5cc314c956eaca11556a9211..5f92eb16482a0ea5f8436cfa7e55849f171ebd24 100644
+--- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+@@ -1239,6 +1239,21 @@ &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 				status = "disabled";
+ 			};
  
- 		switch (qcadev->btsoc_type) {
-+		case QCA_WCN3950:
- 		case QCA_WCN3988:
- 		case QCA_WCN3990:
- 		case QCA_WCN3991:
-@@ -1366,6 +1367,7 @@ static int qca_set_baudrate(struct hci_dev *hdev, uint8_t baudrate)
- 
- 	/* Give the controller time to process the request */
- 	switch (qca_soc_type(hu)) {
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -1452,6 +1454,7 @@ static unsigned int qca_get_speed(struct hci_uart *hu,
- static int qca_check_speeds(struct hci_uart *hu)
- {
- 	switch (qca_soc_type(hu)) {
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -1494,6 +1497,7 @@ static int qca_set_speed(struct hci_uart *hu, enum qca_speed_type speed_type)
- 		 * changing the baudrate of chip and host.
- 		 */
- 		switch (soc_type) {
-+		case QCA_WCN3950:
- 		case QCA_WCN3988:
- 		case QCA_WCN3990:
- 		case QCA_WCN3991:
-@@ -1528,6 +1532,7 @@ static int qca_set_speed(struct hci_uart *hu, enum qca_speed_type speed_type)
- 
- error:
- 		switch (soc_type) {
-+		case QCA_WCN3950:
- 		case QCA_WCN3988:
- 		case QCA_WCN3990:
- 		case QCA_WCN3991:
-@@ -1746,6 +1751,7 @@ static int qca_regulator_init(struct hci_uart *hu)
- 	}
- 
- 	switch (soc_type) {
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -1776,6 +1782,7 @@ static int qca_regulator_init(struct hci_uart *hu)
- 	qca_set_speed(hu, QCA_INIT_SPEED);
- 
- 	switch (soc_type) {
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -1807,6 +1814,7 @@ static int qca_power_on(struct hci_dev *hdev)
- 		return 0;
- 
- 	switch (soc_type) {
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -1891,6 +1899,7 @@ static int qca_setup(struct hci_uart *hu)
- 		soc_name = "qca2066";
- 		break;
- 
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -1925,6 +1934,7 @@ static int qca_setup(struct hci_uart *hu)
- 	clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
- 
- 	switch (soc_type) {
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -1958,6 +1968,7 @@ static int qca_setup(struct hci_uart *hu)
- 	}
- 
- 	switch (soc_type) {
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -2046,6 +2057,17 @@ static const struct hci_uart_proto qca_proto = {
- 	.dequeue	= qca_dequeue,
- };
- 
-+static const struct qca_device_data qca_soc_data_wcn3950 __maybe_unused = {
-+	.soc_type = QCA_WCN3950,
-+	.vregs = (struct qca_vreg []) {
-+		{ "vddio", 15000  },
-+		{ "vddxo", 60000  },
-+		{ "vddrf", 155000 },
-+		{ "vddch0", 585000 },
-+	},
-+	.num_vregs = 4,
-+};
++			uart3: serial@4a8c000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x04a8c000 0x0 0x4000>;
++				interrupts = <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP0_S3_CLK>;
++				clock-names = "se";
++				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
++						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
++						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
++						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
++				interconnect-names = "qup-core",
++						     "qup-config";
++				status = "disabled";
++			};
 +
- static const struct qca_device_data qca_soc_data_wcn3988 __maybe_unused = {
- 	.soc_type = QCA_WCN3988,
- 	.vregs = (struct qca_vreg []) {
-@@ -2338,6 +2360,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 		qcadev->btsoc_type = QCA_ROME;
- 
- 	switch (qcadev->btsoc_type) {
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -2374,6 +2397,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 			break;
- 		}
- 		fallthrough;
-+	case QCA_WCN3950:
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -2683,6 +2707,7 @@ static const struct of_device_id qca_bluetooth_of_match[] = {
- 	{ .compatible = "qcom,qca6174-bt" },
- 	{ .compatible = "qcom,qca6390-bt", .data = &qca_soc_data_qca6390},
- 	{ .compatible = "qcom,qca9377-bt" },
-+	{ .compatible = "qcom,wcn3950-bt", .data = &qca_soc_data_wcn3950},
- 	{ .compatible = "qcom,wcn3988-bt", .data = &qca_soc_data_wcn3988},
- 	{ .compatible = "qcom,wcn3990-bt", .data = &qca_soc_data_wcn3990},
- 	{ .compatible = "qcom,wcn3991-bt", .data = &qca_soc_data_wcn3991},
+ 			i2c4: i2c@4a90000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x04a90000 0x0 0x4000>;
 
 -- 
 2.39.5
