@@ -1,331 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-46637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39F9DA248FC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 13:27:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E62BA2491F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 13:47:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A517E16672B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 12:27:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8422B3A5CA8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 12:47:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04F201A0BD7;
-	Sat,  1 Feb 2025 12:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CD491ADC6B;
+	Sat,  1 Feb 2025 12:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gVWTgqMS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dR9aU7Ab"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AC220318;
-	Sat,  1 Feb 2025 12:27:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3ED10E0
+	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Feb 2025 12:47:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738412865; cv=none; b=h/5zUY7GZ/w8q4/B6HbLWmwUoEQD8O2SS0K5zA8YEMncBELkWueI6y+u2Mt8/HcruSjqCc28vs6suYRKbpfSCMpQIrDMq6lDC88K8DE5Yqy5JSXufgEElmsUTKoNIk6ui9uYHMKoA1LeV08KoTLoByXXixnTe0pNJ+q+ttSvz30=
+	t=1738414069; cv=none; b=t30qN01c1cUZVpceg8YvPJQ/RCn5zZRu+GHYOvVa3KUraAR2rp5SGwG22uMmV0WW8rrkq8/4en+0Bt4+inT27jVQxa1QxlAYh5JKEum67UMug3XBJ6ObqPi8ENGXClZBlPLA4fEc7UczOhgpxMfhrpTWSH9EQU9M88w8K+6NFD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738412865; c=relaxed/simple;
-	bh=d2gitCcfXyVjh/Va1xgB9YHhFmFeYjmw6K+s66qxC0U=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GgJuBNodZ0owiRWA51RT6YE1J/JyE+DK3Ln9W5dx0juRM4ouJ3rGsQ0WV+U3Y5n5gdGQh5EINjf0BkOnaoRBO6KwoMqrNyDowAzlwPwKrhJvR90HPPg03tnQt+8l9hD7XWw/aLPSO7+UnEtUUfBdUIJQ2Gv4uIPi3E+4LiUs1zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gVWTgqMS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE79C4CED3;
-	Sat,  1 Feb 2025 12:27:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738412865;
-	bh=d2gitCcfXyVjh/Va1xgB9YHhFmFeYjmw6K+s66qxC0U=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=gVWTgqMSgiDYD7dnYligksY2KpM+YbWeOm2AH9FKhZ+jIbzMYsY8ndmsq/EEfwbCr
-	 v28IUMuQq4Z9upLtJjpQjZYzqsZDc4Yi0j/KCyKxPvLE/edOagXcsco///zPAjjgua
-	 QObpJoLXxlzL76d6GAeoptvACc96Sar7+tIZOFKvvO4x6d0CrFeTdVXrM4a+lk1cWO
-	 0mhSGPaN+3VT5cnoLZpPqkwAjidregwMrnEEJgG/Aw8fLsqwH3vZuyqfEf7B0yBpiw
-	 tHeb5fQU0hJR7d1KeVo6t0wtbcp3zBMfpzgs3vVugS0UB8seTMr3OpXnNiveTJBdcw
-	 +ioOx8gIhyy8Q==
-Date: Sat, 1 Feb 2025 12:27:31 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- agross@kernel.org, andersson@kernel.org, dmitry.baryshkov@linaro.org,
- konradybcio@kernel.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
- amitk@kernel.org, thara.gopinath@gmail.com, lee@kernel.org,
- rafael@kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com,
- david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
- quic_kamalw@quicinc.com, rui.zhang@intel.com, lukasz.luba@arm.com,
- lars@metafoo.de, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
- quic_skakitap@quicinc.com, neil.armstrong@linaro.org
-Subject: Re: [PATCH V5 5/5] thermal: qcom: add support for PMIC5 Gen3 ADC
- thermal monitoring
-Message-ID: <20250201122731.2762b1f8@jic23-huawei>
-In-Reply-To: <20250131183242.3653595-6-jishnu.prakash@oss.qualcomm.com>
-References: <20250131183242.3653595-1-jishnu.prakash@oss.qualcomm.com>
-	<20250131183242.3653595-6-jishnu.prakash@oss.qualcomm.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1738414069; c=relaxed/simple;
+	bh=4RZ7OWUNYW5slaMOvnaTZEv0LT0QnKX108Pvk3JR9fI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kfrJ0lxVWH1QjDVtDwVX209RhyuZ11sLWBI9e+xoTpTBuXQtMtLf0SmeKQwt20rm7uqJO0bLQXoQXId56gUvK++PvXo7CUE0BsJf/oPCs5ifDltz5BssJhl/i5USDmea5B9YgcVwAKn5skPO7A8IEyds6RHm6CG4oQsBe383/Mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dR9aU7Ab; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-543cc81ddebso3304805e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Feb 2025 04:47:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738414065; x=1739018865; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=E7U/QY0AwysjlkyJl/K85+VbcTx0/u5THnr6ChZjWiM=;
+        b=dR9aU7AbxafwVrprWCUJ8NE/NHf8HV50uNkOdlz+V4sapnL5kQFmO6pEk87IXsE13s
+         yc82VvDgDH8wYrR7yqJxt4R0TiLadmO6TOOGspSFN/qA343nXTnLh4qVjuapTD7v8Vzl
+         vk4X7llsCDKpsYLsQQXZn68c5eqTrcUD69pa9Ul+7n0Wq7yC+oOF2wS9QV4mkIIfTp8v
+         Soe2t8Fufd62LqavaXWA+cG0jROTGxzaKv7i7kXYV82mDQ3Yl/tuwvnfWDtmiUdUb7aO
+         nu7qoWqW19JJPaJzeC6ycfLvqWW2tLO38F2sQS5j93z63vBtHQPPuvDvoMzjiII/Lpl0
+         qPDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738414065; x=1739018865;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E7U/QY0AwysjlkyJl/K85+VbcTx0/u5THnr6ChZjWiM=;
+        b=aDd7EfcxFQG38zUlaFGMTOsKCt2+ksjOYBBnBJR0yy+bN4O6y9dEB66cu5UIABTaa1
+         AMV43G0rzc79cYfTqUMlbn8HGsOXKEzkmGPxmeSABIlNgaBj4guEEIUskggVth81cUKd
+         9TqSHFEtA51w5iY7DOu4Gmrj9YbXc74jwKY9pY/D2o8BN4BGyWhNcrnL1t6UBp5OSf2L
+         +OnqUr8pKkrbtbw8x6s3bmNnsL8NoshkkRGszNWTyg8Tb5oBqHixkRG7AIalH6MPV9Ga
+         zfKKbdvYZZegzpxdk0gxQe6bmhTnVMeUMPsONxdA8fwq9Fq4WrD/JMf+7tMYlK1sonTf
+         sr6w==
+X-Forwarded-Encrypted: i=1; AJvYcCVm/JfgcXfY1Z1CDcCszyHVMKFK0UIEkkd40nIfoJbxeifWDsHypwgiMAjC33QGFo62qdORIGn+dBa4aCtx@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmgV1yGGnfbY1MyvgKPhguR3a3mH9x4fR+I6/rcnAfNw49Md+b
+	qbo6DZnq4bqrY4rMnmCzCQTKxS+Q1VCowGfZ9s27vS3VcUowfYDmh8ZrNXiVIEo=
+X-Gm-Gg: ASbGnctJqYRcOsFeLx4XccUkP5FPMERTzX9eAui2XvBzW5KSDx4zoBepobUKzvpQaeQ
+	gjR0oY2i5s8hfV6aCi7A6QFoQ3CYcZY3h8otR6Qxgbj3Hz3NyeWH9BUnJpRtAl7q9UtkcUWiB8S
+	4mCw49PxGqz6r/4DGKkPfCOzy/4oufF02sCva8IHZb0wv6JpBBFDrOXBkHPF7FXtvb+zXvwWeA3
+	jof+UCoHgogUtNgyqHW8DdHLWP8TtJ/cCF5O0aEokZMa/67irfL+JleLYAVt1WEztkh0nPnwVeT
+	ZMOUKWRZDFzMunir4oaekYDjc2Cu9wvEoUIxVzGwXsAWEgmBad63uyb4UAbKrmWvYMTA6gQ=
+X-Google-Smtp-Source: AGHT+IEy2qDiVDwdoHC9BRZ37NSRP2KIMWzIo3wkTY5DJjgfWOTjn3aNna7i19+0q/ldZYCNWbFmWw==
+X-Received: by 2002:a05:6512:234c:b0:542:29ec:d5be with SMTP id 2adb3069b0e04-543e4be0016mr4629444e87.10.1738414065247;
+        Sat, 01 Feb 2025 04:47:45 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543ebeb06desm741428e87.145.2025.02.01.04.47.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Feb 2025 04:47:43 -0800 (PST)
+Date: Sat, 1 Feb 2025 14:47:41 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/4] Bluetooth: qca: add WCN3950 support
+Message-ID: <whxrzliiyqsceodr452u7xf7zlo326vygiknpiydq67vp2le7f@kggswwh4hbef>
+References: <20250201-rb1-bt-v1-0-ae896c4923d8@linaro.org>
+ <20250201-rb1-bt-v1-2-ae896c4923d8@linaro.org>
+ <13d5026c-3274-4b90-b941-22f08a8ebdc4@molgen.mpg.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <13d5026c-3274-4b90-b941-22f08a8ebdc4@molgen.mpg.de>
 
-On Sat,  1 Feb 2025 00:02:42 +0530
-Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
-
-> Add support for ADC_TM part of PMIC5 Gen3.
+On Sat, Feb 01, 2025 at 01:15:29PM +0100, Paul Menzel wrote:
+> Dear Dmitry,
 > 
-> This is an auxiliary driver under the Gen3 ADC driver, which
-> implements the threshold setting and interrupt generating
-> functionalities of QCOM ADC_TM drivers, used to support thermal
-> trip points.
+> 
+> Thank you for the patch.
+> 
+> Am 01.02.25 um 10:18 schrieb Dmitry Baryshkov:
+> > WCN3950 is another example of the WCN39xx BT/WiFI family of chips. It
+> > requires different firmware files and has different current
+> > requirements, so add it as a separate SoC type.
+> 
+> Is the firmware publicly available already? (In patch 4/4 you write, it is,
+> and I found it [1].) I find such information helpful in commit messages, and
+> also the firmware names:
+> 
+> •   qca/cmbtfw12.tlv
+> •   qca/cmbtfw13.tlv
+> •   qca/cmnv12.bin
+> •   qca/cmnv13.bin
 
-Very short wrap. For commit descriptions 75 chars is fine.
+Ack, I will add it.
+
+> Do you also have a datasheet name to review the vregs?
+
+I have it, but I don't think it is public.
 
 > 
-> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Various minor comments inline.
-
-Jonathan
-
-> ---
-> Changes since v4:
-> - Fixed a compilation error and updated dependencies in config as suggested
->   by reviewer.
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/bluetooth/btqca.c   |  9 +++++++++
+> >   drivers/bluetooth/btqca.h   |  1 +
+> >   drivers/bluetooth/hci_qca.c | 25 +++++++++++++++++++++++++
+> >   3 files changed, 35 insertions(+)
 > 
->  drivers/thermal/qcom/Kconfig                  |   9 +
->  drivers/thermal/qcom/Makefile                 |   1 +
->  drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c | 489 ++++++++++++++++++
->  3 files changed, 499 insertions(+)
->  create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
+> […]
 > 
+> The rest looks good.
+> 
+> 
+> Kind regards,
+> 
+> Paul
+> 
+> 
+> [1]: https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=421017641e6a6ef389190ac3edf67885183f3de0
 
-> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-> new file mode 100644
-> index 000000000000..d384d7ae2617
-> --- /dev/null
-> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-> @@ -0,0 +1,489 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/bitfield.h>
-> +#include <linux/iio/adc/qcom-adc5-gen3-common.h>
-> +#include <linux/iio/consumer.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/thermal.h>
-> +#include <linux/unaligned.h>
-> +
-> +#include "../thermal_hwmon.h"
-> +
-> +struct adc_tm5_gen3_chip;
-> +
-> +/*
-> + * @adc_tm: indicates if the channel is used for TM measurements.
-
-Doesn't match the parts of the structure.
-Make this full kernel-doc and then you can rely on automation to spot that.
-
-> + * @tm_chan_index: TM channel number used (ranging from 1-7).
-> + * @timer: time period of recurring TM measurement.
-> + * @tzd: pointer to thermal device corresponding to TM channel.
-> + * @high_thr_en: TM high threshold crossing detection enabled.
-> + * @low_thr_en: TM low threshold crossing detection enabled.
-> + * @last_temp: last temperature that caused threshold violation,
-> + *	or a thermal TM channel.
-> + * @last_temp_set: indicates if last_temp is stored.
-> + */
-> +
-> +struct adc_tm5_gen3_channel_props {
-> +	struct device			*dev;
-> +	unsigned int			timer;
-> +	unsigned int			tm_chan_index;
-> +	unsigned int			sdam_index;
-> +	struct adc5_channel_common_prop common_props;
-> +	bool			high_thr_en;
-> +	bool			low_thr_en;
-> +	bool			meas_en;
-> +	struct adc_tm5_gen3_chip	*chip;
-> +	struct thermal_zone_device *tzd;
-> +	int				last_temp;
-> +	bool				last_temp_set;
-> +};
-> +
-> +struct adc_tm5_gen3_chip {
-> +	struct adc5_device_data	*dev_data;
-> +	struct adc_tm5_gen3_channel_props	*chan_props;
-> +	unsigned int		nchannels;
-> +	struct device		*dev;
-> +	struct work_struct		tm_handler_work;
-> +};
-
-This sort of aligning for pretty printing goes wrong too often. I'd just not do it
-and use a single space only before field names.
-
-Note it's already looking odd and will only get worse if future changes need
-more space.
-
-
-> +
-> +static int _adc_tm5_gen3_disable_channel(struct adc_tm5_gen3_channel_props *prop)
-> +{
-> +	struct adc_tm5_gen3_chip *adc_tm5 = prop->chip;
-> +	int ret;
-> +	u8 val;
-> +
-> +	prop->high_thr_en = false;
-> +	prop->low_thr_en = false;
-> +
-> +	ret = adc5_gen3_poll_wait_hs(adc_tm5->dev_data, prop->sdam_index);
-> +	if (ret)
-> +		return ret;
-> +
-> +	val = BIT(prop->tm_chan_index);
-> +	ret = adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index, ADC5_GEN3_TM_HIGH_STS_CLR,
-> +			      &val, 1);
-> +	if (ret)
-> +		return ret;
-> +
-> +	val = MEAS_INT_DISABLE;
-> +	ret = adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index, ADC5_GEN3_TIMER_SEL, &val, 1);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* To indicate there is an actual conversion request */
-> +	val = ADC5_GEN3_CHAN_CONV_REQ | prop->tm_chan_index;
-> +	ret = adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index, ADC5_GEN3_PERPH_CH, &val, 1);
-> +	if (ret)
-> +		return ret;
-> +
-> +	val = ADC5_GEN3_CONV_REQ_REQ;
-> +	return adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index, ADC5_GEN3_CONV_REQ, &val, 1);
-
-sizeof(val) for those 1s
-Same applies in previous patch.  This acts as documentation and makes it hard to get the sizing
-wrong.
-
-
-> +}
-
-
-> +static void adctm_event_handler(struct auxiliary_device *adev)
-> +{
-> +	struct adc_tm5_gen3_chip *adc_tm5 = auxiliary_get_drvdata(adev);
-> +
-> +	schedule_work(&adc_tm5->tm_handler_work);
-> +}
-> +
-> +static int adc_tm5_probe(struct auxiliary_device *aux_dev, const struct auxiliary_device_id *id)
-> +{
-> +	struct adc_tm5_gen3_chip *adc_tm5;
-> +	struct tm5_aux_dev_wrapper *aux_dev_wrapper;
-> +	struct device *dev = &aux_dev->dev;
-> +	int i, ret;
-> +
-> +	adc_tm5 = devm_kzalloc(&aux_dev->dev, sizeof(*adc_tm5), GFP_KERNEL);
-> +	if (!adc_tm5)
-> +		return -ENOMEM;
-> +
-> +	aux_dev_wrapper = container_of(aux_dev, struct tm5_aux_dev_wrapper, aux_dev);
-> +
-> +	adc_tm5->dev = dev;
-> +	adc_tm5->dev_data = aux_dev_wrapper->dev_data;
-> +	adc_tm5->nchannels = aux_dev_wrapper->n_tm_channels;
-> +	adc_tm5->chan_props = devm_kcalloc(adc_tm5->dev, aux_dev_wrapper->n_tm_channels,
-> +					   sizeof(*adc_tm5->chan_props), GFP_KERNEL);
-> +	if (!adc_tm5->chan_props)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < adc_tm5->nchannels; i++) {
-> +		adc_tm5->chan_props[i].common_props = aux_dev_wrapper->tm_props[i];
-> +		adc_tm5->chan_props[i].timer = MEAS_INT_1S;
-> +		adc_tm5->chan_props[i].sdam_index = (i + 1) / 8;
-> +		adc_tm5->chan_props[i].tm_chan_index = (i + 1) % 8;
-> +		adc_tm5->chan_props[i].chip = adc_tm5;
-> +	}
-> +
-> +	ret = devm_add_action_or_reset(adc_tm5->dev, adc5_gen3_disable, adc_tm5);
-> +	if (ret)
-> +		return ret;
-> +
-
-Maybe a comment on why you skip first sdam here.
-
-> +	for (i = 1; i < adc_tm5->dev_data->num_sdams; i++) {
-> +		ret = devm_request_threaded_irq(adc_tm5->dev, adc_tm5->dev_data->base[i].irq, NULL,
-> +						adctm5_gen3_isr, IRQF_ONESHOT,
-> +						adc_tm5->dev_data->base[i].irq_name, adc_tm5);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
-> +
-> +	INIT_WORK(&adc_tm5->tm_handler_work, tm_handler_work);
-
-I'd move this before the irq request.  Normally aim to have everything that might
-use ready before we even request it. That avoids any issue with spurious irqs or
-weird device state etc.
-
-> +	ret = devm_add_action(adc_tm5->dev, adc5_gen3_clear_work, adc_tm5);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = adc_tm5_register_tzd(adc_tm5);
-> +	if (ret)
-> +		return ret;
-> +
-> +	auxiliary_set_drvdata(aux_dev, adc_tm5);
-Maybe add a comment that this is only in the notifier called from outside this
-driver.  Otherwise it looks odd to register eveything and only then set
-drvdata.  I went looking for what smelled like a bug.
-
-> +	return 0;
-> +}
-> +
-> +static const struct auxiliary_device_id adctm5_auxiliary_id_table[] = {
-> +	{ .name = "qcom_spmi_adc5_gen3.adc5_tm_gen3", },
-> +	{},
-
-No trailing comma on a terminating entry like this.
-
-> +};
-> +
-> +MODULE_DEVICE_TABLE(auxiliary, adctm5_auxiliary_id_table);
-> +
-> +static struct adc_tm5_auxiliary_drv adctm5gen3_auxiliary_drv = {
-> +	.adrv = {
-> +		.id_table = adctm5_auxiliary_id_table,
-> +		.probe = adc_tm5_probe,
-> +	},
-> +	.tm_event_notify = adctm_event_handler,
-> +};
-> +
-> +static int __init adctm5_init_module(void)
-> +{
-> +	return auxiliary_driver_register(&adctm5gen3_auxiliary_drv.adrv);
-> +}
-> +
-> +static void __exit adctm5_exit_module(void)
-> +{
-> +	auxiliary_driver_unregister(&adctm5gen3_auxiliary_drv.adrv);
-> +}
-> +
-> +module_init(adctm5_init_module);
-> +module_exit(adctm5_exit_module);
-
-Can use module_auxiliary_driver() to replace this boilerplate.
-The embedded adrv shouldn't stop that working that I can see.
-
-
-> +
-> +MODULE_DESCRIPTION("SPMI PMIC Thermal Monitor ADC driver");
-> +MODULE_LICENSE("GPL");
-> +MODULE_IMPORT_NS("QCOM_SPMI_ADC5_GEN3");
-
+-- 
+With best wishes
+Dmitry
 
