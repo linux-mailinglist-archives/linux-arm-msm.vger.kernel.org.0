@@ -1,174 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-46655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C1EAA24A5E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 17:27:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05760A24A6F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 17:34:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A8D56163743
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 16:27:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2C57B7A039B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 16:33:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 910A11C5D73;
-	Sat,  1 Feb 2025 16:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D5061C5D44;
+	Sat,  1 Feb 2025 16:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VhQ1AMM4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bVCfhuZV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0238F1C5D65
-	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Feb 2025 16:27:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF7A1BBBD4;
+	Sat,  1 Feb 2025 16:34:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738427224; cv=none; b=UHltHg8ivnXWgLsfpb3mD2eYUROgOmANnIxoFEwC5f0Jr0CNIpmyZBjDC0KOi8yshEwHlUgjZgAXYJu9iyhbRzGQ3A1Qn31ine8teomZlTMzvAMY7HF9mrTBazyzGb7YUzKPgV707wV/iwZ0fjRCrzxhKaQsTFEaLqSk65GuSqA=
+	t=1738427670; cv=none; b=BQFeYUPJw1xxbQ8q0E1J46tDeWICMaj9U7W1Pf2UeSucFCWSmthZ38xAL5eoZiXF34xJzyg4RoZVgQRUWDW/eFslCJpkTqNB4qM6TIe/kjQYBPm/gfNZjF5I7HwB0m2ikXkvr7O75yx2lRjr3wl2x4VouG+9d9PMrJeuDTpOhLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738427224; c=relaxed/simple;
-	bh=Yxhl8LZFj20FOUDFn3DFSQ8NRNktMewV2d+gewSUVqw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OBm+Xaj6qO7Xb4e4ZW3b4Q0pHvMp4vPbvl+rtBUPy2nk6OfnslUf2WswInZ3PpVrCCv6GIhbx7I8Y4/X/PZnuadDxK1ZQSjkiM7m7XzkiUD1iiyrcNgwmB6uzS+r4WVJVA0QT75ypimNKha12CyVJ2/nkzRzJZQIRcg+lLe8sXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VhQ1AMM4; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51157hoD024970
-	for <linux-arm-msm@vger.kernel.org>; Sat, 1 Feb 2025 16:27:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EKll0OTr+FAupnplWAio3axMf3LjnLIqeSqJawk3ocA=; b=VhQ1AMM467Pl8oY5
-	p3ZdQQMO7ryoJNf9YdmC+UGRXztIfWG93qejsXbeyw3Lt4ceUfE+KTVwgD/HG0HM
-	8ZReaItoewDJtWMWUNtqjtJyZ+Tv09cbiY8f2N8KTTtuoLj2j1DpQG1aRNbi0JVe
-	bOjHMk7uGp4wIGHEaXweZklqbNhULpMNPhTzgxj+FIdvnIT7C7axtvoptPUJpxBX
-	sRALm57UoGkoD/qgbauZuce10ofcC+ZpTJeE38J8AiuGmvqmRGMDrsbGGgtCLeJH
-	fBF3z4H0Iq6tm07wgMxOnp6OnznW1Ss14HJ/whocFpPxMT5iaxGYuB0iH1uUAngr
-	fFhWDg==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44hd5y152f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 01 Feb 2025 16:27:01 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6d8e8153104so3997396d6.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Feb 2025 08:27:01 -0800 (PST)
+	s=arc-20240116; t=1738427670; c=relaxed/simple;
+	bh=tDyhorXyf61KzIVLARtJ1pBbB+25Ayo/ggH84SDJlfc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ASEYBex3vmPjiXWmm6sR4sqDO+htZdyEVCRQpSnAeXxCRTUpN/vocr8NjRJUtDw8sl8XzG7Q8QElEbW7WgcD46rAcfGhHQ29BIFe2hCXB9w16ZbfLE/Un6s/OogTfR3Jtzu8eWX2eMeGLioUFhsvqTM8TZmJE44IyfvcbzxPwrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bVCfhuZV; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-219f8263ae0so55794965ad.0;
+        Sat, 01 Feb 2025 08:34:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738427668; x=1739032468; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/rw5CDGeNAXHcIv9I05e+KmdzvvrpagDx33eTW7QaPk=;
+        b=bVCfhuZVUAJhdmZE9eXcUN+YERXj8rGHskv1MZtFl+OchoWPWKlLMGJZmqRip27Dq1
+         RAZeoJfGrT5ul4ikZP4xihpzqWC3/q75BLdsZlWenrXBQG9xbiNiDiTtUfAOqMkW77aA
+         gwQNlt7T5Ey260AjFQ2L0X+6U5sLzEFfYbFJ7QROEEK8UUzs1dHCXGAC/o64MXo204aP
+         Lxi8GI4bsBUq1z6nc+doY7qzSvfildaTxgKMZCorf1o5TrIaGYWkMrYdYus+i8kLvU3F
+         PeiOVAeXGxuA2Tk/h4Gq0QembYIb45sTGluIC8J0F4ZaasBIObwHtjKd6BHkMCunOjAp
+         5Pqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738427221; x=1739032021;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EKll0OTr+FAupnplWAio3axMf3LjnLIqeSqJawk3ocA=;
-        b=iVjTYBzZyd1W4DNcsHMeTjx6RF3G45FQ/LnqHu5pVrh18I5G+Fq9DkcUjPce82Gpjf
-         MVWmrVIHIucKlqWqW670NaOw6DzBRi5K9nKqsmCfLW6uSoM/nyl7e/vu2MlvLttiHJ7c
-         3n/V3zV4QRCNxwVxyk3aP9nl0MsD0GHlelg9aWodpONbZkZUGNPIjsmyh2evT4D9+Wsa
-         iln5bZMD/Bb6cn497IkoVlqccvPPVtqjRnDhBZvP8/iAzz+PSJ8o1d+g+PP3urSM9rhk
-         b+UiwCF/IW0pkAO1K9ri1Upqoq0fdevR7fT/FpEg9SyWotTMxFFSFzbkRU/OHOzhsO04
-         0/8A==
-X-Forwarded-Encrypted: i=1; AJvYcCXjUrrVpY5fK9k2w6m4/GQJgGnv5KTZSXb+dlEttsAM+WnYNQA656NzMVWO4w5p75drkbYWhIzzDM1/kHnN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3vTfbkCf8jL1OWzGGl6NYsiO2DElPBWG6i31ySf3RLQ3zv4Qv
-	QYUXcut72icLm425aZij5sBbRf8kZo4bFyb1Mq8HatMPK5YD91mGEaAQpXDiYNSpPQmq+cHLZhJ
-	iBiyISeqOQFjFOOGlSrRTRUrgQZkf4vRqhU4YTFHAjF1W9KUaN5wvyD2O//Lcsfpx
-X-Gm-Gg: ASbGncstSQY2i4RDyZ0jAk6xxjO2hS3XMC+b/qD4l49mDRo/6ou9MFwCB/Jnq/6oaVv
-	bFVRiMK6Uaphwa5YM+eXvYQX7apGMJ9D+9CABDoyhXUhwmQocBCQTnS95i4e2Xr+SKjYyDz8G2i
-	yjv07LnL7hABBTzZWF+le3x8cfzJIgzl59kiFz9FIscB9RnUECQcO7blM0hRjDIOnJl0+tqABKy
-	mhKgOTIc3WXejWKnCbBWI3u6WJvkukGlNHZW+ya2RM9vAkJkhhiqxxWM5pzA8mJ08JAtlMipjvD
-	YziNLQXjZwG2manhj3yky5zz5mUdMZhCduyD0QMk0Z+zlzCW8c22LU/c34k=
-X-Received: by 2002:a05:620a:29d2:b0:7b8:5629:5d58 with SMTP id af79cd13be357-7bffcce5683mr798966085a.4.1738427220609;
-        Sat, 01 Feb 2025 08:27:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGW5dCt57KxB3QTUkH/DtBPukVEDHPBWvCI3vtS5HPPpewERxqmhT5SNUKe1IVKv5OIuqLK2g==
-X-Received: by 2002:a05:620a:29d2:b0:7b8:5629:5d58 with SMTP id af79cd13be357-7bffcce5683mr798963885a.4.1738427220201;
-        Sat, 01 Feb 2025 08:27:00 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dc7240487csm4570605a12.34.2025.02.01.08.26.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Feb 2025 08:26:59 -0800 (PST)
-Message-ID: <80ca597a-3d85-40d0-a04d-4bb8ca91b687@oss.qualcomm.com>
-Date: Sat, 1 Feb 2025 17:26:56 +0100
+        d=1e100.net; s=20230601; t=1738427668; x=1739032468;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/rw5CDGeNAXHcIv9I05e+KmdzvvrpagDx33eTW7QaPk=;
+        b=cu89l0Laf/MQfAdwyOebUK0NiUOMERNTA+cEtOO2mB72c3ckLdRfNBcafJGTSsEvzi
+         i0jHbpPECL9OYmez8kU81gE+mFPCIMtPq8sRsqlVfYjscA6u5WLloqwSb7Zukh0RQC3Y
+         HOjow8RHFXW4KD00yFNV8T6aM/ureRjjLVRKxeEH0s/Doqn7mdqYH17OVWNL10Jr8A3B
+         1QNgu2Uvqg5KFSvrvxuK2LOcbxewu3Kr/2vnrJAALa9kDJ9TQ9+Ba9Xr05L2rV67UYfa
+         oBKD3iwvmKkbYMpvlwPJugFDvGzczJUxXbt7EEniyADZkacgSx/O2TLcP4T7yPt8Y9Vo
+         zZNg==
+X-Forwarded-Encrypted: i=1; AJvYcCUByWVSzgtoMzz9dyLS30Sx+/3KsJW2D8XZiWme0UjrQA2lyjecFvpRTFOojbD5+7CRDYvTAk3+WREuHjc=@vger.kernel.org, AJvYcCVGwK3kW+y1tOcgATv0abAtHqYSeEyVBlic1vedtKE5xs7DCM7/NebiizRIyS7C3192Wa3j1vrgT2uutP1uUA==@vger.kernel.org, AJvYcCVtyvCPj+n15+XmzYP+y8rNQ0VHCqRWmQ/49seFbZ3Om/OKfww00p2Ke1vUgpLI/7lh+sSb36r9yQZaRpj/F2jMHnaUmQ==@vger.kernel.org, AJvYcCWVXJOvN5kH8jMl+Y3RVBDmT5Iz+gHioLd/xkTQXfnVFCTiTio7RAQDsoKfxE5pHX9c6an1eiONIIrS@vger.kernel.org, AJvYcCXICwEnIzPIaMFaNYsKe46JujbOhokeTH+vhc89PdJ9Q3134/kZ2gt5qY6oKr4pXmdSnjgyid09UwLzN9uK@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZx6mvtzhkyED0IJmxZJG5MransRVQsmbvbsfP+7gTLNPapO8V
+	6AdOzLCeIyx/B4bFE2punkK31GIzh0LJKj4lqrwKpqSJsjLZeXTN
+X-Gm-Gg: ASbGncvoNK/2EGwUZ1ie7Lfy9pz9Q2JIxYL2biHJp0FWDTBqXmkngSGar1Y/KLD59zs
+	YrBiFo3kqXd7vFyUfYwBXlQYD9qv9OZDUSRgc7skno3NOpay0P/X3qll4vmW8Qod3WmMMcFT3TX
+	qi+IEvWjoXARGXuRt38R8ttYmxjg8cV6tQWmPuyfYVYi+eWQ4idQooOrFNkrXgFC1jcQHIAZjw7
+	d/+cv6kRGWxUYLGkwtyk3mXjxyGheU3SOJLmiTfHPPJ833wvvTTRKb1Qy/du70HxXQZ5vp/YWR0
+	F8ev8YE9mY09+Rvj
+X-Google-Smtp-Source: AGHT+IHYIyyhQyCr4zJPxBlGg+rtfSQqSyIltCCmOB3F05c1HfP75Mvwy2uLT513Sf7dOCP4Tekigg==
+X-Received: by 2002:a17:902:ce91:b0:216:2259:a4bd with SMTP id d9443c01a7336-21dd7e08915mr223414495ad.52.1738427667889;
+        Sat, 01 Feb 2025 08:34:27 -0800 (PST)
+Received: from SC8280XP.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de331efafsm47660075ad.217.2025.02.01.08.34.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Feb 2025 08:34:27 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: konrad.dybcio@oss.qualcomm.com
+Cc: andersson@kernel.org,
+	bryan.odonoghue@linaro.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	hdegoede@redhat.com,
+	ilpo.jarvinen@linux.intel.com,
+	jdelvare@suse.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	krzk@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-hwmon@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	mitltlatltl@gmail.com,
+	platform-driver-x86@vger.kernel.org,
+	robh@kernel.org
+Subject: Re: [PATCH RESEND v6 0/3] platform: arm64: Huawei Matebook E Go embedded controller
+Date: Sun,  2 Feb 2025 00:34:13 +0800
+Message-ID: <20250201163416.2774-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <018281e0-001a-4587-b775-a9df6e54f75e@oss.qualcomm.com>
+References: <018281e0-001a-4587-b775-a9df6e54f75e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 2/2] arm64: dts: qcom:
- qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
-        todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
-        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        akapatra@quicinc.com, hariramp@quicinc.com, andersson@kernel.org,
-        konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
-        cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com,
-        will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20250121125010.1853269-1-quic_vikramsa@quicinc.com>
- <20250121125010.1853269-3-quic_vikramsa@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250121125010.1853269-3-quic_vikramsa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 4zl1ymxj0WNan8VJbhccfimyJLbS3L4g
-X-Proofpoint-ORIG-GUID: 4zl1ymxj0WNan8VJbhccfimyJLbS3L4g
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-01_07,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- phishscore=0 mlxscore=0 impostorscore=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=766 adultscore=0 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502010142
+Content-Transfer-Encoding: 8bit
 
-On 21.01.2025 1:50 PM, Vikram Sharma wrote:
-> The Vision Mezzanine for the RB3 ships with an imx577 camera sensor.
-> Enable the IMX577 on the vision mezzanine.
+On Sat, Feb 1, 2025 at 11:35 PM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
+> On 1.02.2025 8:38 AM, Pengyu Luo wrote:
+> > On Sat, Feb 1, 2025 at 5:20 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> >> On 31/01/2025 10:21, Pengyu Luo wrote:
+> >>> This adds binding, drivers and the DT support for the Huawei Matebook E Go
+> >>> (sc8280xp-based) Embedded Controller which is also found in Huawei Matebook
+> >>> E Go LTE (sc8180x-based), but I don't have the sc8180x one to perform
+> >>> tests, so this series enable support for sc8280xp variant only, this series
+> >>> provides the following features:
+> >>>
+> >>> - battery and charger information report
+> >>> - charging thresholds control
+> >>> - FN lock (An alternative method)
+> >>> - LID switch detection
+> >>> - Temperature sensors
+> >>> - USB Type-C altmode
+> >>> - USB Type-C PD(high power)
+> >>>
+> >>
+> >> Why are you resending?
+> >>
+> >> Previous version was only week ago and minimal time is two weeks. Plus
+> >> its merge window, so this resend is unjustified.
+> >
+> > Sorry, I am still new to the process, I may have misunderstood something.
+> > I sent it because I had got at leaset one reviewed tag for every patch
+> > from the corresponding subsystem maintainer. Can I expect that there would
+> > be no reviewing? All I need to do is wait for it to be applied.
 > 
-> An example media-ctl pipeline for the imx577 is:
+> Generally if people have a concern, they'll share it with you.
+> It may be that one review is not enough, this is up to the maintainer.
 > 
-> media-ctl --reset
-> media-ctl -v -V '"imx577 '17-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> You don't need to resend after you get new tags, the maintainer tools will
+> pick those up when the patches are being applied.
 > 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+> Patches are generally not picked up by maintainers in the timeframe between
+> stable vX.Y release and vX.(Y+1)-rc1, this is the time when Linus accepts
+> code that has been sitting in the maintainers' branches for some time and
+> getting build/functionality tested in linux-next over the previous cycle
 > 
-> Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
 
+It is helpful, thanks for explanation.
 
-> +&tlmm {
-> +	cam2_default: cam2-default-state {
-> +		mclk-pins {
-> +			pins = "gpio67";
-> +			function = "cam_mclk";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-
-If you don't plan on adding more pins there, drop mclk-pins{} and put the
-properties directly under the cam2-default-state node, similarly below
-
-with that
-
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-> +	};
-> +
-> +	cam2_suspend: cam2-suspend-state {
-> +		mclk-pins {
-> +			pins = "gpio67";
-> +			function = "cam_mclk";
-> +			drive-strength = <2>;
-> +			bias-pull-down;
-> +		};
-> +	};
-> +};
+Best wishes,
+Pengyu
 
