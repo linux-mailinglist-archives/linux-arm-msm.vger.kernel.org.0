@@ -1,138 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-46625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FF6CA24493
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 22:21:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1D9AA2478E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 08:38:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A0F0118878DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2025 21:21:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3F4017A34A6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 07:38:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 523901F3D48;
-	Fri, 31 Jan 2025 21:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35BF1132122;
+	Sat,  1 Feb 2025 07:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rIPp4FA5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gy4nv8CU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165A4139E;
-	Fri, 31 Jan 2025 21:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EC2AD2C;
+	Sat,  1 Feb 2025 07:38:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738358458; cv=none; b=IaLIYcniIB4kRteIgVT9srGs9VOAw3+Ds73wlqsMF74o7GtS0IKp2bQiBZqzowPVANLImoUSf1iKwOACwB+8Fsb/mdq81/1NvoRHbmiHpSazIqXk6c1t3B4MBAoj2IUvB1qySP737kewSYC7qu8KjquSN/7wEyw0Kvsa9wVV3Ak=
+	t=1738395533; cv=none; b=B0750jCADSmm0hBiQhREukO//iWSMRgar0vhPgVowFZQRfs9cSGV0rixVYLFal94H4b15xCOQmJYCutjlx5C/8/Fh5ZA4os+S3UWknMPjiIifcaz9RYz5yxB9/y1fvaVxG7II797iR3W+XaNZ2RxofMYwt42R97nLgGi4amBvzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738358458; c=relaxed/simple;
-	bh=tNv/VPiXdMNnDJUXI1YEFGfxy4fPeU/bg99THsTfA/k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OafmNLMQdPV10Q+RVXXjaMeHGQtVtL6PB5JY/Sj9fxsMJ2b7S9oneTBtRrJWVRTuDmq5J0EK0J8MpB+stYwW7BZWK1XsaZ9pcCoWQRz1U+vMTg6kl/Z/0pbHdtEngMS4Jr6OMKOpZPAwmwiWcdv1mn5mPjOfzMoF7maIQEiaopE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rIPp4FA5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2B8C4CED1;
-	Fri, 31 Jan 2025 21:20:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738358457;
-	bh=tNv/VPiXdMNnDJUXI1YEFGfxy4fPeU/bg99THsTfA/k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rIPp4FA57oHcCqItKND1wp9QdcvekUIf5cJHwp9p2z/fob2sNEPGcZwsazEB/WxGt
-	 MGarS/gRgs/B422r8YMo/PuBUnVWz99WMIMUcbgIEQWdy7UqvRFvMrtWxp+6eA1u8l
-	 U3bTtcUiJU+WHguX0DhhwZY5Gsw/TGb1ILRO+llkebBnShHzd0bVSZoxxSGicJ3fom
-	 gkpWF/IMZte1JWMm7ZtTi5FFbtF9GQ18Xiqljom9ZLWiyaDsLhNjIGuZm8CVbs8WrS
-	 fELoPrAaL7VYnKwX/h8qT/4GJ/uiDbRj00+Qx0sC70n4CISMFgms9sXsMLg8KXrIgt
-	 syNxt1MQp576Q==
-Message-ID: <33f8a68f-46d8-472f-8061-52800e5bd014@kernel.org>
-Date: Fri, 31 Jan 2025 22:20:51 +0100
+	s=arc-20240116; t=1738395533; c=relaxed/simple;
+	bh=9xmvHIq9dsoshm+uhUroh5H2iby22JoiDwJUC4ufiTU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uYCSDC+nQd1cp4/aRuAxaMmcaYeal8kxXUJBTf3kEVhB/iZGaH0HIrJnhgxeMOZmZZ0bXQd4SmbFW6EJv3VgwtadMEFSzR2ULEj3ZJNhhPbFyQ4BOxzWH3lf3DGNI8Ox3MBOh6kHNuN60IrSEuMqh0EH/xSFQ1G2PXZhn1paPAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gy4nv8CU; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2161eb95317so48351115ad.1;
+        Fri, 31 Jan 2025 23:38:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738395531; x=1739000331; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9xmvHIq9dsoshm+uhUroh5H2iby22JoiDwJUC4ufiTU=;
+        b=gy4nv8CU8XdDxtKiQT9BGQbldOULrx6auZ8fHmSo4Lu1FZQy/c2hUPApuCpg5irj+R
+         dzeiGgtABFCTwJIAFV0uhWLw27nZnH/gTj46QZg+WwSR6sGU44+QjBtF7Dzkc7Q6iXX1
+         h/CyUE+PIf11pXANqIAOdg0B8lx5ZiUm3CmeesRsa4myQeSyaYba9NLKHA9LQ4RQIhGW
+         z+/GqvPQ2cr2edIShefP1dUs/5XNSxFgDWh9icdhG05dJSyJTnG/4tK+fPQTL3aTmZOB
+         zwXfiZ5phOCy/KTLEw3ipuSvdR9Pe6aiZ4Hc8kyeDk0QLgGhKqsh/PVy/Rh6sdNOKfMl
+         /vNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738395531; x=1739000331;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9xmvHIq9dsoshm+uhUroh5H2iby22JoiDwJUC4ufiTU=;
+        b=iMAiwEcuIQEiympzeY8l4BT50LAhCM7Vv6XzBPUCx6BOE0PiGGdipDVBQos/vnRqxL
+         VrNJfSAZHfUUkIDdLFXS1PSBCIpas/HZKvyXLUrtGspg3QokHZYP7EcD5D8vahl9jQuI
+         aCL00/cKu7F5OWOdWfivNnHPmYDaj8mMOfzO686skmSsyQy4t5iW0vrFfAA1HeykVImC
+         YLHvc4A+t7DmgEJ5sE1nik/mBPtCuCuFzGvhEhbM5n8o5gn1MGwuIa+6jm84Vxa2JoLN
+         M5b6hkLcUDTGOeeqF66lbEKGMH5N+AsB7OKcRfxqOuPbsuRYVwf7VAjRhIMjf8BY3b/a
+         a+Aw==
+X-Forwarded-Encrypted: i=1; AJvYcCV37Fib72Huq4iuH1BQNWgEDdSjAsKMkz4uoy/lErvHtqVAn9dWuwKk/R8pqro8IPvZ8rROOXgc+0Y3E+k=@vger.kernel.org, AJvYcCWkxL8bJzEe526KpcZA4DVrOAhU1H7Ix9BS/IoiPNeYHXAbbPUw0JhzZUG2YbSgdiNn7LlJVTYt81zn@vger.kernel.org, AJvYcCWy5t2rtFLg/ftmbKcD77mQaYBSqPGDQH7USRN7eLWdxtvsRtXO2Vv0/YhW8J3QsFhXK3cv3hU/eEU7YD88wg==@vger.kernel.org, AJvYcCWzmTeXMCI19iAa1lSG03CKqEsfi+m27JEGP4Z3I5cFDKUkwLmxJyYw9YTNrsz+4mCPrzKH6Rxlw7orOy2v@vger.kernel.org, AJvYcCXLk1AqoayVw3kMWIO7rVHBLP9S+11PRy60JDX8ouha2JuTepty4mEXlUbZvB4MgjDcX0MuTJfvkU0brPErx1io5T2S2g==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwiSps+IFpF4w4tIxHOpQtuOzy6dq0jKBGTTA4LWugM+LIBjvn5
+	QTo7Za9x8q1fyVxD8P87fkmtjI/0mwzeY0+aFBAxiwQN/lXPfKnw
+X-Gm-Gg: ASbGnct2h49gLJyRlQpTaXeLgpuOH30CiYeBx9q5jTLWbnyw4vUSzbW98zA4VNo7R90
+	5u7sQA0b0KPA2RYNpvH+dhf19rcR3rz3ngjt39WLkJQ9twi2GY8caxCu+BjQwekhLcE+00Dcw0w
+	JNUKMQtF23cUzOM62nYEA2piGB+emoLYe/enpareamWZF6WQOoj3UNi1jY3/zHV3Svi8gR0DGfx
+	bcWJet0/3VrsgmNaDm+WljHZt+evpO+cacwTA2YykPGzZhflGzA/b4Sovt+j85UF9CJfkmwdH+A
+	0DOwTiZ+Mkqc+k3S
+X-Google-Smtp-Source: AGHT+IEH7GLuMVenB+DGZ11031+0Z7QM64QuG4lUZJW7bAL42hdA0RgOGjpRPyREV+YjQByA00/2yQ==
+X-Received: by 2002:a17:902:d50f:b0:21a:8716:faab with SMTP id d9443c01a7336-21dd7d78cd3mr216024245ad.16.1738395530815;
+        Fri, 31 Jan 2025 23:38:50 -0800 (PST)
+Received: from SC8280XP.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de31edc21sm40719225ad.42.2025.01.31.23.38.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jan 2025 23:38:50 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: krzk@kernel.org
+Cc: andersson@kernel.org,
+	bryan.odonoghue@linaro.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	hdegoede@redhat.com,
+	ilpo.jarvinen@linux.intel.com,
+	jdelvare@suse.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-hwmon@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	mitltlatltl@gmail.com,
+	platform-driver-x86@vger.kernel.org,
+	robh@kernel.org
+Subject: Re: [PATCH RESEND v6 0/3] platform: arm64: Huawei Matebook E Go embedded controller
+Date: Sat,  1 Feb 2025 15:38:37 +0800
+Message-ID: <20250201073838.3278-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <33f8a68f-46d8-472f-8061-52800e5bd014@kernel.org>
+References: <33f8a68f-46d8-472f-8061-52800e5bd014@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v6 0/3] platform: arm64: Huawei Matebook E Go
- embedded controller
-To: Pengyu Luo <mitltlatltl@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Hans de Goede <hdegoede@redhat.com>,
- =?UTF-8?Q?Ilpo_J=C3=83=C2=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-hwmon@vger.kernel.org
-References: <20250131092139.6065-1-mitltlatltl@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250131092139.6065-1-mitltlatltl@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 31/01/2025 10:21, Pengyu Luo wrote:
-> This adds binding, drivers and the DT support for the Huawei Matebook E Go
-> (sc8280xp-based) Embedded Controller which is also found in Huawei Matebook
-> E Go LTE (sc8180x-based), but I don't have the sc8180x one to perform
-> tests, so this series enable support for sc8280xp variant only, this series
-> provides the following features:
-> 
-> - battery and charger information report
-> - charging thresholds control
-> - FN lock (An alternative method)
-> - LID switch detection
-> - Temperature sensors
-> - USB Type-C altmode
-> - USB Type-C PD(high power)
-> 
+On Sat, Feb 1, 2025 at 5:20 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> On 31/01/2025 10:21, Pengyu Luo wrote:
+> > This adds binding, drivers and the DT support for the Huawei Matebook E Go
+> > (sc8280xp-based) Embedded Controller which is also found in Huawei Matebook
+> > E Go LTE (sc8180x-based), but I don't have the sc8180x one to perform
+> > tests, so this series enable support for sc8280xp variant only, this series
+> > provides the following features:
+> >
+> > - battery and charger information report
+> > - charging thresholds control
+> > - FN lock (An alternative method)
+> > - LID switch detection
+> > - Temperature sensors
+> > - USB Type-C altmode
+> > - USB Type-C PD(high power)
+> >
+>
+> Why are you resending?
+>
+> Previous version was only week ago and minimal time is two weeks. Plus
+> its merge window, so this resend is unjustified.
 
-Why are you resending?
+Sorry, I am still new to the process, I may have misunderstood something.
+I sent it because I had got at leaset one reviewed tag for every patch
+from the corresponding subsystem maintainer. Can I expect that there would
+be no reviewing? All I need to do is wait for it to be applied.
 
-Previous version was only week ago and minimal time is two weeks. Plus
-its merge window, so this resend is unjustified.
+For merge window, I noticed pr from platform-driver-x86 had been merged a
+week ago. Maybe I shouldn't assume for every subsystem.
 
-Best regards,
-Krzysztof
+Best wishes,
+Pengyu
 
