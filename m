@@ -1,89 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-46651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 067C7A24A1B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 17:04:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C5E9A24A23
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 17:07:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B9A71885C14
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 16:04:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7EF11885CF1
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 16:07:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC9131ADC95;
-	Sat,  1 Feb 2025 16:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F4E41C5490;
+	Sat,  1 Feb 2025 16:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mK5NEsPp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FPOQoCwH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0796F2F56
-	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Feb 2025 16:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AF12F56
+	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Feb 2025 16:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738425862; cv=none; b=ZHpud1uvfDnj1/iksyzct2MvdU+iTUnaN7HcQPox42bJI/NfNoWMYtfdPyCJW2oL3Lp9cfznNKe6jbi7XbY/RJ5bNmOZAcmCQwMDDKOr9MgQwIscowqwJl6shpsQTimu5dR9odSotsOL9rHiw2jN0s11X8GcaNSpspVGxEOM0hQ=
+	t=1738426049; cv=none; b=r9RC+wiNR5Nu1dpTy/BqZsqaVKSQMqHmGgYX0Kmg2XXg2pbUNYjegEtSMgB2AHtlGwXhsYaKfBOhnRa4LrqJ7oQNidfJBkF3DmW87w68Ca3vrAm+rkeDDNFGidZyrgAoG4hL/nuBA5piYIlLcyesdIH/JAKpGMQV/7ccj+XZahM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738425862; c=relaxed/simple;
-	bh=KtceULTfdDsUj55KcdcM3ju2T2sUybiXtJOlp5XvovI=;
+	s=arc-20240116; t=1738426049; c=relaxed/simple;
+	bh=g06AyooziM75vKiwG8D4NAwEKMYO1gOo6PVjYKxBdaY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XJ7AVWpRw0WLGmGJ8iEaHp60Bv/bagNonIHmi6e78DpyU70KfPbZIlsX1m4W40ebmqNibQP1gQLkQ8P7KZf1AizKLZVry8bKo4cPuqIS3XShkNMFlkT5JYKM6Ea6g42zQZo99+mb97qwrLCGdYNhBn2AEb/FtUZ32l7fclZqO7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mK5NEsPp; arc=none smtp.client-ip=209.85.214.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=aoe+LwSZKPCPrq3S86AEmUAOLof4u0gu8vtYaZ03NO1UyiWoZCWHQFEFImKrTvVhiXPUCILDZAoPrFxKdnP+IqEZPYyOq6ov6ZiL0hg/Cm2B7Rk3NkxAjhFGWu2xsZ9/gyfQ82HCQL7a9cIJZ/4/fzp6bi7u71mRPzmsy0RZvPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FPOQoCwH; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2166022c5caso45898875ad.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Feb 2025 08:04:20 -0800 (PST)
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2164b662090so60437615ad.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Feb 2025 08:07:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738425860; x=1739030660; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738426046; x=1739030846; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=PD3elKhBBrhryeUJej2rhEevK6Z6OCKdP8pilTUiFmI=;
-        b=mK5NEsPpeRXP2Y3zcj5i+5OayQvkkC/xv2fEl6YlSfCW4p9DyuaHlOpcPHXLjX3jOb
-         dvcA4z8RG0muZAp9N1qCzPKtHnATNGAOOQ/bhRikSoWQfdTwO0s+Y/tTCHfvwTRZEV8s
-         l6EnYkt8CcXfBFmiNlIDzumdpyrMzOa1BgnMX03+lzGOuFQUhYaZYZr62yrEpO8/jhmp
-         fQrKRx6fexye3pEXsChPFLmbRXN1Se/qHgQPuU0s5JOuiWx1LnAkooX4FZbiOc3hJJs3
-         OEwj/8vIcfgK3SaWcb7AxvJYsi3DssxfO+lnuK34bEPcx/qBSDSS+sKfu1Zzh8p0bl5i
-         YavQ==
+        bh=eZ3t1aj2mFgpfj7pEzNxUv1YuWtm6+xQW/tflVh/XyA=;
+        b=FPOQoCwHGroKq+62FC7BFJ3iINNFucnQQD6mqCjAWS1H5GszDzRcL9FiKM7fH78jQe
+         RkURyARXnq+rSwjYTmG8i9oJkqC4b9ln06p91mkQqCuQRRDUdNQUQDXQDG3MRX3kOEDc
+         mFcNv0VGqjfCRpM1A3uRfaK2CkPxI6zSENzPgRyOUdsxiNzLtmtHasEHr4yptjaObISy
+         CCxw7sK/PE9KDRfI1SvIkTSDhSynw/BDkd3fsO3jI2b0RpmTrSUsk6TeMFqL7R9B8L4o
+         iPhXeRUmLEDhL9oPPTuBt2YSSIos97QyUIIQ/iM7XbvsPbD/el4Yar+CYBcgib71qPi0
+         oapg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738425860; x=1739030660;
+        d=1e100.net; s=20230601; t=1738426046; x=1739030846;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PD3elKhBBrhryeUJej2rhEevK6Z6OCKdP8pilTUiFmI=;
-        b=E5PlI2nKDPBt884q2531lb608GOuokcdjkTNWPhCHPGm7f7uMQwRcHkkDS/JzGWRQA
-         nFrqjEIz3L3ac/Xj4J53OXiAsEosAK6l9rj/7Uud1obrWHiCBAqZtbCzuQgqNDxhBGXt
-         CVXdO826KbqRlIFTg8JJbOuP+V1u05M4uJKdL6aa48/ftiH/zPgo+igoE9g0/VCpVCoL
-         9IzUeNXQuk3Ir12LlxFUNG52oBjTTzLRzg8rgqsCFH9d69QECOzllNFYTTKWY2V8hTRi
-         56pqGQkEu0676Fux74QTFiVkKMVTrG8ejx+xJaYHzIhkLq/Mc6pax7zSgpgDE/BAnMLc
-         yuVw==
-X-Forwarded-Encrypted: i=1; AJvYcCVnhUencDDc46D5NziEJ4AATJogHmoETHK2byNrs7SPC/nNWP+1U4r+J2Yw27TyiON3WLo9gBIhVZnslK7T@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxakpf2WH/QnRJItWiv950HVnOsEsQjtMqfuyHoonCW2pfJCime
-	8eL29PSjv8U0fwto6W8g60rT0IIYcaVJ6IClS/pEJp8iRS/6svI5FtTxr1pQNw==
-X-Gm-Gg: ASbGncuwqiJDwvgQCqPpnGExSARJd0bJf7V3mjEWRbs7TV85UYjNhGn/jlnHB6s6H5H
-	Auhtb693LBQoVa2xCJWlemHwQEX7dtgnlIWeEmEx5gBiTU9j6KEzku82wOhTDlbELFY0UGlufin
-	gYciiK5P/yUlsxkc+01oFfPJ2+IRYrk66PM21KUS2fBC8DU07xtq9/uPoYMrrImH0GFRAyMM2xS
-	6iOHL7x6tkWnC0nPQG3oYBsgooaZl5krb1JsvugT5SxqCtuXnS1QjQIwpB+KpyIw+DZHEN4Ez6O
-	rVdiaXtktP26heKfPRKGeHaPXPo=
-X-Google-Smtp-Source: AGHT+IHMiquJqImn6K84gT1weLJxq5o/E72F/zmLI6WDRKNBWyZi82ZnYP+0ysd0qODUl9LYt+ulyw==
-X-Received: by 2002:a05:6a21:32a4:b0:1e1:b329:3cd with SMTP id adf61e73a8af0-1ed7a638554mr25944662637.20.1738425860203;
-        Sat, 01 Feb 2025 08:04:20 -0800 (PST)
+        bh=eZ3t1aj2mFgpfj7pEzNxUv1YuWtm6+xQW/tflVh/XyA=;
+        b=hMq+WeiZHRogVDfC/iBUp2ks4eKiILp9YT/+tVf8EM1ttbaQw4uBCw8OKPpOVP1Vqa
+         /wn5jhYdWxotXcyyYQQC59m0RGPRyGoQRGcX1dzbnJYyo9wYTdBCVq/olMYRXOM/VZjo
+         wDCabx5paPlwawY+gl8FqlQXfG+2la7fvo0pWpBYg2gNJUHLg5r4+UrXXx+mKsvs2dm3
+         mD66Zo8qWIPxEZtuX4KfFes89EVGZnU5YdBVMSWFAaG4zk+b+FYPcmBpEgCmIPJFsYwA
+         gZVpU3VwjxbOtIwfUDimrRSErtg8ff+xy2fzpueEXYveYxYs8Bd64y/Vjg/p1xcHPAwr
+         t8oA==
+X-Forwarded-Encrypted: i=1; AJvYcCVMpXPjYeFTlCuwR8gZxn5nkGnCdR0T9UY+YstfLYq1swPpcG2iSGKgFp1z8xn6o52SVAqvxaYGxB1NBFyi@vger.kernel.org
+X-Gm-Message-State: AOJu0YyO5fjl3rUFcYzgI67o2BJNLxNTqKPlGXbyMc/uk/4UJEvEM8l4
+	umsxAn1NjY2gS5HDqbxrYnz5SaafCsX46hCutAKUmRSOlahDg1MMdBSIGzdVmAI5Rt8Dk3xYE3Y
+	=
+X-Gm-Gg: ASbGncsPQ9uaeZtmoa6C0rkdGm74WK0ylo2oAzZsgOrXltT+231OrptmBDBJORrivSd
+	Xt9aysuJJdqcl37qI8HdHbmEXBwU6E7Zt+fvWImAnb/kzgT+Uo8SiProHdGKRS7uuE/kNwUKXjP
+	80lvX/NtlUU3I6h+wV5jhGHF9zY1TjmgJ0305UpMHoaxKFo8iap3ACwWQjeHu24EXDr6vOcYlmK
+	DD1NbTyeoXsQlXCRmruEAsUWh+6Iq2ApINsNd5jUGEOBU/aGmD6ppU/ZdPD8QrOBXDHFAi31cra
+	WvLKX5PO9wjpd7NT2T0k09c4Gjw=
+X-Google-Smtp-Source: AGHT+IGKVXS8baXhCPTBe6sl/h9UfWPlgRpWJrmewAX1ZXLow3mZ1mzo+rt7H8F7HI7Zdq7gTkCKAg==
+X-Received: by 2002:a05:6a20:72a0:b0:1e5:a0d8:5a33 with SMTP id adf61e73a8af0-1ed7a62498amr27455365637.18.1738426045945;
+        Sat, 01 Feb 2025 08:07:25 -0800 (PST)
 Received: from thinkpad ([120.56.202.249])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-acebe3842a4sm4856617a12.20.2025.02.01.08.04.16
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe69cd80esm5193344b3a.121.2025.02.01.08.07.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Feb 2025 08:04:19 -0800 (PST)
-Date: Sat, 1 Feb 2025 21:34:13 +0530
+        Sat, 01 Feb 2025 08:07:25 -0800 (PST)
+Date: Sat, 1 Feb 2025 21:37:21 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-Cc: James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
-	andersson@kernel.org, bvanassche@acm.org, ebiggers@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>,
-	Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: Re: [PATCH V11] scsi: ufs: qcom: Enable UFS Shared ICE Feature
-Message-ID: <20250201160413.eyhtn2edwnslxijy@thinkpad>
-References: <20250127151815.6049-1-quic_rdwivedi@quicinc.com>
+To: linux@treblig.org
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: Remove unused functions
+Message-ID: <20250201160721.bgfyi3cwilvibl74@thinkpad>
+References: <20250127215859.261105-1-linux@treblig.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,184 +90,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250127151815.6049-1-quic_rdwivedi@quicinc.com>
+In-Reply-To: <20250127215859.261105-1-linux@treblig.org>
 
-On Mon, Jan 27, 2025 at 08:48:15PM +0530, Ram Kumar Dwivedi wrote:
-> By default, the UFS controller allocates a fixed number of RX
-> and TX engines statically. Consequently, when UFS reads are in
-> progress, the TX ICE engines remain idle, and vice versa.
-> This leads to inefficient utilization of RX and TX engines.
+On Mon, Jan 27, 2025 at 09:58:59PM +0000, linux@treblig.org wrote:
+> From: "Dr. David Alan Gilbert" <linux@treblig.org>
 > 
-> To address this limitation, enable the UFS shared ICE feature for
-> Qualcomm UFS V5.0 and above. This feature utilizes a pool of crypto
-> cores for both TX streams (UFS Write – Encryption) and RX streams
-> (UFS Read – Decryption). With this approach, crypto cores are
-> dynamically allocated to either the RX or TX stream as needed.
+
+Subject prefix should be:
+
+'bus: mhi: host:"
+
+> mhi_device_get() and mhi_queue_dma() haven't been used since 2020's
+> commit 189ff97cca53 ("bus: mhi: core: Add support for data transfer")
+> added them.
 > 
-> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Co-developed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> Remove them.
+> 
+> Note that mhi_queue_dma_sync() is used and has been left.
+> 
+> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-One nit below.
-
-> ---
-> Changes from v10:
-> 1. Addressed Manivannan's comment to align the shared ICE register
->    definitions with the existing vendor-specific registers.
-> 
-> Changes from v9:
-> 1. Addressed Manivannan's comment to pair ufs_qcom_config_ice_allocator
->    with ufs_qcom_ice_enable.
-> 2. Addressed Manivannan's comment to avoid guarding the definitions.
-> 3. Addressed Manivannan's comment to align bit definitions.
-> 2. Addressed Manivannan's comment to use enum for register definitions.
-> 
-> Changes from v8:
-> 1. Addressed Manivannan's comment to call ufs_qcom_config_ice_allocator()
->    from ufs_qcom_ice_enable().
-> 2. Addressed Manivannan's comment to place UFS_QCOM_CAP_ICE_CONFIG
->    definition outside of the ufs_qcom_host struct.
-> 3. Addressed Manivannan's comment to align ICE definitions with
->    other definitions.
-> 
-> Changes from v7:
-> 1. Addressed Eric's comment to perform ice configuration only if
->    UFSHCD_CAP_CRYPTO is enabled.
->  
-> Changes from v6: 
-> 1. Addressed Eric's comment to replace is_ice_config_supported() helper
->    function with a conditional check for UFS_QCOM_CAP_ICE_CONFIG.
-> 
-> Changes from v5: 
-> 1. Addressed Bart's comment to declare the "val" variable with
->    the "static" keyword.
-> 
-> Changes from v4:
-> 1. Addressed Bart's comment to use get_unaligned_le32() instead of
->    bit shifting and to declare val with the const keyword.
-> 
-> Changes from v3:
-> 1. Addressed Bart's comment to change the data type of "config" to u32
->    and "val" to uint8_t.
-> 
-> Changes from v2:
-> 1. Refactored the code to have a single algorithm in the code and
-> enabled by default.
-> 2. Revised the commit message to incorporate the refactored change.
-> 3. Qcom host capabilities are now enabled in a separate function.
-> 
-> Changes from v1:
-> 1. Addressed Rob's and Krzysztof's comment to fix dt binding compilation
->    issue.
-> 2. Addressed Rob's comment to enable the nodes in example.
-> 3. Addressed Eric's comment to rephrase patch commit description.
->    Used terminology as ICE allocator instead of ICE algorithm.
-> 4. Addressed Christophe's comment to align the comment as per kernel doc.
-> ---
->  drivers/ufs/host/ufs-qcom.c | 37 ++++++++++++++++++++++++++++++++++
->  drivers/ufs/host/ufs-qcom.h | 40 ++++++++++++++++++++++++++++++++++++-
->  2 files changed, 76 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 68040b2ab5f8..83bf156eb171 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -15,6 +15,7 @@
->  #include <linux/platform_device.h>
->  #include <linux/reset-controller.h>
->  #include <linux/time.h>
-> +#include <linux/unaligned.h>
->  
->  #include <soc/qcom/ice.h>
->  
-> @@ -105,6 +106,26 @@ static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
->  }
->  
->  #ifdef CONFIG_SCSI_UFS_CRYPTO
-> +/**
-> + * ufs_qcom_config_ice_allocator() - ICE core allocator configuration
-> + *
-> + * @host: pointer to qcom specific variant structure.
-> + */
-> +static void ufs_qcom_config_ice_allocator(struct ufs_qcom_host *host)
-> +{
-> +	struct ufs_hba *hba = host->hba;
-> +	static const uint8_t val[4] = { NUM_RX_R1W0, NUM_TX_R0W1, NUM_RX_R1W1, NUM_TX_R1W1 };
-> +	u32 config;
-> +
-> +	if (!(host->caps & UFS_QCOM_CAP_ICE_CONFIG) ||
-> +			!(host->hba->caps & UFSHCD_CAP_CRYPTO))
-> +		return;
-> +
-> +	config = get_unaligned_le32(val);
-> +
-> +	ufshcd_writel(hba, ICE_ALLOCATOR_TYPE, REG_UFS_MEM_ICE_CONFIG);
-> +	ufshcd_writel(hba, config, REG_UFS_MEM_ICE_NUM_CORE);
-> +}
->  
->  static inline void ufs_qcom_ice_enable(struct ufs_qcom_host *host)
->  {
-> @@ -196,6 +217,11 @@ static inline int ufs_qcom_ice_suspend(struct ufs_qcom_host *host)
->  {
->  	return 0;
->  }
-> +
-> +static void ufs_qcom_config_ice_allocator(struct ufs_qcom_host *host)
-> +{
-> +}
-> +
->  #endif
->  
->  static void ufs_qcom_disable_lane_clks(struct ufs_qcom_host *host)
-> @@ -439,6 +465,7 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
->  		err = ufs_qcom_check_hibern8(hba);
->  		ufs_qcom_enable_hw_clk_gating(hba);
->  		ufs_qcom_ice_enable(host);
-> +		ufs_qcom_config_ice_allocator(host);
->  		break;
->  	default:
->  		dev_err(hba->dev, "%s: invalid status %d\n", __func__, status);
-> @@ -932,6 +959,14 @@ static void ufs_qcom_set_host_params(struct ufs_hba *hba)
->  	host_params->hs_tx_gear = host_params->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
->  }
->  
-> +static void ufs_qcom_set_host_caps(struct ufs_hba *hba)
-> +{
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +
-> +	if (host->hw_ver.major >= 0x5)
-> +		host->caps |= UFS_QCOM_CAP_ICE_CONFIG;
-> +}
-> +
->  static void ufs_qcom_set_caps(struct ufs_hba *hba)
->  {
->  	hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
-> @@ -940,6 +975,8 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
->  	hba->caps |= UFSHCD_CAP_WB_EN;
->  	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
->  	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
-> +
-> +	ufs_qcom_set_host_caps(hba);
->  }
->  
->  /**
-> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> index b9de170983c9..d4241e6793d1 100644
-> --- a/drivers/ufs/host/ufs-qcom.h
-> +++ b/drivers/ufs/host/ufs-qcom.h
-> @@ -50,6 +50,10 @@ enum {
->  	 */
->  	UFS_AH8_CFG				= 0xFC,
->  
-> +	/* bit definition for REG_UFS_MEM_ICE_CONFIG register */
-
-This is not a bit definition. Please drop the comment.
-
 - Mani
+
+> ---
+>  drivers/bus/mhi/host/main.c | 19 -------------------
+>  drivers/bus/mhi/host/pm.c   | 14 --------------
+>  include/linux/mhi.h         | 18 ------------------
+>  3 files changed, 51 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index 4de75674f193..4c91ffd6ed0e 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -1181,25 +1181,6 @@ int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_queue_skb);
+>  
+> -int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+> -		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags)
+> -{
+> -	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
+> -							     mhi_dev->dl_chan;
+> -	struct mhi_buf_info buf_info = { };
+> -
+> -	buf_info.p_addr = mhi_buf->dma_addr;
+> -	buf_info.cb_buf = mhi_buf;
+> -	buf_info.pre_mapped = true;
+> -	buf_info.len = len;
+> -
+> -	if (unlikely(mhi_chan->pre_alloc))
+> -		return -EINVAL;
+> -
+> -	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
+> -}
+> -EXPORT_SYMBOL_GPL(mhi_queue_dma);
+> -
+>  int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+>  			struct mhi_buf_info *info, enum mhi_flags flags)
+>  {
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index 11c0e751f223..2fb27e6f8f88 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -1296,20 +1296,6 @@ int mhi_force_rddm_mode(struct mhi_controller *mhi_cntrl)
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_force_rddm_mode);
+>  
+> -void mhi_device_get(struct mhi_device *mhi_dev)
+> -{
+> -	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> -
+> -	mhi_dev->dev_wake++;
+> -	read_lock_bh(&mhi_cntrl->pm_lock);
+> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+> -		mhi_trigger_resume(mhi_cntrl);
+> -
+> -	mhi_cntrl->wake_get(mhi_cntrl, true);
+> -	read_unlock_bh(&mhi_cntrl->pm_lock);
+> -}
+> -EXPORT_SYMBOL_GPL(mhi_device_get);
+> -
+>  int mhi_device_get_sync(struct mhi_device *mhi_dev)
+>  {
+>  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 059dc94d20bb..dd372b0123a6 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -720,12 +720,6 @@ enum mhi_state mhi_get_mhi_state(struct mhi_controller *mhi_cntrl);
+>   */
+>  void mhi_soc_reset(struct mhi_controller *mhi_cntrl);
+>  
+> -/**
+> - * mhi_device_get - Disable device low power mode
+> - * @mhi_dev: Device associated with the channel
+> - */
+> -void mhi_device_get(struct mhi_device *mhi_dev);
+> -
+>  /**
+>   * mhi_device_get_sync - Disable device low power mode. Synchronously
+>   *                       take the controller out of suspended state
+> @@ -776,18 +770,6 @@ int mhi_prepare_for_transfer_autoqueue(struct mhi_device *mhi_dev);
+>   */
+>  void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev);
+>  
+> -/**
+> - * mhi_queue_dma - Send or receive DMA mapped buffers from client device
+> - *                 over MHI channel
+> - * @mhi_dev: Device associated with the channels
+> - * @dir: DMA direction for the channel
+> - * @mhi_buf: Buffer for holding the DMA mapped data
+> - * @len: Buffer length
+> - * @mflags: MHI transfer flags used for the transfer
+> - */
+> -int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+> -		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags);
+> -
+>  /**
+>   * mhi_queue_buf - Send or receive raw buffers from client device over MHI
+>   *                 channel
+> -- 
+> 2.48.1
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
