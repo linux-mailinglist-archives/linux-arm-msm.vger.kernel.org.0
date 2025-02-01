@@ -1,220 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-46652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C5E9A24A23
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 17:07:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 126B5A24A44
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 17:21:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7EF11885CF1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 16:07:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3B1F77A30DD
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2025 16:20:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F4E41C5490;
-	Sat,  1 Feb 2025 16:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 428A01C3BFC;
+	Sat,  1 Feb 2025 16:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FPOQoCwH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oBUX0caU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AF12F56
-	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Feb 2025 16:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588751C3BE3
+	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Feb 2025 16:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738426049; cv=none; b=r9RC+wiNR5Nu1dpTy/BqZsqaVKSQMqHmGgYX0Kmg2XXg2pbUNYjegEtSMgB2AHtlGwXhsYaKfBOhnRa4LrqJ7oQNidfJBkF3DmW87w68Ca3vrAm+rkeDDNFGidZyrgAoG4hL/nuBA5piYIlLcyesdIH/JAKpGMQV/7ccj+XZahM=
+	t=1738426861; cv=none; b=OsFjdOySfKk4oqeXKWKHD1ApnSD0EMp6aoy63rqjrAu65QDuKvQnt8Se6sbYC/tW2VdjTVPzAVO861CMZjWyLcsOJDbISARXMOGvb/3byQchy+YMpNdiuySrAdcu/BwLcG2BJeJvQax9IjGa5SpSCZU8n3NqY+yylsaehcmzpvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738426049; c=relaxed/simple;
-	bh=g06AyooziM75vKiwG8D4NAwEKMYO1gOo6PVjYKxBdaY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aoe+LwSZKPCPrq3S86AEmUAOLof4u0gu8vtYaZ03NO1UyiWoZCWHQFEFImKrTvVhiXPUCILDZAoPrFxKdnP+IqEZPYyOq6ov6ZiL0hg/Cm2B7Rk3NkxAjhFGWu2xsZ9/gyfQ82HCQL7a9cIJZ/4/fzp6bi7u71mRPzmsy0RZvPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FPOQoCwH; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1738426861; c=relaxed/simple;
+	bh=dLZ8qBz4GQGw/lB7QcQZEOIBYgf0eH+A1saMne8F+Lg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RY5EmXmVA4Q0/qSUptMEDzZClVEvHB9P4gXOG2IRSflqjd58gItLIXiZnTecQAP0QPRVh9edFsfpxoBADs7Hq3smr74A/8VRc9Zy11mn4o6Qa2djsH4szFIiVtLvD/jE6RKwpb+P49qjZxI0i7wkaX0j2RYsnhNFAwO0c+L+OkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oBUX0caU; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2164b662090so60437615ad.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Feb 2025 08:07:26 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53e389d8dc7so2973722e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Feb 2025 08:20:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738426046; x=1739030846; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=eZ3t1aj2mFgpfj7pEzNxUv1YuWtm6+xQW/tflVh/XyA=;
-        b=FPOQoCwHGroKq+62FC7BFJ3iINNFucnQQD6mqCjAWS1H5GszDzRcL9FiKM7fH78jQe
-         RkURyARXnq+rSwjYTmG8i9oJkqC4b9ln06p91mkQqCuQRRDUdNQUQDXQDG3MRX3kOEDc
-         mFcNv0VGqjfCRpM1A3uRfaK2CkPxI6zSENzPgRyOUdsxiNzLtmtHasEHr4yptjaObISy
-         CCxw7sK/PE9KDRfI1SvIkTSDhSynw/BDkd3fsO3jI2b0RpmTrSUsk6TeMFqL7R9B8L4o
-         iPhXeRUmLEDhL9oPPTuBt2YSSIos97QyUIIQ/iM7XbvsPbD/el4Yar+CYBcgib71qPi0
-         oapg==
+        d=linaro.org; s=google; t=1738426857; x=1739031657; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KVrpqivVclrkNJ3DXwl8qw6V7kQmEH15SzRImukJaRc=;
+        b=oBUX0caUNmJSDWxetmAwZg4LhgwNjDUhlFLwuOSILocndto2ri1HC9+hteXBUTekAe
+         Wofqohw1O8qGS2f2sydHV/KOO3I78wPg1SLa5sGeYaCR6HhUc2WoL30zDvPRfnxNgZ1c
+         ih4D3HIDbBuopIltfp5jRzQWK2Axhl6JWmh4gmiYxh8rriltQNnqvAPlBeHclrhAEPPd
+         5Km/CbRd8UWoz1gVx1kB9Zgo04L7U/c2SuLuxTQQTxegHzb51ixS+N+SoWSArYWd/guw
+         8hDSns25da7Yp/ZsY/pCkQzOE+2Pk/bprdOVcUyNgz1KZNNUHsjDq698DNQBlayVS+Ax
+         b8og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738426046; x=1739030846;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eZ3t1aj2mFgpfj7pEzNxUv1YuWtm6+xQW/tflVh/XyA=;
-        b=hMq+WeiZHRogVDfC/iBUp2ks4eKiILp9YT/+tVf8EM1ttbaQw4uBCw8OKPpOVP1Vqa
-         /wn5jhYdWxotXcyyYQQC59m0RGPRyGoQRGcX1dzbnJYyo9wYTdBCVq/olMYRXOM/VZjo
-         wDCabx5paPlwawY+gl8FqlQXfG+2la7fvo0pWpBYg2gNJUHLg5r4+UrXXx+mKsvs2dm3
-         mD66Zo8qWIPxEZtuX4KfFes89EVGZnU5YdBVMSWFAaG4zk+b+FYPcmBpEgCmIPJFsYwA
-         gZVpU3VwjxbOtIwfUDimrRSErtg8ff+xy2fzpueEXYveYxYs8Bd64y/Vjg/p1xcHPAwr
-         t8oA==
-X-Forwarded-Encrypted: i=1; AJvYcCVMpXPjYeFTlCuwR8gZxn5nkGnCdR0T9UY+YstfLYq1swPpcG2iSGKgFp1z8xn6o52SVAqvxaYGxB1NBFyi@vger.kernel.org
-X-Gm-Message-State: AOJu0YyO5fjl3rUFcYzgI67o2BJNLxNTqKPlGXbyMc/uk/4UJEvEM8l4
-	umsxAn1NjY2gS5HDqbxrYnz5SaafCsX46hCutAKUmRSOlahDg1MMdBSIGzdVmAI5Rt8Dk3xYE3Y
-	=
-X-Gm-Gg: ASbGncsPQ9uaeZtmoa6C0rkdGm74WK0ylo2oAzZsgOrXltT+231OrptmBDBJORrivSd
-	Xt9aysuJJdqcl37qI8HdHbmEXBwU6E7Zt+fvWImAnb/kzgT+Uo8SiProHdGKRS7uuE/kNwUKXjP
-	80lvX/NtlUU3I6h+wV5jhGHF9zY1TjmgJ0305UpMHoaxKFo8iap3ACwWQjeHu24EXDr6vOcYlmK
-	DD1NbTyeoXsQlXCRmruEAsUWh+6Iq2ApINsNd5jUGEOBU/aGmD6ppU/ZdPD8QrOBXDHFAi31cra
-	WvLKX5PO9wjpd7NT2T0k09c4Gjw=
-X-Google-Smtp-Source: AGHT+IGKVXS8baXhCPTBe6sl/h9UfWPlgRpWJrmewAX1ZXLow3mZ1mzo+rt7H8F7HI7Zdq7gTkCKAg==
-X-Received: by 2002:a05:6a20:72a0:b0:1e5:a0d8:5a33 with SMTP id adf61e73a8af0-1ed7a62498amr27455365637.18.1738426045945;
-        Sat, 01 Feb 2025 08:07:25 -0800 (PST)
-Received: from thinkpad ([120.56.202.249])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe69cd80esm5193344b3a.121.2025.02.01.08.07.23
+        d=1e100.net; s=20230601; t=1738426857; x=1739031657;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KVrpqivVclrkNJ3DXwl8qw6V7kQmEH15SzRImukJaRc=;
+        b=aEJDUT8/pdNlJl+Enr7EsaLGmp07EopoXY1dpRfUx0hypzPC3wbS08MvL/dWq9QbUx
+         8QoMgVAjr7wSA6jG5JMM5wRlDuoT20mTuC5VY9KXACRlkJeCAujNoz96F7gXAe4DuddH
+         tOx0j1T6A8Jjcw1T5hXVmF7yYpzroplvRY3B99EY5Vv7Fa4gI5TIDEgElIYfWhscCqIg
+         tsXK9MRL1UpujnhkDeA84bacogOxuuvHAmdVUFw73wvmZPvo6VqnkQ8H2MDcplTPY6F3
+         iUr2f5AXv7VPdidR9dGeFtEFzm7IaIA3kV6zP/ztpUSOQ9mK5hiDSpnbr0/O1u+/FcxM
+         KdMA==
+X-Forwarded-Encrypted: i=1; AJvYcCUwaywTudYvF9sIfeJNbzgpYWYAoDZQOAcvN2wwmH0MNNcAvMqRVJu7tcz8auRizIz7H1UPgD3idAOtfUbx@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVdHIQkk1VTLDRLGzriQmeGD2XowrrHUpPVZk/lxwr0SCx9NT+
+	CPex+0xs0Cnsv2r7WNl8Ey2GKc/FAePR9HJgOLuJE3xTi3M2YEDqfjRXYtlDwuOh8h8F3MufqEN
+	B16myE/hS
+X-Gm-Gg: ASbGnctPsSYTByPZxDxzSZeKYLX1jne0Pn4Q+l2+ZCH7DzBpOYpgqR9Hyw27VOZ+4Z0
+	0kWlAD4oJpnu8f0s5b8m//VAc3lZkj8z+Ij66ZViXTkqFU2vaeUs6RWKWLFS9pSs8gm6I200JAt
+	I9bYJ+Uee5+sGubMKakFRvvxV9I/upnlDMyUHJJmUAumCwbU9Iyttfdr1m6i1Ios84wxZn0ApbB
+	eoI5aQ5gSbilbIrHvpbSpCL2zR+6y/z+n5SEQwVZv5b52LPSGg5NnWmhG4MytIgzTBb9/zWPXLr
+	97Ea7VzrZvHa37dLvUhoAnu0RT6QJSE=
+X-Google-Smtp-Source: AGHT+IGzLjvNy5md5KJMNowDOz5fBZmGTDNe2Ls3qAbLpqBRkp4azUKYm8Ap4tW15m6c0DiiSs6j3g==
+X-Received: by 2002:ac2:4d05:0:b0:540:1e17:10eb with SMTP id 2adb3069b0e04-543e4c3a0d9mr4750727e87.48.1738426855892;
+        Sat, 01 Feb 2025 08:20:55 -0800 (PST)
+Received: from umbar.unikie.fi ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543ebdf0fb8sm775308e87.7.2025.02.01.08.20.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Feb 2025 08:07:25 -0800 (PST)
-Date: Sat, 1 Feb 2025 21:37:21 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: linux@treblig.org
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: Remove unused functions
-Message-ID: <20250201160721.bgfyi3cwilvibl74@thinkpad>
-References: <20250127215859.261105-1-linux@treblig.org>
+        Sat, 01 Feb 2025 08:20:54 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: linux-firmware@kernel.org,
+	ath11k@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: ath11k: add device-specific firmware for QCM6490 boards
+Date: Sat,  1 Feb 2025 18:20:52 +0200
+Message-Id: <20250201162052.3858294-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250127215859.261105-1-linux@treblig.org>
 
-On Mon, Jan 27, 2025 at 09:58:59PM +0000, linux@treblig.org wrote:
-> From: "Dr. David Alan Gilbert" <linux@treblig.org>
-> 
+Josh, please give a couple of days to let ath11k and MSM maintainers to ACK or
+NAK this.
 
-Subject prefix should be:
+Compatibility links are added to follow the names in the existing DTs for the
+QCM6490-IDP and Qualcomm RB3 Gen2. If platform maintainers think that breaking
+those is fine, I can drop those link.
 
-'bus: mhi: host:"
+The following changes since commit 722d0d1271dce547df152e5d6db84c139b9f83a7:
 
-> mhi_device_get() and mhi_queue_dma() haven't been used since 2020's
-> commit 189ff97cca53 ("bus: mhi: core: Add support for data transfer")
-> added them.
-> 
-> Remove them.
-> 
-> Note that mhi_queue_dma_sync() is used and has been left.
-> 
-> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+  Merge branch 'robot/pr-0-1738348854' into 'main' (2025-01-31 20:18:00 +0000)
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+are available in the Git repository at:
 
-- Mani
+  https://gitlab.com/lumag/linux-firmware rb3gen2-wpss
 
-> ---
->  drivers/bus/mhi/host/main.c | 19 -------------------
->  drivers/bus/mhi/host/pm.c   | 14 --------------
->  include/linux/mhi.h         | 18 ------------------
->  3 files changed, 51 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 4de75674f193..4c91ffd6ed0e 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -1181,25 +1181,6 @@ int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->  }
->  EXPORT_SYMBOL_GPL(mhi_queue_skb);
->  
-> -int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> -		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags)
-> -{
-> -	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
-> -							     mhi_dev->dl_chan;
-> -	struct mhi_buf_info buf_info = { };
-> -
-> -	buf_info.p_addr = mhi_buf->dma_addr;
-> -	buf_info.cb_buf = mhi_buf;
-> -	buf_info.pre_mapped = true;
-> -	buf_info.len = len;
-> -
-> -	if (unlikely(mhi_chan->pre_alloc))
-> -		return -EINVAL;
-> -
-> -	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
-> -}
-> -EXPORT_SYMBOL_GPL(mhi_queue_dma);
-> -
->  int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->  			struct mhi_buf_info *info, enum mhi_flags flags)
->  {
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index 11c0e751f223..2fb27e6f8f88 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -1296,20 +1296,6 @@ int mhi_force_rddm_mode(struct mhi_controller *mhi_cntrl)
->  }
->  EXPORT_SYMBOL_GPL(mhi_force_rddm_mode);
->  
-> -void mhi_device_get(struct mhi_device *mhi_dev)
-> -{
-> -	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> -
-> -	mhi_dev->dev_wake++;
-> -	read_lock_bh(&mhi_cntrl->pm_lock);
-> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
-> -		mhi_trigger_resume(mhi_cntrl);
-> -
-> -	mhi_cntrl->wake_get(mhi_cntrl, true);
-> -	read_unlock_bh(&mhi_cntrl->pm_lock);
-> -}
-> -EXPORT_SYMBOL_GPL(mhi_device_get);
-> -
->  int mhi_device_get_sync(struct mhi_device *mhi_dev)
->  {
->  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 059dc94d20bb..dd372b0123a6 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -720,12 +720,6 @@ enum mhi_state mhi_get_mhi_state(struct mhi_controller *mhi_cntrl);
->   */
->  void mhi_soc_reset(struct mhi_controller *mhi_cntrl);
->  
-> -/**
-> - * mhi_device_get - Disable device low power mode
-> - * @mhi_dev: Device associated with the channel
-> - */
-> -void mhi_device_get(struct mhi_device *mhi_dev);
-> -
->  /**
->   * mhi_device_get_sync - Disable device low power mode. Synchronously
->   *                       take the controller out of suspended state
-> @@ -776,18 +770,6 @@ int mhi_prepare_for_transfer_autoqueue(struct mhi_device *mhi_dev);
->   */
->  void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev);
->  
-> -/**
-> - * mhi_queue_dma - Send or receive DMA mapped buffers from client device
-> - *                 over MHI channel
-> - * @mhi_dev: Device associated with the channels
-> - * @dir: DMA direction for the channel
-> - * @mhi_buf: Buffer for holding the DMA mapped data
-> - * @len: Buffer length
-> - * @mflags: MHI transfer flags used for the transfer
-> - */
-> -int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> -		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags);
-> -
->  /**
->   * mhi_queue_buf - Send or receive raw buffers from client device over MHI
->   *                 channel
-> -- 
-> 2.48.1
-> 
+for you to fetch changes up to f0e750f347227cb1e0008715a27b2020399b5efc:
 
--- 
-மணிவண்ணன் சதாசிவம்
+  ath11k: add device-specific firmware for QCM6490 boards (2025-02-01 18:10:11 +0200)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (1):
+      ath11k: add device-specific firmware for QCM6490 boards
+
+ WHENCE                                |   7 +++++++
+ ath11k/WCN6750/hw1.0/qcm6490/wpss.mbn | Bin 0 -> 7734064 bytes
+ 2 files changed, 7 insertions(+)
+ create mode 100644 ath11k/WCN6750/hw1.0/qcm6490/wpss.mbn
 
