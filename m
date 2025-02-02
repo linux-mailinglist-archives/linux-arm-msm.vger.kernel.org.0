@@ -1,142 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-46680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C491A24EAD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 15:38:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 80905A25065
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 23:46:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DFD3D162B64
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 14:38:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8645D163A36
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 22:46:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 124D41FAC26;
-	Sun,  2 Feb 2025 14:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFDF62147F7;
+	Sun,  2 Feb 2025 22:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MRsQeMtS"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="fuN52ii/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03031D7E57;
-	Sun,  2 Feb 2025 14:38:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0262D1FBEAD
+	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Feb 2025 22:46:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738507119; cv=none; b=SgAXcaJocbZKbx85MAAEKeKz0FWwhDZhsqMTad//LSLyKuKCkjxLhtvjzzeZ39XvjYhXVsL3hmME7kBfrrM2SRJ3x4eVJdfg/Dvhrz1TjKtlGotG9jOajkZEoZ78prcC6+wQ5A19R8vbfG/asJD5p1s5k1gIq8XMC3Gxi+VOl88=
+	t=1738536373; cv=none; b=rz3aNmsQDjz0m/ZeRU8pGQ0I4eY9/Vb4qf9NMtPXA6OM9DzwTPW9ykHYJvDg4YL0IDmnnCIp4orQBb0B3hVdFtUJfrHcaJP4tFlvJfStEnzxI5F7XMXoQdKw6O8rgtskncOB6hsI6JFZgiU4WcPfsShWTZSne2VD4yNSsevUF8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738507119; c=relaxed/simple;
-	bh=VC3TvpTS3OgA37PYjJzVzTBE9twfsQyPycmL+dK3wBA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=GKdxNFHGJ/l43t87FrMMKRt0s5bVBSdU5xVkm0xM0bkqh175Cd6G1Tnz3PIDxHVqkjjjs/LUobni663iSjTBBD17lvPaRPe6Sg6Uns4irmMSjKkOhIlxJfW5ePfTqOwXLjwPvZXNfjHB6PlQp2rZuwpsVbrRVIzithm4iqdUXNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MRsQeMtS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259F0C4CED1;
-	Sun,  2 Feb 2025 14:38:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738507118;
-	bh=VC3TvpTS3OgA37PYjJzVzTBE9twfsQyPycmL+dK3wBA=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=MRsQeMtSY+inEX470+z190fXTmCy/XJsG9DcJGD9GGaXRAdKyo5aGjZg+Bvj6nx2y
-	 mFm4a0d5H6HlVKyMcBdHFcOjimNMZNMgHop2pBWrIAdGYalK8gv0mxzVUnSAi/2QEV
-	 sXpLxitPs4qTr129yOmb3/CwdHIsUaWlyOJLyDUySYvPDVbuMcqptZJhpl1W0JEw+5
-	 kr0yFrrUlehxg04AD29TB3GBc5d3BbV9f0wejwzZAtp3Yt2HLLB2O4u0q/Tlk1XtAH
-	 LoYPMyq/MmiI945iT5mmtJcg0DNOdUIz1ixwZSseZuYpAZWld1Ff2QM2LOxG/cMExC
-	 XBPhaMKS6Bcyw==
-Message-ID: <4e1c3a64-5c66-4312-b96a-334eac933684@kernel.org>
-Date: Sun, 2 Feb 2025 15:38:30 +0100
+	s=arc-20240116; t=1738536373; c=relaxed/simple;
+	bh=AgL8Vh4o01HqqDUJ+cWv0Odl6D4wHVO6sMsIgzd0wkE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=M93yiENf3NJKKMq5cBcoPjaGM9RFqtgIZxoihr69A+RrYtcE4yhTyOz32KQoMtwhAEkmgX+TSys5TAmSMOaXz4sZQMypC4jYkti/8JGg4mgXpimh6ea/J9jyJLJsqHW2GPHXQGkKLJts9rf5jGgyJnvJl5K2PoOD3qnnyOS4uys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=fuN52ii/; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-436ce2ab251so25648645e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Feb 2025 14:46:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1738536369; x=1739141169; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YMxp+N8AKPgVkLLt+tNd5Z5gGgVjKJ6HI6C9QfMvPDY=;
+        b=fuN52ii/hTOy3qleFmXOZlsz7f5wuimSH6LILVnaC6e1QCacxvOPpY++PV6hls7bLk
+         Q32pjDUBgMdoW/Pr8hqLHyHVFhBO7co62VBmpxuvLULCK8XRV6Y/ijrB5NnI5eTLX1hu
+         5MWFVXJE0meVofQLwE4e3o2D3rGrWqKOIWB0+h+DV0jFMGvaVeAs1pCf9YcNJj4xB5pp
+         W4kpnBgEns5tslGl6WLlwZwKh/kDNoJ3CLszjCKVjgz+LDyXmvA/v3ayCVWNs33KukfA
+         0PTovCGWx2H1v8//xLB70WqV7pqNzq2386ORQRIX9mkSB/iaNDWmxis6hBehMRrDw0FF
+         pUTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738536369; x=1739141169;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YMxp+N8AKPgVkLLt+tNd5Z5gGgVjKJ6HI6C9QfMvPDY=;
+        b=okjCcEsa4wiZTOYT9lCfdzm8c7xnqvDaVc6YRxMlWc/ycJUCzZe2tu8qdzWZ9IaAb4
+         yg38R3docutlq85HXM4/DSANNQdSjjQ8dZ7n87dhGFszU/BOiJjDftxORREhbV549in6
+         qPywoOrnErlTOuWW5/RYSDVfu4lUPxaOMatMloF0bzbn7gGwFk50tG0jPgAB/09oXOB8
+         wDL7Hc4kkZcC9TVJyx6XJ07uWyWaXXUG/Iohh9svGSJcjfkwxHGUYpRIH4YdBXVtZ+0N
+         engTfuXClaUYWs94PDJJnxRTYBKfdCcXIW2mWmKSNp/LFBmP3lkiHy3z5/JPRD1Lj/8v
+         RpBg==
+X-Forwarded-Encrypted: i=1; AJvYcCXh2+KlDyycHAQHK2F/9FN6X4zxU1hPpMU5mTmtAm+Vmswj7qryqpzm7TyT9zAxcqsglxIyPMQjcZ5oip+D@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRl2p4eUzdRc+qzQv6MMnpikdDjO46NzMyrmLjUy9Um7ilD7Jj
+	1i1vpzEvjoniRZpBFLSoPk3tAUBqsDlNoS1XQC77R7YOjRoS242dchWhD+y9VBY=
+X-Gm-Gg: ASbGnctj/+Rvsz4dKt0Fetun88agwHrFmXOFiAM5V7EtTLFT0yV02X5vx0r+p/ZR9AU
+	bvBM51dvDL6CZZUh8R1/8BOj4I7NJXucX34kiKCwpcHgAZUmbim9MkZy8+GZYatr6xCx6RNtg22
+	StM80OEmKOkEQNbMaJgHvECHZtmIE0yayUwtLodARHErJAfvvYrv4RLq38bxAFvyNb+AFUBzO3f
+	+rPNq0RtBw/LqN7SIzvrD7ZGf5wKIePjfMa2oRCnypCKiaxUenvLDGc2CZv9rfu6J/rgK/+Ghet
+	znMVlQFnBfE/yje/QCV9NvV2Ym0=
+X-Google-Smtp-Source: AGHT+IGcFZzU17tuXtMYl8AEybTSN0illAVTYf2xaoCzTK9YBwUnEwlsFBobc6i+n1sl9bjYkSI4Bw==
+X-Received: by 2002:a05:600c:3d9b:b0:434:ff08:202b with SMTP id 5b1f17b1804b1-438dc3c360dmr159424395e9.12.1738536368984;
+        Sun, 02 Feb 2025 14:46:08 -0800 (PST)
+Received: from [100.64.0.4] ([2a02:a03f:6bc3:6b01:62c7:350e:556e:d0f0])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc80e61sm170849605e9.34.2025.02.02.14.46.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Feb 2025 14:46:08 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/2] Enable panel and GPU on Fairphone 5
+Date: Sun, 02 Feb 2025 23:45:50 +0100
+Message-Id: <20250202-fp5-display-v1-0-f52bf546e38f@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: clock: ipq5424-apss-clk: Add ipq5424
- apss clock controller
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Sricharan R <quic_srichara@quicinc.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
- rafael@kernel.org, viresh.kumar@linaro.org, ilia.lin@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20250127093128.2611247-1-quic_srichara@quicinc.com>
- <20250127093128.2611247-2-quic_srichara@quicinc.com>
- <0c26af56-ed7a-4de8-ac47-7447298b87f0@kernel.org>
- <ee608de8-ad3c-4cb4-994d-fc3cf930e29c@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <ee608de8-ad3c-4cb4-994d-fc3cf930e29c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJ71n2cC/x3MTQqAIBBA4avIrBvwBwm6SrQQHWsgTBSiEO+et
+ PwW7zWoVJgqLKJBoZsrX2lATQL84dJOyGEYtNRWKm0wZouBaz7di7P15EnLYCjCKHKhyM9/W7f
+ eP08/RqZdAAAA
+X-Change-ID: 20250123-fp5-display-75cece20d3ef
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+X-Mailer: b4 0.14.2
 
-On 01/02/2025 16:21, Konrad Dybcio wrote:
-> On 28.01.2025 8:34 AM, Krzysztof Kozlowski wrote:
->> On 27/01/2025 10:31, Sricharan R wrote:
->>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>
->>> The CPU core in ipq5424 is clocked by a huayra PLL with RCG support.
->>> The RCG and PLL have a separate register space from the GCC.
->>> Also the L3 cache has a separate pll and needs to be scaled along
->>> with the CPU.
->>>
->>> Co-developed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>
->> Considering that there were multiple conflicting patches coming from
->> Qualcomm around IPQ SoCs and that we are in the merge window, I will
->> skip this patch.
-> 
-> I think you confused this with something else, I don't see any other IPQ
-> clock patches
+Now since upstream DPU driver can use 1:1:1 DSC topology, we can finally
+enable the panel and GPU on Fairphone 5.
 
-The conflicts were not about clocks, but I just don't want to spend my
-time to figure out whether clocks also have conflicting work or not.
+Depends on https://lore.kernel.org/linux-arm-msm/20250122-dpu-111-topology-v2-1-505e95964af9@somainline.org/
+
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Konrad Dybcio (1):
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Enable the GPU
+
+Luca Weiss (1):
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Enable display
+
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 102 ++++++++++++++++++++-
+ 1 file changed, 97 insertions(+), 5 deletions(-)
+---
+base-commit: adff68376f7a6872be00d87720764b30f3ad1059
+change-id: 20250123-fp5-display-75cece20d3ef
 
 Best regards,
-Krzysztof
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
 
