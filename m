@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-46678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4D88A24E8A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 15:19:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E94ACA24EAB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 15:36:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A9671615FD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 14:19:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A53533A4A7C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 14:36:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF2031F8F02;
-	Sun,  2 Feb 2025 14:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F9CC1FA85A;
+	Sun,  2 Feb 2025 14:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EO+9BlT2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fQGx17qj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2301F8AC6;
-	Sun,  2 Feb 2025 14:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFCE1D7E57;
+	Sun,  2 Feb 2025 14:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738505966; cv=none; b=kWxB+SPg/t5qu74r2s8sJfOnrWI1BOv5fRNf0j0A2lmPO9rtEywdshnEyIYPF04crAGd5aATKrSyKGdGJvYSnVG6EzUPYOiWEhxHTYRPUTsQ4/18m4F3rHoUVpUwQJI2KYlEVwbv88tp6s5ZIzQOCwxYEknWb+83nPyAP9Rm050=
+	t=1738506965; cv=none; b=f53k635cHFwMPW5EZcfk4tnnJevOshP2s02sTDO+gh6MFPU9P3sAn/u5tzhv+RS7PtEuHWvCLUFZLRPUB3dYD0bTzTbKwFlvR6wfpL0GrFwitIP1ljZRBgM3wq/86izUcjZ+PjkyO4erhY9gVB9GbTaieAuf06MtFrTryI0tmsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738505966; c=relaxed/simple;
-	bh=uK0X5J5lyezZDHKxlxotvwtoEJskgRWw9NWZ4i78AU8=;
+	s=arc-20240116; t=1738506965; c=relaxed/simple;
+	bh=RoM2DrcAH3qY5/eJW2z5B5ULG2qPQmb3lF34oPA5T+U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n8OQATGLmhQMopfGLxACUyuwY5w0r6rT3TSH8skRCq1sru76/idY+cyi/IrzMvSbex8thPo+WomqrHFNiT6/NjGm8WlUc243hTCL3FGCuFBgxsw7JLEvzP+lb/b/L/bI+nGm9fiTp0rYRKhrJ4cb9QOwx3w/iCGp6fWR3ss9F1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EO+9BlT2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6B5C4CED1;
-	Sun,  2 Feb 2025 14:19:21 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ugJrZqguW5nlwqTREFiqJ9yj7Kg/GSkZzbXIDgRmSbZK7yxL2Q5khO9KXuh9a2nG8GwUM98dllFQzgc5OAjQayXpDI/ArdxYx6I9dErLzRfOS9VMzGXcT5d6HHCJPHPFnIHitXJtTCa2wXeW+mVRafhldyfQgWryX2I7K12NYrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fQGx17qj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3553DC4CED1;
+	Sun,  2 Feb 2025 14:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738505966;
-	bh=uK0X5J5lyezZDHKxlxotvwtoEJskgRWw9NWZ4i78AU8=;
+	s=k20201202; t=1738506965;
+	bh=RoM2DrcAH3qY5/eJW2z5B5ULG2qPQmb3lF34oPA5T+U=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EO+9BlT2QlyaUUnFR9NfMrNxp4qUPkL4kRK9+fI8AzO7cyISSmdx1udl7aG6aS5Qm
-	 YB/s7CYIAcNnvlCp4AOo4raAHOjmDigW+Dc2weV1+Egmfi8OQgfECQhmUsN0vC4z/V
-	 9hB7JLUGSBnAyjCpZ8v+HAcLKtlOdMtlD6Tnz07T+9bMrGJu3GK/nJLdPOIZvatPQN
-	 fA51mjoc9gZ3TemIc2nng4MmdwfxK86iooSrPBjsbDEt4WfzexbMNSGXdqjxIX45kh
-	 Dtw4sjHX3rsLWD9QY67CfmwJ43ewpYYos8PQWCpKAcqo9qHS+1UPPLAzYPqunMw7Pn
-	 xGftPJF+4kscw==
-Message-ID: <5d1154f8-785d-4249-9781-938e9cc99167@kernel.org>
-Date: Sun, 2 Feb 2025 15:19:19 +0100
+	b=fQGx17qjCzW/Uz1ibc6CHAP1TcX2CSrUbk2ytFwvfP7hwG6zYTfPaT+rjwUOemGIt
+	 rlM+IG9ZbcRD8xg9ZNCdTI/tlLANj1i8hfIbSl/TPCshruFERNDzcnn5etQf5r1X4y
+	 i6GH6g4jmFY6uCLsimIrQb4/fYkwpNLIe31KySySBbKMsqmwwxU8wWnFRHPKKk5eAN
+	 MMpb6YTFbuPSmP6Ys4zZW3Xv927cofv3PbiHzgBlcGUZ2whXVTkZ9bjb5JdlsrKTKj
+	 cfXDVbacjDWbfUhn5Rw/uQYMkEITQdAWYXlhYHv+QfrfAgOYrIrjyoEUwwetpYEH81
+	 gKTqWHbCSQvhQ==
+Message-ID: <0ec25b21-9a1d-4c4a-ae52-6bd1c3018f4c@kernel.org>
+Date: Sun, 2 Feb 2025 15:35:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v6 0/3] platform: arm64: Huawei Matebook E Go
- embedded controller
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: andersson@kernel.org, bryan.odonoghue@linaro.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org, hdegoede@redhat.com,
- ilpo.jarvinen@linux.intel.com, jdelvare@suse.com, konradybcio@kernel.org,
- krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux@roeck-us.net, platform-driver-x86@vger.kernel.org, robh@kernel.org
-References: <33f8a68f-46d8-472f-8061-52800e5bd014@kernel.org>
- <20250201073838.3278-1-mitltlatltl@gmail.com>
+Subject: Re: [PATCH 2/6] dt-bindings: phy: qcom,qmp-pcie: Drop reset number
+ constraints
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
+ <20250125-topic-x1p4_dts-v1-2-02659a08b044@oss.qualcomm.com>
+ <20250127-hungry-bald-groundhog-4f7d4b@krzk-bin>
+ <96c4af07-6adb-470a-8cbf-784bb544ff76@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,45 +110,34 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250201073838.3278-1-mitltlatltl@gmail.com>
+In-Reply-To: <96c4af07-6adb-470a-8cbf-784bb544ff76@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 01/02/2025 08:38, Pengyu Luo wrote:
-> On Sat, Feb 1, 2025 at 5:20 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->> On 31/01/2025 10:21, Pengyu Luo wrote:
->>> This adds binding, drivers and the DT support for the Huawei Matebook E Go
->>> (sc8280xp-based) Embedded Controller which is also found in Huawei Matebook
->>> E Go LTE (sc8180x-based), but I don't have the sc8180x one to perform
->>> tests, so this series enable support for sc8280xp variant only, this series
->>> provides the following features:
+On 01/02/2025 16:56, Konrad Dybcio wrote:
+> On 27.01.2025 9:26 AM, Krzysztof Kozlowski wrote:
+>> On Sat, Jan 25, 2025 at 04:31:18AM +0100, Konrad Dybcio wrote:
+>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 >>>
->>> - battery and charger information report
->>> - charging thresholds control
->>> - FN lock (An alternative method)
->>> - LID switch detection
->>> - Temperature sensors
->>> - USB Type-C altmode
->>> - USB Type-C PD(high power)
+>>> (Almost?) all QMP PHYs come with both a "full reset" ("phy") and a
+>>> "retain certain registers" one ("phy_nocsr").
 >>>
+>>> Drop the maxItems=1 constraint for resets and reset_names as we go
+>>> ahead and straighten out the DT usage. After that's done (which
+>>> will involve modifying some clock drivers etc.), we may set
+>>> *min*Items to 2, bar some possible exceptions.
 >>
->> Why are you resending?
->>
->> Previous version was only week ago and minimal time is two weeks. Plus
->> its merge window, so this resend is unjustified.
+>> You drop minItems now, so that's a bit confusing. If all devices have
+>> two resets, just change in top-level resets the minItems -> 2 now and
+>> mention that it does not affect the ABI, because Linux will support
+>> missing reset and it describes the hardware more accurately.
 > 
-> Sorry, I am still new to the process, I may have misunderstood something.
-> I sent it because I had got at leaset one reviewed tag for every patch
-> from the corresponding subsystem maintainer. Can I expect that there would
-> be no reviewing? All I need to do is wait for it to be applied.
+> This will generate a ton of warnings and resolving them may take an
+> additional cycle, as I'd need to get things merged through clk too,
+> so I thought this is a good transitional solution
 
-
-and when I gave you the review, what did I write? Long instruction what
-to do:
-
-"However, there's no
-need to repost patches *only* to add the tags."
-
+I still don't understand why existing devices now get 1 reset, while
+previously they had minItems:2.
 
 Best regards,
 Krzysztof
