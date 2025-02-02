@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-46679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E94ACA24EAB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 15:36:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C491A24EAD
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 15:38:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A53533A4A7C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 14:36:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DFD3D162B64
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 14:38:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F9CC1FA85A;
-	Sun,  2 Feb 2025 14:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 124D41FAC26;
+	Sun,  2 Feb 2025 14:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fQGx17qj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MRsQeMtS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFCE1D7E57;
-	Sun,  2 Feb 2025 14:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03031D7E57;
+	Sun,  2 Feb 2025 14:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738506965; cv=none; b=f53k635cHFwMPW5EZcfk4tnnJevOshP2s02sTDO+gh6MFPU9P3sAn/u5tzhv+RS7PtEuHWvCLUFZLRPUB3dYD0bTzTbKwFlvR6wfpL0GrFwitIP1ljZRBgM3wq/86izUcjZ+PjkyO4erhY9gVB9GbTaieAuf06MtFrTryI0tmsQ=
+	t=1738507119; cv=none; b=SgAXcaJocbZKbx85MAAEKeKz0FWwhDZhsqMTad//LSLyKuKCkjxLhtvjzzeZ39XvjYhXVsL3hmME7kBfrrM2SRJ3x4eVJdfg/Dvhrz1TjKtlGotG9jOajkZEoZ78prcC6+wQ5A19R8vbfG/asJD5p1s5k1gIq8XMC3Gxi+VOl88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738506965; c=relaxed/simple;
-	bh=RoM2DrcAH3qY5/eJW2z5B5ULG2qPQmb3lF34oPA5T+U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ugJrZqguW5nlwqTREFiqJ9yj7Kg/GSkZzbXIDgRmSbZK7yxL2Q5khO9KXuh9a2nG8GwUM98dllFQzgc5OAjQayXpDI/ArdxYx6I9dErLzRfOS9VMzGXcT5d6HHCJPHPFnIHitXJtTCa2wXeW+mVRafhldyfQgWryX2I7K12NYrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fQGx17qj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3553DC4CED1;
-	Sun,  2 Feb 2025 14:36:01 +0000 (UTC)
+	s=arc-20240116; t=1738507119; c=relaxed/simple;
+	bh=VC3TvpTS3OgA37PYjJzVzTBE9twfsQyPycmL+dK3wBA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=GKdxNFHGJ/l43t87FrMMKRt0s5bVBSdU5xVkm0xM0bkqh175Cd6G1Tnz3PIDxHVqkjjjs/LUobni663iSjTBBD17lvPaRPe6Sg6Uns4irmMSjKkOhIlxJfW5ePfTqOwXLjwPvZXNfjHB6PlQp2rZuwpsVbrRVIzithm4iqdUXNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MRsQeMtS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259F0C4CED1;
+	Sun,  2 Feb 2025 14:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738506965;
-	bh=RoM2DrcAH3qY5/eJW2z5B5ULG2qPQmb3lF34oPA5T+U=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fQGx17qjCzW/Uz1ibc6CHAP1TcX2CSrUbk2ytFwvfP7hwG6zYTfPaT+rjwUOemGIt
-	 rlM+IG9ZbcRD8xg9ZNCdTI/tlLANj1i8hfIbSl/TPCshruFERNDzcnn5etQf5r1X4y
-	 i6GH6g4jmFY6uCLsimIrQb4/fYkwpNLIe31KySySBbKMsqmwwxU8wWnFRHPKKk5eAN
-	 MMpb6YTFbuPSmP6Ys4zZW3Xv927cofv3PbiHzgBlcGUZ2whXVTkZ9bjb5JdlsrKTKj
-	 cfXDVbacjDWbfUhn5Rw/uQYMkEITQdAWYXlhYHv+QfrfAgOYrIrjyoEUwwetpYEH81
-	 gKTqWHbCSQvhQ==
-Message-ID: <0ec25b21-9a1d-4c4a-ae52-6bd1c3018f4c@kernel.org>
-Date: Sun, 2 Feb 2025 15:35:59 +0100
+	s=k20201202; t=1738507118;
+	bh=VC3TvpTS3OgA37PYjJzVzTBE9twfsQyPycmL+dK3wBA=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=MRsQeMtSY+inEX470+z190fXTmCy/XJsG9DcJGD9GGaXRAdKyo5aGjZg+Bvj6nx2y
+	 mFm4a0d5H6HlVKyMcBdHFcOjimNMZNMgHop2pBWrIAdGYalK8gv0mxzVUnSAi/2QEV
+	 sXpLxitPs4qTr129yOmb3/CwdHIsUaWlyOJLyDUySYvPDVbuMcqptZJhpl1W0JEw+5
+	 kr0yFrrUlehxg04AD29TB3GBc5d3BbV9f0wejwzZAtp3Yt2HLLB2O4u0q/Tlk1XtAH
+	 LoYPMyq/MmiI945iT5mmtJcg0DNOdUIz1ixwZSseZuYpAZWld1Ff2QM2LOxG/cMExC
+	 XBPhaMKS6Bcyw==
+Message-ID: <4e1c3a64-5c66-4312-b96a-334eac933684@kernel.org>
+Date: Sun, 2 Feb 2025 15:38:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] dt-bindings: phy: qcom,qmp-pcie: Drop reset number
- constraints
+Subject: Re: [PATCH 1/4] dt-bindings: clock: ipq5424-apss-clk: Add ipq5424
+ apss clock controller
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
- <20250125-topic-x1p4_dts-v1-2-02659a08b044@oss.qualcomm.com>
- <20250127-hungry-bald-groundhog-4f7d4b@krzk-bin>
- <96c4af07-6adb-470a-8cbf-784bb544ff76@oss.qualcomm.com>
+ Sricharan R <quic_srichara@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
+ rafael@kernel.org, viresh.kumar@linaro.org, ilia.lin@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <20250127093128.2611247-1-quic_srichara@quicinc.com>
+ <20250127093128.2611247-2-quic_srichara@quicinc.com>
+ <0c26af56-ed7a-4de8-ac47-7447298b87f0@kernel.org>
+ <ee608de8-ad3c-4cb4-994d-fc3cf930e29c@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,34 +109,33 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <96c4af07-6adb-470a-8cbf-784bb544ff76@oss.qualcomm.com>
+In-Reply-To: <ee608de8-ad3c-4cb4-994d-fc3cf930e29c@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/02/2025 16:56, Konrad Dybcio wrote:
-> On 27.01.2025 9:26 AM, Krzysztof Kozlowski wrote:
->> On Sat, Jan 25, 2025 at 04:31:18AM +0100, Konrad Dybcio wrote:
->>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On 01/02/2025 16:21, Konrad Dybcio wrote:
+> On 28.01.2025 8:34 AM, Krzysztof Kozlowski wrote:
+>> On 27/01/2025 10:31, Sricharan R wrote:
+>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 >>>
->>> (Almost?) all QMP PHYs come with both a "full reset" ("phy") and a
->>> "retain certain registers" one ("phy_nocsr").
+>>> The CPU core in ipq5424 is clocked by a huayra PLL with RCG support.
+>>> The RCG and PLL have a separate register space from the GCC.
+>>> Also the L3 cache has a separate pll and needs to be scaled along
+>>> with the CPU.
 >>>
->>> Drop the maxItems=1 constraint for resets and reset_names as we go
->>> ahead and straighten out the DT usage. After that's done (which
->>> will involve modifying some clock drivers etc.), we may set
->>> *min*Items to 2, bar some possible exceptions.
+>>> Co-developed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 >>
->> You drop minItems now, so that's a bit confusing. If all devices have
->> two resets, just change in top-level resets the minItems -> 2 now and
->> mention that it does not affect the ABI, because Linux will support
->> missing reset and it describes the hardware more accurately.
+>> Considering that there were multiple conflicting patches coming from
+>> Qualcomm around IPQ SoCs and that we are in the merge window, I will
+>> skip this patch.
 > 
-> This will generate a ton of warnings and resolving them may take an
-> additional cycle, as I'd need to get things merged through clk too,
-> so I thought this is a good transitional solution
+> I think you confused this with something else, I don't see any other IPQ
+> clock patches
 
-I still don't understand why existing devices now get 1 reset, while
-previously they had minItems:2.
+The conflicts were not about clocks, but I just don't want to spend my
+time to figure out whether clocks also have conflicting work or not.
 
 Best regards,
 Krzysztof
