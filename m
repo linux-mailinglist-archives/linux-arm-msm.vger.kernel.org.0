@@ -1,245 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-46813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C0EFA261D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 18:59:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 701DEA2628C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 19:33:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CD14F7A10C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 17:58:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7F523A79DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 18:33:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59B4B20CCD3;
-	Mon,  3 Feb 2025 17:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EF5420E716;
+	Mon,  3 Feb 2025 18:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h08rPa1e"
+	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="DeWC6pRo";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="BC98GYkI";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="ajmjCBND"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fallback1.i.mail.ru (fallback1.i.mail.ru [79.137.243.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D6920A5EA
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 17:58:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6418B20E704;
+	Mon,  3 Feb 2025 18:32:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738605542; cv=none; b=e/qzZKeufWTD7twg4U6YaFiRJKHwuhpf+VoKS0eRvPmp9C/9NH79FfBHx0wDP5B1BEjgB7hQqRtXxvUOagUkoSAiE7hxJZDKpNTehqHPEMT+qsr0AVlnF1yMu3D1RJ6cFUHWx8zQKsl/z2rahVlLECNMyj8vERBopG6ukbI6bmk=
+	t=1738607552; cv=none; b=c7tLAzkAISik/1ltjhpn/p0PlNe8rx8fo/+x738NcdALZGwbUO+8dK/vyh+KvRiT41PjGRuPAgrhk5oxJBMVLuyR7WM+DFOfQhNSWtP9iTjdXAjlSLATgL9BckJBYN/L2Vyn334yuOkTfA+AppFrB77HJ6RUOJtkuefTR3oDpeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738605542; c=relaxed/simple;
-	bh=oSsmlzbI68ndLgngvT3v0KlCPiyIo0B8T0CfGknne/w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JKubcCxuRBEk46qV/0839/UA9lZUx3U/GZP6k8NQGLv0caq3t0/p4x56u4ktH6KNvewT149HcL6IYmu6AJejmPDnNNbJKiA9eVk+S1wrCyxOW+bjUELQXpboyokNZ9nKI0GICGxSHUFbriDDb+VgmFvapLvWE7DF3jqQC3uALfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h08rPa1e; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53ff1f7caaeso4632781e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 09:58:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738605538; x=1739210338; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Stn8iOzRg0pl2xk4Aml3qZzGpyJrcj7qEXXMSflHudU=;
-        b=h08rPa1er59bYvxp1eP0DHO8QlJQina4be6FGAX1/gh0X5CI42YtFEANAfOz/auM0k
-         sr0lh8rjHh49MPMdBMBuxhCEZbpHKlI96lZ+6TODxX1sBzmdtp1sMCnxtUhidjnK++Lp
-         deWE7FyE3OW0SUoT6/gN4FXJAbkVxlHvdKXeObbTh8udl9PN2KEYHHHW9Qcht0K3DILx
-         viKxxFsHi/LkT3+6CJYwG2B7R1320qD7z0afrMUrbrmdup9ifzgwme14tRHx9RfzvxYb
-         uWr1+H9tv3FmmRQ3tLJQKhLjz1R6TCjIq6hzh8SDhIX/qD0qBD3rDOL3hIPgBlMzNFE3
-         fc0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738605538; x=1739210338;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Stn8iOzRg0pl2xk4Aml3qZzGpyJrcj7qEXXMSflHudU=;
-        b=U94Fe+dZKgthxaDBmHC3zqkqhtd1Zc0ALKxP8HebYvLmEpbkKOD86g5YG5HeQE46ry
-         aFZGWgd/B8nJLBL8X00h8JOw9opZj+q+RYdpuvqAvX1Fvr0xWTW/CMgno5LwntqPlvX0
-         Q4//jAR2Gtuw5rfn+WH9sCrw+7yDiFktCpoBN3+508XXVS32UAyw5iXdzKDgHxo+e6X+
-         2ds4s8KzvywLu/ypxEmGLteXpvGSZI6t/LfOdR3pav4AVSt25VMyZ5ev4UPFg9pDmGip
-         BYYZoZEUjP/b+2yddDg2NkOHlks443dsoHw+6hfOpS0vEHK+K02ezrAyRRu2JNx6NAxH
-         OBcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU+LI4Acvc+1QdlO7KRV2QRUnEq+q3krznm/w5IEFs+PxsOXKwOfEdkdA+w8aoj/JRZhY6Xq4qEHKrTL5oD@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHsoGY+BU0A8jV8MqpYgYrrQ0WL29FBMSsIi6Lc2m7JRgziyKj
-	wr038ymHDJ4lcq8WyYs3WbTXKHoBmU5Kq07Ve+KRVqEWZUZSBrmPUtn8kifx2CU=
-X-Gm-Gg: ASbGncvyagAyaNu6AMkSoqWUHMOqJmeaG2T1RpC2O74M+w1QVyK0KQNg0XZBwVwrj5Y
-	/kZtzIKo7r0LDV43aRl/HTuEVp3Fj/kHH4JNMAY/wt7fKLbjDtcSKLCq5JuxvWY83mRZYgAQlfP
-	IDqrmD31IFSvwXke6OZDw7YCTmMub/buHvJRvRbb3Sb83Slxu3UF7jPVwCv8DGUBe+I3W09CV7G
-	9ukgVogE17IZk0pS9cy0n9snhl7jNqhVu302K+k/f6yg2VMGrUALpIofYWxD/cGXbpfBQ2CsF1s
-	ciZy/iYj6nxa+drzr6xuJX2YvoXJ+ZTm1TAwYd3F3vHKauM9xrPgcYpugmu0CXDgDGLC+tA=
-X-Google-Smtp-Source: AGHT+IH1q3ZO9LNsyTVW4NPTdU//0Fx/rXlFPloiEN1WTFjn/TPZDusif7LVG5SOUF6QcwTmsZ4I/w==
-X-Received: by 2002:ac2:41d7:0:b0:542:6f2a:946a with SMTP id 2adb3069b0e04-543e4be034cmr5391500e87.6.1738605537977;
-        Mon, 03 Feb 2025 09:58:57 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543ebeb06d1sm1367606e87.121.2025.02.03.09.58.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 09:58:57 -0800 (PST)
-Date: Mon, 3 Feb 2025 19:58:55 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] drm/msm/dsi/phy: Define PHY_CMN_CLK_CFG[01]
- bitfields and simplify saving
-Message-ID: <hhedgfdbqpbv7s6iegtoztmznqdqn7bdumik7dm5xtsfsj6uwp@3jz422fhchcn>
-References: <20250203-drm-msm-phy-pll-cfg-reg-v2-0-862b136c5d22@linaro.org>
- <20250203-drm-msm-phy-pll-cfg-reg-v2-4-862b136c5d22@linaro.org>
+	s=arc-20240116; t=1738607552; c=relaxed/simple;
+	bh=gbnqMsjBbar7L5IkcxQWuIBrW21wwM7jzvysuJgWk5s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UgjTwWJtZhmuMQZEguEKwL2PdPti5uk6XNCcuXS+jmvgr4uG37+914fhzP9v64P74Rxb7Rv6ReeAetDrNzDf1L8zbWZeoV2lBtARvxKIj/weYogk7DUDPj9n+epDHQocdPdG0Lwjd7Ec9pel05XAqo45fdEj+AfQA1IvA5dcz2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=DeWC6pRo; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=BC98GYkI; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=ajmjCBND; arc=none smtp.client-ip=79.137.243.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=D7JRFzFEare/oFNaQJiakwJpq4E0pQkd2/w9tDmKTqw=;
+	t=1738607549;x=1738697549; 
+	b=DeWC6pRofGD7d5nfFu7rCK4WFWL/dWaMAjBsECvOICTjKWtchQUdpIbLlqjUZXEFXpLqTt+mpvHcb8Q4+wlO5q93jtm3EpAbmDs0QSQ7yTb2WEYvd7Zit6TG8aKsbGQ8UNuLjHV++oPy5FNG3H+qY3jEf4iN478JGhIGP7ko5Ao=;
+Received: from [10.113.26.107] (port=52868 helo=send262.i.mail.ru)
+	by fallback1.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1tf0yU-000zpC-CA; Mon, 03 Feb 2025 21:15:10 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
+	Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=D7JRFzFEare/oFNaQJiakwJpq4E0pQkd2/w9tDmKTqw=; t=1738606510; x=1738696510; 
+	b=BC98GYkIhf7SHAed8xAJquTrfQJUoaDxnqsC94m0fZu7esO3T4eRUmKRCEKFdX8+g5EKnCy/aNS
+	mQZtO4VYTUzHLKdW4eD3ixU9xUcxr5iB39YAB4RqyWTYNKCNvlEwbQheu72PJCQ7kPMoLvEZgdO1p
+	TGIlUsYIrBLbDbsi3RI=;
+Received: from [10.113.188.174] (port=48258 helo=send264.i.mail.ru)
+	by exim-fallback-5fbdbdcb77-7lmmm with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1tf0yL-00000000FA4-3QGz; Mon, 03 Feb 2025 21:15:02 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
+	Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
+	References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
+	List-Owner:List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=D7JRFzFEare/oFNaQJiakwJpq4E0pQkd2/w9tDmKTqw=; t=1738606501; x=1738696501; 
+	b=ajmjCBNDH9Og/zmCjKzP+Pl//2SDrwqtFJc1aaPH6tJK4VD9GJCnyUkWOUGfmErl2qEjVtY/Be5
+	RuZJhT5zY0mbJPqhtj3l+i6aImyEhP+UZt7gQU/yT/2jpADXv8VpzqIJK2Dyye3cype4NOstSFVOj
+	zMZO1rcEpPg+dqWAgEQ=;
+Received: by exim-smtp-6d97ff8cf4-crh4d with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1tf0y4-00000000H1P-2H7S; Mon, 03 Feb 2025 21:14:45 +0300
+From: Danila Tikhonov <danila@jiaxyga.com>
+To: neil.armstrong@linaro.org,
+	quic_jesszhan@quicinc.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	andersson@kernel.org,
+	konradybcio@kernel.org,
+	robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	dmitry.baryshkov@linaro.org,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	jonathan@marek.ca,
+	jun.nie@linaro.org,
+	fekz115@gmail.com
+Cc: dri-devel@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	linux@mainlining.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	Danila Tikhonov <danila@jiaxyga.com>
+Subject: [PATCH 0/4] sm7325-nothing-spacewar: Add and enable the panel
+Date: Mon,  3 Feb 2025 21:14:23 +0300
+Message-ID: <20250203181436.87785-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250203-drm-msm-phy-pll-cfg-reg-v2-4-862b136c5d22@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Mailru-Src: smtp
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD985D89FF3B425BBEFB48FEBABD90F3B7401DE346ACC8939A6CD62213F67905E7A3696776F0B98519CBDA1AADECFE04B855B746C49C5A93FB624BDAFD5E9761C67FEDCCBD3DDE7F493
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7B7733D0215A2F71AEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006378F586D843116CFB2EA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38BC08E230531AC9C90D48C84F60DA7BD9C119A65102D8A25FFE0C136DC086F5BCDA471835C12D1D9774AD6D5ED66289B5278DA827A17800CE77FFCE1C639F4728C9FA2833FD35BB23D2EF20D2F80756B5F868A13BD56FB6657A471835C12D1D977725E5C173C3A84C3A367EA73E0D98AAD117882F4460429728AD0CFFFB425014E868A13BD56FB6657D81D268191BDAD3DC09775C1D3CA48CF05E80F4396618BB276E601842F6C81A12EF20D2F80756B5FB606B96278B59C4276E601842F6C81A127C277FBC8AE2E8B406C66621D3021AFD81D268191BDAD3D3666184CF4C3C14F3FC91FA280E0CE3D1A620F70A64A45A98AA50765F79006372E808ACE2090B5E1725E5C173C3A84C3C5EA940A35A165FF2DBA43225CD8A89F890A246B268E114E5E1C53F199C2BB95B5C8C57E37DE458BEDA766A37F9254B7
+X-C1DE0DAB: 0D63561A33F958A5D4AF5AD9AAC5B2B25002B1117B3ED696750175D3FA3F03671E49B01306B5E3AD823CB91A9FED034534781492E4B8EEAD14747542773C033FC79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF123DA26E3BF0E2AAF0A13BBC0A68F25BA3F27AC1796CF9F1BBB2732F3F50E1D614625291CC5E48B9C56FE0738BD31C043FCBB3ED5EEAA176139AD299E36D9692B5D06203C12B99C4354DA1E504E663BD02C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojks+hT+CyYL1/eAliXkWy9g==
+X-Mailru-Sender: 9EB879F2C80682A0D0AE6A344B45275FF5005910AAC186731356DD24693B53BC3C74BFA4BD2A0242BE2B9809F5EE1A3E2C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C1F01E828FDC9BC856049FFFDB7839CE9E725523CC1EE150EB27A37986E63DEF09B751DBE7BA36A3DC8D4C3B0D36B3506639594C5AF30C0DD2
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSpaVNpzbQKl5AyxHfUpwjuv
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C1BDB3A1FA17F234B6049FFFDB7839CE9E725523CC1EE150EB483549C658F0D40FE1F6A45164BAA1708DC51D434ABBA9C3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSqf+jS9K0O6j7JdENjvzQK2
+X-Mailru-MI: 20000000000000800
+X-Mras: Ok
 
-On Mon, Feb 03, 2025 at 06:29:21PM +0100, Krzysztof Kozlowski wrote:
-> Add bitfields for PHY_CMN_CLK_CFG0 and PHY_CMN_CLK_CFG1 registers to
-> avoid hard-coding bit masks and shifts and make the code a bit more
-> readable.  While touching the lines in dsi_7nm_pll_save_state()
-> resulting cached->pix_clk_div assignment would be too big, so just
-> combine pix_clk_div and bit_clk_div into one cached state to make
-> everything simpler.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes in v2:
-> 1. New patch
-> ---
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          | 31 ++++++++++++----------
->  .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  | 12 +++++++--
->  2 files changed, 27 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> index 926fd8e3330b2cdfc69d1e0e5d3930abae77b7d8..b61e75a01e1b69f33548ff0adefc5c92980a15d7 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> @@ -67,8 +67,7 @@ struct dsi_pll_config {
->  
->  struct pll_7nm_cached_state {
->  	unsigned long vco_rate;
-> -	u8 bit_clk_div;
-> -	u8 pix_clk_div;
-> +	u8 clk_div;
->  	u8 pll_out_div;
->  	u8 pll_mux;
->  };
-> @@ -401,12 +400,12 @@ static void dsi_pll_cmn_clk_cfg1_update(struct dsi_pll_7nm *pll, u32 mask,
->  
->  static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
->  {
-> -	dsi_pll_cmn_clk_cfg1_update(pll, BIT(5), 0);
-> +	dsi_pll_cmn_clk_cfg1_update(pll, DSI_7nm_PHY_CMN_CLK_CFG1_CLK_EN, 0);
->  }
->  
->  static void dsi_pll_enable_global_clk(struct dsi_pll_7nm *pll)
->  {
-> -	u32 cfg_1 = BIT(5) | BIT(4);
-> +	u32 cfg_1 = DSI_7nm_PHY_CMN_CLK_CFG1_CLK_EN | DSI_7nm_PHY_CMN_CLK_CFG1_CLK_EN_SEL;
->  
->  	writel(0x04, pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_3);
->  	dsi_pll_cmn_clk_cfg1_update(pll, cfg_1, cfg_1);
-> @@ -572,15 +571,17 @@ static void dsi_7nm_pll_save_state(struct msm_dsi_phy *phy)
->  	cached->pll_out_div &= 0x3;
->  
->  	cmn_clk_cfg0 = readl(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG0);
-> -	cached->bit_clk_div = cmn_clk_cfg0 & 0xf;
-> -	cached->pix_clk_div = (cmn_clk_cfg0 & 0xf0) >> 4;
-> +	cached->clk_div = cmn_clk_cfg0 & (DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_3_0__MASK |
-> +					  DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_7_4__MASK);
+This patch series adds support for the Visionox RM692E5 panel, which is
+used on the Nothing Phone (1) and then adds it to the DTS.
 
-Could you rather store these two fields separately by using FIELD_GET?
+But before adding to DTS we need to allow all bpc values ​​in DSC code,
+because Visionox RM692E5 has a bpc value of 10. Also we need to make sure
+that the DSC patch for 1.1.1 topology was applied.
 
->  
->  	cmn_clk_cfg1 = readl(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-> -	cached->pll_mux = cmn_clk_cfg1 & 0x3;
-> +	cached->pll_mux = cmn_clk_cfg1 & DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL__MASK;
+To: Neil Armstrong <neil.armstrong@linaro.org> 
+To: Jessica Zhang <quic_jesszhan@quicinc.com>
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+To: Maxime Ripard <mripard@kernel.org>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+To: David Airlie <airlied@gmail.com>
+To: Simona Vetter <simona@ffwll.ch>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+To: Rob Clark <robdclark@gmail.com>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sean Paul <sean@poorly.run>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+To: Jonathan Marek <jonathan@marek.ca>
+To: Jun Nie <jun.nie@linaro.org>
+To: Eugene Lepshy <fekz115@gmail.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux@mainlining.org
+Cc: ~postmarketos/upstreaming@lists.sr.ht
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 
-FIELD_GET
+Danila Tikhonov (1):
+  dt-bindings: display: panel: Add Visionox RM692E5
 
->  
->  	DBG("DSI PLL%d outdiv %x bit_clk_div %x pix_clk_div %x pll_mux %x",
-> -	    pll_7nm->phy->id, cached->pll_out_div, cached->bit_clk_div,
-> -	    cached->pix_clk_div, cached->pll_mux);
-> +	    pll_7nm->phy->id, cached->pll_out_div,
-> +	    cached->clk_div & DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_3_0__MASK,
-> +	    cached->clk_div >> DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_7_4__SHIFT,
-> +	    cached->pll_mux);
->  }
->  
->  static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
-> @@ -595,9 +596,9 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
->  	val |= cached->pll_out_div;
->  	writel(val, pll_7nm->phy->pll_base + REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE);
->  
-> -	dsi_pll_cmn_clk_cfg0_write(pll_7nm,
-> -				   cached->bit_clk_div | (cached->pix_clk_div << 4));
-> -	dsi_pll_cmn_clk_cfg1_update(pll_7nm, 0x3, cached->pll_mux);
-> +	dsi_pll_cmn_clk_cfg0_write(pll_7nm, cached->clk_div);
-> +	dsi_pll_cmn_clk_cfg1_update(pll_7nm, DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL__MASK,
-> +				    cached->pll_mux);
->  
->  	ret = dsi_pll_7nm_vco_set_rate(phy->vco_hw,
->  			pll_7nm->vco_current_rate,
-> @@ -634,7 +635,8 @@ static int dsi_7nm_set_usecase(struct msm_dsi_phy *phy)
->  	}
->  
->  	/* set PLL src */
-> -	dsi_pll_cmn_clk_cfg1_update(pll_7nm, GENMASK(3, 2), data << 2);
-> +	dsi_pll_cmn_clk_cfg1_update(pll_7nm, DSI_7nm_PHY_CMN_CLK_CFG1_BITCLK_SEL__MASK,
-> +				    data << DSI_7nm_PHY_CMN_CLK_CFG1_BITCLK_SEL__SHIFT);
+Eugene Lepshy (3):
+  drm/panel: Add Visionox RM692E5 panel driver
+  drm/msm/dsi: Allow all bpc values
+  arm64: dts: qcom: sm7325-nothing-spacewar: Enable panel and GPU
 
-use accessor function from the header.
-
->  
->  	return 0;
->  }
-> @@ -737,7 +739,8 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
->  		u32 data;
->  
->  		data = readl(pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-> -		writel(data | 3, pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-> +		writel(data | DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL__MASK,
-> +		       pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
->  
->  		phy_pll_out_dsi_parent = pll_post_out_div;
->  	} else {
-> diff --git a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-> index d54b72f924493b4bf0925c287366f7b1e18eb46b..d2c8c46bb04159da6e539bfe80a4b5dc9ffdf367 100644
-> --- a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-> +++ b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-> @@ -9,8 +9,16 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
->  	<reg32 offset="0x00004" name="REVISION_ID1"/>
->  	<reg32 offset="0x00008" name="REVISION_ID2"/>
->  	<reg32 offset="0x0000c" name="REVISION_ID3"/>
-> -	<reg32 offset="0x00010" name="CLK_CFG0"/>
-> -	<reg32 offset="0x00014" name="CLK_CFG1"/>
-> +	<reg32 offset="0x00010" name="CLK_CFG0">
-> +		<bitfield name="DIV_CTRL_3_0" low="0" high="3" type="uint"/>
-> +		<bitfield name="DIV_CTRL_7_4" low="4" high="7" type="uint"/>
-
-Are there any sensible names for these two regs? It looks ther are
-not...
-
-> +	</reg32>
-> +	<reg32 offset="0x00014" name="CLK_CFG1">
-> +		<bitfield name="CLK_EN" pos="5" type="boolean"/>
-> +		<bitfield name="CLK_EN_SEL" pos="4" type="boolean"/>
-> +		<bitfield name="BITCLK_SEL" low="2" high="3" type="uint"/>
-> +		<bitfield name="DSICLK_SEL" low="0" high="1" type="uint"/>
-> +	</reg32>
->  	<reg32 offset="0x00018" name="GLBL_CTRL"/>
->  	<reg32 offset="0x0001c" name="RBUF_CTRL"/>
->  	<reg32 offset="0x00020" name="VREG_CTRL_0"/>
-> 
-> -- 
-> 2.43.0
-> 
+ .../display/panel/visionox,rm692e5.yaml       |  77 ++++
+ .../boot/dts/qcom/sm7325-nothing-spacewar.dts |  53 ++-
+ drivers/gpu/drm/msm/dsi/dsi_host.c            |   7 +-
+ drivers/gpu/drm/panel/Kconfig                 |  10 +
+ drivers/gpu/drm/panel/Makefile                |   1 +
+ .../gpu/drm/panel/panel-visionox-rm692e5.c    | 433 ++++++++++++++++++
+ 6 files changed, 573 insertions(+), 8 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm692e5.yaml
+ create mode 100644 drivers/gpu/drm/panel/panel-visionox-rm692e5.c
 
 -- 
-With best wishes
-Dmitry
+2.48.1
+
 
