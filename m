@@ -1,203 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-46791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6518A25E62
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 16:20:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0E33A25E6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 16:21:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4CAF61881DEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 15:17:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 943047A13BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 15:20:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B502620967A;
-	Mon,  3 Feb 2025 15:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40423208995;
+	Mon,  3 Feb 2025 15:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bqxzwYD7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qRu0qJIn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F980209677
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 15:16:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EC020013E
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 15:20:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738595817; cv=none; b=Lvz56YKLSmyNegbhwrwuLmoFS8N441c/UczmgCkF2fSqo1fjRgvJE6ff4ZdAQYow6UezzrftR6NcDASc1sIvhCuw/TAS8Pv+kRTQydatXoe8v9RMgTxdTSuLd8RQAYJLwVCok+SeV2Imi09IkvRZdvqws12uDaeM1jyouS8TawE=
+	t=1738596061; cv=none; b=uwq1HqIvfmb7z+oxsmotk18BropqaNC7mJAB8scV4kmvdOS48wxCNotkn9mGVa32vceUnTn8e4lAbWSg9kztD7SS6jc60tfDE7J0g+3cIDbLfqwHKtOV2mGXUFgkSR28iy4jsd8GobnhRhLX6Mo7hRaFNScUbk47cEVVBxLbd8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738595817; c=relaxed/simple;
-	bh=cTbrNYJLCNdhhwnl8aRo/ZlBGCgcrth/NNaKS4Dl3I4=;
+	s=arc-20240116; t=1738596061; c=relaxed/simple;
+	bh=1pk/fGGnQgOxwIyL078JGo17yd4G/o1v6YPLxHS7VdY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UgqxwwJ9pzKS9pbyvHVLCQmR+pPX0U5DzBM+tF+6XJ4kyNCqH4ewxF8sGs2mBUlD+DqvOif8UBgoUAJL+jsS+zsxhogp6DrOEjgt+GATRDJizvXZjAGKz33iLJjo1WBADJQkgYjl5EtjfVlZ3PN8rMQ6TI40HzIKlnHrW3b5E9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bqxzwYD7; arc=none smtp.client-ip=209.85.167.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=LvoXCbskeYDXhnmSzD5D3fftydF4LV8o/3BAzg1SDz6/enBfSBaiRRg5/7pd2Umbfd0VUul8r+CFtt/4hK9W4d3GPXilBaKVElY9WNseVQXyOyuKRMn4MNBZRcB0S61nvpqfavOSlLXzmBw78uEftJ9eYEL0OaMKFB515gP/hQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qRu0qJIn; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5401c68b89eso4148008e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 07:16:55 -0800 (PST)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-216426b0865so77445965ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 07:20:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738595813; x=1739200613; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vyj67VRTVYAUNFxIG4OB3HpFs4YteBVpT2TtAqLX6IY=;
-        b=bqxzwYD74+gmpc19QIPgSZvpZEIONYQ5r9FegQRbqzokR6ZsIg9D6kTWxv+lJJwvSf
-         hdDbFGXSjdZOQzcUonkZjPyiNNg1JRmc5TsO7Vs1EHR2jhMJfakTWPvfJY7bAfvdXIuy
-         ZT8mdWe8lj79VqiQv4MCCp4VXtLnv0Jcb2vhS7IWkeFlEbtbV/2pc1BsIfvrJO/GfomE
-         xEOyW7pezMiGggv9Zf/34d7yEIaJat2wG3WSSFR/rWOgaaFy5FsCbFdvA6hcF+c5jE2h
-         tMSoG8VhnJR1NavOzLSaxhtmqtFdbO3pukFvXsMSJeQTpdH53ZNEw0EbJRWPQIw075Ce
-         S8Kw==
+        d=linaro.org; s=google; t=1738596058; x=1739200858; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+QBWhANjAr1OtmbGA6f8TwWPn8UUhnW9g2jYfFPH9TA=;
+        b=qRu0qJInPUmAHKzq3a5kBOKBjuVaPMA58FwgGmx30Jcu3Xn7043NpDz1x+Y2aHVIgR
+         LxenLOKt6YAHkkyJWmsdS0hRHlUJESCLgN0k4muZfsB3ZEaLmE2+jbGsg8xJwHn3mJTX
+         TloHMjaUwuwvxpRqyJlv3MVqHf2zgvbWfGej4KAUciwZnJhCh3fhs+0Y6fkiSFGpuMbj
+         9NI3T7oy99sXsZ3AFKRJ5lknnV6UXXHRRKKqEgo++oQsvmoEOcSKRTPQzXNk2DXduIH9
+         fioz7lJgubcNAnYF79eEZwZcLoEn8T9oihPUh8ce7kGjtGLsIJWe/FZG1VOjvaCO6DFG
+         u1hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738595813; x=1739200613;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vyj67VRTVYAUNFxIG4OB3HpFs4YteBVpT2TtAqLX6IY=;
-        b=ZKlk6OpxfaqzIXxo/tf25XMrbqfz99qQ/9ZIjaWTYvnT7a/J4cJVTm9l6OKNqA3AV9
-         L0UH3W/wehhMq/A/x135mXr167uwj+TAo//chDfMbqQZBDwUTqYjzOW/8K7r+0Gt9Jt/
-         zOZyVnOYRBtM84R6L2jYwcK6qnMZCgzGopva1qED+z5qjhpNh3Xi8CfpPlxqPaejCnkb
-         e2n1zLwG/UokOgnpwGh+FMhWcN86PF9Zf7GcVk/Gqw53CnU7jASiXSp7lPOGXBnkXe6f
-         mNTKLhM3fgDGDHzQEjUyRGKcLyn/x0+jhXaG5IYr+Zt4kqzXarluB9Kymf9mUmlKlZnd
-         ZI9w==
-X-Forwarded-Encrypted: i=1; AJvYcCUobc2750me64itM+akNq6Buy2/UXAzs7Ed9EnnsUvccRfuPLL+PpRDOP1KuWjO8qPZl4t/0r21OVzIxThF@vger.kernel.org
-X-Gm-Message-State: AOJu0YxiUEnCNEnicRkspXGeFbH6ixfRbE+XlGvxrTN/sIBqNDBg2j4d
-	U8nSO7wPHjnKBTj3y1JfIt/1R2qawRvb2MKB5EGNsz+/UXiBCtrBBM6DHpX09/U=
-X-Gm-Gg: ASbGncsE/PUbW756EQZPNOCUPlivwx5jj4uK/eB37eiRajucgrHs9cr3OUqR0W8QknF
-	GngksCH4wjeYRwxHuvvdhxPkPqFSXnjOruPdtes3v8aQzJre417CDCidxMFpvuptTO39jRaTi/Y
-	JnyTSDgdAzHlqJ60QeRckqO6wrJmE+U3wsK1fineNpTDA38FaRT0LeIUuqC25m7p+oq/pcv4quY
-	XhAxxUPvyCYlyvOI2LIqsDlwJqst61bH0ixFvMKsLs9pHQUheinz23NtkLLd9JTa6b6Nk2pfpiR
-	EbyAbKAhrzZzh2BQiqr2kC1EF4SUYLfjO01G/Fw4UTUTzu4Cw2OHBXySlbO1PFToKTeyjDY=
-X-Google-Smtp-Source: AGHT+IFvcunhehAneV8WOuwnEKnlJW9yoQuXlRAFhfSrhoXK3pww1JqdTTeDy8iee3YPZkps+263Uw==
-X-Received: by 2002:a05:6512:2343:b0:543:e4de:3e12 with SMTP id 2adb3069b0e04-543f0f25405mr4806134e87.18.1738595813396;
-        Mon, 03 Feb 2025 07:16:53 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543ebebec5esm1322732e87.236.2025.02.03.07.16.51
+        d=1e100.net; s=20230601; t=1738596058; x=1739200858;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+QBWhANjAr1OtmbGA6f8TwWPn8UUhnW9g2jYfFPH9TA=;
+        b=r3Ts5FMgj2iPJNGxJKpMFZowmxgtTKDWsyCSWRc2qL9dk94ecR+ny7nxncVvvWI3JS
+         nSYg7NYo2+6gIXg02vpomv1BCvrDnVOYt7he3KuSm6qb4/r7J/CLbwtMeTl+F46wEef9
+         Q9wO0Xu+1bTmS6TQELTetf13fEiUN4TQKjgYI2ajgSR6+LmkahQ12Vc+lQZuNpitbf5x
+         WBVKHwrd8jiJLOP90CUlTLdgoSSzHlEf0LBxSFbXZ4UujlaMBER1nfS2grxYMyUmKrD+
+         Tp7SiZkI8wWVOwa0xXc1C5e4Tky5evJUfZIoVGd+2sisBdB51bDyexF9L87ablVsoBXj
+         Ln/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUp4g0OTHi15Et11YQkxHCZuxcuSeAwr8BvT4lSpQItNM7GqQcTU5s+THCY6XNUnNUOuP1Vfb92glX/9a9a@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVYN70RMk1G+SuA/eZdFsBdRJe1/PvCdhyPt9mWymG52EAjz5f
+	qQRQzG2N0WkrfXJtOvTovygOnveWud2YTyJ7jyfvn1ZxCqd9HaieZkLRBe4+AA==
+X-Gm-Gg: ASbGnctT1x7CkvOi5iqOIDwUSusgPnyKaw+ho2UVyQOGkSSV1nZiwzuuLeTqglNF5j8
+	atYgLYNWJIyh3c74G0Eymcx14q0SjOh4JtL6CWJ6KTGj0s4HVRlzo0DFhb/Yz/XbiUCTDMtAYWq
+	af0NaPDyunRNh5fz+OafDd23RmjdjsK0JwHQzIQIt7SM+5D6Re4ZLAgEMUoQckI7OLg9fjCfXTA
+	/AGzyZ4gh/6CGkrFSqSp5YmETqJAO0T68Kl3KgaRkHuv3YyHmts/wUOOVAxiQReXMFDiuqTFhBl
+	BMt1NkycOoxxjmSzAxp8Aio3GQ==
+X-Google-Smtp-Source: AGHT+IGSJSMOvMrFBAciSyZK7WnnknN8UNArG9prlqW7rQYL/0HyxOSeul8ibO5cwBLiZ/VXl0y4dw==
+X-Received: by 2002:a17:903:23c5:b0:216:30f9:93d4 with SMTP id d9443c01a7336-21dd7c55e5cmr196882845ad.8.1738596058155;
+        Mon, 03 Feb 2025 07:20:58 -0800 (PST)
+Received: from thinkpad ([120.60.129.34])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de3306012sm77356935ad.179.2025.02.03.07.20.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 07:16:51 -0800 (PST)
-Date: Mon, 3 Feb 2025 17:16:50 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>, 
-	quic_vgarodia@quicinc.com, mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	p.zabel@pengutronix.de, hverkuil@xs4all.nl, sebastian.fricke@collabora.com, 
-	bryan.odonoghue@linaro.org, neil.armstrong@linaro.org, nicolas@ndufresne.ca, 
-	u.kleine-koenig@baylibre.com, stefan.schmidt@linaro.org, lujianhua000@gmail.com, 
-	linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, krzysztof.kozlowski@linaro.org
-Subject: Re: [RFC PATCH v10 1/2] media: iris: introduce helper module to
- select video driver
-Message-ID: <tqbm672pi223ipcw7btiemlb745weeeiy4gnazzeghozhq2emj@wppbkms6hir5>
-References: <20250128080429.3911091-1-quic_dikshita@quicinc.com>
- <20250128080429.3911091-2-quic_dikshita@quicinc.com>
- <5070e1f1-914b-4654-88ef-3566e3eee9ca@kernel.org>
- <f1344e49-61b6-4115-ae88-55b4a3cfed28@quicinc.com>
- <Z6B822-6UTxQfX46@hovoldconsulting.com>
+        Mon, 03 Feb 2025 07:20:57 -0800 (PST)
+Date: Mon, 3 Feb 2025 20:50:52 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	konrad.dybcio@oss.qualcomm.com, quic_mrana@quicinc.com,
+	quic_vbadigan@quicinc.com, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v4 3/4] PCI: dwc: Improve handling of PCIe lane
+ configuration
+Message-ID: <20250203152052.kwbmt6bhjzv55ddk@thinkpad>
+References: <20250124-preset_v2-v4-0-0b512cad08e1@oss.qualcomm.com>
+ <20250124-preset_v2-v4-3-0b512cad08e1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z6B822-6UTxQfX46@hovoldconsulting.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250124-preset_v2-v4-3-0b512cad08e1@oss.qualcomm.com>
 
-On Mon, Feb 03, 2025 at 09:22:51AM +0100, Johan Hovold wrote:
-> On Fri, Jan 31, 2025 at 10:44:28AM -0800, Abhinav Kumar wrote:
-> > On 1/29/2025 2:44 AM, Krzysztof Kozlowski wrote:
-> > > On 28/01/2025 09:04, Dikshita Agarwal wrote:
+On Fri, Jan 24, 2025 at 04:52:49PM +0530, Krishna Chaitanya Chundru wrote:
+> Currently even if the number of lanes hardware supports is equal to
+> the number lanes provided in the devicetree, the driver is trying to
+> configure again the maximum number of lanes which is not needed.
 > 
-> > >> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-> > >> index 954cc7c0cc97..276461ade811 100644
-> > >> --- a/drivers/media/platform/qcom/iris/iris_probe.c
-> > >> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
-> > >> @@ -196,6 +196,9 @@ static int iris_probe(struct platform_device *pdev)
-> > >>   	u64 dma_mask;
-> > >>   	int ret;
-> > >>   
-> > >> +	if (!video_drv_should_bind(&pdev->dev, true))
-> > >> +		return -ENODEV;
-> > > 
-> > > Wouldn't it mark the probe as failed and cause dmesg regressions?
+> Update number of lanes only when it is not equal to hardware capability.
 > 
-> No, this is perfectly fine. Probe can return -ENODEV and driver core
-> will continue with any further matches.
+> And also if the num-lanes property is not present in the devicetree
+> update the num_lanes with the maximum hardware supports.
 > 
-> > >> +#if !IS_REACHABLE(CONFIG_VIDEO_QCOM_VENUS) || !IS_REACHABLE(CONFIG_VIDEO_QCOM_IRIS)
-> > >> +bool video_drv_should_bind(struct device *dev, bool is_iris_driver)
-> > >> +{
-> > >> +	/* If just a single driver is enabled, use it no matter what */
-> > >> +	return true;
-> > >> +}
-> > >> +
-> > >> +#else
-> > >> +static bool prefer_venus = true;
-> > >> +MODULE_PARM_DESC(prefer_venus, "Select whether venus or iris driver should be preferred");
-> > >> +module_param(prefer_venus, bool, 0444);
-> > > 
-> > > 
-> > > The choice of driver is by module blacklisting, not by failing probes.
-> > > 
-> > > I don't understand why this patchset is needed and neither commit msg
-> > > nor above longer code comment explain me that. Just blacklist the module.
+> Introduce dw_pcie_link_get_max_link_width() to get the maximum lane
+> width the hardware supports.
 > 
-> > Summarizing the discussion with myself, Krzysztof and Dmitry:
-> > 
-> > 1) module blacklisting solution will not be ideal if users want to have 
-> > both venus and iris or either of them built-in
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware-host.c |  3 +++
+>  drivers/pci/controller/dwc/pcie-designware.c      | 14 +++++++++++++-
+>  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+>  3 files changed, 17 insertions(+), 1 deletion(-)
 > 
-> Module blacklisting is not the way to go, you shouldn't have two drivers
-> racing to bind to the same device ever.
-> 
-> > 2) with current approach, one of the probes (either venus or iris) will 
-> > certainly fail as video_drv_should_bind() will fail for one of them. 
-> > This can be considered as a regression and should not happen.
-> 
-> How can that be a regression? One driver must fail to probe (see above).
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 3e41865c7290..2cd0acbf9e18 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -504,6 +504,9 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  
+>  	dw_pcie_iatu_detect(pci);
+>  
+> +	if (pci->num_lanes < 1)
+> +		pci->num_lanes = dw_pcie_link_get_max_link_width(pci);
+> +
+>  	/*
+>  	 * Allocate the resource for MSG TLP before programming the iATU
+>  	 * outbound window in dw_pcie_setup_rc(). Since the allocation depends
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> index 6d6cbc8b5b2c..acb2a963ae1a 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> @@ -736,6 +736,16 @@ static void dw_pcie_link_set_max_speed(struct dw_pcie *pci)
+>  
+>  }
+>  
+> +int dw_pcie_link_get_max_link_width(struct dw_pcie *pci)
+> +{
+> +	u32 lnkcap;
+> +	u8 cap;
+> +
+> +	cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	lnkcap = dw_pcie_readl_dbi(pci, cap + PCI_EXP_LNKCAP);
+> +	return FIELD_GET(PCI_EXP_LNKCAP_MLW, lnkcap);
+> +}
+> +
+>  static void dw_pcie_link_set_max_link_width(struct dw_pcie *pci, u32 num_lanes)
+>  {
+>  	u32 lnkcap, lwsc, plc;
+> @@ -1069,6 +1079,7 @@ void dw_pcie_edma_remove(struct dw_pcie *pci)
+>  
+>  void dw_pcie_setup(struct dw_pcie *pci)
+>  {
+> +	int num_lanes = dw_pcie_link_get_max_link_width(pci);
+>  	u32 val;
+>  
+>  	dw_pcie_link_set_max_speed(pci);
+> @@ -1102,5 +1113,6 @@ void dw_pcie_setup(struct dw_pcie *pci)
+>  	val |= PORT_LINK_DLL_LINK_EN;
+>  	dw_pcie_writel_dbi(pci, PCIE_PORT_LINK_CONTROL, val);
+>  
+> -	dw_pcie_link_set_max_link_width(pci, pci->num_lanes);
+> +	if (num_lanes != pci->num_lanes)
 
-I also don't think that it's a regression. I think Krzysztof was
-concerned about the 'failed to bind' messages in dmesg.
+Move this check inside dw_pcie_link_set_max_link_width() where we are already
+checking for !num_lanes.
 
-> > Solution: If the user prefers iris driver and iris driver has not probed 
-> > yet, and if venus tries to probe ahead of iris we keep -EDEFERing till 
-> > iris probes and succeeds. Vice-versa when the preference is venus as well.
-> 
-> This sounds wrong too.
-> 
-> Look, first you guys need to explain *why* you want to have two drivers
-> for the same hardware (not just to me, in the commit message and cover
-> letter).
->
-> That's something that really should never be the case and would need to
-> be motivated properly.
-
-I think it has been written several time (not sure about this commit):
-to provide a way for a migration path _while_ people are working on Iris
-features. Being able to A/B test Venus and Iris drivers and to report
-possible regressions or lack of those on the common platforms supported
-by those (sm8250 at this moment).
-
-> Second, if the reasons for keeping both drivers are deemed justifiable,
-> you need to come up with mechanism for only binding one of them.
-> 
-> I already told you that module parameters is not the way to go here (and
-> the msm drm driver's abuse of module parameters is not a good precedent
-> here).
-> 
-> If this is a transitional thing (which it must be), then just add a
-> Kconfig symbol to determine which driver should probe. That's good
-> enough for evaluating whatever needs to be evaluated, and doesn't
-> depend on adding anti-patterns like module parameters (and helper
-> modules for them).
-
-No, Kconfig complicates A/B testing. What you usually want to do is to
-boot a kernel, then go over a bunch of files testing that they work with
-both drivers. Kconfig implies booting abother kernel, etc.
-
-> 
-> Keep it simple.
-> 
-> Johan
+- Mani
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
