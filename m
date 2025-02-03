@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-46702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA26AA2531E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 08:34:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 108E4A25321
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 08:36:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E32887A1FAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 07:33:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84A6A162C37
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 07:36:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4722C1E7C20;
-	Mon,  3 Feb 2025 07:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1D0C1DED47;
+	Mon,  3 Feb 2025 07:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IjTAsZlH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qaf1MwRP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1FD1DDC1B;
-	Mon,  3 Feb 2025 07:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4252557C;
+	Mon,  3 Feb 2025 07:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738568063; cv=none; b=fXtMs/+8DqsAGFoTyd9TOvj/SFXNmlflkRkZ6tYAikxPCQj29oLBUf7AiFKK59rokNwxFswff6T7T7NPWTtniL9cqYOpM14wlyaF1oPpY7p1p9P9tTMlRCg0NXbiMPZwhjenVFgZqRajLs7D8Ho0juNgNWv0zO0rhUNU+Qg6Dic=
+	t=1738568211; cv=none; b=WO4/sg4Gf85SKxDbOfe2DBW5agyJPWF5HUTd8lTkk7cRGDLcJHS7UVNpAL4fHj+OgQGSsPj+2EjJuw3kOaZgtaBlPGxfNNumsYfvUqXxCIz8YI31JIFBXy7d5DlFETryfhef4aDR5tbe6deNVV9ssgv4MSivPL73rw5z6gCAGro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738568063; c=relaxed/simple;
-	bh=0fcgH6fpAU+WqDpnPrnEK4yexzXBn4fqZT+ycK7aI3c=;
+	s=arc-20240116; t=1738568211; c=relaxed/simple;
+	bh=Hg5sCKmDMIH5N6S7Afmz4ils8tiC2ujQXPYqn/6TxTY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tk0xalQVJku7xM+u+pP68b6/0tquZEyaaarst9TDSxZi3iNBN8xsHsZgLlouFstBSz74BVeaJkFy7/1aSTNLNGUwaEgfl36yFt0peWqlfH+5BDZSfAiTfH6nCtFgbbf3jHhqAUg1ZQLdkfOKzl7yCR3PybXOgfcihMHKbAqtKTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IjTAsZlH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDF4C4CEE2;
-	Mon,  3 Feb 2025 07:34:21 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=hf/05mfUApmC0T58db6E5p+79F4XWescQs2qDbx1u0j4Vs/GxKhJu4RDWqaGfa6qUYEZbu6bfrFrn5WkkAUv93GBvNjNzMkisvr2s9jAS/Bzl/0d6g6g4aEzPMn5G4gm5AKSfjkIOW4Eziw0QBfj7f1axrQfzuhIW7GQI9ZD6pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qaf1MwRP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6202FC4CEE2;
+	Mon,  3 Feb 2025 07:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738568062;
-	bh=0fcgH6fpAU+WqDpnPrnEK4yexzXBn4fqZT+ycK7aI3c=;
+	s=k20201202; t=1738568211;
+	bh=Hg5sCKmDMIH5N6S7Afmz4ils8tiC2ujQXPYqn/6TxTY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IjTAsZlHDtzcC9Z5sZbCEYC9gToKIZMZ/OC5TwV9/hg4+yroCNi++HNt2Jnozlhbs
-	 sEYmt315saTQ2j0sLNP3YQ7pE21IsgKxnvIjVOBmWUsqpYzreRPI0OfA8xFbkxZIEu
-	 KTqq93/+ud782OYURu18/EsiHsh2u7EnWxd+tmM7fC9XCZpoIkJyerBUMPtX8BMD3g
-	 AwGntRAziBFtD7DphHTDXWtxT4mDfTCIzQavyDNd2yjvygzhJ1H8P0ApTiR9t+YJXz
-	 RUURQyU5Z8CXyxQBbjHcW9l2S6jMQM6S102ll8Ot4CBxPWqBpwiFVgVvnLarsFGjQu
-	 7qUw2T9pQlppA==
-Date: Mon, 3 Feb 2025 08:34:19 +0100
+	b=qaf1MwRPb0ZMDY1sKLNjGOwcQ00rVSm9VQ4mTNcfI8WfUDPF4tGZIzKqLCHOiR6J8
+	 0vuGr3+qHsg7NQTOs4JTfc28zkjkgNo7wbCjBer7qMtvbRC7RClWJW/s1ivKRJ6tw2
+	 Hl7/wtd9Fc7Nm1wMIZslfI2NkWwH+Qm6tGNH4sJLrcQ0TrZMbksufeInsnPZCKpmRQ
+	 B4y9SpxjOLIKiBrPDpWTXHEKMZdkXicdI+9+OINTmCLNsHZxUDkf8ELOlyB67G+eMH
+	 fQMDwxYDmXSrzUBy6tvt6JnEKbHOXhOCqNHtYJVzqGPNjCl0JRyW56Zgsc6DOiao93
+	 FWiIoPrsrwYMg==
+Date: Mon, 3 Feb 2025 08:36:47 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Pratyush Brahma <quic_pbrahma@quicinc.com>
-Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
+To: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] dt-bindings: arm-smmu: Document QCS8300 GPU SMMU
-Message-ID: <20250203-demonic-melodic-jellyfish-7d2b5f@krzk-bin>
-References: <20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com>
- <20250203-b4-branch-gfx-smmu-v4-1-eaa7aa762f48@quicinc.com>
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] dt-bindings: clock: gcc-sdm660: Add missing SDCC
+ resets
+Message-ID: <20250203-bright-copper-tuatara-6d9eb9@krzk-bin>
+References: <20250203063427.358327-1-alexeymin@postmarketos.org>
+ <20250203063427.358327-2-alexeymin@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +63,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250203-b4-branch-gfx-smmu-v4-1-eaa7aa762f48@quicinc.com>
+In-Reply-To: <20250203063427.358327-2-alexeymin@postmarketos.org>
 
-On Mon, Feb 03, 2025 at 11:17:01AM +0530, Pratyush Brahma wrote:
-> Add the compatible for Qualcomm QCS8300 GPU SMMU. Add the compatible
-> in the list of clocks required by the GPU SMMU and remove it from the
-> list of disallowed clocks.
+On Mon, Feb 03, 2025 at 09:34:24AM +0300, Alexey Minnekhanov wrote:
+> Add resets for eMMC/SD card blocks that were missed during initial
+> driver submission.
 > 
-> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
 > ---
->  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
