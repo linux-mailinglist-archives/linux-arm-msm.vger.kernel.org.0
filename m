@@ -1,87 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-46769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C99B2A25BE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 15:10:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B50B5A25BF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 15:12:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A45351883914
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 14:10:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B81B1626FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 14:12:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02EE220551A;
-	Mon,  3 Feb 2025 14:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BD6C205E25;
+	Mon,  3 Feb 2025 14:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HweA8u0h"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IvgVrmch"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AFD205AA5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 14:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3D52010F5
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 14:12:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738591797; cv=none; b=B+0azHDhYrKc/K7RokKIT8h7Q91jS+DUF+fpA89gbHoTrWMYvP5QyLsMEPT1pSt0MWR3p2dRW1xrd2vmL3PHOwsYam8j2hOhrkhH1y3cHgvwiLDCGXUwwjdt8OczvgLBwQtLo8M7EFizKqS3kYXWKnCp1LKRBOebzPY08cIrXvc=
+	t=1738591962; cv=none; b=rLySEIOb3Z6JTIV02VaVDKlLjbqbtI9AH4UvHq3NM+s/AvTyXkoAvwYHJ/wKJpfGHCe1hkM9ZRUuH9z0JMl7D112ZNnLhPQ9qGdPk+42RW+NsQjMHT+mQENshLldlD762xJWtvGOD1DwZxJoswFOnr8QdyexP5UA+0qHttz+dqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738591797; c=relaxed/simple;
-	bh=x3CVHKQsrsBc35sYt/SLxzM7OsZW74laauClXu3SedQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=AC1MErKe7A1uAtR6uI+qhJ1uwY325PI1kn9r+wo5mY+eBaAmt9RiYF14EK6dWDaVpGaLy2FIAG8aMNegwRZ7inZqtAni893A6SJx1m5O2FHj15YvRoWZNihT3mfGRiTVnIzdo/6MzukLdaA+U3mhga49BCruRIlt17WUJyFodug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HweA8u0h; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 513E6w0J005764
-	for <linux-arm-msm@vger.kernel.org>; Mon, 3 Feb 2025 14:09:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	PqnvQI074/SnPhRHaDZqDIU5f3FDzozpaHm90U+0054=; b=HweA8u0hbjNe0fJb
-	f5n6RWmKMDZ6iVaCxA1mUqv5GcjN2NpU9mrTa/S/UvONbp08eyv5fqnAsZ8JkKWL
-	CCLPL5+8HSLhEqdtO2KtPzGrkidpVYQrypPRHZV/j/ptmMKlZHPNKxsbSp7bSHAx
-	dFBGOqYAfhHeYiy2zrVY+ZE8CX0PqwRzo+AKY9tRdSgVin1kT5iwbvBbfnimmZVF
-	nVIQu269efng/uSfvDqUYIphJnPsSgzw7z3u3ZGIsEwyem5d1zC5ewOPizCAxPFN
-	jozxZBCjJqKaYbatIG+vvggrOMjv6D9dmmyzMJZa5Rf0CoqRjm6R+bakGAFRyYTc
-	WOIJFw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44jy9g00e8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 14:09:55 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7b6e132c31eso21275585a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 06:09:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738591794; x=1739196594;
+	s=arc-20240116; t=1738591962; c=relaxed/simple;
+	bh=tsZxVi3hWnfSgdTZWSolIwnNneopaRWe39nLdwQMAoA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UtAf1avRBNIxlhPDWjluu/UtYlhEfpxpMVWaP/h8bKYcgK62zruqP940lUTXqawG6ysB3VotqwI94y3ykOK/FiRFhZSw0Fw0hCtGbSXXtQCv668Rt5tzBXnKuAoDNM9I17209dovIhk/1TnFndef7ZosrUQAIkZOc50zWuJCEVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IvgVrmch; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-38be3bfb045so3648089f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 06:12:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738591958; x=1739196758; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QUjPahpJZ490tF5nS7xvrKmwqtWzzB567d1rXxR9fdw=;
+        b=IvgVrmch1fV5tP63yh0ZqdFO5wOkKsKd2FurqHJDCZCXuljPMJFqUg+6sBYrQQMOVx
+         o9guUFbL1qVl3cckmizrHh1MPwZ0uYN4yh16XU1IhdrkrXwS6ZETQcu8LbkAUcrCyGiM
+         y7xKUdvr5jjHMwozoH6w7NKGX+ZQjIuELGM/O80Ce2Zz3WviHOac60MWjyE7yIK+KDyo
+         f4oXHJZk6hhgwKQaM6SLtdCo6d6dv20CJXVW4jyswRHebiw/6rHV32uOYWSRipJ07NOm
+         qvxitPmU4OkLfhGKmXGDlKScielOeEX6AgfxjkpDHOdxV3PppNMeyhdHv65VcX46eJyi
+         VBoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738591958; x=1739196758;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PqnvQI074/SnPhRHaDZqDIU5f3FDzozpaHm90U+0054=;
-        b=W3+rw3P6/zThJpsxfWB2PSTM8EiJAbDodfEMmEnB36qHLNzPw1fT6Y6q1mWKDivIPf
-         UJ/J1eXc6OmqtpxtMkXLVZbRbfVuFEgHv0jA7jjkSngK777BwOrvICC5T6vKUw7XIHcQ
-         Mdq9wQ+cHDieCaxD3Fd+1reVAcvRZUJP7of2VIQxMaZ625GX73xnW+0tfdF14+W6YlR1
-         YWE5L45e0mmSVri5cUMxT25xZ6Ro/htjI/M/XFYO0UTSXjkO6LasX7epwkd7Lz502YdH
-         sMlqI9EKyo+nbQXs+EsJX8pPYKWbkSr+bNwyh9D4nGc2qT299smpyFHZLkRV2malSzt/
-         xDyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWfMP5Pif7JKFGKdkRynr9qrOEm6O8cR9NUUHIGd+S7zsnGjnbVNagq0H+JXBuHY2TIprvOpMisBA9I5zoS@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXhd+40SiWQUBMfj1tuSFE6dxr/wveiSBRctTfaZe8TLKLpXGJ
-	RFAXdoX1pPyH4aLnlAIWYzCIceD+BR/2MHmIcpn41wf/V7uNWJHsEnox4Wva1DDjAhGaHcdpnzE
-	Vhj7anDU+jxSCd04l4dfMQTYLQDelGpfYJMw/C1bCrY86DiGeqxHoPsVCWWcPIB7p
-X-Gm-Gg: ASbGncuO2mwJfeUdXWJ8By6caNGgit5u94qq7jiu6QdFP7fJBXG4oa99Tqbeu9EbAC4
-	U6+xbGYgdSoDPWox1yYkSLgA2DBh64ebzpnTt2z4wma82rIrE9O/Zsi6SRYgLkcDVGwc4zrLMTt
-	FPt11L7m0t3/INxUxzjKOUk+Bc632E3+PnTfBTw8AdUlvJ6IOdKgelK84Ikj6qk+UgFMxe2c4/T
-	KldFQa6cEhsMTk6fjo7rROHWUWNk4PobQqGBOOAunPKHZAp45ZcOW2e8qZgYJIh/9u0Wbe6aKyV
-	ygLWsYNjgOVmZPpBCe1JVX84lCeRuQfK3NbYPEGdStHQHvmCM0bG/NLgpZ0=
-X-Received: by 2002:a05:620a:390d:b0:7b6:d754:2076 with SMTP id af79cd13be357-7bffcd8fa55mr1031475585a.12.1738591793721;
-        Mon, 03 Feb 2025 06:09:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHEdwI+jcirq72tzg0fC8beLhnirVMEduC/S0WxjJZZWIFxTyTZtGZdO0egq+PfA0bGFTgCpw==
-X-Received: by 2002:a05:620a:390d:b0:7b6:d754:2076 with SMTP id af79cd13be357-7bffcd8fa55mr1031474085a.12.1738591793255;
-        Mon, 03 Feb 2025 06:09:53 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab6e49ffe2csm770673766b.97.2025.02.03.06.09.52
+        bh=QUjPahpJZ490tF5nS7xvrKmwqtWzzB567d1rXxR9fdw=;
+        b=Ac1pLqXGAe9uUZq6rtDDqmvuf/+tDv1uJQILjAL/e1jivvbkGVk09WBTYVGnDtYjBl
+         JQtNwyrzFWTumKBWUdBg24Mknmm1n/ttSPWy9c7cilNo826jWsSatMspFsZM2gvI2Jfz
+         ISPH8nuFLNl7ygj4QE2IRaImBt89u/AbZE7aS4LBXhoEaZQP6ClmucYaA9r/jPs638zI
+         b8RYZSHWtp9QLLjd+c2JwNEtIH2KzVp3rVmd9OcmmPajr/puossR79AnzcDCP4ABP48c
+         uXLpy2Fp4+1ZuTRnuquYs4AgmMWCd0FGnFs++C1tk/UPP0w459DzX/aFmr+8P+vbrS+M
+         Q/mQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVb0I1o/jqf+8WvnzoNILZ8AVzUy3DEGAeETh6zxlsDA7gI4EGti0TF/42uEapqnwAUGM4dVzZmO9UgNzBD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7uL0LjQikq2qT153Q0VM+K4hrSZ+6vbua/nwXqUbYUSVGXakj
+	7K1pZgmeqxitWZQY7I/7SrY8d26UVIRwFO+66HLGR0mM5GrO9k893lzmfePTIaI=
+X-Gm-Gg: ASbGnctbgfPOGW2UNsb278WI9o4urkqbzF9dKDVJIT/O+68tgTVFWXubZZUIDsk92NW
+	DUsEndu/NKMsUfIaSE5Qr10E8vfTN32zM7ftNwD7l32VtogLTAGaLcz43KNiaYPuO3xhVeGapZK
+	RBkSatJVPWZ5+1UeEDRc5E3el4kUpsgayFb9yG8Xi0qLRzTY3VfxXR1k02Nf1UCxlBxzXlyZBGV
+	BknklZcVE8pbFEoEJKoEeEnIGZdrCY8B2xXyOkPx+4hVpev0UVwcFRnp9JUVMka8rDNP7ziRpTr
+	EssEHZ5942LxK3HEngT4ZOC50SMNgx6cvQ==
+X-Google-Smtp-Source: AGHT+IFA8mWEpLmmdVcjuR4koqsoB3sj55W01B83hJSvs3SAyixdmRXxMrYb2kLmMpISqzfZlvuUaw==
+X-Received: by 2002:a05:6000:2a5:b0:38b:f3f4:5812 with SMTP id ffacd0b85a97d-38c5a9a62damr16085238f8f.21.1738591957643;
+        Mon, 03 Feb 2025 06:12:37 -0800 (PST)
+Received: from [192.168.68.112] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-38c5c1cfa2fsm13136123f8f.91.2025.02.03.06.12.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Feb 2025 06:09:52 -0800 (PST)
-Message-ID: <2c306351-39d7-48da-8860-e8eb75e301e0@oss.qualcomm.com>
-Date: Mon, 3 Feb 2025 15:09:51 +0100
+        Mon, 03 Feb 2025 06:12:37 -0800 (PST)
+Message-ID: <14f167e6-ea2f-401a-87e9-2722929bd9a2@linaro.org>
+Date: Mon, 3 Feb 2025 14:12:36 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,49 +81,77 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs8300: Partially revert "arm64:
- dts: qcom: qcs8300: add QCrypto nodes"
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250128115333.95021-1-krzysztof.kozlowski@linaro.org>
- <20250128115333.95021-2-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ASoC: q6apm-dai: schedule all the periods before we start
+ streaming
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: broonie@kernel.org, lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com,
+ krzysztof.kozlowski@linaro.org, pierre-louis.bossart@linux.dev,
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250203124945.11406-1-srinivas.kandagatla@linaro.org>
+ <za6jydjpvhz77h22qvssjxv2vrh6g637ctgfndqavoxo7pnqel@vcalzbkbfoss>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250128115333.95021-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <za6jydjpvhz77h22qvssjxv2vrh6g637ctgfndqavoxo7pnqel@vcalzbkbfoss>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: C9GsO3fOkMB9V_b4SPOcHwNZ0T_LI5aJ
-X-Proofpoint-ORIG-GUID: C9GsO3fOkMB9V_b4SPOcHwNZ0T_LI5aJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-03_06,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- phishscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=999
- spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
- definitions=main-2502030104
 
-On 28.01.2025 12:53 PM, Krzysztof Kozlowski wrote:
-> Partially revert commit a86d84409947 ("arm64: dts: qcom: qcs8300: add
-> QCrypto nodes") by dropping the untested QCE device node.  Devicetree
-> bindings test failures were reported on mailing list on 16th of January
-> and after two weeks still no fixes:
+
+
+On 03/02/2025 14:09, Dmitry Baryshkov wrote:
+> On Mon, Feb 03, 2025 at 12:49:45PM +0000, srinivas.kandagatla@linaro.org wrote:
+>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>
+>> With the existing code, we are only setting up one period at a time, in a
+>> ping-pong buffer style. This tiggers lot of underruns in the dsp
+>> leading to jitter noise during audio playback.
+>>
+>> Fix this by scheduling all the periods, this will ensure that the dsp
+>> has enough buffer feed and ultimatley fixing the underruns and audio
+>> distortion.
+>>
+>> Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
+>> Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>   sound/soc/qcom/qdsp6/q6apm-dai.c | 8 +++++---
+>>   1 file changed, 5 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
+>> index c9404b5934c7..148c3fb77168 100644
+>> --- a/sound/soc/qcom/qdsp6/q6apm-dai.c
+>> +++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
+>> @@ -299,15 +299,17 @@ static int q6apm_dai_trigger(struct snd_soc_component *component,
+>>   {
+>>   	struct snd_pcm_runtime *runtime = substream->runtime;
+>>   	struct q6apm_dai_rtd *prtd = runtime->private_data;
+>> -	int ret = 0;
+>> +	int ret = 0, i;
+>>   
+>>   	switch (cmd) {
+>>   	case SNDRV_PCM_TRIGGER_START:
+>>   	case SNDRV_PCM_TRIGGER_RESUME:
+>>   	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+>>   		 /* start writing buffers for playback only as we already queued capture buffers */
+>> -		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+>> -			ret = q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
+>> +		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+>> +			for (i = 0; i < runtime->periods; i++)
+>> +				ret = q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
 > 
->   qcs8300-ride.dtb: crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
->     ...
->     'qcom,qcs8300-qce' is not one of ['qcom,ipq4019-qce', 'qcom,sm8150-qce']
+> So, all errors except the last one are ignored now?
+
+this needs fixing,
+
+thanks for review
+--srini
 > 
-> Reported-by: Rob Herring <robh@kernel.org>
-> Closes: https://lore.kernel.org/all/CAL_JsqL0HzzGXnCD+z4GASeXNsBxrdw8-qyfHj8S+C2ucK6EPQ@mail.gmail.com/
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
-Konrad
+>> +		}
+>>   		break;
+>>   	case SNDRV_PCM_TRIGGER_STOP:
+>>   		/* TODO support be handled via SoftPause Module */
+>> -- 
+>> 2.39.5
+>>
+> 
 
