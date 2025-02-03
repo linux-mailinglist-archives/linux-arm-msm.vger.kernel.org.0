@@ -1,142 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-46742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD5D1A25A13
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 13:54:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A754A25A2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 13:58:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0AA7C3AA039
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 12:53:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D408D3A774B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 12:55:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A3F91FECD2;
-	Mon,  3 Feb 2025 12:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88CC8204C09;
+	Mon,  3 Feb 2025 12:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dI9+6Oxo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q1iOGLtS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6162046A5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 12:49:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C355D204590;
+	Mon,  3 Feb 2025 12:55:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738586993; cv=none; b=oIVIiUSvcductE+FaWeh61oTHGxnjlyBxs47K7tDx6drTfsF9Jf8rzsYsm1MuU8lIULAA/gux4ML2X9Msi6OnunsCMga7EDBNgGBv+MEJlnMqh4hXTU9ZwTH+HwucdSmmv9irb5n0uJveKYsaIlZihDTbZaqmJQD1i9jEPO3emw=
+	t=1738587344; cv=none; b=N9oPDzdrp3p8mhucU6TC89rkrNYgqQL3nDToADYf5iCHYqbYl0It77ELdUave8RCTxaI9mqY+X72gLW9o5j0pT9NN5nq9IoCIXCxzOmsc7+FfPS3rFuTTCoVXWNdEYwkRlDn5K1PZC2lMqEnNKYPQ4WZWa25XCQ0/Tk59GXfzTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738586993; c=relaxed/simple;
-	bh=nUkpU5HdizpxTWr8YxBaJkQkZC9L5Iy1O5dsyOZHQtY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ecs3zZxyD4ZMZ0HdpejrlBhisauUR3PNLaSpq6rBQZ/fY/n/IuARyYpR+ZAoZkBr8qghI/T8FnySWmjQ4oTrD97pb4CTXNJLPHyezvkqG/8PlGTKekGlKNkd2KL2Il1Dql0nLeB3ekPDJaKKNEQOgYPdAf0/ke502EWgpfgWUPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dI9+6Oxo; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-38a8b17d7a7so2264793f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 04:49:50 -0800 (PST)
+	s=arc-20240116; t=1738587344; c=relaxed/simple;
+	bh=bs8Tqd0CFF96NXsDeU5iUh1wpxnut02IrBS8m9fe34g=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=OKwepnGmmhbhAYSppSVLA0kp+CM4Zd6dNTJmTjoHFiA5Ht4RYyIPOPCwmSogIwRTHZk2gN9u7S2Q7Ik4JvBORLPlxQCZNbwRM2TzwJPXY7TL1EGv95OxlpiWbHkVneVIdFJ9v7EffRkP5eyIU/RI7nGW24oqkjIvPmGuyChIGCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q1iOGLtS; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-38be3bfb045so3583545f8f.0;
+        Mon, 03 Feb 2025 04:55:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738586989; x=1739191789; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ywGUrOp/w8H6RCppdbR3Agfd+wqSLlU6tOUovBhQqng=;
-        b=dI9+6OxokdsnoihcAOg5SVnwAgJdhRbr4yoY2vKt1NmMyHrloRebNjBS7z/4wG2e6y
-         KwDneDXWijRuWnYy+MUgYtJ2TSV2GjgG1xvBiOqr1Th/9bP3STpj+Hy/hIDc1txIffFW
-         aObscZVLtL7P7gXtppoDUkY0hNtxTwP0nkLaluQ8BitU0h7X52c+mUnpXKxJc3Bt5PLP
-         OLaWuVUYCUzv7IEvDD1Udjp3hYy2gYjCrVXHogEXPVXlpAKQ/lCi+bIm4LDFFrHLdHbs
-         NJxP7mOKjkwa3WeoSMQueYVetWzBzZ5XBJGKZ8jiaJIy+xLzw0Oa5fxKdf8P6ULm0Ll/
-         V7Nw==
+        d=gmail.com; s=20230601; t=1738587341; x=1739192141; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=bs8Tqd0CFF96NXsDeU5iUh1wpxnut02IrBS8m9fe34g=;
+        b=Q1iOGLtS01vs8TdSmUSndmb1P2/Q9OAZM6IJssJUzE3rZ9gaU3gBzQl/duhWJWvLaL
+         hluAt9XVGUoFfdcLIAfLQewEkncSURMuRw6apjdlDYM+c7OSQoctldSOEIxswvQHJD06
+         UtDgjVfb2sOSLuZJOEKhPCwO0V/boMGVGmp8PL4MQpZWQTb/he7TpyisyCCUDcxP+29Q
+         jrUk1/rR1HyitIqxYete6VpQrw+pRSsrnL6HE88J45mcfSp9AiYUUcb2zo1qmMm5D7FE
+         fNdMnhbRJibhRafU8TCn5jzmgrVkJFkIZb9T3rlXri/LYubSf54xCBrYrLW5ZJM97OSc
+         ep6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738586989; x=1739191789;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ywGUrOp/w8H6RCppdbR3Agfd+wqSLlU6tOUovBhQqng=;
-        b=Uk71BX7Pr4iq6EZELUukvuH6Wzq5Q6EL8igOizFiVCM92mwtlm6ApHH4N5jWMLFrVw
-         x0gPLMeDWFZDOgcCf0dyx9sCzYtt5LxEN/xUdfxRth3kbemHtTALbpRUB414BTFpM13E
-         lqlFQQgltewK5YDyvb80fsc7o7Twsv3Rgqt3+wcoXaok3zrVryGQwPxfc22SVDw4gAxf
-         CRuBFOe0maHY3uchT0kuV9ggGNIMFJUNm0VYCG+sBlsobItkPWxAkpdKxtK5IIcUOA87
-         kc1fekqsrsVHHwMSSbWaDnRkQfz/lbfd4T3ZF23BtWlRW9bHJK1mrtbK+6d9rRYdxFf6
-         qy2w==
-X-Forwarded-Encrypted: i=1; AJvYcCWPf3krY6YZZzFW5Ndw2GlZYxe/7niFc62hwR7uoKqqVkNtVwIY+vdhGBHWE8W4r4GusNC84aYR9opXXstt@vger.kernel.org
-X-Gm-Message-State: AOJu0YznAIGZiXeqR7CilI7tzy2Ao0XLvH9uNsjNgmgXnc8uBkCr/U2V
-	Wn6AhlSORW8E7oCGdyx+ninFZjcUtC0wWG/ARNkuy4yHHT9/siDgCNKC7z6p7Ig=
-X-Gm-Gg: ASbGncvD09xVKJ1PYmbzZQzsqsBDjl1liHXo0LnZKRxxk7/bR9E9OZXmW6G7Lxq4sE2
-	XbSFdFCMXd6egg0ZgH6wMZtMI6LC00KKd0j0jg59TdRjnm0t0QNJ0ysLZnuyJI28WZYP8QpvIfN
-	//5LK1suITMvRMzPIocZFFf9w/Xz3o9/K83CboEaH/vuDox6+oRPIcq7Ht6Y59rToTQCllT9H46
-	ZahKZ0C19T0QGT7FzzK+LhEYm+Vtw7X6Y+tFOWhXiSsviQnXoAaRWRaO5aiEV8NfF+rjiOSWFGq
-	lc4nvt8o39bK9Ka1wgUMmsx8ZndFs9vmocwGBd3T
-X-Google-Smtp-Source: AGHT+IFcRPGPDmD48EIK6elAaZu2Zk8DxQERIr9dnmWyB0Uuf10XrVS2TvtkTaG7Mc0/1xomxVn61g==
-X-Received: by 2002:adf:f504:0:b0:38b:e109:1e0d with SMTP id ffacd0b85a97d-38c520b6629mr14361510f8f.49.1738586989345;
-        Mon, 03 Feb 2025 04:49:49 -0800 (PST)
-Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc2f17dsm189411645e9.23.2025.02.03.04.49.48
+        d=1e100.net; s=20230601; t=1738587341; x=1739192141;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bs8Tqd0CFF96NXsDeU5iUh1wpxnut02IrBS8m9fe34g=;
+        b=KieC8xV0lX4TdO5xJDSY7Xggu1p/xMVz5dBDw2I0JDP8Urw3mlSXCFm2b3+DV7z2r8
+         jmrFPTCs8p2rUfgPchJ7yMeEZooT47DsucGfEZe8vk+ER/ts3gw8P45GQBJMnokYwwWR
+         2EjItaHDrwnKwsMQmupZZ/Z8A+sC3JGCKIP41wpvVvTJmADr8RA0XlT+PuyKZDk0Q6RE
+         0B0RnR9BJi1m8GbdxsfmTRjF/IANN/1ydgd7sRmhYdzjysZrVK9rXnD6OqK7aNqOEeFz
+         sWEPVT1T4W+B/9EMqcYbYHApeMmdtx29lkgsB2fZFroiye4vF0TiTLeY/TDhI059wAPu
+         3O0A==
+X-Forwarded-Encrypted: i=1; AJvYcCVVI/LX82lNPiaY2dN71wpfqb+S4CCIxJDiJOQK75u8DgJxoMv3RqhSVdnaUfVeugWuV9LOCj2kcFqoxao=@vger.kernel.org, AJvYcCVr1acTjDUz2Aq37DjIDYWuAsmZ+j9wMg2Wc+v9sQmwE69B1eRKVuM8eaTekFGoeczuWZxMiR4rvK98Lw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YxwkBDI2Lkm9pJD8kCgWef5EqlDl2zBHIQbxzsIpj3wTM3tZKOV
+	DrM9tKp97z0KHULHnoC2t4nzLIKCQLLGO5GGEwqW5J78OgcjHnZH
+X-Gm-Gg: ASbGncu/ZSm+YvdO9ag2qrTUdUROPvngWqqqAqPtg50dVyn3ZKbVF5AkV6iugWGlaPP
+	hZLuy3zUlLPGxkrqGEBRDLWbQwKkeTwlodg6gL3Exjvc8gd3O1Ttcq1GBLZE48g6w2VRWCdju1+
+	7uL+R/3AiVvuRcoYjchgQxjCxWFjH5Wv5UzIHNL4xl2V8cxvGsj7zzLUtQsoYKf5I0/B+mdwj38
+	3uOf38HEpCo9wtRmAsnnO0BwZOZEzFE/vvD9sVrkpi50S7yg0OPZ53DFfMBo44c0qMHFnI+l75r
+	EUDaaOCt0SLkPLcBVA==
+X-Google-Smtp-Source: AGHT+IEEJalytdX0QUtX6yL5bhNnoqVYfs8Qe+QO+eMTH0COVjkeIsK1vfCC60j4oez4kuL/EbEqwQ==
+X-Received: by 2002:a5d:47c3:0:b0:386:3327:4f21 with SMTP id ffacd0b85a97d-38c5a9bf70dmr15142010f8f.27.1738587340616;
+        Mon, 03 Feb 2025 04:55:40 -0800 (PST)
+Received: from [10.176.235.56] ([137.201.254.41])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c0ec7f1sm12481772f8f.9.2025.02.03.04.55.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 04:49:48 -0800 (PST)
-From: srinivas.kandagatla@linaro.org
-To: broonie@kernel.org
-Cc: lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	krzysztof.kozlowski@linaro.org,
-	pierre-louis.bossart@linux.dev,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	dmitry.baryshkov@linaro.org,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH] ASoC: q6apm-dai: schedule all the periods before we start streaming
-Date: Mon,  3 Feb 2025 12:49:45 +0000
-Message-Id: <20250203124945.11406-1-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.39.5
+        Mon, 03 Feb 2025 04:55:40 -0800 (PST)
+Message-ID: <21d0a62a4f7f17304d81449e75c345f1e47948ae.camel@gmail.com>
+Subject: Re: [PATCH v3 3/8] scsi: ufs: core: Add a vop to map clock
+ frequency to gear speed
+From: Bean Huo <huobean@gmail.com>
+To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com, 
+ bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
+ avri.altman@wdc.com,  junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+ quic_nguyenb@quicinc.com,  quic_nitirawa@quicinc.com,
+ quic_rampraka@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, Alim Akhtar
+ <alim.akhtar@samsung.com>, "James E.J. Bottomley"
+ <James.Bottomley@HansenPartnership.com>, Peter Wang
+ <peter.wang@mediatek.com>,  Manivannan Sadhasivam
+ <manivannan.sadhasivam@linaro.org>, Eric Biggers <ebiggers@google.com>,
+ Minwoo Im <minwoo.im@samsung.com>,  open list <linux-kernel@vger.kernel.org>
+Date: Mon, 03 Feb 2025 13:55:38 +0100
+In-Reply-To: <20250203081109.1614395-4-quic_ziqichen@quicinc.com>
+References: <20250203081109.1614395-1-quic_ziqichen@quicinc.com>
+	 <20250203081109.1614395-4-quic_ziqichen@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Mon, 2025-02-03 at 16:11 +0800, Ziqi Chen wrote:
+> From: Can Guo <quic_cang@quicinc.com>
+>=20
+> Add a vop to map UFS host controller clock frequencies to the maximum
+> supported UFS high speed gear speeds.=20
 
-With the existing code, we are only setting up one period at a time, in a
-ping-pong buffer style. This tiggers lot of underruns in the dsp
-leading to jitter noise during audio playback.
+From the code, seems it is not "maximum" gear, it is corresponding UFS
+Gear.
 
-Fix this by scheduling all the periods, this will ensure that the dsp
-has enough buffer feed and ultimatley fixing the underruns and audio
-distortion.
+> During clock scaling, we canmap thetarget clock frequency, demanded
+> by devfreq, to the maximum supported gear
+> speed, so that devfreq can scale the gear to the highest gear speed
+> supported at the target clock frequency, instead of just scaling
+> up/down
+> the gear between the min and max gear speeds.
+>=20
+> Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+> Signed-off-by: Can Guo <quic_cang@quicinc.com>
 
-Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
-Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- sound/soc/qcom/qdsp6/q6apm-dai.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-index c9404b5934c7..148c3fb77168 100644
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -299,15 +299,17 @@ static int q6apm_dai_trigger(struct snd_soc_component *component,
- {
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct q6apm_dai_rtd *prtd = runtime->private_data;
--	int ret = 0;
-+	int ret = 0, i;
- 
- 	switch (cmd) {
- 	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_RESUME:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
- 		 /* start writing buffers for playback only as we already queued capture buffers */
--		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
--			ret = q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
-+		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
-+			for (i = 0; i < runtime->periods; i++)
-+				ret = q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
-+		}
- 		break;
- 	case SNDRV_PCM_TRIGGER_STOP:
- 		/* TODO support be handled via SoftPause Module */
--- 
-2.39.5
-
+Reveiwed-by: Bean Huo <beanhuo@micron.com>
 
