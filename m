@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-46807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44358A26174
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 18:30:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03634A26173
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 18:30:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB6137A2724
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 17:29:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95B2F3A8481
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 17:29:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A586620E019;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8EC320E01B;
 	Mon,  3 Feb 2025 17:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OLqUjhB1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RTMIFlAr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6CF20C499
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 17:29:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D120A20B808
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 17:29:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738603781; cv=none; b=Wr9v4XA+oOtj1R2VThKAdPYDlAEb/rZIvLhqUR7sxdpCVzu5JxMtfGBBTTIvbVDgproTwF2K8bnYxPw/RyeCAA5vF2Ij7+TKyRztiKjQ/Ig9nLn27bql8QZCf9p/nxtCwJth/uhDzAG5MFyJlenWZOcdGes27Oh/cjUB48K0etw=
+	t=1738603781; cv=none; b=hK9pR69nvfpprZjq8ZSzP3ay62G7iTxr9k3/8qPyylGpME1p8b6UYLAICHqK7CNb7XcVoViI2U0JRUhZwgoOq5sjnbyeEt2FNkN0y/T5tS3iVtmzMp2hopzWJr26kevmTdPimfSJRYAg4hUIS2OAgMj38fW5bBVSnh5Gdx6ULeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1738603781; c=relaxed/simple;
-	bh=zlnos82iUqx+CQNn8/y/plTrr00WcMZCC6iMPwasfUA=;
+	bh=hyETAALjAp1ZZkmUcX9prHNyliCQYJnSPIVGqiYhRz8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fhJDgfUzsp26wnuAmo1YOxTi2P7izWLwUTYhXJ3mwm/y+Qh3+TlKKlQ6uOaJyoospY3a5iegz+hStE53UAABzpA8pkUC+4cPl3Zg+xKNm/88LgZTLeNo7bP7zBpIvUlnEdSbMPPKJ1dK21HMq7wLk7hXLSy2f6aQX/+Mj5XsriM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OLqUjhB1; arc=none smtp.client-ip=209.85.128.44
+	 In-Reply-To:To:Cc; b=HFrAj2kMP1fLd8QwsEuz0qBRtkPkL6l3QStyAEFEcvjUWsRUKTfgMiuKYOfqxzbpv5iXZbbAwxjNkauYrgSawLMfpxY9vKP8I/0PxN5ZowA8godvg+kU25UGMikycCPINZKwYS2DQETkv4DUJNK5zoQeIMq94QmxnCMhRN6EdC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RTMIFlAr; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-436230de7a3so5888785e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 09:29:38 -0800 (PST)
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-38bec08834dso339369f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 09:29:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738603777; x=1739208577; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738603778; x=1739208578; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Tf+gynoUbS6lxW8GWMLHyFia33+uFkAfKbxTriQ8gQk=;
-        b=OLqUjhB1Q02TzTaszwI8UOMLBTyD7b6UqXKKjbJXA1JXNKC4QdkE+gJ53Hs9IUNMak
-         /zK73L2f+S3NsXsBH8gME2wG/11qbmAmURtMwbJkfOXbMj+zr9cZLBLgP7dYs7zS6UPp
-         Odt1Ac/uBotpWhEuK3+/rabgK01s/cCe1Q+jqxzOhTsipFV2t6QG5jXF5BWcgY2HeWSI
-         5wrLLS6FRZUFtaY905sXGKXP/1uH8nljnbcWMF3/bMGb3lT5S3WSo9O0NkqYylN/TCov
-         BEcgrqLuzwIVDjNVzlJe8tP9Vd9StUMWFQBcf2CtmSqTSOlck2HIb8wITuclEWb5ABSk
-         PNDQ==
+        bh=ZJ4SckAe3M5hIc6bII4OvJM2A7o5F83xDKuWL0+57KE=;
+        b=RTMIFlArVDT5vELC+OTFrYoX/+shiD8E3Q3XIm9sl7e/5EwRD6HMLRIFsKDGviZJl6
+         8drNKdqM+5gferuBij1MIJk/Vy/2KJYj1vtJvmUDKFystwNxTY0icEw6eqEe11LxVEH/
+         oRTZij8oXIUw9jlxk7vpfI207nGBokyriwnx08PHtvoi0rQOtzSSMzh+GiGOMxjyWQ1p
+         J+xWJw6Xw86fgF7AFfLzO8E0UHrzOU/G4XEQuWFvZXefTqIDAkKby5TxEZ0AKBDzPrBy
+         /RAP6mIo85F78Dj+5bQYzvWLodxO23F4hpA6+S74K5r5ZZbcaVjlytJbiSoPLj48Prej
+         r2rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738603777; x=1739208577;
+        d=1e100.net; s=20230601; t=1738603778; x=1739208578;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Tf+gynoUbS6lxW8GWMLHyFia33+uFkAfKbxTriQ8gQk=;
-        b=mTsaQZ6h6rMbr5KgUun/y4SaQf7k9uAE6meLrCMeWOiO4038F7hVRV3If2i6wgpvef
-         AtPJb3EF431pdmxIgOjq/IUy7ugIHZ0NtxxBZULoD9wr3Gsic9fk7j0cPBBQvsyxkLj1
-         U29Yxu+LfNLLgErS3vHAl1c0EHvYTwrtQAIm0ZF+QB+e2zqyJqpaTLALP+SCylgGb0Dw
-         nn1y0d8QrhI/YNA+ajd1antzopfzda5rta4Xp2hcvbX5Q/GuyVgt+x7WrE8Qgt0kh6AW
-         9a8VivbR6eMFjOflV3hhafyMZM0hjx+OB5C09zMIfTRcplzYKNvc6H6hFDhj5KXyOflw
-         hDiQ==
-X-Gm-Message-State: AOJu0Yw4bzi5IGlCdb0bgFIhvaZhZnHDb/0bABXzrDeSRVepcS+oMkY+
-	iak4kbRp89n2lgAVJKgX8hHvfPaAq3gGCuHatxWvV9YMEk7kcl8LnPbtUiQ9rdA=
-X-Gm-Gg: ASbGncs/M0YZbwPBYv0xXyvx4Lv1aHjCi1Bqq2Ho4kwBHsQHP2kMUzBzjcLGWlmgVVv
-	w67WugsZBtAj+qwSKN+I1k9ShdF1f+6a01uoZrMtXrPUPr2li28YHyp+Fi+ZzUy5NY9LngYAwBJ
-	MlD83fvYnSLFXIo9i6JkGnET1Qype8pHKEKPWKRz6ByX6QbiytOq40MjbpaGnOjTYtvm0N5OMrt
-	S8ym0nALm7bDpYbwnL1lkR+l1Iy4Ck5bf6aHUOR+BGjLLcMP6YmQmGZul8p+4Zr3x7Ac6JMqi84
-	n7yiqUNU6lGowuuaqwuaZOptyELQ4Rw=
-X-Google-Smtp-Source: AGHT+IHpCi8NFdRZPkNyfk3QyLKPMrZikIzHsaOMm+NxpNTCIpyZ/wD6KwoRM3Rv4yDTUHoHPY3etw==
-X-Received: by 2002:a5d:5889:0:b0:38b:ed21:c2ad with SMTP id ffacd0b85a97d-38da4e44075mr142580f8f.10.1738603776796;
-        Mon, 03 Feb 2025 09:29:36 -0800 (PST)
+        bh=ZJ4SckAe3M5hIc6bII4OvJM2A7o5F83xDKuWL0+57KE=;
+        b=Sf5fBnU0lzxmBcFuo1xMNLTraEDIyEfFMTgzXR6i8I+R5lhx2O+7/J0wQdcpmr0Fit
+         W9CbgcGs4qs1m7FLH8Ehg7x/Vw0hQtO3Xo8QiUtrB3qtx8RSM+nokl4q4if2SEsb261W
+         HzITtzu2SDsbWgToZmZWvIc6zFjleWW4nBBeHl+OREUMylW1w3pGmNtD5aNGVOKOL6Zh
+         UH4e5zmF0sOi/1OKoyqgKC3xhAXtQWFgA1rNDkFkvxtw3XWs+MUUOI2BttrYuayUemBA
+         zJV1PCgx28E+/0u4u0pKapfp0M+1XREfgQgT0Qj3lu1k+Xr2NYMcALLBwxoMjInrwFT+
+         2KKQ==
+X-Gm-Message-State: AOJu0Yzp+i2Qzw9JDNJ+4zrSTyLBJ1GTZtzzdlND5s6qKPtQZgLuELnJ
+	KidKKy4krzuYyKQQXqpF2zVu4h0Uwu/9b+IQMOpQPmlcvgQwNUcBa6THb+zJy28=
+X-Gm-Gg: ASbGncvcnMM/MJMu4qFov/Q2YI8oeDEEOzuLv29nC11kuEBF/Sq0jNT8cX1ohhRW63m
+	lGWWuuuLSa+XLzw0s87JF16BXhUvjQd1Vx/1MzaxuPb/piLBpN2jZLNwW2AF3jRNLzaw3mwcfps
+	9Gpp38eBaUd3jx6d1Z+0I13Pi18km201K7M8e6ERVoaVrG94uBqdnPv74LEUvJKpk/g/oMZcCoj
+	/uUqhLU+YTTu5sKBnLSnwxx85So/NvYGN9enDkPQIGVThLAdV6t+BYaVFwj9RVSJE8EChz0QzTl
+	WhEhgKCedPrrs/vHFPjzN808XJgx5q0=
+X-Google-Smtp-Source: AGHT+IFIj4gRIDP4pX0InpsIa4ZwSNF/sOa8F+6utSwOkoqKvTqGjRdYhd1+BwpOgmBytJ4Gc3rcYQ==
+X-Received: by 2002:a05:6000:1acb:b0:38b:f3a4:4e15 with SMTP id ffacd0b85a97d-38da4e027c5mr148030f8f.4.1738603778081;
+        Mon, 03 Feb 2025 09:29:38 -0800 (PST)
 Received: from [127.0.1.1] ([178.197.218.144])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c122e59sm13528122f8f.55.2025.02.03.09.29.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c122e59sm13528122f8f.55.2025.02.03.09.29.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 09:29:36 -0800 (PST)
+        Mon, 03 Feb 2025 09:29:37 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Mon, 03 Feb 2025 18:29:19 +0100
-Subject: [PATCH v2 2/4] drm/msm/dsi/phy: Protect PHY_CMN_CLK_CFG1 against
- clock driver
+Date: Mon, 03 Feb 2025 18:29:20 +0100
+Subject: [PATCH v2 3/4] drm/msm/dsi/phy: Do not overwite PHY_CMN_CLK_CFG1
+ when choosing bitclk source
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250203-drm-msm-phy-pll-cfg-reg-v2-2-862b136c5d22@linaro.org>
+Message-Id: <20250203-drm-msm-phy-pll-cfg-reg-v2-3-862b136c5d22@linaro.org>
 References: <20250203-drm-msm-phy-pll-cfg-reg-v2-0-862b136c5d22@linaro.org>
 In-Reply-To: <20250203-drm-msm-phy-pll-cfg-reg-v2-0-862b136c5d22@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -95,135 +95,60 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3986;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1491;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=zlnos82iUqx+CQNn8/y/plTrr00WcMZCC6iMPwasfUA=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnoPz6SXke1wN3LIxQpJSGHIG66Ahs05fJYVm97
- EI55upUv52JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ6D8+gAKCRDBN2bmhouD
- 17mjEACTFIg2S5sLDyvJm4cvRIu+58N1tdpml8Ho4aDS5A5mzbv5nDSQWGscQ6ljI5t9OSmyelR
- 52A6qLGVFefVpEEpaxw+5jbD/Gnac1QsvtOKvYzimBAXKaXegC2ib/um49dePLH4ucgVnF6e2xI
- GIJql9srxKV3yHXOYImS9uYWqkiKNtad4Zv0k8MSXRU1bwD50MwxDAT6jMc2OsSWl6KQTRsQ6tR
- kSEZc0l5I1K9IoWdthde7Dyzg8tTGvrd6bkNp3bqwFwpKFrhDmoZlKDKHNr5BhH2YR0Il3j/F0s
- M+cEIiDjOFhcrZGAAsUGheMS7PUA/BqOcu3aU3lqzrxfLUy/MJRNfuiH30NYo3GzQ8qv69xBssn
- /+Vr+579/tSyDrsXoSs7FvxGqAxKi6EkWAAJt2/36qbcK4HyIC9DChZQ/hqIK+okmYRrwkjE0p4
- Jzvo1yctgd57P2YQNfumHu5FNMlxYdYrMnvkPPq8EPIuJ4u9f6zpSqymJpxxp8B0UKt6IePF642
- pTXbF9H9tNw3zY+tgaswu/lBBWHxRGFNLzJ9SlSev2nN9Q5VasGmouLOlax0LPb2rKiCTcZMVjU
- KZIxOu1nQDbsKA8VLWxousm8vWOwe3B0mkdPQw5hWE3Y7uyxben/ffY27SUS64CQA1ujKG1x7yd
- FYITAlGx+wi/PRA==
+ bh=hyETAALjAp1ZZkmUcX9prHNyliCQYJnSPIVGqiYhRz8=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnoPz7wTiytFmItVkhR/QVQhjlyp7a9NNDuCzGS
+ viLLXyQdLeJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ6D8+wAKCRDBN2bmhouD
+ 13ecD/45uNqBQXPujtKXQplCzdZ1S842t1bD975cTQzBpJN1MF75/iexO0wkpEJ6CNa0k7fiP/H
+ RE2nQ7Q0HPfls6Secz/pG9DTzy2OSiQmnOHq6eOWExVJSl6cQcjZ7o0+y21srYhpSdXutcpJ6xp
+ kGJN7lQyXyOJ5fFGnPWALIeNVf0ozbkylM/Vz4rac4IqDcf1QfFvNA69wX14RhVxuyBsRLhq6z8
+ DKj5oBB3OU1ahAlviKu0t/QQjTzGe93CeZVECz1mQYMeP7t0ARY+TWzCwSxfz0ruWi9wOLMsUnL
+ tD0C/XZyJWAkMmPQvPdxXpvxi5iygP95ZVkYu7RZJLgbsS3BlkQJaacvP9/SjDzQ/FM7F6/l3nq
+ aSGm0kDHrtl9xKUaJYfzGT//rbAYE7+kC65UxR0/duievXHCMFHaCd+kK1EmI9RmTYintf5RMWQ
+ wTGUO5QpvM/s1cwyaVRE+BDfVT63Usc4PoQDKMTMDcBI2/hO86rn5zEwiqpAiHQwmj0p8CjsfYc
+ z44BJYZt19buIAOLuaMGpVtKb0AmjGXI7m43Ves93B7laSLFisFFqyWirB8cUp8sNbeiSimpZLh
+ LINguzbhhSWwMtaI2sxpN6vcKNUsG4zvl5703fAv43h5uvZI1EFLXtSFgw0MOjYo5K0ts2+uxAt
+ wzuwFw28fzFFykw==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-PHY_CMN_CLK_CFG1 register is updated by the PHY driver and by a mux
-clock from Common Clock Framework:
-devm_clk_hw_register_mux_parent_hws().  There could be a path leading to
-concurrent and conflicting updates between PHY driver and clock
-framework, e.g. changing the mux and enabling PLL clocks.
+PHY_CMN_CLK_CFG1 register has four fields being used in the driver: DSI
+clock divider, source of bitclk and two for enabling the DSI PHY PLL
+clocks.
 
-Add dedicated spinlock to be sure all PHY_CMN_CLK_CFG1 updates are
-synchronized.
+dsi_7nm_set_usecase() sets only the source of bitclk, so should leave
+all other bits untouched.  Use newly introduced
+dsi_pll_cmn_clk_cfg1_update() to update respective bits without
+overwriting the rest.
 
 Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
 ---
-
-Changes in v2:
-1. Store BIT(4) and BIT(5) in local var in dsi_pll_enable_global_clk()
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 35 +++++++++++++++++++------------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index c164f845653816291ad96c863257f75462ef58e7..e26f53f7cde8f0f6419a633f5d39784dc2e5bb98 100644
+index e26f53f7cde8f0f6419a633f5d39784dc2e5bb98..926fd8e3330b2cdfc69d1e0e5d3930abae77b7d8 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -83,6 +83,9 @@ struct dsi_pll_7nm {
- 	/* protects REG_DSI_7nm_PHY_CMN_CLK_CFG0 register */
- 	spinlock_t postdiv_lock;
- 
-+	/* protects REG_DSI_7nm_PHY_CMN_CLK_CFG1 register */
-+	spinlock_t pclk_mux_lock;
-+
- 	struct pll_7nm_cached_state cached_state;
- 
- 	struct dsi_pll_7nm *slave;
-@@ -381,22 +384,32 @@ static void dsi_pll_cmn_clk_cfg0_write(struct dsi_pll_7nm *pll, u32 val)
- 	spin_unlock_irqrestore(&pll->postdiv_lock, flags);
- }
- 
--static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
-+static void dsi_pll_cmn_clk_cfg1_update(struct dsi_pll_7nm *pll, u32 mask,
-+					u32 val)
- {
-+	unsigned long flags;
- 	u32 data;
- 
-+	spin_lock_irqsave(&pll->pclk_mux_lock, flags);
- 	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
--	writel(data & ~BIT(5), pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	data &= ~mask;
-+	data |= val & mask;
-+
-+	writel(data, pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	spin_unlock_irqrestore(&pll->pclk_mux_lock, flags);
-+}
-+
-+static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
-+{
-+	dsi_pll_cmn_clk_cfg1_update(pll, BIT(5), 0);
- }
- 
- static void dsi_pll_enable_global_clk(struct dsi_pll_7nm *pll)
- {
--	u32 data;
-+	u32 cfg_1 = BIT(5) | BIT(4);
- 
- 	writel(0x04, pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_3);
--
--	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
--	writel(data | BIT(5) | BIT(4), pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	dsi_pll_cmn_clk_cfg1_update(pll, cfg_1, cfg_1);
- }
- 
- static void dsi_pll_phy_dig_reset(struct dsi_pll_7nm *pll)
-@@ -574,7 +587,6 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
+@@ -616,7 +616,6 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
+ static int dsi_7nm_set_usecase(struct msm_dsi_phy *phy)
  {
  	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(phy->vco_hw);
- 	struct pll_7nm_cached_state *cached = &pll_7nm->cached_state;
--	void __iomem *phy_base = pll_7nm->phy->base;
- 	u32 val;
- 	int ret;
+-	void __iomem *base = phy->base;
+ 	u32 data = 0x0;	/* internal PLL */
  
-@@ -585,11 +597,7 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
+ 	DBG("DSI PLL%d", pll_7nm->phy->id);
+@@ -635,7 +634,7 @@ static int dsi_7nm_set_usecase(struct msm_dsi_phy *phy)
+ 	}
  
- 	dsi_pll_cmn_clk_cfg0_write(pll_7nm,
- 				   cached->bit_clk_div | (cached->pix_clk_div << 4));
--
--	val = readl(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
--	val &= ~0x3;
--	val |= cached->pll_mux;
--	writel(val, phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	dsi_pll_cmn_clk_cfg1_update(pll_7nm, 0x3, cached->pll_mux);
+ 	/* set PLL src */
+-	writel(data << 2, base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
++	dsi_pll_cmn_clk_cfg1_update(pll_7nm, GENMASK(3, 2), data << 2);
  
- 	ret = dsi_pll_7nm_vco_set_rate(phy->vco_hw,
- 			pll_7nm->vco_current_rate,
-@@ -742,7 +750,7 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
- 					pll_by_2_bit,
- 				}), 2, 0, pll_7nm->phy->base +
- 					REG_DSI_7nm_PHY_CMN_CLK_CFG1,
--				0, 1, 0, NULL);
-+				0, 1, 0, &pll_7nm->pclk_mux_lock);
- 		if (IS_ERR(hw)) {
- 			ret = PTR_ERR(hw);
- 			goto fail;
-@@ -787,6 +795,7 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
- 	pll_7nm_list[phy->id] = pll_7nm;
- 
- 	spin_lock_init(&pll_7nm->postdiv_lock);
-+	spin_lock_init(&pll_7nm->pclk_mux_lock);
- 
- 	pll_7nm->phy = phy;
- 
+ 	return 0;
+ }
 
 -- 
 2.43.0
