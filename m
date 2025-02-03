@@ -1,78 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-46796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AF5DA25FDD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 17:26:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67449A25FE3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 17:27:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B41E1887BC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 16:26:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF9183A818D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 16:27:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24CFA204C05;
-	Mon,  3 Feb 2025 16:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6149320ADEB;
+	Mon,  3 Feb 2025 16:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WSit5eS9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aIFJrGqT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D521C139
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 16:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C2120ADDB
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 16:27:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738599986; cv=none; b=fqL66yHhjos/NbhxERNkwlMRnm8izgpMBb/FO6itOGuQJHUnIowsznbbeEyeh7d7I6kNnlJqyxVi0dvwa3fVEADsD1UG5/mXs1qjfgjUxvW+4WRmbq912gtawrnkgtpv30ShotAqjbdYcS4zQ8stXRqkgHxd4WKb8aDFxKWLo14=
+	t=1738600038; cv=none; b=WXNCsje1vsGAtUMu7DhnYJSl2rAA0l1lKwwsqnIaGtx7j6twwScBLPHs1XwIieNsXK2jDYqkZ1xkk8QnGiLu1G8jNMM4+w9DnYKHLs0URUEmzWAYzDkY6n5clnpT86ngWOup27N/b6EnYGabt/tKVqhrC5dL8plC1xwLz4+wwv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738599986; c=relaxed/simple;
-	bh=OVibP8ReQyd3HQmntDn0iiGBJZzdEqwa87ZWcwRodw0=;
+	s=arc-20240116; t=1738600038; c=relaxed/simple;
+	bh=rR7hQh33KP0bP7q4B4IjjrkJyufHdp8U5zeSr0Radkw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IFVgt7R4O7ManciesvBc4J7ZDgSyRxnbjf8ZYBVg92kZgmPht7KBh6O+J+8W1oaEwuLA/HjcEKxhklO8JEeRAVFatfvwEp0FS7eOlCD+Bzaf7CBISpcCxs1nG4CtLlxa38wdjwtpTYzd5NIEZiXIzwin78NQeXzzxcn5XLZXqtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WSit5eS9; arc=none smtp.client-ip=209.85.214.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=F+jnKjJzUePeoK/6DH/NXC/3nnbKnvv6U0rV9NGP/+Ji0RiQ6Rbp19mOPA0e5Fo+vFWNgMZZnHXjdyqVlo8WMB2swKQaUZeGb/LwsWnl+cZ70KTDptUqlSnYajxbIsNQ0dGt0Af/H6cmT8xJFKQampRAZH4NsXB3TBhSlPqareM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aIFJrGqT; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21ddab8800bso63823765ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 08:26:24 -0800 (PST)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-21644aca3a0so107928005ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 08:27:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738599984; x=1739204784; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738600035; x=1739204835; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=fpVOevLK/nWn6zp5PxG8PfTYQAwpuKIZhTQ2q8JK1sU=;
-        b=WSit5eS9RXGVOCTJ3Sf5kWBU2jEnJtiLb2D33Jc9Fzs4GRqZg+EycRTOA9O1CIJ0bN
-         sOAiQfW4sp2VOnxF8AAUuD4ao5paRh5xkz73HC868qZvza6H5dFzFL5zvg0xuDEcFgnn
-         l0iuXzPwRvAqeusDkzxbelsPpSnPde+Nae6xU3Kq96zoXEH0Tv3mgUKxDXMpIACO9AYh
-         tXi+qaajoQYgkQhjS+yVk91rq6q6/K9NOo2N+g1W6nMyrb+WimMzKd9zmApa8cKMPYYa
-         0zf4aSdOfvmfh/h3QX0ldaflPIKJGJzUfYEvgqkkJRFywKOWi3894COOjLhkpL6sNM67
-         6zSw==
+        bh=JBg6gLdWMQpS46gItbVGZbM0/ir52n7XG2Rtnoa7Rhs=;
+        b=aIFJrGqTh8IncU6vk+Rcs9nl8kIT4zd3ghDKjeuOVTcsriJMfKlzNCGf6kww3UGxmE
+         rLfNeOV3PQ7BdNCwbIL/RDjxRJASk4wccuQH8xG7E1JxLH+uFtvLkIGwp6I9aW6eODaE
+         tY0z1qvOOy3YWaN7tMj1w5cN24AOQyiUtPnJetK3mFFWFfSgCdft2cCZiOALv+E7RDdF
+         w+qPZgkI6wUlkPV8WHf9jJeOhAm+3JzKT06dnL6WGo/t+VIAtFoqb3YAPiixt26n/Ikv
+         nMcEXdmcb3spECKD93aXlHWRMxAUUkYY/s3ejlI9QTJRAyj5rMuf11T+M1W1Q7pxy0xH
+         1L2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738599984; x=1739204784;
+        d=1e100.net; s=20230601; t=1738600035; x=1739204835;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fpVOevLK/nWn6zp5PxG8PfTYQAwpuKIZhTQ2q8JK1sU=;
-        b=lT+mJ7WXazP9+XLmDYQrb+Yy2Z/v6rEVCUSK2itFp6+SbvQnrrCAH+8eRZFx3yZLLo
-         sh+38VpKUFSfx8Sj7CJdmuK1DSyvtabIxDTnowunozQtSNJlNKsSl4Yi9z925KPmlsk/
-         brkjqjicbcVmbhnsy4n2Tv/uh1eOBbnvE0QiieTkcI2mkDR0+ah8mr/aS3Eti70iWvGU
-         jHx0RNb6e2q21XdcTACpEMYTO0oRc9YVNbBVk1I8xI3GYBKXTZLKGlokzW/GEVQwFYUK
-         4AXO72jEh1+nhLGY4dKZfKLPZns8T7ISm5GCEevypFdaj4zLOAuTl63LJoj0qzj0n5Di
-         l6UA==
-X-Forwarded-Encrypted: i=1; AJvYcCWZF5cjcJf0xos3DAi0FomBH1WOZlxFg6fT4Vz0BLqyNHC7KxwzLct26VK6CPyOssM4Zn/6OIfAUJAbaqmw@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCDRpmdlP9jpTQ++s1iFH74HFDyXX20fkyMV4oijx3PlN4GXrP
-	L3yrF86LHKOdDhUfYJkTOcl2g+FWZNiHEXMVz+Cbn4U3hlDEr+ukiDAekV31Gw==
-X-Gm-Gg: ASbGnctPXmjemx0M4Jh+MCu9vxZAp5/1QD5Qdct7qSkEQkqs+3YmVBDzr0IS2ThGAs0
-	CXy2CXdqXRgkLjgBxVaiBlYR+stxgSdWBM857TnSc/dNbhFHqqsBclFUuSgddYFILZQn/dzoq7K
-	0hZ1mQ2Gy0x5ziJEmnPHCnSjB4CHpmT9WlKbHmu+HVr7kTac/PZneSq4dw413kjNPk/s3v68Axh
-	E1SBzqpHcWmkVsGsRTgbHmRIg/Vh0os4Ipjex6Xyl9KVp1X6djLr6i5xXDQ6a27NwMhj/yE01HD
-	WW7aHd2TlcDTSsPANKvHXxlsiQ==
-X-Google-Smtp-Source: AGHT+IFOuXKAdtxhNw7CHCzZkSB+L34XynX4lNUCqGi6tRRgVguTo3ptD/9ETnLqXyet7OFZO69Avw==
-X-Received: by 2002:a17:902:f68a:b0:21a:8769:302e with SMTP id d9443c01a7336-21dd7c65746mr352286105ad.14.1738599983682;
-        Mon, 03 Feb 2025 08:26:23 -0800 (PST)
+        bh=JBg6gLdWMQpS46gItbVGZbM0/ir52n7XG2Rtnoa7Rhs=;
+        b=RdPoe9m3v2VuSNy0FfFYOBqyaLoTCxsGfFPuPcrn5UQ4Wq+mprNnQssC0wvmqVQDHu
+         YtrGMobhyyxBsFsBPJrdUnMchdCzPoVCCJrK68qpMHL35UX/eh5gKlcDCAEfj/qAQygY
+         hGz/7Iab6m2b+nLCtwts/BN3XRLhIu9qw4Norvy9FEDb2F9dX7hCxTsiVTfgnUfRRlBd
+         ZV+CyeJ6yHC7mxgoBOWth3jYgT2BJYuof7W0xQRMFhMYSIBZ8QkfxRM+0CyLLkQfoj7z
+         j9n/NGBHsycfyyBu+rNsGKfwr2X0Jyu9CCq55GSRbc9mDWsg7tRA5lr/fTwxlVbKyjWf
+         HhLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWc5n1TG3gI7R80iF5e9JTr8EkSYlq/x0MfvMxJzhMEP6T8EPU7wRO8iwC3YqwwrZmPiaPsuLESc+0guQsL@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCPs5+a0RU9zaMbbPys7sr8gvC5wxn0Er0W341i5Mv40pIZETe
+	LGTNdTquiWMreLbn0rWBthi5byuIcFWHm8I9Hdd+GZtipstvjNmU7/HMoGIooqBTeRUMwpafRhM
+	=
+X-Gm-Gg: ASbGnctXpo5xttdOeQhKQQmysA08b71zFKOEPqy6MGs/LuNsy7nvmxopfZ/974zMc/5
+	bm02kaOhwogzJ2EL/XOuEfdpfmf9qVPRiaa8TL3HVBgXdh3EL0azBhif3zC34N96qySSLEGyhZI
+	bjCMeQPF0nW2VBRHCdC7Hceg0YNaVUWOg7oQUJTg7smO+a8s2QpeH3mAt9rtwSJMaUizTxvPgF9
+	rkxmR0IB3man0C8cmwKn4o2tbqiYYNDN61NLDzog1Q0dr9vzhowx542hP5n8gOzy0kn8NzQ8ioR
+	zf9DZPI0v5q4eOM/tBxo6ixHPg==
+X-Google-Smtp-Source: AGHT+IHuJ1CvxSLBHcjRE6fl9BYtU6v4T+2YCHXV92PHfDZwQle0B9YOYr0Awsg0UnhM953ytkygeg==
+X-Received: by 2002:a17:902:7c93:b0:21b:bc95:e8d4 with SMTP id d9443c01a7336-21dd7dcb1e7mr291187365ad.35.1738600033231;
+        Mon, 03 Feb 2025 08:27:13 -0800 (PST)
 Received: from thinkpad ([120.60.129.34])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de31ee1fasm78854315ad.44.2025.02.03.08.26.18
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de31f7927sm78526795ad.99.2025.02.03.08.27.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 08:26:23 -0800 (PST)
-Date: Mon, 3 Feb 2025 21:56:17 +0530
+        Mon, 03 Feb 2025 08:27:12 -0800 (PST)
+Date: Mon, 3 Feb 2025 21:57:06 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: Varadarajan Narayanan <quic_varada@quicinc.com>
 Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
@@ -85,10 +86,11 @@ Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
 	linux-phy@lists.infradead.org,
 	Praveenkumar I <quic_ipkumar@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v7 6/7] arm64: dts: qcom: ipq5332: Add PCIe related nodes
-Message-ID: <20250203162617.sstmdvv7d3k53izf@thinkpad>
+Subject: Re: [PATCH v7 7/7] arm64: dts: qcom: ipq5332-rdp441: Enable PCIe
+ phys and controllers
+Message-ID: <20250203162706.bz2xtpyuvylgzfdw@thinkpad>
 References: <20250122063411.3503097-1-quic_varada@quicinc.com>
- <20250122063411.3503097-7-quic_varada@quicinc.com>
+ <20250122063411.3503097-8-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,12 +100,12 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250122063411.3503097-7-quic_varada@quicinc.com>
+In-Reply-To: <20250122063411.3503097-8-quic_varada@quicinc.com>
 
-On Wed, Jan 22, 2025 at 12:04:10PM +0530, Varadarajan Narayanan wrote:
+On Wed, Jan 22, 2025 at 12:04:11PM +0530, Varadarajan Narayanan wrote:
 > From: Praveenkumar I <quic_ipkumar@quicinc.com>
 > 
-> Add phy and controller nodes for pcie0_x1 and pcie1_x2.
+> Enable the PCIe controller and PHY nodes for RDP 441.
 > 
 > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
@@ -111,30 +113,117 @@ On Wed, Jan 22, 2025 at 12:04:10PM +0530, Varadarajan Narayanan wrote:
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-One minor comment below.
-
-
-[...]
-
-> +			assigned-clocks = <&gcc GCC_PCIE3X2_AUX_CLK>,
-> +					<&gcc GCC_PCIE3X2_AXI_M_CLK>,
-> +					<&gcc GCC_PCIE3X2_AXI_S_BRIDGE_CLK>,
-> +					<&gcc GCC_PCIE3X2_AXI_S_CLK>,
-> +					<&gcc GCC_PCIE3X2_RCHG_CLK>;
-> +
-> +			assigned-clock-rates = <2000000>,
-> +						<266666666>,
-> +						<240000000>,
-> +						<240000000>,
-> +						<100000000>;
-> +
-
-Does the drivers really need to set clock rate for these many clocks?
-
-No, as per the reply to my similar question to IPQ5424:
-https://lore.kernel.org/linux-arm-msm/9206e44c-da4f-4bdb-850f-fac511f4ddc7@quicinc.com/
-
 - Mani
+
+> ---
+> v5: Add 'Reviewed-by: Konrad Dybcio'
+> 
+> v4: Fix nodes sort order
+>     Use property-n followed by property-names
+> 
+> v3: Reorder nodes alphabetically
+>     Fix commit subject
+> ---
+>  arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts | 76 +++++++++++++++++++++
+>  1 file changed, 76 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> index 846413817e9a..79ec77cfe552 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> @@ -32,6 +32,34 @@ &sdhc {
+>  	status = "okay";
+>  };
+>  
+> +&pcie0 {
+> +	pinctrl-0 = <&pcie0_default>;
+> +	pinctrl-names = "default";
+> +
+> +	perst-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie0_phy {
+> +	status = "okay";
+> +};
+> +
+> +&pcie1 {
+> +	pinctrl-0 = <&pcie1_default>;
+> +	pinctrl-names = "default";
+> +
+> +	perst-gpios = <&tlmm 47 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie1_phy {
+> +	status = "okay";
+> +};
+> +
+>  &tlmm {
+>  	i2c_1_pins: i2c-1-state {
+>  		pins = "gpio29", "gpio30";
+> @@ -40,6 +68,54 @@ i2c_1_pins: i2c-1-state {
+>  		bias-pull-up;
+>  	};
+>  
+> +	pcie0_default: pcie0-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio37";
+> +			function = "pcie0_clk";
+> +			drive-strength = <8>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-n-pins {
+> +			pins = "gpio38";
+> +			function = "gpio";
+> +			drive-strength = <8>;
+> +			bias-pull-up;
+> +			output-low;
+> +		};
+> +
+> +		wake-n-pins {
+> +			pins = "gpio39";
+> +			function = "pcie0_wake";
+> +			drive-strength = <8>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	pcie1_default: pcie1-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio46";
+> +			function = "pcie1_clk";
+> +			drive-strength = <8>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-n-pins {
+> +			pins = "gpio47";
+> +			function = "gpio";
+> +			drive-strength = <8>;
+> +			bias-pull-up;
+> +			output-low;
+> +		};
+> +
+> +		wake-n-pins {
+> +			pins = "gpio48";
+> +			function = "pcie1_wake";
+> +			drive-strength = <8>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+>  	sdc_default_state: sdc-default-state {
+>  		clk-pins {
+>  			pins = "gpio13";
+> -- 
+> 2.34.1
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
