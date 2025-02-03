@@ -1,183 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-46735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD421A25849
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 12:39:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 550BBA257EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 12:17:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E5613A339A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 11:38:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C9DC7166F2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 11:17:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F6D5202F90;
-	Mon,  3 Feb 2025 11:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A5D5202C27;
+	Mon,  3 Feb 2025 11:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="GhyLvPdq";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="vWqptYS8";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="wmKO62n9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JpFGoISA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fallback18.i.mail.ru (fallback18.i.mail.ru [79.137.243.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775131D618C;
-	Mon,  3 Feb 2025 11:39:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBED201015
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 11:16:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738582745; cv=none; b=KFgSgZLlovyyDeyHOqRUZWiraJnRU2zqWL+TvH5AjYayjFpw65FqH0VSQZJBxUp0jncpgUfxgRlhziZCqMBTIXOvSZ8ydbdZP1np6WhBGimO0FfYoOP/Sf6C4OgyUhTojGEs2Uxh2tmNOnRLfwFUh76AJtmROo5Nv07lKBYjm2U=
+	t=1738581418; cv=none; b=BU2M+52eFbSNEVE/CHO7SViOwLtalFi1WZMNMFyt0emKrBLQj74yBcBeBe1gwyLqWRmMBJjJis8xyGflPPguQKvOEdgfaB+7nJC7r1uTR49keijdsOJgwBuidDSwIDQk6ZWZp8toOwy+COV1QLhh6qs1uRyVCwS8wbnwPwyNsCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738582745; c=relaxed/simple;
-	bh=cFIXdqCAzfqYTvVxJjPM/BClrqmVzRbkp7cmf1Xvi0s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=po470Q417GoLBTLPIbnTE5pPq3vxLwedBw7t6PTERibiunlOiwhZvCvJ7TJ2KWk6liva0eR/Yz6A56vhUUkc3glq8L5ZDMjonLqOMnHnSDXl5JpCHgzBzIDHfYpufIiYPjfx6rr/IOGXxaNRJvTsSnUvNT3wUSMd3EshoSRAmsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=GhyLvPdq; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=vWqptYS8; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=wmKO62n9; arc=none smtp.client-ip=79.137.243.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
-	h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=2TPkGOHH2dCmSc1u8xbyPFHf6VgozFSLf+PWHrqWYjg=;
-	t=1738582742;x=1738672742; 
-	b=GhyLvPdq1vV84kivqWwbBpD/5YIXaXvTyzVIPnZzQ3i8TqdoYMdxDdmHWYZVLGr6jufJDJ1Ivq32HvkldtPpBG1r54s/dR11/dQkyo038WY00ubfpoIAECH6Niuj0HwSAgUjeiW4yilOV732oSVlBfX7olSsqKn5lxzm9sfstmM=;
-Received: from [10.113.18.238] (port=56844 helo=send146.i.mail.ru)
-	by fallback18.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1teuPy-00FgrV-DD; Mon, 03 Feb 2025 14:15:06 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=2TPkGOHH2dCmSc1u8xbyPFHf6VgozFSLf+PWHrqWYjg=; t=1738581306; x=1738671306; 
-	b=vWqptYS8eo+GbCQQETxuOGrwi5iXNwvdDaP9I6K7n950+L0J0QUcq2n3+PXMpNSEbfVmIeU551a
-	u2YNk90GesidU6kxyBxmjAWyWlGjDtroUvkPz3QNeBsASzFsSVPbsEicnIUk3sGVkCKL5YPMs+MKP
-	6NA1DuStgXEt/ig6nbc=;
-Received: from [10.113.55.27] (port=35452 helo=send219.i.mail.ru)
-	by exim-fallback-5fbdbdcb77-q5bpz with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1teuPp-00000000Nzd-2Mxj; Mon, 03 Feb 2025 14:14:57 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=2TPkGOHH2dCmSc1u8xbyPFHf6VgozFSLf+PWHrqWYjg=; t=1738581297; x=1738671297; 
-	b=wmKO62n9lCFJaLEvHIecsdCj2Mw1XZgsS6Cm3w+AGu7iAXOpGuoUzfvSNP4XVmihRoycUCninCB
-	FDBLqifyi2k+CSIstyZDRtO/4NbMW8Jp2txLgQdQwNo7f4vKp0Gpog/OH9PTkLOb9/p+vOCmAhBf1
-	s4wZbMPfaSBo9lYDFzE=;
-Received: by exim-smtp-6d97ff8cf4-hcpzs with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1teuPb-00000000A0H-1qVO; Mon, 03 Feb 2025 14:14:43 +0300
-From: Danila Tikhonov <danila@jiaxyga.com>
-To: brgl@bgdev.pl,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	andersson@kernel.org,
-	konradybcio@kernel.org
-Cc: linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux@mainlining.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH 4/4] arm64: dts: qcom: sm7325-nothing-spacewar: Enable camera EEPROMs
-Date: Mon,  3 Feb 2025 14:14:29 +0300
-Message-ID: <20250203111429.22062-5-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250203111429.22062-1-danila@jiaxyga.com>
-References: <20250203111429.22062-1-danila@jiaxyga.com>
+	s=arc-20240116; t=1738581418; c=relaxed/simple;
+	bh=itoNMLYdiXiTIITprU+dQimHf4SEtH9w2NTnFP84r4s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NueSc36i4vnKSKQkvO+wnpMZyYNjxYCpsWnUB5n9KNFm30QU5Z4SHIBycQVRSHWvcvsjPxY5k4fki+8NL0pFomDhQwBXSV8iC60rLteYbzC8o65vh71EoKooMQ1K1v/AKoo8tyiffX+qpOjidw42oli1i83eNC+rBjwY5Ve7ahE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JpFGoISA; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-436246b1f9bso6507015e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 03:16:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738581413; x=1739186213; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ozyTlPLnaugnaEoHQY+R4AXQEUzCLS18GW7s5hKxc5M=;
+        b=JpFGoISAoTAVzIzOpRHzIQ8IpzsXgoKnqvp93Bl5OBng8NLJ6g5niAPqFEwfD4323t
+         xOugaRt1MVFIwqB6KWndLKyW72kABUxOUtL3nHD1a9K5mXmszrvX6d3rO1EWc3rsHW/V
+         NCzrTYHR23jJ9bfozd4OsErG3YNHkoPF9Q8JVNEmQ5TeWCAAPe0ykqAZxZnjycMP061R
+         8ACjyhlip/oDsjcKZbOsS4rmOknTnD7nuHKSlehL+Zi881NjIcd74EuZrN+OoFqS3C+h
+         0tFMUcWd1wfWiRbBR269dcR4mphmQmeOHTSIKGBCeSPYHpJ/5kGFhcWRRVp92lCnFn+e
+         1vgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738581413; x=1739186213;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ozyTlPLnaugnaEoHQY+R4AXQEUzCLS18GW7s5hKxc5M=;
+        b=m+76Jaz/wCwF505aAt4Jl0r9CE1JdNekNHipsfrc3UIaNTnPKAZ0APNZg2iZ8jDDXY
+         v16cwGvHets8I+0zuPB0rPduL2TaP60bzzqZbMLqqzHVO+kI0fUcGhJN9ut1Rk/P+1cf
+         0a+zxPmWxJsGpI08wfwUZ/92OUGzq8BHbCmOW7kqH6F9ZBxtctfn1VNK6e7880H0FdUW
+         3Zr6JeKeWfz5eUoi3VvfPtXNjr7p7qxV9dzADpgE8gQAneCCDTY7F8XTMu2NqjyzoVOu
+         SsrqrsDaNHyvcbuMuOs4pWP5Lq8E6XIQAynT2Co5+eadHlNiDldlwwqSpBEFgMGuyygN
+         CZ4A==
+X-Forwarded-Encrypted: i=1; AJvYcCXcEt4tYxXjuUr03B9r13dL6gVJFAEHXGjIzCbA6VIwphkWsBxzlV2oM8m3o0JeCYzO81HjvnTBu9HY7QnX@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOrxS8XWrirmygXwxC2Fz7s78BgFKHi6emiPLCRL9xdOdmgqk9
+	ZI8NOJRnnJIoq7Du+CKC3XlkXFgejs/gvNML1FVkclA0KrqjSYpZZCBEW0EU4bs=
+X-Gm-Gg: ASbGnctxcRC4Dw0BOVSU4pBcScifBQ6Rbn88WT8PFqij0nlOs77j1FoTHugYxdV84Yu
+	UcKe+FKSpRHx0W+ANXgEknJMY5eF/XFr17Jx1dtdFl+aMqe3pLFBSR3Usb2pUTRUCNj7zdCkMOd
+	TKlmuSXztEuEfdJTLqvsMo0CYJlMsMH5JxLclUDVV4H4q/8/fQv2NzOVORVfSG60MqT0qZ5rny1
+	myZQm9HiYv0ouHAdLBrdtGLzbbx9tV+2Z+cbJgc2v2drNbNOx/I1o5QC4Eb53SwqJd/EcxylGXi
+	eaFgLeljgiGcshvEBzf0h9lTz1sBQYSVzhk=
+X-Google-Smtp-Source: AGHT+IER4b8x4k4tSsG3NXSbXAj/U65SZ2uRmU7FJsNnr3cP55/fxC2eGPVEdqHi8nEykzMTwVK4eg==
+X-Received: by 2002:a5d:6d86:0:b0:38b:eb86:694c with SMTP id ffacd0b85a97d-38c5167a2cfmr6601607f8f.0.1738581412780;
+        Mon, 03 Feb 2025 03:16:52 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.144])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c1b57b6sm12487667f8f.72.2025.02.03.03.16.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Feb 2025 03:16:52 -0800 (PST)
+Message-ID: <ab65d951-7d1e-436e-8bcd-5b389991a0ef@linaro.org>
+Date: Mon, 3 Feb 2025 12:16:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-7564579A: 78E4E2B564C1792B
-X-77F55803: 4F1203BC0FB41BD985D89FF3B425BBEF98DB62D66459834914625F44760CB589CD62213F67905E7A4E7CCAA464028312BC5D9AA61015533C167BD26470AC1E4020DE98A5765A13B408D917D6130B1AFB
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7ECD3FEFFF0C7120DC2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6778DA827A17800CE79145AB6E9E75F07EEA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38BC08E230531AC9C901D70DF93126762B2E0EEAC1B7B6212993C62E9A0E66B5D81A471835C12D1D9774AD6D5ED66289B5278DA827A17800CE77A825AB47F0FC8649FA2833FD35BB23D2EF20D2F80756B5F868A13BD56FB6657A471835C12D1D977725E5C173C3A84C3A12191B5F2BB8629117882F4460429728AD0CFFFB425014E868A13BD56FB6657D81D268191BDAD3DC09775C1D3CA48CF41A8C64E0A55F0E6BA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B60F250D17497FEF6176E601842F6C81A1F004C906525384303E02D724532EE2C3F43C7A68FF6260569E8FC8737B5C2249EC8D19AE6D49635B68655334FD4449CB9ECD01F8117BC8BEAAAE862A0553A39223F8577A6DFFEA7C5B09DCDDD98ABCD243847C11F186F3C59DAA53EE0834AAEE
-X-C1DE0DAB: 0D63561A33F958A5DBA90CD3E1C6DDB85002B1117B3ED6965D43C33756616C13E20DC3F561CE4150823CB91A9FED034534781492E4B8EEAD6804EF05EF4ADF2AF36E2E0160E5C55395B8A2A0B6518DF68C46860778A80D548E8926FB43031F38
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF08EAF55EF79058FEFF0A684EF56C4CCCFC015EC7AA1B2F14868CE7E40FA2AC4B1F5011C79ABBA8E7D5D9813428A63F6C9F17F948BDBF95F937F80B1A62BB60B5B925FFA6CC0C2810E4FDFA4A036B0C3902C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojODHyJtLJ2QjsBkNTHL+FSg==
-X-Mailru-Sender: 9EB879F2C80682A0D0AE6A344B45275F3916920A183BFB2397B151A33FA7A9F8E00BC8B0849E6E4A04468141FFBBCC512C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: B8F34718100C35BD
-X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C11582D74B19986F8F049FFFDB7839CE9E5FC588583EA33AA1DEE3642A5B070E3E72F84B0BBC8E02CBFCB3B9E13CE27911827441742EF3F779
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSqgmQqKELHYk5zUdJfQ/bjz
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C1BDB3A1FA17F234B6049FFFDB7839CE9E5FC588583EA33AA13031D95DB377D0B753E0704197304C2D04D75D4748136814
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSocPAboFA1B25f1Wbpd8t+6
-X-Mailru-MI: 20000000000000800
-X-Mras: Ok
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] drm/msm/dsi/phy: Improvements around concurrent
+ PHY_CMN_CLK_CFG[01]
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250131-drm-msm-phy-pll-cfg-reg-v1-0-3b99efeb2e8d@linaro.org>
+ <gyslnttjsuav5dsbmglroujpwrqazokfnj65uhbegja3w27yxc@iamitbbg2e7e>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <gyslnttjsuav5dsbmglroujpwrqazokfnj65uhbegja3w27yxc@iamitbbg2e7e>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Configure the EEPROMs which are found on the different camera sensors on
-this device.
+On 31/01/2025 17:24, Dmitry Baryshkov wrote:
+> On Fri, Jan 31, 2025 at 04:02:49PM +0100, Krzysztof Kozlowski wrote:
+>> Calling these improvements, not fixes, because I don't think we ever hit
+>> actual concurrency issue.  Although if we ever hit it, it would be very
+>> tricky to debug and find the cause.
+> 
+> All of the patches miss Fixes: tags.  Could you please provide those.
 
-The pull-up regulator for these I2C busses is vreg_cam_vio_1p8, the same
-supply that powers VCC of all the EEPROMs.
 
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
----
- .../boot/dts/qcom/sm7325-nothing-spacewar.dts | 32 +++++++++++++++++--
- 1 file changed, 29 insertions(+), 3 deletions(-)
+I did not provide on purpose, but I don't mind calling these commits
+fixes. Will do  in v2.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts b/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
-index 4f964e5d34da..0c89f7726865 100644
---- a/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
-@@ -843,7 +843,15 @@ &cci0 {
- };
- 
- &cci0_i2c0 {
--	/* sony,imx471 (Front) */
-+	/* D-PHY sony,imx471 (Front) @ 0x1a */
-+
-+	camf_p24c64f: eeprom@52 {
-+		compatible = "puya,p24c64f",
-+			     "atmel,24c64";
-+		reg = <0x52>;
-+		vcc-supply = <&vreg_cam_vio_1p8>;
-+		read-only;
-+	};
- };
- 
- &cci1 {
-@@ -851,11 +859,29 @@ &cci1 {
- };
- 
- &cci1_i2c0 {
--	/* samsung,s5kjn1 (Rear-aux UW) */
-+	/* actuator (For Ultra Wide sensor) @ 0xc */
-+	/* D-PHY samsung,s5kjn1 (Ultra Wide) @ 0x2d */
-+
-+	camu_gt24p128e: eeprom@51 {
-+		compatible = "giantec,gt24p128e",
-+			     "atmel,24c128";
-+		reg = <0x51>;
-+		vcc-supply = <&vreg_cam_vio_1p8>;
-+		read-only;
-+	};
- };
- 
- &cci1_i2c1 {
--	/* sony,imx766 (Rear Wide) */
-+	/* actuator (For Wide sensor) @ 0xc */
-+	/* C-PHY sony,imx766 (Wide) @ 0x10 */
-+
-+	camw_gt24p128e: eeprom@50 {
-+		compatible = "giantec,gt24p128e",
-+			     "atmel,24c128";
-+		reg = <0x50>;
-+		vcc-supply = <&vreg_cam_vio_1p8>;
-+		read-only;
-+	};
- };
- 
- &gcc {
--- 
-2.48.1
 
+Best regards,
+Krzysztof
 
