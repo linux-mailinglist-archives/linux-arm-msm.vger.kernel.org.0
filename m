@@ -1,182 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-46792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0E33A25E6A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 16:21:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 499C1A25EF5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 16:38:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 943047A13BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 15:20:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7EDCB1881669
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 15:38:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40423208995;
-	Mon,  3 Feb 2025 15:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD15E209F5C;
+	Mon,  3 Feb 2025 15:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qRu0qJIn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TpiY7HNG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EC020013E
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 15:20:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6D620A5CA
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 15:37:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738596061; cv=none; b=uwq1HqIvfmb7z+oxsmotk18BropqaNC7mJAB8scV4kmvdOS48wxCNotkn9mGVa32vceUnTn8e4lAbWSg9kztD7SS6jc60tfDE7J0g+3cIDbLfqwHKtOV2mGXUFgkSR28iy4jsd8GobnhRhLX6Mo7hRaFNScUbk47cEVVBxLbd8A=
+	t=1738597054; cv=none; b=gvb9P/NCdzrrCp++95R6vsAzeDGE7vyfiA23t6G+txjakjpzgZVx7GxtOnMoN9m4nmAy2iI1uU753OvRjxZOt+8HjnXVeztmB+4qTnDRFuP3OoaKdDrfV8r+tuCaukAEWc6jq67xDBdsgBUX04+y13Ft8M/Y/NF/8JMjd+nZgUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738596061; c=relaxed/simple;
-	bh=1pk/fGGnQgOxwIyL078JGo17yd4G/o1v6YPLxHS7VdY=;
+	s=arc-20240116; t=1738597054; c=relaxed/simple;
+	bh=fXSwyb6kluFm+mPLGWZ4iJ5T4rAna3D85/lI9eoXJ/g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LvoXCbskeYDXhnmSzD5D3fftydF4LV8o/3BAzg1SDz6/enBfSBaiRRg5/7pd2Umbfd0VUul8r+CFtt/4hK9W4d3GPXilBaKVElY9WNseVQXyOyuKRMn4MNBZRcB0S61nvpqfavOSlLXzmBw78uEftJ9eYEL0OaMKFB515gP/hQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qRu0qJIn; arc=none smtp.client-ip=209.85.214.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=BEpuv9AZvVu2mK+fmjR1EEMuzOFgeL1f8MOd208b2YSZ/BL+DKbmiwJvgf7FFWdjqqn728B3FyiDvl/OTxDtgQCHptwha90dKDofrLqD20ChuxwcG39OlyGhzEppgW06HFGor2uY1X8W7Bph+Rm1O9l1WT3A0gfKqQnhM5oQMjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TpiY7HNG; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-216426b0865so77445965ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 07:20:58 -0800 (PST)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-54024aa9febso4568461e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 07:37:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738596058; x=1739200858; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+QBWhANjAr1OtmbGA6f8TwWPn8UUhnW9g2jYfFPH9TA=;
-        b=qRu0qJInPUmAHKzq3a5kBOKBjuVaPMA58FwgGmx30Jcu3Xn7043NpDz1x+Y2aHVIgR
-         LxenLOKt6YAHkkyJWmsdS0hRHlUJESCLgN0k4muZfsB3ZEaLmE2+jbGsg8xJwHn3mJTX
-         TloHMjaUwuwvxpRqyJlv3MVqHf2zgvbWfGej4KAUciwZnJhCh3fhs+0Y6fkiSFGpuMbj
-         9NI3T7oy99sXsZ3AFKRJ5lknnV6UXXHRRKKqEgo++oQsvmoEOcSKRTPQzXNk2DXduIH9
-         fioz7lJgubcNAnYF79eEZwZcLoEn8T9oihPUh8ce7kGjtGLsIJWe/FZG1VOjvaCO6DFG
-         u1hg==
+        d=linaro.org; s=google; t=1738597051; x=1739201851; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UHRIhzqvNH1bzn0adefvZWos6ZS5C0TEuaPKGujIOQI=;
+        b=TpiY7HNGSkPhFMjPF96dMgtKofwLOuWS4oXrZAhxjPtpf+OmGsadqTiOhlQGKx7ymm
+         Qxu2fQ+50v91dRjkoot8X7DxphsKitpL3+QIsyXB+RKoWkxCkvyKyKgdm7OlmugmJ0d6
+         SRPiwp8kWRgLQgHU6Zwfibwx2xKgYcHGRKclx8Dzkqiu5LXQ/+HyPQGX6c1TBQedNDqr
+         8XLwpw35Azd3iDbzM+QT1ZkfawbAWX+toqxc9h1n4Hmyn87ixrjOtIDN+c3nWsJApWuT
+         ILbCqB6/g/u5eHSxfORLQJgCk+64Y1s1teflNmSNS+UeAw9xDHTT0jUKIp2WE6lo/iP/
+         cWaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738596058; x=1739200858;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+QBWhANjAr1OtmbGA6f8TwWPn8UUhnW9g2jYfFPH9TA=;
-        b=r3Ts5FMgj2iPJNGxJKpMFZowmxgtTKDWsyCSWRc2qL9dk94ecR+ny7nxncVvvWI3JS
-         nSYg7NYo2+6gIXg02vpomv1BCvrDnVOYt7he3KuSm6qb4/r7J/CLbwtMeTl+F46wEef9
-         Q9wO0Xu+1bTmS6TQELTetf13fEiUN4TQKjgYI2ajgSR6+LmkahQ12Vc+lQZuNpitbf5x
-         WBVKHwrd8jiJLOP90CUlTLdgoSSzHlEf0LBxSFbXZ4UujlaMBER1nfS2grxYMyUmKrD+
-         Tp7SiZkI8wWVOwa0xXc1C5e4Tky5evJUfZIoVGd+2sisBdB51bDyexF9L87ablVsoBXj
-         Ln/A==
-X-Forwarded-Encrypted: i=1; AJvYcCUp4g0OTHi15Et11YQkxHCZuxcuSeAwr8BvT4lSpQItNM7GqQcTU5s+THCY6XNUnNUOuP1Vfb92glX/9a9a@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVYN70RMk1G+SuA/eZdFsBdRJe1/PvCdhyPt9mWymG52EAjz5f
-	qQRQzG2N0WkrfXJtOvTovygOnveWud2YTyJ7jyfvn1ZxCqd9HaieZkLRBe4+AA==
-X-Gm-Gg: ASbGnctT1x7CkvOi5iqOIDwUSusgPnyKaw+ho2UVyQOGkSSV1nZiwzuuLeTqglNF5j8
-	atYgLYNWJIyh3c74G0Eymcx14q0SjOh4JtL6CWJ6KTGj0s4HVRlzo0DFhb/Yz/XbiUCTDMtAYWq
-	af0NaPDyunRNh5fz+OafDd23RmjdjsK0JwHQzIQIt7SM+5D6Re4ZLAgEMUoQckI7OLg9fjCfXTA
-	/AGzyZ4gh/6CGkrFSqSp5YmETqJAO0T68Kl3KgaRkHuv3YyHmts/wUOOVAxiQReXMFDiuqTFhBl
-	BMt1NkycOoxxjmSzAxp8Aio3GQ==
-X-Google-Smtp-Source: AGHT+IGSJSMOvMrFBAciSyZK7WnnknN8UNArG9prlqW7rQYL/0HyxOSeul8ibO5cwBLiZ/VXl0y4dw==
-X-Received: by 2002:a17:903:23c5:b0:216:30f9:93d4 with SMTP id d9443c01a7336-21dd7c55e5cmr196882845ad.8.1738596058155;
-        Mon, 03 Feb 2025 07:20:58 -0800 (PST)
-Received: from thinkpad ([120.60.129.34])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de3306012sm77356935ad.179.2025.02.03.07.20.53
+        d=1e100.net; s=20230601; t=1738597051; x=1739201851;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UHRIhzqvNH1bzn0adefvZWos6ZS5C0TEuaPKGujIOQI=;
+        b=ax/+qU/olzJzH5+cJSXd8dg4Le+6T0aNY9tHRyuxZP43VJ7mIdYI/by5QzGTyrIeUY
+         fcwl58MVT0HwmDIl2f2GI9x3y9i1ijTP+n2vCPo+yyIfYg9CSIqjzg0kN7PAHqA+9Gyz
+         Tg4f+40Z7TCr3aX+fTtCRYEz/zG71wpILCp01GI2qv5lCFxh3YbrfEXitSrUoBZ6/+ad
+         PiY2ho674IL4XXFdz/dpxqauSn4+J1W72B7Aow4CWdPG77yZD1eTc+LSL6Jnu6x/ufw9
+         eJK+G4GukDMAAOWeZlT0ugX/bAtBz1U0buunLXc/WGOrTgBVpada9Y+8tBUlbAvhp1Pp
+         /uHw==
+X-Forwarded-Encrypted: i=1; AJvYcCXX9ZhF26NT1zW+g6lsix7kPCw11bTJfnOJULixGz9nxpnRh+LDzHkXFTOrAXcizXmUaAt8eTCTgxMoVJ7z@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoyltbBceRZSxqQRmOpJoowstPGd6pSKsyBkpvpHovVCCjsrv+
+	FVwa6ALfyY5i89mXJHM/yamH2m8ZvrzZrw0I6zL4oL4/AL8QbFT/c48d++idEMs=
+X-Gm-Gg: ASbGnctUMIm5yHXhji1F5MNWdfUtR7rBGTmYhPDXs42zF4FGRgNoat3rFuzeTGj3IyD
+	AQIBsewn9yyGVrSjkI4KMzOtx0m5SQXgDPQWEK0VovZupMNxzL6vblbb+UNJoWhC0qKy9sYr3VJ
+	qNkvbbyUTfpJlwbTTKdL/tPRl4AkkEodZxjsyKFJXdUJ8ASBLFwjW55WbD5Pn2ydZb1tCEMuc7U
+	TCAujvbWw+Dr4emfi50vaaRRlS3HJ+dl/T8R6ZxGXf9hUVfQf7m8HwzOJeU6ejM/3KcDHIB/stZ
+	VkjO0ZTazls2OKlLB3k7jDhzzNST+i9P0vtGT1PWAz9BL2S3Qwzyjx9FTXNqQQaXxqVpPAQ=
+X-Google-Smtp-Source: AGHT+IGh+KF+0uAYGcEmgM7tPX/mz+NrDdDUP0TAAcJzdf4B7LZrgSe3h4Ylxvx3xmOG8C7EsGJV7w==
+X-Received: by 2002:a05:6512:3c8f:b0:543:bbe1:b0fe with SMTP id 2adb3069b0e04-543e4c03049mr7131057e87.24.1738597050676;
+        Mon, 03 Feb 2025 07:37:30 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543ebeb0993sm1308210e87.132.2025.02.03.07.37.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 07:20:57 -0800 (PST)
-Date: Mon, 3 Feb 2025 20:50:52 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	konrad.dybcio@oss.qualcomm.com, quic_mrana@quicinc.com,
-	quic_vbadigan@quicinc.com, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v4 3/4] PCI: dwc: Improve handling of PCIe lane
- configuration
-Message-ID: <20250203152052.kwbmt6bhjzv55ddk@thinkpad>
-References: <20250124-preset_v2-v4-0-0b512cad08e1@oss.qualcomm.com>
- <20250124-preset_v2-v4-3-0b512cad08e1@oss.qualcomm.com>
+        Mon, 03 Feb 2025 07:37:30 -0800 (PST)
+Date: Mon, 3 Feb 2025 17:37:28 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+	Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Hans Verkuil <hverkuil@xs4all.nl>, 
+	Sebastian Fricke <sebastian.fricke@collabora.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Nicolas Dufresne <nicolas@ndufresne.ca>, 
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, Jianhua Lu <lujianhua000@gmail.com>, 
+	Stefan Schmidt <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of
+ SM8250 SoC
+Message-ID: <fhqlt5xsz7yyrbnvhnovt66gzldjjbitpeznlvxztobdxmjnuw@d4avd5fq3muh>
+References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+ <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
+ <Z3_nCPk_g8znto4A@hovoldconsulting.com>
+ <64f8bebd-35e1-c743-b212-e1a3292bade2@quicinc.com>
+ <Z4EuiPEw8mvDQ2gv@hovoldconsulting.com>
+ <24334fb8-4d83-eb06-aee3-dfe1f8e4937b@quicinc.com>
+ <552972B8-1ACA-4243-A8E3-8F48DAF39C5C@linaro.org>
+ <Z6CApNuSlPGvVL2k@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250124-preset_v2-v4-3-0b512cad08e1@oss.qualcomm.com>
+In-Reply-To: <Z6CApNuSlPGvVL2k@hovoldconsulting.com>
 
-On Fri, Jan 24, 2025 at 04:52:49PM +0530, Krishna Chaitanya Chundru wrote:
-> Currently even if the number of lanes hardware supports is equal to
-> the number lanes provided in the devicetree, the driver is trying to
-> configure again the maximum number of lanes which is not needed.
+On Mon, Feb 03, 2025 at 09:39:00AM +0100, Johan Hovold wrote:
+> On Fri, Jan 10, 2025 at 08:01:21PM +0200, Dmitry Baryshkov wrote:
+> > On 10 January 2025 19:30:30 EET, Dikshita Agarwal <quic_dikshita@quicinc.com> wrote:
+> > >
+> > >
+> > >On 1/10/2025 7:58 PM, Johan Hovold wrote:
+> > >> On Thu, Jan 09, 2025 at 11:18:29PM +0530, Vikash Garodia wrote:
+> > >>> On 1/9/2025 8:41 PM, Johan Hovold wrote:
+> > >>>> On Thu, Dec 12, 2024 at 05:21:49PM +0530, Dikshita Agarwal wrote:
+> > >>>>> Initialize the platform data and enable video driver probe of SM8250
+> > >>>>> SoC. Add a kernel param to select between venus and iris drivers for
+> > >>>>> platforms supported by both drivers, for ex: SM8250.
+> > >>>>
+> > >>>> Why do you want to use a module parameter for this? What would be the
+> > >>>> default configuration? (Module parameters should generally be avoided.)
+> > >> 
+> > >>> This was discussed during v4 [1] and implemented as per suggestion
+> > >>>
+> > >>> [1]
+> > >>> https://lore.kernel.org/linux-media/eea14133-2152-37bb-e2ff-fcc7ed4c47f5@quicinc.com/
+> > >> 
+> > >> First, the background and motivation for this still needs to go in the
+> > >> commit message (and be mentioned in the cover letter).
+> > >> 
+> > >> Second, what you implemented here is not even equivalent to what was
+> > >> done in the mdm drm driver since that module parameter is honoured by
+> > >> both drivers so that at most one driver tries to bind to the platform
+> > >> device.
+> > >> 
+> > >> With this patch as it stands, which driver ends up binding depends on
+> > >> things like link order and what driver has been built a module, etc. (as
+> > >> I pointed out below).
+> > >> 
+> > >>>> Why not simply switch to the new driver (and make sure that the new
+> > >>>> driver is selected if the old one was enabled in the kernel config)?
+> > >> 
+> > >>> Its about the platform in migration i.e sm8250. Since new driver is not yet
+> > >>> feature parity with old driver, choice is provided to client if it wants to use
+> > >>> the new driver (default being old driver for sm8250)
+> > >> 
+> > >> This should be described in the commit message, along with details on
+> > >> what the delta is so that the reasoning can be evaluated.
+> > >> 
+> > >> And I'm still not sure using a module parameter for this is the right
+> > >> thing to do as it is generally something that should be avoided.
+> > >> 
+> > >I understand your concern of using module params.
+> > >I will modify it to rely on Kconfig to select the driver (suggested by
+> > >Hans) instead of module param.
+> > 
+> > Please don't. This makes it impossible to perform side-by-side
+> > comparison.
 > 
-> Update number of lanes only when it is not equal to hardware capability.
-> 
-> And also if the num-lanes property is not present in the devicetree
-> update the num_lanes with the maximum hardware supports.
-> 
-> Introduce dw_pcie_link_get_max_link_width() to get the maximum lane
-> width the hardware supports.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->  drivers/pci/controller/dwc/pcie-designware-host.c |  3 +++
->  drivers/pci/controller/dwc/pcie-designware.c      | 14 +++++++++++++-
->  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
->  3 files changed, 17 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 3e41865c7290..2cd0acbf9e18 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -504,6 +504,9 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->  
->  	dw_pcie_iatu_detect(pci);
->  
-> +	if (pci->num_lanes < 1)
-> +		pci->num_lanes = dw_pcie_link_get_max_link_width(pci);
-> +
->  	/*
->  	 * Allocate the resource for MSG TLP before programming the iATU
->  	 * outbound window in dw_pcie_setup_rc(). Since the allocation depends
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index 6d6cbc8b5b2c..acb2a963ae1a 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -736,6 +736,16 @@ static void dw_pcie_link_set_max_speed(struct dw_pcie *pci)
->  
->  }
->  
-> +int dw_pcie_link_get_max_link_width(struct dw_pcie *pci)
-> +{
-> +	u32 lnkcap;
-> +	u8 cap;
-> +
-> +	cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +	lnkcap = dw_pcie_readl_dbi(pci, cap + PCI_EXP_LNKCAP);
-> +	return FIELD_GET(PCI_EXP_LNKCAP_MLW, lnkcap);
-> +}
-> +
->  static void dw_pcie_link_set_max_link_width(struct dw_pcie *pci, u32 num_lanes)
->  {
->  	u32 lnkcap, lwsc, plc;
-> @@ -1069,6 +1079,7 @@ void dw_pcie_edma_remove(struct dw_pcie *pci)
->  
->  void dw_pcie_setup(struct dw_pcie *pci)
->  {
-> +	int num_lanes = dw_pcie_link_get_max_link_width(pci);
->  	u32 val;
->  
->  	dw_pcie_link_set_max_speed(pci);
-> @@ -1102,5 +1113,6 @@ void dw_pcie_setup(struct dw_pcie *pci)
->  	val |= PORT_LINK_DLL_LINK_EN;
->  	dw_pcie_writel_dbi(pci, PCIE_PORT_LINK_CONTROL, val);
->  
-> -	dw_pcie_link_set_max_link_width(pci, pci->num_lanes);
-> +	if (num_lanes != pci->num_lanes)
+> Why? You can have two kernel builds and run the same tests. And you
+> obviously cannot run iris and venus on the same hardware at once anyway.
 
-Move this check inside dw_pcie_link_set_max_link_width() where we are already
-checking for !num_lanes.
+At once not. But unbindng and rebinding another driver works perfectly.
 
-- Mani
+> > Also as venus and iris drivers are not completely
+> > equivalent wrt supported platforms, distributions will have to select
+> > whether to disable support for older platforms or for new platforms:
+> > Kconfig dependency will make it impossible to enable support for both
+> > kinds.
+> 
+> You shouldn't have both enabled. The only reason for keeping support
+> for the same hardware in both drivers is that the iris support is
+> incomplete and considered experimental. No one should enable that except
+> for development and evaluation purposes until the driver is up to par.
+> And then you drop support from the old driver along with the config
+> option.
+
+That's the plan. This modparam is a temporal thing for transition
+period. And yes, as a developers / platform enablers we want to be able
+to have a quick turnaround between drivers.
+
+Please stop forcing your decisions on other people. The Linux kernel and
+its development process has always been about providing a possibility,
+not a policy.
+
+> 
+> Johan
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
 
