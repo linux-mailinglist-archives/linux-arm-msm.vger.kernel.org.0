@@ -1,206 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-46729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55889A25798
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 11:59:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A853A258A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 12:55:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE6D33A838F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 10:59:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 243C73A2ECB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 11:55:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16D212036F9;
-	Mon,  3 Feb 2025 10:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DFE820371B;
+	Mon,  3 Feb 2025 11:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sDyDYXVN"
+	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="sQbtKdep";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="acLk+Y5J";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="O6KBE2Qj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fallback19.i.mail.ru (fallback19.i.mail.ru [79.137.243.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DE1202F97
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 10:58:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D96E2036F0;
+	Mon,  3 Feb 2025 11:55:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738580311; cv=none; b=le/DNigR2R8nOKISYvdlixBPFF1zInVUifD4CSsmTk6JJmAuk49Yk1fLlUje19aECk0r4/K8qTyujo/VR29ffkmHwIW9PGYCCN799G9RrGqLrGjaM6xe5SU0aT9C0GkMG7JzC+peFO+3ut0AG+GfO2L3HZFKF0lB5aZs8qxGVv8=
+	t=1738583708; cv=none; b=eQvVsN6Gl+AghQXKd64LMedBkMNwwwNrMfwoSWASYS74s07Jw39fkRa0tNXJEdssbTjkkNyz6CKm/R8S1hR9HUpeebk4bYDTGV3/l8RcTQMNZ3rM/22s8uuiUG4fvu8Wwvm6I8Wmlcs/YcZPiRhyPOUn0zIUZ70uEDXaH2+PzbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738580311; c=relaxed/simple;
-	bh=Jh+EL4p/6JSMFadATMQ/dMawzZEL4l2MOkq/1iyumns=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pd2aWmfzIA23jy07wZHKtKl9stFLsh/PFD4cz0kTElugtIw7/ghQ2FsFju0r9awo0LiNMz7SQOm2ToQ/IGUnn7F2+QmFw6yB6IeO1n0nr89bhMfvT/t2t4R1evrKLCV9OEnxtVjouweG4dz4AQteBNvtjvbnMRDs1QDnQAyONOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sDyDYXVN; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4368a293339so49773175e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 02:58:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738580308; x=1739185108; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YU2toixtghG/UIHIgDfi+TrJAb+KbxkNuLjUS/jgDXM=;
-        b=sDyDYXVNFP+iewVdmnRCOTGbB8y1zrIccusyVzUPSBbgkIsQB7aC0cfik+PBycS4Am
-         J+TwWKqOqbdXe1UgHVTSwOl4LM8Ey4NRML6gfy4YXr1gZFLyQzqt7tpA30BeLx+aTP5G
-         8+vtiNJtmtQV+wzh/u7f4CWan+VhimqYarzI974NqFmvKOMuVNcdKRXwuhLSX/VXdhOm
-         tE+YNG1fMr0Sh7d6wMCGGfA4YiIpFNjjc4E6r7VSb/0B4IP8ufzC3DtYVAFiX22R289n
-         +LB2hE03iFXO56yimOiujIdS+SJXsgbdweOshpYRFeWQfaAB+TVUsct+xsH5KOKxXpXl
-         01QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738580308; x=1739185108;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YU2toixtghG/UIHIgDfi+TrJAb+KbxkNuLjUS/jgDXM=;
-        b=i25lXnt6gk+ZehTiWpw1KsttUTC2LvUKmoQxGnHshnZP53GHsT23ubk3/rwYucW0+M
-         eJTCVZqqhZ8KE4CON/LkwxitkbzJBaYPK5Wse1HPdG/3/tucOep0YBQ8lafaWk2yX1rL
-         15Ir55G2wN6KLpPd6Wzxq235IFzGe9sAMAyUIvFI5bccVjYZxh0pb3eoBFV0EfYpV3/p
-         euBfptX2anu5RQyRZwFEsEOQ7j/6v0PFAdzr417ldvpx2Dec8CkTFGmhZt19yt/cos98
-         1ToMCCmWM3/3iLIHmWtBQjrunuZm3YLNaAIYZqOWYhTVYckT6duZClf5blEsmZDkD0EY
-         WlIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWh2ntTCXYHIcWrB+L0wqUvZ2faDvhFFgS9nfaFHOjtoy0qKuWJ+dwpobPm/+aH0tp9Nnku2yK9codVmCom@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywf17g5WC8fbRbh09xzIDxIyRHDSQxEP6uXynPslesLXKdS/1e8
-	KkSdpRMRWM1osvfanhrzrPFcLqtzjtkVzB01OqFkZuw8ZKUOLU47OwFyQifh5TE=
-X-Gm-Gg: ASbGncsXR3U+UyMgqO4qHV+UUhaDsVNlMxU2W+aQjPBPIesvDcKz/8dDgEAJV2GcR9z
-	gIEeo/kbojAx0bbKym7wIcD6Gi3iVrDnSw5ecgczb3UXE8LVXIL4FK3LwnVn51BKePvZpc76t7I
-	df7A75rhMeMguH0tBeW5rob3HmL/DFpFF75lsMBXT9xMhh7eTP3E3gedVXjDoio03816ZgMqHLF
-	KXdTClXYCvCJywNZ5pz7/FruAmG+9kce/gcX4XAxP/K/CB8dV4qGJApKu/NiwNmPXKcaCtKG7Ed
-	iouIayKl9dNdOl0=
-X-Google-Smtp-Source: AGHT+IG3sxZoF1BxKwDs6D8yKh85vjYaq2CGCwZLuA4JBiE6X/IAqNanFP9ag+j0VZ8Qqg5mgek9bg==
-X-Received: by 2002:a05:600c:35d1:b0:436:1971:2a4 with SMTP id 5b1f17b1804b1-438dc3cc9f1mr185238805e9.17.1738580307609;
-        Mon, 03 Feb 2025 02:58:27 -0800 (PST)
-Received: from [127.0.1.1] ([86.123.96.125])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c13a0efsm12555083f8f.60.2025.02.03.02.58.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 02:58:27 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 03 Feb 2025 12:57:59 +0200
-Subject: [PATCH v5 4/4] drm/msm/dp: Add support for LTTPR handling
+	s=arc-20240116; t=1738583708; c=relaxed/simple;
+	bh=08M3p9oGMzidDgKck+CoH1GdYkANxKqXHb1MUIHtTwg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eNlC2cw77Ld4uwKc/t45xxcVZKlVPQF6hTR+CrpbJAnHcES6ugrO1/2JLCEF0W84ioQtDLZZ3YjvQCwFOVau90WgJFoQjCqp9ifpj3r+rKw2IlvNFCP2BNKVzXkq+UG3BeaksFauqi5eb9aMe9yxM2qbNjCk/P58BeNh10ALmEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=sQbtKdep; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=acLk+Y5J; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=O6KBE2Qj; arc=none smtp.client-ip=79.137.243.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+	h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=RvJ+Uu+o3CLYL49CuJSBzX+iZF2ycLEFbwANuuq0X4c=;
+	t=1738583704;x=1738673704; 
+	b=sQbtKdep1gnFRKc712yaxASwKZU8HO7MOvloKY58mEIOHQuDIsrCiaAZtwy7JqqxYPVfYvf7ujo3AjPOjYLR2vxlk9fWknkdO+a8SlX7Ot9iSjsZYjawQfWxFZSYbV4XmxQU92ZuKQVVbNXSFGoISiyUugag49FbgZNrvY5d9Ic=;
+Received: from [10.113.249.120] (port=36674 helo=send147.i.mail.ru)
+	by fallback19.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1teuPt-008esJ-Ii; Mon, 03 Feb 2025 14:15:01 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=RvJ+Uu+o3CLYL49CuJSBzX+iZF2ycLEFbwANuuq0X4c=; t=1738581301; x=1738671301; 
+	b=acLk+Y5JVuE9Y6K+oGzvesYgjQz8tePI9gKPNkmisc45msVWdJ73effPc54wySCNZ0vQQYtmYTB
+	h6mo390MbPZkzJ69mInG6r4JfdZVPLYqnPcWtpSvyhUrGdcxVgDnH7BwVxwcfbjKrjfw/lYRuKvME
+	4AKGLRIx7TBGG/9IFtA=;
+Received: from [10.113.228.105] (port=33732 helo=send126.i.mail.ru)
+	by exim-fallback-5fbdbdcb77-8zhhh with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1teuPk-00000000IpY-2SYj; Mon, 03 Feb 2025 14:14:52 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=RvJ+Uu+o3CLYL49CuJSBzX+iZF2ycLEFbwANuuq0X4c=; t=1738581292; x=1738671292; 
+	b=O6KBE2QjQcojRftB/yQ72SdQY9zAPqanV8PyCUteGsgb0rSF64+D2/OLy/MCQodb7MaR3daXTKY
+	ifwXzIWJCq5xLhKEhmqszzKEv1L3MbADZHoOiNT8r9Zl2l+i1Yb/qawiQv8QfNtWo3TqoHSvya5k/
+	iU3NWQ9Sw+mC9hvb7xk=;
+Received: by exim-smtp-6d97ff8cf4-hcpzs with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1teuPT-00000000A0H-1tNK; Mon, 03 Feb 2025 14:14:36 +0300
+From: Danila Tikhonov <danila@jiaxyga.com>
+To: brgl@bgdev.pl,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	andersson@kernel.org,
+	konradybcio@kernel.org
+Cc: linux-i2c@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux@mainlining.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	Danila Tikhonov <danila@jiaxyga.com>
+Subject: [PATCH 0/4] sm7325-nothing-spacewar: Preparing for the cameras
+Date: Mon,  3 Feb 2025 14:14:25 +0300
+Message-ID: <20250203111429.22062-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250203-drm-dp-msm-add-lttpr-transparent-mode-set-v5-4-c865d0e56d6e@linaro.org>
-References: <20250203-drm-dp-msm-add-lttpr-transparent-mode-set-v5-0-c865d0e56d6e@linaro.org>
-In-Reply-To: <20250203-drm-dp-msm-add-lttpr-transparent-mode-set-v5-0-c865d0e56d6e@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
- Danilo Krummrich <dakr@redhat.com>, 
- Jani Nikula <jani.nikula@linux.intel.com>, 
- Rodrigo Vivi <rodrigo.vivi@intel.com>, 
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
- Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, 
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
- intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
- freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3226; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=Jh+EL4p/6JSMFadATMQ/dMawzZEL4l2MOkq/1iyumns=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnoKFIouFywSlDaZiCw4jErWqSRIqEpI3epr4AW
- pUfu6e93kKJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ6ChSAAKCRAbX0TJAJUV
- VkinEADM92QE1zN3OdqwoLmwOoyxpCMwh545d6+dM1Jydy6p2+/Kc4BB1xjuxNF1HNo5rtoqH07
- ym9dN4Q2Qq7XF1KIk/3CrsDT4I6xsQyH+dZXcInkRjCUYzr92gP/vw1kR3ZEqKR0MhGKoby+vee
- AMNZ73KL9sbyxqDOSvYlfU64YT+4M3Y0RjyunUFlc8d0B77KoL9D1lf+9S/cf/VIG5xt10eHvCI
- Y/7TVphY3czZAV8pnzwIf8rvKl8ovXxM1wuxLd5rbHSICbG9xkbeuPm9Gk0ayUP21CpdlnMwnrO
- ZgiMbd646uADECWUTsnLP+vy/yGmYdZk+wxCNssoiv8Uwdn5ZBIDrTreTRLOTRfs0yrkWKw+2Rr
- nvsWS9eg48JbmcR2ZEUHO9TK8fTbA7zOnb/X1M9Xm6dTObpCTrH/1WvFKyJHOT+F8lkUhOhWYM5
- FHml27aV+44Peh/GLto6Qzz4d2+f92sCsBH9ywrCKadg7S/0e9kxiYCsVG5CPv74tlxnI1MJTIk
- 38joR4PETewNrhxKk1ppq87XoZJCSGrVxk/IZsbYHALamKacJUTrn6kJ91yS/mNIU23LtyOTkdh
- M2PhJ+2wRSHuQtQv19TyrWt+d38PCVc5NM4iGWqb0J4QbPzEgPwhp1xeCLwRcvp1mk/vM6udNFY
- hRWMZsNaZcQlw7w==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+Content-Transfer-Encoding: 8bit
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD985D89FF3B425BBEF64F830AAED58760BC4D045B50C24E742CD62213F67905E7A2AC4D49D072AC54EBC5D9AA61015533C2A6F8CC78338C5D54B7100E68FD373F2C5C7FD16981B76AE
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE74D62681FFDF80F84EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006379BF04B24BEB7B2D58638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D805C50B9BDACD356DEE9DB705B7A98D04FBA8683A809B405DCC7F00164DA146DAFE8445B8C89999728AA50765F7900637E603D20A273AEC4F389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC80CABCCA60F52D7EBF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C2D01283D1ACF37BABA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B6B0E9FD5D4288160E3AA81AA40904B5D99C9F4D5AE37F343AD1F44FA8B9022EA23BBE47FD9DD3FB595F5C1EE8F4F765FC72CEEB2601E22B093A03B725D353964B0B7D0EA88DDEDAC722CA9DD8327EE4930A3850AC1BE2E735F3CCD8A865B74A75C4224003CC83647689D4C264860C145E
+X-C1DE0DAB: 0D63561A33F958A5DF821E4F645B6DB85002B1117B3ED69691FF9B2459FBC3D1AD0703CEB2EF9A27823CB91A9FED034534781492E4B8EEADEF0AF71940E62277C79554A2A72441328621D336A7BC284946AD531847A6065A17B107DEF921CE79BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFFFB4007EAC77398A43614324D7071F2D82408137FF06C7368DAE059F5ED1109014625291CC5E48B9D5D9813428A63F6CDCF5566733BBEC8E37F80B1A62BB60B559968CC7693375D1E4FDFA4A036B0C3902C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXgS6CEGaw2xI90KW7iM6K0A
+X-Mailru-Sender: 9EB879F2C80682A0D0AE6A344B45275F3916920A183BFB234756507F36A35F4B1DCB45136720F479B4B1E5B0E63599662C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: B8F34718100C35BD
+X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C1CB476F615DCA8D7C049FFFDB7839CE9E5FC588583EA33AA18E9E85C91E8EEDEF3E541CD7046B48C47CD676F1951F6640EFADE2AA2806D7A2
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSqgmQqKELHYkwyxHfUpwjuv
+X-Mras: Ok
+X-7564579A: B8F34718100C35BD
+X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C17F4F1A202AC583AF049FFFDB7839CE9E5FC588583EA33AA12513C89A6A2555DE41AFFA8E49FEFF59D5E304D1DC8154CC
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSocPAboFA1B23vnsmttD4RG
+X-Mailru-MI: 20000000000000800
+X-Mras: Ok
 
-Link Training Tunable PHY Repeaters (LTTPRs) are defined in DisplayPort
-1.4a specification. As the name suggests, these PHY repeaters are
-capable of adjusting their output for link training purposes.
+Nothing Phone (1) - sm7325-nothing-spacewar has three camera sensors:
+- Wide sony,imx766
+- Ultra wide samsung,s5kjn1
+- Front sony,imx471
+We tested the UW and Front cameras by hacking the IMX412 in our fork and
+they work as expected. Wide is a C-PHY sensor, so unfortunately we haven't
+tested it fully yet.
 
-According to the DisplayPort standard, LTTPRs have two operating
-modes:
- - non-transparent - it replies to DPCD LTTPR field specific AUX
-   requests, while passes through all other AUX requests
- - transparent - it passes through all AUX requests.
+However, some of our work can already be upstreamed, so that's what we're
+doing in this series.
 
-Switching between these two modes is done by the DPTX by issuing
-an AUX write to the DPCD PHY_REPEATER_MODE register.
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-i2c@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux@mainlining.org
+Cc: ~postmarketos/upstreaming@lists.sr.ht
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 
-The msm DP driver is currently lacking any handling of LTTPRs.
-This means that if at least one LTTPR is found between DPTX and DPRX,
-the link training would fail if that LTTPR was not already configured
-in transparent mode.
+Danila Tikhonov (4):
+  arm64: dts: qcom: sm7325-nothing-spacewar: Add CAM fixed-regulators
+  dt-bindings: eeprom: at24: Add compatible for Puya P24C64F
+  dt-bindings: eeprom: at24: Add compatible for Giantec GT24P128E
+  arm64: dts: qcom: sm7325-nothing-spacewar: Enable camera EEPROMs
 
-The section 3.6.6.1 from the DisplayPort v2.0 specification mandates
-that before link training with the LTTPR is started, the DPTX may place
-the LTTPR in non-transparent mode by first switching to transparent mode
-and then to non-transparent mode. This operation seems to be needed only
-on first link training and doesn't need to be done again until device is
-unplugged.
-
-It has been observed on a few X Elite-based platforms which have
-such LTTPRs in their board design that the DPTX needs to follow the
-procedure described above in order for the link training to be successful.
-
-So add support for reading the LTTPR DPCD caps to figure out the number
-of such LTTPRs first. Then, for platforms (or Type-C dongles) that have
-at least one such an LTTPR, set its operation mode to transparent mode
-first and then to non-transparent, just like the mentioned section of
-the specification mandates.
-
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 24dd37f1682bf5016bb0efbeb44489061deff060..1dd8f94e27475ae5b5b25d80f758968e6818f6cc 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -367,6 +367,19 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
- 	return 0;
- }
- 
-+static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp)
-+{
-+	u8 lttpr_caps[DP_LTTPR_COMMON_CAP_SIZE];
-+	int rc;
-+
-+	if (drm_dp_read_lttpr_common_caps(dp->aux, dp->panel->dpcd, lttpr_caps))
-+		return;
-+
-+	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(lttpr_caps));
-+	if (rc)
-+		DRM_ERROR("failed to set LTTPRs transparency mode, rc=%d\n", rc);
-+}
-+
- static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
- {
- 	struct drm_connector *connector = dp->msm_dp_display.connector;
-@@ -377,6 +390,8 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
- 	if (rc)
- 		goto end;
- 
-+	msm_dp_display_lttpr_init(dp);
-+
- 	msm_dp_link_process_request(dp->link);
- 
- 	if (!dp->msm_dp_display.is_edp)
+ .../devicetree/bindings/eeprom/at24.yaml      |   5 +-
+ .../boot/dts/qcom/sm7325-nothing-spacewar.dts | 157 +++++++++++++++++-
+ 2 files changed, 158 insertions(+), 4 deletions(-)
 
 -- 
-2.34.1
+2.48.1
 
 
