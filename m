@@ -1,81 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-46683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F25DA2506A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 23:46:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 07B3EA25152
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 03:45:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07CCB1885134
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2025 22:46:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C4B31883D0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 02:45:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04159214812;
-	Sun,  2 Feb 2025 22:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0768778F49;
+	Mon,  3 Feb 2025 02:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="b7cID80U"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GGMTDLbE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A2B214805
-	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Feb 2025 22:46:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB0628E0F;
+	Mon,  3 Feb 2025 02:44:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738536374; cv=none; b=ffoswVMtMLnnrE3jZqqX1+6S4TpK08zMBr/a/9BIZDecV5Iw7pFV3GyJKyshKImKa7mY3MgyeCqkBPxZWxnH6D7+SaD1qaPLuwC91SBbmUjkQLeb9DoeXlAFVFn8lY3XgzdnWefEtcxEYCFh4mR77p6P/sh0jE7MrhAvZD/w7pc=
+	t=1738550683; cv=none; b=AcAKr98M0ZmH7Bkv5nc8qBEpiWF3nOX7z/0/jLCaZzhMJ3XiQGpR28kjZEKDqAL5Jk6zAextgF8wkneQTC3xsKMm8uJqQo9T9Kk72C96F0g9F2QC8BIO/T7tWGoH6A2Rt57bnXYs05GWHUmbX93a4hzIVw+2ZQEefrOLRTmZNYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738536374; c=relaxed/simple;
-	bh=YnNSE/LPAfAe/u2HSLYj+o9uJBnXbnpQ9KgSWsMPZXE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MPrN50hvNCnAeTzfGykn2HGm2kGR9ncQlOjXy10yDiQWpDRVsFtVU4LeedKnFJO6H9MUByokJmC46SxI4nOT+LgWXu0+GpgWsODsON58RDTbbAcAx65pKkzXbaPp8T0GWmC2lIOH5CFAzVu0WkSIxsDPz1ItyikGWW3kKLWIHQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=b7cID80U; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-438a39e659cso25604995e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Feb 2025 14:46:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1738536371; x=1739141171; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8RI53vn3X23eEEDFRotITDuCiKS/4aif1tdWU0fr4HU=;
-        b=b7cID80UgQ+VIi32X4t5rICT6N4nRqY8owH39oNJKBX4CxW2CFyHStwaj66+T50RtE
-         SCIBxAeefY9TLfR8i1rX1SV1b0ru9Tfw9luX5japSKJwMZx1JwmLTmCc7piSrpIVElS/
-         +yW1nzLQN+uCDBg1qaqdrcnV9zl5ABc+YmcaeWEUdOGvGvYfoT/Yd5+TwDhHTY8EtT9Y
-         oDRqntj+UQiEKpLrxTPl8fYy6L9MMAg/GJs4DjRwkLyoraOfWw102Zj7bdrbZdVdmqn7
-         i7GywM7CVBUcsEJpflubFQ+nLPkbIlpCIcnjl4pkmrTZgCjcLaX4qViOFwPMKxGdBzcr
-         c+WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738536371; x=1739141171;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8RI53vn3X23eEEDFRotITDuCiKS/4aif1tdWU0fr4HU=;
-        b=i7+nMVZdioeF3px0yLgebCjsfRLWmxdiQiMJOW6MMnIu9uVZr9sXb9YA3lTeIwfXpW
-         ZkeATLG1hfEM6itAGlqLiSsgjJyZ7D+vrxqHyxLROL9UVW+1JRytpFBU3bLGXG5UJPTc
-         dO0MCKbxkDEYaZxcy8FYrM7YRcHTC2Couh8yIWDlkpUvA65Mo2G28Q4jxQ8IUKTdCvH8
-         4+J6ZiGa6rJf//BbufE74Al9UaEQwnBCVgJCtC9BfoqzO04d6XqBfElA4pnHJBRiUXop
-         8CR1a3jLy02bxcIY1sbECcB55Wcof7bts1pWjQjMd+yCJcmTrs2yWJFyd2i5B4GcP/s4
-         Ssmw==
-X-Forwarded-Encrypted: i=1; AJvYcCX5cMBAKWgJagzebWSlLEV/cWt52fRczd02mxix0zlB4GlNO4CYHgdSgc3W3xYtrUAEOyS3lJsZ5rhRiJ1M@vger.kernel.org
-X-Gm-Message-State: AOJu0YyzNm9GNG4giHDI4cih9At3ShcOUbe/kh0x5z8IpO3SthmBkF7Q
-	ZzL7VvRdbdGs81Y9HGaZOtqAww07sdoa4iUR5mPhLuV5GYKuBkrBjFbT5R+IQMo=
-X-Gm-Gg: ASbGncvznbPyogtlIlf1ozVMQxT+mv7FB9WmJSeDDVAzI+4NhX5getKfSmTtLXRFeDG
-	jUIl+GmgY0jDavLyatPg0hzgifLPXuyvYQnDqi8VSfMZR9AtzY3xauTEiIaERZc+efBLvehubCV
-	RFJtSiA0BtXWP05kTjXbon9RMzWbqzaxpvHFcgScptw0KHIGn9csgCTq4XYlLSJ89ZE7BLB593F
-	uh3hcNqR/oSlaOwsg1eoYbEcTcI5lhqsliDcLfHs8dAfVSKh9z1GNcj+r4GOB8BfRcTcCK00eUb
-	/aHHekruUG7iGTpYKwJKlcx0Tbs=
-X-Google-Smtp-Source: AGHT+IGBX6lu1OSNvz8aeULWff/wDITldKG3wzn8oH2zHYByjYJKUn9rdrJm/tqoC8tJVosKX2xovA==
-X-Received: by 2002:a05:600c:1d26:b0:434:f5c0:32b1 with SMTP id 5b1f17b1804b1-438dc3cb5b9mr167114485e9.15.1738536371121;
-        Sun, 02 Feb 2025 14:46:11 -0800 (PST)
-Received: from [100.64.0.4] ([2a02:a03f:6bc3:6b01:62c7:350e:556e:d0f0])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc80e61sm170849605e9.34.2025.02.02.14.46.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Feb 2025 14:46:10 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Sun, 02 Feb 2025 23:45:52 +0100
-Subject: [PATCH 2/2] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable the
- GPU
+	s=arc-20240116; t=1738550683; c=relaxed/simple;
+	bh=3KdEjtOzh+lLUqLNfDFbydmxQRR/Fl5o39s+waEHouE=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=Z9Kfzto1lmMqXvNU7T7MC3cEoQDH3otbe0OKJi9anjvG/9gweBYR9rwOBGeH0LFyenkGIn38kMZOSV4lmXuEienIW1LwWZT0mE73GKK+57fG501v4ye5UoXzShlJoYUWTHqWCOLnBNX3HaMj5a/aN6v7xsfzh8LLFNdKuMr6Ack=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GGMTDLbE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 512Muh1M002400;
+	Mon, 3 Feb 2025 02:44:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=1h1FB6CRuoAiUEGLsv0Qye
+	bIyyCG8GPjdBJJBhB2S98=; b=GGMTDLbER2frWuPX0nW+00PcPWOxLiO4qOjbj4
+	sYjugr5P98ziH8BI6ifvUgTNvM4yIwnkxj8a0DFWFZLwbnqPe0O9uTlY8DzziYFy
+	nxI6XU4BDypLxenvhX4uWjrAfmMi9uJFg8Jr/mPFBlz+OSCqtubypZoIV3q8gU1E
+	zdPEi0jQCodO0q2geFje8mmAJ5dbP9r7uvFQJuKOxS1DF11jzX+KL81dWdzGND53
+	nC0NfjL6AovY3bCBTN1dOtsqN8PM0DJirCLdxlqKv1uz0GtBDXyLf8QOB+0QDU17
+	/0youapJCKAAzKwmmg1mgINkYJrLbwNFW+Eor7K0EneddG0Q==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44jd428fxf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Feb 2025 02:44:23 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5132iMdD020266
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Feb 2025 02:44:22 GMT
+Received: from hu-azarrabi-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 2 Feb 2025 18:44:21 -0800
+From: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Subject: [PATCH v2 0/8] Trusted Execution Environment (TEE) driver for
+ Qualcomm TEE (QTEE)
+Date: Sun, 2 Feb 2025 18:43:28 -0800
+Message-ID: <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-0-297eacd0d34f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,51 +67,158 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250202-fp5-display-v1-2-f52bf546e38f@fairphone.com>
-References: <20250202-fp5-display-v1-0-f52bf546e38f@fairphone.com>
-In-Reply-To: <20250202-fp5-display-v1-0-f52bf546e38f@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
- Konrad Dybcio <konradybcio@kernel.org>
-X-Mailer: b4 0.14.2
+X-B4-Tracking: v=1; b=H4sIAFAtoGcC/5WNQQ6CMBBFr0Jm7Zi2QE1ceQ/CQusAY0IrnYIaw
+ t2t3MDN5L+f/HkrCEUmgXOxQqSFhYPPYA4FuOHqe0K+ZwajTKXzwcmFERMRzsK+35MIvjgNYU4
+ 40ojh9sDSGmdtWananCD/ekbq+L17mjbzwJJC/OzaRf/afw2LRoVdrQx1SpPS9jLN7Ni7Y55Du
+ 23bF+WDbRTcAAAA
+To: Jens Wiklander <jens.wiklander@linaro.org>,
+        Sumit Garg
+	<sumit.garg@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <op-tee@lists.trustedfirmware.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>,
+        Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pcHqi7qESdTQ91i6oOc-GO4E-G45WtHE
+X-Proofpoint-ORIG-GUID: pcHqi7qESdTQ91i6oOc-GO4E-G45WtHE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-02_11,2025-01-31_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 malwarescore=0
+ spamscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502030021
 
-From: Konrad Dybcio <konradybcio@kernel.org>
+This patch series introduces a Trusted Execution Environment (TEE)
+driver for Qualcomm TEE (QTEE). QTEE enables Trusted Applications (TAs)
+and services to run securely. It uses an object-based interface, where
+each service is an object with sets of operations. Clients can invoke
+these operations on objects, which can generate results, including other
+objects. For example, an object can load a TA and return another object
+that represents the loaded TA, allowing access to its services.
 
-Enable the Adreno GPU and point to the correct ZAP fw path.
+Kernel and userspace services are also available to QTEE through a
+similar approach. QTEE makes callback requests that are converted into
+object invocations. These objects can represent services within the
+kernel or userspace process.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Note: This patch series focuses on QTEE objects and userspace services.
+
+Linux already provides a TEE subsystem, which is described in [1]. The
+tee subsystem provides a generic ioctl interface, TEE_IOC_INVOKE, which
+can be used by userspace to talk to a TEE backend driver. We extend the
+Linux TEE subsystem to understand object parameters and an ioctl call so
+client can invoke objects in QTEE:
+
+  - TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_*
+  - TEE_IOC_OBJECT_INVOKE
+
+The existing ioctl calls TEE_IOC_SUPPL_RECV and TEE_IOC_SUPPL_SEND are
+used for invoking services in the userspace process by QTEE.
+
+The TEE backend driver uses the QTEE Transport Message to communicate
+with QTEE. Interactions through the object INVOKE interface are
+translated into QTEE messages. Likewise, object invocations from QTEE
+for userspace objects are converted into SEND/RECV ioctl calls to
+supplicants.
+
+The details of QTEE Transport Message to communicate with QTEE is
+available in [PATCH 10/10] Documentation: tee: Add Qualcomm TEE driver.
+
+You can run basic tests with following steps:
+git clone https://github.com/quic/quic-teec.git
+cd quic-teec
+mkdir build
+cmake .. -DCMAKE_TOOLCHAIN_FILE=CMakeToolchain.txt -DBUILD_UNITTEST=ON
+
+https://github.com/quic/quic-teec/blob/main/README.md lists dependancies
+needed to build the above.
+
+This series has been tested for basic QTEE object invocations and
+callback requests, including loading a TA and requesting services form
+the TA.
+
+[1] https://www.kernel.org/doc/Documentation/tee.txt
+
+Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Changes in v2:
+- Clean up commit messages and comments.
+- Use better names such as ubuf instead of membuf or QCOMTEE prefix
+  instead of QCOM_TEE, or names that are more consistent with other
+  TEE-backend drivers such as qcomtee_context_data instead of
+  qcom_tee_context.
+- Drop the DTS patch and instantiate the device from the scm driver.
+- Use a single structure for all driver's internal states.
+- Drop srcu primitives and use the existing mutex for synchronization
+  between the supplicant and QTEE.
+- Directly use tee_context to track the lifetime of qcomtee_context_data.
+- Add close_context() to be called when the user closes the tee_context.
+- Link to v1: https://lore.kernel.org/r/20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 965e32473a58ae4748e4cb748980fad1d2b06ab6..582b19277de414fa9cbb8f9929c6eebd697e8033 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -651,6 +651,14 @@ &gpi_dma1 {
- 	status = "okay";
- };
- 
-+&gpu {
-+	status = "okay";
-+};
-+
-+&gpu_zap_shader {
-+	firmware-name = "qcom/qcm6490/fairphone5/a660_zap.mbn";
-+};
-+
- &i2c1 {
- 	status = "okay";
- 
+Changes in v1:
+- It is a complete rewrite to utilize the TEE subsystem.
+- Link to RFC: https://lore.kernel.org/all/20240702-qcom-tee-object-and-ioctls-v1-0-633c3ddf57ee@quicinc.com
 
+---
+Amirreza Zarrabi (8):
+      tee: allow a driver to allocate a tee_device without a pool
+      tee: add close_context to TEE driver operation
+      tee: add TEE_IOCTL_PARAM_ATTR_TYPE_UBUF
+      tee: add TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF
+      firmware: qcom: scm: add support for object invocation
+      tee: add Qualcomm TEE driver
+      qcomtee: add primordial object
+      Documentation: tee: Add Qualcomm TEE driver
+
+ Documentation/tee/index.rst            |   1 +
+ Documentation/tee/qtee.rst             | 150 ++++++
+ drivers/firmware/qcom/qcom_scm.c       | 128 ++++++
+ drivers/firmware/qcom/qcom_scm.h       |   7 +
+ drivers/tee/Kconfig                    |   1 +
+ drivers/tee/Makefile                   |   1 +
+ drivers/tee/qcomtee/Kconfig            |  10 +
+ drivers/tee/qcomtee/Makefile           |  10 +
+ drivers/tee/qcomtee/async.c            | 160 +++++++
+ drivers/tee/qcomtee/call.c             | 741 ++++++++++++++++++++++++++++++
+ drivers/tee/qcomtee/core.c             | 810 +++++++++++++++++++++++++++++++++
+ drivers/tee/qcomtee/primordial_obj.c   |  65 +++
+ drivers/tee/qcomtee/qcom_scm.c         |  36 ++
+ drivers/tee/qcomtee/qcomtee_msg.h      | 234 ++++++++++
+ drivers/tee/qcomtee/qcomtee_private.h  | 226 +++++++++
+ drivers/tee/qcomtee/release.c          |  59 +++
+ drivers/tee/qcomtee/shm.c              | 102 +++++
+ drivers/tee/qcomtee/user_obj.c         | 712 +++++++++++++++++++++++++++++
+ drivers/tee/tee_core.c                 | 121 ++++-
+ drivers/tee/tee_private.h              |   6 -
+ include/linux/firmware/qcom/qcom_scm.h |  27 ++
+ include/linux/firmware/qcom/qcom_tee.h | 286 ++++++++++++
+ include/linux/tee_core.h               |  15 +-
+ include/linux/tee_drv.h                |  18 +
+ include/uapi/linux/tee.h               |  54 ++-
+ 25 files changed, 3964 insertions(+), 16 deletions(-)
+---
+base-commit: dab2734f8e9ecba609d66d1dd087a392a7774c04
+change-id: 20241202-qcom-tee-using-tee-ss-without-mem-obj-362c66340527
+
+Best regards,
 -- 
-2.48.1
+Amirreza Zarrabi <quic_azarrabi@quicinc.com>
 
 
