@@ -1,151 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-46718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48D57A25493
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 09:38:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A933DA25496
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 09:39:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B64F31638CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 08:38:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3921D1613E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 08:39:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 461CC1FBE88;
-	Mon,  3 Feb 2025 08:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AEE11FBCB9;
+	Mon,  3 Feb 2025 08:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PV4PSb9y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJD1AePS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976501FA859;
-	Mon,  3 Feb 2025 08:38:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D659D1D7E50;
+	Mon,  3 Feb 2025 08:38:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738571893; cv=none; b=mGc0KNG12F3iIbcW1QD2YsdEsMT7pHMq91CNY1aCQDluI58FtYKAsQv6Y0BfTmTwC6pw6eun0crecmLEYQHlj9DgDGUvHHGWKkPg8VCoJyk4IqKqRZ6Tolay+dotFPrYLH0xeDWzB2aUz8GZvv9dzOhrqZ2BavypikA88kGgvSs=
+	t=1738571938; cv=none; b=oetnAs9NABpTjk5SPHi27TeHjWdnsDphqcM6jpzT63dESggPpC8XkcvgVtamMOPj2jZA5b3zuZVerDsYAVhlafVpJpz4UdRg1DHv5qvcCVouCx0Ri3cPibfn+VvA5ATfzOFDNbkvimOuok7M3qi2zBC96Sl7wSGx9567dEA6AH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738571893; c=relaxed/simple;
-	bh=EJVvYHmUv5g/Vnq219Og/XdQw7v2OLZ38BqZWLWWbgA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TnmM+YbCfr6JVrtku7HjaBByPZ1SgnRdyWeJ0lm6B5ZRcZi3t8mqdv3wLdPjXmrIW9C8uUCnZM+JAVGrnAFgupDvLIwSvNpEEacR5o8p6Iwg4guYKYZ6yDKNHuHx4nFZq5dHv8t80Sfgj6T0NfCdpah1JS7dwUkEpveZo5wJwsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PV4PSb9y; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5135lEr1007514;
-	Mon, 3 Feb 2025 08:38:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XVGYg007DqlZ14Celc1KRgbSlHax+yNO1OqjdJZgd5k=; b=PV4PSb9ywGcurZ2N
-	BQBhAJnxJtXP/oJ1EBRGtk0FtNpLNTKo70pmYFul3I0+AU5Szf30TnFfqIdJXqX0
-	hxsiwpJksDdw6sqBxwwd/VGrfSaX29gWFiSxHHn30GjYuYPSdUTOCUIm5dt/97hM
-	xxbNC4APIDCokYgC5+CkA2lQovNlm+XjnlGmcdqu0mzVQ7bpPoQ3tk9uIdubCxrY
-	tY5LbjoM1NmeHrIR59ApO4uTCoBnplgOesGoKcgyNL4PuldS0BUkolPCOQR+e3Nh
-	SbynayGywdqj3BaBs4ID1mm2pJNjt4TtiTFsnW8lKm7EoTQ31J21d8agVF9C8KgP
-	iyTeRA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44jqxw0bva-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Feb 2025 08:38:01 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5138bxcX030486
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Feb 2025 08:37:59 GMT
-Received: from [10.219.57.57] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Feb 2025
- 00:37:55 -0800
-Message-ID: <273df630-007d-4aaf-9432-2884a7e94d5e@quicinc.com>
-Date: Mon, 3 Feb 2025 14:07:52 +0530
+	s=arc-20240116; t=1738571938; c=relaxed/simple;
+	bh=tn2D/VXU3gO/10cPKSVc8ExofoOyoDNBmyGrz4AHorQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LgC9ALmLcfFouFN4Tbmhymdcw9ZhrW5GHzj90wyZuz2OZuQdsfsj4xdelz/ephU9auzFsCkJhiorVhBJNkWwCCINqVHhY3fQ/qissI9DywuPM19j9qKM0KXdt3v4KQsRGxYsHMgcwB8qlxcfo+AGzkslewWZMsKmUi62zSnO7aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJD1AePS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D083C4CED2;
+	Mon,  3 Feb 2025 08:38:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738571937;
+	bh=tn2D/VXU3gO/10cPKSVc8ExofoOyoDNBmyGrz4AHorQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XJD1AePSGYwbioAb3WD4/DaRdqVJx86k9Bzfr76DIsjvOVKDl3UpC5Z8mWTjmylg1
+	 Bc8CUIz4LWEhU57kSly8ZnU3sD93k7vhpuLy6uhC+5wCl6r2/J1qDdCoBdXqlJ1+IM
+	 VvqBRJGwX3lj5UtIu1SbfbWbd+X7nMly6v/Y6k97/QtNO7ldRbmZIEzi+WCWAWGt4K
+	 UJAame1Rzn1JAA+OwZ60w93WeKw23eJPHitaf/F476ENkNSxKWQeR/Qdy9xG6KlEm/
+	 NKYiKx6QzF4osT3Q3fr1gBw0FK5yvI0EO5bQvsZVyDw45BTFsgSFOTQ089FiJxE5QG
+	 RQFXHiWUgAdzA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1teryu-000000006Yr-03dx;
+	Mon, 03 Feb 2025 09:39:00 +0100
+Date: Mon, 3 Feb 2025 09:39:00 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nicolas Dufresne <nicolas@ndufresne.ca>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Jianhua Lu <lujianhua000@gmail.com>,
+	Stefan Schmidt <stefan.schmidt@linaro.org>,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of
+ SM8250 SoC
+Message-ID: <Z6CApNuSlPGvVL2k@hovoldconsulting.com>
+References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+ <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
+ <Z3_nCPk_g8znto4A@hovoldconsulting.com>
+ <64f8bebd-35e1-c743-b212-e1a3292bade2@quicinc.com>
+ <Z4EuiPEw8mvDQ2gv@hovoldconsulting.com>
+ <24334fb8-4d83-eb06-aee3-dfe1f8e4937b@quicinc.com>
+ <552972B8-1ACA-4243-A8E3-8F48DAF39C5C@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/2] Add support for GPU SMMU on QCS8300
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg
- Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com>
- <20250203-lean-delightful-ermine-f5b902@krzk-bin>
-Content-Language: en-US
-From: Pratyush Brahma <quic_pbrahma@quicinc.com>
-In-Reply-To: <20250203-lean-delightful-ermine-f5b902@krzk-bin>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: A3Y4AVxh3AHw6zDw3dRdd7GiAx6Rmuqp
-X-Proofpoint-GUID: A3Y4AVxh3AHw6zDw3dRdd7GiAx6Rmuqp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-03_03,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- phishscore=0 bulkscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
- adultscore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502030068
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <552972B8-1ACA-4243-A8E3-8F48DAF39C5C@linaro.org>
 
+On Fri, Jan 10, 2025 at 08:01:21PM +0200, Dmitry Baryshkov wrote:
+> On 10 January 2025 19:30:30 EET, Dikshita Agarwal <quic_dikshita@quicinc.com> wrote:
+> >
+> >
+> >On 1/10/2025 7:58 PM, Johan Hovold wrote:
+> >> On Thu, Jan 09, 2025 at 11:18:29PM +0530, Vikash Garodia wrote:
+> >>> On 1/9/2025 8:41 PM, Johan Hovold wrote:
+> >>>> On Thu, Dec 12, 2024 at 05:21:49PM +0530, Dikshita Agarwal wrote:
+> >>>>> Initialize the platform data and enable video driver probe of SM8250
+> >>>>> SoC. Add a kernel param to select between venus and iris drivers for
+> >>>>> platforms supported by both drivers, for ex: SM8250.
+> >>>>
+> >>>> Why do you want to use a module parameter for this? What would be the
+> >>>> default configuration? (Module parameters should generally be avoided.)
+> >> 
+> >>> This was discussed during v4 [1] and implemented as per suggestion
+> >>>
+> >>> [1]
+> >>> https://lore.kernel.org/linux-media/eea14133-2152-37bb-e2ff-fcc7ed4c47f5@quicinc.com/
+> >> 
+> >> First, the background and motivation for this still needs to go in the
+> >> commit message (and be mentioned in the cover letter).
+> >> 
+> >> Second, what you implemented here is not even equivalent to what was
+> >> done in the mdm drm driver since that module parameter is honoured by
+> >> both drivers so that at most one driver tries to bind to the platform
+> >> device.
+> >> 
+> >> With this patch as it stands, which driver ends up binding depends on
+> >> things like link order and what driver has been built a module, etc. (as
+> >> I pointed out below).
+> >> 
+> >>>> Why not simply switch to the new driver (and make sure that the new
+> >>>> driver is selected if the old one was enabled in the kernel config)?
+> >> 
+> >>> Its about the platform in migration i.e sm8250. Since new driver is not yet
+> >>> feature parity with old driver, choice is provided to client if it wants to use
+> >>> the new driver (default being old driver for sm8250)
+> >> 
+> >> This should be described in the commit message, along with details on
+> >> what the delta is so that the reasoning can be evaluated.
+> >> 
+> >> And I'm still not sure using a module parameter for this is the right
+> >> thing to do as it is generally something that should be avoided.
+> >> 
+> >I understand your concern of using module params.
+> >I will modify it to rely on Kconfig to select the driver (suggested by
+> >Hans) instead of module param.
+> 
+> Please don't. This makes it impossible to perform side-by-side
+> comparison.
 
-On 2/3/2025 1:03 PM, Krzysztof Kozlowski wrote:
-> On Mon, Feb 03, 2025 at 11:17:00AM +0530, Pratyush Brahma wrote:
->> Enable GPU SMMU function on QCS8300 platform. GPU SMMU is required
->> for address translation in GPU device.
->>
->> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
->> --
->> Changes since v3:
->> - Modified the order of clock voting and properties as suggested by Konrad
->> - Removed dependency on clocks in commit text as change is merged in
->>    linux-next before current base commit
->>
->> Link to v3:
->> https://lore.kernel.org/all/20241227105818.28516-1-quic_pbrahma@quicinc.com/
->>
-> How are you sending these?
->
-> b4 diff 20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com
-> Grabbing thread from lore.kernel.org/all/20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com/t.mbox.gz
-> Checking for older revisions
-> Grabbing search results from lore.kernel.org
->    Added from v3: 2 patches
-> ---
-> Analyzing 7 messages in the thread
-> Preparing fake-am for v3: dt-bindings: arm-smmu: Document QCS8300 GPU SMMU
-> ERROR: v3 series incomplete; unable to create a fake-am range
-> ---
-> Could not create fake-am range for lower series v3
-I have sent this version of the patch series using b4 for the first 
-time, as suggested earlier [1]. The issue might be due to the previous 
-version being sent
-incorrectly using git send-mail. Consequently, I had to manually apply 
-the previous patches after creating the b4 branch,
-since "b4 prep -F" was throwing an error when trying to apply the last 
-patch.
+Why? You can have two kernel builds and run the same tests. And you
+obviously cannot run iris and venus on the same hardware at once anyway.
 
-[1] 
-https://lore.kernel.org/all/64ak7h5pwqinmcymas5i4xexa6bntvti7zkwfhzx7qrsmgaow3@zmn7jffcrp5f/
->
-> Best regards,
-> Krzysztof
->
--- 
-Thanks and Regards
-Pratyush Brahma
+> Also as venus and iris drivers are not completely
+> equivalent wrt supported platforms, distributions will have to select
+> whether to disable support for older platforms or for new platforms:
+> Kconfig dependency will make it impossible to enable support for both
+> kinds.
 
+You shouldn't have both enabled. The only reason for keeping support
+for the same hardware in both drivers is that the iris support is
+incomplete and considered experimental. No one should enable that except
+for development and evaluation purposes until the driver is up to par.
+And then you drop support from the old driver along with the config
+option.
+
+Johan
 
