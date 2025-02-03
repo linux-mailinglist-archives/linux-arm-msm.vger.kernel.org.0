@@ -1,79 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-46829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE3C5A26740
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 23:59:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAB68A267A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 00:12:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 508ED1882FCD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 22:59:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 478893A4C7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 23:11:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 255E2211466;
-	Mon,  3 Feb 2025 22:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8796B2144B1;
+	Mon,  3 Feb 2025 23:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OTeOxERb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W73U2Do3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AED211269;
-	Mon,  3 Feb 2025 22:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0412144A8;
+	Mon,  3 Feb 2025 23:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738623578; cv=none; b=f9ocA32nRc0bYGBsZH+0DQl6fH8XijgUG3ZQ4HQm5a2/RXzWAAegnK3uAh3V/SjawyIWGnYOjCUUikKWGodEnRANTUCZRVgB84F32fG9VFlxX646De+RwFwO9//zpG++nXEwqB/q/ezIyKDr1wdtj7AOqmDcy/X4PvvU8t+Ukk8=
+	t=1738623894; cv=none; b=TaNrv0QsjGWubpYxwYM4oPNdLhIYLkZknSM3Gwl4cH7AT+3VK5Gn5QM9unERcZVT/2h9XsQjsDTBuf2OLgsAyrRjwMgQq0svzd07+XoqQQOKQMhX5MYXr3KuuyEcpv6e/GoBwDxw7bWE31ENEUDXr1Y/nHR+RDclMP+NUAM4mjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738623578; c=relaxed/simple;
-	bh=g/ZpLB90eEOtSKmAoZjBPulwgV8zka0al3gfWNHs9n8=;
+	s=arc-20240116; t=1738623894; c=relaxed/simple;
+	bh=8LXNfDj0XbdIAmhPvi+TuYd1/opSOX2Sn7nRqUMekVU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TGTc73Uu0QERVGrgJpvdmYEkYJAxfBZKkL9B2g2JfmLRm34t0C3ZWmlYRWGfu44fhLu9QClJbNlMD3zGJfNHt8w1/BkwTz09yDL9vxT7dlE1R0TpsSqTHFf1Bv1/k3l6yyORHqa1XZqxlZJHbISQ5eH1O6KnUS+f5WAXsQOLGik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OTeOxERb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C83C4CEE0;
-	Mon,  3 Feb 2025 22:59:36 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=oEHiDOLh+shMvqUv+F65Bm8WjB8Y4mTQBVNwz8+7qJ0SWD+yW8OGmU9uEBdgYX468cge9JLDltE91ikC0J5RoHFNLPhBZTD/7idcBfrlypwNoRSO6WcxJ2BmWCTFJz2E9n784BeMi/cY0tcunm/gbNYAKAdcDmCm+zYDEjz2Vfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W73U2Do3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B72C4CEEA;
+	Mon,  3 Feb 2025 23:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738623577;
-	bh=g/ZpLB90eEOtSKmAoZjBPulwgV8zka0al3gfWNHs9n8=;
+	s=k20201202; t=1738623893;
+	bh=8LXNfDj0XbdIAmhPvi+TuYd1/opSOX2Sn7nRqUMekVU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OTeOxERbmFkaL7RFQMUtdWRsZR6lVYCGgTWdYXsuXmQ3DlUF70Bf33zf5vWoZ+uzh
-	 nM7vQ4OwORmXeU7RCjSalG2kMcGP96FNOGfnqBK8OyrsCJM1pdru8ETJ9anM0k9uXL
-	 PbXXMoh/m+BkBSITiRdJ6E+GLUNEk+UneVn45BFyEuKRO5XGe6X5ZQjFuFDlPK0MdX
-	 Nk1GtETvQwtwZ1SPzK/0CRLBCjb/IElDP5Qb1G9Zeq5kpU/dW3PHfMt7Mq4rY54U1w
-	 tvRhiuNwMT7qYl/8HgyUeCPY977YZGH5GBDVknkAdU+21RV5eXFdo+awxvQFHzw5Em
-	 cLpA4rg6RqLsA==
-Date: Mon, 3 Feb 2025 16:59:36 -0600
+	b=W73U2Do3p8HRpob25XLwSf3uFb+Uj7d/dFfMIyFRZwRt7Foo28qldEsHhuEr9Heun
+	 A9z/eoBtcyF2nTtz2xAMc5oYBLvgFCVNfhLfDsZi5UMyOzJV8ZwlFNnBpqr2sZsrfT
+	 sXLfoAdGPWyUMLtEcYR2Mbna2AXWtk9ynv9dR7MhTmcJPk/9WqYl07AKMu/zmbPY0b
+	 v/mYDKfMtkgiWWK+6wMl+rNOMhuCxuoPip9ZDKzHRSec9oHP8a4VOVJIwwjMPm5xsr
+	 2QnmeGncsFD5N5KDaQ9H6jvDOC9imsSR/UFMTbQ41ikzR18cID0hlssuc3rS25xo67
+	 u12dLkBwxJdhA==
+Date: Mon, 3 Feb 2025 17:04:51 -0600
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: conor+dt@kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org, andersson@kernel.org,
-	linux-kernel@vger.kernel.org, konradybcio@kernel.org,
-	krzk+dt@kernel.org, brgl@bgdev.pl, linux@mainlining.org
-Subject: Re: [PATCH 3/4] dt-bindings: eeprom: at24: Add compatible for
- Giantec GT24P128E
-Message-ID: <173862357520.500395.299611236712032118.robh@kernel.org>
-References: <20250203111429.22062-1-danila@jiaxyga.com>
- <20250203111429.22062-4-danila@jiaxyga.com>
+Cc: maarten.lankhorst@linux.intel.com, konradybcio@kernel.org,
+	freedreno@lists.freedesktop.org, linux@mainlining.org,
+	tzimmermann@suse.de, dmitry.baryshkov@linaro.org,
+	devicetree@vger.kernel.org, quic_abhinavk@quicinc.com,
+	~postmarketos/upstreaming@lists.sr.ht, krzk+dt@kernel.org,
+	jun.nie@linaro.org, fekz115@gmail.com, robdclark@gmail.com,
+	marijn.suijten@somainline.org, simona@ffwll.ch, airlied@gmail.com,
+	mripard@kernel.org, conor+dt@kernel.org, sean@poorly.run,
+	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	quic_jesszhan@quicinc.com, neil.armstrong@linaro.org,
+	linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+	jonathan@marek.ca
+Subject: Re: [PATCH 1/4] dt-bindings: display: panel: Add Visionox RM692E5
+Message-ID: <173862389119.509853.11162021545785979711.robh@kernel.org>
+References: <20250203181436.87785-1-danila@jiaxyga.com>
+ <20250203181436.87785-2-danila@jiaxyga.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250203111429.22062-4-danila@jiaxyga.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250203181436.87785-2-danila@jiaxyga.com>
 
 
-On Mon, 03 Feb 2025 14:14:28 +0300, Danila Tikhonov wrote:
-> Add the compatible for another 128Kb EEPROM from Giantec.
+On Mon, 03 Feb 2025 21:14:24 +0300, Danila Tikhonov wrote:
+> The Visionox RM692E5 is a 6.55” AMOLED panel used in Nothing Phone (1)
+> (sm7325-nothing-spacewar).
 > 
 > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 > ---
->  Documentation/devicetree/bindings/eeprom/at24.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  .../display/panel/visionox,rm692e5.yaml       | 77 +++++++++++++++++++
+>  1 file changed, 77 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm692e5.yaml
 > 
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
 
