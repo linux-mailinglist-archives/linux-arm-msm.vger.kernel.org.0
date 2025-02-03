@@ -1,160 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-46715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72BCBA25452
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 09:23:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 95E9BA25459
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 09:24:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C73D3A3FA8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 08:22:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B9BD3A4406
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 08:23:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB9E71FAC3E;
-	Mon,  3 Feb 2025 08:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EA26381A3;
+	Mon,  3 Feb 2025 08:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QTelIAoZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SwthbFKX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B5C26AE4;
-	Mon,  3 Feb 2025 08:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEF91FBE9D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 08:23:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738570968; cv=none; b=NnrNKxdsAlqfhSaxhQB82qHwy9DhM/QnKvr8KDagx5vZxj4cEmo0aMxBK04u6TxFZPHnIJRmrCOOSgwIytudLiFMVPEV2lvGbP/gkIcalaAbMSuPWmXYZtke8+XCWJif1VWefZLpXdxnxOv51c6PD5P85Dnwd78hOXi5UpFDMOg=
+	t=1738571013; cv=none; b=XJ/4rbj2xtBLbsq2HlZUzwLRSg5E6GqLvmcasB2uJJrT3SAPZs5QNBzLBtrWIOrSvD8NXHZWXnJiMLXh3XJt2om0RL5a3cmgJyRsPOr25CjoRPQ9Rf1PAh7VWr9qBPmVPQiPOZFtldUMM23C/1Mx+CwSwOeL/esqjlcq/A4dLKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738570968; c=relaxed/simple;
-	bh=4D7ohBd8vmVNBGTLY4YrjYleLW9zHfaWxTOXamEVLwY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RQWbel7JxRfJh23g25M7ttYPFds1ePR5AI2gSykiqI7Qcigu+ywbz6DIhTE4rPPJfl3xKNppnwNB6534u7+A7jADAKVgG43+bn96puKOf6vU3PhZNd7x3WPxzJTZwEbqRBRETzut4LL85y37I5Dobyy+uwfUS3fTZ1ryqOhdotQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QTelIAoZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC841C4CED2;
-	Mon,  3 Feb 2025 08:22:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738570968;
-	bh=4D7ohBd8vmVNBGTLY4YrjYleLW9zHfaWxTOXamEVLwY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QTelIAoZeqoIWeB3c1gNsMUXJ6xWGMo4LmQp5j7AgoESIts8OpPCaGRYezr4evlGx
-	 sRwgqa9PHWgnsvDtEaMiTF/i9WWzC7lECrFOx+6kNvKbZI3Aoz3DX3WweG1lWwXDp5
-	 1cewTdIfkg1l08fCeiZ7nFkpRcbJoWkua3Ouufy+vpiZD8O5vuI9to1LH8UXlBcpLP
-	 jRFBeM2CC0DRxnnxBkwwNVIGKAakJO9TmOLNpisLrr8nKHddC2k1j7yiDasYhER6N7
-	 Tth2Jmvx+3ga2eL5/ZWlmsu15Yw34U2Jwe6QicvWpC+h8GDoPQ+L8q+Wf3I0wa6Mcp
-	 bCX0lCdkl/VYg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1terjH-000000006IC-0zOo;
-	Mon, 03 Feb 2025 09:22:51 +0100
-Date: Mon, 3 Feb 2025 09:22:51 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	quic_vgarodia@quicinc.com, mchehab@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, p.zabel@pengutronix.de, hverkuil@xs4all.nl,
-	sebastian.fricke@collabora.com, bryan.odonoghue@linaro.org,
-	dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
-	nicolas@ndufresne.ca, u.kleine-koenig@baylibre.com,
-	stefan.schmidt@linaro.org, lujianhua000@gmail.com,
-	linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	krzysztof.kozlowski@linaro.org
-Subject: Re: [RFC PATCH v10 1/2] media: iris: introduce helper module to
- select video driver
-Message-ID: <Z6B822-6UTxQfX46@hovoldconsulting.com>
-References: <20250128080429.3911091-1-quic_dikshita@quicinc.com>
- <20250128080429.3911091-2-quic_dikshita@quicinc.com>
- <5070e1f1-914b-4654-88ef-3566e3eee9ca@kernel.org>
- <f1344e49-61b6-4115-ae88-55b4a3cfed28@quicinc.com>
+	s=arc-20240116; t=1738571013; c=relaxed/simple;
+	bh=lsYMgQzyZBIQnv3whEA7UEb+4odLzI1QwzOG3iDq1+I=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mKy4Q0N849lVXbPfuQf+HDKk5ujM0qdy56njUKi1ahQZpVsoq0JRuDxByiFTtMk3aQ1NoKGmiYsjkSleDGsNizSqCYX2ptARZJjE1mYGGJOV8mp2Wdi7CDWt8PC1GBHIzIp4uncY1NOn20uhYWqgpu5//H7Lt+ET9ko4No3+E8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SwthbFKX; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-385deda28b3so2090125f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 00:23:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738571010; x=1739175810; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZOuSDlUyybSiEJ3f6h/LZmrdiywD5/68VjAoOBVcbwg=;
+        b=SwthbFKXzWp6GCTwFXA+ZJnIKADVnqLPtmqEcqwPHoTn5Ryv8jTueP7IRVNz+jPoXM
+         YO5YrvY1r87IDz+UETLmE05BRYktMXRU2q5xhNtdKOcz/h9jYCNPowv4637se9CVAUmv
+         rDn9wVwgza3Ib6bDRNt/8Kt6unUBX9QKGyqJanVEkLnabiz6/SOMAL4AKNmoVbozdMoc
+         6Tj1VquknNs+nZmX7n82aBHJHVltjev4C/ZuzH8XG0S9gDqSrWec5J5cRhtk9XJLZjWo
+         hbqtCKTpRHaiz28LNllyjGvz4dlFd0lweIgFiUZBbpz14zhYeVdSROF7dOuPt7TYhECP
+         cUtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738571010; x=1739175810;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ZOuSDlUyybSiEJ3f6h/LZmrdiywD5/68VjAoOBVcbwg=;
+        b=cYArPeYQyhg9/KqFDNkHARnfsmp6hjcwCWGVyDkXMtjWYNwdw6IxtcUwXNNYDF/srZ
+         2ZYdpwPEHlXCnxHRn5EbhC76AliRLZt/NqbZisIhO+O7WiYRGwPQ9VDxobfBofXU50t+
+         /vAwiVIRpE+0Yi+AB8vrkUG8eWE/+xaTIua/WY6V3dFrk7NpS7t0a46O/oUJb0PZ9Fym
+         VsixqrXfFfqv4rTLqCBvPS8zT+ZD7lxL65FRBpU/GMXK00GtBnhhgln3S34BVtVArdGk
+         U+EVOeGLLN00+BPVcOjwOZ0jyMSGyhBYkMbxaIbt0cAaBVs14mpPVRGCLafHNpii/4ZW
+         QMug==
+X-Gm-Message-State: AOJu0Yx1vMh4Gt3vI2yzPtmPgqwxCvZ50yiIgnEWepPgT3LNGW1alY3z
+	mVkOJDzF7RzymOiUwrtiH/2wH3apjqK1hvk4iYFiov6xP02RNwdoTZ6kChqmi88=
+X-Gm-Gg: ASbGnct/C4PukBQ/qpwTqyEpK0kiHI9SLbF7iR+HEItVQ2NjBo7mdSXR+I3o96Xvx4h
+	QfSiDf6O0JZBiskBmvtRa+lO+OjaBevpLTWIo9EvMvc1HgeVH45uFtJYXDjf0jLzFcZgNOP/DvH
+	PSBMb4WBI1icautVIrLPefREsm3QZWn2ZlfIEUXTsLYHrX6OoLW+5xqSMch3MCnCAaqZIbFvOii
+	K94e3R8QAAIFrjqLQpw+Y/RzsVdLZIcTQ3wiM77J6KT9DlEWZIwtewfAh02z1v7/S4UtmOifNvV
+	9Yi58ipwAI0+dFqDVgpxG6M5pqcB0Lk27zn5SZNGCSuAchQpr5S/6ipUKr/gSo6aV/mg
+X-Google-Smtp-Source: AGHT+IHPELpFTdB9Xb7SriUYuda4fkxNg6z+5NJPCGuw6it+EnAph0FkWSLlDR63D4RB9ZM6K2zXTg==
+X-Received: by 2002:adf:e90c:0:b0:385:f23a:2fe1 with SMTP id ffacd0b85a97d-38c51960357mr12150693f8f.26.1738571009776;
+        Mon, 03 Feb 2025 00:23:29 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:e2ce:628f:fe98:a052? ([2a01:e0a:982:cbb0:e2ce:628f:fe98:a052])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c102d00sm12280434f8f.32.2025.02.03.00.23.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Feb 2025 00:23:29 -0800 (PST)
+Message-ID: <cf5f9a36-db3a-46e8-aa61-a46a06b1f446@linaro.org>
+Date: Mon, 3 Feb 2025 09:23:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f1344e49-61b6-4115-ae88-55b4a3cfed28@quicinc.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: sm8650: drop cpu thermal passive
+ trip points
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250129-topic-sm8650-thermal-cpu-idle-v3-0-62ab1a64098d@linaro.org>
+ <20250129-topic-sm8650-thermal-cpu-idle-v3-1-62ab1a64098d@linaro.org>
+ <80948a6f-1cd4-47b3-9218-f5ab0c25eb3b@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <80948a6f-1cd4-47b3-9218-f5ab0c25eb3b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jan 31, 2025 at 10:44:28AM -0800, Abhinav Kumar wrote:
-> On 1/29/2025 2:44 AM, Krzysztof Kozlowski wrote:
-> > On 28/01/2025 09:04, Dikshita Agarwal wrote:
-
-> >> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-> >> index 954cc7c0cc97..276461ade811 100644
-> >> --- a/drivers/media/platform/qcom/iris/iris_probe.c
-> >> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
-> >> @@ -196,6 +196,9 @@ static int iris_probe(struct platform_device *pdev)
-> >>   	u64 dma_mask;
-> >>   	int ret;
-> >>   
-> >> +	if (!video_drv_should_bind(&pdev->dev, true))
-> >> +		return -ENODEV;
-> > 
-> > Wouldn't it mark the probe as failed and cause dmesg regressions?
-
-No, this is perfectly fine. Probe can return -ENODEV and driver core
-will continue with any further matches.
-
-> >> +#if !IS_REACHABLE(CONFIG_VIDEO_QCOM_VENUS) || !IS_REACHABLE(CONFIG_VIDEO_QCOM_IRIS)
-> >> +bool video_drv_should_bind(struct device *dev, bool is_iris_driver)
-> >> +{
-> >> +	/* If just a single driver is enabled, use it no matter what */
-> >> +	return true;
-> >> +}
-> >> +
-> >> +#else
-> >> +static bool prefer_venus = true;
-> >> +MODULE_PARM_DESC(prefer_venus, "Select whether venus or iris driver should be preferred");
-> >> +module_param(prefer_venus, bool, 0444);
-> > 
-> > 
-> > The choice of driver is by module blacklisting, not by failing probes.
-> > 
-> > I don't understand why this patchset is needed and neither commit msg
-> > nor above longer code comment explain me that. Just blacklist the module.
-
-> Summarizing the discussion with myself, Krzysztof and Dmitry:
+On 01/02/2025 16:41, Konrad Dybcio wrote:
+> On 29.01.2025 10:43 AM, Neil Armstrong wrote:
+>> On the SM8650, the dynamic clock and voltage scaling (DCVS) is done in an
+>> hardware controlled loop using the LMH and EPSS blocks with constraints and
+>> OPPs programmed in the board firmware.
+>>
+>> Since the Hardware does a better job at maintaining the CPUs temperature
+>> in an acceptable range by taking in account more parameters like the die
+>> characteristics or other factory fused values, it makes no sense to try
+>> and reproduce a similar set of constraints with the Linux cpufreq thermal
+>> core.
+>>
+>> In addition, the tsens IP is responsible for monitoring the temperature
+>> across the SoC and the current settings will heavily trigger the tsens
+>> UP/LOW interrupts if the CPU temperatures reaches the hardware thermal
+>> constraints which are currently defined in the DT. And since the CPUs
+>> are not hooked in the thermal trip points, the potential interrupts and
+>> calculations are a waste of system resources.
+>>
+>> Drop the current passive trip points and only leave the critical trip
+>> point that will trigger a software system reboot before an hardware
+>> thermal shutdown in the allmost impossible case the hardware DCVS cannot
+>> handle the temperature surge.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 180 -----------------------------------
+>>   1 file changed, 180 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> index 25e47505adcb790d09f1d2726386438487255824..95509ce2713d4fcc3dbe0c5cd5827312d5681af4 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> @@ -5751,18 +5751,6 @@ cpu2-top-thermal {
+>>   			thermal-sensors = <&tsens0 5>;
+>>   
+>>   			trips {
+>> -				trip-point0 {
+>> -					temperature = <90000>;
+>> -					hysteresis = <2000>;
+>> -					type = "passive";
+>> -				};
 > 
-> 1) module blacklisting solution will not be ideal if users want to have 
-> both venus and iris or either of them built-in
+> Feel free to drop polling-delay-passive from these nodes too
 
-Module blacklisting is not the way to go, you shouldn't have two drivers
-racing to bind to the same device ever.
+Good catch
 
-> 2) with current approach, one of the probes (either venus or iris) will 
-> certainly fail as video_drv_should_bind() will fail for one of them. 
-> This can be considered as a regression and should not happen.
+Neil
 
-How can that be a regression? One driver must fail to probe (see above).
- 
-> Solution: If the user prefers iris driver and iris driver has not probed 
-> yet, and if venus tries to probe ahead of iris we keep -EDEFERing till 
-> iris probes and succeeds. Vice-versa when the preference is venus as well.
+> 
+> Konrad
 
-This sounds wrong too.
-
-Look, first you guys need to explain *why* you want to have two drivers
-for the same hardware (not just to me, in the commit message and cover
-letter).
-
-That's something that really should never be the case and would need to
-be motivated properly.
-
-Second, if the reasons for keeping both drivers are deemed justifiable,
-you need to come up with mechanism for only binding one of them.
-
-I already told you that module parameters is not the way to go here (and
-the msm drm driver's abuse of module parameters is not a good precedent
-here).
-
-If this is a transitional thing (which it must be), then just add a
-Kconfig symbol to determine which driver should probe. That's good
-enough for evaluating whatever needs to be evaluated, and doesn't
-depend on adding anti-patterns like module parameters (and helper
-modules for them).
-
-Keep it simple.
-
-Johan
 
