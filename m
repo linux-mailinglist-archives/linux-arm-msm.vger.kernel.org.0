@@ -1,80 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-46717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16C64A25456
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 09:24:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48D57A25493
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 09:38:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A02AF1884FF4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 08:24:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B64F31638CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 08:38:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEB121FBC8B;
-	Mon,  3 Feb 2025 08:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 461CC1FBE88;
+	Mon,  3 Feb 2025 08:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lhH4hsfV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PV4PSb9y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA891FBC86
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 08:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976501FA859;
+	Mon,  3 Feb 2025 08:38:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738571034; cv=none; b=YRulrMeqsB4XQyXemymPn6mTKXK4fN4fM79C74iLjeKpY9/nvipVhOlbYGOZe7TRJTfabN1lzpGdSMMCB7UHE1v3DUagT7ywXQAHWuXnR15LVeHW5sdcsk1DZPThUMarnNgMM8W18HD2Fo4Wpm+yHkgbDP+tKTcoT7uy9o7oxds=
+	t=1738571893; cv=none; b=mGc0KNG12F3iIbcW1QD2YsdEsMT7pHMq91CNY1aCQDluI58FtYKAsQv6Y0BfTmTwC6pw6eun0crecmLEYQHlj9DgDGUvHHGWKkPg8VCoJyk4IqKqRZ6Tolay+dotFPrYLH0xeDWzB2aUz8GZvv9dzOhrqZ2BavypikA88kGgvSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738571034; c=relaxed/simple;
-	bh=z9BU705GLXB50N/YdOjFX73tlnQpgsmKDIwSJPpU4eA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=XSkFe/ZHUZUm5RxbSdo4w1tDBnpfl0MgN0s7c7g/DE1V2M5KttjeEJGDATm5PBF3afjqtQkP4+4k3TzQHXJZ4bGskozFI4a07tByP8fJeB8X9X9gJOKVtG1RxufvtrnJH+beQCiWlEnHfoCZxOSEVWXkDxs4oo2mW0HwvD63HHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lhH4hsfV; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-385de59c1a0so2108237f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2025 00:23:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738571031; x=1739175831; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pQCWhqsYRmlL9rcM+R5ONSNVXNMcUnDtP0jlAKeY3ZE=;
-        b=lhH4hsfV5FG00bvmMFMsCmHS/zsFFp2BxCt52jV4jfns80QinsRTw0tw/G5JSunKFI
-         xHZTRPJTTbYoAdW3k+V5gKOjV36NPw75VCARpcAw/eK6vY5FforbxY5opTgqlfQQyvlx
-         RgEfj9maEvjOlpSLjyBpI0dHP92EL8511cAmCP47UJ+1xYurs2IKS8aU5+TJlFwJpcji
-         y+s4Nc033Z7dpglOAlWumPadDZOntVrbiIWfscrtHMkFqV+acAj9kHqlD6vyfR/T0xBO
-         oDLU9+7h4Ns3OPKMKHWXZOWqVbaZmnw+D4Sl+UTcMjN+UiUMgUes3sK/UJ221SO0cmGh
-         DFMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738571031; x=1739175831;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pQCWhqsYRmlL9rcM+R5ONSNVXNMcUnDtP0jlAKeY3ZE=;
-        b=T1fBnTft1RQcdCUxHlN3mjcvGIkNW5tev5rcVFY35w+YIZluuDugrU3qxlV48yIYU9
-         upvrUZGPdh0uLxW5Y4yD+SiJmKOZDBmtL/imNun+qXcNpWt1eBlWo5loKGgxi7tgKUs9
-         OsL3I2JK2x1HJyNuIiD1tmOCPG586J20C8O+fn7HRMbrgQ+mV2XycOeirW4T9tyRVoKk
-         Vebn5GJ6jrc55mPgZ3DtxIL00nkUZ4EY5qlVZZT9hd9FA2rEyEdnFulgc/+x6Nk/GH+D
-         VdCif0nU/gnpfCa4U+IXy84/fTDlt+Lx/jjoa5ezrtAGS8eIWov5hcFLJVvlDA8VqaIw
-         616g==
-X-Gm-Message-State: AOJu0YxpEQa/il5UP57iYnMPzQyTXs6hcVsfVG/Q4LHC/+BUQd1ckBLN
-	Ud1xg3cAmPMeD+cSW+rkOYt+zgPRDxJLA2aJ1bT5KNFw4C36Q43baR9aorwbhNo=
-X-Gm-Gg: ASbGnct5oja26//zNUlR0sMUWRIG40BuK8OZfs3QivlT7SRqqKRnJYeq2F/4ss+Qm+e
-	Bjbm9qGYUi7qFAKDA04nWwJvbE0KdV3SgXz2vMt95Ooe+SiLzT5EVm7hxtbOuud6TqB9ckUQPT1
-	8U5qb784COUrIDvp0w3OmcghedH2txnY6DhlQm9EQL36Ssg4v8BynHCxlyIJUj3a25GvU5FztU9
-	wbKuTQOGs0vixwKLOQvE5HbUx3iaY/J+18noXR1MTe7oC1rKleT1JKb+6slif1qygi5UbON7Vxd
-	WPWtt4pQpjz+RewKLDSz3TG1iFQDyuUaSRO9CruegJxi+EzXYzBGwB327yBxMe7quU+v
-X-Google-Smtp-Source: AGHT+IELO7TOgF+MW1lIEUbvDpJTkXWnvydRSQikj2ZL+gIMdvxjI/MEWkY8cQZpZfyaXuW3zEOkPw==
-X-Received: by 2002:a5d:6dae:0:b0:38c:5bfa:a961 with SMTP id ffacd0b85a97d-38c5bfaabefmr10691476f8f.4.1738571031292;
-        Mon, 03 Feb 2025 00:23:51 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:e2ce:628f:fe98:a052? ([2a01:e0a:982:cbb0:e2ce:628f:fe98:a052])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c102bdbsm11901976f8f.28.2025.02.03.00.23.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Feb 2025 00:23:51 -0800 (PST)
-Message-ID: <82828c3a-ed8c-42b8-b603-bc73d3be7497@linaro.org>
-Date: Mon, 3 Feb 2025 09:23:52 +0100
+	s=arc-20240116; t=1738571893; c=relaxed/simple;
+	bh=EJVvYHmUv5g/Vnq219Og/XdQw7v2OLZ38BqZWLWWbgA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TnmM+YbCfr6JVrtku7HjaBByPZ1SgnRdyWeJ0lm6B5ZRcZi3t8mqdv3wLdPjXmrIW9C8uUCnZM+JAVGrnAFgupDvLIwSvNpEEacR5o8p6Iwg4guYKYZ6yDKNHuHx4nFZq5dHv8t80Sfgj6T0NfCdpah1JS7dwUkEpveZo5wJwsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PV4PSb9y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5135lEr1007514;
+	Mon, 3 Feb 2025 08:38:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XVGYg007DqlZ14Celc1KRgbSlHax+yNO1OqjdJZgd5k=; b=PV4PSb9ywGcurZ2N
+	BQBhAJnxJtXP/oJ1EBRGtk0FtNpLNTKo70pmYFul3I0+AU5Szf30TnFfqIdJXqX0
+	hxsiwpJksDdw6sqBxwwd/VGrfSaX29gWFiSxHHn30GjYuYPSdUTOCUIm5dt/97hM
+	xxbNC4APIDCokYgC5+CkA2lQovNlm+XjnlGmcdqu0mzVQ7bpPoQ3tk9uIdubCxrY
+	tY5LbjoM1NmeHrIR59ApO4uTCoBnplgOesGoKcgyNL4PuldS0BUkolPCOQR+e3Nh
+	SbynayGywdqj3BaBs4ID1mm2pJNjt4TtiTFsnW8lKm7EoTQ31J21d8agVF9C8KgP
+	iyTeRA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44jqxw0bva-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Feb 2025 08:38:01 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5138bxcX030486
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Feb 2025 08:37:59 GMT
+Received: from [10.219.57.57] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Feb 2025
+ 00:37:55 -0800
+Message-ID: <273df630-007d-4aaf-9432-2884a7e94d5e@quicinc.com>
+Date: Mon, 3 Feb 2025 14:07:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,78 +65,87 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sm8650: setup gpu thermal with
- higher temperatures
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250129-topic-sm8650-thermal-cpu-idle-v3-0-62ab1a64098d@linaro.org>
- <20250129-topic-sm8650-thermal-cpu-idle-v3-2-62ab1a64098d@linaro.org>
- <3db4b41c-0d29-468a-875b-eec3cced5aa5@linaro.org>
- <292ed7db-aa9a-4dd3-a887-70e0ccf346c2@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <292ed7db-aa9a-4dd3-a887-70e0ccf346c2@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v4 0/2] Add support for GPU SMMU on QCS8300
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg
+ Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com>
+ <20250203-lean-delightful-ermine-f5b902@krzk-bin>
+Content-Language: en-US
+From: Pratyush Brahma <quic_pbrahma@quicinc.com>
+In-Reply-To: <20250203-lean-delightful-ermine-f5b902@krzk-bin>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: A3Y4AVxh3AHw6zDw3dRdd7GiAx6Rmuqp
+X-Proofpoint-GUID: A3Y4AVxh3AHw6zDw3dRdd7GiAx6Rmuqp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-03_03,2025-01-31_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
+ adultscore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502030068
 
-On 01/02/2025 16:37, Konrad Dybcio wrote:
-> On 29.01.2025 3:41 PM, Neil Armstrong wrote:
->> On 29/01/2025 10:43, Neil Armstrong wrote:
->>> On the SM8650, the dynamic clock and voltage scaling (DCVS) for the GPU
->>> is done from the HLOS, but the GPU can achieve a much higher temperature
->>> before failing according the the reference downstream implementation.
->>>
->>> Set higher temperatures in the GPU trip points corresponding to
->>> the temperatures provided by Qualcomm in the dowstream source, much
->>> closer to the junction temperature and with a higher critical
->>> temperature trip in the case the HLOS DCVS cannot handle the
->>> temperature surge.
+
+On 2/3/2025 1:03 PM, Krzysztof Kozlowski wrote:
+> On Mon, Feb 03, 2025 at 11:17:00AM +0530, Pratyush Brahma wrote:
+>> Enable GPU SMMU function on QCS8300 platform. GPU SMMU is required
+>> for address translation in GPU device.
 >>
->> Since the tsens MAX_THRESHOLD which leads to a system
->> monitor thermal shutdown is set at 120C, I need to lower
->> the critical and hot trip point, so please ignore this patchset.
-> 
-> Should we make the "critical" trip point something like 110 or so? If
-> LMH triggers a hard shutdown at 120, the OS will not have any time to
-> take action. And 120 sounds like we're pushing it quite hard anyway.
+>> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+>> --
+>> Changes since v3:
+>> - Modified the order of clock voting and properties as suggested by Konrad
+>> - Removed dependency on clocks in commit text as change is merged in
+>>    linux-next before current base commit
+>>
+>> Link to v3:
+>> https://lore.kernel.org/all/20241227105818.28516-1-quic_pbrahma@quicinc.com/
+>>
+> How are you sending these?
+>
+> b4 diff 20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com
+> Grabbing thread from lore.kernel.org/all/20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com/t.mbox.gz
+> Checking for older revisions
+> Grabbing search results from lore.kernel.org
+>    Added from v3: 2 patches
+> ---
+> Analyzing 7 messages in the thread
+> Preparing fake-am for v3: dt-bindings: arm-smmu: Document QCS8300 GPU SMMU
+> ERROR: v3 series incomplete; unable to create a fake-am range
+> ---
+> Could not create fake-am range for lower series v3
+I have sent this version of the patch series using b4 for the first 
+time, as suggested earlier [1]. The issue might be due to the previous 
+version being sent
+incorrectly using git send-mail. Consequently, I had to manually apply 
+the previous patches after creating the b4 branch,
+since "b4 prep -F" was throwing an error when trying to apply the last 
+patch.
 
-
-My plan is to harmonize and use 110 for hot and 115 for critical, and
-if available any passive cooling devices is available at 95C
-
-Neil
-
-> 
-> Konrad
+[1] 
+https://lore.kernel.org/all/64ak7h5pwqinmcymas5i4xexa6bntvti7zkwfhzx7qrsmgaow3@zmn7jffcrp5f/
+>
+> Best regards,
+> Krzysztof
+>
+-- 
+Thanks and Regards
+Pratyush Brahma
 
 
