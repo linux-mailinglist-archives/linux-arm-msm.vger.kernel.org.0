@@ -1,108 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-46700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40ECCA25287
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 07:35:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44E90A2531A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 08:34:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 397087A222D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 06:34:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FCCB1884028
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2025 07:34:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B23B1DD9A6;
-	Mon,  3 Feb 2025 06:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FA371E7C20;
+	Mon,  3 Feb 2025 07:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="U+lc7m8v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UsRIoKni"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960C31EE02F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Feb 2025 06:35:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F081DED47;
+	Mon,  3 Feb 2025 07:33:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738564505; cv=none; b=oSv67k6UoJY0b1bNrhzDB+jn12XWTFSv6gd5XCRY5J7qdggLYYev9DQRtoQoKTKxdlFi+A0ToYhYaYyuCNFeObBuFGDiLnFTnYC3P7nDhPB1A/OUIfZDaqDFE8tgIrwm1yivFaPW0kVazUj0i2PojANnuZ4DKTvHPoKJMyjXhe4=
+	t=1738568033; cv=none; b=WhzrLfMgoJv7qPlaFxiL6NQ9LODL/8tvRZFRqHVI4rGKDPzBEVv4u/pWSIM8baA2t4uMIYysKozgV3WG00FIOeFmWkx46kQezQHJnflyanYVU7USIGXFPFkjXwN2lbKxz02SLAn5Iem+JOgSzfzSV3FFInehStmAmUj0qTCbt2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738564505; c=relaxed/simple;
-	bh=MvHOs/prmCaGsMdoXg9G8LLJtKC+Frm9bhsedB5JUP8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIyunz2uyVaVbrRYC7N3bhlHE2p3EmG2SHnzQq6dopIzHR3rPatyD5/QfHuosMeapRzm3Jhd5mNWTvr8iWjEX1PA4urnQelK8bn9Ajmlaqy98o0sCcIksbIaeKGIALIc8NUStbghYEXx6baO4qb3ut1ONxKBGVzefT5kdCy8lk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=U+lc7m8v; arc=none smtp.client-ip=95.215.58.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1738564500;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=rXujrocl/q/AoW1/bTP6mXk3VvohzMz5MXKMXXqfQK0=;
-	b=U+lc7m8v7Ln+09sAx8bM2qlC3mc3ybFktdoJp3fBrsdrcvexU/YtXhMI/05RXu2M/t64EV
-	cW/tfruWSXtMgDOlSIbDALltcE6DTZbKqDRi0+fiRvW6oMdaNbsYD7iBCk9uII4LDnSl/W
-	5COMjC4bx4RmOcuL0yMN1i1Es2jvU8gIuPjYrrPTKbj0o79DOdDFG6zr/fDCQjj4QSmfIz
-	kKhyvFVwiPk84UiY729caG3LkdJ8wUsQi5RHFpbNHtlt8dcu6SSmGgIqjdWmxxu9Vb+fVW
-	XO79XaKJOK9qSMaGl/HN8dSgIingtiqsgLu7IgkeL80li2fG0N+6u4Hs5vGGHA==
-From: Alexey Minnekhanov <alexeymin@postmarketos.org>
-To: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v3 3/3] arm64: dts: qcom: sdm630: Add missing resets to mmc blocks
-Date: Mon,  3 Feb 2025 09:34:26 +0300
-Message-ID: <20250203063427.358327-4-alexeymin@postmarketos.org>
-In-Reply-To: <20250203063427.358327-1-alexeymin@postmarketos.org>
-References: <20250203063427.358327-1-alexeymin@postmarketos.org>
+	s=arc-20240116; t=1738568033; c=relaxed/simple;
+	bh=yOy3zcmE0HZGLG2DLjwjOiQ1ZDVv6x3eU+/3hLDWIUo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UBYnXXDcNPQpVOd3PjGsgAz1uyANb8Pv/nBxNX/GS+27VKlTrMfoniPOtsPJ4Ztsy+I6ivDwwIVjl11turwmRQzf3PM3MCepfuBbmbq2TPWEsZyii0n5/Pnmthwdmdciugkp9NGCFm6D0jIRgS95zO3uXN9XhS6PnFvGkbCVGZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UsRIoKni; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A02DC4CEE3;
+	Mon,  3 Feb 2025 07:33:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738568033;
+	bh=yOy3zcmE0HZGLG2DLjwjOiQ1ZDVv6x3eU+/3hLDWIUo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UsRIoKni7Yk20ziOyb9DL2vZl2jzq/MwPWN+xK2gZTS83mbNFh8SGEex3IeSW9gFa
+	 l0VJnjLmBFx+br2iCRIfeUV6p7vW7VA6QdmT0PQDTZndAIyERaQ9ctja43M8MhcudW
+	 gpR66BkU8AP5Ulor5AvYroUKfA4hU765tB2RRHEzDuDS+KO7mVB3bVhTvoJ0bnBcUA
+	 eJ4pqfAkqxVYXf7tTiwZ8jNG5hTCfNUOZ2aQhMfYQiYf09lqbOL509wEGM23ITnfqx
+	 ezSyiq1//TPd5K1suv51fYYrClr5BCC4Sy6jWG3ntNdKYy3S+sJhgvLWY4hZNXAy39
+	 GXdyUBoLlFczQ==
+Date: Mon, 3 Feb 2025 08:33:49 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Pratyush Brahma <quic_pbrahma@quicinc.com>
+Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 0/2] Add support for GPU SMMU on QCS8300
+Message-ID: <20250203-lean-delightful-ermine-f5b902@krzk-bin>
+References: <20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com>
 
-Add resets to eMMC/SD card blocks so linux can properly reset
-them during initialization.
+On Mon, Feb 03, 2025 at 11:17:00AM +0530, Pratyush Brahma wrote:
+> Enable GPU SMMU function on QCS8300 platform. GPU SMMU is required
+> for address translation in GPU device.
+> 
+> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+> --
+> Changes since v3:
+> - Modified the order of clock voting and properties as suggested by Konrad
+> - Removed dependency on clocks in commit text as change is merged in
+>   linux-next before current base commit
+> 
+> Link to v3:
+> https://lore.kernel.org/all/20241227105818.28516-1-quic_pbrahma@quicinc.com/
+> 
 
-Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+How are you sending these?
+
+b4 diff 20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com
+Grabbing thread from lore.kernel.org/all/20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com/t.mbox.gz
+Checking for older revisions
+Grabbing search results from lore.kernel.org
+  Added from v3: 2 patches
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+Analyzing 7 messages in the thread
+Preparing fake-am for v3: dt-bindings: arm-smmu: Document QCS8300 GPU SMMU
+ERROR: v3 series incomplete; unable to create a fake-am range
+---
+Could not create fake-am range for lower series v3
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index a2c079bac1a7..3722e405a97c 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1379,6 +1379,7 @@ sdhc_2: mmc@c084000 {
- 					<&xo_board>;
- 			clock-names = "iface", "core", "xo";
- 
-+			resets = <&gcc GCC_SDCC2_BCR>;
- 
- 			interconnects = <&a2noc 3 &a2noc 10>,
- 					<&gnoc 0 &cnoc 28>;
-@@ -1433,6 +1434,8 @@ sdhc_1: mmc@c0c4000 {
- 				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
- 			clock-names = "iface", "core", "xo", "ice";
- 
-+			resets = <&gcc GCC_SDCC1_BCR>;
-+
- 			interconnects = <&a2noc 2 &a2noc 10>,
- 					<&gnoc 0 &cnoc 27>;
- 			interconnect-names = "sdhc-ddr", "cpu-sdhc";
--- 
-2.45.3
+Best regards,
+Krzysztof
 
 
