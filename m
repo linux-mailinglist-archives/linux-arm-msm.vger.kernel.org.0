@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-46839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C482A26A90
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 04:22:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A2FAA26AA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 04:32:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE6E73A325C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 03:22:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B70A818881B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 03:32:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0D241552FA;
-	Tue,  4 Feb 2025 03:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48FC8156F3F;
+	Tue,  4 Feb 2025 03:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WLi4VETt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hJv0ULNX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E3425A642;
-	Tue,  4 Feb 2025 03:22:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673653597D;
+	Tue,  4 Feb 2025 03:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738639344; cv=none; b=gJXcCKjr4dNw85ERYjMA/dB9sKi+u/rYTEwzOjYoglZ4wXpSVCX6NRIYcd+fM94/fkySwDNdm9Yr4jzozvCTmIxu1Oc09Jgwkfvy54qcZEVg+HgKfwJDUH2TfIyMDmGiBC44sTO8qx796oUr+bOSqLwrT4HtRzrkQP58i9Mj5es=
+	t=1738639929; cv=none; b=bOErXXKgKpp8YEbdQTJ+9cMiA34KMVgJufOmaabH3FPpn8Hh2N8J81CYXWNxpJuvgDE+nM5s9FNqOnqajZ/eCsqrn9IIFG1hZziC/VsReyRJdkWBI/cAsbGSiGduADz2wIpOcuIFRcQTrwD8AyMixxBQ00eWk/wKsMi2KSs6Q00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738639344; c=relaxed/simple;
-	bh=nCXAnrUP9N8+x3kpeBz5EX2rRV2CFmekJYL7ldnnfkg=;
+	s=arc-20240116; t=1738639929; c=relaxed/simple;
+	bh=TWNLrLjw3qbxr/KJZNLCQqARFZ9+WXg1tUmIxXhRP4g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=MdC+ohixFrjJFTrCaVXpk6lI33NKeGSAIvblukYoZnSXMVM7B0oqc+DK/f758gDdyZCfnqkPUtYywgdJhGX15cOIhWEYJBYi34R25FRKi0BN0oQVg+/Z99y1OrAnin00fYZf5TSa9Pp2KbgQf6OvdE5XZzvtcXg3vBAmmU0TAO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WLi4VETt; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=ADNFgZqdYhlklRK8u4tuvMmjSadc4cND8d3otXQKWjFMFkXOUrJKWtftNCUcMfqBNzMqO9SpfQeXQU543MfhitwI3F9HEDEttcfQ4wHr8txaAu9aNCKqRvCEQabRxDxskKfZ52fAHBgWBDcSrqeSeBOATDYVG9wVff61Z5QJlhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hJv0ULNX; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 513GFHMu011894;
-	Tue, 4 Feb 2025 03:22:02 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5141boqj005319;
+	Tue, 4 Feb 2025 03:31:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HAqS3bI/nZNWijByPRTKJVUN97hHHkCl5lQJzeIb+ao=; b=WLi4VETtAWct4DCY
-	e0865jVE7ezCdHQKwZTkQKcc71eTsKLHt98yk01nMYHfw/ZZRvZPx4x35nigG5yE
-	RK0KDwJwiMmj8RgwX7zGNYfvvpxH9D3lHv5QxwnfKi/fZGUuP//1SbKl3io/3y7P
-	FFUz+oaAQ1xmSxprk1p9ghQQ7MUwy/kgMUl0qID4b9lonDyuCLTw5Ti2UHHMY8+U
-	fzF1ljB0hIK9kwtQB3TkLV36axTj88YGg5jnAUSRh0BiCUsMb0/p744Y+FhVvHhr
-	o5YyUeSOlhCareh7abe0rt46/+FPLdhnR/uGV6GdDSqAKUTVyzaUZ7ouTltNT+jU
-	btYM2w==
+	SYGs+oOrt9/tkOKhBTiYPbbc8sioi3ceD+boUWkOygM=; b=hJv0ULNXz/d7ll+t
+	XlpXdfCTKy00n2/cr2bu4N6iJ+aBwN31L/XOtgolbTZnK/J59To8bIpU7Y0Q+Fw+
+	Kagoarpf3WJjYto1ATepyOHjPqq49/YHZJj4AVCz8p1cYxAKjnLaV0LGLtoutvug
+	s97S9wDJKhjObIsU/Xwj4txm7sVasd/6RpRkxEa24r9Yso+zDUhjjo7S+0uv+9Aa
+	dwaZf85b6UyzGB6a7F24xmUSR0WQEDi9j61u0KzJofB5xkEXPmgjsOVXkQQV43N9
+	1F2VTMfz3Dz0S/XLz/RBJI1Y0kaCMw5CjGGFL/ju2xTK9RjxbYMz7tmGnYVKEja8
+	aYHbeg==
 Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44k159h94t-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44k9cn05wr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Feb 2025 03:22:01 +0000 (GMT)
+	Tue, 04 Feb 2025 03:31:41 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5143M0SN003203
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5143Ve21017734
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 4 Feb 2025 03:22:00 GMT
+	Tue, 4 Feb 2025 03:31:40 GMT
 Received: from [10.110.45.144] (10.80.80.8) by nalasex01b.na.qualcomm.com
  (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Feb 2025
- 19:21:59 -0800
-Message-ID: <4a18ddb1-a7f4-41ae-b115-516b1710cbde@quicinc.com>
-Date: Mon, 3 Feb 2025 19:21:52 -0800
+ 19:31:33 -0800
+Message-ID: <0ec95cca-45ed-4805-8ebd-03563d55627e@quicinc.com>
+Date: Mon, 3 Feb 2025 19:31:29 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,8 +65,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8750: Add USB support to SM8750
- platforms
+Subject: Re: [PATCH 4/7] phy: qcom: qmp-combo: Add new PHY sequences for
+ SM8750
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Melody Olvera
 	<quic_molvera@quicinc.com>
@@ -89,262 +89,114 @@ CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
         <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>
 References: <20250113-sm8750_usb_master-v1-0-09afe1dc2524@quicinc.com>
- <20250113-sm8750_usb_master-v1-7-09afe1dc2524@quicinc.com>
- <lk26ltslmijj7tj2kst2wsvd6d2hyj3zjzcwavwl63evjhcgdh@ewqliiijispu>
+ <20250113-sm8750_usb_master-v1-4-09afe1dc2524@quicinc.com>
+ <tcm2hn7rpzaazntp5r7ag466ynacexnke43e6ypm4q5mrrlkdb@nem3gzib2l2v>
 Content-Language: en-US
 From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <lk26ltslmijj7tj2kst2wsvd6d2hyj3zjzcwavwl63evjhcgdh@ewqliiijispu>
+In-Reply-To: <tcm2hn7rpzaazntp5r7ag466ynacexnke43e6ypm4q5mrrlkdb@nem3gzib2l2v>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Zy9C0otC3fT2aMT_4_uaNVuK6dCyJmDa
-X-Proofpoint-ORIG-GUID: Zy9C0otC3fT2aMT_4_uaNVuK6dCyJmDa
+X-Proofpoint-GUID: 6CZ12yG9laqlC6280Q6qRDyqXtceBvnD
+X-Proofpoint-ORIG-GUID: 6CZ12yG9laqlC6280Q6qRDyqXtceBvnD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-04_01,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 spamscore=0 mlxlogscore=999 phishscore=0 clxscore=1011
- mlxscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502040024
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ spamscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 phishscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502040025
 
 
-On 1/14/2025 2:38 AM, Dmitry Baryshkov wrote:
-> On Mon, Jan 13, 2025 at 01:52:13PM -0800, Melody Olvera wrote:
+On 1/14/2025 2:23 AM, Dmitry Baryshkov wrote:
+> On Mon, Jan 13, 2025 at 01:52:10PM -0800, Melody Olvera wrote:
 >> From: Wesley Cheng <quic_wcheng@quicinc.com>
 >>
->> Enable USB support on SM8750 MTP and QRD variants. SM8750 has a QMP combo
->> PHY for the SSUSB path, and a M31 eUSB2 PHY for the HSUSB path.
+>> Add new register offsets and PHY values for SM8750. Some of the previous
+>> definitions can be leveraged from older PHY versions as offsets within
+>> registers have not changed. This also updates the PHY sequence that is
+>> recommended after running hardware characterization.
 >>
 >> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 >> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 >> ---
->>  arch/arm64/boot/dts/qcom/sm8750-mtp.dts |  24 ++++++
->>  arch/arm64/boot/dts/qcom/sm8750-qrd.dts |  24 ++++++
->>  arch/arm64/boot/dts/qcom/sm8750.dtsi    | 134 ++++++++++++++++++++++++++++++++
-> Separate SoC and board patches.
->
->>  3 files changed, 182 insertions(+)
+>>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 198 ++++++++++++++++++++++++++++++
+>>  1 file changed, 198 insertions(+)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
->> index 9e3aacad7bdab6848e86f8e45e04907e1c752a07..059eccbbc3fb05fc8806e36d35dc469d44443a26 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
->> @@ -792,3 +792,27 @@ &tlmm {
->>  &uart7 {
->>  	status = "okay";
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+>> index b09fa00e9fe7db8d97b7179ee15d3f07fe578b0c..823a60029ea6acbd1f0f8c7d27aaa58de39ed758 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+>> @@ -1471,6 +1471,139 @@ static const struct qmp_phy_init_tbl x1e80100_usb43dp_pcs_tbl[] = {
+>>  	QMP_PHY_INIT_CFG(QPHY_V6_N4_PCS_EQ_CONFIG5, 0x10),
 >>  };
->> +
->> +&usb_1 {
->> +	status = "okay";
->> +};
->> +
->> +&usb_1_dwc3 {
->> +	dr_mode = "peripheral";
->> +};
->> +
->> +&usb_1_hsphy {
->> +	vdd-supply = <&vreg_l2d_0p88>;
->> +	vdda12-supply = <&vreg_l3g_1p2>;
->> +
->> +	phys = <&pmih0108_eusb2_repeater>;
->> +
->> +	status = "okay";
->> +};
->> +
->> +&usb_dp_qmpphy {
->> +	vdda-phy-supply = <&vreg_l3g_1p2>;
->> +	vdda-pll-supply = <&vreg_l2d_0p88>;
->> +
->> +	status = "okay";
->> +};
->> diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
->> index f77efab0aef9bab751a947173bcdcc27df7295a8..01c0af643626917614fbd68cf8962ef947ca6548 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
->> @@ -790,3 +790,27 @@ &tlmm {
->>  &uart7 {
->>  	status = "okay";
->>  };
->> +
->> +&usb_1 {
->> +	status = "okay";
->> +};
->> +
->> +&usb_1_dwc3 {
->> +	dr_mode = "peripheral";
->> +};
->> +
->> +&usb_1_hsphy {
->> +	vdd-supply = <&vreg_l2d_0p88>;
->> +	vdda12-supply = <&vreg_l3g_1p2>;
->> +
->> +	phys = <&pmih0108_eusb2_repeater>;
->> +
->> +	status = "okay";
->> +};
->> +
->> +&usb_dp_qmpphy {
->> +	vdda-phy-supply = <&vreg_l3g_1p2>;
->> +	vdda-pll-supply = <&vreg_l2d_0p88>;
->> +
->> +	status = "okay";
->> +};
->> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->> index 3bbd7d18598ee0a3a0d5130c03a3166e1fc14d82..54522fd3d0e11c3cff02beaf1d249fe654cacc0f 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->> @@ -10,6 +10,7 @@
->>  #include <dt-bindings/interconnect/qcom,icc.h>
->>  #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
->>  #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->>  #include <dt-bindings/power/qcom,rpmhpd.h>
->>  #include <dt-bindings/power/qcom-rpmpd.h>
->>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> @@ -1966,6 +1967,139 @@ lpass_lpicx_noc: interconnect@7420000 {
->>  			#interconnect-cells = <2>;
->>  		};
 >>  
->> +		usb_1_hsphy: phy@88e3000 {
->> +			compatible = "qcom,sm8750-m31-eusb2-phy";
->> +			reg = <0x0 0x88e3000 0x0 0x29c>;
+>> +static const struct qmp_phy_init_tbl sm8750_usb3_serdes_tbl[] = {
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE1_MODE1, 0xc0),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE2_MODE1, 0x01),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x02),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x16),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x36),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CORECLK_DIV_MODE1, 0x04),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x16),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x41),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x41),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MSB_MODE1, 0x00),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START1_MODE1, 0x55),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START2_MODE1, 0x75),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START3_MODE1, 0x01),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x01),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE1_MODE1, 0x25),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE2_MODE1, 0x02),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_BIN_VCOCAL_CMP_CODE1_MODE1, 0x5c),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_BIN_VCOCAL_CMP_CODE2_MODE1, 0x0f),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_BIN_VCOCAL_CMP_CODE1_MODE0, 0x5c),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_BIN_VCOCAL_CMP_CODE2_MODE0, 0x0f),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE1_MODE0, 0xc0),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE2_MODE0, 0x01),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x02),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x16),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x36),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x08),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x1a),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x41),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MSB_MODE0, 0x00),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START1_MODE0, 0x55),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START2_MODE0, 0x75),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START3_MODE0, 0x01),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE1_MODE0, 0x25),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE2_MODE0, 0x02),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_BG_TIMER, 0x0a),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_EN_CENTER, 0x01),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_PER1, 0x62),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_PER2, 0x02),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_BUF_ENABLE, 0x0c),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0x1a),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_CFG, 0x14),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CORE_CLK_EN, 0x20),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x16),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_AUTO_GAIN_ADJ_CTRL_1, 0xb6),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_AUTO_GAIN_ADJ_CTRL_2, 0x4a),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_AUTO_GAIN_ADJ_CTRL_3, 0x36),
+> The only difference from sm8550_usb3_serdes_tbl, it has 0x37 here.
+Not sure what the suggestion is here.  I think in general I would want to have a separate table for each chipset, considering that settings may change/evolve.  Currently, if you're asking to re-use the sm8550 table to avoid re-defining this sequence, I think it'll be confusing to folks when they refer to this SOC's PHY settings.
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_ADDITIONAL_MISC, 0x0c),
+>> +};
 >> +
->> +			clocks = <&tcsrcc TCSR_USB2_CLKREF_EN>;
->> +			clock-names = "ref";
->> +
->> +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
->> +
->> +			#phy-cells = <0>;
->> +
->> +			status = "disabled";
->> +		};
->> +
->> +		usb_dp_qmpphy: phy@88e8000 {
->> +			compatible = "qcom,sm8750-qmp-usb3-dp-phy";
->> +			reg = <0x0 0x088e8000 0x0 0x3000>;
->> +
->> +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
->> +				 <&rpmhcc RPMH_CXO_CLK>,
->> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
->> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
->> +			clock-names = "aux",
->> +				      "ref",
->> +				      "com_aux",
->> +				      "usb3_pipe";
->> +
->> +			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
->> +				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
->> +			reset-names = "phy",
->> +				      "common";
->> +
->> +			power-domains = <&gcc GCC_USB3_PHY_GDSC>;
->> +
->> +			#clock-cells = <1>;
->> +			#phy-cells = <1>;
-> Missing orientation-switch and ports{} description.
-
-At least for this initial submission/series, we haven't yet defined the PMIC GLINK connections yet, so does it make sense to include these now?  Basically, even if we define that connection, since I'm not aware if the enablement of PMIC GLINK has been added, it would be nil, as it would be the one responsible for registering the type C port. 
-
->> +
->> +			status = "disabled";
->> +		};
->> +
->> +		usb_1: usb@a6f8800 {
->> +			compatible = "qcom,sm8750-dwc3", "qcom,dwc3";
->> +			reg = <0x0 0x0a6f8800 0x0 0x400>;
->> +			status = "disabled";
->> +			#address-cells = <2>;
->> +			#size-cells = <2>;
->> +			ranges;
->> +
->> +			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
->> +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
->> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
->> +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
->> +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
->> +				 <&tcsrcc TCSR_USB3_CLKREF_EN>;
->> +			clock-names = "cfg_noc",
->> +				      "core",
->> +				      "iface",
->> +				      "sleep",
->> +				      "mock_utmi",
->> +				      "xo";
->> +
->> +			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
->> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
->> +			assigned-clock-rates = <19200000>, <200000000>;
->> +
->> +			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
->> +						  <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&pdc 14 IRQ_TYPE_EDGE_BOTH>,
->> +					      <&pdc 15 IRQ_TYPE_EDGE_BOTH>,
->> +					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "pwr_event",
->> +					  "hs_phy_irq",
->> +					  "dp_hs_phy_irq",
->> +					  "dm_hs_phy_irq",
->> +					  "ss_phy_irq";
->> +
->> +			power-domains = <&gcc GCC_USB30_PRIM_GDSC>;
->> +			required-opps = <&rpmhpd_opp_nom>;
->> +
->> +			resets = <&gcc GCC_USB30_PRIM_BCR>;
->> +
->> +			interconnects = <&aggre1_noc MASTER_USB3_0 0 &mc_virt SLAVE_EBI1 0>,
->> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
->> +			interconnect-names = "usb-ddr", "apps-usb";
->> +
->> +			usb_1_dwc3: usb@a600000 {
->> +				compatible = "snps,dwc3";
->> +				reg = <0x0 0x0a600000 0x0 0xe000>;
->> +
->> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +				iommus = <&apps_smmu 0x40 0x0>;
->> +
->> +				phys = <&usb_1_hsphy>, <&usb_dp_qmpphy QMP_USB43DP_USB3_PHY>;
->> +				phy-names = "usb2-phy", "usb3-phy";
->> +
->> +				snps,hird-threshold = /bits/ 8 <0x0>;
->> +				snps,usb2-gadget-lpm-disable;
->> +				snps,dis_u2_susphy_quirk;
->> +				snps,dis_enblslpm_quirk;
->> +				snps,dis-u1-entry-quirk;
->> +				snps,dis-u2-entry-quirk;
->> +				snps,is-utmi-l1-suspend;
->> +				snps,usb3_lpm_capable;
->> +				snps,usb2-lpm-disable;
->> +				snps,has-lpm-erratum;
->> +				tx-fifo-resize;
->> +
->> +				dr_mode = "peripheral";
-> This goes to the board files.
+> [...]
 >
->> +
->> +				dma-coherent;
->> +
->> +				ports {
->> +					#address-cells = <1>;
->> +					#size-cells = <0>;
->> +
->> +					port@0 {
->> +						reg = <0>;
->> +
->> +						usb_1_dwc3_hs: endpoint {
->> +						};
->> +					};
->> +
->> +					port@1 {
->> +						reg = <1>;
->> +
->> +						usb_1_dwc3_ss: endpoint {
-> QMP endpoint.
-
-Same as above comment.
+>> @@ -1781,6 +1914,22 @@ static const struct qmp_combo_offsets qmp_combo_offsets_v5 = {
+>>  	.dp_dp_phy	= 0x2200,
+>>  };
+>>  
+>> +static const struct qmp_combo_offsets qmp_combo_offsets_v8 = {
+> Why is it v8? Is the actual PHY also v8 rather than v6?
+Yes, actual QMP PHY major rev is v8.  If we want to, I can generate a separate v8 based header files if that is better.  However, most of the offsets for the registers we're taking advantage of in the actual driver has the same offsets as previous revisions.
 
 Thanks
 
