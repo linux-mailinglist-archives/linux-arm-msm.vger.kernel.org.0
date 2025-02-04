@@ -1,87 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-46887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADDA6A2780A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 18:12:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19DD5A2787B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 18:34:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B368F7A10F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 17:11:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE65F18869AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 17:34:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCE6C215F45;
-	Tue,  4 Feb 2025 17:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D31782165E6;
+	Tue,  4 Feb 2025 17:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="S6w27GDG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZIgIEta1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6462B20C494
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Feb 2025 17:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A70721639D;
+	Tue,  4 Feb 2025 17:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738689110; cv=none; b=HSHc/tJtXykkG2voWwHEH5wkIjZGnqeruay1YoMyUO1OXIdeKnn0oNQXHN/vdy8rkGcDqGJofkQFqQxUXKTNyOSdmObxOv2QCshMU4psCP1xeOFEuy+Xqho3lBS2bYsqiA4U4xsLEfkiiydkSg1ZbfVEGCaFm0uqSPbOUr+MTXI=
+	t=1738690433; cv=none; b=tZriBwdiGKxe5R21Bt0N9OKu8PaymM+GqIMC5+kcXa6lRFCzBlz2V9Jy4Qv+3Dhq12bqKSq8GvhGzA8N7qKFFB5Z5RYcvirnI2ZReNnhLTrFUKGmHiBVK/ZseSx2jSFx8s8e6GpBQ40XN8IqVIMktwc7rgb3QXPaTVPC9A8bylI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738689110; c=relaxed/simple;
-	bh=wJkDn7YCFok122WXw1rCvRoFmpC55dJo2sQ29BMI9zM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MJj8PRNBxC7DgFrCaQAiiAZpfP5FX/tsR+l7VUcWLgdCN2I2drHHsN9s1tNn/p57zDWh3O+voPM/J6tMmPxrqf8XSJs/gaigjmKkAztyKrX4czdJE96vbDtyY8IXxqPD7LmnLHiDiuroAxsrmM4XH2joL+GG7jyTe1bw/qAO7+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=S6w27GDG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 514GuZmn024444
-	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Feb 2025 17:11:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1738690433; c=relaxed/simple;
+	bh=Sjru/Y7F5aBZSj6PwM/+IWSv6HOM44HRrHG3/kZqfS8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ODXxxtGZQUaHUUPEV5gcFk+SscWIvPwJZiLIEkf15B+NlLnh0hKjuVGzdWDKzu+tA3mL2MHUUpbn03XjYPKIseMT4Mqmp1ND9glvj7pCw48LqL0+g87BOIgM52X8xseC7MAr+IKo9dhzsC/mvMNrsjgyQVHP0Yh6+SclZtH8scQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZIgIEta1; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5148WTsC010185;
+	Tue, 4 Feb 2025 17:33:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	93FHj3TQtDW6kBe7tNjNj9/Gx/ttkR4OUn4cjKP3MWM=; b=S6w27GDGKpMWBShq
-	puqoKWRyxACijeF1GA4GzGacnVCm/7x0/qzqsB5rCpD5wxbhSYalJ/c61qKogxdl
-	PtBwn2iNvUdqS9LFXdDEFiXwZoNYOefrcrbAcrWfE7DGdGKrY0Rnt9HPZ2Nvroth
-	7sssS+QcTud4cpTkaJ6qCPHQINoJt/0aRRo4s2lBfNSbKFpasJni9sLyPXFGkKjP
-	uuOLySMNRNaxkzI95/GOMiBokMmUXv096WCWZCYvsrZGQCnuGEsPNNPZbYTFSXF8
-	dG84FFzph4G8kZ9T7FZpIdcDcSlsnTrcZ0sAz/kChyKClG27Qzdr2WDix4Lwv5D+
-	I5kBfA==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44kpuy81nw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 17:11:48 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-2f9bf2d1c7eso2061275a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 09:11:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738689107; x=1739293907;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=93FHj3TQtDW6kBe7tNjNj9/Gx/ttkR4OUn4cjKP3MWM=;
-        b=ZtxO8P0prDH3lKTXTO2Vv8Ux8pj+2Hpl8DZb98KUfbeGev29O/Li9HyEnCqbS4r15Z
-         yP1UeKlsR4cekus1ahcnChHtcKwutZaXDSSSr4RgY2CzgDM1IcRf0CVqmh08881L75AH
-         DUVM+wlrZDwTiFVSFvOGx1asFFpC2G9Q3TPcZDFG1vWggEsNUAopV7SIDiwsIajfgUw/
-         4AbBO6eoBoPL7EJCxt1w76TiF+diTuRLuU7zvtl1SaTidHF82+fQMQw0CVpp5P1F52cp
-         PHXi1y2aExMHcdDa3lwjCUjqiBPaxHPZMgwhm8JGemiglIEQ6mIaIVsh1rXh+axy8VYD
-         iWTA==
-X-Forwarded-Encrypted: i=1; AJvYcCVXxoIzvAnMZ0mbK7xsHR3qV+UsSwN4aFjh4EUMwr+qV75G68xZb8vZMFtJ0zvRoTpBE/SpRJD+vRu59FHg@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2zg5FxkCFHzl9S58ynevDHJdgaTHO18AzA5FM0gMLXZziWK/7
-	QuW+hQvQVDaiUTD6Ez1HED4eIE+S/+tLKy5PNjxuK7FjFINHnEABJdL8qwUrwxg5BTQrx1+Yd/7
-	KzmtAIlh7bdKT3IMx06N3PRPJUVW+8Bq+IVCmgOT72gOSjKU5jJAxsUg2j0ZPXU90dMR1T7dH
-X-Gm-Gg: ASbGncusRQXFlrpoGJgLomXnFvwF5X41/5SOPAdcSwYhamSCZROF1SgGtC10h2otRTd
-	KBmo6dq/3xY4aTdyNz2BplS6BkKhbuWHhha0mgdsaIRsC0caakvwQ9hhje8Xae+oA4P7I18x9Bp
-	4UqL7UDWlN5jafV1lnzvPr96zh4zho9jeRPqCkKTE1GIB9wSszWtU08T4+N7AJg1ozyHOIVcArw
-	t9l+kaHl1CQ523iFm5tnPCo6YW/I9vt/o83YRixe+h88x3ZpdKpRpeyzhKelEt6PFa5TJ3Z2jVk
-	PlcaCs6RTmO6M7fF8llKy4sOhNkBobcip4bRhoNHezfkEeaxBw+VZR7xWSOh
-X-Received: by 2002:a05:6a00:1d07:b0:725:e325:ab3a with SMTP id d2e1a72fcca58-72fd0c14ab0mr35785524b3a.14.1738689107317;
-        Tue, 04 Feb 2025 09:11:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGHf9sTI3/bERhociH7aUvlwtJRs44kD1fFfsK6rqdKU/2j492U2HrA4zfIg5B8xfpPFbMd1w==
-X-Received: by 2002:a05:6a00:1d07:b0:725:e325:ab3a with SMTP id d2e1a72fcca58-72fd0c14ab0mr35785491b3a.14.1738689106909;
-        Tue, 04 Feb 2025 09:11:46 -0800 (PST)
-Received: from [10.227.110.203] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe631bf8esm10824195b3a.28.2025.02.04.09.11.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Feb 2025 09:11:46 -0800 (PST)
-Message-ID: <c6e4511f-ee56-4df1-9dd1-1ff47b2c0f0a@oss.qualcomm.com>
-Date: Tue, 4 Feb 2025 09:11:45 -0800
+	d+UpcNhUWMnNNbsqJMX4+97AYxTxTfP8PufS942T7P0=; b=ZIgIEta1Ignza4bS
+	ToPwVX6VAZTS6aIL1woemob5/rv7W3rl2hRSTiBKPOCEM/8ZpOlGCVZAuI2eLcDO
+	/P/rYe/a+Sl/W2ANqwDupfcjg2uG4M72iERXkBRyxCT3QUxF4u7xyhmc+K/5m4Qn
+	SFHdHnuKB6PMRb14sfW1/Zu6WExj/b9gbNd7sU89Mbcxn7mEmjrdGT0T6ejbGPls
+	7Hlzi4XvMpVnYPbunuC2M9mKS0FwjtVg35WoRWvnI6hHMt7U2ZsXMTuUcDoS3PZr
+	ch2aWzyGm7dJEUnNFRMqd+30RL2CIxCifoCNVLnyqISQH3hc/p2wQgvL1/+XwwCP
+	qOTreg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44kffnhb5r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 04 Feb 2025 17:33:49 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 514HXmKl001124
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 4 Feb 2025 17:33:48 GMT
+Received: from [10.216.62.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Feb 2025
+ 09:33:44 -0800
+Message-ID: <da980161-087b-4fd7-a1a9-56576b6dfff9@quicinc.com>
+Date: Tue, 4 Feb 2025 23:03:41 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,48 +65,94 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: ath11k-firmware: WCN6750: hw1.0: Qualcomm Robotics RB3gen2 BDF
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, ath11k@lists.infradead.org,
-        Jeff Johnson <jjohnson@kernel.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, linux-arm-msm@vger.kernel.org
-References: <CAA8EJpq6P=ENtPHxAseD2dbCmxLJ2g-YVrNHVehgQh4tHk6tdw@mail.gmail.com>
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: qcs615: Add clock nodes for
+ multimedia clock
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250119-qcs615-mm-v2-dt-nodes-v2-0-c46ab4080989@quicinc.com>
+ <20250119-qcs615-mm-v2-dt-nodes-v2-1-c46ab4080989@quicinc.com>
+ <19a83d67-7e1a-495b-8dff-e1d2ba05b878@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <CAA8EJpq6P=ENtPHxAseD2dbCmxLJ2g-YVrNHVehgQh4tHk6tdw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: Taniya Das <quic_tdas@quicinc.com>
+In-Reply-To: <19a83d67-7e1a-495b-8dff-e1d2ba05b878@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: XjVCXkHWEIu2MeJNOWT9Yt8J8OaRPFxt
-X-Proofpoint-ORIG-GUID: XjVCXkHWEIu2MeJNOWT9Yt8J8OaRPFxt
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: c4JAX9SwW01lt6SO9zeJVRQ6s4YQFfdn
+X-Proofpoint-ORIG-GUID: c4JAX9SwW01lt6SO9zeJVRQ6s4YQFfdn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-04_08,2025-02-04_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 bulkscore=0 mlxlogscore=907 spamscore=0 mlxscore=0
- malwarescore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2502040132
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ malwarescore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
+ mlxlogscore=999 spamscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502040135
 
-On 2/1/2025 8:03 AM, Dmitry Baryshkov wrote:
-> Hello,
+
+
+On 2/3/2025 7:44 PM, Konrad Dybcio wrote:
+> On 19.01.2025 1:00 PM, Taniya Das wrote:
+>> Add support for video, camera, display and gpu clock controller nodes
+>> for QCS615 platform.
+>>
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs615.dtsi | 51 ++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 51 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> index f4abfad474ea62dea13d05eb874530947e1e8d3e..9d537019437c5202c4d398eecd0ce2a991083175 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> @@ -3,7 +3,11 @@
+>>    * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>>    */
+>>   
+>> +#include <dt-bindings/clock/qcom,qcs615-camcc.h>
+>> +#include <dt-bindings/clock/qcom,qcs615-dispcc.h>
+>>   #include <dt-bindings/clock/qcom,qcs615-gcc.h>
+>> +#include <dt-bindings/clock/qcom,qcs615-gpucc.h>
+>> +#include <dt-bindings/clock/qcom,qcs615-videocc.h>
+>>   #include <dt-bindings/clock/qcom,rpmh.h>
+>>   #include <dt-bindings/dma/qcom-gpi.h>
+>>   #include <dt-bindings/interconnect/qcom,icc.h>
+>> @@ -1418,6 +1422,18 @@ data-pins {
+>>   			};
+>>   		};
+>>   
+>> +		gpucc: clock-controller@5090000 {
+>> +			compatible = "qcom,qcs615-gpucc";
+>> +			reg = <0 0x05090000 0 0x9000>;
+>> +
+>> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+>> +				 <&gcc GPLL0>;
 > 
-> With the hopes of getting this into the February linux-firmware release:
-> Please add the following BDF file to the archive
-> 
-> * description for what hardware this is
->   - Qualcomm Robotics RB3 gen2 platform
->   - WCN6750 WiFi/BT chip controlled via the remoteproc (DSP)
-> * origin of the board file
->   - It has been provided by Qualcomm as a part of the RB3gen2 firmware
-> release, licenced under LICENSE.qcom
-> * ids to be used with the board file
->   - WCN6750 / hw 1.0
->      bus=ahb,qmi-chip-id=1,qmi-board-id=25,variant=Qualcomm_rb3gen2
-> * md5sum of each new board file to add
-> md5sum bus\=ahb\,qmi-chip-id\=1\,qmi-board-id\=25\,variant\=Qualcomm_rb3gen2.bin
-> 39b270f43cb6d733cde607bf2b23e2be
-> bus=ahb,qmi-chip-id=1,qmi-board-id=25,variant=Qualcomm_rb3gen2.bin
+> This would normally be GCC_GPU_GPLL0_(DIV_)CLK_SRC, is this intentional?
 > 
 
-Qualcomm will handle this, pushing a BDF + regdb.
+Yes, Konard, but on QCS615 GPLL0 is connected and not the GCC_GPU_GPLL0 
+sources.
+
+> Konrad
+
+-- 
+Thanks & Regards,
+Taniya Das.
 
 
