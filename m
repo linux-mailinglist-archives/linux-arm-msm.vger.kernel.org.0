@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-46854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22B69A26E14
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 10:21:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69B9BA26E18
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 10:21:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E694165BA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 09:20:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9609F7A0FCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 09:20:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C88FA206F37;
-	Tue,  4 Feb 2025 09:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49BC3206F37;
+	Tue,  4 Feb 2025 09:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eILPqPrK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fYkrweth"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADAF207A00
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Feb 2025 09:20:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5263B205E26
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Feb 2025 09:21:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738660857; cv=none; b=jX4VtzAr2FRMbM6Xdsyw2TJdSwtCmAZBdyZHF1qNYUrxvMww+slfPo0G+HU1lzk66GFb7H3254xI66EC+odGfJKeSIvENlCUDFzD4uSGAuz7JheAqYIU0K3wvakKKZAkHNMuZe9U/W5qmf/1TrY2vh49VBU7Ra4PRCU5xvzhwPc=
+	t=1738660891; cv=none; b=ZdI3mAr17XxXx8zPLUQHpLu4DK3tn3e6d77xiwFgMoTN7T1K4o3Z9jnBqMAICGyQqf6OLWUabrYBec0r/8YzlddIhVN+6ByTw7Ur+ScLpUGH608+MoTB47T8mcA0maNeBUCJCGfb7fFox0e8W7XOuNAief8h6byCvEhThCQ3ZHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738660857; c=relaxed/simple;
-	bh=O4eOmjAQzwHhI5lzYn3JiCBN1g+XRupIaxZdgM+ZxXM=;
+	s=arc-20240116; t=1738660891; c=relaxed/simple;
+	bh=UR4WUjMOCRbQAGCJXPesaWpaijzHGhicTObCGihf3RE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KQ4El9UUaBNeqUN5+4DW73F/TZOIbcj8CdCREjPyxL6iAQa1IpMbcnhTIFza57ZEN7W+UbmcGe4vqAkGoTebikvlhMksxt1BVdFw6TRFFqQ3UIEVfxJMZa8SA9kzHwA+EfIdVrKfUaGKRSNPhVsiI4nxH27dhcMboARKUoSBFVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eILPqPrK; arc=none smtp.client-ip=209.85.221.54
+	 In-Reply-To:Content-Type; b=QR15SVwesKl0+FEcTFIbCbdTywU71dIvQL0yF3iNYHbzxaO9m++xVG/2m5eOw2skvBRCKwgT0QUISj3W6EiUo4Lcjp4e9aHCF4i4lSmFP1iX+b2J1vdaZxw7NlXaaJXye3njeNMzu3OjFZYh5BvM3c0aeGms71FspCKYT2J2U+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fYkrweth; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-385e44a1a2dso317645f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 01:20:55 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-436203f1203so7086995e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 01:21:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738660854; x=1739265654; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738660887; x=1739265687; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pjOn8HlqiUp9imgeIwX/Vs1stgG6CCtQrFtgz5ne2w0=;
-        b=eILPqPrKTu3/3B9A5GJZCW7+b6rUZbPenWyF4qezHses2ydmBgdbf3l0UyvPVeRkiB
-         Cab/0qkpbLCB2X5VHta3rI9YF7wtofG0lVtWnOmwmqsggPRhbs2Cgk+MZs96U64OB5Hx
-         P7u07ChjvNHr6m53wMBzUVNwwFiLWUQfLjJUCrvZzUndnsNJUAnsA6xM1gTVzvyw1BxO
-         L31IUtLxs0Zu35CdBW2T12bz2p5ThUueRx1w6f8XYfiOfeaouyRifonSUXVVOpbNhixF
-         jaqefgdn9Q5/5qmqTRpgyAaL8mNuLQBpj+Nbb47Has1HwPKLS88T5HS7NMpflPep5bvA
-         iWYg==
+        bh=MxDn6shiABuWq3wMV9vLvSmKWQSLFhundB+LooO/KY0=;
+        b=fYkrwethrWz00EwPSirzeqLNJiQK6pdyTPkprv416lLdyiIGTImF++EjSWLj+cK14n
+         ue6KeMAAnEbDEJ+lMxieHyLvTDVI5L8xvNI3T++y9CQuWkh97pExesq3whiL1IaXSvSD
+         jfvgbv7DbrIUZLFQEmWP2eHx1FvjQDUpM/MQxtnzVfMuIys5b2GY1tJDUeTbX7jXxuh4
+         DSvqlgBnQ7gLReZAnjBGzmVMzSNT1M1IKJORNYFat805iBvchfzirSFDmW8dxIm3iSvZ
+         ZoPt0hKwIytvy4aB0PNdIOD6MgU/yRV57QQ6quplG50kFIusmu8+XsHwSxiiVldoOLUS
+         lTzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738660854; x=1739265654;
+        d=1e100.net; s=20230601; t=1738660887; x=1739265687;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pjOn8HlqiUp9imgeIwX/Vs1stgG6CCtQrFtgz5ne2w0=;
-        b=L7eCcjJ+txeRcr8XeTUXOgYK/AYzAzeShuukHAGqMZbFDYKsR65zq7jjlAGyYxBuBh
-         hXCuHxxtX3ds5oEIKue9ChFcFDbLvrYBC1UTfqjlwA4Q7nU9AU39L6NNOV4BThHrLg36
-         SDxjoW0Gq4FvjAtwVqMkfBzadgECqPNImzH0cXhViCKyoaCWxdBRoc7DewLIY68okGe8
-         0cAoXYvXIY/bRURe7DCM2iOSd4fS1HK8dn1cqGKyYqSfjJIXblutpphXdi2BRItb+dJz
-         5BEruFKeqb92rKIRYZToBVR10LPAMDVBEiSiTsgrEttx+5RkfoxSSFpxmjr5V/ST2vLh
-         x3XQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXh3iOqzIt98uuNXnN2MeXl2sU7aUJFmbs1H/pjRNWzP3kNKtMNM+JA0Lg77J8W8WbiFcApVXxM2Kwkc546@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdQN+POn9wn4D7bYiWgSrJRXFjkMGnB7ADgLh+Z3FjHRlA4WIa
-	OP0dB1/k7pTbAWstkL8JbBQORPwOzwqiFT4iJlwOC3SBpXCivkLMzxlxNcEgiNU=
-X-Gm-Gg: ASbGncvk+yBjnGvKOOm2buIlq2vo6nLwaYojr7xoCMF8TnrI+QvRLlVS0Ex8tI30uN8
-	Ps1jXLBCVOrsRteOwVWnwqC8uTEgvFyK2y6JDGPeTON7vshBnRlEKt2eI5JIq3LTSNuvNQoldgZ
-	m6+YusLrfMHILVVxxrEkyN0YQsM8VSnyku5iWAY4IoYv8T5kbI45xx9x6CB2t4SbTiKMu9J5HH2
-	8k5mKjPaT6003vUqYKGYJUzwW8qLwvtsRvy+kivRRRNp5nBv5pBco2f7m93U4w7++ExDLmYpjbW
-	JZ7i42h2+QQnDF0bR+LS6V+ck+6xabQDo+U=
-X-Google-Smtp-Source: AGHT+IFloUpSZQql46Cok/SCgcqCNh/GvapYs4i6t5zqyN7Opagv1IM4g04vLOIGgxfILq4uWlvkXw==
-X-Received: by 2002:a05:600c:3ba6:b0:434:a339:ec67 with SMTP id 5b1f17b1804b1-43905ac256fmr8627075e9.3.1738660853880;
-        Tue, 04 Feb 2025 01:20:53 -0800 (PST)
+        bh=MxDn6shiABuWq3wMV9vLvSmKWQSLFhundB+LooO/KY0=;
+        b=qPZU4awCUjjyhMCEp9AjE3OiHytGxy5SRgAkVDLM82IT66jjebDEARMxATtLTEJkP8
+         bndGPBHKAy++4DAVnIH4rrYrUuHtFietrVqVzGEWRJIWQLq8wSNq8ldImE0ks4C3WQfX
+         wTqre53TAvkgmIwkY3HYMrmJNUUWRTSDh3tNwvBSb7YL1lArzv+AZOqpjzt7oE4S9hvQ
+         o6ChclLMUGSw2VfFu5kgSuNoGhyN8MKo9IpeEgZP38XnN8wjyzT50zXw/PyKJz2gfk9o
+         Gl04/kW7IQRskVe5vJAxanDfHaTEg3lPg95FoqSO1BUUhwjc+bRUNgM2SO8U5TGGVsRe
+         0Gzg==
+X-Forwarded-Encrypted: i=1; AJvYcCWiqN+BbPeGveU0gKxzsbooELes4S1q29RmwxfsM6RSY2Pz+O2aC1W7fGJKoLNEgD0+o0EBSsNXUMecR0HC@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhQr3krs0LuYzphXjGatWx7mr0k1b0+Rlnbc66K67ZS8v5Ys50
+	GzgLFCB0s7dv6qdbTQ6tPmZRpAKaUZ/MGglYFr2i3i/DDLpy2BGXfD84alBSdow=
+X-Gm-Gg: ASbGncvV0UPPYNObzsLbrAE4T7bnS/gakVtuAkgoOQWOUwr4AUyR8IKPCog/NN6+JHO
+	Y8DUVwxwIVtEjNkJMsg43DFknYha/lUzlHvjNPPdQzQB1zz2oerr0FcvNLyljypcro3zS0NHOFj
+	/ptkYz+i0nB69Nj1SbVZUE+57+ESMkxhouuAz6pfaD/cG3VFJoCOz/q5R1yhrJvQDLIkZhT1oBt
+	YZriIMBWYFxnqxKM9hZqiaEnRao84y2ZaIViFp4Tv7ioGwJgFfQLhwVhm9FrcsNwmEi3UXgJC0+
+	X/9jABtRtgZ3oRVn3RXNusMcEmQ/CI1RCsc=
+X-Google-Smtp-Source: AGHT+IHuAsbkXGxd/AEEKWOPNtGCZnolavSf2K5Iiz0RSlT60ZCByR9bM0szeITb48WA7qfXeizZ8g==
+X-Received: by 2002:a05:600c:4f8e:b0:436:fb10:d595 with SMTP id 5b1f17b1804b1-438e17dad66mr76372095e9.1.1738660887443;
+        Tue, 04 Feb 2025 01:21:27 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.144])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438e23d42c7sm187223825e9.3.2025.02.04.01.20.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc12f88sm218334835e9.2.2025.02.04.01.21.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Feb 2025 01:20:53 -0800 (PST)
-Message-ID: <cc63872f-3ad5-479e-bfff-8d62478e446e@linaro.org>
-Date: Tue, 4 Feb 2025 10:20:51 +0100
+        Tue, 04 Feb 2025 01:21:26 -0800 (PST)
+Message-ID: <12275e11-eadc-48be-b8c3-9463cdf92698@linaro.org>
+Date: Tue, 4 Feb 2025 10:21:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +82,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] drm/msm/dsi/phy: Protect PHY_CMN_CLK_CFG0 updated
- from driver side
+Subject: Re: [PATCH v2 2/4] drm/msm/dsi/phy: Protect PHY_CMN_CLK_CFG1 against
+ clock driver
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
  <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
@@ -92,8 +92,8 @@ Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
  linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 References: <20250203-drm-msm-phy-pll-cfg-reg-v2-0-862b136c5d22@linaro.org>
- <20250203-drm-msm-phy-pll-cfg-reg-v2-1-862b136c5d22@linaro.org>
- <le5kxzhm3b2whxoo3eblkelryc7ak2yezugqti2sxw7m244dzc@nyuhhs53jdup>
+ <20250203-drm-msm-phy-pll-cfg-reg-v2-2-862b136c5d22@linaro.org>
+ <u4qho7u2nu2x6qxkfxpeakotmbdgoha3e5csmsamaanlxziiif@22kzxupzibj7>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -140,63 +140,81 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <le5kxzhm3b2whxoo3eblkelryc7ak2yezugqti2sxw7m244dzc@nyuhhs53jdup>
+In-Reply-To: <u4qho7u2nu2x6qxkfxpeakotmbdgoha3e5csmsamaanlxziiif@22kzxupzibj7>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 03/02/2025 18:42, Dmitry Baryshkov wrote:
-> On Mon, Feb 03, 2025 at 06:29:18PM +0100, Krzysztof Kozlowski wrote:
->> PHY_CMN_CLK_CFG0 register is updated by the PHY driver and by two
->> divider clocks from Common Clock Framework:
->> devm_clk_hw_register_divider_parent_hw().  Concurrent access by the
->> clocks side is protected with spinlock, however driver's side in
->> restoring state is not.  Restoring state is called from
->> msm_dsi_phy_enable(), so there could be a path leading to concurrent and
->> conflicting updates with clock framework.
+On 03/02/2025 18:41, Dmitry Baryshkov wrote:
+> On Mon, Feb 03, 2025 at 06:29:19PM +0100, Krzysztof Kozlowski wrote:
+>> PHY_CMN_CLK_CFG1 register is updated by the PHY driver and by a mux
+>> clock from Common Clock Framework:
+>> devm_clk_hw_register_mux_parent_hws().  There could be a path leading to
+>> concurrent and conflicting updates between PHY driver and clock
+>> framework, e.g. changing the mux and enabling PLL clocks.
 >>
->> Add missing lock usage on the PHY driver side, encapsulated in its own
->> function so the code will be still readable.
+>> Add dedicated spinlock to be sure all PHY_CMN_CLK_CFG1 updates are
+>> synchronized.
 >>
 >> Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
 >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
 >> ---
->>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 13 +++++++++++--
->>  1 file changed, 11 insertions(+), 2 deletions(-)
+>>
+>> Changes in v2:
+>> 1. Store BIT(4) and BIT(5) in local var in dsi_pll_enable_global_clk()
+>> ---
+>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 35 +++++++++++++++++++------------
+>>  1 file changed, 22 insertions(+), 13 deletions(-)
 >>
 >> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->> index 031446c87daec0af3f81df324158311f5a80014e..c164f845653816291ad96c863257f75462ef58e7 100644
+>> index c164f845653816291ad96c863257f75462ef58e7..e26f53f7cde8f0f6419a633f5d39784dc2e5bb98 100644
 >> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
 >> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->> @@ -372,6 +372,15 @@ static void dsi_pll_enable_pll_bias(struct dsi_pll_7nm *pll)
->>  	ndelay(250);
+>> @@ -83,6 +83,9 @@ struct dsi_pll_7nm {
+>>  	/* protects REG_DSI_7nm_PHY_CMN_CLK_CFG0 register */
+>>  	spinlock_t postdiv_lock;
+>>  
+>> +	/* protects REG_DSI_7nm_PHY_CMN_CLK_CFG1 register */
+>> +	spinlock_t pclk_mux_lock;
+>> +
+>>  	struct pll_7nm_cached_state cached_state;
+>>  
+>>  	struct dsi_pll_7nm *slave;
+>> @@ -381,22 +384,32 @@ static void dsi_pll_cmn_clk_cfg0_write(struct dsi_pll_7nm *pll, u32 val)
+>>  	spin_unlock_irqrestore(&pll->postdiv_lock, flags);
 >>  }
 >>  
->> +static void dsi_pll_cmn_clk_cfg0_write(struct dsi_pll_7nm *pll, u32 val)
->> +{
+>> -static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
+>> +static void dsi_pll_cmn_clk_cfg1_update(struct dsi_pll_7nm *pll, u32 mask,
+>> +					u32 val)
+>>  {
 >> +	unsigned long flags;
+>>  	u32 data;
+>>  
+>> +	spin_lock_irqsave(&pll->pclk_mux_lock, flags);
+>>  	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
+>> -	writel(data & ~BIT(5), pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
+>> +	data &= ~mask;
+>> +	data |= val & mask;
 >> +
->> +	spin_lock_irqsave(&pll->postdiv_lock, flags);
->> +	writel(val, pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG0);
->> +	spin_unlock_irqrestore(&pll->postdiv_lock, flags);
+>> +	writel(data, pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
+>> +	spin_unlock_irqrestore(&pll->pclk_mux_lock, flags);
 >> +}
 >> +
->>  static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
->>  {
->>  	u32 data;
->> @@ -574,8 +583,8 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
->>  	val |= cached->pll_out_div;
->>  	writel(val, pll_7nm->phy->pll_base + REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE);
+>> +static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
+>> +{
+>> +	dsi_pll_cmn_clk_cfg1_update(pll, BIT(5), 0);
+>>  }
 >>  
->> -	writel(cached->bit_clk_div | (cached->pix_clk_div << 4),
->> -	       phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG0);
->> +	dsi_pll_cmn_clk_cfg0_write(pll_7nm,
->> +				   cached->bit_clk_div | (cached->pix_clk_div << 4));
+>>  static void dsi_pll_enable_global_clk(struct dsi_pll_7nm *pll)
+>>  {
+>> -	u32 data;
+>> +	u32 cfg_1 = BIT(5) | BIT(4);
 > 
-> Ideally this would be FIELD_PREP or a special function generated for you
-> in the header.
+> Please define these two bits too.
 
-There is no header. That's patch #1 and I do not see how changing this
-to FIELDPREP is anyhow related to the actual problem being solved here.
+Why? They were not defined before. This only moving existing code.
+
 
 Best regards,
 Krzysztof
