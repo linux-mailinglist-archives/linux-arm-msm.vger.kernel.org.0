@@ -1,81 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-46853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1E97A26D21
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 09:20:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22B69A26E14
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 10:21:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DCEA87A4013
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 08:19:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E694165BA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 09:20:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B251E2066E5;
-	Tue,  4 Feb 2025 08:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C88FA206F37;
+	Tue,  4 Feb 2025 09:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EiaDss9f"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eILPqPrK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920BA2066C4
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Feb 2025 08:19:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADAF207A00
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Feb 2025 09:20:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738657192; cv=none; b=DM7EGTLPBYyrYCUb1dbbgX9YyzWkwWnQiXSvD3scyOkdlf3D/w2RkQ4ceR5eYkqIJh5AjLu4fz/MUUGkJDtP2l3kI9YN7uKhPCGUHfDJjdUU36TUdnJRVS2eOl5k5E9yE2ouLuMp3GXBW1xD+WWabu1x+pKAwuLrYw4LXgTo5sU=
+	t=1738660857; cv=none; b=jX4VtzAr2FRMbM6Xdsyw2TJdSwtCmAZBdyZHF1qNYUrxvMww+slfPo0G+HU1lzk66GFb7H3254xI66EC+odGfJKeSIvENlCUDFzD4uSGAuz7JheAqYIU0K3wvakKKZAkHNMuZe9U/W5qmf/1TrY2vh49VBU7Ra4PRCU5xvzhwPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738657192; c=relaxed/simple;
-	bh=QJoP5bpuVDnXG0hP+2j8Y5lK8cbNr/AX+eYxJkg7etc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=orLVIHq2FxWxTsZ6wGwtBoL0srtbQa6IqUlMNDlbZD4FRoNyxs442k9iDZVo87ro8VM10BPsoEqSVwUfQ8omdaOUj+Km5al90BvgMr8XBs6vhSrGu11LEn/ujxPK0VRo8ATGJUUjIMGX9unDpOx31OScVdOouC4LNozKfWMNi4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EiaDss9f; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1738660857; c=relaxed/simple;
+	bh=O4eOmjAQzwHhI5lzYn3JiCBN1g+XRupIaxZdgM+ZxXM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KQ4El9UUaBNeqUN5+4DW73F/TZOIbcj8CdCREjPyxL6iAQa1IpMbcnhTIFza57ZEN7W+UbmcGe4vqAkGoTebikvlhMksxt1BVdFw6TRFFqQ3UIEVfxJMZa8SA9kzHwA+EfIdVrKfUaGKRSNPhVsiI4nxH27dhcMboARKUoSBFVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eILPqPrK; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-38632b8ae71so4436150f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 00:19:50 -0800 (PST)
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-385e44a1a2dso317645f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 01:20:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738657189; x=1739261989; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4VasOeDLqwO0DGgvAXrhPGy6KqMolkRSV5bMCtl5mMs=;
-        b=EiaDss9fc/PaCleByjP5Ua5orAqKoZEy4ycVEKG9fD6FLM3/Cet1hrWKFnf21EGNSx
-         CtSS2UIeRbXqEoeLjU+a5wGZpzHTV/dr8xVYE9hhUE9l70fiYsYqyMD5Qdf+pkc17NLZ
-         I4l0FmRARtt3SOhC3q07gmc4Cbzl9G+RYoFkgANKl9TDgjExumnGQ57JrEWT7WRdlaE0
-         QJ5GR7aWQh5wlo3HrPbr1CVpaeR8e2Ji4mKR3RzNZHSZZKiug/5tX2fwB6P0BVRhmJfx
-         yBjJKz3/T/6M9tj0AmP5g19jix2EQx1645JHCVJq0H26UsmV3owTRdlYJBpHZhA5eewv
-         LW/g==
+        d=linaro.org; s=google; t=1738660854; x=1739265654; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pjOn8HlqiUp9imgeIwX/Vs1stgG6CCtQrFtgz5ne2w0=;
+        b=eILPqPrKTu3/3B9A5GJZCW7+b6rUZbPenWyF4qezHses2ydmBgdbf3l0UyvPVeRkiB
+         Cab/0qkpbLCB2X5VHta3rI9YF7wtofG0lVtWnOmwmqsggPRhbs2Cgk+MZs96U64OB5Hx
+         P7u07ChjvNHr6m53wMBzUVNwwFiLWUQfLjJUCrvZzUndnsNJUAnsA6xM1gTVzvyw1BxO
+         L31IUtLxs0Zu35CdBW2T12bz2p5ThUueRx1w6f8XYfiOfeaouyRifonSUXVVOpbNhixF
+         jaqefgdn9Q5/5qmqTRpgyAaL8mNuLQBpj+Nbb47Has1HwPKLS88T5HS7NMpflPep5bvA
+         iWYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738657189; x=1739261989;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4VasOeDLqwO0DGgvAXrhPGy6KqMolkRSV5bMCtl5mMs=;
-        b=Bv/raR0/23JM6qoXVYuG15AWxGAV/4TpsJ1p8lzeiZ6dACsDiX8BfoZ9ZGqtAxOJkt
-         shwGYPUBGOX6Af0/w9PeuRIMEupGKrFbAuQACPit7C4HsZ+7At2yDKIKXaQj9dAdu07f
-         olYHS0zg4r768EmbsIMu3cVzlKaEMGV3b4nZ1NylRtZQt0w7kAJ+m51Q0WYSYXUwLEod
-         LX8E/0j+bp56gFcMFPLtU27p6EwyQxj+W5M+Fq4/p2HazEI3ogkxXAZRc/l7nUi2I3/r
-         k2xsB80rw3U3g0b+PoPi9tCHd1zqwF8WMZsPJzOzHkcO/kc9bOGcI3UtdxVa1OUEs77S
-         OIQg==
-X-Forwarded-Encrypted: i=1; AJvYcCVKuI3qzVGf7L/pCjX3tjtg9x+WEDMfCQyMWSHsum5tMxusz6QeXK7JJE6aYwmK2peF8TnCphmhiYSp2OxQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzB2Uky2npoFm6+Keq2xjJoBBxV+FZMgrh135+gKgbJLBGGijIC
-	M4fA8uZKA4+T/Gi4sGyTsyEZidiM5HvZxqSdwxPnfQyICZ0bEEEVsbQ/R0Hxf3c=
-X-Gm-Gg: ASbGncvHLAROPXbhyaCDYoSzLv83I6dA94qa4y31pYc8YyGi54KKsVO/dHgcphYyQsj
-	M/rO1zM9r6Figklli7QHrcHhNadrkjyO4FUa77tyygb0bWrQG09KKlwlIvj70AXV0HWeYMC8KYK
-	khQGzh9aoQwvCyx1AElfr26MMDTuFAYMoQllgY8hpvqEdbAabCmNYD75hyoU76T/Jj1z6vNkV5p
-	VddAdwz1FaKVLJqjYdK6HJfh3+64r+eheiFFPRUuonEBlRPcoVaolvBeYLQWcPQgddfDcRLm0gh
-	zjx0PFmc6dBmjdslZOiE/dyOJmwQ22pxvIi+QqaDPpQb7qbJsoqNiGTULkU8UZTsVWHc
-X-Google-Smtp-Source: AGHT+IFbnJg2PuT9i73jomtjcF87nuxMc6wmD76FQvWnGe8UxJCAypV81miJ7w4UhG+d0OffsaA56A==
-X-Received: by 2002:a05:6000:1f88:b0:385:e176:4420 with SMTP id ffacd0b85a97d-38c5194da70mr19435261f8f.10.1738657188754;
-        Tue, 04 Feb 2025 00:19:48 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:8db5:d196:bd48:5fbb? ([2a01:e0a:982:cbb0:8db5:d196:bd48:5fbb])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c1cf364sm14910592f8f.88.2025.02.04.00.19.47
+        d=1e100.net; s=20230601; t=1738660854; x=1739265654;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pjOn8HlqiUp9imgeIwX/Vs1stgG6CCtQrFtgz5ne2w0=;
+        b=L7eCcjJ+txeRcr8XeTUXOgYK/AYzAzeShuukHAGqMZbFDYKsR65zq7jjlAGyYxBuBh
+         hXCuHxxtX3ds5oEIKue9ChFcFDbLvrYBC1UTfqjlwA4Q7nU9AU39L6NNOV4BThHrLg36
+         SDxjoW0Gq4FvjAtwVqMkfBzadgECqPNImzH0cXhViCKyoaCWxdBRoc7DewLIY68okGe8
+         0cAoXYvXIY/bRURe7DCM2iOSd4fS1HK8dn1cqGKyYqSfjJIXblutpphXdi2BRItb+dJz
+         5BEruFKeqb92rKIRYZToBVR10LPAMDVBEiSiTsgrEttx+5RkfoxSSFpxmjr5V/ST2vLh
+         x3XQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXh3iOqzIt98uuNXnN2MeXl2sU7aUJFmbs1H/pjRNWzP3kNKtMNM+JA0Lg77J8W8WbiFcApVXxM2Kwkc546@vger.kernel.org
+X-Gm-Message-State: AOJu0YxdQN+POn9wn4D7bYiWgSrJRXFjkMGnB7ADgLh+Z3FjHRlA4WIa
+	OP0dB1/k7pTbAWstkL8JbBQORPwOzwqiFT4iJlwOC3SBpXCivkLMzxlxNcEgiNU=
+X-Gm-Gg: ASbGncvk+yBjnGvKOOm2buIlq2vo6nLwaYojr7xoCMF8TnrI+QvRLlVS0Ex8tI30uN8
+	Ps1jXLBCVOrsRteOwVWnwqC8uTEgvFyK2y6JDGPeTON7vshBnRlEKt2eI5JIq3LTSNuvNQoldgZ
+	m6+YusLrfMHILVVxxrEkyN0YQsM8VSnyku5iWAY4IoYv8T5kbI45xx9x6CB2t4SbTiKMu9J5HH2
+	8k5mKjPaT6003vUqYKGYJUzwW8qLwvtsRvy+kivRRRNp5nBv5pBco2f7m93U4w7++ExDLmYpjbW
+	JZ7i42h2+QQnDF0bR+LS6V+ck+6xabQDo+U=
+X-Google-Smtp-Source: AGHT+IFloUpSZQql46Cok/SCgcqCNh/GvapYs4i6t5zqyN7Opagv1IM4g04vLOIGgxfILq4uWlvkXw==
+X-Received: by 2002:a05:600c:3ba6:b0:434:a339:ec67 with SMTP id 5b1f17b1804b1-43905ac256fmr8627075e9.3.1738660853880;
+        Tue, 04 Feb 2025 01:20:53 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.144])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438e23d42c7sm187223825e9.3.2025.02.04.01.20.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Feb 2025 00:19:48 -0800 (PST)
-Message-ID: <842284b1-343f-4991-98f4-462f547ad2bc@linaro.org>
-Date: Tue, 4 Feb 2025 09:19:47 +0100
+        Tue, 04 Feb 2025 01:20:53 -0800 (PST)
+Message-ID: <cc63872f-3ad5-479e-bfff-8d62478e446e@linaro.org>
+Date: Tue, 4 Feb 2025 10:20:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,138 +82,122 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] ASoC: qcom: sc8280xp: enable primary mi2s
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Danila Tikhonov <danila@jiaxyga.com>
-Cc: srinivas.kandagatla@linaro.org, lgirdwood@gmail.com, broonie@kernel.org,
- perex@perex.cz, tiwai@suse.com, linux-sound@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux@mainlining.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20250203113857.34728-1-danila@jiaxyga.com>
- <df4580ff-7b45-4485-9664-4cae731b7c53@linaro.org>
- <bcb4585e-1426-444a-9112-6cd95a81f8bc@jiaxyga.com>
- <D7J77FB0GLG2.1SDETF63DWW8Z@fairphone.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <D7J77FB0GLG2.1SDETF63DWW8Z@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 1/4] drm/msm/dsi/phy: Protect PHY_CMN_CLK_CFG0 updated
+ from driver side
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250203-drm-msm-phy-pll-cfg-reg-v2-0-862b136c5d22@linaro.org>
+ <20250203-drm-msm-phy-pll-cfg-reg-v2-1-862b136c5d22@linaro.org>
+ <le5kxzhm3b2whxoo3eblkelryc7ak2yezugqti2sxw7m244dzc@nyuhhs53jdup>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <le5kxzhm3b2whxoo3eblkelryc7ak2yezugqti2sxw7m244dzc@nyuhhs53jdup>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 04/02/2025 00:27, Luca Weiss wrote:
-> On Mon Feb 3, 2025 at 5:33 PM CET, Danila Tikhonov wrote:
->> On 03/02/2025 17:23, neil.armstrong@linaro.org wrote:
->>> On 03/02/2025 12:38, Danila Tikhonov wrote:
->>>> When using primary mi2s on sc8280xp-compatible SoCs, the correct clock
->>>> needs to get enabled to be able to use the mi2s interface.
->>>>
->>>> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
->>>> ---
->>>>    sound/soc/qcom/sc8280xp.c | 13 +++++++++++++
->>>>    1 file changed, 13 insertions(+)
->>>>
->>>> diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
->>>> index 311377317176..03687de1ebb0 100644
->>>> --- a/sound/soc/qcom/sc8280xp.c
->>>> +++ b/sound/soc/qcom/sc8280xp.c
->>>> @@ -14,6 +14,8 @@
->>>>    #include "common.h"
->>>>    #include "sdw.h"
->>>>    +#define MI2S_BCLK_RATE    1536000
->>>> +
->>>>    struct sc8280xp_snd_data {
->>>>        bool stream_prepared[AFE_PORT_MAX];
->>>>        struct snd_soc_card *card;
->>>> @@ -25,13 +27,24 @@ struct sc8280xp_snd_data {
->>>>      static int sc8280xp_snd_init(struct snd_soc_pcm_runtime *rtd)
->>>>    {
->>>> +    unsigned int codec_dai_fmt = SND_SOC_DAIFMT_BC_FC;
->>>> +    unsigned int fmt = SND_SOC_DAIFMT_BP_FP;
->>>>        struct sc8280xp_snd_data *data =
->>>> snd_soc_card_get_drvdata(rtd->card);
->>>> +    struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtd, 0);
->>>>        struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
->>>>        struct snd_soc_card *card = rtd->card;
->>>>        struct snd_soc_jack *dp_jack  = NULL;
->>>>        int dp_pcm_id = 0;
->>>>          switch (cpu_dai->id) {
->>>> +    case PRIMARY_MI2S_RX:
->>>> +        codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
->>>> +        snd_soc_dai_set_sysclk(cpu_dai,
->>>> +            Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT,
->>>> +            MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
->>>
->>> How is this possible ? sc8280xp uses the q6prm clock driver, and
->>> there's no
->>> way this call sets the Q6PRM_LPASS_CLK_ID_PRI_MI2S_IBIT, or I totally
->>> missed
->>> something.
->>>
->>> And prm is neither a dai nor has the set_sysclk callback.
->>>
->>> Neil
->>>
->> Oh, thanks for the answer.
+On 03/02/2025 18:42, Dmitry Baryshkov wrote:
+> On Mon, Feb 03, 2025 at 06:29:18PM +0100, Krzysztof Kozlowski wrote:
+>> PHY_CMN_CLK_CFG0 register is updated by the PHY driver and by two
+>> divider clocks from Common Clock Framework:
+>> devm_clk_hw_register_divider_parent_hw().  Concurrent access by the
+>> clocks side is protected with spinlock, however driver's side in
+>> restoring state is not.  Restoring state is called from
+>> msm_dsi_phy_enable(), so there could be a path leading to concurrent and
+>> conflicting updates with clock framework.
 >>
->> This comes from qcm6490 compatibility. Actually it is needed for
->> Nothing Phone (1) and Luca Weiss just suggested me to use
->> qcom,qcm6490-idp-sndcard like do they do it for FP5. (SM7325 is the
->> closest to QCM6490):
->> https://github.com/sc7280-mainline/linux/pull/5#discussion_r1848984788
->> Actually I also think it is a bit incorrect.
-> 
-> For reference, this is coming from this and following:
-> https://lore.kernel.org/linux-arm-msm/e8a24709-de96-4d09-ba00-1e084a656c68@kernel.org/
-
-Sure, but do you use sound/soc/qcom/sc8280xp.c ? it's designed for audioreach
-compatible audio architecture (post sm8250).
-
-sound/soc/qcom/sm8250.c has already support for PRIMARY_MI2S_RX via
-the Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT, and it compatible with the previous
-audio architecture (non audioreach).
-
-Neil
-
-> 
-> Regards
-> Luca
-> 
+>> Add missing lock usage on the PHY driver side, encapsulated in its own
+>> function so the code will be still readable.
 >>
+>> Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >> ---
->> Regards,
->> Danila
->>>> +        snd_soc_dai_set_fmt(cpu_dai, fmt);
->>>> +        snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
->>>> +        break;
->>>>        case WSA_CODEC_DMA_RX_0:
->>>>        case WSA_CODEC_DMA_RX_1:
->>>>            /*
->>>
+>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 13 +++++++++++--
+>>  1 file changed, 11 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>> index 031446c87daec0af3f81df324158311f5a80014e..c164f845653816291ad96c863257f75462ef58e7 100644
+>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>> @@ -372,6 +372,15 @@ static void dsi_pll_enable_pll_bias(struct dsi_pll_7nm *pll)
+>>  	ndelay(250);
+>>  }
+>>  
+>> +static void dsi_pll_cmn_clk_cfg0_write(struct dsi_pll_7nm *pll, u32 val)
+>> +{
+>> +	unsigned long flags;
+>> +
+>> +	spin_lock_irqsave(&pll->postdiv_lock, flags);
+>> +	writel(val, pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG0);
+>> +	spin_unlock_irqrestore(&pll->postdiv_lock, flags);
+>> +}
+>> +
+>>  static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
+>>  {
+>>  	u32 data;
+>> @@ -574,8 +583,8 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
+>>  	val |= cached->pll_out_div;
+>>  	writel(val, pll_7nm->phy->pll_base + REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE);
+>>  
+>> -	writel(cached->bit_clk_div | (cached->pix_clk_div << 4),
+>> -	       phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG0);
+>> +	dsi_pll_cmn_clk_cfg0_write(pll_7nm,
+>> +				   cached->bit_clk_div | (cached->pix_clk_div << 4));
 > 
+> Ideally this would be FIELD_PREP or a special function generated for you
+> in the header.
 
+There is no header. That's patch #1 and I do not see how changing this
+to FIELDPREP is anyhow related to the actual problem being solved here.
+
+Best regards,
+Krzysztof
 
