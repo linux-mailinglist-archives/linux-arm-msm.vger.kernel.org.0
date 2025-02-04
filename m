@@ -1,185 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-46850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74D39A26BD8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 07:04:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3D0DA26C1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 07:29:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03B733A36A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 06:04:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6FC7A188780F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 06:29:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37BA82063DA;
-	Tue,  4 Feb 2025 06:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B428A201267;
+	Tue,  4 Feb 2025 06:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="garOtrXB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ix3T/+eO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1572205E3B;
-	Tue,  4 Feb 2025 06:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED95E25A655;
+	Tue,  4 Feb 2025 06:28:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738649005; cv=none; b=WUVk7pdBDqk3CkEH3PaoXwXmCEZn8bagzU5jzHyfllTJOzC200nxUiz5aDWpq43x1fP47Ji57Wp4VayYeQ1uDMGp7mcajO/JqSPIMWfKXHvjKxyrY5rFYCdU0rn8I4zxf9+flyy3DJi8TGSU2gBu4KaUcPTOVrG14pNHo72He8A=
+	t=1738650538; cv=none; b=JGiHqKXoNsiEvqs9jIvqikJFT+9mw8aVzOUcVhG7yEGmRl9kbrFuRtJsHA1rtDHoR5zvublOJhZBkwVtJuUhYYPluRgxFKqvO+iDpBGWHaHfbR9R23XkI41uHZHYhPRTz6nnS0nTykZbtu9rJuSA9NUN6vazBF9xuZtI+D7ixzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738649005; c=relaxed/simple;
-	bh=YXruEiMk7Z0SmUMhsRZ5knXXsH2CoZdEoFSRKJf1RGc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRfMUxg6OALoTmrKwcS0Mro2JK4wWTfrQ0Ojuew1Sp2UZ1mb1rtEEp8WybXlVMUv+Yw2YLuBrirRNdOi2flA51p3Lkc6XXf08sLbAQZGFx9QHtga8Yvz88al1lAiTUdq6MQbJ101xuCrbMUDpD/8DSbFNGEQThJzYHWO5iKS5is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=garOtrXB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE01C4CEEC;
-	Tue,  4 Feb 2025 06:03:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738649004;
-	bh=YXruEiMk7Z0SmUMhsRZ5knXXsH2CoZdEoFSRKJf1RGc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=garOtrXBfk87XX+HKV3vl1JuwQYttO4QQ1AKchE5eO/0jiReyy1XvWDD2yZGLa9FC
-	 AeKmy+jUsslnY2mPcu5mEUS2c2H2bCHjQWof2mTJgn93SLPnVMi5LEeBC6WJcpadnk
-	 u2DOpDfoE7IluiD1NS0ecBDa051JLaGewLijvwGI2eN6QM4y5FmrBT8Krub6mQAAY1
-	 Zt/MpKhOFfwK5m6oLaqZs2K6rlQzhNYy6gzAJPG/FvI3ILHbh0NflYxDC7Xmq2OP0c
-	 49B9SNkzewZfyYQob96/Zyxm1qXzL4tfODbRqxSLgBPgjVdd4wwy4Gq447+twUUlW8
-	 wy9WykkXhfD1w==
-From: Eric Biggers <ebiggers@kernel.org>
-To: linux-block@vger.kernel.org,
-	Jens Axboe <axboe@kernel.dk>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Gaurav Kashyap <quic_gaurkash@quicinc.com>
-Cc: linux-fscrypt@vger.kernel.org,
-	linux-mmc@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v11 7/7] ufs: qcom: add support for wrapped keys
-Date: Mon,  3 Feb 2025 22:00:41 -0800
-Message-ID: <20250204060041.409950-8-ebiggers@kernel.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250204060041.409950-1-ebiggers@kernel.org>
-References: <20250204060041.409950-1-ebiggers@kernel.org>
+	s=arc-20240116; t=1738650538; c=relaxed/simple;
+	bh=Dqn57KPeZHxLv4sYXabrO0zuW/2UdonbxL7YbLPQmiA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=QpWj374Afh7h1n/13l5w+UuJnO3mqEd/4ooLp95qCTHZRs8e2BxHPnSJDoLq+ICZirQYza4NQQ2C2wkEDDDxl/GBjPRBLwMLDP9W+ELAuk6p1XmGIOvqD2/rWnPcvhPo4z1YmCYe1/WDpXGhkU1RVU6/XPrq8AmWwz4bdcfxvEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ix3T/+eO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5141aNFs003771;
+	Tue, 4 Feb 2025 06:28:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Poa3aqsD9Vd5Zi+ir9FLHytRK+1RHlmIkI4PXgUyVKU=; b=Ix3T/+eOjTelPdow
+	TdWSeK0NjkOlOiOdNL+w6KhaqdMo/jaXeikWlyW8kFdhJH6T4v11kuUvSNoJ6T2C
+	h0UBeWa4I7cFBydObyMdQD1sfX8UfoDdoWSAa+rYCDFM8dNC/ED3DGKjyinSeHEF
+	0zv/tcqYN4Vus91YO//ZSN928f+icssiZeLOASAQXpc1Bc3orOzOeANhqKMfFXRw
+	WcOTuk0SyDDQusgdxRdgZEWMp/WCILQjnyoVTczKO+pJVLzgwbif4p4p0sh/4P0Q
+	Iahr78rId4mOykh3CzNwkNrVzHjFFujONL3oTskpfLUOEpkS4I6C4OlCH21+8olq
+	PRxmHQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44k9cn0gh6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 04 Feb 2025 06:28:52 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5146SpeB023620
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 4 Feb 2025 06:28:51 GMT
+Received: from [10.216.35.77] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Feb 2025
+ 22:28:45 -0800
+Message-ID: <7031f2da-36bb-4655-a4df-fa85c99e6eb4@quicinc.com>
+Date: Tue, 4 Feb 2025 11:58:42 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] clk: qcom: apss-ipq5424: Add ipq5424 apss clock
+ controller
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <konradybcio@kernel.org>,
+        <rafael@kernel.org>, <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+References: <20250127093128.2611247-1-quic_srichara@quicinc.com>
+ <20250127093128.2611247-3-quic_srichara@quicinc.com>
+ <47f7553d-74a2-4da0-a64c-cc49a2170efb@oss.qualcomm.com>
+ <123a324c-561a-4081-be43-8d8ed0662acc@quicinc.com>
+ <6c8bb178-1758-4b73-bbaf-8572dc1216d3@oss.qualcomm.com>
+Content-Language: en-US
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <6c8bb178-1758-4b73-bbaf-8572dc1216d3@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: G66RT-xuFG8CsmYLyVRQpd6xlsfrBNfF
+X-Proofpoint-ORIG-GUID: G66RT-xuFG8CsmYLyVRQpd6xlsfrBNfF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-04_03,2025-01-31_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ spamscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 phishscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502040050
 
-From: Eric Biggers <ebiggers@google.com>
 
-Wire up the wrapped key support for ufs-qcom by implementing the needed
-methods in struct blk_crypto_ll_ops and setting the appropriate flag in
-blk_crypto_profile::key_types_supported.
 
-For more information about this feature and how to use it, refer to
-the sections about hardware-wrapped keys in
-Documentation/block/inline-encryption.rst and
-Documentation/filesystems/fscrypt.rst.
+On 2/1/2025 8:55 PM, Konrad Dybcio wrote:
+> On 30.01.2025 11:03 AM, Sricharan Ramabadhran wrote:
+>>
+>>
+>> On 1/28/2025 5:29 PM, Konrad Dybcio wrote:
+>>> On 27.01.2025 10:31 AM, Sricharan R wrote:
+>>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>>>
+>>>> CPU on Qualcomm ipq5424 is clocked by huayra PLL with RCG support.
+>>>> Add support for the APSS PLL, RCG and clock enable for ipq5424.
+>>>> The PLL, RCG register space are clubbed. Hence adding new APSS driver
+>>>> for both PLL and RCG/CBC control. Also the L3 cache has a separate pll
+>>>> and needs to be scaled along with the CPU.
+>>>>
+>>>> Co-developed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>>> ---
+> 
+> [...]
+> 
+>>>> +    clk_alpha_pll_configure(&ipq5424_l3_pll, regmap, &l3_pll_config);
+>>>> +
+>>>> +    clk_alpha_pll_configure(&ipq5424_apss_pll, regmap, &apss_pll_config);
+>>>> +
+>>>> +    ret = qcom_cc_really_probe(dev, &apss_ipq5424_desc, regmap);
+>>>> +    if (ret)
+>>>> +        return ret;
+>>>> +
+>>>> +    dev_dbg(&pdev->dev, "Registered APSS & L3 clock provider\n");
+>>>> +
+>>>> +    apss_ipq5424_cfg->dev = dev;
+>>>> +    apss_ipq5424_cfg->hw = &apss_silver_clk_src.clkr.hw;
+>>>> +    apss_ipq5424_cfg->cpu_clk_notifier.notifier_call = cpu_clk_notifier_fn;
+>>>> +
+>>>> +    apss_ipq5424_cfg->l3_clk = clk_hw_get_clk(&l3_core_clk.clkr.hw, "l3_clk");
+>>>> +    if (IS_ERR(apss_ipq5424_cfg->l3_clk)) {
+>>>> +        dev_err(&pdev->dev, "Failed to get L3 clk, %ld\n",
+>>>> +            PTR_ERR(apss_ipq5424_cfg->l3_clk));
+>>>> +        return PTR_ERR(apss_ipq5424_cfg->l3_clk);
+>>>> +    }
+>>>
+>>> Now that you'll use OPP, you can drop all this getting.. maybe even the
+>>> apss_ipq5424_cfg struct could be let go
+>>
+>> ok, is the suggestion here to use devm_pm_opp_set_config ?
+> 
+> Since what you tried to do here is binding CPU and L3 frequencies together,
+> yeah, we can just scale two clocks from OPP.
+> 
+> On some newer platforms using the epss-l3 driver, or on msm8996 with a more
+> complex setup, we expose the L3 voter as an interconnect, but here it would
+> seem that we directly control the clock that feeds it.
 
-Based on patches by Gaurav Kashyap <quic_gaurkash@quicinc.com>.
-Reworked to use the custom crypto profile support.
+ok, will update and check.
 
-Signed-off-by: Eric Biggers <ebiggers@google.com>
----
- drivers/ufs/host/ufs-qcom.c | 51 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 45 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index f34527fb02fb2..dc3eb6f29f5b2 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -132,15 +132,10 @@ static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
- 	}
- 
- 	if (IS_ERR_OR_NULL(ice))
- 		return PTR_ERR_OR_ZERO(ice);
- 
--	if (qcom_ice_get_supported_key_type(ice) != BLK_CRYPTO_KEY_TYPE_RAW) {
--		dev_warn(dev, "Wrapped keys not supported. Disabling inline encryption support.\n");
--		return 0;
--	}
--
- 	host->ice = ice;
- 
- 	/* Initialize the blk_crypto_profile */
- 
- 	caps.reg_val = cpu_to_le32(ufshcd_readl(hba, REG_UFS_CCAP));
-@@ -150,11 +145,11 @@ static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
- 	if (err)
- 		return err;
- 
- 	profile->ll_ops = ufs_qcom_crypto_ops;
- 	profile->max_dun_bytes_supported = 8;
--	profile->key_types_supported = BLK_CRYPTO_KEY_TYPE_RAW;
-+	profile->key_types_supported = qcom_ice_get_supported_key_type(ice);
- 	profile->dev = dev;
- 
- 	/*
- 	 * Currently this driver only supports AES-256-XTS.  All known versions
- 	 * of ICE support it, but to be safe make sure it is really declared in
-@@ -218,13 +213,57 @@ static int ufs_qcom_ice_keyslot_evict(struct blk_crypto_profile *profile,
- 	err = qcom_ice_evict_key(host->ice, slot);
- 	ufshcd_release(hba);
- 	return err;
- }
- 
-+static int ufs_qcom_ice_derive_sw_secret(struct blk_crypto_profile *profile,
-+					 const u8 *eph_key, size_t eph_key_size,
-+					 u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
-+{
-+	struct ufs_hba *hba = ufs_hba_from_crypto_profile(profile);
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	return qcom_ice_derive_sw_secret(host->ice, eph_key, eph_key_size,
-+					 sw_secret);
-+}
-+
-+static int ufs_qcom_ice_import_key(struct blk_crypto_profile *profile,
-+				   const u8 *raw_key, size_t raw_key_size,
-+				   u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct ufs_hba *hba = ufs_hba_from_crypto_profile(profile);
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	return qcom_ice_import_key(host->ice, raw_key, raw_key_size, lt_key);
-+}
-+
-+static int ufs_qcom_ice_generate_key(struct blk_crypto_profile *profile,
-+				     u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct ufs_hba *hba = ufs_hba_from_crypto_profile(profile);
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	return qcom_ice_generate_key(host->ice, lt_key);
-+}
-+
-+static int ufs_qcom_ice_prepare_key(struct blk_crypto_profile *profile,
-+				    const u8 *lt_key, size_t lt_key_size,
-+				    u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct ufs_hba *hba = ufs_hba_from_crypto_profile(profile);
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	return qcom_ice_prepare_key(host->ice, lt_key, lt_key_size, eph_key);
-+}
-+
- static const struct blk_crypto_ll_ops ufs_qcom_crypto_ops = {
- 	.keyslot_program	= ufs_qcom_ice_keyslot_program,
- 	.keyslot_evict		= ufs_qcom_ice_keyslot_evict,
-+	.derive_sw_secret	= ufs_qcom_ice_derive_sw_secret,
-+	.import_key		= ufs_qcom_ice_import_key,
-+	.generate_key		= ufs_qcom_ice_generate_key,
-+	.prepare_key		= ufs_qcom_ice_prepare_key,
- };
- 
- #else
- 
- static inline void ufs_qcom_ice_enable(struct ufs_qcom_host *host)
--- 
-2.48.1
-
+Regards,
+Sricharan
 
