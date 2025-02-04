@@ -1,125 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-46842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38189A26AB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 04:35:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 94312A26BB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 07:03:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B138A3A6AFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 03:35:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A2803A3018
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 06:03:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47A7F1EE014;
-	Tue,  4 Feb 2025 03:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C2D71F9F5C;
+	Tue,  4 Feb 2025 06:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="FFJfIXHj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PbqM4/jf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D73D16D4E6;
-	Tue,  4 Feb 2025 03:35:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.165.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0120F25A655;
+	Tue,  4 Feb 2025 06:03:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738640116; cv=none; b=IYww34eIH++eP7LHjNlobCOrFVlPEqNp8lHI2O/V34gQuveuiSLnI5cpxR3nUubxOG/FTaaoISgtWkgFqKEuE0WlMfFOxz52XYC5PSyzHGS8jnJH+iXeMd0vFEDypSeCv1b9u4Y/02dmuZ0YfHHa1upCAmPvk+ox80KfE+SE92g=
+	t=1738649002; cv=none; b=XvLxBMucFz4L5kUlhp8nEG8GFsmBQ3XRRnFoCTO9SqKtXA/OQUAKmO91Uv0TyoMzuKUFTrlAb2EDehMMatjUFyDTl39KtjLUo5EWwzhMWpPXn78vfYOUHo54Acv7GOBCJnTios43E3bPuwQ+DIRBpMdeog6PDwDX5Rh7WwTVChU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738640116; c=relaxed/simple;
-	bh=LvjcqtCOQasUzHGgpJ3ldZuX5qUSyl44nPnp8M2+sGg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YcvlIcTKCmP7HxR9yYvM1YQBBPG+JA1291MDceAI9+GmQTwz6zsznJf0iunHJV4XCrvvsJsnRK+/LzUleWcrtT5weDT3EtaXhyLIKy+ByswnuQVyNxUGjpkeHu2mJZD40xaA2tAouNzsbWVbaWiVyfOuBFfNvMfbq/zPjViZ6gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=FFJfIXHj; arc=none smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5141Mpce008581;
-	Tue, 4 Feb 2025 03:33:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2023-11-20; bh=OljqLUza+/baG9lUxsAUE7xPAIhfTiIdxHd6klwyagw=; b=
-	FFJfIXHjRuOGQVijrnCzoA156Qk+NYpQhSg1UlL94wBJ77jYyJv4E/QsaaZEVZvF
-	MzRNI0Ga7MuJutF9QhkpTcPsVgJ57L8l1ftRhMKWNTGsHswN5c5uwnOv7MWwSFYw
-	Aqj+IrOeLwJKeBJ1X9jxBUsVowFlbdLc2I+PcPtXBBpqh1iOwAdzwuR37b8iwYJs
-	CMVDWLn6y4gofR9Cu/VIEB04UoqX1PcR11WebONqF1/fPOC1bj72q1vhYDGSN7Q3
-	wUbfJhLpOsDthRV8CnngZlJty2zAQ8HizjK7nl2gb/PJutdYh7r+wiASEX4mKx4W
-	uXFkHdD25UhN3YuQYM2n8Q==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 44hhjtuy2e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 04 Feb 2025 03:33:56 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 5140C0vi038928;
-	Tue, 4 Feb 2025 03:33:55 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 44j8e76f08-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 04 Feb 2025 03:33:55 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5143Xs6k015172;
-	Tue, 4 Feb 2025 03:33:54 GMT
-Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 44j8e76ex2-1;
-	Tue, 04 Feb 2025 03:33:54 +0000
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-To: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-        Peter Griffin <peter.griffin@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Mike Snitzer <snitzer@redhat.com>, Jens Axboe <axboe@kernel.dk>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Satya Tangirala <satyat@google.com>,
-        Eric Biggers <ebiggers@google.com>,
-        =?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>
-Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Will McVicker <willmcvicker@google.com>, kernel-team@android.com,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v4] scsi: ufs: fix use-after free in init error and remove paths
-Date: Mon,  3 Feb 2025 22:33:04 -0500
-Message-ID: <173863996284.4118719.16500657324570528150.b4-ty@oracle.com>
+	s=arc-20240116; t=1738649002; c=relaxed/simple;
+	bh=8mFduILeD8XBrdhkNeuzpSJovgcKN2zlq+Lc0COwgOM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nWGyRC0mYbGOMe+QcabHucYkvs91NUrE3KNXhEfy+JydDs0la1yNGKSW6t1QO3IVixYqgOqn5zRLeCQikgX8DLMdUKB/MMbEJdznKWbh8xOurdUwC/QxPtyZdFUD21hzV8eFlkpYfnLenhWy0vbZw15Xk77TrW+PABS04Cvs2gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PbqM4/jf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71CC7C4CEDF;
+	Tue,  4 Feb 2025 06:03:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738649000;
+	bh=8mFduILeD8XBrdhkNeuzpSJovgcKN2zlq+Lc0COwgOM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=PbqM4/jfSOcUlHnH9Hae6gjl1HWx7TppDrsjtgdnDS6ZyQWt5T6lxZNlHrV+3KRLc
+	 m7gVtlknYz2U99bvp/nklrVX+ojPmxiCr1nmxqsFDPUptxRfK+RHqz8x0svdCXBurm
+	 oPnl02Vinc9uctAT1Lasu6AeuS1Z+IhE213KpH8GoIMAiftQTWe0zS1z5bXF70KsbD
+	 S8ZC6DrcG4CDh43Kwndamza8TbNRRMK2VOEL/S9tPXROosHjQOlcRmtR1p32elhrU7
+	 yMsOeQJ1rz0uMzf7ZnyGNMW/+XTJso2W9eEfQlthwKacsBYPrH7eHp/nF/7BRVyAug
+	 nxMNRnPgSsdJw==
+From: Eric Biggers <ebiggers@kernel.org>
+To: linux-block@vger.kernel.org,
+	Jens Axboe <axboe@kernel.dk>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Cc: linux-fscrypt@vger.kernel.org,
+	linux-mmc@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v11 0/7] Support for hardware-wrapped inline encryption keys
+Date: Mon,  3 Feb 2025 22:00:34 -0800
+Message-ID: <20250204060041.409950-1-ebiggers@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250124-ufshcd-fix-v4-1-c5d0144aae59@linaro.org>
-References: <20250124-ufshcd-fix-v4-1-c5d0144aae59@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-04_02,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 mlxlogscore=888
- phishscore=0 adultscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2501170000 definitions=main-2502040026
-X-Proofpoint-GUID: aWx47z6fFMo2i7ui5DF1-UpbrtUACWdk
-X-Proofpoint-ORIG-GUID: aWx47z6fFMo2i7ui5DF1-UpbrtUACWdk
 
-On Fri, 24 Jan 2025 15:09:00 +0000, André Draszik wrote:
+This patchset is based on v6.14-rc1 and is also available at:
 
-> devm_blk_crypto_profile_init() registers a cleanup handler to run when
-> the associated (platform-) device is being released. For UFS, the
-> crypto private data and pointers are stored as part of the ufs_hba's
-> data structure 'struct ufs_hba::crypto_profile'. This structure is
-> allocated as part of the underlying ufshcd and therefore Scsi_host
-> allocation.
-> 
-> [...]
+    git fetch https://git.kernel.org/pub/scm/fs/fscrypt/linux.git wrapped-keys-v11
 
-Applied to 6.14/scsi-fixes, thanks!
+This patchset adds support for hardware-wrapped inline encryption keys,
+a security feature supported by some SoCs.  It adds the block and
+fscrypt framework for the feature as well as support for it with UFS on
+Qualcomm SoCs.
 
-[1/1] scsi: ufs: fix use-after free in init error and remove paths
-      https://git.kernel.org/mkp/scsi/c/f8fb2403ddeb
+This feature is described in full detail in the included Documentation
+changes.  But to summarize, hardware-wrapped keys are inline encryption
+keys that are wrapped (encrypted) by a key internal to the hardware so
+that they can only be unwrapped (decrypted) by the hardware.  Initially
+keys are wrapped with a permanent hardware key, but during actual use
+they are re-wrapped with a per-boot ephemeral key for improved security.
+The hardware supports importing keys as well as generating keys itself.
 
+This differs from the existing support for hardware-wrapped keys in the
+kernel crypto API (also called "hardware-bound keys" in some places) in
+the same way that the crypto API differs from blk-crypto: the crypto API
+is for general crypto operations, whereas blk-crypto is for inline
+storage encryption.
+
+This feature is already being used by Android downstream for several
+years
+(https://source.android.com/docs/security/features/encryption/hw-wrapped-keys),
+but on other platforms userspace support will be provided via fscryptctl
+and tests via xfstests.  The tests have been merged into xfstests, and
+they pass on the SM8650 HDK with the upstream kernel plus this patchset.
+
+This is targeting 6.15.  As per the suggestion from Jens
+(https://lore.kernel.org/linux-block/c3407d1c-6c5c-42ee-b446-ccbab1643a62@kernel.dk/),
+I'd like patches 1-3 to be queued up into a branch that gets pulled into
+the block tree.  I'll then take patches 4-7 through the fscrypt tree,
+also for 6.15.  If I end up with too many merge conflicts by trying to
+take patches 5-7 (given that this is a cross-subsystem feature), my
+fallback plan will be to wait until 6.16 to land patches 5-7, when they
+will finally be unblocked by the block patches having landed.
+
+Changed in v11:
+  - Rebased onto v6.14-rc1.  Dropped the patches that were upstreamed in
+    6.14, and put the block patches first in the series again.
+  - Significantly cleaned up the patch "soc: qcom: ice: add HWKM support
+    to the ICE driver".  Some of the notable changes were dropping the
+    unnecessary support for HWKM v1, and replacing qcom_ice_using_hwkm()
+    with qcom_ice_get_supported_key_type().
+  - Consistently used and documented the EBADMSG error code for invalid
+    hardware-wrapped keys.
+  - Other minor cleanups.
+
+Changed in v10:
+  - Fixed bugs in qcom_scm_derive_sw_secret() and cqhci_crypto_init().
+  - Added "ufs: qcom: fix crypto key eviction" and
+    "mmc: sdhci-msm: fix crypto key eviction".
+  - Split removing ufs_hba_variant_ops::program_key into its own patch.
+  - Minor cleanups.
+  - Added Tested-by.
+
+Changed in v9 (relative to v7 patchset from Bartosz Golaszewski):
+  - ufs-qcom and sdhci-msm now just initialize the blk_crypto_profile
+    themselves, like what ufs-exynos was doing.  This avoids needing to
+    add all the host-specific hooks for wrapped key support to the MMC
+    and UFS core drivers.
+  - When passing the blk_crypto_key further down the stack, it now
+    replaces parameters like the algorithm ID, to avoid creating two
+    sources of truth.
+  - The module parameter qcom_ice.use_wrapped_keys should work correctly now.
+  - The fscrypt support no longer uses a policy flag to indicate when a
+    file is protected by a HW-wrapped key, since it was already implied
+    by the file's key identifier being that of a HW-wrapped key.
+    Originally there was an issue where raw and HW-wrapped keys could
+    share key identifiers, but I had fixed that earlier by introducing a
+    new HKDF context byte.
+  - The term "standard keys" is no longer used.  Now "raw keys" is
+    consistently used instead.  I've found that people find the term
+    "raw keys" to be more intuitive.  Also HW-wrapped keys could in
+    principle be standardized.
+  - I've reordered the patchset to place preparatory patches that don't
+    depend on the actual HW-wrapped key support first.
+
+For older changelogs, see
+https://lore.kernel.org/r/20241202-wrapped-keys-v7-0-67c3ca3f3282@linaro.org and
+https://lore.kernel.org/r/20231104211259.17448-1-ebiggers@kernel.org
+
+Eric Biggers (6):
+  blk-crypto: add basic hardware-wrapped key support
+  blk-crypto: show supported key types in sysfs
+  blk-crypto: add ioctls to create and prepare hardware-wrapped keys
+  fscrypt: add support for hardware-wrapped keys
+  soc: qcom: ice: make qcom_ice_program_key() take struct blk_crypto_key
+  ufs: qcom: add support for wrapped keys
+
+Gaurav Kashyap (1):
+  soc: qcom: ice: add HWKM support to the ICE driver
+
+ Documentation/ABI/stable/sysfs-block          |  20 +
+ Documentation/block/inline-encryption.rst     | 255 ++++++++++++-
+ Documentation/filesystems/fscrypt.rst         | 200 ++++++++--
+ .../userspace-api/ioctl/ioctl-number.rst      |   2 +
+ block/blk-crypto-fallback.c                   |   7 +-
+ block/blk-crypto-internal.h                   |  10 +
+ block/blk-crypto-profile.c                    | 101 +++++
+ block/blk-crypto-sysfs.c                      |  35 ++
+ block/blk-crypto.c                            | 204 +++++++++-
+ block/ioctl.c                                 |   5 +
+ drivers/md/dm-table.c                         |   1 +
+ drivers/mmc/host/cqhci-crypto.c               |   8 +-
+ drivers/mmc/host/sdhci-msm.c                  |  17 +-
+ drivers/soc/qcom/ice.c                        | 349 ++++++++++++++++--
+ drivers/ufs/core/ufshcd-crypto.c              |   7 +-
+ drivers/ufs/host/ufs-exynos.c                 |   3 +-
+ drivers/ufs/host/ufs-qcom.c                   |  56 ++-
+ fs/crypto/fscrypt_private.h                   |  75 +++-
+ fs/crypto/hkdf.c                              |   4 +-
+ fs/crypto/inline_crypt.c                      |  42 ++-
+ fs/crypto/keyring.c                           | 157 ++++++--
+ fs/crypto/keysetup.c                          |  63 +++-
+ fs/crypto/keysetup_v1.c                       |   4 +-
+ include/linux/blk-crypto-profile.h            |  73 ++++
+ include/linux/blk-crypto.h                    |  73 +++-
+ include/soc/qcom/ice.h                        |  34 +-
+ include/uapi/linux/blk-crypto.h               |  44 +++
+ include/uapi/linux/fs.h                       |   6 +-
+ include/uapi/linux/fscrypt.h                  |   7 +-
+ 29 files changed, 1654 insertions(+), 208 deletions(-)
+ create mode 100644 include/uapi/linux/blk-crypto.h
+
+
+base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
 -- 
-Martin K. Petersen	Oracle Linux Engineering
+2.48.1
+
 
