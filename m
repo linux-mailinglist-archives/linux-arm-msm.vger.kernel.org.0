@@ -1,154 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-46934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 379F3A287AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 11:14:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF697A288B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 12:00:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DFF617A8273
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 10:09:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B9C11888770
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 11:01:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48F1E22AE65;
-	Wed,  5 Feb 2025 10:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCBD622F15F;
+	Wed,  5 Feb 2025 10:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XLVN661S"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lTZ/NSfY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0D922A7F8
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Feb 2025 10:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA8722F163;
+	Wed,  5 Feb 2025 10:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738750077; cv=none; b=iSz/iGSfLbXu6PRJC/WIc9PqXKK5UpM2sHcPNrTUtgX8AF+6hKiE6ZBy3whJTNrqF9XP7tC5IR2T/+7Dssg/vU0FIZNiK5tlnxcm6hpRHP2p4C3FpR3I63Vr5vBPybhjpEJ9FMWDIQ7TtNqARDiB0QSvn2+ZdpUVZdGDWiJG/x4=
+	t=1738752630; cv=none; b=dv1N615UPcP7G+HblRYQuxoS3JbPwLZlAI/ixz37zokjda1JEw85xxzAQw4O9TYeMzjmSslILew5sGpNnsVvYylYTvOyIjQinXYIBbA7fG7bz4srRdm1z+ctrMLheiAjHnwoxX8fegwnCFpwsrv+YNUTKkLtJFhKaujm1L9B6+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738750077; c=relaxed/simple;
-	bh=E6EZPUORHVouaAmZ2iEF63ewgHz6Zii9/w1uu6nphJ4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qT8SgO4CTJr6R+rukXDwRbueJ5bW2eDQLlAcK4+6skbTGWQP96EQZlayaZNHmOljpApjGFR6J678MB0E0cgrEOgoJj4NMHgFQEX0BlUbap+0r0rUI02EZ4ztcgBfpING8AnQ1MFG1fc5LX8iFjzMAo/FiFMIxUTw8Q9DVSxcBWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XLVN661S; arc=none smtp.client-ip=209.85.160.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-467896541e1so560141cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Feb 2025 02:07:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738750074; x=1739354874; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GgieNQDWbe6UJ/a3VoJuSb/hrlwJAKxq/2FZo7aK9C0=;
-        b=XLVN661S18XdBYN0F8aZRnrW7t9p/hXvKGNaw7+3EdoXey9XK3rQt7+N8xC9IROe2A
-         9YMJ6GV/qoovhR5JcHDPsrGiMQ1mqkMQ4NsZk07KBg//a/krQifJI+vu75/YNkZeADiC
-         aTrfdSVtPtzGNPN7UNX6YCR33sLHCoq1/4WM+QxcFvHfsXi3Zz615ONR/PznDGFRkqPK
-         jxrxe/IIOaKmZiRfoJ61loBAByZR4zrbfzO9iUaJsTzIVfV9d/DJKco0uJeABjwGz5HR
-         hu8Lhm+ofwEBY8Kv2AYF4mvl6+sKle2V75H332hce+k/MJH8UT9xzQky6pn6OJC9U0yc
-         skCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738750074; x=1739354874;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GgieNQDWbe6UJ/a3VoJuSb/hrlwJAKxq/2FZo7aK9C0=;
-        b=uLYcszxPbz5kTXOwGblPyKejbt+X823H3ip7icthGyT5tQgbAtF6AtoDzTtFr4bSUi
-         PazkDa08T77TYlDfpoPfHf3Gr7wE4x9RKCnZiDGXhlGMIsEdh0cqBoC6NmE3pbc0skCb
-         F6qXCOWm9+8VRqwmUuCvWfMcdODO5O6vDXINDFlyXnOe4vtdY8nLQj40HyleJraYkuS+
-         TZZPrrMGPI/ERqKYcdKWryTWalpI9kZ57oFixq2T+MX1STG/9N73dGHy9QXgaplQS05b
-         /ZikzlYAxptWhhsRAvSDvzyTN2zb53E2lLD3754QxPMKtgJzV+Y6k8gAMcuF1HSGXezw
-         yrfA==
-X-Forwarded-Encrypted: i=1; AJvYcCU4fBL2BEjiRvtGDISko9+uksG4PTCDcMokAOfWFFoF0iae7ORW87i5q8/DnSJpJXlrqWSjzsVsFcxafQT9@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGsFWH+QjG/kE8i1O5shYn+JIgygveuJiqXX2vDWewUl0OXOAg
-	LAxeu/P7HMJS0gBJ4QBXSNAw0iolWGCpbTu9w2610quNeeevdyp4JIaHp18TPQZDMswv7C2IiMw
-	grcJmdsbGUTeS74Mbfg1eDURbIXWiX05nIGWG
-X-Gm-Gg: ASbGncuIuTX3sGvEsISUpHdwMZgv/C5YAj/fsFcg6kMzRLK+IZplOL3aLeSDTbTcPXW
-	oxscRUDg1jkWQ8eOKmtKohQViPzr03REbs2c7iBwa75gPL6tnveZRc9DEoCLLe8rnj56R3M9+HD
-	2CoIuOjMob4blU65uk9bzVNfDyPQ==
-X-Google-Smtp-Source: AGHT+IG4G08H6SaXBG9SJQq4wOUQkHhFq5TVkaTFoYC9nSvxNxVx1eB6lZEAlM3Dy7awdhwgGaeQi6Fwr/JMOjowJPA=
-X-Received: by 2002:a05:622a:34f:b0:46c:9f17:12dd with SMTP id
- d75a77b69052e-4701ab77f50mr7422001cf.19.1738750073369; Wed, 05 Feb 2025
- 02:07:53 -0800 (PST)
+	s=arc-20240116; t=1738752630; c=relaxed/simple;
+	bh=GAaQoyH6dy87JYZUhbjPz6gyv2TYG+23a7uNbP8s9Ik=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CRz9n18PUK1eTojHAIh3HIsvrHD89VFXrPtfH3awzhCIJcjAspN/pFpCuqr0SL4qjKWB3rB3VXaoxkBQyQi3uHo8euyJJ8mPJCQ0fXLr1Zi3MheEErTUi+gx6M/Ora1D8LS3gwa7LgvaUrLPoTwCvB8GoFPHAs4g9ptgIMDxnuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lTZ/NSfY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5157Fqqd009879;
+	Wed, 5 Feb 2025 10:49:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=yV+6qkgECPgWR+utpQPN2P2B
+	yvpRL9hXJCZEqEup5Oo=; b=lTZ/NSfYhOQuFdRwxhrSwxLFb7Y+cSUcv+tccBJt
+	vZN+xZKwUOAOU2uoCE6n80d+SoWXVpCPXCRv4eJ16smyD8y4pDwqzByfd6i0jbUe
+	UA3rWJr6OkVzdeg9ivJzF97Vj1mPWiUXggpGNMZFeFojdKQeWL+g+eURclrLzyRr
+	wlGKdYkErD2VVbqYPidtvbEo6X3PUaz8b2AMYcgnideeokrbpus8d6u8otDpl4uV
+	t3ZUS/EZqSzwoBtn6O3a71uGedqwhgteILb7vKkY9DoNSasqnmQ0dK03nJHAOum+
+	62aVzeMFBpE6F258uvDWymMpOZjrAQ956RJEq0To5GqvNg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44m3esgfwa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 05 Feb 2025 10:49:57 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 515Ant15000760
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 5 Feb 2025 10:49:55 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 5 Feb 2025 02:49:39 -0800
+Date: Wed, 5 Feb 2025 16:19:46 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <p.zabel@pengutronix.de>, <dmitry.baryshkov@linaro.org>,
+        <quic_nsekar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v9 6/7] arm64: dts: qcom: ipq5332: Add PCIe related nodes
+Message-ID: <Z6NCSo98YRgG666Q@hu-varada-blr.qualcomm.com>
+References: <20250128062708.573662-1-quic_varada@quicinc.com>
+ <20250128062708.573662-7-quic_varada@quicinc.com>
+ <cc1c34f0-0737-469d-a826-2df7f29f6cf3@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250117163001.2326672-1-tabba@google.com> <20250117163001.2326672-7-tabba@google.com>
- <CAGtprH-R7g5NNLZhO0hTs_RWML_pLafT8Wy=f13qTrHO5LscGw@mail.gmail.com>
-In-Reply-To: <CAGtprH-R7g5NNLZhO0hTs_RWML_pLafT8Wy=f13qTrHO5LscGw@mail.gmail.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 5 Feb 2025 10:07:16 +0000
-X-Gm-Features: AWEUYZkIkkLRXyaTMrVhdDtLzD6dWJnmf8Pfc1flZ135xg6YsQDlRYh3poiT-4Q
-Message-ID: <CA+EHjTx6SHfpW_LO3My-iy2_z_T4NvLuGz_W+1pddnu4bUjUQA@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 06/15] KVM: guest_memfd: Handle final folio_put()
- of guestmem pages
-To: Vishal Annapurve <vannapurve@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <cc1c34f0-0737-469d-a826-2df7f29f6cf3@kernel.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LqkeP6FXi5Jc7zuveJvZcqUkz1DwPpMb
+X-Proofpoint-ORIG-GUID: LqkeP6FXi5Jc7zuveJvZcqUkz1DwPpMb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-05_04,2025-02-05_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
+ suspectscore=0 priorityscore=1501 mlxscore=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 adultscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502050086
 
-Hi Vishal,
-
-On Wed, 5 Feb 2025 at 00:51, Vishal Annapurve <vannapurve@google.com> wrote=
-:
+On Mon, Feb 03, 2025 at 05:30:32PM +0100, Krzysztof Kozlowski wrote:
+> On 28/01/2025 07:27, Varadarajan Narayanan wrote:
+> >
+> > @@ -479,6 +519,230 @@ frame@b128000 {
+> >  				status = "disabled";
+> >  			};
+> >  		};
+> > +
+> > +		pcie1: pcie@18000000 {
+> > +			compatible = "qcom,pcie-ipq5332", "qcom,pcie-ipq9574";
+> > +			reg = <0x00088000 0x3000>,
 >
-> On Fri, Jan 17, 2025 at 8:30=E2=80=AFAM Fuad Tabba <tabba@google.com> wro=
-te:
-> >
-> <snip>
-> >
-> >  static const char *page_type_name(unsigned int page_type)
-> > diff --git a/mm/swap.c b/mm/swap.c
-> > index 6f01b56bce13..15220eaabc86 100644
-> > --- a/mm/swap.c
-> > +++ b/mm/swap.c
-> > @@ -37,6 +37,7 @@
-> >  #include <linux/page_idle.h>
-> >  #include <linux/local_lock.h>
-> >  #include <linux/buffer_head.h>
-> > +#include <linux/kvm_host.h>
-> >
-> >  #include "internal.h"
-> >
-> > @@ -103,6 +104,9 @@ static void free_typed_folio(struct folio *folio)
-> >         case PGTY_offline:
-> >                 /* Nothing to do, it's offline. */
-> >                 return;
-> > +       case PGTY_guestmem:
-> > +               kvm_gmem_handle_folio_put(folio);
-> > +               return;
->
-> Unless it's discussed before, kvm_gmem_handle_folio_put() needs to be
-> implemented outside KVM code which could be unloaded at runtime.
-> Eliott's plan [1] to implement a guest_memfd library can handle this
-> scenario in future.
->
-> [1] https://patches.linaro.org/project/linux-arm-msm/patch/20240829-guest=
--memfd-lib-v2-1-b9afc1ff3656@quicinc.com/
+> So as Konrad pointed out now, this was never tested. It's not we who
+> should run tests for you. It's you.
 
-Yes, not just that, but there's a lot of KVM code in guest_memdf in general=
-.
+This was tested and it did not flag an error since it is having the order
+specified in the bindings. qcom,pcie.yaml has 4 reg specifications. Two of
+them have 'dbi' as the first register space and two of them have 'parf' as
+the first register space. Looks like the constraints with 'dbi' as the
+first entry will match with pcie@xxx and the ones with 'parf' won't match.
 
-Cheers,
-/fuad
+Since IPQ5332 follows the constraints specified for sdx55 which has 'parf'
+as the first entry it is not able to match with pcie@xxx value.
+
+The initial version that was posted has the first 'reg' entry matching with
+pcie@xxx (please see [1]), since it used the ipq9574 reg constraints. Based
+on the feedback received [2], had to add 'mhi' area also. Since adding
+'mhi' to ipq9574 would result in duplication of the sdx55 reg constraints,
+ipq5332 followed sdx55's constraints resulting in the reg entries getting
+reordered and the first reg entry vs pcie@xxx mismatch happened.
+
+To resolve this, shall I reorder the sdx55 reg bindings (and the affected
+DTS arch/arm/boot/dts/qcom/qcom-sdx55.dtsi). Please let me know.
+
+1 - https://lore.kernel.org/linux-arm-msm/20241204113329.3195627-6-quic_varada@quicinc.com/
+2 - https://lore.kernel.org/linux-arm-msm/6fe09de4-c94c-495d-92a4-aa902d2519ef@oss.qualcomm.com/
+
+> It does not look like you tested the DTS against bindings. Please run
+> `make dtbs_check W=1` (see
+> Documentation/devicetree/bindings/writing-schema.rst or
+> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+> for instructions).
+> Maybe you need to update your dtschema and yamllint. Don't rely on
+> distro packages for dtschema and be sure you are using the latest
+> released dtschema.
+
+I run the following tests before posting the patches and go through the
+output to see if the nodes I added/changed have any errors or if other dtbs
+have been impacted by my bindings changes.
+
+	export ARCH=arm64
+	export W=1
+	export DT_CHECKER_FLAGS='-v -m'
+	export DT_SCHEMA_FILES=qcom
+	export CHECK_DTBS=y
+
+	pip3 install dtschema --upgrade
+
+	make -j 16 dt_binding_check
+
+	make -j 16 dtbs_check
+
+	$ pip show dtschema | grep Version
+	Version: 2024.11
+
+Please let me know if I should add anything else to ensure my setup is up
+to speed.
+
+Thanks
+Varada
 
