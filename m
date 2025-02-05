@@ -1,112 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-46896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10898A27FBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 00:41:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00DB8A28037
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 01:42:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78E2F3A2E1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2025 23:40:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5E8A1888874
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 00:43:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50F6821C9E0;
-	Tue,  4 Feb 2025 23:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEA24227BA9;
+	Wed,  5 Feb 2025 00:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OjG4DoLK"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="k5v+1PSS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53002205E23
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Feb 2025 23:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7926A227B8C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Feb 2025 00:42:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738712461; cv=none; b=EKfXGgEpZ3P7ABDiqgqOsynLdTz5gXdbNvNwP5wXZfmsYDgrlQYfCKERtOYeeT0erffApq+uEpzmIz1/cKxR+sjMw8Wpoh+fsvAWKH14N8YQ9lMedzi6lyh6SIm77xJxQcbGYAnttw0r39Yyn2IFYNbQewTXIE1+gqQT0TQ/emQ=
+	t=1738716168; cv=none; b=umgc/UgYC/O9vcIMwvOYYM05jzA3cYvUqMbRQuj71WjOmn+0V+n8DXB7wSBnkhO5vTwm/mFTP1DnbR3mqPp2FW0IwC1oQ0yLdYFVFsx6nAbxJgpkHupdUH8HU4CA1umZqQHNRZhGLxJXNy86oGswGfInJEjIzDauxVM0CJSJOxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738712461; c=relaxed/simple;
-	bh=xNWF85pDr4+xBoLRlJq3hULFJcv9TwBGp0re49+DjQg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GMNPE5DFDVYfp4nIG7kgsfv5ESPqEVQ/PwZGnUOpxUOt6t1dZumDVbtY2M5BGHt7PTJ1XLPMrbHghtX4hrvWGx7R2yoROKtw6OBdcVJ8RS7NOnfOm8qJt0Z+yunDg3wfhIUmYAXe8GrddVK2FhlJYDsah/RPqxwCROazRZMxgjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OjG4DoLK; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5401ab97206so6022978e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 15:40:59 -0800 (PST)
+	s=arc-20240116; t=1738716168; c=relaxed/simple;
+	bh=+k4LG/xT//VjVjGnheLfyBH4vM/8in5IOLbtjE03/+4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=re3ZFqh3nZAOv/rr1aARAV40tdXCgLd1KNLNrlSI/2rWWqJI4sapYpFlJ4tiN3sxsaObY3nwguSWYR+8YcY0/2tY73gURfoMNlZBhH6ZxG3M4tqHxcviJZTbmL7K7HlD9SRqDJ191wJajH2vvslu22b4j/ptZ9G3svh5AbsIpUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=k5v+1PSS; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-544043a21eeso6293e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 16:42:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738712457; x=1739317257; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IXlvd/4s277O8sJg1sChY2UAj1tE+2LPMkXAQD6QJOg=;
-        b=OjG4DoLKeqHmwtpSXkYzsoDBCEojK6938gWN8BXUoiFVxDE0gO6hQS2R7NoTEHKNCb
-         Qd/cogzesxvq9xGPjXCe1qsfJu6wCbFHT32QMzpTH/CiCl+6mL2Pqcfke/1ygqrTh9kh
-         MvZfkbuDv2CAE74zFIPzKTfeWPtIdZvU/8m7d1dOdJGnwVCXsulqS1HwP43Df0Zxs/gk
-         ecJpkeyZVwxpZIeVTss6yo+b8KHKxQeA9gVW9JN9ARFT+VjiqyHJnzCnPAT8BBHAW1xK
-         fMPAJqK2X8gS8anxY+AoDf9c3xA2JG85pOdOQ9cyqSmU8AbGlDqF4Nxniv+jEnaVQKVp
-         tWJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738712457; x=1739317257;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1738716163; x=1739320963; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IXlvd/4s277O8sJg1sChY2UAj1tE+2LPMkXAQD6QJOg=;
-        b=WA61+XpM7YLaRKs40tylNc3JKshac82WurJhIpX/9SwCub7bESKfTJKUbQiTEoON2b
-         KxGkf0tH1qZZ6PQTprbt1Z7PP84jDmp3lS29j82GEAh0H3tGkTEk2ndBig4JPtiYwcTJ
-         EGEr2OlCmjlJGn+7OFrQY7tYx6byFnIAxNuenraPW+xlfXPeNxocT+UYanTk6deZCuo6
-         rbw5Na7dUxCYsw2HqSxmpXqeC5F23drWhk8sEm/gygnTkecw54qcvyt60Ol7SCS87WqZ
-         NX/+DDgyE6py4CJba7j6Kr76oFXIRCWnOa25ZEX+wS3TFbrt4GjKE5BbZbg04l1TaMiH
-         gckA==
-X-Forwarded-Encrypted: i=1; AJvYcCVeIJFKhGJ1I0KKhTf3mGOquUIv0/c25cUJlhz62yopt4+/AABmBRcS0lN4vmEXn6LLxtcUYBMcNCF3SNWW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfRT/Sc9qEHiWDbLW4hYFSDqwCtJSi1iJpvhBmXe+HYVd5zzi3
-	5TMtJDQeG96VW6p9qSSfShQhTffLIjSSs6PeZO10glMDJ0+InuG1pIGhCgw0NCI=
-X-Gm-Gg: ASbGncv+6Sg6soPrexcafQWxcDJWcohehhg9ybH5KRhUgDrdmUt1CPfpatd88uV5PfJ
-	Jv3tXTw8TlZFD7EwbMeWzIypAdfCapsHSrafYai9e3Bxdigi2DKz1bxPhva4sZgoM+9qeVp/3ti
-	tfNbQpca8xaXWoLCsp3NY0IBMU738N/GIlvDdBij5xLQwkTnDq8T5hFUGVzF4ZHkgAEldsu3eI6
-	Y4u1kWpn61TgHtcNzz8wc7DxF3CRxfN+wMvMG6wq+mDy5ThC+m5ydtw2Ij/MSJX3IZCYVKyn6Bm
-	lDeINAtDsCDw701r7lYJPRUNPCfqgW2D1jVmCxAELOo8hEjbvorwgUyKwsWW4K5fqlPiwA0=
-X-Google-Smtp-Source: AGHT+IHEzXTAlRuX8+IIVfXALHdW/BAW9a8mxr7wK4XkIPEw/mvPumPoh0/pqNfSCsa9c8jsyssN5g==
-X-Received: by 2002:a05:6512:1189:b0:540:22e0:1f63 with SMTP id 2adb3069b0e04-54405a1075bmr142615e87.19.1738712457347;
-        Tue, 04 Feb 2025 15:40:57 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543ebeb0993sm1694460e87.132.2025.02.04.15.40.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Feb 2025 15:40:55 -0800 (PST)
-Date: Wed, 5 Feb 2025 01:40:53 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/5] nvmem: core: fix bit offsets of more than one byte
-Message-ID: <tgttk4pxzgsv4g2r5k44k2mtbh27cbpwth4xuj2okulucodei3@7g4gotk6z3cl>
-References: <20250109-sar2130p-nvmem-v4-0-633739fe5f11@linaro.org>
- <20250109-sar2130p-nvmem-v4-1-633739fe5f11@linaro.org>
+        bh=+k4LG/xT//VjVjGnheLfyBH4vM/8in5IOLbtjE03/+4=;
+        b=k5v+1PSSEjxNbX/PQIPnzj5Z7eE4vrJem52rOiiWMw+h55g2fmFHvjU/keNkJftSB+
+         C7Hn4VjY6plgwdzm1PcY4lA019FGEsNlWmRQsYQoyJVlxR6PXKe7OFo4IPqZ+0TY4Bec
+         NzFcQD2IyzaGgFWZNogVtaGcdTrIJI5x/lYCUg7n5vx1OH5uEdYzYScp3T0oCNrmR7o5
+         OSvsm8Fv9tikMOpbtEbXU1lI29DytiML6GLucugxD0D79udvHsZSSkGIP7LNy7zurSC+
+         hdBtrKU9L2C2ZT5kUDSmLSr3w7U73+1Ai0K75CloynT7/p3/WqpjVZ/HMlrUvURGomBL
+         14ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738716163; x=1739320963;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+k4LG/xT//VjVjGnheLfyBH4vM/8in5IOLbtjE03/+4=;
+        b=Nx/FVoEP1+UGbJ48GUZPvW/9sdanjUC5qAmo6zrE+uT6sNDJjqXLookjk5vCurq42p
+         YHYV7jsnqOqafAzCbM+aPc5VYT0WV385ODGB6xvvLEWUDH1BjOjyfFAqV7fVnds7Cv3Q
+         HuLu9qSc2vADAjDu79peaxtIzoj+VmWcj6+S3QtuaEjZLs0jrKLdmxPZebBRE5qW2WIc
+         F9fbOZVdr6Dho3ptt5ktcLiRO9gn4VkSpQibAjYOJj8mCjxvH8aIJQZoqjUuMkSlG1RQ
+         z0+rLePo2DhSmiYkWgmICSWStRBEfLdS2c/PXPKQPgw8c5y1Dmkgkf2FUl5Z+b6RPTf4
+         NVbg==
+X-Forwarded-Encrypted: i=1; AJvYcCW2Q5lEkYlBtsFro2wJ1wQajBIfLdxNskIx+retrUhD5FccQKdhJ/c0369QSENvn+8ryeV0U3753sSvObEd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9E3T2FJVnURye4HTXj0WGirKD+tEn70HbCWh/npCtnQMdyiz4
+	FqkZW2Bfh8nNhjmCY5IMrywgg1WBddsYhdT5eJHxiLmIoumw+6Mwphm0IXkT3vgMqUo+bjfY87e
+	FKo/Ty8bOt3p6jFrndOIj22JA7kC/RYCl1LU+zul9JR1oEzwyag4l+JQhZw==
+X-Gm-Gg: ASbGncvzFao6Tx4qua8hFRpfEvZ4O7keNvXlNU87DMjM3goGWcNxXeQuswrIjIBkZGA
+	iMR3RHyetb+5GQdGlEyWL6QWoShYAvz7a4uK10zUSdnCR/yNYsgmkJ+Z8Uq/O4WYNWvZ1FhGkwG
+	dLRP1k60sPVamzLU6739MSrdRk
+X-Google-Smtp-Source: AGHT+IGnTx6UzLjGyk5EFTTHRVuNUcIuJg7HuQX71hjcnsPe9x8OGm1xiRttmYhFZ6m7rhIXBpjHdBpULzkf6vArrrI=
+X-Received: by 2002:a05:6512:3f26:b0:542:92ee:25ec with SMTP id
+ 2adb3069b0e04-54400bd3692mr317361e87.1.1738716163227; Tue, 04 Feb 2025
+ 16:42:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250109-sar2130p-nvmem-v4-1-633739fe5f11@linaro.org>
+References: <20250117163001.2326672-1-tabba@google.com> <20250117163001.2326672-7-tabba@google.com>
+In-Reply-To: <20250117163001.2326672-7-tabba@google.com>
+From: Vishal Annapurve <vannapurve@google.com>
+Date: Tue, 4 Feb 2025 16:42:31 -0800
+X-Gm-Features: AWEUYZkca8r5uZlJZJrsv5qE9mdpIrtFmbgbr53sT6Fli1EBF4Nt1S-XWhf5aYQ
+Message-ID: <CAGtprH90zc3EWSuyqy4hE7hsmSZSYfB3JBC8KBvc1PdMcw5a4w@mail.gmail.com>
+Subject: Re: [RFC PATCH v5 06/15] KVM: guest_memfd: Handle final folio_put()
+ of guestmem pages
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 09, 2025 at 06:35:45AM +0200, Dmitry Baryshkov wrote:
-> If the NVMEM specifies a stride to access data, reading particular cell
-> might require bit offset that is bigger than one byte. Rework NVMEM core
-> code to support bit offsets of more than 8 bits.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Fri, Jan 17, 2025 at 8:30=E2=80=AFAM Fuad Tabba <tabba@google.com> wrote=
+:
+>
+> Before transitioning a guest_memfd folio to unshared, thereby
+> disallowing access by the host and allowing the hypervisor to
+> transition its view of the guest page as private, we need to be
+> sure that the host doesn't have any references to the folio.
+>
+> This patch introduces a new type for guest_memfd folios, and uses
+> that to register a callback that informs the guest_memfd
+> subsystem when the last reference is dropped, therefore knowing
+> that the host doesn't have any remaining references.
+>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
 > ---
->  drivers/nvmem/core.c | 24 +++++++++++++++++-------
->  1 file changed, 17 insertions(+), 7 deletions(-)
+> The function kvm_slot_gmem_register_callback() isn't used in this
+> series. It will be used later in code that performs unsharing of
+> memory. I have tested it with pKVM, based on downstream code [*].
+> It's included in this RFC since it demonstrates the plan to
+> handle unsharing of private folios.
+>
+> [*] https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/guestme=
+m-6.13-v5-pkvm
 
-Srinivas, it has been almost a month ago, we are past the merge window.
-Could you please review the patchset? I'd like to understand if we need
-to spend more time on it or if it is fine.
-
--- 
-With best wishes
-Dmitry
+Should the invocation of kvm_slot_gmem_register_callback() happen in
+the same critical block as setting the guest memfd range mappability
+to NONE, otherwise conversion/truncation could race with registration
+of callback?
 
