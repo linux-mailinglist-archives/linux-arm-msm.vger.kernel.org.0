@@ -1,137 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-46971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 908E4A2987B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 19:13:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 709B5A29906
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 19:29:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28569164C86
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 18:13:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C8051886147
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 18:28:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78E051FC7EA;
-	Wed,  5 Feb 2025 18:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 433651FF1AA;
+	Wed,  5 Feb 2025 18:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="G0BKd4vC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IYEXCGmN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 008.lax.mailroute.net (008.lax.mailroute.net [199.89.1.11])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7172A14F9E7;
-	Wed,  5 Feb 2025 18:13:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4381FDA89;
+	Wed,  5 Feb 2025 18:28:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738779186; cv=none; b=QDoOxLd5EOfEssN6Dhl0hpnGNmwmc4gtu6/o6z/Wz4NLHGl69MEfl/mQXcGbOs8CazNhUblhFPkDxbJBPIKxw27J0AskRNMApVS1hZSc0UzaftIkJBSOCNyZiXIlqrFaM7YF4P5wwT/9cnfkYI79aXL7+tG9WCFwPBB2c3PEzug=
+	t=1738780096; cv=none; b=c88ntnwsqv37A9jj15D0rJHtHg6doO4mhhtIRtW5ySSM+X098UMUxoX4TQOxtS8Ue1nv3/joB8b6oTPCDgceOb/xjBZT/1jcG3ZPew59oFoNowsp9dKK5d/xFzNzANZ3zi1v8MUeyTT3WICwqqaeJW41dINXoXH6fuqgBfFQjIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738779186; c=relaxed/simple;
-	bh=Up/qq84r5S/UYhXFTh8In9C34CQSWCRxH4/J+jHx9Ws=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CTc9bWQPkqI8CxO2tLsiN1n4BXz/D/8SGAxoPWDAUCtXyUEb1C918sJ3NCDIY47OvObCK05HbkfQF0v19HS3HgwQNYlTucg2XN8alB0XkUaL2JQ8br3ft6nGvmcXb9+RDo5mMRckOd8NViHQphr4/8V6dl7Bjo6Qy8Q1ijYXykM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=G0BKd4vC; arc=none smtp.client-ip=199.89.1.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 008.lax.mailroute.net (Postfix) with ESMTP id 4Yp7dC5dByz6CmLxY;
-	Wed,  5 Feb 2025 18:13:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1738779175; x=1741371176; bh=HEmpdHhzE2vU2QVoWRp2+Ebu
-	PduQnjFGmo2WB4b4xlk=; b=G0BKd4vCbygEYnk4FihlhKIYkoAwpDCDXlFiY5SR
-	dLTZF7iBDGbHfLNtd82jMjhOsNF/lt5te9akmECpZAAiRE3DtFRPSQWUuusvkv+W
-	G+5wYrDQqpaIkNJwMG0DSD1F8Gt/6JL5a+L7T8F4ulxKe4OIi70P9raftJF+SrK5
-	zS5XK0PoLVBWfsmX2CfvptE84mKPxduf+9YmAe8cxgo1zSRk7UarbOlEe9TKZJpA
-	9iuAOrgG3pLDVw+ckqRRqHH12XHZz+ln3jOm4o5jWMt9pN1f61YD2EOaQiBq3m8l
-	VJSRmJ1DX78qMA5R4c+gzWYWrfvQbbHVBL+RKcTgxzShJg==
-X-Virus-Scanned: by MailRoute
-Received: from 008.lax.mailroute.net ([127.0.0.1])
- by localhost (008.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id k9WYAbFLhfcS; Wed,  5 Feb 2025 18:12:55 +0000 (UTC)
-Received: from [100.66.154.22] (unknown [104.135.204.82])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 008.lax.mailroute.net (Postfix) with ESMTPSA id 4Yp7cy6KcTz6CmM6c;
-	Wed,  5 Feb 2025 18:12:50 +0000 (UTC)
-Message-ID: <07c3d640-d2d7-4edb-b62e-0926e5e7c7c8@acm.org>
-Date: Wed, 5 Feb 2025 10:12:49 -0800
+	s=arc-20240116; t=1738780096; c=relaxed/simple;
+	bh=WIK77QSHrwjdjXP5YguhdLZZtWO37MnzcX3h68pNHDs=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hsFNsKxlMWsClsTpLKag01mtEV/mN7trBWhD9W6NHRgDM4r8D2/q56ZjU4UldAek1AuZOFLP7m6SdgYTiNAYCtUIjKjFg4eOoWl+wVgNv9gpMu1djg6i3kkdvHSSLyY/+gxXFRbj1ys2qm/lIeDF4CXBUswFJAe5Ltt4krcc2FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IYEXCGmN; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 515ErZnn011015;
+	Wed, 5 Feb 2025 18:28:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=wox7ET7OjT930xo72QvX45
+	kqjJCIhhqSOwlX3tfnH80=; b=IYEXCGmNG6hONudpz33g2FBHXMJICjkmPr6Fnz
+	8NN6ygTIr+we3IH5Alq8masAF/TpcUqLDE2LXSStauL+RuceqssK/mzCQQJJej0L
+	we8T5IOZugRoKR0WO7OjISkWX/y9Nh0P4bygEcqcHe1hmcrrVQV9v9+C8nFyYS+7
+	ROE+rLT+1cQjWhukKptfTB538MAtXSOTuvYFmNY+2vEQWwikksg+ZDq/8CLpRCq5
+	VVXZ+DUaI77X1JXL8tRIPYyt4lKbel3d7U8TElMwUGURehecEHAerxusYczW+qS0
+	dLb4hyWtwUnaroXaRchgFv2rdfw9mdGhpPwOwg+1vhV6M/AQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ma598jkv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 05 Feb 2025 18:28:08 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 515IS74S016733
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 5 Feb 2025 18:28:07 GMT
+Received: from c194c8e2f407.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 5 Feb 2025 10:28:02 -0800
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: Odelu Kukatla <quic_okukatla@quicinc.com>,
+        Mike Tipton
+	<quic_mdtipton@quicinc.com>,
+        Jeff Johnson <quic_jjohnson@quicinc.com>,
+        "Andrew Halaney" <ahalaney@redhat.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH V8 0/7] Add EPSS L3 provider support on SA8775P SoC
+Date: Wed, 5 Feb 2025 18:27:36 +0000
+Message-ID: <20250205182743.915-1-quic_rlaggysh@quicinc.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] ABI: sysfs-driver-ufs: Add missing UFS sysfs
- attributes
-To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com,
- mani@kernel.org, beanhuo@micron.com, avri.altman@wdc.com,
- junwoo80.lee@samsung.com, martin.petersen@oracle.com,
- quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
- quic_rampraka@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- Keoseong Park <keosung.park@samsung.com>,
- open list <linux-kernel@vger.kernel.org>
-References: <20250203081109.1614395-1-quic_ziqichen@quicinc.com>
- <20250203081109.1614395-9-quic_ziqichen@quicinc.com>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20250203081109.1614395-9-quic_ziqichen@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: IgTQUmUuDmjRCzOMCz8lzRAYCDFPBQkY
+X-Proofpoint-ORIG-GUID: IgTQUmUuDmjRCzOMCz8lzRAYCDFPBQkY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-05_06,2025-02-05_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=999 malwarescore=0 adultscore=0 clxscore=1011 phishscore=0
+ bulkscore=0 spamscore=0 mlxscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502050141
 
-On 2/3/25 12:11 AM, Ziqi Chen wrote:
+Add Epoch Subsystem (EPSS) L3 provider support on SA8775P SoCs.
 
-Please change the patch title from "Add missing UFS sysfs attributes" 
-into "Add missing UFS sysfs attribute documentation". This patch does 
-not add any sysfs attributes - it adds missing documentation.
+Current interconnect framework is based on static IDs for creating node
+and registering with framework. This becomes a limitation for topologies
+where there are multiple instances of same interconnect provider.
+Modified interconnect framework APIs to create and link icc node with
+dynamic IDs, this will help to overcome the dependency on static IDs.
 
-> +What:		/sys/bus/platform/drivers/ufshcd/*/clkscale_enable
-> +What:		/sys/bus/platform/devices/*.ufs/clkscale_enable
-> +Date:		January 2025
-> +Contact:	Ziqi Chen <quic_ziqichen@quicinc.com>
-> +Description:
-> +		This file shows whether the UFS clock scaling is enabled or not.
-> +		And it can be used to enable/disable the clock scaling by writing
-> +		1 or 0 to this file.
-> +
-> +		The file is read/write.
-> +
-> +What:		/sys/bus/platform/drivers/ufshcd/*/clkgate_enable
-> +What:		/sys/bus/platform/devices/*.ufs/clkgate_enable
-> +Date:		January 2025
-> +Contact:	Ziqi Chen <quic_ziqichen@quicinc.com>
-> +Description:
-> +		This file shows whether the UFS clock gating is enabled or not.
-> +		And it can be used to enable/disable the clock gating by writing
-> +		1 or 0 to this file.
-> +
-> +		The file is read/write.
-> +
-> +What:		/sys/bus/platform/drivers/ufshcd/*/clkgate_delay_ms
-> +What:		/sys/bus/platform/devices/*.ufs/clkgate_delay_ms
-> +Date:		January 2025
-> +Contact:	Ziqi Chen <quic_ziqichen@quicinc.com>
-> +Description:
-> +		This file shows and sets the number of milliseconds of idle time
-> +		before the UFS driver start to perform clock gating. This can
-                                       ^^^^^
-                                       starts
-> +		prevent the UFS from frequently performing clock gate/ungate.
-                                                                  ^^^^^^^
-                                                          gating/ungating
-> +
-> +		The file is read/write.
+Change since v7:
+ - Updated interconnect framework APIs icc_node_create() and
+   icc_link_create() to dynamically allocate IDs for interconnect nodes
+   during creation.
+ - Moved naming conventions to the framework and replaced snprintf() with
+   devm_kasprintf() as suggested.
+ - Updated the icc-rpmh driver and SA8775P SoC provider driver to support
+   dynamic ID allocation.
+ - Revised commit text to explain the use of the existing generic 
+   compatible "qcom,epss-l3".
+ - Addressed other comments regarding the alphabetical ordering of 
+   compatible properties.
 
+Change since v6:
+ - Added icc_node_create_alloc_id() API to dynamically allocate ID while
+   creating the node. Replaced the IDA (ID allocator) with
+   icc_node_create_alloc_id() API to allocate node IDs dynamically.
+ - Removed qcom,epss-l3-perf generic compatible as per the comment.
+ - Added L3 ICC handles for CPU0 and CPU4 in DT, as per Bjorn comment.
+   Link to comment:
+   https://lore.kernel.org/lkml/ww3t3tu7p36qzlhcetaxif2xzrpgslydmuqo3fqvisbuar4bjh@qc2u43dck3qi/
 
-Please change the word "file" into "attribute" to make the sysfs 
-attribute documentation consistent with the sysfs documentation for
-other kernel drivers.
+Change since v5:
+ - Reused qcom,sm8250-epss-l3 compatible for sa8775p SoC.
+ - Rearranged the patches, moved dt changes to end of series.
+ - Updated the commit text.
 
-Thanks,
+Changes since v4:
+ - Added generic compatible "qcom,epss-l3-perf" and split the driver
+   changes accordingly.
 
-Bart.
+Changes since v3:
+ - Removed epss-l3-perf generic compatible changes. These will be posted
+   as separate patch until then SoC specific compatible will be used for
+   probing.
+
+Changes since v2:
+ - Updated the commit text to reflect the reason for code change.
+ - Added SoC-specific and generic compatible to driver match table.
+
+Changes since v1:
+ - Removed the usage of static IDs and implemented dynamic ID assignment
+   for icc nodes using IDA.
+ - Removed separate compatibles for cl0 and cl1. Both cl0 and cl1
+   devices use the same compatible.
+ - Added new generic compatible for epss-l3-perf.
+
+Jagadeesh Kona (1):
+  arm64: dts: qcom: sa8775p: Add CPU OPP tables to scale DDR/L3
+
+Raviteja Laggyshetty (6):
+  dt-bindings: interconnect: Add EPSS L3 compatible for SA8775P
+  interconnect: core: Add dynamic id allocation support
+  interconnect: qcom: Add multidev EPSS L3 support
+  interconnect: qcom: icc-rpmh: Add dynamic icc node id support
+  interconnect: qcom: sa8775p: Add dynamic icc node id support
+  arm64: dts: qcom: sa8775p: add EPSS l3 interconnect provider
+
+ .../bindings/interconnect/qcom,osm-l3.yaml    |    1 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  229 ++
+ drivers/interconnect/core.c                   |   13 +-
+ drivers/interconnect/qcom/icc-rpmh.c          |   16 +-
+ drivers/interconnect/qcom/icc-rpmh.h          |    3 +-
+ drivers/interconnect/qcom/osm-l3.c            |   46 +-
+ drivers/interconnect/qcom/sa8775p.c           | 2194 ++++++++---------
+ 7 files changed, 1246 insertions(+), 1256 deletions(-)
+
+-- 
+2.39.2
+
 
