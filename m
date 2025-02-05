@@ -1,131 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-46952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EEAEA29022
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 15:32:38 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA6C1A29037
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 15:33:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A13E91696B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 14:32:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3912D164254
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 14:33:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D75A155CB3;
-	Wed,  5 Feb 2025 14:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IbSqKxDp"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D838C1662EF;
+	Wed,  5 Feb 2025 14:32:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C69151988;
-	Wed,  5 Feb 2025 14:32:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96E51632DA;
+	Wed,  5 Feb 2025 14:32:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765929; cv=none; b=iLKtrGV/RJuN4klL9H/UtcM24i25Iu3/9cOOrrBPJwLpZXLDsfVsRK54T+h04ncMxg+3U0hSWCREBXt4xw5IJOHASxPDO7Jzt3PKNCmbh6OCVx+gklrykPu5ams9Bz4NAsAY+OaGKlJ+MdODo2LCzSKJVIPXDSHl522ILVTnuFw=
+	t=1738765971; cv=none; b=hCBuAkSHLo9J/Pr4LQesjgMtY/BPA0N7vlU9rBIopIhImES3bL3bLmXiFpn2pvkDuGXXDfqblZ4VdcslxxY6BU2NZSSMtSC+1eFwyimjCTqEC7uvRYUxkNxD8jw5NLCVTdPvt0a9bhw4/30jMuv9uEOEwJh/LtGcYVUclSvxc1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765929; c=relaxed/simple;
-	bh=FSXSbkQDKJUXj53XLx4D2XtIiBjFgcKnhxplRwzBUlo=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Mi28A2K5QPAkr8xpieh8Pt2PFrEAwTpmyKoozLUX4esfyG7ulv91h75P4WbpeJmF8Pd87maljpZthMV/5qsKCSwiPcWpr4SsMNwitBwceLxPsMXYLEboIvOQJAYixVhTuiFfmRaBUKS0oNMNUCwDVhEkD1HLQMYRnElvrZz1qLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IbSqKxDp; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 515EVhvO025803;
-	Wed, 5 Feb 2025 14:32:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=Pxz9THixkd8
-	MMWy14tVHB4+bN7P7Z9hkWsaKuJO8Q4E=; b=IbSqKxDp77TlbDGs6FQmdhD+TJI
-	l8Hng9cmDIZX85uZzZ8VlsjkZWcufUKRYZD08KLOgA+sK/7vR8YXVX2Z4S8aKehf
-	ZlUS6OylFX6dygZIq1k8fTgYoQcHSaXg1P4qcpOnNK5i+y1800cGacLRAXGU7xyZ
-	EtEZnvzkNsqaBcp8vTSkN/anIaZZxVgys0rIDQscoHF1do7I/9aOsVO1wyOtWbFz
-	qCICm4A73cTV7w8+h/iXSECEBjwgJpM2bF12Qnn+7/Utx33UNuKR56GIyqu8Ymho
-	zEemoiSMHPUjCshiMFKrSjb1mGXqkmVruoN0hp8DkxlDc1PAQgNSdJCcPfA==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44m9txg01r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Feb 2025 14:32:00 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 515ETXKb024149;
-	Wed, 5 Feb 2025 14:31:57 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 44hcpm8b5k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Feb 2025 14:31:57 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 515EVvjf026671;
-	Wed, 5 Feb 2025 14:31:57 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 515EVuFP026669
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Feb 2025 14:31:57 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
-	id 83ADC241AA; Wed,  5 Feb 2025 20:01:56 +0530 (+0530)
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-To: alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, jarkko.nikula@linux.intel.com,
-        linux-i3c@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: [PATCH v1 3/3] MAINTAINERS: Add maintainer for Qualcomm's I3C driver
-Date: Wed,  5 Feb 2025 20:01:09 +0530
-Message-Id: <20250205143109.2955321-4-quic_msavaliy@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20250205143109.2955321-1-quic_msavaliy@quicinc.com>
-References: <20250205143109.2955321-1-quic_msavaliy@quicinc.com>
+	s=arc-20240116; t=1738765971; c=relaxed/simple;
+	bh=0bYuOke5HicLvyysSTvwmqkgRqMgEAHNqs3w4ITvTZQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W/IgWt5fdvlO9Nc15TF13a6BcsgpAIoYt2mq479DVRDIOz4uzRt0/NNIr4OBFpv19Ip4AGXh9zoVp1c6jwqVQKzbQ/DLqNwsqnyq97BvT2Xbbcs7NmGnFxOawbn34bMydOkcAjFFlWvkSV04yVENlbRl3LoaBUjNkLJZ0kRAa68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD32C4CED1;
+	Wed,  5 Feb 2025 14:32:47 +0000 (UTC)
+Message-ID: <fc9d5253-9e78-4b12-8b1c-96c97b0f4438@xs4all.nl>
+Date: Wed, 5 Feb 2025 15:32:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: GCPoLZZxjkESdCriMRXAuo0Mx3HF6a5N
-X-Proofpoint-GUID: GCPoLZZxjkESdCriMRXAuo0Mx3HF6a5N
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-05_06,2025-02-05_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- bulkscore=0 impostorscore=0 adultscore=0 mlxlogscore=883 clxscore=1015
- mlxscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
- definitions=main-2502050114
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v10 27/28] media: iris: enable video driver probe of
+ SM8250 SoC
+To: Johan Hovold <johan@kernel.org>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, quic_vgarodia@quicinc.com,
+ quic_abhinavk@quicinc.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, p.zabel@pengutronix.de, sebastian.fricke@collabora.com,
+ bryan.odonoghue@linaro.org, dmitry.baryshkov@linaro.org,
+ neil.armstrong@linaro.org, nicolas@ndufresne.ca,
+ u.kleine-koenig@baylibre.com, stefan.schmidt@linaro.org,
+ lujianhua000@gmail.com, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, krzysztof.kozlowski@linaro.org
+References: <20250116070234.4027116-1-quic_dikshita@quicinc.com>
+ <a3cafc25-3453-4a2d-81fb-71730982ddc0@xs4all.nl>
+ <Z6Nz5r8Z1BhtD2KZ@hovoldconsulting.com>
+Content-Language: en-US, nl
+From: Hans Verkuil <hverkuil@xs4all.nl>
+Autocrypt: addr=hverkuil@xs4all.nl; keydata=
+ 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
+In-Reply-To: <Z6Nz5r8Z1BhtD2KZ@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add a new entry for the I3C QCOM GENI driver to the MAINTAINERS file.
-This entry includes the maintainer's name and contact information,
-ensuring proper maintainership and communication for the new driver.
+On 05/02/2025 15:21, Johan Hovold wrote:
+> On Wed, Feb 05, 2025 at 02:15:25PM +0100, Hans Verkuil wrote:
+> 
+>> This discussion about probing the driver is holding up the merging of this
+>> driver unnecessarily. For now, only support the iris driver for SM8250 SoC
+>> if the venus driver is not enabled:
+>>
+>> #if !IS_REACHABLE(CONFIG_VIDEO_QCOM_VENUS)
+>>
+>> That should be uncontroversial, and allows us to merge the iris driver.
+> 
+> Sounds good to me, but that should be IS_ENABLED() as otherwise which
+> driver ends up binding depends on whether venus is built as a module or
+> not.
 
-Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+You are right, good catch.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3520ce6f9859..d343467740b8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -11011,6 +11011,14 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/i3c/cdns,i3c-master.yaml
- F:	drivers/i3c/master/i3c-master-cdns.c
- 
-+I3C DRIVER FOR QUALCOMM MASTER CONTROLLER IP
-+M:	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-+L:	linux-i3c@lists.infradead.org (moderated for non-subscribers)
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Supported
-+F:	Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
-+F:	drivers/i3c/master/qcom-i3c-master.c
-+
- I3C DRIVER FOR SYNOPSYS DESIGNWARE
- S:	Orphan
- F:	Documentation/devicetree/bindings/i3c/snps,dw-i3c-master.yaml
--- 
-2.25.1
+Regards,
+
+	Hans
+
+> 
+> Johan
 
 
