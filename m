@@ -1,188 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-46917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21FD6A28360
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 05:32:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D78DFA283BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 06:39:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CFA9E18852FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 04:32:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 390063A6433
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 05:39:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14CE221518A;
-	Wed,  5 Feb 2025 04:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 738D2217F32;
+	Wed,  5 Feb 2025 05:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qxRdh40v"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mVl+RPbW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCCC20AF77
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Feb 2025 04:31:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A671D221D86
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Feb 2025 05:38:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738729920; cv=none; b=q5slQLg/LQdHrHxA+DWJOE/N3Sp7qkSnsjYfLGuFCpNp6RG4RXt67CQmftyMqZnWeMVHBTc+3IIAwOLUsAT2oQx6R50QLLl67u5vRLO/qQoZtnFS9K3QY5tSlEnHsTsB4Xt6uiD9+QPcn9qWdkcCGn2d+kzRvOPNF2s3we5APQA=
+	t=1738733942; cv=none; b=m+Z6u+/BQD1FCkSYUKhmnSgjQ3J3SiypzFtqVtVOOILmUZ7I4rtejktw6HZzhfm7mquhLXLWpYBWLOA46mrLP9hPPGQNr3HpWTPHnQsgOx0YTK+w/vOpocHcgz8Pt0hjEA1Z38oAPTUHmo4S2CTPxneyTYlHZQdcccXBBL1DorI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738729920; c=relaxed/simple;
-	bh=JE8go6R1VpRIPO7yBC5BBAyXsPGOwpgj7jmfJ1zIgCw=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=brchtbKIZyxjW1YIRac/DueYlfceyI/bqWmWl05FWbd9UsugZtkZCAxjzr6hVcLK/ofByiPPKI06gw0mK+1YCeRgpKb5vlsy6sLYWzwgVfJWmSRS72vYn7vu2eR14ndK+Kf4yHEV1RrqVsUl6sn8tBBkIr2CA62Ci8Ap0XXr//Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qxRdh40v; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-21f078fc592so34545885ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 20:31:58 -0800 (PST)
+	s=arc-20240116; t=1738733942; c=relaxed/simple;
+	bh=oYZIE1WKgBIkinbX1yVJwFqw1Yy25EB1bt9R4zIMPsE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qwIsaw0eZRXi3C9ThN0803tjpvB792Mldt2Rlrlq7iXG51G1VcSTa9yqGxXFjxl2ifzBjqSAXxREvTKNkpuc9U4TOQX2lvjZlllah/GtHIjhGEeZ000d7Je2ib0JMIGzKaTUm6knxSlC9mp8MzjYM8Hbcfm0qFJ+SmHfXOJfWwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mVl+RPbW; arc=none smtp.client-ip=209.85.217.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4b24d969db1so1494654137.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 21:38:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738729918; x=1739334718; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZtAIjBOFFeafVFBhyEOiFEMQllzc64d/EBT8ds1/JA8=;
-        b=qxRdh40v88qBqKw22bUdLanCqfUTWZU6cL/kTQ9Mm10XmvkZ/gv2DReOt+VnDzU6Np
-         Ndfj+lbiRq6xsWPsO8fynkNMYYjfzGBCB3q4Qb4dsJWGp5PsPluNBEpPLv9X9l1rOP29
-         hUE75+0H38Z9OPkolxe3rwSwOzVFZBfxa9Cr1SN7gFEhZA+lgGDle+W+InMIMh5GwNSe
-         TZV54mrvOjQU62Oqs1pd3Y5AchMuZqOrg9NBSplK6a/WG8IxQhbwzTPtbO0nDqBUY2V9
-         +8hdmhw4phOb2GTlvxiwC7QZkzKtAo+TB3Bw6/g+px/wPRbgLnt7k4abXU4l1d6+IwTY
-         KDww==
+        d=linaro.org; s=google; t=1738733938; x=1739338738; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iZcHmE5LfGpzo6oy13bAZTRZiNz/yFAVgtXYT5lK3YI=;
+        b=mVl+RPbW6wNN+LNnSkbX934oKSA9UtfYh1HzscpzHEVAMVcCh+5RDlFVM7tJsOTdvx
+         XuRNo7LyVsNz4+eq8EeBhtn8U/iKe1P1XoVXdP7sRfdC3AbJjA4KmG8LFPs4pDja7GE6
+         h5PUiEL1vUDvmD3fjf+Cj1bqxOBSUWME2PptT93C8OIAe3aJsozRqtUY4oHnLbZ56hSs
+         y1qwpu9L2W2gxi57VGJK2FZHsAcBKBpkdOFRj7JSDrX7a7By6sZJoWekJwEQj4qcPTCM
+         scm526iZNqyMFsNmA1bJCLidIvOLGmdiWsQAzKuiBvZBnRk+g2+XSIP9UzP25AoGWtX1
+         guZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738729918; x=1739334718;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ZtAIjBOFFeafVFBhyEOiFEMQllzc64d/EBT8ds1/JA8=;
-        b=YFF1r/M+YHCfGEWZNW7kHVppnu/rJFui//ULC61tPZEtD6RcJmS5sVmtUkOXHl+lqm
-         x3ZFrTRH9kBvmpTWXnCiquTcbcURO5YdtwfZP5rFjyuArDO75ZKaO9E1rk8xw5OK4MzG
-         6nh4iVpTIAyyUsLfOARujnBtNFwVEDuvkEGCh76Wvo6HGGQC+m9e6OBXLwX0713wx32F
-         l7wodJIiCgiklCbwebXUWsFayGmeF+AluugDjTmcHemVNbr3qVNujjXcQscuy0KD4UdI
-         F6hZccC76SORq+FQ8etqcQGF0UO+lDw2i2F638TeG2aiROfBv4isIpr3Qz5f85rHHjA7
-         mYgw==
-X-Forwarded-Encrypted: i=1; AJvYcCUn9FwveDVL9dtBYn/NyVqpvKXsv7mmqwZLDeN8VB4it1soZaOFzohkHjTbsleQcM3HIIbv+GHydtLcxLBG@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLegTWN/Z2+Xj+VyWFKFfEkyeojWcw0MYkj2LWyGxsUctJTav4
-	bQJp9q6+uWjnInTGmxk/xqoRfSmT1RRpeRpGSLwZxveZHkFGeB1L8rBxSED0ru1+p/LzEO83PeR
-	cjvYzZaf2yLbf2xbPbcLaUw==
-X-Google-Smtp-Source: AGHT+IEUGAEXsyrkT7DjTRUy8A7fBT8adorRd83c8M0VQOASQHQWG4hYdiwBaNDxKPtPTZ7XijwVU7oj/MkuobrlOg==
-X-Received: from pfde7.prod.google.com ([2002:aa7:8c47:0:b0:725:f376:f548])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:100c:b0:1e0:d1c3:97d1 with SMTP id adf61e73a8af0-1ede88b3b5fmr2567882637.29.1738729917642;
- Tue, 04 Feb 2025 20:31:57 -0800 (PST)
-Date: Wed, 05 Feb 2025 04:31:53 +0000
-In-Reply-To: <CAGtprH-Ryn6Xqs-3_VBMkk3ew74Rf9=D8S_iHVmq2DE-YFk2-w@mail.gmail.com>
- (message from Vishal Annapurve on Tue, 4 Feb 2025 17:28:08 -0800)
+        d=1e100.net; s=20230601; t=1738733938; x=1739338738;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iZcHmE5LfGpzo6oy13bAZTRZiNz/yFAVgtXYT5lK3YI=;
+        b=R54GZ2iKgXe6nAIY4GuE6yH5b7D1JIjojhM0NwSvthT2oQ7iDgW5Fj50XoULAWTG3Y
+         qWTUPjiPir4P76m87px6gZV1AcDC6mP6+Xq+83aXpDYLbuTqZ07Emv5Y3uGrQ6PqST4L
+         nJff5GiECkwbUJfmpeAwvmA+STiv7ljIm8Zvgp9NBQ+Mlc/BREzqMUurl3QYQ+rCGVnd
+         +Vtt1SCq9y1QKAUEJ8/kBlzgLdo2MwS4Dm6yKPGJO7zC57jIQtJfeOwrHgNCiu/kZ6Ob
+         LWrvwTMN/MH5q/he0sZIltOtDB6hz59w4Pt15DRb5voabCz+I7uYwXnu2mP/MD1QFd3/
+         /9Hg==
+X-Forwarded-Encrypted: i=1; AJvYcCW6iwbpo3OwJJZwyj6VCAPrtHJ79HB95cWbfZwZppiPoXkcGrZmgT/vSWFFBUNgbtivnOQChX7paVO76dHH@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWJcTx8f2jwDG8IG35f8lFcBYmzqsf0K7cBFfdPy2jVS1JEI8n
+	5jKzZHtmN0mLHFem7P07ntHguBMF/ZPeBn9hL9A/bryvlf0IV83ZQwljDKeLZD58fpkE/GY0wBs
+	zHJmX16IW0f705hIFvUHGsPpwakJ53Jw9TDx1vg==
+X-Gm-Gg: ASbGncsGt1xBPkeKlbb6PkhsqxHk6PB1+Bs1Jk82xx1JlkCczI9p2aRZaJ+SR/qcGgH
+	phQd2s1igesY5xoZOuWBzdSUMVL1UrIM4V0+y1oH7+FnHAYQsmouV+6F0lsN94RTzSKqHnHGIj2
+	E=
+X-Google-Smtp-Source: AGHT+IGP8iaV1lSJK3k61hP2EUn7b4J7C0feOjedPDBXitriSHUsXfoWs2rikX22K7TDZvBiWOLJscwElk2khGF9pWQ=
+X-Received: by 2002:a05:6102:3c8d:b0:4b1:1565:f4f1 with SMTP id
+ ada2fe7eead31-4ba46dab143mr1416296137.3.1738733938448; Tue, 04 Feb 2025
+ 21:38:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzldulovuu.fsf@ackerleytng-ctop-specialist.c.googlers.com>
-Subject: Re: [RFC PATCH v5 06/15] KVM: guest_memfd: Handle final folio_put()
- of guestmem pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Vishal Annapurve <vannapurve@google.com>
-Cc: tabba@google.com, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, 
-	mic@digikod.net, vbabka@suse.cz, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+References: <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-0-297eacd0d34f@quicinc.com>
+In-Reply-To: <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-0-297eacd0d34f@quicinc.com>
+From: Sumit Garg <sumit.garg@linaro.org>
+Date: Wed, 5 Feb 2025 11:08:47 +0530
+X-Gm-Features: AWEUYZk-9uPQuZCvuldLLo0gp1nCZvfng0cr_ZdFUSsUs5f9vvtvhtZ_fCOgRaA
+Message-ID: <CAFA6WYNGH_LP-R4hQx-+XMY3zFN74ij-JngwnuKOsz8=r_-bsQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] Trusted Execution Environment (TEE) driver for
+ Qualcomm TEE (QTEE)
+To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Cc: Jens Wiklander <jens.wiklander@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-doc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Vishal Annapurve <vannapurve@google.com> writes:
+Hi Amirreza,
 
-> On Thu, Jan 23, 2025 at 1:51=E2=80=AFAM Fuad Tabba <tabba@google.com> wro=
-te:
->>
->> On Wed, 22 Jan 2025 at 22:16, Ackerley Tng <ackerleytng@google.com> wrot=
-e:
->> >
->> > Fuad Tabba <tabba@google.com> writes:
->> >
->> > Hey Fuad, I'm still working on verifying all this but for now this is
->> > one issue. I think this can be fixed by checking if the folio->mapping
->> > is NULL. If it's NULL, then the folio has been disassociated from the
->> > inode, and during the dissociation (removal from filemap), the
->> > mappability can also either
->> >
->> > 1. Be unset so that the default mappability can be set up based on
->> >    GUEST_MEMFD_FLAG_INIT_MAPPABLE, or
->> > 2. Be directly restored based on GUEST_MEMFD_FLAG_INIT_MAPPABLE
->>
->> Thanks for pointing this out. I hadn't considered this case. I'll fix
->> in the respin.
->>
+On Mon, 3 Feb 2025 at 08:14, Amirreza Zarrabi <quic_azarrabi@quicinc.com> wrote:
 >
-> Can the below scenario cause trouble?
-> 1) Userspace converts a certain range of guest memfd as shared and
-> grabs some refcounts on shared memory pages through existing kernel
-> exposed mechanisms.
-> 2) Userspace converts the same range to private which would cause the
-> corresponding mappability attributes to be *MAPPABILITY_NONE.
-> 3) Userspace truncates the range which will remove the page from pagecach=
-e.
-> 4) Userspace does the fallocate again, leading to a new page getting
-> allocated without freeing the older page which is still refcounted
-> (step 1).
+> This patch series introduces a Trusted Execution Environment (TEE)
+> driver for Qualcomm TEE (QTEE). QTEE enables Trusted Applications (TAs)
+> and services to run securely. It uses an object-based interface, where
+> each service is an object with sets of operations. Clients can invoke
+> these operations on objects, which can generate results, including other
+> objects. For example, an object can load a TA and return another object
+> that represents the loaded TA, allowing access to its services.
 >
-> Effectively this could allow userspace to keep allocating multiple
-> pages for the same guest_memfd range.
+> Kernel and userspace services are also available to QTEE through a
+> similar approach. QTEE makes callback requests that are converted into
+> object invocations. These objects can represent services within the
+> kernel or userspace process.
+>
+> Note: This patch series focuses on QTEE objects and userspace services.
+>
+> Linux already provides a TEE subsystem, which is described in [1]. The
+> tee subsystem provides a generic ioctl interface, TEE_IOC_INVOKE, which
+> can be used by userspace to talk to a TEE backend driver. We extend the
+> Linux TEE subsystem to understand object parameters and an ioctl call so
+> client can invoke objects in QTEE:
+>
+>   - TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_*
+>   - TEE_IOC_OBJECT_INVOKE
+>
+> The existing ioctl calls TEE_IOC_SUPPL_RECV and TEE_IOC_SUPPL_SEND are
+> used for invoking services in the userspace process by QTEE.
+>
+> The TEE backend driver uses the QTEE Transport Message to communicate
+> with QTEE. Interactions through the object INVOKE interface are
+> translated into QTEE messages. Likewise, object invocations from QTEE
+> for userspace objects are converted into SEND/RECV ioctl calls to
+> supplicants.
+>
+> The details of QTEE Transport Message to communicate with QTEE is
+> available in [PATCH 10/10] Documentation: tee: Add Qualcomm TEE driver.
+>
+> You can run basic tests with following steps:
+> git clone https://github.com/quic/quic-teec.git
+> cd quic-teec
+> mkdir build
+> cmake .. -DCMAKE_TOOLCHAIN_FILE=CMakeToolchain.txt -DBUILD_UNITTEST=ON
+>
+> https://github.com/quic/quic-teec/blob/main/README.md lists dependancies
+> needed to build the above.
+>
+> This series has been tested for basic QTEE object invocations and
+> callback requests, including loading a TA and requesting services form
+> the TA.
 
-I'm still verifying this but for now here's the flow Vishal described in
-greater detail:
+Thanks for sharing these test user-space applications/libraries. Can I
+know which platforms are currently supported by this QTEE driver? I
+would like to run and understand the overall stack on a real device. I
+do have rb3, rb5 and db410c on my desk to test with.
 
-+ guest_memfd starts without GUEST_MEMFD_FLAG_INIT_MAPPABLE
-    + All new pages will start with mappability =3D GUEST
-+ guest uses a page
-    + Get new page
-    + Add page to filemap
-+ guest converts page to shared
-    + Mappability is now ALL
-+ host uses page
-+ host takes transient refcounts on page
-    + Refcount on the page is now (a) filemap's refcount (b) vma's refcount
-      (c) transient refcount
-+ guest converts page to private
-    + Page is unmapped
-        + Refcount on the page is now (a) filemap's refcount (b) transient
-          refcount
-    + Since refcount is elevated, the mappabilities are left as NONE
-    + Filemap's refcounts are removed from the page
-        + Refcount on the page is now (a) transient refcount
-+ host punches hole to deallocate page
-    + Since mappability was NONE, restore filemap's refcount
-        + Refcount on the page is now (a) transient refcount (b) filemap's
-          refcount
-    + Mappabilities are reset to GUEST for truncated range
-    + Folio is removed from filemap
-        + Refcount on the page is now (a) transient refcount
-    + Callback remains registered so that when the transient refcounts are
-      dropped, cleanup can happen - this is where merging will happen
-      with 1G page support
-+ host fallocate()s in the same address range
-    + will get a new page
+Also, platform support is important information you should put in the
+cover letter as well as the QTEE documentation.
 
-Though the host does manage to get a new page while the old one stays
-around, I think this is working as intended, since the transient
-refcounts are truly holding the old folio around. When the transient
-refcounts go away, the old folio will still get cleaned up (with 1G page
-support: merged and returned) to as expected. The new page will also be
-freed at some point later.
+-Sumit
 
-If the userspace program decides to keep taking transient refcounts to hold
-pages around, then the userspace program is truly leaking memory and it
-shouldn't be guest_memfd's bug.
+>
+> [1] https://www.kernel.org/doc/Documentation/tee.txt
+>
+> Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+> ---
+> Changes in v2:
+> - Clean up commit messages and comments.
+> - Use better names such as ubuf instead of membuf or QCOMTEE prefix
+>   instead of QCOM_TEE, or names that are more consistent with other
+>   TEE-backend drivers such as qcomtee_context_data instead of
+>   qcom_tee_context.
+> - Drop the DTS patch and instantiate the device from the scm driver.
+> - Use a single structure for all driver's internal states.
+> - Drop srcu primitives and use the existing mutex for synchronization
+>   between the supplicant and QTEE.
+> - Directly use tee_context to track the lifetime of qcomtee_context_data.
+> - Add close_context() to be called when the user closes the tee_context.
+> - Link to v1: https://lore.kernel.org/r/20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com
+>
+> Changes in v1:
+> - It is a complete rewrite to utilize the TEE subsystem.
+> - Link to RFC: https://lore.kernel.org/all/20240702-qcom-tee-object-and-ioctls-v1-0-633c3ddf57ee@quicinc.com
+>
+> ---
+> Amirreza Zarrabi (8):
+>       tee: allow a driver to allocate a tee_device without a pool
+>       tee: add close_context to TEE driver operation
+>       tee: add TEE_IOCTL_PARAM_ATTR_TYPE_UBUF
+>       tee: add TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF
+>       firmware: qcom: scm: add support for object invocation
+>       tee: add Qualcomm TEE driver
+>       qcomtee: add primordial object
+>       Documentation: tee: Add Qualcomm TEE driver
+>
+>  Documentation/tee/index.rst            |   1 +
+>  Documentation/tee/qtee.rst             | 150 ++++++
+>  drivers/firmware/qcom/qcom_scm.c       | 128 ++++++
+>  drivers/firmware/qcom/qcom_scm.h       |   7 +
+>  drivers/tee/Kconfig                    |   1 +
+>  drivers/tee/Makefile                   |   1 +
+>  drivers/tee/qcomtee/Kconfig            |  10 +
+>  drivers/tee/qcomtee/Makefile           |  10 +
+>  drivers/tee/qcomtee/async.c            | 160 +++++++
+>  drivers/tee/qcomtee/call.c             | 741 ++++++++++++++++++++++++++++++
+>  drivers/tee/qcomtee/core.c             | 810 +++++++++++++++++++++++++++++++++
+>  drivers/tee/qcomtee/primordial_obj.c   |  65 +++
+>  drivers/tee/qcomtee/qcom_scm.c         |  36 ++
+>  drivers/tee/qcomtee/qcomtee_msg.h      | 234 ++++++++++
+>  drivers/tee/qcomtee/qcomtee_private.h  | 226 +++++++++
+>  drivers/tee/qcomtee/release.c          |  59 +++
+>  drivers/tee/qcomtee/shm.c              | 102 +++++
+>  drivers/tee/qcomtee/user_obj.c         | 712 +++++++++++++++++++++++++++++
+>  drivers/tee/tee_core.c                 | 121 ++++-
+>  drivers/tee/tee_private.h              |   6 -
+>  include/linux/firmware/qcom/qcom_scm.h |  27 ++
+>  include/linux/firmware/qcom/qcom_tee.h | 286 ++++++++++++
+>  include/linux/tee_core.h               |  15 +-
+>  include/linux/tee_drv.h                |  18 +
+>  include/uapi/linux/tee.h               |  54 ++-
+>  25 files changed, 3964 insertions(+), 16 deletions(-)
+> ---
+> base-commit: dab2734f8e9ecba609d66d1dd087a392a7774c04
+> change-id: 20241202-qcom-tee-using-tee-ss-without-mem-obj-362c66340527
+>
+> Best regards,
+> --
+> Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+>
 
