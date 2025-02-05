@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-46897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00DB8A28037
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 01:42:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BFA2A28058
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 01:51:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5E8A1888874
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 00:43:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3533D1618ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 00:51:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEA24227BA9;
-	Wed,  5 Feb 2025 00:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0230F5FDA7;
+	Wed,  5 Feb 2025 00:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="k5v+1PSS"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sc6hfSyj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7926A227B8C
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Feb 2025 00:42:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D16747F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Feb 2025 00:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738716168; cv=none; b=umgc/UgYC/O9vcIMwvOYYM05jzA3cYvUqMbRQuj71WjOmn+0V+n8DXB7wSBnkhO5vTwm/mFTP1DnbR3mqPp2FW0IwC1oQ0yLdYFVFsx6nAbxJgpkHupdUH8HU4CA1umZqQHNRZhGLxJXNy86oGswGfInJEjIzDauxVM0CJSJOxc=
+	t=1738716693; cv=none; b=KzsCkI1VvHIojhmS6NfHhXDrUxHtquGqiTWR50jsyJBaG8U/30v1xumBktj3xYCWLieM9v6B2UwqXrS6UxXpFFOgh/pW4iPee3WWQb0XHcWpSJgtEoKHO1XQrFDUEsY8CUCxHea76kQhQzmBK8qvOoJ60+GGOSsg0Z0crinmmgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738716168; c=relaxed/simple;
-	bh=+k4LG/xT//VjVjGnheLfyBH4vM/8in5IOLbtjE03/+4=;
+	s=arc-20240116; t=1738716693; c=relaxed/simple;
+	bh=XtQQWabVOHX7zmQS2CO7NrOR6aQ88uLVgXmR1WS1CFg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=re3ZFqh3nZAOv/rr1aARAV40tdXCgLd1KNLNrlSI/2rWWqJI4sapYpFlJ4tiN3sxsaObY3nwguSWYR+8YcY0/2tY73gURfoMNlZBhH6ZxG3M4tqHxcviJZTbmL7K7HlD9SRqDJ191wJajH2vvslu22b4j/ptZ9G3svh5AbsIpUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=k5v+1PSS; arc=none smtp.client-ip=209.85.167.47
+	 To:Cc:Content-Type; b=ht+nNFV5bKej6hEzp+ENIpkuYWtfRv7HXyeDU8pDXK8Z3QXMVsIsTMngkuG9wj2bVb3kZbcb5SwBiVQxXggR9uwYYfPK5wIiHmvIY/RlT5X4JKnchVZc/PJamjYUzNSw6Keo1zKoL0JccgtT8bBxIOytk9isJaDMxkyXoJABchU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sc6hfSyj; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-544043a21eeso6293e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 16:42:45 -0800 (PST)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5401af8544bso9688e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 16:51:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738716163; x=1739320963; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1738716690; x=1739321490; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+k4LG/xT//VjVjGnheLfyBH4vM/8in5IOLbtjE03/+4=;
-        b=k5v+1PSSEjxNbX/PQIPnzj5Z7eE4vrJem52rOiiWMw+h55g2fmFHvjU/keNkJftSB+
-         C7Hn4VjY6plgwdzm1PcY4lA019FGEsNlWmRQsYQoyJVlxR6PXKe7OFo4IPqZ+0TY4Bec
-         NzFcQD2IyzaGgFWZNogVtaGcdTrIJI5x/lYCUg7n5vx1OH5uEdYzYScp3T0oCNrmR7o5
-         OSvsm8Fv9tikMOpbtEbXU1lI29DytiML6GLucugxD0D79udvHsZSSkGIP7LNy7zurSC+
-         hdBtrKU9L2C2ZT5kUDSmLSr3w7U73+1Ai0K75CloynT7/p3/WqpjVZ/HMlrUvURGomBL
-         14ig==
+        bh=Hc8Lcys0yC2tF2+f+cOwe8ZYx1K/RKZrOMNcRMYC5p4=;
+        b=sc6hfSyjJeTXTaLNjjVpcC7rNLgDxpXcF6Keq2CbHm+aN1cKse4wOk6KrYrXMX4jby
+         R360LJP5hyd+zr8hkrixbr0wVWAM3QiUd9mDdez/bJSSEGdjeTaeAGUK60A3ekryRBdW
+         7pe8HgeqPnP7NKB+xfySSHDsO/+xR2JMe/UesyWaC+b8OLpvpsxrOFeRjFx3en7H6nIX
+         1Ls2CceOD1a/YKwUuhCjs8OmKSTWGxjNMZjjRr2Pkyr/PZULkeoif0hrJP9hnBi3IQ/a
+         daFOUClDHzK/lJs5l4neRKIDC7sKziQQUdBkRoaqLs4Zw8FxmoYe1hEvgwfSGocMKR3S
+         0lWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738716163; x=1739320963;
+        d=1e100.net; s=20230601; t=1738716690; x=1739321490;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+k4LG/xT//VjVjGnheLfyBH4vM/8in5IOLbtjE03/+4=;
-        b=Nx/FVoEP1+UGbJ48GUZPvW/9sdanjUC5qAmo6zrE+uT6sNDJjqXLookjk5vCurq42p
-         YHYV7jsnqOqafAzCbM+aPc5VYT0WV385ODGB6xvvLEWUDH1BjOjyfFAqV7fVnds7Cv3Q
-         HuLu9qSc2vADAjDu79peaxtIzoj+VmWcj6+S3QtuaEjZLs0jrKLdmxPZebBRE5qW2WIc
-         F9fbOZVdr6Dho3ptt5ktcLiRO9gn4VkSpQibAjYOJj8mCjxvH8aIJQZoqjUuMkSlG1RQ
-         z0+rLePo2DhSmiYkWgmICSWStRBEfLdS2c/PXPKQPgw8c5y1Dmkgkf2FUl5Z+b6RPTf4
-         NVbg==
-X-Forwarded-Encrypted: i=1; AJvYcCW2Q5lEkYlBtsFro2wJ1wQajBIfLdxNskIx+retrUhD5FccQKdhJ/c0369QSENvn+8ryeV0U3753sSvObEd@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9E3T2FJVnURye4HTXj0WGirKD+tEn70HbCWh/npCtnQMdyiz4
-	FqkZW2Bfh8nNhjmCY5IMrywgg1WBddsYhdT5eJHxiLmIoumw+6Mwphm0IXkT3vgMqUo+bjfY87e
-	FKo/Ty8bOt3p6jFrndOIj22JA7kC/RYCl1LU+zul9JR1oEzwyag4l+JQhZw==
-X-Gm-Gg: ASbGncvzFao6Tx4qua8hFRpfEvZ4O7keNvXlNU87DMjM3goGWcNxXeQuswrIjIBkZGA
-	iMR3RHyetb+5GQdGlEyWL6QWoShYAvz7a4uK10zUSdnCR/yNYsgmkJ+Z8Uq/O4WYNWvZ1FhGkwG
-	dLRP1k60sPVamzLU6739MSrdRk
-X-Google-Smtp-Source: AGHT+IGnTx6UzLjGyk5EFTTHRVuNUcIuJg7HuQX71hjcnsPe9x8OGm1xiRttmYhFZ6m7rhIXBpjHdBpULzkf6vArrrI=
-X-Received: by 2002:a05:6512:3f26:b0:542:92ee:25ec with SMTP id
- 2adb3069b0e04-54400bd3692mr317361e87.1.1738716163227; Tue, 04 Feb 2025
- 16:42:43 -0800 (PST)
+        bh=Hc8Lcys0yC2tF2+f+cOwe8ZYx1K/RKZrOMNcRMYC5p4=;
+        b=VBNFfqDvbbFgY3fHaUTMZKbPXM3ZmX4wJsEfSAKSMBlc5plFlCWBPHA5h1aO3Nm0re
+         bty2gML4cHe6d8yHwqzrICFWf3LSyDtBdp5Ix/Mg89rrpA1TDcyV0yVJj7bkSgIVxqKQ
+         /BIt0frCRwLHQ0Qc7oVuXRmNPQPnWlHu/NL9nfOdkeRnSMPFU/IGSi61evyFIy15aZP0
+         t25M1ceKwb+3iQp4rsuoCCbBtndvHxQf+56QHRrRoBA/lXFf/Sc70cM7DvP92dSugstQ
+         ycB2GeHe+16bZGG8nFOXaWWvESd/pWhgTSL6yDt5k0dPXueMPSnK5XyaUJOyz2c6vEJi
+         ZscQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXfcZdnQAzycBJHXy0bdp/fGKPOGjrR7FSsr80CThw/MDxGe7/P/QUVdciAcCVMz9xuuoMkIrKL2KvxoNcX@vger.kernel.org
+X-Gm-Message-State: AOJu0YygM4vVpHKenwnCO+j6IHjau8wn8AanSHRydyWyqdrbGuvzWcO5
+	HLwJOsVA3gWodd14p0LZ+dAmBO/DySoI9e0udgo5uB/Yva0uko7s8dRJucvHZ2EhUWMdYBwn9Iq
+	mPKNfyAxVLoNjgr9CN3nskojqsx/VPqNGXI36
+X-Gm-Gg: ASbGnctqt60saheB8uGc0OziyAmG5xIpop0P67W2vk7t4F+DLE/sAHVJ3rj9Tui0W/t
+	xZfdkStooHJGLcwmol6PLWYM1tf25JDv4E56yafzzz/Mirjq+ShjwxigffASWHAyPnM6d3bHeVf
+	DIgsfC8vc6f1GHb3QjggOGWbUk
+X-Google-Smtp-Source: AGHT+IGFQO7s55x3biW/18h8H5HRUzXB3NHyKRsEz3BGUxgrIoIQVnI5qZd01OD1ZeF2iLwQJ+MGR/VRwInf18RB54k=
+X-Received: by 2002:a05:6512:220d:b0:543:e5ac:8ba9 with SMTP id
+ 2adb3069b0e04-54400262b09mr447679e87.6.1738716689955; Tue, 04 Feb 2025
+ 16:51:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +77,9 @@ MIME-Version: 1.0
 References: <20250117163001.2326672-1-tabba@google.com> <20250117163001.2326672-7-tabba@google.com>
 In-Reply-To: <20250117163001.2326672-7-tabba@google.com>
 From: Vishal Annapurve <vannapurve@google.com>
-Date: Tue, 4 Feb 2025 16:42:31 -0800
-X-Gm-Features: AWEUYZkca8r5uZlJZJrsv5qE9mdpIrtFmbgbr53sT6Fli1EBF4Nt1S-XWhf5aYQ
-Message-ID: <CAGtprH90zc3EWSuyqy4hE7hsmSZSYfB3JBC8KBvc1PdMcw5a4w@mail.gmail.com>
+Date: Tue, 4 Feb 2025 16:51:18 -0800
+X-Gm-Features: AWEUYZkuSE-sHTWcu7LlcMXcBbzwY2ZrjgMl2ba1jEXbdckTrns-xOC5624jTFM
+Message-ID: <CAGtprH-R7g5NNLZhO0hTs_RWML_pLafT8Wy=f13qTrHO5LscGw@mail.gmail.com>
 Subject: Re: [RFC PATCH v5 06/15] KVM: guest_memfd: Handle final folio_put()
  of guestmem pages
 To: Fuad Tabba <tabba@google.com>
@@ -109,29 +109,34 @@ Content-Transfer-Encoding: quoted-printable
 On Fri, Jan 17, 2025 at 8:30=E2=80=AFAM Fuad Tabba <tabba@google.com> wrote=
 :
 >
-> Before transitioning a guest_memfd folio to unshared, thereby
-> disallowing access by the host and allowing the hypervisor to
-> transition its view of the guest page as private, we need to be
-> sure that the host doesn't have any references to the folio.
+<snip>
 >
-> This patch introduces a new type for guest_memfd folios, and uses
-> that to register a callback that informs the guest_memfd
-> subsystem when the last reference is dropped, therefore knowing
-> that the host doesn't have any remaining references.
+>  static const char *page_type_name(unsigned int page_type)
+> diff --git a/mm/swap.c b/mm/swap.c
+> index 6f01b56bce13..15220eaabc86 100644
+> --- a/mm/swap.c
+> +++ b/mm/swap.c
+> @@ -37,6 +37,7 @@
+>  #include <linux/page_idle.h>
+>  #include <linux/local_lock.h>
+>  #include <linux/buffer_head.h>
+> +#include <linux/kvm_host.h>
 >
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
-> The function kvm_slot_gmem_register_callback() isn't used in this
-> series. It will be used later in code that performs unsharing of
-> memory. I have tested it with pKVM, based on downstream code [*].
-> It's included in this RFC since it demonstrates the plan to
-> handle unsharing of private folios.
+>  #include "internal.h"
 >
-> [*] https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/guestme=
-m-6.13-v5-pkvm
+> @@ -103,6 +104,9 @@ static void free_typed_folio(struct folio *folio)
+>         case PGTY_offline:
+>                 /* Nothing to do, it's offline. */
+>                 return;
+> +       case PGTY_guestmem:
+> +               kvm_gmem_handle_folio_put(folio);
+> +               return;
 
-Should the invocation of kvm_slot_gmem_register_callback() happen in
-the same critical block as setting the guest memfd range mappability
-to NONE, otherwise conversion/truncation could race with registration
-of callback?
+Unless it's discussed before, kvm_gmem_handle_folio_put() needs to be
+implemented outside KVM code which could be unloaded at runtime.
+Eliott's plan [1] to implement a guest_memfd library can handle this
+scenario in future.
+
+[1] https://patches.linaro.org/project/linux-arm-msm/patch/20240829-guest-m=
+emfd-lib-v2-1-b9afc1ff3656@quicinc.com/
 
