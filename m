@@ -1,138 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-46925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84509A28592
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 09:30:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E60BDA2860C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 09:59:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6FD6A18857C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 08:30:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8090A169095
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 08:59:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 302D721D5AB;
-	Wed,  5 Feb 2025 08:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D53BF21A424;
+	Wed,  5 Feb 2025 08:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uzMIDa9N"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="qsTZvYSf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F024F20E004;
-	Wed,  5 Feb 2025 08:30:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B91722A4C9
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Feb 2025 08:59:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738744240; cv=none; b=DTZmnlnpTKN3ozu+S1Ic0V/5tjqnBsM8StDy5lZmCOT/ftSP9w5BbW0fk5FDQa1Gl9d+pEvDMrMjzoxXTR/CQYNvRImhNYAlXwRllVlX74tWxGemWD4Y8p0EqZ9BCJTyCBBiXzeStTrZ0zEpCQKy0bxeJJ7DFgBZqi9tcHD6+PY=
+	t=1738745989; cv=none; b=bbXxRv8wvptO8qN0boP2ReKVlqmU67xF3hdBBUAJ34Rebf9J+9EkXjVXRI+9HHM+imvybcXNwiPbCKoB0g8FyzVoYJVEeAFXvFgBAoN7mIH4TeZvbV2g1Ov9K2KU5exgTrBT7Vq8iJQl7f5eAYUEPD56F/9x2zlsVlLOHgVfODA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738744240; c=relaxed/simple;
-	bh=BAeQkOipvrJpo8BJ7v2PB1Gs5G+nzczTlfJtspomTf0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OdTagi7r8BYXDX7fdomMCh97ZLjGWM9b23NosTTOBNcVaiaEXb1BEczlcw+MIKlkIpDG+cdO0Xs2OnCO5wHgTYjG3y7wxFvsoBD5ws3Hd7rndIXZSjgzVZOfohHFxwht+CR+J+5IWBHuTV2bvAummQzvFZXB9bMN9WGUN1roghY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uzMIDa9N; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511CDC4CED1;
-	Wed,  5 Feb 2025 08:30:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738744239;
-	bh=BAeQkOipvrJpo8BJ7v2PB1Gs5G+nzczTlfJtspomTf0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uzMIDa9NNlHBWX10J9SI0j4NX434uZJ6mAkx6FLRfprYurjv5wfXdIBqaWeoG1Ud4
-	 hhz0jhCGk5vjEMI9NqumYpN430t9u/zXg11PPhlBzU3pCTxAn9qREnonlpzrHMsb2l
-	 N/iRTVQ5FCLv5Z6l7AsJMrd5xtXzGmPetrOXGLs/OnXeCOA7BIlvaOJUtGt0KVdx4v
-	 C7Qpd6DTUIoNfpoE2upRYPx7iXiQdPPL7eU05bulSMcblFjQqpxI+2bAQ4pbtJIEt+
-	 z1m1PX9zbyLxm8c7iaZFfYrfRtMcwdvOcBxCVq2rSP+cV6iQRAQO09Td33d0kgiqJ0
-	 qjNDMZ87HRt8w==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tfanz-000000008CI-1jTm;
-	Wed, 05 Feb 2025 09:30:44 +0100
-Date: Wed, 5 Feb 2025 09:30:43 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>, quic_vgarodia@quicinc.com,
-	mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	p.zabel@pengutronix.de, hverkuil@xs4all.nl,
-	sebastian.fricke@collabora.com, bryan.odonoghue@linaro.org,
-	neil.armstrong@linaro.org, nicolas@ndufresne.ca,
-	u.kleine-koenig@baylibre.com, stefan.schmidt@linaro.org,
-	lujianhua000@gmail.com, linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, krzysztof.kozlowski@linaro.org
-Subject: Re: [RFC PATCH v10 1/2] media: iris: introduce helper module to
- select video driver
-Message-ID: <Z6MhsxskgbFX3dFd@hovoldconsulting.com>
-References: <20250128080429.3911091-2-quic_dikshita@quicinc.com>
- <5070e1f1-914b-4654-88ef-3566e3eee9ca@kernel.org>
- <f1344e49-61b6-4115-ae88-55b4a3cfed28@quicinc.com>
- <Z6B822-6UTxQfX46@hovoldconsulting.com>
- <tqbm672pi223ipcw7btiemlb745weeeiy4gnazzeghozhq2emj@wppbkms6hir5>
- <Z6HehbKL88LW1lxC@hovoldconsulting.com>
- <hpcf7olw3ody7ns4ibdeoc5qrkmh3fgeqbhjd4eqwfuanevzoa@plenabtrjqi5>
- <Z6I5nx2Wt3bbBmSI@hovoldconsulting.com>
- <ilqfs6miq55ahyxjnhniv4k654vstfugmpswo5wld2ncgxxcx3@vsbr4bdl7y64>
- <69dc3c64-e0b7-a453-a73b-6a3c9dbded7d@quicinc.com>
+	s=arc-20240116; t=1738745989; c=relaxed/simple;
+	bh=4rdH6GrIXB8lz8HjYqpZ22C0ajtDCyflT20HUHPnBBw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=eAjsmQkhAvHlkck0JW4DdCxan8zmnEUTLPEGlVENMbmLIBgLP1dYshStz7vJvFpT0EwusVM+uedy7cKSuhjxKO5p/BKv+PtAwo3pukCdRppMZvI2BIABqmCGixvwHUmtvV792G5qB1XkrCe8jf4zfW4I0OhScYyLhMuty7E2wak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=qsTZvYSf; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4363ae65100so75786965e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Feb 2025 00:59:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1738745986; x=1739350786; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5wmjz18zqFyKr/G/A4DW/iVZd6rNAAhBzVdAwovC+Hs=;
+        b=qsTZvYSfA2iAaSvNAmjNIfOyMh4C4XDBJbJ8lEHGaDffN7K8UItLD8F2opmcBQGBbU
+         4OvshB2mP8fSP5DC/dJouuENaIueeg1zN1v/q/ek8n1EhT9kaJnL+pq0ESMyhS5QXApi
+         u5nUTgUPgVrel3MlJQ8n1kSiwHvoJyVjLe4T6QDnA2cisHp0ty/SoTB6AN7jczb3zCVU
+         GczYmndR+a0IXfCqlvWXB003PQn3wApz5cJ66kr0/dxfrsFZKh1x6TYblP0bggXNbHuy
+         7te44fmlbzVnwfi0zPYVp7vTM2QmmM8Veoy47SGXZr0kCplpWUjfZefVgHl6JRQQ6Eto
+         jEaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738745986; x=1739350786;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5wmjz18zqFyKr/G/A4DW/iVZd6rNAAhBzVdAwovC+Hs=;
+        b=s4qOGc9spGXJTyRjxtvfr8s5CQi2Xr1zOIGsO0AKu8cWD9BKdWjPseS1WWuVKn0W5P
+         y8ECOBNcCzZ1VUK8L02pSQWjwF/r+uolj7Q4s+QdbgtXtd4rT7RLdy+6qDn3I9404adF
+         J8Jzjt0owj+FqKfnUlHqAcCu47E34mJSlP9QnJHuPXCVsBPUaT6YiDXZZ4dC0XoCvbS1
+         bRPgGmPTliF00oNLjOJAC8q71YNWwu1nDBoeDG0uzXnm/hd+IsUD6jBe0qlnZ9RqaEwH
+         SVGNPbPPrY7N3VQezQxT7Xs1EKpjCWlfzxaOg4/px2i9o7KGlzNRrcx8gX0WbFFISOQC
+         +NhA==
+X-Forwarded-Encrypted: i=1; AJvYcCXPvygy4Djv690a47pg3wVeBXNPIm+6taZb3gfVZSKTXiC70QzjgBHL1U98uxbgaQsDmrN598fOgH46TE0a@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5oalbVcG3QwuizoafqKwAG67Hx85xQVgUbGQQ71YApu3rrtvJ
+	C4AlKVkbxEf/74g1EAaR2gCr7qNn6R/2lTyUroCV6HNGhAdwrGQGAwBu/fqwu1Q=
+X-Gm-Gg: ASbGncsaG1NmnZgOfJzuADaQ4VH0s/R8U43kAZRe4oM4BrdIGYQtcargrAWHggGEmPT
+	5b6JGxG/Jg6sZJtCmtxQE/wY5WPHAS1bCtHtFRdC8o6USS5RnPazZ9F7X35BcRysPI3tY/dvCHR
+	YGVw+GImuHeRkDGUxl3PpIcoCh5CNZajeWRfFd/lrLj/GGQMsIK0A4V3SnATge6xlUID/JF+KCK
+	YViuQ/Neod1AmPE0mo/RqNrD7QfZE/V/quyBvHaF4hJSJk/R7eh4aRWujnoFqZ0Y/hDbnXLDxlf
+	KKNahCJbDp9/kjw=
+X-Google-Smtp-Source: AGHT+IHvujR6ocyaWXRib9FJP8dFsztpMFdYT+nb0yAfmtcuRsRIBa6C6+A4Dxp5o66bjEcIRw+i0g==
+X-Received: by 2002:a05:6000:2cd:b0:38c:2745:2df3 with SMTP id ffacd0b85a97d-38db49009a6mr1396467f8f.37.1738745985676;
+        Wed, 05 Feb 2025 00:59:45 -0800 (PST)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:a766:1fb1:99b5:1d5f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43907f1b570sm33940815e9.1.2025.02.05.00.59.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Feb 2025 00:59:45 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: brgl@bgdev.pl,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	andersson@kernel.org,
+	konradybcio@kernel.org,
+	Danila Tikhonov <danila@jiaxyga.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-i2c@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux@mainlining.org,
+	~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: (subset) [PATCH 0/4] sm7325-nothing-spacewar: Preparing for the cameras
+Date: Wed,  5 Feb 2025 09:59:43 +0100
+Message-ID: <173874597816.7784.10623106141376200723.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250203111429.22062-1-danila@jiaxyga.com>
+References: <20250203111429.22062-1-danila@jiaxyga.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <69dc3c64-e0b7-a453-a73b-6a3c9dbded7d@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, Feb 05, 2025 at 11:47:12AM +0530, Dikshita Agarwal wrote:
-> On 2/5/2025 4:39 AM, Dmitry Baryshkov wrote:
-> > On Tue, Feb 04, 2025 at 05:00:31PM +0100, Johan Hovold wrote:
-> >> On Tue, Feb 04, 2025 at 04:55:58PM +0200, Dmitry Baryshkov wrote:
-> >>> On Tue, Feb 04, 2025 at 10:31:49AM +0100, Johan Hovold wrote:
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-> >>>> Unbinding and rebinding drivers is not part of any normal work flow
-> >>>> expect possibly during development. And a developer can easily compare
-> >>>> Venus and Iris for 8250 without a module parameter too.
-> >>>
-> >>> Yes, we are talking about development. And yes, modparam helps. If you'd
-> >>> like to do two separate kernel builds, that's fine.
-> >>
-> >> Please just motivate why you think this is needed as part of the
-> >> submission. And make sure that the implementation is sane (e.g. not some
-> >> random probe defer indefinitely thing).
-> >>
-> >> Like I said, having two drivers for the same hardware is normally not
-> >> something that is acceptable, and this would need to be a transitional
-> >> thing as we both agree. One way to guarantee that is to not expose it to
-> >> regular users until it is ready (e.g. a Kconfig hidden behind
-> >> CONFIG_EXPERT or similar). Otherwise, I fear you'll end up supporting
-> >> both forever (with at least one of them bitrotting behind that module
-> >> parameter over time).
-> > 
-> > I think I'm fine with hiding IRIS behind CONFIG_EXPERT, might be a good
-> > idea.
 
-I was only thinking about the (experimental) support for hardware
-already supported by venus (i.e. initially 8250) and possibly the
-module parameter if you think that is essential.
-
-I can imagine the feature set becoming non-overlapping overtime so that
-you end up with some users depending on venus and some depending on iris
-for the same hardware if you expose iris support prematurely.
-
-> Are you suggesting to add a dependency on CONFIG_EXPERT for IRIS driver?
-> Something like:
-> config VIDEO_QCOM_IRIS
->         tristate "Qualcomm iris V4L2 decoder driver"
->         depends on EXPERT
+On Mon, 03 Feb 2025 14:14:25 +0300, Danila Tikhonov wrote:
+> Nothing Phone (1) - sm7325-nothing-spacewar has three camera sensors:
+> - Wide sony,imx766
+> - Ultra wide samsung,s5kjn1
+> - Front sony,imx471
+> We tested the UW and Front cameras by hacking the IMX412 in our fork and
+> they work as expected. Wide is a C-PHY sensor, so unfortunately we haven't
+> tested it fully yet.
 > 
-> This will impact the enablement of iris driver on SM8550 as well.
+> [...]
 
-Right, it would, and that is not necessarily right.
+Applied, thanks!
 
-> And will this also be needed to be captured in cover letter?
+[2/4] dt-bindings: eeprom: at24: Add compatible for Puya P24C64F
+      commit: 78d9ee370ed33cd8b662981fe1f47cff7b4f0e43
+[3/4] dt-bindings: eeprom: at24: Add compatible for Giantec GT24P128E
+      commit: 03480898cefe9cb5ba921dba9304703f7574b687
 
-Yes, whatever solution you end up with need to be described and
-motivated in the cover letter (and commit messages) so that the
-reasoning can be evaluated.
-
-Johan
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
