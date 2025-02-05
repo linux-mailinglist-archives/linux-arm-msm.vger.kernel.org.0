@@ -1,93 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-46909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 381DCA28227
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 03:48:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D4C0A2822D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 03:51:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D36A3A234D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 02:48:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2798218857A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 02:51:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B81E72AF0E;
-	Wed,  5 Feb 2025 02:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94553212D68;
+	Wed,  5 Feb 2025 02:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aDIA6Q1h"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nC3iPDc9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C5425A65E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Feb 2025 02:48:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFA042AAF
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Feb 2025 02:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738723710; cv=none; b=a/IPpaJh4QgyMIiR9SssAt8c7cXsNEMzmnV9NrZrq5fpXyWW+32Sn91EwASaKiY/4kwB5GnzQsHLHibRCiGv86SD1F3Xi9bkanZYqj6ay+6crFoWqwPxkzuVnBfPZ+ghZrXKcsQNAsGHz7/D6hV+BozeuyuN67dLe5SOrrMnTiM=
+	t=1738723881; cv=none; b=agdfICiVnEV3VrV0jyZBJY1AyVH4snG8jbkVZHRtkd9CfHWyEBr92sR1MuwY6IjFIAmtW4peAqoxmFtDTYIZATgTUjxqneApwKp40Rf7l7Y3HNlyYuKor4YlOEvk4y/UfMHfzkx8yYN/Gi/J8dToBbEW16sPaFhTxemCm3eurYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738723710; c=relaxed/simple;
-	bh=aYgKDjNlX9q6f8ZmsWkeB4BouMEqZMt0P/CFNY0+KmY=;
+	s=arc-20240116; t=1738723881; c=relaxed/simple;
+	bh=Dq9vxqrnT5RdZRZ4AVTNMHghyNZacIE6uz6dgCTXBfA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D3q/CVussUAVl2A7i/M3eDAv/NifNBTDZ1C8qwLkx5g2NO+VL9rehzq/UZ2Z5RuEeB6DD9ucRopjDxWdwW/NZPTbykhuecbBwiVFBh3oFN2EAWrI7PnCFP6pyIyvOFu9a+jCZLHhPtfTWlKKkOmbKDzBMzAejtLmL2v/V3FW05o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aDIA6Q1h; arc=none smtp.client-ip=209.85.208.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=i4uooUlEj7mR/bc5fGvnTCmYKcbUAMWYcknwq3th0rxI1V6xfeQqY1WWUn+/dhWl6vZcw8GBY1CVK/RSc0boZfYp217t5dmLj48Xp88dWqPzy64iOwPmsJxK0x9n52SJ9mnLhDPpMLaXjkiB3WA+MmcccDNrynaCKmLaxaCgaPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nC3iPDc9; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-304e4562516so4004141fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 18:48:28 -0800 (PST)
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-543d8badc30so6621873e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2025 18:51:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738723706; x=1739328506; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738723876; x=1739328676; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KORfQaUKPciCl0b2CXyUX6rgFXA9enZCrhKR40wbesU=;
-        b=aDIA6Q1hpo0GghlzEWi5U/ipa4T81Aj8INlz76Ku2/lQv2FcNCH6qC9islwYH91+6N
-         5BMvutFUgwrHmdIr3vIAhkzZudnH8m7ywHCn7fwluHaDOAFBYlUl3pf8LQxsKCYP6SKr
-         nNaa9WXfkysRX+3lGQPzqATi85zAMzl7LGZshOvoxeumsiBaFQrduchROwe45DQfyQpE
-         6/Jk2GdX0YNZ+i0g5XIPhF9q9BMpH3z2ARRhvBAgY6I1M6oncghXzuLVkDHM7uL6IqN5
-         s+mqj3Hwnu5L5buk0hIWQuWoyQ48+j+P4VZ2xxF+WQAU3GvwNVO6c1ViMuAheWBV9/xk
-         5rMQ==
+        bh=Sal9bpIT3EIK1E8XL8kL1lQntuyvQMLbh8ZI+Q+dMFE=;
+        b=nC3iPDc9JqiIlK8vt5ZtqlPV6Sw9ryYp4yo2nAxMIBVXusdfWv7gSJ+gvFDd2Ekz8X
+         veV9NFEaRrqJXkIl2v8hxNtjXZZwTsCpuXFrmPINyxDx8YeGmXdBMIdCdzf5HFWkg+23
+         48yjHmwqhwRTlq7qJC6+jCtSnk1iloe+oiyo4mE+511pb1HjiUU/tojq5aYAHq7yFkSr
+         IsnK8nRoukJNK7b6fPiEnbWbdlhR4zaEBJu9SrAnZpRCpdCevpY8VDzQ6Ov+Aqu296Rj
+         /cU5nEgGeSx4hGPNgAreWUFx0W+kuMwHFCVa6CC9HpLijWi64Ox2EyoqVEGWt3M7Ebwr
+         vKVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738723706; x=1739328506;
+        d=1e100.net; s=20230601; t=1738723876; x=1739328676;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KORfQaUKPciCl0b2CXyUX6rgFXA9enZCrhKR40wbesU=;
-        b=s+k5j7YeIj2+vKGrHas1r5zfv1pkTo9E2/K3Khp4vFwBCG0KHHER30+3Wa2WP+F7PX
-         2l9iF/R2gbU3XUdg1ZZmeJ7vWlWeWrtoAeD6dsDuIH+3+4pgQ5u54T7fGspXY3YjFH1T
-         7jDr7Aj1kpcOR7AxdJR38ZHIFdKVdR9lWDCG0szcoa4jpuI6YEOMTyzkRUzmsKY6/LqP
-         ZkY3gg7EeDtKcXtql58vSQdWY+TfHfRYC5L4eItLtK0TdFphPiYPeZXNW9xbhCrMkY3W
-         +vBca9U08iAuOLPYvSsQaO4JylRh9QiKmpUzWUhdLMrluqb1NVMy3hRDVkXA+ZLCig8S
-         3Zig==
-X-Forwarded-Encrypted: i=1; AJvYcCVExhw2n1V1mma0KGdbbLrF7G63uuwx50bTVRvIvz2JJB6FX+UJuaRAvdUhmplp5fDGSXlSt890hyDbPP6b@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywr8T5vYWydqu3AY+1wz1TgSS6QlP5r93aj/ecEoMWsPcSn+f+m
-	AtPSH97OjRuQXL5H2muKNjURc4cFcvx0+DdzkV00Gg48NGJ1aDk4yOfoRx+06gI=
-X-Gm-Gg: ASbGncs5KBaNICks7u2sqAiroA21Df65v/09qn5xYJGtyt5XQvvSBWZiFEzxmva6GV9
-	5iU9wagArey+XEXvEI2ef2LO+KWf1tRV9sDWflJNZA0x+xT76rG7zVGDPckTtG537aOyvWlnjtF
-	zRDudygV98skHdnPObss2DEjG6u1/i8Qap/yWYSM+gvjXfHhNY7xMI18y4jJmJdnPs7DzMkIYNf
-	uAU9NXfdccqV/j3lK2kyqjfKX1lJnBJ0x16OMUDI0v7nC+WrA1lgkesa7TIhmHmG3txlw32CC9F
-	yT8Qk6pdWENwTc1tI0Vg0dwlNIz1ro+/XUGHHbbjKSkZprVp9bF2lIUPZpnO0iHiPLoTN2Q=
-X-Google-Smtp-Source: AGHT+IH3/CvFzgTmuPgQIn8DGNcSY6VUA2bSSz/5MVHPj8kIo9Cj7Fku3ScseiRzS700dvIRYZlcxg==
-X-Received: by 2002:a2e:8098:0:b0:300:31dc:8a4a with SMTP id 38308e7fff4ca-307c695989fmr18686511fa.18.1738723706339;
-        Tue, 04 Feb 2025 18:48:26 -0800 (PST)
+        bh=Sal9bpIT3EIK1E8XL8kL1lQntuyvQMLbh8ZI+Q+dMFE=;
+        b=Qjy6WaPYD7BfXtfdGTlcuHy51O+Z/q0oPpnKeGEc79U9F2n9OoptOiACusao7gEz73
+         n9nZyQMufWHrgm35h9OIKJUUGybea8u3JBowCCbTDxHMILQws/l1M0ZSYyCbodTFqdk8
+         S12luGBLznGRyxYUos0kI7FJzxykPT+R+EGM2L/sqTLDuoHwINTBvVVqtkxWb39P7o2I
+         D3HjYyLd2vclT5MDQZkzgjI6MBGWJnXrGHyyrcBEfgfg8eR0jfMKcyodCc9PKks+fKnA
+         3GUQ8PbrlvzFtzK4PswEzRVQQv9wUeiX0qCAlvPKq4B6JQ25KxrfHTHhbjc9km/EQryE
+         5EvA==
+X-Forwarded-Encrypted: i=1; AJvYcCV4lQZHODkdoueWbA3zU6NSX6JgK6SM1JFRUsISIRshpVwD42EWe8PHnt2TRACxYXC5SQaJi2CwNKN3gV/u@vger.kernel.org
+X-Gm-Message-State: AOJu0YwICREedcsHEqSwrYSBV/mtO3+5iiPK+w8DAbNmpz0rV+i7BZZO
+	5rMJ2qHA5IlpOORyucRpabI3nvf76xdhDtq3UwZIUJFec5z7A3VjMJuj1CFPUJk=
+X-Gm-Gg: ASbGncshVO6xdaR2ePsF5G7uXVtTHY94FJyHUVAcAK3SV7NYI3syftMg6OD5pkRP2rl
+	P6tB2wNAm9B3jrYHx8lI2zx5Sikn3mLsiUzIjr4drtFavCBUw1abruW2MBr1Hi8WiWT3o0WdRx3
+	g7krzflqlRn4g3tG67nHFRzHiqrLn1mPUs+TLqGR3x+BX3DMKoghGhu95x/3/RqHGhD9FcFc0Xw
+	tx5fhBNfwdNUgtzYzdA28U0lReJNgqCLx2nkHxsVRt0Bu5DW+7U+1XREFpivg7esDkEaFcl51Zs
+	Bce8SkCMgqXXuTK2EXPWwk5vj90G4C7THYZjhwMNpg0nPPIPJxmKpWGOhUIxyWUZxCxNinY=
+X-Google-Smtp-Source: AGHT+IEpdwrVVWgvPZBy3RjGtkhwHF0kUa5g2ZWpU4E+/3fmvwNCNdl0KYdTFTnKWGKykH6xnSeS9A==
+X-Received: by 2002:a05:6512:234c:b0:540:1b7e:7b3d with SMTP id 2adb3069b0e04-54405a682f8mr239139e87.36.1738723876503;
+        Tue, 04 Feb 2025 18:51:16 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-307a309faddsm19302181fa.61.2025.02.04.18.48.24
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543ebeb782bsm1779544e87.182.2025.02.04.18.51.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Feb 2025 18:48:25 -0800 (PST)
-Date: Wed, 5 Feb 2025 04:48:23 +0200
+        Tue, 04 Feb 2025 18:51:15 -0800 (PST)
+Date: Wed, 5 Feb 2025 04:51:12 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Simona Vetter <simona@ffwll.ch>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Subject: Re: [PATCH v5 07/14] drm/msm/dpu: Reserve resources for CWB
-Message-ID: <f4jlvjkwrw37v4dkelvispo2nnl7hkkxczjb3rk47sjpss6bnc@nsdk7qo3c7lg>
-References: <20250128-concurrent-wb-v5-0-6464ca5360df@quicinc.com>
- <20250128-concurrent-wb-v5-7-6464ca5360df@quicinc.com>
- <2cc6pp6okhanqv5ndzm32aomgbhidgmvukc4lptrapgpl4utp4@gornklf5hhzp>
- <a69b7265-7a11-4dcb-b642-8a589770af6e@quicinc.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] drm/msm/dsi/phy: Protect PHY_CMN_CLK_CFG1 against
+ clock driver
+Message-ID: <t4zn2gv3mbn3nqlh5h3l3ej5zxs4wa74ncgymonci7v45w47ai@qmmtxbelichw>
+References: <20250203-drm-msm-phy-pll-cfg-reg-v2-0-862b136c5d22@linaro.org>
+ <20250203-drm-msm-phy-pll-cfg-reg-v2-2-862b136c5d22@linaro.org>
+ <u4qho7u2nu2x6qxkfxpeakotmbdgoha3e5csmsamaanlxziiif@22kzxupzibj7>
+ <12275e11-eadc-48be-b8c3-9463cdf92698@linaro.org>
+ <vfqfbpxc3zrerrb2hyis6h4kgk7aqfljwb7sxlduwlkqprmodg@rjjfsgwr5c6j>
+ <2e96ae62-3114-4c7b-bea7-27f6e2009634@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,200 +96,111 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a69b7265-7a11-4dcb-b642-8a589770af6e@quicinc.com>
+In-Reply-To: <2e96ae62-3114-4c7b-bea7-27f6e2009634@linaro.org>
 
-On Tue, Feb 04, 2025 at 01:29:23PM -0800, Jessica Zhang wrote:
-> 
-> 
-> On 1/29/2025 2:11 PM, Dmitry Baryshkov wrote:
-> > On Tue, Jan 28, 2025 at 07:20:39PM -0800, Jessica Zhang wrote:
-> > > Add support for RM to reserve dedicated CWB PINGPONGs and CWB muxes
-> > > 
-> > > For concurrent writeback, even-indexed CWB muxes must be assigned to
-> > > even-indexed LMs and odd-indexed CWB muxes for odd-indexed LMs. The same
-> > > even/odd rule applies for dedicated CWB PINGPONGs.
-> > > 
-> > > Track the CWB muxes in the global state and add a CWB-specific helper to
-> > > reserve the correct CWB muxes and dedicated PINGPONGs following the
-> > > even/odd rule.
-> > > 
-> > > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> > > 
-> > > ---
-> > > Changes in v5:
-> > > - Allocate CWB muxes first then allocate PINGPONG block based on CWB mux
-> > >    index
-> > > - Corrected comment doc on odd/even rule
-> > > ---
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 34 ++++++++++--
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  2 +
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  1 +
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 82 +++++++++++++++++++++++++++++
-> > >   4 files changed, 115 insertions(+), 4 deletions(-)
-> > > 
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > index 99db194f5d095e83ac72f2830814e649a25918ef..17bd9762f56a392e8e9e8d7c897dcb6e06bccbb3 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > @@ -2,7 +2,7 @@
-> > >   /*
-> > >    * Copyright (C) 2013 Red Hat
-> > >    * Copyright (c) 2014-2018, 2020-2021 The Linux Foundation. All rights reserved.
-> > > - * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> > > + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> > >    *
-> > >    * Author: Rob Clark <robdclark@gmail.com>
-> > >    */
-> > > @@ -28,6 +28,7 @@
-> > >   #include "dpu_hw_dsc.h"
-> > >   #include "dpu_hw_merge3d.h"
-> > >   #include "dpu_hw_cdm.h"
-> > > +#include "dpu_hw_cwb.h"
-> > >   #include "dpu_formats.h"
-> > >   #include "dpu_encoder_phys.h"
-> > >   #include "dpu_crtc.h"
-> > > @@ -133,6 +134,9 @@ enum dpu_enc_rc_states {
-> > >    * @cur_slave:		As above but for the slave encoder.
-> > >    * @hw_pp:		Handle to the pingpong blocks used for the display. No.
-> > >    *			pingpong blocks can be different than num_phys_encs.
-> > > + * @hw_cwb:		Handle to the CWB muxes used for concurrent writeback
-> > > + *			display. Number of CWB muxes can be different than
-> > > + *			num_phys_encs.
-> > >    * @hw_dsc:		Handle to the DSC blocks used for the display.
-> > >    * @dsc_mask:		Bitmask of used DSC blocks.
-> > >    * @intfs_swapped:	Whether or not the phys_enc interfaces have been swapped
-> > > @@ -177,6 +181,7 @@ struct dpu_encoder_virt {
-> > >   	struct dpu_encoder_phys *cur_master;
-> > >   	struct dpu_encoder_phys *cur_slave;
-> > >   	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
-> > > +	struct dpu_hw_cwb *hw_cwb[MAX_CHANNELS_PER_ENC];
-> > >   	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
-> > >   	unsigned int dsc_mask;
-> > > @@ -1137,7 +1142,10 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
-> > >   	struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
-> > >   	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
-> > >   	struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
-> > > +	struct dpu_hw_blk *hw_cwb[MAX_CHANNELS_PER_ENC];
-> > >   	int num_ctl, num_pp, num_dsc;
-> > > +	int num_cwb = 0;
-> > > +	bool is_cwb_encoder;
-> > >   	unsigned int dsc_mask = 0;
-> > >   	int i;
-> > > @@ -1151,6 +1159,8 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
-> > >   	priv = drm_enc->dev->dev_private;
-> > >   	dpu_kms = to_dpu_kms(priv->kms);
-> > > +	is_cwb_encoder = drm_crtc_in_clone_mode(crtc_state) &&
-> > > +			dpu_enc->disp_info.intf_type == INTF_WB;
-> > >   	global_state = dpu_kms_get_existing_global_state(dpu_kms);
-> > >   	if (IS_ERR_OR_NULL(global_state)) {
-> > > @@ -1161,9 +1171,25 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
-> > >   	trace_dpu_enc_mode_set(DRMID(drm_enc));
-> > >   	/* Query resource that have been reserved in atomic check step. */
-> > > -	num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> > > -		drm_enc->crtc, DPU_HW_BLK_PINGPONG, hw_pp,
-> > > -		ARRAY_SIZE(hw_pp));
-> > > +	if (is_cwb_encoder) {
-> > > +		num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> > > +						       drm_enc->crtc,
-> > > +						       DPU_HW_BLK_DCWB_PINGPONG,
-> > > +						       hw_pp, ARRAY_SIZE(hw_pp));
-> > > +		num_cwb = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> > > +						       drm_enc->crtc,
-> > > +						       DPU_HW_BLK_CWB,
-> > > +						       hw_cwb, ARRAY_SIZE(hw_cwb));
-> > > +	} else {
-> > > +		num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> > > +						       drm_enc->crtc,
-> > > +						       DPU_HW_BLK_PINGPONG, hw_pp,
-> > > +						       ARRAY_SIZE(hw_pp));
-> > > +	}
-> > > +
-> > > +	for (i = 0; i < num_cwb; i++)
-> > > +		dpu_enc->hw_cwb[i] = to_dpu_hw_cwb(hw_cwb[i]);
-> > > +
-> > >   	num_ctl = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> > >   		drm_enc->crtc, DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> > > index ba7bb05efe9b8cac01a908e53121117e130f91ec..8d820cd1b5545d247515763039b341184e814e32 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> > > @@ -77,12 +77,14 @@ enum dpu_hw_blk_type {
-> > >   	DPU_HW_BLK_LM,
-> > >   	DPU_HW_BLK_CTL,
-> > >   	DPU_HW_BLK_PINGPONG,
-> > > +	DPU_HW_BLK_DCWB_PINGPONG,
-> > >   	DPU_HW_BLK_INTF,
-> > >   	DPU_HW_BLK_WB,
-> > >   	DPU_HW_BLK_DSPP,
-> > >   	DPU_HW_BLK_MERGE_3D,
-> > >   	DPU_HW_BLK_DSC,
-> > >   	DPU_HW_BLK_CDM,
-> > > +	DPU_HW_BLK_CWB,
-> > >   	DPU_HW_BLK_MAX,
-> > >   };
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> > > index 54ef6cfa2485a8a3886bd26b7ec3692d037dc35e..a57ec2ec106083e8f93578e4307e8b13ae549c08 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> > > @@ -132,6 +132,7 @@ struct dpu_global_state {
-> > >   	uint32_t cdm_to_crtc_id;
-> > >   	uint32_t sspp_to_crtc_id[SSPP_MAX - SSPP_NONE];
-> > > +	uint32_t cwb_to_crtc_id[CWB_MAX - CWB_0];
-> > >   };
-> > >   struct dpu_global_state
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > > index dca3107d1e8265a864ac62d6b845d6cb966965ed..2d5cf97a75913d51b2568ce85ec0c79a4a34deb4 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > > @@ -233,6 +233,54 @@ static int _dpu_rm_get_lm_peer(struct dpu_rm *rm, int primary_idx)
-> > >   	return -EINVAL;
-> > >   }
-> > > +static int _dpu_rm_reserve_cwb_mux_and_pingpongs(struct dpu_rm *rm,
-> > > +						 struct dpu_global_state *global_state,
-> > > +						 uint32_t crtc_id,
-> > > +						 struct msm_display_topology *topology)
-> > > +{
-> > > +	int num_cwb_mux = topology->num_lm, cwb_mux_count = 0;
-> > > +	int cwb_pp_start_idx = PINGPONG_CWB_0 - PINGPONG_0;
-> > > +	int cwb_pp_idx[MAX_BLOCKS];
-> > > +	int cwb_mux_idx[MAX_BLOCKS];
-> > > +
-> > > +	/*
-> > > +	 * Reserve additional dedicated CWB PINGPONG blocks and muxes for each
-> > > +	 * mixer
-> > > +	 *
-> > > +	 * TODO: add support reserving resources for platforms with no
-> > > +	 *       PINGPONG_CWB
-> > > +	 */
-> > > +	for (int i = 0; i < ARRAY_SIZE(rm->mixer_blks) &&
-> > > +	     cwb_mux_count < num_cwb_mux; i++) {
-> > > +		for (int j = 0; j < ARRAY_SIZE(rm->cwb_blks); j++) {
-> > > +			/*
-> > > +			 * Odd LMs must be assigned to odd CWB muxes and even
-> > > +			 * LMs with even CWB muxes
-> > > +			 */
-> > > +			if (reserved_by_other(global_state->cwb_to_crtc_id, j, crtc_id) ||
-> > > +			    i % 2 != j % 2)
+On Tue, Feb 04, 2025 at 04:46:04PM +0100, Krzysztof Kozlowski wrote:
+> On 04/02/2025 15:26, Dmitry Baryshkov wrote:
+> > On Tue, Feb 04, 2025 at 10:21:25AM +0100, Krzysztof Kozlowski wrote:
+> >> On 03/02/2025 18:41, Dmitry Baryshkov wrote:
+> >>> On Mon, Feb 03, 2025 at 06:29:19PM +0100, Krzysztof Kozlowski wrote:
+> >>>> PHY_CMN_CLK_CFG1 register is updated by the PHY driver and by a mux
+> >>>> clock from Common Clock Framework:
+> >>>> devm_clk_hw_register_mux_parent_hws().  There could be a path leading to
+> >>>> concurrent and conflicting updates between PHY driver and clock
+> >>>> framework, e.g. changing the mux and enabling PLL clocks.
+> >>>>
+> >>>> Add dedicated spinlock to be sure all PHY_CMN_CLK_CFG1 updates are
+> >>>> synchronized.
+> >>>>
+> >>>> Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
+> >>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>>>
+> >>>> ---
+> >>>>
+> >>>> Changes in v2:
+> >>>> 1. Store BIT(4) and BIT(5) in local var in dsi_pll_enable_global_clk()
+> >>>> ---
+> >>>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 35 +++++++++++++++++++------------
+> >>>>  1 file changed, 22 insertions(+), 13 deletions(-)
+> >>>>
+> >>>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> >>>> index c164f845653816291ad96c863257f75462ef58e7..e26f53f7cde8f0f6419a633f5d39784dc2e5bb98 100644
+> >>>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> >>>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> >>>> @@ -83,6 +83,9 @@ struct dsi_pll_7nm {
+> >>>>  	/* protects REG_DSI_7nm_PHY_CMN_CLK_CFG0 register */
+> >>>>  	spinlock_t postdiv_lock;
+> >>>>  
+> >>>> +	/* protects REG_DSI_7nm_PHY_CMN_CLK_CFG1 register */
+> >>>> +	spinlock_t pclk_mux_lock;
+> >>>> +
+> >>>>  	struct pll_7nm_cached_state cached_state;
+> >>>>  
+> >>>>  	struct dsi_pll_7nm *slave;
+> >>>> @@ -381,22 +384,32 @@ static void dsi_pll_cmn_clk_cfg0_write(struct dsi_pll_7nm *pll, u32 val)
+> >>>>  	spin_unlock_irqrestore(&pll->postdiv_lock, flags);
+> >>>>  }
+> >>>>  
+> >>>> -static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
+> >>>> +static void dsi_pll_cmn_clk_cfg1_update(struct dsi_pll_7nm *pll, u32 mask,
+> >>>> +					u32 val)
+> >>>>  {
+> >>>> +	unsigned long flags;
+> >>>>  	u32 data;
+> >>>>  
+> >>>> +	spin_lock_irqsave(&pll->pclk_mux_lock, flags);
+> >>>>  	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
+> >>>> -	writel(data & ~BIT(5), pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
+> >>>> +	data &= ~mask;
+> >>>> +	data |= val & mask;
+> >>>> +
+> >>>> +	writel(data, pll->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
+> >>>> +	spin_unlock_irqrestore(&pll->pclk_mux_lock, flags);
+> >>>> +}
+> >>>> +
+> >>>> +static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
+> >>>> +{
+> >>>> +	dsi_pll_cmn_clk_cfg1_update(pll, BIT(5), 0);
+> >>>>  }
+> >>>>  
+> >>>>  static void dsi_pll_enable_global_clk(struct dsi_pll_7nm *pll)
+> >>>>  {
+> >>>> -	u32 data;
+> >>>> +	u32 cfg_1 = BIT(5) | BIT(4);
+> >>>
+> >>> Please define these two bits too.
+> >>
+> >> Why? They were not defined before. This only moving existing code.
 > > 
-> > Should't it be a loop over allocated LMs with the check that
-> > lm[i]->idx % 2 != j % 2 ?
-> > Otherwise you are looping over some random LMs and trying to match CWB
-> > indices against them.
+> > Previously it was just a bit magic. Currently you are adding them as
 > 
-> Hi Dmitry,
+> No, previous code:
 > 
-> The RM array idx are based of the hw block ids [1] so there isn't much
-> difference using i and lm[i]->id.
+> writel(data | BIT(5) | BIT(4), pll->phy->base +
+> REG_DSI_7nm_PHY_CMN_CLK_CFG1);
+> 
+> This is a mask and update in the same time, because:
+> 	(data & (BIT(5) | BIT(4)) | BIT(5) | BIT(4)
+> is just redudant.
+> 
+> I did not do any logical change, I did not add any mask or field.
+> Everything was already there.
 
-Ack. Please add a comment (as I think there will be another revision).
+Yes... and no. Previously it was just writel(foo | BIT(5) | BIT(4)). Now
+your code adds BIT(5) as a 'mask' parameter. Is it a correct mask for
+that field? That's why I'm asking you to define those - you have changed
+bitwrites to the masked bit writes. Masks should be defined.
 
 > 
-> Thanks,
 > 
-> Jessica Zhang
+> > masks. I want to know if BIT(4) and BIT(5) are parts of the same
+> > bitfield (2 bits wide) or if they define two different bits.
 > 
-> [1] https://elixir.bootlin.com/linux/v6.13.1/source/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c#L74
-> 
+> While in general you are right, it does not matter for this fix. If this
+> are separate bitfields - fix is correct. If this is one bitfield - fix
+> is still correct. You could claim that if this was one bitfield, using
+> 2xBIT() is not logical, but this was there already, so again my fix is
+> only fixing and keeping entire logic or inconsistencies intact.
 
 -- 
 With best wishes
