@@ -1,149 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-46924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9888A28517
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 08:48:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84509A28592
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 09:30:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 179D33A72F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 07:48:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6FD6A18857C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2025 08:30:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D24FB229B36;
-	Wed,  5 Feb 2025 07:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 302D721D5AB;
+	Wed,  5 Feb 2025 08:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N/3kbVUf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uzMIDa9N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B193229B2E;
-	Wed,  5 Feb 2025 07:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F024F20E004;
+	Wed,  5 Feb 2025 08:30:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738741683; cv=none; b=HU8+qlNzZtI5tW4SN09W/J/3bcXGURHFx57w+W0jN5E11wDceIXaLDTE1alLrV0lT6Kd3u+UFpoQTYS0giK84v0uCkHkHaieVsB7slzkKCsnj+H3aRWAT9vI+HxnXmQslLtOkxuE6OiaIcynlWfoJ+jjnvVd3fIbS/w67QNOoi4=
+	t=1738744240; cv=none; b=DTZmnlnpTKN3ozu+S1Ic0V/5tjqnBsM8StDy5lZmCOT/ftSP9w5BbW0fk5FDQa1Gl9d+pEvDMrMjzoxXTR/CQYNvRImhNYAlXwRllVlX74tWxGemWD4Y8p0EqZ9BCJTyCBBiXzeStTrZ0zEpCQKy0bxeJJ7DFgBZqi9tcHD6+PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738741683; c=relaxed/simple;
-	bh=Utxw0SnMEG/YDKtxtjuk/OikaSc4nnjrllltus4vBqw=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ld7/ClyS4cL6CxVXFBErLFt+5Vxe5VmS6EZLjItl4lrYaA9BxvrPGICB4WGa6JM5UIyuBqVJuOtDbgJdwMCc/cY7SFR+wT3BuNbzapdl1Y/RsP0KEnB7aRDNf/Eog6bUcHwyT1yYgq6wU2xKbWJyNqA/CXI30r1v63vYEA5AMb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N/3kbVUf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5156pXcM018149;
-	Wed, 5 Feb 2025 07:47:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2EhGfTlbKs/r3ujMgHUZ9vptMwV2xOc1pfaHW734jJ4=; b=N/3kbVUf5zT9kDO3
-	NF0fLyEspCGX96BgXCKymgBbbvzGvOb2oys2MACHDPASazzAMIxO8NVmVZEG2lFf
-	aeiMJNiBTIK9Pvy6vN7WgNBRb+gKbJje11fPwhtY14/IZHHwiuaN02GcxVrPvqns
-	Fco+2ZxsGsdwAkLnqp/gaXxCbWVYWlptraenvxSFHQAeBcd7ip6C16UkBowfyoba
-	7qC0Quin3beyYhCt6F7QHTRkKUSlufMfK+0jhq8Hv8pc2u445OGUHAD+FG63M7qL
-	aNchVWZUsi6iY0FEVvcp6n2WNz1XBgzqBJNEnsQ3mVUjJQVJ4MvaNZwTKpS9SNVx
-	NElD2w==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44m33b83sg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Feb 2025 07:47:58 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5157lvX8015671
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 5 Feb 2025 07:47:57 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 4 Feb 2025 23:47:53 -0800
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <agross@kernel.org>,
-        <quic_varada@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC: <stable@vger.kernel.org>
-Subject: [PATCH v1 2/2] arm64: dts: qcom: ipq9574: Fix USB vdd info
-Date: Wed, 5 Feb 2025 13:16:57 +0530
-Message-ID: <20250205074657.4142365-3-quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250205074657.4142365-1-quic_varada@quicinc.com>
-References: <20250205074657.4142365-1-quic_varada@quicinc.com>
+	s=arc-20240116; t=1738744240; c=relaxed/simple;
+	bh=BAeQkOipvrJpo8BJ7v2PB1Gs5G+nzczTlfJtspomTf0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OdTagi7r8BYXDX7fdomMCh97ZLjGWM9b23NosTTOBNcVaiaEXb1BEczlcw+MIKlkIpDG+cdO0Xs2OnCO5wHgTYjG3y7wxFvsoBD5ws3Hd7rndIXZSjgzVZOfohHFxwht+CR+J+5IWBHuTV2bvAummQzvFZXB9bMN9WGUN1roghY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uzMIDa9N; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511CDC4CED1;
+	Wed,  5 Feb 2025 08:30:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738744239;
+	bh=BAeQkOipvrJpo8BJ7v2PB1Gs5G+nzczTlfJtspomTf0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uzMIDa9NNlHBWX10J9SI0j4NX434uZJ6mAkx6FLRfprYurjv5wfXdIBqaWeoG1Ud4
+	 hhz0jhCGk5vjEMI9NqumYpN430t9u/zXg11PPhlBzU3pCTxAn9qREnonlpzrHMsb2l
+	 N/iRTVQ5FCLv5Z6l7AsJMrd5xtXzGmPetrOXGLs/OnXeCOA7BIlvaOJUtGt0KVdx4v
+	 C7Qpd6DTUIoNfpoE2upRYPx7iXiQdPPL7eU05bulSMcblFjQqpxI+2bAQ4pbtJIEt+
+	 z1m1PX9zbyLxm8c7iaZFfYrfRtMcwdvOcBxCVq2rSP+cV6iQRAQO09Td33d0kgiqJ0
+	 qjNDMZ87HRt8w==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tfanz-000000008CI-1jTm;
+	Wed, 05 Feb 2025 09:30:44 +0100
+Date: Wed, 5 Feb 2025 09:30:43 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>, quic_vgarodia@quicinc.com,
+	mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	p.zabel@pengutronix.de, hverkuil@xs4all.nl,
+	sebastian.fricke@collabora.com, bryan.odonoghue@linaro.org,
+	neil.armstrong@linaro.org, nicolas@ndufresne.ca,
+	u.kleine-koenig@baylibre.com, stefan.schmidt@linaro.org,
+	lujianhua000@gmail.com, linux-arm-msm@vger.kernel.org,
+	linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, krzysztof.kozlowski@linaro.org
+Subject: Re: [RFC PATCH v10 1/2] media: iris: introduce helper module to
+ select video driver
+Message-ID: <Z6MhsxskgbFX3dFd@hovoldconsulting.com>
+References: <20250128080429.3911091-2-quic_dikshita@quicinc.com>
+ <5070e1f1-914b-4654-88ef-3566e3eee9ca@kernel.org>
+ <f1344e49-61b6-4115-ae88-55b4a3cfed28@quicinc.com>
+ <Z6B822-6UTxQfX46@hovoldconsulting.com>
+ <tqbm672pi223ipcw7btiemlb745weeeiy4gnazzeghozhq2emj@wppbkms6hir5>
+ <Z6HehbKL88LW1lxC@hovoldconsulting.com>
+ <hpcf7olw3ody7ns4ibdeoc5qrkmh3fgeqbhjd4eqwfuanevzoa@plenabtrjqi5>
+ <Z6I5nx2Wt3bbBmSI@hovoldconsulting.com>
+ <ilqfs6miq55ahyxjnhniv4k654vstfugmpswo5wld2ncgxxcx3@vsbr4bdl7y64>
+ <69dc3c64-e0b7-a453-a73b-6a3c9dbded7d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AZ6tG7GHMTBPuFxj8laziaxQPGY2Kl5I
-X-Proofpoint-ORIG-GUID: AZ6tG7GHMTBPuFxj8laziaxQPGY2Kl5I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-05_03,2025-02-05_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 spamscore=0 mlxlogscore=614 clxscore=1015 impostorscore=0
- mlxscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502050061
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <69dc3c64-e0b7-a453-a73b-6a3c9dbded7d@quicinc.com>
 
-USB phys in ipq9574 use the 'L5' regulator. The commit
-ec4f047679d5 ("arm64: dts: qcom: ipq9574: Enable USB")
-incorrectly specified it as 'L2'. Because of this when the phy
-module turns off/on its regulators, 'L2' is turned off/on
-resulting in 2 issues, namely 'L5' is not turned off/on and the
-network module powered by the 'L2' is turned off/on.
+On Wed, Feb 05, 2025 at 11:47:12AM +0530, Dikshita Agarwal wrote:
+> On 2/5/2025 4:39 AM, Dmitry Baryshkov wrote:
+> > On Tue, Feb 04, 2025 at 05:00:31PM +0100, Johan Hovold wrote:
+> >> On Tue, Feb 04, 2025 at 04:55:58PM +0200, Dmitry Baryshkov wrote:
+> >>> On Tue, Feb 04, 2025 at 10:31:49AM +0100, Johan Hovold wrote:
 
-Cc: stable@vger.kernel.org
-Fixes: ec4f047679d5 ("arm64: dts: qcom: ipq9574: Enable USB")
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+> >>>> Unbinding and rebinding drivers is not part of any normal work flow
+> >>>> expect possibly during development. And a developer can easily compare
+> >>>> Venus and Iris for 8250 without a module parameter too.
+> >>>
+> >>> Yes, we are talking about development. And yes, modparam helps. If you'd
+> >>> like to do two separate kernel builds, that's fine.
+> >>
+> >> Please just motivate why you think this is needed as part of the
+> >> submission. And make sure that the implementation is sane (e.g. not some
+> >> random probe defer indefinitely thing).
+> >>
+> >> Like I said, having two drivers for the same hardware is normally not
+> >> something that is acceptable, and this would need to be a transitional
+> >> thing as we both agree. One way to guarantee that is to not expose it to
+> >> regular users until it is ready (e.g. a Kconfig hidden behind
+> >> CONFIG_EXPERT or similar). Otherwise, I fear you'll end up supporting
+> >> both forever (with at least one of them bitrotting behind that module
+> >> parameter over time).
+> > 
+> > I think I'm fine with hiding IRIS behind CONFIG_EXPERT, might be a good
+> > idea.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-index ae12f069f26f..b24b795873d4 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-@@ -111,6 +111,13 @@ mp5496_l2: l2 {
- 			regulator-always-on;
- 			regulator-boot-on;
- 		};
-+
-+		mp5496_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-always-on;
-+			regulator-boot-on;
-+		};
- 	};
- };
- 
-@@ -146,7 +153,7 @@ &usb_0_dwc3 {
- };
- 
- &usb_0_qmpphy {
--	vdda-pll-supply = <&mp5496_l2>;
-+	vdda-pll-supply = <&mp5496_l5>;
- 	vdda-phy-supply = <&regulator_fixed_0p925>;
- 
- 	status = "okay";
-@@ -154,7 +161,7 @@ &usb_0_qmpphy {
- 
- &usb_0_qusbphy {
- 	vdd-supply = <&regulator_fixed_0p925>;
--	vdda-pll-supply = <&mp5496_l2>;
-+	vdda-pll-supply = <&mp5496_l5>;
- 	vdda-phy-dpdm-supply = <&regulator_fixed_3p3>;
- 
- 	status = "okay";
--- 
-2.34.1
+I was only thinking about the (experimental) support for hardware
+already supported by venus (i.e. initially 8250) and possibly the
+module parameter if you think that is essential.
 
+I can imagine the feature set becoming non-overlapping overtime so that
+you end up with some users depending on venus and some depending on iris
+for the same hardware if you expose iris support prematurely.
+
+> Are you suggesting to add a dependency on CONFIG_EXPERT for IRIS driver?
+> Something like:
+> config VIDEO_QCOM_IRIS
+>         tristate "Qualcomm iris V4L2 decoder driver"
+>         depends on EXPERT
+> 
+> This will impact the enablement of iris driver on SM8550 as well.
+
+Right, it would, and that is not necessarily right.
+
+> And will this also be needed to be captured in cover letter?
+
+Yes, whatever solution you end up with need to be described and
+motivated in the cover letter (and commit messages) so that the
+reasoning can be evaluated.
+
+Johan
 
