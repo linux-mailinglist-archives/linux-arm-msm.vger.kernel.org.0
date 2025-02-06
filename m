@@ -1,416 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-47017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B81A5A2A518
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 10:49:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDEB5A2A531
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 10:53:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C1A7161B1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 09:49:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D10157A3B5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 09:52:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B81692248A1;
-	Thu,  6 Feb 2025 09:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0D1622653A;
+	Thu,  6 Feb 2025 09:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="foyTX8Ju"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XSvB18QO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55FD1FDE08
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 09:49:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF396226539
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 09:53:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738835381; cv=none; b=g0OP1m51JYd2E04vmcqFcyxeQ7FEQAN7IXbscUJ3Gpidrn3W1UxHANn7oHCcrRNeh75TLbgBrYQCHFwyz3zmQ5C0U5r+8xEmJEVS236nzIyeHjJ1nu9dws5Yo3qNk9Bx2dlzJtjCL5sW38cWhnRmW7MPzUdrFIqNu3Cuf9THG0Q=
+	t=1738835612; cv=none; b=Vqy47O7gdJXngCtJRvlhqJL4zPjq0mjBtsRwCxzZFq5Iz55oSYQyZi80qBXT+eiQsd9p1pfGVEzSydgUEOGSGPrWFwf0pt82aV+8spjzWiVFTM9Ii53HwzjzAGRPiW+Gga9uZrUcS35BUu17iZbDfmvJa4OK7Z1OVJTQ49HLGzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738835381; c=relaxed/simple;
-	bh=Tey3Pm/24OpqMv2mAqjb7nG+Py0i5d53tLaznXL9Svo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ixFfeYvp114P4jNEF+WSCzrmegjFEwiXJi6xNs5s5mZhE8CWUgAfPfnT7NE/GkZVljd5MgG7ABjtlQo1bpsKH7hlCtF0vHiREuFn7Bg2zB2PeocbzTqDGv45y6vXozPmekCJ9HuZA932FgeATNxiHy2yVL6xJigd2OE0Wjj8ITk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=foyTX8Ju; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-467abce2ef9so203791cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 01:49:39 -0800 (PST)
+	s=arc-20240116; t=1738835612; c=relaxed/simple;
+	bh=WUBT/dBT3hdEKftrm9ytaz0AxYAgi67qXEPM3/1/Jfg=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=sPLyo2x3KE+qozILBXeeMWRDWDPQoHzV6aNDIufJ+/JvGz5PdfQIS8v1TNXf4tM/MpGW1HFIPqyRHCroXVoCjA8LWgTI0W09ncHteFEp/mlJz0k6na4Dwuo8Ec2RNjni0lwkJJki3FruwLjetyeJH6/ZUjaz61caUhIRk/Byk2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XSvB18QO; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-38dba1cc632so384427f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 01:53:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738835378; x=1739440178; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vMspzqIoxWrtTD4RwkkteSffyt0ubH7EbrNEdQKzrTo=;
-        b=foyTX8JuQVx5tI0FZDqtk7U4KI7p/ii5kfZCNso1pxnRyOpCje2TkIj/f00tSuS3e2
-         siVmf4sDjFMIeNk6aG+Sys0qwSXPz5cEo+MgkiKe1sfA0nmCfDmX6bpqTkPetFTe1GaT
-         gv215AqNHDlkaNYXpiumBY9P5s3Ur29oLYzK6MscaeAWK7/RBCw8PwZAkyA7uLnR5I3i
-         B1HkZDycHPycU05EItv+MrkviFDC5J/Iy91o0FAMmJjPtsoTp4aYUNuwd52yj+ivxJo/
-         tKXtzceyr0+XSUgIhfWtm4P5+y0wX8/N+Uh2Xz4fmvIV0jvXCilsAv5Jl5QNcW92YO6A
-         +c9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738835378; x=1739440178;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1738835609; x=1739440409; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vMspzqIoxWrtTD4RwkkteSffyt0ubH7EbrNEdQKzrTo=;
-        b=H5fxdW3JUZBGGBE7G3e27aPYLnlFZezS/7QMBwrJQFsDLVHSzNN3uqQDqw6OaLhz9g
-         +nhh6tgPdm2RKwb4Eg65gz0YAxXZHE8TXSS34FN0MFqjUW5Y6lIi8xh0GodluBaqvth6
-         oH4s1LhS6BVugxOH3ftSbOUdOC+va2GRw8CqCV1g3KGqO1xLAHJXZLlXOIjZWKJwqJpw
-         iSfM36HqImTSHVF1I7ctvIthGL2tmG8HxdS/Vp1q90/AeeK5/Te7QE0qzbmNOx27L11U
-         sEbZQd30bcik9BqBvBcaGZbMzMD1xbmw4KZcoW8AMg3cEwkZONIQke+zpxOb4P/JOlwN
-         F+hg==
-X-Forwarded-Encrypted: i=1; AJvYcCWozcDYbZnK5Z1+WgDDi9M+jLmqhnjL8xbL/DUG1f1Nyat4Dzdfj13Uq0csgbjrHNOpohHd/TPalZs1j5IX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0DtbVcQFWI9otwB6WBUmB+B61MYu3N+vMSo1oXVgWfC/X85jS
-	yEWCHxIAdGh45t8cM9WaohzpSa39TBodJ9UbbaqAXd1LbCYPAIQPcXwFwpPwO+twIkmBZW711vN
-	qOCVsPA3XZTFwbT3f5g55isK2E9SCTNJeEm/M
-X-Gm-Gg: ASbGncvuxxH7vBTiCkFfpTGQ3D7SUopmDKkAeQvg9YhgoMns71UKGt8aI+KfFxVTDgq
-	Css7rRPP0Qe1Nk6TBoP8tGqHlGx8wc9TBiJ4hlrvxC+qlJgiK8BwjXLZyBx7ANNXzaLDAx1Ivhw
-	nvoJl45GITJt6T8aK7RGlVmD9Y2g==
-X-Google-Smtp-Source: AGHT+IF1OziUk+ipGo12CI6tiiCpNFjwOsoIlMx9DcEg2iZigJ8C0IOYkeKhQT4+Bk0eAiWiez3G+VPEJSEkIkXyUEI=
-X-Received: by 2002:a05:622a:1886:b0:46f:c1ee:3ea3 with SMTP id
- d75a77b69052e-470ffb7145bmr2067291cf.20.1738835378375; Thu, 06 Feb 2025
- 01:49:38 -0800 (PST)
+        bh=Y/Bse1dCSk7wlBTxWxrw+fvF90V1hOkdi4rEK3c8vEo=;
+        b=XSvB18QOuJFkJq9EC+rSNnHmv65O1/n5hZxQA+oOr6lzH1eCr7b2J9j7Y5CrPipyYk
+         7NqH4eJerTmIL1KqgFrlbGuwKaUOcs2L3gD8yBRgp/A29aGSX0Xj4obcInAA3PUcI8rg
+         xXxQB25VpkRtUP6QfV7K2h5THK/dF/bcefndRAlZWk3twtt2Siwo5PM6Tg01R/tj77m4
+         dXb10QhYSwtWdPhoZMSt0FYJa1FQl7eL0lXIR/NheMlZu4mBX/iubtGZdJ1OGJjnm4dw
+         /eSaEOIt8cQKCTEQHcPNBjyb3BSirYM9UPm8+sPpc7xt2fUfCpIZpB8c0qFtdtM3aD08
+         gm7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738835609; x=1739440409;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Y/Bse1dCSk7wlBTxWxrw+fvF90V1hOkdi4rEK3c8vEo=;
+        b=qd6iOv/BicKf18XHC3tWdZkOFEpZCH71My/k7xzlYm3C7LCLXq+1e5dq5aBo0lm3TU
+         yngxb44ZAMgdP3/N1dKiECBe8RVrSe21Ml5q635R65Dcf+Txlq01/fjPT/56x1wndUnT
+         YtbxF5c0XaSET8xqLn8y+q3+U1PhNg4Ui+13ClJsOV37GZQyO3TMt0RTVcruV5mTPHiP
+         SxkW73SXFTTbLf8GOjDzeFwvaHVFGA40JYortNHmg+Aktn6nlUBqvT61yUxvRDcHcUEH
+         kCsgUttyOvoE/SPjV21v04vTiZIjxjiulIvbqiSirzMqJvuEd17CYWN7/LmnlmG0MGCV
+         5HzA==
+X-Gm-Message-State: AOJu0YwPWEO3dVe7q/JqSwdjh2AIj17EWw5iyVtwEZ04nuzkotOE6jtA
+	eQdMby73TRnLDVsVC9sw0innKNutma6aAG079M2pw+VvKpx0AYf9iT9CEkVQfF8=
+X-Gm-Gg: ASbGncsj/qDoK7dzM5BXY8Nvk6m5rCexy6gUXkpyqKuwdM+7KkuhybCBwscl2HZKvNH
+	NJRc/K8axXQjSp7ZjQISPKwAVpLqvQLAe7pVMRmzZhubMPOAiegdzy/J6e2tc0G0dpS7pOBKPLP
+	eiNiuVtuq3DXnXOv8DW98FH3Cu+xk9ppbHlRkL8+RC6oy9P41M5AVmL0XtUw5wyVuwr3AEbovd7
+	UQpHeUZ+uy1oMumDfi0kCvtda9QA8a2HiXI/jXjD9MepgyDtoo7/cDqlD7TZGT+raX4zmrO8GVe
+	VpUd1uD3gI0DqI36NytQcaqKBj4ETQMHeGlxMSTsjlGBVOIGPRBXOzQQGyYfTNHMaiuW
+X-Google-Smtp-Source: AGHT+IFZ/YD1C+lwl5UFVIadECKSzvAxjxJXg73+g+VHFrSip3JyQPnIew9WOECpn6y9hKaGtkaC7Q==
+X-Received: by 2002:a5d:5f4c:0:b0:385:fae2:f443 with SMTP id ffacd0b85a97d-38db48d5d49mr3733434f8f.34.1738835608907;
+        Thu, 06 Feb 2025 01:53:28 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:4972:46a2:e0cb:c0a6? ([2a01:e0a:982:cbb0:4972:46a2:e0cb:c0a6])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dc31b9394sm337288f8f.11.2025.02.06.01.53.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Feb 2025 01:53:28 -0800 (PST)
+Message-ID: <63578f71-e5f5-482a-98a7-779053b1caf7@linaro.org>
+Date: Thu, 6 Feb 2025 10:53:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250117163001.2326672-7-tabba@google.com> <diqz1pwbspzx.fsf@ackerleytng-ctop.c.googlers.com>
-In-Reply-To: <diqz1pwbspzx.fsf@ackerleytng-ctop.c.googlers.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 6 Feb 2025 09:49:01 +0000
-X-Gm-Features: AWEUYZl0jkM18J4GnKfTjdDFBJWhhPpUXzN0WB2wY9PGEGPv5QogeezgmoZYrM4
-Message-ID: <CA+EHjTzRsou4hwbwFTP9ai6pLOpjp-ikVhNx1b4t+nCByC5Pbw@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 06/15] KVM: guest_memfd: Handle final folio_put()
- of guestmem pages
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 0/8] Support Multi-frequency scale for UFS
+To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com,
+ bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
+ avri.altman@wdc.com, junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+ quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+ quic_rampraka@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ "open list:ARM/Mediatek SoC support:Keyword:mediatek"
+ <linux-kernel@vger.kernel.org>,
+ "moderated list:ARM/Mediatek SoC support:Keyword:mediatek"
+ <linux-arm-kernel@lists.infradead.org>,
+ "moderated list:ARM/Mediatek SoC support:Keyword:mediatek"
+ <linux-mediatek@lists.infradead.org>
+References: <20250203081109.1614395-1-quic_ziqichen@quicinc.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250203081109.1614395-1-quic_ziqichen@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, 6 Feb 2025 at 03:37, Ackerley Tng <ackerleytng@google.com> wrote:
->
-> Fuad Tabba <tabba@google.com> writes:
->
-> > Before transitioning a guest_memfd folio to unshared, thereby
-> > disallowing access by the host and allowing the hypervisor to
-> > transition its view of the guest page as private, we need to be
-> > sure that the host doesn't have any references to the folio.
-> >
-> > This patch introduces a new type for guest_memfd folios, and uses
-> > that to register a callback that informs the guest_memfd
-> > subsystem when the last reference is dropped, therefore knowing
-> > that the host doesn't have any remaining references.
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> > The function kvm_slot_gmem_register_callback() isn't used in this
-> > series. It will be used later in code that performs unsharing of
-> > memory. I have tested it with pKVM, based on downstream code [*].
-> > It's included in this RFC since it demonstrates the plan to
-> > handle unsharing of private folios.
-> >
-> > [*] https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/guestmem-6.13-v5-pkvm
-> > ---
-> >  include/linux/kvm_host.h   |  11 +++
-> >  include/linux/page-flags.h |   7 ++
-> >  mm/debug.c                 |   1 +
-> >  mm/swap.c                  |   4 +
-> >  virt/kvm/guest_memfd.c     | 145 +++++++++++++++++++++++++++++++++++++
-> >  5 files changed, 168 insertions(+)
-> >
-> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> > index 84aa7908a5dd..63e6d6dd98b3 100644
-> > --- a/include/linux/kvm_host.h
-> > +++ b/include/linux/kvm_host.h
-> > @@ -2574,6 +2574,8 @@ int kvm_slot_gmem_clear_mappable(struct kvm_memory_slot *slot, gfn_t start,
-> >                                gfn_t end);
-> >  bool kvm_slot_gmem_is_mappable(struct kvm_memory_slot *slot, gfn_t gfn);
-> >  bool kvm_slot_gmem_is_guest_mappable(struct kvm_memory_slot *slot, gfn_t gfn);
-> > +int kvm_slot_gmem_register_callback(struct kvm_memory_slot *slot, gfn_t gfn);
-> > +void kvm_gmem_handle_folio_put(struct folio *folio);
-> >  #else
-> >  static inline bool kvm_gmem_is_mappable(struct kvm *kvm, gfn_t gfn, gfn_t end)
-> >  {
-> > @@ -2615,6 +2617,15 @@ static inline bool kvm_slot_gmem_is_guest_mappable(struct kvm_memory_slot *slot,
-> >       WARN_ON_ONCE(1);
-> >       return false;
-> >  }
-> > +static inline int kvm_slot_gmem_register_callback(struct kvm_memory_slot *slot, gfn_t gfn)
-> > +{
-> > +     WARN_ON_ONCE(1);
-> > +     return -EINVAL;
-> > +}
-> > +static inline void kvm_gmem_handle_folio_put(struct folio *folio)
-> > +{
-> > +     WARN_ON_ONCE(1);
-> > +}
-> >  #endif /* CONFIG_KVM_GMEM_MAPPABLE */
-> >
-> >  #endif
-> > diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
-> > index 6615f2f59144..bab3cac1f93b 100644
-> > --- a/include/linux/page-flags.h
-> > +++ b/include/linux/page-flags.h
-> > @@ -942,6 +942,7 @@ enum pagetype {
-> >       PGTY_slab       = 0xf5,
-> >       PGTY_zsmalloc   = 0xf6,
-> >       PGTY_unaccepted = 0xf7,
-> > +     PGTY_guestmem   = 0xf8,
-> >
-> >       PGTY_mapcount_underflow = 0xff
-> >  };
-> > @@ -1091,6 +1092,12 @@ FOLIO_TYPE_OPS(hugetlb, hugetlb)
-> >  FOLIO_TEST_FLAG_FALSE(hugetlb)
-> >  #endif
-> >
-> > +#ifdef CONFIG_KVM_GMEM_MAPPABLE
-> > +FOLIO_TYPE_OPS(guestmem, guestmem)
-> > +#else
-> > +FOLIO_TEST_FLAG_FALSE(guestmem)
-> > +#endif
-> > +
-> >  PAGE_TYPE_OPS(Zsmalloc, zsmalloc, zsmalloc)
-> >
-> >  /*
-> > diff --git a/mm/debug.c b/mm/debug.c
-> > index 95b6ab809c0e..db93be385ed9 100644
-> > --- a/mm/debug.c
-> > +++ b/mm/debug.c
-> > @@ -56,6 +56,7 @@ static const char *page_type_names[] = {
-> >       DEF_PAGETYPE_NAME(table),
-> >       DEF_PAGETYPE_NAME(buddy),
-> >       DEF_PAGETYPE_NAME(unaccepted),
-> > +     DEF_PAGETYPE_NAME(guestmem),
-> >  };
-> >
-> >  static const char *page_type_name(unsigned int page_type)
-> > diff --git a/mm/swap.c b/mm/swap.c
-> > index 6f01b56bce13..15220eaabc86 100644
-> > --- a/mm/swap.c
-> > +++ b/mm/swap.c
-> > @@ -37,6 +37,7 @@
-> >  #include <linux/page_idle.h>
-> >  #include <linux/local_lock.h>
-> >  #include <linux/buffer_head.h>
-> > +#include <linux/kvm_host.h>
-> >
-> >  #include "internal.h"
-> >
-> > @@ -103,6 +104,9 @@ static void free_typed_folio(struct folio *folio)
-> >       case PGTY_offline:
-> >               /* Nothing to do, it's offline. */
-> >               return;
-> > +     case PGTY_guestmem:
-> > +             kvm_gmem_handle_folio_put(folio);
-> > +             return;
-> >       default:
-> >               WARN_ON_ONCE(1);
-> >       }
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index d1c192927cf7..722afd9f8742 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> > @@ -387,6 +387,28 @@ enum folio_mappability {
-> >       KVM_GMEM_NONE_MAPPABLE  = 0b11, /* Not mappable, transient state. */
-> >  };
-> >
-> > +/*
-> > + * Unregisters the __folio_put() callback from the folio.
-> > + *
-> > + * Restores a folio's refcount after all pending references have been released,
-> > + * and removes the folio type, thereby removing the callback. Now the folio can
-> > + * be freed normaly once all actual references have been dropped.
-> > + *
-> > + * Must be called with the filemap (inode->i_mapping) invalidate_lock held.
-> > + * Must also have exclusive access to the folio: folio must be either locked, or
-> > + * gmem holds the only reference.
-> > + */
-> > +static void __kvm_gmem_restore_pending_folio(struct folio *folio)
-> > +{
-> > +     if (WARN_ON_ONCE(folio_mapped(folio) || !folio_test_guestmem(folio)))
-> > +             return;
-> > +
-> > +     WARN_ON_ONCE(!folio_test_locked(folio) && folio_ref_count(folio) > 1);
-> > +
-> > +     __folio_clear_guestmem(folio);
-> > +     folio_ref_add(folio, folio_nr_pages(folio));
-> > +}
-> > +
-> >  /*
-> >   * Marks the range [start, end) as mappable by both the host and the guest.
-> >   * Usually called when guest shares memory with the host.
-> > @@ -400,7 +422,31 @@ static int gmem_set_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
-> >
-> >       filemap_invalidate_lock(inode->i_mapping);
-> >       for (i = start; i < end; i++) {
-> > +             struct folio *folio = NULL;
-> > +
-> > +             /*
-> > +              * If the folio is NONE_MAPPABLE, it indicates that it is
-> > +              * transitioning to private (GUEST_MAPPABLE). Transition it to
-> > +              * shared (ALL_MAPPABLE) immediately, and remove the callback.
-> > +              */
-> > +             if (xa_to_value(xa_load(mappable_offsets, i)) == KVM_GMEM_NONE_MAPPABLE) {
-> > +                     folio = filemap_lock_folio(inode->i_mapping, i);
-> > +                     if (WARN_ON_ONCE(IS_ERR(folio))) {
-> > +                             r = PTR_ERR(folio);
-> > +                             break;
-> > +                     }
-> > +
-> > +                     if (folio_test_guestmem(folio))
-> > +                             __kvm_gmem_restore_pending_folio(folio);
-> > +             }
-> > +
-> >               r = xa_err(xa_store(mappable_offsets, i, xval, GFP_KERNEL));
-> > +
-> > +             if (folio) {
-> > +                     folio_unlock(folio);
-> > +                     folio_put(folio);
-> > +             }
-> > +
-> >               if (r)
-> >                       break;
-> >       }
-> > @@ -473,6 +519,105 @@ static int gmem_clear_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
-> >       return r;
-> >  }
-> >
->
-> I think one of these functions to restore mappability needs to be called
-> to restore the refcounts on truncation. Without doing this, the
-> refcounts on the folios at truncation time would only be the
-> transient/speculative ones, and truncating will take off the filemap
-> refcounts which were already taken off to set up the folio_put()
-> callback.
+On 03/02/2025 09:11, Ziqi Chen wrote:
+> With OPP V2 enabled, devfreq can scale clocks amongst multiple frequency
+> plans. However, the gear speed is only toggled between min and max during
+> clock scaling. Enable multi-level gear scaling by mapping clock frequencies
+> to gear speeds, so that when devfreq scales clock frequencies we can put
+> the UFS link at the appropraite gear speeds accordingly.
+> 
+> This series has been tested on below platforms -
+> sm8550 mtp + UFS3.1
+> SM8650 MTP + UFS3.1
+> SM8750 MTP + UFS4.0
+> 
+> v1 -> v2:
+> 1. Withdraw old patch 8/8 "ARM: dts: msm: Use Operation Points V2 for UFS on SM8650"
+> 2. Add new patch 8/8 "ABI: sysfs-driver-ufs: Add missing UFS sysfs addributes"
+> 3. Modify commit message for  "scsi: ufs: core: Pass target_freq to clk_scale_notify() vops" and "scsi: ufs: qcom: Pass target_freq to clk scale pre and post change"
+> 4. In "scsi: ufs: qcom: Pass target_freq to clk scale pre and post change", use common Macro HZ_PER_MHZ in function ufs_qcom_set_core_clk_ctrl()
+> 5. In "scsi: ufs: qcom: Implement the freq_to_gear_speed() vops", print out freq and gear info as debugging message
+> 6. In "scsi: ufs: core: Enable multi-level gear scaling", rename the lable "do_pmc" to "config_pwr_mode"
+> 7. In "scsi: ufs: core: Toggle Write Booster during clock", initialize the local variables "wb_en" as "false"
+> 
+> v2 -> v3:
+> 1. Change 'vops' to 'vop' in all commit message
+> 2. keep the indentation consistent for clk_scale_notify() definition.
+> 3. In "scsi: ufs: core: Add a vop to map clock frequency to gear speed", "scsi: ufs: qcom: Implement the freq_to_gear_speed() vop"
+>     and "scsi: ufs: core: Enable multi-level gear scaling", remove the parameter 'gear' and use it as return result in function freq_to_gear_speed()
+> 4. In "scsi: ufs: qcom: Implement the freq_to_gear_speed(), removed the variable 'ret' in function ufs_qcom_freq_to_gear_speed()
+> 5. In "scsi: ufs: core: Enable multi-level gear scaling", use assignment instead memcpy() in function ufshcd_scale_gear()
+> 6. Improve the grammar of attributes' descriptions in “ABI: sysfs-driver-ufs: Add missing UFS sysfs attributes”
+> 7. Typo fixed for some commit messages.
+> 
+> Can Guo (6):
+>    scsi: ufs: core: Pass target_freq to clk_scale_notify() vop
+>    scsi: ufs: qcom: Pass target_freq to clk scale pre and post change
+>    scsi: ufs: core: Add a vop to map clock frequency to gear speed
+>    scsi: ufs: qcom: Implement the freq_to_gear_speed() vop
+>    scsi: ufs: core: Enable multi-level gear scaling
+>    scsi: ufs: core: Toggle Write Booster during clock scaling base on
+>      gear speed
+> 
+> Ziqi Chen (2):
+>    scsi: ufs: core: Check if scaling up is required when disable clkscale
+>    ABI: sysfs-driver-ufs: Add missing UFS sysfs attributes
+> 
+>   Documentation/ABI/testing/sysfs-driver-ufs | 33 ++++++++++
+>   drivers/ufs/core/ufshcd-priv.h             | 15 ++++-
+>   drivers/ufs/core/ufshcd.c                  | 76 +++++++++++++++++-----
+>   drivers/ufs/host/ufs-mediatek.c            |  1 +
+>   drivers/ufs/host/ufs-qcom.c                | 62 ++++++++++++++----
+>   include/ufs/ufshcd.h                       |  9 ++-
+>   6 files changed, 160 insertions(+), 36 deletions(-)
+> 
 
-Good point.
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
 
-> Should mappability can be restored according to
-> GUEST_MEMFD_FLAG_INIT_MAPPABLE? Or should mappability of NONE be
-> restored to GUEST and mappability of ALL left as ALL?
+I added some traces and played with devfreq max_freq while copying data
+from the UFS disk, no issues observed.
 
-Not sure I follow :)
-
-Thanks,
-/fuad
-
-> > +/*
-> > + * Registers a callback to __folio_put(), so that gmem knows that the host does
-> > + * not have any references to the folio. It does that by setting the folio type
-> > + * to guestmem.
-> > + *
-> > + * Returns 0 if the host doesn't have any references, or -EAGAIN if the host
-> > + * has references, and the callback has been registered.
-> > + *
-> > + * Must be called with the following locks held:
-> > + * - filemap (inode->i_mapping) invalidate_lock
-> > + * - folio lock
-> > + */
-> > +static int __gmem_register_callback(struct folio *folio, struct inode *inode, pgoff_t idx)
-> > +{
-> > +     struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
-> > +     void *xval_guest = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
-> > +     int refcount;
-> > +
-> > +     rwsem_assert_held_write_nolockdep(&inode->i_mapping->invalidate_lock);
-> > +     WARN_ON_ONCE(!folio_test_locked(folio));
-> > +
-> > +     if (folio_mapped(folio) || folio_test_guestmem(folio))
-> > +             return -EAGAIN;
-> > +
-> > +     /* Register a callback first. */
-> > +     __folio_set_guestmem(folio);
-> > +
-> > +     /*
-> > +      * Check for references after setting the type to guestmem, to guard
-> > +      * against potential races with the refcount being decremented later.
-> > +      *
-> > +      * At least one reference is expected because the folio is locked.
-> > +      */
-> > +
-> > +     refcount = folio_ref_sub_return(folio, folio_nr_pages(folio));
-> > +     if (refcount == 1) {
-> > +             int r;
-> > +
-> > +             /* refcount isn't elevated, it's now faultable by the guest. */
-> > +             r = WARN_ON_ONCE(xa_err(xa_store(mappable_offsets, idx, xval_guest, GFP_KERNEL)));
-> > +             if (!r)
-> > +                     __kvm_gmem_restore_pending_folio(folio);
-> > +
-> > +             return r;
-> > +     }
-> > +
-> > +     return -EAGAIN;
-> > +}
-> > +
-> > +int kvm_slot_gmem_register_callback(struct kvm_memory_slot *slot, gfn_t gfn)
-> > +{
-> > +     unsigned long pgoff = slot->gmem.pgoff + gfn - slot->base_gfn;
-> > +     struct inode *inode = file_inode(slot->gmem.file);
-> > +     struct folio *folio;
-> > +     int r;
-> > +
-> > +     filemap_invalidate_lock(inode->i_mapping);
-> > +
-> > +     folio = filemap_lock_folio(inode->i_mapping, pgoff);
-> > +     if (WARN_ON_ONCE(IS_ERR(folio))) {
-> > +             r = PTR_ERR(folio);
-> > +             goto out;
-> > +     }
-> > +
-> > +     r = __gmem_register_callback(folio, inode, pgoff);
-> > +
-> > +     folio_unlock(folio);
-> > +     folio_put(folio);
-> > +out:
-> > +     filemap_invalidate_unlock(inode->i_mapping);
-> > +
-> > +     return r;
-> > +}
-> > +
-> > +/*
-> > + * Callback function for __folio_put(), i.e., called when all references by the
-> > + * host to the folio have been dropped. This allows gmem to transition the state
-> > + * of the folio to mappable by the guest, and allows the hypervisor to continue
-> > + * transitioning its state to private, since the host cannot attempt to access
-> > + * it anymore.
-> > + */
-> > +void kvm_gmem_handle_folio_put(struct folio *folio)
-> > +{
-> > +     struct xarray *mappable_offsets;
-> > +     struct inode *inode;
-> > +     pgoff_t index;
-> > +     void *xval;
-> > +
-> > +     inode = folio->mapping->host;
-> > +     index = folio->index;
-> > +     mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
-> > +     xval = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
-> > +
-> > +     filemap_invalidate_lock(inode->i_mapping);
-> > +     __kvm_gmem_restore_pending_folio(folio);
-> > +     WARN_ON_ONCE(xa_err(xa_store(mappable_offsets, index, xval, GFP_KERNEL)));
-> > +     filemap_invalidate_unlock(inode->i_mapping);
-> > +}
-> > +
-> >  static bool gmem_is_mappable(struct inode *inode, pgoff_t pgoff)
-> >  {
-> >       struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+Neil		
 
