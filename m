@@ -1,70 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-46997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60749A29F4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 04:18:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8433A29F5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 04:28:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17DC07A392D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 03:17:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 90DE4188799F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 03:28:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF0817DA6A;
-	Thu,  6 Feb 2025 03:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD0251537AC;
+	Thu,  6 Feb 2025 03:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nxYYt/tr"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="azzcDBHC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EAC6F30F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 03:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239F41487F8
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 03:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738811888; cv=none; b=CvkNpILMCIDqiVt9vJyvdbLjTWgcZaMVuYbA0JcvPZoRqjpLE3CVup0F88YVub1qPHvNbip7RKvKPkQUx854YxrF6v0YdYNuL3MXZlSDuHg9UCJSzcMkzBmSGiVMFCsjUr1VSxy+cToz3oN6AcMDxfOVNNYADCWgZmAQOfHtUOU=
+	t=1738812483; cv=none; b=gWtz3NYbDcp/1EHrKhuYGB8xCQ11Q34uzcsytbUn4PkusQxg9BpUv7b3ixcBbIvz5mg9k3ibatLR+8PH2MZe6glSAQP0VjdIQnYSKrwJ+arIqKACI2RbRNj2L/5KRY1BzM1ootCw91F3Uq85F22UkaI6+0+uTOiVbAxVMxnsp4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738811888; c=relaxed/simple;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	s=arc-20240116; t=1738812483; c=relaxed/simple;
+	bh=h+MLPWhIAMvwOiv0vuo+4FISoS7wVvZQbwB2GT+DW+I=;
 	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=U1RZIaIW2cKQ8eWOcdi1UFzJ+2TYLqe5+kUzTNk5G6gDLobiLR7cLgzTOz+mfE0lOB/NEZFrSf3qn5NS7ykUeyk9PqLS76KwmNxRbMihblNKAjUfsv8A5QvIiDY6Yr6peU3nlbKXTvEWBB07Amez8MlfsslCd/+BCTCieSoXoOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nxYYt/tr; arc=none smtp.client-ip=209.85.214.202
+	 Content-Type; b=DE1tB3rq3mNtjtr2TCmoMH8Qci8efmkoctfWc//zDKO5vnNmtztLjc8sMBlqLhObXCRLzuzqsxlA37DZP6iBPFCbMuNEe84BBSi086tvvA6tTsyX5MSj/HINJVthtjbfjjKeZ0KJ3DLPcWxdZZeyiYFh1Me6ncxvOdjTHSMogG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=azzcDBHC; arc=none smtp.client-ip=209.85.216.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-21f37eaef03so1814095ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Feb 2025 19:18:07 -0800 (PST)
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2f46b7851fcso1321477a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Feb 2025 19:28:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738811887; x=1739416687; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1738812481; x=1739417281; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=nxYYt/tr3LZaB7Y+qMOSD/jZmjOqXmtuLW5gTnw/fTXuMyd6eVAXvqRGjEcRNkS32Q
-         s8Im9eVpewoWWbpSOA3E3sNfXLaXyahsm/mvOsAWufydxQ6G+5zRX9f3uPOaB40Vvzk2
-         /mMZFJ4Nrn93Sw9kb3SSzAQO3zXWAXrztj3FaEBVUj+/Fcy0ZaUTHZPLPNHHclGmSSqi
-         098Ll6M6+pdidH+0LSxOvKKLCjJoOOQ5wGVaWncc2N7a4uKLy3hpTlHnVhg3uSi1rdPa
-         /805PRLWlSF7nss0mYlBQ0LvCFfl8oHOm4vbt9cfDHScYw008vs7OIP9+L+ubB8uTRHt
-         TYqw==
+        bh=f86QKI54VzReRntSvKH8Sw9ugqYuvTu09svLm+2ooYY=;
+        b=azzcDBHCgf4DeVEIk4gRfmVlnpEKvRxeUwxlJghuWWOPA0piSiGgYFyOkHyltw917u
+         iRgpW9T5vtCZMi/g49YqWmzXABpsQFMeHOCwD34r62G+764ivkbd84JwNKWo0Y6I6f3X
+         TRzHAm+OUQ/Vqpo59RmrR0Oqui2dfk/PoVDU7m38LQYsLUn7gYQhOy3feKT2m8Z/bSPW
+         oU4nixTnp9DO2FBKMZSJYpKnL/kYYlGJf+h/5Zz8aRmqdCdQW3GCWEz29QYJq3mp1WrU
+         usFLeadaAfdOb/l2u6LNXBy5o/QNYr9oHEGrnbSVGU/YS3Mz/LtGNlO2ybCQUjEkX52E
+         5BeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738811887; x=1739416687;
+        d=1e100.net; s=20230601; t=1738812481; x=1739417281;
         h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=vkHmHucxaPIJu9WHUy28OQc/kRq5sCy/IDvPQYHhucOCULoZdfFcaftSJ5Pgk6Rm/Q
-         AZKjyaUE650xxkbi/onDmJBgVXHgn6JeObGh0IyRHEFJVyzgsJ4DuBvUWNq9graJs2zp
-         gKGegvdDU/yJ0t4twnW65JyMZivSYfAL5gsJAbDX4j6w2PWTlwmqyQtpyJnCsFH0R5en
-         bWDjofEyrjx7wUaQMApazPoobVPFyP7xDUzszuF0QqhH9VHrRy1XsRuWfjuyjuWpB0oi
-         v1LVpdLoaCF23aPoTfPGseledjwDxlqz57ClEIunh5HyxSu0lP33TcSqz7nfgxTGA4Zu
-         hGpw==
-X-Forwarded-Encrypted: i=1; AJvYcCUTpeVQllScPLtL0+S2lBHKhJL3Tl1KaB+gwGv+dJVozMGAiS4cqgvdW8mUNFziIpsb4ZB8Eant1WXd+7ya@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8yZL0IcEi8peuBW1seF2vliKvHHa6Y3GTjuFBbR91jx2vDIVq
-	jPRc4Dnr3UGOXBhJZOGzWVTGiIGkvkMtJ6q0yE+JD/wfBmGmp3d4/4dkh/cBcfndynwXUXZFbck
-	y3GhZbev5lGvm7iDkNuK5jQ==
-X-Google-Smtp-Source: AGHT+IEYWUr9XYWAl9VfD8M6tGsEcmMIrj94f/xQ66OItUGZ223OtfUcvUSjSKLFBgzFwxMNgf2NfB2UWbEyyCQV8g==
-X-Received: from pfaw12.prod.google.com ([2002:a05:6a00:ab8c:b0:725:f324:ad1c])
+        bh=f86QKI54VzReRntSvKH8Sw9ugqYuvTu09svLm+2ooYY=;
+        b=lkdy4ELAyathu4GfH6XQErpFF5xgu5WzDXSb1mtWvuOXLQR+LIQl92ilSw5kXnD3dZ
+         OFfMt1dE/yYawBMppvpAlW6HEvU4UVZ2S70MYmdsHz+DJiLeHUGdFwkSplrHZr1D4JK5
+         wZ8RrDCSzEmw4aOiPx1+rq1Hv4E2vpiJAQD/gH4dRHsy5uNEsozKaaJnkBh75aw8PXCv
+         oUwuiiVM58xIu9xRRPFErRjbZXu9kAVz5vbWmzM3JLtjc0KZYHE/EMC+4qXg7mrawQxo
+         4tAK0+rIVGpD51+mAh6+aaNglcZbzxOEgiX+IFsVgPpima+DN6WJqhzKiTGb9H8kO7jX
+         Q6Sg==
+X-Forwarded-Encrypted: i=1; AJvYcCXqA9YYXTvjPeuZ00D1CYbuM1Y17A55Q2Q+sBCVZ/YECetY5OdGtm5I3/Y4ZjqbjlgNB9G5gf48BbIkVzzf@vger.kernel.org
+X-Gm-Message-State: AOJu0YwCD37PePsSntUKZ0rO69Tez4yI4nYpZ6NaUEgkxJ7jHfI5tq6r
+	4YWMXZwJdOzv7y7QN7g/If+jTAIHT7LF95epmBx4OhqnyL0tDupZZdtU3LBJkDfdR/nqTBDOIE8
+	9Ii47MM4/fan6naLdB1D0cw==
+X-Google-Smtp-Source: AGHT+IH0DhkGpMKRUFBfTEJ4n7ZfzHdfgibyH/6sTUAKCmbFrQGBXGYU070tEmkqKMXdvIZELc0Lez0AxeRJeaX27g==
+X-Received: from pjbst14.prod.google.com ([2002:a17:90b:1fce:b0:2f5:63a:4513])
  (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:d04e:b0:1e0:d89e:f5bc with SMTP id adf61e73a8af0-1ede883b82fmr9504056637.11.1738811886593;
- Wed, 05 Feb 2025 19:18:06 -0800 (PST)
-Date: Thu, 06 Feb 2025 03:18:05 +0000
+ 2002:a17:90b:4b4a:b0:2ea:7cd5:4ad6 with SMTP id 98e67ed59e1d1-2f9e0851384mr6953905a91.32.1738812481234;
+ Wed, 05 Feb 2025 19:28:01 -0800 (PST)
+Date: Thu, 06 Feb 2025 03:28:00 +0000
 In-Reply-To: <CA+EHjTyToQEHoKOQLgDxdjTCCvawrtS8czsZYLehRO1N_Ph2EQ@mail.gmail.com>
  (message from Fuad Tabba on Thu, 23 Jan 2025 11:00:28 +0000)
 Precedence: bulk
@@ -73,7 +73,7 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
-Message-ID: <diqz8qqjsqvm.fsf@ackerleytng-ctop.c.googlers.com>
+Message-ID: <diqz4j17sqf3.fsf@ackerleytng-ctop.c.googlers.com>
 Subject: Re: [RFC PATCH v5 06/15] KVM: guest_memfd: Handle final folio_put()
  of guestmem pages
 From: Ackerley Tng <ackerleytng@google.com>
@@ -100,4 +100,219 @@ Cc: vbabka@suse.cz, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	jthoughton@google.com
 Content-Type: text/plain; charset="UTF-8"
 
+Fuad Tabba <tabba@google.com> writes:
+
+> On Wed, 22 Jan 2025 at 22:24, Ackerley Tng <ackerleytng@google.com> wrote:
+>>
+>> Fuad Tabba <tabba@google.com> writes:
+>>
+>> >> > <snip>
+>> >> >
+>> >> > +/*
+>> >> > + * Registers a callback to __folio_put(), so that gmem knows that the host does
+>> >> > + * not have any references to the folio. It does that by setting the folio type
+>> >> > + * to guestmem.
+>> >> > + *
+>> >> > + * Returns 0 if the host doesn't have any references, or -EAGAIN if the host
+>> >> > + * has references, and the callback has been registered.
+>> >>
+>> >> Note this comment.
+>> >>
+>> >> > + *
+>> >> > + * Must be called with the following locks held:
+>> >> > + * - filemap (inode->i_mapping) invalidate_lock
+>> >> > + * - folio lock
+>> >> > + */
+>> >> > +static int __gmem_register_callback(struct folio *folio, struct inode *inode, pgoff_t idx)
+>> >> > +{
+>> >> > +     struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+>> >> > +     void *xval_guest = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
+>> >> > +     int refcount;
+>> >> > +
+>> >> > +     rwsem_assert_held_write_nolockdep(&inode->i_mapping->invalidate_lock);
+>> >> > +     WARN_ON_ONCE(!folio_test_locked(folio));
+>> >> > +
+>> >> > +     if (folio_mapped(folio) || folio_test_guestmem(folio))
+>> >> > +             return -EAGAIN;
+>> >>
+>> >> But here we return -EAGAIN and no callback was registered?
+>> >
+>> > This is intentional. If the folio is still mapped (i.e., its mapcount
+>> > is elevated), then we cannot register the callback yet, so the
+>> > host/vmm needs to unmap first, then try again. That said, I see the
+>> > problem with the comment above, and I will clarify this.
+>> >
+>> >> > +
+>> >> > +     /* Register a callback first. */
+>> >> > +     __folio_set_guestmem(folio);
+>> >> > +
+>> >> > +     /*
+>> >> > +      * Check for references after setting the type to guestmem, to guard
+>> >> > +      * against potential races with the refcount being decremented later.
+>> >> > +      *
+>> >> > +      * At least one reference is expected because the folio is locked.
+>> >> > +      */
+>> >> > +
+>> >> > +     refcount = folio_ref_sub_return(folio, folio_nr_pages(folio));
+>> >> > +     if (refcount == 1) {
+>> >> > +             int r;
+>> >> > +
+>> >> > +             /* refcount isn't elevated, it's now faultable by the guest. */
+>> >>
+>> >> Again this seems racy, somebody could have just speculatively increased it.
+>> >> Maybe we need to freeze here as well?
+>> >
+>> > A speculative increase here is ok I think (famous last words). The
+>> > callback was registered before the check, therefore, such an increase
+>> > would trigger the callback.
+>> >
+>> > Thanks,
+>> > /fuad
+>> >
+>> >
+>>
+>> I checked the callback (kvm_gmem_handle_folio_put()) and agree with you
+>> that the mappability reset to KVM_GMEM_GUEST_MAPPABLE is handled
+>> correctly (since kvm_gmem_handle_folio_put() doesn't assume anything
+>> about the mappability state at callback-time).
+>>
+>> However, what if the new speculative reference writes to the page and
+>> guest goes on to fault/use the page?
+>
+> I don't think that's a problem. At this point the page is in a
+> transient state, but still shared from the guest's point of view.
+> Moreover, no one can fault-in the page at the host at this point (we
+> check in kvm_gmem_fault()).
+>
+> Let's have a look at the code:
+>
+> +static int __gmem_register_callback(struct folio *folio, struct inode
+> *inode, pgoff_t idx)
+> +{
+> +       struct xarray *mappable_offsets =
+> &kvm_gmem_private(inode)->mappable_offsets;
+> +       void *xval_guest = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
+> +       int refcount;
+>
+> At this point the guest still perceives the page as shared, the state
+> of the page is KVM_GMEM_NONE_MAPPABLE (transient state). This means
+> that kvm_gmem_fault() doesn't fault-in the page at the host anymore.
+>
+> +       rwsem_assert_held_write_nolockdep(&inode->i_mapping->invalidate_lock);
+> +       WARN_ON_ONCE(!folio_test_locked(folio));
+> +
+> +       if (folio_mapped(folio) || folio_test_guestmem(folio))
+> +               return -EAGAIN;
+> +
+> +       /* Register a callback first. */
+> +       __folio_set_guestmem(folio);
+>
+> This (in addition to the state of the NONE_MAPPABLE), also ensures
+> that kvm_gmem_fault() doesn't fault-in the page at the host anymore.
+>
+> +       /*
+> +        * Check for references after setting the type to guestmem, to guard
+> +        * against potential races with the refcount being decremented later.
+> +        *
+> +        * At least one reference is expected because the folio is locked.
+> +        */
+> +
+> +       refcount = folio_ref_sub_return(folio, folio_nr_pages(folio));
+> +       if (refcount == 1) {
+> +               int r;
+>
+> At this point we know that guest_memfd has the only real reference.
+> Speculative references AFAIK do not access the page itself.
+> +
+> +               /* refcount isn't elevated, it's now faultable by the guest. */
+> +               r = WARN_ON_ONCE(xa_err(xa_store(mappable_offsets,
+> idx, xval_guest, GFP_KERNEL)));
+>
+> Now it's safe so let the guest know that it can map the page.
+>
+> +               if (!r)
+> +                       __kvm_gmem_restore_pending_folio(folio);
+> +
+> +               return r;
+> +       }
+> +
+> +       return -EAGAIN;
+> +}
+>
+> Does this make sense, or did I miss something?
+
+Thanks for explaining! I don't know enough to confirm/deny this but I agree
+that if speculative references don't access the page itself, this works.
+
+What if over here, we just drop the refcount, and let setting mappability to
+GUEST happen in the folio_put() callback?
+
+>
+> Thanks!
+> /fuad
+>
+>> >> > +             r = WARN_ON_ONCE(xa_err(xa_store(mappable_offsets, idx, xval_guest, GFP_KERNEL)));
+>> >> > +             if (!r)
+>> >> > +                     __kvm_gmem_restore_pending_folio(folio);
+>> >> > +
+>> >> > +             return r;
+>> >> > +     }
+>> >> > +
+>> >> > +     return -EAGAIN;
+>> >> > +}
+>> >> > +
+>> >> > +int kvm_slot_gmem_register_callback(struct kvm_memory_slot *slot, gfn_t gfn)
+>> >> > +{
+>> >> > +     unsigned long pgoff = slot->gmem.pgoff + gfn - slot->base_gfn;
+>> >> > +     struct inode *inode = file_inode(slot->gmem.file);
+>> >> > +     struct folio *folio;
+>> >> > +     int r;
+>> >> > +
+>> >> > +     filemap_invalidate_lock(inode->i_mapping);
+>> >> > +
+>> >> > +     folio = filemap_lock_folio(inode->i_mapping, pgoff);
+>> >> > +     if (WARN_ON_ONCE(IS_ERR(folio))) {
+>> >> > +             r = PTR_ERR(folio);
+>> >> > +             goto out;
+>> >> > +     }
+>> >> > +
+>> >> > +     r = __gmem_register_callback(folio, inode, pgoff);
+>> >> > +
+>> >> > +     folio_unlock(folio);
+>> >> > +     folio_put(folio);
+>> >> > +out:
+>> >> > +     filemap_invalidate_unlock(inode->i_mapping);
+>> >> > +
+>> >> > +     return r;
+>> >> > +}
+>> >> > +
+>> >> > +/*
+>> >> > + * Callback function for __folio_put(), i.e., called when all references by the
+>> >> > + * host to the folio have been dropped. This allows gmem to transition the state
+>> >> > + * of the folio to mappable by the guest, and allows the hypervisor to continue
+>> >> > + * transitioning its state to private, since the host cannot attempt to access
+>> >> > + * it anymore.
+>> >> > + */
+>> >> > +void kvm_gmem_handle_folio_put(struct folio *folio)
+>> >> > +{
+>> >> > +     struct xarray *mappable_offsets;
+>> >> > +     struct inode *inode;
+>> >> > +     pgoff_t index;
+>> >> > +     void *xval;
+>> >> > +
+>> >> > +     inode = folio->mapping->host;
+>> >> > +     index = folio->index;
+>> >> > +     mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+>> >> > +     xval = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
+>> >> > +
+>> >> > +     filemap_invalidate_lock(inode->i_mapping);
+>> >> > +     __kvm_gmem_restore_pending_folio(folio);
+>> >> > +     WARN_ON_ONCE(xa_err(xa_store(mappable_offsets, index, xval, GFP_KERNEL)));
+>> >> > +     filemap_invalidate_unlock(inode->i_mapping);
+>> >> > +}
+>> >> > +
+>> >> >  static bool gmem_is_mappable(struct inode *inode, pgoff_t pgoff)
+>> >> >  {
+>> >> >       struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+>> >>
 
