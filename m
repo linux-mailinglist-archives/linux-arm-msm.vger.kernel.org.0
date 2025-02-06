@@ -1,180 +1,239 @@
-Return-Path: <linux-arm-msm+bounces-47053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E11C6A2B2E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 21:06:24 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C01C8A2B382
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 21:43:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E22AC188AC97
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 20:06:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57A34166538
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 20:43:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 764441D61B9;
-	Thu,  6 Feb 2025 20:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73E051D88D7;
+	Thu,  6 Feb 2025 20:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="JmMTwe4s"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C2oL3sCM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DCC1D5AD8;
-	Thu,  6 Feb 2025 20:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A4E1A4F12;
+	Thu,  6 Feb 2025 20:43:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738872365; cv=none; b=txU/yuPK82GVnp5p8JpqwdwE0w2/SjKOxTz3t0yTp25bag3O6lUwGzZvqdXFiDFY02o96cw5ZZ/nNqB/alrQqIyOQcUx8terSYOockf4QA1bNoWZAeDt+rZho4wzU1SdoEnqCKHkcM7XxaI4ULMchXJ3WxfZQY9ytIXCSXevmNw=
+	t=1738874597; cv=none; b=EfrSGzGSSFoHWJp69K7ujTY5dFuWPEWcy5LyVc5gItPhTFWU6alVT4gqs1aVkQwSbIPHgmTJil1ua96Cg2LSMW7pTCccu0LtC21l9eHWMnjEu85q3e+DJFKUNUdyOAgMc3vykYK3hNJeI9IXVwMPGyzJIAjIMIuU9C6Q0iwOvqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738872365; c=relaxed/simple;
-	bh=s5qZPIsWTjLP53Z+ervmP5VF7KNxJznZKE2uskfwYTs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AJ+UPMX35ABkhSUa1qqY63q78jn8O0AoYGBOBl38i6PfUpHu1HNAsO4cJAXLqrBNdj2rTWuNBDHOm3iCZTAYR1U8KyL3PgzMbxIBFC41rf/Gb/wJ/+1j5D+woTMYnsIYUb9cPiBs0eqSZmIkSuDW58mFScihDcb9WufPmzyc6LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=JmMTwe4s; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1738871842; bh=s5qZPIsWTjLP53Z+ervmP5VF7KNxJznZKE2uskfwYTs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=JmMTwe4saCPRQjT51G/AshKGU296RWxf7fQMMbCFpzP/hhmJeeoxaCM7WWzaNfb09
-	 nqn197MILPjNYuFCpC7F1dhjPzFIb8G0PGd+OaWWsJGvat7CuLzwXDgnQX/sfYQQBw
-	 qHhrgeHHLiNhif3agoPvvZCmCHrkl0VMsmX3BwFg=
-From: Luca Weiss <luca@lucaweiss.eu>
-Date: Thu, 06 Feb 2025 20:56:48 +0100
-Subject: [PATCH v2 2/2] remoteproc: qcom_wcnss: Handle platforms with only
- single power domain
+	s=arc-20240116; t=1738874597; c=relaxed/simple;
+	bh=JI8O3sI18zPdfFZUFX44FdVhvRZI45EiHE6VzY/Hjc8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JFOR92yzJWdy/9NpigOjbJ6nHpNCfT/gSvXa6F9d6nkM41FxGfulO5TYb17cOXuZC3gBKxoc41cQe+F6/h4tbevQB0dNtykg4Qh9+oH/0zeOJO8zx+And9Xt4mK3C2noYJAd1iTXP1vSnE+OjnFqkiLhsZUn2PAZ1uLrhLbGh+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C2oL3sCM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 516E57UU015247;
+	Thu, 6 Feb 2025 20:42:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	VOS1t+7zQCjgLpQI16tbYkeg5M4/gUoycEPmZCoPtg4=; b=C2oL3sCML5Mp372Q
+	tsh2a4etcxDp6ud4iDGUoIpaB2m36EsQw193s1xh5BkfT+fPilGN9+sDQG4jRCka
+	WlrlzP/YjOMJT+Lov5+E1dl9iXV6MvlrP4lcgz33FwMSVxniQnKI5whhjw6/FkJW
+	/v41owjV2yNxLAskYFN/Ohd69kicAEA/VgrcWEdrcWEl5UUzTcsLjxta+11d/1K6
+	N4KU8UHU3b4Wbtvbqv1BPuvlV1qqfRlcAE+gh5hXiGpauQRpSEnxKJHhxm3EYC+7
+	k45OblkFROdcUBT6IUguD5WZB++uJbdRMVCjBc6PRA4qUbKVUlw1lMW3GQMvz+vw
+	jBU1KQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44mxhbryu6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Feb 2025 20:42:52 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 516KgpMw009163
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Feb 2025 20:42:51 GMT
+Received: from [10.71.110.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Feb 2025
+ 12:42:07 -0800
+Message-ID: <1b98265e-8766-4504-b374-f7af8203c926@quicinc.com>
+Date: Thu, 6 Feb 2025 12:41:30 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250206-wcnss-singlepd-v2-2-9a53ee953dee@lucaweiss.eu>
-References: <20250206-wcnss-singlepd-v2-0-9a53ee953dee@lucaweiss.eu>
-In-Reply-To: <20250206-wcnss-singlepd-v2-0-9a53ee953dee@lucaweiss.eu>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Stephan Gerhold <stephan.gerhold@linaro.org>, 
- =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca@lucaweiss.eu>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3011; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=tnIGOs6S3OyQbm6Y5g+I6xPil/Bz8DZ6vLvYuNzSX3E=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnpRQgRILFaTTkTU3LTF5cxS5Motyv+/o+Y/hm/
- ob9ay09UPiJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ6UUIAAKCRBy2EO4nU3X
- VrL/EACiXl1UPUtsnnN4n/40gYwK/aOD3yLNYXWK09CZ7vF4M6A1pUUnw0tQmNx8nneGaIL940m
- ZCEq/HUwaOb0igiMZmy5YQROpx/ii25NdHezhkbuOULZHRSjbdDdlef0YZFee5QUz2AuhydN66A
- 99U6XMLUkFG3Fi6DqpA8YyIbPEvlc49oHlEinf3pZqV6MCCww2sI3Go8pnhLNVMeolZV16Gdbnb
- Az6LKpdNA9fkToX0tfQ0lC1TrbRVaFnUcDGYird7lre4Yd0RjJFLXsDAVKZmq0CW1IqOChh8iYV
- eaIaH6J7GNN0ac+fwQ9x3r6q5bGH4NWSNgjbsF9xXuxmzxA0/xO3+kmqy4g1f+vCMe4vjgtDILq
- YwnfJBTjXQvgRAzfp6LthgA13YGWNEezYYSmkwCFqi6zHhlcHC7t1aafyhzqeOOY2pf8N6k1VG8
- kmbVAy9GdNXoCG4csRi0FL3X+VRKA9nNfWyn+bGJx/6FPmGxHBifzicA5e4cY/clD7zFdGl8k6c
- 6PY8uW+qctXCBLJUQCgFgwgHYKB1Mav9s3U1nGpjim4yKN+8z6w4DD5YgZaFscyvoNU4OaRsEHq
- W81VKhqZFUDx10EjwHYH5hsGZsTvmsieZMzbdA/cgVn2g3CKHDkJdHEiYqeVrVBcb++IXYyaS/B
- 1HaR1EUmEcAlXTg==
-X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/7] drm/msm/hdmi: program HDMI timings during
+ atomic_pre_enable
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart
+	<Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej
+ Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Simona Vetter <simona@ffwll.ch>,
+        Simona
+ Vetter <simona.vetter@ffwll.ch>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20250124-bridge-hdmi-connector-v6-0-1592632327f7@linaro.org>
+ <20250124-bridge-hdmi-connector-v6-2-1592632327f7@linaro.org>
+ <7fbfc7d5-f6bb-4f99-914a-f91bb7d153fd@quicinc.com>
+ <na7jgb5leqbugi6a6xkfz3nl6mp7li4oevfevhjmo5y4v7eot6@fsmfv52u2rtz>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <na7jgb5leqbugi6a6xkfz3nl6mp7li4oevfevhjmo5y4v7eot6@fsmfv52u2rtz>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: eoBIM9uswIRdOCIYAwxjd8U7b03cxVB5
+X-Proofpoint-GUID: eoBIM9uswIRdOCIYAwxjd8U7b03cxVB5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-06_06,2025-02-05_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ mlxlogscore=999 priorityscore=1501 mlxscore=0 clxscore=1015 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
+ definitions=main-2502060164
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 
-Both MSM8974 and MSM8226 have only CX as power domain with MX & PX being
-handled as regulators. Handle this case by reodering pd_names to have CX
-first, and handling that the driver core will already attach a single
-power domain internally.
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-[luca: minor changes]
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
----
- drivers/remoteproc/qcom_wcnss.c | 32 +++++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+On 2/3/2025 4:59 PM, Dmitry Baryshkov wrote:
+> On Mon, Feb 03, 2025 at 11:34:00AM -0800, Abhinav Kumar wrote:
+>>
+>>
+>> On 1/24/2025 1:47 PM, Dmitry Baryshkov wrote:
+>>> The mode_set callback is deprecated, it doesn't get the
+>>> drm_bridge_state, just mode-related argumetns. Also Abhinav pointed out
+>>> that HDMI timings should be programmed after setting up HDMI PHY and
+>>> PLL. Rework the code to program HDMI timings at the end of
+>>> atomic_pre_enable().
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 23 +++++++++++++++--------
+>>>    1 file changed, 15 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+>>> index d839c71091dcdc3b020fcbba8d698d58ee7fc749..d5ab1f74c0e6f47dc59872c016104e9a84d85e9e 100644
+>>> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+>>> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+>>> @@ -126,15 +126,26 @@ static void msm_hdmi_config_avi_infoframe(struct hdmi *hdmi)
+>>>    	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
+>>>    }
+>>> +static void msm_hdmi_bridge_atomic_set_timings(struct hdmi *hdmi,
+>>> +					       const struct drm_display_mode *mode);
+>>>    static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
+>>>    					      struct drm_bridge_state *old_bridge_state)
+>>>    {
+>>> +	struct drm_atomic_state *state = old_bridge_state->base.state;
+>>>    	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+>>>    	struct hdmi *hdmi = hdmi_bridge->hdmi;
+>>>    	struct hdmi_phy *phy = hdmi->phy;
+>>> +	struct drm_encoder *encoder = bridge->encoder;
+>>> +	struct drm_connector *connector;
+>>> +	struct drm_connector_state *conn_state;
+>>> +	struct drm_crtc_state *crtc_state;
+>>>    	DBG("power up");
+>>> +	connector = drm_atomic_get_new_connector_for_encoder(state, encoder);
+>>> +	conn_state = drm_atomic_get_new_connector_state(state, connector);
+>>> +	crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
+>>> +
+>>>    	if (!hdmi->power_on) {
+>>>    		msm_hdmi_phy_resource_enable(phy);
+>>>    		msm_hdmi_power_on(bridge);
+>>> @@ -151,6 +162,8 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
+>>>    	if (hdmi->hdcp_ctrl)
+>>>    		msm_hdmi_hdcp_on(hdmi->hdcp_ctrl);
+>>> +
+>>> +	msm_hdmi_bridge_atomic_set_timings(hdmi, &crtc_state->adjusted_mode);
+>>>    }
+>>
+>> This addresses my comment about setting up the HDMI timing registers before
+>> setting up the timing engine registers.
+>>
+>> But prior to this change, mode_set was doing the same thing as
+>> msm_hdmi_bridge_atomic_set_timings() which means
+>> msm_hdmi_bridge_atomic_set_timings() should be called at the beginning of
+>> pre_enable()?
+>>
+>> The controller is enabled in msm_hdmi_set_mode(). So this should be done
+>> before that.
+> 
+> In [1] you provided the following order:
+> 
+> 1) setup HDMI PHY and PLL
+> 2) setup HDMI video path correctly (HDMI timing registers)
+> 3) setup timing generator to match the HDMI video in (2)
+> 4) Enable timing engine
+> 
+> This means htat msm_hdmi_bridge_atomic_set_timings() should come at the
+> end of msm_hdmi_bridge_atomic_pre_enable(), not in the beginning /
+> middle of it.
+> 
+> [1] https://lore.kernel.org/dri-devel/8dd4a43e-d83c-1f36-21ff-61e13ff751e7@quicinc.com/
+> 
 
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index 5b5664603eed293a1086a302564111d6203b17ca..143cc2fa8b65e4cf076cf29b41bb8939de5a74f0 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -117,10 +117,10 @@ static const struct wcnss_data pronto_v1_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
- 
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddcx", .super_turbo = true},
-+		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -131,10 +131,10 @@ static const struct wcnss_data pronto_v2_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
- 
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddcx", .super_turbo = true },
-+		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -397,8 +397,17 @@ static irqreturn_t wcnss_stop_ack_interrupt(int irq, void *dev)
- static int wcnss_init_pds(struct qcom_wcnss *wcnss,
- 			  const char * const pd_names[WCNSS_MAX_PDS])
- {
-+	struct device *dev = wcnss->dev;
- 	int i, ret;
- 
-+	/* Handle single power domain */
-+	if (dev->pm_domain) {
-+		wcnss->pds[0] = dev;
-+		wcnss->num_pds = 1;
-+		pm_runtime_enable(dev);
-+		return 0;
-+	}
-+
- 	for (i = 0; i < WCNSS_MAX_PDS; i++) {
- 		if (!pd_names[i])
- 			break;
-@@ -418,8 +427,15 @@ static int wcnss_init_pds(struct qcom_wcnss *wcnss,
- 
- static void wcnss_release_pds(struct qcom_wcnss *wcnss)
- {
-+	struct device *dev = wcnss->dev;
- 	int i;
- 
-+	/* Handle single power domain */
-+	if (wcnss->num_pds == 1 && dev->pm_domain) {
-+		pm_runtime_disable(dev);
-+		return;
-+	}
-+
- 	for (i = 0; i < wcnss->num_pds; i++)
- 		dev_pm_domain_detach(wcnss->pds[i], false);
- }
-@@ -437,9 +453,11 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
- 	 * the regulators for the power domains. For old device trees we need to
- 	 * reserve extra space to manage them through the regulator interface.
- 	 */
--	if (wcnss->num_pds)
--		info += num_pd_vregs;
--	else
-+	if (wcnss->num_pds) {
-+		info += wcnss->num_pds;
-+		/* Handle single power domain case */
-+		num_vregs += num_pd_vregs - wcnss->num_pds;
-+	} else
- 		num_vregs += num_pd_vregs;
- 
- 	bulk = devm_kcalloc(wcnss->dev,
+Sequence given is correct and is exactly what is given in the docs. What 
+is somewhat not clear in the docs is the location of the enable of the 
+HDMI controller. This is not there in the above 4 steps. I am referring 
+to the enable bit being programmed in msm_hdmi_set_mode(). Ideally till 
+we enable the timing engine, it should be okay but what I wanted to do 
+was to keep the msm_hdmi_set_mode() as the last call in this function 
+that way we program everything and then enable the controller.
 
--- 
-2.48.1
+This can be done in either way, move it to the beginning of the function 
+or move it right before msm_hdmi_set_mode(). I had suggested beginning 
+because thats how it was when things were still in mode_set.
 
+
+
+> 
+>>
+>>>    static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
+>>> @@ -177,17 +190,12 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
+>>>    	}
+>>>    }
+>>> -static void msm_hdmi_bridge_mode_set(struct drm_bridge *bridge,
+>>> -		 const struct drm_display_mode *mode,
+>>> -		 const struct drm_display_mode *adjusted_mode)
+>>> +static void msm_hdmi_bridge_atomic_set_timings(struct hdmi *hdmi,
+>>> +					       const struct drm_display_mode *mode)
+>>>    {
+>>> -	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+>>> -	struct hdmi *hdmi = hdmi_bridge->hdmi;
+>>>    	int hstart, hend, vstart, vend;
+>>>    	uint32_t frame_ctrl;
+>>> -	mode = adjusted_mode;
+>>> -
+>>>    	hdmi->pixclock = mode->clock * 1000;
+>>>    	hstart = mode->htotal - mode->hsync_start;
+>>> @@ -306,7 +314,6 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
+>>>    	.atomic_reset = drm_atomic_helper_bridge_reset,
+>>>    	.atomic_pre_enable = msm_hdmi_bridge_atomic_pre_enable,
+>>>    	.atomic_post_disable = msm_hdmi_bridge_atomic_post_disable,
+>>> -	.mode_set = msm_hdmi_bridge_mode_set,
+>>>    	.mode_valid = msm_hdmi_bridge_mode_valid,
+>>>    	.edid_read = msm_hdmi_bridge_edid_read,
+>>>    	.detect = msm_hdmi_bridge_detect,
+>>>
+> 
 
