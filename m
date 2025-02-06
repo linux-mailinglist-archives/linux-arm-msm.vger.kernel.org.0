@@ -1,403 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-46999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFFC8A29F6C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 04:37:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 34779A2A02C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 06:29:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9896718888C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 03:37:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6A8207A3245
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 05:29:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2B2D154BE2;
-	Thu,  6 Feb 2025 03:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73585223328;
+	Thu,  6 Feb 2025 05:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TIoK3YLg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hhwGI1fI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC03D46BF
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 03:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11E4376;
+	Thu,  6 Feb 2025 05:29:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738813030; cv=none; b=tGIKM5+QCWky0JXlIclnfiODfnjEXIxkc+rA2VbTlCFpN/h2xXJD4QfD6/6jScKeyNBR4v9yGl5clo644TQBUgqM7n+IytAyA6Mk4K2kPVQoRRH3xkGP3fiV4pH0UxhxXEv1PHwpFwwogste3EMzO7DxBP+2iD6VQDUPoA/SNwQ=
+	t=1738819790; cv=none; b=ddZ99fDaCuNSsn2k6qnbNK+pTpqh9fLKJIr7Ubz+H9xski7hmAae0qK2lF46ZKOZD8cuFb1f6O9HJL6DWsuqVyuSE30iGgghGlIO8khmVIo0TMfg4+FEDjOWBd3a9EWbHIip0NeYrJfw58HZBt9im3TFTRDM1TCbiOQJfwE4UyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738813030; c=relaxed/simple;
-	bh=SKWn6TXEXhmMjKUHcZeCx7dEpDbAaVJ346qu9arIhzE=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=pxXV7jWrjO4+1SBW5jUR5YFBY0nCUuZJRM863Kjpl8qvCFAOLzC+pymyxDq3Ugn3XMXoCjlHOjmyzi2PMTenQaI1vZyxeqIiIcan0KozpPCN7lS2wKYxXzpYoQv0Pl5UKx8d6uTXwtixvBAGa9vpDNkXdrWpcm0kMiwKAXtQIZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TIoK3YLg; arc=none smtp.client-ip=209.85.216.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-2f9d1ca50c9so1383531a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Feb 2025 19:37:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738813028; x=1739417828; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pRUcWLN38Aa0aZPGEebbNawOjCOpEyDG26hlfVRLOOs=;
-        b=TIoK3YLgkIpV5LRIYkMo38XfHPKPWbN5JHACNKXvMCxmHiO3Wm+9+uUdlmx8tU6rgy
-         QT6I/OyipKvQK2YgkQ/WKQQaOSv65HVMrdWc5huoCxJ2HQxCYcA8qcyrzcTaBqj296Wz
-         fHjC4Ccjm+bU7nD+DKH8EKxwOj4wDwgA4xljalvljNMlvfD+BLwm++cCJgHZaH35BkTY
-         U5OYl+NXy4COg12AeOZXDLoflQHVbYWrrpgm9fmoON/1ZW1XKnTJLMvlG8X2w2dRxCyH
-         MurV/eD4fpN/ywNuaKy/b/ET21Nu59b6F8YeTs0LvQwtJGIdLSW3KUG3K2MK4RQWLR+6
-         211Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738813028; x=1739417828;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pRUcWLN38Aa0aZPGEebbNawOjCOpEyDG26hlfVRLOOs=;
-        b=j7kfm6eai7qYojjkh8egCOxteReIA4O8UOKBDOUmtD5GLP5PWR1LnITBl6eL6BX5QC
-         emTPozq7fpllhro+idzLLQoLnSLAAXi/yImS6PwqEQi8kLuiX3Xvchf8ZZC7BXJ36cF9
-         V9BqxqqhzjQzWUzC3cN0lxalRNU8sLNNTJhJriNK7pjJ8dLHZr3T6Y/QtkWKI73rN718
-         4SiCrbcVnaKKaVEt8xjwjeZP/bldR1Zh7ZD5yYeLYyZfdq4GH1IQ7cOg+uti7Kj5tAxP
-         K79k1hfQeWklzJaPTL/zeu4+OjyQcDxVC7up9zmqXJLAVvFjYIYHiaM5A36T84Md19vq
-         aJ+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXnRm/XXIGsJL+wvlQsxcQPKPufNlP6tE9yNmGTQqAdP3T1cBAVE8n5l0RubkkKXqCDdZ/1Z2jDB9RIkNK4@vger.kernel.org
-X-Gm-Message-State: AOJu0YwY5MZxaX/UEy9Y2xslEMZgMf3TVXMA3XUvunYSY8mOi8HFkZ5L
-	Y/QRfq784SdZRYIc/X6EbIRnllTtTOW9XseuIm3pDU8+a/Z/gcd0opX38yIBLFIc/nHdEIxMm9R
-	f5FBxwexGrvId9rzZFOLmmg==
-X-Google-Smtp-Source: AGHT+IGhY4/pV+4mHiEaSq+to1TSQKDTUBZjG4PDt5LI9mDx6rl17K7kwWvRj+1UQyTkxkdUhDnW93d4pfLlxxgdZA==
-X-Received: from pjl7.prod.google.com ([2002:a17:90b:2f87:b0:2f9:d5f9:128f])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90a:d44b:b0:2ee:c9b6:c267 with SMTP id 98e67ed59e1d1-2f9e075da23mr8852501a91.9.1738813028145;
- Wed, 05 Feb 2025 19:37:08 -0800 (PST)
-Date: Thu, 06 Feb 2025 03:37:06 +0000
-In-Reply-To: <20250117163001.2326672-7-tabba@google.com> (message from Fuad
- Tabba on Fri, 17 Jan 2025 16:29:52 +0000)
+	s=arc-20240116; t=1738819790; c=relaxed/simple;
+	bh=sPkE2H7TRcVJFXCbyejleJMn2GkjiA93cL6WofHY1Oo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ox9Q5My0n/Ymc4Y03HT8sC7ceEi0lvVaEsSbK+bhAuG0XtSIZnfATcDSOBhl17F/zTFAYdRxueaZT+9gO6tSDugSsZCyFrvoPmfmlcMx5U1E2mONdfqRelrst31UpEy9Ifo3AL6Gis3S56UKTytsf5VH1Be/QeK22y2EaL0F1bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hhwGI1fI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 515FDYFb030209;
+	Thu, 6 Feb 2025 05:29:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	HqNZCSPe9MF37Q5T+4kjTCzADjtZNkVnwXEV6pjLaXQ=; b=hhwGI1fIoDV2bgcC
+	ZohJGQOsnoLNC7jXo4Kaaj/XrZ5YgALylT+pb1Tlm4HmuC+KWOYESFvxIToXMDMq
+	dZFipDm0n86WpqNTxSzVLzti9V4YHfWu4iSVU5ftS/sXLGQnucaPJYFX14eoxDL6
+	jxjGoFKoVwUo5veSnjGq9rP0WcKobjeDtdT00L2vSo/uCt4wtGRbBqrlBngwPqJU
+	vr2OKXh6YLKlwt1YEvaa5Cqiv81Y00gsJ0yTXuMMsqRQ9XTx6mMcfk0GYm4tnbHX
+	/YMjgIjkllB5y8D7xcOTtHPb76j8h45xS+LegOowdPubsvw7eZRpQyeR9FKqHYpb
+	1pURLQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44maep9qvn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Feb 2025 05:29:12 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5165TC20020014
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Feb 2025 05:29:12 GMT
+Received: from [10.216.41.37] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 5 Feb 2025
+ 21:29:03 -0800
+Message-ID: <ffbd8209-116a-a4ad-1b5a-cd61665758fd@quicinc.com>
+Date: Thu, 6 Feb 2025 10:59:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqz1pwbspzx.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [RFC PATCH v5 06/15] KVM: guest_memfd: Handle final folio_put()
- of guestmem pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [RESEND v5 3/4] soundwire: qcom: Add set_channel_map api support
+Content-Language: en-US
+To: Mark Brown <broonie@kernel.org>
+CC: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Liam Girdwood
+	<lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul
+	<vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        "Jaroslav
+ Kysela" <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+        Pierre-Louis Bossart
+	<pierre-louis.bossart@linux.dev>,
+        Sanyog Kale <sanyog.r.kale@intel.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_pkumpatl@quicinc.com>,
+        <kernel@quicinc.com>
+References: <20250123042823.2067740-1-quic_mohs@quicinc.com>
+ <20250123042823.2067740-4-quic_mohs@quicinc.com>
+ <a82a33a8-d27c-45c8-a39a-58e6357e0d99@sirena.org.uk>
+From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+In-Reply-To: <a82a33a8-d27c-45c8-a39a-58e6357e0d99@sirena.org.uk>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: k1NjFBqjvvM6nUIMBobsAedehUiWsiQ-
+X-Proofpoint-ORIG-GUID: k1NjFBqjvvM6nUIMBobsAedehUiWsiQ-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-06_01,2025-02-05_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502060043
 
-Fuad Tabba <tabba@google.com> writes:
+On 2/3/2025 6:49 PM, Mark Brown wrote:
+> On Thu, Jan 23, 2025 at 09:58:22AM +0530, Mohammad Rafi Shaik wrote:
+>> Added qcom_swrm_set_channel_map api to set the master channel mask for
+>> TX and RX paths based on the provided slots.
+> 
+> This breaks an allmodconfig build, and arm64 defconfig:
+> 
+> /build/stage/linux/drivers/soundwire/qcom.c: In function ‘qcom_swrm_set_channel_map’:
+> /build/stage/linux/drivers/soundwire/qcom.c:1283:36: warning: unused variable ‘sruntime’ [-Wunused-variable]
+>   1283 |         struct sdw_stream_runtime *sruntime = ctrl->sruntime[dai->id];
+>        |                                    ^~~~~~~~
+> /build/stage/linux/drivers/soundwire/qcom.c: At top level:
+> /build/stage/linux/drivers/soundwire/qcom.c:1335:28: error: initialization of ‘int (*)(struct snd_soc_dai *, unsigned int,  const unsigned int *, unsigned int,  const unsigned int *)’ from incompatible pointer type ‘int (*)(struct snd_soc_dai *, unsigned int,  unsigned int *, unsigned int,  unsigned int *)’ [-Werror=incompatible-pointer-types]
+>   1335 |         .set_channel_map = qcom_swrm_set_channel_map,
+>        |                            ^~~~~~~~~~~~~~~~~~~~~~~~~
+> /build/stage/linux/drivers/soundwire/qcom.c:1335:28: note: (near initialization for ‘qcom_swrm_pdm_dai_ops.set_channel_map’)
 
-> Before transitioning a guest_memfd folio to unshared, thereby
-> disallowing access by the host and allowing the hypervisor to
-> transition its view of the guest page as private, we need to be
-> sure that the host doesn't have any references to the folio.
->
-> This patch introduces a new type for guest_memfd folios, and uses
-> that to register a callback that informs the guest_memfd
-> subsystem when the last reference is dropped, therefore knowing
-> that the host doesn't have any remaining references.
->
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
-> The function kvm_slot_gmem_register_callback() isn't used in this
-> series. It will be used later in code that performs unsharing of
-> memory. I have tested it with pKVM, based on downstream code [*].
-> It's included in this RFC since it demonstrates the plan to
-> handle unsharing of private folios.
->
-> [*] https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/guestmem-6.13-v5-pkvm
-> ---
->  include/linux/kvm_host.h   |  11 +++
->  include/linux/page-flags.h |   7 ++
->  mm/debug.c                 |   1 +
->  mm/swap.c                  |   4 +
->  virt/kvm/guest_memfd.c     | 145 +++++++++++++++++++++++++++++++++++++
->  5 files changed, 168 insertions(+)
->
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 84aa7908a5dd..63e6d6dd98b3 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -2574,6 +2574,8 @@ int kvm_slot_gmem_clear_mappable(struct kvm_memory_slot *slot, gfn_t start,
->  				 gfn_t end);
->  bool kvm_slot_gmem_is_mappable(struct kvm_memory_slot *slot, gfn_t gfn);
->  bool kvm_slot_gmem_is_guest_mappable(struct kvm_memory_slot *slot, gfn_t gfn);
-> +int kvm_slot_gmem_register_callback(struct kvm_memory_slot *slot, gfn_t gfn);
-> +void kvm_gmem_handle_folio_put(struct folio *folio);
->  #else
->  static inline bool kvm_gmem_is_mappable(struct kvm *kvm, gfn_t gfn, gfn_t end)
->  {
-> @@ -2615,6 +2617,15 @@ static inline bool kvm_slot_gmem_is_guest_mappable(struct kvm_memory_slot *slot,
->  	WARN_ON_ONCE(1);
->  	return false;
->  }
-> +static inline int kvm_slot_gmem_register_callback(struct kvm_memory_slot *slot, gfn_t gfn)
-> +{
-> +	WARN_ON_ONCE(1);
-> +	return -EINVAL;
-> +}
-> +static inline void kvm_gmem_handle_folio_put(struct folio *folio)
-> +{
-> +	WARN_ON_ONCE(1);
-> +}
->  #endif /* CONFIG_KVM_GMEM_MAPPABLE */
->  
->  #endif
-> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
-> index 6615f2f59144..bab3cac1f93b 100644
-> --- a/include/linux/page-flags.h
-> +++ b/include/linux/page-flags.h
-> @@ -942,6 +942,7 @@ enum pagetype {
->  	PGTY_slab	= 0xf5,
->  	PGTY_zsmalloc	= 0xf6,
->  	PGTY_unaccepted	= 0xf7,
-> +	PGTY_guestmem	= 0xf8,
->  
->  	PGTY_mapcount_underflow = 0xff
->  };
-> @@ -1091,6 +1092,12 @@ FOLIO_TYPE_OPS(hugetlb, hugetlb)
->  FOLIO_TEST_FLAG_FALSE(hugetlb)
->  #endif
->  
-> +#ifdef CONFIG_KVM_GMEM_MAPPABLE
-> +FOLIO_TYPE_OPS(guestmem, guestmem)
-> +#else
-> +FOLIO_TEST_FLAG_FALSE(guestmem)
-> +#endif
-> +
->  PAGE_TYPE_OPS(Zsmalloc, zsmalloc, zsmalloc)
->  
->  /*
-> diff --git a/mm/debug.c b/mm/debug.c
-> index 95b6ab809c0e..db93be385ed9 100644
-> --- a/mm/debug.c
-> +++ b/mm/debug.c
-> @@ -56,6 +56,7 @@ static const char *page_type_names[] = {
->  	DEF_PAGETYPE_NAME(table),
->  	DEF_PAGETYPE_NAME(buddy),
->  	DEF_PAGETYPE_NAME(unaccepted),
-> +	DEF_PAGETYPE_NAME(guestmem),
->  };
->  
->  static const char *page_type_name(unsigned int page_type)
-> diff --git a/mm/swap.c b/mm/swap.c
-> index 6f01b56bce13..15220eaabc86 100644
-> --- a/mm/swap.c
-> +++ b/mm/swap.c
-> @@ -37,6 +37,7 @@
->  #include <linux/page_idle.h>
->  #include <linux/local_lock.h>
->  #include <linux/buffer_head.h>
-> +#include <linux/kvm_host.h>
->  
->  #include "internal.h"
->  
-> @@ -103,6 +104,9 @@ static void free_typed_folio(struct folio *folio)
->  	case PGTY_offline:
->  		/* Nothing to do, it's offline. */
->  		return;
-> +	case PGTY_guestmem:
-> +		kvm_gmem_handle_folio_put(folio);
-> +		return;
->  	default:
->  		WARN_ON_ONCE(1);
->  	}
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index d1c192927cf7..722afd9f8742 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -387,6 +387,28 @@ enum folio_mappability {
->  	KVM_GMEM_NONE_MAPPABLE	= 0b11, /* Not mappable, transient state. */
->  };
->  
-> +/*
-> + * Unregisters the __folio_put() callback from the folio.
-> + *
-> + * Restores a folio's refcount after all pending references have been released,
-> + * and removes the folio type, thereby removing the callback. Now the folio can
-> + * be freed normaly once all actual references have been dropped.
-> + *
-> + * Must be called with the filemap (inode->i_mapping) invalidate_lock held.
-> + * Must also have exclusive access to the folio: folio must be either locked, or
-> + * gmem holds the only reference.
-> + */
-> +static void __kvm_gmem_restore_pending_folio(struct folio *folio)
-> +{
-> +	if (WARN_ON_ONCE(folio_mapped(folio) || !folio_test_guestmem(folio)))
-> +		return;
-> +
-> +	WARN_ON_ONCE(!folio_test_locked(folio) && folio_ref_count(folio) > 1);
-> +
-> +	__folio_clear_guestmem(folio);
-> +	folio_ref_add(folio, folio_nr_pages(folio));
-> +}
-> +
->  /*
->   * Marks the range [start, end) as mappable by both the host and the guest.
->   * Usually called when guest shares memory with the host.
-> @@ -400,7 +422,31 @@ static int gmem_set_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
->  
->  	filemap_invalidate_lock(inode->i_mapping);
->  	for (i = start; i < end; i++) {
-> +		struct folio *folio = NULL;
-> +
-> +		/*
-> +		 * If the folio is NONE_MAPPABLE, it indicates that it is
-> +		 * transitioning to private (GUEST_MAPPABLE). Transition it to
-> +		 * shared (ALL_MAPPABLE) immediately, and remove the callback.
-> +		 */
-> +		if (xa_to_value(xa_load(mappable_offsets, i)) == KVM_GMEM_NONE_MAPPABLE) {
-> +			folio = filemap_lock_folio(inode->i_mapping, i);
-> +			if (WARN_ON_ONCE(IS_ERR(folio))) {
-> +				r = PTR_ERR(folio);
-> +				break;
-> +			}
-> +
-> +			if (folio_test_guestmem(folio))
-> +				__kvm_gmem_restore_pending_folio(folio);
-> +		}
-> +
->  		r = xa_err(xa_store(mappable_offsets, i, xval, GFP_KERNEL));
-> +
-> +		if (folio) {
-> +			folio_unlock(folio);
-> +			folio_put(folio);
-> +		}
-> +
->  		if (r)
->  			break;
->  	}
-> @@ -473,6 +519,105 @@ static int gmem_clear_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
->  	return r;
->  }
->
+ACK,
 
-I think one of these functions to restore mappability needs to be called
-to restore the refcounts on truncation. Without doing this, the
-refcounts on the folios at truncation time would only be the
-transient/speculative ones, and truncating will take off the filemap
-refcounts which were already taken off to set up the folio_put()
-callback.
+Thanks for the review and test.
 
-Should mappability can be restored according to
-GUEST_MEMFD_FLAG_INIT_MAPPABLE? Or should mappability of NONE be
-restored to GUEST and mappability of ALL left as ALL?
+Somehow above build errors not reproduced in my build setup.
 
-> +/*
-> + * Registers a callback to __folio_put(), so that gmem knows that the host does
-> + * not have any references to the folio. It does that by setting the folio type
-> + * to guestmem.
-> + *
-> + * Returns 0 if the host doesn't have any references, or -EAGAIN if the host
-> + * has references, and the callback has been registered.
-> + *
-> + * Must be called with the following locks held:
-> + * - filemap (inode->i_mapping) invalidate_lock
-> + * - folio lock
-> + */
-> +static int __gmem_register_callback(struct folio *folio, struct inode *inode, pgoff_t idx)
-> +{
-> +	struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
-> +	void *xval_guest = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
-> +	int refcount;
-> +
-> +	rwsem_assert_held_write_nolockdep(&inode->i_mapping->invalidate_lock);
-> +	WARN_ON_ONCE(!folio_test_locked(folio));
-> +
-> +	if (folio_mapped(folio) || folio_test_guestmem(folio))
-> +		return -EAGAIN;
-> +
-> +	/* Register a callback first. */
-> +	__folio_set_guestmem(folio);
-> +
-> +	/*
-> +	 * Check for references after setting the type to guestmem, to guard
-> +	 * against potential races with the refcount being decremented later.
-> +	 *
-> +	 * At least one reference is expected because the folio is locked.
-> +	 */
-> +
-> +	refcount = folio_ref_sub_return(folio, folio_nr_pages(folio));
-> +	if (refcount == 1) {
-> +		int r;
-> +
-> +		/* refcount isn't elevated, it's now faultable by the guest. */
-> +		r = WARN_ON_ONCE(xa_err(xa_store(mappable_offsets, idx, xval_guest, GFP_KERNEL)));
-> +		if (!r)
-> +			__kvm_gmem_restore_pending_folio(folio);
-> +
-> +		return r;
-> +	}
-> +
-> +	return -EAGAIN;
-> +}
-> +
-> +int kvm_slot_gmem_register_callback(struct kvm_memory_slot *slot, gfn_t gfn)
-> +{
-> +	unsigned long pgoff = slot->gmem.pgoff + gfn - slot->base_gfn;
-> +	struct inode *inode = file_inode(slot->gmem.file);
-> +	struct folio *folio;
-> +	int r;
-> +
-> +	filemap_invalidate_lock(inode->i_mapping);
-> +
-> +	folio = filemap_lock_folio(inode->i_mapping, pgoff);
-> +	if (WARN_ON_ONCE(IS_ERR(folio))) {
-> +		r = PTR_ERR(folio);
-> +		goto out;
-> +	}
-> +
-> +	r = __gmem_register_callback(folio, inode, pgoff);
-> +
-> +	folio_unlock(folio);
-> +	folio_put(folio);
-> +out:
-> +	filemap_invalidate_unlock(inode->i_mapping);
-> +
-> +	return r;
-> +}
-> +
-> +/*
-> + * Callback function for __folio_put(), i.e., called when all references by the
-> + * host to the folio have been dropped. This allows gmem to transition the state
-> + * of the folio to mappable by the guest, and allows the hypervisor to continue
-> + * transitioning its state to private, since the host cannot attempt to access
-> + * it anymore.
-> + */
-> +void kvm_gmem_handle_folio_put(struct folio *folio)
-> +{
-> +	struct xarray *mappable_offsets;
-> +	struct inode *inode;
-> +	pgoff_t index;
-> +	void *xval;
-> +
-> +	inode = folio->mapping->host;
-> +	index = folio->index;
-> +	mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
-> +	xval = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
-> +
-> +	filemap_invalidate_lock(inode->i_mapping);
-> +	__kvm_gmem_restore_pending_folio(folio);
-> +	WARN_ON_ONCE(xa_err(xa_store(mappable_offsets, index, xval, GFP_KERNEL)));
-> +	filemap_invalidate_unlock(inode->i_mapping);
-> +}
-> +
->  static bool gmem_is_mappable(struct inode *inode, pgoff_t pgoff)
->  {
->  	struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+I am Using below commands for build:
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- allmodconfig
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j32
+
+Will check and fix in next version.
+
+Thanks & Regards,
+Rafi
+
 
