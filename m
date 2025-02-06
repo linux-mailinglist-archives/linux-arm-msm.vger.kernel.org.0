@@ -1,79 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-47043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68051A2AB75
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 15:34:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85827A2ADED
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 17:38:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4817A1889B34
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 14:34:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BEB4B3A87ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 16:38:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27DE223642A;
-	Thu,  6 Feb 2025 14:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1235235348;
+	Thu,  6 Feb 2025 16:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DV/k8PEC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C+HnH1in"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267CA236420
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 14:34:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAD323534D
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 16:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738852454; cv=none; b=KJ2hTvM4ou9wTncZui0R9u+Xiihh0wygjD/euZCXa1HYb17MoAO5RCxJ7VlUoRNs9MxmidPxZPlIrfs/KgXnm0bRg0YcdFJPvw1jCsPNLU2C/fUfcpGVY3OYCR7MHWuwyrey9EyYUD3IUQVDWHkKwHh9neR4iBiQ1fMzzFnx5fw=
+	t=1738859887; cv=none; b=eAlQqoZUlyzz1DMoACN7Z4GNN7g2wDcxngUNuq5rwDSXHPUCiOHMi0/YF3qXxWqPNLoitK73VZ3h0vUAdkL1hWJdumqX0cTdebZJmU1Hv4FDuTOq2Egr3SA4oXXwyImih6Yqn+gNlzf+OEjIyUA3/ePts+gPNXgSKCrttYQR4C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738852454; c=relaxed/simple;
-	bh=TsM6cjP5exs6iulgzLG9GLX0YUqpxbzphn+dl/t4bxY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h57bYfRxPyEx0Hh7KD2Z6ULJ/KNlAupldAS7C/48ixEgk9z8TtfO9kbgqnuImP48uWmFYVdX7rnTIi+zDrcFfOJPZu/6dp6EmXXsAOsUdc6F/NNQvc3yK/Ifjdj1X3yX450ytquIjHDnVWm22k7+K29bxeG9az9kQwtTSXpXkMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DV/k8PEC; arc=none smtp.client-ip=209.85.208.52
+	s=arc-20240116; t=1738859887; c=relaxed/simple;
+	bh=uN0IEVrZOBL8PiHBuedt5JYRkOjD/zgets4xq5XjFOE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=CsAKZqc0g2rMZKKyPHUKhRWrf98NA3rNpaE9S+ccqBfU3nBVq3JeHrrwCjMWRSMfHIqN0iEKye8Syv8+ZXeNmTs1Xxs470r/s+vhAbLJUa4kjjQ30bB07hKp3gokMH1FIwCM7ANK1oLfv87VlZoQiQh21qcxfJscxb/fp9i2wnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C+HnH1in; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5dcef33eeceso1568408a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 06:34:08 -0800 (PST)
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38dc627eba6so187875f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 08:38:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738852447; x=1739457247; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MwFNLRKVl3GLa/eUZNAIfbXnJp0kf6uNNAcjv2if4lE=;
-        b=DV/k8PEC9STRFd+pKUIzhcYu+i/XR1KYVBXpygoMgko167E4w1bB3NA00o2OYEZK6v
-         i9mmdKHfvm9kIzQ+SEg5ptgqL7tvltMazS+ZzkRLxA6skejT2ijBWSl0/Eu1z1bHVlrv
-         b61Tk3fsZ2wD8PfRKiJLhksTAWnQ1D9fUaCtLGzkSxBc564yvDvBVcynsPIEion0iyP9
-         08Wa8qzD8gSKhgqhm9P4habhTttMhChB94laG+M6LZBkngUVgB6z4iTZ5ZeqEF4FO4YH
-         VzXm9nD7EGcMsXp34eVb76scVdeBOVeQVpO2sncuOzxsRHNpBzeTCx0KLUavb1hzL1DF
-         jopA==
+        d=linaro.org; s=google; t=1738859884; x=1739464684; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f2FAB+iTgyf7DK0nqsLX/lCiNQbaaJsTbkBl60A84eA=;
+        b=C+HnH1inmip29lSYNfDu8DnW+lCveyOW2rkUQKDlG5fbHD79PiO/N5xo9d25cOmbqF
+         997v+wi8ldqW1BMBErxfLTEVdYYMP1Xo6wSOy51EAZaH3fCQXR2Nx07MOybxxxt5P4WT
+         lbJO5zzxNWGOKvqgzp6Ew5CHwlTf6siycLbakLli1Jo9reDEGq9cwb+/kTECsQ5cw8lH
+         kki18Dy/9BULiSKU+JOjFPYtywUCIKlBZSr1ju8R9KCYm52bAeiUDigDUPY3ZT5Zj8Js
+         KR0QNwQN/lm1iVzGeQbbctp5twzIhvXYKj5QUEkru8VB25yakfnTxVsXrsxmwxRQe2oW
+         ai5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738852447; x=1739457247;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MwFNLRKVl3GLa/eUZNAIfbXnJp0kf6uNNAcjv2if4lE=;
-        b=XJQ9yV5TIVhCCjBdNWvNKZ0KMdMqSjOVB56EO+Ouz+SWVSEl2W6pvyTvwLm6AE1kUF
-         p3u/3d0aTi79D9/HTyfCU1yU9KhHWH1SdZjojknJTnXooezOmTdRW4LkOYkGOZnTy6Z3
-         zIQUazC3HjvSZ6UwZ1NCEkKbZyz/QOmia6NBrr8W9PrnxT1pp+NH/qLqEEx8zTj67os3
-         +G6eGYAgQnRcJJ/iDrfDPR4WCP9OfrOZ1TXWKMPYDKSc7syjnOOGnhQVffunlKjsS4Wu
-         onZL3VmbtJd+hCZUocyl5/hfqTixBE/K2iTN7nrV0Jsi4mpRnjNBpRWAmaNg09t4eDP9
-         gTnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW3Cqelx7Kz9yCO9DVoWsnHXYeZd1N38choggVaUAnNvU03WZ7WffzrVLyZ3YhZPAXvBI4EMDxXFYQCuvfr@vger.kernel.org
-X-Gm-Message-State: AOJu0YzatFd3v9OjQUdMrXVOUDAPYSo0bDcLDQ1cDjBIgn5EOd2hPZGl
-	+T9OUFsuNeVnpASQXyQv2hdRFg5BE+h4TdPpdamVlGm0qkDNKRMuQrrrutfU6rI=
-X-Gm-Gg: ASbGncsX0y+UYm1Zk3pUsgvHjxjGPzsmPWz8aZ/soqFXjY5mwqlqIa0x9xgfSg46gJ7
-	f/2ecizzj5GKN7cUUAO/vprZb307jaXOGnbXTmCjaIhWwb9RJbfNPNo8jVSMDlB/rwEFnB5MucA
-	df7QvtRrpg82V9In4DpHtypWwXGT+urEQ4W3al6aF5AJhT3vn//GA9H9hxYMUDJ3rLvb1MPFy//
-	TV2jqvfi3jnUf0tK4+PUKXRU211zRijaAkhJRcr8oUYWJHc+i27y3U7H420LYHXVw9TRKAIJAMY
-	qOYEBBCDyVp7hrrR1H6eBbTTVg==
-X-Google-Smtp-Source: AGHT+IG3q+0P/fya6NFqy3RqY1DP7UH/Lfdz/0UaueHOOOGIKvrkCAj+SukVWU9lFNykW8MeIAuk4w==
-X-Received: by 2002:a05:6402:4486:b0:5dc:74fd:ac0a with SMTP id 4fb4d7f45d1cf-5dcdb717885mr7451425a12.8.1738852447266;
-        Thu, 06 Feb 2025 06:34:07 -0800 (PST)
-Received: from [192.168.68.163] ([212.105.145.75])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dcf6c9f85bsm961629a12.61.2025.02.06.06.34.05
+        d=1e100.net; s=20230601; t=1738859884; x=1739464684;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=f2FAB+iTgyf7DK0nqsLX/lCiNQbaaJsTbkBl60A84eA=;
+        b=N43taNlwbcRH/P3KPzYZoU021gawJj/P+0cZ87R6W2LLlRbk15/vrpuJt0i9wnJKSJ
+         bAeQB0GsFgY/tdIBEBU/h8sJe1QGPFMko2Dx8H9UNqKjModDNsfmZkzB5b0dYv+5sAMu
+         4oh2G0lvTElpu/VPCiWNutaoNtWIvaLvEnSAtcqcac3r0p7N8ru+5XMTBQ5OqMjJ32TQ
+         skaqmR6fjQwdemuXYRewGfPaRp3KrHRpD/TMVZS30dn6pcv+zmJpg6Vh78WU3chhbCt6
+         2fmINODW8iESUCjS1kCsIJKtxkSk02FjqeJPqply29UMayXE2f/WVOyM/i8G01U7lpFX
+         EMGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUmQdsUXW82mtApUhGscjlPuycz11wbRS08K13syMAoiPqt/2au+W5yZESuII8UF45Cw7ulF3Mw7PA/ja8b@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXnhe7cWmcLTuogr1eMnLI5HBaR/1RWKxulVKX0tW8bpkwDcJl
+	bKZOsSYM+UOjq7VBQsnySHWNbgipI6z2qdEm89556f1XghpzcBTOYCdfU0LmfGY=
+X-Gm-Gg: ASbGncvH0No0R0AZhTi1IG39hQe6yC2j99IC1Qpq7daOAhAceuP47GHwW/0UtX5SKoC
+	pLSOMcid1499h1eqhaM4th1GOq/o1JjbOCWid6v6SRI+/0kDTXN7pOsePYHcrKSs4YpMt17TJcP
+	I9VuyGeiPhI7tIRAs/0Xu8hYTcLITfapeMUmWvZ12E5PwvGNc4TZDNIN5X3o1FjNcDhFlhLalIX
+	o4Z1ImxtFRD7HLl3uIVeWUxtmLirSlrMEznBdeOTfRjv+vTy1SZectiYkzfMzoCk+otpoBK6zla
+	LLNSIBUPhK66Bhvz/dVXbJMCr+8BsSCuXnWIPo4gSy6BgYETGnwfkvfx8N6fzLhS06F1
+X-Google-Smtp-Source: AGHT+IGlqziDYgd+qIttUBo1t8lTgV41m6KBM7E7wDX7PChM3ilTHXoaQrEduT6TQpYPNTTVTKQCEA==
+X-Received: by 2002:a5d:6a03:0:b0:385:f638:c68a with SMTP id ffacd0b85a97d-38db4883bcbmr4850947f8f.30.1738859883521;
+        Thu, 06 Feb 2025 08:38:03 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:4972:46a2:e0cb:c0a6? ([2a01:e0a:982:cbb0:4972:46a2:e0cb:c0a6])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dbde0fd23sm2118978f8f.71.2025.02.06.08.38.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Feb 2025 06:34:06 -0800 (PST)
-Message-ID: <7c78ca62-bb7e-4b95-9590-ad21f1c6f171@linaro.org>
-Date: Thu, 6 Feb 2025 14:34:04 +0000
+        Thu, 06 Feb 2025 08:38:03 -0800 (PST)
+Message-ID: <da80b9bb-be2f-455c-961d-1d2a55b061ef@linaro.org>
+Date: Thu, 6 Feb 2025 17:38:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,403 +83,553 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] coresight: Don't save handle in path
-To: Jie Gan <quic_jiegan@quicinc.com>
-Cc: quic_tingweiz@quicinc.com, quic_jinlmao@quicinc.com,
- coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
- suzuki.poulose@arm.com, mike.leach@linaro.org,
- alexander.shishkin@linux.intel.com, mcoquelin.stm32@gmail.com,
- alexandre.torgue@foss.st.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org
-References: <d5332d6d-237f-4b78-9eaf-2619bd97b7bd@quicinc.com>
- <20250131163617.1730505-1-james.clark@linaro.org>
- <20250131163617.1730505-2-james.clark@linaro.org>
- <85bdaa4d-3805-4ae3-917e-7258a131741c@quicinc.com>
-Content-Language: en-US
-From: James Clark <james.clark@linaro.org>
-In-Reply-To: <85bdaa4d-3805-4ae3-917e-7258a131741c@quicinc.com>
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 2/4] drm/panel: Add Visionox RM692E5 panel driver
+To: Danila Tikhonov <danila@jiaxyga.com>, quic_jesszhan@quicinc.com,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de,
+ airlied@gmail.com, simona@ffwll.ch, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ robdclark@gmail.com, quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+ sean@poorly.run, marijn.suijten@somainline.org, jonathan@marek.ca,
+ jun.nie@linaro.org, fekz115@gmail.com
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux@mainlining.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+References: <20250203181436.87785-1-danila@jiaxyga.com>
+ <20250203181436.87785-3-danila@jiaxyga.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250203181436.87785-3-danila@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
+Hi,
 
+On 03/02/2025 19:14, Danila Tikhonov wrote:
+> From: Eugene Lepshy <fekz115@gmail.com>
+> 
+> Add the driver for Visionox RM692E5 panel support found in Nothing
+> Phone (1).
+> 
+> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
+> Co-developed-by: Danila Tikhonov <danila@jiaxyga.com>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> ---
+>   drivers/gpu/drm/panel/Kconfig                 |  10 +
+>   drivers/gpu/drm/panel/Makefile                |   1 +
+>   .../gpu/drm/panel/panel-visionox-rm692e5.c    | 433 ++++++++++++++++++
+>   3 files changed, 444 insertions(+)
+>   create mode 100644 drivers/gpu/drm/panel/panel-visionox-rm692e5.c
+> 
+> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+> index d7469c565d1d..66b2827169fb 100644
+> --- a/drivers/gpu/drm/panel/Kconfig
+> +++ b/drivers/gpu/drm/panel/Kconfig
+> @@ -996,6 +996,16 @@ config DRM_PANEL_VISIONOX_RM69299
+>   	  Say Y here if you want to enable support for Visionox
+>   	  RM69299  DSI Video Mode panel.
+>   
+> +config DRM_PANEL_VISIONOX_RM692E5
+> +	tristate "Visionox RM692E5"
+> +	depends on OF
+> +	depends on DRM_MIPI_DSI
+> +	depends on BACKLIGHT_CLASS_DEVICE
+> +	help
+> +	  Say Y here if you want to enable support for Visionox RM692E5 amoled
+> +	  display panels, such as the one found in the Nothing Phone (1)
+> +	  smartphone.
+> +
+>   config DRM_PANEL_VISIONOX_VTDR6130
+>   	tristate "Visionox VTDR6130"
+>   	depends on OF
+> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+> index 7dcf72646cac..6177f2d4113e 100644
+> --- a/drivers/gpu/drm/panel/Makefile
+> +++ b/drivers/gpu/drm/panel/Makefile
+> @@ -100,6 +100,7 @@ obj-$(CONFIG_DRM_PANEL_TPO_TD043MTEA1) += panel-tpo-td043mtea1.o
+>   obj-$(CONFIG_DRM_PANEL_TPO_TPG110) += panel-tpo-tpg110.o
+>   obj-$(CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA) += panel-truly-nt35597.o
+>   obj-$(CONFIG_DRM_PANEL_VISIONOX_RM69299) += panel-visionox-rm69299.o
+> +obj-$(CONFIG_DRM_PANEL_VISIONOX_RM692E5) += panel-visionox-rm692e5.o
+>   obj-$(CONFIG_DRM_PANEL_VISIONOX_VTDR6130) += panel-visionox-vtdr6130.o
+>   obj-$(CONFIG_DRM_PANEL_VISIONOX_R66451) += panel-visionox-r66451.o
+>   obj-$(CONFIG_DRM_PANEL_WIDECHIPS_WS2401) += panel-widechips-ws2401.o
+> diff --git a/drivers/gpu/drm/panel/panel-visionox-rm692e5.c b/drivers/gpu/drm/panel/panel-visionox-rm692e5.c
+> new file mode 100644
+> index 000000000000..abaa035f3a92
+> --- /dev/null
+> +++ b/drivers/gpu/drm/panel/panel-visionox-rm692e5.c
+> @@ -0,0 +1,433 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Generated with linux-mdss-dsi-panel-driver-generator from vendor device tree:
+> + * Copyright (c) 2013, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2025, Eugene Lepshy <fekz115@gmail.com>
+> + * Copyright (c) 2025, Danila Tikhonov <danila@jiaxyga.com>
+> + */
+> +
+> +#include <linux/backlight.h>
+> +#include <linux/delay.h>
+> +#include <linux/gpio/consumer.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/regulator/consumer.h>
+> +
+> +#include <video/mipi_display.h>
+> +
+> +#include <drm/display/drm_dsc.h>
+> +#include <drm/display/drm_dsc_helper.h>
+> +#include <drm/drm_mipi_dsi.h>
+> +#include <drm/drm_modes.h>
+> +#include <drm/drm_panel.h>
+> +#include <drm/drm_probe_helper.h>
+> +
+> +struct visionox_rm692e5 {
+> +	struct drm_panel panel;
+> +	struct mipi_dsi_device *dsi;
+> +	struct drm_dsc_config dsc;
+> +	struct gpio_desc *reset_gpio;
+> +	struct regulator_bulk_data *supplies;
+> +};
+> +
+> +static const struct regulator_bulk_data visionox_rm692e5_supplies[] = {
+> +	{ .supply = "vddio" },	/* 1p8 */
+> +	{ .supply = "vdd" },	/* 3p3 */
+> +};
+> +
+> +static inline
+> +struct visionox_rm692e5 *to_visionox_rm692e5(struct drm_panel *panel)
+> +{
+> +	return container_of(panel, struct visionox_rm692e5, panel);
+> +}
+> +
+> +static void visionox_rm692e5_reset(struct visionox_rm692e5 *ctx)
+> +{
+> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+> +	usleep_range(10000, 11000);
+> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+> +	usleep_range(1000, 2000);
+> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+> +	msleep(32);
+> +}
+> +
+> +static int visionox_rm692e5_on(struct visionox_rm692e5 *ctx)
+> +{
+> +	struct mipi_dsi_device *dsi = ctx->dsi;
+> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = dsi };
+> +
+> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+> +
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xfe, 0x40);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xbd, 0x07);
+> +	mipi_dsi_usleep_range(&dsi_ctx, 17000, 18000);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xfe, 0xd2);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x50, 0x11);
+> +	mipi_dsi_dcs_set_display_brightness_multi(&dsi_ctx, 0x00ab);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x52, 0x30);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, MIPI_DCS_WRITE_CONTROL_DISPLAY, 0x09);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x54, 0x60);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, MIPI_DCS_WRITE_POWER_SAVE, 0x04);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x56, 0x38);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x58, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x59, 0x14);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x5a, 0x02);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x5b, 0x1c);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x5c, 0x02);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x5d, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, MIPI_DCS_SET_CABC_MIN_BRIGHTNESS, 0x20);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x5f, 0x01);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x60, 0xe8);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x61, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x62, 0x07);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x63, 0x0c);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x64, 0x05);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x65, 0x0e);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x66, 0x05);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x67, 0x16);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x68, 0x18);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x69, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x6a, 0x10);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x6b, 0xf0);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x6c, 0x07);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x6d, 0x10);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x6e, 0x20);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x6f, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x70, 0x06);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x71, 0x0f);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x72, 0x0f);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x73, 0x33);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x74, 0x0e);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x75, 0x1c);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x76, 0x2a);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x77, 0x38);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x78, 0x46);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x79, 0x54);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x7a, 0x62);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x7b, 0x69);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x7c, 0x70);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x7d, 0x77);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x7e, 0x79);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x7f, 0x7b);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x80, 0x7d);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x81, 0x7e);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x82, 0x01);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x83, 0x02);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x84, 0x22);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x85, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x86, 0x2a);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x87, 0x40);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x88, 0x2a);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x89, 0xbe);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x8a, 0x3a);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x8b, 0xfc);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x8c, 0x3a);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x8d, 0xfa);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x8e, 0x3a);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x8f, 0xf8);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x90, 0x3b);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x91, 0x38);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x92, 0x3b);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x93, 0x78);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x94, 0x3b);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x95, 0xb6);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x96, 0x4b);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x97, 0xf6);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x98, 0x4c);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x99, 0x34);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x9a, 0x4c);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x9b, 0x74);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x9c, 0x5c);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x9d, 0x74);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x9e, 0x8c);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x9f, 0xf4);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, MIPI_DCS_READ_PPS_START, 0x02);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xa3, 0x1c);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xa4, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xa5, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xa6, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xa7, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, MIPI_DCS_READ_PPS_CONTINUE, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xaa, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xa0, 0x80);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xfe, 0xa1);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xcd, 0x6b);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xce, 0xbb);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xfe, 0xd1);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb4, 0x01);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xfe, 0x38);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x17, 0x0f);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x18, 0x0f);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xfe, 0x00);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xfa, 0x01);
+> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xc2, 0x08);
+> +	mipi_dsi_dcs_set_tear_on_multi(&dsi_ctx, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
+> +	mipi_dsi_dcs_set_display_brightness_multi(&dsi_ctx, 0x000d);
+> +	mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
+> +	mipi_dsi_msleep(&dsi_ctx, 50);
+> +	mipi_dsi_dcs_set_display_on_multi(&dsi_ctx);
+> +	mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
+> +
+> +	return dsi_ctx.accum_err;
+> +}
+> +
+> +static int visionox_rm692e5_disable(struct drm_panel *panel)
+> +{
+> +	struct visionox_rm692e5 *ctx = to_visionox_rm692e5(panel);
+> +	struct mipi_dsi_device *dsi = ctx->dsi;
+> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = dsi };
+> +
+> +	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+> +
+> +	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
+> +	mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
+> +	mipi_dsi_dcs_enter_sleep_mode_multi(&dsi_ctx);
+> +	mipi_dsi_usleep_range(&dsi_ctx, 1000, 2000);
+> +
+> +	return dsi_ctx.accum_err;
+> +}
+> +
+> +static int visionox_rm692e5_prepare(struct drm_panel *panel)
+> +{
+> +	struct visionox_rm692e5 *ctx = to_visionox_rm692e5(panel);
+> +	struct drm_dsc_picture_parameter_set pps;
+> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
+> +
+> +	dsi_ctx.accum_err = regulator_bulk_enable(ARRAY_SIZE
+> +				(visionox_rm692e5_supplies), ctx->supplies);
+> +	if (dsi_ctx.accum_err)
+> +		return dsi_ctx.accum_err;
 
-On 06/02/2025 3:02 am, Jie Gan wrote:
-> 
-> 
-> On 2/1/2025 12:36 AM, James Clark wrote:
->> Signed-off-by: James Clark <james.clark@linaro.org>
->> ---
->>   drivers/hwtracing/coresight/coresight-core.c     | 10 +++++-----
->>   drivers/hwtracing/coresight/coresight-dummy.c    |  2 +-
->>   drivers/hwtracing/coresight/coresight-etb10.c    |  8 +++-----
->>   drivers/hwtracing/coresight/coresight-etm-perf.c |  3 +--
->>   drivers/hwtracing/coresight/coresight-priv.h     |  4 ++--
->>   drivers/hwtracing/coresight/coresight-sysfs.c    |  2 +-
->>   drivers/hwtracing/coresight/coresight-tmc-etf.c  |  9 ++++-----
->>   drivers/hwtracing/coresight/coresight-tmc-etr.c  | 13 +++++--------
->>   drivers/hwtracing/coresight/coresight-tmc.h      |  2 +-
->>   drivers/hwtracing/coresight/coresight-tpiu.c     |  2 +-
->>   drivers/hwtracing/coresight/coresight-trbe.c     |  4 +---
->>   drivers/hwtracing/coresight/ultrasoc-smb.c       |  8 +++-----
->>   include/linux/coresight.h                        |  2 +-
->>   13 files changed, 29 insertions(+), 40 deletions(-)
->>
-> 
-> Hi James
-> 
-> I removed the handle from coresight_path and placed these codes in a 
-> separate patch. However, I believe this change is not related to the 
-> CTCU driver or coresight_path. Therefore, I suggest we submit it 
-> independently.
-> 
-> Thanks,
-> Jie
-> 
-> 
+This is quite unpretty, just add a additional ret, the compiler will
+optimize things much smarter, keep code readable.
 
-Yeah if you've removed the handle from the path then we can do the other 
-void* changes separately. Makes sense.
+> +
+> +	visionox_rm692e5_reset(ctx);
+> +	visionox_rm692e5_on(ctx);
 
->> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/ 
->> hwtracing/coresight/coresight-core.c
->> index 11d5d5320b1a..253ef02fde12 100644
->> --- a/drivers/hwtracing/coresight/coresight-core.c
->> +++ b/drivers/hwtracing/coresight/coresight-core.c
->> @@ -272,9 +272,9 @@ void coresight_add_helper(struct coresight_device 
->> *csdev,
->>   EXPORT_SYMBOL_GPL(coresight_add_helper);
->>   static int coresight_enable_sink(struct coresight_device *csdev,
->> -                 enum cs_mode mode, void *data)
->> +                 enum cs_mode mode, struct perf_output_handle *handle)
->>   {
->> -    return sink_ops(csdev)->enable(csdev, mode, data);
->> +    return sink_ops(csdev)->enable(csdev, mode, handle);
->>   }
->>   static void coresight_disable_sink(struct coresight_device *csdev)
->> @@ -448,7 +448,8 @@ static int coresight_enable_helpers(struct 
->> coresight_device *csdev,
->>       return 0;
->>   }
->> -int coresight_enable_path(struct coresight_path *cs_path, enum 
->> cs_mode mode)
->> +int coresight_enable_path(struct coresight_path *cs_path, enum 
->> cs_mode mode,
->> +              struct perf_output_handle *handle)
->>   {
->>       int ret = 0;
->>       u32 type;
->> @@ -479,7 +480,7 @@ int coresight_enable_path(struct coresight_path 
->> *cs_path, enum cs_mode mode)
->>           switch (type) {
->>           case CORESIGHT_DEV_TYPE_SINK:
->> -            ret = coresight_enable_sink(csdev, mode, cs_path);
->> +            ret = coresight_enable_sink(csdev, mode, handle);
->>               /*
->>                * Sink is the first component turned on. If we
->>                * failed to enable the sink, there are no components
->> @@ -807,7 +808,6 @@ void coresight_release_path(struct coresight_path 
->> *cs_path)
->>           kfree(nd);
->>       }
->> -    cs_path->handle = NULL;
->>       kfree(cs_path->path);
->>       kfree(cs_path);
->>   }
->> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/ 
->> hwtracing/coresight/coresight-dummy.c
->> index dfcf24e9c49a..6f86d33efef4 100644
->> --- a/drivers/hwtracing/coresight/coresight-dummy.c
->> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
->> @@ -54,7 +54,7 @@ static int dummy_source_trace_id(struct 
->> coresight_device *csdev, enum cs_mode mo
->>   }
->>   static int dummy_sink_enable(struct coresight_device *csdev, enum 
->> cs_mode mode,
->> -                void *data)
->> +                struct perf_output_handle *handle)
->>   {
->>       dev_dbg(csdev->dev.parent, "Dummy sink enabled\n");
->> diff --git a/drivers/hwtracing/coresight/coresight-etb10.c b/drivers/ 
->> hwtracing/coresight/coresight-etb10.c
->> index 05430d8931d1..e373b0f590bf 100644
->> --- a/drivers/hwtracing/coresight/coresight-etb10.c
->> +++ b/drivers/hwtracing/coresight/coresight-etb10.c
->> @@ -167,14 +167,12 @@ static int etb_enable_sysfs(struct 
->> coresight_device *csdev)
->>       return ret;
->>   }
->> -static int etb_enable_perf(struct coresight_device *csdev, void *data)
->> +static int etb_enable_perf(struct coresight_device *csdev, struct 
->> perf_output_handle *handle)
->>   {
->>       int ret = 0;
->>       pid_t pid;
->>       unsigned long flags;
->>       struct etb_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->> -    struct coresight_path *cs_path = (struct coresight_path *)data;
->> -    struct perf_output_handle *handle = cs_path->handle;
->>       struct cs_buffers *buf = etm_perf_sink_config(handle);
->>       spin_lock_irqsave(&drvdata->spinlock, flags);
->> @@ -225,7 +223,7 @@ static int etb_enable_perf(struct coresight_device 
->> *csdev, void *data)
->>   }
->>   static int etb_enable(struct coresight_device *csdev, enum cs_mode 
->> mode,
->> -              void *data)
->> +              struct perf_output_handle *handle)
->>   {
->>       int ret;
->> @@ -234,7 +232,7 @@ static int etb_enable(struct coresight_device 
->> *csdev, enum cs_mode mode,
->>           ret = etb_enable_sysfs(csdev);
->>           break;
->>       case CS_MODE_PERF:
->> -        ret = etb_enable_perf(csdev, data);
->> +        ret = etb_enable_perf(csdev, handle);
->>           break;
->>       default:
->>           ret = -EINVAL;
->> diff --git a/drivers/hwtracing/coresight/coresight-etm-perf.c b/ 
->> drivers/hwtracing/coresight/coresight-etm-perf.c
->> index b6765abb0a26..0fad9968c2c0 100644
->> --- a/drivers/hwtracing/coresight/coresight-etm-perf.c
->> +++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
->> @@ -501,9 +501,8 @@ static void etm_event_start(struct perf_event 
->> *event, int flags)
->>       if (WARN_ON_ONCE(!sink))
->>           goto fail_end_stop;
->> -    cs_path->handle = handle;
->>       /* Nothing will happen without a path */
->> -    if (coresight_enable_path(cs_path, CS_MODE_PERF))
->> +    if (coresight_enable_path(cs_path, CS_MODE_PERF, handle))
->>           goto fail_end_stop;
->>       /* Finally enable the tracer */
->> diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/ 
->> hwtracing/coresight/coresight-priv.h
->> index 8e02a222b9f8..7bd43304f461 100644
->> --- a/drivers/hwtracing/coresight/coresight-priv.h
->> +++ b/drivers/hwtracing/coresight/coresight-priv.h
->> @@ -112,7 +112,6 @@ struct cs_buffers {
->>    * @trace_id:        trace_id of the whole path.
->>    */
->>   struct coresight_path {
->> -    struct perf_output_handle    *handle;
->>       struct list_head        *path;
->>       u8                trace_id;
->>   };
->> @@ -142,7 +141,8 @@ static inline void CS_UNLOCK(void __iomem *addr)
->>   }
->>   void coresight_disable_path(struct coresight_path *cs_path);
->> -int coresight_enable_path(struct coresight_path *cs_path, enum 
->> cs_mode mode);
->> +int coresight_enable_path(struct coresight_path *cs_path, enum 
->> cs_mode mode,
->> +              struct perf_output_handle *handle);
->>   struct coresight_device *coresight_get_sink(struct list_head *path);
->>   struct coresight_device *coresight_get_sink_by_id(u32 id);
->>   struct coresight_device *
->> diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/ 
->> hwtracing/coresight/coresight-sysfs.c
->> index 04e76cc1bfdf..f9a6b838726c 100644
->> --- a/drivers/hwtracing/coresight/coresight-sysfs.c
->> +++ b/drivers/hwtracing/coresight/coresight-sysfs.c
->> @@ -209,7 +209,7 @@ int coresight_enable_sysfs(struct coresight_device 
->> *csdev)
->>           goto out;
->>       }
->> -    ret = coresight_enable_path(cs_path, CS_MODE_SYSFS);
->> +    ret = coresight_enable_path(cs_path, CS_MODE_SYSFS, NULL);
->>       if (ret)
->>           goto err_path;
->> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/ 
->> drivers/hwtracing/coresight/coresight-tmc-etf.c
->> index e6b07f917556..fdf1c2511d67 100644
->> --- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
->> +++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
->> @@ -244,14 +244,13 @@ static int tmc_enable_etf_sink_sysfs(struct 
->> coresight_device *csdev)
->>       return ret;
->>   }
->> -static int tmc_enable_etf_sink_perf(struct coresight_device *csdev, 
->> void *data)
->> +static int tmc_enable_etf_sink_perf(struct coresight_device *csdev,
->> +                    struct perf_output_handle *handle)
->>   {
->>       int ret = 0;
->>       pid_t pid;
->>       unsigned long flags;
->>       struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->> -    struct coresight_path *cs_path= (struct coresight_path *)data;
->> -    struct perf_output_handle *handle = cs_path->handle;
->>       struct cs_buffers *buf = etm_perf_sink_config(handle);
->>       spin_lock_irqsave(&drvdata->spinlock, flags);
->> @@ -303,7 +302,7 @@ static int tmc_enable_etf_sink_perf(struct 
->> coresight_device *csdev, void *data)
->>   }
->>   static int tmc_enable_etf_sink(struct coresight_device *csdev,
->> -                   enum cs_mode mode, void *data)
->> +                   enum cs_mode mode, struct perf_output_handle *handle)
->>   {
->>       int ret;
->> @@ -312,7 +311,7 @@ static int tmc_enable_etf_sink(struct 
->> coresight_device *csdev,
->>           ret = tmc_enable_etf_sink_sysfs(csdev);
->>           break;
->>       case CS_MODE_PERF:
->> -        ret = tmc_enable_etf_sink_perf(csdev, data);
->> +        ret = tmc_enable_etf_sink_perf(csdev, handle);
->>           break;
->>       /* We shouldn't be here */
->>       default:
->> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/ 
->> drivers/hwtracing/coresight/coresight-tmc-etr.c
->> index 82a872882e24..2d0bd06bab2a 100644
->> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
->> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
->> @@ -1252,10 +1252,8 @@ static int tmc_enable_etr_sink_sysfs(struct 
->> coresight_device *csdev)
->>   }
->>   struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
->> -                   enum cs_mode mode, void *data)
->> +                   enum cs_mode mode, struct perf_output_handle *handle)
->>   {
->> -    struct coresight_path *cs_path = (struct coresight_path *)data;
->> -    struct perf_output_handle *handle = cs_path->handle;
->>       struct etr_perf_buffer *etr_perf;
->>       switch (mode) {
->> @@ -1643,14 +1641,13 @@ tmc_update_etr_buffer(struct coresight_device 
->> *csdev,
->>       return size;
->>   }
->> -static int tmc_enable_etr_sink_perf(struct coresight_device *csdev, 
->> void *data)
->> +static int tmc_enable_etr_sink_perf(struct coresight_device *csdev,
->> +                    struct perf_output_handle *handle)
->>   {
->>       int rc = 0;
->>       pid_t pid;
->>       unsigned long flags;
->>       struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->> -    struct coresight_path *cs_path = (struct coresight_path *)data;
->> -    struct perf_output_handle *handle = cs_path->handle;
->>       struct etr_perf_buffer *etr_perf = etm_perf_sink_config(handle);
->>       spin_lock_irqsave(&drvdata->spinlock, flags);
->> @@ -1698,13 +1695,13 @@ static int tmc_enable_etr_sink_perf(struct 
->> coresight_device *csdev, void *data)
->>   }
->>   static int tmc_enable_etr_sink(struct coresight_device *csdev,
->> -                   enum cs_mode mode, void *data)
->> +                   enum cs_mode mode, struct perf_output_handle *handle)
->>   {
->>       switch (mode) {
->>       case CS_MODE_SYSFS:
->>           return tmc_enable_etr_sink_sysfs(csdev);
->>       case CS_MODE_PERF:
->> -        return tmc_enable_etr_sink_perf(csdev, data);
->> +        return tmc_enable_etr_sink_perf(csdev, handle);
->>       default:
->>           return -EINVAL;
->>       }
->> diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/ 
->> hwtracing/coresight/coresight-tmc.h
->> index 2671926be62a..e991afd43742 100644
->> --- a/drivers/hwtracing/coresight/coresight-tmc.h
->> +++ b/drivers/hwtracing/coresight/coresight-tmc.h
->> @@ -336,7 +336,7 @@ struct coresight_device 
->> *tmc_etr_get_catu_device(struct tmc_drvdata *drvdata);
->>   void tmc_etr_set_catu_ops(const struct etr_buf_operations *catu);
->>   void tmc_etr_remove_catu_ops(void);
->>   struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
->> -                   enum cs_mode mode, void *data);
->> +                   enum cs_mode mode, struct perf_output_handle 
->> *handle);
->>   extern const struct attribute_group coresight_etr_group;
->>   #endif
->> diff --git a/drivers/hwtracing/coresight/coresight-tpiu.c b/drivers/ 
->> hwtracing/coresight/coresight-tpiu.c
->> index 97ef36f03ec2..ccf463ac7bf5 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpiu.c
->> +++ b/drivers/hwtracing/coresight/coresight-tpiu.c
->> @@ -75,7 +75,7 @@ static void tpiu_enable_hw(struct csdev_access *csa)
->>   }
->>   static int tpiu_enable(struct coresight_device *csdev, enum cs_mode 
->> mode,
->> -               void *__unused)
->> +               struct perf_output_handle *__unused)
->>   {
->>       struct tpiu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->> diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/ 
->> hwtracing/coresight/coresight-trbe.c
->> index 5005efd88a66..997d5976d2d2 100644
->> --- a/drivers/hwtracing/coresight/coresight-trbe.c
->> +++ b/drivers/hwtracing/coresight/coresight-trbe.c
->> @@ -1009,12 +1009,10 @@ static int __arm_trbe_enable(struct trbe_buf 
->> *buf,
->>   }
->>   static int arm_trbe_enable(struct coresight_device *csdev, enum 
->> cs_mode mode,
->> -               void *data)
->> +               struct perf_output_handle *handle)
->>   {
->>       struct trbe_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->>       struct trbe_cpudata *cpudata = dev_get_drvdata(&csdev->dev);
->> -    struct coresight_path *cs_path = (struct coresight_path *)data;
->> -    struct perf_output_handle *handle = cs_path->handle;
->>       struct trbe_buf *buf = etm_perf_sink_config(handle);
->>       WARN_ON(cpudata->cpu != smp_processor_id());
->> diff --git a/drivers/hwtracing/coresight/ultrasoc-smb.c b/drivers/ 
->> hwtracing/coresight/ultrasoc-smb.c
->> index 9be88394b3bb..1574b5067206 100644
->> --- a/drivers/hwtracing/coresight/ultrasoc-smb.c
->> +++ b/drivers/hwtracing/coresight/ultrasoc-smb.c
->> @@ -213,11 +213,9 @@ static void smb_enable_sysfs(struct 
->> coresight_device *csdev)
->>       coresight_set_mode(csdev, CS_MODE_SYSFS);
->>   }
->> -static int smb_enable_perf(struct coresight_device *csdev, void *data)
->> +static int smb_enable_perf(struct coresight_device *csdev, struct 
->> perf_output_handle *handle)
->>   {
->>       struct smb_drv_data *drvdata = dev_get_drvdata(csdev->dev.parent);
->> -    struct coresight_path *cs_path = (struct coresight_path *)data;
->> -    struct perf_output_handle *handle = cs_path->handle;
->>       struct cs_buffers *buf = etm_perf_sink_config(handle);
->>       pid_t pid;
->> @@ -241,7 +239,7 @@ static int smb_enable_perf(struct coresight_device 
->> *csdev, void *data)
->>   }
->>   static int smb_enable(struct coresight_device *csdev, enum cs_mode 
->> mode,
->> -              void *data)
->> +              struct perf_output_handle *handle)
->>   {
->>       struct smb_drv_data *drvdata = dev_get_drvdata(csdev->dev.parent);
->>       int ret = 0;
->> @@ -262,7 +260,7 @@ static int smb_enable(struct coresight_device 
->> *csdev, enum cs_mode mode,
->>           smb_enable_sysfs(csdev);
->>           break;
->>       case CS_MODE_PERF:
->> -        ret = smb_enable_perf(csdev, data);
->> +        ret = smb_enable_perf(csdev, handle);
->>           break;
->>       default:
->>           ret = -EINVAL;
->> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
->> index 87f9baa7fefe..a859fc00eef9 100644
->> --- a/include/linux/coresight.h
->> +++ b/include/linux/coresight.h
->> @@ -353,7 +353,7 @@ enum cs_mode {
->>    */
->>   struct coresight_ops_sink {
->>       int (*enable)(struct coresight_device *csdev, enum cs_mode mode,
->> -              void *data);
->> +              struct perf_output_handle *handle);
->>       int (*disable)(struct coresight_device *csdev);
->>       void *(*alloc_buffer)(struct coresight_device *csdev,
->>                     struct perf_event *event, void **pages,
-> 
+You don't check the return here, just pass the current dsi_ctx
 
+> +	drm_dsc_pps_payload_pack(&pps, &ctx->dsc);
+> +	mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
+> +	mipi_dsi_compression_mode_ext_multi(&dsi_ctx, true, MIPI_DSI_COMPRESSION_DSC, 0);
+> +
+> +	mipi_dsi_msleep(&dsi_ctx, 28);
+> +
+> +	if (dsi_ctx.accum_err) {
+> +		gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+> +		regulator_bulk_disable(ARRAY_SIZE(visionox_rm692e5_supplies),
+> +				       ctx->supplies);
+> +	}
+> +
+> +	return dsi_ctx.accum_err;
+> +}
+> +
+> +static int visionox_rm692e5_unprepare(struct drm_panel *panel)
+> +{
+> +	struct visionox_rm692e5 *ctx = to_visionox_rm692e5(panel);
+> +
+> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+> +	regulator_bulk_disable(ARRAY_SIZE(visionox_rm692e5_supplies),
+> +			       ctx->supplies);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct drm_display_mode visionox_rm692e5_modes[] = {
+> +	/* Let's initialize the highest frequency first */
+> +	{ /* 120Hz mode */
+> +		.clock = (1080 + 26 + 39 + 36) * (2400 + 16 + 21 + 16) * 120 / 1000,
+> +		.hdisplay = 1080,
+> +		.hsync_start = 1080 + 26,
+> +		.hsync_end = 1080 + 26 + 39,
+> +		.htotal = 1080 + 26 + 39 + 36,
+> +		.vdisplay = 2400,
+> +		.vsync_start = 2400 + 16,
+> +		.vsync_end = 2400 + 16 + 21,
+> +		.vtotal = 2400 + 16 + 21 + 16,
+> +		.width_mm = 68,
+> +		.height_mm = 152,
+> +		.type = DRM_MODE_TYPE_DRIVER,
+> +	},
+> +	{ /* 90Hz mode */
+> +		.clock = (1080 + 26 + 39 + 36) * (2400 + 16 + 21 + 16) * 90 / 1000,
+> +		.hdisplay = 1080,
+> +		.hsync_start = 1080 + 26,
+> +		.hsync_end = 1080 + 26 + 39,
+> +		.htotal = 1080 + 26 + 39 + 36,
+> +		.vdisplay = 2400,
+> +		.vsync_start = 2400 + 16,
+> +		.vsync_end = 2400 + 16 + 21,
+> +		.vtotal = 2400 + 16 + 21 + 16,
+> +		.width_mm = 68,
+> +		.height_mm = 152,
+> +		.type = DRM_MODE_TYPE_DRIVER,
+> +	},
+> +	{ /* 60Hz mode */
+> +		.clock = (1080 + 26 + 39 + 36) * (2400 + 16 + 21 + 16) * 60 / 1000,
+> +		.hdisplay = 1080,
+> +		.hsync_start = 1080 + 26,
+> +		.hsync_end = 1080 + 26 + 39,
+> +		.htotal = 1080 + 26 + 39 + 36,
+> +		.vdisplay = 2400,
+> +		.vsync_start = 2400 + 16,
+> +		.vsync_end = 2400 + 16 + 21,
+> +		.vtotal = 2400 + 16 + 21 + 16,
+> +		.width_mm = 68,
+> +		.height_mm = 152,
+> +		.type = DRM_MODE_TYPE_DRIVER,
+> +	},
+> +};
+> +
+> +static int visionox_rm692e5_get_modes(struct drm_panel *panel,
+> +						   struct drm_connector *connector)
+> +{
+> +	int count = 0;
+> +
+> +	for (int i = 0; i < ARRAY_SIZE(visionox_rm692e5_modes); i++) {
+> +		count += drm_connector_helper_get_modes_fixed(connector,
+> +						    &visionox_rm692e5_modes[i]);
+> +	}
+
+Nit: you can drop those {}
+
+> +
+> +	return count;
+> +}
+> +
+> +static const struct drm_panel_funcs visionox_rm692e5_panel_funcs = {
+> +	.prepare = visionox_rm692e5_prepare,
+> +	.unprepare = visionox_rm692e5_unprepare,
+> +	.disable = visionox_rm692e5_disable,
+> +	.get_modes = visionox_rm692e5_get_modes,
+> +};
+> +
+> +static int visionox_rm692e5_bl_update_status(struct backlight_device *bl)
+> +{
+> +	struct mipi_dsi_device *dsi = bl_get_data(bl);
+> +	u16 brightness = backlight_get_brightness(bl);
+> +	int ret;
+> +
+> +	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+> +
+> +	ret = mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+> +
+> +	return 0;
+> +}
+> +
+> +static int visionox_rm692e5_bl_get_brightness(struct backlight_device *bl)
+> +{
+> +	struct mipi_dsi_device *dsi = bl_get_data(bl);
+> +	u16 brightness;
+> +	int ret;
+> +
+> +	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+> +
+> +	ret = mipi_dsi_dcs_get_display_brightness_large(dsi, &brightness);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+> +
+> +	return brightness;
+> +}
+> +
+> +static const struct backlight_ops visionox_rm692e5_bl_ops = {
+> +	.update_status = visionox_rm692e5_bl_update_status,
+> +	.get_brightness = visionox_rm692e5_bl_get_brightness,
+> +};
+> +
+> +static struct backlight_device *
+> +visionox_rm692e5_create_backlight(struct mipi_dsi_device *dsi)
+> +{
+> +	struct device *dev = &dsi->dev;
+> +	const struct backlight_properties props = {
+> +		.type = BACKLIGHT_RAW,
+> +		.brightness = 2047,
+> +		.max_brightness = 4095,
+> +	};
+> +
+> +	return devm_backlight_device_register(dev, dev_name(dev), dev, dsi,
+> +					      &visionox_rm692e5_bl_ops, &props);
+> +}
+> +
+> +static int visionox_rm692e5_probe(struct mipi_dsi_device *dsi)
+> +{
+> +	struct device *dev = &dsi->dev;
+> +	struct visionox_rm692e5 *ctx;
+> +	int ret;
+> +
+> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+> +	if (!ctx)
+> +		return -ENOMEM;
+> +
+> +	ret = devm_regulator_bulk_get_const(&dsi->dev,
+> +					    ARRAY_SIZE(visionox_rm692e5_supplies),
+> +					    visionox_rm692e5_supplies,
+> +					    &ctx->supplies);
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "Failed to get regulators\n");
+> +
+> +	ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+> +	if (IS_ERR(ctx->reset_gpio))
+> +		return dev_err_probe(dev, PTR_ERR(ctx->reset_gpio),
+> +				     "Failed to get reset-gpios\n");
+> +
+> +	ctx->dsi = dsi;
+> +	mipi_dsi_set_drvdata(dsi, ctx);
+> +
+> +	dsi->lanes = 4;
+> +	dsi->format = MIPI_DSI_FMT_RGB888;
+> +	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS;
+> +
+> +	drm_panel_init(&ctx->panel, dev, &visionox_rm692e5_panel_funcs,
+> +		       DRM_MODE_CONNECTOR_DSI);
+> +	ctx->panel.prepare_prev_first = true;
+> +
+> +	ctx->panel.backlight = visionox_rm692e5_create_backlight(dsi);
+> +	if (IS_ERR(ctx->panel.backlight))
+> +		return dev_err_probe(dev, PTR_ERR(ctx->panel.backlight),
+> +				     "Failed to create backlight\n");
+> +
+> +	drm_panel_add(&ctx->panel);
+> +
+> +	dsi->dsc = &ctx->dsc;
+> +	ctx->dsc.dsc_version_major = 1;
+> +	ctx->dsc.dsc_version_minor = 1;
+> +	ctx->dsc.slice_height = 20;
+> +	ctx->dsc.slice_width = 540;
+> +	ctx->dsc.slice_count = 1080 / ctx->dsc.slice_width;
+> +	ctx->dsc.bits_per_component = 10;
+> +	ctx->dsc.bits_per_pixel = 8 << 4;
+> +	ctx->dsc.block_pred_enable = true;
+> +
+> +	ret = devm_mipi_dsi_attach(dev, dsi);
+> +	if (ret < 0) {
+> +		drm_panel_remove(&ctx->panel);
+> +		return dev_err_probe(dev, ret, "Failed to attach to DSI host\n");
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void visionox_rm692e5_remove(struct mipi_dsi_device *dsi)
+> +{
+> +	struct visionox_rm692e5 *ctx = mipi_dsi_get_drvdata(dsi);
+> +
+> +	drm_panel_remove(&ctx->panel);
+> +}
+> +
+> +static const struct of_device_id visionox_rm692e5_of_match[] = {
+> +	{ .compatible = "visionox,rm692e5" },
+> +	{ /* sentinel */ }
+> +};
+> +MODULE_DEVICE_TABLE(of, visionox_rm692e5_of_match);
+> +
+> +static struct mipi_dsi_driver visionox_rm692e5_driver = {
+> +	.probe = visionox_rm692e5_probe,
+> +	.remove = visionox_rm692e5_remove,
+> +	.driver = {
+> +		.name = "panel-visionox-rm692e5",
+> +		.of_match_table = visionox_rm692e5_of_match,
+> +	},
+> +};
+> +module_mipi_dsi_driver(visionox_rm692e5_driver);
+> +
+> +MODULE_AUTHOR("Eugene Lepshy <fekz115@gmail.com>");
+> +MODULE_AUTHOR("Danila Tikhonov <danila@jiaxyga.com>");
+> +MODULE_DESCRIPTION("DRM driver for Visionox RM692E5 cmd mode dsi panel");
+> +MODULE_LICENSE("GPL");
+
+Thanks,
+Neil
 
