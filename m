@@ -1,112 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-47046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27273A2AE9F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 18:14:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D45F3A2B08E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 19:21:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4E521165382
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 17:14:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CCFD5188BB0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 18:21:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96533239599;
-	Thu,  6 Feb 2025 17:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB7921DE8A8;
+	Thu,  6 Feb 2025 18:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aMdSxuPW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="coSja6AX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6665239593
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 17:13:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FA91A0BF3;
+	Thu,  6 Feb 2025 18:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738862036; cv=none; b=eM9Oj/FX/j0rfcJsJNtxdBGuh+iqiECF6pErVNISMwOrGo7Uz2enwxXHttT9nUArq5hpuBtrM3JhUl2Ndu4kYuDQjJ8QyY1DMDv42Fcwmq6yj2v8h+zODPieQ9g1tZs6uIli5cmzhKBlyPjuME2YLsKbK6C/2F+dg8FH36rCiTk=
+	t=1738865766; cv=none; b=uQHZTnoI265qVYTSCC3NjMmYfEgLQWnVwqvvLdKY4QoJh35tDV5Q/eMOZ677WoOIpfnPRDaDMqeUudbVAEx+nypsDKbQbhift01gJxJ/xsF6nr5lvIlJ7Vy0dLiSmar+Cm6qovNfyEHW7jnhAAm0JaIUhX/pUA2XZLpck5PjMVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738862036; c=relaxed/simple;
-	bh=GyEJU0L/3MWVHO0datjwyHCsUmy6MpDfg1f1e7CVeAo=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=FDo1QtzUE48lSvFrtdb7MZjREuZO+pv/ygNCSJO3YWIrC1U/p5lM1kYV0HRYhX7sG9g7rGkQsGybX7o3QsL8wjFCVZ+WPXGgvkFqrmrnO/50pt4VGGtagORHa4UM/X2o+D8k3sVwOMVcHMO2YcgNFwFcgQwegAiT7z68pNkXHcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aMdSxuPW; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-54412e9e808so58355e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 09:13:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738862033; x=1739466833; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n06l2ijL01WqUrkNIC0JdabkH8hZdmIZKxet5fVh6fk=;
-        b=aMdSxuPWTp4eLRwIwuM4k5eNqk5jvnOR8kAmMsfv3KurIE89/rQTfQeMNUE7f1C/Av
-         b5O5hdpdUcuPGd1+8qbqDbmE32qKwvzysa4LiNEz3+zAy9pgcgR9aEpXUMNzkU7P1DJv
-         v3rDdIs0qlyPaMU8kOcxi4aMGI8gNaiugZAX4REz6w2VnA6DUAkqp6C/39JVGjFgCUgr
-         9xTRXJfzfidzKOzIFFjmWxUAyJM1XOkyu144u6R0vwasd6nCSXiOXq31032m2aR16+OV
-         MEHsQoCmtpO9/XX8MTxOdT18OKtnYn1LHlgsSg/Ll7ScLus2UuQC4VnuMI+rx1OSFZbr
-         OFGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738862033; x=1739466833;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n06l2ijL01WqUrkNIC0JdabkH8hZdmIZKxet5fVh6fk=;
-        b=TZFu4A5qe2Ycvvm5ko3EJiQSjSCSNtmuRTttkwz5aRSMBDmUA60Pke21vUBi/TX7vg
-         X/j7ZtVfImY48DGDw3/m6MNqqWeWnbH1j970/QD3KWiJvhJzLwD/pwUYzxlXI54Zd99E
-         m2lfpV9dEIIfySTRLH7iyrbNRmPErtFyoEKMQwOC286t827BPq2bbm1y66DLiCUr9uG8
-         Tm+je3P9RdKzkxtN34CMaLoDY7LUpVtXnjYU1XgQycl8s2UTmgAYWpjRXveRSh5VDu92
-         wpcXWf9xYNVq695zcLI6t1A3eoj1O6jCWX+VfvR1es4yY+i7W1xrzuzu8b4nmz5TCX+l
-         TVhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXd5eYQXJhZiSRtTiDgCvnYpXT5Lpi5ALk3bWOo1gwls5MbZ1P4QvB0Md/uaSoqBntg+aEY7/2eqIybuKs1@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+iPUwaYnC8zHq+X3w1kgIkFDZNpxEHFSQAvDgf5dzAjx5oCHF
-	sFUPdPRJbAPSVJDawDowTxZQSp2EvQIIo0QHoaTXbUfNSmGQesuw/qR3KlJ7N0cIaceM9DX4DWs
-	b
-X-Gm-Gg: ASbGnctNv4L2Kt+nxGpxYuINpO6uiraJFclSQlcGq9eQHMop1yjBibJsyemUfsR3bcs
-	RhMLsLLRX0DeAMGkSRTPgMBCIpDfr/kS1973drFaXUNpKmrQ/vgJWT7azpfxO8Cr6UupjZZWAPs
-	nXDXJN2lID2uu9lo2HWw/G3fFPZ/foTi+fR6Etk25q0++ywEwU8EyjAmwZsnoPUkbUzVWUM+Pwy
-	ItHYEhNr8IYjsq7p3+CDzPmAu5SJj3aEoCXK4MK/Vu/L6bSidQPdtBxQ1yL2NRfJUFZ1YzqwxlF
-	H+AlEDuN/N92/Rl0Xc10PLauBedkq2EFdt868gPq8ETjuqg1D/SQ0ckwIbTMgXZt0X+0Uw==
-X-Google-Smtp-Source: AGHT+IHWWrgv4CCtFsNqLE/vXmG/2vKMIHZ0SThpHyfdpzv1pApRQd8jikvoaYfgBXVjgPTwsprDBg==
-X-Received: by 2002:a05:6512:1052:b0:544:e8f:6c02 with SMTP id 2adb3069b0e04-5440e8f6d16mr604618e87.3.1738862032797;
-        Thu, 06 Feb 2025 09:13:52 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-544105f30d8sm180156e87.196.2025.02.06.09.13.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Feb 2025 09:13:52 -0800 (PST)
-Message-ID: <e789ff43-78cb-4ecd-8949-1d0f8beb1194@linaro.org>
-Date: Thu, 6 Feb 2025 19:13:43 +0200
+	s=arc-20240116; t=1738865766; c=relaxed/simple;
+	bh=rkwyFkT1EbN8duRPnMT1XIUJb0V2Pm6NPMAaSFnGjjk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QRfwmEeF657OT0ZWPj6zODx3SgntQ2d1IMQwzn1Gh2h6N0zoBJ1UsuaClqxseFxFB60OVLsuIan4XbAVTiYl+HhWGCwbnam6CBC1aU1Mzu+ipb1tt5E8ZrztR6ftGsh3GLkTkXh4fceD+TMsTPpMep68HBtvjgrtO49nuZmMIQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=coSja6AX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A21C4CEE2;
+	Thu,  6 Feb 2025 18:16:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738865765;
+	bh=rkwyFkT1EbN8duRPnMT1XIUJb0V2Pm6NPMAaSFnGjjk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=coSja6AXd6MQfZbRyxD/E3sRpcknEZ03tVCc0Apa6QVlNHbXnBBink2aFeGLkNBAV
+	 QleyaNLMjP0vjR9J7Dm25ZCb8pFgQuMVEa5CkW7Up4igdaxTlRDhnkIOAdliBl5Ncf
+	 145TKdFDrlFdKLJpaKdfBntD5elYD/5O1Jzb6/Lx199vnVfZrhGDSjzpxUczbPHzKt
+	 HJbzVEirIsDrcwMSPovznKofVpJ3sUmnjq6MNj7R4N07fjNEacLSYWXeTjHbothH7U
+	 HpLeapf6NFJp3SB+CP6pHUorhCyzDkmfLZ0rxtySgPiUXh6wFDf+F6Z/INWTDYxc/J
+	 8fgQlyoAZQiYQ==
+Date: Thu, 6 Feb 2025 18:15:59 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Johan Hovold <johan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 1/2] dt-bindings: usb: Add Parade PS8830 Type-C
+ retimer bindings
+Message-ID: <20250206-poison-handmade-091e9cb58c5e@spud>
+References: <20250206-x1e80100-ps8830-v6-0-60b1e49cfa8d@linaro.org>
+ <20250206-x1e80100-ps8830-v6-1-60b1e49cfa8d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: switch CSID to defined MIPI CSI data
- type IDs
-Content-Language: ru-RU
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Sakari Ailus <sakari.ailus@linux.intel.com>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20241225205748.1515251-1-vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20241225205748.1515251-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="L1/lhnsuiEdnY/9A"
+Content-Disposition: inline
+In-Reply-To: <20250206-x1e80100-ps8830-v6-1-60b1e49cfa8d@linaro.org>
 
-On 12/25/24 22:57, Vladimir Zapolskiy wrote:
-> Remove redefined image data type IDs taken directly from the MIPI CSI-2
-> specification. Non-functional change.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-I would appreciate, if the change is reviewed and/or it enters
-media/devel eventually.
+--L1/lhnsuiEdnY/9A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
---
-Best wishes,
-Vladimir
+On Thu, Feb 06, 2025 at 11:28:27AM +0200, Abel Vesa wrote:
+> The Parade PS8830 is a USB4, DisplayPort and Thunderbolt 4 retimer,
+> controlled over I2C. It usually sits between a USB/DisplayPort PHY and the
+> Type-C connector, and provides orientation and altmode handling.
+>=20
+> Currently, it is found on all boards featuring the Qualcomm Snapdragon
+> X Elite SoCs.
+>=20
+> Document bindings for its new driver. Future-proof the schema for the
+> PS8833 variant, which seems to be similar to PS8830.
+>=20
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+
+This seems fine, but usb switches aren't something I know much about..
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+
+Cheers,
+Conor.
+
+--L1/lhnsuiEdnY/9A
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHQEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ6T8XwAKCRB4tDGHoIJi
+0ht7APUXSyfjFXBWF/j++c7tfhr4QQa2rEII3S0K9QsNpJAYAQDa+n2lghR/tl1C
+NbgIMl5r93WvXL9zcUxpyNf4YnW6Cg==
+=eH4j
+-----END PGP SIGNATURE-----
+
+--L1/lhnsuiEdnY/9A--
 
