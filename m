@@ -1,239 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-47055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C01C8A2B382
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 21:43:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7E7DA2B384
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 21:43:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57A34166538
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 20:43:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D20313A1660
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 20:43:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73E051D88D7;
-	Thu,  6 Feb 2025 20:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4712C1A4F12;
+	Thu,  6 Feb 2025 20:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C2oL3sCM"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="VpdvU9Qi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A4E1A4F12;
-	Thu,  6 Feb 2025 20:43:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEA51D8DFE
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 20:43:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738874597; cv=none; b=EfrSGzGSSFoHWJp69K7ujTY5dFuWPEWcy5LyVc5gItPhTFWU6alVT4gqs1aVkQwSbIPHgmTJil1ua96Cg2LSMW7pTCccu0LtC21l9eHWMnjEu85q3e+DJFKUNUdyOAgMc3vykYK3hNJeI9IXVwMPGyzJIAjIMIuU9C6Q0iwOvqM=
+	t=1738874626; cv=none; b=e6FMDVxH+s1N0nnkhle9qMWKE4EWcxathq8NvoZ8ztsJmzTebLQhtexTHCRSt6NfNzCFfiJamSyiVTEzpy5axttz1UYBf/ynf5rBtIoYqDlDRpb0LviKhNnTbh6qlyp5xwuJd7Wi3J5r2JEVfMKiepqQhPB0Xh7+L0rstwdE7t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738874597; c=relaxed/simple;
-	bh=JI8O3sI18zPdfFZUFX44FdVhvRZI45EiHE6VzY/Hjc8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JFOR92yzJWdy/9NpigOjbJ6nHpNCfT/gSvXa6F9d6nkM41FxGfulO5TYb17cOXuZC3gBKxoc41cQe+F6/h4tbevQB0dNtykg4Qh9+oH/0zeOJO8zx+And9Xt4mK3C2noYJAd1iTXP1vSnE+OjnFqkiLhsZUn2PAZ1uLrhLbGh+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C2oL3sCM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 516E57UU015247;
-	Thu, 6 Feb 2025 20:42:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VOS1t+7zQCjgLpQI16tbYkeg5M4/gUoycEPmZCoPtg4=; b=C2oL3sCML5Mp372Q
-	tsh2a4etcxDp6ud4iDGUoIpaB2m36EsQw193s1xh5BkfT+fPilGN9+sDQG4jRCka
-	WlrlzP/YjOMJT+Lov5+E1dl9iXV6MvlrP4lcgz33FwMSVxniQnKI5whhjw6/FkJW
-	/v41owjV2yNxLAskYFN/Ohd69kicAEA/VgrcWEdrcWEl5UUzTcsLjxta+11d/1K6
-	N4KU8UHU3b4Wbtvbqv1BPuvlV1qqfRlcAE+gh5hXiGpauQRpSEnxKJHhxm3EYC+7
-	k45OblkFROdcUBT6IUguD5WZB++uJbdRMVCjBc6PRA4qUbKVUlw1lMW3GQMvz+vw
-	jBU1KQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44mxhbryu6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Feb 2025 20:42:52 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 516KgpMw009163
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Feb 2025 20:42:51 GMT
-Received: from [10.71.110.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Feb 2025
- 12:42:07 -0800
-Message-ID: <1b98265e-8766-4504-b374-f7af8203c926@quicinc.com>
-Date: Thu, 6 Feb 2025 12:41:30 -0800
+	s=arc-20240116; t=1738874626; c=relaxed/simple;
+	bh=ghMXVxcLYuC3amakcAM+2RrFtMQq4/vF5UL/FgqkJjk=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HmdC60EU/b7i8rvTEcPkcukYGIiuA8zQr10rH9bDpnrqqYq1B1CDUqdwR+nI40qkEKDnHx+BIvzsi5b9UcfSC5T6tkyqvneC49Tzl8Ybs+GXV8oraC6Mh2v+ZVZkXUL0Caw73JM77dOf6J23zTZrqDXgDpyqSVUyBLcDi7u0t30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=VpdvU9Qi; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7b6e8814842so148709385a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 12:43:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1738874623; x=1739479423; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ghMXVxcLYuC3amakcAM+2RrFtMQq4/vF5UL/FgqkJjk=;
+        b=VpdvU9Qi4JF1wHvut91sAo2uH9unLgmKOBEfJRN8Kk4VvYj+U6zot43hjvvgfT1tJW
+         9CQ87LtUodSUD25bSJOLppkguLXy85C6GEo84/grB4ZOdi3BOb9jN5Sxf9JAlOJsbhy1
+         EPxam1tWwLJ2VvbT4EIQmcTXugM4yabxL6G+k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738874623; x=1739479423;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ghMXVxcLYuC3amakcAM+2RrFtMQq4/vF5UL/FgqkJjk=;
+        b=IpUpWrRPDpPDg+q3G5kv04w6mPvofOrw1jjlGLmMc+vnsDCwujb9hTZ4mUAF9y6PUW
+         nGkmQyqciUdRH0NCuTFsdHc2YGCh8wam+kDhcVaL+lCZ8yVD5ehRQF7OmMqvJb/nyEw6
+         aQil5ewv3DbSdk70iTs9I3PySLEiUJjacUgbaozNeqotXvK6AEv98Tp0dvQsHOmOvPoX
+         g0DTon3qESVeH9TKxvSrBAyFfeQYTNO/IiGUNaBJRESb8BX4Rr6mej7ae7GA2hUOC4CT
+         f76PwQLFIuYgXXbj+lDeaQs7bSsIKC0QkAqr8fwnOF2J+NQ04ClbM7M1hSFh93ektiHF
+         UU+g==
+X-Forwarded-Encrypted: i=1; AJvYcCU0dX4YmquRkOvr9baQsEkqG01CcTGBNbnQ++VU5IWLVJInvlHpgPQncma/5Y8zjAyfHVASSP6f/3oSmi8E@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWdfRyCjClI7ffzK0+hn8iOkm3STqmeMQQZbQslk5EegUuaBZQ
+	rdKBV+7CpSsNua9wpGM4Bn9wkKG03C5pFi2rjBUkwdjLUk5Qe3kSTPPOKsinXhKl8T+qVppBrBs
+	f6DRgsxV7YAyF5K6EiVf0Hhfel1BKxKUNNKWt
+X-Gm-Gg: ASbGncs7rZCr/qxh2R4moNo0tmDHfheTvTl7oJq7j9ZJ8iX+lFk6lJorNlTCinIwac1
+	PfFCmdZaYhNAnjZS4KRSniLA7OKP9KOxhmBfTC45m7ZG0cYPHvk6wWbVzkLuTMKRbemXFlrvam7
+	G0VdYO5lMhNmdKkKU5qnKeVBqL
+X-Google-Smtp-Source: AGHT+IGIi7KHGakyYrhAS6Nm6sSDzZzym1yivy6eswLvWosFcy/m0lzamEPvxM2Mp6Z9Nh8JG+b4sn+mv4BnqJ62Jhc=
+X-Received: by 2002:a05:620a:f15:b0:7b6:dc74:829f with SMTP id
+ af79cd13be357-7c047ba4996mr111088585a.7.1738874623312; Thu, 06 Feb 2025
+ 12:43:43 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Feb 2025 12:43:42 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Feb 2025 12:43:42 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/7] drm/msm/hdmi: program HDMI timings during
- atomic_pre_enable
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart
-	<Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej
- Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Simona Vetter <simona@ffwll.ch>,
-        Simona
- Vetter <simona.vetter@ffwll.ch>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20250124-bridge-hdmi-connector-v6-0-1592632327f7@linaro.org>
- <20250124-bridge-hdmi-connector-v6-2-1592632327f7@linaro.org>
- <7fbfc7d5-f6bb-4f99-914a-f91bb7d153fd@quicinc.com>
- <na7jgb5leqbugi6a6xkfz3nl6mp7li4oevfevhjmo5y4v7eot6@fsmfv52u2rtz>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <na7jgb5leqbugi6a6xkfz3nl6mp7li4oevfevhjmo5y4v7eot6@fsmfv52u2rtz>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eoBIM9uswIRdOCIYAwxjd8U7b03cxVB5
-X-Proofpoint-GUID: eoBIM9uswIRdOCIYAwxjd8U7b03cxVB5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-06_06,2025-02-05_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- mlxlogscore=999 priorityscore=1501 mlxscore=0 clxscore=1015 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
- definitions=main-2502060164
+In-Reply-To: <74527323-31ff-4ed0-b19f-e535f26abf2b@oss.qualcomm.com>
+References: <20250205233016.1600517-1-swboyd@chromium.org> <20250205233016.1600517-2-swboyd@chromium.org>
+ <74527323-31ff-4ed0-b19f-e535f26abf2b@oss.qualcomm.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.12.dev1+gaa8c22fdeedb
+Date: Thu, 6 Feb 2025 12:43:42 -0800
+X-Gm-Features: AWEUYZk9G69zlKfea1G0cVv2Pso0fG2dCEq5z01lgx0Eou9Uj4laycjO7Oq51wY
+Message-ID: <CAE-0n50DXcAXQMaLtsamvxHjUrkJVBz42G6gtgKgW9Rh=qd31Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: chrome: Add binding for ChromeOS Pogo
+ pin connector
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, cros-qcom-dts-watchers@chromium.org, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Benson Leung <bleung@chromium.org>, devicetree@vger.kernel.org, 
+	chrome-platform@lists.linux.dev, Pin-yen Lin <treapking@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
+Quoting Konrad Dybcio (2025-02-06 03:30:50)
+> On 6.02.2025 12:30 AM, Stephen Boyd wrote:
+> > diff --git a/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+> > new file mode 100644
+> > index 000000000000..622e171b6b08
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+> > @@ -0,0 +1,68 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/chrome/google,pogo-pin-connector.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Google Pogo Pin Connector
+>
+> This looks like a very generic piece of hw.. many boards (esp. convertibles)
+> do the same thing, with 4 or 5 pins on the bottom of the device.
 
+Yes, connectors are basically just pins :-)
 
-On 2/3/2025 4:59 PM, Dmitry Baryshkov wrote:
-> On Mon, Feb 03, 2025 at 11:34:00AM -0800, Abhinav Kumar wrote:
->>
->>
->> On 1/24/2025 1:47 PM, Dmitry Baryshkov wrote:
->>> The mode_set callback is deprecated, it doesn't get the
->>> drm_bridge_state, just mode-related argumetns. Also Abhinav pointed out
->>> that HDMI timings should be programmed after setting up HDMI PHY and
->>> PLL. Rework the code to program HDMI timings at the end of
->>> atomic_pre_enable().
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 23 +++++++++++++++--------
->>>    1 file changed, 15 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
->>> index d839c71091dcdc3b020fcbba8d698d58ee7fc749..d5ab1f74c0e6f47dc59872c016104e9a84d85e9e 100644
->>> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
->>> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
->>> @@ -126,15 +126,26 @@ static void msm_hdmi_config_avi_infoframe(struct hdmi *hdmi)
->>>    	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
->>>    }
->>> +static void msm_hdmi_bridge_atomic_set_timings(struct hdmi *hdmi,
->>> +					       const struct drm_display_mode *mode);
->>>    static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
->>>    					      struct drm_bridge_state *old_bridge_state)
->>>    {
->>> +	struct drm_atomic_state *state = old_bridge_state->base.state;
->>>    	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
->>>    	struct hdmi *hdmi = hdmi_bridge->hdmi;
->>>    	struct hdmi_phy *phy = hdmi->phy;
->>> +	struct drm_encoder *encoder = bridge->encoder;
->>> +	struct drm_connector *connector;
->>> +	struct drm_connector_state *conn_state;
->>> +	struct drm_crtc_state *crtc_state;
->>>    	DBG("power up");
->>> +	connector = drm_atomic_get_new_connector_for_encoder(state, encoder);
->>> +	conn_state = drm_atomic_get_new_connector_state(state, connector);
->>> +	crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
->>> +
->>>    	if (!hdmi->power_on) {
->>>    		msm_hdmi_phy_resource_enable(phy);
->>>    		msm_hdmi_power_on(bridge);
->>> @@ -151,6 +162,8 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
->>>    	if (hdmi->hdcp_ctrl)
->>>    		msm_hdmi_hdcp_on(hdmi->hdcp_ctrl);
->>> +
->>> +	msm_hdmi_bridge_atomic_set_timings(hdmi, &crtc_state->adjusted_mode);
->>>    }
->>
->> This addresses my comment about setting up the HDMI timing registers before
->> setting up the timing engine registers.
->>
->> But prior to this change, mode_set was doing the same thing as
->> msm_hdmi_bridge_atomic_set_timings() which means
->> msm_hdmi_bridge_atomic_set_timings() should be called at the beginning of
->> pre_enable()?
->>
->> The controller is enabled in msm_hdmi_set_mode(). So this should be done
->> before that.
-> 
-> In [1] you provided the following order:
-> 
-> 1) setup HDMI PHY and PLL
-> 2) setup HDMI video path correctly (HDMI timing registers)
-> 3) setup timing generator to match the HDMI video in (2)
-> 4) Enable timing engine
-> 
-> This means htat msm_hdmi_bridge_atomic_set_timings() should come at the
-> end of msm_hdmi_bridge_atomic_pre_enable(), not in the beginning /
-> middle of it.
-> 
-> [1] https://lore.kernel.org/dri-devel/8dd4a43e-d83c-1f36-21ff-61e13ff751e7@quicinc.com/
-> 
+>
+> But of course hw manufacturers being hw manufacturers, many different kinds
+> of signals go through such connectors - if it's not USB then it's perhaps
+> I2C or some variation thereof
 
-Sequence given is correct and is exactly what is given in the docs. What 
-is somewhat not clear in the docs is the location of the enable of the 
-HDMI controller. This is not there in the above 4 steps. I am referring 
-to the enable bit being programmed in msm_hdmi_set_mode(). Ideally till 
-we enable the timing engine, it should be okay but what I wanted to do 
-was to keep the msm_hdmi_set_mode() as the last call in this function 
-that way we program everything and then enable the controller.
+Right, and I doubt they call them "pogo".
 
-This can be done in either way, move it to the beginning of the function 
-or move it right before msm_hdmi_set_mode(). I had suggested beginning 
-because thats how it was when things were still in mode_set.
+>
+> IMO, we could perhaps add this to usb-connector.yaml as "usb-custom-connector"
+> or so
 
+Do you have a device that could use such a generic binding? I can't
+really design something in the abstract without two or more concrete use
+cases. Coming up with something generic looks like a quagmire, because
+as you say the signals going through the pins could be anything: i2c,
+1-wire, etc.
 
+At least this is a vendor prefixed binding, meaning a generic binding
+could supersede this one later. The risk of accepting this binding is
+low because it can be replaced by a more generic one at a later date.
 
-> 
->>
->>>    static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
->>> @@ -177,17 +190,12 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
->>>    	}
->>>    }
->>> -static void msm_hdmi_bridge_mode_set(struct drm_bridge *bridge,
->>> -		 const struct drm_display_mode *mode,
->>> -		 const struct drm_display_mode *adjusted_mode)
->>> +static void msm_hdmi_bridge_atomic_set_timings(struct hdmi *hdmi,
->>> +					       const struct drm_display_mode *mode)
->>>    {
->>> -	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
->>> -	struct hdmi *hdmi = hdmi_bridge->hdmi;
->>>    	int hstart, hend, vstart, vend;
->>>    	uint32_t frame_ctrl;
->>> -	mode = adjusted_mode;
->>> -
->>>    	hdmi->pixclock = mode->clock * 1000;
->>>    	hstart = mode->htotal - mode->hsync_start;
->>> @@ -306,7 +314,6 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
->>>    	.atomic_reset = drm_atomic_helper_bridge_reset,
->>>    	.atomic_pre_enable = msm_hdmi_bridge_atomic_pre_enable,
->>>    	.atomic_post_disable = msm_hdmi_bridge_atomic_post_disable,
->>> -	.mode_set = msm_hdmi_bridge_mode_set,
->>>    	.mode_valid = msm_hdmi_bridge_mode_valid,
->>>    	.edid_read = msm_hdmi_bridge_edid_read,
->>>    	.detect = msm_hdmi_bridge_detect,
->>>
-> 
+I will move the file to usb/ so that it is more likely to be seen, but
+I'm hesitant to sign up to work on any sort of generic binding for USB2
+plus an extra pin used for who knows what.
 
