@@ -1,339 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-47058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98FEDA2B572
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 23:45:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C2D8A2B68F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 00:29:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28A53166CA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 22:45:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 511A818849D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 23:29:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AF27197A8E;
-	Thu,  6 Feb 2025 22:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83BA923771D;
+	Thu,  6 Feb 2025 23:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q9z2w8Ds"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ptIgSLPK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E8523C378;
-	Thu,  6 Feb 2025 22:45:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B64E237710
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Feb 2025 23:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738881941; cv=none; b=G1sBXzuvC/wi1V94BdF9HopjNaomp5bUU0gN/RhWsMj8W9U6ZAhV2pHqKErhvG2UbC+e7nsMUoZ9MzKq3+Ezriu2rvZe7oDXq70siiTwZFl//wsOsGJQfyDU8N40fWSPu0IHwhYfP17N5YzLBW6exJo/AiUFFIW8u7yz6ADHbwU=
+	t=1738884552; cv=none; b=uX2ch3nr6/piJWunU47qlzOFxvIjFJgHC1aRElrfF4Ae0ROkb4hbd2fyNzzSv9KCYOEqQO+3lXKAxSoDLvIx2E6I9S4YREF/kvRHp3RfBJ9fkB4Dyn3hI66t1cg+gxMo6lAguffz0pjuIxMy8sOAJwUIFo96nXhSOgs/J+zgFo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738881941; c=relaxed/simple;
-	bh=beF6B6ELc54Bf53QtxsvcDNK3d8W+d6zndfsvwzFj8E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QWWkWq/VdpsBg9NzOotZMzmRw4FsLbOaiO9Uj8NfXuPAVNuVDY8VShaeDDjUK0XBu5vigmK4E8vtFuC8/3Xyl0kotHdMfhkq1kcGRGwczIneZlT2GK1LJetP7NJLqSaT2bLyRuOi1oqO3qMirFKgAByvnm16dGe5b540AvY8I8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q9z2w8Ds; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 516EiRZY021405;
-	Thu, 6 Feb 2025 22:45:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zfgsPQw8s8ghTcllTkWKTRRAIy24vbp5oisCLthTWJo=; b=Q9z2w8DsVB/AIsFr
-	E9QVNOhdM8sTpNLJi23j04wgj5MtVE2xSKB04i3wD39bJeFk/8jt7jiziYVlLE+Y
-	EInU9r8ainarcoo9OTQqh8N3rTItm3+1PAD69kP7S+dpUAd82Y3iO4i+mbQCAe0X
-	/1roD5j6SI5I9ledydgs3HqItGaGrXvEWzQqCYvVTnf44/H8CtxvpNTO2hW2sabS
-	z5gG2QmRyoMdx5YosNoHiHvrzFbBsBatM9OBmeVpKAuvQYYiWELNTdIS6+x0h6Ba
-	oycaMO4yZ7ATPi1nEKPvjks96RhDd/I+TW6Rd7njlylUqu8V5qisd0ZPJn+W8ASV
-	R6Hiqw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44my4114ne-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Feb 2025 22:45:21 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 516MjKFh027963
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Feb 2025 22:45:20 GMT
-Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Feb 2025
- 14:45:20 -0800
-Message-ID: <cbf66ae4-9f52-4f8f-b569-6a71f8b55a4f@quicinc.com>
-Date: Thu, 6 Feb 2025 14:45:19 -0800
+	s=arc-20240116; t=1738884552; c=relaxed/simple;
+	bh=oxBfLTZdXL8ZaQ+RGvvB79FuQ4Hav3x0rRtUrfoL094=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kLoiG6yZlpG5LcG4EfKIur1Ur+dc5985P/iZ/dpum/T4ZavJRb/yojZO4BApyglGYFizyDe++kZS8JtTxo6r5GxswH6NKBxaWj97Xw+lcpM4q0GT5tEkuE5PTKqq7l11SBY0WYQeD1yKUkJ3qOvAKCylwGa0Z5MLfMgS0qyptXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ptIgSLPK; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 516E4XBa014196
+	for <linux-arm-msm@vger.kernel.org>; Thu, 6 Feb 2025 23:29:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=dpZ6su+P1oYF13MEsL4+5m
+	JyK1Vwo2Uj6+roerGXEPE=; b=ptIgSLPKx0SQetApTgqxDoRw1g11h/SZLJyyzU
+	miZhdv0iC2frHFQAFgC7CQ04oQZva2HU/KDgzZzHirOQfS6gsRCw94Dn7pU6XQ3Z
+	pOkOH4t4Snjl1+t1XeMxQAwRpbSu1fDGX1YSkRi0vGsYviGYnv6k+tEwH10oCDia
+	BhGSkUt0xOPV2g00ekBn3Rx4tKq/qm0YWuS6uNvAI0VJ8aJbYQnjEgg1MpH/Cc/W
+	fB0Y8IJceij5DPupF+I0RGhiNCzk9vlb3xVr5GwUO9TcYF8VUHILuDSQjMTCtNj7
+	xF4dGswtyyXK9r56JhBVxRU8m2aogaVgB8WE7FuEmfPZTpoA==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44mxhbs9xx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 23:29:07 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-21f464b9954so13025105ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 15:29:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738884547; x=1739489347;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dpZ6su+P1oYF13MEsL4+5mJyK1Vwo2Uj6+roerGXEPE=;
+        b=Iy+9RdII24BkFmxgC5Z/z10jHgmku7GAebgptDtVIrMh4jVnSQxkFK5PmQq95nqL3w
+         aPbaIOy129j7TB2KmK6FZnUAPPjGjACQWEVXytyY/+hm48oKsiV5QdNDeJqO4eFiAMyN
+         SwyE2TefGIJvIumlH25WX5X2Lf/5M3U+CiOY7NghlPyvU7QRCLrn5TqVaNHbIfzsbCMX
+         kmV5m/NN/w0XwfMA0eN4ICk+HnO86stk9Fz6TjsWRXCNNksLUamslCmYOLTLIhf7pmW7
+         gr9eNXrq0SYBn4tEQcQRvnklyp6l7ZKIcObN5NxuMwRV5WioKorVG8+e7T8gZcyCuwwn
+         U4qg==
+X-Gm-Message-State: AOJu0YybLhitXXypXEaBp4LOmMktUMuEqXqT+rDLCKPaTKpA6JgvSIGI
+	DI91bmacTGR1njllUduFtlRGhuco/HmYO8rdHh9a9SXHy5G4IyhKoXQQ+GlQtxPLrtMO17pWVe3
+	B618puL6tR0HNiwb0/FdyUjHskcJ43y6ge9BKwZhhkxfst5cC97bmKuCI5Z6gH39e
+X-Gm-Gg: ASbGncsCJzrxQhYKOz2WwMmZBO6do58guFQsh8tjtog6teZDXPInrCNKaTfBOWFi18c
+	ItDS1wYF0V0Qd22qLafWyJ+EsUvWaFJ0eIZ3YZC7D8v301DhfvZDurVOj3HBoC8c1eHoDF/xxwl
+	fbYNQ9zsSbccS/p/C9hCo+2W6shkJsOXg0rpIeaV9J6+3INkxjkCWWm+Ub0Dqz+UcDoCqM89HeA
+	Pi3MoA8iEX0FnEWanEXMmLLlLJzTmLKOnVguT6E0+rcdEHhPPoh1iQ2aYN4RlEeG9xnsA7kYOJ5
+	EfFzOTgKiXm10prtUOHgENyjnGzKBNkkQbdjOWcL
+X-Received: by 2002:a05:6a20:6f06:b0:1ed:d780:feaf with SMTP id adf61e73a8af0-1ee05290924mr1616912637.6.1738884546625;
+        Thu, 06 Feb 2025 15:29:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGxmXBVvH1fpX/BdAfjS95c5Q07NgLnx+DigG5tdrqzE17uXKKnHeKeKCiQd7KexJ11AQqGoQ==
+X-Received: by 2002:a05:6a20:6f06:b0:1ed:d780:feaf with SMTP id adf61e73a8af0-1ee05290924mr1616872637.6.1738884546221;
+        Thu, 06 Feb 2025 15:29:06 -0800 (PST)
+Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73048ae7f6esm1845905b3a.74.2025.02.06.15.29.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Feb 2025 15:29:05 -0800 (PST)
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: [PATCH v4 0/4] PCI: dwc: Add ECAM support with iATU configuration
+Date: Fri, 07 Feb 2025 04:58:55 +0530
+Message-Id: <20250207-ecam_v4-v4-0-94b5d5ec5017@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/14] drm/msm/dpu: Add Concurrent Writeback Support
- for DPU 10.x+
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
-        Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David
- Airlie" <airlied@gmail.com>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Simona Vetter <simona@ffwll.ch>,
-        Simona Vetter <simona.vetter@ffwll.ch>, <quic_ebharadw@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Rob Clark
-	<robdclark@chromium.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?=
-	<ville.syrjala@linux.intel.com>
-References: <20250128-concurrent-wb-v5-0-6464ca5360df@quicinc.com>
- <zoswzhubdq7ezxpecz72ki5kloyyedqo232toiol4r7hi244me@52rzudflyl52>
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <zoswzhubdq7ezxpecz72ki5kloyyedqo232toiol4r7hi244me@52rzudflyl52>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: maaWke4PvaBycpp9UB42ZiOih83EjHTJ
-X-Proofpoint-GUID: maaWke4PvaBycpp9UB42ZiOih83EjHTJ
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALdFpWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyTHQUlJIzE
+ vPSU3UzU4B8JSMDI1MDIwNz3dTkxNz4MhPdNJPUJMskC0vj1NQkJaDqgqLUtMwKsEnRsbW1AP1
+ 9uXNZAAAA
+To: cros-qcom-dts-watchers@chromium.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com,
+        quic_vpernami@quicinc.com, mmareddy@quicinc.com,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1738884540; l=3998;
+ i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
+ bh=oxBfLTZdXL8ZaQ+RGvvB79FuQ4Hav3x0rRtUrfoL094=;
+ b=Qwbi5zyvH8rfmT+Wv3pa+qBkexhAhioDvey0+mkUJGVmlYr5Ium09a000b1HakE9EEh7+5Ui5
+ 8SRakNl3nMaBTQTIqBljjJpePvZtBFjYwRdTSL1aZmP64DeCHXeLGap
+X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-Proofpoint-ORIG-GUID: m6rozSyeU84Ww1XW87ZalHgJ81Afbn_u
+X-Proofpoint-GUID: m6rozSyeU84Ww1XW87ZalHgJ81Afbn_u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-06_07,2025-02-05_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- suspectscore=0 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
- mlxlogscore=999 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502060178
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ mlxlogscore=999 priorityscore=1501 mlxscore=0 clxscore=1015 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
+ definitions=main-2502060182
 
+The current implementation requires iATU for every configuration
+space access which increases latency & cpu utilization.
 
+Designware databook 5.20a, section 3.10.10.3 says about CFG Shift Feature,
+which shifts/maps the BDF (bits [31:16] of the third header DWORD, which
+would be matched against the Base and Limit addresses) of the incoming
+CfgRd0/CfgWr0 down to bits[27:12]of the translated address.
 
-On 1/29/2025 9:51 AM, Dmitry Baryshkov wrote:
-> On Tue, Jan 28, 2025 at 07:20:32PM -0800, Jessica Zhang wrote:
->> DPU supports a single writeback session running concurrently with primary
->> display when the CWB mux is configured properly. This series enables
->> clone mode for DPU driver and adds support for programming the CWB mux
->> in cases where the hardware has dedicated CWB pingpong blocks. Currently,
->> the CWB hardware blocks have only been added to the SM8650
->> hardware catalog and only DSI has been exposed as a possible_clone of WB.
->>
->> This changes are split into two parts:
->>
->> The first part of the series will pull in Dmitry's patches to refactor
->> the DPU resource manager to be based off of CRTC instead of encoder.
->> This includes some changes (noted in the relevant commits) by me and
->> Abhinav to fix some issues with getting the global state and refactoring
->> the CDM allocation to work with Dmitry's changes.
->>
->> The second part of the series will add support for CWB by doing the
->> following:
->>
->> 1) Add the CWB mux to the hardware catalog and clarify the pingpong
->>     block index enum to specifiy which pingpong blocks are dedicated to
->>     CWB only and which ones are general use pingpong blocks
->> 2) Add support for configuring the CWB mux via dpu_hw_cwb ops
->> 3) Add pending flush support for CWB
->> 4) Add support for validating clone mode in the DPU CRTC and setting up
->>     CWB within the encoder
->> 5) Adjust the encoder trigger flush, trigger start, and kickoff order to
->>     accomodate clone mode
->> 6) Adjust when the frame done timer is started for clone mode
->> 7) Define the possible clones for DPU encoders so that WB encoders can
->>     be cloned by non-WB encoders
->>
->> The feature was tested on SM8650 using IGT's kms_writeback test with the
->> following change [1] and dumping the writeback framebuffer when in clone
->> mode. I haven't gotten the chance to test it on DP yet, but I've
->> validated both single and dual LM on DSI.
->>
->> To test CWB with IGT, you'll need to apply this series [1] and run the
->> following command to dump the writeback buffer:
->>
->> IGT_FRAME_DUMP_PATH=<dump path> FRAME_PNG_FILE_NAME=<file name> \
->> ./build/tests/kms_writeback -d [--run-subtest dump-valid-clones] \
->>
->> You can also do CRC validation by running this command:
->>
->> ./build/tests/kms_writeback [--run-subtest dump-valid-clones]
->>
->> NOTE: this series depends on Dmitry's modeset fixes [2]
->>
->> [1] https://patchwork.freedesktop.org/series/137933/
->> [2] https://patchwork.freedesktop.org/series/142905/
->>
->> ---
->> Changes in v5:
->> - Rebased onto MSM modeset fixes series (Dmitry)
->> - Reordered RM refactor patches to prevent breaking CI and to avoid
->>    breaking when partially applied (Dmitry)
->> - Switch CWB resource reservation to reserve CWB mux first (Dmitry)
->> - Reworded commit messages to be clearer (Dmitry)
->> - Change CDM check to fail only if both DP and WB outputs are
->>    requesting the CDM block simultaneously (Dmitry)
->> - Use helper to grab dsc config in dpu_encoder_update_topology
->> - Link to v4: https://lore.kernel.org/r/20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com
->>
->> Changes in v4:
->> - Rebased onto latest msm-next
->> - Added kunit tests for framework changes
->> - Skip valid clone check for encoders that don't have any possible clones set
->>    (this is to avoid failing kunit tests, specifically the HDMI state helper tests)
->> - Link to v3: https://lore.kernel.org/r/20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com
->>
->> Changes in v3:
->> - Dropped support for CWB on DP connectors for now
->> - Dropped unnecessary PINGPONG array in *_setup_cwb()
->> - Add a check to make sure CWB and CDM aren't supported simultaneously
->>    (Dmitry)
->> - Document cwb_enabled checks in dpu_crtc_get_topology() (Dmitry)
->> - Moved implementation of drm_crtc_in_clone_mode() to drm_crtc.c (Jani)
->> - Dropped duplicate error message for reserving CWB resources (Dmitry)
->> - Added notes in framework changes about posting a separate series to
->>    add proper KUnit tests (Maxime)
->> - Added commit message note addressing Sima's comment on handling
->>    mode_changed (Dmitry)
->> - Formatting fixes (Dmitry)
->> - Added proper kerneldocs (Dmitry)
->> - Renamed dpu_encoder_helper_get_cwb() -> *_get_cwb_mask() (Dmitry)
->> - Capitalize all instances of "pingpong" in comments (Dmitry)
->> - Link to v2: https://lore.kernel.org/r/20240924-concurrent-wb-v2-0-7849f900e863@quicinc.com
->>
->> Changes in v2:
->> - Moved CWB hardware programming to its own dpu_hw_cwb abstraction
->>    (Dmitry)
->> - Reserve and get assigned CWB muxes using RM API and KMS global state
->>    (Dmitry)
->> - Dropped requirement to have only one CWB session at a time
->> - Moved valid clone mode check to DRM framework (Dmitry and Ville)
->> - Switch to default CWB tap point to LM as the DSPP
->> - Dropped printing clone mode status in atomic state (Dmitry)
->> - Call dpu_vbif_clear_errors() before dpu_encoder_kickoff() (Dmitry)
->> - Squashed setup_input_ctrl() and setup_input_mode() into a single
->>    dpu_hw_cwb op (Dmitry)
->> - Moved function comment docs to correct place and fixed wording of
->>    comments/commit messages (Dmitry)
->> - Grabbed old CRTC state using proper drm_atomic_state API in
->>    dpu_crtc_atomic_check() (Dmitry)
->> - Split HW catalog changes of adding the CWB mux block and changing the
->>    dedicated CWB pingpong indices into 2 separate commits (Dmitry)
->> - Moved clearing the dpu_crtc_state.num_mixers to "drm/msm/dpu: fill
->>    CRTC resources in dpu_crtc.c" (Dmitry)
->> - Fixed alignment and other formatting issues (Dmitry)
->> - Link to v1: https://lore.kernel.org/r/20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com
->>
->> ---
->> Dmitry Baryshkov (3):
->>        drm/msm/dpu: fill CRTC resources in dpu_crtc.c
->>        drm/msm/dpu: move resource allocation to CRTC
->>        drm/msm/dpu: switch RM to use crtc_id rather than enc_id for allocation
->>
->> Jessica Zhang (11):
->>        drm/msm/dpu: Add CWB to msm_display_topology
->>        drm/msm/dpu: Require modeset if clone mode status changes
->>        drm/msm/dpu: Fail atomic_check if multiple outputs request CDM block
->>        drm/msm/dpu: Reserve resources for CWB
->>        drm/msm/dpu: Configure CWB in writeback encoder
->>        drm/msm/dpu: Support CWB in dpu_hw_ctl
->>        drm/msm/dpu: Adjust writeback phys encoder setup for CWB
->>        drm/msm/dpu: Start frame done timer after encoder kickoff
->>        drm/msm/dpu: Skip trigger flush and start for CWB
->>        drm/msm/dpu: Reorder encoder kickoff for CWB
->>        drm/msm/dpu: Set possible clones for all encoders
->>
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           | 229 +++++++++++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h           |   3 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 416 ++++++++++++---------
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  16 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |   7 +-
->>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  16 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  30 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  15 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   2 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  27 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  13 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             | 293 ++++++++++-----
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |  14 +-
->>   13 files changed, 752 insertions(+), 329 deletions(-)
->> ---
->> base-commit: 86313a9cd152330c634b25d826a281c6a002eb77
->> change-id: 20240618-concurrent-wb-97d62387f952
->> prerequisite-change-id: 20241209-abhinavk-modeset-fix-74864f1de08d:v3
->> prerequisite-patch-id: a197a0cd4647cb189ea20a96583ea78d0c98b638
->> prerequisite-patch-id: 112c8f1795cbed989beb02b72561854c0ccd59dd
-> 
-> No, it's not a full list. Please use b4 prep --check-deps to check
-> dependencies. See the following errors:
+Configuring iATU in config shift mode enables ECAM feature to access the
+config space, which avoids iATU configuration for every config access.
 
-Hi Dmitry,
+Add cfg_shft_mode into struct dw_pcie_ob_atu_cfg to enable config shift mode.
 
-Ah, I should've put my changes on drm-misc-next instead of trying to 
-pull in the merged drm changes on top of msm-next... The deps list is 
-fixed now.
+As DBI comes under config space, this avoids remapping of DBI space
+separately. Instead, it uses the mapped config space address returned from
+ECAM initialization. Change the order of dw_pcie_get_resources() execution
+to acheive this.
 
-Thanks for the heads up,
+Enable the ECAM feature if the config space size is equal to size required
+to represent number of buses in the bus range property.
 
-Jessica Zhang
+The ELBI registers falls after the DBI space, PARF_SLV_DBI_ELBI register
+gives us the offset from which ELBI starts. so use this offset and cfg
+win to map these regions instead of doing the ioremap again.
 
-> 
-> $ b4 shazam -H 20250128-concurrent-wb-v5-0-6464ca5360df@quicinc.com
-> Grabbing thread from lore.kernel.org/all/20250128-concurrent-wb-v5-0-6464ca5360df@quicinc.com/t.mbox.gz
-> Checking for newer revisions
-> Grabbing search results from lore.kernel.org
-> Analyzing 15 messages in the thread
-> Analyzing 174 code-review messages
-> Checking attestation on all messages, may take a moment...
-> ---
->    ✓ [PATCH v5 1/14] drm/msm/dpu: fill CRTC resources in dpu_crtc.c
->    ✓ [PATCH v5 2/14] drm/msm/dpu: move resource allocation to CRTC
->    ✓ [PATCH v5 3/14] drm/msm/dpu: switch RM to use crtc_id rather than enc_id for allocation
->    ✓ [PATCH v5 4/14] drm/msm/dpu: Add CWB to msm_display_topology
->    ✓ [PATCH v5 5/14] drm/msm/dpu: Require modeset if clone mode status changes
->    ✓ [PATCH v5 6/14] drm/msm/dpu: Fail atomic_check if multiple outputs request CDM block
->    ✓ [PATCH v5 7/14] drm/msm/dpu: Reserve resources for CWB
->    ✓ [PATCH v5 8/14] drm/msm/dpu: Configure CWB in writeback encoder
->    ✓ [PATCH v5 9/14] drm/msm/dpu: Support CWB in dpu_hw_ctl
->    ✓ [PATCH v5 10/14] drm/msm/dpu: Adjust writeback phys encoder setup for CWB
->    ✓ [PATCH v5 11/14] drm/msm/dpu: Start frame done timer after encoder kickoff
->    ✓ [PATCH v5 12/14] drm/msm/dpu: Skip trigger flush and start for CWB
->    ✓ [PATCH v5 13/14] drm/msm/dpu: Reorder encoder kickoff for CWB
->    ✓ [PATCH v5 14/14] drm/msm/dpu: Set possible clones for all encoders
->    ---
->    ✗ No key: ed25519/quic_jesszhan@quicinc.com
->    ✓ Signed: DKIM/quicinc.com
-> ---
-> Total patches: 14
-> ---
->   Base: using specified base-commit 86313a9cd152330c634b25d826a281c6a002eb77
->   Deps: looking for dependencies matching 2 patch-ids
->   Deps: Applying prerequisite patch: [PATCH v2 1/2] drm: allow encoder mode_set even when connectors change for crtc
->   Deps: Applying prerequisite patch: [PATCH v3 2/2] drm/tests: Add test for drm_atomic_helper_commit_modeset_disables()
-> Magic: Preparing a sparse worktree
-> Unable to cleanly apply series, see failure log below
-> ---
-> Applying: drm: allow encoder mode_set even when connectors change for crtc
-> Applying: drm/tests: Add test for drm_atomic_helper_commit_modeset_disables()
-> Applying: drm/msm/dpu: fill CRTC resources in dpu_crtc.c
-> Patch failed at 0003 drm/msm/dpu: fill CRTC resources in dpu_crtc.c
-> When you have resolved this problem, run "git am --continue".
-> If you prefer to skip this patch, run "git am --skip" instead.
-> To restore the original branch and stop patching, run "git am --abort".
-> error: patch failed: drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:1230
-> error: drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c: patch does not apply
-> error: patch failed: drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:719
-> error: drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: patch does not apply
-> hint: Use 'git am --show-current-patch=diff' to see the failed patch
-> 
-> 
->>
->> Best regards,
->> -- 
->> Jessica Zhang <quic_jesszhan@quicinc.com>
->>
-> 
-> -- 
-> With best wishes
-> Dmitry
+On root bus, we have only the root port. Any access other than that
+should not go out of the link and should return all F's. Since the iATU
+is configured for the buses which starts after root bus, block the
+transactions starting from function 1 of the root bus to the end of
+the root bus (i.e from dbi_base + 4kb to dbi_base + 1MB) from going
+outside the link through ECAM blocker through PARF registers.
+
+Increase the configuration size to 256MB as required by the ECAM feature
+and also move config space, DBI, iATU to upper space and use lower space
+entirely for BAR region.
+
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+---
+Changes in v4:
+- Update the commit messgaes and do minor code changes like adding
+  export for the api, adding error message( mani)
+- Link to v3: https://lore.kernel.org/all/20250121-enable_ecam-v3-0-cd84d3b2a7ba@oss.qualcomm.com/
+Changes in v3:
+- if bus range is less than 2 return with out configuring iATU for next
+  bus & update the logic of ecam_supported() as suggested ( Konrad)
+- updated commit text and update S-o-b (Bjorn Andresson)
+- Link to v2: https://lore.kernel.org/r/20241224-enable_ecam-v2-0-43daef68a901@oss.qualcomm.com
+
+changes in v2:
+- rename enable_ecam to ecam_mode as suggested by mani.
+- refactor changes as suggested by bjorn
+- remove ecam_init() function op as we have removed ELBI virtual address
+update from the ecam_init and moved to host init as we need the clocks
+to be enabled to read the ELBI offset from the PARF registers.
+- Update comments and commit message as suggested by bjorn.
+- Allocate host bridge in the DWC glue drivers as suggested by bjorn
+- move qcom_pcie_ecam_supported to dwc as suggested by mani.
+Link to v1: https://lore.kernel.org/r/linux-devicetree/20241117-ecam-v1-1-6059faf38d07@quicinc.com/T/
+
+---
+Krishna Chaitanya Chundru (4):
+      arm64: dts: qcom: sc7280: Increase config size to 256MB for ECAM feature
+      PCI: dwc: Add ECAM support with iATU configuration
+      PCI: dwc: Reduce DT reads by allocating host bridge via DWC glue driver
+      PCI: qcom: Enable ECAM feature
+
+ arch/arm64/boot/dts/qcom/sc7280.dtsi              |  12 +-
+ drivers/pci/controller/dwc/Kconfig                |   1 +
+ drivers/pci/controller/dwc/pcie-designware-host.c | 142 +++++++++++++++++++---
+ drivers/pci/controller/dwc/pcie-designware.c      |   2 +-
+ drivers/pci/controller/dwc/pcie-designware.h      |  11 ++
+ drivers/pci/controller/dwc/pcie-qcom.c            |  77 +++++++++++-
+ 6 files changed, 218 insertions(+), 27 deletions(-)
+---
+base-commit: 92514ef226f511f2ca1fb1b8752966097518edc0
+change-id: 20250207-ecam_v4-f4eb9b893eeb
+
+Best regards,
+-- 
+Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
 
