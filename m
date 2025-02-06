@@ -1,45 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-47052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77B1DA2B2EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 21:06:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D168A2B2EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 21:06:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9D93C7A4043
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 20:05:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1627A188ACE0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 20:06:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 665381D61A1;
-	Thu,  6 Feb 2025 20:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC56C1D8DE0;
+	Thu,  6 Feb 2025 20:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="kFyUiykl"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="6fn7b+r5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D1A1D5ACF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D751D5AD3;
 	Thu,  6 Feb 2025 20:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738872365; cv=none; b=YM3rRYt/4JAEeKq2/v6NeBzdhvlmoEjZAyQLaflLIh46TpPYCdJPUK83m7SF39l3KmHvtopX4h8NOuxsRMzQMyM34KJ9n4eOMx8PTnVhSz+TLIAUGtJLXWx52P/KwYK5E5i4ULBxH8XJl27rvRgvIN/SYxo0A1EMV/7Ymz+0P6Y=
+	t=1738872366; cv=none; b=JIOqIsn+UCsWFDZ/l8mb1Pbh0Bra4EXkt9Bky+5co1e/O15BIyHGr8x4t+LyYSRyqdQiDo6bSF5/gLJc3qtBYD3ZpZai7fnawrECtWsGOcQ3igaT6HcRJvHi5hZErfuuElwTA27n+78oKO1RxizHeOQDc/2N7p3xZc1KQSlu3bM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738872365; c=relaxed/simple;
-	bh=vSTIuybZy5DJn49mPWMLVQD4HMxFkEzZ34vFkrDQIXI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QMS80Y+6oC6pmD3Kp+qrD3k6wcHQneExhT3qHP5FCPf9iCZ+ugQMGeJIMLVZe7d2ZSs1CT0iDbx+AJbUC/UXc9MYJTOSQ1FAL1PkKRUIa5CGVr8hk/ckLezDlXJbYmlEHtuzEgRjpBJY/0ADLDc7e4u4RBRhNh1lXpbATJVbUuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=kFyUiykl; arc=none smtp.client-ip=128.199.32.197
+	s=arc-20240116; t=1738872366; c=relaxed/simple;
+	bh=GqzyQ80y7ToCYhmy8tAK/9KoMbBvhfh6sjp3BzYq0lQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=lNPiSdjw3v8JgZMDY/vnxPvzJ72LsooSqSIXaGFC/TQyFwUaIfCyw13LzW++I6+AAQWMk9sdN05EFLiJ2f3moSCSU4c6QWa+kHaBpSt8nNL/ZPP+p7M6+FCINDev9sORC+YANhTc8i/sUYfZ8Rlt7nW05y2UceQgijM7R1HTCK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=6fn7b+r5; arc=none smtp.client-ip=128.199.32.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1738871841; bh=vSTIuybZy5DJn49mPWMLVQD4HMxFkEzZ34vFkrDQIXI=;
-	h=From:Subject:Date:To:Cc;
-	b=kFyUiykl/7z3qQfnICIR0kDom0+Q9kTaQi42YaE2toan6uWvysE1ydkel30a19bOL
-	 I/TQbO6ZDcUkKhlewtqJ/57nAIw0sJ8oASVgdtPDCbiSseXsG2F9/Ln5/icpK06Hmn
-	 RF/OB5rakVo3qjXChmjhG3SDkz9pqvxbceCuirYk=
+	t=1738871842; bh=GqzyQ80y7ToCYhmy8tAK/9KoMbBvhfh6sjp3BzYq0lQ=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=6fn7b+r5KEKbqejPzIckpvbgXUT5AUiI71zvFB+NSc0IlvENNDOcRp38EgMf8ZcD1
+	 HVxt2DPWC18ln1P1zfm3REIDUl6qdGpKLWz+OlvMGlnpS8P2Rt2XUwBMBQYO0gjCkA
+	 MugI0wo9o1uOX1baPHNo+RTg2Pw8J20/eaTRTxp4=
 From: Luca Weiss <luca@lucaweiss.eu>
-Subject: [PATCH v2 0/2] Support single-PD in wcnss driver
-Date: Thu, 06 Feb 2025 20:56:46 +0100
-Message-Id: <20250206-wcnss-singlepd-v2-0-9a53ee953dee@lucaweiss.eu>
+Date: Thu, 06 Feb 2025 20:56:47 +0100
+Subject: [PATCH v2 1/2] dt-bindings: remoteproc: qcom,wcnss-pil: Add
+ support for single power-domain platforms
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,10 +49,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAP4TpWcC/3XMyw6CMBCF4Vchs7ambSyKK9/DsOhlgElIIR0BD
- em7W9m7/E9yvh0YEyHDvdoh4UpMUyyhTxX4wcYeBYXSoKU2UulGbD4yC6bYjzgH0TVY38xFmys
- GKKc5YUfvA3y2pQfi15Q+h7+q3/qXWpWQwklla2elUy48xsXbDYn5jAu0OecvY2Kr9K8AAAA=
-X-Change-ID: 20250129-wcnss-singlepd-f9e6854257ed
+Message-Id: <20250206-wcnss-singlepd-v2-1-9a53ee953dee@lucaweiss.eu>
+References: <20250206-wcnss-singlepd-v2-0-9a53ee953dee@lucaweiss.eu>
+In-Reply-To: <20250206-wcnss-singlepd-v2-0-9a53ee953dee@lucaweiss.eu>
 To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
  Bjorn Andersson <andersson@kernel.org>, 
  Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
@@ -63,49 +63,118 @@ Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Luca Weiss <luca@lucaweiss.eu>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1043; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=vSTIuybZy5DJn49mPWMLVQD4HMxFkEzZ34vFkrDQIXI=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnpRQC3xLAYr6wHYazamtoiaGwWG7Flfqhtv/DI
- V4SI2C8NSSJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ6UUAgAKCRBy2EO4nU3X
- Vk9eEACT936C0NBzS0pMXn60Jg14OnSDFFJOCb0lG2zwS/j7JDzbTkxoo0aZtNqxypFjy3X36yo
- scC57Qyq23tmT9+9XZWyVeBSe9nOvFLeSicq5FZHK7qTHG5D+nPvpTwD4OGt658TfOE+2tBsMji
- Rk0f1Z36yyW67FCN1SzeaG0t1gTRVMcEaz/E0bwpaFeWAl39ShjtYvJrKl9UodGwQsLkRDq5B5g
- ADZQ5As5JJwmC5epkuOuWtpMBFiBZUXPjYaczzxoCd5JZ7JfsNYYBjd07jRiQ4Mf3POFi+Ila5Q
- KjUtxr5JcOwQaQgGatKzboe6HFYBq/X2DRKUaKiwGrYk8AH/0PA50s9+6PyUyCtGZYWEooeU+ET
- tp27kTFBXhgZxebpwZM0kW/F7qr5ITk3vMrhRhwm4Y7gBBcn2vBlFPvj5MKFKA3U5Kl2jOE21x9
- NMx/umvKjoy1j5S+ck0h0RYOy6N7EUi/omWpq9vXeLYSxGZgw2nevMkSAgiBeSpEmBsd7sL2V42
- EcFrUS4haYA0oocu6cEQil8ZZFR+opZ+TNkDfxE2NGd8WYYnEdNQkYB3vstGcoMzD312EPhJDpV
- JGkChCb7bFKyIdf5ZDzOMP+qTW3q2KUiavsLVk3EKyj3z4oLmxvH1RYeuCpGq82pv0sTjziwFh7
- 1rvJRkytTZ7iVeg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3077; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=l+8YJNfDS903Eqh028X13FBAPbGMBhedBGZ2vx4lhHc=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnpRQfRJWflBdWfa9DM5hNTEQOLB2U75zZtrHlt
+ p7nd8P//h+JAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ6UUHwAKCRBy2EO4nU3X
+ VqdqD/97qaNPVI0DUfgLlFKYK3YjydeEC+06RHLDGA+PU1t6u4C2IuHpHvd8+sKwlMvg+Y3OX08
+ PN/KTwFe6ifQsZRi5gnat2290yKtH7/GJ7n9R/j9AAvViqpZhSSh3JRuDHns1lOk8cvxfoxykG2
+ 6hGonVId3JyG+DusVSm2O9MBOQw7Nj5J4MZgHUJx7x+xPkldauAqH76BJFQYR9f9HlgWakdpUd3
+ /HiqHNunDCCtfjHOw4oZ5QlGyAZcqbTTK7SkXcUNpO8GFMAlLWiutQ07WVGhVIm3KmAoTAEL7+m
+ JcJLIyU/n6T5yLhVyPOvxIdX+734zbJqL3bUC2xDFr7FlWe08vxlC8773fGHnNrXa58Bfy2tyQJ
+ H5Iq4+u/07AprzSXCwP+KyWPENuXsEUcYUcGZ3q8pJN+YMS/OChFaXQ/aqEpHosPEut0tmAazHM
+ LVluDSOiPVFRc9fCsWDHicARQ12cj5uJM2bHwwidlDatnrAVrrgQSGo5uWxF+8NwVjnqg5XEkyG
+ yJS4MmS/JFuVDBYJ5loN9l0pKcvq0rAJM99hq81q58Gs4ULrFvj9JXKdzPazAaT7OZmWeoOcvrY
+ 5Q29T+50LUTWSXefMUtwZ/laEDb2Y4WvhwboYfhQBFHcdzsbdkZ3SXik1t6JR3MtfJ6Yd4h5X9J
+ 9y9zNC7IhCMPWGQ==
 X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
  fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-Both MSM8974 and MSM8226 only model CX as power domain, leaving MX & PX
-as regulators. Add some patches to support this use case.
+From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 
+Support platforms such as MSM8226 and MSM8974 with only one power rail
+(CX) modelled as power domain while MX and PX are regulators.
+
+Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+[luca: reword commit message, expand based on feedback from
+ Stephan Gerhold]
 Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 ---
-Changes in v2:
-- Narrow down dt-schema to only allow one of these three options:
-    - cx regulator + mx regulator (still deprecated)
-    - cx pd + mx regulator
-    - cx pd + mx pd
-- Link to v1: https://lore.kernel.org/r/20250129-wcnss-singlepd-v1-0-b01a6ba0b1bd@lucaweiss.eu
-
----
-Matti Lehtimäki (2):
-      dt-bindings: remoteproc: qcom,wcnss-pil: Add support for single power-domain platforms
-      remoteproc: qcom_wcnss: Handle platforms with only single power domain
-
  .../bindings/remoteproc/qcom,wcnss-pil.yaml        | 45 +++++++++++++++++-----
- drivers/remoteproc/qcom_wcnss.c                    | 32 +++++++++++----
- 2 files changed, 61 insertions(+), 16 deletions(-)
----
-base-commit: 808eb958781e4ebb6e9c0962af2e856767e20f45
-change-id: 20250129-wcnss-singlepd-f9e6854257ed
+ 1 file changed, 36 insertions(+), 9 deletions(-)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+index 8e033b22d28cfa8203234f744b3b408e976e20c3..117fb4d0c4ad2a3fad3cfe5d49ec2223b59358b2 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+@@ -69,9 +69,11 @@ properties:
+       CX regulator to be held on behalf of the booting of the WCNSS core.
+ 
+   power-domains:
++    minItems: 1
+     maxItems: 2
+ 
+   power-domain-names:
++    minItems: 1
+     items:
+       - const: cx
+       - const: mx
+@@ -187,22 +189,43 @@ allOf:
+               - qcom,pronto-v1-pil
+               - qcom,pronto-v2-pil
+     then:
+-      properties:
+-        vddmx-supply:
+-          deprecated: true
+-          description: Deprecated for qcom,pronto-v1/2-pil
+-
+-        vddcx-supply:
+-          deprecated: true
+-          description: Deprecated for qcom,pronto-v1/2-pil
+-
++      # CX and MX must be present either as power domains or regulators
+       oneOf:
++        # Both CX and MX represented as power domains
+         - required:
+             - power-domains
+             - power-domain-names
++          properties:
++            power-domains:
++              minItems: 2
++            power-domain-names:
++              minItems: 2
++            vddmx-supply: false
++            vddcx-supply: false
++        # CX represented as power domain, MX as regulator
++        - required:
++            - power-domains
++            - power-domain-names
++            - vddmx-supply
++          properties:
++            power-domains:
++              maxItems: 1
++            power-domain-names:
++              maxItems: 1
++            vddcx-supply: false
++        # Both CX and MX represented as regulators
+         - required:
+             - vddmx-supply
+             - vddcx-supply
++          properties:
++            power-domains: false
++            power-domain-names: false
++            vddmx-supply:
++              deprecated: true
++              description: Deprecated for qcom,pronto-v1/2-pil
++            vddcx-supply:
++              deprecated: true
++              description: Deprecated for qcom,pronto-v1/2-pil
+ 
+   - if:
+       properties:
+@@ -212,6 +235,10 @@ allOf:
+               - qcom,pronto-v3-pil
+     then:
+       properties:
++        power-domains:
++          minItems: 2
++        power-domain-names:
++          minItems: 2
+         vddmx-supply: false
+         vddcx-supply: false
+ 
+
 -- 
-Luca Weiss <luca@lucaweiss.eu>
+2.48.1
 
 
