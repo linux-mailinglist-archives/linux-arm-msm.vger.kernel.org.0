@@ -1,195 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-47162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3E0CA2C92D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 17:46:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BEFAA2C955
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 17:53:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 001FF3A4CCB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 16:45:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C3F13AAFD4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 16:53:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AFD3161320;
-	Fri,  7 Feb 2025 16:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A39F18FC75;
+	Fri,  7 Feb 2025 16:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="ScaHENaw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jj8dUFDo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-9102.amazon.com (smtp-fw-9102.amazon.com [207.171.184.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B22323C8AF;
-	Fri,  7 Feb 2025 16:45:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.171.184.29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB4818DB3B
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Feb 2025 16:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738946760; cv=none; b=DexfibhuzS5S+bbQyfIrmuq20Yl6kqPrBLjCUpnlGZ/JjBWzAaG6fnrmqXyY0KTrg/Fmsrp6mCzI0IgBgXgifkf7CJYfxrQGkYkhZj7iZaLCtbWTtZ9nJaR4XFKHmezqWA5982wwMOuTGcijlfa29YawqMvfiESjXBrvopGVgQ0=
+	t=1738947190; cv=none; b=R9JhkZZAUO6lBjBLdz/KhRbnEwReV4f04rAy9Ad1HgHWjHh5uHK8m8MDnLHYKk5suWIaL6oCRbEvvZ1/k1SV9PXmyH3TDr42cVE46RzDgEjDl0qDhsYD7M7Eh22dMjJn/kRrCaNaXibMv8loLSUt+6bQXGdQqnqwt0ag/8UKmhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738946760; c=relaxed/simple;
-	bh=sD/CGPZZ7laiJ27vQakP60j57br3QZpDJMPYzD3tjPI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ALYyU7rms1GxdPHCzRl+sMolPfYhGrVHwJM82Bys9T/mA49v0aEPtRKViRyxMAv+V31JIe8G5ngcMnCxDvxRfOjxrTxzQK+FJDU7bueqKJGpyH7mSeqgy3/2rTqSHjMgR/fZqPpeFb+eP9IzV5qK1A/Mdo+mhpZB61fbMq2yO4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=ScaHENaw; arc=none smtp.client-ip=207.171.184.29
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
+	s=arc-20240116; t=1738947190; c=relaxed/simple;
+	bh=vaKookLkIMbqbKYg6/kjE6g76pw3+o99rcJ2IrFpCDw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tp58tIdLIHG2SQvStZ17S6pRJNmbG/+ZDb9oZXVsakWpaRH9m1oOWsNm6fn41+QWjfVraRNWaxorlFsvApnpacT5dxHk+SpYeNi8YLIX57uzk9jaWYvIJOMlcsd/69bSi/mpyueahH0G1ys3J5Crk8fj4tPIgHagWTX6GI3LitQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jj8dUFDo; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2166651f752so52436545ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2025 08:53:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
-  s=amazon201209; t=1738946759; x=1770482759;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=q7xTDS28+TP5gE07LEBmeY0j/rksTUzAlt42eYMiWY0=;
-  b=ScaHENawKmE7nO2/FjyLaBfTHiNoyAW3v27NJN9JtIFlndawGqPnTITe
-   5h/YS35y3BQZ9FtNUW7BGJlEI7MBQKp8zGwIZP77aV/GevQmBBubtUciB
-   zjBylj/pqUJ+26iWcZx9dbyaMCtGvgYeOI/KaQjWkWN+0Wacepj2pVzYV
-   8=;
-X-IronPort-AV: E=Sophos;i="6.13,267,1732579200"; 
-   d="scan'208";a="492059548"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
-  by smtp-border-fw-9102.sea19.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Feb 2025 16:45:48 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [10.0.7.35:61291]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.49.27:2525] with esmtp (Farcaster)
- id 0c878457-1ded-46ff-8f23-53205f2aa13e; Fri, 7 Feb 2025 16:45:47 +0000 (UTC)
-X-Farcaster-Flow-ID: 0c878457-1ded-46ff-8f23-53205f2aa13e
-Received: from EX19MTAUWB002.ant.amazon.com (10.250.64.231) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Fri, 7 Feb 2025 16:45:34 +0000
-Received: from email-imr-corp-prod-iad-1box-1a-6851662a.us-east-1.amazon.com
- (10.25.36.214) by mail-relay.amazon.com (10.250.64.228) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
- 15.2.1258.39 via Frontend Transport; Fri, 7 Feb 2025 16:45:34 +0000
-Received: from [127.0.0.1] (dev-dsk-roypat-1c-dbe2a224.eu-west-1.amazon.com [172.19.88.180])
-	by email-imr-corp-prod-iad-1box-1a-6851662a.us-east-1.amazon.com (Postfix) with ESMTPS id 8644C40575;
-	Fri,  7 Feb 2025 16:45:27 +0000 (UTC)
-Message-ID: <0b1cc981-52e8-4f8f-846a-f19507e3a630@amazon.co.uk>
-Date: Fri, 7 Feb 2025 16:45:26 +0000
+        d=linaro.org; s=google; t=1738947187; x=1739551987; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=07sAhcqH1FxD3dDlL1CQk6YZIcXVY49sZTSbdxtRTNI=;
+        b=jj8dUFDo9gi/0ONKCLKZTgeHX8YyVldx7gTBpeTWS0y+XTXWu3MYxP4mijdqJA6kcb
+         sQRAC2kwlp0Blrp86Sc3ZXqFp8EjE1/agKUsDYdnI6lUyOqZEqNVILskj/7zBYjodHVM
+         1G/hjocVrhWVn/80l+Z/PG1Ye0QB7XOftNh33VqVxcOxmxQcRPAKlvt9UBobARimYpxY
+         9JwKNuhddi59z9g9UXPT1u3iWEKTuYlHXhylMNP36YiHjolDosQOkaT3gTgl/UP7dlyT
+         hdJbIn5tS6Pn5Lqcv+vUvStE0/glZlSQb9nhl21lqPLHB8jA/UuTcVXdGe9RFQBhJCaZ
+         DdgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738947187; x=1739551987;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=07sAhcqH1FxD3dDlL1CQk6YZIcXVY49sZTSbdxtRTNI=;
+        b=n2XyOEVDYmvc3Ru/XYLNe7HW4dMC4+S0b9lK4VcAbp0FIUeTUKHBHKY0F4UJtXCTzz
+         qY3EmJoWA/NS014JE8m3EO9izk+Am6N4Rs6TGoEc4ru/s443PcggvRcpx3+llODB6z+P
+         zm+RUHzfXpm0SGIO7woHdvkSSWv5wfd1cu4FmmLR0ULpJsaWPRDVWipjbLutRIs60BbY
+         ChuwOE2FCyMIjibTbaR582JkpVqT5kUpxs0cgTlwVNy0wb5FoNAsQCZ498u54dm5/nMY
+         L/qY+1qmjDVq/qdEukVHwUwi7fuQdWczq9sPPJl/tkrwKrNHutDRbilkK3ismxUYXX2D
+         /41Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVt2CSDv6kfKw+xMjCLB9qhlV8v4GSqNugcVXpjhyRIVw9sKbnhRXMl15Af7wj6PSRaAi3pJANqgDpy7Oux@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxev9D//DHg5EnasDtW26bnEl8Jr5WUOXpsCaQjczZcwL0HfHUs
+	gZlr1WoQVlbUzBts8YJdkI22Vl2UWdX5LYoFrFAjdjB8PLRoqW3txUJysofoWA==
+X-Gm-Gg: ASbGnctUKkiXzZnWXo3xDk1ezITTO5vQMTn9wXWmNj6wC1qxRXtgxZRMnvibgS2+6ZB
+	Lq2u87viFIWyUjiuUoVztKkyVJ99VfYJqgY8BBCXMfXG4wUbB331TctD1gk5HsO+KH/wR/x3mr7
+	qXNOD/uPc1EjkP8CtgxVI1sIMeUhm3710btxk40GS5VdJZS8IkWPDi6d/hqzjrPlczhOucjn1D1
+	/lXl+Gv/W9xwh1TF+jVheVuQYHKsUioLZR3T6KAKdiMacfbPfRGkgZuMfDHsk88ThrqZ0Z4pnSn
+	9uso1dGJ/FWOl7DrMZh5o5L3Lg==
+X-Google-Smtp-Source: AGHT+IG5hyI3rT/ohaf6sowh7YAwVBBR7lqLcQSukba3mNR6S4cJBQEjHUOxdtXWVuZ6A+Rd4SRpOw==
+X-Received: by 2002:a17:902:e802:b0:219:d28a:ca23 with SMTP id d9443c01a7336-21f4e75e4damr66197745ad.36.1738947187624;
+        Fri, 07 Feb 2025 08:53:07 -0800 (PST)
+Received: from thinkpad ([120.60.76.168])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fa09b5c757sm3577043a91.45.2025.02.07.08.53.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Feb 2025 08:53:07 -0800 (PST)
+Date: Fri, 7 Feb 2025 22:23:01 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	=?utf-8?B?TsOtY29sYXMgRi4gUi4gQS4=?= Prado <nfraprado@collabora.com>
+Subject: Re: [PATCH v2 01/21] arm64: dts: qcom: sm8250: Add PCIe bridge node
+Message-ID: <20250207165301.eoobrmb6bxxtrv3d@thinkpad>
+References: <20250128134514.u7mgxzwxqohzy5oj@thinkpad>
+ <20250128161612.GA319610@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 03/11] KVM: guest_memfd: Allow host to map
- guest_memfd() pages
-To: Fuad Tabba <tabba@google.com>, <kvm@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-mm@kvack.org>
-CC: <pbonzini@redhat.com>, <chenhuacai@kernel.org>, <mpe@ellerman.id.au>,
-	<anup@brainfault.org>, <paul.walmsley@sifive.com>, <palmer@dabbelt.com>,
-	<aou@eecs.berkeley.edu>, <seanjc@google.com>, <viro@zeniv.linux.org.uk>,
-	<brauner@kernel.org>, <willy@infradead.org>, <akpm@linux-foundation.org>,
-	<xiaoyao.li@intel.com>, <yilun.xu@intel.com>, <chao.p.peng@linux.intel.com>,
-	<jarkko@kernel.org>, <amoorthy@google.com>, <dmatlack@google.com>,
-	<yu.c.zhang@linux.intel.com>, <isaku.yamahata@intel.com>, <mic@digikod.net>,
-	<vbabka@suse.cz>, <vannapurve@google.com>, <ackerleytng@google.com>,
-	<mail@maciej.szmigiero.name>, <david@redhat.com>, <michael.roth@amd.com>,
-	<wei.w.wang@intel.com>, <liam.merwick@oracle.com>,
-	<isaku.yamahata@gmail.com>, <kirill.shutemov@linux.intel.com>,
-	<suzuki.poulose@arm.com>, <steven.price@arm.com>, <quic_eberman@quicinc.com>,
-	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
-	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
-	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
-	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
-	<qperret@google.com>, <keirf@google.com>, <shuah@kernel.org>,
-	<hch@infradead.org>, <jgg@nvidia.com>, <rientjes@google.com>,
-	<jhubbard@nvidia.com>, <fvdl@google.com>, <hughd@google.com>,
-	<jthoughton@google.com>
-References: <20250129172320.950523-1-tabba@google.com>
- <20250129172320.950523-4-tabba@google.com>
-From: Patrick Roy <roypat@amazon.co.uk>
-Content-Language: en-US
-Autocrypt: addr=roypat@amazon.co.uk; keydata=
- xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
- NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
- wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
- CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
- AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
- AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
- IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
- 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
- 8hlxFQM=
-In-Reply-To: <20250129172320.950523-4-tabba@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250128161612.GA319610@bhelgaas>
 
-Hi Fuad!
+On Tue, Jan 28, 2025 at 10:16:12AM -0600, Bjorn Helgaas wrote:
+> On Tue, Jan 28, 2025 at 07:15:14PM +0530, Manivannan Sadhasivam wrote:
+> > On Tue, Jan 21, 2025 at 05:11:31PM -0600, Bjorn Helgaas wrote:
+> > ...
+> 
+> > > Let me back up; I don't think we're understanding each other.  This
+> > > DT:
+> > > 
+> > >   pcie@0 {
+> > >     bus-range = <0x01 0xff>;
+> > > 
+> > >     &pcieport0 {
+> > >       wifi@0 {
+> > > 	reg = <0x10000 0x0 0x0 0x0 0x0>;
+> > > 
+> > > says that wifi@0 is at 01:00.0, which is only true if the pcie@0
+> > > secondary bus number is 01.  The power-up default is 00, so it's
+> > > only 01 if either firmware or Linux has programmed it that way.
+> > > 
+> > > I claim this DT assumes the pcie@0 secondary bus number is
+> > > programmed either by firmware or Linux.  This makes me a bit
+> > > nervous because AFAIK there's nothing that guarantees Linux would
+> > > choose bus 01.
+> > 
+> > Why do you think so? PCI devices are scanned in a depth-first
+> > manner, so the bus number should match the DT order. Like, while
+> > scanning the bus under pcie@0, it should use 01 as the secondary bus
+> > number as it is going to be the first bus after the root bus. I
+> > don't know how linux or any other OS would end up using a different
+> > bus number.
+> 
+> In this case of the first bridge on the root bus, it's very likely
+> that the secondary bus will be 01.
+> 
+> If there are more bridges, it's dangerous to make assumptions about
+> their secondary bus numbers because those bus numbers depend on what
+> hierarchies have already been enumerated and any additional space
+> assigned in anticipation of hotplug.
+> 
 
-On Wed, 2025-01-29 at 17:23 +0000, Fuad Tabba wrote:
-> Add support for mmap() and fault() for guest_memfd backed memory
-> in the host for VMs that support in-place conversion between
-> shared and private (shared memory). To that end, this patch adds
-> the ability to check whether the VM type has that support, and
-> only allows mapping its memory if that's the case.
-> 
-> Additionally, this behavior is gated with a new configuration
-> option, CONFIG_KVM_GMEM_SHARED_MEM.
-> 
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> 
-> ---
-> 
-> This patch series will allow shared memory support for software
-> VMs in x86. It will also introduce a similar VM type for arm64
-> and allow shared memory support for that. In the future, pKVM
-> will also support shared memory.
-> ---
->  include/linux/kvm_host.h | 11 ++++++
->  virt/kvm/Kconfig         |  4 +++
->  virt/kvm/guest_memfd.c   | 77 ++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 92 insertions(+)
-> 
-> -snip-
->
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index 47a9f68f7b24..86441581c9ae 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -307,7 +307,84 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
->         return gfn - slot->base_gfn + slot->gmem.pgoff;
->  }
-> 
-> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
-> +static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
-> +{
-> +       struct inode *inode = file_inode(vmf->vma->vm_file);
-> +       struct folio *folio;
-> +       vm_fault_t ret = VM_FAULT_LOCKED;
-> +
-> +       filemap_invalidate_lock_shared(inode->i_mapping);
-> +
-> +       folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> +       if (IS_ERR(folio)) {
-> +               ret = VM_FAULT_SIGBUS;
-> +               goto out_filemap;
-> +       }
-> +
-> +       if (folio_test_hwpoison(folio)) {
-> +               ret = VM_FAULT_HWPOISON;
-> +               goto out_folio;
-> +       }
-> +
-> +       if (WARN_ON_ONCE(folio_test_guestmem(folio)))  {
-> +               ret = VM_FAULT_SIGBUS;
-> +               goto out_folio;
-> +       }
-> +
-> +       /* No support for huge pages. */
-> +       if (WARN_ON_ONCE(folio_nr_pages(folio) > 1)) {
-> +               ret = VM_FAULT_SIGBUS;
-> +               goto out_folio;
-> +       }
-> +
-> +       if (!folio_test_uptodate(folio)) {
-> +               clear_highpage(folio_page(folio, 0));
-> +               folio_mark_uptodate(folio);
+The enumeration hierarchy should match the DT order. I'm not sure how there can
+be a deviation if the firmware enumerates the bridges in order. Or you are
+fearing that the firmware *could* do something crazy?
 
-kvm_gmem_mark_prepared() instead of direct folio_mark_uptodate() here, I
-think (in preparation of things like [1])? Noticed this while rebasing
-my direct map removal series on top of this and wondering why mmap'd
-folios sometimes didn't get removed (since it hooks mark_prepared()).
+> I don't know of any spec that requires the OS to assign bus numbers in
+> a certain way, and it feels kind of subtle if this kind of DT
+> description is only reliable for things below the first bridge on a
+> root bus.
+> 
 
-Best,
-Patrick
+This is almost similar to how domain numbers are assigned today. For DT based
+systems, 'linux,pci-domain' property is parsed to find the domain number if
+available. And this domain number is not guaranteed to match the order in which
+the RC nodes are defined in DT.
 
-[1]: https://lore.kernel.org/kvm/20241108155056.332412-1-pbonzini@redhat.com/
+But I guess no one bothered to parse 'bus-range' property for PCI bridges since
+it is not bound to change.
+
+- Mani
+
+-- 
+
 
