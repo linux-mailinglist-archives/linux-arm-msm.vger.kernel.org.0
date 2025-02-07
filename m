@@ -1,149 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-47161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A71DA2C82F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 17:00:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3E0CA2C92D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 17:46:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F116165AC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 16:00:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 001FF3A4CCB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 16:45:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C6BB23FC70;
-	Fri,  7 Feb 2025 15:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AFD3161320;
+	Fri,  7 Feb 2025 16:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="byed9zhr"
+	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="ScaHENaw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp-fw-9102.amazon.com (smtp-fw-9102.amazon.com [207.171.184.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED18F1EB18D;
-	Fri,  7 Feb 2025 15:59:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B22323C8AF;
+	Fri,  7 Feb 2025 16:45:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.171.184.29
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738943955; cv=none; b=aOauz6zYIHy5Qb6hy1ORs7VjVwb6tpW0sQHen1lwtfelGxWUQj6nmhWf7YkjB/wcY1Ol8wuZqzWxHhQFgigMRIMyARJewyyjmrWl5cZuJ10zcM9dkSn8oGWJ4z0dbC+j+o6ZD2UR2o6O07aH02DYmC+pHajqL6Ts+Vdrn8pfe7Q=
+	t=1738946760; cv=none; b=DexfibhuzS5S+bbQyfIrmuq20Yl6kqPrBLjCUpnlGZ/JjBWzAaG6fnrmqXyY0KTrg/Fmsrp6mCzI0IgBgXgifkf7CJYfxrQGkYkhZj7iZaLCtbWTtZ9nJaR4XFKHmezqWA5982wwMOuTGcijlfa29YawqMvfiESjXBrvopGVgQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738943955; c=relaxed/simple;
-	bh=HpFqvIT+cfFtpH+ABRHpXGMzJbwYFkCkvBI+O9Njk7I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=NJvqUAUVPcF2SajMSILrLJkA7+L+kRBG/RLjd3NYrffNMmMYaSCDWBXJ8tBn2b5N0baNQ8/NUYFgYVKt9Osp83GK/72aAQDZ8SPg3WUY8mlzg3+hjbdRx71AKXAgKfyFtZYbsLYTiv2ygvuNjAJFp0XF0p4xTSTgvlo1qMgRBOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=byed9zhr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51770SKi016630;
-	Fri, 7 Feb 2025 15:59:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	btt4RdEIIBJit2kN1ZGw58yZ2tYbo1VWqyU39sDoZ30=; b=byed9zhrpfHTTQ/X
-	LfH+jwBFDCMq3fX98IR5AUybDQ14ORpb7PPMbTUnTwfWnbpWiZcjMSK5DOhIUxJ0
-	uPmxtugUXK0XXmVDbS91rG2fjWhBRNTtjQQSWKJfp3RJoJnsoRs4qdOo3WB4ZtOc
-	sRCauJVK257buDaWy638BZOx8OYGagO1sYyHn2MOjdLjGSMk/Q30k+O6fcx8EiXH
-	RwaMNs1hdpzHXIZ5k0xJy9dMSNH85pZ/9R2R8zcQoHX59Pq4+sxFjFwXhiL8XiUl
-	WNqAAsymidUEcvxj5+5Vx3k2boomnxo3yfwVQMh6dHvkUVkwvqAemr72mIb/ygmU
-	B/ZsFA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44nddh1bxx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 07 Feb 2025 15:58:59 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 517FwxUw007384
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 7 Feb 2025 15:58:59 GMT
-Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 7 Feb 2025 07:58:54 -0800
-From: Lei Wei <quic_leiwei@quicinc.com>
-Date: Fri, 7 Feb 2025 23:53:16 +0800
-Subject: [PATCH net-next v5 5/5] MAINTAINERS: Add maintainer for Qualcomm
- IPQ9574 PCS driver
+	s=arc-20240116; t=1738946760; c=relaxed/simple;
+	bh=sD/CGPZZ7laiJ27vQakP60j57br3QZpDJMPYzD3tjPI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ALYyU7rms1GxdPHCzRl+sMolPfYhGrVHwJM82Bys9T/mA49v0aEPtRKViRyxMAv+V31JIe8G5ngcMnCxDvxRfOjxrTxzQK+FJDU7bueqKJGpyH7mSeqgy3/2rTqSHjMgR/fZqPpeFb+eP9IzV5qK1A/Mdo+mhpZB61fbMq2yO4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=ScaHENaw; arc=none smtp.client-ip=207.171.184.29
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
+  s=amazon201209; t=1738946759; x=1770482759;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=q7xTDS28+TP5gE07LEBmeY0j/rksTUzAlt42eYMiWY0=;
+  b=ScaHENawKmE7nO2/FjyLaBfTHiNoyAW3v27NJN9JtIFlndawGqPnTITe
+   5h/YS35y3BQZ9FtNUW7BGJlEI7MBQKp8zGwIZP77aV/GevQmBBubtUciB
+   zjBylj/pqUJ+26iWcZx9dbyaMCtGvgYeOI/KaQjWkWN+0Wacepj2pVzYV
+   8=;
+X-IronPort-AV: E=Sophos;i="6.13,267,1732579200"; 
+   d="scan'208";a="492059548"
+Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
+  by smtp-border-fw-9102.sea19.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Feb 2025 16:45:48 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [10.0.7.35:61291]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.49.27:2525] with esmtp (Farcaster)
+ id 0c878457-1ded-46ff-8f23-53205f2aa13e; Fri, 7 Feb 2025 16:45:47 +0000 (UTC)
+X-Farcaster-Flow-ID: 0c878457-1ded-46ff-8f23-53205f2aa13e
+Received: from EX19MTAUWB002.ant.amazon.com (10.250.64.231) by
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Fri, 7 Feb 2025 16:45:34 +0000
+Received: from email-imr-corp-prod-iad-1box-1a-6851662a.us-east-1.amazon.com
+ (10.25.36.214) by mail-relay.amazon.com (10.250.64.228) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
+ 15.2.1258.39 via Frontend Transport; Fri, 7 Feb 2025 16:45:34 +0000
+Received: from [127.0.0.1] (dev-dsk-roypat-1c-dbe2a224.eu-west-1.amazon.com [172.19.88.180])
+	by email-imr-corp-prod-iad-1box-1a-6851662a.us-east-1.amazon.com (Postfix) with ESMTPS id 8644C40575;
+	Fri,  7 Feb 2025 16:45:27 +0000 (UTC)
+Message-ID: <0b1cc981-52e8-4f8f-846a-f19507e3a630@amazon.co.uk>
+Date: Fri, 7 Feb 2025 16:45:26 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 03/11] KVM: guest_memfd: Allow host to map
+ guest_memfd() pages
+To: Fuad Tabba <tabba@google.com>, <kvm@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>, <linux-mm@kvack.org>
+CC: <pbonzini@redhat.com>, <chenhuacai@kernel.org>, <mpe@ellerman.id.au>,
+	<anup@brainfault.org>, <paul.walmsley@sifive.com>, <palmer@dabbelt.com>,
+	<aou@eecs.berkeley.edu>, <seanjc@google.com>, <viro@zeniv.linux.org.uk>,
+	<brauner@kernel.org>, <willy@infradead.org>, <akpm@linux-foundation.org>,
+	<xiaoyao.li@intel.com>, <yilun.xu@intel.com>, <chao.p.peng@linux.intel.com>,
+	<jarkko@kernel.org>, <amoorthy@google.com>, <dmatlack@google.com>,
+	<yu.c.zhang@linux.intel.com>, <isaku.yamahata@intel.com>, <mic@digikod.net>,
+	<vbabka@suse.cz>, <vannapurve@google.com>, <ackerleytng@google.com>,
+	<mail@maciej.szmigiero.name>, <david@redhat.com>, <michael.roth@amd.com>,
+	<wei.w.wang@intel.com>, <liam.merwick@oracle.com>,
+	<isaku.yamahata@gmail.com>, <kirill.shutemov@linux.intel.com>,
+	<suzuki.poulose@arm.com>, <steven.price@arm.com>, <quic_eberman@quicinc.com>,
+	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
+	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
+	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
+	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
+	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
+	<qperret@google.com>, <keirf@google.com>, <shuah@kernel.org>,
+	<hch@infradead.org>, <jgg@nvidia.com>, <rientjes@google.com>,
+	<jhubbard@nvidia.com>, <fvdl@google.com>, <hughd@google.com>,
+	<jthoughton@google.com>
+References: <20250129172320.950523-1-tabba@google.com>
+ <20250129172320.950523-4-tabba@google.com>
+From: Patrick Roy <roypat@amazon.co.uk>
+Content-Language: en-US
+Autocrypt: addr=roypat@amazon.co.uk; keydata=
+ xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
+ NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
+ wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
+ CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
+ AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
+ AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
+ IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
+ 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
+ 8hlxFQM=
+In-Reply-To: <20250129172320.950523-4-tabba@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250207-ipq_pcs_6-14_rc1-v5-5-be2ebec32921@quicinc.com>
-References: <20250207-ipq_pcs_6-14_rc1-v5-0-be2ebec32921@quicinc.com>
-In-Reply-To: <20250207-ipq_pcs_6-14_rc1-v5-0-be2ebec32921@quicinc.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-        Heiner Kallweit
-	<hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>
-CC: <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
-        <quic_pavir@quicinc.com>, <quic_linchen@quicinc.com>,
-        <quic_luoj@quicinc.com>, <quic_leiwei@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
-        <vsmuthu@qti.qualcomm.com>, <john@phrozen.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1738943908; l=960;
- i=quic_leiwei@quicinc.com; s=20240829; h=from:subject:message-id;
- bh=HpFqvIT+cfFtpH+ABRHpXGMzJbwYFkCkvBI+O9Njk7I=;
- b=VSf5SDGe+EnzqQXbNcX0ZedQX9iLRui2ne1AO4awX8E7tUkqeORxShAC4dsbxOx3N9vUvaoaj
- cvqD6OL5v74D1zuNfctv9XjqfM+PNLpLq7JYEMjArAWFapZ/nPs3zzI
-X-Developer-Key: i=quic_leiwei@quicinc.com; a=ed25519;
- pk=uFXBHtxtDjtIrTKpDEZlMLSn1i/sonZepYO8yioKACM=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rHfawhoiJifVUufzwZsZwbfmp-crgsGk
-X-Proofpoint-GUID: rHfawhoiJifVUufzwZsZwbfmp-crgsGk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-07_07,2025-02-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- clxscore=1015 mlxlogscore=814 lowpriorityscore=0 impostorscore=0
- mlxscore=0 spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502070121
 
-Add maintainer for the Ethernet PCS driver supported for Qualcomm
-IPQ9574 SoC.
+Hi Fuad!
 
-Signed-off-by: Lei Wei <quic_leiwei@quicinc.com>
----
- MAINTAINERS | 9 +++++++++
- 1 file changed, 9 insertions(+)
+On Wed, 2025-01-29 at 17:23 +0000, Fuad Tabba wrote:
+> Add support for mmap() and fault() for guest_memfd backed memory
+> in the host for VMs that support in-place conversion between
+> shared and private (shared memory). To that end, this patch adds
+> the ability to check whether the VM type has that support, and
+> only allows mapping its memory if that's the case.
+> 
+> Additionally, this behavior is gated with a new configuration
+> option, CONFIG_KVM_GMEM_SHARED_MEM.
+> 
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> 
+> ---
+> 
+> This patch series will allow shared memory support for software
+> VMs in x86. It will also introduce a similar VM type for arm64
+> and allow shared memory support for that. In the future, pKVM
+> will also support shared memory.
+> ---
+>  include/linux/kvm_host.h | 11 ++++++
+>  virt/kvm/Kconfig         |  4 +++
+>  virt/kvm/guest_memfd.c   | 77 ++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 92 insertions(+)
+> 
+> -snip-
+>
+> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> index 47a9f68f7b24..86441581c9ae 100644
+> --- a/virt/kvm/guest_memfd.c
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -307,7 +307,84 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
+>         return gfn - slot->base_gfn + slot->gmem.pgoff;
+>  }
+> 
+> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> +static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
+> +{
+> +       struct inode *inode = file_inode(vmf->vma->vm_file);
+> +       struct folio *folio;
+> +       vm_fault_t ret = VM_FAULT_LOCKED;
+> +
+> +       filemap_invalidate_lock_shared(inode->i_mapping);
+> +
+> +       folio = kvm_gmem_get_folio(inode, vmf->pgoff);
+> +       if (IS_ERR(folio)) {
+> +               ret = VM_FAULT_SIGBUS;
+> +               goto out_filemap;
+> +       }
+> +
+> +       if (folio_test_hwpoison(folio)) {
+> +               ret = VM_FAULT_HWPOISON;
+> +               goto out_folio;
+> +       }
+> +
+> +       if (WARN_ON_ONCE(folio_test_guestmem(folio)))  {
+> +               ret = VM_FAULT_SIGBUS;
+> +               goto out_folio;
+> +       }
+> +
+> +       /* No support for huge pages. */
+> +       if (WARN_ON_ONCE(folio_nr_pages(folio) > 1)) {
+> +               ret = VM_FAULT_SIGBUS;
+> +               goto out_folio;
+> +       }
+> +
+> +       if (!folio_test_uptodate(folio)) {
+> +               clear_highpage(folio_page(folio, 0));
+> +               folio_mark_uptodate(folio);
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 896a307fa065..60c340a2de5e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -19525,6 +19525,15 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/regulator/vqmmc-ipq4019-regulator.yaml
- F:	drivers/regulator/vqmmc-ipq4019-regulator.c
- 
-+QUALCOMM IPQ9574 Ethernet PCS DRIVER
-+M:	Lei Wei <quic_leiwei@quicinc.com>
-+L:	netdev@vger.kernel.org
-+S:	Supported
-+F:	Documentation/devicetree/bindings/net/pcs/qcom,ipq9574-pcs.yaml
-+F:	drivers/net/pcs/pcs-qcom-ipq9574.c
-+F:	include/dt-bindings/net/qcom,ipq9574-pcs.h
-+F:	include/linux/pcs/pcs-qcom-ipq9574.h
-+
- QUALCOMM NAND CONTROLLER DRIVER
- M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
- L:	linux-mtd@lists.infradead.org
+kvm_gmem_mark_prepared() instead of direct folio_mark_uptodate() here, I
+think (in preparation of things like [1])? Noticed this while rebasing
+my direct map removal series on top of this and wondering why mmap'd
+folios sometimes didn't get removed (since it hooks mark_prepared()).
 
--- 
-2.34.1
+Best,
+Patrick
 
+[1]: https://lore.kernel.org/kvm/20241108155056.332412-1-pbonzini@redhat.com/
 
