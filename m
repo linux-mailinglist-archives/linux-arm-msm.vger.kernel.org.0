@@ -1,108 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-47131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74CE0A2C062
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 11:18:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D1E09A2C099
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 11:31:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9AC843AA81D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 10:18:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A6933AA5EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 10:31:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8B5F80BFF;
-	Fri,  7 Feb 2025 10:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7EDB1DE3AA;
+	Fri,  7 Feb 2025 10:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UAqICNa4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SA7Gs/la"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46723194094;
-	Fri,  7 Feb 2025 10:18:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40AC6AA7
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Feb 2025 10:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738923515; cv=none; b=VS/az7s76x5pgPpTsIbNrdl6lgiZF7aGQa3DLyh7c1GNw9GBa273zW8btZH2Yk00cVvtqe8ztJmHvxsaqF6laTZH9AB2deFR1MIjoef12KKqloSwrh/uorDqxeW/3YYxzLx/ghoCUyJSPyBho73s/4P+xiLiU3zlwE0rsBH3fyk=
+	t=1738924284; cv=none; b=SnZ+uZveDCokUycYuSzmelad9wJ7zoldCwivq9FkXBvfAMeIIxQH+WO4zfmPc9w12BN1j2GxWzdPHOncggDIx+Lxccm7NiqQ4QA2weQSZX3QTH5UmEnjFN4FesQpmj331/GDY+4q5KCzCBPyhO8F6+dHMMMeFHNDXuh71sWyGEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738923515; c=relaxed/simple;
-	bh=P3qLJwpRwqti53PlkJQBfQmkD1LGbQ2Ft7S7UCGX/Gk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SZT2H2ovJwPbCf0S1ExuJEeL+OGK992abZP3x7TsSUSdLbh67io21cAOH1IkNfuJSpMl/5ZuxkgjpaUy0lFVAwfZpOe72X+peEaWWaG/CQRxJcZXvOvlo9tg6fwmIFFowPMTo7HGkdlXLoajjyVUqCiI/rkHJ62eWwL2eQ8+Wd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UAqICNa4; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1738923514; x=1770459514;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=P3qLJwpRwqti53PlkJQBfQmkD1LGbQ2Ft7S7UCGX/Gk=;
-  b=UAqICNa4IsDEm+p6DchtJH4k2E9eTN5Sy/tApH6wxUmk4y1kroyKkcIy
-   MnZWhz3pf+Db6i3e/y96PWwvRa082j9RfluAY+eeBjuPDYdcSufsKOI2E
-   EXytc6lIT9WLZsZY+pnNue0FJdW0np2qV4isYTNlaO5EN9Lw0SQ3zNG4y
-   yTKIgPEeekyB1l/zy5+N52J/HZjkH1Xm/nOY5KspVNqhLZOSt0ZFB/T4A
-   WarsZaCkGpLkNnkfE2Mo2zNBiLq7FpsWiLFATwQGCctMBnUqIjj+GHWpP
-   XDuSu4JH8C4R0j1gN18AqjjUAdouCAvdt9hZNc8jvBG9xXzzZ+qxUSNMW
-   Q==;
-X-CSE-ConnectionGUID: /sBr5c5TTfS2tpEUrpnvrw==
-X-CSE-MsgGUID: L6p4GcVPTmy8FyfRbThjlA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="39674999"
-X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; 
-   d="scan'208";a="39674999"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Feb 2025 02:18:33 -0800
-X-CSE-ConnectionGUID: yIExHDWWQEqxbxahe5RcHQ==
-X-CSE-MsgGUID: yYx/QUxzTru9gA2ovmQ02w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="116686154"
-Received: from turnipsi.fi.intel.com (HELO kekkonen.fi.intel.com) ([10.237.72.44])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Feb 2025 02:18:32 -0800
-Received: from kekkonen.localdomain (localhost [127.0.0.1])
-	by kekkonen.fi.intel.com (Postfix) with SMTP id 8D18011F9C3;
-	Fri,  7 Feb 2025 12:18:28 +0200 (EET)
-Date: Fri, 7 Feb 2025 10:18:28 +0000
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] media: qcom: camss: switch CSID to defined MIPI CSI data
- type IDs
-Message-ID: <Z6Xd9JPuzmzzl08o@kekkonen.localdomain>
-References: <20241225205748.1515251-1-vladimir.zapolskiy@linaro.org>
- <e789ff43-78cb-4ecd-8949-1d0f8beb1194@linaro.org>
+	s=arc-20240116; t=1738924284; c=relaxed/simple;
+	bh=3p98QG4ex3N8/Po1UNXvmhY6FROi20vCqKEYtfIsfcg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Zc4dm1W3uEH9fQOKZcB2EfFN/SpO9UQCxS9U2WcKD4txx+3ZFA2zRkKzsaM0PYbN6EU6iN00IvHgwPtrgpbpCYuNEMFeDkxHHZlMYS8A8wbg/6GCsGewJCANDQZFN7OeIPUc/3V63ByValZxFfOfxoc02thmg+FVsDD+vV6eymI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SA7Gs/la; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38dae9a0566so886923f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2025 02:31:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738924281; x=1739529081; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YREpSrkrflOlNGwP6NH/gAIlpHPiGAPOJ6ZNf02lLZc=;
+        b=SA7Gs/laVeE3XwSlO0v2aFjlrkibqdYZ/dJ0iGQMIZaipeOYnZthCd3JxnfAssmRet
+         +af4MCVGFMgOzZ3ysZ+i1x9TU0kWEOmhrRD8UTfXDLhLb17tGMFTCZm9ukQUgwcIDON0
+         ZRq5hbGSGZE9rDAR/TehhPCih5zlRzMcKugMGX/1P5YS1TZxfPSGlYChemRE1A5lX+Zi
+         jh8JatGLCSgxzkdkI3BB1lgZN0gHYHwMtv+OliIyTKEpDDgaq14htFUEE4thrScvTapK
+         tUnc+chdAeIpHy/pCv6ucPeDj6BAtuWxTiSVymSJTSYU7CHztmjORt7ihl3EJRApdu6N
+         fTcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738924281; x=1739529081;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YREpSrkrflOlNGwP6NH/gAIlpHPiGAPOJ6ZNf02lLZc=;
+        b=PaDfJn17gDkOV6SsgOoc/EjD6KVGWlQrRVWrVB97t46CUktjo/3mNRTpWkLvjNbzTB
+         9xm3hQ00cqYDGLlQgnX3OvgFIsdEN+UNhDx6bL9bbNbD84tDsbJYdF7ECMsYkwL9/NuZ
+         05QaJ9ib/unqcJQE3jqVGRpldPJo8dYTZge0xIiV7ElLpBpFZWPG2MpyzPbWB1spCK53
+         PT8BRL2e1vF/Wdx4GUTZueHdQnO0Fi7Ujv12g0dZt8hT/CZoRTvsI7qBrQIJNzFtLzNU
+         OP5GbUbRDk0HTXLlcbEvN813zSvEIC+DZ+M6Jopw2sZLaYx9GB2YjlxpuykuyMWcvwsK
+         WQsQ==
+X-Gm-Message-State: AOJu0YwcF6D9m2UjUV+tEuFiLJXP+3KOOa0buXBNOPfjLi9z3m8H2+h2
+	rhod63Pz9l0nGK2QKMWzGZwF2dK0EjlmVwvWMvN0v9zCzxBM0YMuxxXt5OK3AeI=
+X-Gm-Gg: ASbGncvzCYcjkStgCHN7AJtlEutXW+/WHfuqDSerm7d9e/NYDN13cF+CvMtJSd1uob6
+	+t2MLxhC2Cr/uUU1YfJ+qoZQoop3wN0GPn6VRt+oY2jF1xgLRvRX8TFSZvpw8cj9mXy1CM4aoG+
+	iXPhV1F4JNzeuSigwNzbyZeT2pn68mx9tYgfDAkH0JPGGbWrVKIBsBd8SrUQGIbKa+hdOzLAJKW
+	+ivD9oepUDtqIFfWPSq7O2x5hzDRKXQwI9rD5Y+qVMg6I9l5Z61df0aBE1HDeO9gMNNLaQqEHrV
+	91244Soc7KxGX5R4S9wsaybk6pwCXHoe0qQX
+X-Google-Smtp-Source: AGHT+IEQclQ19QnwTTNLog5fe6aJupXgXdsoBvU42wl3/jA+8P+NFpayzk/EhLSa+4KzOBZeL8IJng==
+X-Received: by 2002:a5d:5985:0:b0:385:e30a:e0f7 with SMTP id ffacd0b85a97d-38dc932dd45mr1506939f8f.22.1738924281136;
+        Fri, 07 Feb 2025 02:31:21 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dc2f6aeafsm3170442f8f.20.2025.02.07.02.31.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Feb 2025 02:31:20 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: sm8650: switch to 4 interrupt cells
+ to add PPI partitions for PMUs
+Date: Fri, 07 Feb 2025 11:31:14 +0100
+Message-Id: <20250207-topic-sm8650-pmu-ppi-partition-v1-0-dd3ba17b3eea@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e789ff43-78cb-4ecd-8949-1d0f8beb1194@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPLgpWcC/x2NQQ5AMBAAvyJ7tkk1oeUr4lC62AM2bYlE/F3jO
+ IeZeSBSYIrQFQ8EujjysWeoygKm1e0LIfvMoJWulVYG0yE8YdxsUyuU7UQRRnEhccoqVtT62Y7
+ WGO8gRyTQzPc/6If3/QDFv/yscAAAAA==
+X-Change-ID: 20250207-topic-sm8650-pmu-ppi-partition-1e9df8b877da
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=696;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=3p98QG4ex3N8/Po1UNXvmhY6FROi20vCqKEYtfIsfcg=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnpeD3/DNjPZBnMlj8uYjKDfeSfkIeDzBE7PEzkPJs
+ cUUFQ5aJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ6Xg9wAKCRB33NvayMhJ0Z0vEA
+ CEZym2xl2EQc7+1fyt2NUWgOjXp9Y5rVxsmvd5XJzHKKKYh75dWkDa0sN9yJSXKgdP61oFqfMsjSJ7
+ ZaeHO8MYejD/5N+RDrLU7ymEQJZfu1m7z/cepaxgJNBfsEvdJceeEFUwcU+GA+AH67PTu9pQp+AmY8
+ 6ZLD2psOmwJ2npqRwvixi4hnmF6P71KaX2im6kFST/iHaHuuCp0+dMf5vmYqcEBRko2vRBvigPyKMa
+ xaIxmJUT16mZ8pcXs3tnhXIHME38UcQuplXZLRBfjBEpjbgL7lgiMwpp0ehzmpa7o5Z2Lu0P6jGyIF
+ 1G86QXmwHOH3NU/AaPD5KLQh4C/qQZxdHbKp8DlxbTwb/v2kdS4at7sMWMcGqPEveBz9bOc1+bjxbx
+ LG0swFnJaarxWO5/zZut+xv/0G85FGyGAUr2kZ/+eoEKmH7CrJ+PhZrmcfsefJYsPJrFgp+2dRgA6L
+ HB8EJ1ziVYKra+5742LJRY4MNiVU34tMxlkchJHS7k4DfRZOfSy/UX/zaCiMl/3PoTj/oBoCAOV1xi
+ 48P6LlTsvSjaBNtCptBlMW7ROEKIWuDPvzeOvA/vDmuBVsfyya0VNv24yG52I0USQdmv+womWHezZB
+ E7/WLtR4nrb1VjJdLzaM6lNuzweTugXyAtEWfE5DmZxfcWWCm93vPy8pi6eg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Hi Vladimir,
+Swich to 4 interrupt cells on the GIC node to allow us passing
+the proper PPI interrupt partitions for the ARM PMUs.
 
-On Thu, Feb 06, 2025 at 07:13:43PM +0200, Vladimir Zapolskiy wrote:
-> On 12/25/24 22:57, Vladimir Zapolskiy wrote:
-> > Remove redefined image data type IDs taken directly from the MIPI CSI-2
-> > specification. Non-functional change.
-> > 
-> > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> 
-> I would appreciate, if the change is reviewed and/or it enters
-> media/devel eventually.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (2):
+      arm64: dts: qcom: sm8650: switch to interrupt-cells 4 to add PPI partitions
+      arm64: dts: qcom: sm8650: add PPI interrupt partitions for the ARM PMUs
 
-It's in my tree now.
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 556 ++++++++++++++++++-----------------
+ 1 file changed, 285 insertions(+), 271 deletions(-)
+---
+base-commit: 808eb958781e4ebb6e9c0962af2e856767e20f45
+change-id: 20250207-topic-sm8650-pmu-ppi-partition-1e9df8b877da
 
-Thanks.
-
+Best regards,
 -- 
-Kind regards,
+Neil Armstrong <neil.armstrong@linaro.org>
 
-Sakari Ailus
 
