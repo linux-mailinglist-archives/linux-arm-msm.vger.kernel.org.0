@@ -1,90 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-47080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BD5CA2BBC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 07:45:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 08AB9A2BC54
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 08:36:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 968341882535
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 06:45:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1957A188A443
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 07:36:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52013235BF4;
-	Fri,  7 Feb 2025 06:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5E6B1A2846;
+	Fri,  7 Feb 2025 07:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zp/NzhxE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CbOKN8rP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01A71991CF;
-	Fri,  7 Feb 2025 06:43:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE631A2544;
+	Fri,  7 Feb 2025 07:36:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738910620; cv=none; b=M28cLh0yqKFjpqr54g9uMYdmQ0cqGYB10amwDCcjfSc0rPwCHLVi8BP2gIaY11x1SCzR3TeY854+fNoOqCcO0JjGbnvVnFuIPyRlU1ykEt0eCHtrS/Lq7O1SHsNnSA4lWKIevKP+OBYCnc13koaQtX6ZCRDCb2K0ZjA12P7CieY=
+	t=1738913769; cv=none; b=QK+QbJV5kPx+dQUQ++sS/dlzpyfOVCLAkNj9NDoND5enVp43/1MLpKZC5ZxTQIZzU5awixWRCBWKLZv+xU1CAuCa7F2g3auyfiTs9vobXmyAJT8OHhIdavtckqdLjK5jB1NZoMrmaaGQQDAMOXgzFgWrgWUDb85JqSAViw2MymU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738910620; c=relaxed/simple;
-	bh=tYFvJAC+E6lq1I465BOU8f0pSMGntQzDYaPmWQtwSuc=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tJdrF7M1gajOnZ2iUokrTeMXghBCZmvI4Ciwq0qC+CaLUaBvWOwvYW4vxn58nS7SU4dv39X2uPErwyHADlL9RS5NAJhBNNhwuvHfkgBvNMg0o93abGDH4WllpznUtBEzJSgVfFW1hnLETMi7XjFhpfm9ML3uNzEwDL1Tw7zDmHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Zp/NzhxE; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1738913769; c=relaxed/simple;
+	bh=lRRvLjOjWz7k/Hrges3g7wd4SV2ewKBhzV0A11CrK+4=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fNPy0hHwqjsBJvic0WYkJroGYtkwlkB1PVSaDrPZZNlFJlpoHbBGuH6DDibNltDo9EAj/VKFOXKtsjknk/sGx0vrJ/mrgTIKmgfgUNV4CpDgEbbDZsGT2fnV2vx7kAGN2Ox0eYS6R3ZQgbppbj5BiePyYDOLQppAIsgG10KmfVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CbOKN8rP; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5171PXai029939;
-	Fri, 7 Feb 2025 06:43:25 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5174KrI7008031;
+	Fri, 7 Feb 2025 07:36:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FrWpXWtpt+ZULEbiR2Up6sVFlN84+mzhnBc7WKp2O/Q=; b=Zp/NzhxE7qzl2Tj1
-	D+l8iuuWY1/LI85ZnLKykQiD3wcYgipaeUjyJLAPOyXxq5MSC7wZK7KX36OdK0xq
-	25zooswxVwp6jNLWIRhn+EFBj7lc7dqyO1rACp7MV/z6svFvfIy4mMcm+m4VVLAu
-	s8uBS9BfSIdnNu5piVA9wgV7cJ+1ltcoIGPFpvJDNOiJRBo0tKwGxQANqD1Pqi9S
-	YIDDxkpJxtmQIzSbha3LspVetHlDl15V2pe44SbZM9Kfhw660NynOt4RcWwH7jCH
-	fS3RlfPnjkbXq7S+RFDIQAQ78KwsWmw5EU4uJF46ZceRzObfGfC9Lrj8WRc+hQhi
-	Yea/4A==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44n2rt9d9g-1
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=TElmkLpAeSRtWN2JQWnKor
+	ZVjXpepyP+ED8zX2uO+wA=; b=CbOKN8rPswP1K97isQdRyhHtN/QjZA8fbdBX52
+	hLAW9EQ51qHmb4+yTCS9DVW3/EgjuF2Gza9cfhx7prmQa90QldjbDHZRsfMqhNUr
+	OpUumF8AAGXYoEfTThXMcfwafZKAHDdDoXP2/zXw+Q2D2NPT66V/QrZUacHuXIz8
+	U4CUmnALXpt4mWMYnVmslnjW7SGJFlwJy6fQAVi2YiGJcG5o+mSlQIsqwzeQoT41
+	Ci+u1EuAPpFhu8pM7ir+jlH0FcsMGHWdm415ilzvc5k1aEj6yadEageZFmpmSpL2
+	8Od0tcIHd3VxkEvgBiIMqQQ/xT2mxyLh8MntgZ8JMyaMNibA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44nb2m8eak-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 07 Feb 2025 06:43:25 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5176hO5f002778
+	Fri, 07 Feb 2025 07:36:04 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5177a3P4026898
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 7 Feb 2025 06:43:24 GMT
-Received: from jiegan-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+	Fri, 7 Feb 2025 07:36:03 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 6 Feb 2025 22:43:18 -0800
-From: Jie Gan <quic_jiegan@quicinc.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao
-	<quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v10 7/7] arm64: dts: qcom: sa8775p: Add CTCU and ETR nodes
-Date: Fri, 7 Feb 2025 14:42:13 +0800
-Message-ID: <20250207064213.2314482-8-quic_jiegan@quicinc.com>
+ 15.2.1544.9; Thu, 6 Feb 2025 23:36:00 -0800
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_varada@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 0/1] Fix USB vdd info for IPQ9574
+Date: Fri, 7 Feb 2025 13:05:44 +0530
+Message-ID: <20250207073545.1768990-1-quic_varada@quicinc.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250207064213.2314482-1-quic_jiegan@quicinc.com>
-References: <20250207064213.2314482-1-quic_jiegan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,206 +73,41 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fkU6W8CiK_QDSDrOT9g65MHIA69xApnY
-X-Proofpoint-GUID: fkU6W8CiK_QDSDrOT9g65MHIA69xApnY
+X-Proofpoint-GUID: 5lz9yiNqETeXupsAH0LNfOxJ0JSKv0dU
+X-Proofpoint-ORIG-GUID: 5lz9yiNqETeXupsAH0LNfOxJ0JSKv0dU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-07_03,2025-02-07_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0 mlxlogscore=999
- impostorscore=0 suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502070050
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=618
+ suspectscore=0 bulkscore=0 phishscore=0 malwarescore=0 mlxscore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2501170000 definitions=main-2502070057
 
-Add CTCU and ETR nodes in DT to enable related functionalities.
+Use correct regulator for USB phy.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 153 ++++++++++++++++++++++++++
- 1 file changed, 153 insertions(+)
+v2: * Skip the first patch as it has been pulled in
+    * Reword and fix commit message formatting for the remaining patch
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 3394ae2d1300..31aa94d2a043 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -2429,6 +2429,35 @@ crypto: crypto@1dfa000 {
- 			interconnect-names = "memory";
- 		};
- 
-+		ctcu@4001000 {
-+			compatible = "qcom,sa8775p-ctcu";
-+			reg = <0x0 0x04001000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb";
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					ctcu_in0: endpoint {
-+						remote-endpoint = <&etr0_out>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					ctcu_in1: endpoint {
-+						remote-endpoint = <&etr1_out>;
-+					};
-+				};
-+			};
-+		};
-+
- 		stm: stm@4002000 {
- 			compatible = "arm,coresight-stm", "arm,primecell";
- 			reg = <0x0 0x4002000 0x0 0x1000>,
-@@ -2633,6 +2662,122 @@ qdss_funnel_in1: endpoint {
- 			};
- 		};
- 
-+		replicator@4046000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x04046000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					qdss_rep_in: endpoint {
-+						remote-endpoint = <&swao_rep_out0>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				port {
-+					qdss_rep_out0: endpoint {
-+						remote-endpoint = <&etr_rep_in>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tmc_etr: tmc@4048000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0x0 0x04048000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			iommus = <&apps_smmu 0x04c0 0x00>;
-+
-+			arm,scatter-gather;
-+
-+			in-ports {
-+				port {
-+					etr0_in: endpoint {
-+						remote-endpoint = <&etr_rep_out0>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				port {
-+					etr0_out: endpoint {
-+						remote-endpoint = <&ctcu_in0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		replicator@404e000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x0404e000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					etr_rep_in: endpoint {
-+						remote-endpoint = <&qdss_rep_out0>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					etr_rep_out0: endpoint {
-+						remote-endpoint = <&etr0_in>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					etr_rep_out1: endpoint {
-+						remote-endpoint = <&etr1_in>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tmc_etr1: tmc@404f000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0x0 0x0404f000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			iommus = <&apps_smmu 0x04a0 0x40>;
-+
-+			arm,scatter-gather;
-+			arm,buffer-size = <0x400000>;
-+
-+			in-ports {
-+				port {
-+					etr1_in: endpoint {
-+						remote-endpoint = <&etr_rep_out1>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				port {
-+					etr1_out: endpoint {
-+						remote-endpoint = <&ctcu_in1>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@4b04000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0x0 0x4b04000 0x0 0x1000>;
-@@ -2708,6 +2853,14 @@ out-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-+				port@0 {
-+					reg = <0>;
-+
-+					swao_rep_out0: endpoint {
-+						remote-endpoint = <&qdss_rep_in>;
-+					};
-+				};
-+
- 				port@1 {
- 					reg = <1>;
- 					swao_rep_out1: endpoint {
+v1: For some reason, the dt-bindings [1] patch posted and Acked long
+    time back seems to have slipped through the cracks and hasn't been
+    merged. Including it along with this patch as both are related.
+    dt_binding_check & dtbs_check passed.
+
+    1 - https://lore.kernel.org/linux-arm-msm/170266996013.286103.17303148912355511017.robh@kernel.org/
+
+Varadarajan Narayanan (1):
+  arm64: dts: qcom: ipq9574: Fix USB vdd info
+
+ arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+
+base-commit: 40b8e93e17bff4a4e0cc129e04f9fdf5daa5397e
+prerequisite-patch-id: d3da55704446c2222b5c624d9bb3a738357cb2fc
 -- 
 2.34.1
 
