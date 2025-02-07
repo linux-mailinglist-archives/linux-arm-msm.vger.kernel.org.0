@@ -1,122 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-47172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC876A2CD90
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 21:08:18 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0336A2CDE6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 21:14:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5BB06167BD9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 20:08:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7B4F77A43B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 20:13:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D59E919E98B;
-	Fri,  7 Feb 2025 20:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 820C91A08B1;
+	Fri,  7 Feb 2025 20:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ES4u4wzD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zt6XL+7J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032C519DF81
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Feb 2025 20:08:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927921A0B08;
+	Fri,  7 Feb 2025 20:12:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738958893; cv=none; b=be89kYWtj7XggUNIW4+xhjSL4ooog2gd62ZN84932RHu88ZX8MrptjfXkz36vJHYSaaYb/38PRYzNMoA22ThIxBhMCdosDQA9LT/k1As2JpJXSQrmByUvoMp0Ac/gL4PUp8FXwd78VyUn2J1am8oo1b51xAmvNylJXZ1dqZATDI=
+	t=1738959139; cv=none; b=rvTZ2mPehmwiJMi6070WEQWPBQ9QauN8n1isDBAGvGilhMzNmy8lN92ciEXkNHn4mN/bY2naG+CDTCKdgBBJKSecp99CYWG1Y8Iil4Te5YMzUJKMIjRDM4sjIVpQC3LI6AHgGA0W7ePX57wWtRkiSanchD0uFK5BByCCHDKc7zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738958893; c=relaxed/simple;
-	bh=MbgpBNIaAwKh0Xwyh/rwjugty583wceU/kSTCQjjAxc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MKzA01oyTLFYZgafltgdV7b6hEyHHJZGd50UKB5K3aqfQyka+wu+rzGqHQnFAiB3GBBOzoQ4knBoSpRtmHT63pRqPsiZv+TZHzURR2OT8aD1vmpYSNuSWS6Wc+/twd4ak3qpJ/pJqjRTNCJjURTAATwxPy+qlz7OKGlhlk2JLKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ES4u4wzD; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-543e49a10f5so2714724e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2025 12:08:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738958890; x=1739563690; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FYkob5dL+kHvl3z2XknwVDlIEJTWdgOpBDOpHuAAwH4=;
-        b=ES4u4wzD3i1AfhAf4zsU3Tgng2eIO+MJWHAmz2vcOs813Rf1QmNu3SjLtvNSRQHCYC
-         bMWqLuc4XqB0XovKItI4BfjJuDRlFEJrMp2h8RmVAD49nOnVxb9sW4CxS6OKyGyJtEcz
-         YFRyA4X4o3jlTsdnzwRDS+qcUGZuVPXuCzIg8cElMpQfrpwU82o3QUSU5HmAKGpUV9I6
-         zqq0y7wx/ddQB3cO3FLEqdLUm1hxGVygu6DIVjRrAsKuL/6EutgD5omBkXABA6ncLcEt
-         rNf7oaNB7QM8hOIiAxSw3UzvmynyHXCIP0J6sFCglIlj5FxjSCzRpYHeq7UfF/aY8TFx
-         IRLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738958890; x=1739563690;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FYkob5dL+kHvl3z2XknwVDlIEJTWdgOpBDOpHuAAwH4=;
-        b=WOhjn0NhhMfCn60PHh9J0S4xE/oT1951gwo/iTP0RvXruvOeJ6OB88WCUk0zydV2N7
-         lxDoitK6ODsxJt01xE95a0IxFR80GzOEWiryhXLyQQ22MrNbpGgoQlR7qohNU7XDvXTB
-         T4xFK4E+Qh995J5ZBkU1+th9eqmsM4+mN2eXxcy189IH6fhFDRfFHlgbWra05ekLyvmY
-         SpTV3IVr7mRY3CbDimKhMWp8fjAY4hb8R6CUZd+kT/BYU7qy/z5BY5GIabR2fhOpbu/o
-         ZhxhrOdUmx0whjTHMbDN+XtyJVg1qrrf/p+ZE7v6nWUoXUie12IQ/Fw5bnnMn76X62oJ
-         esVw==
-X-Forwarded-Encrypted: i=1; AJvYcCXdOJE4XnOGVo/e7Qu1cFPEMrozOmoMDDIXBuZrS70H2bPvmM3xbXr6bFu/aGSN0XeA8zrw2lyPUkQ3jjR/@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+Hb1fLuerY3LLVor5wuxODGOnZ6Y8VaklzzzJT6ATgMv/gUZC
-	xh0G9sWb0h5WF3DZlHcIXYpSr9k+IF0Fw7nwvStwykxLmAH3LJWWnkU+n4NPu9A=
-X-Gm-Gg: ASbGnctdeCJiLcjanOF8sCETZY1KlYDeqZaiwJKkWX9PTAinJzXqEp5UW3IazoKbHak
-	/ATz/F5VnBU7Hn3F8XRN0DMQDSPDy+/qWSp0uuL22r690+jX0uIvgvobFHbso2f2x7Dii0kLqCi
-	dyeowLBgI3w8j8/+o2olsgL6F5z+9UyEOod+gvft3VwJ/wohtPChpI7XajTcRmZGH7+WPQUX+bY
-	jEV7XKJtiHuRbgKcSJl2qX165EIocDrAkeKWupfheDWH/X8gFHD0wtkOnmNhkiO8D4odpy6xQbA
-	BkYNJQ35sIDPBhVRTUKz5PYfrh3wRm60W4dVVVhg3HbHAL/YRkU5SFxmcpYCx1K9jUSXNgM=
-X-Google-Smtp-Source: AGHT+IG7/wH8lvWcq5WTdfj8YtPxXYAdI23+8Xf0vHDGS3N8knZZCrXym+bOiezQMN/DqbfaTNAu4w==
-X-Received: by 2002:a05:6512:a8f:b0:544:f77:1fbc with SMTP id 2adb3069b0e04-54414aa811bmr1516524e87.28.1738958890042;
-        Fri, 07 Feb 2025 12:08:10 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5441053ecb6sm546134e87.6.2025.02.07.12.08.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Feb 2025 12:08:08 -0800 (PST)
-Date: Fri, 7 Feb 2025 22:08:07 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Vikram Sharma <quic_vikramsa@quicinc.com>
-Cc: rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org, 
-	mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	akapatra@quicinc.com, hariramp@quicinc.com, andersson@kernel.org, 
-	konradybcio@kernel.org, hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org, 
-	catalin.marinas@arm.com, will@kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v12 2/2] arm64: dts: qcom:
- qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
-Message-ID: <slpvv4gvncgnpexu3lc6ujbyvhfne66kmwau3ch7i7sqraogc3@enc2jhll6kid>
-References: <20250207090422.1609260-1-quic_vikramsa@quicinc.com>
- <20250207090422.1609260-3-quic_vikramsa@quicinc.com>
+	s=arc-20240116; t=1738959139; c=relaxed/simple;
+	bh=js3/L1kH4kxEihA1SRO6/53bxBojLIfkR9/vdjllX8M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VGqEXrpu7sil8P7hYou1XEY4gUn6oNKCWlpI9AFBOGpEZmmE4MCnLy58D0FCTD7qrRdpXQvz3tBQPYH4zV2q7bGLe8WDtV8N3BBxgJo6Ba97/XeRrVttSJns6GaT29MD47j6ehW4n/53xKvXKwzEZgHxlOIZW2YnpAILTuPOuec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Zt6XL+7J; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 517B6UGF016976;
+	Fri, 7 Feb 2025 20:11:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zSgIMbskBs9DQq6cGCzvl2hoxmfK8m643mccdsYsoTU=; b=Zt6XL+7Juok2QSTV
+	JpIjVTmcydmfJoiDMy07HOI2fGyHNbN/ndOW3tQqaOyq+nvWG/cJ+ZIwWH57F64P
+	1sckyCNzlYCvEPvTuxvyK5epGCR0S+WcKpCaaV5RJ8r470XJvo0wrhLMSbPvWAvK
+	ICSreXYTeJycoPFXkuXi3TPboDc3ZPq5F9kuL/ALz3WyYAiCmNHBHROni1EBNArN
+	INZ30Ee0rtyRuW3TvXiEAXLIN6IYBjTAucm+RedLOk4r5O8llJn2LwMi6oahb0MV
+	YyCnWh/u930JExgmz4y+SqEwYZV3UHwLZN8874x3oZcX1WRpgUW/9Kx3DYA7mGsg
+	ctgHBw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44nh0w19mg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 07 Feb 2025 20:11:58 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 517KBvGI022866
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 7 Feb 2025 20:11:57 GMT
+Received: from [10.110.94.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 7 Feb 2025
+ 12:11:55 -0800
+Message-ID: <b7561a2c-653b-4c56-8bef-3ae76a729d7c@quicinc.com>
+Date: Fri, 7 Feb 2025 12:11:55 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250207090422.1609260-3-quic_vikramsa@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/7] drm/msm/hdmi: program HDMI timings during
+ atomic_pre_enable
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart
+	<Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej
+ Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Simona Vetter <simona@ffwll.ch>,
+        Simona
+ Vetter <simona.vetter@ffwll.ch>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20250124-bridge-hdmi-connector-v6-0-1592632327f7@linaro.org>
+ <20250124-bridge-hdmi-connector-v6-2-1592632327f7@linaro.org>
+ <7fbfc7d5-f6bb-4f99-914a-f91bb7d153fd@quicinc.com>
+ <na7jgb5leqbugi6a6xkfz3nl6mp7li4oevfevhjmo5y4v7eot6@fsmfv52u2rtz>
+ <1b98265e-8766-4504-b374-f7af8203c926@quicinc.com>
+ <fgzcd4gm4uriqbpslh7arfyxjvzyxrck3f2uuv4mhkvcbkdmvm@b2pz5vmmqs3l>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <fgzcd4gm4uriqbpslh7arfyxjvzyxrck3f2uuv4mhkvcbkdmvm@b2pz5vmmqs3l>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: KKL97QBwWp18hsHZe4fhucww8XfK25Sz
+X-Proofpoint-ORIG-GUID: KKL97QBwWp18hsHZe4fhucww8XfK25Sz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-07_09,2025-02-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 priorityscore=1501
+ impostorscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502070151
 
-On Fri, Feb 07, 2025 at 02:34:22PM +0530, Vikram Sharma wrote:
-> The Vision Mezzanine for the RB3 ships with an imx577 camera sensor.
 
-No, RB3 uses a different sensor. RB3 != RB3 Gen2.
 
-> Enable the IMX577 on the vision mezzanine.
+On 2/6/2025 5:19 PM, Dmitry Baryshkov wrote:
+> On Thu, Feb 06, 2025 at 12:41:30PM -0800, Abhinav Kumar wrote:
+>>
+>>
+>> On 2/3/2025 4:59 PM, Dmitry Baryshkov wrote:
+>>> On Mon, Feb 03, 2025 at 11:34:00AM -0800, Abhinav Kumar wrote:
+>>>>
+>>>>
+>>>> On 1/24/2025 1:47 PM, Dmitry Baryshkov wrote:
+>>>>> The mode_set callback is deprecated, it doesn't get the
+>>>>> drm_bridge_state, just mode-related argumetns. Also Abhinav pointed out
+>>>>> that HDMI timings should be programmed after setting up HDMI PHY and
+>>>>> PLL. Rework the code to program HDMI timings at the end of
+>>>>> atomic_pre_enable().
+>>>>>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> ---
+>>>>>     drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 23 +++++++++++++++--------
+>>>>>     1 file changed, 15 insertions(+), 8 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+>>>>> index d839c71091dcdc3b020fcbba8d698d58ee7fc749..d5ab1f74c0e6f47dc59872c016104e9a84d85e9e 100644
+>>>>> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+>>>>> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+>>>>> @@ -126,15 +126,26 @@ static void msm_hdmi_config_avi_infoframe(struct hdmi *hdmi)
+>>>>>     	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
+>>>>>     }
+>>>>> +static void msm_hdmi_bridge_atomic_set_timings(struct hdmi *hdmi,
+>>>>> +					       const struct drm_display_mode *mode);
+>>>>>     static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
+>>>>>     					      struct drm_bridge_state *old_bridge_state)
+>>>>>     {
+>>>>> +	struct drm_atomic_state *state = old_bridge_state->base.state;
+>>>>>     	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+>>>>>     	struct hdmi *hdmi = hdmi_bridge->hdmi;
+>>>>>     	struct hdmi_phy *phy = hdmi->phy;
+>>>>> +	struct drm_encoder *encoder = bridge->encoder;
+>>>>> +	struct drm_connector *connector;
+>>>>> +	struct drm_connector_state *conn_state;
+>>>>> +	struct drm_crtc_state *crtc_state;
+>>>>>     	DBG("power up");
+>>>>> +	connector = drm_atomic_get_new_connector_for_encoder(state, encoder);
+>>>>> +	conn_state = drm_atomic_get_new_connector_state(state, connector);
+>>>>> +	crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
+>>>>> +
+>>>>>     	if (!hdmi->power_on) {
+>>>>>     		msm_hdmi_phy_resource_enable(phy);
+>>>>>     		msm_hdmi_power_on(bridge);
+>>>>> @@ -151,6 +162,8 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
+>>>>>     	if (hdmi->hdcp_ctrl)
+>>>>>     		msm_hdmi_hdcp_on(hdmi->hdcp_ctrl);
+>>>>> +
+>>>>> +	msm_hdmi_bridge_atomic_set_timings(hdmi, &crtc_state->adjusted_mode);
+>>>>>     }
+>>>>
+>>>> This addresses my comment about setting up the HDMI timing registers before
+>>>> setting up the timing engine registers.
+>>>>
+>>>> But prior to this change, mode_set was doing the same thing as
+>>>> msm_hdmi_bridge_atomic_set_timings() which means
+>>>> msm_hdmi_bridge_atomic_set_timings() should be called at the beginning of
+>>>> pre_enable()?
+>>>>
+>>>> The controller is enabled in msm_hdmi_set_mode(). So this should be done
+>>>> before that.
+>>>
+>>> In [1] you provided the following order:
+>>>
+>>> 1) setup HDMI PHY and PLL
+>>> 2) setup HDMI video path correctly (HDMI timing registers)
+>>> 3) setup timing generator to match the HDMI video in (2)
+>>> 4) Enable timing engine
+>>>
+>>> This means htat msm_hdmi_bridge_atomic_set_timings() should come at the
+>>> end of msm_hdmi_bridge_atomic_pre_enable(), not in the beginning /
+>>> middle of it.
+>>>
+>>> [1] https://lore.kernel.org/dri-devel/8dd4a43e-d83c-1f36-21ff-61e13ff751e7@quicinc.com/
+>>>
+>>
+>> Sequence given is correct and is exactly what is given in the docs. What is
+>> somewhat not clear in the docs is the location of the enable of the HDMI
+>> controller. This is not there in the above 4 steps. I am referring to the
+>> enable bit being programmed in msm_hdmi_set_mode(). Ideally till we enable
+>> the timing engine, it should be okay but what I wanted to do was to keep the
+>> msm_hdmi_set_mode() as the last call in this function that way we program
+>> everything and then enable the controller.
+>>
+>> This can be done in either way, move it to the beginning of the function or
+>> move it right before msm_hdmi_set_mode(). I had suggested beginning because
+>> thats how it was when things were still in mode_set.
 > 
-> An example media-ctl pipeline for the imx577 is:
-> 
-> media-ctl --reset
-> media-ctl -v -V '"imx577 '17-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+> Well.. following your description it might be better to put it after PHY
+> init. What do you think?
 > 
 
--- 
-With best wishes
-Dmitry
+Are you referring to after msm_hdmi_phy_powerup()? Yes, thats fine too.
+
 
