@@ -1,64 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-47148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDAB8A2C490
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 15:08:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 365A6A2C489
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 15:07:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 261433AE425
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 14:06:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B56F47A60DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 14:06:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F34641F8AC0;
-	Fri,  7 Feb 2025 14:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7688322332D;
+	Fri,  7 Feb 2025 14:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AVwJtefr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pp/MJHsT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9001F8904;
-	Fri,  7 Feb 2025 14:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C892206BD;
+	Fri,  7 Feb 2025 14:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738936952; cv=none; b=nPFTW0i41J+ybXwtYVdU5/NuQqvghHzgrlCzhz5u6NeC5qrAkPzT6wBBpUHM4t43RSAJGVC/Nr3b8Ae/5Jv40R5BqU1kB/m3A5VF2dvY0ogOOhqB0QoKAfV8V9EvTPwsoo/f9ujYgTyY68sNAF6VUEqvLPNz/qv5k0PuynUUB5o=
+	t=1738936964; cv=none; b=IczD16flbzr/WjprK4PYf7YKBnNi5nCTiNQztgLmvdd1gaQNtzs96lBmv6ltFvqHmbocltdWQQYyiSCfa7nDpf6Wr7ytX1tJDDOKqwksaUMTSkv/ev1Zn0t1aYg5/H4z97zZ1xtS6NmjQepV5hgzNZ36nGvhLCOpZls0TFyi2Tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738936952; c=relaxed/simple;
-	bh=9c7ll7ByFsejq5s0nUA0I8Zo037AKWmHwCfUg+90rmU=;
+	s=arc-20240116; t=1738936964; c=relaxed/simple;
+	bh=q44RXL38E1YbjO9kakKKAjRxHMqYVfPk8XX8EmyAPzg=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=WWrp7H06TXxXrsM6iU5V/HASoZquDSUIl6d95HgnO/ivPmCo0NoFyImntHigxmfMd1EKR8OnwXfPM6ydiJxV3lF5Rn4Po+Ob3ZQl8sf7T/ObeZy/smT9TiaQJvSIbI8G2dRhIPWB04LyHrEdon9+qpRa4y7+DaKArFNoMf3hUcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AVwJtefr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F70C4CED1;
-	Fri,  7 Feb 2025 14:02:28 +0000 (UTC)
+	 MIME-Version:Content-Type; b=YUb+fahANf67mKAu16kRm+mYR5m27EozugUtcsgQw04cDnt0OEWk75wg/2NXr+znnZKsm0X3imydlQHpREnQVbWnK8k9aqCrToN2R/HpmHIetr8fWilhkqpd5V+hJGBi0fm+p7Igq7fuZivSmxhLy1VK8M3VibXNvRLEmc2nZ40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pp/MJHsT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0967C4CEE7;
+	Fri,  7 Feb 2025 14:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738936952;
-	bh=9c7ll7ByFsejq5s0nUA0I8Zo037AKWmHwCfUg+90rmU=;
+	s=k20201202; t=1738936963;
+	bh=q44RXL38E1YbjO9kakKKAjRxHMqYVfPk8XX8EmyAPzg=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=AVwJtefrBLaM4rw63mLgUYmzPcyI0iQop4gu6PqVy2v2g9uq2DFu8Apvg8mNarXuk
-	 0ZZZfH+8Y7+fLozNZYkgmAw5PFgs3irC4rp6CqSo1qnDgyrl46kDs/Cybo7Nvq61cO
-	 ri1iw+W60e7oTPJ7eczxIzubVkERcljjZ8YvvYoHmwSX+B7/3d8nUfY0c1aadHJmtV
-	 Cj377ckudkn1j3j/WdxTTrDh7Nc5hOkeFDf5Xkj14AF8JXTx59LleMzcMJAVgqXsYS
-	 w2f1/Ock9fh6mHldRg4oDszqdgzULXGpGdBei5zg02M/Zb/3a5n08J8i/n2Uwg9pdW
-	 TT5tqrvIRVSVA==
+	b=pp/MJHsToP/eI4vw3BQV2gmga0vLg1hkFvmu2HrkT2V2JAgs77faufgfVTZVGurB/
+	 Yl5d/h2qsI4SWjmOKfR/85wp9DaUA1LxbPqOH0o2ZWbbFqtexDBMBAhZg+NmeQ0aUZ
+	 WRU9jX2kn3gYLecBYxIrosJKuGW04hlxGSeeQB6OUVZrgLP0XfOsZQVDr3+hiNMK2Z
+	 k3aTA6IrWB/8sbrkhw38rJ0JAiRXn4U4KWQHBW9/k/xV+M/4EPoamGjIyySs5p9cfU
+	 Q7hxR6mikv91gpaJnH6lUqPctCtgHkO17dWeDhG6FvY0TjXNrsr9k4CJE4Y5eOgWwb
+	 W/zxje5CsSgFg==
 From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
+To: cros-qcom-dts-watchers@chromium.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
- Bard Liao <yung-chuan.liao@linux.intel.com>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, 
- Sanyog Kale <sanyog.r.kale@intel.com>, linux-arm-msm@vger.kernel.org, 
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, quic_pkumpatl@quicinc.com, kernel@quicinc.com
-In-Reply-To: <20250123042823.2067740-1-quic_mohs@quicinc.com>
-References: <20250123042823.2067740-1-quic_mohs@quicinc.com>
-Subject: Re: [RESEND v5 0/4] Add static channel mapping between soundwire
- master and slave
-Message-Id: <173893694834.35212.14357376286762551331.b4-ty@kernel.org>
-Date: Fri, 07 Feb 2025 14:02:28 +0000
+ Conor Dooley <conor+dt@kernel.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <20241209-starqltechn_integration_upstream-v8-0-ec604481d691@gmail.com>
+References: <20241209-starqltechn_integration_upstream-v8-0-ec604481d691@gmail.com>
+Subject: Re: (subset) [PATCH v8 00/14] This is continued work on Samsung
+ S9(SM-9600) starqltechn
+Message-Id: <173893696051.35212.8853631432356836429.b4-ty@kernel.org>
+Date: Fri, 07 Feb 2025 14:02:40 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,18 +67,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Mailer: b4 0.15-dev-1b0d6
 
-On Thu, 23 Jan 2025 09:58:19 +0530, Mohammad Rafi Shaik wrote:
-> Add static channel map support between soundwire master and slave.
-> 
-> Currently, the channel value for each soundwire port is hardcoded in the
-> wcd937x-sdw driver and the same channel  value is configured in the
-> soundwire master.
-> 
-> The Qualcomm board like the QCM6490-IDP require static channel map
-> settings for the soundwire master and slave ports.
+On Mon, 09 Dec 2024 15:09:04 +0300, Dzmitry Sankouski wrote:
+> Contains starqltechn device tree changes.
+> Add support for new features:
+> - sound (headphones and mics only)
+> - gpu
+> - panel
+> - buttons
+> - MAX77705 MFD:
+>   - charger
+>   - fuelgauge
+>   - haptic
+>   - led
 > 
 > [...]
 
@@ -87,14 +91,10 @@ Applied to
 
 Thanks!
 
-[1/4] ASoC: dt-bindings: wcd937x-sdw: Add static channel mapping support
-      commit: 72826381215e2f9d2bd2f32f63f76a80942b7fdf
-[2/4] ASoC: codecs: wcd937x: Add static channel mapping support in wcd937x-sdw
-      commit: c06c4f7cbea1d8dc71485bfddef2849a1b721e67
-[3/4] soundwire: qcom: Add set_channel_map api support
-      commit: 7796c97df6b1b2206681a07f3c80f6023a6593d5
-[4/4] ASoC: qcom: sdw: Add get and set channel maps support from codec to cpu dais
-      commit: 0e9a970d7b2cb98d741bc0e32ad8c8f30c009c63
+[01/14] ASoC: dt-bindings: Add bindings for WCD934x DAIs
+        commit: 8478dadc8148af311c3d43d4867cfb6632686ede
+[02/14] ASoC: codecs: wcd934x: use wcd934x binding header
+        commit: e27c125040b1e1f26d910b46daabbe55e67fdf3b
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
