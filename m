@@ -1,338 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-47064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9843A2B6BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 00:50:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A10FFA2B766
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 01:58:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47CE7165774
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2025 23:50:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1ED743A6FC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 00:57:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D3E8224B12;
-	Thu,  6 Feb 2025 23:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC8D131A89;
+	Fri,  7 Feb 2025 00:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R8ltG564"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mTCiW6xh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D95B2417D3;
-	Thu,  6 Feb 2025 23:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3B822EE5
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Feb 2025 00:57:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738885814; cv=none; b=gxjFErGV/xH2yey/6LGq9Y1PwDiUur8131YwsYYFBZmiEcwBPaZM1f5my5xzUgGGPZVaksAtfCGmJ8Z4jM6UiJ9fKRiH63clivbrYmUbHvNn0M4UHINshspoPP3JENRT2rPTV6uS4sUTrzmIWzI0/YW4PoS35Iv2K7gzaxZCKik=
+	t=1738889881; cv=none; b=FVEFXAZ3yvSn4xfwEAs3HDsdHJJvDtLRQhicTxMAWIwnFqzeLdzSiKAq+alZDN3hT/B2xx5E8nCzHW939p9y7veNJZSx2+fsq8fnRlNvW5zqCOC7nqET/nrm4hby6QCmRr1XESJjzXvhfpa4sXXxkIUsyqerw0HyVaz2iEO187Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738885814; c=relaxed/simple;
-	bh=kKlBxyicCOP9XTyufT2tGUeD7R5c5IG2vRb9/IOlz6E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=U0ApHgNvP5qLiCNSTpTEuq4scVbd+zhNrx3zV1GAlYASQD5IWD2J006UMNbiPJ5R7BQFBrkA2KaJ3y8WMMJSgAdPMuKJXNq8Lkgzp66gipHjlU7O6pGde6HakXaD+xMPpqYjNs9xqirFX9YmXvy3P1c9qfh5SVGI0sqO2MTZ1gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R8ltG564; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 516LpOeN016821;
-	Thu, 6 Feb 2025 23:49:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NiordE/s0euCUZ6Ltf92B+aT43Ccp14BRhTbVyEftas=; b=R8ltG564Hmw/ZM3L
-	IxsqE+ta/4yhD2jIRApbxYN1jjJTsMQ5XBR8JHiqpSlROyOEoDXvGOmUcZ7ma2ri
-	cZ0+/4Yqtw+c7iHy//qlsPzB/e18g6izcDiGcqQzhO7D5BCSDpSAaP90ZdJoMJcP
-	jBk5JZI2e5u0aMjx+NMXN4qva/Boa7DGQciFwx9/lAYZgCL57aP75rrgU+ezaBY+
-	LybLyxnfNiSqUi+daORXX68MNFJHAKmQFW4uaLcm9mlDkAysnwnUSdwbc7zrG8Sy
-	tp0wUWdENkYmnccRJU9pczOhXYPUXRSuYgIqDlMd+nQvPSI5zrrUdBOfhpon6dDa
-	C+dFsw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44mtsa1x7m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Feb 2025 23:49:55 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 516NnsR2013498
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Feb 2025 23:49:54 GMT
-Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Feb 2025
- 15:49:53 -0800
-Message-ID: <16986655-0c51-49ac-8088-6548317be7e6@quicinc.com>
-Date: Thu, 6 Feb 2025 15:49:53 -0800
+	s=arc-20240116; t=1738889881; c=relaxed/simple;
+	bh=DyRPOhqc4W2rMI3vNL/F2NkcghrCHGEoKNEPy44TDh8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wl/REjCXWLUFWq6Le9MPX0egl2ypMFVR4BU4XgsNmnQn8FiL6m45nCTn3BdcbmeW6KM5tEOCZJ4oiiAF0YC/5S1S4rg3xtTFwqcmn2ORmtmuqgAYC3rcm7yB1VxrF21gHpZnvFtt3hyRApnXaxEZW55GPDkD2FcLC3AoQ4f51m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mTCiW6xh; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-54021daa6cbso1669568e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 16:57:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738889877; x=1739494677; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ug1cHKYkHOI5SE4G5i310J6mOL4B8HpmJ/dr1AHs9PU=;
+        b=mTCiW6xhCcD4HDlI019EajX1wDPzZuiFOLYxUj9PmWSqN2Bp3fuQZibpM6qbQ9m0u0
+         k8/KZgCRgriw7m6+c67Xk1DpkpVW51dX2msULfaRbohvBZm+BTDL+skvdUONAxmTdO2V
+         pO2kpHF7eYMFHpxnBG+IczW9WgiLbf1ZhoyPf29nVItZHWF6gTxgiwkvGcL9t5GnE0h0
+         yUPUUqKSWz9tZJA7ukfJf1KKaawLN+FP02XMOz6nkiD/pbORxLt8LhIjbySfO3c33vOY
+         0MnSkZNPGrjLzALMmZKUXEIJiijZ/MtlA8LX7jXVzfemK8vdl29EjvJrfhjBa/3XGPSk
+         wUeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738889877; x=1739494677;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ug1cHKYkHOI5SE4G5i310J6mOL4B8HpmJ/dr1AHs9PU=;
+        b=PwCITch7ZlO4YoK5Jv/VlQAfjwI1+mKmE4twlVbh7XFa533sUWRLF08kq1m53ySE7b
+         jmYvn9+RITCQLDLqgVoIPADFLKmMZKA3YQW56yCVbizhi3kpckOhT0mmYIRNdjPCWtcX
+         pC9Ej/ImDcTlIlzEdN0p6ZdHzuPCARGiM3lk4reLjurgRXnpeq3J78w7iwK1qvY9ER70
+         Iq7AbE2coWXKrmsdl16R7XqbnUSORto1m9wCIWC7xEKhToY/wMgMxYS73FrNUYK1tP8k
+         BVlPg0tqKGHaI3QVBUT+ImmHTg0wEa5Jw4HGxRqQEPVM2/Z+xl5ey7f6tWgt528p1eJi
+         r5oA==
+X-Forwarded-Encrypted: i=1; AJvYcCXy/MvA1UaGWIEPxZslGtzH9rimWM/1Q0JHN9CR+hZAALowK4bZ9SYjbIzoThedUrK5Zi05kKzcroRM+wVi@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPVftKQI8zZYA0yVNw8QhxSo4hwNg5F/YwhjlDrxp3fDl/EKn/
+	Aw0QU3AweQZfTrAamZVyLAANRaTxpy5dlsK9SampIf4dSm6YSCfizj8LSnJ0lF0=
+X-Gm-Gg: ASbGncsL4DAe7CTEaphJgVIGjDdqFH2y4Wreu3yOOexEZVj5xPy1lIOzlEWp4FEQnH4
+	aiIpg7tDYilMRqEXcCx3FE1OZIqd5YNPxr15cGN8xEdCC0JjEFGozCIERLwbhqcRX0IHn1NQFcv
+	oidTE6QFzvGSnBO22rYg4/38PbPfip33uMh70u2SxQx3lFqiA6uQx/0ZLlvHhGrSo7GI0eBuRhc
+	yUUstL3UC9M1WXZ7CZZgvt/fhcDAeD9px5H/Kzj6VPZy5a+bA+qD+zHS05IANsm//YMYcY0bV/M
+	lJ1/DF8JWLAI2RhuxHoO0Pg1uR8tXMgI+Uuc47XiK0royhOlJrJ0pv+3IsynhBTbH+Epou4=
+X-Google-Smtp-Source: AGHT+IGx2wRNt1b93pnywaXmYh85b7plMQz/H56Gv8K9JriphvzOJ7iTLmi1YOxkbvURlnH6S1mo4g==
+X-Received: by 2002:a05:6512:b8a:b0:540:1e7e:ca80 with SMTP id 2adb3069b0e04-54414aa87f8mr253956e87.30.1738889877278;
+        Thu, 06 Feb 2025 16:57:57 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54410555751sm279982e87.85.2025.02.06.16.57.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Feb 2025 16:57:56 -0800 (PST)
+Date: Fri, 7 Feb 2025 02:57:55 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Stephen Boyd <swboyd@chromium.org>, Paloma Arellano <quic_parellan@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/dp: account for widebus and yuv420 during
+ mode validation
+Message-ID: <yjpb5byscw7tfy2zz676j42uwavnn6rjszn7sag6mqietq3i3a@fdynfqqolvwe>
+References: <20250206-dp-widebus-fix-v2-1-cb89a0313286@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/14] drm/msm/dpu: move resource allocation to CRTC
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
-        Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David
- Airlie" <airlied@gmail.com>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Simona Vetter <simona@ffwll.ch>,
-        Simona Vetter <simona.vetter@ffwll.ch>, <quic_ebharadw@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Rob Clark
-	<robdclark@chromium.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?=
-	<ville.syrjala@linux.intel.com>
-References: <20250128-concurrent-wb-v5-0-6464ca5360df@quicinc.com>
- <20250128-concurrent-wb-v5-2-6464ca5360df@quicinc.com>
- <34zk3jbcjlbux7737t2ve3xcwbt2uxsalbqih6os4ykqeklyfa@phy4izanhn3d>
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <34zk3jbcjlbux7737t2ve3xcwbt2uxsalbqih6os4ykqeklyfa@phy4izanhn3d>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bKS3qhzkE6s_pjuKdb4ld8bcC3pMiXr9
-X-Proofpoint-ORIG-GUID: bKS3qhzkE6s_pjuKdb4ld8bcC3pMiXr9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-06_07,2025-02-05_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 impostorscore=0 priorityscore=1501
- clxscore=1015 mlxscore=0 adultscore=0 bulkscore=0 mlxlogscore=971
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502060185
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250206-dp-widebus-fix-v2-1-cb89a0313286@quicinc.com>
 
-
-
-On 1/29/2025 2:04 PM, Dmitry Baryshkov wrote:
-> On Tue, Jan 28, 2025 at 07:20:34PM -0800, Jessica Zhang wrote:
->> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>
->> All resource allocation is centered around the LMs. Then other blocks
->> (except DSCs) are allocated basing on the LMs that was selected, and LM
->> powers up the CRTC rather than the encoder.
->>
->> Moreover if at some point the driver supports encoder cloning,
->> allocating resources from the encoder will be incorrect, as all clones
->> will have different encoder IDs, while LMs are to be shared by these
->> encoders.
->>
->> In addition, move mode_changed() to dpu_crtc as encoder no longer has
->> access to topology information
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> [quic_abhinavk@quicinc.com: Refactored resource allocation for CDM]
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> [quic_jesszhan@quicinc.com: Changed to grabbing exising global state]
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>
->> ---
->> Changes in v5:
->> - Reordered to prevent breaking CI and upon partial applciation
->> - Moved mode_changed() from dpu_encoder to dpu_crtc
->> - Dropped dpu_encoder_needs_dsc_merge() refactor to clean up commit
->> - In dpu_encoder_update_topology(), grab DSC config using dpu_encoder
->>    helper as dpu_encoder->dsc hasn't been set yet
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  79 +++++++++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |   2 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 174 +++++++++-------------------
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  11 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  19 +--
->>   5 files changed, 144 insertions(+), 141 deletions(-)
->>
+On Thu, Feb 06, 2025 at 11:46:36AM -0800, Abhinav Kumar wrote:
+> Widebus allows the DP controller to operate in 2 pixel per clock mode.
+> The mode validation logic validates the mode->clock against the max
+> DP pixel clock. However the max DP pixel clock limit assumes widebus
+> is already enabled. Adjust the mode validation logic to only compare
+> the adjusted pixel clock which accounts for widebus against the max DP
+> pixel clock. Also fix the mode validation logic for YUV420 modes as in
+> that case as well, only half the pixel clock is needed.
 > 
->> -/**
->> - * dpu_encoder_virt_check_mode_changed: check if full modeset is required
->> - * @drm_enc:    Pointer to drm encoder structure
->> - * @crtc_state:	Corresponding CRTC state to be checked
->> - * @conn_state: Corresponding Connector's state to be checked
->> - *
->> - * Check if the changes in the object properties demand full mode set.
->> - */
->> -int dpu_encoder_virt_check_mode_changed(struct drm_encoder *drm_enc,
->> -					struct drm_crtc_state *crtc_state,
->> -					struct drm_connector_state *conn_state)
->> +bool dpu_encoder_needs_modeset(struct drm_encoder *drm_enc, struct drm_atomic_state *state)
->>   {
->> +	struct drm_connector *connector;
->> +	struct drm_connector_state *conn_state;
->> +	struct drm_framebuffer *fb;
->>   	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
->> -	struct msm_display_topology topology;
->> -
->> -	DPU_DEBUG_ENC(dpu_enc, "\n");
->> -
->> -	/* Using mode instead of adjusted_mode as it wasn't computed yet */
->> -	topology = dpu_encoder_get_topology(dpu_enc, &crtc_state->mode, crtc_state, conn_state);
->> -
->> -	if (topology.needs_cdm && !dpu_enc->cur_master->hw_cdm)
->> -		crtc_state->mode_changed = true;
->> -	else if (!topology.needs_cdm && dpu_enc->cur_master->hw_cdm)
->> -		crtc_state->mode_changed = true;
->> -
->> -	return 0;
->> -}
->> -
->> -static int dpu_encoder_virt_atomic_check(
->> -		struct drm_encoder *drm_enc,
->> -		struct drm_crtc_state *crtc_state,
->> -		struct drm_connector_state *conn_state)
->> -{
->> -	struct dpu_encoder_virt *dpu_enc;
->> -	struct msm_drm_private *priv;
->> -	struct dpu_kms *dpu_kms;
->> -	struct drm_display_mode *adj_mode;
->> -	struct msm_display_topology topology;
->> -	struct dpu_global_state *global_state;
->> -	int ret = 0;
->> -
->> -	if (!drm_enc || !crtc_state || !conn_state) {
->> -		DPU_ERROR("invalid arg(s), drm_enc %d, crtc/conn state %d/%d\n",
->> -				drm_enc != NULL, crtc_state != NULL, conn_state != NULL);
->> -		return -EINVAL;
->> -	}
->> -
->> -	dpu_enc = to_dpu_encoder_virt(drm_enc);
->> -	DPU_DEBUG_ENC(dpu_enc, "\n");
->> -
->> -	priv = drm_enc->dev->dev_private;
->> -	dpu_kms = to_dpu_kms(priv->kms);
->> -	adj_mode = &crtc_state->adjusted_mode;
->> -	global_state = dpu_kms_get_global_state(crtc_state->state);
->> -	if (IS_ERR(global_state))
->> -		return PTR_ERR(global_state);
->>   
->> -	trace_dpu_enc_atomic_check(DRMID(drm_enc));
->> +	if (!drm_enc || !state)
->> +		return false;
->>   
->> -	topology = dpu_encoder_get_topology(dpu_enc, adj_mode, crtc_state, conn_state);
->> +	connector = drm_atomic_get_new_connector_for_encoder(state, drm_enc);
->> +	if (!connector)
->> +		return false;
->>   
->> -	/*
->> -	 * Release and Allocate resources on every modeset
->> -	 */
->> -	if (drm_atomic_crtc_needs_modeset(crtc_state)) {
->> -		dpu_rm_release(global_state, drm_enc);
->> +	conn_state = drm_atomic_get_new_connector_state(state, connector);
->>   
->> -		if (crtc_state->enable)
->> -			ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
->> -					drm_enc, crtc_state, &topology);
->> +	if (dpu_enc->disp_info.intf_type == INTF_WB && conn_state->writeback_job) {
->> +		fb = conn_state->writeback_job->fb;
->> +		if (fb && MSM_FORMAT_IS_YUV(msm_framebuffer_format(fb))) {
->> +			if (!dpu_enc->cur_master->hw_cdm)
->> +				return true;
->> +		} else {
->> +			if (dpu_enc->cur_master->hw_cdm)
->> +				return true;
->> +		}
+> Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
+> Fixes: 6db6e5606576 ("drm/msm/dp: change clock related programming for YUV420 over DP")
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+> Changes in v2:
+> - move msm_dp_wide_bus_available() to the next line
+> - Link to v1: https://lore.kernel.org/r/20250128-dp-widebus-fix-v1-1-b66d2265596b@quicinc.com
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 11 ++++++-----
+>  drivers/gpu/drm/msm/dp/dp_drm.c     |  5 ++++-
+>  2 files changed, 10 insertions(+), 6 deletions(-)
 > 
-> Nit: this is duplicating a part of the dpu_encoder_update_topology(). It
-> would be nice to have a comment here. If there is no need for a new
-> versoion, I can probably write something when applying.
 
-Sure, I can add a note that we need to duplicate these checks in 
-*_needs_modeset() since topology info is not stored in the encoder or crtc
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks,
-
-Jessica Zhang
-
-> 
->>   	}
->>   
->> -	trace_dpu_enc_atomic_check_flags(DRMID(drm_enc), adj_mode->flags);
->> -
->> -	return ret;
->> +	return false;
->>   }
->>   
->>   static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
->> @@ -2612,7 +2545,6 @@ static const struct drm_encoder_helper_funcs dpu_encoder_helper_funcs = {
->>   	.atomic_mode_set = dpu_encoder_virt_atomic_mode_set,
->>   	.atomic_disable = dpu_encoder_virt_atomic_disable,
->>   	.atomic_enable = dpu_encoder_virt_atomic_enable,
->> -	.atomic_check = dpu_encoder_virt_atomic_check,
->>   };
->>   
->>   static const struct drm_encoder_funcs dpu_encoder_funcs = {
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> index da133ee4701a329f566f6f9a7255f2f6d050f891..b0ac10ebd02c2b63e6f6f9010a22cdace931cf3b 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> @@ -80,6 +80,13 @@ int dpu_encoder_get_crc(const struct drm_encoder *drm_enc, u32 *crcs, int pos);
->>   
->>   bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc);
->>   
->> +void dpu_encoder_update_topology(struct drm_encoder *drm_enc,
->> +				 struct msm_display_topology *topology,
->> +				 struct drm_atomic_state *state,
->> +				 const struct drm_display_mode *adj_mode);
->> +
->> +bool dpu_encoder_needs_modeset(struct drm_encoder *drm_enc, struct drm_atomic_state *state);
->> +
->>   void dpu_encoder_prepare_wb_job(struct drm_encoder *drm_enc,
->>   		struct drm_writeback_job *job);
->>   
->> @@ -88,8 +95,4 @@ void dpu_encoder_cleanup_wb_job(struct drm_encoder *drm_enc,
->>   
->>   bool dpu_encoder_is_valid_for_commit(struct drm_encoder *drm_enc);
->>   
->> -int dpu_encoder_virt_check_mode_changed(struct drm_encoder *drm_enc,
->> -					struct drm_crtc_state *crtc_state,
->> -					struct drm_connector_state *conn_state);
->> -
->>   #endif /* __DPU_ENCODER_H__ */
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index 5ce06e25990cb70284d3c3f04ac1e1e1bed6142a..c6b3b2e147b4c61ec93db4a9f01d5a288d2b9eb2 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -449,24 +449,11 @@ static void dpu_kms_disable_commit(struct msm_kms *kms)
->>   static int dpu_kms_check_mode_changed(struct msm_kms *kms, struct drm_atomic_state *state)
->>   {
->>   	struct drm_crtc_state *new_crtc_state;
->> -	struct drm_connector *connector;
->> -	struct drm_connector_state *new_conn_state;
->> +	struct drm_crtc *crtc;
->>   	int i;
->>   
->> -	for_each_new_connector_in_state(state, connector, new_conn_state, i) {
->> -		struct drm_encoder *encoder;
->> -
->> -		WARN_ON(!!new_conn_state->best_encoder != !!new_conn_state->crtc);
->> -
->> -		if (!new_conn_state->crtc || !new_conn_state->best_encoder)
->> -			continue;
->> -
->> -		new_crtc_state = drm_atomic_get_new_crtc_state(state, new_conn_state->crtc);
->> -
->> -		encoder = new_conn_state->best_encoder;
->> -
->> -		dpu_encoder_virt_check_mode_changed(encoder, new_crtc_state, new_conn_state);
->> -	}
->> +	for_each_new_crtc_in_state(state, crtc, new_crtc_state, i)
->> +		dpu_crtc_check_mode_changed(new_crtc_state);
->>   
->>   	return 0;
->>   }
->>
->> -- 
->> 2.34.1
->>
-> 
-> -- 
-> With best wishes
-> Dmitry
-
+-- 
+With best wishes
+Dmitry
 
