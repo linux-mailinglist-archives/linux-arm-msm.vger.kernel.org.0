@@ -1,193 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-47071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D43DAA2B9BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 04:29:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FEF9A2BA87
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 06:13:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D912F7A3337
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 03:28:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3503F3A7778
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 05:12:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C08F17AE1D;
-	Fri,  7 Feb 2025 03:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EA6823313B;
+	Fri,  7 Feb 2025 05:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KL/1s30B"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s/4MIITE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57104EB51;
-	Fri,  7 Feb 2025 03:29:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA3823312C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Feb 2025 05:12:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738898972; cv=none; b=WF9XciL4WaIV6jhGekVmvBn68cpxxGYzZEru7IxLaYoC8pCiPGgFqJL+2/oTEbYKSruOSSZpNQH4e34nvVnRNwWDvSJPO2lGC0fW67HRFAf1y6EBGcFFhfma4y5I92jb/ehZBIjT13Drif7bWimudzxPlR30dfDcb1wLXdnJ9Rw=
+	t=1738905172; cv=none; b=SXw6Oy+ODI5rM/zLDk4QjMPUCbhZRnIIRPSh8nPXEphBh3FAJytm1wzy197goSXF0cyG6tt6gcZ07v7+j5dU7ojaerFshPqDGU4TetqqIY6UHKfXHuQ2rXeoASUsqPE7NdQZgmRNcR2+/wcKgk/amTjR/slYPNBGCYPSg1fwxUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738898972; c=relaxed/simple;
-	bh=wQYy0MLLhPN8ZhFKgW+wijJFfu1s5KWChEuZHpzXf3s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tzaPuFT8CWUEB1KB9afrnD/jWW5FmePiDpc7sGowxCPFibrs4Cdz+hZcz/IYukheVbw5RJw7VTr9TZuZnfI7FU7nAtEAFoP/unKg6I+eMZdNu27Q95UoEReUHiuriaoX2jrFxHP3k5wKBkQJipRttb8sciWtc8oMzlUydWeFPj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KL/1s30B; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5172Iu7r003636;
-	Fri, 7 Feb 2025 03:29:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8FLQmQ0c3Vy/txmDNUrwkn1oUQN3GmmHcI49m6qoCV4=; b=KL/1s30BqeE/e0KQ
-	TAjUlUp4RS2BRaRAJGnvXiWSv/4CYks/oeCOjHYQ5rajidjkDM850aIzRocOF8yp
-	9pB5sv3g8fkM13PwwtfOoFUXxHS5Z2Tx8gKQM5DhKdwR2+dKaAEoNhABtfaRL7eH
-	7J70TWlRxz8VppzDd498JBcYgZ1NllwINYTqdyyLNTrV3rPjM5hcTjxhrmL60fyz
-	RmT2g/2t/nvQ5F7+ibzaRemPZtZ9NE7nrU+fsk1grirnkxS7ryqKr6xrBj8ZDbEg
-	zvBbUzSRKohSJJtLjkOTDraMrL/0Coa83bT2qJS5gjIgRSdmEkYdshg0rKPa/YR0
-	w/FsAA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44n99e84hq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 07 Feb 2025 03:29:12 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5173TBVV014274
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 7 Feb 2025 03:29:11 GMT
-Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Feb 2025
- 19:29:07 -0800
-Message-ID: <46aa5bbe-a7dd-4561-9d4a-0367779f0680@quicinc.com>
-Date: Fri, 7 Feb 2025 11:29:04 +0800
+	s=arc-20240116; t=1738905172; c=relaxed/simple;
+	bh=FzAGaPlLaweajGoIIj+Xr9VB8vTpfZqyn2PkFUSCgyg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mARFEE8+I2nHBCnx+TsCUb2+sgjVXbbDqk6EPMYnBczvBDt/RNsIOdPoA+8+i8wPrthjy4G8LAUfPLE8LczjiStr9lHA4qmCqvFfisV0eKS9oWJ/W2ae2h6rYrOTOIl3Y82pl5rsmmiSnIlJKJqrabHfPSysSUZ+uG8wMRTo1BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s/4MIITE; arc=none smtp.client-ip=209.85.217.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-4ba77618c9aso389739137.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2025 21:12:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738905168; x=1739509968; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jAqxiqpAkCMvKRS8aIsBMQxfvImPXVu+azXD9hvL8PY=;
+        b=s/4MIITEdXx0HKAw0WKPJ6NGYKpZVyoEzyTn5BgdeKxHo3HpjGZAjdFjlFrWVejL6g
+         fK5ViNxqvOCk3pzXfosTm5lyDiVoox2sEITBmwHZxIQyP4Ra9t2dS18UYSCmT/8rxrGI
+         a2XRjB9MvmQZTEjvz5AHJpWTivbfwMfGdV8E5z0GNsbGKBzYXM9yKj+TwB1qBJaT+USn
+         ER2Chjl/vpDVhKCLr2+dffEpRev903rCPUycxPXGF968C8Njv4DNQeybAPYICvzOSIXR
+         mVOiGnj2ehtfc42BFRGIfQmPSRabBZQK/gTTu5SBx8DK+kZRvyrwn2TIrTq3dGiEoUdn
+         za/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738905168; x=1739509968;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jAqxiqpAkCMvKRS8aIsBMQxfvImPXVu+azXD9hvL8PY=;
+        b=PNQCHHI6LBgIi2LBQ/ixOSO9dzc5pQDg3/93qUWsh5/AT6pzFfXSrBAa4ll/X2UdQi
+         jXMYoRaioI/plZ409wTbxirtWVAFDkh3afXB1SA3cdvo0VBTjWlT2BORygjYTlMuCcfh
+         2pKgR64Q0NyPoDIcBigVBemJdalhTWwRwUbk7VoqsoHVHtZ8eypJYkr/lSd7BkJnN6Vo
+         DmhpSOm9moxZ0inx5jfRz/MDNVeL/95v2Oa3l9pSChTisJ1dwZCCwZwz0t5Xoblmx5Ml
+         NubL0N8kR8r02FRkUBWWMt7hGT1wLxQnP+h+xoWNvFSk2CYAdq9L63hnSb23z/XaxJ17
+         20Ww==
+X-Forwarded-Encrypted: i=1; AJvYcCUEhaFf08UbSX3Aw8adCfrHNOZzpuRWkK7VFVp6YE/czaQe/ZwcXKlRLKEo7AnUUpq68w3BarOVHAyR39Pt@vger.kernel.org
+X-Gm-Message-State: AOJu0YwaLfSquIp8K4F8Up7pSkFomTICL/FSOhawghyMPvfX8vsxytVd
+	aAoD0Hwe+NfxX/kDIqxsHssv0PbMBemCn1QQdkMF09ixIIrWgHwrwd8NvjFPIsUJtnOgP2G8ouP
+	fZGaHgVaC/VxQ/foUd5TI59T8jOg67N1QE+4gMA==
+X-Gm-Gg: ASbGnctSyvqLBOochyJA4rDtDThsXFi3rYx8uEIVF3kSHDEpfWzCUX6ohBhUItA7xLW
+	ScZxMSqcumBHOZ0qEBLXXZY1m2ucFU/+vBEsasOx25lM3bD62nFYbowNttEjZdTrZw8VCTsWDrN
+	E=
+X-Google-Smtp-Source: AGHT+IE38JWQ2LCgjBYwmT3N3ol5clUSl4tITr+DYbzBN4LacIyJ/8n+15f0JggCZmLkGY8UfJDe2aSTD/beIrAwTp0=
+X-Received: by 2002:a05:6102:4b1b:b0:4b4:6988:b12b with SMTP id
+ ada2fe7eead31-4ba85f83342mr1232055137.23.1738905168219; Thu, 06 Feb 2025
+ 21:12:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/8] Support Multi-frequency scale for UFS
-To: <neil.armstrong@linaro.org>, <quic_cang@quicinc.com>, <bvanassche@acm.org>,
-        <mani@kernel.org>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_rampraka@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        "Matthias
- Brugger" <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>,
-        "open list:ARM/Mediatek SoC
- support:Keyword:mediatek" <linux-kernel@vger.kernel.org>,
-        "moderated
- list:ARM/Mediatek SoC support:Keyword:mediatek"
-	<linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/Mediatek SoC
- support:Keyword:mediatek" <linux-mediatek@lists.infradead.org>
-References: <20250203081109.1614395-1-quic_ziqichen@quicinc.com>
- <63578f71-e5f5-482a-98a7-779053b1caf7@linaro.org>
-Content-Language: en-US
-From: Ziqi Chen <quic_ziqichen@quicinc.com>
-In-Reply-To: <63578f71-e5f5-482a-98a7-779053b1caf7@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5Ubfs8AnUQPDeBCS3H14rcbvplXejdNd
-X-Proofpoint-GUID: 5Ubfs8AnUQPDeBCS3H14rcbvplXejdNd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-07_02,2025-02-05_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- mlxscore=0 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- phishscore=0 adultscore=0 mlxlogscore=999 malwarescore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502070024
+References: <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-0-297eacd0d34f@quicinc.com>
+ <CAFA6WYNGH_LP-R4hQx-+XMY3zFN74ij-JngwnuKOsz8=r_-bsQ@mail.gmail.com> <f3b30e00-d6cd-44ee-88a5-e5a523563bb3@quicinc.com>
+In-Reply-To: <f3b30e00-d6cd-44ee-88a5-e5a523563bb3@quicinc.com>
+From: Sumit Garg <sumit.garg@linaro.org>
+Date: Fri, 7 Feb 2025 10:42:37 +0530
+X-Gm-Features: AWEUYZkJm1RihC28R4o1haiyj5l-eJg1q_e1aaNfSATrdDF3p0v_A4C4GrMIZlI
+Message-ID: <CAFA6WYMhyDLmFaZMWd3TFfNTnujAN8ZuzguPgzjJXfhZf2ZnKA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] Trusted Execution Environment (TEE) driver for
+ Qualcomm TEE (QTEE)
+To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Cc: Jens Wiklander <jens.wiklander@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-doc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Fri, 7 Feb 2025 at 01:25, Amirreza Zarrabi <quic_azarrabi@quicinc.com> wrote:
+>
+>
+>
+> On 2/5/2025 4:38 PM, Sumit Garg wrote:
+> > Hi Amirreza,
+> >
+> > On Mon, 3 Feb 2025 at 08:14, Amirreza Zarrabi <quic_azarrabi@quicinc.com> wrote:
+> >>
+> >> This patch series introduces a Trusted Execution Environment (TEE)
+> >> driver for Qualcomm TEE (QTEE). QTEE enables Trusted Applications (TAs)
+> >> and services to run securely. It uses an object-based interface, where
+> >> each service is an object with sets of operations. Clients can invoke
+> >> these operations on objects, which can generate results, including other
+> >> objects. For example, an object can load a TA and return another object
+> >> that represents the loaded TA, allowing access to its services.
+> >>
+> >> Kernel and userspace services are also available to QTEE through a
+> >> similar approach. QTEE makes callback requests that are converted into
+> >> object invocations. These objects can represent services within the
+> >> kernel or userspace process.
+> >>
+> >> Note: This patch series focuses on QTEE objects and userspace services.
+> >>
+> >> Linux already provides a TEE subsystem, which is described in [1]. The
+> >> tee subsystem provides a generic ioctl interface, TEE_IOC_INVOKE, which
+> >> can be used by userspace to talk to a TEE backend driver. We extend the
+> >> Linux TEE subsystem to understand object parameters and an ioctl call so
+> >> client can invoke objects in QTEE:
+> >>
+> >>   - TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_*
+> >>   - TEE_IOC_OBJECT_INVOKE
+> >>
+> >> The existing ioctl calls TEE_IOC_SUPPL_RECV and TEE_IOC_SUPPL_SEND are
+> >> used for invoking services in the userspace process by QTEE.
+> >>
+> >> The TEE backend driver uses the QTEE Transport Message to communicate
+> >> with QTEE. Interactions through the object INVOKE interface are
+> >> translated into QTEE messages. Likewise, object invocations from QTEE
+> >> for userspace objects are converted into SEND/RECV ioctl calls to
+> >> supplicants.
+> >>
+> >> The details of QTEE Transport Message to communicate with QTEE is
+> >> available in [PATCH 10/10] Documentation: tee: Add Qualcomm TEE driver.
+> >>
+> >> You can run basic tests with following steps:
+> >> git clone https://github.com/quic/quic-teec.git
+> >> cd quic-teec
+> >> mkdir build
+> >> cmake .. -DCMAKE_TOOLCHAIN_FILE=CMakeToolchain.txt -DBUILD_UNITTEST=ON
+> >>
+> >> https://github.com/quic/quic-teec/blob/main/README.md lists dependancies
+> >> needed to build the above.
+> >>
+> >> This series has been tested for basic QTEE object invocations and
+> >> callback requests, including loading a TA and requesting services form
+> >> the TA.
+> >
+> > Thanks for sharing these test user-space applications/libraries. Can I
+> > know which platforms are currently supported by this QTEE driver? I
+> > would like to run and understand the overall stack on a real device. I
+> > do have rb3, rb5 and db410c on my desk to test with.
+> >
+> > Also, platform support is important information you should put in the
+> > cover letter as well as the QTEE documentation.
+> >
+> > -Sumit
+> >
+>
+> I have tested it with sm8650-mtp. But would expect it to work with any platform.
 
+Good to know that I will try to test it by next week on one of the
+available platforms on my desk.
 
-On 2/6/2025 5:53 PM, neil.armstrong@linaro.org wrote:
-> On 03/02/2025 09:11, Ziqi Chen wrote:
->> With OPP V2 enabled, devfreq can scale clocks amongst multiple frequency
->> plans. However, the gear speed is only toggled between min and max during
->> clock scaling. Enable multi-level gear scaling by mapping clock 
->> frequencies
->> to gear speeds, so that when devfreq scales clock frequencies we can put
->> the UFS link at the appropraite gear speeds accordingly.
->>
->> This series has been tested on below platforms -
->> sm8550 mtp + UFS3.1
->> SM8650 MTP + UFS3.1
->> SM8750 MTP + UFS4.0
->>
->> v1 -> v2:
->> 1. Withdraw old patch 8/8 "ARM: dts: msm: Use Operation Points V2 for 
->> UFS on SM8650"
->> 2. Add new patch 8/8 "ABI: sysfs-driver-ufs: Add missing UFS sysfs 
->> addributes"
->> 3. Modify commit message for  "scsi: ufs: core: Pass target_freq to 
->> clk_scale_notify() vops" and "scsi: ufs: qcom: Pass target_freq to clk 
->> scale pre and post change"
->> 4. In "scsi: ufs: qcom: Pass target_freq to clk scale pre and post 
->> change", use common Macro HZ_PER_MHZ in function 
->> ufs_qcom_set_core_clk_ctrl()
->> 5. In "scsi: ufs: qcom: Implement the freq_to_gear_speed() vops", 
->> print out freq and gear info as debugging message
->> 6. In "scsi: ufs: core: Enable multi-level gear scaling", rename the 
->> lable "do_pmc" to "config_pwr_mode"
->> 7. In "scsi: ufs: core: Toggle Write Booster during clock", initialize 
->> the local variables "wb_en" as "false"
->>
->> v2 -> v3:
->> 1. Change 'vops' to 'vop' in all commit message
->> 2. keep the indentation consistent for clk_scale_notify() definition.
->> 3. In "scsi: ufs: core: Add a vop to map clock frequency to gear 
->> speed", "scsi: ufs: qcom: Implement the freq_to_gear_speed() vop"
->>     and "scsi: ufs: core: Enable multi-level gear scaling", remove the 
->> parameter 'gear' and use it as return result in function 
->> freq_to_gear_speed()
->> 4. In "scsi: ufs: qcom: Implement the freq_to_gear_speed(), removed 
->> the variable 'ret' in function ufs_qcom_freq_to_gear_speed()
->> 5. In "scsi: ufs: core: Enable multi-level gear scaling", use 
->> assignment instead memcpy() in function ufshcd_scale_gear()
->> 6. Improve the grammar of attributes' descriptions in “ABI: sysfs- 
->> driver-ufs: Add missing UFS sysfs attributes”
->> 7. Typo fixed for some commit messages.
->>
->> Can Guo (6):
->>    scsi: ufs: core: Pass target_freq to clk_scale_notify() vop
->>    scsi: ufs: qcom: Pass target_freq to clk scale pre and post change
->>    scsi: ufs: core: Add a vop to map clock frequency to gear speed
->>    scsi: ufs: qcom: Implement the freq_to_gear_speed() vop
->>    scsi: ufs: core: Enable multi-level gear scaling
->>    scsi: ufs: core: Toggle Write Booster during clock scaling base on
->>      gear speed
->>
->> Ziqi Chen (2):
->>    scsi: ufs: core: Check if scaling up is required when disable clkscale
->>    ABI: sysfs-driver-ufs: Add missing UFS sysfs attributes
->>
->>   Documentation/ABI/testing/sysfs-driver-ufs | 33 ++++++++++
->>   drivers/ufs/core/ufshcd-priv.h             | 15 ++++-
->>   drivers/ufs/core/ufshcd.c                  | 76 +++++++++++++++++-----
->>   drivers/ufs/host/ufs-mediatek.c            |  1 +
->>   drivers/ufs/host/ufs-qcom.c                | 62 ++++++++++++++----
->>   include/ufs/ufshcd.h                       |  9 ++-
->>   6 files changed, 160 insertions(+), 36 deletions(-)
->>
-> 
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-> 
-> I added some traces and played with devfreq max_freq while copying data
-> from the UFS disk, no issues observed.
-> 
-> Neil
+> I'll update the cover letter with the details :).
 
-Thank Neil for your test result.
+Also, put it in QTEE documentation too such that people are aware
+about supported platforms.
 
--Ziqi
-
+-Sumit
 
