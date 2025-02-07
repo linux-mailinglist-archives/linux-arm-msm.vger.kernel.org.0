@@ -1,156 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-47124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38BE9A2BDDE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 09:26:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD306A2BE88
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 09:56:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8BF3D3AA7A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 08:26:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D4B363A62EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2025 08:56:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDFBB235C0B;
-	Fri,  7 Feb 2025 08:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B72D11AE877;
+	Fri,  7 Feb 2025 08:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dqMs2wG6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Xcbe8mZq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C63B23497C;
-	Fri,  7 Feb 2025 08:25:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2401F1A4E70;
+	Fri,  7 Feb 2025 08:56:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738916736; cv=none; b=lwn/vjn/uGMZ+prPu4sqjOa1qbk71jvQ0qxhc84DkWtxQkWttLeRIVr/5fh6M58XwEJFiy1D6UDxyXeeMlWA4jZmKs7SlWZBv1BhcLEOjVyPCaS6JXGD9a3zdFZTcg2RN0OkwVOLl3fwKGbcJCK1RXfgloI0DxCbaS95tcGzD8U=
+	t=1738918609; cv=none; b=S7SV/d56AeBSwQkSOLbcZ3me73BWIDN0X5DW0OSllOd1xD4jksFO4Tr8I5ceiHaGJMrWPirnwwYxB+wF+GT5U5/FyrkZYdD6Az9/dPm87S4i1NqwEQXxu9OdWBmtNUe6z3H3s5dNX6t0ynK3bOMiOZ5bkb6Lx2dwq29y2WBbTiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738916736; c=relaxed/simple;
-	bh=momNFG7HmrlvZT1BkDBQhwhSFM+A1S+Ius0MDXLSgYE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=K7VFuUPVvUORlSlXevFjqAMUQ3ZwD7kgX8d92PnPN5taOyEr6/OR749uRTM7HLFjSrSSGSbrgn0DdrYxZba1IDptjzBuHWvuKWG3n6raykxccDNy4SlN+sZGmn1IqAzuTGvxPDx2RTcNaMh24XLvZq4MMH87nFmktxDZHEASaD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dqMs2wG6; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1738918609; c=relaxed/simple;
+	bh=Yl6ldaHkVl3Q/jLZovzlP+xEbDH9XAk23aBnRxgMxVU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=RH7ptMZFqNHilLWMzRPnn5N47m8lU+0E4mnCZBbBTOQtlteD/SPhj+wMmpUUPmObLGCP5pb/XNLGWoMqwvC5jiVptRsvJeE40YPS0h0TbkH1U5Xq+T2o2po+k8zCRsmdYsSHqbRbByF/eetw2u4JAe+VFKGT8AipUP6n5sVMxGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Xcbe8mZq; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5174KrMA008031;
-	Fri, 7 Feb 2025 08:25:29 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5175787c024662;
+	Fri, 7 Feb 2025 08:56:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dwccvR0I8r73vh8lHYvXtH8o48ByEI6FWFPxtm9adwg=; b=dqMs2wG6JDuc9E0C
-	KB9Bgucm6jsPuNvs2/YVdrSloy0kWLsANaXsf2bF83BoTWocN57JjwKucsGKzgL2
-	OuM99iGFoPpLPH77o0fZYCKztnDvGfQArVGxb4PmuVwShHArnRwT2Gw1QMM8FEwG
-	AUN1T7LUFyN+6MaCZPL5EwnKgRoLhfL5mwy24VjWOafe5T5gO38l9VgZJ+F3m/eX
-	ETA4rRC0HToqt5QOU+gxob3SHq2h7YiGTY9U8vqrgVHHbrC7/GfO2cS7Lv/u146U
-	y5XjATf5wJs+eRl81AWzw+jFftHvXrnpS/YL22Eshtr/ZY9kUSD1/xObfgCTE1uE
-	bGfBgw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44nb2m8jaj-1
+	mPR0ceyB/SJj6hD908j/YJazELTEVbh/kd+3G/RomqE=; b=Xcbe8mZq3Xehtt9A
+	CM7qRoBpjZYt/dWetyU+OlY9XKwbNO9+A4kNnRlPtqT/4RRFZUBUIjbKN66ZujQO
+	pToAUkD8+1lA0q/zauCRSpDLC1t0hifBD5HCkpTkeQE0EjtZ0psl8WEvcqW9yvh8
+	34lIdL61owf/HqRpu2/zTHIq/k+q4xr19pFDsME+jOHyvaYfabHAnakczR1LJwv+
+	DJ/uh3SCik5u1YvD/YX8M+JQewVFzgbgaAX/SjheLoUt7luSNUK1kLahbKQWwvgm
+	4AtQdaZxXyn3giUQkQeV1VkSlveoFdvzJOP+TUv9PgChSyg2h99+pgUcrLObVdcI
+	uyHXFg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44nbr40h1t-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 07 Feb 2025 08:25:29 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5178PS48016556
+	Fri, 07 Feb 2025 08:56:42 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5178ufHS002527
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 7 Feb 2025 08:25:28 GMT
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 7 Feb 2025 00:25:24 -0800
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-Date: Fri, 7 Feb 2025 13:54:52 +0530
-Subject: [PATCH v4 4/4] media: venus: hfi: add a check to handle OOB in sfr
- region
+	Fri, 7 Feb 2025 08:56:41 GMT
+Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 7 Feb 2025
+ 00:56:38 -0800
+Message-ID: <de8fc55c-2d68-490b-9a12-cb368e27d266@quicinc.com>
+Date: Fri, 7 Feb 2025 16:56:35 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/1] Fix USB vdd info for IPQ9574
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250207073545.1768990-1-quic_varada@quicinc.com>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <20250207073545.1768990-1-quic_varada@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250207-venus_oob_2-v4-4-522da0b68b22@quicinc.com>
-References: <20250207-venus_oob_2-v4-0-522da0b68b22@quicinc.com>
-In-Reply-To: <20250207-venus_oob_2-v4-0-522da0b68b22@quicinc.com>
-To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>
-CC: Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+samsung@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>, <stable@vger.kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1738916708; l=1564;
- i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
- bh=momNFG7HmrlvZT1BkDBQhwhSFM+A1S+Ius0MDXLSgYE=;
- b=prPcLufdCupz/3NHyvik5CDUXSRa0eMiMXcZpkiIdANMwEo+EBNEfLMDfscRrVyktANLd+cVm
- xp+hyye1IcxB9CrqugCruLnz7NNWFA2erd2L/C4NU8XVgQbZQ5TQAbr
-X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
- pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QKg2mcET48Ejmgl-RaoE7Xi2sM2yn7Ef
-X-Proofpoint-ORIG-GUID: QKg2mcET48Ejmgl-RaoE7Xi2sM2yn7Ef
+X-Proofpoint-GUID: u3eytLjIE8t-yvxVLl4YU4ty3mbhIZlW
+X-Proofpoint-ORIG-GUID: u3eytLjIE8t-yvxVLl4YU4ty3mbhIZlW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-07_04,2025-02-07_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=964
- suspectscore=0 bulkscore=0 phishscore=0 malwarescore=0 mlxscore=0
- spamscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
- clxscore=1015 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2502070062
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0 mlxscore=0
+ adultscore=0 mlxlogscore=794 spamscore=0 lowpriorityscore=0 clxscore=1011
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502070067
 
-sfr->buf_size is in shared memory and can be modified by malicious user.
-OOB write is possible when the size is made higher than actual sfr data
-buffer. Cap the size to allocated size for such cases.
 
-Cc: stable@vger.kernel.org
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
----
- drivers/media/platform/qcom/venus/hfi_venus.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 6b615270c5dae470c6fad408c9b5bc037883e56e..c3113420d266e61fcab44688580288d7408b50f4 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1041,18 +1041,23 @@ static void venus_sfr_print(struct venus_hfi_device *hdev)
- {
- 	struct device *dev = hdev->core->dev;
- 	struct hfi_sfr *sfr = hdev->sfr.kva;
-+	u32 size;
- 	void *p;
- 
- 	if (!sfr)
- 		return;
- 
--	p = memchr(sfr->data, '\0', sfr->buf_size);
-+	size = sfr->buf_size;
-+	if (size > ALIGNED_SFR_SIZE)
-+		size = ALIGNED_SFR_SIZE;
-+
-+	p = memchr(sfr->data, '\0', size);
- 	/*
- 	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
- 	 * that Venus is in the process of crashing.
- 	 */
- 	if (!p)
--		sfr->data[sfr->buf_size - 1] = '\0';
-+		sfr->data[size - 1] = '\0';
- 
- 	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
- }
+On 2/7/2025 3:35 PM, Varadarajan Narayanan wrote:
+> Use correct regulator for USB phy.
+> 
+> v2: * Skip the first patch as it has been pulled in
+>      * Reword and fix commit message formatting for the remaining patch
+> 
+You dont need the cover letter patch if you only have one patch.
 
--- 
-2.34.1
+B4 can handle it automatically.
+
+Thanks,
+Jie
+
+> v1: For some reason, the dt-bindings [1] patch posted and Acked long
+>      time back seems to have slipped through the cracks and hasn't been
+>      merged. Including it along with this patch as both are related.
+>      dt_binding_check & dtbs_check passed.
+> 
+>      1 - https://lore.kernel.org/linux-arm-msm/170266996013.286103.17303148912355511017.robh@kernel.org/
+> 
+> Varadarajan Narayanan (1):
+>    arm64: dts: qcom: ipq9574: Fix USB vdd info
+> 
+>   arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 11 +++++++++--
+>   1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> 
+> base-commit: 40b8e93e17bff4a4e0cc129e04f9fdf5daa5397e
+> prerequisite-patch-id: d3da55704446c2222b5c624d9bb3a738357cb2fc
 
 
