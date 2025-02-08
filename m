@@ -1,63 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-47219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1EDCA2D2A4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 02:31:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D68FDA2D2BA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 02:43:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 896797A1B0C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 01:30:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 870F77A601D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 01:42:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B95B2257D;
-	Sat,  8 Feb 2025 01:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A8F6145323;
+	Sat,  8 Feb 2025 01:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZBCveahe"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZMVwTL2L"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D998A13AA2A;
-	Sat,  8 Feb 2025 01:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3A3125D6
+	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Feb 2025 01:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738978305; cv=none; b=JVvCOT6zk5/PvRpuQLiw68uaRgskAuodPWeX7rdTob2M1PeOnPIX86HIkz3YWufJQYOLe1MroBvEmJAYoLnk9xdDLzyl9P5UcSpRx7lE6CrM6srgiErfwf7F4akP/TwO8X/gS4ESMxtVdKV6XCV6lFB48UnuqEIFfGpD/hKAK38=
+	t=1738979009; cv=none; b=IAIPuRuJSJrdRq0Q/ZvGP/iiPDNv8R/Eahk0TD0K7FWiQxbkGTz1MyrHxToRpMl5rLd/bi3bNsvkOwPPqQhsQ/IfIZIQqaSnlDgd/TVX4CT+Qa2Zt4yiHyyKm3I/zzx4iWLgkrVCc1D9QfExjr5sj7oEnw5Yok2fvKiO28F4W4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738978305; c=relaxed/simple;
-	bh=32VVIjqVMf+zEMUj4wsrN1ch6BDoXQEJ36SiMy39l2w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gclN3Hfgsz6RZC/7BHrqCb/UWvEYedtdt91gZAsrA3LvWDcs1SqZgrnVh6F+3bjT49IBLfKhcWlLWXULdxpdof9U9TGBB7FnFuYF8UK/HzauOYo+vEazFkC+muIV2RXc55dJdSXiHotflnPVCbw2GYlmAkUU1NY8UhorlKlfa1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZBCveahe; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51811px7016565;
-	Sat, 8 Feb 2025 01:31:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1738979009; c=relaxed/simple;
+	bh=8KOc8TEtPMV6vPScInXgKUCKf0lxAqvOCy5Faaq1d1I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OjuypwEJ/8gCExaWubzmUyIWEj/z8vjFnl64kSXdtUwvNSpX/3IKrfVXnpcgK3SSXFvpce+6hfqCZ59R0btlb5p8uCKO/wD8aUDKubar9miyEjaFpc6LaArYsIps3r5xSaH4bRPll0Uq0JRziW16pElNupnR83rXtpqon6HaxoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZMVwTL2L; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 517Hfewd013852
+	for <linux-arm-msm@vger.kernel.org>; Sat, 8 Feb 2025 01:43:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kOMW8RTIO3pAab3P0zq0c0WZFk8FEg7wDem0H2F5bMQ=; b=ZBCveaheBEIB1yx+
-	+e8siaQMZdqA0HK716C5buXUWQnYvfWaDITtHyFSlj5Q2xpPEyjuCY8wzKckEjT1
-	hLwdCttW7trcSmZWyfDo0gi6u0G3R0XXC+RSt9oR6ha0exv6CfOV3USqqZTmOWIv
-	7qA6Q3JEtDO7ADIa1GwWEdJk2vUS5gOHu9FC4rgDNPqHSZvJQ67xVIZN1uD9wK2g
-	q3aScdYlb/6pBSOetR7TdQ9Io7A/uhMXfy64Ca/15CNU1dIP0XfbuW2JWZttcIH1
-	TM4i8ElqqdgjOwnMc8qRXRkTxU0tXgHQOKj1poBgfkSXoc3307OGjoqubjU3VV+0
-	V8ZgEA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44nw8cg1aj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 08 Feb 2025 01:31:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5181VMlE032072
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 8 Feb 2025 01:31:22 GMT
-Received: from [10.110.94.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 7 Feb 2025
- 17:31:21 -0800
-Message-ID: <9c35f577-2124-4f80-a5d3-542b47ed6825@quicinc.com>
-Date: Fri, 7 Feb 2025 17:31:20 -0800
+	uvl2a0j7vqsq5LA3kTdIeYd/weJt9uMnmK28HOLRjek=; b=ZMVwTL2LkACuACMy
+	ygKp3yW7CTUwiETtROhJy1HJUozpmgXNUUmgzvu402fofhhXAr3pG6ToO3GZbMB+
+	alcJaTXvhr0VKr+MC3iI6nxwUrSBUHMa/ToyIlzVWtjyy9iFfDbO9prOa7sDEJ5q
+	JKAyFsaX3Lnho06J2tlJh86hzqfHIaYyTHi94uHS9FlxBfIJd84Pceie5+itI16o
+	zqJ9mrIxd8rdKBoac1w9TJl2cvFunfELroOQrtVZNrspGu/aQDlmGchmdBxdJAct
+	ZmHYSAsKtmH0AV4AfNm4EnQcyfhlxVo1jlMKUoAuLzTGOM8dGb1/6VZYxPcPcbB+
+	isOj/g==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44npt18vrw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 01:43:26 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7b6e132c31eso34326885a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2025 17:43:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738979005; x=1739583805;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uvl2a0j7vqsq5LA3kTdIeYd/weJt9uMnmK28HOLRjek=;
+        b=tRkyWK17y1e8zLuZo+Pbj0FXkHSYt0/G3KpDDOiarVxsVAxK5iewv506t5iYtnhfRY
+         jGAQ+DdhPKZhuS3pd1toQEy7ns7n5sqgAz75IBpJroCUFac/WnCWzTf+GPyzML2jGtss
+         V63wPhKeGfadD3+3jSABe6hZg/tb6aVTSkb1YHdczuuyZ8BH/t3k+j081h3F7eSd0lKT
+         MA5oj3dCw0DBUORZ11WvV+Lz+7V4dk2Ro00r8LtojZmoYaciQP2St+HFyJz211E9W39D
+         E4AjP8qi0C+4+wfW5VqVSeekIGGMEIvVu2LS+XQm3mtDvBOd23bCsIXYNcUKvLpdhHo3
+         VMjg==
+X-Gm-Message-State: AOJu0YwpnMZ0Zi4hvrru+bdO99xdkI4M7/3TgEqnt8VWxPTcjcs9AwYR
+	hZuW+bmjaUsVdc36nDaWQ9XUcUSwg0+Zz4gs2xyqDynWh6PKHgW4zM9GUZMJNkOHjpe8PeCcgCw
+	QgYX5Zy4/hzGtMjPgp2M16MVaxX8jvGMMRfJ+WH7VvWg2su3TYL1tiaq1UCndMHtd
+X-Gm-Gg: ASbGncvLJBL8CsTDT5y8XvoIFEuwtQBKhYnpXupJSFm9NXbj7K978SlNMQqLWsai1xs
+	tQmr4JuRmjsB3kK8hfIcU3pcSrKQrqodQ3DV7R0raMwUsEsgQnUsa1ZN5l0//i2bTqBzJMKKcuI
+	5j9RtEv2NrqDKlBGfm9k5VpBs3jpdCg5uJ2x5cwhOChUgHTi/Sgmf51dWeDebTtjHE+lTDQTwaX
+	IH/WHycH5SaRLHtV2tKHZv8afeITnwFUwL7EBApij1XCgLxVjOJ7WsdthP5O+utuFANHpm7bUP7
+	eKntKGQj9pnLjsfKoUzkwWcaygm7bCYD2++h18KgMc6DRpyXqIodSYvx46c=
+X-Received: by 2002:a05:620a:318e:b0:7b1:3bf8:b3c4 with SMTP id af79cd13be357-7c047afc65fmr327771885a.0.1738979004745;
+        Fri, 07 Feb 2025 17:43:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH8UTS+vVH26H8xLRB9dyiuCt4iajAYis4LHIkOKK04eLWDXnRv19j6gDsEybLesd/OnD2ezg==
+X-Received: by 2002:a05:620a:318e:b0:7b1:3bf8:b3c4 with SMTP id af79cd13be357-7c047afc65fmr327770685a.0.1738979004410;
+        Fri, 07 Feb 2025 17:43:24 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dcf1b7b0a2sm3418731a12.22.2025.02.07.17.43.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Feb 2025 17:43:23 -0800 (PST)
+Message-ID: <9368eaa3-f1f0-4581-9f18-24c2a6f8f5b3@oss.qualcomm.com>
+Date: Sat, 8 Feb 2025 02:43:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,213 +88,76 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 6/7] drm/msm/hdmi: also send the SPD and HDMI Vendor
- Specific InfoFrames
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andrzej Hajda
-	<andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert
- Foss <rfoss@kernel.org>,
-        Laurent Pinchart
-	<Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej
- Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Simona Vetter <simona@ffwll.ch>,
-        Simona
- Vetter <simona.vetter@ffwll.ch>
-CC: <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20250208-bridge-hdmi-connector-v7-0-0c3837f00258@linaro.org>
- <20250208-bridge-hdmi-connector-v7-6-0c3837f00258@linaro.org>
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: sm8750: Add UFS nodes for SM8750
+ SoC
+To: Melody Olvera <quic_molvera@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Bjorn Andersson
+ <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>,
+        Manish Pandey <quic_mapa@quicinc.com>
+References: <20250113-sm8750_ufs_master-v1-0-b3774120eb8c@quicinc.com>
+ <20250113-sm8750_ufs_master-v1-4-b3774120eb8c@quicinc.com>
 Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20250208-bridge-hdmi-connector-v7-6-0c3837f00258@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250113-sm8750_ufs_master-v1-4-b3774120eb8c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: a0_OQfXAb4jRESBvnIWZvvBaHnDzGYTB
-X-Proofpoint-ORIG-GUID: a0_OQfXAb4jRESBvnIWZvvBaHnDzGYTB
+X-Proofpoint-GUID: GukVSM3I9W4aQGVbW9rEsPUhWc0029me
+X-Proofpoint-ORIG-GUID: GukVSM3I9W4aQGVbW9rEsPUhWc0029me
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-07_11,2025-02-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxscore=0 clxscore=1015 phishscore=0 malwarescore=0
- impostorscore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
- bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502080009
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=878
+ spamscore=0 mlxscore=0 adultscore=0 impostorscore=0 phishscore=0
+ suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502080010
 
-
-
-On 2/7/2025 4:27 PM, Dmitry Baryshkov wrote:
-> Extend the driver to send SPD and HDMI Vendor Specific InfoFrames.
+On 13.01.2025 10:46 PM, Melody Olvera wrote:
+> From: Nitin Rawat <quic_nitirawa@quicinc.com>
 > 
-> While the HDMI block has special block to send HVS InfoFrame, use
-> GENERIC0 block instead. VENSPEC_INFO registers pack frame data in a way
-> that requires manual repacking in the driver, while GENERIC0 doesn't
-> have such format requirements. The msm-4.4 kernel uses GENERIC0 to send
-> HDR InfoFrame which we do not at this point anyway.
+> Add UFS host controller and PHY nodes for SM8750 SoC.
 > 
-
-True that GENERIC_0/1 packets can be used for any infoframe. But because 
-we have so many of them, thats why when there are dedicated registers 
-for some of them, we use them to save the GENERIC0 ones for others.
-
-Lets take a case where we want to send HVSIF, SPD and HDR together for 
-the same frame, then we run out as there are no HDR specific infoframe 
-registers we can use. Is the expectation that we will migrate to 
-VENSPEC_INFO regs for HVSIF when we add HDR support?
-
-Also from a validation standpoint, I guess to really validate this 
-change you need an analyzer which decodes the HVSIF. So was this mostly 
-sanity tested at this pointed to make sure that the sink just comes up?
-
-> Acked-by: Maxime Ripard <mripard@kernel.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
+> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 93 ++++++++++++++++++++++++++++++++++
->   1 file changed, 93 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> index 15ab0858105328c2f774ec1f79423614bbbaeb41..aee75eee3d4244cd95e44df46d65b8e3e53de735 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> @@ -69,6 +69,8 @@ static void power_off(struct drm_bridge *bridge)
->   }
->   
->   #define AVI_IFRAME_LINE_NUMBER 1
-> +#define SPD_IFRAME_LINE_NUMBER 1
-> +#define VENSPEC_IFRAME_LINE_NUMBER 3
->   
->   static int msm_hdmi_config_avi_infoframe(struct hdmi *hdmi,
->   					 const u8 *buffer, size_t len)
-> @@ -142,6 +144,74 @@ static int msm_hdmi_config_audio_infoframe(struct hdmi *hdmi,
->   	return 0;
->   }
->   
-> +static int msm_hdmi_config_spd_infoframe(struct hdmi *hdmi,
-> +					 const u8 *buffer, size_t len)
-> +{
-> +	u32 buf[7] = {};
-> +	u32 val;
-> +	int i;
-> +
-> +	if (len != HDMI_INFOFRAME_SIZE(SPD) || len - 3 > sizeof(buf)) {
-> +		DRM_DEV_ERROR(&hdmi->pdev->dev,
-> +			"failed to configure SPD infoframe\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	/* checksum gets written together with the body of the frame */
-> +	hdmi_write(hdmi, REG_HDMI_GENERIC1_HDR,
-> +		   buffer[0] |
-> +		   buffer[1] << 8 |
-> +		   buffer[2] << 16);
-> +
-> +	memcpy(buf, &buffer[3], len - 3);
-> +
-> +	for (i = 0; i < ARRAY_SIZE(buf); i++)
-> +		hdmi_write(hdmi, REG_HDMI_GENERIC1(i), buf[i]);
-> +
-> +	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-> +	val |= HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
-> +		 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
-> +		 HDMI_GEN_PKT_CTRL_GENERIC1_LINE(SPD_IFRAME_LINE_NUMBER);
-> +	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-> +
-> +	return 0;
-> +}
-> +
-> +static int msm_hdmi_config_hdmi_infoframe(struct hdmi *hdmi,
-> +					  const u8 *buffer, size_t len)
 
-msm_hdmi_config_hvsif_infoframe() to be more clear?
+Please also add this bit:
 
-> +{
-> +	u32 buf[7] = {};
-> +	u32 val;
-> +	int i;
-> +
-> +	if (len < HDMI_INFOFRAME_HEADER_SIZE + HDMI_VENDOR_INFOFRAME_SIZE ||
-> +	    len - 3 > sizeof(buf)) {
-> +		DRM_DEV_ERROR(&hdmi->pdev->dev,
-> +			"failed to configure HDMI infoframe\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	/* checksum gets written together with the body of the frame */
-> +	hdmi_write(hdmi, REG_HDMI_GENERIC0_HDR,
-> +		   buffer[0] |
-> +		   buffer[1] << 8 |
-> +		   buffer[2] << 16);
-> +
-> +	memcpy(buf, &buffer[3], len - 3);
-> +
-> +	for (i = 0; i < ARRAY_SIZE(buf); i++)
-> +		hdmi_write(hdmi, REG_HDMI_GENERIC0(i), buf[i]);
-> +
-> +	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-> +	val |= HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
-> +		 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
-> +		 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
-> +		 HDMI_GEN_PKT_CTRL_GENERIC0_LINE(VENSPEC_IFRAME_LINE_NUMBER);
-> +	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-> +
-> +	return 0;
-> +}
-> +
->   static int msm_hdmi_bridge_clear_infoframe(struct drm_bridge *bridge,
->   					   enum hdmi_infoframe_type type)
->   {
-> @@ -176,6 +246,25 @@ static int msm_hdmi_bridge_clear_infoframe(struct drm_bridge *bridge,
->   
->   		break;
->   
-> +	case HDMI_INFOFRAME_TYPE_SPD:
-> +		val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-> +		val &= ~(HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
-> +			 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
-> +			 HDMI_GEN_PKT_CTRL_GENERIC1_LINE__MASK);
-> +		hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-> +
-> +		break;
-> +
-> +	case HDMI_INFOFRAME_TYPE_VENDOR:
-> +		val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-> +		val &= ~(HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
-> +			 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
-> +			 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
-> +			 HDMI_GEN_PKT_CTRL_GENERIC0_LINE__MASK);
-> +		hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-> +
-> +		break;
-> +
->   	default:
->   		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
->   	}
-> @@ -197,6 +286,10 @@ static int msm_hdmi_bridge_write_infoframe(struct drm_bridge *bridge,
->   		return msm_hdmi_config_avi_infoframe(hdmi, buffer, len);
->   	case HDMI_INFOFRAME_TYPE_AUDIO:
->   		return msm_hdmi_config_audio_infoframe(hdmi, buffer, len);
-> +	case HDMI_INFOFRAME_TYPE_SPD:
-> +		return msm_hdmi_config_spd_infoframe(hdmi, buffer, len);
-> +	case HDMI_INFOFRAME_TYPE_VENDOR:
-> +		return msm_hdmi_config_hdmi_infoframe(hdmi, buffer, len);
->   	default:
->   		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
->   		return 0;
-> 
+diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+index 3bbd7d18598e..1f79f2adb0a5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+@@ -532,9 +532,9 @@ gcc: clock-controller@100000 {
+                                 <0>,
+                                 <&sleep_clk>,
+                                 <0>,
+-                                <0>,
+-                                <0>,
+-                                <0>,
++                                <&ufs_mem_phy 0>,
++                                <&ufs_mem_phy 1>,
++                                <&ufs_mem_phy 2>,
+                                 <0>;
+ 
+                        #clock-cells = <1>;
 
+
+Konrad
 
