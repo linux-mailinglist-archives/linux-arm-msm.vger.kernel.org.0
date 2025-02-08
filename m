@@ -1,133 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-47250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEB7BA2D932
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 23:09:43 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60EABA2D935
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 23:10:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 744F87A342F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 22:08:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08B6C16442F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 22:10:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8330B24395B;
-	Sat,  8 Feb 2025 22:09:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zI+w0ylH"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C133243958;
+	Sat,  8 Feb 2025 22:10:03 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF22624396F
-	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Feb 2025 22:09:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDB4243957
+	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Feb 2025 22:10:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739052570; cv=none; b=eMAHLZsNlYxlFhGS3vw+YXHPoXhnPZP0C1RQD/lqveWFBXB3kaxch733S+aBMI+7LkAft3yqyEHiWGmUyFlJRZjlTBg0bVuVoLjQ9HMDhVj23PQMkcXT3AN+AIZRwBkLnNsR7bvgiCn4+bMUeaF+cMDHdRvIAWzc9YCkNVz3slo=
+	t=1739052602; cv=none; b=fujjPCrzA8WPhLRZ1Rv2cUfZll1LpPy9LhSXXFL/jca3gonwPWmOuO+rM2Tbz54eMBFeABT2H9sckTFUkDF5NxF7bNxob/FAWgR/3hEYtdVxI4mWX4yVM+qdLEKoJB/gnOTj3dGRFAhBiRVC/GcjUTmcG25cXR3U5dtl3GpaEbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739052570; c=relaxed/simple;
-	bh=nbh0lUP9+B3S+rH9TsK6SuaDCZWSaxFbqXXgX6kTQM4=;
+	s=arc-20240116; t=1739052602; c=relaxed/simple;
+	bh=VNXWM7sMqhjFaxfUzdILMX5xJaOMrKxE7UKltovgIXQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L22jgX6/dLf75oTJl7wK3SjpEMwDJ2T8+2rN2HNpQLfhL5tUbFLHbydbb+1m5aVCj2oxN/s6AcxpV8dHl81IRj8cOc6jAnKkRVbh0Wf2q5AkBy1cXbeIj0XoLpRJ+bci6vNBVSojdd8I8ElTnXoyZK3/+U9UcBUWYFeQRRU5ugw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zI+w0ylH; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-30229d5b229so30548851fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 14:09:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739052566; x=1739657366; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qTHcKUL0A9GikZYj1YTvr/EhlWV7sWgF6MMVtB1N/9Q=;
-        b=zI+w0ylHtIKcWCDf5JCPH4CobNz97bPRa0iCKNK+66ZCfHwvMvA1UZErij8irRaT8U
-         zan5Je+57zc0avCroPWKkO0ZSasD9zGLirKy+Fw9PD2HV6K0X8Zq1xqFitPAVN3cV4BN
-         TdlpniSciuDd/Jeu3usGaN0fmlaHkahWrISbSV9Zt8XPSJFp5acbJPvIaskWCr988Tpw
-         6u1rfkt/km4EYPUqwvY5wDz6q+5pIjW3oqyYAHH7l+V5UqD2mmgI4IczOU1nb/Yz8m1m
-         8WFnVqgE+vc9evRQvxxd2pJPeiwa6WStY6YE8zgAXo5Y0exBGP8ExT7TKxabtPrHTTG5
-         2sjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739052566; x=1739657366;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qTHcKUL0A9GikZYj1YTvr/EhlWV7sWgF6MMVtB1N/9Q=;
-        b=TtBbhnSRocU0h28eMoYH92K8Qzmw21pfL797wyVvswF1ul0LH/XgjsvSBFVdhdmtxw
-         8EQ2DN6C1RIaCxzxgARSNkqQQ2lAIp9RtSayi/5WFOvl+wPbWnbJanLYoi319tnjDaGx
-         tUwRUJmT8CtIREg7kOqlxjX2HV3ATjLJQelpwRha06vtq/OACLU+0Fhwxtbklo1ChOzH
-         JhdaUUktvFXZAp/5B9yUaFctuTL/g6z4f6zAeuhBBQ2eYsdyIkDPvNT/xGvDejmbWfGb
-         pk3snngKRr+TZ8rjlSwPGrPnDfb7meWHoIkvlgVjN9A44op6DEXjvUibNC8y3mex3JmP
-         K5tw==
-X-Forwarded-Encrypted: i=1; AJvYcCV9z/3N/xx8I+/W5pxxsjO89wn4FuDp8qTRo1iLjacIXkqENwPuq3gXm2co4HOzY+/4zcl4BSj4yMxcQP8l@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYA2OITWd/ezsYUcukSX3ZDRMbJMQDNT9ldZjiCSWp6HM8Lor0
-	op8/VSKI/QGCS/pPIO4y5OBdRQyj0pqCQ30PM14CYQiRyZFemxAPm6hhUdC+gLo=
-X-Gm-Gg: ASbGncviETOESHp885Hm+nZLQDMjKVpbzv4fR4p/DlO+p7C03KS2pbSU3pOpmRhcGan
-	z6UQAQpshYellFi252Ys/HckbWlnPs2816hRYfuj5l7uO9hZih3AmnGceoX/9xxo4DDOfy/rS+p
-	hkyuAqPS3vhdQ0TZwE2RHuewwEbnheH7M5C4ppEcfQuJudb95X7+a0V2uyqEc31JCb4vqsL578Q
-	Kv2hA8moFL0ihNaDauqg7sRr+oQJhvy9unSao0Vv30hON5ccXA89isSzkqplGGeHnXCHFd4JUZd
-	OkyJxtvtiBKkEKm/9F5hw97hBJS0jKhm+OE6IllzIQTzku8INA5cqanABMpvFdzTBRq6Aw4=
-X-Google-Smtp-Source: AGHT+IGUH3UmhIKInMLmECf90pr5INGbeBJEBwOwexzDKJYYzBRhSekRFOt84/bINUn54xlSrNAvSw==
-X-Received: by 2002:a05:6512:1247:b0:543:f1a0:9e82 with SMTP id 2adb3069b0e04-54414a96211mr2604148e87.6.1739052565570;
-        Sat, 08 Feb 2025 14:09:25 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5441053ed99sm830251e87.3.2025.02.08.14.09.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Feb 2025 14:09:24 -0800 (PST)
-Date: Sun, 9 Feb 2025 00:09:21 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Vikram Sharma <quic_vikramsa@quicinc.com>
-Cc: rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org, 
-	mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl, 
-	cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v13 2/2] arm64: dts: qcom:
- qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
-Message-ID: <mn5zxr72jn3qbn6uiqnzg6qf4s4bydjvmvqqxhd4wvrrmtf3ii@hoau7ge4wfk3>
-References: <20250208165232.2371889-1-quic_vikramsa@quicinc.com>
- <20250208165232.2371889-3-quic_vikramsa@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=cRbmY6CfUjfHzMoH1Z9Eb81jPL3gSua65XlZ4m6LkSt0o7+7BkFgL/RErbMco1DSEXbhN9TetOjhMJSjr6LxYRdmjrCur8xmVf4f7MvV7xp1VerkJZMVq0imyLZVjQ3QhzHB4ZKpFuNBjx5+xkJmAGVRiwtDZjVVLqGTGBackqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A43AA20268;
+	Sat,  8 Feb 2025 23:09:57 +0100 (CET)
+Date: Sat, 8 Feb 2025 23:09:56 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Danila Tikhonov <danila@jiaxyga.com>
+Cc: neil.armstrong@linaro.org, quic_jesszhan@quicinc.com, 
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, 
+	simona@ffwll.ch, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	andersson@kernel.org, konradybcio@kernel.org, robdclark@gmail.com, 
+	quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, sean@poorly.run, jonathan@marek.ca, 
+	jun.nie@linaro.org, fekz115@gmail.com, dri-devel@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux@mainlining.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 3/4] drm/msm/dsi: Allow all bpc values
+Message-ID: <rnuv4dieiy6s6c5s33hff7ntr6hkneemsq5qzk3u4ug2abwisd@6ahmijlayhhr>
+References: <20250203181436.87785-1-danila@jiaxyga.com>
+ <20250203181436.87785-4-danila@jiaxyga.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250208165232.2371889-3-quic_vikramsa@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250203181436.87785-4-danila@jiaxyga.com>
 
-On Sat, Feb 08, 2025 at 10:22:32PM +0530, Vikram Sharma wrote:
-> The Vision Mezzanine for the rb3gen2 ships with an imx577 camera sensor.
+On 2025-02-03 21:14:26, Danila Tikhonov wrote:
+> From: Eugene Lepshy <fekz115@gmail.com>
+> 
+> DRM DSC helper has parameters for various bpc values ​​other than 8:
 
-Qualcomm RB3 Gen 2
+Weird zero-width \u200b spaces here between "values" and "other", please delete
+those.
 
-> Enable the IMX577 on the vision mezzanine.
+> (8/10/12/14/16).
 > 
-> An example media-ctl pipeline for the imx577 is:
+> Remove this guard.
 > 
-> media-ctl --reset
-> media-ctl -V '"imx577 '17-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-> 
-> Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
-> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+
+Should this patch elaborate that those "DRM DSC helper" don't have any
+additional guarding for the values you mention either, i.e. passing 9 or 11 or
+>16 don't seem to be checked anywhere else either?
+
+And your title might have space to spell out "Bits Per Component" entirely.
+
 > ---
->  arch/arm64/boot/dts/qcom/Makefile             |  4 +
->  .../qcs6490-rb3gen2-vision-mezzanine.dtso     | 89 +++++++++++++++++++
->  2 files changed, 93 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 7 +------
+>  1 file changed, 1 insertion(+), 6 deletions(-)
 > 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 007311c21fda..d182af7bbb81 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1767,11 +1767,6 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (dsc->bits_per_component != 8) {
+> -		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support bits_per_component != 8 yet\n");
+> -		return -EOPNOTSUPP;
+> -	}
+> -
+>  	dsc->simple_422 = 0;
+>  	dsc->convert_rgb = 1;
+>  	dsc->vbr_enable = 0;
 
--- 
-With best wishes
-Dmitry
+This seems supicous on the dpu1 side, in the original DSC 1.1 (not 1.2) block in
+dpu_hw_dsc_config(), which has:
+
+	data |= (dsc->line_buf_depth << 3);
+	data |= (dsc->simple_422 << 2);
+	data |= (dsc->convert_rgb << 1);
+	data |= dsc->bits_per_component;
+
+The original value of `8` would overlap with the lowest bit of line_buf_depth
+(4th bit in `data`).  Now, the 2nd bit which will take the value from
+convert_rgb, which is already set to 1 above, will overlap with the 2nd bit in
+your new bpc value of 10.
+
+Can you double-check that this code in DPU1 is actually valid?  I assume you
+have tested this panel at least and it is working (worthy mention in the cover
+letter?), this just seems like yet another mistake in the original bindings
+(though the register always had a matching value with downstream on 8 BPC panels
+for me).
+
+> @@ -1779,7 +1774,7 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
+>  	drm_dsc_set_const_params(dsc);
+>  	drm_dsc_set_rc_buf_thresh(dsc);
+>  
+> -	/* handle only bpp = bpc = 8, pre-SCR panels */
+> +	/* handle only pre-SCR panels */
+>  	ret = drm_dsc_setup_rc_params(dsc, DRM_DSC_1_1_PRE_SCR);
+
+Good catch - this comment sounds like it's documenting a limitation of
+this helper function, but the function does not have such limitations...
+rc_parameters_pre_scr has values for all these combinations.
+
+- Marijn
+
+>  	if (ret) {
+>  		DRM_DEV_ERROR(&msm_host->pdev->dev, "could not find DSC RC parameters\n");
+> -- 
+> 2.48.1
+> 
 
