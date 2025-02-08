@@ -1,133 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-47245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04D4DA2D85A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 20:34:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 755C7A2D86D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 21:03:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A03BB1629E6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 19:34:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 186DA16546B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 20:02:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F56719DF6A;
-	Sat,  8 Feb 2025 19:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BACF424111A;
+	Sat,  8 Feb 2025 20:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ncY6UqwZ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IwWj1TZ9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B65E241117;
-	Sat,  8 Feb 2025 19:34:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51485674E;
+	Sat,  8 Feb 2025 20:02:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739043249; cv=none; b=sEDuYEBhX1FDapBqym/sqGrV/7HUjM/7eJgWS6fNMos8aIicAKL0f31cGGQFjk0xDEGg5HvgE6eF5WU+O+csZotA+LJn/5XN2aWxWnPlaZ3cdJOPu8x6VHWxgs0MGGsGEkoYST9Cnk1k6fkQZZFZGunPe1RAHEa+xdjbE5/i6Js=
+	t=1739044978; cv=none; b=f/hDg/ruLLKeuHSZE2d7K9cTpD/tA7kietFcbxgOyPZBsxFTxK7IwHzP+F4aWMCdzP5DiqpHH12cnITAUkcdxhse/n5853o8Z+J98paFYT9lA5VKfVkzkj0+O19rYF/ADh/Kugn2IRNRx8D9SWmo940mekbQGSlNWoX4wce2Rk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739043249; c=relaxed/simple;
-	bh=qkvgTQQuxFPruc1sggnDJ+9xRdU/zjaKvV0ZAg8Ktuo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KmNeAycjC7RRjScLM7TkFThSptg3w+17S4AY5RqTEr4h2HUOHSeIVBiLNI/I/j7xwWg56OHP9+8Jp5TJU8sShMg2RkH1+CWrQdrwGVgP02cId9fTYTIL6OUpErB0DkslA9jebI0QypLDkJYCbRNM33bsq+bS64aN+Q0n6GlqyW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ncY6UqwZ; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-438a39e659cso20760795e9.2;
-        Sat, 08 Feb 2025 11:34:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739043246; x=1739648046; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7zTCFimJ1vopwwf/s9XZ/VAGKYCECaIBDkzBMbYiPnc=;
-        b=ncY6UqwZDMFmqxX6idvTC36OSe90jVtxSF3zVleni5a6UW53TCFSpmhZsexi0ZUBpt
-         o39PRl+MBmaLZnqJlMXJPlUB0QJnRUJWnnAjFKkDq9dSw5ErQUbQHJOdra/Xa5tEKMVN
-         TdS/18h9XXX1e3jMowzENLeUkRtWgYDoU1tCHbCW4Ve0AWUGU1Bwf6Rld58FJMpT5ZaE
-         CnOBiqjfwBAU0/kxyYgf0ujVZTLdjW1qifbmEAmtP+hIc+AjcBBYJ4GA5RqWbEQAVJiw
-         RP9ySNw2Egup+6sZXTCs/Rl4noywWfUKq8NliWBucFRxYOraMULGvMLUH6zgFKkKfMpx
-         W+gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739043246; x=1739648046;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7zTCFimJ1vopwwf/s9XZ/VAGKYCECaIBDkzBMbYiPnc=;
-        b=NwPMemkJK/DEyZmaNDf+Rg+WLZE7tIoJqwFdZfTEt3Ka7wSJoZtnrHQnjwoOs3sxm4
-         hIA+X/VWa7Xprbp3Siuy+S7yOjmXtU73cH7ERrUwDhqV5HVneD/Fgg8KAC59cvrl/Psb
-         Iw/KHRgw1w9nffotqlj+/ix58QKNPnvLcQVS6+Mfw+M32P3IribZN+9Y/BfmKwY3hUyT
-         I4MUUOEZ2ICQ3t7Mss5fef4pz+3ANemmXwCNK4dY02TFwd6k1OcSkaAEdog7VmrkH5M9
-         pOTQWOuSrRLfB0ywQzinap05QTg3dldvUULmuQlkqGaDUY+ek/+cIPA/2rl9sahPksT1
-         OIYw==
-X-Forwarded-Encrypted: i=1; AJvYcCVTuGj9VYhCLaFFE2a3f/RVfRo6Gwf7RzJSx0xnPFr5wz6FW3+k+Uxdvod9zuIuJ7PL4XzTBHWVL4GjtB8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw++8Q5Ca/+MVjF38NOZLVbFn4xtDHS/e0kWQ6QT19Kmbho4jUR
-	/tkYzFg6POdI3v2x650KJC75s+vrdZmVYGPSv8aIMiqGrEPPr1XjJjU0qPXvH2s=
-X-Gm-Gg: ASbGncuS4w8xLLle1nQIBjMTM5YothW2Zn0Z0ufw2nd5UKADbkkDos1CSbG2CNRnhWf
-	UqnyfTCZKKyAqvHL4ik9eVHOf1k0FMBrus0mfD2t0weQ7xqNbnguOEnnzYv8SGs2H/3kjUXDo4B
-	RJccwirh5cLqX/lCUhPvo7R7WJCIBIH7vy9r+UK2yW4h4ER14oLegKDDr86U/kGmOsgF8CFLFG1
-	e0X91K0iAecduzOJzoSCNT/sxv21m7ywZ5P7K7F4gqEOKhWxLB6//GLa+x7RavPUdg6F1sl7j/A
-	FHYpxADAH142EQvT4oSIff9BBA==
-X-Google-Smtp-Source: AGHT+IF6K1aGzMQrmgg2BtmlzUAKpwYvdiG4gcqs0vFrqKcS/fziiZZl1Tg4aL3qUHceV0U8RBg6Jw==
-X-Received: by 2002:a05:600c:a085:b0:434:e2ea:fc94 with SMTP id 5b1f17b1804b1-439249843b8mr78920775e9.11.1739043245270;
-        Sat, 08 Feb 2025 11:34:05 -0800 (PST)
-Received: from [192.168.1.117] ([90.248.169.16])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43936bcc04fsm19994775e9.20.2025.02.08.11.34.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Feb 2025 11:34:04 -0800 (PST)
-Message-ID: <7a370271-1372-4588-8be9-ea7ea93d7a79@gmail.com>
-Date: Sat, 8 Feb 2025 19:34:03 +0000
+	s=arc-20240116; t=1739044978; c=relaxed/simple;
+	bh=Pl9mvMnThYGort8HlHxwSrnmS+mzJ/kO38p+F19JrX8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t0x2L+jc2RF2CqIKqJ8thhf2iTgCdrILkTlyHVzpnoF47Y1iLRjemXBOzrBXKT4yUAl07XkBIfmNAoN2o44dXrIEf0OGX/DOQ6vGncYi5rmmLHDttlwPfu71gY4CI9PPJRAwlzkR2/siXrEUXyneOYILAk9LD1UvO37ewSrysAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IwWj1TZ9; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1739044977; x=1770580977;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Pl9mvMnThYGort8HlHxwSrnmS+mzJ/kO38p+F19JrX8=;
+  b=IwWj1TZ9lPD6CiX8JPuJBOhqr1FdLDwNSDfDNM8ovXM0Tgv6eZjEnIjG
+   +2p55C1oz+ueFNueTx1givzJB+KS1gZYwDUQtyBgQd1UVwZUxy8hFfoGF
+   vLoveuYCNQPxTWerlRJia1/Ft7bOFajVGofh8miwv7LfCQqSRN2Ih0z03
+   z/54mTO3vG0c0Gfn/Z8Y8FMqzaPd2KIwakQDUq+y8wE6Tm4MxrDVCec1q
+   QfdMBu9VEX9Lkl3tFDcpeMk0hverQYIYDRhTfAv6zdUyKYXPZHFJHP7u2
+   YNj8IIzkW3gQPUmAYnKh+avTg9BFpNrAAyAkhR7q31qISHFBvAM19qlVO
+   w==;
+X-CSE-ConnectionGUID: OeF5nnJYQPC4PTg8ru/Itw==
+X-CSE-MsgGUID: W22HQT5MRiOBdl44QrIhmw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11339"; a="57083274"
+X-IronPort-AV: E=Sophos;i="6.13,270,1732608000"; 
+   d="scan'208";a="57083274"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2025 12:02:56 -0800
+X-CSE-ConnectionGUID: p/gmGRl4T8SbOYVMUVGDOA==
+X-CSE-MsgGUID: lNe6Q+VkTOuQqTixirSBsA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="115898498"
+Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
+  by fmviesa003.fm.intel.com with ESMTP; 08 Feb 2025 12:02:52 -0800
+Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tgr2Q-0010ZP-1S;
+	Sat, 08 Feb 2025 20:02:50 +0000
+Date: Sun, 9 Feb 2025 04:01:55 +0800
+From: kernel test robot <lkp@intel.com>
+To: Eric Biggers <ebiggers@kernel.org>, linux-block@vger.kernel.org,
+	Jens Axboe <axboe@kernel.dk>, Bartosz Golaszewski <brgl@bgdev.pl>,
+	Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-fscrypt@vger.kernel.org,
+	linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v11 6/7] soc: qcom: ice: add HWKM support to the ICE
+ driver
+Message-ID: <202502090302.znlTCbTa-lkp@intel.com>
+References: <20250204060041.409950-7-ebiggers@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/msm/dp: account for widebus and yuv420 during mode
- validation
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
- <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Kuogee Hsieh <quic_khsieh@quicinc.com>, Stephen Boyd <swboyd@chromium.org>,
- Paloma Arellano <quic_parellan@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250206-dp-widebus-fix-v2-1-cb89a0313286@quicinc.com>
-Content-Language: en-US
-From: Dale Whinham <daleyo@gmail.com>
-In-Reply-To: <20250206-dp-widebus-fix-v2-1-cb89a0313286@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250204060041.409950-7-ebiggers@kernel.org>
 
-On 06/02/2025 19:46, Abhinav Kumar wrote:
-> Widebus allows the DP controller to operate in 2 pixel per clock mode.
-> The mode validation logic validates the mode->clock against the max
-> DP pixel clock. However the max DP pixel clock limit assumes widebus
-> is already enabled. Adjust the mode validation logic to only compare
-> the adjusted pixel clock which accounts for widebus against the max DP
-> pixel clock. Also fix the mode validation logic for YUV420 modes as in
-> that case as well, only half the pixel clock is needed.
-> 
-> Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
-> Fixes: 6db6e5606576 ("drm/msm/dp: change clock related programming for YUV420 over DP")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes in v2:
-> - move msm_dp_wide_bus_available() to the next line
-> - Link to v1: https://lore.kernel.org/r/20250128-dp-widebus-fix-v1-1-b66d2265596b@quicinc.com
-> ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 11 ++++++-----
->   drivers/gpu/drm/msm/dp/dp_drm.c     |  5 ++++-
->   2 files changed, 10 insertions(+), 6 deletions(-)
+Hi Eric,
 
-This patch fixes a CLOCK_HIGH mode rejection error on the Microsoft 
-Surface Pro 11 (OLED panel) which I had previously been working-around 
-by raising DP_MAX_PIXEL_CLK_KHZ.
+kernel test robot noticed the following build warnings:
 
-Tested-by: Dale Whinham <daleyo@gmail.com>
+[auto build test WARNING on 2014c95afecee3e76ca4a56956a936e23283f05b]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Eric-Biggers/blk-crypto-add-basic-hardware-wrapped-key-support/20250204-140702
+base:   2014c95afecee3e76ca4a56956a936e23283f05b
+patch link:    https://lore.kernel.org/r/20250204060041.409950-7-ebiggers%40kernel.org
+patch subject: [PATCH v11 6/7] soc: qcom: ice: add HWKM support to the ICE driver
+config: openrisc-randconfig-r111-20250208 (https://download.01.org/0day-ci/archive/20250209/202502090302.znlTCbTa-lkp@intel.com/config)
+compiler: or1k-linux-gcc (GCC) 14.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20250209/202502090302.znlTCbTa-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202502090302.znlTCbTa-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/soc/qcom/ice.c:337:9: sparse: sparse: incorrect type in argument 1 (different base types) @@     expected unsigned int [usertype] value @@     got restricted __le32 [usertype] regval @@
+   drivers/soc/qcom/ice.c:337:9: sparse:     expected unsigned int [usertype] value
+   drivers/soc/qcom/ice.c:337:9: sparse:     got restricted __le32 [usertype] regval
+
+vim +337 drivers/soc/qcom/ice.c
+
+   302	
+   303	static int qcom_ice_program_wrapped_key(struct qcom_ice *ice, unsigned int slot,
+   304						const struct blk_crypto_key *bkey)
+   305	{
+   306		struct device *dev = ice->dev;
+   307		union crypto_cfg cfg = {
+   308			.dusize = bkey->crypto_cfg.data_unit_size / 512,
+   309			.capidx = QCOM_SCM_ICE_CIPHER_AES_256_XTS,
+   310			.cfge = QCOM_ICE_HWKM_CFG_ENABLE_VAL,
+   311		};
+   312		int err;
+   313	
+   314		if (!ice->use_hwkm) {
+   315			dev_err_ratelimited(dev, "Got wrapped key when not using HWKM\n");
+   316			return -EINVAL;
+   317		}
+   318		if (!ice->hwkm_init_complete) {
+   319			dev_err_ratelimited(dev, "HWKM not yet initialized\n");
+   320			return -EINVAL;
+   321		}
+   322	
+   323		/* Clear CFGE before programming the key. */
+   324		qcom_ice_writel(ice, 0x0, QCOM_ICE_REG_CRYPTOCFG(slot));
+   325	
+   326		/* Call into TrustZone to program the wrapped key using HWKM. */
+   327		err = qcom_scm_ice_set_key(translate_hwkm_slot(ice, slot), bkey->bytes,
+   328					   bkey->size, cfg.capidx, cfg.dusize);
+   329		if (err) {
+   330			dev_err_ratelimited(dev,
+   331					    "qcom_scm_ice_set_key failed; err=%d, slot=%u\n",
+   332					    err, slot);
+   333			return err;
+   334		}
+   335	
+   336		/* Set CFGE after programming the key. */
+ > 337		qcom_ice_writel(ice, cfg.regval, QCOM_ICE_REG_CRYPTOCFG(slot));
+   338		return 0;
+   339	}
+   340	
 
 -- 
-Best regards,
-Dale
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
