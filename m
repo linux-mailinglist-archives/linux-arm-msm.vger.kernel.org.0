@@ -1,114 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-47233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10090A2D608
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 13:17:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6409DA2D618
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 13:42:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3ABD01889E6F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 12:17:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C9BD188C625
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 12:42:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B01F246326;
-	Sat,  8 Feb 2025 12:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B159246331;
+	Sat,  8 Feb 2025 12:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vz4WbChs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YQTmfNbi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4329D2451DC
-	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Feb 2025 12:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180FE2451F7;
+	Sat,  8 Feb 2025 12:42:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739017039; cv=none; b=oTxvvD9wnx7jhXFNP9H/ufd+KncYr7rGinOU07MRULG6aujNN+BLk/FjyX4/zmJ2UbqdHYjD/OXA2jV2SCZhWppo7wh4wOq/XUb3yDuSrFLC/D0RxC7+hg7UgBFZ7/zO8V1r16P7o3GR3rye594XPAGtx9+ioaqBy/KI71Bqpxw=
+	t=1739018546; cv=none; b=EGxfF2CQ3NLbYyLslVTzYW7cQtqIzXi4DtkEIThehAuT2yb9QwqBFE0LRn2nOmKYpbkXoSev4l+ZBPVp8pi++JgpLqR1a8EBKsRGvNmgO58ojnWotyiDTReuGwzSi1e9VLQt0Rc/dg+D4Dl7IQO9uWY99tvfs9+v9W4fgzr+iBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739017039; c=relaxed/simple;
-	bh=T4eIb3bqRCOm/qgXKt5JXRdNtc/g3t2rmHuZgsY86yc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UvhPNMq5IxWuHFWxfNnOhxPUgoh1Hiapa00thfiknrO+59yx1Wn4vjdJniQPKbj604Ws5YoSFyIw/g2KS5xo+WpD6NIksL3MAuOdWM3hWmGy1n3DjrUa+Bk+fjUIzRaoEfpVN4d5BweTJEClW8703oHuJ6T4RGmqeFh2vklvng8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vz4WbChs; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-544ff74be6eso973008e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 04:17:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739017035; x=1739621835; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=86n5+Q0ZSLD5Q/iLrsvS8vsVVb/euNtkQzazsN+zt/4=;
-        b=vz4WbChsrYzHJeJBLC/mlxlljZujRZ0PfRVGAH7rcTDuEDV7gxQWUZkvPhGv8jrfdV
-         svOkbRMHQeQmR20yjY2DYYC1dlNPLF7DvoIYQbumt2OAbD43o304uC5av1GxI/eaTICd
-         c8ZBOgFnLWkFT83MdOhCKra+e9+fs9cXscdRxUbP62QaklwRIDBLN8qF/QLvx4l7cK7d
-         xY7u4E+D3KHCfCDt6nWwTWCWemCsNek4th61UkEBPjInpfsKP0/bF4J6CX3+Az9rh+oh
-         4fjFDKIRdqu1e+zW2XLNQUReMcG4S+beFnqXxsFZ44eEubVg3n5ncCD2SSrUCHfRWhQO
-         Ikfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739017035; x=1739621835;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=86n5+Q0ZSLD5Q/iLrsvS8vsVVb/euNtkQzazsN+zt/4=;
-        b=NxFTPws+UDMCPAwfJZ2Ll6F2qPfs7BG5qoHFz3VWht2IkGbL2mBXGWw+E+J6fz2gJF
-         2kI50t025XJm54BWHVHehzv1NRQLZShloonGwGZF1oxdF46bKZKGko0JhqAlZUyExsc7
-         CMP1u28VjI1krDhNAjpZVPJlXjSOWxTS6uDwI4eKWJ2eMizsJymCz0K0C8zn08oFrk34
-         i7wUcrgVhb5N9I54UkBCm+xsY+auq8IM/2QbZFNDs53BAx3m7i5P7UoxukMLbdzlg71k
-         Gp/k3lhCzWxgTXE+onIp8UJjH85ONnTb73V4XDUv8yCPwpIkrRju1/50VuiOCwFL14XJ
-         HBPg==
-X-Forwarded-Encrypted: i=1; AJvYcCXJQhm2Q+/OTvBzGMM5ZcI/8g2VlsXqJLafxjbeSzDG3bq/bRlMIrAGf/RkT+DWvWCYxqo7QtFIFYmv2jJn@vger.kernel.org
-X-Gm-Message-State: AOJu0YxZxAbLYUtBavD4ffzDs9TkVutiCJPGrKRVfzKyFYZnhspzMftl
-	rYjS2YOp+58DJfwkBEC0IFj0oTDBs8sAqu7NAPtmjM6M4i4hQ/llXOx+B4kujTY=
-X-Gm-Gg: ASbGncuTnWlgRYpNif+xLewv8gcesSe2DldmmMlmyNT9FTJzYrLzPmkRaBS6TaFNW3r
-	rd8gLFaOp0uq0aCSlru3NulQeU8uGKXfdxirI42IE7R6STxQxCJx6v9txYY9tWNB8WMKL9+MDTB
-	inKW3fZTGTp709MM/OeKApUTLvU3vXLSEFwZnFZKMBqwU59eF45mFYNtxfs3EALTNwzoqTj7Zzb
-	OcrMEXbfNdxAYJKuaZ/pK6oIv+1tRRBhLvKjedek4kzDHChR3h5aIRHk4c7ytDGorc5w6xWtRqi
-	0pThKEGitZ+anJz1S0SkOEYuCmqFBnyXVErtE/lVc9ryK5CmEk/yj2slo8R4zOVapQo9DKA=
-X-Google-Smtp-Source: AGHT+IFwIWTeNKS4wN4R624q3kbyJQojVN74fOV9zot7wxyHPiII72LWtpH9IvPMBK8s7MHZJcW8Bg==
-X-Received: by 2002:ac2:4ed0:0:b0:542:9883:26f with SMTP id 2adb3069b0e04-54414aee2c3mr1807642e87.50.1739017035188;
-        Sat, 08 Feb 2025 04:17:15 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54504062523sm191475e87.79.2025.02.08.04.17.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Feb 2025 04:17:13 -0800 (PST)
-Date: Sat, 8 Feb 2025 14:17:12 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Chukun Pan <amadeus@jmu.edu.cn>
-Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
-	konradybcio@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 3/5] arm64: dts: qcom: ipq6018: move mp5496 regulator
- out of soc dtsi
-Message-ID: <x353yhiu4zsdyu5dpgfe6li53bq6b25rd3rhsquab7g4cbzehl@klbvqidc2sac>
-References: <z6vspyykbj7e55uequibwacdx7uuwubtuabnsxagcudmqrfwn3@4gfna5rqiimc>
- <20250208080015.553458-1-amadeus@jmu.edu.cn>
+	s=arc-20240116; t=1739018546; c=relaxed/simple;
+	bh=8+vNZ6d84M35ihQAL4ODrnR0bTXDuJyzFILukAohueE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N0TQjYww0aiRHxorZlWv4Fp8xsRi4b6OCeH9cLEm3zFg+5bS6O20/q12pFHugCjFjyRVtJYRLTVyWwACDIqJ/dcRLF5rkdt+GZ6SmDARrdebouHu9Cb8Ea3TIjHatPj7HEaHB5r25cIobXOapm9frfYFRLlWHUV40qKfYUtoDZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YQTmfNbi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DBBC4CED6;
+	Sat,  8 Feb 2025 12:42:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739018545;
+	bh=8+vNZ6d84M35ihQAL4ODrnR0bTXDuJyzFILukAohueE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=YQTmfNbi/DQpRUnZUt6exBi4BWNf220EK6sjGTlAzkyUGvbIH2dJDhXE0QuBpE1ww
+	 ayMSUe10kKIgGBYk7+M/BGNZdAXxm4Op6mcRduRCOdNAJS8zzFibJeIqaf9zO6D3NL
+	 yeZvB8A/WxFnoAzMQvb5S1j+aBpSjEPYeYAbfZsX3/B12cEhzxvZBch2/cs2qTnjHy
+	 XVT/Cey+XaFB+m9b/ko/1YhA5+/THm5ulqgEtjbreBgvCx34IYm0g5RrP3d0YVpcao
+	 h6mXHbgRuR6tUL8otPurR7XgLCxrwN9B6jJ2bJldEtCgLa6Li8AAmFHRNsC+bRgnuP
+	 Agix9fdGWOG/A==
+Message-ID: <0892dca2-e76b-4aab-95cf-7437dabfc7a4@kernel.org>
+Date: Sat, 8 Feb 2025 14:42:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250208080015.553458-1-amadeus@jmu.edu.cn>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Avoid accessing BAM_REVISION on
+ remote BAM
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+ Vinod Koul <vkoul@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20250207-bam-read-fix-v1-1-027975cf1a04@oss.qualcomm.com>
+Content-Language: en-US
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20250207-bam-read-fix-v1-1-027975cf1a04@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Feb 08, 2025 at 04:00:15PM +0800, Chukun Pan wrote:
-> Hi,
-> > Wouldn't it be better to move it to the board file without having
-> > intermediate include files?
+On 7.02.25 22:17, Bjorn Andersson wrote:
+> Commit '57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing
+> unavailable register")' made this read unconditional, in order to
+> identify if the instance is BAM-NDP or BAM-Lite.
+> But the BAM_REVISION register is not accessible on remotely managed BAM
+> instances and attempts to access it causes the system to crash.
 > 
-> The intermediate include files were suggested by you:
-> https://lore.kernel.org/lkml/xmvtbib3q72tnfpcaic3vbgwilpo7yjnqimr5uk2myjgtslbgm@mlp2kqvljayc/
+> Move the access back to be conditional and expand the checks that was
+> introduced to restore the old behavior when no revision information is
+> available.
 > 
-> Unlike mobile phones or development boards, the pmic (voltage) setting
-> on routers is relatively fixed. (Because QCA will not provide relevant
-> documents). On IPQ60xx SoCs, s2 supplies to cpu, l2 supplies to emmc.
-> The downstream vendor kernel puts it in soc.dtsi (no device override),
-> so I think the include files is more appropriate.
+> Fixes: 57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing unavailable register")
+> Reported-by: Georgi Djakov <djakov@kernel.org>
+> Closes: https://lore.kernel.org/lkml/9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org/
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Georgi Djakov <djakov@kernel.org> # db845c
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Georgi
 
