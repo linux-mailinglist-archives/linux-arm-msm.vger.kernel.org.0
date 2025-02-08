@@ -1,189 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-47237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BE1AA2D72C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 17:15:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FE79A2D794
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 17:53:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D26EF1674DA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 16:15:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AEA491889B96
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 16:53:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C3B22500D8;
-	Sat,  8 Feb 2025 16:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC055241CB9;
+	Sat,  8 Feb 2025 16:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dZ7SFyxt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ToZMv6Yx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190E6187346;
-	Sat,  8 Feb 2025 16:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07F3241C84;
+	Sat,  8 Feb 2025 16:53:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739031330; cv=none; b=R1Me03qI4FWdpNUz7YjjTRrDBvNC8/Mn203JZCGacpchvYcJZkn+mX9C1PCmE7JwuMIHZBjXDkCa2QrWBsvkoTVZlG5UBD2c8yvLZk8rwzq5KkkBFb3epV1IZiwvM4SiaFOaauhyqzJqjyNruuoKiTkvTqJY2Zre6GjNcGGCF1g=
+	t=1739033601; cv=none; b=SaP7OKQM7KQFhBvW+gRIbRJgWGHKgDCxWTVfenkPJiiWt2C+7WfaCnpKha3G6vJM/LQ9+MiLl9L29x2r2JESdrLlI/jpO2lL5Nx0jzxL5cmv9XSbYG9E7yjmXvFopjrkB32VfryQmEtv8NWw1/XdmlJP0WF6fhR7nSnSMnR3n90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739031330; c=relaxed/simple;
-	bh=qjV1wjKjlXBB7aJHZrNgaXYHC6q7WnBZJMd9PbbzIxQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iL1sWqxOxjt54Sj0pEoS/kENp+Z2KP8Kt3fgc7f7na9elD9/ejZHoVGPAYk1X5HDwYOmewouFBaBipv0ld3/D+f+0qZ+EWq6IUmCQgJH8QWDPH5ySodwCXcHEfRZ6Sh+AcTEU5eY6Hs5d+G/4Z6n+QImoMJdjuZJgY5OXToGZJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dZ7SFyxt; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739031329; x=1770567329;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=qjV1wjKjlXBB7aJHZrNgaXYHC6q7WnBZJMd9PbbzIxQ=;
-  b=dZ7SFyxtPoC5PoA3YHIu2nfk5BBS6hhBnDwjPj8CnoFkIwsk7lhfgmkK
-   CPWz/az1EgjqpHH6vOfPR9VucOWo3ot5zWya1p4Q+JCgZZek61phqxl/d
-   RmfiJ7dBK95H0Q9pt7MuADgiL/qwa7cSV6/XDjDcuntRwfiTiTp/2vJ6F
-   kCUz+KEh06sDEwxErk4dTYK1O5EspBgbRbYm6yFZBXdfXlJ6mu9CRnuCi
-   /1MXAflKmaMbAnumpVl36gDuie3C2LwwvdBmuhUkdyO28BZgY7IyKkzFH
-   CAjkU+RUH4X7UTttfgnjXfmJx5VDs1hua2pyvIurN2xGDvDvx5Zx9Uz1U
-   A==;
-X-CSE-ConnectionGUID: yUELN7ooQw2/ipxzaEBHqg==
-X-CSE-MsgGUID: wxI248r6Sfy1EP6d5DB0Yg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11339"; a="27266057"
-X-IronPort-AV: E=Sophos;i="6.13,270,1732608000"; 
-   d="scan'208";a="27266057"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2025 08:15:28 -0800
-X-CSE-ConnectionGUID: u7esEy1ORdW8L+jgc21u/A==
-X-CSE-MsgGUID: 7p6bmWiyR/eQipD6rm+wmw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="142673942"
-Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
-  by fmviesa001.fm.intel.com with ESMTP; 08 Feb 2025 08:15:22 -0800
-Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tgnUF-0010J1-1s;
-	Sat, 08 Feb 2025 16:15:19 +0000
-Date: Sun, 9 Feb 2025 00:15:18 +0800
-From: kernel test robot <lkp@intel.com>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
-	Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
-	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
-	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
-	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Romain Gantois <romain.gantois@bootlin.com>
-Subject: Re: [PATCH net-next 12/13] net: phy: dp83822: Add SFP support
- through the phy_port interface
-Message-ID: <202502090056.jTCOvIPk-lkp@intel.com>
-References: <20250207223634.600218-13-maxime.chevallier@bootlin.com>
+	s=arc-20240116; t=1739033601; c=relaxed/simple;
+	bh=rr/QKnV4d/0UoL/qDFzn5BlT9+ZvH3mb8SRM/+/ZCik=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=iXGR1wRr/eHxUjWY+Tj++1LsfkPGFXR1QOLLuXtQZPLuLAkNxmWzbSOsND17mjVneGyjGh3kXdTN1TedJ1ULdNRmvT0ow28Grc6QgfewFDXDlZXlK4EBzc+Rql0LKjguSTIjcq6Ip7S6BuEjXM5AWPuW+2hszB+gsxgn7587RsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ToZMv6Yx; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 518EUTsD026967;
+	Sat, 8 Feb 2025 16:52:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=zGOd74MDNP1qQjh1StNz01
+	7zyC7tg4pj4AvUqb5yuXo=; b=ToZMv6YxGavlkKqyMYKymPJtb61YPNJuBiIELa
+	F8KxGdgtDqUF4yUwWqMdBaAh7S6Y9qr+dURC2QpOwXYUfqB2P4XqtBcKgIvMzb5q
+	9TZ3rGqvZXrgYwfiWzYBvXx+G10XsWcTYS0ztl/SbLRGUvwuLnewKSAz6L5IT2Pd
+	+61YjmKOa0sMGc42Agd3X/Xr39cgFZdBCtTDOdvhsxkA1/sJgocucpmqzm/4btxs
+	agsgRIRaLnwFpczIb1Mec9Az1ucs5lZNzTHIWhiHqjk1Ok/upfjCJELpXNKVLfwJ
+	TROREVeofq9x9mrZDWeslq5QyYvi4OXgTpDx4coAaqUqF2QQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0e1gwtb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 08 Feb 2025 16:52:53 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 518Gqqpa012818
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 8 Feb 2025 16:52:52 GMT
+Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sat, 8 Feb 2025 08:52:47 -0800
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <hverkuil-cisco@xs4all.nl>,
+        <cros-qcom-dts-watchers@chromium.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <quic_vikramsa@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v13 0/2] media: qcom: camss: Add sc7280 support
+Date: Sat, 8 Feb 2025 22:22:30 +0530
+Message-ID: <20250208165232.2371889-1-quic_vikramsa@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250207223634.600218-13-maxime.chevallier@bootlin.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XF6rwmNiTqN1NlwAuZZmjPlCV06fLOo5
+X-Proofpoint-GUID: XF6rwmNiTqN1NlwAuZZmjPlCV06fLOo5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-08_06,2025-02-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ suspectscore=0 lowpriorityscore=0 mlxlogscore=999 impostorscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 clxscore=1015 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502080142
 
-Hi Maxime,
+SC7280 is a Qualcomm SoC. This series adds support to bring up the CSIPHY,
+CSID, VFE/RDI interfaces in SC7280.
 
-kernel test robot noticed the following build errors:
+SC7280 provides
+- 3 x VFE, 3 RDI per VFE
+- 2 x VFE Lite, 4 RDI per VFE
+- 3 x CSID
+- 2 x CSID Lite
+- 5 x CSI PHY
 
-[auto build test ERROR on net-next/main]
+We have tested this on qcs6490-rb3gen2-vision-mezzanine board having IMX577
+sensor.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Maxime-Chevallier/net-ethtool-Introduce-ETHTOOL_LINK_MEDIUM_-values/20250208-064223
-base:   net-next/main
-patch link:    https://lore.kernel.org/r/20250207223634.600218-13-maxime.chevallier%40bootlin.com
-patch subject: [PATCH net-next 12/13] net: phy: dp83822: Add SFP support through the phy_port interface
-config: i386-buildonly-randconfig-004-20250208 (https://download.01.org/0day-ci/archive/20250209/202502090056.jTCOvIPk-lkp@intel.com/config)
-compiler: clang version 19.1.3 (https://github.com/llvm/llvm-project ab51eccf88f5321e7c60591c5546b254b6afab99)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250209/202502090056.jTCOvIPk-lkp@intel.com/reproduce)
+Used following tools for the sanity check of these changes.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202502090056.jTCOvIPk-lkp@intel.com/
+- make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml
+qcom/qcs6490-rb3gen2-vision-mezzanine.dtb
+- make DT_CHECKER_FLAGS=-m W=1
+DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml dt_binding_check
+- make -j32 W=1
+- ./scripts/checkpatch.pl
+ 
+Changes in V13:
+- Updated commit text for [PATCH v12 2/2] - Dmitry
+- Updated Copyright to add 2025 for [PATCH v12 2/2] - Jie
+- Link to v12:
+  https://lore.kernel.org/linux-arm-msm/20250207090422.1609260-1-quic_vikramsa@quicinc.com/
 
-All errors (new ones prefixed by >>):
+Changes in V12:
+- droped mclk-pins{} and put the properties directly under the
+  cam2-default-state and cam2-suspend-state node - Konrad.
+- Link to v11:
+  https://lore.kernel.org/linux-arm-msm/20250121125010.1853269-1-quic_vikramsa@quicinc.com/
 
->> drivers/net/phy/dp83822.c:916:43: error: use of undeclared identifier 'interfaces'
-     916 |                 __set_bit(PHY_INTERFACE_MODE_100BASEFX, interfaces);
-         |                                                         ^
->> drivers/net/phy/dp83822.c:916:13: error: use of undeclared identifier 'PHY_INTERFACE_MODE_100BASEFX'; did you mean 'PHY_INTERFACE_MODE_100BASEX'?
-     916 |                 __set_bit(PHY_INTERFACE_MODE_100BASEFX, interfaces);
-         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-         |                           PHY_INTERFACE_MODE_100BASEX
-   include/linux/bitops.h:54:48: note: expanded from macro '__set_bit'
-      54 | #define __set_bit(nr, addr)             bitop(___set_bit, nr, addr)
-         |                                                           ^
-   include/linux/bitops.h:44:25: note: expanded from macro 'bitop'
-      44 |         ((__builtin_constant_p(nr) &&                                   \
-         |                                ^
-   include/linux/phy.h:140:2: note: 'PHY_INTERFACE_MODE_100BASEX' declared here
-     140 |         PHY_INTERFACE_MODE_100BASEX,
-         |         ^
->> drivers/net/phy/dp83822.c:916:43: error: use of undeclared identifier 'interfaces'
-     916 |                 __set_bit(PHY_INTERFACE_MODE_100BASEFX, interfaces);
-         |                                                         ^
->> drivers/net/phy/dp83822.c:916:43: error: use of undeclared identifier 'interfaces'
-   drivers/net/phy/dp83822.c:916:13: error: use of undeclared identifier 'PHY_INTERFACE_MODE_100BASEFX'
-     916 |                 __set_bit(PHY_INTERFACE_MODE_100BASEFX, interfaces);
-         |                           ^
->> drivers/net/phy/dp83822.c:916:43: error: use of undeclared identifier 'interfaces'
-     916 |                 __set_bit(PHY_INTERFACE_MODE_100BASEFX, interfaces);
-         |                                                         ^
-   drivers/net/phy/dp83822.c:916:13: error: use of undeclared identifier 'PHY_INTERFACE_MODE_100BASEFX'
-     916 |                 __set_bit(PHY_INTERFACE_MODE_100BASEFX, interfaces);
-         |                           ^
->> drivers/net/phy/dp83822.c:916:43: error: use of undeclared identifier 'interfaces'
-     916 |                 __set_bit(PHY_INTERFACE_MODE_100BASEFX, interfaces);
-         |                                                         ^
-   8 errors generated.
+Changes in V11:
+- Moved [PATCH v10 1/4] and [PATCH v10 2/4] as a separate series.
+- Marked dependency on
+  https://lore.kernel.org/linux-arm-msm/20250121120901.1841142-1-quic_vikramsa@quicinc.com/
+- Sorted the header files alphabetically in dtso.
+- Removed invalid property for sensor.
+- Removed rst-pin from default and suspend states of pinctrl. We have verified
+  that for imx412 sensor there are no SET_SYSTEM_SLEEP_PM_OPS added.
+  So removing rst-pin does not make any difference in power management. 
+- Link to v10: https://lore.kernel.org/linux-arm-msm/20241217140656.965235-1-quic_vikramsa@quicinc.com/
 
+Changes in V10:
+- Updated cover letter to add link for v8 under changes in v9.
+- No change in the patches w.r.t V9
+- Link to v9: https://lore.kernel.org/linux-arm-msm/20241217133955.946426-1-quic_vikramsa@quicinc.com/
 
-vim +/interfaces +916 drivers/net/phy/dp83822.c
+Changes in V9:
+- Removed GCC_CAMERA_AHB_CLK as its always enabled.
+- Added GCC_CAMERA_SF_AXI_CLK.
+- Renamed gcc_cam_hf_axi to gcc_axi_hf.
+- V8 had 5 patches and V9 have 4 patches.
+- First 3 patches of V8 are already promoted to linux-next
+i.e  
+  media: dt-bindings: Add qcom,sc7280-camss
+  media: qcom: camss: Sort camss version enums and compatible strings
+  media: qcom: camss: Add support for camss driver on sc7280
+- 2 new patches are added to handle new comments from Konrad on
+  "Patch v8 4/5 arm64: dts: qcom: sc7280: Add support for camss" 
+  1 of the 2 new patches make changes in yaml and other one is making
+  change in camss driver to handle new comments in dtsi.
+- for "Patch v8 4/5 arm64: dts: qcom: sc7280: Add support for camss" I got
+  comments from Konrad to make changes for clock names so I had to make
+  respective changes in "bindings/media/qcom,sc7280-camss.yaml". As dtsi
+  changes are not merged yet, so there is no issues with backward
+  compatibility and I am assuming this should be acceptable.
+- Link to v8: https://lore.kernel.org/linux-arm-msm/20241206191900.2545069-1-quic_vikramsa@quicinc.com/
+  
+Changes in V8:
+- Changed node name from camss to isp.
+- Added QCOM_ICC_TAG_ACTIVE_ONLY and QCOM_ICC_TAG_ALWAYS tags for
+  interconnects. 
+- Added blank lines when required.
+- Modified power-domain-names from horizontal to vertical list.
+- Sorted pinctrl nodes based on gpio index.
+- Link to v7: https://lore.kernel.org/linux-arm-msm/20241204100003.300123-1-quic_vikramsa@quicinc.com/
 
-   899	
-   900			if (dp83822->fx_enabled) {
-   901				port->lanes = 1;
-   902				port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASEF) |
-   903						BIT(ETHTOOL_LINK_MEDIUM_BASEX);
-   904			} else {
-   905				/* This PHY can only to 100BaseTX max, so on 2 lanes */
-   906				port->lanes = 2;
-   907				port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASET);
-   908			}
-   909		}
-   910	
-   911		/* If attached from SFP, is_serdes is set, but not the mediums. */
-   912		if (port->is_serdes)
-   913			dp83822->fx_enabled = true;
-   914	
-   915		if (dp83822->fx_enabled)
- > 916			__set_bit(PHY_INTERFACE_MODE_100BASEFX, interfaces);
-   917	
-   918		return 0;
-   919	}
-   920	
+Changes in V7:
+- Changed unit address for camss in documention and dts.
+- Added avdd-supply and dvdd-supply for sensor.
+- Changed reg/clocks/interrupts name for vfe_lite and csid_lite.
+- Link to v6: https://lore.kernel.org/linux-arm-msm/20241127100421.3447601-1-quic_vikramsa@quicinc.com/
+
+Changes in V6:
+- Changed order of properties in Documentation [PATCH 1/5].
+- Updated description for ports in Documentaion [PATCH 1/5].
+- Moved regulators from csid to csiphy [PATCH 3/5].
+- Link to v5: https://lore.kernel.org/linux-arm-msm/20241112173032.2740119-1-quic_vikramsa@quicinc.com/ 
+
+Changes in V5:
+- Updated Commit text for [PATCH v5 1/6].
+- Moved reg after compatible string.
+- Renamed csi'x' clocks to vfe'x'_csid
+- Removed [PATCH v4 4/6] and raised a seprate series for this one.
+- Moved gpio states to mezzanine dtso.
+- Added more clock levels to address TPG related issues.
+- Renamed power-domains-names -> power-domain-names. 
+- Link to v4: https://lore.kernel.org/linux-arm-msm/20241030105347.2117034-1-quic_vikramsa@quicinc.com/ 
+
+Changes in V4:
+- V3 had 8 patches and V4 is reduced to 6.
+- Removed [Patch v3 2/8] as binding change is not required for dtso.
+- Removed [Patch v3 3/8] as the fix is already taken care in latest
+  kernel tip. 
+- Updated alignment for dtsi and dt-bindings.
+- Adding qcs6490-rb3gen2-vision-mezzanine as overlay. 
+- Link to v3: https://lore.kernel.org/linux-arm-msm/20241011140932.1744124-1-quic_vikramsa@quicinc.com/
+
+Changes in V3:
+- Added missed subject line for cover letter of V2.
+- Updated Alignment, indentation and properties order.
+- edit commit text for [PATCH 02/10] and [PATCH 03/10].
+- Refactor camss_link_entities.
+- Removed camcc enablement changes as it already done.
+- Link to v2: https://lore.kernel.org/linux-arm-msm/20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-0-b18ddcd7d9df@quicinc.com/
+
+Changes in V2:
+- Improved indentation/formatting.
+- Removed _src clocks and misleading code comments.
+- Added name fields for power domains and csid register offset in DTSI.
+- Dropped minItems field from YAML file.
+- Listed changes in alphabetical order.
+- Updated description and commit text to reflect changes
+- Changed the compatible string from imx412 to imx577.
+- Added board-specific enablement changes in the newly created vision
+  board DTSI file.
+- Fixed bug encountered during testing.
+- Moved logically independent changes to a new/seprate patch.
+- Removed cci0 as no sensor is on this port and MCLK2, which was a
+  copy-paste error from the RB5 board reference.
+- Added power rails, referencing the RB5 board.
+- Discarded Patch 5/6 completely (not required).
+- Removed unused enums.
+- Link to v1: https://lore.kernel.org/linux-arm-msm/20240629-camss_first_post_linux_next-v1-0-bc798edabc3a@quicinc.com/
+
+Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+
+Vikram Sharma (2):
+  arm64: dts: qcom: sc7280: Add support for camss
+  arm64: dts: qcom: qcs6490-rb3gen2-vision-mezzanine: Add vision
+    mezzanine
+
+ arch/arm64/boot/dts/qcom/Makefile             |   4 +
+ .../qcs6490-rb3gen2-vision-mezzanine.dtso     |  89 +++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 178 ++++++++++++++++++
+ 3 files changed, 271 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.25.1
+
 
