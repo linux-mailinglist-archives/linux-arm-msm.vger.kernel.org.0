@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-47218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE3FBA2D258
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 01:43:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1EDCA2D2A4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 02:31:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 91C38162E82
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 00:43:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 896797A1B0C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 01:30:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28FF93D68;
-	Sat,  8 Feb 2025 00:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B95B2257D;
+	Sat,  8 Feb 2025 01:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OffX088E"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZBCveahe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBCB2CA6;
-	Sat,  8 Feb 2025 00:43:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D998A13AA2A;
+	Sat,  8 Feb 2025 01:31:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738975394; cv=none; b=DbVbXBt4+onQKF5Sp/GPS3Wv269LVD5eNf0PGxKZ//SzRwOSPAGK+r4I0vN0fKK5XFJoLrCxkak5t3m3vRu1r8gXnfsWUUg0WV4WJ2vRroh17aYWIHhcJ+Qm3xmhsb5MP6G0YxYbXyxXJmmsijFY74T7rG/4GbdfXgSZkx58cdU=
+	t=1738978305; cv=none; b=JVvCOT6zk5/PvRpuQLiw68uaRgskAuodPWeX7rdTob2M1PeOnPIX86HIkz3YWufJQYOLe1MroBvEmJAYoLnk9xdDLzyl9P5UcSpRx7lE6CrM6srgiErfwf7F4akP/TwO8X/gS4ESMxtVdKV6XCV6lFB48UnuqEIFfGpD/hKAK38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738975394; c=relaxed/simple;
-	bh=hmOk+kVgEY0Gm3FuBx7MCIpGtTuGb1YVT7o392Sr0FE=;
+	s=arc-20240116; t=1738978305; c=relaxed/simple;
+	bh=32VVIjqVMf+zEMUj4wsrN1ch6BDoXQEJ36SiMy39l2w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YFpkVkD1/Sx4658cW/CI+ghso4gbDvnEPi8pWTy5OFsA78iuHRrcrJSyDyNry2uFz+iFW9DayWCrDO919HZAOZOrMy6TQKv1ZNICTjRkBMc+CnwmcHmhp3RgEWfHgDK8ZHdMSyLkn1Juik9Az/befJYy6J02X1Wl8l8XViPfduY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OffX088E; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=gclN3Hfgsz6RZC/7BHrqCb/UWvEYedtdt91gZAsrA3LvWDcs1SqZgrnVh6F+3bjT49IBLfKhcWlLWXULdxpdof9U9TGBB7FnFuYF8UK/HzauOYo+vEazFkC+muIV2RXc55dJdSXiHotflnPVCbw2GYlmAkUU1NY8UhorlKlfa1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZBCveahe; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 517FrckV002495;
-	Sat, 8 Feb 2025 00:42:49 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51811px7016565;
+	Sat, 8 Feb 2025 01:31:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KCEiIoHCtst/NhjzeQGoVC0FR2YSA7BYdxQis/rSROM=; b=OffX088EVJC02fFn
-	ZoEivQTAiOTd7WGjxECmfAPqYCqVE8ytKduJtGgmDUwNIUs0ho7iObz7/j5fvgxA
-	Sp7jhTSTfIUaiD62QIjo8z1gGtSkmOjtJRtSoLc8dFl1Na6kzwclaFhq3MIaKy3T
-	GvUTrj+xfpvsmcfnLwiE67sD4lPjxXcJ3yWAwimYtd8SF0QrDXNDGct3H/ZsVJBm
-	tjeMqX69yio2oRfRaKMg+MlwIZlusUZE5xHJt+5VKWLsJkTfJw3uO7043T00yFAe
-	LYy5x3YJKey0Lz43RhM9r8K8fVXb1hRezKsfmULWZHPQ8zYGYhe4O9yka19SWN5w
-	06a1mw==
+	kOMW8RTIO3pAab3P0zq0c0WZFk8FEg7wDem0H2F5bMQ=; b=ZBCveaheBEIB1yx+
+	+e8siaQMZdqA0HK716C5buXUWQnYvfWaDITtHyFSlj5Q2xpPEyjuCY8wzKckEjT1
+	hLwdCttW7trcSmZWyfDo0gi6u0G3R0XXC+RSt9oR6ha0exv6CfOV3USqqZTmOWIv
+	7qA6Q3JEtDO7ADIa1GwWEdJk2vUS5gOHu9FC4rgDNPqHSZvJQ67xVIZN1uD9wK2g
+	q3aScdYlb/6pBSOetR7TdQ9Io7A/uhMXfy64Ca/15CNU1dIP0XfbuW2JWZttcIH1
+	TM4i8ElqqdgjOwnMc8qRXRkTxU0tXgHQOKj1poBgfkSXoc3307OGjoqubjU3VV+0
+	V8ZgEA==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44nn7fs3pm-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44nw8cg1aj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 08 Feb 2025 00:42:49 +0000 (GMT)
+	Sat, 08 Feb 2025 01:31:23 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5180gmHl008244
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5181VMlE032072
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 8 Feb 2025 00:42:48 GMT
+	Sat, 8 Feb 2025 01:31:22 GMT
 Received: from [10.110.94.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 7 Feb 2025
- 16:42:47 -0800
-Message-ID: <cdfa5cfd-6cdf-45cf-ac18-c2c217d4211a@quicinc.com>
-Date: Fri, 7 Feb 2025 16:42:46 -0800
+ 17:31:21 -0800
+Message-ID: <9c35f577-2124-4f80-a5d3-542b47ed6825@quicinc.com>
+Date: Fri, 7 Feb 2025 17:31:20 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,8 +65,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/7] drm/msm/hdmi: program HDMI timings during
- atomic_pre_enable
+Subject: Re: [PATCH v7 6/7] drm/msm/hdmi: also send the SPD and HDMI Vendor
+ Specific InfoFrames
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andrzej Hajda
 	<andrzej.hajda@intel.com>,
@@ -92,112 +92,186 @@ To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 CC: <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
         <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
 References: <20250208-bridge-hdmi-connector-v7-0-0c3837f00258@linaro.org>
- <20250208-bridge-hdmi-connector-v7-2-0c3837f00258@linaro.org>
+ <20250208-bridge-hdmi-connector-v7-6-0c3837f00258@linaro.org>
 Content-Language: en-US
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20250208-bridge-hdmi-connector-v7-2-0c3837f00258@linaro.org>
+In-Reply-To: <20250208-bridge-hdmi-connector-v7-6-0c3837f00258@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RHTzmRBfGq36tSuCNDeI_LPDsup84izJ
-X-Proofpoint-ORIG-GUID: RHTzmRBfGq36tSuCNDeI_LPDsup84izJ
+X-Proofpoint-GUID: a0_OQfXAb4jRESBvnIWZvvBaHnDzGYTB
+X-Proofpoint-ORIG-GUID: a0_OQfXAb4jRESBvnIWZvvBaHnDzGYTB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-07_11,2025-02-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
- spamscore=0 priorityscore=1501 bulkscore=0 mlxscore=0 lowpriorityscore=0
- clxscore=1015 phishscore=0 impostorscore=0 malwarescore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
- definitions=main-2502080002
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 mlxscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ impostorscore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502080009
 
 
 
 On 2/7/2025 4:27 PM, Dmitry Baryshkov wrote:
-> The mode_set callback is deprecated, it doesn't get the
-> drm_bridge_state, just mode-related argumetns. Also Abhinav pointed out
-> that HDMI timings should be programmed after setting up HDMI PHY and
-> PLL. Rework the code to program HDMI timings at the end of
-> atomic_pre_enable().
+> Extend the driver to send SPD and HDMI Vendor Specific InfoFrames.
+> 
+> While the HDMI block has special block to send HVS InfoFrame, use
+> GENERIC0 block instead. VENSPEC_INFO registers pack frame data in a way
+> that requires manual repacking in the driver, while GENERIC0 doesn't
+> have such format requirements. The msm-4.4 kernel uses GENERIC0 to send
+> HDR InfoFrame which we do not at this point anyway.
 > 
 
-I think now this needs to be changed that, program the HDMI timings at 
-the beginning of atomic_pre_enable() to match the location of mode_set()
+True that GENERIC_0/1 packets can be used for any infoframe. But because 
+we have so many of them, thats why when there are dedicated registers 
+for some of them, we use them to save the GENERIC0 ones for others.
 
-With that fixed,
+Lets take a case where we want to send HVSIF, SPD and HDR together for 
+the same frame, then we run out as there are no HDR specific infoframe 
+registers we can use. Is the expectation that we will migrate to 
+VENSPEC_INFO regs for HVSIF when we add HDR support?
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Also from a validation standpoint, I guess to really validate this 
+change you need an analyzer which decodes the HVSIF. So was this mostly 
+sanity tested at this pointed to make sure that the sink just comes up?
 
-> Reviewed-by: Maxime Ripard <mripard@kernel.org>
+> Acked-by: Maxime Ripard <mripard@kernel.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 24 ++++++++++++++++--------
->   1 file changed, 16 insertions(+), 8 deletions(-)
+>   drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 93 ++++++++++++++++++++++++++++++++++
+>   1 file changed, 93 insertions(+)
 > 
 > diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> index d839c71091dcdc3b020fcbba8d698d58ee7fc749..bd94b3a70f0e5e457a88f089b491103a8c09567b 100644
+> index 15ab0858105328c2f774ec1f79423614bbbaeb41..aee75eee3d4244cd95e44df46d65b8e3e53de735 100644
 > --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
 > +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> @@ -126,15 +126,29 @@ static void msm_hdmi_config_avi_infoframe(struct hdmi *hdmi)
->   	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
+> @@ -69,6 +69,8 @@ static void power_off(struct drm_bridge *bridge)
 >   }
 >   
-> +static void msm_hdmi_set_timings(struct hdmi *hdmi,
-> +				 const struct drm_display_mode *mode);
+>   #define AVI_IFRAME_LINE_NUMBER 1
+> +#define SPD_IFRAME_LINE_NUMBER 1
+> +#define VENSPEC_IFRAME_LINE_NUMBER 3
+>   
+>   static int msm_hdmi_config_avi_infoframe(struct hdmi *hdmi,
+>   					 const u8 *buffer, size_t len)
+> @@ -142,6 +144,74 @@ static int msm_hdmi_config_audio_infoframe(struct hdmi *hdmi,
+>   	return 0;
+>   }
+>   
+> +static int msm_hdmi_config_spd_infoframe(struct hdmi *hdmi,
+> +					 const u8 *buffer, size_t len)
+> +{
+> +	u32 buf[7] = {};
+> +	u32 val;
+> +	int i;
 > +
->   static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
->   					      struct drm_bridge_state *old_bridge_state)
+> +	if (len != HDMI_INFOFRAME_SIZE(SPD) || len - 3 > sizeof(buf)) {
+> +		DRM_DEV_ERROR(&hdmi->pdev->dev,
+> +			"failed to configure SPD infoframe\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	/* checksum gets written together with the body of the frame */
+> +	hdmi_write(hdmi, REG_HDMI_GENERIC1_HDR,
+> +		   buffer[0] |
+> +		   buffer[1] << 8 |
+> +		   buffer[2] << 16);
+> +
+> +	memcpy(buf, &buffer[3], len - 3);
+> +
+> +	for (i = 0; i < ARRAY_SIZE(buf); i++)
+> +		hdmi_write(hdmi, REG_HDMI_GENERIC1(i), buf[i]);
+> +
+> +	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
+> +	val |= HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
+> +		 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
+> +		 HDMI_GEN_PKT_CTRL_GENERIC1_LINE(SPD_IFRAME_LINE_NUMBER);
+> +	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
+> +
+> +	return 0;
+> +}
+> +
+> +static int msm_hdmi_config_hdmi_infoframe(struct hdmi *hdmi,
+> +					  const u8 *buffer, size_t len)
+
+msm_hdmi_config_hvsif_infoframe() to be more clear?
+
+> +{
+> +	u32 buf[7] = {};
+> +	u32 val;
+> +	int i;
+> +
+> +	if (len < HDMI_INFOFRAME_HEADER_SIZE + HDMI_VENDOR_INFOFRAME_SIZE ||
+> +	    len - 3 > sizeof(buf)) {
+> +		DRM_DEV_ERROR(&hdmi->pdev->dev,
+> +			"failed to configure HDMI infoframe\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	/* checksum gets written together with the body of the frame */
+> +	hdmi_write(hdmi, REG_HDMI_GENERIC0_HDR,
+> +		   buffer[0] |
+> +		   buffer[1] << 8 |
+> +		   buffer[2] << 16);
+> +
+> +	memcpy(buf, &buffer[3], len - 3);
+> +
+> +	for (i = 0; i < ARRAY_SIZE(buf); i++)
+> +		hdmi_write(hdmi, REG_HDMI_GENERIC0(i), buf[i]);
+> +
+> +	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
+> +	val |= HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
+> +		 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
+> +		 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
+> +		 HDMI_GEN_PKT_CTRL_GENERIC0_LINE(VENSPEC_IFRAME_LINE_NUMBER);
+> +	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
+> +
+> +	return 0;
+> +}
+> +
+>   static int msm_hdmi_bridge_clear_infoframe(struct drm_bridge *bridge,
+>   					   enum hdmi_infoframe_type type)
 >   {
-> +	struct drm_atomic_state *state = old_bridge_state->base.state;
->   	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
->   	struct hdmi *hdmi = hdmi_bridge->hdmi;
->   	struct hdmi_phy *phy = hdmi->phy;
-> +	struct drm_encoder *encoder = bridge->encoder;
-> +	struct drm_connector *connector;
-> +	struct drm_connector_state *conn_state;
-> +	struct drm_crtc_state *crtc_state;
+> @@ -176,6 +246,25 @@ static int msm_hdmi_bridge_clear_infoframe(struct drm_bridge *bridge,
 >   
->   	DBG("power up");
+>   		break;
 >   
-> +	connector = drm_atomic_get_new_connector_for_encoder(state, encoder);
-> +	conn_state = drm_atomic_get_new_connector_state(state, connector);
-> +	crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
+> +	case HDMI_INFOFRAME_TYPE_SPD:
+> +		val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
+> +		val &= ~(HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
+> +			 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
+> +			 HDMI_GEN_PKT_CTRL_GENERIC1_LINE__MASK);
+> +		hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
 > +
-> +	msm_hdmi_set_timings(hdmi, &crtc_state->adjusted_mode);
+> +		break;
 > +
->   	if (!hdmi->power_on) {
->   		msm_hdmi_phy_resource_enable(phy);
->   		msm_hdmi_power_on(bridge);
-> @@ -177,17 +191,12 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
+> +	case HDMI_INFOFRAME_TYPE_VENDOR:
+> +		val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
+> +		val &= ~(HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
+> +			 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
+> +			 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
+> +			 HDMI_GEN_PKT_CTRL_GENERIC0_LINE__MASK);
+> +		hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
+> +
+> +		break;
+> +
+>   	default:
+>   		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
 >   	}
->   }
->   
-> -static void msm_hdmi_bridge_mode_set(struct drm_bridge *bridge,
-> -		 const struct drm_display_mode *mode,
-> -		 const struct drm_display_mode *adjusted_mode)
-> +static void msm_hdmi_set_timings(struct hdmi *hdmi,
-> +				 const struct drm_display_mode *mode)
->   {
-> -	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
-> -	struct hdmi *hdmi = hdmi_bridge->hdmi;
->   	int hstart, hend, vstart, vend;
->   	uint32_t frame_ctrl;
->   
-> -	mode = adjusted_mode;
-> -
->   	hdmi->pixclock = mode->clock * 1000;
->   
->   	hstart = mode->htotal - mode->hsync_start;
-> @@ -306,7 +315,6 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
->   	.atomic_reset = drm_atomic_helper_bridge_reset,
->   	.atomic_pre_enable = msm_hdmi_bridge_atomic_pre_enable,
->   	.atomic_post_disable = msm_hdmi_bridge_atomic_post_disable,
-> -	.mode_set = msm_hdmi_bridge_mode_set,
->   	.mode_valid = msm_hdmi_bridge_mode_valid,
->   	.edid_read = msm_hdmi_bridge_edid_read,
->   	.detect = msm_hdmi_bridge_detect,
+> @@ -197,6 +286,10 @@ static int msm_hdmi_bridge_write_infoframe(struct drm_bridge *bridge,
+>   		return msm_hdmi_config_avi_infoframe(hdmi, buffer, len);
+>   	case HDMI_INFOFRAME_TYPE_AUDIO:
+>   		return msm_hdmi_config_audio_infoframe(hdmi, buffer, len);
+> +	case HDMI_INFOFRAME_TYPE_SPD:
+> +		return msm_hdmi_config_spd_infoframe(hdmi, buffer, len);
+> +	case HDMI_INFOFRAME_TYPE_VENDOR:
+> +		return msm_hdmi_config_hdmi_infoframe(hdmi, buffer, len);
+>   	default:
+>   		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
+>   		return 0;
 > 
 
 
