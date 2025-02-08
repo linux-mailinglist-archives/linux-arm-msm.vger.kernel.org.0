@@ -1,81 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-47213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10638A2D1FF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 01:27:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A29AA2D200
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 01:28:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 25CB73A631D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 00:27:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FEC73AB585
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 00:27:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40002DDCD;
-	Sat,  8 Feb 2025 00:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B407143748;
+	Sat,  8 Feb 2025 00:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S99QDt//"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oKd9V58P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A96912C499
-	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Feb 2025 00:27:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221E813B7A3
+	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Feb 2025 00:27:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738974438; cv=none; b=em8VU4NP/f/DJCTult7HDnBzO41mnwIquqOximFpqGfExLg4pgTiwnFx6FzjTm8GgI6li/womn/WYIGzMZeh8sZw96vDkX5It9JjpRUlhrvhK0bEpIgYC8FMNYEiYTFhChZANnonpu0lUJRgjOa7LjvYyOJpV2HfW+hU52z2kYs=
+	t=1738974439; cv=none; b=pS4+l2LujoYV/4jBjH6W7VIsC906x28eYo+YvwJi/mH92AFzL5FQAouZppLRw0kOlUi77GcE/YehWFpt3MepF+PBCdIRssti/53CognLLR4jq5KNKDGP+tLPaA7VQmALw616wIgoXbEyEvcFQz8Wh/v/mndJCb57aP2hHFrjMxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738974438; c=relaxed/simple;
-	bh=nHYYRE/CeCqfmTKVjZd6ihooOFDKt9/BT7EesHCrXDk=;
+	s=arc-20240116; t=1738974439; c=relaxed/simple;
+	bh=kwW90yaGXjA8kr6gl2QdxUU01rGJmaVy/t2QVZCPXNM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sJo/fCtzFqfqRlxAlfq6btpUIUIUaU+wW34N6E5BWMRAlKWrBqGvv1x3ic6kDa/SVQKvowDWRSc3QRRJKvHB+Oil7MRvY/JmaEtXQfY44r1ca3GTulmyUfzNsQM8vtOcNjDna7CT12tPjqJOQ62K6ZG1Iq5QuS+Oc8+GYKWYASk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S99QDt//; arc=none smtp.client-ip=209.85.167.48
+	 In-Reply-To:To:Cc; b=fmRsHiDlBmMN86p4DjzV+Bk5rowy5xGW59tf09quWVsVBzcyVdV7jthHfz+dMFYiK270zSyT8VZhWH8MKf+o/FXrpN/i01Waiuctv/HXLjNyQ0J/SgewvZ8Xlc9Y+4TAqomJ2gM9DcP6ulN4qHjHeLyQj3A1hYqrDVRhYc7sfAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oKd9V58P; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-54505191cdcso102613e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2025 16:27:14 -0800 (PST)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-54450213957so1457287e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2025 16:27:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738974433; x=1739579233; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738974435; x=1739579235; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZOBO19WJAGLcwBijDsk4iWnIQdvG0YxxQdf3oKTQwzU=;
-        b=S99QDt//mNwBXo7undSF9vfBtgNjZuiUmJblRwW588nuj2Dk+MD0M8mNk60epzYWHV
-         fB1tHuVQTgSaYI2IOH11/9xysgZe3miZ6rMNTL3galiGZoIz7vp1bLgaYTqwuMFIHi5j
-         CqJBSNI+Tikw0xi7vfywmo2naBxSCnwgNd3TGOlXrmdlTbGm/uMm6tN7D5uBz1r5T4uD
-         D7LB7/7OceMcMhnSG8l9unINMiD7Bxwr/oplz49hLyE9P3ZH97ILyS2LXwoajS6tEiDz
-         YpKscn0Qt2WlqFJN200Q5IRtXLZ3WRXiUxafyu5UFH/7FaFH/BpiwPs6uamsGl/NSEcJ
-         V9ig==
+        bh=cQ4eiEd6P4+c5hYs9d14pRxOxpaCXWHbXbrnXxZW1Kg=;
+        b=oKd9V58PFMbmEB77hjN4QCI3lZZ5FxmsD96l8VsLhamJUovz9zFazgqAEESFALEClS
+         XHx7AWKvskUJA7vM6SbQZP7iwZRhsPw18q2MF/kWKV54j5DI7z0YvSUjFCVEmoob4R5N
+         KtnnycM8FeIrZ7sQZ5Qwmnn356/ITskAFcv5uptjx9i77kO2gUOjUgOQJV8j1QtK8Z2P
+         C6ZsywST6FHdNXwUPXA2/dceN+YoaxUG3XYlYZmNXFi7F4XfPE14sKKAdPZFPSbhiSSI
+         r91MPRP2wUG6lTWm5HOVaIcDJ4kAEWSSHjd/BOrDrao0HSIp5owjtLkDBjq4J1pJ132l
+         Xhcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738974433; x=1739579233;
+        d=1e100.net; s=20230601; t=1738974435; x=1739579235;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZOBO19WJAGLcwBijDsk4iWnIQdvG0YxxQdf3oKTQwzU=;
-        b=pLqr5P9MRdxLcp22WL4WwOqsUZpQbC2Sn8M2oKMQliNctGpEO0bc1njE3r3hoMG29s
-         6Zf9r6fXItjj+ZA5bRnM37zTUht94c2YE6C+OltZpz+AWVKbCyHHaJCc/pwYG4du3Pxr
-         Ibt9B2F05NOWEiYh840HkwsawLCe6SjZBDGwVqS+icseNQC5GnUC7IxPJ5vBb0yQ0f9s
-         biFdWxjW7NS692WwEDuq+B/8pwWcimXGm9bezn1rktPGyUCkmu3GSz3uPfmYqzOfeOV2
-         WPw7HoNs2Ifa1LsEybx7spt/lDGVW919Cx4zf+/IG3GlzgrA7RYWvNFIFK3baiqOmOe5
-         ZorQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVk3bDXik8Ut5gvWalptNOxxHGg37vZ0sWlV3zR5wK+rgOC/KdHe0jC6eFo7vGmvLJLKWiZEsyytC05aVbr@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbF4OZPxYAZQGll8a09SDzEYtMiiCrh9d2VEsvfhOHdaqyxdRt
-	hx3PsXDo8RFHviXCwWxTavN9IJUX2nHCwWuEGlMkLQ1btS3vT7an0f3mvN0baqg=
-X-Gm-Gg: ASbGncsNKJXdWFlKTPqZ3KmLLodEtxKrzkFsNSffIJcsA6S+/9KUrtHPdVe/RN/ouKm
-	zQ7XDRoYbBYWoBb7jHYEIQkWNid4sQgSbVnrcveNH2shJOvC/f2Yj+jQ+x4Zur9hbO0Snp6ai+J
-	f0I3Y3y51iB89lrjxqSGCxyxkql4iRsL0u5E/rwNWpI6Oy1jrIHZ1zG4sbZeFk/+dT0q616QQbq
-	UdUlhalfuolVsJ7dQjy/44gtn6IMLkXHUE5f14zwmdupo5X3GYfe3LYX9FhKcI1LNl0ZfMMbS7W
-	qSfVJYTaCrwpQq1S9lFiXek=
-X-Google-Smtp-Source: AGHT+IGBTPYEcBgpEF1zll0mXDOwH7Br8ZDX3ih1cuoECflpWsUoPkEK2H84bYa6V1x5qLIP7pTCfg==
-X-Received: by 2002:a05:6512:3a85:b0:542:2990:6e9b with SMTP id 2adb3069b0e04-54414a9cf1dmr1758580e87.14.1738974432631;
-        Fri, 07 Feb 2025 16:27:12 -0800 (PST)
+        bh=cQ4eiEd6P4+c5hYs9d14pRxOxpaCXWHbXbrnXxZW1Kg=;
+        b=oTpirIeBTHuoNzdUcWA409zzlLii95zD9nhxi2zULhFHyQWHS4mnS0Sg8g3NcmRyX6
+         9kZuAEn+QvxJqncUijYxrLnmUq3jMTGc9MdHaObJY7X78XHvmyHQIvV5gDWqb0c0MFDg
+         zO3mgmOXiNQRH2kETl9fO1PAH/mpTvNfmJHSm17XzgL1Qx10ST+GeZ7cCPUmR6MBL7Fb
+         wTOn7WZfQg4MpDkiPnCWocJc03KVgi7fZnY+wFncp8YLjWHhYaX4uaLk3Hj/zHUM9CTO
+         yXQSrkeqGvl5P1gl1u7lc7V7aCanvPI2DVZZIToIeyWp6e2RLmNhPt1pqn65cl8ru5vr
+         oWiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXgOLFb6CQ55ZyUdu+ok/Bj946MwFTT3magQ9xZij0+sONqWkISsQOqpvPj1W4X/1/yX40717Dvt1FiMqF9@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfxNOHCOZtwjXjZ4n8c1vAy1t3dUMFUrmmW44HMZPSvFeRye3G
+	qZOJ1r0fKSSYSVOJ3r81aaHABxYgCPuyjVqfiReJOfgngGg5eWQlifeOJSRRCeg=
+X-Gm-Gg: ASbGncu7v5UBYg9e3vpClnSphZV36hRvld1V4F6PrFG1cJO02Zv2Il6UZZqQ18XnLq6
+	gTy4bcKWeN/QdWRQeKWGBM6IUaU29jBl5257pTGMJajachkBmYuTYskNWLvB9xqd3e0xVmr/mbv
+	EVnWOuQKtyDK21uNdkMXHve4ej8M7GfmkeRkCpkF1lg76+wNBAU1RqmniBli8O/IdE38Gt4NyXN
+	NTx8pI2uCvjS/nxuK6kp60gXlVmJiUWDzHRwxHLeQOMd7S7VDgeZD8wr1NotvhFRg7ytuRMuyH5
+	PiJR3B/78iEbI/yLBH6lTHI=
+X-Google-Smtp-Source: AGHT+IE0HRYadLgRlFKRYvwewdKyRJrqdIwef+bzOoB0eCBwvioFcB13g7Pms7VdBytcIFx7GOh01w==
+X-Received: by 2002:a05:6512:36c2:b0:543:baa3:87a9 with SMTP id 2adb3069b0e04-54414ae62a8mr1280181e87.49.1738974435149;
+        Fri, 07 Feb 2025 16:27:15 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5441060413asm588785e87.222.2025.02.07.16.27.10
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5441060413asm588785e87.222.2025.02.07.16.27.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Feb 2025 16:27:11 -0800 (PST)
+        Fri, 07 Feb 2025 16:27:13 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 08 Feb 2025 02:27:02 +0200
-Subject: [PATCH v7 3/7] drm/msm/hdmi: make use of the drm_connector_hdmi
- framework
+Date: Sat, 08 Feb 2025 02:27:03 +0200
+Subject: [PATCH v7 4/7] drm/msm/hdmi: get rid of hdmi_mode
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250208-bridge-hdmi-connector-v7-3-0c3837f00258@linaro.org>
+Message-Id: <20250208-bridge-hdmi-connector-v7-4-0c3837f00258@linaro.org>
 References: <20250208-bridge-hdmi-connector-v7-0-0c3837f00258@linaro.org>
 In-Reply-To: <20250208-bridge-hdmi-connector-v7-0-0c3837f00258@linaro.org>
 To: Andrzej Hajda <andrzej.hajda@intel.com>, 
@@ -100,617 +99,106 @@ To: Andrzej Hajda <andrzej.hajda@intel.com>,
 Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=20862;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3269;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=nHYYRE/CeCqfmTKVjZd6ihooOFDKt9/BT7EesHCrXDk=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnpqTVPBdlhvek/4oY7Vv6KVDcsMzJgdAxXJdlF
- H3IgvoF+xSJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ6ak1QAKCRCLPIo+Aiko
- 1fGKCACTZH/JDvAv2e2eiJVgOThnSPXXST7xKIMoEpHhPpzY52dK3WHGc5knMZOqDxyokiDVaPS
- 8OXn+6bC+VX7v6oJ3LbVXEG/gZflJYd3X0q/FqWWJA6FQ5H3ur/TTVOiyijvMd627JWjSv/kgBo
- J82NL1t7OVadvVb6StzmZcgPar+C/JHBbZ2JdsrkbvUrQn4JipMvjidJqO4IEbXyjwCLB4vaVZW
- 9rlLd6mCYvF0XSIkGqGKU4JmNauCQoZZKdGf4M0uEhnXuZrRKCCsRGCLjPBPMvyLv/vmgOeczTT
- F4RzWq4d9JTsTKaNjcgNvzFTwlgagLxmn1wWqwxfYs9Ii/YB
+ bh=kwW90yaGXjA8kr6gl2QdxUU01rGJmaVy/t2QVZCPXNM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnpqTVhekXNgRhbLo/MXTHBp+Ns1DBrCTeoHx8m
+ 2qQDmR13leJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ6ak1QAKCRCLPIo+Aiko
+ 1WDCCACfkXHtGNmUhx68GPVqzQoQbhU68C4O524tof04eeulXgnYHBmCdk5Vi4r5ynnRCpdLuge
+ kCIECZgv5ymAymrGv8LjSUSNWI0RjujMmltE9uANd4IhKtseKx7rhd5F+/bxDRH8ZgDhqSa7zSV
+ QM6VNcw9csfYsqDu2dVfUc9uIIDAb7Pv4ILiWv5txe/G0AsB18djO2MD4zsQrYSgsM4Kops3ZZq
+ 2Oz+MvRFEMirCLf3/uhgsrqAz/hMh88zbi9yZUUty0OQ4rQx+nOHMwYX83xjjWgH8kr+u1nNDxZ
+ 2oDOdbC6xcILj3Vp9d0p9uTRarqCMygGrzhfA9j8csBcUHzs
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Setup the HDMI connector on the MSM HDMI outputs. Make use of
-atomic_check hook and of the provided Infoframe infrastructure.
+Use connector->display_info.is_hdmi instead of manually using
+drm_detect_hdmi_monitor().
 
 Acked-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/Kconfig            |   2 +
- drivers/gpu/drm/msm/hdmi/hdmi.c        |  45 ++-------
- drivers/gpu/drm/msm/hdmi/hdmi.h        |  15 +--
- drivers/gpu/drm/msm/hdmi/hdmi_audio.c  |  72 ++++----------
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 175 ++++++++++++++++++++++++---------
- 5 files changed, 162 insertions(+), 147 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi.c        |  2 +-
+ drivers/gpu/drm/msm/hdmi/hdmi.h        |  2 --
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 17 +++--------------
+ 3 files changed, 4 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 7ec833b6d8292f8cb26cfe5582812f2754cd4d35..974bc7c0ea761147d3326bdce9039d6f26f290d0 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -170,6 +170,8 @@ config DRM_MSM_HDMI
- 	bool "Enable HDMI support in MSM DRM driver"
- 	depends on DRM_MSM
- 	default y
-+	select DRM_DISPLAY_HDMI_HELPER
-+	select DRM_DISPLAY_HDMI_STATE_HELPER
- 	help
- 	  Compile in support for the HDMI output MSM DRM driver. It can
- 	  be a primary or a secondary display on device. Note that this is used
 diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index 37b3809c6bdd7c35aca6b475cb1f41c0ab4d3e6d..b14205cb9e977edd0d849e0eafe9b69c0da594bd 100644
+index b14205cb9e977edd0d849e0eafe9b69c0da594bd..6b77e0fb8d5ec218dfbf58215e2e12ad1dfb1b85 100644
 --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
 +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -12,6 +12,7 @@
- 
- #include <drm/drm_bridge_connector.h>
- #include <drm/drm_of.h>
-+#include <drm/display/drm_hdmi_state_helper.h>
- 
- #include <sound/hdmi-codec.h>
- #include "hdmi.h"
-@@ -165,8 +166,6 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
- 	hdmi->dev = dev;
- 	hdmi->encoder = encoder;
- 
--	hdmi_audio_infoframe_init(&hdmi->audio.infoframe);
--
- 	ret = msm_hdmi_bridge_init(hdmi);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev->dev, "failed to create HDMI bridge: %d\n", ret);
-@@ -254,40 +253,12 @@ static int msm_hdmi_audio_hw_params(struct device *dev, void *data,
- 				    struct hdmi_codec_params *params)
- {
- 	struct hdmi *hdmi = dev_get_drvdata(dev);
--	unsigned int chan;
--	unsigned int channel_allocation = 0;
- 	unsigned int rate;
--	unsigned int level_shift  = 0; /* 0dB */
--	bool down_mix = false;
-+	int ret;
- 
- 	DRM_DEV_DEBUG(dev, "%u Hz, %d bit, %d channels\n", params->sample_rate,
- 		 params->sample_width, params->cea.channels);
- 
--	switch (params->cea.channels) {
--	case 2:
--		/* FR and FL speakers */
--		channel_allocation  = 0;
--		chan = MSM_HDMI_AUDIO_CHANNEL_2;
--		break;
--	case 4:
--		/* FC, LFE, FR and FL speakers */
--		channel_allocation  = 0x3;
--		chan = MSM_HDMI_AUDIO_CHANNEL_4;
--		break;
--	case 6:
--		/* RR, RL, FC, LFE, FR and FL speakers */
--		channel_allocation  = 0x0B;
--		chan = MSM_HDMI_AUDIO_CHANNEL_6;
--		break;
--	case 8:
--		/* FRC, FLC, RR, RL, FC, LFE, FR and FL speakers */
--		channel_allocation  = 0x1F;
--		chan = MSM_HDMI_AUDIO_CHANNEL_8;
--		break;
--	default:
--		return -EINVAL;
--	}
--
- 	switch (params->sample_rate) {
- 	case 32000:
- 		rate = HDMI_SAMPLE_RATE_32KHZ;
-@@ -316,9 +287,12 @@ static int msm_hdmi_audio_hw_params(struct device *dev, void *data,
- 		return -EINVAL;
- 	}
- 
--	msm_hdmi_audio_set_sample_rate(hdmi, rate);
--	msm_hdmi_audio_info_setup(hdmi, 1, chan, channel_allocation,
--			      level_shift, down_mix);
-+	ret = drm_atomic_helper_connector_hdmi_update_audio_infoframe(hdmi->connector,
-+								      &params->cea);
-+	if (ret)
-+		return ret;
-+
-+	msm_hdmi_audio_info_setup(hdmi, rate, params->cea.channels);
- 
- 	return 0;
- }
-@@ -327,7 +301,8 @@ static void msm_hdmi_audio_shutdown(struct device *dev, void *data)
- {
- 	struct hdmi *hdmi = dev_get_drvdata(dev);
- 
--	msm_hdmi_audio_info_setup(hdmi, 0, 0, 0, 0, 0);
-+	drm_atomic_helper_connector_hdmi_clear_audio_infoframe(hdmi->connector);
-+	msm_hdmi_audio_disable(hdmi);
- }
- 
- static const struct hdmi_codec_ops msm_hdmi_audio_codec_ops = {
+@@ -25,7 +25,7 @@ void msm_hdmi_set_mode(struct hdmi *hdmi, bool power_on)
+ 	spin_lock_irqsave(&hdmi->reg_lock, flags);
+ 	if (power_on) {
+ 		ctrl |= HDMI_CTRL_ENABLE;
+-		if (!hdmi->hdmi_mode) {
++		if (!hdmi->connector->display_info.is_hdmi) {
+ 			ctrl |= HDMI_CTRL_HDMI;
+ 			hdmi_write(hdmi, REG_HDMI_CTRL, ctrl);
+ 			ctrl &= ~HDMI_CTRL_HDMI;
 diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
-index a62d2aedfbb7239d37c826c4f96762f100a2be4a..8faad8440cf70f792da353978b990861b0677ed8 100644
+index 8faad8440cf70f792da353978b990861b0677ed8..cdd3bd4f37831f9a606a4c3627a48364f5d4025f 100644
 --- a/drivers/gpu/drm/msm/hdmi/hdmi.h
 +++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
-@@ -24,8 +24,8 @@ struct hdmi_platform_config;
+@@ -67,8 +67,6 @@ struct hdmi {
+ 	/* the encoder we are hooked to (outside of hdmi block) */
+ 	struct drm_encoder *encoder;
  
- struct hdmi_audio {
- 	bool enabled;
--	struct hdmi_audio_infoframe infoframe;
- 	int rate;
-+	int channels;
- };
- 
- struct hdmi_hdcp_ctrl;
-@@ -207,12 +207,6 @@ static inline int msm_hdmi_pll_8998_init(struct platform_device *pdev)
- /*
-  * audio:
-  */
--/* Supported HDMI Audio channels and rates */
--#define	MSM_HDMI_AUDIO_CHANNEL_2	0
--#define	MSM_HDMI_AUDIO_CHANNEL_4	1
--#define	MSM_HDMI_AUDIO_CHANNEL_6	2
--#define	MSM_HDMI_AUDIO_CHANNEL_8	3
+-	bool hdmi_mode;               /* are we in hdmi mode? */
 -
- #define	HDMI_SAMPLE_RATE_32KHZ		0
- #define	HDMI_SAMPLE_RATE_44_1KHZ	1
- #define	HDMI_SAMPLE_RATE_48KHZ		2
-@@ -222,11 +216,8 @@ static inline int msm_hdmi_pll_8998_init(struct platform_device *pdev)
- #define	HDMI_SAMPLE_RATE_192KHZ		6
+ 	int irq;
+ 	struct workqueue_struct *workq;
  
- int msm_hdmi_audio_update(struct hdmi *hdmi);
--int msm_hdmi_audio_info_setup(struct hdmi *hdmi, bool enabled,
--	uint32_t num_of_channels, uint32_t channel_allocation,
--	uint32_t level_shift, bool down_mix);
--void msm_hdmi_audio_set_sample_rate(struct hdmi *hdmi, int rate);
--
-+int msm_hdmi_audio_info_setup(struct hdmi *hdmi, int rate, int channels);
-+int msm_hdmi_audio_disable(struct hdmi *hdmi);
- 
- /*
-  * hdmi bridge:
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_audio.c b/drivers/gpu/drm/msm/hdmi/hdmi_audio.c
-index 4c2058c4adc1001a12e10f35e88a6d58f3bd2fdc..0b91ed5eabd234ff3bca0c2dfaa159dd2e6a9df5 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_audio.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_audio.c
-@@ -7,9 +7,6 @@
- #include <linux/hdmi.h>
- #include "hdmi.h"
- 
--/* maps MSM_HDMI_AUDIO_CHANNEL_n consts used by audio driver to # of channels: */
--static int nchannels[] = { 2, 4, 6, 8 };
--
- /* Supported HDMI Audio sample rates */
- #define MSM_HDMI_SAMPLE_RATE_32KHZ		0
- #define MSM_HDMI_SAMPLE_RATE_44_1KHZ		1
-@@ -74,16 +71,17 @@ static const struct hdmi_msm_audio_arcs *get_arcs(unsigned long int pixclock)
- int msm_hdmi_audio_update(struct hdmi *hdmi)
- {
- 	struct hdmi_audio *audio = &hdmi->audio;
--	struct hdmi_audio_infoframe *info = &audio->infoframe;
- 	const struct hdmi_msm_audio_arcs *arcs = NULL;
- 	bool enabled = audio->enabled;
- 	uint32_t acr_pkt_ctrl, vbi_pkt_ctrl, aud_pkt_ctrl;
--	uint32_t infofrm_ctrl, audio_config;
-+	uint32_t audio_config;
-+
-+	if (!hdmi->connector->display_info.is_hdmi)
-+		return -EINVAL;
-+
-+	DBG("audio: enabled=%d, channels=%d, rate=%d",
-+	    audio->enabled, audio->channels, audio->rate);
- 
--	DBG("audio: enabled=%d, channels=%d, channel_allocation=0x%x, "
--		"level_shift_value=%d, downmix_inhibit=%d, rate=%d",
--		audio->enabled, info->channels,  info->channel_allocation,
--		info->level_shift_value, info->downmix_inhibit, audio->rate);
- 	DBG("video: power_on=%d, pixclock=%lu", hdmi->power_on, hdmi->pixclock);
- 
- 	if (enabled && !(hdmi->power_on && hdmi->pixclock)) {
-@@ -104,7 +102,6 @@ int msm_hdmi_audio_update(struct hdmi *hdmi)
- 	acr_pkt_ctrl = hdmi_read(hdmi, REG_HDMI_ACR_PKT_CTRL);
- 	vbi_pkt_ctrl = hdmi_read(hdmi, REG_HDMI_VBI_PKT_CTRL);
- 	aud_pkt_ctrl = hdmi_read(hdmi, REG_HDMI_AUDIO_PKT_CTRL1);
--	infofrm_ctrl = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL0);
- 	audio_config = hdmi_read(hdmi, REG_HDMI_AUDIO_CFG);
- 
- 	/* Clear N/CTS selection bits */
-@@ -113,7 +110,6 @@ int msm_hdmi_audio_update(struct hdmi *hdmi)
- 	if (enabled) {
- 		uint32_t n, cts, multiplier;
- 		enum hdmi_acr_cts select;
--		uint8_t buf[14];
- 
- 		n   = arcs->lut[audio->rate].n;
- 		cts = arcs->lut[audio->rate].cts;
-@@ -155,20 +151,12 @@ int msm_hdmi_audio_update(struct hdmi *hdmi)
- 				HDMI_ACR_1_N(n));
- 
- 		hdmi_write(hdmi, REG_HDMI_AUDIO_PKT_CTRL2,
--				COND(info->channels != 2, HDMI_AUDIO_PKT_CTRL2_LAYOUT) |
-+				COND(audio->channels != 2, HDMI_AUDIO_PKT_CTRL2_LAYOUT) |
- 				HDMI_AUDIO_PKT_CTRL2_OVERRIDE);
- 
- 		acr_pkt_ctrl |= HDMI_ACR_PKT_CTRL_CONT;
- 		acr_pkt_ctrl |= HDMI_ACR_PKT_CTRL_SEND;
- 
--		/* configure infoframe: */
--		hdmi_audio_infoframe_pack(info, buf, sizeof(buf));
--		hdmi_write(hdmi, REG_HDMI_AUDIO_INFO0,
--				(buf[3] <<  0) | (buf[4] <<  8) |
--				(buf[5] << 16) | (buf[6] << 24));
--		hdmi_write(hdmi, REG_HDMI_AUDIO_INFO1,
--				(buf[7] <<  0) | (buf[8] << 8));
--
- 		hdmi_write(hdmi, REG_HDMI_GC, 0);
- 
- 		vbi_pkt_ctrl |= HDMI_VBI_PKT_CTRL_GC_ENABLE;
-@@ -176,11 +164,6 @@ int msm_hdmi_audio_update(struct hdmi *hdmi)
- 
- 		aud_pkt_ctrl |= HDMI_AUDIO_PKT_CTRL1_AUDIO_SAMPLE_SEND;
- 
--		infofrm_ctrl |= HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SEND;
--		infofrm_ctrl |= HDMI_INFOFRAME_CTRL0_AUDIO_INFO_CONT;
--		infofrm_ctrl |= HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE;
--		infofrm_ctrl |= HDMI_INFOFRAME_CTRL0_AUDIO_INFO_UPDATE;
--
- 		audio_config &= ~HDMI_AUDIO_CFG_FIFO_WATERMARK__MASK;
- 		audio_config |= HDMI_AUDIO_CFG_FIFO_WATERMARK(4);
- 		audio_config |= HDMI_AUDIO_CFG_ENGINE_ENABLE;
-@@ -190,17 +173,12 @@ int msm_hdmi_audio_update(struct hdmi *hdmi)
- 		vbi_pkt_ctrl &= ~HDMI_VBI_PKT_CTRL_GC_ENABLE;
- 		vbi_pkt_ctrl &= ~HDMI_VBI_PKT_CTRL_GC_EVERY_FRAME;
- 		aud_pkt_ctrl &= ~HDMI_AUDIO_PKT_CTRL1_AUDIO_SAMPLE_SEND;
--		infofrm_ctrl &= ~HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SEND;
--		infofrm_ctrl &= ~HDMI_INFOFRAME_CTRL0_AUDIO_INFO_CONT;
--		infofrm_ctrl &= ~HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE;
--		infofrm_ctrl &= ~HDMI_INFOFRAME_CTRL0_AUDIO_INFO_UPDATE;
- 		audio_config &= ~HDMI_AUDIO_CFG_ENGINE_ENABLE;
- 	}
- 
- 	hdmi_write(hdmi, REG_HDMI_ACR_PKT_CTRL, acr_pkt_ctrl);
- 	hdmi_write(hdmi, REG_HDMI_VBI_PKT_CTRL, vbi_pkt_ctrl);
- 	hdmi_write(hdmi, REG_HDMI_AUDIO_PKT_CTRL1, aud_pkt_ctrl);
--	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, infofrm_ctrl);
- 
- 	hdmi_write(hdmi, REG_HDMI_AUD_INT,
- 			COND(enabled, HDMI_AUD_INT_AUD_FIFO_URUN_INT) |
-@@ -214,41 +192,29 @@ int msm_hdmi_audio_update(struct hdmi *hdmi)
- 	return 0;
- }
- 
--int msm_hdmi_audio_info_setup(struct hdmi *hdmi, bool enabled,
--	uint32_t num_of_channels, uint32_t channel_allocation,
--	uint32_t level_shift, bool down_mix)
-+int msm_hdmi_audio_info_setup(struct hdmi *hdmi, int rate, int channels)
- {
--	struct hdmi_audio *audio;
--
- 	if (!hdmi)
- 		return -ENXIO;
- 
--	audio = &hdmi->audio;
--
--	if (num_of_channels >= ARRAY_SIZE(nchannels))
-+	if ((rate < 0) || (rate >= MSM_HDMI_SAMPLE_RATE_MAX))
- 		return -EINVAL;
- 
--	audio->enabled = enabled;
--	audio->infoframe.channels = nchannels[num_of_channels];
--	audio->infoframe.channel_allocation = channel_allocation;
--	audio->infoframe.level_shift_value = level_shift;
--	audio->infoframe.downmix_inhibit = down_mix;
-+	hdmi->audio.rate = rate;
-+	hdmi->audio.channels = channels;
-+	hdmi->audio.enabled = true;
- 
- 	return msm_hdmi_audio_update(hdmi);
- }
- 
--void msm_hdmi_audio_set_sample_rate(struct hdmi *hdmi, int rate)
-+int msm_hdmi_audio_disable(struct hdmi *hdmi)
- {
--	struct hdmi_audio *audio;
--
- 	if (!hdmi)
--		return;
--
--	audio = &hdmi->audio;
-+		return -ENXIO;
- 
--	if ((rate < 0) || (rate >= MSM_HDMI_SAMPLE_RATE_MAX))
--		return;
-+	hdmi->audio.rate = 0;
-+	hdmi->audio.channels = 2;
-+	hdmi->audio.enabled = false;
- 
--	audio->rate = rate;
--	msm_hdmi_audio_update(hdmi);
-+	return msm_hdmi_audio_update(hdmi);
- }
 diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index bd94b3a70f0e5e457a88f089b491103a8c09567b..4f8e4ffdb2e058ecf243bb319c12c444cb2e5200 100644
+index 4f8e4ffdb2e058ecf243bb319c12c444cb2e5200..15ab0858105328c2f774ec1f79423614bbbaeb41 100644
 --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
 +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -7,6 +7,8 @@
- #include <linux/delay.h>
- #include <drm/drm_bridge_connector.h>
- #include <drm/drm_edid.h>
-+#include <drm/display/drm_hdmi_helper.h>
-+#include <drm/display/drm_hdmi_state_helper.h>
- 
- #include "msm_kms.h"
- #include "hdmi.h"
-@@ -68,23 +70,17 @@ static void power_off(struct drm_bridge *bridge)
- 
- #define AVI_IFRAME_LINE_NUMBER 1
- 
--static void msm_hdmi_config_avi_infoframe(struct hdmi *hdmi)
-+static int msm_hdmi_config_avi_infoframe(struct hdmi *hdmi,
-+					 const u8 *buffer, size_t len)
- {
--	struct drm_crtc *crtc = hdmi->encoder->crtc;
--	const struct drm_display_mode *mode = &crtc->state->adjusted_mode;
--	union hdmi_infoframe frame;
--	u8 buffer[HDMI_INFOFRAME_SIZE(AVI)];
-+	u32 buf[4] = {};
- 	u32 val;
--	int len;
-+	int i;
- 
--	drm_hdmi_avi_infoframe_from_display_mode(&frame.avi,
--						 hdmi->connector, mode);
--
--	len = hdmi_infoframe_pack(&frame, buffer, sizeof(buffer));
--	if (len < 0) {
-+	if (len != HDMI_INFOFRAME_SIZE(AVI) || len - 3 > sizeof(buf)) {
- 		DRM_DEV_ERROR(&hdmi->pdev->dev,
- 			"failed to configure avi infoframe\n");
--		return;
-+		return -EINVAL;
- 	}
- 
- 	/*
-@@ -93,37 +89,118 @@ static void msm_hdmi_config_avi_infoframe(struct hdmi *hdmi)
- 	 * written to the LSB byte of AVI_INFO0 and the version is written to
- 	 * the third byte from the LSB of AVI_INFO3
- 	 */
--	hdmi_write(hdmi, REG_HDMI_AVI_INFO(0),
-+	memcpy(buf, &buffer[3], len - 3);
-+
-+	buf[3] |= buffer[1] << 24;
-+
-+	for (i = 0; i < ARRAY_SIZE(buf); i++)
-+		hdmi_write(hdmi, REG_HDMI_AVI_INFO(i), buf[i]);
-+
-+	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
-+	val |= HDMI_INFOFRAME_CTRL0_AVI_SEND |
-+		HDMI_INFOFRAME_CTRL0_AVI_CONT;
-+	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, val);
-+
-+	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
-+	val &= ~HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE__MASK;
-+	val |= HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE(AVI_IFRAME_LINE_NUMBER);
-+	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
-+
-+	return 0;
-+}
-+
-+static int msm_hdmi_config_audio_infoframe(struct hdmi *hdmi,
-+					   const u8 *buffer, size_t len)
-+{
-+	u32 val;
-+
-+	if (len != HDMI_INFOFRAME_SIZE(AUDIO)) {
-+		DRM_DEV_ERROR(&hdmi->pdev->dev,
-+			"failed to configure audio infoframe\n");
-+		return -EINVAL;
-+	}
-+
-+	hdmi_write(hdmi, REG_HDMI_AUDIO_INFO0,
- 		   buffer[3] |
- 		   buffer[4] << 8 |
- 		   buffer[5] << 16 |
- 		   buffer[6] << 24);
- 
--	hdmi_write(hdmi, REG_HDMI_AVI_INFO(1),
-+	hdmi_write(hdmi, REG_HDMI_AUDIO_INFO1,
- 		   buffer[7] |
- 		   buffer[8] << 8 |
- 		   buffer[9] << 16 |
- 		   buffer[10] << 24);
- 
--	hdmi_write(hdmi, REG_HDMI_AVI_INFO(2),
--		   buffer[11] |
--		   buffer[12] << 8 |
--		   buffer[13] << 16 |
--		   buffer[14] << 24);
-+	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
-+	val |= HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SEND |
-+		HDMI_INFOFRAME_CTRL0_AUDIO_INFO_CONT |
-+		HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE |
-+		HDMI_INFOFRAME_CTRL0_AUDIO_INFO_UPDATE;
-+	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, val);
-+
-+	return 0;
-+}
-+
-+static int msm_hdmi_bridge_clear_infoframe(struct drm_bridge *bridge,
-+					   enum hdmi_infoframe_type type)
-+{
-+	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
-+	struct hdmi *hdmi = hdmi_bridge->hdmi;
-+	u32 val;
-+
-+	switch (type) {
-+	case HDMI_INFOFRAME_TYPE_AVI:
-+		val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL0);
-+		val &= ~(HDMI_INFOFRAME_CTRL0_AVI_SEND |
-+			 HDMI_INFOFRAME_CTRL0_AVI_CONT);
-+		hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, val);
- 
--	hdmi_write(hdmi, REG_HDMI_AVI_INFO(3),
--		   buffer[15] |
--		   buffer[16] << 8 |
--		   buffer[1] << 24);
-+		val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
-+		val &= ~HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE__MASK;
-+		hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
- 
--	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0,
--		   HDMI_INFOFRAME_CTRL0_AVI_SEND |
--		   HDMI_INFOFRAME_CTRL0_AVI_CONT);
-+		break;
- 
--	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
--	val &= ~HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE__MASK;
--	val |= HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE(AVI_IFRAME_LINE_NUMBER);
--	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
-+	case HDMI_INFOFRAME_TYPE_AUDIO:
-+		val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL0);
-+		val &= ~(HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SEND |
-+			 HDMI_INFOFRAME_CTRL0_AUDIO_INFO_CONT |
-+			 HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE |
-+			 HDMI_INFOFRAME_CTRL0_AUDIO_INFO_UPDATE);
-+		hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, val);
-+
-+		val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
-+		val &= ~HDMI_INFOFRAME_CTRL1_AUDIO_INFO_LINE__MASK;
-+		hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
-+
-+		break;
-+
-+	default:
-+		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
-+	}
-+
-+	return 0;
-+}
-+
-+static int msm_hdmi_bridge_write_infoframe(struct drm_bridge *bridge,
-+					   enum hdmi_infoframe_type type,
-+					   const u8 *buffer, size_t len)
-+{
-+	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
-+	struct hdmi *hdmi = hdmi_bridge->hdmi;
-+
-+	msm_hdmi_bridge_clear_infoframe(bridge, type);
-+
-+	switch (type) {
-+	case HDMI_INFOFRAME_TYPE_AVI:
-+		return msm_hdmi_config_avi_infoframe(hdmi, buffer, len);
-+	case HDMI_INFOFRAME_TYPE_AUDIO:
-+		return msm_hdmi_config_audio_infoframe(hdmi, buffer, len);
-+	default:
-+		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
-+		return 0;
-+	}
- }
- 
- static void msm_hdmi_set_timings(struct hdmi *hdmi,
-@@ -147,18 +224,20 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
- 	conn_state = drm_atomic_get_new_connector_state(state, connector);
- 	crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
- 
-+	hdmi->pixclock = conn_state->hdmi.tmds_char_rate;
-+
- 	msm_hdmi_set_timings(hdmi, &crtc_state->adjusted_mode);
- 
- 	if (!hdmi->power_on) {
+@@ -232,7 +232,7 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
  		msm_hdmi_phy_resource_enable(phy);
  		msm_hdmi_power_on(bridge);
  		hdmi->power_on = true;
--		if (hdmi->hdmi_mode) {
--			msm_hdmi_config_avi_infoframe(hdmi);
-+		if (hdmi->hdmi_mode)
+-		if (hdmi->hdmi_mode)
++		if (connector->display_info.is_hdmi)
  			msm_hdmi_audio_update(hdmi);
--		}
  	}
  
-+	drm_atomic_helper_connector_hdmi_update_infoframes(connector, state);
-+
- 	msm_hdmi_phy_powerup(phy, hdmi->pixclock);
+@@ -264,7 +264,7 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
+ 	if (hdmi->power_on) {
+ 		power_off(bridge);
+ 		hdmi->power_on = false;
+-		if (hdmi->hdmi_mode)
++		if (hdmi->connector->display_info.is_hdmi)
+ 			msm_hdmi_audio_update(hdmi);
+ 		msm_hdmi_phy_resource_disable(phy);
+ 	}
+@@ -320,7 +320,7 @@ static void msm_hdmi_set_timings(struct hdmi *hdmi,
+ 	DBG("frame_ctrl=%08x", frame_ctrl);
+ 	hdmi_write(hdmi, REG_HDMI_FRAME_CTRL, frame_ctrl);
  
- 	msm_hdmi_set_mode(hdmi, true);
-@@ -197,8 +276,6 @@ static void msm_hdmi_set_timings(struct hdmi *hdmi,
- 	int hstart, hend, vstart, vend;
- 	uint32_t frame_ctrl;
+-	if (hdmi->hdmi_mode)
++	if (hdmi->connector->display_info.is_hdmi)
+ 		msm_hdmi_audio_update(hdmi);
+ }
  
--	hdmi->pixclock = mode->clock * 1000;
+@@ -339,17 +339,6 @@ static const struct drm_edid *msm_hdmi_bridge_edid_read(struct drm_bridge *bridg
+ 
+ 	hdmi_write(hdmi, REG_HDMI_CTRL, hdmi_ctrl);
+ 
+-	if (drm_edid) {
+-		/*
+-		 * FIXME: This should use connector->display_info.is_hdmi from a
+-		 * path that has read the EDID and called
+-		 * drm_edid_connector_update().
+-		 */
+-		const struct edid *edid = drm_edid_raw(drm_edid);
 -
- 	hstart = mode->htotal - mode->hsync_start;
- 	hend   = mode->htotal - mode->hsync_start + mode->hdisplay;
- 
-@@ -276,18 +353,16 @@ static const struct drm_edid *msm_hdmi_bridge_edid_read(struct drm_bridge *bridg
+-		hdmi->hdmi_mode = drm_detect_hdmi_monitor(edid);
+-	}
+-
  	return drm_edid;
  }
  
--static enum drm_mode_status msm_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
--		const struct drm_display_info *info,
--		const struct drm_display_mode *mode)
-+static enum drm_mode_status msm_hdmi_bridge_tmds_char_rate_valid(const struct drm_bridge *bridge,
-+								 const struct drm_display_mode *mode,
-+								 unsigned long long tmds_rate)
- {
- 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
- 	struct hdmi *hdmi = hdmi_bridge->hdmi;
- 	const struct hdmi_platform_config *config = hdmi->config;
- 	struct msm_drm_private *priv = bridge->dev->dev_private;
- 	struct msm_kms *kms = priv->kms;
--	long actual, requested;
--
--	requested = 1000 * mode->clock;
-+	long actual;
- 
- 	/* for mdp5/apq8074, we manage our own pixel clk (as opposed to
- 	 * mdp4/dtv stuff where pixel clk is assigned to mdp/encoder
-@@ -295,15 +370,16 @@ static enum drm_mode_status msm_hdmi_bridge_mode_valid(struct drm_bridge *bridge
- 	 */
- 	if (kms->funcs->round_pixclk)
- 		actual = kms->funcs->round_pixclk(kms,
--			requested, hdmi_bridge->hdmi->encoder);
-+						  tmds_rate,
-+						  hdmi_bridge->hdmi->encoder);
- 	else if (config->pwr_clk_cnt > 0)
--		actual = clk_round_rate(hdmi->pwr_clks[0], requested);
-+		actual = clk_round_rate(hdmi->pwr_clks[0], tmds_rate);
- 	else
--		actual = requested;
-+		actual = tmds_rate;
- 
--	DBG("requested=%ld, actual=%ld", requested, actual);
-+	DBG("requested=%lld, actual=%ld", tmds_rate, actual);
- 
--	if (actual != requested)
-+	if (actual != tmds_rate)
- 		return MODE_CLOCK_RANGE;
- 
- 	return 0;
-@@ -315,9 +391,11 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
- 	.atomic_reset = drm_atomic_helper_bridge_reset,
- 	.atomic_pre_enable = msm_hdmi_bridge_atomic_pre_enable,
- 	.atomic_post_disable = msm_hdmi_bridge_atomic_post_disable,
--	.mode_valid = msm_hdmi_bridge_mode_valid,
- 	.edid_read = msm_hdmi_bridge_edid_read,
- 	.detect = msm_hdmi_bridge_detect,
-+	.hdmi_tmds_char_rate_valid = msm_hdmi_bridge_tmds_char_rate_valid,
-+	.hdmi_clear_infoframe = msm_hdmi_bridge_clear_infoframe,
-+	.hdmi_write_infoframe = msm_hdmi_bridge_write_infoframe,
- };
- 
- static void
-@@ -349,8 +427,11 @@ int msm_hdmi_bridge_init(struct hdmi *hdmi)
- 	bridge->funcs = &msm_hdmi_bridge_funcs;
- 	bridge->ddc = hdmi->i2c;
- 	bridge->type = DRM_MODE_CONNECTOR_HDMIA;
-+	bridge->vendor = "Qualcomm";
-+	bridge->product = "Snapdragon";
- 	bridge->ops = DRM_BRIDGE_OP_HPD |
- 		DRM_BRIDGE_OP_DETECT |
-+		DRM_BRIDGE_OP_HDMI |
- 		DRM_BRIDGE_OP_EDID;
- 
- 	ret = devm_drm_bridge_add(hdmi->dev->dev, bridge);
 
 -- 
 2.39.5
