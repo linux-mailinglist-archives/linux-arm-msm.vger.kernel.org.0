@@ -1,81 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-47275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC7EEA2DAEE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 06:07:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5FC6A2DB04
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 06:07:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63D923A6FA7
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 05:06:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B84297A2C3F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 05:06:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4D2E8248C;
-	Sun,  9 Feb 2025 05:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DCFD2563;
+	Sun,  9 Feb 2025 05:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aSYylMB/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w0JhIudh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BB9535D8
-	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 05:06:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6408E76034
+	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 05:06:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739077612; cv=none; b=O31viwnwXLzf4Ig8fcsAKAVrNzRVoKRjLyGrEvd3ahkO6WuwolIvIXdweW5OE4CoA+B/NGP6YB8frPAO1F6Wv2dFJ6Vb3tE8NpohazZB50hcbCQFsRTZWRJ/LPrAePYAzHfuLkuE7xLQZPbIK2td2pEwnsvRFwR0JEgnNHSoL2s=
+	t=1739077614; cv=none; b=YqeF+YZEoHqTAK/M2LZlsVx0oEjRWqQrcxwFXl6hpzjgM/Zfth0NpEpXc1QtssvTufA4YM/9Iq8KM+2ea698xoPemIQhfASRo9DFoIKF78LkItpi3ITpkr7LAo89tRn3YoeSn4ZOp++5dMhsAaweoJtsxZC06SJEKTHRTahF10s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739077612; c=relaxed/simple;
-	bh=BXA7Q9IpU3LJo5o0YQp3oC/xe/tm2VyAy8ivKO92PBQ=;
+	s=arc-20240116; t=1739077614; c=relaxed/simple;
+	bh=NLSCP5E6ORI9H0QuM74oVHUl+a0F/vNbAQWYghqkTiw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hgH6QrwRkNgfmKjByjQKdUjwb4lgpqmVdqkqlMQ0RUVPpXPKMEYM7tZNCF2gfrFH7n/mXXr0s4xKxcGIlns8QOrwCd1+X0pCuT896jV22WJPYxovGiXd2bVaekylLRjgOm2zW8C+fNzw5y9uGLY3Qd6MVIz7yBMg3KrFnMmmuJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aSYylMB/; arc=none smtp.client-ip=209.85.167.42
+	 In-Reply-To:To:Cc; b=kVhyYqm+zR7eEX9S2hD/nSAoIfMry/eq5urtos3izm/WGab7EIQHNe+6/Zz64CsCacwX3hxL/s4rcHTrB2AWN88iMtvOJkDM2yZ+4KM5aOkbmhWWEoba8Q4GLbaLQRVcekHyDlxJHDncy/ibtmt6tti9SHZE2NXhQDdyfBfvfys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w0JhIudh; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-543e49a10f5so3613416e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 21:06:50 -0800 (PST)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-543e47e93a3so3687866e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 21:06:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739077609; x=1739682409; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739077610; x=1739682410; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yj0BuWh1hjkMiCnQtqM7MPhpgvXgx80zo8kYUYLklb8=;
-        b=aSYylMB/ayzXdDs5w1kWFx8Egop05cq1dPpL03zCKNGZishvNUzHx8NKlk2If3fOTM
-         JmoEVnJFDYClCD7pYWo9rbmJYEezaJ989ZqqxUA9RUl1V4WRXEFF8aYwjUDM1iTdK57R
-         3mSqJI6cHO9T1RIcoMUvUzWlPsghJGEa17SyKX4U3mxsk+40XQqD6+UeZPK23oyiOpbr
-         PPF7AYbpnoz7UpnIP5pxLegLYjHxfk0deTydLjb4DvnwjggGVdgFW0Vf1sBPXXvVhZk3
-         GIbMqhgxwEtzWbnCssvReM+WNx7iNS9+ny06qK+5xFZ3b05u5QYd4Wq1WEG4ozDSm6uX
-         sAPg==
+        bh=nTcdagHfVvJWdpzLDW5hzkEO6YN/7LPqkZiqmOtMZH8=;
+        b=w0JhIudhmULBLKKGr9xFhxltuB1kZTIrqTvMYfwXDtrJzcik+WPA92TTLCiS+vqb9X
+         XMXuD4riEbLT/EH/ZsdydrhH+uFmKx8mKomxyIfAZOhGdqb7pQ91YhlO0FjeXvl9tBri
+         PlwfUXILGrEkNsAAdvBTZEPxtMU1PDgyq8cB1Aabh8GpkvKzCQgfV483qymlVL4Vn5a1
+         DRSFX72FpMl+Cb3CaDOInb6NNy3d8DrC6efHt3bopcVRQ1w+BpOlBy2tG8wmRYVC5gME
+         NDADXqCpd+6QeULYQfrhT+e4W7fPrRIBcWWqZdK2hrW0WT5AXHXlAzd0xjb3AAnOm6dD
+         icNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739077609; x=1739682409;
+        d=1e100.net; s=20230601; t=1739077610; x=1739682410;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yj0BuWh1hjkMiCnQtqM7MPhpgvXgx80zo8kYUYLklb8=;
-        b=Jfkn6tM67tfAXLeQZO/Q8Gb6MNaBz+6SBUIgZmPYcqnvEUk/hMuli1dT1rXPMPEU0Q
-         XRhNVRNpy5prhOxCti68Ub3vm8MLzNWaRKsUXSBrlmUwqmEzwOIivHwZZ9+Cyb8x3Wvd
-         SvtQ3EfbtmDcswLfHXm2chuhXSWxDSrLHmk4dN8hQW/hqUQ2VVLsHlLSH9iRsXRIsOho
-         zTXO91wcQQzZNB5iyhu6fPQ6GrfqIW79SUVAnR4tW5ojq27nB7ZqYZq9cGcK2k0r/YME
-         XKJcTOtgRuxf6nKoVD2/I8Cd2JbOOL4Tjl6iW0pAiIFQZD0ZyaAZ/yEAj0yaKLA3huq1
-         qVkg==
-X-Gm-Message-State: AOJu0YyU95kRNmlV93sq7kNOWQLHcUcpc9Wr8BZK0feyzvrjx9HBLE7L
-	tTBxYenHF3t2wMQGtM/dGYsxiGzMl7vB0NBcVyLwpoKgdp96udlcqNeIpv4YUe6kbEMZm9+gykm
-	N1kc=
-X-Gm-Gg: ASbGncvKjNgQcfg6m3WUmuwamJImOLGgunQkYj2T/QKG6BPjJISMq5oT2pI/jY1loC2
-	wrCg+ERAD4zEg9rXiJnRyaBcnoR9XuJtE3p1Cd0sEWcmWoWnXWZuX6x4wtnOvN1d/GefMDhhgOm
-	X+T0oMGTgPP0wLqfK6XZBgX4nOnJvvpIaAhaB0qWgRPI1Prw0eCmylTNloshrXMinz3Zv7K0mrP
-	zaZZOW88hJC6AMkDf4n6A+c5eopGjVHNgsbt0U/ABZt30Y0ndDqQwWw02ZWc7atEoz4u+s9MAzD
-	HU6D03UF8NEmFFvFHv6FXUA=
-X-Google-Smtp-Source: AGHT+IHlnIFRUHNy4Pv8cos18vLNYdATiWlvlgAGSIQwUUTZUpNqTfhFg+S88Fft5a+ZKQPZyT7Z3g==
-X-Received: by 2002:a05:6512:2384:b0:53e:23ec:b2e7 with SMTP id 2adb3069b0e04-54414adfaebmr3141413e87.34.1739077608720;
-        Sat, 08 Feb 2025 21:06:48 -0800 (PST)
+        bh=nTcdagHfVvJWdpzLDW5hzkEO6YN/7LPqkZiqmOtMZH8=;
+        b=d1vitgk0of1IkrWLcxR5qnZGqC0RDhPKshIC8CiZ6H/tSNN6Sa0+W1mY4ZavtOzYCu
+         zbci3rbb6rJplj2wWsjhZ87RwhJOhG62zpDxDThczZdZ3cqAhfwWSUvggElL7K3v1LJv
+         gZpXOghvJPanlv/hKTEcIyod12VV5PX3Zxf+7f4m/bh7eo9zQvIf6V/zTnfCA/lszTur
+         RfNxRfxlFyYzSg3SHK1I3H/QeGXD5jHauAdi2t4x2/2iF/6lSvYtqwQN3XYIFK/9XJ9R
+         TQdGyTRdIIkNuTTNWShqBmCHadd6yhxf8oTiGscY7aniVj03iXRuYzHpTvT2GF7vjugW
+         30qw==
+X-Gm-Message-State: AOJu0YwLexJ3TXBixEm2yVeFQ9LSjM+PKLsR8PH+Ntnh0rkKUWEdxd28
+	iZY/TTmtjpjObfJICjmc7fAJkvMxOTWKY6XfdUn6bdfP7n9Dt342WOp9ppYgR+KzZj5mVMRBdiX
+	/ZT0=
+X-Gm-Gg: ASbGnctp/XKeotJQ/SrKLQo/jsICo3EF59gNdeGW72KeM/jrLxdJ8g6/9jTZ801V2nG
+	EoJe7/n+/GrRWPIjEohlzRhval7F/wGI0VYRmydyL8zzI/dAPuaqnynYg52Zvo5bkcmITGoiVsF
+	/rrk3VNzWznjMOYqJ1tKnnXJ6R14TPcvfsdusNK+f3SbKWyrUj8YzIot05lIpHeNsdcYaAn2ut1
+	EkfaPwmmwWD2aJIeByL4SAngO3cxNiNTuZ9lr1ofRsR1FckIufuCZ9OAwJkQLgEd4Ix7Zdxv0fy
+	E7oOu5LVTWHyXVoFaOdknMo=
+X-Google-Smtp-Source: AGHT+IEFXe5K8k+ix/TTKVKq9EFeSW9km/qit2DCh/DLsirowioK0KDRuuwtMc/zx6EiGq/Gs8hrxA==
+X-Received: by 2002:a05:6512:2205:b0:545:576:cbd2 with SMTP id 2adb3069b0e04-54507bfa112mr584003e87.10.1739077610224;
+        Sat, 08 Feb 2025 21:06:50 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54506ef1733sm245576e87.1.2025.02.08.21.06.46
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54506ef1733sm245576e87.1.2025.02.08.21.06.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Feb 2025 21:06:47 -0800 (PST)
+        Sat, 08 Feb 2025 21:06:49 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 09 Feb 2025 07:04:45 +0200
-Subject: [PATCH v4 01/16] dt-bindings: display/msm/hdmi: drop obsolete
- GPIOs from schema
+Date: Sun, 09 Feb 2025 07:04:46 +0200
+Subject: [PATCH v4 02/16] dt-bindings: display/msm: hdmi: drop hpd-gpios
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250209-fd-hdmi-hpd-v4-1-6224568ed87f@linaro.org>
+Message-Id: <20250209-fd-hdmi-hpd-v4-2-6224568ed87f@linaro.org>
 References: <20250209-fd-hdmi-hpd-v4-0-6224568ed87f@linaro.org>
 In-Reply-To: <20250209-fd-hdmi-hpd-v4-0-6224568ed87f@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -101,54 +100,54 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  devicetree@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1225;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1438;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=BXA7Q9IpU3LJo5o0YQp3oC/xe/tm2VyAy8ivKO92PBQ=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnqDfhD1AdF8cdaEFbZcUVUS48D8BueW7S4NJjP
- m99fsTsa8mJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ6g34QAKCRCLPIo+Aiko
- 1UjqB/9FEXBtULbRjjbPI2zjBtvnostnj5+h5M5uFG+qcq1zFtALCl0x1N5gtOoekLyqo4wWRO8
- pm+HZ10170lI47GVEPlWbenUymsUQLGvEXx62AaHWZOLQ+peYt3EPJyrGaCRAk+ck635Ewh6olI
- erz99ab2bo/ggk2quQvQ4jzbw2cCWnm+HxsPjvxw38guV+w1YmqU8jGXfOmn7PgnM235jR/PiEs
- AydsPxkkK6SYICEpdFWJl2RcHmBqxCAtETjF6I+U3SPBT5NvEm8HeZeXNr2DeLp4fQlYlWSlAii
- rC2DEgtxa7xXBPhqjINBQTnuKu9LthaXvCgHcbl7D5+CBhzE
+ bh=NLSCP5E6ORI9H0QuM74oVHUl+a0F/vNbAQWYghqkTiw=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnqDfhYclpOw8R2du6T24MrpOm7QjiPhE/g7GXP
+ i/M4vlXimmJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ6g34QAKCRCLPIo+Aiko
+ 1bNlCACw8jnIu5ritWEfsFqRqlft4maCais+D8f7xJZLStAU3zaKpA81oDi+4en7jDRNdsZKwTR
+ gggCP29ILVZoZGLRsfYrFUbdVnSjGejPVwCyXS/x4+tby9pkAeheeDOhHxx3F1+XL4FWqUv2sdR
+ RS/kMmNkTQI//eK08wp5ld2x+RDs66f/J21yrExwXeahWL9KacJuD1P1PRPUTIQCzsNw834YPny
+ exHq0VzE1nH4db6YwrCrf4+h1hoz2IIXXh2LAIjesZE1cT2n426Kv5wR96kCUi0Ovzz++zkiiGR
+ uwA7gar7slMJunZwgXtK5+AflEVpxjcM8yBfnXpM4OSqNowq
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The commit 68e674b13b17 ("drm/msm/hdmi: drop unused GPIO support")
-dropped support for obsolete qcom,hdmi-tx-mux-* gpios. They were not
-used by any of the upstream platforms. Drop them from the bindings too.
+Supporting simultaneous check of native HPD and the external GPIO proved
+to be less stable than just native HPD. Drop the hpd-gpios from the
+bindings. This is not a breaking change, since the HDMI block has been
+using both GPIO _and_ internal HPD anyway. In case the native HPD
+doesn't work users are urged to switch to specifying the hpd-gpios
+property to the hdmi-connector device.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/hdmi.yaml | 15 ---------------
- 1 file changed, 15 deletions(-)
+ Documentation/devicetree/bindings/display/msm/hdmi.yaml | 5 -----
+ 1 file changed, 5 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.yaml b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-index d4a2033afea8d4e4f83c9859f8840d30ae9d53f8..7e6f776a047a00851e3e1e27fec3dabeed5242fd 100644
+index 7e6f776a047a00851e3e1e27fec3dabeed5242fd..a5ff7045a14be3b8106b3edf0033a8028a684529 100644
 --- a/Documentation/devicetree/bindings/display/msm/hdmi.yaml
 +++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-@@ -66,21 +66,6 @@ properties:
-     maxItems: 1
-     description: hpd pin
+@@ -62,10 +62,6 @@ properties:
+   core-vcc-supply:
+     description: phandle to VCC supply regulator
  
--  qcom,hdmi-tx-mux-en-gpios:
+-  hpd-gpios:
 -    maxItems: 1
--    deprecated: true
--    description: HDMI mux enable pin
--
--  qcom,hdmi-tx-mux-sel-gpios:
--    maxItems: 1
--    deprecated: true
--    description: HDMI mux select pin
--
--  qcom,hdmi-tx-mux-lpm-gpios:
--    maxItems: 1
--    deprecated: true
--    description: HDMI mux lpm pin
+-    description: hpd pin
 -
    '#sound-dai-cells':
      const: 1
  
+@@ -178,7 +174,6 @@ examples:
+       clocks = <&clk 61>,
+                <&clk 72>,
+                <&clk 98>;
+-      hpd-gpios = <&msmgpio 72 GPIO_ACTIVE_HIGH>;
+       core-vdda-supply = <&pm8921_hdmi_mvs>;
+       hdmi-mux-supply = <&ext_3p3v>;
+       pinctrl-names = "default", "sleep";
 
 -- 
 2.39.5
