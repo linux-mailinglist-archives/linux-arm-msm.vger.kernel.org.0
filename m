@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFC0EA2DD22
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 12:45:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FE0BA2DD27
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 12:46:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4CB11164DB4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 11:45:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 820D61885589
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 11:46:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D5C8199223;
-	Sun,  9 Feb 2025 11:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CA741BD9CE;
+	Sun,  9 Feb 2025 11:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OjicF0XW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FQr2pfXO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DA06F06A;
-	Sun,  9 Feb 2025 11:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2256F06A;
+	Sun,  9 Feb 2025 11:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739101515; cv=none; b=oYtnGngeJIlk5Tb9BY04LO0Hp5rTWx3/3ykRxKfly4wXewa+8g2Y3czJ9F/p3C/RkgPDsLqrwUR3myouLpRWrd3S9d9Nt0jiX2wSp/UzN8kFDCQpF1F2mOA927K1ZXotjKDhGg6CBEWusMcL7jB4d3ozgBKPlfqUwbhJPBh0fB4=
+	t=1739101606; cv=none; b=SNE3qRm5VTNGeZVs55g4q622ty/F39S66Z2POUvj/7cuUILRVloExW0lzJYf3yz66yPuJrhZGNPj17v4Lz3MvkOnBWxj36T8sW6pjlfjwugnMIl0/uxwt0ozryaDSC1uQ9kyDBNt/Ky9WhjTo431Do23yMzmzIRe7xdfLNbWMto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739101515; c=relaxed/simple;
-	bh=Av0QYU6wpxgVuFwcAS24I8JUgJ1wCGCWJhmZb+cGJsI=;
+	s=arc-20240116; t=1739101606; c=relaxed/simple;
+	bh=hr6YvJwPrLbR0mqEALiFbD/EzVOiUk+m7gr/K9W39qY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qaXbQUGxZqPVPFtV8iLkInE8+OLHm6204iqC4QK1fdHC12pBbmZ/pANZ6Hcvml3gDid+mQVMi84SnV0dr7yVjCR0pe114yW4iEiUlWCQanhnqtf2wFFe6+N7KHpGQAtB7J8jfotaaOZeF284DP/paAj0uq60VrsFNGFE1JKD7UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OjicF0XW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFACC4CEDD;
-	Sun,  9 Feb 2025 11:45:10 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OSNKdJQDat2rBBdE8dmQK1UvyoiuvuoFRNUyqFMVUT84/gk9iaqutmqcA1uNC3WKd4kwogKi0Rna1NLccEx8umciR0mQCRus/zKweq2NVF4uW331dgvAlGI3/WCt23bKqU6DTHNPW2xT+4zMAGmjFxkUqUVsf1VPe5UTn7Qu6M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FQr2pfXO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8826C4CEDD;
+	Sun,  9 Feb 2025 11:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739101514;
-	bh=Av0QYU6wpxgVuFwcAS24I8JUgJ1wCGCWJhmZb+cGJsI=;
+	s=k20201202; t=1739101605;
+	bh=hr6YvJwPrLbR0mqEALiFbD/EzVOiUk+m7gr/K9W39qY=;
 	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=OjicF0XWimMaZwBsAwKDa1eQ8tybOAQk46ys/fmY0tyiD3E2qxXG+CHCPGr2v2WiG
-	 N8W/OS6pl/jbJVy8u5eqUQI3PUaKHYuJrHrGapDi8hMjLyOQ3mgZUfwOxPAb7C6ixC
-	 PFLYzW/hUKtzEiZ7sjAE3FeEyVbDgZO0oImlCn68sk/xGcFLzPOlBr9GWOSaiFGa1q
-	 qdNUjEEElmLve/pRpKJD0mNHmiFwBrKTh4rIpfEgezaZObjpnDqE3PR7ZTMWb/QW4n
-	 YjpNQckzP3i9RiJQBI2mbTwGwg1Dya0TaDlSl4IYGA85KJP0VHnkcSSg2w/f2kTwLi
-	 KdRFXyBQakrCQ==
-Message-ID: <7c518972-75df-4c8a-8920-06d5aa2849ae@kernel.org>
-Date: Sun, 9 Feb 2025 12:45:08 +0100
+	b=FQr2pfXONN4Br77vkvPO5jDiWNi4I7kpB1UWzsbWXQJNhrPlr0uIEle/N+6Gfqc3A
+	 Jbg3Xit7ntSHjzBXjRp21QafQpwwY1vu7yV2FHBGoWGuF/+RVjhri5PJwUXeQ/LXYi
+	 rVnt/CQuQnzLz1wn8/p7ZBU6nJ98rJTXk46k8+He0HV5wls2laJMnuA+8K8f5VKhOv
+	 hkc2Sw4lNhA2RXN7svmaEGwo3LZ+7yrf5T5ultqclfFCWTraAklPgqfYSUuU1tYHG+
+	 Ry3ppboYiDPKIywjIGwnF7oDxCR9EiqUcB2l1IrkVZWnv/V+ZYoX5yL7iOP3SFOB+3
+	 ARXz54ZxWrVFQ==
+Message-ID: <c7cc1453-d54f-46f7-86da-275636eaed84@kernel.org>
+Date: Sun, 9 Feb 2025 12:46:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,6 +61,7 @@ References: <20250205143109.2955321-1-quic_msavaliy@quicinc.com>
  <20250205143109.2955321-2-quic_msavaliy@quicinc.com>
  <248000f5-63db-492c-884d-ac72db337493@kernel.org>
  <0ae3f754-edcb-4b22-9d49-b20ef264554b@quicinc.com>
+ <f643c57e-de01-4372-a1b1-7ebde319d0a4@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,136 +107,36 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <0ae3f754-edcb-4b22-9d49-b20ef264554b@quicinc.com>
+In-Reply-To: <f643c57e-de01-4372-a1b1-7ebde319d0a4@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 06/02/2025 14:43, Mukesh Kumar Savaliya wrote:
-> Hi Krzysztof,  Thanks !
-> 
-> On 2/5/2025 8:12 PM, Krzysztof Kozlowski wrote:
->> On 05/02/2025 15:31, Mukesh Kumar Savaliya wrote:
->>> Add device tree bindings for the Qualcomm I3C master controller. This
->>> includes the necessary documentation and properties required to describe
->>> the hardware in the device tree.
->>
->> A nit, subject: drop second/last, redundant "bindings". The
->> "dt-bindings" prefix is already stating that these are bindings.
-> Sure
->> See also:
->> https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
->>
->> Use modern terminology, which means:
->> s/master/whatever else or even nothing/
->> See other recent bindings and discussions.
->>
-> Sure
->>
+On 07/02/2025 13:03, Mukesh Kumar Savaliya wrote:
+>> I will remove minItems and MaxItems, will list Items with description.
 >>>
->>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>> ---
->>>   .../bindings/i3c/qcom,i3c-master.yaml         | 57 +++++++++++++++++++
->>>   1 file changed, 57 insertions(+)
->>>   create mode 100644 Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
->>> new file mode 100644
->>> index 000000000000..ad63ea779fd6
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
->>
->> Filename matching compatible.
->>
-> Changed compatible to "qcom,i3c-master"
->>> @@ -0,0 +1,57 @@
->>> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/i3c/qcom,i3c-master.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm I3C master controller
->>> +
->>> +maintainers:
->>> +  - Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>> +
->>> +allOf:
->>> +  - $ref: i3c.yaml#
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,geni-i3c
->>
->> No SoC? So to be sure: you claim all future SoCs will be using exactly
->> the same interface. No new compatibles, no new properties will be added.
->>
-> I think i should remove const. kept it for now as no other compatible to 
-> be added as of now.
+> Wanted to check if below way is fine ? Because some of the ask to drop 
+> constraints are already present in other i3c yaml files.
 > 
-> let me remove const.
-
-No, it does not matter. Keep const.
-
+> if not, could you please help share example removing constraints and 
+> listing item ?
 > 
-> SoC name is not required, as this compatible is generic to all the SOCs.
-
-That's the statement you make. I accept it. I will bookmark this thread
-and use it whenever you try to add any future property here (to be
-clear: you agree you will not add new properties to fulfill *FUTURE* SoC
-differences).
-
->>> +
->>> +  reg:
->>> +    minItems: 1
->>
->> Drop
->>
-> Not required ? I see other bindings are using it, so please confirm if i 
-> can remove this.
->>> +    maxItems: 2
->>
->> Drop and instead list and describe items
->>
-> Okay, i can remove maxItems if not mandatory. Taken cdns,i3c-master.yaml 
-> and added these.
+> == Sample ==
+> properties:
+>    compatible:
+>      enum:
+>        - qcom,i3c-controller
 > 
->>
->>> +
->>> +  clocks:
->>> +    minItems: 1
->>
->> Look at other bindings. There is never code like this.
->>
-> cdns,i3c-master.yaml taken as reference.
->>> +
->>> +  clock-names:
->>> +    items:
->>> +      - const: se-clk
->>
->> Drop clock-names
-> Sure, took reference from cdns,i3c-master.yaml.
->>
->>> +
->>> +  interrupts-extended:
->>> +    minItems: 1
->>> +    maxItems: 3
->>
->> As well - there is never an interrupts-extended property. Just interrupts.
->>
-> No, i see this property many places. Do you mean to say 
-> interrupts-extended  can be there in examples but not only add 
-
-I already wrote what you should do:
-
-"Just interrupts."
-
-> "interrupts" property here ?
-> e.g timer/riscv,timer.yaml +41 lists it in yaml also.
+>    reg:
+>      type: array
+>      minItems: 1
+>      maxItems: 1
+>      items:
+>        type: integer
+>      description: Base address and size of the I3C controller registers.
 
 
-Please do not take one file and create coding style out of it, but
-instead look what ~2300 other YAML files do.
-
+I really do not understand this sample. That's not a DT schema code.
+Please open existing Qcom bindings and look how it is done.
 
 Best regards,
 Krzysztof
