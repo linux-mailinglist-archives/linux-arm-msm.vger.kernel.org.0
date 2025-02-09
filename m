@@ -1,90 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-47272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 080C1A2DAA2
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 04:38:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB46AA2DAB3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 04:48:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64B701884DCE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 03:38:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6108F7A21C8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 03:47:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A517711CA0;
-	Sun,  9 Feb 2025 03:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0A8E182BD;
+	Sun,  9 Feb 2025 03:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LwKV+4O6"
+	dkim=pass (2048-bit key) header.d=ethancedwards.com header.i=@ethancedwards.com header.b="Ua0RKQyO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC7B4409
-	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 03:38:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AC41BDCF;
+	Sun,  9 Feb 2025 03:48:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739072304; cv=none; b=I9lzTBeuoHhAtgEXPBuH4ux/EYL8SCS2yI9SLLEpSEjfN9lTiHuedCHs9FifEjsSRk44tEyH2I7Dlk2xu+FTybrSujWAY/BNs2mCFEOl8khiaHwGqf29NdFTc+Zs2oeop/3oWZC+cdQKSuFIJRHhruJuAikTnevqvGarctzFGJ4=
+	t=1739072927; cv=none; b=tPCL4L4GysvkNy6CcltHGbOXMv/TyGPZc8SsOS27GVGY8oL7eiJx2SxfQQKWrbaXH43SV0zWbzT9rq4/v2keF9xL9fiscMBt8Xfios4QENX2R4v7BUS/PtP/YGrPGSBDtu8iIw6XSKsDmvBdyWGAg1tX2IUV87+wziMK0wHuRaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739072304; c=relaxed/simple;
-	bh=/qAcYCKh8OmEH9Fcx0X2ca76LPDtXY0RMYXA3FieKhA=;
+	s=arc-20240116; t=1739072927; c=relaxed/simple;
+	bh=Ic8Nual4Xw1g6kb4I2rOetEHmVrR1/wPufL+tPhpbc4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QhfnV6JmE3My/wC+LiWQRyMkipcRodqdj3ms3+pg5NpRCpdwKtnBbPC8xDcXDtfqgzOBnyOcrtTCp1UuEDMYgIHq8HucQ/48jxf0GAtUg6HXaIB4JiNyaHqolINPMd2AgbIIvDiZe6/EmMcdweBLWNmTzl6Yuf6acX2vX5UGHks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LwKV+4O6; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30761be8fa8so31444121fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 19:38:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739072301; x=1739677101; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z/6yPVhvzSQt8FpEj+34A3KYWg9MIBUILVNRXOHt7zM=;
-        b=LwKV+4O6jFXDmlWMjod7/PMtVGTOyPqz8a8F1/R/KGeNOCeK7jomCLOvLcn8tma7ym
-         sdriHA6mu0ZbsOIOu79LuBZalxZqykcMI+w98E/QN92Di9JUeDO9lb0o1S28BXj4Mary
-         lhD5F54OazJ20noCNJAKNL6LT+ZAfowQ/K6lFAzllz1cmEiVzk1vao3T4y/jYsOsYyWv
-         8/aKw2CdmDbPi7EZ5UmaSaGMIXEjMtI68ntJ/MpCESi4QdFJcGXiec3vTjIR59mQNBj3
-         QssXLDBYOIHEodIfyPliXjo3FzryZR8r+3nW9kU/130WkWiOb44ndgI6K5CpSGSUcnoQ
-         cV6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739072301; x=1739677101;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z/6yPVhvzSQt8FpEj+34A3KYWg9MIBUILVNRXOHt7zM=;
-        b=ajDFXy8iZcEIxdbV6+AdFYve3SETn+uvgHZiJ/gf8WlP+ieDN1x8qDOVnInup+KgL1
-         TJh2/44AQBeJ61qD5hT54+UXe+5YWrwTQpmz2Ks6p3CtXtEElMvbC1E8kBi0RF6RwLQC
-         JlQIkz1KnHQHWKiE020aI1M3n3n4rrzYLBZnSrSLEu95dV+I65E5feSpCAYlkP46QKp8
-         fBVjiFz3oVEfZoqiMisHVVYKi/fg4KbGlpGs5QHI9ngZij0jPpc2yu/P1RSQ/Km64RKG
-         SH6MqQvM6fObyibIslI5Ll6loSHN2Jl0pHwYZwqltcC47L8rDlJ4dyBV1arnGr88YPpS
-         bh9w==
-X-Forwarded-Encrypted: i=1; AJvYcCU3OzQEgfIAem66PS0E6u2MgA0NM7XFvQjz105RvDVOGrEpzpMbJQSWBRlI8zUEhjlbKDGOIjy3Ic1T8ecW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyp38FxC7dW+aa37s1QrlexRVswX59umIHniT+gs4wVxRmcxRuT
-	7TTT6jxVVqV1XyWUiwMklp6yV0TmXYUQC0eTuJnDbsNHytBlLDAG40H1kLmZLm4=
-X-Gm-Gg: ASbGnct4/2QWcKW0u9FUyLOA3j0g7PI7kDkFfoWReX0Rmo86RQ/757AX/J+dY0SFBRT
-	kTqTHtQEsZrNm4AYqLCYN+R0z6wUnNkwd2r9Gzlpj65XkMPmioVExvSX/jc1JRPkiorF2Ox2aaE
-	gCoSMfF4BADVZTX/4fb+B/Z6rMHGYiP5Zd7EN7+LsHQLQv0S3TY9bVNXUS2jFgakLTk0ixvCWv4
-	U01rK3FLR4z+HY0Da3VdYxbAXZIsYR/0yOOq/yV6bhMa2Q3CVoDF+9YQ7NjuaDKp/jN/S28S+Dz
-	Sg33zO45rSDOHMivdFT+RZF2laun94fyRvpymK+Ezl1u8snwSowqEiZxadhUWIo5nRoVqWE=
-X-Google-Smtp-Source: AGHT+IES07fxPyHCztfsqpUU3ib0W9GV8knyWCON3WWXjJGQPwrMdTFe5n+ZQFCrewVIai6KclkWWw==
-X-Received: by 2002:a05:6512:108d:b0:540:2a92:7da9 with SMTP id 2adb3069b0e04-54414ab5605mr2768060e87.21.1739072300614;
-        Sat, 08 Feb 2025 19:38:20 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5450a64ea2dsm39590e87.14.2025.02.08.19.38.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Feb 2025 19:38:20 -0800 (PST)
-Date: Sun, 9 Feb 2025 05:38:17 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH RFC 0/7] drm/display: dp: add new DPCD access functions
-Message-ID: <pxcgcutzjjge6ruw5hobg6jkfqozhtlvbhdlmyazesbi4aipj2@enepqlcvjruw>
-References: <20250117-drm-rework-dpcd-access-v1-0-7fc020e04dbc@linaro.org>
- <ctla3nt6o3osdxek63zyidyuofzgq3mgshh2azong3ntcqevhi@3rrzr3hrzbor>
- <87r04tn8is.fsf@intel.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=K9PQTaXdhx/NZn8h/ytrsQCAcyyEuZAWNFV8tQo9ld71NPDqkqhZt1yUj5je1Um1Ls/khQCUiNw8K8RkiKDf6BPQlS/9Cl07TsGCm92y8hHYx+kclHVdRrcizp8cGbP+mfQin67XrD6/+SjSJiQdd4gFuZimWqRkuz5eaXgrHDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ethancedwards.com; spf=pass smtp.mailfrom=ethancedwards.com; dkim=pass (2048-bit key) header.d=ethancedwards.com header.i=@ethancedwards.com header.b=Ua0RKQyO; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ethancedwards.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ethancedwards.com
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4YrD815h4Zz9sZv;
+	Sun,  9 Feb 2025 04:43:29 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ethancedwards.com;
+	s=MBO0001; t=1739072609;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=gqoZcM4nfDwbCLWIhNBrMzj0yt+yJ0Y4yVQAT7915pA=;
+	b=Ua0RKQyOc2Ls0JEfvaVdqF3BIMlp0kOToonnRrXBi4AMObu54PEl/drQd27U1eBrFoYzdy
+	XT2nIK7r8O+hI5TFeEZtsPkwuMvIrxU18eijwVBYE4an4rvxsyd9cC/V2QJ2eNxve9c7a0
+	cyKkObbPDpSMkAFiHcotMhs0qzi4utYNKwnxkU6VVnCb+uScm797iweUaUBGlznPeWwDyW
+	C3A6owfQOD6aFaGdATm4JF58DiCM1ScCm7eH5VVzvmuXXvc/U6LDRga6og2fFXdRstok5j
+	Ou/FTnP6y2Il0vwa3q+COl03OM5svCBh1zcnTkkin2oa2JwJ7G90GBlnToArig==
+Date: Sat, 8 Feb 2025 22:43:26 -0500
+From: Ethan Carter Edwards <ethan@ethancedwards.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
+	"linux-hardening@vger.kernel.org" <linux-hardening@vger.kernel.org>, 
+	"kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>, linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Takashi Iwai <tiwai@suse.com>
+Subject: Re: [PATCH] ASoC: q6dsp: q6apm: change kzalloc to kcalloc
+Message-ID: <lcaqr52jf5texgoro2mm5kegykgwaifq45m6gkln47tg7fjv4r@4cxw374tspnj>
+References: <s6duijftssuzy34ilogc5ggfyukfqxmbflhllyzjlu4ki3xoo4@ci57esahvmxn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,80 +66,39 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87r04tn8is.fsf@intel.com>
+In-Reply-To: <s6duijftssuzy34ilogc5ggfyukfqxmbflhllyzjlu4ki3xoo4@ci57esahvmxn>
 
-On Thu, Jan 23, 2025 at 12:12:43PM +0200, Jani Nikula wrote:
-> On Thu, 23 Jan 2025, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> > On Fri, Jan 17, 2025 at 10:56:35AM +0200, Dmitry Baryshkov wrote:
-> >> Existing DPCD access functions return an error code or the number of
-> >> bytes being read / write in case of partial access. However a lot of
-> >> drivers either (incorrectly) ignore partial access or mishandle error
-> >> codes. In other cases this results in a boilerplate code which compares
-> >> returned value with the size.
-> >> 
-> >> As suggested by Jani implement new set of DPCD access helpers, which
-> >> ignore partial access, always return 0 or an error code. Reimplement
-> >> existing helpers using the new functions to ensure backwards
-> >> compatibility.
-> >> 
-> >> This series targets only the DRM helpers code. If the approach is found
-> >> to be acceptable, each of the drivers should be converted on its own.
-> >
-> > Gracious ping for the series, it's been posted a week ago.
-> 
-> It's a bit of a bummer the names become longer. I don't have a better
-> suggestion, though.
-> 
-> I do like it that the error handling becomes easier and more uniform
-> overall, and this actually fixes many places that only checked for < 0
-> with the old functions.
-> 
-> I glanced through the series, I didn't spot anything obviously wrong,
-> but didn't do a thorough review either. I can do once we have wider
-> buy-in for the idea in general, so the effort won't be wasted.
-> 
-> For now,
-> 
-> Acked-by: Jani Nikula <jani.nikula@intel.com>
+I wanted to check in on this. Anything I need to change?
 
-Is it okay to merge this? I'd prefer to have comments from other
-developers / maintainers, so that it doesn't become a controversial
-change.
+Thanks,
+Ethan
 
-> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> ---
-> >> Dmitry Baryshkov (7):
-> >>       drm/display: dp: change drm_dp_dpcd_read_link_status() return
-> >>       drm/display: dp: implement new access helpers
-> >>       drm/display: dp: use new DCPD access helpers
-> >>       drm/display: dp-aux-dev: use new DCPD access helpers
-> >>       drm/display: dp-cec: use new DCPD access helpers
-> >>       drm/display: dp-mst-topology: use new DCPD access helpers
-> >>       drm/display: dp-tunnel: use new DCPD access helpers
-> >> 
-> >>  drivers/gpu/drm/display/drm_dp_aux_dev.c      |  12 +-
-> >>  drivers/gpu/drm/display/drm_dp_cec.c          |  37 ++-
-> >>  drivers/gpu/drm/display/drm_dp_helper.c       | 345 +++++++++++---------------
-> >>  drivers/gpu/drm/display/drm_dp_mst_topology.c | 132 +++++-----
-> >>  drivers/gpu/drm/display/drm_dp_tunnel.c       |  20 +-
-> >>  drivers/gpu/drm/msm/dp/dp_ctrl.c              |  45 ++--
-> >>  drivers/gpu/drm/msm/dp/dp_link.c              |  17 +-
-> >>  include/drm/display/drm_dp_helper.h           |  81 +++++-
-> >>  include/drm/display/drm_dp_mst_helper.h       |  10 +-
-> >>  9 files changed, 354 insertions(+), 345 deletions(-)
-> >> ---
-> >> base-commit: 440aaf479c9aaf5ecea9a463eb826ec243d5f1cf
-> >> change-id: 20241231-drm-rework-dpcd-access-b0fc2e47d613
-> >> 
-> >> Best regards,
-> >> -- 
-> >> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> 
+On 25/01/19 08:32PM, Ethan Carter Edwards wrote:
+> We are replacing any instances of kzalloc(size * count, ...) with
+> kcalloc(count, size, ...) due to risk of overflow [1].
 > 
+> [1] https://www.kernel.org/doc/html/next/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments
+> Link: https://github.com/KSPP/linux/issues/162
+> 
+> Signed-off-by: Ethan Carter Edwards <ethan@ethancedwards.com>
+> ---
+>  sound/soc/qcom/qdsp6/q6apm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
+> index 2a2a5bd98110..11e252a70f69 100644
+> --- a/sound/soc/qcom/qdsp6/q6apm.c
+> +++ b/sound/soc/qcom/qdsp6/q6apm.c
+> @@ -230,7 +230,7 @@ int q6apm_map_memory_regions(struct q6apm_graph *graph, unsigned int dir, phys_a
+>  		return 0;
+>  	}
+>  
+> -	buf = kzalloc(((sizeof(struct audio_buffer)) * periods), GFP_KERNEL);
+> +	buf = kcalloc(periods, sizeof(struct audio_buffer), GFP_KERNEL);
+>  	if (!buf) {
+>  		mutex_unlock(&graph->lock);
+>  		return -ENOMEM;
 > -- 
-> Jani Nikula, Intel
-
--- 
-With best wishes
-Dmitry
+> 2.48.0
+> 
 
