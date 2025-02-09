@@ -1,63 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-47291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E5BCA2DBF4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 11:11:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3AA0A2DBFB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 11:16:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 836561654AC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 10:11:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 510F77A2C41
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 10:15:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D8C814A0B7;
-	Sun,  9 Feb 2025 10:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3C1A14E2E2;
+	Sun,  9 Feb 2025 10:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ktOQaRty"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="e8KWJk7K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E41339A8;
-	Sun,  9 Feb 2025 10:11:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFF317BB6;
+	Sun,  9 Feb 2025 10:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739095909; cv=none; b=FmLgMoeR1B2uHHd/2nXaK19U6AMfLlI9KN0U0E2EfUkk5Ls/77MygKWsXGsVuBL6x1PM1Q4h4v/spjwy1GQSQdQRGmBuN0JWLII5u8mdz0toGkVKiHJQJHNc8nBk9xi65r7aXEKoLAsfFW19ShY57jmFC1N5mFPPbUl9qI8M39w=
+	t=1739096182; cv=none; b=IqaGcjuNx+8fvkbr7y/OiQmcTZF8zhUKBOC07Q4f869am7S7XRTl/498RXCVVCVOGRnNeKGaIBjTc+c+u79UjFzS467RMZwesgjd8zecf4jmZo1UkFsG8ZVMjXpwl51RW3Il2T/6Zlld+w6CECNMgGAfuPUTuzn03qlfyaJXQFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739095909; c=relaxed/simple;
-	bh=vNfQHGy9KvvHWawYZq7BNNrvnPQWExBbzHbPaHBUPaA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=t1PokcxpX61uqVV6f8KPrN4TwwEXiaqChJqukDhmNeUQjBaMM/+1muYuIPEhx0B3Kh7FO1dFf3IjEGaJtlTPItEx0GO6UvChbT67p1fbsJQ/fhiTU1jQkh9vsvWQRG3VpyfinTB4qXZkbzk1hdYUeDc+lNu8+meqrn0x06lwcBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ktOQaRty; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5199gVjw015074;
-	Sun, 9 Feb 2025 10:11:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Dmek2XxpbJMsM7efAFBBMti346SYX/rpk932t0eKqPQ=; b=ktOQaRtyNQa7+tB0
-	RdPe2UaAv6kRKotfPEya8EU3JadZpwA7k8e7jJ2i7UjMi8notIQdL4D3oekm9xMD
-	IJGcHgf+/2lzOiXhp4wPZZ+TiSyE1e8vIhgI7Tuel3M+g3eAOWVE/2ZY7DNGuApy
-	dZn3H2ugc5UqprbR1+HnTNCN/+ns8zTo0DOoeCmGqW8kPlTj3L/IbSQop5i7ha3o
-	D+OJrhoMdu2fWO9LqMwF0AYT/7Bg7zFk79xs+8ndu+DDit2F1nqFUYEHX/Oy5jTH
-	t30gC7JscRsei0AwaAU7+/l0Z0/aD3IqBSQppIPTdXUCaZRWPvoslyaCBsvnwTt7
-	M9PQnA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dyhtfq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 09 Feb 2025 10:11:41 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 519ABepp019131
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 9 Feb 2025 10:11:40 GMT
-Received: from [10.216.10.172] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 9 Feb 2025
- 02:11:33 -0800
-Message-ID: <01362821-ac7f-41d7-a4c1-b1f675e9f644@quicinc.com>
-Date: Sun, 9 Feb 2025 15:41:16 +0530
+	s=arc-20240116; t=1739096182; c=relaxed/simple;
+	bh=DsS2geAXtMSqBWDK9YbfnJpbliuNKiJlxEBaQTMgqwA=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=diOoH7FfWB0DU3L703mSmVd9D8odD+wEuPS4gcDV//Smp8D8XEICRfeIkth4+9GrqVwINaVIAGInZ3YPmebhq0Qy8rKDSAFyOX5O2MAu28uZl1szuzwPMW2uflYtd4tnmMVVTzOtZXbxMYSAVL8agyCkl7Ao3Ni58yCN8/14rUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=e8KWJk7K; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1739096168; x=1739700968; i=markus.elfring@web.de;
+	bh=F3bDdKl8eATlDg8WYVq5TTuNjlsg7scF7CmaxNIlem4=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=e8KWJk7KnQ+x/X/TSMhk/eufCcaY5Dw8k2LN0Acynm5KxjdmIHZuxQFlQnOHSkhF
+	 0M+vyHWXRKV3SDHtoQcZpuGaENaiCNnUaHeXktQjNP3IyjvPSFvOnufNDxxuO27fL
+	 d7hNznti5Pyljzu1GDCER/JQDLwyFiErAGMPKQWK+wLupNBcg4N6Y8wslhdS5r8yB
+	 dkhToCQwTBjXVesvsm5nO+pArfDj81n3fx6/U4uWwPIKKJ81V54560XQFtsMrz2GY
+	 OqHV9wAMm8njp1ki85/Rxh6ANtddENq/XR5k2X6MYSCp3dduc1fa+wkHhHLX6zthL
+	 pIaO9nfvz2C9Jh6LLQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.70.5]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MidDR-1tE5Gh0OXv-00qiTY; Sun, 09
+ Feb 2025 11:16:08 +0100
+Message-ID: <797c061c-7324-42e2-b4bd-fd93cf4ff0d0@web.de>
+Date: Sun, 9 Feb 2025 11:15:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,157 +57,74 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] dt-bindings: serial: Add support for selecting
- data transfer mode
-To: <neil.armstrong@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-CC: <andi.shyti@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>,
-        <jirislaby@kernel.org>, <broonie@kernel.or>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <johan+linaro@kernel.org>,
-        <dianders@chromium.org>, <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
-References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
- <20250124105309.295769-5-quic_vdadhani@quicinc.com>
- <10060d39-87a4-4565-a2a6-80c93ac2266a@kernel.org>
- <dudqd2y42wy6iq2k73aphd5ol4mtq7z4c54zhd27rl745rrw5x@p3oummf2jke7>
- <374e16d6-46aa-4bdf-85e9-bc2e33c38057@kernel.org>
- <v5n7wn3saiymi2ncgi35drzdjfeaa4ng2ftia6ggex6oh74ocg@7vuskxosh726>
- <5f710113-08b0-468e-940a-2c65e8b42486@linaro.org>
-Content-Language: en-US
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-In-Reply-To: <5f710113-08b0-468e-940a-2c65e8b42486@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nO-jX9qXh2SLLs-_2Es2F7tOeMSivxvw
-X-Proofpoint-GUID: nO-jX9qXh2SLLs-_2Es2F7tOeMSivxvw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-09_04,2025-02-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
- mlxscore=0 priorityscore=1501 spamscore=0 adultscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502090089
+To: Ethan Carter Edwards <ethan@ethancedwards.com>,
+ kernel-hardening@lists.openwall.com, linux-hardening@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, Takashi Iwai <tiwai@suse.com>
+References: <s6duijftssuzy34ilogc5ggfyukfqxmbflhllyzjlu4ki3xoo4@ci57esahvmxn>
+Subject: Re: [PATCH] ASoC: q6dsp: q6apm: change kzalloc to kcalloc
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <s6duijftssuzy34ilogc5ggfyukfqxmbflhllyzjlu4ki3xoo4@ci57esahvmxn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:9qLT0/6znlrr/UX2FzpFVqVWgiJtm9nEXtNZITfFV7q0fA3urLi
+ ocRmNq9WCEz2HCQzKkoSyn47v8HjzCebI+Oj/qtjnE1FRMWmyCFf5dfO26MJbnfgAdHHFln
+ 2zjuGAn5UCfMW4tm07CItXxbmqYohhCD4zdFou4/hoh/3/D+Aho/Ns3Il7nnGOa3yYMxaIw
+ 3PcJMFAN2O6SUFKgFFUPQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:sSj4urlGScs=;aYQ2CVZDDz1kQzwhW3MloEE1199
+ 3bTjnrHI7d3xVZuOLLFf1VDWX062zj02hYmpGEh8PFSaH4NZSPV0L6O37cq5eA5FrpRnY6hUM
+ Ses7fbc00O6fLHuruFIMZwAPXEaNOkMLntvEF/bPkzpHu17d9QVNfdQb5zWHtTLurnJcBUsQ+
+ Ug2KU3fYOEdDiwkPZfXfZ5PTiaq7GiZV2FEuqUBE88JuFw2rhJdPxs/si8yqUoL6VW3BC6BV5
+ /qHUsvSbyzjvWsTkk6HqiIQNV43xLtC4uFLHoCxZvQqEFp9NhfumITFGqSEIwB5mi+Fn6g91o
+ G5vyAwyezRK/ED9Xa53W0JnI3ak8kxxOIaxCfDT8L375f4tsfZGJ2wTO36xQ5QRN0aY0zxqo2
+ dd4hHSZk34h6Az+pZbds8+TvN/DM1YiqU61ySMGM83wlJGHijYcTk1UnBLpCCFoaM+wR7M+vI
+ YwY9e1PYoQkBcU9fuhB3e2qdmAjIYKxUV9Zv9BHPcZByWQmpWmI6Fk5xsXQMI+Z8xDrAOmxaT
+ wPLL6YJpmIBfyXebgUmB+SJctSZw0sdKawZPNmVh4Q8UAQ3l0tF3l8HGSmDlvo4FQky9DDHqY
+ +dpPE1RRjxwkXvAiWUnw+uKWYSJi4APeLlVJzeGX0a5ZU9aF6FfgVzUCAM7my2TCtGFVWsiFd
+ ap2nLz3jTA0+vIPW0Q6j6bvgg/ruXVq14NQlIwe4S0UXXlH8R18I2VIwZ1VbMoqU2qau2vAHk
+ +y43sExq+zW3g2K4OXXXYmqo4y+AYuXROJhLW72Vjpun7hJUIGYtW1Kxbwz7WOT0NJ5uM8P3S
+ 3v0xmak90lMqOom4zR+V3PJD5rkBRnBA9Czp9b35VJ+nHqozR2uNxdlwiaNWZlwHUMfKZV1IM
+ 9Uy1hWtpkGoMADutt6LhzW4iUW/9ASkyZ2Ra12u3USd5u1YwiayZ6EOdkQ5Kbbf5yEIZQGdKI
+ kvOzCS6yLogdSoo7b9a4K/RuPPxOsESr3lPzwbrkMY+eu87/CgeGdGUls838JJ6mlu/YSAMl0
+ xF2KNIYyqHcdY0bi+BkH7du5ufBnUZ3+N9+OY02OWrwaw1pAkgAkOMDtqLRBe1kcaL7zWIYSA
+ m/au2iaUvmcQdRv0O+Uc9G+1ISV85zD6eebAt6JLiIpOt7/V0lf+c2XFc6lr8qeEHKHZI7HIO
+ o7YlJaegmMXffKFlK4fIW9cgdKydK/s24g38UlWDW2Nk7wq2NwgUwnsxXbLnBHMLaag/cRS+p
+ p3bQNbh+onsXAtr2xyej2FeBbW1UXQtiaB6mR80NKfwT+1p32mIBSsvXjBsnCqmXl4x7UJTBO
+ tp+3UUBRPCLWazFoMssAqKOFtzvpJlc4i8aTcN1pr6NPVExOWDXU06W+fuCaRDxmcvpwU6bXp
+ D45YEcGOmQ3aPNw3r/OW3noIPaLCuRgukot7yICaD44BJSI0K6LSGbdOYkQ8CS0lEGMpTdBHj
+ 3U7JovgvjF0/MIpPWUdKJvM8Avig=
+
+> We are replacing any instances of kzalloc(size * count, ...) with
+> kcalloc(count, size, ...) due to risk of overflow [1].
+
+See also:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/submitting-patches.rst?h=3Dv6.13#n94
 
 
+=E2=80=A6
+> +++ b/sound/soc/qcom/qdsp6/q6apm.c
+> @@ -230,7 +230,7 @@ int q6apm_map_memory_regions(struct q6apm_graph *gra=
+ph, unsigned int dir, phys_a
+>  		return 0;
+>  	}
+>
+> -	buf =3D kzalloc(((sizeof(struct audio_buffer)) * periods), GFP_KERNEL)=
+;
+> +	buf =3D kcalloc(periods, sizeof(struct audio_buffer), GFP_KERNEL);
+=E2=80=A6
 
-On 1/29/2025 1:48 PM, neil.armstrong@linaro.org wrote:
-> On 29/01/2025 03:21, Dmitry Baryshkov wrote:
->> On Mon, Jan 27, 2025 at 05:24:21PM +0100, Krzysztof Kozlowski wrote:
->>> On 27/01/2025 15:27, Dmitry Baryshkov wrote:
->>>> On Mon, Jan 27, 2025 at 08:02:12AM +0100, Krzysztof Kozlowski wrote:
->>>>> On 24/01/2025 11:53, Viken Dadhaniya wrote:
->>>>>> Data transfer mode is fixed by TrustZone (TZ), which currently 
->>>>>> restricts
->>>>>> developers from modifying the transfer mode from the APPS side.
->>>>>>
->>>>>> Document the 'qcom,xfer-mode' properties to select the data 
->>>>>> transfer mode,
->>>>>> either GPI DMA (Generic Packet Interface) or non-GPI mode (PIO/CPU 
->>>>>> DMA).
->>>>>>
->>>>>> UART controller can operate in one of two modes based on the
->>>>>> 'qcom,xfer-mode' property, and the firmware is loaded accordingly.
->>>>>>
->>>>>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>>>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>>>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->>>>>> ---
->>>>>>
->>>>>> v1 -> v2:
->>>>>>
->>>>>> - Drop 'qcom,load-firmware' property and add 'firmware-name' 
->>>>>> property in
->>>>>>    qup common driver.
->>>>>> - Update commit log.
->>>>>>
->>>>>> v1 Link: 
->>>>>> https://lore.kernel.org/linux-kernel/20241204150326.1470749-4-quic_vdadhani@quicinc.com/
->>>>>> ---
->>>>>> ---
->>>>>>   .../devicetree/bindings/serial/qcom,serial-geni-qcom.yaml | 8 
->>>>>> ++++++++
->>>>>>   1 file changed, 8 insertions(+)
->>>>>>
->>>>>> diff --git 
->>>>>> a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
->>>>>> index dd33794b3534..383773b32e47 100644
->>>>>> --- 
->>>>>> a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
->>>>>> +++ 
->>>>>> b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
->>>>>> @@ -56,6 +56,13 @@ properties:
->>>>>>     reg:
->>>>>>       maxItems: 1
->>>>>> +  qcom,xfer-mode:
->>>>>> +    description: Set the value to 1 for non-GPI (FIFO/CPU DMA) 
->>>>>> mode and 3 for GPI DMA mode.
->>>>>> +      The default mode is FIFO.
->>>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
->>>>>> +    enum: [1, 3]
->>>>>> +
->>>>>> +
->>>>>
->>>>> Just one blank line, but anyway, this property should not be in three
->>>>> places. Do you really expect that each of serial engines within one
->>>>> GeniQUP will be configured differently by TZ?
->>>>
->>>> Yes, each SE is configured separately and it's quite frequent when
->>>> different SEs have different DMA configuration.
->>>
->>> Well, I checked at sm8550 and sm8650 and each pair of SE - which shares
->>> resources - has the same DMAs, so I would not call it frequent. Care to
->>> bring an example where same serial engines have different DMAs and
->>> different TZ? We do not talk about single QUP.
->>
->> Well, I don't have access to the latest sm8550 / sm8650 devcfg sources.
->> I checked the RB5 ones. As far as I understand out of 14 enabled SEs
->> only two are configured for the GSI DMA, others should use FIFO / SE
->> DMA. Same applies to the SM8250 MTP devices. Checking the RB1 / RB2
->> setup also shows 3 out of 6 SEs being set for GSI.
-> 
-> I think selecting GSI DMA is only for devices needs high speed streaming 
-> to the
-> device, like the touch screen, using GSI DMA for random small access is 
-> a non-sense.
-> 
-> But the thing is, in the TZ world the configuration was static so we had 
-> no choice
-> of using GSI DMA when configured, but now we have the choice so we could 
-> totally
-> reconfigure the SE with the transfer type (FIFO, SE DMA or GSI DMA) as 
-> runtime and
-> drop this attribute.
-> 
-> So instead of hardcoding this, add a way to dynamically select either of 
-> the 3
-> transfer types when firmware can be loaded from HLOS.
-> 
-> Neil
-> 
+See also:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/coding-style.rst?h=3Dv6.13#n941
 
-Yes, GSI DMA mode is required for specific use cases only.
 
-Dynamically switching from GSI mode to non-GSI mode is neither possible 
-nor useful. For each SE, the use case is fixed, and based on the use 
-case, the developer can choose the mode via the device tree property.
+How do you think about to increase the application of scope-based resource=
+ management?
 
->>
->>>
->>> Anyway, if you need property per node, this has to be shared schema.
->>>
->>> Best regards,
->>> Krzysztof
->>
-> 
+Regards,
+Markus
 
