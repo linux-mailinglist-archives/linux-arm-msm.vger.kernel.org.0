@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38F85A2DD1F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 12:40:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFC0EA2DD22
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 12:45:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1D0287A302C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 11:39:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4CB11164DB4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 11:45:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1BE71CAA92;
-	Sun,  9 Feb 2025 11:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D5C8199223;
+	Sun,  9 Feb 2025 11:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WsP3bWHb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OjicF0XW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A091CAA70;
-	Sun,  9 Feb 2025 11:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DA06F06A;
+	Sun,  9 Feb 2025 11:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739101244; cv=none; b=kt6SP4WqweoQV3nQXrSMdjNZuggylN3PZtmJEtAE5Zh/kyRvbj/AHRrK9E3oz97ElBHneHqy/NW3EPFMJOZ2qJJSBLjqKOSZXurke/5VkMptpZKXawm3qfa2/F+/35tdi+/qdQCt6MB9lEsoRaO+K2FqS/qNatRDS1H+traa+9U=
+	t=1739101515; cv=none; b=oYtnGngeJIlk5Tb9BY04LO0Hp5rTWx3/3ykRxKfly4wXewa+8g2Y3czJ9F/p3C/RkgPDsLqrwUR3myouLpRWrd3S9d9Nt0jiX2wSp/UzN8kFDCQpF1F2mOA927K1ZXotjKDhGg6CBEWusMcL7jB4d3ozgBKPlfqUwbhJPBh0fB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739101244; c=relaxed/simple;
-	bh=CIK0DWwvcQxoxrvp0Fs/IS337214EaWDY0MuIwPidbU=;
+	s=arc-20240116; t=1739101515; c=relaxed/simple;
+	bh=Av0QYU6wpxgVuFwcAS24I8JUgJ1wCGCWJhmZb+cGJsI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=DxF5cm3GB5ZuzlLGxogDndiwA6CbD2hyOPLssipqUdo5lLOXt7DMd/ZJD4HJ3UUBdU8sGgn+/ULgeglKAHD7xL7fEUKtxxxbe2s7iOy+5u49AnkjCJ3Z38xk5HlcgS3xDowcNaUF49OOGyZrnqw5IGQQkF8oyiQ3chY+tYx6FkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WsP3bWHb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BE5C4CEDD;
-	Sun,  9 Feb 2025 11:40:41 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qaXbQUGxZqPVPFtV8iLkInE8+OLHm6204iqC4QK1fdHC12pBbmZ/pANZ6Hcvml3gDid+mQVMi84SnV0dr7yVjCR0pe114yW4iEiUlWCQanhnqtf2wFFe6+N7KHpGQAtB7J8jfotaaOZeF284DP/paAj0uq60VrsFNGFE1JKD7UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OjicF0XW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFACC4CEDD;
+	Sun,  9 Feb 2025 11:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739101244;
-	bh=CIK0DWwvcQxoxrvp0Fs/IS337214EaWDY0MuIwPidbU=;
+	s=k20201202; t=1739101514;
+	bh=Av0QYU6wpxgVuFwcAS24I8JUgJ1wCGCWJhmZb+cGJsI=;
 	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=WsP3bWHbKX5UpeY2yiqCRRXfJUnUPMkgO4iP0HaIItsDNMVL47TUmIoOMLSyKmFrD
-	 tvlvzatzOCe3yFO1LLvqmFlJuLfaArUfMzw0fOkdANlAY5GUiuwLXtYUXXSfgDoloj
-	 GDt3ePGw8S3CUiqyIkNPXiDCgqGgJwb/rDXNYwyPuoORN1Sya/0nkjh0vQjda5QC1a
-	 nv3Iou6+tjD+QuVxjncyLtMdo0+3uoPscGPfayR6WTLtzxHkiXpL9ld73QYQ/bfAG0
-	 m0Pr+Id85ir1P1IU1Il/iX3ZUZL1JoEQebIKmkDvmKcatpbEl7L7XG4AO7iTjMLe8v
-	 XGJxn6FTr1Y6g==
-Message-ID: <1e3a103d-d468-40c6-b03c-723427d7bb41@kernel.org>
-Date: Sun, 9 Feb 2025 12:40:39 +0100
+	b=OjicF0XWimMaZwBsAwKDa1eQ8tybOAQk46ys/fmY0tyiD3E2qxXG+CHCPGr2v2WiG
+	 N8W/OS6pl/jbJVy8u5eqUQI3PUaKHYuJrHrGapDi8hMjLyOQ3mgZUfwOxPAb7C6ixC
+	 PFLYzW/hUKtzEiZ7sjAE3FeEyVbDgZO0oImlCn68sk/xGcFLzPOlBr9GWOSaiFGa1q
+	 qdNUjEEElmLve/pRpKJD0mNHmiFwBrKTh4rIpfEgezaZObjpnDqE3PR7ZTMWb/QW4n
+	 YjpNQckzP3i9RiJQBI2mbTwGwg1Dya0TaDlSl4IYGA85KJP0VHnkcSSg2w/f2kTwLi
+	 KdRFXyBQakrCQ==
+Message-ID: <7c518972-75df-4c8a-8920-06d5aa2849ae@kernel.org>
+Date: Sun, 9 Feb 2025 12:45:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] i3c: master: Add Qualcomm I3C master controller
- driver
+Subject: Re: [PATCH v1 1/3] dt-bindings: i3c: Add Qualcomm I3C master
+ controller bindings
 To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
  alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, jarkko.nikula@linux.intel.com,
  linux-i3c@lists.infradead.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250205143109.2955321-1-quic_msavaliy@quicinc.com>
- <20250205143109.2955321-3-quic_msavaliy@quicinc.com>
- <fec85cd8-4c56-4b48-a15f-e7ae08352cc2@kernel.org>
- <e5cad9d0-e602-442f-b216-2f655a9526e3@quicinc.com>
+ <20250205143109.2955321-2-quic_msavaliy@quicinc.com>
+ <248000f5-63db-492c-884d-ac72db337493@kernel.org>
+ <0ae3f754-edcb-4b22-9d49-b20ef264554b@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,77 +106,135 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <e5cad9d0-e602-442f-b216-2f655a9526e3@quicinc.com>
+In-Reply-To: <0ae3f754-edcb-4b22-9d49-b20ef264554b@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 07/02/2025 13:03, Mukesh Kumar Savaliya wrote:
->>> +	gi3c->se.clk = devm_clk_get(&pdev->dev, "se-clk");
->>> +	if (IS_ERR(gi3c->se.clk)) {
->>> +		ret = PTR_ERR(gi3c->se.clk);
->>> +		dev_err(&pdev->dev, "Error getting SE Core clk %d\n", ret);
->>> +		return ret;
->>> +	}
+On 06/02/2025 14:43, Mukesh Kumar Savaliya wrote:
+> Hi Krzysztof,  Thanks !
+> 
+> On 2/5/2025 8:12 PM, Krzysztof Kozlowski wrote:
+>> On 05/02/2025 15:31, Mukesh Kumar Savaliya wrote:
+>>> Add device tree bindings for the Qualcomm I3C master controller. This
+>>> includes the necessary documentation and properties required to describe
+>>> the hardware in the device tree.
+>>
+>> A nit, subject: drop second/last, redundant "bindings". The
+>> "dt-bindings" prefix is already stating that these are bindings.
+> Sure
+>> See also:
+>> https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+>>
+>> Use modern terminology, which means:
+>> s/master/whatever else or even nothing/
+>> See other recent bindings and discussions.
+>>
+> Sure
+>>
+>>>
+>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>> ---
+>>>   .../bindings/i3c/qcom,i3c-master.yaml         | 57 +++++++++++++++++++
+>>>   1 file changed, 57 insertions(+)
+>>>   create mode 100644 Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+>>> new file mode 100644
+>>> index 000000000000..ad63ea779fd6
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+>>
+>> Filename matching compatible.
+>>
+> Changed compatible to "qcom,i3c-master"
+>>> @@ -0,0 +1,57 @@
+>>> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/i3c/qcom,i3c-master.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 >>> +
->>> +	ret = device_property_read_u32(&pdev->dev, "se-clock-frequency", &gi3c->clk_src_freq);
->>
->> You never tested your DTS or this code... Drop
->>
-> I have tested on SM8550 MTP only. Below entry in my internal/local DTSI.
-
-
-And how is it supposed to work? Are you going to send us your local
-internal DTSI? Is it going to pass any checks?
-
-> Do you mean to say i should add this property in yaml too ?
-
-Yes.
-
-You cannot add undocumented ABI. That's a strong NAK.
-
-
-> se-clock-frequency = <100000000>;
->>
->>> +	if (ret) {
->>> +		dev_info(&pdev->dev, "SE clk freq not specified, default to 100 MHz.\n");
->>> +		gi3c->clk_src_freq = 100000000;
->>> +	}
+>>> +title: Qualcomm I3C master controller
 >>> +
->>> +	ret = geni_icc_get(&gi3c->se, NULL);
->>> +	if (ret)
->>> +		return ret;
+>>> +maintainers:
+>>> +  - Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
 >>> +
->>> +	/* Set the bus quota to a reasonable value for register access */
->>> +	gi3c->se.icc_paths[GENI_TO_CORE].avg_bw = GENI_DEFAULT_BW;
->>> +	gi3c->se.icc_paths[CPU_TO_GENI].avg_bw = GENI_DEFAULT_BW;
->>> +	ret = geni_icc_set_bw(&gi3c->se);
->>> +	if (ret) {
->>> +		dev_err(&pdev->dev, "%s: icc set bw failed ret:%d\n", __func__, ret);
->>> +		return ret;
->>> +	}
->>> +	dev_dbg(&pdev->dev, "%s: GENI_TO_CORE:%d CPU_TO_GENI:%d\n", __func__,
->>> +		gi3c->se.icc_paths[GENI_TO_CORE].avg_bw, gi3c->se.icc_paths[CPU_TO_GENI].avg_bw);
+>>> +allOf:
+>>> +  - $ref: i3c.yaml#
 >>> +
->>> +	ret = device_property_read_u32(&pdev->dev, "dfs-index", &gi3c->dfs_idx);
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,geni-i3c
 >>
->> The same. You cannot send us hidden ABI.
+>> No SoC? So to be sure: you claim all future SoCs will be using exactly
+>> the same interface. No new compatibles, no new properties will be added.
 >>
->> This code does not look like ready for upstream. Are you sure it was
->> internally reviewed?
+> I think i should remove const. kept it for now as no other compatible to 
+> be added as of now.
+> 
+> let me remove const.
+
+No, it does not matter. Keep const.
+
+> 
+> SoC name is not required, as this compatible is generic to all the SOCs.
+
+That's the statement you make. I accept it. I will bookmark this thread
+and use it whenever you try to add any future property here (to be
+clear: you agree you will not add new properties to fulfill *FUTURE* SoC
+differences).
+
+>>> +
+>>> +  reg:
+>>> +    minItems: 1
 >>
-> yes, we have taken 2 rounds internally.
+>> Drop
+>>
+> Not required ? I see other bindings are using it, so please confirm if i 
+> can remove this.
+>>> +    maxItems: 2
+>>
+>> Drop and instead list and describe items
+>>
+> Okay, i can remove maxItems if not mandatory. Taken cdns,i3c-master.yaml 
+> and added these.
+> 
+>>
+>>> +
+>>> +  clocks:
+>>> +    minItems: 1
+>>
+>> Look at other bindings. There is never code like this.
+>>
+> cdns,i3c-master.yaml taken as reference.
+>>> +
+>>> +  clock-names:
+>>> +    items:
+>>> +      - const: se-clk
+>>
+>> Drop clock-names
+> Sure, took reference from cdns,i3c-master.yaml.
+>>
+>>> +
+>>> +  interrupts-extended:
+>>> +    minItems: 1
+>>> +    maxItems: 3
+>>
+>> As well - there is never an interrupts-extended property. Just interrupts.
+>>
+> No, i see this property many places. Do you mean to say 
+> interrupts-extended  can be there in examples but not only add 
+
+I already wrote what you should do:
+
+"Just interrupts."
+
+> "interrupts" property here ?
+> e.g timer/riscv,timer.yaml +41 lists it in yaml also.
 
 
-And none of the reviewers spotted undocumented ABI? OK, learning
-experience for me.
-
-
-> Are you saying i should add this into yaml ?  what do you mean by 
-> hiddern ABI ?
-
-
-Where is the documentation of the ABI?
-
+Please do not take one file and create coding style out of it, but
+instead look what ~2300 other YAML files do.
 
 
 Best regards,
