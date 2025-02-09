@@ -1,297 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-47327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17C53A2DEF1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 16:50:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05834A2DF21
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 17:30:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 234877A30E5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 15:50:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 94709164AE3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 16:30:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BDA11DF26B;
-	Sun,  9 Feb 2025 15:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8191F1E0080;
+	Sun,  9 Feb 2025 16:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aVr+PACB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lu/dJc34"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CCF24339A
-	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 15:50:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29AA13B2BB
+	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 16:29:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739116249; cv=none; b=FP98iv+AjzZqyaRFjwq8DaXuTQcFYo4IXvrxyRS9i02IGqMAhAXTrQZPEgZTMuHhHw5s4E3nvtYyNQHNwfiWTxhOIBsJl0C1uAp6O22unTawUweNi41V3azP1HL2jKq2ys8q0KUBr3egkDnEXskSRKXRFPaHC+dRvlcsYTpz3Ow=
+	t=1739118595; cv=none; b=ie879EPDNEt+qiZzcjbp7d0/l8jLOsLO+WxGIVWGeKs0qxq9yuH9pt+DgD6Mxh6EW6ZHBgXpNtbrh+AE+V0vMaOmO/sUUXatcZUMVH2/R/1VF3EMp7GLO/96fMzxiVClh6dLcx2jf0dy16ENlRWgPuNZxjWsq4IY5Ta/GUQbiI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739116249; c=relaxed/simple;
-	bh=3tTvuuiVnCPVSn8oE7K5yeOzQnMOW0db5YwDCMguaLo=;
+	s=arc-20240116; t=1739118595; c=relaxed/simple;
+	bh=DtQdODobD5Mx3g14PsoAutzDTfvkFPnqEOr4yL6UY8o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mct6BgQjQEgviabp0WI4M6IkdSW1Kg+0707BKtLHHylxPq2nHLm0dADUa1iSBNgCKP4dtgbP7xEU395IAt0Xo2CVWnCjEYf+OftfjtVHyN6yVk5Y4yeX2+7lwxupA8l4mKtIIBHjmaR8I2PCXpS8Pym+eUwfluVM6BqZcszBR3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aVr+PACB; arc=none smtp.client-ip=209.85.214.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=nenBfn6EzSDzl6tGXJ+MG0U5J+1KQebC5CurNjiYD2kIStlpk0Ms2vm3YvT2Y/pVfkTjWbPbV0CugBgZasfS93IR7BGc9nHMu2GAvAUn4nRxotoxuUVFkj25E45JzMDrp/kzihjCwBohS/yAWVvSdZmydRYJ1rNWuzhsjPdZM5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lu/dJc34; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-21f6f18b474so13068255ad.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Feb 2025 07:50:46 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5439a6179a7so3865411e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Feb 2025 08:29:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739116246; x=1739721046; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=z+3e8LQ4+KCVM1ZlHvF+ScpOdJFsseLnvwjtZa8Jb9M=;
-        b=aVr+PACB9VG26qPt95YFGXicHmK+aWC1lxtpVI7fagTPPPPBNww3O4dCVqVNSmLtjQ
-         rC35qvTkFjPhZdDNTLRD6enqpAyOwL4akPZNHf1eOeWajHTlKpjobgNpObn7yV0nZEdF
-         CUSnV2F5Hy6UjmijrGZttCm2tNlkVAQ2IIfhnzt2oXxNdPKebQ5qH+Nf46Pz8xRPCUT8
-         3nBgqRrBAOFCW+EJkVAT0rSGJMAJ+9Kiv1bBBtZ3cl6wR3w7kOR4jEqzTJMgYLCfYqri
-         OMu8D9ILow8rSrAQETeOv8ghx4ocVTKgU1gr/je5UyiKpEpKhDSFLb8sf7KHm9s3PehC
-         Tfqg==
+        d=linaro.org; s=google; t=1739118591; x=1739723391; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CBBaxSpqSP+CW1UdUykgwYZL/97FlmN6t4SFUigusvk=;
+        b=lu/dJc34nlf+tNhk5b65pDeHJahy0uc6eYaueWXMoF7Q5kmZ/bYqfGVDIiiHrQuUo1
+         Sc60EKVpjPpiWjcQ05eIoxno2/iNrERr2GWkY9laSYHFxkcB3wuAV4gTG/CO9kgW/kTc
+         d0FI+jpQQw64qcWYtlu5bNjsaI7vyWqtudByuf46RYi89K5tlUJXyX2kXbvjMPSHl40t
+         XLIvIANt56AVNDMJfdh4wIk90/oqfsLxzhKsbxKIXrOBSm21ikQZLpwUKg8obFzJm5Bb
+         ZjHA1B3AlL8v9d10mu9R2ZIWstsb6zma1pTkkXboeKty6ZzJLjQbfUvgtIxffMsaXHmg
+         yV/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739116246; x=1739721046;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z+3e8LQ4+KCVM1ZlHvF+ScpOdJFsseLnvwjtZa8Jb9M=;
-        b=XsuJ6rQ3MsTtG/tY+aAGpMax08pLhPj9YIJX+GsUypoQiJ+QCI87yraf1LQwgYN/i6
-         v6CJHGp4l6BLoxUj8UBkRNYHpeVBeynfgVV8A8z7nLcxj4/FHuG1yfCkppPMdeqoaV+s
-         7ftWRM2I6b9DwSdRxGQv15UdhRhfOYe69YvxBk6HILTRepkA2REYpRXQf+sjBsFEF/IS
-         jveM1Qk0uX1AU8KXanNMkYuO7ZjUqOeQdPmDaG/4ny2YV3hL7DKg3OcRCnPQOkS4oGA9
-         muvstQ0868aykmZArhGYWAjxtdDI/DkW5zbO1x4X9AQSLgodU/vx1soNpzczznrUbOKT
-         JQag==
-X-Forwarded-Encrypted: i=1; AJvYcCU6XUDC7fqWgfXPgcN6gHMhgMxNPn56DVgCJHcg/GygXVEw/FftKXP8ZX1f1UBmxxr+OIuEQHe/+WmKSiz6@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywgzs3jXr0H1g0ZRb5ROB3eM00Aq029PpghORuap/yAHsZNSkKj
-	0NY8UjOZFkPyWbZRxYfxsXleBmIYtt6/8VlF+/u3H2nhRMFXmIWV3M0Sh45QZA==
-X-Gm-Gg: ASbGncuARWGcPgiE9BhQJjLa4bNWIb8SrolgpGc2y1Ajidrr01BzotOpQBFAz28s5d4
-	gRzXJsVi6zxX7XnsVxyu6/iC6U2aDvKezHwqSHEvnsZBP+EtCvABY+1adi0y8aLlJ2wMTt9YJuT
-	VMYsKYepdmJp9h1gfz13f9iv7t8h4e7koz6cZMSKxGjFknN/QcgpHK/oKuHUcMGMw0y2cradAvM
-	RYRXaJpGA85g4ZT/HteWDDPYHVNBMPK/E1egOXUW16UbCiguqV/1BRiKaK8U93ZGF0u51g+YYg0
-	YaWzeuNuhAU8LBhC+Ny8l0ZhCMKb
-X-Google-Smtp-Source: AGHT+IE4gdu2yxLbkLWa2z+fxMD4SNoZKshd8ELUK0DWfD4+eLBEQB9U2Q8lXY9MpRroDTXbBu5Psw==
-X-Received: by 2002:a05:6a00:9289:b0:730:8d25:4c31 with SMTP id d2e1a72fcca58-7308d25550amr2078276b3a.8.1739116245689;
-        Sun, 09 Feb 2025 07:50:45 -0800 (PST)
-Received: from thinkpad ([220.158.156.173])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73048ad2866sm6332220b3a.52.2025.02.09.07.50.42
+        d=1e100.net; s=20230601; t=1739118591; x=1739723391;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CBBaxSpqSP+CW1UdUykgwYZL/97FlmN6t4SFUigusvk=;
+        b=EQjaRRokm6wDogBPZUT8ATMLGztY/PMBCO1eFUwWe+VjD6rRV25kgjz/SPhHQiJAQd
+         9ukbHFSTG+6+cLAq5oXqbPBawhUoB8X2FK8tHINvNCNeMjBRc13ZFj5Wi8Att1maI5LK
+         HOfOCI01FJCgzmJA9lgqqizyE+x0v3O+QvL3uxVzZdsPwwB8oKzKwhI/tcKr4yWQcGwC
+         /VK3L6v0Ctm7CsL5qpf5MoI1fqw7yUl+muIEAKs1wZmiHVWh16H2K2e030dLWnwI2miu
+         WLmv/hyOh6uurigPTLQ3CYxNfAhDTyxptHGDEozlgEgOPE/jsfiEkTyqK0zJqqk5ywkK
+         adtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV4PqdnJDSkAHDti6ccyp4kFq+Aq7EmnDr9exXeZWwsEPX/wRpk+JnxK6Lm7aAmASN2vdbsZcs5hQgGCb4n@vger.kernel.org
+X-Gm-Message-State: AOJu0YzL5Kw5ukoOfa2AX1ZriFfhUlyDg7G/lEYXoFfWeLT1i+v6ogAA
+	Nl9YyXHOy6GUznzy8vxr6pCHt086X9ua4He7pg/RZ6At02u0pmhRUkjVZM+JU4g=
+X-Gm-Gg: ASbGncupfKPxKzL7132LpdyhFl62KVKhRKK84/lVbQIXWVvJEGPwhpCHsBkbmkO1Fat
+	0YtZavdaWlI5XmfVB0Lu7jNBejM6XfnUZCiQIPTHOWIFKKgbFrucjJN5zZ13fs3x/jGvREuseiF
+	Ab+rFi2gOJ+IJH7eJz3Wob9lVvzQj2xzb/F6HXa4siMbpzJbvGBiVwPQaj5Jd8GHime5gHUHF4p
+	u4W6g3lp70DEhO5YTNlbkeQ+sWQrPjw7jhaYfJNseppg1E+IPhMR9+RBTpWrJgYOHCB0vkzYRfj
+	6w6Ru8yP2BC0On6+tuhf3D0WyeMuqjGd14AKkET91VA+wRjjS4RU6B9YmqqB3sZvqe+ghV8=
+X-Google-Smtp-Source: AGHT+IFzize2yKjpIdEHEa0CzVZP+PJ8P5Q3H+Z4nzXrwEuHJD8mwDugjc4mCpltXZ8b6WnzCOQMjA==
+X-Received: by 2002:a05:6512:12c7:b0:545:d70:93f1 with SMTP id 2adb3069b0e04-5450d709519mr22207e87.11.1739118590771;
+        Sun, 09 Feb 2025 08:29:50 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5450a76bc6fsm182100e87.241.2025.02.09.08.29.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2025 07:50:45 -0800 (PST)
-Date: Sun, 9 Feb 2025 21:20:40 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: linux-block@vger.kernel.org, Jens Axboe <axboe@kernel.dk>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-	linux-fscrypt@vger.kernel.org, linux-mmc@vger.kernel.org,
-	linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v11 5/7] soc: qcom: ice: make qcom_ice_program_key() take
- struct blk_crypto_key
-Message-ID: <20250209155040.gnkf6xuhhzp5jnrw@thinkpad>
-References: <20250204060041.409950-1-ebiggers@kernel.org>
- <20250204060041.409950-6-ebiggers@kernel.org>
+        Sun, 09 Feb 2025 08:29:49 -0800 (PST)
+Date: Sun, 9 Feb 2025 18:29:46 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Connor Abbott <cwabbott0@gmail.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sa8775p-ride: Enable Adreno 663
+ GPU
+Message-ID: <ah6nusoouth7ziu3iscxmafm6cxuwwebxt44ixsjmesp5adwc4@e5lnbztds2xd>
+References: <20241030-a663-gpu-support-v3-0-bdf1d9ce6021@quicinc.com>
+ <20241030-a663-gpu-support-v3-2-bdf1d9ce6021@quicinc.com>
+ <4cfd1ebc-1a95-43d4-b36a-8b183c6dfd16@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250204060041.409950-6-ebiggers@kernel.org>
+In-Reply-To: <4cfd1ebc-1a95-43d4-b36a-8b183c6dfd16@quicinc.com>
 
-On Mon, Feb 03, 2025 at 10:00:39PM -0800, Eric Biggers wrote:
-> From: Eric Biggers <ebiggers@google.com>
+On Wed, Nov 13, 2024 at 02:18:43AM +0530, Akhil P Oommen wrote:
+> On 10/30/2024 12:32 PM, Akhil P Oommen wrote:
+> > From: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+> > 
+> > Enable GPU for sa8775p-ride platform and provide path for zap
+> > shader.
+> > 
+> > Signed-off-by: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+> > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> > index 0c1b21def4b6..4901163df8f3 100644
+> > --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> > @@ -407,6 +407,14 @@ queue3 {
+> >  	};
+> >  };
+> >  
+> > +&gpu {
+> > +	status = "okay";
+> > +};
+> > +
+> > +&gpu_zap_shader {
+> > +	firmware-name = "qcom/sa8775p/a663_zap.mbn";
+> > +};
+> > +
+> >  &i2c11 {
+> >  	clock-frequency = <400000>;
+> >  	pinctrl-0 = <&qup_i2c11_default>;
+> > 
 > 
-> qcom_ice_program_key() currently accepts the key as an array of bytes,
-> algorithm ID, key size enum, and data unit size.  However both callers
-> have a struct blk_crypto_key which contains all that information.  Thus
-> they both have similar code that converts the blk_crypto_key into the
-> form that qcom_ice_program_key() wants.  Once wrapped key support is
-> added, the key type would need to be added to the arguments too.
+> Bjorn,
 > 
-> Therefore, this patch changes qcom_ice_program_key() to take in all this
-> information as a struct blk_crypto_key directly.  The calling code is
-> updated accordingly.  This ends up being much simpler, and it makes the
-> key type be passed down automatically once wrapped key support is added.
-> 
-> Based on a patch by Gaurav Kashyap <quic_gaurkash@quicinc.com> that
-> replaced the byte array argument only.  This patch makes the
-> blk_crypto_key replace other arguments like the algorithm ID too,
-> ensuring that there remains only one source of truth.
-> 
-> Signed-off-by: Eric Biggers <ebiggers@google.com>
+> Please ignore this patch for now. This is probably not the right
+> platform dtsi file where gpu should be enabled. I am discussing about
+> this internally. Will send a revision or a new patch based on the
+> conclusion.
 
-For ufs-qcom:
-
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-- Mani
-
-> ---
->  drivers/mmc/host/sdhci-msm.c | 11 +----------
->  drivers/soc/qcom/ice.c       | 23 ++++++++++++-----------
->  drivers/ufs/host/ufs-qcom.c  | 11 +----------
->  include/soc/qcom/ice.h       | 22 +++-------------------
->  4 files changed, 17 insertions(+), 50 deletions(-)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 3c383bce4928f..2c926f566d053 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -1960,20 +1960,11 @@ static int sdhci_msm_ice_keyslot_program(struct blk_crypto_profile *profile,
->  					 unsigned int slot)
->  {
->  	struct sdhci_msm_host *msm_host =
->  		sdhci_msm_host_from_crypto_profile(profile);
->  
-> -	/* Only AES-256-XTS has been tested so far. */
-> -	if (key->crypto_cfg.crypto_mode != BLK_ENCRYPTION_MODE_AES_256_XTS)
-> -		return -EOPNOTSUPP;
-> -
-> -	return qcom_ice_program_key(msm_host->ice,
-> -				    QCOM_ICE_CRYPTO_ALG_AES_XTS,
-> -				    QCOM_ICE_CRYPTO_KEY_SIZE_256,
-> -				    key->bytes,
-> -				    key->crypto_cfg.data_unit_size / 512,
-> -				    slot);
-> +	return qcom_ice_program_key(msm_host->ice, slot, key);
->  }
->  
->  static int sdhci_msm_ice_keyslot_evict(struct blk_crypto_profile *profile,
->  				       const struct blk_crypto_key *key,
->  				       unsigned int slot)
-> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> index 393d2d1d275f1..78780fd508f0b 100644
-> --- a/drivers/soc/qcom/ice.c
-> +++ b/drivers/soc/qcom/ice.c
-> @@ -159,41 +159,42 @@ int qcom_ice_suspend(struct qcom_ice *ice)
->  
->  	return 0;
->  }
->  EXPORT_SYMBOL_GPL(qcom_ice_suspend);
->  
-> -int qcom_ice_program_key(struct qcom_ice *ice,
-> -			 u8 algorithm_id, u8 key_size,
-> -			 const u8 crypto_key[], u8 data_unit_size,
-> -			 int slot)
-> +int qcom_ice_program_key(struct qcom_ice *ice, unsigned int slot,
-> +			 const struct blk_crypto_key *blk_key)
->  {
->  	struct device *dev = ice->dev;
->  	union {
->  		u8 bytes[AES_256_XTS_KEY_SIZE];
->  		u32 words[AES_256_XTS_KEY_SIZE / sizeof(u32)];
->  	} key;
->  	int i;
->  	int err;
->  
->  	/* Only AES-256-XTS has been tested so far. */
-> -	if (algorithm_id != QCOM_ICE_CRYPTO_ALG_AES_XTS ||
-> -	    key_size != QCOM_ICE_CRYPTO_KEY_SIZE_256) {
-> -		dev_err_ratelimited(dev,
-> -				    "Unhandled crypto capability; algorithm_id=%d, key_size=%d\n",
-> -				    algorithm_id, key_size);
-> +	if (blk_key->crypto_cfg.crypto_mode !=
-> +	    BLK_ENCRYPTION_MODE_AES_256_XTS) {
-> +		dev_err_ratelimited(dev, "Unsupported crypto mode: %d\n",
-> +				    blk_key->crypto_cfg.crypto_mode);
->  		return -EINVAL;
->  	}
->  
-> -	memcpy(key.bytes, crypto_key, AES_256_XTS_KEY_SIZE);
-> +	if (blk_key->size != AES_256_XTS_KEY_SIZE) {
-> +		dev_err_ratelimited(dev, "Incorrect key size\n");
-> +		return -EINVAL;
-> +	}
-> +	memcpy(key.bytes, blk_key->bytes, AES_256_XTS_KEY_SIZE);
->  
->  	/* The SCM call requires that the key words are encoded in big endian */
->  	for (i = 0; i < ARRAY_SIZE(key.words); i++)
->  		__cpu_to_be32s(&key.words[i]);
->  
->  	err = qcom_scm_ice_set_key(slot, key.bytes, AES_256_XTS_KEY_SIZE,
->  				   QCOM_SCM_ICE_CIPHER_AES_256_XTS,
-> -				   data_unit_size);
-> +				   blk_key->crypto_cfg.data_unit_size / 512);
->  
->  	memzero_explicit(&key, sizeof(key));
->  
->  	return err;
->  }
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index c3f0aa81ff983..9330022e98eec 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -193,21 +193,12 @@ static int ufs_qcom_ice_keyslot_program(struct blk_crypto_profile *profile,
->  {
->  	struct ufs_hba *hba = ufs_hba_from_crypto_profile(profile);
->  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->  	int err;
->  
-> -	/* Only AES-256-XTS has been tested so far. */
-> -	if (key->crypto_cfg.crypto_mode != BLK_ENCRYPTION_MODE_AES_256_XTS)
-> -		return -EOPNOTSUPP;
-> -
->  	ufshcd_hold(hba);
-> -	err = qcom_ice_program_key(host->ice,
-> -				   QCOM_ICE_CRYPTO_ALG_AES_XTS,
-> -				   QCOM_ICE_CRYPTO_KEY_SIZE_256,
-> -				   key->bytes,
-> -				   key->crypto_cfg.data_unit_size / 512,
-> -				   slot);
-> +	err = qcom_ice_program_key(host->ice, slot, key);
->  	ufshcd_release(hba);
->  	return err;
->  }
->  
->  static int ufs_qcom_ice_keyslot_evict(struct blk_crypto_profile *profile,
-> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
-> index 5870a94599a25..4cecc7f088b4b 100644
-> --- a/include/soc/qcom/ice.h
-> +++ b/include/soc/qcom/ice.h
-> @@ -4,34 +4,18 @@
->   */
->  
->  #ifndef __QCOM_ICE_H__
->  #define __QCOM_ICE_H__
->  
-> +#include <linux/blk-crypto.h>
->  #include <linux/types.h>
->  
->  struct qcom_ice;
->  
-> -enum qcom_ice_crypto_key_size {
-> -	QCOM_ICE_CRYPTO_KEY_SIZE_INVALID	= 0x0,
-> -	QCOM_ICE_CRYPTO_KEY_SIZE_128		= 0x1,
-> -	QCOM_ICE_CRYPTO_KEY_SIZE_192		= 0x2,
-> -	QCOM_ICE_CRYPTO_KEY_SIZE_256		= 0x3,
-> -	QCOM_ICE_CRYPTO_KEY_SIZE_512		= 0x4,
-> -};
-> -
-> -enum qcom_ice_crypto_alg {
-> -	QCOM_ICE_CRYPTO_ALG_AES_XTS		= 0x0,
-> -	QCOM_ICE_CRYPTO_ALG_BITLOCKER_AES_CBC	= 0x1,
-> -	QCOM_ICE_CRYPTO_ALG_AES_ECB		= 0x2,
-> -	QCOM_ICE_CRYPTO_ALG_ESSIV_AES_CBC	= 0x3,
-> -};
-> -
->  int qcom_ice_enable(struct qcom_ice *ice);
->  int qcom_ice_resume(struct qcom_ice *ice);
->  int qcom_ice_suspend(struct qcom_ice *ice);
-> -int qcom_ice_program_key(struct qcom_ice *ice,
-> -			 u8 algorithm_id, u8 key_size,
-> -			 const u8 crypto_key[], u8 data_unit_size,
-> -			 int slot);
-> +int qcom_ice_program_key(struct qcom_ice *ice, unsigned int slot,
-> +			 const struct blk_crypto_key *blk_key);
->  int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
->  struct qcom_ice *of_qcom_ice_get(struct device *dev);
->  #endif /* __QCOM_ICE_H__ */
-> -- 
-> 2.48.1
-> 
+Akhil, any updates on this?
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
 
