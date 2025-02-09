@@ -1,143 +1,327 @@
-Return-Path: <linux-arm-msm+bounces-47297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FE0BA2DD27
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 12:46:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D00B3A2DD36
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 12:57:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 820D61885589
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 11:46:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6CC13163432
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 11:57:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CA741BD9CE;
-	Sun,  9 Feb 2025 11:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 785B01CEAA3;
+	Sun,  9 Feb 2025 11:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FQr2pfXO"
+	dkim=pass (2048-bit key) header.d=oltmanns.dev header.i=@oltmanns.dev header.b="XA68FjMs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2256F06A;
-	Sun,  9 Feb 2025 11:46:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41AD243399;
+	Sun,  9 Feb 2025 11:57:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739101606; cv=none; b=SNE3qRm5VTNGeZVs55g4q622ty/F39S66Z2POUvj/7cuUILRVloExW0lzJYf3yz66yPuJrhZGNPj17v4Lz3MvkOnBWxj36T8sW6pjlfjwugnMIl0/uxwt0ozryaDSC1uQ9kyDBNt/Ky9WhjTo431Do23yMzmzIRe7xdfLNbWMto=
+	t=1739102268; cv=none; b=AFweSVYTNgCV86imJaWEJYvD39Il2t9aQ1eucCEOxjTrUVP2pkoV34Itjb7pZfgF5++DO5F4MvWfxG2awtyioCCH5amKp0nJew0Ua+ydtBCR1OZGhEOitBcE+i2cUNM4ccDnAHBD2E2dmMbE8DOu1LxssyxyTabe8y1aTXHdE7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739101606; c=relaxed/simple;
-	bh=hr6YvJwPrLbR0mqEALiFbD/EzVOiUk+m7gr/K9W39qY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=OSNKdJQDat2rBBdE8dmQK1UvyoiuvuoFRNUyqFMVUT84/gk9iaqutmqcA1uNC3WKd4kwogKi0Rna1NLccEx8umciR0mQCRus/zKweq2NVF4uW331dgvAlGI3/WCt23bKqU6DTHNPW2xT+4zMAGmjFxkUqUVsf1VPe5UTn7Qu6M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FQr2pfXO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8826C4CEDD;
-	Sun,  9 Feb 2025 11:46:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739101605;
-	bh=hr6YvJwPrLbR0mqEALiFbD/EzVOiUk+m7gr/K9W39qY=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=FQr2pfXONN4Br77vkvPO5jDiWNi4I7kpB1UWzsbWXQJNhrPlr0uIEle/N+6Gfqc3A
-	 Jbg3Xit7ntSHjzBXjRp21QafQpwwY1vu7yV2FHBGoWGuF/+RVjhri5PJwUXeQ/LXYi
-	 rVnt/CQuQnzLz1wn8/p7ZBU6nJ98rJTXk46k8+He0HV5wls2laJMnuA+8K8f5VKhOv
-	 hkc2Sw4lNhA2RXN7svmaEGwo3LZ+7yrf5T5ultqclfFCWTraAklPgqfYSUuU1tYHG+
-	 Ry3ppboYiDPKIywjIGwnF7oDxCR9EiqUcB2l1IrkVZWnv/V+ZYoX5yL7iOP3SFOB+3
-	 ARXz54ZxWrVFQ==
-Message-ID: <c7cc1453-d54f-46f7-86da-275636eaed84@kernel.org>
-Date: Sun, 9 Feb 2025 12:46:40 +0100
+	s=arc-20240116; t=1739102268; c=relaxed/simple;
+	bh=IFPrwgWX/SeQu6djTRtCOLTF5LOOkTem+odoOFUh3Pw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lnlzjBCJNvS7bEegI2zkWUSJol7Knu05HNMme3wbqzxzKZbXfCD4WHDs3Hf3rd6pBTsQ9k2VhHCeEqQFnIIQ9sTDVSU0fSDWzeqNlRLMf2WyjOEGs1uK8g3okbeAcNfId1ib4q0MgOdbyBrYZAip0MAwg7oBavGGVoT8GY6pdao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oltmanns.dev; spf=pass smtp.mailfrom=oltmanns.dev; dkim=pass (2048-bit key) header.d=oltmanns.dev header.i=@oltmanns.dev header.b=XA68FjMs; arc=none smtp.client-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oltmanns.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oltmanns.dev
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4YrR664fMtz9t6M;
+	Sun,  9 Feb 2025 12:57:34 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oltmanns.dev;
+	s=MBO0001; t=1739102254;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SUts8dcXXQeAlZTyL5V8OhXHvjjPlRSnn/MhZvJ1N1M=;
+	b=XA68FjMsblS72OcIEJ7vDmM3vuAesgs4X9CxtqB3JX6fVlzaHbtAMzOV1pdM03eTG8wR8y
+	jazO81rAQgfbiG2Ox89/IwnIXnmskdQB4h/UQVdOW+TRJgMT5myXQYOt/zZyqZYB0UYgdR
+	p5MbvEWujgGZumg21oHrUnExxd4AQ5GILmh9WzVZshMHbxj5/BBlc4506CW5Sn1VEurMOA
+	/+M1Wo56NwXOsH3bzY4SL0oyd1PIwOM0fo75+9ksKH/NMNoW87IMsNTdosHZVAf51mopG+
+	JlmHUFyuooVyeH8sgYySg7FIkrdkfm/T2FWsavuyWIk6iQLNqMwdSMgaGBo5sQ==
+From: Frank Oltmanns <frank@oltmanns.dev>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,  Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>,  Chris Lew <quic_clew@quicinc.com>,
+  linux-arm-msm@vger.kernel.org,  linux-kernel@vger.kernel.org,  Stephan
+ Gerhold <stephan.gerhold@linaro.org>,  Johan Hovold
+ <johan+linaro@kernel.org>,  Caleb Connolly <caleb.connolly@linaro.org>,
+  Joel Selvaraj <joelselvaraj.oss@gmail.com>,  Alexey Minnekhanov
+ <alexeymin@postmarketos.org>,  stable@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: pd-mapper: defer probing on sdm845
+In-Reply-To: <87msez1sim.fsf@oltmanns.dev> (Frank Oltmanns's message of "Thu,
+	06 Feb 2025 07:44:49 +0100")
+References: <20250205-qcom_pdm_defer-v1-1-a2e9a39ea9b9@oltmanns.dev>
+	<2vfwtuiorefq64ood4k7y7ukt34ubdomyezfebkeu2wu5omvkb@c5h2sbqs47ya>
+	<87y0yj1up1.fsf@oltmanns.dev> <87msez1sim.fsf@oltmanns.dev>
+Date: Sun, 09 Feb 2025 12:57:21 +0100
+Message-ID: <87seon9vq6.fsf@oltmanns.dev>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] dt-bindings: i3c: Add Qualcomm I3C master
- controller bindings
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, jarkko.nikula@linux.intel.com,
- linux-i3c@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250205143109.2955321-1-quic_msavaliy@quicinc.com>
- <20250205143109.2955321-2-quic_msavaliy@quicinc.com>
- <248000f5-63db-492c-884d-ac72db337493@kernel.org>
- <0ae3f754-edcb-4b22-9d49-b20ef264554b@quicinc.com>
- <f643c57e-de01-4372-a1b1-7ebde319d0a4@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <f643c57e-de01-4372-a1b1-7ebde319d0a4@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 07/02/2025 13:03, Mukesh Kumar Savaliya wrote:
->> I will remove minItems and MaxItems, will list Items with description.
+On 2025-02-06 at 07:44:49 +0100, Frank Oltmanns <frank@oltmanns.dev> wrote:
+Hi Bjorn,
+
+> Hi again,
+>
+> On 2025-02-06 at 06:57:46 +0100, Frank Oltmanns <frank@oltmanns.dev> wrot=
+e:
+>> On 2025-02-05 at 20:54:53 -0600, Bjorn Andersson <andersson@kernel.org> =
+wrote:
+>>> On Wed, Feb 05, 2025 at 10:57:11PM +0100, Frank Oltmanns wrote:
+>>>> On xiaomi-beryllium and oneplus-enchilada audio does not work reliably
+>>>> with the in-kernel pd-mapper. Deferring the probe solves these issues.
+>>>> Specifically, audio only works reliably with the in-kernel pd-mapper, =
+if
+>>>> the probe succeeds when remoteproc3 triggers the first successful prob=
+e.
+>>>> I.e., probes from remoteproc0, 1, and 2 need to be deferred until
+>>>> remoteproc3 has been probed.
+>>>>
+>>>> Introduce a device specific quirk that lists the first auxdev for which
+>>>> the probe must be executed. Until then, defer probes from other auxdev=
+s.
+>>>>
+>>>> Fixes: 1ebcde047c54 ("soc: qcom: add pd-mapper implementation")
+>>>> Cc: stable@vger.kernel.org
+>>>> Signed-off-by: Frank Oltmanns <frank@oltmanns.dev>
+>>>> ---
+>>>> The in-kernel pd-mapper has been causing audio issues on sdm845
+>>>> devices (specifically, xiaomi-beryllium and oneplus-enchilada). I
+>>>> observed that Stephan=E2=80=99s approach [1] - which defers module pro=
+bing by
+>>>> blocklisting the module and triggering a later probe - works reliably.
+>>>>
+>>>> Inspired by this, I experimented with delaying the probe within the
+>>>> module itself by returning -EPROBE_DEFER in qcom_pdm_probe() until a
+>>>> certain time (13.9 seconds after boot, based on ktime_get()) had
+>>>> elapsed. This method also restored audio functionality.
+>>>>
+>>>> Further logging of auxdev->id in qcom_pdm_probe() led to an interesting
+>>>> discovery: audio only works reliably with the in-kernel pd-mapper when
+>>>> the first successful probe is triggered by remoteproc3. In other words,
+>>>> probes from remoteproc0, 1, and 2 must be deferred until remoteproc3 h=
+as
+>>>> been probed.
+>>>>
 >>>
-> Wanted to check if below way is fine ? Because some of the ask to drop 
-> constraints are already present in other i3c yaml files.
-> 
-> if not, could you please help share example removing constraints and 
-> listing item ?
-> 
-> == Sample ==
-> properties:
->    compatible:
->      enum:
->        - qcom,i3c-controller
-> 
->    reg:
->      type: array
->      minItems: 1
->      maxItems: 1
->      items:
->        type: integer
->      description: Base address and size of the I3C controller registers.
+>>> The remoteproc numbering is assigned at the time of registering each
+>>> remoteproc driver, and does not necessarily relate to the order in which
+>>> they are launched. That said, it sounds like what you're saying is that
+>>> is that audio only works if we launch the pd-mapper after the
+>>> remoteprocs has started?
+>>
+>> Almost, but not quite. You are right, that remoteproc3 in my setup is
+>> always the last one that probes the pd-mapper.
+>>
+>> However, when experimenting with different timings I saw that the
+>> pd-mapper really do has to respond to the probe from remoteproc3 (I'm
+>> not sure I'm using the right terminology here, but I hope my intent
+>> comes across). If the pd-mapper responds to remoteproc3's probe with
+>> -EPROBE_DEFER there will again be subsequent probes from the other
+>> remoteprocs. If we act on those probes, there is a chance that audio
+>> (mic in my case) does not work. So, my conclusion was that remoteproc3's
+>> probe has to be answered first before responding to the other probes.
+>>
+>> Further note that in my experiments remoteproc1 was always the first to
+>> do the probing, followed by either remoteproc0 or remoteproc2.
+>> remoteproc3 was always the last.
+>>
+>>> Can you please confirm which remoteproc is which in your numbering? (In
+>>> particular, which remoteproc instance is the audio DSP?)
+>>
+>> remoteproc0: adsp
+>> remoteproc1: cdsp
+>> remoteproc2: slpi
+>> remoteproc3: 4080000.remoteproc
+>
+> I'm sorry but there's one additional thing that I really should have
+> mentioned earlier: My issue is specifically with *call* audio.
+>
+> Call audio is only available using out-of-tree patches. The ones I'm
+> currently using are here:
+> https://gitlab.com/sdm845-mainline/linux/-/commits/sdm845-6.13-rc2-r2?ref=
+_type=3Dtags
 
+Just wanted to let you know that I've tested Mukesh Ojha's and Saranya
+R's patch [1]. Thanks, Bjorn for cc'ing me in your response.
 
-I really do not understand this sample. That's not a DT schema code.
-Please open existing Qcom bindings and look how it is done.
+Unfortunately, it seems to fix a different issue than the one I'm
+experiencing. The phone's mic still doesn't work. As I wrote elsewhere
+[2], I don't see the PDR error messages on xiaomi-beryllium, so, as
+Johan expected, the issue I'm experiencing is indeed a different one.
 
 Best regards,
-Krzysztof
+  Frank
+
+[1]: https://lore.kernel.org/linux-arm-msm/20250129155544.1864854-1-mukesh.=
+ojha@oss.qualcomm.com/
+[2]: https://lore.kernel.org/linux-arm-msm/87wmf18m8g.fsf@oltmanns.dev/
+
+>
+> Best regards,
+>   Frank
+>
+>>
+>> (I took them from the kernel messages "remoteproc remoteproc<X>: <xyz>
+>> is available".)
+>>
+>>>> To address this, I propose introducing a quirk table (which currently
+>>>> only contains sdm845) to defer probing until the correct auxiliary
+>>>> device (remoteproc3) initiates the probe.
+>>>>
+>>>> I look forward to your feedback.
+>>>>
+>>>
+>>> I don't think the proposed workaround is our path forward, but I very
+>>> much appreciate your initiative and the insights it provides!
+>>
+>> Thank you! I was hoping that somebody with more experience in the QCOM
+>> universe can draw further conclusions from this.
+>>
+>>> Seems to
+>>> me that we have a race-condition in the pdr helper.
+>>
+>> If you need further experimenting or can give me rough guidance on where
+>> to look next, I'll be glad to help.
+>>
+>> Thanks again,
+>>   Frank
+>>
+>>>
+>>> Regards,
+>>> Bjorn
+>>>
+>>>> Thanks,
+>>>>   Frank
+>>>>
+>>>> [1]: https://lore.kernel.org/linux-arm-msm/Zwj3jDhc9fRoCCn6@linaro.org/
+>>>> ---
+>>>>  drivers/soc/qcom/qcom_pd_mapper.c | 43 ++++++++++++++++++++++++++++++=
++++++++++
+>>>>  1 file changed, 43 insertions(+)
+>>>>
+>>>> diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom=
+_pd_mapper.c
+>>>> index 154ca5beb47160cc404a46a27840818fe3187420..34b26df665a888ac4872f5=
+6e948e73b561ae3b6b 100644
+>>>> --- a/drivers/soc/qcom/qcom_pd_mapper.c
+>>>> +++ b/drivers/soc/qcom/qcom_pd_mapper.c
+>>>> @@ -46,6 +46,11 @@ struct qcom_pdm_data {
+>>>>  	struct list_head services;
+>>>>  };
+>>>>
+>>>> +struct qcom_pdm_probe_first_dev_quirk {
+>>>> +	const char *name;
+>>>> +	u32 id;
+>>>> +};
+>>>> +
+>>>>  static DEFINE_MUTEX(qcom_pdm_mutex); /* protects __qcom_pdm_data */
+>>>>  static struct qcom_pdm_data *__qcom_pdm_data;
+>>>>
+>>>> @@ -526,6 +531,11 @@ static const struct qcom_pdm_domain_data *x1e8010=
+0_domains[] =3D {
+>>>>  	NULL,
+>>>>  };
+>>>>
+>>>> +static const struct qcom_pdm_probe_first_dev_quirk first_dev_remotepr=
+oc3 =3D {
+>>>> +	.id =3D 3,
+>>>> +	.name =3D "pd-mapper"
+>>>> +};
+>>>> +
+>>>>  static const struct of_device_id qcom_pdm_domains[] __maybe_unused =
+=3D {
+>>>>  	{ .compatible =3D "qcom,apq8016", .data =3D NULL, },
+>>>>  	{ .compatible =3D "qcom,apq8064", .data =3D NULL, },
+>>>> @@ -566,6 +576,10 @@ static const struct of_device_id qcom_pdm_domains=
+[] __maybe_unused =3D {
+>>>>  	{},
+>>>>  };
+>>>>
+>>>> +static const struct of_device_id qcom_pdm_defer[] __maybe_unused =3D {
+>>>> +	{ .compatible =3D "qcom,sdm845", .data =3D &first_dev_remoteproc3, },
+>>>> +	{},
+>>>> +};
+>>>>  static void qcom_pdm_stop(struct qcom_pdm_data *data)
+>>>>  {
+>>>>  	qcom_pdm_free_domains(data);
+>>>> @@ -637,6 +651,25 @@ static struct qcom_pdm_data *qcom_pdm_start(void)
+>>>>  	return ERR_PTR(ret);
+>>>>  }
+>>>>
+>>>> +static bool qcom_pdm_ready(struct auxiliary_device *auxdev)
+>>>> +{
+>>>> +	const struct of_device_id *match;
+>>>> +	struct device_node *root;
+>>>> +	struct qcom_pdm_probe_first_dev_quirk *first_dev;
+>>>> +
+>>>> +	root =3D of_find_node_by_path("/");
+>>>> +	if (!root)
+>>>> +		return true;
+>>>> +
+>>>> +	match =3D of_match_node(qcom_pdm_defer, root);
+>>>> +	of_node_put(root);
+>>>> +	if (!match)
+>>>> +		return true;
+>>>> +
+>>>> +	first_dev =3D (struct qcom_pdm_probe_first_dev_quirk *) match->data;
+>>>> +	return (auxdev->id =3D=3D first_dev->id) && !strcmp(auxdev->name, fi=
+rst_dev->name);
+>>>> +}
+>>>> +
+>>>>  static int qcom_pdm_probe(struct auxiliary_device *auxdev,
+>>>>  			  const struct auxiliary_device_id *id)
+>>>>
+>>>> @@ -647,6 +680,15 @@ static int qcom_pdm_probe(struct auxiliary_device=
+ *auxdev,
+>>>>  	mutex_lock(&qcom_pdm_mutex);
+>>>>
+>>>>  	if (!__qcom_pdm_data) {
+>>>> +		if (!qcom_pdm_ready(auxdev)) {
+>>>> +			pr_debug("%s: Deferring probe for device %s (id: %u)\n",
+>>>> +				__func__, auxdev->name, auxdev->id);
+>>>> +			ret =3D -EPROBE_DEFER;
+>>>> +			goto probe_stop;
+>>>> +		}
+>>>> +		pr_debug("%s: Probing for device %s (id: %u), starting pdm\n",
+>>>> +			__func__, auxdev->name, auxdev->id);
+>>>> +
+>>>>  		data =3D qcom_pdm_start();
+>>>>
+>>>>  		if (IS_ERR(data))
+>>>> @@ -659,6 +701,7 @@ static int qcom_pdm_probe(struct auxiliary_device =
+*auxdev,
+>>>>
+>>>>  	auxiliary_set_drvdata(auxdev, __qcom_pdm_data);
+>>>>
+>>>> +probe_stop:
+>>>>  	mutex_unlock(&qcom_pdm_mutex);
+>>>>
+>>>>  	return ret;
+>>>>
+>>>> ---
+>>>> base-commit: 7f048b202333b967782a98aa21bb3354dc379bbf
+>>>> change-id: 20250205-qcom_pdm_defer-3dc1271d74d9
+>>>>
+>>>> Best regards,
+>>>> --
+>>>> Frank Oltmanns <frank@oltmanns.dev>
+>>>>
 
