@@ -1,166 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-47262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EAF5A2DA57
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 03:04:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 985A7A2DA77
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 04:21:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B55781659A8
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 02:04:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E8D15165BFB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 03:21:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EEF04C7C;
-	Sun,  9 Feb 2025 02:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C4E34683;
+	Sun,  9 Feb 2025 03:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B13a1Oxg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MmnQit1U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9D22F30;
-	Sun,  9 Feb 2025 02:03:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D42243365
+	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 03:21:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739066637; cv=none; b=ufa/7raoHALy8WdPVkXj0Sw6e5Sd5Kq3A/Y5RloGxXERpxAAdeDGQwmiJm97gEAcMlJMOu+5+FpcHmPEcCtthieUJoatDnntzQfeD9q9per4uWsBRB57rGIL1hHlSpS4DPgu+dId2ln66SSEhhVD2yuUxqQJZ3I9W6d7wcrrXAg=
+	t=1739071288; cv=none; b=bj30sywrrjp1d/OL/i3M9uF1GnMWulkUPF6VJzSreWTuHPMgNIx1EQ8C7XOCWX62vg3h6dZzw3Scglu/FU0wL3rhiMb89MqCKJoHZOMyJX0Pp819anjl7niMqzwpD60SeBTk6L/6UCKF0QsBPMrGgEhi2s0qS7mVLuTKIN/9QiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739066637; c=relaxed/simple;
-	bh=FE0Jqk5YY21GWTtz+x5JwkDRGQl1loDlgHMN/kBLDJI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KPL2vwlttf1R4O9yAVepjQSlc7TUNwTVkzAol+P9/6gGiPm75CFKAVjaJ58eTG9OBqsSPL0U5rCKDDEzF1NXOEs4c4TRHin3NMknJEnrGVT+v/EiKxvS/Qy8RWNEd4kPly7kYZ7EOpSaA7CCD1zWHgj243X11KboGTR1FulRESg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B13a1Oxg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D024C4CEE0;
-	Sun,  9 Feb 2025 02:03:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739066636;
-	bh=FE0Jqk5YY21GWTtz+x5JwkDRGQl1loDlgHMN/kBLDJI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=B13a1OxgvGbzDTDPaaGGQYoZvGlwNg7G4cO+tzeNx516zXv65IXbbzx/LNL2rS0jZ
-	 KkaWnbN3N5mpLXm43liJvtiGNQ4Wr+2Xy1UXi8jpZF5CVKxglyu90W4oL//nIBVC8C
-	 ydjeeP4t81fcr5cWYzZyjsGF+hhStOyLvH/dEOQrMedSRr9b5kzH1vg6XsEPfaPK25
-	 GY9w00Yu+a5T4/rHbJ9EjJ3DsRxR2ZV1nVjiyjLM5MVi8wkvc0q7Lm+htT8ZqtDCeH
-	 pyyc0D05dDPtLxPxBeNaeglayp00xUqM8CABxrwGHCD91hsIvejaQ0DKmCww4kYT2p
-	 XUmYodopFTF9Q==
-Date: Sat, 8 Feb 2025 20:03:53 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Caleb Connolly <caleb.connolly@linaro.org>
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
-	Amit Vadhavana <av2082000@gmail.com>, Dave Jiang <dave.jiang@intel.com>, 
-	Fenghua Yu <fenghua.yu@intel.com>, Kees Cook <kees@kernel.org>, 
-	Md Sadre Alam <quic_mdalam@quicinc.com>, Robin Murphy <robin.murphy@arm.com>, 
-	Vinod Koul <vkoul@kernel.org>, David Heidelberg <david@ixit.cz>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] Revert "dmaengine: qcom: bam_dma: Avoid writing
- unavailable register"
-Message-ID: <mjyavvk5jymhfdn4czffihi55nvlxea5ldgchsmkyd6lomrlbr@7224az7nsnsa>
-References: <20250208223112.142567-1-caleb.connolly@linaro.org>
+	s=arc-20240116; t=1739071288; c=relaxed/simple;
+	bh=NTr02ouTwM6BMx0LotwmedBZCP4G07mywT7v8bHyyGg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XafGJzBnanV4ib76fMFfM3HRynORQ6dDV/FzqQUBweidmqzUY0xiXzgwBVMyXy3pwK+I3xrO9FPHnrkrhtpexJLZpZLeaJbTbDnVzkvuVFyuahnsD0LaolXyJ19zCGLVanrJmCA+3iVgNuLN5UKhSbgc7qhp4sCDFsEXqxGPEKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MmnQit1U; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-54505a75445so893734e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 19:21:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739071284; x=1739676084; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lAjNA953tZUPp6VSyuChrIP+Zsr/R1tQauJo2e/D/xs=;
+        b=MmnQit1UJFPiCz6r6QcW4UZHiT7Z8CH9INz3DTvLKNy68ylHk1/4GackPrZaSR98x4
+         bLQPOgFxBKRnrBH7ObppOHL7SQtipYz+yNCO9LlFClKEGked/A30ZHtgvpZbOptznSD1
+         DD+IqQ2OVGTyZccgwwbnxOR0vFR6/Zfs8rsn87E8oecYbQV3AK9quhPEab4XTkVTdgOf
+         LpOJ9A7Hj+YQfBvlR4FUL9FqppPLVzRwRSc1VbGhHYmj42dhrU7xgx++3fikIX1zXGTv
+         QrrJHycvrjGGTtb39sf4QUtNDTZTanp5NRwm/1sQ7DQgVHBW+YJG8lRxzDFJq5HH/djh
+         MO0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739071284; x=1739676084;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lAjNA953tZUPp6VSyuChrIP+Zsr/R1tQauJo2e/D/xs=;
+        b=KfBT+8w8PooG6ZznS3nA34I+64EFgOuGUv+G+Y/aZ0YWMY/+6Cb2zDKI9RKzMOfknM
+         ZA1JsG7CtV13umJfmcdvwEcRivMa/7rpkE24+LOA3RkH/hj/esrH1LQ6S+FJxTHwPo5N
+         BaMCV5nB0lxrI3319YVFJ+q3+Ef7Kk2iz4YBHp5qYdodD5lzHEdaCibO3ZAmmk3q0t+n
+         WmcgO1pbL2k8o+S8tXEfUAIRzRw4ZvJanDP1/BM1aTtTH/0Yb8Xq6qjpiM3fJ92iQEQN
+         4zYwuap6zQjHhugoEmIBeXKeBSZX/FWttNXtKtwEQVpf6aSnG7d4xuUlzTaUUC1ypHpB
+         /s3A==
+X-Gm-Message-State: AOJu0YzwbpDumGb4cdGE1IK5/93FLws4bkRIRAD7NF08Jtyh95d5daip
+	b0kLWMjqEoauYVlylMd/w4yabq7iAcU6I/TmMwle0bXclpUVhkKnKkXuTzvYRtM=
+X-Gm-Gg: ASbGncuUN5cNd3Zd/pqvsYcoDq6mg4JyPOfG9IiFb3mKCCCsYawNwEbptHzaV0RLXIX
+	yH1X/ZSWeT1WiFYNpDGUieRjASw9EaO7rJ2tuKFPeg1lXud07toKoPGHLkx58e2sQfI1xjoE80b
+	ekHkTTEARBfxmhz9AeZ/A51OeJ5OVeZAFo+xW7POzlGKBKPG/aJ6HR78LkX6tsmC20ghixB6Z3j
+	fMaVVyRAS6GD1ARSceNxLbZ+/jACBZmswizFW3tZhguEJqSqYaCPWdV99g1r8BBfuvYvKpshcPZ
+	G71Z8JELVTOzRwC7UT3vii4=
+X-Google-Smtp-Source: AGHT+IHsxeWqnTeAqZtBc5A1b7LgJNE/n6mSsdvXC0Wcuj5manHlA1woFEwXNs89JFvUrGGGlgGgUQ==
+X-Received: by 2002:a05:6512:a8f:b0:544:12df:8726 with SMTP id 2adb3069b0e04-54414ab6a8bmr2765026e87.22.1739071284173;
+        Sat, 08 Feb 2025 19:21:24 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54505e41c63sm279711e87.148.2025.02.08.19.21.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 08 Feb 2025 19:21:22 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v5 0/8] drm/msm/dpu: rework debugfs interface of
+ dpu_core_perf
+Date: Sun, 09 Feb 2025 05:21:10 +0200
+Message-Id: <20250209-dpu-perf-rework-v5-0-87e936cf3004@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250208223112.142567-1-caleb.connolly@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACcfqGcC/3XNQQ6CMBCF4auQrq2pdFqsK+9hXBSYQqOhZKpVQ
+ 7i7hcSFMS7/l8w3E4tIHiM7FBMjTD76MORQm4I1vR065L7NzUpRgpA74O145yOS44SPQBduKtd
+ YYwzWoFm+Ggmdf67i6Zy79/EW6LU+SHJZ/1tJcsEr4yyg0EpVcLz6wVLYBurYgiX4AErshP4FI
+ ANC1CXsJRio9Bcwz/MbwcFNXvAAAAA=
+X-Change-ID: 20240314-dpu-perf-rework-97fca999eb46
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Stephen Boyd <swboyd@chromium.org>, 
+ Simona Vetter <simona.vetter@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2253;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=NTr02ouTwM6BMx0LotwmedBZCP4G07mywT7v8bHyyGg=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnqB8wAtAgwlyeiUFSx8giTZ7sPZ7ZnTosJodpk
+ W90Fh9WtTWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ6gfMAAKCRCLPIo+Aiko
+ 1TeoCACDRUjHxkfP08uFblALxS6ihEF8m5IAQ4guKr2xl6aVUXmVEDt50W7PeiH5BQy7SC2DROX
+ GWFIxTr3UcsxfAFKV+VqBkPrjTdrq2Vh4G72xZj7D6LQ74L6ng3luyMFHRTo22yqCU8yfee4Jv3
+ vH6wTg2owfwtaYXHZ60SWvqwl02Id+RuR23wjlHc+ngEdzx/fapKf7WQfQ5/sGj7w2nWe2OIsLU
+ Yagr4kOyq0IpTSqv7ePqkPDVxLHbGc+WUa2xhnpyKymZkS6QJLk84r1Nn3m9DnM/zNznZFkZfNb
+ OHk1+jHccN0Gbn1PeI/iH0gktjGjvdWX1HX9hk6n3EgIyKWI
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Sat, Feb 08, 2025 at 10:30:54PM +0000, Caleb Connolly wrote:
-> This commit causes a hard crash on sdm845 and likely other platforms.
-> Revert it until a proper fix is found.
-> 
-> This reverts commit 57a7138d0627309d469719f1845d2778c251f358.
-> 
+Bring back a set of patches extracted from [1] per Abhinav's suggestion.
 
-I posted below patch yesterday, which reverts the change for
-bdev->num_ees != 0 (i.e. SDM845), while still retaining the introduced
-NDP vs Lite logic.
+Rework debugging overrides for the bandwidth and clock settings. Instead
+of specifying the 'mode' and some values, allow one to set the affected
+value directly.
 
-https://lore.kernel.org/linux-arm-msm/0892dca2-e76b-4aab-95cf-7437dabfc7a4@kernel.org/T/#t
+[1] https://patchwork.freedesktop.org/series/119552/#rev2
 
-Regards,
-Bjorn
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v5:
+- Fixed bps -> KBps in the comments (Abhinav)
+- Split the core_clk_rate changes into a separate commit (Abhinav)
+- Expanded commit message to note that debugfs bandwidth settings are
+  not a subject to catalog thresholds (Abhinav)
+- Temporarily dropped the patches actually reworking the debugfs modes,
+  they will be reposted separately.
+- Link to v4: https://lore.kernel.org/r/20250106-dpu-perf-rework-v4-0-00b248349476@linaro.org
 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->  drivers/dma/qcom/bam_dma.c | 24 ++++++++----------------
->  1 file changed, 8 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index c14557efd577..bbc3276992bb 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -58,11 +58,8 @@ struct bam_desc_hw {
->  #define DESC_FLAG_EOB BIT(13)
->  #define DESC_FLAG_NWD BIT(12)
->  #define DESC_FLAG_CMD BIT(11)
->  
-> -#define BAM_NDP_REVISION_START	0x20
-> -#define BAM_NDP_REVISION_END	0x27
-> -
->  struct bam_async_desc {
->  	struct virt_dma_desc vd;
->  
->  	u32 num_desc;
-> @@ -400,9 +397,8 @@ struct bam_device {
->  	int irq;
->  
->  	/* dma start transaction tasklet */
->  	struct tasklet_struct task;
-> -	u32 bam_revision;
->  };
->  
->  /**
->   * bam_addr - returns BAM register address
-> @@ -444,12 +440,10 @@ static void bam_reset(struct bam_device *bdev)
->  	val |= BAM_EN;
->  	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
->  
->  	/* set descriptor threshold, start with 4 bytes */
-> -	if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
-> -		     BAM_NDP_REVISION_END))
-> -		writel_relaxed(DEFAULT_CNT_THRSHLD,
-> -			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
-> +	writel_relaxed(DEFAULT_CNT_THRSHLD,
-> +			bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
->  
->  	/* Enable default set of h/w workarounds, ie all except BAM_FULL_PIPE */
->  	writel_relaxed(BAM_CNFG_BITS_DEFAULT, bam_addr(bdev, 0, BAM_CNFG_BITS));
->  
-> @@ -1005,12 +999,11 @@ static void bam_apply_new_config(struct bam_chan *bchan,
->  		if (dir == DMA_DEV_TO_MEM)
->  			maxburst = bchan->slave.src_maxburst;
->  		else
->  			maxburst = bchan->slave.dst_maxburst;
-> -		if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
-> -			     BAM_NDP_REVISION_END))
-> -			writel_relaxed(maxburst,
-> -				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
-> +
-> +		writel_relaxed(maxburst,
-> +			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
->  	}
->  
->  	bchan->reconfigure = 0;
->  }
-> @@ -1198,13 +1191,12 @@ static int bam_init(struct bam_device *bdev)
->  {
->  	u32 val;
->  
->  	/* read revision and configuration information */
-> -	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
-> -	if (!bdev->num_ees)
-> +	if (!bdev->num_ees) {
-> +		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
->  		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
-> -
-> -	bdev->bam_revision = val & REVISION_MASK;
-> +	}
->  
->  	/* check that configured EE is within range */
->  	if (bdev->ee >= bdev->num_ees)
->  		return -EINVAL;
-> -- 
-> 2.48.1
-> 
-> 
+Changes in v4:
+- Dropped core_perf: from patch subject (Abhinav)
+- Fixed indentation of _dpu_core_perf_crtc_update_bus() (Abhinav)
+- Expanded commit messages to reflect different questions (Abhinav)
+- Reworked existing files to specify max allowed average bandwidth
+  (Abhinav)
+- Fixed u32 vs u64 and KBps vs Bps values in debugfs interface
+- Link to v3: https://lore.kernel.org/r/20240314-dpu-perf-rework-v3-0-79fa4e065574@linaro.org
+
+---
+Dmitry Baryshkov (8):
+      drm/msm/dpu: extract bandwidth aggregation function
+      drm/msm/dpu: remove duplicate code calculating sum of bandwidths
+      drm/msm/dpu: change ib values to u32
+      drm/msm/dpu: make fix_core_ab_vote consistent with fix_core_ib_vote
+      drm/msm/dpu: also use KBps for bw_ctl output
+      drm/msm/dpu: rename average bandwidth-related debugfs files
+      drm/msm/dpu: drop core_clk_rate overrides from _dpu_core_perf_calc_crtc
+      drm/msm/dpu: handle perf mode in _dpu_core_perf_crtc_update_bus()
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 140 ++++++++++++--------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  10 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |   5 +-
+ 3 files changed, 71 insertions(+), 84 deletions(-)
+---
+base-commit: ed58d103e6da15a442ff87567898768dc3a66987
+change-id: 20240314-dpu-perf-rework-97fca999eb46
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
