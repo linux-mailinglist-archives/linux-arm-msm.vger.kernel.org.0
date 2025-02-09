@@ -1,132 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-47260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F238A2D9A6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 00:23:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8956CA2D9FB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 01:30:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 54D951888960
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2025 23:23:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8940C1887660
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 00:30:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49BDE148304;
-	Sat,  8 Feb 2025 23:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A99F1819;
+	Sun,  9 Feb 2025 00:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dLWrlf9L"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="olwVLODN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C09A24338E
-	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Feb 2025 23:23:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C6F1FAA;
+	Sun,  9 Feb 2025 00:30:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.177.23.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739056991; cv=none; b=OavcCd6a3cEoyHjGOfjRukmignMzvIgY5FE+y8pnnituN3rno1xUhWe+OzNsjGZMjct/HHgnuEaKOJC2e1vlegeE3HuEtKEst1RJML0PUsYmxJV7wCKLs370GahwDVzoqBhhw+NQfp3WoZt4d1BbT/HQKEwhDqzTNK5QxcMB1lE=
+	t=1739061027; cv=none; b=pjf851Dj5TcImaHbbv9ZOsGVVm8QZzdOcXUssLP+mOgDXASUahW2LFdWvOtUbHWl4vlVw63n0FvPNUGjhacktkZ4byyhlffShqJ8O+2EC6quXHdQnXQzhSpyp2CpIsl2pCJ6lIhN+MoN0EMANWueM1GvdG1fSUjkF5sFsMez7p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739056991; c=relaxed/simple;
-	bh=PLIDnn6usldfw2RsFfecIxrGar99FFVUikArP3YZaB0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OrilDQkhgkPmSRLY3zvOt1GZikql1u0t8k2POIkBRMOxZfwW0Juecio72UOLaQZGnX5wpR7cOpxrGuoahR8SZPdWI2uj8QtA3ZEzeXFm8sylo3g8jttH910zaT41QLHHPW5mZRZxCxKKgyCN77zD9YZ224Uldg6IqhCRo3Ir//8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dLWrlf9L; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-54504f29000so818881e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 15:23:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739056987; x=1739661787; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ykULb9cEiyiSRjZuTpehkeQRCkbvvsFyEn2UQm5iuoU=;
-        b=dLWrlf9L1hapsR/1s3qGIvbFzn4oC3YtDwu6JRxxFoCShgjyghBlaRf1zh1dnyyCi8
-         1nUdut8ebY7q0JreqanLP2l1PDUgeVkpqfd3qNTYcr/tg8TStYhfKAI1snD7mwyk+jnb
-         jhTpU0QYImElTigR7GvdEfcC6eTuSyPPPTkhDzO2INI4tStktGdz7glxteO0Ml0f0SLI
-         5sbO2bca5GNYKqucDAOWFGIp4lYgZ/92K8zOHdieWJX2aZ7qwwwJWuRrAv0zd2VYyjZQ
-         dM9y3gJhnCbkT5kVx7FTupxtcZK9EUal84A7xwpDig3Y2UhLJsBX6ruvgThHOE/zYM5O
-         fBUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739056987; x=1739661787;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ykULb9cEiyiSRjZuTpehkeQRCkbvvsFyEn2UQm5iuoU=;
-        b=jua/xYuCtkyPL2hKzzEwU25SMhVzn60jWl0Jq19Ua4NGj1zduR3rIiWlGCSH3h2XWc
-         n2LEJQcBVUwaXvVLuNn9Ww1j92ML78Q0MSYD1xJBdskmu4TaH3b6JivNQ2vPMj5pBtUd
-         z+sxy3qEMKRsFMlTHYsqXxMhSFZ8EIUYvOpJjh5OefxIN8wgUR97QsC7BfDlCVqcBhlP
-         i4OFtAIiJgPg9495zpKUFm3GbCXu8P2stFBn81mVntx1Ij12LRXIpdUd5DSY4McoWuZL
-         n031w0XI6aFQQCxm0TkzNQY3WeXJpEiiouuBTrcUgkd/nl0pxhq+cNhNVqkMzcQMz5LI
-         Z/sw==
-X-Forwarded-Encrypted: i=1; AJvYcCXktUCckY2lnl4+LVldtF+f4kCj/t4PkYD+jt3WysHFUzyD3AhuFnVA/F5RcwrlzO1NqVI3KgPIwekEJuDD@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8gSbclH3Rij2l5kolx2lsokevVmj0qXchwvx4smCWkgGh9kfF
-	WNrYEDsjZ4xJxTbIUNIGh1QuN8cuUoy+/kJ5fvA2dCEJZlB3VPUeb/GCOMiQ3kA=
-X-Gm-Gg: ASbGncsL9wPolXidY+l7AwVp7xLZQQ1qiAaIvPcmWJMF6kge8LwRuyifUInNNIKY6fn
-	X9krcdWign2w8bLHqLMXrfZ7Vl2T5tOkZGdHjp4xtwbdd8gn2P0c/gZmEv3elHhbB7O1ilBBeUR
-	Uof3/9/Cg2r0dkMHOXUMz4NXW34jEO5vHISU89/wwdD2eUC000FdliSeUdXvYjxp5nl172Q4D71
-	OH84wMmW1nFwUc83ohdzAWooq02L2l3OzPFIw4jUDQfqCCo2f4yxyLGwMdsaTQw6TJzVNQPdY49
-	K5KUxQ81ueEtRqv/mPnwHb0TQYO8QwAAlSckrPqr8RhW7iD7axEjRkC7fSCsEjRYCCHVhuo=
-X-Google-Smtp-Source: AGHT+IF/JBvJkuagJqa26itTPE8jU8/kvFQIMKuDm05aOsyGHWAPDELu87GWmNGqjraF7sL+Cp5yWg==
-X-Received: by 2002:a05:6512:3a85:b0:53d:e3a6:ae8b with SMTP id 2adb3069b0e04-54414aa80f7mr2528489e87.26.1739056987259;
-        Sat, 08 Feb 2025 15:23:07 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-544105f2f31sm832127e87.165.2025.02.08.15.23.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Feb 2025 15:23:05 -0800 (PST)
-Date: Sun, 9 Feb 2025 01:23:03 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Vikram Sharma <quic_vikramsa@quicinc.com>
-Cc: rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org, 
-	mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl, 
-	cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v14 0/2] media: qcom: camss: Add sc7280 support
-Message-ID: <dv6ccohw33gnc42fhjmxaofg5lyip6jked2u26rwkxykcwt6sx@vlgjyjkn7wva>
-References: <20250208225143.2868279-1-quic_vikramsa@quicinc.com>
+	s=arc-20240116; t=1739061027; c=relaxed/simple;
+	bh=uYjUoicn0RZevWWMG0EWbqoMvEJWmhTl/k34JO1Hwf4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ArvoOHwApbhIy60GRSpwCzhDVxJ6X8wQj5TKKt5zfTfO/Bh+48XEJSu0HkXSuLPG8KMZJKyVyxJGoYHFi6ckq5qdfzZxRz1iRYGhaLbNugtqFENQvSyO05BvXLOO4emqpatKlwQuZjbDOyWzUlGzMdZxbPT3Ys0PRZ270EBVJTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=olwVLODN; arc=none smtp.client-ip=89.177.23.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 945F6166630;
+	Sun,  9 Feb 2025 01:23:12 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1739060592;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=HrVabAyIl6ZLLss+NfryXD+BO0Gy6+L829e7ZC91LjU=;
+	b=olwVLODNfQkjZeHbluCO5C8PFixESlheVU+gArgBZN2YxtCzuHclPrjTVImS2/xcJSJBbf
+	a41TGfofiHyFNM4qdaIemGNAe8poEGQsNtvaGkv72PapAOFzKjG5aCZ2+dgn/I++yI/0so
+	E7zZy3ErsZzlbfYY48d3ZscBk/iPemA=
+Message-ID: <cbca0f26-1f3d-47d4-8011-5f2513a4b08c@ixit.cz>
+Date: Sun, 9 Feb 2025 01:23:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250208225143.2868279-1-quic_vikramsa@quicinc.com>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH] Revert "dmaengine: qcom: bam_dma: Avoid writing
+ unavailable register"
+To: Caleb Connolly <caleb.connolly@linaro.org>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Amit Vadhavana <av2082000@gmail.com>, Dave Jiang <dave.jiang@intel.com>,
+ Fenghua Yu <fenghua.yu@intel.com>, Kees Cook <kees@kernel.org>,
+ Md Sadre Alam <quic_mdalam@quicinc.com>, Robin Murphy
+ <robin.murphy@arm.com>, Vinod Koul <vkoul@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20250208223112.142567-1-caleb.connolly@linaro.org>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
+ 9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
+ lZxQaOl+1bY/7ttd7DapLh9rmBXJ2lKiMEaIpUwb/Nw0d7Enp4Jy2TpkhPywIpUn8CoJCv3/
+ 61qbvI9y5utB/UhfMAUXsaAgwEJyGPAqHlC0YZjaTwOu+YQUE3AFzhCbksq95CwDz4U4gdls
+ dmv9tkATfu2OmzERZQ6vJTehK0Pu4l5KmCAzYg42I9Dy4E6b17x6NncKbcByQFOXMtG0qVUk
+ F1yeeOQUHwu+8t3ZDMBUhCkRL/juuoqLmyDWKMc0hKNNeZ9BNXgB8fXkRLWEUfgDXsFyEkKp
+ NxUy5bDRlivf6XfExnikk5kj9l2gGlNQwqROti/46bfbmlmc/a2GM4k8ZyalHNEAdwtXYSpP
+ 8JJmlbQ7hNTLkc3HQLRsIocN5th/ur7pPMz1Beyp0gbE9GcOceqmdZQB80vJ01XDyCAihf6l
+ AMnzwpXZsjqIqH9r7T7tM6tVEVbPSwPt4eZYXSoJijEBC/43TBbmxDX+5+3txRaSCRQrG9dY
+ k3mMGM3xJLCps2KnaqMcgUnvb1KdTgEFUZQaItw7HyRd6RppewARAQABzSBEYXZpZCBIZWlk
+ ZWxiZXJnIDxkYXZpZEBpeGl0LmN6PsLBlAQTAQgAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIe
+ AQIXgBYhBNd6Cc/u3Cu9U6cEdGACP8TTSSByBQJl+KksBQkPDaAOAAoJEGACP8TTSSBy6IAQ
+ AMqFqVi9LLxCEcUWBn82ssQGiVSDniKpFE/tp7lMXflwhjD5xoftoWOmMYkiWE86t5x5Fsp7
+ afALx7SEDz599F1K1bLnaga+budu55JEAYGudD2WwpLJ0kPzRhqBwGFIx8k6F+goZJzxPDsf
+ loAtXQE62UvEKa4KRRcZmF0GGoRsgA7vE7OnV8LMeocdD3eb2CuXLzauHAfdvqF50IfPH/sE
+ jbzROiAZU+WgrwU946aOzrN8jVU+Cy8XAccGAZxsmPBfhTY5f2VN1IqvfaRdkKKlmWVJWGw+
+ ycFpAEJKFRdfcc5PSjUJcALn5C+hxzL2hBpIZJdfdfStn+DWHXNgBeRDiZj1x6vvyaC43RAb
+ VXvRzOQfG4EaMVMIOvBjBA/FtIpb1gtXA42ewhvPnd5RVCqD9YYUxsVpJ9d+XsAy7uib3BsV
+ W2idAEsPtoqhVhq8bCUs/G4sC2DdyGZK8MRFDJqciJSUbqA+5z1ZCuE8UOPDpZKiW6H/OuOM
+ zDcjh0lOzr4p+/1TSg1PbUh7fQ+nbMuiT044sC1lLtJK0+Zyn0GwhR82oNM4fldNsaHRW42w
+ QGD35+eNo5Pvb3We5XRMlBdhFnj7Siggp4J8/PJ6MJvRyC+RIJPGtbdMB2/RxWunFLn87e5w
+ UgwR9jPMHAstuTR1yR23c4SIYoQ2fzkrRzuazsFNBF5v1x4BEADnlrbta2WL87BlEOotZUh0
+ zXANMrNV15WxexsirLetfqbs0AGCaTRNj+uWlTUDJRXOVIwzmF76Us3I2796+Od2ocNpLheZ
+ 7EIkq8budtLVd1c06qJ+GMraz51zfgSIazVInNMPk9T6fz0lembji5yEcNPNNBA4sHiFmXfo
+ IhepHFOBApjS0CiOPqowYxSTPe/DLcJ/LDwWpTi37doKPhBwlHev1BwVCbrLEIFjY0MLM0aT
+ jiBBlyLJaTqvE48gblonu2SGaNmGtkC3VoQUQFcVYDXtlL9CVbNo7BAt5gwPcNqEqkUL60Jh
+ FtvVSKyQh6gn7HHsyMtgltjZ3NKjv8S3yQd7zxvCn79tCKwoeNevsvoMq/bzlKxc9QiKaRPO
+ aDj3FtW7R/3XoKJBY8Hckyug6uc2qYWRpnuXc0as6S0wfek6gauExUttBKrtSbPPHiuTeNHt
+ NsT4+dyvaJtQKPBTbPHkXpTO8e1+YAg7kPj3aKFToE/dakIh8iqUHLNxywDAamRVn8Ha67WO
+ AEAA3iklJ49QQk2ZyS1RJ2Ul28ePFDZ3QSr9LoJiOBZv9XkbhXS164iRB7rBZk6ZRVgCz3V6
+ hhhjkipYvpJ/fpjXNsVL8jvel1mYNf0a46T4QQDQx4KQj0zXJbC2fFikAtu1AULktF4iEXEI
+ rSjFoqhd4euZ+QARAQABwsF8BBgBCAAmAhsMFiEE13oJz+7cK71TpwR0YAI/xNNJIHIFAmX4
+ qVAFCQ8NoDIACgkQYAI/xNNJIHKN4A/+Ine2Ii7JiuGITjJkcV6pgKlfwYdEs4eFD1pTRb/K
+ 5dprUz3QSLP41u9OJQ23HnESMvn31UENk9ffebNoW7WxZ/8cTQY0JY/cgTTrlNXtyAlGbR3/
+ 3Q/VBJptf04Er7I6TaKAmqWzdVeKTw33LljpkHp02vrbOdylb4JQG/SginLV9purGAFptYRO
+ 8JNa2J4FAQtQTrfOUjulOWMxy7XRkqK3QqLcPW79/CFn7q1yxamPkpoXUJq9/fVjlhk7P+da
+ NYQpe4WQQnktBY29SkFnvfIAwqIVU8ix5Oz8rghuCcAdR7lEJ7hCX9bR0EE05FOXdZy5FWL9
+ GHvFa/Opkq3DPmFl/0nt4HJqq1Nwrr+WR6d0414oo1n2hPEllge/6iD3ZYwptTvOFKEw/v0A
+ yqOoYSiKX9F7Ko7QO+VnYeVDsDDevKic2T/4GDpcSVd9ipiKxCQvUAzKUH7RUpqDTa+rYurm
+ zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
+ fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
+ ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
+In-Reply-To: <20250208223112.142567-1-caleb.connolly@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Feb 09, 2025 at 04:21:41AM +0530, Vikram Sharma wrote:
-> SC7280 is a Qualcomm SoC. This series adds support to bring up the CSIPHY,
-> CSID, VFE/RDI interfaces in SC7280.
-> 
-> SC7280 provides
-> - 3 x VFE, 3 RDI per VFE
-> - 2 x VFE Lite, 4 RDI per VFE
-> - 3 x CSID
-> - 2 x CSID Lite
-> - 5 x CSI PHY
-> 
-> We have tested this on qcs6490-rb3gen2-vision-mezzanine board having IMX577
-> sensor.
-> 
-> Used following tools for the sanity check of these changes.
-> 
-> - make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml
-> qcom/qcs6490-rb3gen2-vision-mezzanine.dtb
-> - make DT_CHECKER_FLAGS=-m W=1
-> DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml dt_binding_check
-> - make -j32 W=1
-> - ./scripts/checkpatch.pl
->  
-> Changes in V14:
-> - Updated commit text for [PATCH v13 2/2] - Dmitry
-> - Removed duplicate Reviewed-by tag for [PATCH v13 1/2] - Dmitry
-> - Link to v13:
->   https://lore.kernel.org/linux-arm-msm/20250208165232.2371889-1-quic_vikramsa@quicinc.com/
+Fixes initial boot crash into QCOM Crashdump.
 
-For the series:
+Tested-by: David Heidelberg <david@ixit.cz>
 
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 08/02/2025 23:30, Caleb Connolly wrote:
+> This commit causes a hard crash on sdm845 and likely other platforms.
+> Revert it until a proper fix is found.
+> 
+> This reverts commit 57a7138d0627309d469719f1845d2778c251f358.
+> 
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> ---
+>   drivers/dma/qcom/bam_dma.c | 24 ++++++++----------------
+>   1 file changed, 8 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index c14557efd577..bbc3276992bb 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -58,11 +58,8 @@ struct bam_desc_hw {
+>   #define DESC_FLAG_EOB BIT(13)
+>   #define DESC_FLAG_NWD BIT(12)
+>   #define DESC_FLAG_CMD BIT(11)
+>   
+> -#define BAM_NDP_REVISION_START	0x20
+> -#define BAM_NDP_REVISION_END	0x27
+> -
+>   struct bam_async_desc {
+>   	struct virt_dma_desc vd;
+>   
+>   	u32 num_desc;
+> @@ -400,9 +397,8 @@ struct bam_device {
+>   	int irq;
+>   
+>   	/* dma start transaction tasklet */
+>   	struct tasklet_struct task;
+> -	u32 bam_revision;
+>   };
+>   
+>   /**
+>    * bam_addr - returns BAM register address
+> @@ -444,12 +440,10 @@ static void bam_reset(struct bam_device *bdev)
+>   	val |= BAM_EN;
+>   	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+>   
+>   	/* set descriptor threshold, start with 4 bytes */
+> -	if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+> -		     BAM_NDP_REVISION_END))
+> -		writel_relaxed(DEFAULT_CNT_THRSHLD,
+> -			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+> +	writel_relaxed(DEFAULT_CNT_THRSHLD,
+> +			bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>   
+>   	/* Enable default set of h/w workarounds, ie all except BAM_FULL_PIPE */
+>   	writel_relaxed(BAM_CNFG_BITS_DEFAULT, bam_addr(bdev, 0, BAM_CNFG_BITS));
+>   
+> @@ -1005,12 +999,11 @@ static void bam_apply_new_config(struct bam_chan *bchan,
+>   		if (dir == DMA_DEV_TO_MEM)
+>   			maxburst = bchan->slave.src_maxburst;
+>   		else
+>   			maxburst = bchan->slave.dst_maxburst;
+> -		if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+> -			     BAM_NDP_REVISION_END))
+> -			writel_relaxed(maxburst,
+> -				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+> +
+> +		writel_relaxed(maxburst,
+> +			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>   	}
+>   
+>   	bchan->reconfigure = 0;
+>   }
+> @@ -1198,13 +1191,12 @@ static int bam_init(struct bam_device *bdev)
+>   {
+>   	u32 val;
+>   
+>   	/* read revision and configuration information */
+> -	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+> -	if (!bdev->num_ees)
+> +	if (!bdev->num_ees) {
+> +		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+>   		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
+> -
+> -	bdev->bam_revision = val & REVISION_MASK;
+> +	}
+>   
+>   	/* check that configured EE is within range */
+>   	if (bdev->ee >= bdev->num_ees)
+>   		return -EINVAL;
 
 -- 
-With best wishes
-Dmitry
+David Heidelberg
+
 
