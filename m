@@ -1,238 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-47323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28589A2DEA6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 15:55:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F875A2DEC1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 16:20:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C2646164FDC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 14:55:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46E733A3534
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 15:19:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 865AA17A5A4;
-	Sun,  9 Feb 2025 14:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C5681DE8A0;
+	Sun,  9 Feb 2025 15:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W9SoOJ2x"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="ZkPYthcS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C37D13AA31;
-	Sun,  9 Feb 2025 14:55:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EBA1DE892;
+	Sun,  9 Feb 2025 15:19:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.177.23.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739112914; cv=none; b=jOuTNYU1Dv+cHWVjPJmmjJzAHA2X/f4tvGHthKsablNWwotti+GxZxQTyuKqvs7NCqDPtGq5LLE5Jh8OCUIVcCBxv6N/QgYywl08lZykHwYkfjAGX+GjTSIg2M56mvq7yP6/RXRWLjAmdV3LT9QdpoJFm8PrPbscFJXx0q08XsA=
+	t=1739114400; cv=none; b=ZX5ZBVsZUl9uBUUD2PzqFeRydO/RhU33g7L9pAYnE0k7fKf4Zr0ct4/PrDQLiM1Lcu34Nhn3qN1T3pEn7REpvprSj1y2Cn44TMR/+CG8QIaFDA6t9ahYsrY5IO7imjWUuSLEUxKFm7L5FPmvFOG9NbUk/7Wq8wrtBA5uTi2vW4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739112914; c=relaxed/simple;
-	bh=k3txjtZx9ekcvt6SENF5b58wE9f6OfkDAQXrlFXv3cs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=X7LjvmdRkSKt9vZdIpl+X++Cdk6FSjfSmmsxVZNZ7pmmt5n3Pc9OSvVU0ubHZTVpxU+DMoZHOf3mwqC407vh0CFW5e+tbQhsufNXcUflKbB9/gDlHZKvlgexwto4vxfr5C3v/sHPYePjBXyEvLQ29Ka6iEsrmH64+R+NtedB8gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W9SoOJ2x; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4394036c0efso1546925e9.2;
-        Sun, 09 Feb 2025 06:55:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739112911; x=1739717711; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VR6UdNPUPJ42D/VBzpeWAAtAvkLAE7xD5d1I3/gJKTc=;
-        b=W9SoOJ2x2SGXwB40g3+hXfVyyiJICJfZrcuP5ahKoiEZ9fhSvZsMDHcGuwAmhxGS07
-         DZSilgD1shHdRpFHuN3KstcT0Y7ZFLWU9RzrWYHJsOxHMCWAOP0ULsiADyvC4XNQ8rx4
-         OLzBsZXhom0B5G8buHN1PBKsosLRtyOPv7UkcWF5UEa30EFuphExby2urniPReSu/7Ht
-         rLTBPJLmrZ15ZB/06qgegcLtQ74LNRV+fvDfHS/JKdvT2BdAWWJ6PLisO/B8hAW5xuvX
-         nwKZ33sXflvZKt38gV91SJnPALJ860ijO1aFW9vbsEvKmFDXUhnkOHfsjfUTZbkSk6U3
-         HK7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739112911; x=1739717711;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VR6UdNPUPJ42D/VBzpeWAAtAvkLAE7xD5d1I3/gJKTc=;
-        b=ChS1Qu2O/A9osmGqWSzeF4B4jvFsNmPIonrN7sfV6yX6mldsekihXGLCdfcmG0/2IA
-         nh2TkaWEbxFnuku70fXWzyep8ctjkxeubhval4SMoSznLp+1iFg3Kg4JM2sTJoaoEPvx
-         7SBOWQAtdD+DbxeoNuR2g1Oum55kIkZUpDadZmBP8QCcJi8U0IFe3ycBWeyUk82qqjd/
-         Iu3Z47N08KbjnvNgJAdJMpyAKtCAUNaKIjzpyQZqAz6NMKk8Hs4FTthvamnGknIedIZd
-         j1Cic79cXe/sx93GD458TsEcXPUs/i269kSolxhnr6nMJY5JCO+frke2SmkweOA/Z4OO
-         kSvw==
-X-Forwarded-Encrypted: i=1; AJvYcCX+5ZLwTftQv5KvlvAA6BdFPiT7vCgs6BzrKI7lb8Gq5x7lqV3s8DIzxvIAB3evkdArX3m6pR9LEXeO0pYQ@vger.kernel.org, AJvYcCXp1eGwerU0lgRG+kmvIsGUNOxpAPf+6AKArtlRYwyJvPDUQQiIms0Jbrb5dn3XL05Mf7cLQuui2O3W+WUR@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAg5Sz1Lm3h1Vr9HAbSCLtp5812BfndJHVL1b6cgF7WSl2cMrR
-	qwMz/E4yn2H/NZvXtebpe5+1OXBeC7Z4DvWM41ZMNYkkKVfkyoZyJEo44Q==
-X-Gm-Gg: ASbGncvywX7oxWNPQltyOnjwBCMCD4kSCpS6Qpkx7cKW3c+Us/c75nXL1dTwe/vnUnX
-	XP/0Ne8OqNEMY1nlPG88hqinzTNY0fc/7cdwAr5ISy843x/526d+epq+fPoLriKyNqyFp+GutrP
-	XkrMHh2Vd/rEmPvkN3ovI5aS8TvOTWx99hbhhuhkb21p0l0GdtcW79m5hO7M4VofTv36JOOAGeI
-	mth0fvm0mrg1c37FH79nLqo+hbIt8/BS8SpTZjBn6YW9LavJdhsae09v8eLUfQM+Tg8hyP+g+dk
-	RrXcS+wzxbqRuuAKORo8SWs9PnijiwQxzMnV+uRTLhNiqgDcFPQ0ktdbPhfq
-X-Google-Smtp-Source: AGHT+IFHe7gvVLclb1m+4Z27Ar57CqWhA65W6sLxSy8rAjGx/OK7ohocscL6lEIOsqgeUbXb4Kh4PA==
-X-Received: by 2002:a05:6000:2aa:b0:38d:daf3:be6a with SMTP id ffacd0b85a97d-38ddaf3c061mr2341962f8f.40.1739112910710;
-        Sun, 09 Feb 2025 06:55:10 -0800 (PST)
-Received: from localhost.localdomain (93-34-91-161.ip49.fastwebnet.it. [93.34.91.161])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-439069290c7sm138387205e9.0.2025.02.09.06.55.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2025 06:55:10 -0800 (PST)
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	linux-mtd@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH] mtd: rawnand: qcom: finish converting register to FIELD_PREP
-Date: Sun,  9 Feb 2025 15:54:32 +0100
-Message-ID: <20250209145439.19047-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.47.1
+	s=arc-20240116; t=1739114400; c=relaxed/simple;
+	bh=2Reh71zztneGACpbLISz5V4Stqed8X57QnfeKJHY+0w=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=KHJuohE7HKguTWMAqy9DJNthfAqHlV3qdA7BT+kUqGQ7/tKxWAw2rJGhwgDRmHPfBaw6e+RjeQMdSVA1zAVtBtcl1D9ZFXxdrvaAgIVWUfsLKp7XCXYoI/ID74X6JU3D0Z+9YFPx7uQSLgCtsz/cUeLaY9rsWQjg3+RDJT1WjRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=ZkPYthcS; arc=none smtp.client-ip=89.177.23.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id BB1E516658B;
+	Sun,  9 Feb 2025 16:19:53 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1739114393; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=G/Qh3CE9Z0937GjvloaGvas1w18VkO3vU8aAYRlhLqY=;
+	b=ZkPYthcS9Gidw0pux1JgKvX3wkoBPJIngtjXW5Cc9qydvjc/V3Bji0Rf21WOxO48elGKeB
+	U2KiQmyNYQ3A+Bx2bSvscyiAI6f1wa+QHS9984/T0GxuqztMKWkkEPG0Rit0eWu7GhriDK
+	3ibQNVDA6xumnSJ3SxSOKH408vmBrY4=
+Message-ID: <5cc3639f-2689-4e4a-a89b-02ade0efe966@ixit.cz>
+Date: Sun, 9 Feb 2025 16:19:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird Beta
+To: bjorn.andersson@oss.qualcomm.com
+Cc: djakov@kernel.org, dmaengine@vger.kernel.org,
+ dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_mdalam@quicinc.com, vkoul@kernel.org
+References: <20250207-bam-read-fix-v1-1-027975cf1a04@oss.qualcomm.com>
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Avoid accessing BAM_REVISION on
+ remote BAM
+Content-Language: en-US
+Reply-To: 20250207-bam-read-fix-v1-1-027975cf1a04@oss.qualcomm.com
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <20250207-bam-read-fix-v1-1-027975cf1a04@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-With some research in some obscure old QSDK, it was possible to find the
-MASK of the last register there were still set with raw shift and
-convert them to FIELD_PREP API.
+On 7.02.25 22:17, Bjorn Andersson wrote:
+ > Commit '57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing
+ > unavailable register")' made this read unconditional, in order to
+ > identify if the instance is BAM-NDP or BAM-Lite.
+ > But the BAM_REVISION register is not accessible on remotely managed BAM
+ > instances and attempts to access it causes the system to crash.
+ >
+ > Move the access back to be conditional and expand the checks that was
+ > introduced to restore the old behavior when no revision information is
+ > available.
+ >
+ > Fixes: 57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing 
+unavailable register")
+ > Reported-by: Georgi Djakov <djakov@kernel.org>
+ > Closes: 
+https://lore.kernel.org/lkml/9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org/
+ > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-This is only a cleanup and modernize the code a bit and doesn't make
-any behaviour change.
+Tested-by: David Heidelberg <david@ixit.cz> # OnePlus 6T
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- drivers/mtd/nand/raw/qcom_nandc.c    | 36 ++++++++++++++--------------
- include/linux/mtd/nand-qpic-common.h |  6 ++++-
- 2 files changed, 23 insertions(+), 19 deletions(-)
-
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 6720b547892b..5eaa0be367cd 100644
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -165,9 +165,9 @@ static void nandc_set_read_loc_first(struct nand_chip *chip,
- {
- 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
- 	__le32 locreg_val;
--	u32 val = (((cw_offset) << READ_LOCATION_OFFSET) |
--		  ((read_size) << READ_LOCATION_SIZE) |
--		  ((is_last_read_loc) << READ_LOCATION_LAST));
-+	u32 val = FIELD_PREP(READ_LOCATION_OFFSET_MASK, cw_offset) |
-+		  FIELD_PREP(READ_LOCATION_SIZE_MASK, read_size) |
-+		  FIELD_PREP(READ_LOCATION_LAST_MASK, is_last_read_loc);
- 
- 	locreg_val = cpu_to_le32(val);
- 
-@@ -197,9 +197,9 @@ static void nandc_set_read_loc_last(struct nand_chip *chip,
- {
- 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
- 	__le32 locreg_val;
--	u32 val = (((cw_offset) << READ_LOCATION_OFFSET) |
--		  ((read_size) << READ_LOCATION_SIZE) |
--		  ((is_last_read_loc) << READ_LOCATION_LAST));
-+	u32 val = FIELD_PREP(READ_LOCATION_OFFSET_MASK, cw_offset) |
-+		  FIELD_PREP(READ_LOCATION_SIZE_MASK, read_size) |
-+		  FIELD_PREP(READ_LOCATION_LAST_MASK, is_last_read_loc);
- 
- 	locreg_val = cpu_to_le32(val);
- 
-@@ -271,14 +271,14 @@ static void update_rw_regs(struct qcom_nand_host *host, int num_cw, bool read, i
- 	}
- 
- 	if (host->use_ecc) {
--		cfg0 = cpu_to_le32((host->cfg0 & ~(7U << CW_PER_PAGE)) |
--				(num_cw - 1) << CW_PER_PAGE);
-+		cfg0 = cpu_to_le32((host->cfg0 & ~CW_PER_PAGE_MASK) |
-+				   FIELD_PREP(CW_PER_PAGE_MASK, (num_cw - 1)));
- 
- 		cfg1 = cpu_to_le32(host->cfg1);
- 		ecc_bch_cfg = cpu_to_le32(host->ecc_bch_cfg);
- 	} else {
--		cfg0 = cpu_to_le32((host->cfg0_raw & ~(7U << CW_PER_PAGE)) |
--				(num_cw - 1) << CW_PER_PAGE);
-+		cfg0 = cpu_to_le32((host->cfg0_raw & ~CW_PER_PAGE_MASK) |
-+				   FIELD_PREP(CW_PER_PAGE_MASK, (num_cw - 1)));
- 
- 		cfg1 = cpu_to_le32(host->cfg1_raw);
- 		ecc_bch_cfg = cpu_to_le32(ECC_CFG_ECC_DISABLE);
-@@ -882,12 +882,12 @@ static void qcom_nandc_codeword_fixup(struct qcom_nand_host *host, int page)
- 			    host->bbm_size - host->cw_data;
- 
- 	host->cfg0 &= ~(SPARE_SIZE_BYTES_MASK | UD_SIZE_BYTES_MASK);
--	host->cfg0 |= host->spare_bytes << SPARE_SIZE_BYTES |
--		      host->cw_data << UD_SIZE_BYTES;
-+	host->cfg0 |= FIELD_PREP(SPARE_SIZE_BYTES_MASK, host->spare_bytes) |
-+		      FIELD_PREP(UD_SIZE_BYTES_MASK, host->cw_data);
- 
- 	host->ecc_bch_cfg &= ~ECC_NUM_DATA_BYTES_MASK;
--	host->ecc_bch_cfg |= host->cw_data << ECC_NUM_DATA_BYTES;
--	host->ecc_buf_cfg = (host->cw_data - 1) << NUM_STEPS;
-+	host->ecc_bch_cfg |= FIELD_PREP(ECC_NUM_DATA_BYTES_MASK, host->cw_data);
-+	host->ecc_buf_cfg = FIELD_PREP(NUM_STEPS_MASK, host->cw_data - 1);
- }
- 
- /* implements ecc->read_page() */
-@@ -1531,7 +1531,7 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
- 			    FIELD_PREP(ECC_PARITY_SIZE_BYTES_BCH_MASK, host->ecc_bytes_hw);
- 
- 	if (!nandc->props->qpic_version2)
--		host->ecc_buf_cfg = 0x203 << NUM_STEPS;
-+		host->ecc_buf_cfg = FIELD_PREP(NUM_STEPS_MASK, 0x203);
- 
- 	host->clrflashstatus = FS_READY_BSY_N;
- 	host->clrreadstatus = 0xc0;
-@@ -1817,7 +1817,7 @@ static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_sub
- 		q_op.cmd_reg |= cpu_to_le32(PAGE_ACC | LAST_PAGE);
- 		nandc->regs->addr0 = q_op.addr1_reg;
- 		nandc->regs->addr1 = q_op.addr2_reg;
--		nandc->regs->cfg0 = cpu_to_le32(host->cfg0_raw & ~(7 << CW_PER_PAGE));
-+		nandc->regs->cfg0 = cpu_to_le32(host->cfg0_raw & ~CW_PER_PAGE_MASK);
- 		nandc->regs->cfg1 = cpu_to_le32(host->cfg1_raw);
- 		instrs = 3;
- 	} else if (q_op.cmd_reg != cpu_to_le32(OP_RESET_DEVICE)) {
-@@ -1900,8 +1900,8 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
- 	/* configure CMD1 and VLD for ONFI param probing in QPIC v1 */
- 	if (!nandc->props->qpic_version2) {
- 		nandc->regs->vld = cpu_to_le32((nandc->vld & ~READ_START_VLD));
--		nandc->regs->cmd1 = cpu_to_le32((nandc->cmd1 & ~(0xFF << READ_ADDR))
--				    | NAND_CMD_PARAM << READ_ADDR);
-+		nandc->regs->cmd1 = cpu_to_le32((nandc->cmd1 & ~READ_ADDR_MASK) |
-+						FIELD_PREP(READ_ADDR_MASK, NAND_CMD_PARAM));
- 	}
- 
- 	nandc->regs->exec = cpu_to_le32(1);
-diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nand-qpic-common.h
-index 4d9b736ff8b7..35e7ee0f7809 100644
---- a/include/linux/mtd/nand-qpic-common.h
-+++ b/include/linux/mtd/nand-qpic-common.h
-@@ -108,7 +108,7 @@
- #define	ECC_FORCE_CLK_OPEN		BIT(30)
- 
- /* NAND_DEV_CMD1 bits */
--#define	READ_ADDR			0
-+#define	READ_ADDR_MASK			GENMASK(7, 0)
- 
- /* NAND_DEV_CMD_VLD bits */
- #define	READ_START_VLD			BIT(0)
-@@ -119,6 +119,7 @@
- 
- /* NAND_EBI2_ECC_BUF_CFG bits */
- #define	NUM_STEPS			0
-+#define	NUM_STEPS_MASK			GENMASK(9, 0)
- 
- /* NAND_ERASED_CW_DETECT_CFG bits */
- #define	ERASED_CW_ECC_MASK		1
-@@ -139,8 +140,11 @@
- 
- /* NAND_READ_LOCATION_n bits */
- #define READ_LOCATION_OFFSET		0
-+#define READ_LOCATION_OFFSET_MASK	GENMASK(9, 0)
- #define READ_LOCATION_SIZE		16
-+#define READ_LOCATION_SIZE_MASK		GENMASK(25, 16)
- #define READ_LOCATION_LAST		31
-+#define READ_LOCATION_LAST_MASK		BIT(31)
- 
- /* Version Mask */
- #define	NAND_VERSION_MAJOR_MASK		0xf0000000
 -- 
-2.47.1
+David Heidelberg
 
 
