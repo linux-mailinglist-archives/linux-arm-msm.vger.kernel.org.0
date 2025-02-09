@@ -1,199 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-47271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE64FA2DA83
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 04:21:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 080C1A2DAA2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 04:38:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F1DCB165C17
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 03:21:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64B701884DCE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 03:38:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC5B4243365;
-	Sun,  9 Feb 2025 03:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A517711CA0;
+	Sun,  9 Feb 2025 03:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nC3+I/MN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LwKV+4O6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F298467
-	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 03:21:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC7B4409
+	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 03:38:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739071306; cv=none; b=snk1+eYmx+/nBbYt01OyCpQNwGWeIDyeQcB5L3WM/Tlz1/0TLnUsr52WZrWGHqZXQ+eQNa7JT4claxs10VSReOWbOzlM8/d55GKaW8J8SrLQpU2T4jn5eVEGDsoIb1uqs3zY11xXTwRf8+RALmpDu4fX1iMSNtmvnoDPMLLe030=
+	t=1739072304; cv=none; b=I9lzTBeuoHhAtgEXPBuH4ux/EYL8SCS2yI9SLLEpSEjfN9lTiHuedCHs9FifEjsSRk44tEyH2I7Dlk2xu+FTybrSujWAY/BNs2mCFEOl8khiaHwGqf29NdFTc+Zs2oeop/3oWZC+cdQKSuFIJRHhruJuAikTnevqvGarctzFGJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739071306; c=relaxed/simple;
-	bh=EjVnzSvwGeLB3HXokJpPau5v3ni0TOZS9ZUms7htZ/E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lHhEwQZpeSw6SeaOFAawhhuyhzk+d7N2f3qTKT88hpy426g21L4s+4cSr4s0PUmCIvh6LcOuJSUu8dX09NOrKHY54lv5sUP6ZuXG/6w2fTZ1ArQMD0TaZR/pLTYFVUtma/E1rYf2rIr5xB+tw4qOEO6l6LUfYSDKUTgbnZOOFFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nC3+I/MN; arc=none smtp.client-ip=209.85.167.53
+	s=arc-20240116; t=1739072304; c=relaxed/simple;
+	bh=/qAcYCKh8OmEH9Fcx0X2ca76LPDtXY0RMYXA3FieKhA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QhfnV6JmE3My/wC+LiWQRyMkipcRodqdj3ms3+pg5NpRCpdwKtnBbPC8xDcXDtfqgzOBnyOcrtTCp1UuEDMYgIHq8HucQ/48jxf0GAtUg6HXaIB4JiNyaHqolINPMd2AgbIIvDiZe6/EmMcdweBLWNmTzl6Yuf6acX2vX5UGHks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LwKV+4O6; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-54412a7d75cso2942821e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 19:21:44 -0800 (PST)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30761be8fa8so31444121fa.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 19:38:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739071303; x=1739676103; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Oi1Az+d17IMWsJWKpM/Z7vG/JaxyEjq4HPEfn1poENE=;
-        b=nC3+I/MNfAV3uu58KbbzEafSE5B0NmC8ipbcbsWCol6LHbb50vT8a9SetOblrG1Q5f
-         WmjroOxXjsY1y1xaOm0D26nWWHnEHTTtaZwgmS8NX2uI7XirbyQvVaNLB1SDuMPw9OjJ
-         tHY2+TuwdJautEL/uJr7DVRPcZrQrGV+yVXXShQWADz1nzW7bW2YPhcFrbopEmZ5Idun
-         tkpJEd1AIiQfcyg6fh5xEw5mw83ZBfEVuh8EbS6OCsTFWiJVlkO5BKPgOR8rh8dxPwhp
-         pLUWM4g6PTip+MuF5VbEDcYPEjpwi9d1o5AL0hBGicQ+o6auQSJf+BLjOj1sFcAa6z9t
-         hisQ==
+        d=linaro.org; s=google; t=1739072301; x=1739677101; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z/6yPVhvzSQt8FpEj+34A3KYWg9MIBUILVNRXOHt7zM=;
+        b=LwKV+4O6jFXDmlWMjod7/PMtVGTOyPqz8a8F1/R/KGeNOCeK7jomCLOvLcn8tma7ym
+         sdriHA6mu0ZbsOIOu79LuBZalxZqykcMI+w98E/QN92Di9JUeDO9lb0o1S28BXj4Mary
+         lhD5F54OazJ20noCNJAKNL6LT+ZAfowQ/K6lFAzllz1cmEiVzk1vao3T4y/jYsOsYyWv
+         8/aKw2CdmDbPi7EZ5UmaSaGMIXEjMtI68ntJ/MpCESi4QdFJcGXiec3vTjIR59mQNBj3
+         QssXLDBYOIHEodIfyPliXjo3FzryZR8r+3nW9kU/130WkWiOb44ndgI6K5CpSGSUcnoQ
+         cV6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739071303; x=1739676103;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Oi1Az+d17IMWsJWKpM/Z7vG/JaxyEjq4HPEfn1poENE=;
-        b=BWomxmRQsL7dcgXihakDghm4UNZW+bCLewwoR+ShuxOdrc+s/hqVnsLtqkgmz4+VjS
-         TNkWfH4Za6ROQ1dzIA3THvSi4B8EQ6mb1JjvTlvJj8PRa+fDYbPJixYR/toCMwNXwhcN
-         OlR5jtzIizspEsV21gaJ9TU+2JD5OH9tqyZxCURQAzKHJDp9DT6s1hbDUu8K0SnEHgeV
-         UEy5gK0i56xxMpj71hdS3ngq/Q0U/fvS21LT61+HnzCmvnb4lbHb3cpTY/fSjX/5fHn2
-         Rl2H/3Wx1IBZ969ouDiKZZyuPS5W7b8CB5OrKd3H9dPi8J3BvW+isM6Dpm3mXF990LdI
-         WXrQ==
-X-Gm-Message-State: AOJu0YzCTwsw7hFKVaq2EyxPLmCoH0TKX7piFythjCOTmHWWIPDGpAXS
-	dAONelS7AzMidJfoaQbzUlHBgXzZPoaOhrvPXgTFMixbaE7vjSlxFyHZ05HTAKA=
-X-Gm-Gg: ASbGncsv3ROmBe2yMaJp4Ay0wmUf39n4Ii9gOcXv+4cPnUmQJORk6lh7BeGUHW75Rkd
-	xq73UuhOCyupwKQ3pBTiufZpf1sX+zQcpvNCo6wpJ6TyNaljRrTm6OfMjXz+4cISULb9W+WA+1s
-	0MXmwVJJqhY7bKz1t+BCO1btCqDJBjB4zORJtjJ2R3AhMSx7B5crjudaVs2sljIdePE2IMdfTvE
-	yEs1KaKGNWheyPpLAE8BZ+UVOq91D/6QS+w4PVq+PqXPgtdyGlDQNzRtZL2krvIrqL4Fv4rSSWn
-	R1xmRh3pLwSV5DoeMMq5YCE=
-X-Google-Smtp-Source: AGHT+IFEZWwhATFiIjC/mq/2iOVr1pCkgPVkoAotYXpYl7oqtRxrDKn/6LcJLuTgNAVp6QR7gFdePQ==
-X-Received: by 2002:a05:6512:2355:b0:540:2022:e3c6 with SMTP id 2adb3069b0e04-54414ae134cmr2990351e87.35.1739071303093;
-        Sat, 08 Feb 2025 19:21:43 -0800 (PST)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54505e41c63sm279711e87.148.2025.02.08.19.21.40
+        d=1e100.net; s=20230601; t=1739072301; x=1739677101;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Z/6yPVhvzSQt8FpEj+34A3KYWg9MIBUILVNRXOHt7zM=;
+        b=ajDFXy8iZcEIxdbV6+AdFYve3SETn+uvgHZiJ/gf8WlP+ieDN1x8qDOVnInup+KgL1
+         TJh2/44AQBeJ61qD5hT54+UXe+5YWrwTQpmz2Ks6p3CtXtEElMvbC1E8kBi0RF6RwLQC
+         JlQIkz1KnHQHWKiE020aI1M3n3n4rrzYLBZnSrSLEu95dV+I65E5feSpCAYlkP46QKp8
+         fBVjiFz3oVEfZoqiMisHVVYKi/fg4KbGlpGs5QHI9ngZij0jPpc2yu/P1RSQ/Km64RKG
+         SH6MqQvM6fObyibIslI5Ll6loSHN2Jl0pHwYZwqltcC47L8rDlJ4dyBV1arnGr88YPpS
+         bh9w==
+X-Forwarded-Encrypted: i=1; AJvYcCU3OzQEgfIAem66PS0E6u2MgA0NM7XFvQjz105RvDVOGrEpzpMbJQSWBRlI8zUEhjlbKDGOIjy3Ic1T8ecW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyp38FxC7dW+aa37s1QrlexRVswX59umIHniT+gs4wVxRmcxRuT
+	7TTT6jxVVqV1XyWUiwMklp6yV0TmXYUQC0eTuJnDbsNHytBlLDAG40H1kLmZLm4=
+X-Gm-Gg: ASbGnct4/2QWcKW0u9FUyLOA3j0g7PI7kDkFfoWReX0Rmo86RQ/757AX/J+dY0SFBRT
+	kTqTHtQEsZrNm4AYqLCYN+R0z6wUnNkwd2r9Gzlpj65XkMPmioVExvSX/jc1JRPkiorF2Ox2aaE
+	gCoSMfF4BADVZTX/4fb+B/Z6rMHGYiP5Zd7EN7+LsHQLQv0S3TY9bVNXUS2jFgakLTk0ixvCWv4
+	U01rK3FLR4z+HY0Da3VdYxbAXZIsYR/0yOOq/yV6bhMa2Q3CVoDF+9YQ7NjuaDKp/jN/S28S+Dz
+	Sg33zO45rSDOHMivdFT+RZF2laun94fyRvpymK+Ezl1u8snwSowqEiZxadhUWIo5nRoVqWE=
+X-Google-Smtp-Source: AGHT+IES07fxPyHCztfsqpUU3ib0W9GV8knyWCON3WWXjJGQPwrMdTFe5n+ZQFCrewVIai6KclkWWw==
+X-Received: by 2002:a05:6512:108d:b0:540:2a92:7da9 with SMTP id 2adb3069b0e04-54414ab5605mr2768060e87.21.1739072300614;
+        Sat, 08 Feb 2025 19:38:20 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5450a64ea2dsm39590e87.14.2025.02.08.19.38.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Feb 2025 19:21:41 -0800 (PST)
+        Sat, 08 Feb 2025 19:38:20 -0800 (PST)
+Date: Sun, 9 Feb 2025 05:38:17 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 09 Feb 2025 05:21:18 +0200
-Subject: [PATCH v5 8/8] drm/msm/dpu: handle perf mode in
- _dpu_core_perf_crtc_update_bus()
+To: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH RFC 0/7] drm/display: dp: add new DPCD access functions
+Message-ID: <pxcgcutzjjge6ruw5hobg6jkfqozhtlvbhdlmyazesbi4aipj2@enepqlcvjruw>
+References: <20250117-drm-rework-dpcd-access-v1-0-7fc020e04dbc@linaro.org>
+ <ctla3nt6o3osdxek63zyidyuofzgq3mgshh2azong3ntcqevhi@3rrzr3hrzbor>
+ <87r04tn8is.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250209-dpu-perf-rework-v5-8-87e936cf3004@linaro.org>
-References: <20250209-dpu-perf-rework-v5-0-87e936cf3004@linaro.org>
-In-Reply-To: <20250209-dpu-perf-rework-v5-0-87e936cf3004@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Stephen Boyd <swboyd@chromium.org>, 
- Simona Vetter <simona.vetter@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3426;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=EjVnzSvwGeLB3HXokJpPau5v3ni0TOZS9ZUms7htZ/E=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnqB8x64F2cJNeOu1Uli/yCTGic6MsHG4iZAHU0
- xuYkcG1bUyJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ6gfMQAKCRCLPIo+Aiko
- 1dRQB/9KevaeocmmMuzIO8TfX0MVz2QgpEIEX19HB0AkRYNpfMcBZFYbPMOEOjm7UT+GjkTHz5Q
- oQQ/7zMIqsyW/6ObGU75R3mPz9vZ8iV9oa/yZ8lv1c3/VSqliYLdwO+gebs92S3DS6ZxGmgTG8c
- a1I83mr92Vh1pxUJDygWzDiflhiVd0KxhTWIjXiyb4Iflz8RET3n+qv8scrqFNe+7RYOx8cIeF2
- cljFJWxAmaIDHdQvvcK/rWlaBdTahxLsET4m7fYFBv0ZM+nptASfNzpI8wRg5aQWf+yUwIQ39si
- dwX5THa0LLAZkrWtLqS8NVfCSd8hKtLkWrV59iILpHtN8zCk
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87r04tn8is.fsf@intel.com>
 
-Move perf mode handling for the bandwidth to
-_dpu_core_perf_crtc_update_bus() rather than overriding per-CRTC data
-and then aggregating known values.
+On Thu, Jan 23, 2025 at 12:12:43PM +0200, Jani Nikula wrote:
+> On Thu, 23 Jan 2025, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > On Fri, Jan 17, 2025 at 10:56:35AM +0200, Dmitry Baryshkov wrote:
+> >> Existing DPCD access functions return an error code or the number of
+> >> bytes being read / write in case of partial access. However a lot of
+> >> drivers either (incorrectly) ignore partial access or mishandle error
+> >> codes. In other cases this results in a boilerplate code which compares
+> >> returned value with the size.
+> >> 
+> >> As suggested by Jani implement new set of DPCD access helpers, which
+> >> ignore partial access, always return 0 or an error code. Reimplement
+> >> existing helpers using the new functions to ensure backwards
+> >> compatibility.
+> >> 
+> >> This series targets only the DRM helpers code. If the approach is found
+> >> to be acceptable, each of the drivers should be converted on its own.
+> >
+> > Gracious ping for the series, it's been posted a week ago.
+> 
+> It's a bit of a bummer the names become longer. I don't have a better
+> suggestion, though.
+> 
+> I do like it that the error handling becomes easier and more uniform
+> overall, and this actually fixes many places that only checked for < 0
+> with the old functions.
+> 
+> I glanced through the series, I didn't spot anything obviously wrong,
+> but didn't do a thorough review either. I can do once we have wider
+> buy-in for the idea in general, so the effort won't be wasted.
+> 
+> For now,
+> 
+> Acked-by: Jani Nikula <jani.nikula@intel.com>
 
-Note, this changes the fix_core_ab_vote. Previously it would be
-multiplied per the CRTC number, now it will be used directly for
-interconnect voting. This better reflects user requirements in the case
-of different resolutions being set on different CRTCs: instead of using
-the same bandwidth for each CRTC (which is incorrect) user can now
-calculate overall bandwidth required by all outputs and use that value.
+Is it okay to merge this? I'd prefer to have comments from other
+developers / maintainers, so that it doesn't become a controversial
+change.
 
-Note #2: this also disables threshold checks for user-entered bandwidth
-values. First of all, it doesn't make sense to fail atomic commits
-because of the debugfs input. Compositors have no way to correlate
-failing commits with debugfs settings. Second, it makes sense to allow
-users to go beyond these values and check whether this makes any
-difference or fixes the issue.
-
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 36 +++++++++++++--------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index c8e20be08aa83c8bdd70065643b46676eeed610f..7ff3405c6867556a8dc776783b91f1da6c86ef3f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -118,20 +118,9 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
- 		return;
- 	}
- 
--	memset(perf, 0, sizeof(struct dpu_core_perf_params));
--
--	if (core_perf->perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
--		perf->bw_ctl = 0;
--		perf->max_per_pipe_ib = 0;
--	} else if (core_perf->perf_tune.mode == DPU_PERF_MODE_FIXED) {
--		perf->bw_ctl = core_perf->fix_core_ab_vote * 1000ULL;
--		perf->max_per_pipe_ib = core_perf->fix_core_ib_vote;
--	} else {
--		perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
--		perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
--	}
-+	perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
-+	perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
- 	perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
--
- 	DRM_DEBUG_ATOMIC(
- 		"crtc=%d clk_rate=%llu core_ib=%u core_ab=%u\n",
- 			crtc->base.id, perf->core_clk_rate,
-@@ -220,18 +209,29 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
- {
- 	struct dpu_core_perf_params perf = { 0 };
- 	int i, ret = 0;
--	u64 avg_bw;
-+	u32 avg_bw;
-+	u32 peak_bw;
- 
- 	if (!kms->num_paths)
- 		return 0;
- 
--	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-+	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-+		avg_bw = 0;
-+		peak_bw = 0;
-+	} else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED) {
-+		avg_bw = kms->perf.fix_core_ab_vote;
-+		peak_bw = kms->perf.fix_core_ib_vote;
-+	} else {
-+		dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-+
-+		avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
-+		peak_bw = perf.max_per_pipe_ib;
-+	}
- 
--	avg_bw = perf.bw_ctl;
--	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
-+	avg_bw /= kms->num_paths;
- 
- 	for (i = 0; i < kms->num_paths; i++)
--		icc_set_bw(kms->path[i], avg_bw, perf.max_per_pipe_ib);
-+		icc_set_bw(kms->path[i], avg_bw, peak_bw);
- 
- 	return ret;
- }
+> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> ---
+> >> Dmitry Baryshkov (7):
+> >>       drm/display: dp: change drm_dp_dpcd_read_link_status() return
+> >>       drm/display: dp: implement new access helpers
+> >>       drm/display: dp: use new DCPD access helpers
+> >>       drm/display: dp-aux-dev: use new DCPD access helpers
+> >>       drm/display: dp-cec: use new DCPD access helpers
+> >>       drm/display: dp-mst-topology: use new DCPD access helpers
+> >>       drm/display: dp-tunnel: use new DCPD access helpers
+> >> 
+> >>  drivers/gpu/drm/display/drm_dp_aux_dev.c      |  12 +-
+> >>  drivers/gpu/drm/display/drm_dp_cec.c          |  37 ++-
+> >>  drivers/gpu/drm/display/drm_dp_helper.c       | 345 +++++++++++---------------
+> >>  drivers/gpu/drm/display/drm_dp_mst_topology.c | 132 +++++-----
+> >>  drivers/gpu/drm/display/drm_dp_tunnel.c       |  20 +-
+> >>  drivers/gpu/drm/msm/dp/dp_ctrl.c              |  45 ++--
+> >>  drivers/gpu/drm/msm/dp/dp_link.c              |  17 +-
+> >>  include/drm/display/drm_dp_helper.h           |  81 +++++-
+> >>  include/drm/display/drm_dp_mst_helper.h       |  10 +-
+> >>  9 files changed, 354 insertions(+), 345 deletions(-)
+> >> ---
+> >> base-commit: 440aaf479c9aaf5ecea9a463eb826ec243d5f1cf
+> >> change-id: 20241231-drm-rework-dpcd-access-b0fc2e47d613
+> >> 
+> >> Best regards,
+> >> -- 
+> >> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> 
+> 
+> -- 
+> Jani Nikula, Intel
 
 -- 
-2.39.5
-
+With best wishes
+Dmitry
 
