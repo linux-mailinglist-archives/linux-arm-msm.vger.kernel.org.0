@@ -1,154 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-47320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61119A2DE8F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 15:35:12 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30407A2DE9B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 15:45:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B0E507A1EFB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 14:34:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C8C11886E07
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 14:45:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBFA71EB18D;
-	Sun,  9 Feb 2025 14:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BCD6243368;
+	Sun,  9 Feb 2025 14:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WksFCWSE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aTC35yCm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD0F1EB185;
-	Sun,  9 Feb 2025 14:31:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252581BD9C9
+	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 14:44:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739111488; cv=none; b=dx3w5/qVCAAglCaTy35LneSzxTvavOzApd82G7DgQ5ZQf/7AygZ8C63BcBAyO915vQqgJsd8Y2AtF4T2GJl/vfrctmQPcbGImBBhKtqTY5xg56wJ7l+Cj2BQ1XwhlY90pY86IaqC1yAz4QIVc8hmnm36A+ZV4aPSxgczy/eg1IA=
+	t=1739112296; cv=none; b=gM6haFv7YyrLZfzeDy8oA9JZRx08ZrcDC8WL63gE3yCZsqjU/EXZW3Bg3wOYNoHCWv1S/8pPvSLg2JhG2wnQEruh30ub/oVgrCL81OvfOyMAIiOYwW4/P0PodfK5qf5h8TIAr8nsoxJiHxoA+Giok9b6oWOBHtvuzKqZ1J0r2jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739111488; c=relaxed/simple;
-	bh=AJF5DL3Pt5AO0mBUIrRPAreWbf8FJCsW/TNx0q0i4bI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=UjPKKeClDFenwCo8MUd5/O0lX4ERWmSyOMbPFdMzd7WG/bARzoxIrvjtyGbtdRn3oYUdWm2l/plKUGQ3tNrVoAFWo21VifaBNdyCpaHkw9D2JEEohTzBpX7QE8H5IRonRnnBez7p95yqDEnW5c8gjyHSyCpE9R+MkJqYemg/mic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WksFCWSE; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5197mQVg006632;
-	Sun, 9 Feb 2025 14:31:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HkVtmIZ7z/sdEG12eKr6XekXbRRZ0uSQPinlKqmirv0=; b=WksFCWSEnPptvANM
-	3y8u2b4QKIbV+rfbQ+l7z8NwRI7smGW7PlsZkt8LbUpn2RYi93428YGsZ741PZrB
-	xpqfsNBR7OQELmjT+q5dX5YYNalOJ/Dy1j1teJ9UTPGasc56DsK0rEl52jkR2eRw
-	cA4+o74XvPL39UC2oAnYwQ6dpaQzUWKCc+fOlxYYitHv0anZPzAki2k1FbmdBT2y
-	021F632dFhBSbGhWpdbQtBJfNu4R6+yu5CorXmtVXVJgPW5z5tlK+aIYG64vPjaw
-	f7wRb8IH+Uo9fvSXfnBIUF26QSEgr6/3q1y7mjJ2LRucdy1oeMbAn/j/Jd2YvVzo
-	OovkHg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dxj3km-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 09 Feb 2025 14:31:13 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 519EVCH4027994
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 9 Feb 2025 14:31:12 GMT
-Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 9 Feb 2025 06:31:07 -0800
-From: Luo Jie <quic_luoj@quicinc.com>
-Date: Sun, 9 Feb 2025 22:29:48 +0800
-Subject: [PATCH net-next v3 14/14] MAINTAINERS: Add maintainer for Qualcomm
- PPE driver
+	s=arc-20240116; t=1739112296; c=relaxed/simple;
+	bh=zy7inQn8IlL22OlQ3SOSyDR4h8QdypuUqFZ0yVIeMHo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=qfSkYXxmBVgg7D7M5joPXpLTJI3CrvDkY/EAZpjAlhSH5uuJyGXVB43DA+9MINWJ0uHWitDlb9YxMIYU98lKusf/dghsa1+hku/VoGG+8n90yUaW3p0gYek5nEqIdzPeSU6RYhX+S/iT725QzJzxpzIMDbebL7rGEUfpnQWysmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aTC35yCm; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-467b74a1754so52912591cf.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Feb 2025 06:44:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739112293; x=1739717093; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=w5QvikTKCFNL7WLcBiL2Nw7xhGaRFi+kZbVL6GI4dUg=;
+        b=aTC35yCmfXuMRKr5srPrqM3aiYRh4Ofn7dODvHKotZyfNJgTFlHjTDjMOIVSWc40kw
+         ++sXDjFaaJczlMeZpCTwN6Ku139sXTjdqITJUemb7FN+m7feWo7N2b/LR7oblshrqWDK
+         u8YLBKB48aHHjqWUGKc7KKDAbwhlptL9A+cgAfG8UL+20rndsFHg3aHXny7kQavQJFsd
+         EjjP7jmXBafO912RIjRz18jDR2wYk+CxC1MwIu9oRAMn2yKkNgUdQ3OXstVl67yP8p7L
+         UWdPFpFsSosI5FW/CZOvdd9F8jv5GzMVN7QhhhscZWVydZSlE2kSsrsx4mUI93/15jUV
+         iTOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739112293; x=1739717093;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=w5QvikTKCFNL7WLcBiL2Nw7xhGaRFi+kZbVL6GI4dUg=;
+        b=TU2hoeXxqaBkGrmxva1hbIBYPTwsBFbQXGwMwVutfpuzzR1LthHaw2hyXoct7/Jyad
+         ePtKhyVK7BESHVQ9Vgtj7RYJ9LNDBP5/S8w+lLkf/iKZe9bKzstUyhfpuRTI2LGvNxzn
+         l2VX/CQ44HGLjQl0GRXvkg2LCinrawlii1m/VDDQBbwl5QqGNIIWmqWOl2y96y+i6uJN
+         MLLtCvp5f8vDGSad1QHNfhOS1E4CtjYfnf1zCCkMcCwtVLX0o+adpJds7rm403UEHHeG
+         UR/cezFN0eW2s4xDldWwBe1GEhVl4y8ww6s36PGbxDyrHJkmWahnP1WxZ06tvne5mC0B
+         Kb3Q==
+X-Gm-Message-State: AOJu0YyCQJJ8e4fmMS6VkCQqap7M93XiCc4AKMDzDCvBT3byBhcT1vIj
+	t5yHXarMOG+ysOVdncjGblT6NWKGBltUl4NeYXlFjef4b8dQSiSQPkmKWU3BVoQ=
+X-Gm-Gg: ASbGncsirth5SdVuk2FkObikA0SPvWLeEILPvaYJSzFw2EWYwlL/SaM/YVFKXtJ/9ov
+	qENVC3tyV8/RQTr6muYanhEl1cTjUu0rZsMHxbjy2OloeqDbh7EjBYeXp4JfS0Y91mF4bz4Y9gM
+	AGBMbYL5kw7lBRgGrHDJIqUbpLXXB1cP8CHokDa4QZJhG7s3G3vkx+0OopL64A3+iB82d6yWbob
+	jiNifC6i8e4Qo6nDrhKtkUGfTZGT9PkT7fmI6pwm8NATJ7rYqtreHc2JfNqWb4GkWU02Y1Zcm6A
+	RATIIjOt71Vgk+QW6DsodlD7CyFpZZQXI0YNqBlCIhHQpY2sfBn65yigf5T535pyy/kF
+X-Google-Smtp-Source: AGHT+IHSNH3EcOtRNo838aV35hz3kX1wpHeFZVgLNa9gNU5K5QGpwy99/u8FN8FkHYN4asPsNSwJKg==
+X-Received: by 2002:a05:6214:1c09:b0:6d8:9be9:7d57 with SMTP id 6a1803df08f44-6e44570afe8mr189702836d6.37.1739112292975;
+        Sun, 09 Feb 2025 06:44:52 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:6e2e:988e:3133:72bd? ([2a01:e0a:982:cbb0:6e2e:988e:3133:72bd])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e44d545327sm21696666d6.33.2025.02.09.06.44.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 Feb 2025 06:44:51 -0800 (PST)
+Message-ID: <6aa71142-3b1d-476f-9c78-1207fbbed3f5@linaro.org>
+Date: Sun, 9 Feb 2025 15:44:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650: add PPI interrupt
+ partitions for the ARM PMUs
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250207-topic-sm8650-pmu-ppi-partition-v1-0-dd3ba17b3eea@linaro.org>
+ <20250207-topic-sm8650-pmu-ppi-partition-v1-2-dd3ba17b3eea@linaro.org>
+ <ba546075-cfc0-4b17-9129-f99054e2e1ae@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <ba546075-cfc0-4b17-9129-f99054e2e1ae@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250209-qcom_ipq_ppe-v3-14-453ea18d3271@quicinc.com>
-References: <20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com>
-In-Reply-To: <20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Lei Wei <quic_leiwei@quicinc.com>,
-        Suruchi Agarwal
-	<quic_suruchia@quicinc.com>,
-        Pavithra R <quic_pavir@quicinc.com>,
-        "Simon
- Horman" <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Kees Cook
-	<kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        "Philipp
- Zabel" <p.zabel@pengutronix.de>
-CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
-        <john@phrozen.org>, Luo Jie <quic_luoj@quicinc.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1739111388; l=880;
- i=quic_luoj@quicinc.com; s=20250209; h=from:subject:message-id;
- bh=AJF5DL3Pt5AO0mBUIrRPAreWbf8FJCsW/TNx0q0i4bI=;
- b=BE4rNkb37rmvXoMYO5+ofb7YHeLdRUbEeeWOpvbyq87upZv+/U2WfKtWIKUd253kMDLIJAuYP
- EmEc6C2fXB2C+P4V9HgfgG5aW9B7qiD4237kwIF64ib39Kf9iG3idnP
-X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
- pk=pzwy8bU5tJZ5UKGTv28n+QOuktaWuriznGmriA9Qkfc=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IWbTVWoGjkTWL24kuPHCxAo50ZkDK6Mz
-X-Proofpoint-ORIG-GUID: IWbTVWoGjkTWL24kuPHCxAo50ZkDK6Mz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-09_06,2025-02-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 impostorscore=0 malwarescore=0 mlxscore=0 phishscore=0
- suspectscore=0 mlxlogscore=657 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2502090129
 
-Add maintainer entry for PPE (Packet Process Engine) driver
-supported for Qualcomm IPQ SoCs.
+On 07/02/2025 21:30, Konrad Dybcio wrote:
+> On 7.02.2025 11:31 AM, Neil Armstrong wrote:
+>> The PMUs shares the same per-cpu (PPI) interrupt, so declare the proper
+>> interrupt partition maps and use the 4th interrupt cell to pass the
+>> partition phandle for each ARM PMU node.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+> 
+>> @@ -5309,6 +5309,20 @@ intc: interrupt-controller@17100000 {
+>>   			#size-cells = <2>;
+>>   			ranges;
+>>   
+>> +			ppi-partitions {
+>> +				ppi_cluster0: interrupt-partition-0 {
+>> +					affinity = <&cpu0 &cpu1>;
+>> +				};
+>> +
+>> +				ppi_cluster1: interrupt-partition-1 {
+>> +					affinity = <&cpu2 &cpu3 &cpu4 &cpu5 &cpu6>;
+>> +				};
+>> +
+>> +				ppi_cluster2: interrupt-partition-2 {
+>> +					affinity = <&cpu7>;
+>> +				};
+> 
+> I'm not sure this is accurate.
+> 
+> I *think* it's cores 0-1 and 2-7, but I can't find a concrete answer
 
-Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Core 7 is a Cortex-X4, and has a dedicated PMU node, look at the cpu compatibles.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 873aa2cce4d7..57c00f9d7753 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -19576,6 +19576,14 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
- F:	drivers/mtd/nand/raw/qcom_nandc.c
- 
-+QUALCOMM PPE DRIVER
-+M:	Luo Jie <quic_luoj@quicinc.com>
-+L:	netdev@vger.kernel.org
-+S:	Supported
-+F:	Documentation/devicetree/bindings/net/qcom,ipq9574-ppe.yaml
-+F:	Documentation/networking/device_drivers/ethernet/qualcomm/ppe/ppe.rst
-+F:	drivers/net/ethernet/qualcomm/ppe/
-+
- QUALCOMM QSEECOM DRIVER
- M:	Maximilian Luz <luzmaximilian@gmail.com>
- L:	linux-arm-msm@vger.kernel.org
+Neil
 
--- 
-2.34.1
+> 
+> Konrad
 
 
