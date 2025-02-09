@@ -1,141 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-47325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D312CA2DEC4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 16:21:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7B45A2DED9
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 16:40:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BCF403A3A93
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 15:21:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 834AF165141
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 15:40:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 977C61DF269;
-	Sun,  9 Feb 2025 15:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE45D1DF75D;
+	Sun,  9 Feb 2025 15:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XWs1lQi3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O6yNn3k3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2CC1DE4C8
-	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 15:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6094D1E526
+	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 15:39:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739114511; cv=none; b=mGhMQBkJt7zr8gwsZjdCYhDm82UuWq4F6aaovks8STISQZRxSQoN7c23GH+FQNnx8BKF4SOJ4cetZ3ZZLG4m8HsugX0jT/g8/gAYbMvrX6dOlDrf+wiaWF/RBFsrcYq1iPDttF7vP4gSh0vg5NwkDbZTfYJW0Nd2y16MGb3Qfis=
+	t=1739115595; cv=none; b=n7Rx4Jova4/FZp1dbpIXd4sLnm5h4pYnizTyKWd181t9W/IUxeI/feZjW5DDS3vR+As8oGdSsQhf0LyULBzFzGa+PNzXY+qNy8n5qft9oBk5fejaJySS3hFzl2Um6K5k4fi/ZTF9RNG64lt0RxZIhPPRzPg+QKcfP9m9bnxIRFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739114511; c=relaxed/simple;
-	bh=B+Taz8FFto55mnsYPpqIlTqX7N41JrWkgq8m3UsOdqI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mcgrlNb2HmcH7cpfST09XIMCbMf5zvE6Y/SoTN2VCIiLEtQdvGwtdhAY2+g7Dz3iTQAuQYokk3eGQLjlnYG7UXFkH83zc6SZ4TW4ZcVH8pxt8XGgLFaSvaj8r+a3sRy2XKfCo4ogcBAY2u9JE2r/jGcc8elJD6yBdWgEnTB2hpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XWs1lQi3; arc=none smtp.client-ip=209.85.216.44
+	s=arc-20240116; t=1739115595; c=relaxed/simple;
+	bh=cARFp4SIhGtLx/eCixlAl4h9ZbuuApwEVo2cNQXqnyo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=d8wJhTsFgN0woFfmfPoh56amNk9YPqdQ6Aw0VHF48c7MiHAZOhgvSim09vN1GM0ErIkyD38lOXPmdLk9DTARhnzHdklG2iz0AdzWrzK/cprSDKyc0SlOfAh6S0/umVFTkS2+shZqHJjRTIZEOu3rTu5wVVw4Ho2OJBCfoHJ6bP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O6yNn3k3; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2f9b9c0088fso5587708a91.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Feb 2025 07:21:49 -0800 (PST)
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-21f74c4e586so14137715ad.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Feb 2025 07:39:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739114509; x=1739719309; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JljyH7L9Kp4vXvGrsHV+BTlHpLmdgYdjpTOUSBHWabo=;
-        b=XWs1lQi3+dRO7oPD7nuQWcWbqBJgVQokH5fkTFGwAtVzfZS68j9/ACF/J572Om5+xs
-         JWOyQwMzaVAacYRNeY2ibxmGndnkexd2dKed846fPwhIarTBvgU+gLrIFHhy3/3gRPmI
-         +FmZihmgfR2jxcKthK0pTjNhXaFiFM+808fOqc9cr/yb0M2akwHe258m0i8QQSLeqfRC
-         Bu/W2qv4+WPWI53jIDCLdZ7XEkW8G5T/53Y92LG+J0K6Y0OKlaTvjIz4/fW/hcAsb9oz
-         jSUl43ogBpCdTeXLZ94BV0LOgVEX4PKztGMAU27zGzRKbGSE2gDI9dBNs5iolIUQApMk
-         4Y6Q==
+        d=linaro.org; s=google; t=1739115592; x=1739720392; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=m/kvIzQrtuFWagP0ZFJ0py48diq2bMBbEg8k6AGhhM8=;
+        b=O6yNn3k3+aebmvrvgNfgPOSc57qDwnRQUTCjhtMWLyhcVL+JcRBYg26nzo/ggRWgB2
+         XEWb1E/D08PAvmDUlkgYyFlpRU4Ge9aZi7WAD+NlJzbLlAlnSII/wsxgE3efJT2sP6Ux
+         UU7lYVtjgd/ILuFQGhStbxB44fHEYt20Bbuasz9pfWYUwh+7CLgwIdWFQ29ZnsIJELfg
+         VS/x3Jiwl0Ij9jRF5J+lSe2xYm6AGGpZ2VLsvNh58zLnjNNjiYFPGZdxj/z4xVY1P6Za
+         mn5ysgBxLQ2RqV4JJbk2VNHTqBxlaTIfaHODQ8NG+ce095O8ULTe3PEDr8Ep31bdI+x7
+         b2Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739114509; x=1739719309;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JljyH7L9Kp4vXvGrsHV+BTlHpLmdgYdjpTOUSBHWabo=;
-        b=lOxNJqZq9JD0+QnTlZojMKNDux426BD6haLdXivSFH2oz6GV2tBOxngNMrmsLMTP4B
-         2kqi4pyOppqpAENe+1W4M33O6jz4SszbSE5QSjaSNG5n8WwbqL/1HWysSORd41xvG62I
-         r7ij5fMWVsrDarpdYYBX9WqnNe3FVLXg2tYazF+m9DIpyv2OMOhC9KwngCVHjFAlKV5u
-         dNxZnqmhEEaCmB7/ObrGP9AcvnhwunF9lUzbbZXKmQTqi44dcL8fFNMJUna5ji0NPDRh
-         LfkAfOSkt6ZzhA39Qi+7gjGG4kAaBPiXLWgbcjWXNy5U0XKuQDHK6+aHZwVaAPJk32MQ
-         WntA==
-X-Forwarded-Encrypted: i=1; AJvYcCWfBpAKlSY9cfNKLHguWeI+sKanDu4piTgFI6bHLbM4e/c0vXnmqyZ+1CyQqaIarJVg3DQMFjoj8dxPIx9k@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxk9hFxsif0lINZTZSm30YMGHl+n+o4BaNSvbiw2nHXJyai/lPS
-	MSoVDkx4/5K/c0jqcsp4B/OjCJ25nIkLYjaOLQRpF91kL8vtq47hQvgWmZfvRA==
-X-Gm-Gg: ASbGncua6jNJEuoNokGKx+OVDyQ89djVt+PEVFHLG9c8ykwTGQcGdWNLSF8CHRdOB6d
-	p9UaS3V/NspgfPQjTsRNf6iN/qBsObUZeyUvGo8GCVo615ltpwUb9xlJHx07B9BCtNalTyZiRlC
-	cvco3lWAMR7vez3Pv2rXjWjNP7CYi5co6/bg/A0IVE+SvToaU2pG9ZMM8S9McVcJVJgh5y8YTDR
-	s73Uogsb3Mi/9tCWun0tPej4FI1ucUjlyDOLE2uE0yW3pEkih1FHY+HJGNTDme6F7S388V6mXg3
-	LAR4Cc1TmNL6Thor9XVj/oJ783+C
-X-Google-Smtp-Source: AGHT+IGWNpvwwkvO1VPlAyxGXl/1r1Q1NAlHKL3FT+xI1xaRL3g54LRlf6f/W3+YFvSs2/+0N4SfAQ==
-X-Received: by 2002:a17:90b:3847:b0:2fa:603e:905c with SMTP id 98e67ed59e1d1-2fa603e909emr5034546a91.2.1739114509226;
-        Sun, 09 Feb 2025 07:21:49 -0800 (PST)
-Received: from thinkpad ([220.158.156.173])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fa0b9c5872sm3020467a91.0.2025.02.09.07.21.43
+        d=1e100.net; s=20230601; t=1739115592; x=1739720392;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m/kvIzQrtuFWagP0ZFJ0py48diq2bMBbEg8k6AGhhM8=;
+        b=eeHR++nAGPnDUG6CfuwQZy+63Qw8AgqiGUub6eETqpYanWZE2pFMRE8loMcbmw8NsW
+         6s2Y8hzrCjrsx93O1R3TOLLGT6FZN2YeyGsn9RoNLR7JOJ144+0gMR4ZtnSNgmsdnPJa
+         IG4TtPj6Tqq1Dj8vohxyEKV38kZnl+ODvg8Q5HDxfLj5+q/jAyqwfZjyHKeAeNpCNePH
+         hyD/ub0hskItGPs0+//aDkoIyV6Tbi/H9A83tXPJDAgeq7N+ZIBfjBsmQZEfsTZ3ClCc
+         LsdHvj4WSYJ8ZWbbmOLpe5i5ePnh6YeF7xtWgJSVMm3WBO+DGYOGHS1eNTLwCu9Nnf5b
+         hR+Q==
+X-Gm-Message-State: AOJu0Ywvm2LnA5MInu0+dfWavwuonoJ1wjghnP8PYHb695JzU0MHRgiH
+	EQEviYsrKl79RT52f1pp5vGvVs4Nax5NJW+NysmzoaPB4bU6fThLVZoV2Q1uvnilalXo7IqXHXY
+	=
+X-Gm-Gg: ASbGnctl8Vk+gzPJqHkIXUjnBT/CxNiIKNV30l38Bhyj92MoLSzYd7I5KAqRNnHLoBj
+	bhr3IJ0P6uTJYk8bTqBspyu8Xn7UK5+S48rWaHulzEXh9yIE5c/DqoY2MJ0DK5hLEK60SJ9k0i2
+	j9ESGwwC+0znZ68iQuttpawkxEgfWioGd0DDxVogSRAckRkWspIOWRozMUaLIxZlgdeXqI3qyQ1
+	ry/IijzP1wz2sVrpa8/fv6S1QIvcrz2dncnZaSPy7vvwsu4nwUTVquLjh34zGTYtoWoyxzE+u3E
+	xgfyCtnx/w8XUHKmdSdn50kOA8esaYtIEwbQLLYE4K19Hw==
+X-Google-Smtp-Source: AGHT+IF4pqcL1CA0s4DBaR/hb1zv6OAkpbvkONKhQYvXu/1axVV/kqi6HnIszoiR+HbDfFDdXVaPxQ==
+X-Received: by 2002:a17:903:285:b0:216:2bd7:1c27 with SMTP id d9443c01a7336-21f4e746605mr166465975ad.33.1739115592714;
+        Sun, 09 Feb 2025 07:39:52 -0800 (PST)
+Received: from localhost.localdomain ([220.158.156.173])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21f3687e0casm62105095ad.174.2025.02.09.07.39.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2025 07:21:48 -0800 (PST)
-Date: Sun, 9 Feb 2025 20:51:40 +0530
+        Sun, 09 Feb 2025 07:39:52 -0800 (PST)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Melody Olvera <quic_molvera@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
-	Nitin Rawat <quic_nitirawa@quicinc.com>,
-	Manish Pandey <quic_mapa@quicinc.com>
-Subject: Re: [PATCH 0/5] Add UFS support for SM8750
-Message-ID: <20250209152140.cyry6g7ltccxcmyj@thinkpad>
-References: <20250113-sm8750_ufs_master-v1-0-b3774120eb8c@quicinc.com>
- <c6352263-8329-4409-b769-a22f98978ac8@oss.qualcomm.com>
+To: andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sa8775p: Add 'global' IRQ for PCIe controllers
+Date: Sun,  9 Feb 2025 21:09:40 +0530
+Message-Id: <20250209153940.3489-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c6352263-8329-4409-b769-a22f98978ac8@oss.qualcomm.com>
 
-On Fri, Feb 07, 2025 at 11:47:12PM +0100, Konrad Dybcio wrote:
-> On 13.01.2025 10:46 PM, Melody Olvera wrote:
-> > Add UFS support for SM8750 SoCs.
-> > 
-> > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> > ---
-> > Nitin Rawat (5):
-> >       dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: Document the SM8750 QMP UFS PHY
-> >       phy: qcom-qmp-ufs: Add PHY Configuration support for SM8750
-> >       dt-bindings: ufs: qcom: Document the SM8750 UFS Controller
-> >       arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 SoC
-> >       arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 QRD and MTP boards
-> 
-> You still need the same workaround 8550/8650 have in the UFS driver
-> (UFSHCD_QUIRK_BROKEN_LSDBS_CAP) for it to work reliably, or at least
-> that was the case for me on a 8750 QRD.
-> 
-> Please check whether we can make that quirk apply based on ctrl
-> version or so, so that we don't have to keep growing the compatible
-> list in the driver.
-> 
+'global' IRQ is used to receive vendor specific events from the PCIe
+controller.
 
-That would be a bizarre. When I added the quirk, I was told that it would affect
-only SM8550 and SM8650 (this one I learned later). I'm not against applying the
-quirk based on UFSHC version if the bug is carried forward, but that would be an
-indication of bad design.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-- Mani
-
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index 3394ae2d1300..7355ef9bac21 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -6421,9 +6421,10 @@ pcie0: pcie@1c00000 {
+ 			     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
+ 			     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
+ 			     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
++			     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>;
+ 		interrupt-names = "msi0", "msi1", "msi2", "msi3",
+-				  "msi4", "msi5", "msi6", "msi7";
++				  "msi4", "msi5", "msi6", "msi7", "global";
+ 		#interrupt-cells = <1>;
+ 		interrupt-map-mask = <0 0 0 0x7>;
+ 		interrupt-map = <0 0 0 1 &intc GIC_SPI 434 IRQ_TYPE_LEVEL_HIGH>,
+@@ -6579,9 +6580,10 @@ pcie1: pcie@1c10000 {
+ 			     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
+ 			     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
+ 			     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
++			     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 518 IRQ_TYPE_LEVEL_HIGH>;
+ 		interrupt-names = "msi0", "msi1", "msi2", "msi3",
+-				  "msi4", "msi5", "msi6", "msi7";
++				  "msi4", "msi5", "msi6", "msi7", "global";
+ 		#interrupt-cells = <1>;
+ 		interrupt-map-mask = <0 0 0 0x7>;
+ 		interrupt-map = <0 0 0 1 &intc GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>,
 -- 
-மணிவண்ணன் சதாசிவம்
+2.25.1
+
 
