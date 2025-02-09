@@ -1,141 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-47290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8385AA2DB32
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 06:10:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E5BCA2DBF4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 11:11:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE2B11887D65
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 05:10:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 836561654AC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2025 10:11:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA371B6D14;
-	Sun,  9 Feb 2025 05:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D8C814A0B7;
+	Sun,  9 Feb 2025 10:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aPzqkLMW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ktOQaRty"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CD51474B8
-	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Feb 2025 05:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E41339A8;
+	Sun,  9 Feb 2025 10:11:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739077648; cv=none; b=VIrJfvNgrSTg14zOWcslg0cH9AOv9Qt29JOSVD92DpsBo8376uqzoEEntk5ENG+tFX+Dw8/XdoLKYLw792oyHHUW2TuKtz3D74Z9EaC2hXu1PC+TZMryuTRNcnH+Q2/6g9fmepfDcK4QJOUYsZMbv40gYisknABxqXkv3XbUjwE=
+	t=1739095909; cv=none; b=FmLgMoeR1B2uHHd/2nXaK19U6AMfLlI9KN0U0E2EfUkk5Ls/77MygKWsXGsVuBL6x1PM1Q4h4v/spjwy1GQSQdQRGmBuN0JWLII5u8mdz0toGkVKiHJQJHNc8nBk9xi65r7aXEKoLAsfFW19ShY57jmFC1N5mFPPbUl9qI8M39w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739077648; c=relaxed/simple;
-	bh=rBkvGR/qHrfxPlnsg0QzXfiNTIC9RTO2ROzJ5dKz7zg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=t2FEcpEP8UQrQlWxFHXrrdSK/n5DmdXIfoYYoqrYnUsCisvNAY+FXHw1W2RO35VeuUeiuhW05oFEQ/+Fznz4alN71bTl45UIght0CE2UCd7GeHwFfi73/FZcWFcI059P1BbnbAE36KQ24wi789xTP1qPtDigZbZnoxBviI62hlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aPzqkLMW; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-54505191cdcso894896e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Feb 2025 21:07:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739077644; x=1739682444; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EfNMfzUAvdO5axXrtOPa21BH0I19Ed6M3V+EZ2kcNQY=;
-        b=aPzqkLMWbFX+7NFvOmEk2laOqFOFfeDjqCedQUpe2La/Ysrc9V08RAhrJ8NY22NYbV
-         lgUrp8qss3uZjh2Pqgk+Oni9M7/s6l52Yji1bRmkgP/vTYUtbUJrNl/oPaL+nKlv1Iut
-         1S92mWsas8hjc2FZpstSHE+iBzKXQiD1WrySs5pavDGsnH0ThULdY76s34TNG9bJzPNd
-         pU1rs0KhY2CTNTVnQMi4kfOcVKk3cY3/niA8QB0s8lRXxoT/5Ug+NXJ08QzWDgDnRJFU
-         zsTUeJqjIic7OxzKq5KdvHwE+7vye+DU4K02KbGZsKopWZuituIy/8fK/fdei9NNR1PO
-         Tuhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739077644; x=1739682444;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EfNMfzUAvdO5axXrtOPa21BH0I19Ed6M3V+EZ2kcNQY=;
-        b=d00U5VnG6AEx4P13ZfWZUDQKp8vBz9RZb5dGFbAkIMUHq1CukJZbYS+7xPVCEWowsi
-         9vOHUAQW27BhIO0ZKbG5Sy64FLULwe0hGNNAua5cvR60tRbcJstE7NTZOn6Nvd5QYEBI
-         cUHVZH+F/VfS11/FrhDN5FE8k6XWP7wj3qenYpr4TwBvAJhOw0ZVpywd0XH7C1hljhMg
-         nGzsegbtUzfdUd1Z08U3g+xmCAwlFfqy6MElmFexrKqEcoCLwMXxjQoWaijvs2AIzOg+
-         64vAjK05p9YrUS1Jbqr7emX3ytjfNvw8hYvjVBIKTUSxpObMwFpY/Hm6FbSsaE9gT4rr
-         Niog==
-X-Gm-Message-State: AOJu0YwNxKHsZJvFF6rvH2Wg8NcSGVvuCAwHZFvyzCK0QLD8q9d3XgeD
-	GL5OVcGUkCRGhdXTJbJi7nB+lor/DW0MVqwhnR76ByJOhSSxwasTx+Yn8Kel4JzbM1Qnmu8j5Ka
-	JprI=
-X-Gm-Gg: ASbGncuQtvTNcuRBB+/puHs/oPoeI2HlRgsK80UPHYRH6nzDATgnAttQpL5Gqb/173o
-	BVB6iFeQpSGz8xZ1Ny7BiQxYqus6eeUu6k/Vlz47p0xx9WJ7MtX4rUAuH0oWG9YhJGUoMw5+k1C
-	GPRfWVJYf47tkVCUNgVdLZD1UNohV4KzC1MYHTOql9gCHTVmgikZCBo8Nqg5p5oXZd13CHstc7O
-	JPigu+l8AKE6QuRyumZ1vAz4pcwasTVaB5kzF4m+c740nRbegbKs88yMsnHGfykGBvR6br4pL5j
-	G+hkgFbrbvqbOKSna+9hJKY=
-X-Google-Smtp-Source: AGHT+IEAJIpGx/KtWJ3FoMRxqCJZCMQixEialyC+rYX1C/PQUXahOHBcURaFNniiUGHQYiTxLHEVSg==
-X-Received: by 2002:ac2:568e:0:b0:543:e4a3:7c3d with SMTP id 2adb3069b0e04-54414aa8782mr2874988e87.29.1739077643911;
-        Sat, 08 Feb 2025 21:07:23 -0800 (PST)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54506ef1733sm245576e87.1.2025.02.08.21.07.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Feb 2025 21:07:22 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 09 Feb 2025 07:05:00 +0200
-Subject: [PATCH v4 16/16] ARM: dts: qcom: apq8064-ifc6410: drop HDMI HPD
- GPIO
+	s=arc-20240116; t=1739095909; c=relaxed/simple;
+	bh=vNfQHGy9KvvHWawYZq7BNNrvnPQWExBbzHbPaHBUPaA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=t1PokcxpX61uqVV6f8KPrN4TwwEXiaqChJqukDhmNeUQjBaMM/+1muYuIPEhx0B3Kh7FO1dFf3IjEGaJtlTPItEx0GO6UvChbT67p1fbsJQ/fhiTU1jQkh9vsvWQRG3VpyfinTB4qXZkbzk1hdYUeDc+lNu8+meqrn0x06lwcBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ktOQaRty; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5199gVjw015074;
+	Sun, 9 Feb 2025 10:11:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Dmek2XxpbJMsM7efAFBBMti346SYX/rpk932t0eKqPQ=; b=ktOQaRtyNQa7+tB0
+	RdPe2UaAv6kRKotfPEya8EU3JadZpwA7k8e7jJ2i7UjMi8notIQdL4D3oekm9xMD
+	IJGcHgf+/2lzOiXhp4wPZZ+TiSyE1e8vIhgI7Tuel3M+g3eAOWVE/2ZY7DNGuApy
+	dZn3H2ugc5UqprbR1+HnTNCN/+ns8zTo0DOoeCmGqW8kPlTj3L/IbSQop5i7ha3o
+	D+OJrhoMdu2fWO9LqMwF0AYT/7Bg7zFk79xs+8ndu+DDit2F1nqFUYEHX/Oy5jTH
+	t30gC7JscRsei0AwaAU7+/l0Z0/aD3IqBSQppIPTdXUCaZRWPvoslyaCBsvnwTt7
+	M9PQnA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dyhtfq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 09 Feb 2025 10:11:41 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 519ABepp019131
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 9 Feb 2025 10:11:40 GMT
+Received: from [10.216.10.172] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 9 Feb 2025
+ 02:11:33 -0800
+Message-ID: <01362821-ac7f-41d7-a4c1-b1f675e9f644@quicinc.com>
+Date: Sun, 9 Feb 2025 15:41:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250209-fd-hdmi-hpd-v4-16-6224568ed87f@linaro.org>
-References: <20250209-fd-hdmi-hpd-v4-0-6224568ed87f@linaro.org>
-In-Reply-To: <20250209-fd-hdmi-hpd-v4-0-6224568ed87f@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Simona Vetter <simona.vetter@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=806;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=rBkvGR/qHrfxPlnsg0QzXfiNTIC9RTO2ROzJ5dKz7zg=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnqDfkPKZGcgzKdMYQrmr8xg29SeVv5ZTbQNhMP
- Xm71FFkyTSJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ6g35AAKCRCLPIo+Aiko
- 1UN1B/9p99p14mAy2cJWH8bo5AHu/xitIDMYADBNYVdsUQXslx1MuCaXPHSz/9EQQ9j45ItPAmv
- EzCEf17MZ//D1/qHLqCjloL9Ltx37KTjBGPz1FUsmmbU8crIut7dokT0vvrXN6tGLdefXI/Hxuc
- awkE7CsVIlujLKcvm1MIvFQt1sbsJ9STP7ppIKasGV7yZiTxpCfT5SglZtHAbrupQBqNjuOhnWd
- 3K8IniuWpKDQQBT71UqooHwEvF5Y9+OSbX8IlfDHj0Wp18urN40IFGX3Er+qj4JGg0EX+RWVWF7
- 5mfvkADq0u6kX/boHk9kXmppgY4vT3pNzviaOXQ+R8XuVeKu
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/8] dt-bindings: serial: Add support for selecting
+ data transfer mode
+To: <neil.armstrong@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+CC: <andi.shyti@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>,
+        <jirislaby@kernel.org>, <broonie@kernel.or>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <johan+linaro@kernel.org>,
+        <dianders@chromium.org>, <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
+References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
+ <20250124105309.295769-5-quic_vdadhani@quicinc.com>
+ <10060d39-87a4-4565-a2a6-80c93ac2266a@kernel.org>
+ <dudqd2y42wy6iq2k73aphd5ol4mtq7z4c54zhd27rl745rrw5x@p3oummf2jke7>
+ <374e16d6-46aa-4bdf-85e9-bc2e33c38057@kernel.org>
+ <v5n7wn3saiymi2ncgi35drzdjfeaa4ng2ftia6ggex6oh74ocg@7vuskxosh726>
+ <5f710113-08b0-468e-940a-2c65e8b42486@linaro.org>
+Content-Language: en-US
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+In-Reply-To: <5f710113-08b0-468e-940a-2c65e8b42486@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: nO-jX9qXh2SLLs-_2Es2F7tOeMSivxvw
+X-Proofpoint-GUID: nO-jX9qXh2SLLs-_2Es2F7tOeMSivxvw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-09_04,2025-02-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
+ mlxscore=0 priorityscore=1501 spamscore=0 adultscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502090089
 
-There is no need to specify separate HPD gpio for the HDMI block. Use
-built-in HPD in order to detect if the monitor is plugged or not.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom/qcom-apq8064-ifc6410.dts | 1 -
- 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064-ifc6410.dts b/arch/arm/boot/dts/qcom/qcom-apq8064-ifc6410.dts
-index b3ff8010b14985c55c580e0083a5c8ea23c03962..717bfd74edb75b278eaf5ab37954fcede1f7ffb0 100644
---- a/arch/arm/boot/dts/qcom/qcom-apq8064-ifc6410.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-apq8064-ifc6410.dts
-@@ -138,7 +138,6 @@ &gsbi7_serial {
- 
- &hdmi {
- 	core-vdda-supply = <&pm8921_hdmi_switch>;
--	hpd-gpios = <&tlmm_pinmux 72 GPIO_ACTIVE_HIGH>;
- 	status = "okay";
- };
- 
+On 1/29/2025 1:48 PM, neil.armstrong@linaro.org wrote:
+> On 29/01/2025 03:21, Dmitry Baryshkov wrote:
+>> On Mon, Jan 27, 2025 at 05:24:21PM +0100, Krzysztof Kozlowski wrote:
+>>> On 27/01/2025 15:27, Dmitry Baryshkov wrote:
+>>>> On Mon, Jan 27, 2025 at 08:02:12AM +0100, Krzysztof Kozlowski wrote:
+>>>>> On 24/01/2025 11:53, Viken Dadhaniya wrote:
+>>>>>> Data transfer mode is fixed by TrustZone (TZ), which currently 
+>>>>>> restricts
+>>>>>> developers from modifying the transfer mode from the APPS side.
+>>>>>>
+>>>>>> Document the 'qcom,xfer-mode' properties to select the data 
+>>>>>> transfer mode,
+>>>>>> either GPI DMA (Generic Packet Interface) or non-GPI mode (PIO/CPU 
+>>>>>> DMA).
+>>>>>>
+>>>>>> UART controller can operate in one of two modes based on the
+>>>>>> 'qcom,xfer-mode' property, and the firmware is loaded accordingly.
+>>>>>>
+>>>>>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>>>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>>>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>>>>>> ---
+>>>>>>
+>>>>>> v1 -> v2:
+>>>>>>
+>>>>>> - Drop 'qcom,load-firmware' property and add 'firmware-name' 
+>>>>>> property in
+>>>>>>    qup common driver.
+>>>>>> - Update commit log.
+>>>>>>
+>>>>>> v1 Link: 
+>>>>>> https://lore.kernel.org/linux-kernel/20241204150326.1470749-4-quic_vdadhani@quicinc.com/
+>>>>>> ---
+>>>>>> ---
+>>>>>>   .../devicetree/bindings/serial/qcom,serial-geni-qcom.yaml | 8 
+>>>>>> ++++++++
+>>>>>>   1 file changed, 8 insertions(+)
+>>>>>>
+>>>>>> diff --git 
+>>>>>> a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
+>>>>>> index dd33794b3534..383773b32e47 100644
+>>>>>> --- 
+>>>>>> a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
+>>>>>> +++ 
+>>>>>> b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
+>>>>>> @@ -56,6 +56,13 @@ properties:
+>>>>>>     reg:
+>>>>>>       maxItems: 1
+>>>>>> +  qcom,xfer-mode:
+>>>>>> +    description: Set the value to 1 for non-GPI (FIFO/CPU DMA) 
+>>>>>> mode and 3 for GPI DMA mode.
+>>>>>> +      The default mode is FIFO.
+>>>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>>>>> +    enum: [1, 3]
+>>>>>> +
+>>>>>> +
+>>>>>
+>>>>> Just one blank line, but anyway, this property should not be in three
+>>>>> places. Do you really expect that each of serial engines within one
+>>>>> GeniQUP will be configured differently by TZ?
+>>>>
+>>>> Yes, each SE is configured separately and it's quite frequent when
+>>>> different SEs have different DMA configuration.
+>>>
+>>> Well, I checked at sm8550 and sm8650 and each pair of SE - which shares
+>>> resources - has the same DMAs, so I would not call it frequent. Care to
+>>> bring an example where same serial engines have different DMAs and
+>>> different TZ? We do not talk about single QUP.
+>>
+>> Well, I don't have access to the latest sm8550 / sm8650 devcfg sources.
+>> I checked the RB5 ones. As far as I understand out of 14 enabled SEs
+>> only two are configured for the GSI DMA, others should use FIFO / SE
+>> DMA. Same applies to the SM8250 MTP devices. Checking the RB1 / RB2
+>> setup also shows 3 out of 6 SEs being set for GSI.
+> 
+> I think selecting GSI DMA is only for devices needs high speed streaming 
+> to the
+> device, like the touch screen, using GSI DMA for random small access is 
+> a non-sense.
+> 
+> But the thing is, in the TZ world the configuration was static so we had 
+> no choice
+> of using GSI DMA when configured, but now we have the choice so we could 
+> totally
+> reconfigure the SE with the transfer type (FIFO, SE DMA or GSI DMA) as 
+> runtime and
+> drop this attribute.
+> 
+> So instead of hardcoding this, add a way to dynamically select either of 
+> the 3
+> transfer types when firmware can be loaded from HLOS.
+> 
+> Neil
+> 
 
--- 
-2.39.5
+Yes, GSI DMA mode is required for specific use cases only.
 
+Dynamically switching from GSI mode to non-GSI mode is neither possible 
+nor useful. For each SE, the use case is fixed, and based on the use 
+case, the developer can choose the mode via the device tree property.
+
+>>
+>>>
+>>> Anyway, if you need property per node, this has to be shared schema.
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>
+> 
 
