@@ -1,184 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-47405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86A0AA2E8CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 11:13:48 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A87EA2E8CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 11:14:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC3CD7A2485
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 10:12:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA1061630E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 10:14:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A6E51C5D40;
-	Mon, 10 Feb 2025 10:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C0471C878A;
+	Mon, 10 Feb 2025 10:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FUE5Mw8J"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mj5b6uYH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321F814F70;
-	Mon, 10 Feb 2025 10:13:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0E91C701D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 10:13:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739182415; cv=none; b=QSfYEA5nZ/5MxJ41kUXFERZtv3HYNJUxWpfYNECAi2ex8v2z0GzZvOSBtay5EjqAXiA6ScgW8k8il++ZxfN0tYvmS9ADVXVXl3aBekrg8EQuLoSS6Mh1g/Rnatwp3JXoteZ0Dr+ZQXr/+BXPTLp84FQlEBjlNFofOVQMkSFuWWs=
+	t=1739182427; cv=none; b=YIsI1MG5C8n7VPGynITqN7PWVIL0fUDGUA9ZMhhtHqR8WwVW6r2Aj8ixPAf3ncPwJBq/sNlrvz9OBWUU6+TEjqqXwGrH18PCLvWuxIrOxDthcwVSe74J3MU6tE2kg8mijpD7m67DPytigKYGdTXuJVubbhHcOzLtiNE6SILQVA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739182415; c=relaxed/simple;
-	bh=x9kOMHXYbCi+8ky9+AUdixtNJKZjwinJuuuzMQJGFcI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jQ8MSOCy5huZVkIm3pxWNBSiLQXrZ2TPp9jo6Vc3WVzfqa5KEsaQBtoxi5fh2eJ8k5nOsIqm13ha18Y4KpAipa4/cRciq+T9WdRuYBPncWr14dPwBgSNFy13kENJB9h5tGNQ6rRmFEDMj3H+ZK2mfbVAzwN1J0g7l/Ck+ucHSoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FUE5Mw8J; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51A9HxNM001544;
-	Mon, 10 Feb 2025 10:13:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6xkH7gwWUcxGs2AWsOE+9+MIUaHbyvxYGoZVLa1YSbs=; b=FUE5Mw8JSPNYtYv5
-	D5MwMot8GdOScYmKeYbGsuYy4OgknsS7Wv7OsHQ+Wj/yT5WvEWTZFycp21pW2BWw
-	z2s67N/wzrGrYIi9RgCY60hYu+iwSRyCaxEMi6S4rwmN4N1ztIShTx7gnOS4aJNa
-	iPp8LJlV2Vc7th+Z1wwXT35YHuM2qoQIhTKDGLquHwQPiH+8lkqjDZIpzUK93PYE
-	uwn3K2+ZWBMRgZDVVRhdTjNgMO091jnNY7W6qhC1RhEwFLEPQx/BqcwAkrQfNhPJ
-	yveQj+jB3DXBFpTExZxhwvWOKHymsk6oSJOZS6f/Ribu5Sf47sXwBRQ07WBlngsK
-	gh/OxQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qepxg54b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 10:13:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51AADOKp022275
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 10:13:24 GMT
-Received: from [10.216.26.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Feb
- 2025 02:13:18 -0800
-Message-ID: <c234188e-a5a5-229c-53e8-bf7f7cfc8567@quicinc.com>
-Date: Mon, 10 Feb 2025 15:43:14 +0530
+	s=arc-20240116; t=1739182427; c=relaxed/simple;
+	bh=yj9rNLDdRjUxGP5fU6NuyeHJVUHXyiKig/1natwetyo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E9DWyQwf/sjKFVj5sxcNMGXupgY8k/8W8AKM7ky6wMglykVZadBwAKcAk96OuuTydRm6N7s9zprCy4AfJzCXUJ6Vv7XexYw8nTBc58XFU4L0i6DiudC7QWvSuX4y7Wlj3aKmgDzjIbGNWVge9bAh3Kp9jY3AJ2exOIF/l4nzI9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mj5b6uYH; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-21f55fbb72bso43289885ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 02:13:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739182425; x=1739787225; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=YVno5Sq7zwbs75yBnVZY8GdclIkXa079v3wSCbF6j08=;
+        b=mj5b6uYHOl13szZ59naCjJ0synW1GL5Tae4JBeX43Ddwjmg7kdxrW2GON3IG0bw4iR
+         UMLdf0ef6S/IxmYfxDugx8BThvXDR5LnO0E9njC02HCRLZLr8JqMdws2Nq8T9STbmgo/
+         rLsDDNDmL6WMEebre6TxDHkgoJ78id9L9pqb0akSOtDKRTAyJYNK+xM5+2ArSp752RUS
+         CLF4rrtdGAHv9FXgefNkVb+7tc7up86Wbzsq1KTuUc2Bi1/5VIWJ4GZrR3OOwnSf55DM
+         2IolmAJUUAz/f1L0dsVtVmRO9u//7tS4486HvFHiBNSi2VCDGaz0g0bjPB/W5u5f/1QU
+         V8Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739182425; x=1739787225;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YVno5Sq7zwbs75yBnVZY8GdclIkXa079v3wSCbF6j08=;
+        b=oqRyE/x27Z8z8fOMQSi7LSGZ+U37I761C7PhZU54OtLp+CfYTYr6Vik8xEt/jgHlH8
+         p8pk8H6SYyNcxj1kcx0wgdGC+jew/k3BcEOI3pTdKp4MxRZ75hnrwNKd6CYK1HHRQaDy
+         J3XPv5XXIBtmelr+93jTifWjidGufIzKKbxeJ9dr0z4eairN3vFdtuwduAzUTOFq7DxT
+         tdJVHKzsReJhDuv7k+cdybBRSMJSMRmPWXjvsWdlRiDVeK3gUq31K7v1eM4hDA35Qz2n
+         0qmuDtHjhlPouC5Y+MVNJRHgNRozJwCRsWVkzGt1oLePdLoXBK/0BMIVYqRFZpWY3NJy
+         Rj4g==
+X-Forwarded-Encrypted: i=1; AJvYcCXU0vQL62/oaywvA0ianHqh/qPp4UbMxAkanxy/Exp4JjNntTXty0qnDP43MWKmXpx9qtWTgiU95N7SFaJb@vger.kernel.org
+X-Gm-Message-State: AOJu0YzW7kJ5R4dIu+P+PbSQdAhBwaWJ7MPYOCXyja4IOb3fkjOll3c8
+	qdfdtIBG3aMFqTvNCooCF6zOKvryuFxvRn0OCKSyIjE+j45cs3RSN+6XEhPojA==
+X-Gm-Gg: ASbGncstgDBs6HoDJmYas9ISrq6lx6vDgC+NZlPJz0MUkZrNL0e7x+Jh0pDsdC/++OU
+	AXgP+4MdcP8C62ZgaVPjC4P6/3utnbRAjpl6J0NLcELKI6A1fGUFu1fRLM5fpkZiplJEjYQOAbp
+	jjAp6Hwa6BwMLi/iEZmdnBc2o7TZeq6eNoaBrg5IjGlcHCb+Pr9OoWsPYYJQXFGC55hDACOW0/a
+	lpgDQrFzWBKYhrwcQ1riblfM3HsOW7xh/Z8a8SLnhW0fwZ2YEnuQKBIg/lv4u3pw+SmfS3GaU14
+	AE1eMBO7QU42mZGU3U9VG/K/KuJF
+X-Google-Smtp-Source: AGHT+IGUVt1XLeTQyYh8zx2PixPGHrQEZjH5CD8Qy4yBx4PREyPgzsVLxt7fw++6KdqziWtaewNdvA==
+X-Received: by 2002:a05:6a20:d705:b0:1ed:a72f:dab5 with SMTP id adf61e73a8af0-1ee03b64561mr26246724637.36.1739182425181;
+        Mon, 10 Feb 2025 02:13:45 -0800 (PST)
+Received: from thinkpad ([220.158.156.173])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad54e4a0049sm2072320a12.63.2025.02.10.02.13.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Feb 2025 02:13:44 -0800 (PST)
+Date: Mon, 10 Feb 2025 15:43:38 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: neil.armstrong@linaro.org, quic_cang@quicinc.com
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Melody Olvera <quic_molvera@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Manish Pandey <quic_mapa@quicinc.com>
+Subject: Re: [PATCH 0/5] Add UFS support for SM8750
+Message-ID: <20250210101338.boziqlrxl2cei775@thinkpad>
+References: <20250113-sm8750_ufs_master-v1-0-b3774120eb8c@quicinc.com>
+ <c6352263-8329-4409-b769-a22f98978ac8@oss.qualcomm.com>
+ <20250209152140.cyry6g7ltccxcmyj@thinkpad>
+ <ae9ba351-53c8-4389-b13b-7b23926a8390@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 1/6] dt-bindings: PCI: Add binding for qps615
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: Rob Herring <robh@kernel.org>, <andersson@kernel.org>,
-        Bjorn Helgaas
-	<bhelgaas@google.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Jingoo Han
-	<jingoohan1@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_vbadigan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241112-qps615_pwr-v3-0-29a1e98aa2b0@quicinc.com>
- <20241112-qps615_pwr-v3-1-29a1e98aa2b0@quicinc.com>
- <20241115161848.GA2961450-robh@kernel.org>
- <74eaef67-18f2-c2a1-1b9c-ac97cefecc54@quicinc.com>
- <kssmfrzgo7ljxveys4rh5wqyaottufhjsdjnro7k7h7e6fdgcl@i7tdpohtny2x>
- <20241230182201.4nem2dvg4lg5vdjv@thinkpad>
- <d4019981-1df2-0946-d093-7dc97c2d0ffe@quicinc.com>
- <20250210075813.c2wvr3bozndi2ice@thinkpad>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20250210075813.c2wvr3bozndi2ice@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2QZrSnxWI7_LdWZoltvBcoP337si-E-c
-X-Proofpoint-ORIG-GUID: 2QZrSnxWI7_LdWZoltvBcoP337si-E-c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-10_05,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
- mlxlogscore=918 clxscore=1015 lowpriorityscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502100085
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ae9ba351-53c8-4389-b13b-7b23926a8390@linaro.org>
 
++ Can (for the MCQ query)
 
-
-On 2/10/2025 1:28 PM, Manivannan Sadhasivam wrote:
-> On Tue, Jan 07, 2025 at 07:58:17PM +0530, Krishna Chaitanya Chundru wrote:
->>
->>
->> On 12/30/2024 11:52 PM, Manivannan Sadhasivam wrote:
->>> On Mon, Dec 23, 2024 at 08:57:37PM +0200, Dmitry Baryshkov wrote:
->>>
->>> [...]
->>>
->>>>> This switch allows us to configure both upstream, downstream ports and
->>>>> also embedded Ethernet port which is internal to the switch. These
->>>>> properties are applicable for all of those.
->>>>>>> +
->>>>>>> +    allOf:
->>>>>>> +      - $ref: /schemas/pci/pci-bus.yaml#
->>>>>>
->>>>>> pci-pci-bridge.yaml is more specific and closer to what this device is.
->>>>>>
->>>>> I tried this now, I was getting warning saying the compatible
->>>>> /local/mnt/workspace/skales/kobj/Documentation/devicetree/bindings/pci/qcom,qps615.example.dtb:
->>>>> pcie@0,0: compatible: ['pci1179,0623'] does not contain items matching the
->>>>> given schema
->>>>>           from schema $id: http://devicetree.org/schemas/pci/qcom,qps615.yaml#
->>>>> /local/mnt/workspace/skales/kobj/Documentation/devicetree/bindings/pci/qcom,qps615.example.dtb:
->>>>> pcie@0,0: Unevaluated properties are not allowed ('#address-cells',
->>>>> '#size-cells', 'bus-range', 'device_type', 'ranges' were unexpected)
->>>>>
->>>>> I think pci-pci-bridge is expecting the compatible string in this format
->>>>> only "pciclass,0604".
->>>>
->>>> I think the pci-pci-bridge schema requires to have "pciclass,0604" among
->>>> other compatibles. So you should be able to do something like:
->>>>
->>>> compatible = "pci1179,0623", "pciclass,0604";
->>>>
->>>
->>> Even though a PCIe switch is supposed to be a network of PCI bridges, using
->>> PCI bridge fallback for this switch is not technically correct IMO. Mostly
->>> because, this switch requires other configurations which are not applicable to
->>> PCI bridges. So the drivers matching against the bridge compatible won't be able
->>> to use this switch.
->>>
->>> - Mani
->> Rob,
->>
->> Using pci-pci-bridge expects to use compatible as pciclass,0604, we
->> can't  use as this switch is doing other configurations which are
->> applicable to PCI bridges. can we continue to use pci-bus.yaml.
->>
+On Mon, Feb 10, 2025 at 10:39:04AM +0100, neil.armstrong@linaro.org wrote:
+> On 09/02/2025 16:21, Manivannan Sadhasivam wrote:
+> > On Fri, Feb 07, 2025 at 11:47:12PM +0100, Konrad Dybcio wrote:
+> > > On 13.01.2025 10:46 PM, Melody Olvera wrote:
+> > > > Add UFS support for SM8750 SoCs.
+> > > > 
+> > > > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> > > > ---
+> > > > Nitin Rawat (5):
+> > > >        dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: Document the SM8750 QMP UFS PHY
+> > > >        phy: qcom-qmp-ufs: Add PHY Configuration support for SM8750
+> > > >        dt-bindings: ufs: qcom: Document the SM8750 UFS Controller
+> > > >        arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 SoC
+> > > >        arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 QRD and MTP boards
+> > > 
+> > > You still need the same workaround 8550/8650 have in the UFS driver
+> > > (UFSHCD_QUIRK_BROKEN_LSDBS_CAP) for it to work reliably, or at least
+> > > that was the case for me on a 8750 QRD.
+> > > 
+> > > Please check whether we can make that quirk apply based on ctrl
+> > > version or so, so that we don't have to keep growing the compatible
+> > > list in the driver.
+> > > 
+> > 
+> > That would be a bizarre. When I added the quirk, I was told that it would affect
+> > only SM8550 and SM8650 (this one I learned later). I'm not against applying the
+> > quirk based on UFSHC version if the bug is carried forward, but that would be an
+> > indication of bad design.
 > 
-> Let's put it the other way. What are the blockers in using the
-> pci-pci-bridge.yaml other than the fallback compatible? If the compatible is the
-> only blocker, you can add it even though the drivers cannot make use of it
-> (that's one of the reason why I was against adding it).
+> Isn't 8750 capable of using MCQ now ? because this is the whole issue behind
+> this UFSHCD_QUIRK_BROKEN_LSDBS_CAP, it's supposed to use MCQ by default... but
+> we don't.
 > 
-> - Mani
+> Is there any news about that ? It's a clear regression against downstream, not
+> having MCQ makes the UFS driver struggle to reach high bandwidth when the system
+> is busy because we can't spread the load over all CPUs and we have only single
+> queue to submit requests.
 > 
-Compatible is the only blocking thing here.
-If I use pci-pci-bridge.yaml I was getting fallowing warning
-pcie@0,0: compatible: ['pci1179,0623'] does not contain items matching 
-the given schema
 
-can we use this way compatible = "pci1179,0623", "pciclass,0604"; to
-avoid warnings.
+There are hardware issues on SM8550 and SM8650(?) for the MCQ feature.
+Apparently, Qcom carries the workaround in downstream, but I got tired of
+pushing them to upstream the fix(es).
 
-- Krishna Chaitanya.
+Maybe Can Guo can share what is the latest update on this.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
