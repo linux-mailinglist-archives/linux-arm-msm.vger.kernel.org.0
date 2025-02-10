@@ -1,210 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-47375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9911BA2E70E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 09:56:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3614A2E72B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 10:06:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA2267A1AB1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 08:55:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 25539162332
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 09:06:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA4811C1AB4;
-	Mon, 10 Feb 2025 08:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B2021A5BA9;
+	Mon, 10 Feb 2025 09:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="o95JPqWv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NDBKaEm1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC181C07C6;
-	Mon, 10 Feb 2025 08:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEAB54782;
+	Mon, 10 Feb 2025 09:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739177757; cv=none; b=Gi4GRaEVmtSpXMAd0ljLbCftDgSWzUnOUckwDvu3eUdi2YysupErpXo4ey6GPtD5TiZ8ExWt/mfVI70UbeUe5/l5oT+DxPGb09qZVoX1aSa9lRO0I8C30dfczrixmilaEaW2cOCyPCa2nMGvvEOf8KtQtWue8QnFyftAIxp+Hds=
+	t=1739178362; cv=none; b=TP8Jk6/x//+M+G+yfuxhkmXtKedRlbnAahuRCiAk1gp+eaSXlmY/IMj3Vsn6+L6iRn7Jd1n8pOqrlXiiZGwY0U9+PlboVNReyupkJUEQNyiObuhyZ7G+MdQ+CVf2O8sZd1/RaDRV9JkjfLwvuvNoBtZ0gYWolaKHYfqWwo7TcRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739177757; c=relaxed/simple;
-	bh=s9JN02o5t9RCKpyA40HtclFOmmyHLhidAsVTcAxGwww=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=grWkYAQUGRYwSzuusKBnpnm75rZdG5JWceSrL/YZp80WyBTBdk0dNr+TMDsws5LwyJCcD1LqgRRobQBwi4o6d7ozrfq9ZXYhRR402TfpVmQCyEjkZ6IkTFaEkeJtjwPdGaQQ37dtM/ZqKHOWOHmww9ahSUVjpijIgJ5U0Q7lFM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=o95JPqWv; arc=none smtp.client-ip=217.70.183.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 3F07B42CCD;
-	Mon, 10 Feb 2025 08:55:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1739177746;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1H+Ir3hzjFy5kvh3ZHOggs0A8zRpB/qKteU8q68oXLw=;
-	b=o95JPqWvhZ/aFf3L1LdM6mNc5/6sUr8ZjPYQyKCtXkRxeXZI6mG6PsAn2U/P17fRwv3lY8
-	fmFVMAz0Xc3xwF2gIrqvokXwtRnKsM4DaXs1UtadUYGahgI1LiQJ2zDI3iUqClbV8yMGDs
-	APXlmCSmYxom/m5suGnd/DSXEKCxEtbSHCEymobtQ+/4HpUQTL7xs1Q5NrYcLcmp65NFxV
-	47U6Bkk2fjsRh9if58lr4DHo7gJVwsTrMSZQziMuB16BY/dcWADU7RmHSCtdZuJ6fWAox3
-	c41sUjfgH1SJ8gj1uIZyC33e+AxKBUZ3t1JWCpZIPfABB0zPVW4ggqm2u2oeqg==
-Date: Mon, 10 Feb 2025 09:55:42 +0100
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: Sean Anderson <seanga2@gmail.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
- <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
- Gantois <romain.gantois@bootlin.com>
-Subject: Re: [PATCH net-next 00/13] Introduce an ethernet port
- representation
-Message-ID: <20250210095542.721bf967@fedora-1.home>
-In-Reply-To: <8349c217-f0ef-3629-6a70-f35d36636635@gmail.com>
-References: <20250207223634.600218-1-maxime.chevallier@bootlin.com>
-	<8349c217-f0ef-3629-6a70-f35d36636635@gmail.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1739178362; c=relaxed/simple;
+	bh=PinqgSQuIRiDyVmTEU8mxVCTFTknhzoXuBmbBYGLgXw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NMNUmO9X0JAZXFIlq6sZWW5k+wTa5dGjlq8OFolxMgDWcuP7A9ocJj4KntEirpFgpZ+6u6mYrYwWGL7jsZV5YJkGJvHYx13CgTsBTL37t30aRsC96zlpW0mYATCzPcM63r6Ag9M/sAF9A3DkI93u/mzh3a1ybITi0jEnzSN13PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NDBKaEm1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 519MT7D8028239;
+	Mon, 10 Feb 2025 09:05:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4w9NfthMBwEcRekiAvRsUrp4oCMwhq6AuwL24E80vlQ=; b=NDBKaEm1lXMQDp4b
+	7XqSHn35ANnA4KLZz5J0y6TbmP19WJW6X4wXd5E+qguR2RyKNtkdWFxnom9j/npO
+	rzrPFL4DY74UykyfEbH0AGibTeAwiUwM64gfyI0jDcxc0oyLoPY9EIapCVm0Qngm
+	sUK51OikUBQMsQWSFi+LxXzlCwUWyi7Wqq1mGQvX9Zutc0cKCAK1D9Io7nKQhZ71
+	m0bYxwrsfPZbv6uMBkpN72SqieCvu2U6CSWKDudQ/5TN0BCdzqJLuYp8RqFYNks1
+	w+w2IIgwKu7NH3gn7/xMZWHm1qGH8y07bV9ofMOCZGENOluboanVb9Z5wS1ohr/m
+	03Niag==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dxkt0m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Feb 2025 09:05:54 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51A95rIF017711
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Feb 2025 09:05:53 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Feb
+ 2025 01:05:50 -0800
+Message-ID: <053dd6d6-9ca2-4723-8c21-da4093f00e03@quicinc.com>
+Date: Mon, 10 Feb 2025 14:35:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] misc: fastrpc: Modify context id mask to support
+ polling mode
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
+References: <20250127044239.578540-1-quic_ekangupt@quicinc.com>
+ <20250127044239.578540-6-quic_ekangupt@quicinc.com>
+ <im7gi5ib7wnihu3ff4a2erqctne2pm2zf3wl4qmuejz4dfhf7e@z5au6vnm5por>
+ <08b469b8-2339-4fde-9472-fcaadbb4ed87@quicinc.com>
+ <jeixk4dmk53ubnujop3sp2lc6jffugjmzndmmqmyuft7uquibt@s2h2dgj7yj7h>
+Content-Language: en-US
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <jeixk4dmk53ubnujop3sp2lc6jffugjmzndmmqmyuft7uquibt@s2h2dgj7yj7h>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefjeeifecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthejredtredtvdenucfhrhhomhepofgrgihimhgvucevhhgvvhgrlhhlihgvrhcuoehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpedugfelledvtdffvdekudeijeduueevvdevffehudehvdeuudetheekheeigfetheenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecukfhppedvrgdtudemtggsudelmeekugegtgemlehftddtmegstgdvudemkeekleelmeehgedttgemvgehlegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegtsgduleemkegugegtmeelfhdttdemsggtvddumeekkeelleemheegtdgtmegvheelvgdphhgvlhhopehfvgguohhrrgdquddrhhhomhgvpdhmrghilhhfrhhomhepmhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepvdelpdhrtghpthhtohepshgvrghnghgrvdesghhmrghilhdrtghomhdprhgtphhtthhopegurghvvghmsegurghvvghmlhhofhhtrdhnvghtpdhrtghpthhtohepnhgvt
- hguvghvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgriiiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrnhgurhgvfieslhhunhhnrdgthhdprhgtphhtthhopehkuhgsrgeskhgvrhhnvghlrdhorhhg
-X-GND-Sasl: maxime.chevallier@bootlin.com
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6WC4wc8GZpK5xRxVYR34dXDyx3cdaxJk
+X-Proofpoint-ORIG-GUID: 6WC4wc8GZpK5xRxVYR34dXDyx3cdaxJk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-10_04,2025-02-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ suspectscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2501170000 definitions=main-2502100076
 
-Hi Sean,
 
-On Fri, 7 Feb 2025 21:14:32 -0500
-Sean Anderson <seanga2@gmail.com> wrote:
 
-> Hi Maxime,
-> 
-> On 2/7/25 17:36, Maxime Chevallier wrote:
-> > Hello everyone,
-> > 
-> > This series follows the 2 RFC that were sent a few weeks ago :
-> > RFC V2: https://lore.kernel.org/netdev/20250122174252.82730-1-maxime.chevallier@bootlin.com/
-> > RFC V1: https://lore.kernel.org/netdev/20241220201506.2791940-1-maxime.chevallier@bootlin.com/
-> > 
-> > The goal of this series is to introduce an internal way of representing
-> > the "outputs" of ethernet devices, for now only focusing on PHYs.
-> > 
-> > This allows laying the groundwork for multi-port devices support (both 1
-> > PHY 2 ports, or more exotic setups with 2 PHYs in parallel, or MII
-> > multiplexers).
-> > 
-> > Compared to the RFCs, this series tries to properly support SFP,
-> > especially PHY-driven SFPs through special phy_ports named "serdes"
-> > ports. They have the particularity of outputing a generic interface,
-> > that feeds into another component (usually, an SFP cage and therefore an
-> > SFP module).
-> > 
-> > This allows getting a fairly generic PHY-driven SFP support (MAC-driven
-> > SFP is handled by phylink).
-> > 
-> > This series doesn't address PHY-less interfaces (bare MAC devices, MACs
-> > with embedded PHYs not driven by phylink, or MAC connected to optical
-> > SFPs) to stay within the 15 patches limit, nor does it include the uAPI
-> > part that exposes these ports to userspace.
-> > 
-> > I've kept the cover short, much more details can be found in the RFC
-> > covers.
-> > 
-> > Thanks everyone,
-> > 
-> > Maxime  
-> 
-> Forgive me for my ignorance, but why have a new ethtool interface instead of
-> extending ethtool_link_settings.port? It's a rather ancient interface, but it
-> seems to be tackling the exact same problem as you are trying to address. Older
-> NICs used to have several physical connectors (e.g. BNC, MII, twisted-pair) but
-> only one could be used at once. This seems directly analogous to a PHY that
-> supports multiple "port"s but not all at once. In fact, the only missing
-> connector type seems to be PORT_BACKPLANE.
-> 
-> I can think of a few reasons why you wouldn't use PORT_*:
-> 
-> - It describes the NIC and not the PHY, and perhaps there is too much impedance
->    mismatch?
-> - There is too much legacy in userspace (or in the kernel) to use that API in
->    this way?
-> - You need more flexibility?
 
-So there are multiple reasons that make the PORT_* field limited :
+On 1/29/2025 4:53 PM, Dmitry Baryshkov wrote:
+> On Wed, Jan 29, 2025 at 11:13:05AM +0530, Ekansh Gupta wrote:
+>>
+>>
+>> On 1/29/2025 5:00 AM, Dmitry Baryshkov wrote:
+>>> On Mon, Jan 27, 2025 at 10:12:39AM +0530, Ekansh Gupta wrote:
+>>>> DSP needs last 4 bits of context id to be 0 for polling mode to be
+>>>> supported as setting of last 8 is intended for async mode(not yet
+>>>> supported on upstream driver) and setting these bits restrics
+>>>> writing to poll memory from DSP. Modify context id mask to ensure
+>>>> polling mode is supported.
+>>> Shouldn't this commit come before the previous one?
+>> Yes, I'll change the order in next series.
+>>
+>> Thanks for reviewing the changes.
+> Please consider asking somebody for the internal review before sending
+> patches. This should help you to catch such mistakes.
+>
+> Next, I keep on asking for a sensible userspace and testing suite. No,
+> existing fastrpc doesn't pass that criteria. We have discussed that, but
+> I see no changes in the development. The PR that you've linked in the
+> cover letter contains a single commit, covering documentation, new
+> IOCTL, CRC support, poll mode support, etc. What if the discussion ends
+> up accepting the CRC support but declining the polling mode? Or vice
+> versa, accepting poll mode but declining the CRC support? There is no
+> easy way for us to review userspace impact, corresponding changes, etc.
 
- - We can't gracefully handle multi-port PHYs for complex scenarios
-where we could say "I'm currently using the Copper port, but does the
-Fiber port has link ?"
+We are working with our Legal team to push HexagonSDK publicly , that  will
+have sample apps for all features supported by upstream driver and can be used
+for testing.
 
- - As you mention in your first argument, what I'd like to try to do is
-come-up with a "generic" representation of outgoing NIC interfaces. The
-final use-cases I'd like to cover are multi-port NICs, allowing
-userspace to control which physical interfaces are available, and which
-t use. Looking at the hardware, this can be implemented in multiple
-ways :
+I'll break down the PR to multiple meaningful commits based on the features
+that are getting added.
 
-           ___ Copper
-          /
- MAC - PHY
-          \__ SFP
+>
+> Last, but not least: I want to bring up Sima's response in one of the
+> earlier discussions ([1]): "Yeah, if fastrpc just keeps growing the
+> story will completely different."
+>
+> You are adding new IOCTL and new ivocation API. That totally sounds
+> like "keeps growing", which returns us back to the uAPI question,
+> drm_accel.h and the rest of the questions on the userspace, compiler,
+> etc.
+>
+> [1] https://lore.kernel.org/dri-devel/Znk87-xCx8f3fIUL@phenom.ffwll.local/
 
-Here, a single PHY has 2 media-side interfaces, and we'd like to select
-the one to use. That's fairly common now, there are quite a number of
-PHYs that support this : mv33x3310, VSC8552, mv88x2222 only to name a
-few. But there are other, more uncommon topologies that exist :
+Currently, we are upstreaming the features supported on DSP for publicly
+available platforms. No features for future platforms are planned for FastRPC
+driver.
 
-                           ____ SGMII PHY -- Copper
-                          /
- MAC - SGMII/1000BaseX MUX
-                          \____ SFP
+We are also looking in having the driver under drivers/accel for any new features
+that are planned in future platforms.
 
-Here, we also have 2 media-side ports, but they are driver through
-different entities : The Copper port sits behind a single-port PHY,
-that is itself behind a *MII MUX, that's also connected to an SFP. Here
-the port selection is done at the MUX level
+--ekansh
 
-Finally, I've been working on supporting devices whith another topology
-(actually, what started this whole work) :
+>
+>
+>> --ekansh
+>>
+>>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>>>> ---
+>>>>  drivers/misc/fastrpc.c | 8 ++++----
+>>>>  1 file changed, 4 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>>>> index 257a741af115..ef56c793c564 100644
+>>>> --- a/drivers/misc/fastrpc.c
+>>>> +++ b/drivers/misc/fastrpc.c
+>>>> @@ -40,7 +40,7 @@
+>>>>  #define FASTRPC_INIT_HANDLE	1
+>>>>  #define FASTRPC_DSP_UTILITIES_HANDLE	2
+>>>>  #define FASTRPC_MAX_STATIC_HANDLE (20)
+>>>> -#define FASTRPC_CTXID_MASK (0xFF0)
+>>>> +#define FASTRPC_CTXID_MASK (0xFF0000)
+>>>>  #define INIT_FILELEN_MAX (2 * 1024 * 1024)
+>>>>  #define INIT_FILE_NAMELEN_MAX (128)
+>>>>  #define FASTRPC_DEVICE_NAME	"fastrpc"
+>>>> @@ -524,7 +524,7 @@ static void fastrpc_context_free(struct kref *ref)
+>>>>  		fastrpc_buf_free(ctx->buf);
+>>>>  
+>>>>  	spin_lock_irqsave(&cctx->lock, flags);
+>>>> -	idr_remove(&cctx->ctx_idr, ctx->ctxid >> 4);
+>>>> +	idr_remove(&cctx->ctx_idr, ctx->ctxid >> 16);
+>>>>  	spin_unlock_irqrestore(&cctx->lock, flags);
+>>>>  
+>>>>  	kfree(ctx->maps);
+>>>> @@ -664,7 +664,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
+>>>>  		spin_unlock_irqrestore(&cctx->lock, flags);
+>>>>  		goto err_idr;
+>>>>  	}
+>>>> -	ctx->ctxid = ret << 4;
+>>>> +	ctx->ctxid = ret << 16;
+>>>>  	spin_unlock_irqrestore(&cctx->lock, flags);
+>>>>  
+>>>>  	kref_init(&ctx->refcount);
+>>>> @@ -2675,7 +2675,7 @@ static int fastrpc_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
+>>>>  	if (len < sizeof(*rsp))
+>>>>  		return -EINVAL;
+>>>>  
+>>>> -	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 4);
+>>>> +	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 16);
+>>>>  
+>>>>  	spin_lock_irqsave(&cctx->lock, flags);
+>>>>  	ctx = idr_find(&cctx->ctx_idr, ctxid);
+>>>> -- 
+>>>> 2.34.1
+>>>>
 
-            ___ PHY
-           /
- MAC --MUX |
-           \__ PHY
-
-Here both PHYs are on the same *MII bus, with some physical,
-gpio-driven MUX, and we have 2 PORT_TP on the same NIC. That design is
-used for link redundancy, if one PHY loses the link, we switch to the
-other one (that hopefully has link).
-
-All these cases have different drivers involved in the MUX'ing (phy
-driver itself, intermediate MUX in-between...), so the end-goal would
-be to expose to userspace info about the media interfaces themselves.
-
-This phy_port object would be what we expose to userspace. One missing
-step in this series is adding control on the ports (netlink API,
-enabling/disabling logic for ports) but that far exceeds the 15 patches
-limitation :)
-
-Sorry if all of that was blurry, I did make so good of a job linking to
-all previous discussions on the topic, I'll address that for the next
-round.
-
-Thanks,
-
-Maxime
 
