@@ -1,187 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-47456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8FCDA2F4BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 18:10:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90C97A2F4BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 18:10:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 20B73188974A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 17:10:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2BCD31671DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 17:10:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0EB31F4629;
-	Mon, 10 Feb 2025 17:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CDFF22257B;
+	Mon, 10 Feb 2025 17:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="grmkWbwR"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="osvIq9nj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0370E24FC09
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 17:10:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CB1256C69
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 17:10:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739207424; cv=none; b=OCC6SeaYH/WzziXCTuBFlmlcIz0Mkzxp98MYZPLRb07tst3Fu0XgQ0tDRqPFgONs+sCHFK0YYGYno2HHdLwD2HP/ilp13DeVDdmcDTlRnu/O2sRDjBYg9o/XzuaWTjfZS0ekX6NZODuHVPIyiy8EQuZ+q24WGdM1seWn6W7wUgQ=
+	t=1739207419; cv=none; b=sRORhxRrnIOLa4GFg8RF0NwfyVjLU6OZ0F97tEGbkv3Eq5/gloKHQrFIVUVzQLqLC9xBe41G+976ICvU1S2ZfiFXsPUqXU/VR8L+Yc9bP1LFcv8yLKvOelNEQDLjYR1GPnlEfoNY+UWiS5kvmD3odPeQn6Ug3lBdf4dqjZ9lE5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739207424; c=relaxed/simple;
-	bh=33obMPf5mqSs6wPrXyBZW3o1+l4eJAntmMYywvCOYOk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tXax+gb4gczCOIxh8lbyej2mzs+7Ylc/Y3MZcQ5HjwxZWAhtppRM1T0YxUt/AL7RNA7mtgOOKQt+OnHyz5z0oznWU9RBPWBBUswZiTknjSczl8LYpG+0s8rQK/gg82CfG/XnRDBBfB4rI3UEHv7BEkvCKITtW59y0yuDBHONEsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=grmkWbwR; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-21f4a4fbb35so59968515ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 09:10:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739207422; x=1739812222; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=iJBo65n/x3cGPmTDY6dfaDs6s3ZVqbAaIw7gB8ar1TU=;
-        b=grmkWbwRR61jXYhgSgX08nsc1LwM5cX/vF5k1XWhZ5s1ANfFcZoZQXettLtC/eZLhb
-         YbKMp/sk9BQc8hZxxK6FljCrN5O5+6yfJd9gzoDTkHQPRpNuZ9Ibs1cAuDrSI8FtHKO8
-         3xGn0R13WQFkqdTSDX9y1eT2kECEG3MA7eBfhkBv6Py/7NN+iPXOBbpExw5R4pwUvQE8
-         1WnNZpucv/DxGJJfJQloeL1gWNlFXTg2ZtFC1I4zvy99NNxaiTCwg5DfVz0L40/mADdo
-         +sXkwBQH1U+WLTPDjuWgxTujKcvuVSvTyqp0uFuUhQKq4zGAE8cfZTGz0R8XwtdT1fvd
-         b0zA==
+	s=arc-20240116; t=1739207419; c=relaxed/simple;
+	bh=cOZOrHut/wzorJQ9KsefR6Cf3mXXyYtzPfNrne/k21w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GtDYQe0RQWpEv3hVDAqdnMdDMyRK7V0HhnhAY0v1FIwBsbd28idSQGYC2vS73BqUUZHhKa2S8IUJC/Ywc6SazSBuRP5j4tqNbw/UHroo8JPYVj+9A6YSwfIBeDQo7TyGX9Pm+6YKN+0sKKVox9nQnpcTIvRL6o+Pf1lLh1YpOaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=osvIq9nj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51A9Pjw2016767
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 17:10:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	E5npZqgjaYKWVPP6BTCK7WRGiQx27IIoDxlSefcsZPc=; b=osvIq9njvLAa6Vul
+	isJzR6bJ/p3pCBSJU8Q0eB1G5ucn3eQy9pnes1xnVdqUgpgomlC62C7W89REH/g9
+	I3kAqUb08X008J0I6G0FWwQ+kgffnQ9L+x8bZ85m9r1wALOv40MSEPXNLtAz1ByV
+	D7PIykkMIjP4DRhTO16jFsTtqG57BN5nu+ELunUNcNIzkO+6ZlVY8rPQTSylSnOQ
+	4iEMw2WKlLJGdgANOCutpeVV2DoMFfxFSdrrjxl8q6vOT8MWyxjUm4QZsEcTaa3U
+	xom7inBcFTA0tv22snV8GTGKuYsSXDgZl2SHVK8j40S6wabFyOvo5HIFfJMW+8Ql
+	pynxnw==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0guw1n4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 17:10:16 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6e18596ce32so11645426d6.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 09:10:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739207422; x=1739812222;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1739207415; x=1739812215;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iJBo65n/x3cGPmTDY6dfaDs6s3ZVqbAaIw7gB8ar1TU=;
-        b=fl0phTVQCujblRBzxkVrUtJx9mJbrAYJ80E24VqP5HKfzcK7u5wjM2gDjh7rxtzai0
-         1LKDQKY2WHSSvHU/37aYtANPd66Z9AzYBOAuWp3BhgkwUVCKBWKNPUO9qhz/PJ/OeqDZ
-         8DhazUuVrAKsHN0sNI3xV8g4Q/QmYTbXCG+9Y4tIYrHIR7JlqvGqK/V9cada10mVIWkx
-         lpUp6yQahW5EQYFxhK95EmpyHSOEjClArt0o/9ExIC+pdBKEzBaVqKzzrut7EBiKLr1I
-         1K152Q+mQFbH9rmseUUiNWFx8rep3wgwPFykxrlVY4wJDCecggLnEvkeVrwvIpirzfGV
-         zD0A==
-X-Forwarded-Encrypted: i=1; AJvYcCUUpNbPvsy/uUtvTtW9jxPtIQpV+G24bu99DWg0E4M5XDKWAXjlQ3Cvd8ZnS0WZSXPd/dAnc4lzgLCcnrdo@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFxTPMMFl6eH7vFgZLmCupHJ7HFrtgzY4ltBIOG/nkCCRpnomy
-	1UFr5a5wYF6cTbnrdBNP4CtBjwV0I+nj1qgZfMn6fFD+fYwGxA2yOmNROZuREw==
-X-Gm-Gg: ASbGncsfdAc0HhW2VXF11aKGuHJk8Hpd8E8+y3KyemSQ4rQTsQlkjPOUapGav4nS70P
-	uEDFEKULcZQak7lLk29WrnpNlyf2pJrd34qmO9PsOaltFFoBvKXMMR0guy47eXwjXXn2Redwo73
-	niSn3nHye+Ojd+3Np5Zs8Shb7ZWgmlIpeY+SyOIOJ0JjvITfw05qmwY5m01Y/zcYRp9zJuBZNgv
-	VH14v7GZJMiaLGhTr6BEPigb7sV6GfqOGZuL6/eTeVI5o9+Fm+sduCZBjIzzLx8wGntYsZOsr2N
-	qIP4wpmOc7ERbQFrfoI76h1IlFsg
-X-Google-Smtp-Source: AGHT+IF56qTkw7TJubOEXPIM9zfQyfQzn7+cZYQk9mn9YGpujIBnDlW/B1WsBT0lOvPG9bCSoLR7yg==
-X-Received: by 2002:a17:902:e54d:b0:21f:3823:482b with SMTP id d9443c01a7336-21fb6f54a29mr1014975ad.25.1739207395874;
-        Mon, 10 Feb 2025 09:09:55 -0800 (PST)
-Received: from thinkpad ([220.158.156.173])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21f365446d7sm81455805ad.82.2025.02.10.09.09.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2025 09:09:55 -0800 (PST)
-Date: Mon, 10 Feb 2025 22:39:50 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Robert Marko <robimarko@gmail.com>
-Subject: Re: [PATCH v2] mtd: rawnand: qcom: fix broken config in
- qcom_param_page_type_exec
-Message-ID: <20250210170950.zxgm5hjeb2a4evfn@thinkpad>
-References: <20250209140941.16627-1-ansuelsmth@gmail.com>
+        bh=E5npZqgjaYKWVPP6BTCK7WRGiQx27IIoDxlSefcsZPc=;
+        b=ELExRgcZhnmD3bp1+RB5fOuVAQqXRYIjIBIarCWz/MsSzkABX5RkM4vBjl+mAdhcZ0
+         fhJViyxfHGU1PMKPlka7MBwsVEgC0omqc3XmoD2xAK37JD8nvS3j1jcSmar0DTmIiE+P
+         hTdtYhDtC0YKpNk0y0dqn1eancoBAn9VtEArefG3S/ZbIqmhJzJk5SUMbHxQYBYo423a
+         SEx/h+3+Go7sqfXdokic6jOI5tDCdpRYWtfd6Lkuk7qggUuYJNieVSU9R1YwpQtaqVGj
+         BWZ+0qgpRep9rKWIhochGZld/+nQwhb7t+iEDZg3/vZ99rThZPKpnbeKG00xiiXSARSS
+         AmZg==
+X-Forwarded-Encrypted: i=1; AJvYcCXwAMOtd+2RpYkLOMBOdivRiQrOV4MutTLetsA6d8n3VHzIXSOX39+amt361qhDPW0G7VuLWYmrf6FZhEbl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6Ij4G1mUJBKjOI73mgtjo1ccRlQYsbhaOxkh2aWTS9qsQxY+J
+	LddDVSRBJE/AYqD0PO/bOz6FSXet1EAJ2H93VutYyRDHJOtVKevhgnmnI7RqW5y+5mk6R9naeW/
+	mg3btFreXtoZhVKrz12fc7lzur386S4WECDKmZNHh3136fNzDk/J5038F002bstwc
+X-Gm-Gg: ASbGncvdsZihupIUsZ19qnUMIYZ5WaCCOtCXuWBpPeehoD8LBmF0ZIdyavBGoxRjAJ1
+	EnrIahiRYSedp/3wEwLR5ekS5T4KYF6nWqJ8G7tIcgxnSzx6g1QwzF86iTpzXt5z9Dcexs66e8u
+	R3Hag+SK9GRYlEXyruFNaZ8nj6q/yh0Ne2RgdLevDYNbiLczswq+XpBU9MJ8OYGf8BVjPwLzPNL
+	Y6RihhJ0ITV81IRQnjl1utOLY0ONRVRDZQIqrZGPPlbf2lu+Izot4a91fpJd7t0k4ZYInF48HKX
+	GF/I87ah22UsuHZySoIb3Z9fLNkySvaTIPYk9H5QBYBbghNR2zfpJx8vLOo=
+X-Received: by 2002:a05:622a:134a:b0:471:99c5:7fe3 with SMTP id d75a77b69052e-47199c584f5mr11944341cf.13.1739207415378;
+        Mon, 10 Feb 2025 09:10:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWCVn+56GmgcEp+f7iKQYBi/AP1TMSZ84eTKF1sfusy7qyasfzqQxSq++Q7ti18cPyRITfPA==
+X-Received: by 2002:a05:622a:134a:b0:471:99c5:7fe3 with SMTP id d75a77b69052e-47199c584f5mr11944091cf.13.1739207414895;
+        Mon, 10 Feb 2025 09:10:14 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5de60497c99sm4926026a12.4.2025.02.10.09.10.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Feb 2025 09:10:14 -0800 (PST)
+Message-ID: <bcba3d38-525e-43d8-936f-2ddc95d0cceb@oss.qualcomm.com>
+Date: Mon, 10 Feb 2025 18:10:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] drm/msm/dsi: Allow all bpc values
+To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Danila Tikhonov <danila@jiaxyga.com>
+Cc: neil.armstrong@linaro.org, quic_jesszhan@quicinc.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
+        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        andersson@kernel.org, konradybcio@kernel.org, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, jonathan@marek.ca, jun.nie@linaro.org,
+        fekz115@gmail.com, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux@mainlining.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20250203181436.87785-1-danila@jiaxyga.com>
+ <20250203181436.87785-4-danila@jiaxyga.com>
+ <rnuv4dieiy6s6c5s33hff7ntr6hkneemsq5qzk3u4ug2abwisd@6ahmijlayhhr>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <rnuv4dieiy6s6c5s33hff7ntr6hkneemsq5qzk3u4ug2abwisd@6ahmijlayhhr>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250209140941.16627-1-ansuelsmth@gmail.com>
+X-Proofpoint-ORIG-GUID: 1zkFh3OlnZG2DxjWFLbtYk3awjGRuYq5
+X-Proofpoint-GUID: 1zkFh3OlnZG2DxjWFLbtYk3awjGRuYq5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-10_09,2025-02-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
+ clxscore=1015 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ mlxlogscore=999 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2501170000 definitions=main-2502100140
 
-On Sun, Feb 09, 2025 at 03:09:38PM +0100, Christian Marangi wrote:
-> Fix broken config in qcom_param_page_type_exec caused by copy-paste error
-> from commit 0c08080fd71c ("mtd: rawnand: qcom: use FIELD_PREP and GENMASK")
+On 8.02.2025 11:09 PM, Marijn Suijten wrote:
+> On 2025-02-03 21:14:26, Danila Tikhonov wrote:
+>> From: Eugene Lepshy <fekz115@gmail.com>
+>>
+>> DRM DSC helper has parameters for various bpc values ​​other than 8:
 > 
-> In qcom_param_page_type_exec the value needs to be set to
-> nandc->regs->cfg0 instead of host->cfg0. This wrong configuration caused
-> the Qcom NANDC driver to malfunction on any device that makes use of it
-> (IPQ806x, IPQ40xx, IPQ807x, IPQ60xx) with the following error:
+> Weird zero-width \u200b spaces here between "values" and "other", please delete
+> those.
 > 
+>> (8/10/12/14/16).
+>>
+>> Remove this guard.
+>>
+>> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
+>> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> 
+> Should this patch elaborate that those "DRM DSC helper" don't have any
+> additional guarding for the values you mention either, i.e. passing 9 or 11 or
+>> 16 don't seem to be checked anywhere else either?
+> 
+> And your title might have space to spell out "Bits Per Component" entirely.
+> 
+>> ---
+>>  drivers/gpu/drm/msm/dsi/dsi_host.c | 7 +------
+>>  1 file changed, 1 insertion(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> index 007311c21fda..d182af7bbb81 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> @@ -1767,11 +1767,6 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
+>>  		return -EINVAL;
+>>  	}
+>>  
+>> -	if (dsc->bits_per_component != 8) {
+>> -		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support bits_per_component != 8 yet\n");
+>> -		return -EOPNOTSUPP;
+>> -	}
+>> -
+>>  	dsc->simple_422 = 0;
+>>  	dsc->convert_rgb = 1;
+>>  	dsc->vbr_enable = 0;
+> 
+> This seems supicous on the dpu1 side, in the original DSC 1.1 (not 1.2) block in
+> dpu_hw_dsc_config(), which has:
+> 
+> 	data |= (dsc->line_buf_depth << 3);
+> 	data |= (dsc->simple_422 << 2);
+> 	data |= (dsc->convert_rgb << 1);
+> 	data |= dsc->bits_per_component;
+> 
+> The original value of `8` would overlap with the lowest bit of line_buf_depth
+> (4th bit in `data`).  Now, the 2nd bit which will take the value from
+> convert_rgb, which is already set to 1 above, will overlap with the 2nd bit in
+> your new bpc value of 10.
+> 
+> Can you double-check that this code in DPU1 is actually valid?  I assume you
+> have tested this panel at least and it is working (worthy mention in the cover
+> letter?), this just seems like yet another mistake in the original bindings
+> (though the register always had a matching value with downstream on 8 BPC panels
+> for me).
 
-I'm wondering whether the offending commit was really tested or not :(
+It seems like the lowest bit should be set iff the input is 10bpc, the
+current situation where our '8' bleeds into the following (correctly named
+fields) is bad.
 
-> [    0.885369] nand: device found, Manufacturer ID: 0x2c, Chip ID: 0xaa
-> [    0.885909] nand: Micron NAND 256MiB 1,8V 8-bit
-> [    0.892499] nand: 256 MiB, SLC, erase size: 128 KiB, page size: 2048, OOB size: 64
-> [    0.896823] nand: ECC (step, strength) = (512, 8) does not fit in OOB
-> [    0.896836] qcom-nandc 79b0000.nand-controller: No valid ECC settings possible
-> [    0.910996] bam-dma-engine 7984000.dma-controller: Cannot free busy channel
-> [    0.918070] qcom-nandc: probe of 79b0000.nand-controller failed with error -28
-> 
-> Restore original configuration fix the problem and makes the driver work
-> again.
-> 
-> Also restore the wrongly dropped cpu_to_le32 to correctly support BE
-> systems.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 0c08080fd71c ("mtd: rawnand: qcom: use FIELD_PREP and GENMASK")
-> Tested-by: Robert Marko <robimarko@gmail.com> # IPQ8074 and IPQ6018
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks for the fix!
-
-- Mani
-
-> ---
-> Changes v2:
-> - Fix smatch warning (add missing cpu_to_le32 that was also dropped
->   from the FIELD_PREP patch)
-> 
->  drivers/mtd/nand/raw/qcom_nandc.c | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index d2d2aeee42a7..6720b547892b 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -1881,18 +1881,18 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
->  	nandc->regs->addr0 = 0;
->  	nandc->regs->addr1 = 0;
->  
-> -	host->cfg0 = FIELD_PREP(CW_PER_PAGE_MASK, 0) |
-> -		     FIELD_PREP(UD_SIZE_BYTES_MASK, 512) |
-> -		     FIELD_PREP(NUM_ADDR_CYCLES_MASK, 5) |
-> -		     FIELD_PREP(SPARE_SIZE_BYTES_MASK, 0);
-> -
-> -	host->cfg1 = FIELD_PREP(NAND_RECOVERY_CYCLES_MASK, 7) |
-> -		     FIELD_PREP(BAD_BLOCK_BYTE_NUM_MASK, 17) |
-> -		     FIELD_PREP(CS_ACTIVE_BSY, 0) |
-> -		     FIELD_PREP(BAD_BLOCK_IN_SPARE_AREA, 1) |
-> -		     FIELD_PREP(WR_RD_BSY_GAP_MASK, 2) |
-> -		     FIELD_PREP(WIDE_FLASH, 0) |
-> -		     FIELD_PREP(DEV0_CFG1_ECC_DISABLE, 1);
-> +	nandc->regs->cfg0 = cpu_to_le32(FIELD_PREP(CW_PER_PAGE_MASK, 0) |
-> +					FIELD_PREP(UD_SIZE_BYTES_MASK, 512) |
-> +					FIELD_PREP(NUM_ADDR_CYCLES_MASK, 5) |
-> +					FIELD_PREP(SPARE_SIZE_BYTES_MASK, 0));
-> +
-> +	nandc->regs->cfg1 = cpu_to_le32(FIELD_PREP(NAND_RECOVERY_CYCLES_MASK, 7) |
-> +					FIELD_PREP(BAD_BLOCK_BYTE_NUM_MASK, 17) |
-> +					FIELD_PREP(CS_ACTIVE_BSY, 0) |
-> +					FIELD_PREP(BAD_BLOCK_IN_SPARE_AREA, 1) |
-> +					FIELD_PREP(WR_RD_BSY_GAP_MASK, 2) |
-> +					FIELD_PREP(WIDE_FLASH, 0) |
-> +					FIELD_PREP(DEV0_CFG1_ECC_DISABLE, 1));
->  
->  	if (!nandc->props->qpic_version2)
->  		nandc->regs->ecc_buf_cfg = cpu_to_le32(ECC_CFG_ECC_DISABLE);
-> -- 
-> 2.47.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad
 
