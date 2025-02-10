@@ -1,208 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-47419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78372A2EBD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 12:49:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65E78A2EC31
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 13:06:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6B9C7A3B77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 11:48:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90220166835
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 12:05:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F4E11F63E8;
-	Mon, 10 Feb 2025 11:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31EF5222566;
+	Mon, 10 Feb 2025 12:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GNhTTGYZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C5W2OVu3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B621F3BA8;
-	Mon, 10 Feb 2025 11:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92098221D85;
+	Mon, 10 Feb 2025 12:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739188104; cv=none; b=CnifUVPmZT9K+poJnib97LH3Zx4OyZIuwVZu+9zqov/SEulWjN0Sc399FcTK8bko8eSmmX3G8zNzLhCyFEGJd/0O1KDfrbAbkE6TRMtarbnDsqkZdUJ0qa5GIwOk6MKu9RB+3wEEkqcg5qYFLlVzVAHbaC2QV36HqJjHPGwFqiU=
+	t=1739189128; cv=none; b=vC/apTpVzaLeO/+/+lYSLVdS2BGXHBPWt2ZkRxrBqlDZdEzNCGzp2jtPBHv9dtlmUc3/thy/PKorCidQxKPDrdpRSj13UW9P5vGu6WIyDVxTb/gEtGwMw/7zWkX7by8138fGYG9+pO1hGOTlAJRXAe4rVV0Bg++kI1pzP+48Ho0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739188104; c=relaxed/simple;
-	bh=H8zuGLErLeAAhpDEAvecFpXqYtOdttIFW4IPa0zwnA4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=FdrlaoqjiEzJyEzHhckvmqYqykzf4cfrew5dZkkhVySGfVa8SEIDOxU+hcfAZ/6hpTttVFyUIGwK0ni6vji5FQhF0mlEOKwOCslwKhxBUnBU47J0SpzuxjLefiNSb+NGLMcdgSCl/Zyg7K2BHVtGapvN5EZxzwXUYf5sYe2pXmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GNhTTGYZ; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1739189128; c=relaxed/simple;
+	bh=oID4Ta0xjTrweyhQDnJ52ku0+gAdSFPdKKZGcYJ03iU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=A1Enf80eJ4rsy6ZtNdy9geciy3TwkhPVRohrtggc68rqfcnAlsj8mAMQTiG8oRT3559taQSzegpJ1Mnca4sAVVMfBTHWiDqCW26ua9X3YsIiJ2O2l2DY2ZJnYlndk4A25bIWQuTtvPfBhdz/en2y+KVp0eeFuhe4ZsW07iSgtbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C5W2OVu3; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51A8wtIs024312;
-	Mon, 10 Feb 2025 11:48:18 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51A8mEct002523;
+	Mon, 10 Feb 2025 12:05:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	G6RYGd5+0vaN5MIhswtJQEfS1LTYnDS9+Lc/lQmvCk4=; b=GNhTTGYZb2RpBKXi
-	jtdRVf2XzA6N9JYIy/h5ZyeSBc8KZjUMZ6438UDE7/CX7zOA8F1REpV1TuyQboe6
-	vh9Ht7sDMc7x0c0zQa61+qF6Le1KHJlL9VfPgus1pjyC8dPnHKK58b76tUqIP1na
-	TJIQlxuapy7Jpo5Vtz8anfin8DT5RaY3L18qPM8Z6f02A7jkhjyac7Bg52sBuTLL
-	p58fRqhIS2Lq7HzWHxZLQ0EAtQ5wZmL/SoSUZWZJGW4NRnyqPLMMMo7RwfLpfzvY
-	fZdTMDO4Z3zcO4I2zI054+znsTqFwMS0N+nWtrRd8LDgOfMrApodMB+RBRzGg4Y6
-	FYWF/A==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dxm7w5-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=q/4OenOS+W79WfF8ASpUEh
+	WQ02xzgBO3Sm/VwFVR2XM=; b=C5W2OVu3OZ1q1Wxdn5fdljZBMVdnCD5hlLNKfz
+	4m+PjatBH63C+UGnKLWB3L6enE864IFrFAWJcu+eO3gDFB+CdaRcuR0yalEnWijA
+	fUYvYz7PhQQIl3FcOlhi0viMTLJnq5XTANtJy0qRZ9rrLOBDlurHMvpk6wbHsmob
+	m0VUoSEg0vDWaoK6zI+rCYgoQp4Px66p5C/cP2QeqjWJq6I0JTmEK+FjizzgjNuQ
+	CHCwlRgyL82Q58X/U03UEAB14LGSTelCqHvpu46+wL0su2AEcKAicfJDvFea8bgM
+	wUAinaJ4heK7lj4MlVhPxi+EjBSY0mfKGRqGk8+C1xWED3DA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dym7c6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 11:48:17 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51ABmHUm004454
+	Mon, 10 Feb 2025 12:05:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51AC52TT010075
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 11:48:17 GMT
-Received: from [10.152.201.53] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Feb
- 2025 03:48:13 -0800
-Message-ID: <7995fc50-b13a-85ab-cb3a-782720cb1353@quicinc.com>
-Date: Mon, 10 Feb 2025 17:18:01 +0530
+	Mon, 10 Feb 2025 12:05:02 GMT
+Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 10 Feb 2025 04:04:57 -0800
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To: <amitk@kernel.org>, <thara.gopinath@gmail.com>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+Subject: [PATCH v11 0/6] Add TSENS support for IPQ5332, IPQ5424 
+Date: Mon, 10 Feb 2025 17:34:30 +0530
+Message-ID: <20250210120436.821684-1-quic_mmanikan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Avoid accessing BAM_REVISION on
- remote BAM
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Bjorn Andersson
-	<bjorn.andersson@oss.qualcomm.com>
-CC: Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>
-References: <20250207-bam-read-fix-v1-1-027975cf1a04@oss.qualcomm.com>
- <Z6m8btwhJ9q4RjB6@linaro.org>
-Content-Language: en-US
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <Z6m8btwhJ9q4RjB6@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HuPL1iLivtZ5sLyWZ4N900-XbCN7Il4j
-X-Proofpoint-ORIG-GUID: HuPL1iLivtZ5sLyWZ4N900-XbCN7Il4j
+X-Proofpoint-ORIG-GUID: p4qbLoOSLlIAdmsYJKTDQZKvJpr8HLGu
+X-Proofpoint-GUID: p4qbLoOSLlIAdmsYJKTDQZKvJpr8HLGu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-10_07,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 impostorscore=0 malwarescore=0 mlxscore=0 phishscore=0
- suspectscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2502100099
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ clxscore=1011 lowpriorityscore=0 impostorscore=0 mlxlogscore=736
+ mlxscore=0 priorityscore=1501 spamscore=0 adultscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502100102
+
+IPQ5332 uses tsens v2.3.3 IP with combined interrupt for
+upper/lower and critical. IPQ5332 does not have RPM and
+kernel has to take care of TSENS enablement and calibration.
+
+IPQ5424 also uses same tsens v2.3.3 IP and it's similar to IPQ5332
+(no RPM) hence add IPQ5424 support in this series itself.
+
+This patch series adds the temperature sensor enablement,
+calibration support for IPQ5332 and IPQ5424.
+
+Changes in V11:
+	- Dropped patch #2 because it's merged.
+	- Detailed change logs are added to the respective patches.
+
+V10 can be found at:
+https://lore.kernel.org/linux-arm-msm/20241219062839.747986-1-quic_mmanikan@quicinc.com/
+
+V9 can be found at:
+https://lore.kernel.org/linux-arm-msm/20241125050728.3699241-1-quic_mmanikan@quicinc.com/
+
+V8 can be found at:
+https://lore.kernel.org/linux-arm-msm/20241115103957.1157495-1-quic_mmanikan@quicinc.com/
+
+V7 can be found at:
+https://lore.kernel.org/linux-arm-msm/20241107140550.3260859-1-quic_mmanikan@quicinc.com/
+
+V6 can be found at:
+https://lore.kernel.org/linux-arm-msm/20241104124413.2012794-1-quic_mmanikan@quicinc.com/
+
+V5 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230721054619.2366510-1-quic_ipkumar@quicinc.com/
+
+V4 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230719104041.126718-1-quic_ipkumar@quicinc.com/
+
+V3 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230713052732.787853-1-quic_ipkumar@quicinc.com/
+
+V2 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230712113539.4029941-1-quic_ipkumar@quicinc.com/
+
+Manikanta Mylavarapu (2):
+  arm64: dts: qcom: ipq5424: Add tsens node
+  arm64: dts: qcom: ipq5424: Add thermal zone nodes
+
+Praveenkumar I (4):
+  dt-bindings: thermal: tsens: Add ipq5332, ipq5424 compatible
+  thermal/drivers/tsens: Add TSENS enable and calibration support for V2
+  arm64: dts: qcom: ipq5332: Add tsens node
+  arm64: dts: qcom: ipq5332: Add thermal zone nodes
+
+ .../bindings/thermal/qcom-tsens.yaml          |  18 ++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 135 ++++++++++++
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi         | 201 ++++++++++++++++++
+ drivers/thermal/qcom/tsens-v2.c               | 178 ++++++++++++++++
+ drivers/thermal/qcom/tsens.c                  |   8 +-
+ drivers/thermal/qcom/tsens.h                  |   3 +
+ 6 files changed, 542 insertions(+), 1 deletion(-)
 
 
+base-commit: df5d6180169ae06a2eac57e33b077ad6f6252440
+-- 
+2.34.1
 
-On 2/10/2025 2:14 PM, Stephan Gerhold wrote:
-> On Fri, Feb 07, 2025 at 12:17:33PM -0800, Bjorn Andersson wrote:
->> Commit '57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing
->> unavailable register")' made this read unconditional, in order to
->> identify if the instance is BAM-NDP or BAM-Lite.
->> But the BAM_REVISION register is not accessible on remotely managed BAM
->> instances and attempts to access it causes the system to crash.
->>
->> Move the access back to be conditional and expand the checks that was
->> introduced to restore the old behavior when no revision information is
->> available.
->>
->> Fixes: 57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing unavailable register")
->> Reported-by: Georgi Djakov <djakov@kernel.org>
->> Closes: https://lore.kernel.org/lkml/9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org/
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> 
-> This patch fixes the most critical regression (the bus hang), but the
-> in_range(..., BAM_NDP) checks are also wrong. They do not consider the
-> plain "BAM" type where the register is apparently also available. The
-> check should be !in_range(..., BAM_LITE) instead to fix this.
-> 
-> I mentioned this twice to Md Sadre Alam [1, 2], but a fix was
-> unfortunately never sent for that part of the regression.
-
-I apologize for the delay. I was attending to a family member's medical 
-emergency and couldn't address this sooner. I will test and post a new 
-revision as soon as possible.
-
-Thanks
-Alam
-
-> 
-> I think we should take Caleb's patch and revert the entire patch for the
-> 6.14 cycle. There are several incorrect assumptions in the original
-> patch, it will be easier to review a fixed version with the full diff,
-> rather than looking at incremental fixups.
-> 
-> On a somewhat related note, I'm working on a patch series for bam_dma to
-> clean up the handling of remotely controlled BAMs. It will make it more
-> clear when it's safe to access BAM registers and when not, and should
-> allow reading the revision also for remotely controlled BAMs. This would
-> avoid the need for all these if (!bdev->bam_revision) checks.
-> 
-> Thanks,
-> Stephan
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/Z4D2jQNNW94qGIlv@linaro.org/
-> [2]: https://lore.kernel.org/linux-arm-msm/Z4_U19_QyH2RJvKW@linaro.org/
-> 
->> ---
->>   drivers/dma/qcom/bam_dma.c | 15 ++++++++-------
->>   1 file changed, 8 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
->> index c14557efd577..d42d913492a8 100644
->> --- a/drivers/dma/qcom/bam_dma.c
->> +++ b/drivers/dma/qcom/bam_dma.c
->> @@ -445,8 +445,8 @@ static void bam_reset(struct bam_device *bdev)
->>   	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
->>   
->>   	/* set descriptor threshold, start with 4 bytes */
->> -	if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
->> -		     BAM_NDP_REVISION_END))
->> +	if (!bdev->bam_revision ||
->> +	    in_range(bdev->bam_revision, BAM_NDP_REVISION_START, BAM_NDP_REVISION_END))
->>   		writel_relaxed(DEFAULT_CNT_THRSHLD,
->>   			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
->>   
->> @@ -1006,8 +1006,8 @@ static void bam_apply_new_config(struct bam_chan *bchan,
->>   			maxburst = bchan->slave.src_maxburst;
->>   		else
->>   			maxburst = bchan->slave.dst_maxburst;
->> -		if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
->> -			     BAM_NDP_REVISION_END))
->> +		if (!bdev->bam_revision ||
->> +		    in_range(bdev->bam_revision, BAM_NDP_REVISION_START, BAM_NDP_REVISION_END))
->>   			writel_relaxed(maxburst,
->>   				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
->>   	}
->> @@ -1199,11 +1199,12 @@ static int bam_init(struct bam_device *bdev)
->>   	u32 val;
->>   
->>   	/* read revision and configuration information */
->> -	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
->> -	if (!bdev->num_ees)
->> +	if (!bdev->num_ees) {
->> +		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
->>   		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
->>   
->> -	bdev->bam_revision = val & REVISION_MASK;
->> +		bdev->bam_revision = val & REVISION_MASK;
->> +	}
->>   
->>   	/* check that configured EE is within range */
->>   	if (bdev->ee >= bdev->num_ees)
->>
->> ---
->> base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
->> change-id: 20250207-bam-read-fix-2b31297d3fa1
->>
->> Best regards,
->> -- 
->> Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
->>
 
