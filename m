@@ -1,119 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-47349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2530AA2E30A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 05:16:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CEF4A2E339
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 05:45:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 058E93A57E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 04:15:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D79503A4FB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 04:44:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F9DF12FF69;
-	Mon, 10 Feb 2025 04:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B546F1586C8;
+	Mon, 10 Feb 2025 04:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CiolQDvO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XareteWg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433FE54918
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 04:15:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2961315746F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 04:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739160959; cv=none; b=A5JB3g9rrWKjJigj/xTk9xyF9qlT1c2z1KbWXvMcbrtATKFE9WEuk4g5k4fnihKGSwcK/CFQNMfyA8FHgDLdwX5d+OZNfiTA2iXWlefK1D0UvHPVsMKO8QeKF4pq4ravCRRzIMEBHkt6zrnXULwkuEfa8BsY0q6l9xn200A9s60=
+	t=1739162694; cv=none; b=U22onUhwB/ybnbjmvRabI66jRDCEPEzqQfr393vuJrWaVaBXNcmg9DmDP4zfL57NZZ9OuObI/Y/ESS1Myc2SYLk9B02kOV1fqXXJAKGNmn3kUjNSS9hEWUABdjay+KjeoeXvMoJRe0jUhCX6jRuDOVYuyR0Lawsuqt1J5jPh3Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739160959; c=relaxed/simple;
-	bh=3M3JyY4rOW2vOrZgnCjRD0TpnM5NeMnBRPZBQbfP9n4=;
+	s=arc-20240116; t=1739162694; c=relaxed/simple;
+	bh=vTanPSj0WJSOQJ6VK+dSr4V6tineoC/hsdguGdxz6Ao=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iGyPhcb0+ruanQZzjzZpWnUv8dsQ7oi6leFAuBm9ECYyfs+zieG4/Marlq3rRl7j2UviL+8gHK6rUT6oHiim6sCyuwgMlgq+YdohpMrlwIanDbZcKLjjdvMjsnctRBF/vpm9Ljgv8lPqLHPqHYmwWHxyUE9BmOuz4raqBnDXvQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CiolQDvO; arc=none smtp.client-ip=209.85.208.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=nSGyc8TIIboFZUJkD1/nVpxP+fHH4WZfeldQkAKtB+Jkjszht4ibggJYVmpc8FBe6+4nAd9X0JBlSrYte1GelpULEWsCzj+qnrfWfxJC23d4FOP5Nstjo9aDBjSmk0widDMd3O4bPHpKmlZrwrX7NNOGb8NoGILvrXBAHjxqiB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XareteWg; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-30762598511so39190181fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Feb 2025 20:15:55 -0800 (PST)
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2fa5af6d743so1527993a91.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Feb 2025 20:44:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739160954; x=1739765754; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QwzLE0GCgihiIk+dFJwQ0ALU3Kl1sVby5kLip594Ikg=;
-        b=CiolQDvONIg+PolEVXKtBwAlZ4I5Cd9irO1OWkOynd3YVO0lJyxI8G7deLCODdab1O
-         iwKbMtl2oA5VmMrFojHXK2pt06YJA5YMOGeQTLwQ5XH2wBhlzH8QXMgBZeOE+ypa0qtc
-         KlirMFbEaHtcZNar2af/4VaIjrZN/SWUATVMNBoGFEBCaRab482xdawa0B+GkkQo5yKH
-         tmuDrqIqN0ki1LFh+yA1ykSbC/IcB57Unb54rcnTqPOEWeLUa1MIQsZ6+UyQNaqp9Rop
-         CksYJpEWmhj2Sk/SdAD89z/+Fiu5ZtzI997dPk6KddlzOyNqFaaTDcck5GA3ptr6Uf0x
-         K/vA==
+        d=linaro.org; s=google; t=1739162691; x=1739767491; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=nF3QMZZh+uHZ+XUypTIOVnYHXZf3sl/wR22/LqBDNSc=;
+        b=XareteWg22SH0Jwhxaz2ViALmGAbvbFygvDRPm9MZUSIPSIcwOjCM+A0wXeZ8f9t1p
+         gDampvr0OUV8RZ7ZVNLc37aceoCvw+XrI6MfGKKJKwC95v/U3yBHwlDNE9pBxXmjjSEM
+         Aal+FesM1awuKFO5quF8KUzfFZ6eGR7Xs5afXKBpix19GLp4BlnhKLEYzLZ0FlG1OptU
+         FTSujHq6XpN7y/vozITYu4jj+g6zjs5DApAM5/pwRhhnWhhN903cgUJIEDSWJtFoaDlv
+         VANmO6yvc1FSQywTt+3oLAF0dnHZT1ST3NFIWqcUGoy9CYil5++0KG04BSveoISHbWwD
+         NIsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739160954; x=1739765754;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QwzLE0GCgihiIk+dFJwQ0ALU3Kl1sVby5kLip594Ikg=;
-        b=T02wrPgBFREpsiDbG+pFKV9EkUKxocASYsm4rRyz8sN0B6YnEJ9LVSDPVdzK3oUDhz
-         de+njZ7in3yshTdBkOzNVW2PZQi8XVMSvfAw2S4urOCloLjocbXWsl1PCb65mjERaijC
-         PCTM3VXo5rbhMoE8yIIN6luDlll/SkmWtx2t/PALXdmeQf9Moi51b/85GsJbfaBLVMy3
-         sNM43fgwRDeihh6xzfKCILwPhRCFuB8YbC7uFtLtEgs9GzXhTZT6SjAzsMAmJfq5bO/7
-         yEaXsMJRi69QTyD6SAEFNy7UyPF7ewaXNsFRvcbR1Lr5pPJpjimvG+yAxsUxD13tJRq0
-         rBhw==
-X-Forwarded-Encrypted: i=1; AJvYcCUL2DbIfBGRRI10GanB6su1HjhIZl03l6HOVmI1aGrA6zhZUoyCXZi2IugjYjEaKu/utVWICcM4QBGR2hrt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxg7RP1nYPzEEoX1PlzYWftZPfWmYufDl6FWlewQ6qd70g5rFXX
-	xoeeMp4ePmgFuoOVpoNQf2HjozA1UVVcvK+roXSG7jvAp8E8MXhlBAYUMJ2sDL8=
-X-Gm-Gg: ASbGncvGgdcN+fS3P8seydGesn7/M9S2scZ0wCwGZOktv5rxWwc2J8k3oF/1wpu9Pj3
-	xBt9mpODvtAQLrY4GUkbJLzKC3hQbw7kGPDD4Er6r13in0clLN7BQrehy5AOD8uRpDmaIB91buy
-	+8XLeLupxl7KeZJTPztQQHOFfKB81cjWTl9Lik7/iTPU9e1yuRRuBPsi9GGiM1op5dMUwgBHaPe
-	jpKO2CXgbQdLozIaG7NO6qPohKsb+pScaSQ7v69/YVlHz0ku1890P4k6m9ZqtrOT46biL85DPLc
-	NPs9rey5q2Vgs9RdRhlqRWYfNqFmQN/fqna2jHkobm+OWuFSFt5d5fKpTgKtbRuI1HNRlpo=
-X-Google-Smtp-Source: AGHT+IF5U6ArPZ8cE6ddrQjBGFIlwz3f3qJFMYvqashpqs6GvurvVMofzsRTGb31NHrx7zoqyP9jzQ==
-X-Received: by 2002:a2e:3502:0:b0:308:e54d:6195 with SMTP id 38308e7fff4ca-308e54d63b4mr13706111fa.24.1739160954311;
-        Sun, 09 Feb 2025 20:15:54 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-307de190915sm11354891fa.40.2025.02.09.20.15.52
+        d=1e100.net; s=20230601; t=1739162691; x=1739767491;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nF3QMZZh+uHZ+XUypTIOVnYHXZf3sl/wR22/LqBDNSc=;
+        b=PTQECqXYOgxkFTWbNQM4zXrzR59IQ+zERgZRQA6MgpG4y4H/Y4AJuWg76NwpZKF34c
+         r6211ZwGj+Nlvfo6KeQjcUBRBu9/4t3vVnpIIZAAffi8i364VoT2fSN6F00yj1iJTLBO
+         OvOYDWGfm4rlbbbBkj++aVV65xTFolTSrtBWWAfsGEvBs2suiuXfvSGealnJ4zYfas/0
+         7+jQUO7hCCXrnuubr9ykgGXhwYXkjG3ynAMR5UIr8BsL4KfbiKcepNsXyxaYKUxXXxR7
+         e/y1JP/o449Ng+HBYNZKa8l4zUU5GqVN16RxXpwev7u6RU8GO7ALTI4PTJeIOWb5BJFi
+         8g6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUjYnw+TsrunQ03x9QdNtOtEAT6qoFYiQazfW9wkzqmwEgaQWC/DleDYSJRLgMHxD2nne9b9/v63OqDE5I3@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBQ10MLxo9VtK3eliEsScaZvCxMhJ/xR+gQv1RXnw5cuCiu3re
+	JchjVVqxbtCmBQnZ+soiJ14VK92+zgoJniZXrDhv2cU0Jjfy+AMHJuLbGfrPxg==
+X-Gm-Gg: ASbGnctQd7cKwfwaodMPWtgPWyQH9051g6k/WqsEMkzFlZM1SoSTpAJnu2fFupJnRBZ
+	cdhL+giB0U7SUQ55oF+zM/uE1bqK/S2/8l4cKwfCqf72GtLxajJ35D8G/jQ4YPKfXib1DvfMJ7o
+	PKZ25q79cffQoG6pI0Z2xTwRJrERHBX8sG/TriVDC9yVnNGY2s3kYIXCB8yDVH0ufEhCWkG2OSH
+	0ZiFHq8sTyeT2EBQOqoqgNiqFRqZMYCTPYbq9orWe2PW1gfvUd7dhVGuFo8P17ATEeJI0sjYGP0
+	vacmXg+lxpE/ptFlEsc7i1tRgwZb
+X-Google-Smtp-Source: AGHT+IEI8FeVLv0rFukXvhLSeUcosU07zHjT/arxCxm962h4GX5fHHBVasy2JjWBqSIvNTOBRXSSKQ==
+X-Received: by 2002:a17:90a:d443:b0:2ee:5111:a54b with SMTP id 98e67ed59e1d1-2fa243eb4dcmr16162251a91.31.1739162691261;
+        Sun, 09 Feb 2025 20:44:51 -0800 (PST)
+Received: from thinkpad ([220.158.156.173])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fa09b3f803sm7611469a91.32.2025.02.09.20.44.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2025 20:15:53 -0800 (PST)
-Date: Mon, 10 Feb 2025 06:15:51 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ethan Carter Edwards <ethan@ethancedwards.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org
-Subject: Re: [PATCH v2] drm/msm/dpu: Fix uninitialized variable
-Message-ID: <koye2ppygjsns56xxpdirz5s64kblqjhw264rmfqzlxsx5mzwo@u5t7m2vktfag>
-References: <20250209-dpu-v2-1-114dfd4ebefd@ethancedwards.com>
+        Sun, 09 Feb 2025 20:44:50 -0800 (PST)
+Date: Mon, 10 Feb 2025 10:14:45 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: linux-block@vger.kernel.org, Jens Axboe <axboe@kernel.dk>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+	linux-fscrypt@vger.kernel.org, linux-mmc@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v11 7/7] ufs: qcom: add support for wrapped keys
+Message-ID: <20250210044445.vmtfhqjibonhi6j2@thinkpad>
+References: <20250204060041.409950-1-ebiggers@kernel.org>
+ <20250204060041.409950-8-ebiggers@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250209-dpu-v2-1-114dfd4ebefd@ethancedwards.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250204060041.409950-8-ebiggers@kernel.org>
 
-On Sun, Feb 09, 2025 at 10:51:54PM -0500, Ethan Carter Edwards wrote:
-> There is a possibility for an uninitialized *ret* variable to be
-> returned in some code paths.
+On Mon, Feb 03, 2025 at 10:00:41PM -0800, Eric Biggers wrote:
+> From: Eric Biggers <ebiggers@google.com>
 > 
-> Fix this by initializing *ret* to 0.
+> Wire up the wrapped key support for ufs-qcom by implementing the needed
+> methods in struct blk_crypto_ll_ops and setting the appropriate flag in
+> blk_crypto_profile::key_types_supported.
 > 
-> Addresses-Coverity-ID: 1642546 ("Uninitialized scalar variable")
-> Fixes: 774bcfb731765d ("drm/msm/dpu: add support for virtual planes")
-> Signed-off-by: Ethan Carter Edwards <ethan@ethancedwards.com>
-> ---
-> Changes in v2:
-> - Return explicit 0 when no error occurs
-> - Add hardening mailing lists
-> - Link to v1: https://lore.kernel.org/r/20250209-dpu-v1-1-0db666884f70@ethancedwards.com
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
+> For more information about this feature and how to use it, refer to
+> the sections about hardware-wrapped keys in
+> Documentation/block/inline-encryption.rst and
+> Documentation/filesystems/fscrypt.rst.
+> 
+> Based on patches by Gaurav Kashyap <quic_gaurkash@quicinc.com>.
+> Reworked to use the custom crypto profile support.
 > 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Instead of mentioning the contribution in description, you should use relevant
+tags IMO.
+
+> Signed-off-by: Eric Biggers <ebiggers@google.com>
+
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 51 ++++++++++++++++++++++++++++++++-----
+>  1 file changed, 45 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index f34527fb02fb2..dc3eb6f29f5b2 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -132,15 +132,10 @@ static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
+>  	}
+>  
+>  	if (IS_ERR_OR_NULL(ice))
+>  		return PTR_ERR_OR_ZERO(ice);
+>  
+> -	if (qcom_ice_get_supported_key_type(ice) != BLK_CRYPTO_KEY_TYPE_RAW) {
+> -		dev_warn(dev, "Wrapped keys not supported. Disabling inline encryption support.\n");
+> -		return 0;
+> -	}
+> -
+>  	host->ice = ice;
+>  
+>  	/* Initialize the blk_crypto_profile */
+>  
+>  	caps.reg_val = cpu_to_le32(ufshcd_readl(hba, REG_UFS_CCAP));
+> @@ -150,11 +145,11 @@ static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
+>  	if (err)
+>  		return err;
+>  
+>  	profile->ll_ops = ufs_qcom_crypto_ops;
+>  	profile->max_dun_bytes_supported = 8;
+> -	profile->key_types_supported = BLK_CRYPTO_KEY_TYPE_RAW;
+> +	profile->key_types_supported = qcom_ice_get_supported_key_type(ice);
+>  	profile->dev = dev;
+>  
+>  	/*
+>  	 * Currently this driver only supports AES-256-XTS.  All known versions
+>  	 * of ICE support it, but to be safe make sure it is really declared in
+> @@ -218,13 +213,57 @@ static int ufs_qcom_ice_keyslot_evict(struct blk_crypto_profile *profile,
+>  	err = qcom_ice_evict_key(host->ice, slot);
+>  	ufshcd_release(hba);
+>  	return err;
+>  }
+>  
+> +static int ufs_qcom_ice_derive_sw_secret(struct blk_crypto_profile *profile,
+> +					 const u8 *eph_key, size_t eph_key_size,
+> +					 u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
+> +{
+> +	struct ufs_hba *hba = ufs_hba_from_crypto_profile(profile);
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +
+> +	return qcom_ice_derive_sw_secret(host->ice, eph_key, eph_key_size,
+> +					 sw_secret);
+> +}
+> +
+> +static int ufs_qcom_ice_import_key(struct blk_crypto_profile *profile,
+> +				   const u8 *raw_key, size_t raw_key_size,
+> +				   u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
+> +{
+> +	struct ufs_hba *hba = ufs_hba_from_crypto_profile(profile);
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +
+> +	return qcom_ice_import_key(host->ice, raw_key, raw_key_size, lt_key);
+> +}
+> +
+> +static int ufs_qcom_ice_generate_key(struct blk_crypto_profile *profile,
+> +				     u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
+> +{
+> +	struct ufs_hba *hba = ufs_hba_from_crypto_profile(profile);
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +
+> +	return qcom_ice_generate_key(host->ice, lt_key);
+> +}
+> +
+> +static int ufs_qcom_ice_prepare_key(struct blk_crypto_profile *profile,
+> +				    const u8 *lt_key, size_t lt_key_size,
+> +				    u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
+> +{
+> +	struct ufs_hba *hba = ufs_hba_from_crypto_profile(profile);
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +
+> +	return qcom_ice_prepare_key(host->ice, lt_key, lt_key_size, eph_key);
+> +}
+> +
+>  static const struct blk_crypto_ll_ops ufs_qcom_crypto_ops = {
+>  	.keyslot_program	= ufs_qcom_ice_keyslot_program,
+>  	.keyslot_evict		= ufs_qcom_ice_keyslot_evict,
+> +	.derive_sw_secret	= ufs_qcom_ice_derive_sw_secret,
+> +	.import_key		= ufs_qcom_ice_import_key,
+> +	.generate_key		= ufs_qcom_ice_generate_key,
+> +	.prepare_key		= ufs_qcom_ice_prepare_key,
+>  };
+>  
+>  #else
+>  
+>  static inline void ufs_qcom_ice_enable(struct ufs_qcom_host *host)
+> -- 
+> 2.48.1
+> 
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
