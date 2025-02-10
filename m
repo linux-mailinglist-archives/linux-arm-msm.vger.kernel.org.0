@@ -1,142 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-47491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5250BA2FCFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 23:26:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A1A4DA2FDC2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 23:50:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ACB491885541
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 22:26:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA3DE1888CFE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 22:50:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF6A62505C3;
-	Mon, 10 Feb 2025 22:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD52B2586FA;
+	Mon, 10 Feb 2025 22:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KSugTeet"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Fn1WTRYx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB0D24C69B;
-	Mon, 10 Feb 2025 22:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2C22586DE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 22:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739226381; cv=none; b=ht1lNHIJvhZCAkOgyQn1FSqVyZAevTFjkShbxY6v6hUBeMZruj8+DR0UaTM4QZKjqg6rs9tEFoXNtGpNsb+42NkTaqFQuziFgcF0Y6lP1gQSCLiFYSZ6t1ZljeBtdjXjQ3eRvN06Q5GUBIzmURtPoa/D6LPys+RgxcLuOf6VAZw=
+	t=1739227840; cv=none; b=Ummxk/w6Fkt/cPOH7V/93Y5WJO31ocklCys+ikZ1Q7vaMxCUstdFcSodzgok83kWPaLxgvT9Myy2i22KtA/8m+wq+M3nghfYTQrGxON6QssgBKHSBFfkGYJ80ZV+O7P8Sa0oDUccc/a0o6Ojg3JeeJrJg46yuVtGVIPhvSu+IMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739226381; c=relaxed/simple;
-	bh=SEahgPWmLPRATg2I7lBTH8xnCEX0VGLxvZpdMfaQ8bU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Hnur1sP0z0vUIvGxloH0Fcx0NBea/Ym/yYx0rqn6xyVq3EFQbBX/JvDRQGOfjkAjOg+bfjy4ChfvpVfNIw9iGfazqjdPfem/vQP+9IqRRwmU+wuvgJgMITR9M/bdhTxuOGaVEXeFrK3x9uUoiuAciD03DAe+bzgjTd1A4oEIJkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KSugTeet; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51AJopVQ008282;
-	Mon, 10 Feb 2025 22:26:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3JkX4/9yze2RT6/wf9KzkDi8PmHo10GnvR6H2a/gySE=; b=KSugTeetGCDeoO2m
-	MmrLNMMuSa+NF7eMrImHptcSp7nZlIho3RkZ6Y5ZDFRK4uFIF/P2R7+H98xKKaF0
-	yPVNHQcGVfIziL6jtxMZ7rwrUfV5CkvoMl3bp3+6KLAScsefsSC4oN4wAXYzpp2S
-	btkXVhIEWyDSSUemrDzdDByeq7NJP2J2Z4JhnDHRxrAt3yRMU0p8TayjgXWtzu+L
-	vcFdl5l8GfUxur9w6CFSv1wcI/gc7pVJHpfqTch2IAXZNwOOShh62vgd4zA8C9af
-	m1F90qVHNEgFnpS559SLHZC3ENmb+/xnyMuNzMekLZ93URv7eFG2be8+5cZqHj10
-	TUy4DQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qewh20wp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 22:26:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51AMQ18r007693
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 22:26:01 GMT
-Received: from [10.71.110.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Feb
- 2025 14:26:00 -0800
-Message-ID: <a91da500-b575-4071-9c2b-e03c9c737144@quicinc.com>
-Date: Mon, 10 Feb 2025 14:26:00 -0800
+	s=arc-20240116; t=1739227840; c=relaxed/simple;
+	bh=5zbZ0mjlc5mJspBqAdHsl+XIcsIzXXEkeeddcLU17Ww=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XdjbpvnKGLpMe//7okCLkaXO1qT+fy8Nhp4Kxa4MmX2TW+n8WksdBJRzOJVf+COXV3YpIDk79jGx+e/VKndlvpg44+vxFAnKMwwYXl8b546TJt9QM1BjXVgk8RMXG8FT5bRynlURBX8Hm66r/k9yAfKNzPisRO4+7HKHc9kmgHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Fn1WTRYx; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6dd420f82e2so63139346d6.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 14:50:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1739227837; x=1739832637; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5zbZ0mjlc5mJspBqAdHsl+XIcsIzXXEkeeddcLU17Ww=;
+        b=Fn1WTRYxcY/IF+pLgssEdlj4HJBpjPUtmFK36ZDZGyP0aHwRFj22JO9P/0V4RjcdUb
+         nIlz+Z7/f892FtYCN26Fl4MB91dA/W6Gy5EtCxH1Wu2HepQ3jf5Tq9oo/RG2nz6qKQFL
+         eBbEcXJ8LqbRwhIU0xYjPIqCUekQ4MytyxNtw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739227837; x=1739832637;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5zbZ0mjlc5mJspBqAdHsl+XIcsIzXXEkeeddcLU17Ww=;
+        b=mcphllMWLO4cittFrCUocDfVGKNKtZ4vcZnTfekfGcFdCoXSYkkub8N7RAoxPU/RTU
+         fPQbaMcWu7HYLRnjofLwbXRn34RI9c+7/Uz7A1SQziHjZCFqeusMYssDtmgETHMoW30G
+         pZIvPiLxU48w8Pcn9iSqmtIn/flgAICTfGnblzg/4XCBKFSr4woJdT/2LwhpbyJTC/hw
+         bvbRPiT6TAtBl+t70cfjHu/gkqaTmPSey2Z4uPwIymeRQloC5fq+Y8qwkRFlT0Y7WLRI
+         SvTFd/xGEISr//2u1lW3KY9ROWg77fBRZfkaWlOohFGXfU1lLCXLCY6p3pu9+gLRjxo3
+         bSCg==
+X-Forwarded-Encrypted: i=1; AJvYcCWwX9YFekUkZd4gNoF7TXP5o1024U9JwQjsd4jI7aT/pyMcHifZMc+BP/vgea12jKfTt8bx77ifU0M8M4x2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxaoOZR2Ro59PTCPMtFDAN5+ExtB4YC6Xoh36W0NsvdSakYl2r9
+	TNMqKZBls27GxdFFPZWYyE4769ld0h5pMzDi4oc50yETsgE5vuXidgaW3U7zSz6VESXYp3KtrRg
+	UI8i2fUK2aPU8U+SP7LWHpsmNENY+DaFI2X9W
+X-Gm-Gg: ASbGnctpFU+Q7K/ubBCRVHosDwPw5icFwiSlCbFTNr8g4ThWq4AUTe+4Pi+huolT5aT
+	Dv4QVMcttIYZkaujOTHqla7kgvjLz6xxEcbMOJ+Z5tYY83fiO3i3e0L+zlcD6Z+iLY3rCDWZFcP
+	s5j5p3xwwIyf861TQkWoNFoAwd
+X-Google-Smtp-Source: AGHT+IGL4SmQgIAC10xipCYbVaexIQbpQQDDIqhx2hGeOo7wq1KUJ/UwijMW6vgDIGzhCGOUFwEwrakNbbsm+km09q4=
+X-Received: by 2002:a05:6214:240f:b0:6df:99f7:a616 with SMTP id
+ 6a1803df08f44-6e4455d2fdemr247845286d6.2.1739227837669; Mon, 10 Feb 2025
+ 14:50:37 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 10 Feb 2025 16:50:37 -0600
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 10 Feb 2025 16:50:37 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 7/7] drm/msm/hdmi: use DRM HDMI Audio framework
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andrzej Hajda
-	<andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert
- Foss <rfoss@kernel.org>,
-        Laurent Pinchart
-	<Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej
- Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Simona Vetter <simona@ffwll.ch>,
-        Simona
- Vetter <simona.vetter@ffwll.ch>
-CC: <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20250208-bridge-hdmi-connector-v7-0-0c3837f00258@linaro.org>
- <20250208-bridge-hdmi-connector-v7-7-0c3837f00258@linaro.org>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20250208-bridge-hdmi-connector-v7-7-0c3837f00258@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: D3xspndLYeAmkruYqi0Uoz3kIT2YabVE
-X-Proofpoint-GUID: D3xspndLYeAmkruYqi0Uoz3kIT2YabVE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-10_11,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- impostorscore=0 mlxlogscore=869 phishscore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502100176
+In-Reply-To: <87895166-659e-475f-99bf-5791a6e1ac3b@oss.qualcomm.com>
+References: <20250205233016.1600517-1-swboyd@chromium.org> <20250205233016.1600517-2-swboyd@chromium.org>
+ <74527323-31ff-4ed0-b19f-e535f26abf2b@oss.qualcomm.com> <CAE-0n50DXcAXQMaLtsamvxHjUrkJVBz42G6gtgKgW9Rh=qd31Q@mail.gmail.com>
+ <87895166-659e-475f-99bf-5791a6e1ac3b@oss.qualcomm.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.12.dev1+gaa8c22fdeedb
+Date: Mon, 10 Feb 2025 16:50:37 -0600
+X-Gm-Features: AWEUYZmtYYT334_kTXnpfDawnzC3OarpU1PJNDWzV_jXYgahC0sPCiJwqwU3_-I
+Message-ID: <CAE-0n51zc65GSm5J9TbHe_g4reos2h_iv-ozMU6CCrAuOt3Kww@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: chrome: Add binding for ChromeOS Pogo
+ pin connector
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, cros-qcom-dts-watchers@chromium.org, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Benson Leung <bleung@chromium.org>, devicetree@vger.kernel.org, 
+	chrome-platform@lists.linux.dev, Pin-yen Lin <treapking@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
+Quoting Konrad Dybcio (2025-02-10 11:09:57)
+> On 6.02.2025 9:43 PM, Stephen Boyd wrote:
+> >
+> > Do you have a device that could use such a generic binding? I can't
+> > really design something in the abstract without two or more concrete use
+> > cases. Coming up with something generic looks like a quagmire, because
+> > as you say the signals going through the pins could be anything: i2c,
+> > 1-wire, etc.
+>
+> Right, we can't be overly generic either. FWIW I'm not standing in the way
+> of this patch getting merged.
+>
 
-
-On 2/7/2025 4:27 PM, Dmitry Baryshkov wrote:
-> In order to simplify the driver even further and to remove the
-> boilerplate code, rewrite the audio interface to use the DRM HDMI Audio
-> framework.
-> 
-> Audio InfoFames are controlled centrally via the DRM HDMI framework.
-> Correct InfoFrame data is programmed at the atomic_pre_enable() time (if
-> it was set before, drm_atomic_helper_connector_hdmi_update_infoframes()
-> takes care of writing all InfoFrames, including the Audio one.) or
-> during msm_hdmi_bridge_audio_prepare() when the new stream is started.
-> 
-> All audio data frame management is deferred to
-> msm_hdmi_bridge_audio_prepare() and msm_hdmi_bridge_audio_shutdown().
-> 
-> Reviewed-by: Maxime Ripard <mripard@kernel.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/hdmi/hdmi.c        | 91 ----------------------------------
->   drivers/gpu/drm/msm/hdmi/hdmi.h        | 18 +++----
->   drivers/gpu/drm/msm/hdmi/hdmi_audio.c  | 68 +++++++++++++++++++++----
->   drivers/gpu/drm/msm/hdmi/hdmi_bridge.c |  5 ++
->   4 files changed, 71 insertions(+), 111 deletions(-)
-> 
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Ok, got it. I've renamed this to google,usb-pogo-keyboard and made it
+keyboard specific. I'll send v3 shortly.
 
