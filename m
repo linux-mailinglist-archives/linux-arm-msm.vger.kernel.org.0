@@ -1,165 +1,293 @@
-Return-Path: <linux-arm-msm+bounces-47401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0160EA2E88B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 11:04:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2B5FA2E8B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 11:08:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 900391623F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 10:04:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D3D51880185
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 10:08:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 898911CAA64;
-	Mon, 10 Feb 2025 10:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A39C1C5F0C;
+	Mon, 10 Feb 2025 10:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hBkaZMdZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QOZXXb7B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32C81E1C36;
-	Mon, 10 Feb 2025 10:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8B21C5499
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 10:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739181786; cv=none; b=lWMQMFrLkn3adoudykNDtn4RkyHu45x9Cw/0BXoL38m3hsaLCik5m8OiBZBzwtTdjvTvqdsm6EkZ2oDm6zPlxcBi9NC4zJQJ2o582+m+RuLnsiC7+sC3buQlxI8VqbvW0sxTG8GpP5OkP6YUbS4FjHAzSz56Ex0sTIwzevTsaYs=
+	t=1739182099; cv=none; b=AKdn84Ne9u2mw5Qc381Dl1OO+cZBEb1Zf9HpkitzkDKQK3Q5s7uTElwkbU3WO/XsdUGNvCV2Y37aK7tr+YIZM2pE468cjuDHpyx9nzqH0c5B3mFabcjNVamwtnDXlWG+UpAmIYPh7SSx4kmFf/n7B7AZh6uvVI/yuHk+7V7yofQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739181786; c=relaxed/simple;
-	bh=Vl7CYpPKWjPlphD0cTwlIw32L5/caGHj9VS8wq3Zrks=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=XGmwro4OVUb4GaGq1s0mbi+z7KQVyZcrEdwI34cSonq6Acjq/GjLzeoE6++4H6p5duS34x8vdjRfsB1WWe7XuIENCdUKKgDwghDJM3v/YeHVFAQzVkIGNC7dqLJbzofWv/haTjGg7ErXrGQn21dPr8ForqDa7Y3j5pJrqVwlews=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hBkaZMdZ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51A8esAJ006164;
-	Mon, 10 Feb 2025 10:02:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=xzhBDGZU8rg
-	1LGotryfUoD70f6sS8G30bKU0B7m5h5s=; b=hBkaZMdZ+hbQiX5JbmPQ5/8aZ+H
-	GwAJsu7MzIP5FIMtuHLcp3p7syQ3QrA4GrRMtt668ZdSMu9ILuia4pBpqNmnqboM
-	k1DeSY6zvOgcK9v2hUjbZdmWaywxEUCMqWw77MUwGfUAFCqJDuFNhFbsR7EIdAwJ
-	KxraI5571iCj6+qxtJaTGgYtdtbugo97HJJenc1oYlTofTFOC52LGlj62bAwdU57
-	kqEMl8CsVFqlE354NSOAOkB1lgguM4t+2QkKah1ZCQXGBKNEOliUMSUW+CRAWAcr
-	H14XeVHcxtbzJvP6MtIzdiSLB1xd0OfMX8KDaHcVvq2rtjgmIJGlA/TW5Sw==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qe5mr8fn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 10:02:50 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 51AA2mTq012156;
-	Mon, 10 Feb 2025 10:02:48 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 44p0bkj1hf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 10:02:48 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51AA2lha012151;
-	Mon, 10 Feb 2025 10:02:47 GMT
-Received: from cbsp-sh-gv.ap.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 51AA2lJC012150
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 10:02:47 +0000
-Received: by cbsp-sh-gv.ap.qualcomm.com (Postfix, from userid 393357)
-	id BE5B540BF7; Mon, 10 Feb 2025 18:02:46 +0800 (CST)
-From: Ziqi Chen <quic_ziqichen@quicinc.com>
-To: quic_cang@quicinc.com, bvanassche@acm.org, mani@kernel.org,
-        beanhuo@micron.com, avri.altman@wdc.com, junwoo80.lee@samsung.com,
-        martin.petersen@oracle.com, quic_ziqichen@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_rampraka@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        Keoseong Park <keosung.park@samsung.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 8/8] ABI: sysfs-driver-ufs: Add missing UFS sysfs attributes
-Date: Mon, 10 Feb 2025 18:02:11 +0800
-Message-Id: <20250210100212.855127-9-quic_ziqichen@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250210100212.855127-1-quic_ziqichen@quicinc.com>
-References: <20250210100212.855127-1-quic_ziqichen@quicinc.com>
+	s=arc-20240116; t=1739182099; c=relaxed/simple;
+	bh=twxKZpeGMXfbXLL5sNsixoNYv4K7VlQz2JJPay8sMbk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CHevMmHDZwzrFa1jT1YH2RbPd2rDNGAe0xshBUS4Cw2c7heD22sJ9fvBNBQJ5dGsRtqGkrNI/iH3T2pbEek94xxyT5QUmQJ91Li3UpEAeAtJ/pqio1g6AWencnYBbysXJhNMQYDqKqcR1FWRQ7aTL5pbGecKPSS+lfffG9xhThk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QOZXXb7B; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-21f62cc4088so35594415ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 02:08:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739182097; x=1739786897; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8CpjcvQrR6B1zjVnhTJo8WuNt5W/FgIFIwhPovibn78=;
+        b=QOZXXb7ByelLrk+DRU5bok/0bLAxHbH5rcodyGNXcnOu/MiQ3QIZ4b4otLMDn41m5g
+         2NIXgXRysGE5JynzY4gIscA7BM1YjEB7lpKcIxV47oUlujyLiJydKTwRbrjE3mHBH1YP
+         63MJxzPrLDLx1+ABmt8WB9vBEKYO1aqKvs6qQTTKmg5BhnxdQWJsiIKWvGQH3qk28efS
+         7epSzcNvSieerd7HJ8egQgYU+mbgTNOsUecoR5KRM3O+5r8ConuR06Zlr13kOzk2Xn/j
+         vK+kWbiU3rvx3UaANrBWlVd7fiDinV+wD/YoLtIT6hy5rcwFG/Px5mFw+MATPNkF8zG8
+         lEqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739182097; x=1739786897;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8CpjcvQrR6B1zjVnhTJo8WuNt5W/FgIFIwhPovibn78=;
+        b=MwZnzI0kcZYAnCPZL60ZUvQVqhdS7xKKSRVRNxz7Vixj0aWRO+V14eDJMZsVyztFE2
+         HEDzHbYLnnet8o1OqhxZlbrUWa71QKlYP6VjldwQeXDVLo3RezHAvbNHdOcZkK6N31kD
+         JFick3SbCntWRC6vgTFJv3eYoNgdPBUDpagniaiUMY0qeqjTOwl6LrZptexxpms7Qp2p
+         ZjOb9oKirtFHziC6o8vZMZLo1DXDgbyxw9SB92lqRBjYsuro1AN42A5IjYbn8g9dP38E
+         UD56Pr3KB/DJaEG3Co2sinjJ/4deFo8oPS1jGw0wfryjH4i2gsKfrWurgvDMuSq2OcLF
+         g37Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUsl0jS65m8Adba0hDIbx2+igNJ78Lhdw9LMixnUQd1WXqCNxseSpRh8QW4FSyvUkFI7TMLx/b8dCHKcQR7@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvUmvTR7unZgZWFEGw94DPXPVgEAa2NRIJ8GDn749Xz9T2fBUF
+	Li6XEKxIPYY2qBvTjuR39x3t766D2G0Y2Qn/LzYkawEjczudAtld3qHcjR69nQ==
+X-Gm-Gg: ASbGncsRORCR8YeZP4+5K46AtLrflxKrlsFPEfp9Yd/0+fy4f0av6FsZnRZI8qOHxsM
+	CgqiKIY2TTOy6QsZ6Qo+i+0Tm1G+ctK3lwcZQRbH83Fwib8AcOVf3Mn4fxcyby3H1pNAGjjcUuv
+	rsrkbKmYPhJZVHBLRZCNv50DdfMR+rhOsRJpop0gNnPEMsYfCvJG8SkkE2k8hsPFvHKZiK6pHfy
+	fYZQLNYc3UGNgS/Z5paBpDDbzLhUxrMDyLAQFDs4RV3hrSzPolj00VWvy7QiT6rAV66arrTZdXb
+	JgpnVtj0CCr1YJqV7rBYIq8OfkcI
+X-Google-Smtp-Source: AGHT+IGpOv5+0oPf8eqlr4KUBEnTbsOiYsFWiAx2tW80SwxOPZowJoVZaLqN+cpkW4FecbyKrfsLPA==
+X-Received: by 2002:a05:6a00:e15:b0:730:91fc:f9c4 with SMTP id d2e1a72fcca58-73091fd0209mr4209900b3a.24.1739182096733;
+        Mon, 10 Feb 2025 02:08:16 -0800 (PST)
+Received: from thinkpad ([220.158.156.173])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73048ae7bc5sm7230733b3a.82.2025.02.10.02.08.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Feb 2025 02:08:16 -0800 (PST)
+Date: Mon, 10 Feb 2025 15:38:10 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_mrana@quicinc.com, quic_vpernami@quicinc.com,
+	mmareddy@quicinc.com
+Subject: Re: [PATCH v4 4/4] PCI: qcom: Enable ECAM feature
+Message-ID: <20250210100810.filk5hmmm7davkjx@thinkpad>
+References: <20250207-ecam_v4-v4-0-94b5d5ec5017@oss.qualcomm.com>
+ <20250207-ecam_v4-v4-4-94b5d5ec5017@oss.qualcomm.com>
+ <20250210092240.5b67fsdervb2tvxp@thinkpad>
+ <5fc8c993-4993-d930-2687-96fdf95dc1cf@oss.qualcomm.com>
+ <20250210094709.lih7lhnwjhmvrk7r@thinkpad>
+ <149f513f-a68f-8966-4c3a-ed8c7aafb1ab@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yN9U9HwjFErnxI9kEP28W1ak-O7Gyx1E
-X-Proofpoint-ORIG-GUID: yN9U9HwjFErnxI9kEP28W1ak-O7Gyx1E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-10_05,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 impostorscore=0 malwarescore=0 spamscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2502100084
+In-Reply-To: <149f513f-a68f-8966-4c3a-ed8c7aafb1ab@quicinc.com>
 
-Add UFS driver sysfs attributes clkscale_enable, clkgate_enable and
-clkgate_delay_ms to this doucment.
+On Mon, Feb 10, 2025 at 03:23:43PM +0530, Krishna Chaitanya Chundru wrote:
+> 
+> 
+> On 2/10/2025 3:17 PM, Manivannan Sadhasivam wrote:
+> > On Mon, Feb 10, 2025 at 03:04:43PM +0530, Krishna Chaitanya Chundru wrote:
+> > > 
+> > > 
+> > > On 2/10/2025 2:52 PM, Manivannan Sadhasivam wrote:
+> > > > On Fri, Feb 07, 2025 at 04:58:59AM +0530, Krishna Chaitanya Chundru wrote:
+> > > > > The ELBI registers falls after the DBI space, PARF_SLV_DBI_ELBI register
+> > > > > gives us the offset from which ELBI starts. so use this offset and cfg
+> > > > > win to map these regions instead of doing the ioremap again.
+> > > > > 
+> > > > > On root bus, we have only the root port. Any access other than that
+> > > > > should not go out of the link and should return all F's. Since the iATU
+> > > > > is configured for the buses which starts after root bus, block the
+> > > > > transactions starting from function 1 of the root bus to the end of
+> > > > > the root bus (i.e from dbi_base + 4kb to dbi_base + 1MB) from going
+> > > > > outside the link through ECAM blocker through PARF registers.
+> > > > > 
+> > > > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > > > > ---
+> > > > >    drivers/pci/controller/dwc/pcie-qcom.c | 77 ++++++++++++++++++++++++++++++++--
+> > > > >    1 file changed, 73 insertions(+), 4 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > index e4d3366ead1f..84297b308e7e 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > @@ -52,6 +52,7 @@
+> > > > >    #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+> > > > >    #define PARF_Q2A_FLUSH				0x1ac
+> > > > >    #define PARF_LTSSM				0x1b0
+> > > > > +#define PARF_SLV_DBI_ELBI			0x1b4
+> > > > >    #define PARF_INT_ALL_STATUS			0x224
+> > > > >    #define PARF_INT_ALL_CLEAR			0x228
+> > > > >    #define PARF_INT_ALL_MASK			0x22c
+> > > > > @@ -61,6 +62,17 @@
+> > > > >    #define PARF_DBI_BASE_ADDR_V2_HI		0x354
+> > > > >    #define PARF_SLV_ADDR_SPACE_SIZE_V2		0x358
+> > > > >    #define PARF_SLV_ADDR_SPACE_SIZE_V2_HI		0x35c
+> > > > > +#define PARF_BLOCK_SLV_AXI_WR_BASE		0x360
+> > > > > +#define PARF_BLOCK_SLV_AXI_WR_BASE_HI		0x364
+> > > > > +#define PARF_BLOCK_SLV_AXI_WR_LIMIT		0x368
+> > > > > +#define PARF_BLOCK_SLV_AXI_WR_LIMIT_HI		0x36c
+> > > > > +#define PARF_BLOCK_SLV_AXI_RD_BASE		0x370
+> > > > > +#define PARF_BLOCK_SLV_AXI_RD_BASE_HI		0x374
+> > > > > +#define PARF_BLOCK_SLV_AXI_RD_LIMIT		0x378
+> > > > > +#define PARF_BLOCK_SLV_AXI_RD_LIMIT_HI		0x37c
+> > > > > +#define PARF_ECAM_BASE				0x380
+> > > > > +#define PARF_ECAM_BASE_HI			0x384
+> > > > > +
+> > > > >    #define PARF_NO_SNOOP_OVERIDE			0x3d4
+> > > > >    #define PARF_ATU_BASE_ADDR			0x634
+> > > > >    #define PARF_ATU_BASE_ADDR_HI			0x638
+> > > > > @@ -84,6 +96,7 @@
+> > > > >    /* PARF_SYS_CTRL register fields */
+> > > > >    #define MAC_PHY_POWERDOWN_IN_P2_D_MUX_EN	BIT(29)
+> > > > > +#define PCIE_ECAM_BLOCKER_EN			BIT(26)
+> > > > >    #define MST_WAKEUP_EN				BIT(13)
+> > > > >    #define SLV_WAKEUP_EN				BIT(12)
+> > > > >    #define MSTR_ACLK_CGC_DIS			BIT(10)
+> > > > > @@ -294,6 +307,44 @@ static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
+> > > > >    	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
+> > > > >    }
+> > > > > +static void qcom_pci_config_ecam(struct dw_pcie_rp *pp)
+> > > > > +{
+> > > > > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> > > > > +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> > > > > +	u64 addr, addr_end;
+> > > > > +	u32 val;
+> > > > > +
+> > > > > +	/* Set the ECAM base */
+> > > > > +	writel_relaxed(lower_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE);
+> > > > > +	writel_relaxed(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
+> > > > > +
+> > > > > +	/*
+> > > > > +	 * The only device on root bus is the Root Port. Any access other than that
+> > > > > +	 * should not go out of the link and should return all F's. Since the iATU
+> > > > > +	 * is configured for the buses which starts after root bus, block the transactions
+> > > > > +	 * starting from function 1 of the root bus to the end of the root bus (i.e from
+> > > > > +	 * dbi_base + 4kb to dbi_base + 1MB) from going outside the link.
+> > > > > +	 */
+> > > > > +	addr = pci->dbi_phys_addr + SZ_4K;
+> > > > > +	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE);
+> > > > > +	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE_HI);
+> > > > > +
+> > > > > +	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE);
+> > > > > +	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE_HI);
+> > > > > +
+> > > > > +	addr_end = pci->dbi_phys_addr + SZ_1M - 1;
+> > > > > +
+> > > > > +	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT);
+> > > > > +	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT_HI);
+> > > > > +
+> > > > > +	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT);
+> > > > > +	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT_HI);
+> > > > > +
+> > > > > +	val = readl_relaxed(pcie->parf + PARF_SYS_CTRL);
+> > > > > +	val |= PCIE_ECAM_BLOCKER_EN;
+> > > > > +	writel_relaxed(val, pcie->parf + PARF_SYS_CTRL);
+> > > > > +}
+> > > > > +
+> > > > >    static int qcom_pcie_start_link(struct dw_pcie *pci)
+> > > > >    {
+> > > > >    	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> > > > > @@ -303,6 +354,9 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
+> > > > >    		qcom_pcie_common_set_16gt_lane_margining(pci);
+> > > > >    	}
+> > > > > +	if (pci->pp.ecam_mode)
+> > > > > +		qcom_pci_config_ecam(&pci->pp);
+> > > > > +
+> > > > >    	/* Enable Link Training state machine */
+> > > > >    	if (pcie->cfg->ops->ltssm_enable)
+> > > > >    		pcie->cfg->ops->ltssm_enable(pcie);
+> > > > > @@ -1233,6 +1287,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+> > > > >    {
+> > > > >    	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> > > > >    	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> > > > > +	u16 offset;
+> > > > >    	int ret;
+> > > > >    	qcom_ep_reset_assert(pcie);
+> > > > > @@ -1241,6 +1296,11 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+> > > > >    	if (ret)
+> > > > >    		return ret;
+> > > > > +	if (pp->ecam_mode) {
+> > > > > +		offset = readl(pcie->parf + PARF_SLV_DBI_ELBI);
+> > > > > +		pcie->elbi = pci->dbi_base + offset;
+> > > > > +	}
+> > > > 
+> > > > If you use the existing 'elbi' register offset defined in DT, you can just rely
+> > > > on the DWC core to call dw_pcie_ecam_supported() as I mentioned in my comment in
+> > > > patch 3.
+> > > >   >> +
+> > > > >    	ret = phy_set_mode_ext(pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
+> > > > >    	if (ret)
+> > > > >    		goto err_deinit;
+> > > > > @@ -1615,6 +1675,13 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > > > >    	pci->ops = &dw_pcie_ops;
+> > > > >    	pp = &pci->pp;
+> > > > > +	pp->bridge = devm_pci_alloc_host_bridge(dev, 0);
+> > > > > +	if (!pp->bridge) {
+> > > > > +		ret = -ENOMEM;
+> > > > > +		goto err_pm_runtime_put;
+> > > > > +	}
+> > > > > +
+> > > > 
+> > > > This will also go away.
+> > > > 
+> > > Hi Mani,
+> > > 
+> > > I get your point but the problem is in ECAM mode the DBI address to maximum
+> > > of 256 MB will be ioremap by pci_ecam_create(). If we don't skip
+> > > this ioremap of elbi ioremap in pci_ecam_create because we already
+> > > iormaped elbi which falls in dbi address to 256 MB region( as we can't
+> > > remap same region twice). so we need to skip doing ioremap for elbi
+> > > region.
+> > > 
+> > 
+> > Then obviously, your DT entries are wrong. You cannot define overlapping regions
+> > on purpose. Can't you leave the ELBI region and start the config region?
+> > 
+> > - Mani
+> ELBI is part of DBI space(present in the first 4kb of the dbi) we can't
+> relocate ELBI region to different location.
 
-Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
----
-v1 -> v2:
-It is a new patch be added to this series since v2.
+I'm not asking you to relocate ELBI. I'm asking you if you can skip the first
+4KiB of the config region to not overlap with DBI and ELBI. Either extend the
+config region or just map 255 MiB since you can use DBI for accessing root port.
 
-v2 -> v3:
-1. Typo fixed for commit message.
-2. Improve the grammar of attributes' descriptions.
+Like this,
 
-V3 -> v4:
-The use of words is more standardized.
----
- Documentation/ABI/testing/sysfs-driver-ufs | 33 ++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
++			      <4 0x00000000 0 0xf1d>,
++			      <4 0x00000f20 0 0xa8>,
++			      <4 0x10000000 0 0x1000>,
++			      <4 0x00100000 0 0xFF00000>; /* First 1MiB is part of DBI space */
 
-diff --git a/Documentation/ABI/testing/sysfs-driver-ufs b/Documentation/ABI/testing/sysfs-driver-ufs
-index 5fa6655aee84..da8d1437d3f4 100644
---- a/Documentation/ABI/testing/sysfs-driver-ufs
-+++ b/Documentation/ABI/testing/sysfs-driver-ufs
-@@ -1559,3 +1559,36 @@ Description:
- 		Symbol - HCMID. This file shows the UFSHCD manufacturer id.
- 		The Manufacturer ID is defined by JEDEC in JEDEC-JEP106.
- 		The file is read only.
-+
-+What:		/sys/bus/platform/drivers/ufshcd/*/clkscale_enable
-+What:		/sys/bus/platform/devices/*.ufs/clkscale_enable
-+Date:		January 2025
-+Contact:	Ziqi Chen <quic_ziqichen@quicinc.com>
-+Description:
-+		This attribute shows whether the UFS clock scaling is enabled or not.
-+		And it can be used to enable/disable the clock scaling by writing
-+		1 or 0 to this attribute.
-+
-+		The attribute is read/write.
-+
-+What:		/sys/bus/platform/drivers/ufshcd/*/clkgate_enable
-+What:		/sys/bus/platform/devices/*.ufs/clkgate_enable
-+Date:		January 2025
-+Contact:	Ziqi Chen <quic_ziqichen@quicinc.com>
-+Description:
-+		This attribute shows whether the UFS clock gating is enabled or not.
-+		And it can be used to enable/disable the clock gating by writing
-+		1 or 0 to this attribute.
-+
-+		The attribute is read/write.
-+
-+What:		/sys/bus/platform/drivers/ufshcd/*/clkgate_delay_ms
-+What:		/sys/bus/platform/devices/*.ufs/clkgate_delay_ms
-+Date:		January 2025
-+Contact:	Ziqi Chen <quic_ziqichen@quicinc.com>
-+Description:
-+		This attribute shows and sets the number of milliseconds of idle time
-+		before the UFS driver starts to perform clock gating. This can
-+		prevent the UFS from frequently performing clock gating/ungating.
-+
-+		The attribute is read/write.
+- Mani
+
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
