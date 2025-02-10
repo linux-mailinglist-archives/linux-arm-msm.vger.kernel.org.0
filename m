@@ -1,63 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-47415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 295A5A2EB20
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 12:32:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4ABEA2EB79
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 12:39:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C37863A7F31
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 11:32:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F350B7A1994
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 11:38:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46EF01E260A;
-	Mon, 10 Feb 2025 11:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 690D21E0DCA;
+	Mon, 10 Feb 2025 11:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I1nw7tqi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CJeHZuiF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D9D1DEFFC;
-	Mon, 10 Feb 2025 11:31:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759F51E379B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 11:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739187113; cv=none; b=jXHfYrCkl96OQIMUDux4Fzero4iGpdUBLgjZk4U1KDTmOKKx0EceKUJH3PY29KfdnxdbIULZHjyyzNjFQbpW1dVViH25HmwlrH1IpMqm3DN33+e3XFSzuLhz3M+8ZM73wpRihaRB17r5jf/87lhIz4IRCrKF6BIWAjtdJhv+lbs=
+	t=1739187563; cv=none; b=lH7wjd9pDgllsh7CstHbMhu6d/J96QZknaUyB2oU9vAhD73aLXYN8YNIqNy+2hjJyUVHSP402lQ43Gb8GBI2hg3b18ajkWkJtoFGKUoYHObSsoLXzS59HyxsiYTQwPq4gJE31FXVzzg3py8O04b08Dm2VkA5yvSA+uM4Yy6+kwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739187113; c=relaxed/simple;
-	bh=lHfVa4WaezjaNaPZ+xqar2iWP4d9jh7xMhWtcE8W7mQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Zzmx/G65jRR2/jfqUWVJejAfdIxzxOqGoX8XMx02owi0r9pmaX6PxhPZq2zw35YnuqCJEi2cPHzyT+F/jd8bH8rB9N/8wJC2tNa71+xTMKbzZqzJOp3Qs6wrTPBqNB9ZZTILuxV6B+YhlGGldU+KARCEAz/Xv9B7SM45SWdshYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I1nw7tqi; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51A75xOs010163;
-	Mon, 10 Feb 2025 11:31:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DX94Y1DLftOcH76cc/D2dTQlv3D9/SsCUAFkAr8Sem8=; b=I1nw7tqiz/kFxhle
-	Holws7trVi6BbmPtbdZWtxDXO1BYTSZYNzA6vQX6lyPfjqpMGFS8TaxpIqaPB9pS
-	r+F6220WPsqkv5A6PeAfjP8HaEjV16ol5TChfvLQXyuW9+0lbtncAgLwNes/Y8Yl
-	L+LHCj5IoMnNPgMCNJza9rwcrPQ7MuwvlvruR13buTflMezkp90Bs1C4xEnHSsCs
-	rn8dFMFO72BhMpf2fae4LYcQJ13YrcGnq4kGhOK70rxKYJxIgMUnml7Z2vCX/npH
-	UBC0vUf0AyyGf935f+62qdKw6m+pbQLXZ59TWMeiIAHc0kP8wXSRHfUKf6j5+u4O
-	4C9b7A==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qcs58sem-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 11:31:40 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51ABVdQB028977
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Feb 2025 11:31:39 GMT
-Received: from [10.216.18.35] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Feb
- 2025 03:31:35 -0800
-Message-ID: <6ddda82b-d90c-4f16-a1e5-1a63fca7aba2@quicinc.com>
-Date: Mon, 10 Feb 2025 17:01:26 +0530
+	s=arc-20240116; t=1739187563; c=relaxed/simple;
+	bh=3gWCjUdrhEX5o1hKIRRVUTniivb3NGT2sSazolj94l0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=iCqNxDYl0wfRuPIwLBp1GlEvP3q4lj+FY9k5jk1gpOf9tHzh4ak4uiKdpfmNdHWu/4QgRXTWcTMBy4zQyrmh+HSbmYXLRmfKeqHMxSOXA3lGOTCaH7m2GijbQZiIl9Z4a/q359m3PY8vE1jC3Ndtqw0uY59eYpUsw3rTaJCm29g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CJeHZuiF; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-38dcf8009f0so1305641f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 03:39:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739187560; x=1739792360; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HdyKhWNG/YV+fyvzEZfQRru8urZE6HyQB3qAUgMoUvM=;
+        b=CJeHZuiFrPuXkIFLMe5bzHB218M6zjuW0wEF/1URPNN8Pj3aFGu+vnLbBZzRwxJ8cy
+         6VZ4qq1ShLKEPxWUlv+lFo8fDwk+Npjj2/uTtEBz3q63m8F1rgS0372AIBPf/m2h2Lux
+         89vMzWIzDzOK0V3utQmhRvHOed+nEP9Bg5tTfVUUaGSV2yyNhfJswNjs5epZZVJq8LvT
+         uuLXEL6tqYU8zlRTcUXe+gb5gkyCQBc7ppYLEirO6P/9KZKfF7231wcbqCK38IU6vV89
+         AhWeyOMQCJWfAGqgH8KGMGqjfu4y0TKH07eskuqWotCZzLknPrApSw58XCUlpfmnHdJv
+         tg1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739187560; x=1739792360;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=HdyKhWNG/YV+fyvzEZfQRru8urZE6HyQB3qAUgMoUvM=;
+        b=spnRV1ZjUruGo4Z4CHZlIyhjDMI6IHVKjvRil7j3V/AkD40n1KTvXR9LbrRcz0tk11
+         qajOjUevC/5OM5wlC796u+2vKaTUsLZloCmp5kC66V8vA68guHJ+Uf6dkqRSIoLUlnvw
+         +TGO/vonOSMLHjcPTTk2v1ZR0x2gp7bRdDeKDK5rLzWMwgrVh0Tm3h0zFDFVhVsZFNuj
+         mamETZMVDBqW3pdvtANjcfNMjUUwptrAyB/hhBjJad/HqKpOzA+A2Ik9Uf+Lk7Yn6AqR
+         bDLeaRgZj/I8jzKKjceZyxi6rVDmbT4C77hsaqhknYRx6eqrCXU60zm7ldqk/eOvKd1n
+         cYpA==
+X-Forwarded-Encrypted: i=1; AJvYcCWDJnbLTymxMQpUdS60ojUMP1mcqKc1QlITs3s29EPsVgeFt9ZzzwAk+0WhK8QZimazzUZmgJyIeMR1zU8I@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVKxnhHFif1xoyNA/jvflRznVtm3bxklO2FfCyo/B7UKWFHhzJ
+	etePnSq1LpLN7Pdl/udz0RusHaRCssU+5st87ToFPlBQGNIZUrL6zdpXR9olZgY=
+X-Gm-Gg: ASbGncs4jMEEaxVFhXpIrPnIpDSAMHLbVKfkI1e3T5XtLuN1SNnXGMNy3A/39Ey3tgM
+	wNA6z0n4xpGdOGHUnlRv0xvZhimNru0I1c/daorzDv7zQi2bsPFHlY4zyOArWLK/ZrHBXLqbEJO
+	sNOVmIF6vOZxg84MERS+XB5jbGRuAH4XZLPDx7BFS+I6uCbxT6vnYy+SkmiyzUK9ggB2jRsp31e
+	blStI+Ia4EkpR41iaeFFQbxRb/ufrFDP9r8j1MO3/EQ+R312cNIAvq0/vrgKICWb/9lcG2AxLqa
+	5ZdycOw8LSezomHOmpe/FpdwgZdcq8ItU0SxX1AlIKn03Z7D0xn+e6fgUOOEgIRC7nof
+X-Google-Smtp-Source: AGHT+IGhf9lS3crLEoNLUnBANd1l1OnXNNmmhTax0NZR8qnDFb0O9+hRSYiZbS083bbEEChIcHAjXA==
+X-Received: by 2002:a05:6000:4009:b0:38d:be2c:2f5 with SMTP id ffacd0b85a97d-38dc8dc3a56mr7631659f8f.6.1739187559686;
+        Mon, 10 Feb 2025 03:39:19 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:8235:1ea0:1a75:c4d5? ([2a01:e0a:982:cbb0:8235:1ea0:1a75:c4d5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dc4d00645sm10937178f8f.66.2025.02.10.03.39.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Feb 2025 03:39:19 -0800 (PST)
+Message-ID: <d1a1c179-664c-48af-baa1-2c8329575174@linaro.org>
+Date: Mon, 10 Feb 2025 12:39:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,117 +83,143 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: qcs8300: Add device node for
- gfx_smmu
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg
- Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com>
- <20250203-b4-branch-gfx-smmu-v4-2-eaa7aa762f48@quicinc.com>
- <464vbzwgv44fn4iw5vj5yzpstzhcsb7rzuedf4fwl23hmdhews@d4q33ro6hxq3>
-Content-Language: en-US
-From: Pratyush Brahma <quic_pbrahma@quicinc.com>
-In-Reply-To: <464vbzwgv44fn4iw5vj5yzpstzhcsb7rzuedf4fwl23hmdhews@d4q33ro6hxq3>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] Revert "dmaengine: qcom: bam_dma: Avoid writing
+ unavailable register"
+To: Caleb Connolly <caleb.connolly@linaro.org>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Amit Vadhavana <av2082000@gmail.com>, Dave Jiang <dave.jiang@intel.com>,
+ Fenghua Yu <fenghua.yu@intel.com>, Kees Cook <kees@kernel.org>,
+ Md Sadre Alam <quic_mdalam@quicinc.com>, Robin Murphy
+ <robin.murphy@arm.com>, Vinod Koul <vkoul@kernel.org>
+Cc: David Heidelberg <david@ixit.cz>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, dmaengine@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250208223112.142567-1-caleb.connolly@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250208223112.142567-1-caleb.connolly@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1FNwXa16gvd1MBf64JJ-2x1HySUAS9rq
-X-Proofpoint-GUID: 1FNwXa16gvd1MBf64JJ-2x1HySUAS9rq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-10_06,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- mlxlogscore=946 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- adultscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
- definitions=main-2502100097
 
+On 08/02/2025 23:30, Caleb Connolly wrote:
+> This commit causes a hard crash on sdm845 and likely other platforms.
+> Revert it until a proper fix is found.
+> 
+> This reverts commit 57a7138d0627309d469719f1845d2778c251f358.
+> 
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> ---
+>   drivers/dma/qcom/bam_dma.c | 24 ++++++++----------------
+>   1 file changed, 8 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index c14557efd577..bbc3276992bb 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -58,11 +58,8 @@ struct bam_desc_hw {
+>   #define DESC_FLAG_EOB BIT(13)
+>   #define DESC_FLAG_NWD BIT(12)
+>   #define DESC_FLAG_CMD BIT(11)
+>   
+> -#define BAM_NDP_REVISION_START	0x20
+> -#define BAM_NDP_REVISION_END	0x27
+> -
+>   struct bam_async_desc {
+>   	struct virt_dma_desc vd;
+>   
+>   	u32 num_desc;
+> @@ -400,9 +397,8 @@ struct bam_device {
+>   	int irq;
+>   
+>   	/* dma start transaction tasklet */
+>   	struct tasklet_struct task;
+> -	u32 bam_revision;
+>   };
+>   
+>   /**
+>    * bam_addr - returns BAM register address
+> @@ -444,12 +440,10 @@ static void bam_reset(struct bam_device *bdev)
+>   	val |= BAM_EN;
+>   	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+>   
+>   	/* set descriptor threshold, start with 4 bytes */
+> -	if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+> -		     BAM_NDP_REVISION_END))
+> -		writel_relaxed(DEFAULT_CNT_THRSHLD,
+> -			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+> +	writel_relaxed(DEFAULT_CNT_THRSHLD,
+> +			bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>   
+>   	/* Enable default set of h/w workarounds, ie all except BAM_FULL_PIPE */
+>   	writel_relaxed(BAM_CNFG_BITS_DEFAULT, bam_addr(bdev, 0, BAM_CNFG_BITS));
+>   
+> @@ -1005,12 +999,11 @@ static void bam_apply_new_config(struct bam_chan *bchan,
+>   		if (dir == DMA_DEV_TO_MEM)
+>   			maxburst = bchan->slave.src_maxburst;
+>   		else
+>   			maxburst = bchan->slave.dst_maxburst;
+> -		if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+> -			     BAM_NDP_REVISION_END))
+> -			writel_relaxed(maxburst,
+> -				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+> +
+> +		writel_relaxed(maxburst,
+> +			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>   	}
+>   
+>   	bchan->reconfigure = 0;
+>   }
+> @@ -1198,13 +1191,12 @@ static int bam_init(struct bam_device *bdev)
+>   {
+>   	u32 val;
+>   
+>   	/* read revision and configuration information */
+> -	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+> -	if (!bdev->num_ees)
+> +	if (!bdev->num_ees) {
+> +		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
+>   		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
+> -
+> -	bdev->bam_revision = val & REVISION_MASK;
+> +	}
+>   
+>   	/* check that configured EE is within range */
+>   	if (bdev->ee >= bdev->num_ees)
+>   		return -EINVAL;
 
-On 2/10/2025 4:31 PM, Dmitry Baryshkov wrote:
-> On Mon, Feb 03, 2025 at 11:17:02AM +0530, Pratyush Brahma wrote:
->> Add the device node for gfx smmu that is required for gpu
->> specific address translations.
->>
->> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 39 +++++++++++++++++++++++++++++++++++
->>   1 file changed, 39 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->> index 4a057f7c0d9fae0ebd1b3cf3468746b382bc886b..7a8211bec139375b5aab939f123d88fca7aceff2 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->> @@ -2674,6 +2674,45 @@ gpucc: clock-controller@3d90000 {
->>   			#power-domain-cells = <1>;
->>   		};
->>   
->> +		adreno_smmu: iommu@3da0000 {
->> +			compatible = "qcom,qcs8300-smmu-500", "qcom,adreno-smmu",
->> +				     "qcom,smmu-500", "arm,mmu-500";
->> +			reg = <0x0 0x3da0000 0x0 0x20000>;
->> +			#iommu-cells = <2>;
->> +			#global-interrupts = <2>;
->> +
->> +			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
->> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
->> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
->> +				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
->> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
->> +				 <&gpucc GPU_CC_AHB_CLK>,
->> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
->> +
->> +			 clock-names = "gcc_gpu_memnoc_gfx_clk",
-> Stray whitespace after the Tab symbol
->
->> +				       "gcc_gpu_snoc_dvm_gfx_clk",
->> +				       "gpu_cc_ahb_clk",
->> +				       "gpu_cc_hlos1_vote_gpu_smmu_clk",
->> +				       "gpu_cc_cx_gmu_clk",
->> +				       "gpu_cc_hub_cx_int_clk",
->> +				       "gpu_cc_hub_aon_clk";
-> clocks and clock-names do not match.
->
->> +			power-domains = <&gpucc GPU_CC_CX_GDSC>;
->> +			dma-coherent;
->> +		};
->> +
->>   		pmu@9091000 {
->>   			compatible = "qcom,qcs8300-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
->>   			reg = <0x0 0x9091000 0x0 0x1000>;
->>
->> -- 
->> 2.34.1
->>
-Thanks for checking. Will address these in next version.
+This fixes the BAM DMA crash happening on DB845c & ifc6410.
 
--- 
-Thanks and Regards
-Pratyush Brahma
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on sdm845-DB845c
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on apq8064-ifc6410
 
+CI: https://git.codelinaro.org/linaro/qcomlt/ci/staging/linux/-/pipelines/131277
+
+Thanks,
+Neil
 
