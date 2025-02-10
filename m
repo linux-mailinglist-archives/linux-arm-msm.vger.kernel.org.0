@@ -1,132 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-47352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C24B6A2E39F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 06:27:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11F61A2E409
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 07:12:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 37D637A1105
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 05:26:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9745F161D68
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 06:12:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69FD818870C;
-	Mon, 10 Feb 2025 05:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 885841922F5;
+	Mon, 10 Feb 2025 06:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="YUh93J9j"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PnUIHkHy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE1B13FD86
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 05:27:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D051F2F2E;
+	Mon, 10 Feb 2025 06:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739165229; cv=none; b=TlOeLJTxzFtrCHQPEcRIKPXv0fgoO6rq8XoCSvs+I4XIuwPnW1AlyHoNxi7wJ0+IFKKCaefZofHitjFjpc/xwRdcbf8FnsZGXn/7rExiOM7Z4E44e+bSArj/W8Q3f3J11QPyIFLM7GOnJ8BgHaMj973l78EL69bXSkOprCLr40s=
+	t=1739167953; cv=none; b=BS82TGYv3Owqlpyi3VNTw7tIZ879V4k+Hb6a491NhZ1eGveot8KaZlrFuF/4peY1ItOt2gO8Vt0yCvA9OzQgjeoSfqZ45i9KCo0wcJB3CnKoHfWmRuiGnnBaRKcATPOibAwcCFrPd1dsohl5TfRKY73mh5FXj6Op67Chg2GfiEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739165229; c=relaxed/simple;
-	bh=ZaZzKvk7Jpw0Xk+IM63SQtNmtlnk3CxqcAOuqfBd0y4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i1BBjlYKbJ7xpDDgsUMpKhmmm/VTV/2ag9HrgE0i1IFgOvTVmYvI/Gap8nxJmtH8VIVcddkD2QTgd7FAoUVNKBDXbWGnsPE9ieqw7lKlFyoRYFry9jpBLDEVZGd2v9x49bplbXqs3hZ/Uhv5vpOLhmb/M6FVKf79r01qlHzJcWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=YUh93J9j; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5de594e2555so3493946a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Feb 2025 21:27:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1739165226; x=1739770026; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YPOmzVXXpww8b7P9KurA43+r96Qxt23SjHf/CrmgaYM=;
-        b=YUh93J9jC1obNHeeEGPIkWgW1cJguy3tw6DIyWUy/mM+ixte3w2PddKcPg2xo8UcXy
-         lK5ZXgF40qBME2VTjrMjXCEbef/QAyh+Pg+AOGVRPHqdblPMhkX1jennOuT+s+3GDKja
-         qWwNQ3QHcVDRrfvdA8pBTtuysxLasfXux0BGmpA/wIeRhtbJ37gqnnySFFK/1iQbYbW+
-         pxOuD12/kJTfQGY0DFrle7VOmZ/PqUl+y+gNyeWtKrErhCwrZHShyoK3Lvk0vGUaaxGO
-         i8muMzdiiHwmrT03OPEAaIHwTbx4Oi6w68p1ZPQaeH0377rb1TC7EBji8SpHS3zJKBuN
-         ZjzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739165226; x=1739770026;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YPOmzVXXpww8b7P9KurA43+r96Qxt23SjHf/CrmgaYM=;
-        b=LwqdCFP/knCTq2R+1YbBP+yKXz3dciG1sTdPgUJDcAgWN0irtu2uyQRyVkh7bWCk3V
-         ZU28TUZGW0hES379ppeyx55ePmC+Hk4XApiyx7TaukA0WqEvwEGzQ/cwwwwMZf7yOp+8
-         TTg59/FeqncjbW/BnXTHVBVQOoK8t9lKHy0klXWScjcoe810LYyS9HLwx6HnUHgCjApa
-         ymwk6rX1Tf/vQYgxZ6xScuVnPpH8dZNe2BkXmJ8PXwlOhnRhAhke8YL/x/q+ZSmMoTDP
-         vYSQNtr6WtFfvQjPSgX184JEzR+uOdgUuXbdWrD1qhK0kPqD8I2XFIsfaPDTpYtQ6BSt
-         so8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWXJH9Lfa4oA4dkijmhYfpUYmBZt5iUUXZzM64D0VNzgGinZ8QnhKVCFl+oKInrTxntguJKEsj1GmjaM8Nf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzibc/uBvHSUVU8n/y2ZePZi/83eqMhMnJF571CkGXlQ8JPY2Xu
-	SaS+NIkJAjTquOvKrtsJ0pmp3RBrIBlgf1VoHOIXk4wSIS+8BMd6I+kfnM7Wtyx7P0PhchPEcQt
-	E0YqsQ4rMPfusef4DAjfrlcjWC9LI0M/qPqlMiQ==
-X-Gm-Gg: ASbGnctCJ+hXddhY/vhHqQm6hcpbuqhGhuKCzLlFtEqJ3yLKOxyNR0jKMsynskReK2/
-	5TTBJVSVvuyr7Dkee1j1ja6jDbnks78v71pVtY0v1Fwmpsp/Ak3m0E0oiMTykUgHw4Z4MW0FhyA
-	==
-X-Google-Smtp-Source: AGHT+IGjQIlzFHCfcDhIb4mXCz1GCQin1Sf8Lm53FCexRLyu5mlSb7CIelWVQUH61W9fRtlXczKUZxn27b99cpM/+8o=
-X-Received: by 2002:a05:6402:3806:b0:5d8:253:b7df with SMTP id
- 4fb4d7f45d1cf-5de450988e0mr12327805a12.27.1739165225957; Sun, 09 Feb 2025
- 21:27:05 -0800 (PST)
+	s=arc-20240116; t=1739167953; c=relaxed/simple;
+	bh=ihYWExwVukP9KGwkRT8lXliaHzer7giR2gVUCNl6LPY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Z6Co/CEzkq42XJqUgltfGhr9jXXBw0tJ19tNxe3kUG5s/OTqPgarr7dXVzvYfbLicAtuu2xZfAD+U18AIe32BCgoHOMhHlWkWnLiGRfVJyG8aQIMuqCp6nAqeAC03xxWw3gvBvomSJtVolEvJ+fSwoAcBn8b4qh7sPnwuJZSvXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PnUIHkHy; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 519NmkM4011856;
+	Mon, 10 Feb 2025 06:12:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	B9zNerNeRN06eKR30n973CXujbZYNKEd1nPUPlK7wfw=; b=PnUIHkHyx39BAH7W
+	nAlvAgAsTE1aEoa0pirLgIjMuKzNa4EhmnYkGnTgTnsK+jmjmonwIce2ls1W0J3V
+	qInS+66WLFywNGdxcP7Yus/Cc3gIaWRswtaJ0EipcXqXzMhBYjGG0tzZLO3xiFN/
+	hhQ5g6L2+BRwxGBjuLrnXU0BBQUJQQyJujmYbQurMoaiJ5wTUnFzYPnv6SI2QJdg
+	+0VYrDzPq6CvVxpaYDQJxl7Lz4LmNx+tlkZHvV3wfaP5x5QLfnmhmir1NYbk1X8w
+	sqORUpYRjVcEj84zKJ9T2vD61NVAbfw7E1x0I223WuFFR2V1s3ATy8+m56f8KniE
+	4woI3g==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dyk6js-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Feb 2025 06:12:26 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51A6CPsg004095
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Feb 2025 06:12:25 GMT
+Received: from [10.218.15.248] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 9 Feb 2025
+ 22:12:20 -0800
+Message-ID: <747868ee-9f6b-4bff-a88b-a91ff52e3f06@quicinc.com>
+Date: Mon, 10 Feb 2025 11:42:17 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250205-qcom_pdm_defer-v1-1-a2e9a39ea9b9@oltmanns.dev>
- <2vfwtuiorefq64ood4k7y7ukt34ubdomyezfebkeu2wu5omvkb@c5h2sbqs47ya>
- <87y0yj1up1.fsf@oltmanns.dev> <87msez1sim.fsf@oltmanns.dev>
- <CAKXuJqhuNh1mV-40LpO3bffoGSOiFLkRB+uZ8+5+0eThctm+-g@mail.gmail.com> <87msev9v9k.fsf@oltmanns.dev>
-In-Reply-To: <87msev9v9k.fsf@oltmanns.dev>
-From: Steev Klimaszewski <steev@kali.org>
-Date: Sun, 9 Feb 2025 23:26:53 -0600
-X-Gm-Features: AWEUYZmIZnrYQpuBSNLsNqjCDTjp8CehJeNFZ2kQMJArY-kRSvx_e5-GL-m08oo
-Message-ID: <CAKXuJqi4h3QPBQjnvMeYTJbu-tiAL7Ti+nX-rADgENvwv4GhqA@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: pd-mapper: defer probing on sdm845
-To: Frank Oltmanns <frank@oltmanns.dev>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Chris Lew <quic_clew@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	Caleb Connolly <caleb.connolly@linaro.org>, Joel Selvaraj <joelselvaraj.oss@gmail.com>, 
-	Alexey Minnekhanov <alexeymin@postmarketos.org>, stable@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V8 5/7] interconnect: qcom: sa8775p: Add dynamic icc node
+ id support
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Odelu Kukatla <quic_okukatla@quicinc.com>,
+        "Mike
+ Tipton" <quic_mdtipton@quicinc.com>,
+        Jeff Johnson
+	<quic_jjohnson@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Sibi
+ Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250205182743.915-1-quic_rlaggysh@quicinc.com>
+ <20250205182743.915-6-quic_rlaggysh@quicinc.com>
+ <ujsy5e4u7inz5mzdh5m672zkfcrd6igoypgkak2assfpvlcrve@mmjlabr6rh5a>
+Content-Language: en-US
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+In-Reply-To: <ujsy5e4u7inz5mzdh5m672zkfcrd6igoypgkak2assfpvlcrve@mmjlabr6rh5a>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: TbPko0J752bfWoB4zchitNYEeYC5_B1G
+X-Proofpoint-GUID: TbPko0J752bfWoB4zchitNYEeYC5_B1G
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-10_03,2025-02-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxlogscore=984
+ mlxscore=0 priorityscore=1501 spamscore=0 adultscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502100050
 
-Hi Frank,
 
-> > I know that Bjorn already said this change is a no, but I wanted to
-> > mention that I have a Lenovo Yoga C630 (WOS) device here that is also
-> > an sdm845, and with this patch applied, it has the opposite effect and
-> > breaks audio on it.
->
-> Interesting! Just so that I get a better understanding: Is remoteproc3
-> loaded at all? Can you please send me the output of:
->
-> $ dmesg | grep "remoteproc.: .* is available"
->
-> and
->
-> $ dmesg | grep "remoteproc.: .* is now up"
->
-> (no need to apply the patch for that)
->
-> Thanks,
->   Frank
 
-Here they are, this is without the patch applied.
+On 2/6/2025 6:30 AM, Dmitry Baryshkov wrote:
+> On Wed, Feb 05, 2025 at 06:27:41PM +0000, Raviteja Laggyshetty wrote:
+>> Discard the static IDs from node data and set the default node ID
+>> to -1 to indicate the for dynamic ID allocation.
+>> Update the topology to use node pointers for links instead of static
+>> IDs, and rearrange the node definitions to avoid undefined references.
+> 
+> I think it might be better to forward-declare all node entries at the
+> top and then keep currently defined nodes in place. Otherwise the diff
+> is pretty unreadable.
+>
 
-steev@limitless:~$ dmesg | grep "remoteproc.: .* is now up"
-[    5.746470] remoteproc remoteproc1: remote processor
-remoteproc-cdsp is now up
-[    5.880144] remoteproc remoteproc0: remote processor
-remoteproc-adsp is now up
-[    5.975094] remoteproc remoteproc3: remote processor
-5c00000.remoteproc is now up
-[    8.642160] remoteproc remoteproc2: remote processor
-4080000.remoteproc is now up
-steev@limitless:~$ dmesg | grep "remoteproc.: .* is available"
-[    5.491202] remoteproc remoteproc0: remoteproc-adsp is available
-[    5.546421] remoteproc remoteproc1: remoteproc-cdsp is available
-[    5.565271] remoteproc remoteproc2: 4080000.remoteproc is available
-[    5.580100] remoteproc remoteproc3: 5c00000.remoteproc is available
+Sure, will upload a new patch with forward declarations.
+These forward declarations will be present only for SA8775P and for
+upcoming SoCs, topology will be adjusted to avoid the forward declarations.
+Please review the other patches in this series, so that I can include
+the suggestions in the next patch revision.
+
+Thanks,
+Raviteja.
+
+>>
+>> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+>> ---
+>>  drivers/interconnect/qcom/sa8775p.c | 2194 ++++++++++++---------------
+>>  1 file changed, 962 insertions(+), 1232 deletions(-)
+>>
+> 
+
 
