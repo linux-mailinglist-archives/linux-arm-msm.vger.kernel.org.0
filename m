@@ -1,171 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-47412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17FB2A2EA55
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 12:01:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A5EEA2EAB1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 12:09:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E74333A10EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 11:01:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A152C3A2EF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 11:09:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F12DD14F70;
-	Mon, 10 Feb 2025 11:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A120519342F;
+	Mon, 10 Feb 2025 11:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YGqm8akA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LbTsaX1E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BB91C701D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 11:01:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD4816BE3A;
+	Mon, 10 Feb 2025 11:09:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739185292; cv=none; b=O37AaPKqNSTeZbyzVyiLZ0hYKLdQtGV612pMVyPap7xLT7JKNbsBq1Hq0lDpN/EKFpJ9FefR7fn+ETzOSSKS5E2zE8AD0/UN9j6p1Og6AWmIIBZ+zaq/crNH4B7ayn1Kcj9HmqlmsrFie7PxMdbf1/AyEuxqYZABwqt7Ip8WEI0=
+	t=1739185763; cv=none; b=mOYhjnujuu5J7to5uI1rMHIiKf6uLIB/QJVDM6AqONmNocUqTn7XVLMvCv3PawiJ+RY2d6wIbYmPDxXBIDgBCbc0T+um26hkrNweSKeZVdgVhp0jdwKy/BOC2LBvoP16uBlWlrLvWDWVWj4dSxRSWNcXMzwzRRH5s/AnTHCurjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739185292; c=relaxed/simple;
-	bh=WgW6ZEWyu81z7BrqyHmBRuGMtk2zuQXDhJEjREDVx6c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CBV8vohqVQfRqpO0OMeylK5GZL4EdbUJmIX5SwJGD8fcBWgmKiMHvsy3JB/IL9N7rQW7VZrxtraVpT6Oev1jdis4hphiAiCDH4/t77HCu7vmfX8vah4cVWWm63COUa/2p9lCMy5BLnnpuGjV4AvDVOLTzwwT9AUPwdeTSJ7WisY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YGqm8akA; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-54504f29000so1824338e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 03:01:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739185289; x=1739790089; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GtTBVwp4J9apExhc56rvDYwcShHHaMo1N7lDCxauzzY=;
-        b=YGqm8akAE8gSZd1S7vpanZvGYy1GVJ+v6hmPJkO+E2m72RZYbt7eZZwHva2orJ5w58
-         4EovFDkM1tJwKmTA95tLhs5Ua+hVJUv3jazgqT9mecFlUI7TEhhcIBTd6YzIqQyTdIXf
-         t5H9wZFSIMi0l8wN98n3/F4ZNU8TtXMEG2pAjzhL0QK1oxiY+cegCvEdRrHOhSOEAL0H
-         yQTGXF6WUPtszeZFs9wqbJzoZSXqXav/im/Y9U83Hcrmn3af0p/j9Zz0nPDBbzVKGnhB
-         07zG+9YyVNtm8t5AVYm3+XqsfWjTPhAdyzrsJXgQYREiG4W6MVzmqHgZZrIOO53zcCqh
-         7jvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739185289; x=1739790089;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GtTBVwp4J9apExhc56rvDYwcShHHaMo1N7lDCxauzzY=;
-        b=Ti1RORgEGYsMvWZcTqVF/zRHjz4N6XRlVDE7KemYvb6vN6GjuPfkDh7HM3OM3XN/j5
-         bzhzCzihxx7H251zgYTcB8VR5NF3zcuLc2GWH8tFHZokwekPQLpx77urcmOreqtOBOay
-         VTH7aQLgAHr9FY77lfBAF7zKpj7TxW9kdiGifaphR1DHYRF8rI0K/lwRH2IzJk25b74l
-         Rslnu0H+lNiD8Jjtzw4lPhCC42J6mXKs4UJwjV8EC78Za77PSc982spskALqxzZVfPKL
-         ug4hJ59E/VcnaFrvr4cq7Y2QG5D0oYynf9yaNkDNUi0B9ijmFLjS9JPAnoF5jJlHS3wO
-         eeuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWlPbmNlHa5o7/Nj6kxIGR06UD4tFl8PR7UBdYhqbvU6m1NVTeh/CUhLmfGxpCLWo0pgPHyWPY9QpMjuAL4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+SLqKv3hXhD175wqcaVBlJjojAZjJWKV992qDDPtS8py1r6pt
-	E3CurhegJ2k3qKoMCh4MizJAoe7kkrS6XJ31hkN7ipgytU/AX8wOEYEr1d3A6W8=
-X-Gm-Gg: ASbGncsCNDDek8U/yBG4MC0UMtRkzJ5EezOPkrJKVdANzou29IV8aV6aLL2DFYQJHQF
-	e8tgWhPjRek5EZ/ORP4LWhsv1PcgZJvCdatfKlxVgwr/sBY1LI9niHClx1mQhWO1Hu5zvrGwK0K
-	79vnceCexTb/XLDTBjBcZ30B0p5Li3N45Al8WRtCvWjLLAU4490jw+c4i1YyfdjhEbY9/mvyyAI
-	g1+Knxz4qgy+QOq6VCgyAFOoxasxTCSChzl78jDEwkD//R5lEvn8irg0OG5KSeA0Fd9FfXNJLw2
-	TMMJNOEmhNW5MLz5kI40ShTZspg3jlkFS77PH9hXa3Je2mowxJFhAXPL27p56NBgZG/Yz8k=
-X-Google-Smtp-Source: AGHT+IESGWlTJg2cuv8Kgo6v/dDQZjg10SE7StQf8S4vcvj1tAiGKln4CJ/xT6Y54Ae/tQTmSnk31g==
-X-Received: by 2002:a05:6512:4022:b0:545:ae6:d740 with SMTP id 2adb3069b0e04-5450ae6d79amr1090753e87.41.1739185289056;
-        Mon, 10 Feb 2025 03:01:29 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5450c0823acsm321386e87.118.2025.02.10.03.01.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2025 03:01:28 -0800 (PST)
-Date: Mon, 10 Feb 2025 13:01:27 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Pratyush Brahma <quic_pbrahma@quicinc.com>
-Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: qcs8300: Add device node for
- gfx_smmu
-Message-ID: <464vbzwgv44fn4iw5vj5yzpstzhcsb7rzuedf4fwl23hmdhews@d4q33ro6hxq3>
-References: <20250203-b4-branch-gfx-smmu-v4-0-eaa7aa762f48@quicinc.com>
- <20250203-b4-branch-gfx-smmu-v4-2-eaa7aa762f48@quicinc.com>
+	s=arc-20240116; t=1739185763; c=relaxed/simple;
+	bh=fiAmj02tnY4RlOfIc3fnucfwbpXcpZX1q76PPA5gZTA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YHMqbl/A8p/oKaduqSHfV+Ro60BVNWjINF8tdDDgnxufLlvwaNgr51C39tYBEOJpom1GKvkHP7jf4gTHMYfWwxmoZjJxlCvSKD3HXP9tHZmd/H44SiWVp5/tPdAXxO9dhom5ElCmcPe0W9rxyMPThpS01evUhqnuJzflq25JwoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LbTsaX1E; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51AA7axe003521;
+	Mon, 10 Feb 2025 11:09:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ggBUKbTWnZ2Htvo1oilHaJI1DyEA5fb4ePZIIAtLG2w=; b=LbTsaX1Ejs6VpnLq
+	UM1hJK8+3iuKDJKQeKh6AItSyWUKG8CwybY0ku2Y+Jo+WNJJMKBzmLe7CEoDCBCa
+	5RIDoC+Au7JFq344Qbesl3jBxZ8ZnGxk1dmoXR+V1uywbEo68Ps8zBzgWOCJbtlQ
+	Z+4ny81sMgg4v8ur5BvD3U249BUBaoOQmk9qru80jXTgayEjn0N+w0ejKT5JQuo8
+	pAbzlPHPFE/96xLcN2ecfm5isxofO8PvuqeZdOdlkhHPgIB8/DiJUd9E7pUGrMGR
+	w+uzeS5BKLAWGQMn/LQ7tRKPf0Xe1FrRPGW+JJ9swDJhUf130/xOF/j11MGeX58S
+	Y/s+pg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dym2ne-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Feb 2025 11:09:09 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51AB98Gt022894
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Feb 2025 11:09:08 GMT
+Received: from [10.218.7.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Feb
+ 2025 03:09:00 -0800
+Message-ID: <e7381931-aa58-4fe9-b96c-4f4226e02371@quicinc.com>
+Date: Mon, 10 Feb 2025 16:38:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250203-b4-branch-gfx-smmu-v4-2-eaa7aa762f48@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] Add UFS support for SM8750
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <neil.armstrong@linaro.org>, <quic_cang@quicinc.com>
+CC: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Melody Olvera
+	<quic_molvera@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Kishon Vijay
+ Abraham I" <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Alim
+ Akhtar" <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "Bart
+ Van Assche" <bvanassche@acm.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        Manish Pandey
+	<quic_mapa@quicinc.com>
+References: <20250113-sm8750_ufs_master-v1-0-b3774120eb8c@quicinc.com>
+ <c6352263-8329-4409-b769-a22f98978ac8@oss.qualcomm.com>
+ <20250209152140.cyry6g7ltccxcmyj@thinkpad>
+ <ae9ba351-53c8-4389-b13b-7b23926a8390@linaro.org>
+ <20250210101338.boziqlrxl2cei775@thinkpad>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <20250210101338.boziqlrxl2cei775@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: tf5xNFri-tkr3gQKi4kRaPgBcrEAm_IK
+X-Proofpoint-GUID: tf5xNFri-tkr3gQKi4kRaPgBcrEAm_IK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-10_05,2025-02-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ clxscore=1011 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
+ mlxscore=0 priorityscore=1501 spamscore=0 adultscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502100093
 
-On Mon, Feb 03, 2025 at 11:17:02AM +0530, Pratyush Brahma wrote:
-> Add the device node for gfx smmu that is required for gpu
-> specific address translations.
+
+
+On 2/10/2025 3:43 PM, Manivannan Sadhasivam wrote:
+> + Can (for the MCQ query)
 > 
-> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi | 39 +++++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
+> On Mon, Feb 10, 2025 at 10:39:04AM +0100, neil.armstrong@linaro.org wrote:
+>> On 09/02/2025 16:21, Manivannan Sadhasivam wrote:
+>>> On Fri, Feb 07, 2025 at 11:47:12PM +0100, Konrad Dybcio wrote:
+>>>> On 13.01.2025 10:46 PM, Melody Olvera wrote:
+>>>>> Add UFS support for SM8750 SoCs.
+>>>>>
+>>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>>> ---
+>>>>> Nitin Rawat (5):
+>>>>>         dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: Document the SM8750 QMP UFS PHY
+>>>>>         phy: qcom-qmp-ufs: Add PHY Configuration support for SM8750
+>>>>>         dt-bindings: ufs: qcom: Document the SM8750 UFS Controller
+>>>>>         arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 SoC
+>>>>>         arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 QRD and MTP boards
+>>>>
+>>>> You still need the same workaround 8550/8650 have in the UFS driver
+>>>> (UFSHCD_QUIRK_BROKEN_LSDBS_CAP) for it to work reliably, or at least
+>>>> that was the case for me on a 8750 QRD.
+>>>>
+>>>> Please check whether we can make that quirk apply based on ctrl
+>>>> version or so, so that we don't have to keep growing the compatible
+>>>> list in the driver.
+>>>>
+>>>
+>>> That would be a bizarre. When I added the quirk, I was told that it would affect
+>>> only SM8550 and SM8650 (this one I learned later). I'm not against applying the
+>>> quirk based on UFSHC version if the bug is carried forward, but that would be an
+>>> indication of bad design.
+>>
+>> Isn't 8750 capable of using MCQ now ? because this is the whole issue behind
+>> this UFSHCD_QUIRK_BROKEN_LSDBS_CAP, it's supposed to use MCQ by default... but
+>> we don't.
+>>
+>> Is there any news about that ? It's a clear regression against downstream, not
+>> having MCQ makes the UFS driver struggle to reach high bandwidth when the system
+>> is busy because we can't spread the load over all CPUs and we have only single
+>> queue to submit requests.
+>>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> index 4a057f7c0d9fae0ebd1b3cf3468746b382bc886b..7a8211bec139375b5aab939f123d88fca7aceff2 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> @@ -2674,6 +2674,45 @@ gpucc: clock-controller@3d90000 {
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		adreno_smmu: iommu@3da0000 {
-> +			compatible = "qcom,qcs8300-smmu-500", "qcom,adreno-smmu",
-> +				     "qcom,smmu-500", "arm,mmu-500";
-> +			reg = <0x0 0x3da0000 0x0 0x20000>;
-> +			#iommu-cells = <2>;
-> +			#global-interrupts = <2>;
-> +
-> +			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
-> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
-> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
-> +				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
-> +				 <&gpucc GPU_CC_AHB_CLK>,
-> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
-> +
-> +			 clock-names = "gcc_gpu_memnoc_gfx_clk",
-
-Stray whitespace after the Tab symbol
-
-> +				       "gcc_gpu_snoc_dvm_gfx_clk",
-> +				       "gpu_cc_ahb_clk",
-> +				       "gpu_cc_hlos1_vote_gpu_smmu_clk",
-> +				       "gpu_cc_cx_gmu_clk",
-> +				       "gpu_cc_hub_cx_int_clk",
-> +				       "gpu_cc_hub_aon_clk";
-
-clocks and clock-names do not match.
-
-> +			power-domains = <&gpucc GPU_CC_CX_GDSC>;
-> +			dma-coherent;
-> +		};
-> +
->  		pmu@9091000 {
->  			compatible = "qcom,qcs8300-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
->  			reg = <0x0 0x9091000 0x0 0x1000>;
+> There are hardware issues on SM8550 and SM8650(?) for the MCQ feature.
+> Apparently, Qcom carries the workaround in downstream, but I got tired of
+> pushing them to upstream the fix(es).
 > 
-> -- 
-> 2.34.1
+> Maybe Can Guo can share what is the latest update on this.
+> 
+> - Mani
 > 
 
--- 
-With best wishes
-Dmitry
+Hi Mani,
+
+I have already replied to konrad mail earlier in this thread.
+
+The LSDBS workaround is only applicable for SM8650 and SM8550.
+SM8750 and onwards doesn't need this WA anymore as it is fixed in HW.
+
+Regards,
+Nitin
+
 
