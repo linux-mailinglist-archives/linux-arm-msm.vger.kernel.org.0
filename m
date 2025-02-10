@@ -1,139 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-47480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EBD6A2F9B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 21:06:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FEC6A2F9DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 21:25:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2139C3A1A21
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 20:05:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD18E168A47
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 20:25:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8497C25C6EE;
-	Mon, 10 Feb 2025 20:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7699724E4B7;
+	Mon, 10 Feb 2025 20:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b9lowbss"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BQPJU1lV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053E324BCFD
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 20:06:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E1225C71C;
+	Mon, 10 Feb 2025 20:25:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739217964; cv=none; b=HYTmQg47Aozt8H8fLq7Fxg+gOk4nbVFtk46waX3HyUiVdYHP2uy9gBwRE9kcw2UbkNzPo0GDfhbTZgRqNtyhkEXjFdAKhlatZPBr83zUqBZIU8NYwIQV3eLTTFiREllZrqdFOkBeJBGWf00lX3wRtnDa/KCYRotlDXIAJbijbU0=
+	t=1739219109; cv=none; b=lXfS8oQ79SwNVybzpjEshWD6kx9NYC8TDhOZRnhWyETwcKGM51Inqw+OFA+LfElzkH+p6wM+rwTH3e9ZKBkcS+SP3JmgMHISl5Sle/L+2WV7vs5tWc3ht1B7vjcUVNKql2Vr0sjEysOYlpBrGxaTvyOZBtnWhTuwaAKlnqpawHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739217964; c=relaxed/simple;
-	bh=1C6majvuXTRgQpweqGpWVKF1omfml9tT/vnejXHKCSs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hPWJ0J0hidEIBoKpFgT6tMA2ThFOPpTRX6/7Yd+hBgSniLbYwPO4+j6lFhErUkTVd4tcuk7CgK+nKFc6+7CT+6qcwDAIAWi+lODm+ucerRtLdNU4Y6I6mmcaBc6NXoPdJF0KtcgVPCVDpAvODs4QiRGqFSw99rSHN4iaez/ImJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b9lowbss; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43618283dedso47757475e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 12:06:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739217960; x=1739822760; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qZge85fGuKAUE9Mz0cTsJLS+63ffaGNjx2RI84r0q6Q=;
-        b=b9lowbssvfiQIeoS1HImtjG43vnAJ5RwLZMfgVfRGlgiPeNdd3hnqPN3sd1xhFcm4/
-         Fq2ZI/qTuRHVc0qbNDhLGCXROiua1GXocpi5XEmaL76ijPOqVGZngqv+rAvLHyroqt78
-         ACNDtNVOjsrq0hbyRGqHNP+u9iPshn7YDQ4wuvqqbQtoDzLML0TYnAx8F4iKjU8qMsR1
-         BU/7VVdTI+p9Dl1m3GWQl+BpY4GcrEPQVoG07NoNBbd4TrnE063dcULgcGo27QHJTzDH
-         foszrIJY8wHK0lQ0cXzkRak/IkVye9PWJ7JN/Kia46sOSYX2JBGB8ZByt7wxf5Z8Ml2O
-         bDoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739217960; x=1739822760;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qZge85fGuKAUE9Mz0cTsJLS+63ffaGNjx2RI84r0q6Q=;
-        b=SSoL93EQ7c/s9JdfEvM4Po72Q8mG5APrdW5Cbj/bbQiuJAZO8Rm1m5eSXhEQb82SsU
-         7QXz/L92tVxuDwLEbp2RRMef4o2nQiKiBYSXLIXH0cUwh3OiFVkQOqoStuSW+cpOfqMa
-         KeUwJjfxlUD8uZ4eztX/jFpPpLWNjxr/2a52PDBPy6wLxPvPNmU17hHyPl9omxrGoFop
-         Fj5uABHuB4MbUPNseDalywf4ts/IypfkQq8YM1CT9Fmw2N+WOXZ5+V/G30PGisRg04i0
-         cG7rOrWJm3c04PyQBv50FVqG3S5j5ooBIBizvQVB8G54ogrzfY5u1swThsIznsBg+t7s
-         Zn6g==
-X-Forwarded-Encrypted: i=1; AJvYcCVYNXgLmE5EZK2z2NzyGRf/1epwJPdBWUF9msU1LkfbDPoPYjqvJOuqKbTagHwDZKFebxrIxQHxaj4grZoY@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJ3wbXoBkkvZnwwq0uMTqeK+zPPtY7o6fCuAq8STdDEUaiyWUy
-	v4PxhZkvpa/czBRQD4OHUePTELeA+FTqdGeAiZoDlwd4ZWPBUWs3qqhoyM60ZcM=
-X-Gm-Gg: ASbGncszsheWM05gMa9rUtBUjw8BLWRmLd+xuOsm2fHzQs0kw5ql1BtNy/W8DygZP+q
-	KvcXhKf956Wtp6TGgLIwSLFWDoQOaIozy0WDbY+GM26FJhG56KW5UhN8zI0CPYp2uaAElIIJlyP
-	VReTr1ix6+wVMC8/GwoGGBQ33ZkdcXFKO6P+juQnS0miZeRc4VPV3YWSg0z2V0vwQBcrfx9gnnR
-	T0vfoX3saa4OWAW2GqoBFpQpvf3KRWcBU7+vxwvDQ4k/GH33lL18VuwOrxfMOKeWFHc8rQlcXuA
-	my8ZHHm9LeFgtAxmaSQybbgE3qpcvBnJNWXLoK5I01gzWYOuNnrMzW27+UHufr7+hmkt/v8M
-X-Google-Smtp-Source: AGHT+IENZNLlzbHZChxxzkAVFaxoHPFPpaDAe1DrFLA3eP/pNGLyNj0uGx+/p7g39WeC2q/Q0BDnJg==
-X-Received: by 2002:a05:600c:a16:b0:439:31e0:d9ab with SMTP id 5b1f17b1804b1-43931e0e01dmr88923185e9.0.1739217960152;
-        Mon, 10 Feb 2025 12:06:00 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:1d11:ab01:7693:a594:d8cc:16e9? ([2a0a:ef40:1d11:ab01:7693:a594:d8cc:16e9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4390db110dfsm194277315e9.36.2025.02.10.12.05.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Feb 2025 12:05:59 -0800 (PST)
-Message-ID: <22b42e2a-55f9-40c5-93a2-bd18a5ac3af9@linaro.org>
-Date: Mon, 10 Feb 2025 20:05:58 +0000
+	s=arc-20240116; t=1739219109; c=relaxed/simple;
+	bh=vXhVwgAzJRsbMBb4ioYc4lrcIttn/6/nkZ/Jx0CS6GM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nXpzX3pCE/drXvega5vRcuxIK9N0AcPGmF9Fy0dwbYT41atyeez5gGcBSXD8STO9SlSWPBmvZoXeWk0IG2ZaA7z7AymXSqhy/XnQauJndYVH+Zpp73O6Q79u1Xatj58C/RdAQm2iGA4tCbEJSCd/nd4PfaN0LuaQcaRHGwt8hnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BQPJU1lV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484BFC4CEE4;
+	Mon, 10 Feb 2025 20:25:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739219108;
+	bh=vXhVwgAzJRsbMBb4ioYc4lrcIttn/6/nkZ/Jx0CS6GM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=BQPJU1lVvT59yLO19S+0VFvHodslE1bbsNTJRksP19srUIFw/MHoVBh89aQFJP/Nl
+	 8NrhHpfkwSJegrDFik1Qi924INyer6fAq+VJLwou4Y4D0D219Bhvyme8kAX0wak5u9
+	 6UZPicZqg+oORAPzkYPOP5BPHLKbhoW1Z1g5MzKP2dMwpPz/Olt9HsEd6maKB3hMdF
+	 tEYcsOiEeX0venL7NxxwRUDWvOdnaBHiP8pH1pPqzoPYrzHunYZy4PFfoxu7Z6TFRp
+	 3XpxT+lnV+DC1K9/IjuKH6M5RxI42O78sgfuSqlHNZv842dAoFtq/wx1KFEeyWjmTv
+	 aHKh2ZYgsqgoA==
+From: Eric Biggers <ebiggers@kernel.org>
+To: linux-fscrypt@vger.kernel.org,
+	linux-scsi@vger.kernel.org
+Cc: linux-block@vger.kernel.org,
+	linux-mmc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v12 0/4] Driver and fscrypt support for HW-wrapped inline encryption keys
+Date: Mon, 10 Feb 2025 12:23:32 -0800
+Message-ID: <20250210202336.349924-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-oneplus: use guard pages
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>
-Cc: "Dr. Git" <drgitx@gmail.com>, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250207151706.45031-1-caleb.connolly@linaro.org>
- <85c31e1f-20bc-4e48-b179-e44ee8e1f816@oss.qualcomm.com>
- <a22afa6d-18de-4b83-ab08-6b23b9a1d927@linaro.org>
- <3dc16129-6f1a-469a-a4fa-ecbfbeff53cf@oss.qualcomm.com>
-Content-Language: en-US
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <3dc16129-6f1a-469a-a4fa-ecbfbeff53cf@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+
+This patchset is based on linux-block/for-next and is also available at:
+
+    git fetch https://git.kernel.org/pub/scm/fs/fscrypt/linux.git wrapped-keys-v12
+
+Now that the block layer support for hardware-wrapped inline encryption
+keys has been applied for 6.15
+(https://lore.kernel.org/r/173920649542.40307.8847368467858129326.b4-ty@kernel.dk),
+this series refreshes the remaining patches.  They add the support for
+hardware-wrapped inline encryption keys to the Qualcomm ICE and UFS
+drivers and to fscrypt.  All tested on SM8650 with xfstests.
+
+TBD whether these will land in 6.15 too, or wait until 6.16 when the
+block patches that patches 2-4 depend on will have landed.
+
+Changed in v12:
+  - Rebased onto linux-block/for-next
+  - Fixed endianness error in drivers/soc/qcom/ice.c
+  - Added Acked-bys
+  - Updated the fscrypt patch to go back to having just
+    FSCRYPT_ADD_KEY_FLAG_HW_WRAPPED (as in v8) instead of
+    FSCRYPT_ADD_KEY_FLAG_HW_WRAPPED_V0 and
+    FSCRYPT_ADD_KEY_FLAG_HW_WRAPPED_V1.  Upon further discussion it
+    seemed the partial V0 compatibility was not going to be as helpful
+    as I had hoped, so instead we'll just have the single new version
+    that does things properly.  Note, I've updated my wip-wrapped-keys
+    branch of fscryptctl accordingly.
+
+Changed in v11:
+  - Rebased onto v6.14-rc1.  Dropped the patches that were upstreamed in
+    6.14, and put the block patches first in the series again.
+  - Significantly cleaned up the patch "soc: qcom: ice: add HWKM support
+    to the ICE driver".  Some of the notable changes were dropping the
+    unnecessary support for HWKM v1, and replacing qcom_ice_using_hwkm()
+    with qcom_ice_get_supported_key_type().
+  - Consistently used and documented the EBADMSG error code for invalid
+    hardware-wrapped keys.
+  - Other minor cleanups.
+
+Changed in v10:
+  - Fixed bugs in qcom_scm_derive_sw_secret() and cqhci_crypto_init().
+  - Added "ufs: qcom: fix crypto key eviction" and
+    "mmc: sdhci-msm: fix crypto key eviction".
+  - Split removing ufs_hba_variant_ops::program_key into its own patch.
+  - Minor cleanups.
+  - Added Tested-by.
+
+Changed in v9 (relative to v7 patchset from Bartosz Golaszewski):
+  - ufs-qcom and sdhci-msm now just initialize the blk_crypto_profile
+    themselves, like what ufs-exynos was doing.  This avoids needing to
+    add all the host-specific hooks for wrapped key support to the MMC
+    and UFS core drivers.
+  - When passing the blk_crypto_key further down the stack, it now
+    replaces parameters like the algorithm ID, to avoid creating two
+    sources of truth.
+  - The module parameter qcom_ice.use_wrapped_keys should work correctly now.
+  - The fscrypt support no longer uses a policy flag to indicate when a
+    file is protected by a HW-wrapped key, since it was already implied
+    by the file's key identifier being that of a HW-wrapped key.
+    Originally there was an issue where raw and HW-wrapped keys could
+    share key identifiers, but I had fixed that earlier by introducing a
+    new HKDF context byte.
+  - The term "standard keys" is no longer used.  Now "raw keys" is
+    consistently used instead.  I've found that people find the term
+    "raw keys" to be more intuitive.  Also HW-wrapped keys could in
+    principle be standardized.
+  - I've reordered the patchset to place preparatory patches that don't
+    depend on the actual HW-wrapped key support first.
+
+For older changelogs, see
+https://lore.kernel.org/r/20241202-wrapped-keys-v7-0-67c3ca3f3282@linaro.org and
+https://lore.kernel.org/r/20231104211259.17448-1-ebiggers@kernel.org
+
+Eric Biggers (3):
+  soc: qcom: ice: make qcom_ice_program_key() take struct blk_crypto_key
+  ufs: qcom: add support for wrapped keys
+  fscrypt: add support for hardware-wrapped keys
+
+Gaurav Kashyap (1):
+  soc: qcom: ice: add HWKM support to the ICE driver
+
+ Documentation/filesystems/fscrypt.rst | 187 +++++++++++---
+ drivers/mmc/host/sdhci-msm.c          |  16 +-
+ drivers/soc/qcom/ice.c                | 350 ++++++++++++++++++++++++--
+ drivers/ufs/host/ufs-qcom.c           |  57 ++++-
+ fs/crypto/fscrypt_private.h           |  75 +++++-
+ fs/crypto/hkdf.c                      |   4 +-
+ fs/crypto/inline_crypt.c              |  44 +++-
+ fs/crypto/keyring.c                   | 138 +++++++---
+ fs/crypto/keysetup.c                  |  63 ++++-
+ fs/crypto/keysetup_v1.c               |   4 +-
+ include/soc/qcom/ice.h                |  34 ++-
+ include/uapi/linux/fscrypt.h          |   6 +-
+ 12 files changed, 809 insertions(+), 169 deletions(-)
 
 
-
-On 2/10/25 18:14, Konrad Dybcio wrote:
-> On 8.02.2025 12:49 AM, Caleb Connolly wrote:
->> (resending from not a mobile client, oops)
->>
->> On 2/7/25 21:20, Konrad Dybcio wrote:
->>> On 7.02.2025 4:17 PM, Caleb Connolly wrote:
->>>> From: "Dr. Git" <drgitx@gmail.com>
->>>>
->>>> Rather than manually define the guard pages, use the
->>>> "qcom,use-guard-pages" property for rmtfs.
->>>>
->>>> Signed-off-by: "Dr. Git" <drgitx@gmail.com>
->>>
->>> I'm not sure this ID is acceptable
->>
->>
->> Linus & Greg explicitly allowed for aliases previously. Patches by "Asahi Lina" and others have been merged.
-> 
-> Correct, however the trust is put into the maintainer. Marcan et al. accepted
-> patches by ""Asahi Lina"", as they had enough confidence to put their name
-> behind said contributor not being e.g. on the sanctioned lists.
-
-Right, well please let me know your decision and how you'd like to 
-proceed if this patch is unacceptable.
-
-Kind regards,
-> 
-> Konrad
-> 
->> Ive spoken with the author several time about this in the previous years and they aren't interested in publicising their legal name. So the only alternative here is that plagiarise these patches which I didn't write, or i have to carry them forever downstream...
-> 
-> 
-
+base-commit: 352245090aa60dbaa11b4f7da18f31caf42aeb82
 -- 
-Caleb (they/them)
+2.48.1
 
 
