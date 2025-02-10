@@ -1,102 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-47488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DC8FA2FC04
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 22:28:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D4ADA2FCBB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 23:14:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1C718165100
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 21:28:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E2271652A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2025 22:14:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E80EF1C3314;
-	Mon, 10 Feb 2025 21:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7EA124E4B8;
+	Mon, 10 Feb 2025 22:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="mDryXL/Q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bKgYrG2O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D81C26462C;
-	Mon, 10 Feb 2025 21:28:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD7A26460A;
+	Mon, 10 Feb 2025 22:14:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739222917; cv=none; b=trvQFhVeewmA4av64jkHBLNRilIdA3bP7y/OP/IA2jtH1x0n0rme6VOxl00Zzmp4lqcxlba7KnYU4QfOj4SQIYK7In8O3EH06ba/98IMIwOzfZwXNfXJEiDenA8qr8JmPcG3CamDMhpIwabrdtDFehKNWbMjU83WPPDUbszAsf8=
+	t=1739225675; cv=none; b=FbWwICmwKRRKA7Jmd0UA9eNMmXOSlOTP13R3Y3vJjTjCouwA4UKbhV6YzPiXC6Fqndi4r68ks3sYtL3lVDRo7xlmJ5bkJj0k5cXLzWH5ieV6G68N9zA8HaIsoKpxHt/6TFlgcnpBBJ/Mwfgl5QuJo07MTYlpMJkEluoVvDaGIvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739222917; c=relaxed/simple;
-	bh=rkzcfXmdY0cWJ7g2nVzxenNJdNZ4J5vhQvxNLSura8U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h+8ONVdNYRabcxFLjPPscU0YruFAIGImlLkORX0iC8ikfA5AItpnUi3ZhKR4NHYJZSs++wwVzrwD3qTcR2YGi6USoZzVn5v995xNp0374mM0J94akN1Zk1pmqfwVDPQuxZCqKkk/XIjDYPNOBNvYafondPWgzXbATw9i98+scrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=mDryXL/Q; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=Ighf+cCWtVjDbwA7lBmh2KFlX0F9HHQRRAc+dU8AEZg=; b=mDryXL/QcS2+NLebwVNJ221iK4
-	LemKm77+MSODAz2Y0hgwvV615EN55OW0NrUlN61R36ifemEa9qBJbYGWv0M/DCqms/SWlaBV0dpPE
-	ei9nGBDp23yzLuXTXxpWee8HgVq/qjQ6Vr1bh9QnNDCjx92IJOIIppt4XOzrGmGwlo+4=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1thbKG-00CqAI-HD; Mon, 10 Feb 2025 22:28:20 +0100
-Date: Mon, 10 Feb 2025 22:28:20 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Yijie Yang <quic_yijiyang@quicinc.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v3 2/4] net: stmmac: dwmac-qcom-ethqos: Mask PHY mode if
- configured with rgmii-id
-Message-ID: <f0e45ece-3242-4d8b-a2d1-fa1478f05005@lunn.ch>
-References: <20250121-dts_qcs615-v3-0-fa4496950d8a@quicinc.com>
- <20250121-dts_qcs615-v3-2-fa4496950d8a@quicinc.com>
- <30450f09-83d4-4ff0-96b2-9f251f0c0896@kernel.org>
- <48ce7924-bbb7-4a0f-9f56-681c8b2a21bd@quicinc.com>
- <2bd19e9e-775d-41b0-99d4-accb9ae8262d@kernel.org>
- <71da0edf-9b2a-464e-8979-8e09f7828120@oss.qualcomm.com>
- <46423f11-9642-4239-af5d-3eb3b548b98c@quicinc.com>
- <60fecdb9-d039-4f76-a368-084664477160@oss.qualcomm.com>
+	s=arc-20240116; t=1739225675; c=relaxed/simple;
+	bh=wAlco3KgE3b5Zm2KxeQSUCDAHvlWIRWuWCxaZuyhKIA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=o/O0PzvduXHusGhsOk6OQN46nsQY50bwxoG9EIdADRt1L9wzyDLHI7slFCJ/HKCIAwHabz6J5QV60QxOJqvpmOAlI7hHR90c0QFRdQaWyLVXKu1dk2PIVSLNfaQT9O6DVoD6BmlYtHop5+UoEnaZ5vq/Qp/lXXYqSO8qJPez2n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bKgYrG2O; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51AFWGNv010537;
+	Mon, 10 Feb 2025 22:14:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vY50FlbYh4+8a/VdeObjeHxe9rwAB0wgSpExAfUGU9c=; b=bKgYrG2O14NkcbVZ
+	cGs/N0lLBDOJLBYcof8s/qxsUf1UpBGHpGGzfQEF+LFCdZIbZXQQ764YyGJoSx8E
+	n67QtCKeY8HVZgQPARVUQgUU0sk9YC+aOetSTfSh5BHIhHdvoCn7ysXEm1BH+3Bv
+	OwQWran9q1WadH1zhCv2LNtt61VZnansqLLHeXWBWJF/tAPGn7jKE+G8adTJU6kd
+	s52HcoX2UoAcGEZBnpPdMVTsXh0Mj0I3zlVzlbc6x4gRk4J57fHIJG7G58YUa4fY
+	bpT87AZVOoKSmvYVcXzUofi+NucLIqg15dAGS9Q2sSIkCfXyQL4rWdFPQMAdHjnG
+	/P/z1w==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qcs5actr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Feb 2025 22:14:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51AMEGmp031662
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Feb 2025 22:14:16 GMT
+Received: from [10.71.110.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Feb
+ 2025 14:14:15 -0800
+Message-ID: <8e40c1bf-6da7-46b1-925c-53d1fa25f3ce@quicinc.com>
+Date: Mon, 10 Feb 2025 14:14:14 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <60fecdb9-d039-4f76-a368-084664477160@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] drm/msm/dpu: Fix uninitialized variable
+To: Ethan Carter Edwards <ethan@ethancedwards.com>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie
+	<airlied@gmail.com>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Simona Vetter <simona@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <linux-hardening@vger.kernel.org>
+References: <20250209-dpu-v2-1-114dfd4ebefd@ethancedwards.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20250209-dpu-v2-1-114dfd4ebefd@ethancedwards.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6dQVsI2Oq7WzMD3NmrriezMEIldBAUks
+X-Proofpoint-GUID: 6dQVsI2Oq7WzMD3NmrriezMEIldBAUks
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-10_11,2025-02-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ mlxlogscore=999 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ adultscore=0 clxscore=1011 mlxscore=0 priorityscore=1501 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
+ definitions=main-2502100175
 
-> > But what about the out-of-tree boards that Andrew mentioned? We need to ensure we don't break them, right?
+
+
+On 2/9/2025 7:51 PM, Ethan Carter Edwards wrote:
+> There is a possibility for an uninitialized *ret* variable to be
+> returned in some code paths.
 > 
-> No. What's not on the list, doesn't exist
+> Fix this by initializing *ret* to 0.
+> 
+> Addresses-Coverity-ID: 1642546 ("Uninitialized scalar variable")
+> Fixes: 774bcfb731765d ("drm/msm/dpu: add support for virtual planes")
+> Signed-off-by: Ethan Carter Edwards <ethan@ethancedwards.com>
+> ---
+> Changes in v2:
+> - Return explicit 0 when no error occurs
+> - Add hardening mailing lists
+> - Link to v1: https://lore.kernel.org/r/20250209-dpu-v1-1-0db666884f70@ethancedwards.com
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
+> 
 
-How i worded it was:
+Thanks for your patch, this was addressed with
 
-> We care less about out of tree boards, but we also don't needlessly
-> break them.
+https://patchwork.freedesktop.org/patch/631567/ but since this is better 
+I am fine with this, will pick this one up
 
-I guess if Qualcomm wants to break all its customers boards, that is
-up to Qualcomm. But we can also make it easier for Qualcomm customers
-to get off the vendor crap kernel and to mainline if we at least give
-them an easier migration path.
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-     Andrew
+
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 098abc2c0003cde90ce6219c97ee18fa055a92a5..af3e541f60c303eb5212524e877129359b5ca98c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1164,7 +1164,6 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+>   			       unsigned int num_planes)
+>   {
+>   	unsigned int i;
+> -	int ret;
+>   
+>   	for (i = 0; i < num_planes; i++) {
+>   		struct drm_plane_state *plane_state = states[i];
+> @@ -1173,13 +1172,13 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+>   		    !plane_state->visible)
+>   			continue;
+>   
+> -		ret = dpu_plane_virtual_assign_resources(crtc, global_state,
+> +		int ret = dpu_plane_virtual_assign_resources(crtc, global_state,
+>   							 state, plane_state);
+>   		if (ret)
+> -			break;
+> +			return ret;
+>   	}
+>   
+> -	return ret;
+> +	return 0;
+>   }
+>   
+>   static void dpu_plane_flush_csc(struct dpu_plane *pdpu, struct dpu_sw_pipe *pipe)
+> 
+> ---
+> base-commit: a64dcfb451e254085a7daee5fe51bf22959d52d3
+> change-id: 20250209-dpu-c3fac78fc617
+> 
+> Best regards,
+
 
