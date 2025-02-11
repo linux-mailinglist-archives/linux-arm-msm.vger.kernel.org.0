@@ -1,169 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-47634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33FD6A3157D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 20:35:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D9E9A315EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 20:51:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3112F7A11E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 19:34:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2ABC57A3456
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 19:50:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B588E26E632;
-	Tue, 11 Feb 2025 19:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3BEB2641D0;
+	Tue, 11 Feb 2025 19:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="wVwgWhD+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GGkTLI1+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E347126E626
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 19:35:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D80261590;
+	Tue, 11 Feb 2025 19:49:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739302504; cv=none; b=OZSXrGadHR1UcyEaVZj7HI7RcWq3f7PS0zaCMPWugBeSSyeW1IythPoBChZVDZ//lhdeZXx0YI2FHmwDoFEp6pgIYnFI5E5NCjKyk6yXzGseQlXeePaCVrVSQQDpihUT9OEFms2Spk6+numF+cJrv/FuV+oqpzC830civxU8hXg=
+	t=1739303388; cv=none; b=i9sNLbLNmIeCqi+Xk1uUb6R65vy4JrcZzmNmMoDKkKgsGAWF8tDB/MEMCrqJS5PCK+PV+vMvj3/xwiTFSBJhAOH5JQjE8MmpGD2mihV7XAbP22Hl6LWXjwAM4iH2GyGuD5nDXbyj3Sscwa4dVVoxE6swRSeqs5PPTAJtsu2IAoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739302504; c=relaxed/simple;
-	bh=Lzk3JO4szt3sEB/N/pUn3BzbN+74+DtV5pLcgvSbqxo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D1hHeNK75CwFRsHCu7rrYtgy/83U3JdIeH8CMK5nBp6tl0ycgfMoxr27FiSk3ltpOs/kmu1Ok0SP0pV/syi/ps05/a99IWlSBlRydQYzt9A/dFJbrkneeQgAogwVp4rphcqvsX9YMQ4TEFMQsU/hMXdkGYcFndjYZSU0LsHMEtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=wVwgWhD+; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5450b91dbc8so2422326e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 11:35:02 -0800 (PST)
+	s=arc-20240116; t=1739303388; c=relaxed/simple;
+	bh=q7mudpGioXTvlqpq0msVddOb6NgEqKQnlQZT/L0oMxA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=J6TjpuBSt+nRGU/u5yrw1IW8R2wVLE0e1rVBvkumKarfYW5ClQaQFljmvzl+mxNvr2M1OqzhG9rrDCPSBd4NAb6azXzWag+mPcdgp6RhdWRR4H7qWBcGCHOH59oPpbq3vglpPBMtx3chB1eauwAFsfDeoTXUu3uCbTqXK17EyZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GGkTLI1+; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21f44e7eae4so101160265ad.2;
+        Tue, 11 Feb 2025 11:49:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1739302501; x=1739907301; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=drPWUvNTbl2xqE92lHeNDNa9DZ5Dy2MPgdDShKYcM30=;
-        b=wVwgWhD+oSOPPdvPybTqYbKdSsBDgQmlZnQpUftZemELyaXIRezJtYeqmV35ZnDkr8
-         d5O7caO7XAyw4XwujK2U9grrM+2/1LYVE8IAkGXBwqpTe4hDo4JnWueqqW8g/YhdWlH6
-         zFI8PD9caN3bfYc2XX2onSU+qho5WVLxgXe3FLRnuSa/jouhHhk3sMIxyfhwZTn67Nhy
-         0yBqgOSUlY/4SFkOusG5cLGixCwb5paAJnnziZxncL6+lqpDDwUGo6u7xzyoJ46wONvo
-         JyvbogUWSVDUX4dOsqedQizr64F2TsQFthx/YWpfYkYRIox233qOHPMFEeibf5/ZA3PJ
-         o5Wg==
+        d=gmail.com; s=20230601; t=1739303386; x=1739908186; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IjpUGXkhDfRXw7zSvgy8sT4jnZ7i9DN1kehwE4vfMW8=;
+        b=GGkTLI1+HIbKLsHQ1032NADSIZ2gS3giH0DnPVJkfev1uHN+Tp9Q207fcOM6tHP3wp
+         81rbsFG2HDe/XOSqKkzTBY+5tY5kPWY5VMf5HguUAcxUoyxiXQlO/O/mH+x4OQAh2yMy
+         M7KM2/L0MKtNwL/76swNZJ5yKMmky1L277tx3HUPtYkdjEeden8WLWPYIj3Cs1Dkb1O/
+         XwPDDUv/yhXRMWMdDVgHWAV2+LUGbp9Fhn6tleSYDck58qN+nauxgBnS2mpFYmlTnIuE
+         OF7xHDIWlmwG5zHvGfF5GgYxqRVYvpOgknu3mIGImdUW3VkMeGUEKqtVNoAscmOYEAl4
+         CP1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739302501; x=1739907301;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=drPWUvNTbl2xqE92lHeNDNa9DZ5Dy2MPgdDShKYcM30=;
-        b=t7hPU0Jg0KRoYE4y296deAEqsj3cWe84Y6/N8tVe4iQHBGe4u9X1iKKtGJ3NWE96PX
-         EPTfhCgoYbA1T0xUoTFKVvgggdoJvcBDBQwrUcbug8u5WfWKhejtryefsFME+nB5tHO2
-         uGEW59BpS5jm/OXKJwcSES10o5Sdj2o/BXYK335XbAMjZD1KSdOwnbO4Z7rmQMyjsK4Z
-         DeJSoK64wBJDMMS87Hu/+5uWRgaXqcKbyU9X17fFoZNrwfUtDMKDO42JywCGTbSjfNRC
-         rR98DaHhEvon9y89MnvPlNLRrURSuiv8thkybLTaKnd7LJ+T7g0KvSdq790IMCXZXf2T
-         SGvg==
-X-Forwarded-Encrypted: i=1; AJvYcCU0g7YWmon5hNUc0je0e+0OaUKG/D52v1aH3YWjps3uqubMvTlFobgUaANhRGhpAo1c8gpyfl5deLGYCGI0@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwPrkfQOZte/R1whpZEVuf/HTrynu+UB8jRqo3LShUfDQ4Rq+H
-	rmCmouyXi8JQSDMRYgqJ1kd1dWpwNTvARMjZwVrezpm18Lx8QnSvlEbNSeLx4oDOcFkll7Kan7P
-	zJKoB3wT/YeemH2zvm179iigwa3wqPbDJ5qV2lg==
-X-Gm-Gg: ASbGnctUPwCF2yySWnqzjZV+IAQiGWf5eVmuXv6gzpimWzmQ4HH5D7iSwj3bkuMU8EF
-	CATmFuHwbIuwf0CBKFFJCxWuWLtQQEmAlu11gMPrMyOIh43qCQDM/EfIFz6ycVGaFbpDwvQnqlA
-	m0FSufpfqrTz7QGbBETtXYJ1HZXCQ=
-X-Google-Smtp-Source: AGHT+IENh7+nnwerkUXKfjNHvIrZjJbgA4nVwo8pSn2O2KjLAKEx5uBtJDNQahXwubnc3itr5UpqLKEB/aF0axoJR14=
-X-Received: by 2002:a05:6512:e98:b0:544:1156:a9d with SMTP id
- 2adb3069b0e04-5451810d0a2mr50314e87.22.1739302500660; Tue, 11 Feb 2025
- 11:35:00 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739303386; x=1739908186;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IjpUGXkhDfRXw7zSvgy8sT4jnZ7i9DN1kehwE4vfMW8=;
+        b=JwgU0RXujDhWsyZUi/uM4foiU+xdn+1cgjjh6jjqxeImRPH+4+gkEtEle2t3wyF9Ud
+         okuZMRebGF+RM8+dTzKExre2+neoTCF7hyoXojmTWu/a6Z5keAWzDZR+Lw87nQl/ti9M
+         Md1EbEe6KWeEgOVgVMnjP/CuOHPRUISmbQU1ZTkgsgUpBxMD3oFOCUSdnYRNmuQ/liZq
+         x+SUEGhBSLM+bncOIF6B/IqiKQwzZzP7Wxmby58X51fdKy/bXzgfObfz77D2ZXKJUPwN
+         OUXfdJU/VlKdtHyDPSEyLNPqbCM2Wc4Ur3GbadepzmrLW25wT7U343nxI+DbMqpPjYvN
+         2XyA==
+X-Forwarded-Encrypted: i=1; AJvYcCU9cM1ny1zqJEFSQzYzg8AjYMrQH7wt098X23mjCMGFgfcyBvCtABPjAUA/r7r8pPCZb7yKJwHoOLCa@vger.kernel.org
+X-Gm-Message-State: AOJu0YzgdnCc+qi4AIIvYuHVoEzlU4p8tF+bgLd6cEUe6FVihSQUS16o
+	L/XxlAytFVpjUISxVhquCqm4m4OEqUDnHlN7MOVWjZWHH2RpmDmeQ52+bSiy
+X-Gm-Gg: ASbGncsVubaJ0kJwo65uhAV1cwO3mxVIfEx5ocVlHNEPnhGJQ4WPhRnmo0PLk4PtFhZ
+	wXzz/rWnwaX31oSAZleHibo0txpFd0VRPQd36Ccv0A2TvgPEv9UFyO9XfFU8AMJJLjJlzWuvDQ1
+	LikEOi4CgNHNh+cwWhYNnzBYlEwnZXZqUYKgYwtGyNhCrYyvS5A9X4C2XwD7UPJ0BxPb1Jd1q/S
+	mPxI704g/J/yR31H56OHMgRuLjXu7FYzTwP+WoTfQ8Os/hF0UKD3HqEncKqLrjZsRWnyumSCO6/
+	eIMb4Lf+3/83ceZdG4qeqCbmPQQAF0zkepSLPA==
+X-Google-Smtp-Source: AGHT+IH37wtYZVk9LnGGxycAwJeRYDRGUVpw8i2n95/wnOmXU3d48HFE1h5Jo+e4BCuHk/JSvIgI5A==
+X-Received: by 2002:a17:902:eccf:b0:215:acb3:3786 with SMTP id d9443c01a7336-220bbad0d25mr7605455ad.19.1739303386130;
+        Tue, 11 Feb 2025 11:49:46 -0800 (PST)
+Received: from localhost.localdomain ([66.119.214.127])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21f3687e68bsm99815035ad.169.2025.02.11.11.49.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 11:49:45 -0800 (PST)
+From: "James A. MacInnes" <james.a.macinnes@gmail.com>
+To: linux-arm-msm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	andersson@kernel.org,
+	konradybcio@kernel.org,
+	quic_wcheng@quicinc.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	"James A. MacInnes" <james.a.macinnes@gmail.com>
+Subject: [PATCH 0/3] Add PMI8998 VBUS Regulator Support
+Date: Tue, 11 Feb 2025 11:49:13 -0800
+Message-ID: <20250211194918.2517593-1-james.a.macinnes@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250211-x1e80100-pwrseq-qcp-v2-1-c4349ca974ab@linaro.org>
- <Z6txevdftVNww0wD@hovoldconsulting.com> <CAMRc=McApxN7TKKKAL2OmfkosKYA9gCYZXQZXFAE_A9a5qykmw@mail.gmail.com>
- <Z6uVJeQd1DXFFHG1@linaro.org>
-In-Reply-To: <Z6uVJeQd1DXFFHG1@linaro.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 11 Feb 2025 20:34:49 +0100
-X-Gm-Features: AWEUYZmxYAztARbq_llYUY0lB0u5EhPSVbakcUSWbCMuoLnLogvwKAVly3UHO-o
-Message-ID: <CAMRc=Mcf8gSr8JGixZ2MQ=d0KbZjDQ3tYNU6RNuSRDQSHpNiwQ@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-qcp: Add WiFi/BT pwrseq
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Abel Vesa <abel.vesa@linaro.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Feb 11, 2025 at 7:21=E2=80=AFPM Stephan Gerhold
-<stephan.gerhold@linaro.org> wrote:
->
-> On Tue, Feb 11, 2025 at 06:51:02PM +0100, Bartosz Golaszewski wrote:
-> > On Tue, Feb 11, 2025 at 4:49=E2=80=AFPM Johan Hovold <johan@kernel.org>=
- wrote:
-> > >
-> > > On Tue, Feb 11, 2025 at 04:01:56PM +0100, Stephan Gerhold wrote:
-> > > > Add the WiFi/BT nodes for QCP and describe the regulators for the W=
-CN7850
-> > > > combo chip using the new power sequencing bindings. All voltages ar=
-e
-> > > > derived from chained fixed regulators controlled using a single GPI=
-O.
-> > > >
-> > > > The same setup also works for CRD (and likely most of the other X1E=
-80100
-> > > > laptops). However, unlike the QCP they use soldered or removable M.=
-2 cards
-> > > > supplied by a single 3.3V fixed regulator. The other necessary volt=
-ages are
-> > > > then derived inside the M.2 card. Describing this properly requires
-> > > > new bindings, so this commit only adds QCP for now.
-> > > >
-> > > > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> > > > ---
-> > > > Changes in v2:
-> > > > - Rebase on qcom for-next, patch 1-2 were applied already
-> > > > - Mention dummy regulator warning
-> > > > - Link to v1: https://lore.kernel.org/r/20241007-x1e80100-pwrseq-qc=
-p-v1-0-f7166510ab17@linaro.org
-> > > > ---
-> > > > The Linux driver currently warns about a missing regulator supply:
-> > > >
-> > > >   pwrseq-qcom_wcn wcn7850-pmu: supply vddio1p2 not found, using dum=
-my regulator
-> > > >
-> > > > This supply exists on the WCN7850 chip, but nothing is connected th=
-ere on
-> > > > the QCP. Discussion is still open how to hide this warning in the d=
-river,
-> > > > but since the DT is correct and the same setup is already used on S=
-M8550
-> > > > upstream, this shouldn't block this patch.
-> > >
-> > > I thought Bartosz was gonna fix his driver...
-> > >
-> >
-> > This is not the same issue. The one you're thinking about[1] was fixed
-> > by commit ad783b9f8e78 ("PCI/pwrctl: Abandon QCom WCN probe on
-> > pre-pwrseq device-trees").
-> >
-> > This warning comes from the PMU driver, not the PCI pwrctrl one for
-> > the WLAN module. One solution would be to make this supply optional in
-> > bindings and use regulator_get_optional for the ones we know may be
-> > unconnected. Does it sound correct?
-> >
->
-> The supply is optional already in the bindings. It's not optional in the
-> driver though, because that one uses the bulk regulator API and that
-> currently provides no way to mark an individual regulator as optional.
->
-> We did discuss this on v1 of this patch. I think you did not get back to
-> Mark's last message yet [2]. :-)
->
-> Thanks,
-> Stephan
->
-> [2]: https://lore.kernel.org/linux-arm-msm/f125c7d5-5f85-4ff6-999b-2098ff=
-3103f9@sirena.org.uk/
+Hello,
 
-Indeed, thanks for reminding me. I'll respond tomorrow.
+This patch series adds support for the PMI8998 VBUS regulator in the Qualcomm USB VBUS regulator driver and the device tree. These changes enable proper VBUS current limit configuration and ensure compatibility across multiple Qualcomm PMICs.
 
-Bartosz
+Summary of Changes:
+- Patch 1/3: Updates the Device Tree Schema bindings to include "qcom,pmi8998-vbus-reg" for PMI8998 support.
+- Patch 2/3: Extends the Qualcomm USB VBUS regulator driver to support PMI8998, dynamically configuring the regulator based on the PMIC type.
+- Patch 3/3: Adds the VBUS regulator node to pmi8998.dtsi, enabling USB Type-C VBUS support.
+
+Motivation:
+A long time ago, in a conference room far, far away, I promised that USB Type-C capability would work on the SDM845 when we chose this chip for our instrument.
+
+That day never came.
+
+So I wrote it myself.
+
+This patch series finally adds the missing support for USB Type-C VBUS regulation on PMI8998-based platforms. Future generations of engineers will no longer have to mutter "Why doesn’t this work?" while digging through device trees.
+
+Kernel Version & Testing:
+- These patches were developed and tested on Linux 6.13.
+- Attempting to run Linux 6.14-rc2 on our Lantronix SOM resulted in a crash, making it unsuitable for validation.
+- Validation was performed using a modified device tree, confirming proper regulator configuration.
+- No regressions were observed on existing PMIC configurations.
+
+Next Steps:
+If there are any suggestions or required changes, please let me know. I will be happy to revise and address any concerns.
+
+Thanks again,
+James A. MacInnes
+james.a.macinnes@gmail.com
+
+James A. MacInnes (3):
+  regulator: qcom_usb_vbus: Update DTS binding for PMI8998 support
+  regulator: qcom_usb_vbus: Add support for PMI8998 VBUS
+  arm64: boot: dts: pmi8998.dtsi: Add VBUS regulator
+
+ .../regulator/qcom,usb-vbus-regulator.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/pmi8998.dtsi         |  6 ++++
+ drivers/regulator/qcom_usb_vbus-regulator.c   | 33 ++++++++++++++++---
+ 3 files changed, 35 insertions(+), 5 deletions(-)
+
+-- 
+2.43.0
+
 
