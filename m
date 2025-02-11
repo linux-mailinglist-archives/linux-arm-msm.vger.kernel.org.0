@@ -1,63 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-47545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2D97A3082F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 11:14:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 237B3A30853
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 11:19:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 122321886276
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 10:14:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8CFA3A2167
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 10:19:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E144B1F3D43;
-	Tue, 11 Feb 2025 10:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01C561F3FE5;
+	Tue, 11 Feb 2025 10:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oZ94Bng3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FbIZsUL0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280921E4106;
-	Tue, 11 Feb 2025 10:14:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E171F3FC1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 10:19:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739268883; cv=none; b=OAO0oCUB+o6mtFovi0YLHysnumpCh8k/NBHxVbn1KpapNvSbGHA793hdz/Q27BUoBraEPdGRtIAyr3Bs9OTaJRGOmbYWL6nA6TvLVol8vbwTeIHUf8ewj0E3lCpynEIASUaysSc8g5Xr51u6GFE+f254zxTyQewlZuI8TSrlzXY=
+	t=1739269155; cv=none; b=LXKgwy+htlJSDJSLfvF0a6d4tOLgTp+ZBWLvS3Khngfpz6mTQmlxB+FFBLzL7n8YFX0AjXYk9vLOApuVU2pk4SiNAc8OSoQ4IJ/ELYf2DXMChU471wYDKCmD5qmIkauvAG3mxLjJSdhpncq1NKKo9MmpzMKg1S5rrczcjwAdsFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739268883; c=relaxed/simple;
-	bh=FdlKOc8KBQzo2vzoUlO3ARAx1VI01bXrJQ9aJ5HAfVs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=FTsI/UMgFXwdLD/RE/T8AbVx6YUCFK7t3M7RoIu7JForOmC4nyVmN30a1ZTlFxOANhLloSYl2rdgkSg5EaYUlkPjSEiEKs//xOMNoPGwFVrMgAf4kokHn0XE/cACIJbgu9eSkNr1JX/Bk7PSFa9/V2LQPUlRZTrxiW0yrHtCtlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oZ94Bng3; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51B8vDth001448;
-	Tue, 11 Feb 2025 10:14:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hvearNOGES36ne3L//usoK4/zvPHiBAzHvBkYWI1NSE=; b=oZ94Bng387yK7UzO
-	4x5sAat/VWCliV7aLFvq8/ywV8Cb+Bu73pxzTIHW2HYGIyApOT4e7tDY44INj3ax
-	K346rxry25lLdgA6MtXfhMpcy1tMd+lv8aaKSfwuyDGMH59lngcCJLsBdH6wjnn8
-	y5CILiReIZ9hrQs1/+vyXEkmcpBzU3bP2G0aHY891W7RtrV7tPdQXW4VyTrTL+qw
-	CylVJvdTYs17PuscYBTf/wxAcxjzwyqVxuIGVab+Yj+5IGJQHga4ffU53tpjo0nf
-	xGeCGae31ipSAi2qjcgGLLsR6wKmUwtMCj0n0+yiqDA0S6blqWqV55ZSL36ioieM
-	2oiG6Q==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qepxkj8s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 10:14:24 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51BAENPo015150
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 10:14:23 GMT
-Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Feb
- 2025 02:14:16 -0800
-Message-ID: <c20ff2ea-5546-4e4a-b813-f5736696b042@quicinc.com>
-Date: Tue, 11 Feb 2025 18:14:14 +0800
+	s=arc-20240116; t=1739269155; c=relaxed/simple;
+	bh=mmYq0ka1rA31PoqSV1w1EnHuELlMe9cDQhIVsboEH4k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=n5dITzbiz11+1d/9p11QyPKUWJNvAPpGGftcSQGBWhlID54qKokP7s1bk67NA5QHQnaYapOXQkOQRENQiPyT/Zf+fsBYb8QJWni4L9yL944VwzihDZtrpeGeskUJXnUXuqDxFTI43XFpuvCIfp2xmfXSoU8JRkUemo7kQApHn5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FbIZsUL0; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-38dd011ff8bso3023677f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 02:19:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739269152; x=1739873952; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=d1+7CYo2GEpNNd6dJTgksWpYBgWB3H8P41Hw271gq6M=;
+        b=FbIZsUL0E8B1mxv3MhwM5VVhhb8aivonj/oWvHc7eWMXRS6cREBKaKwbLbsVBJ3rCN
+         FN5D3/qGfyyyFBjiSkmObVbzwdaritTR8bpi16EVsMeXVIYvftwGO3XaOkBuGfREzlv6
+         6f+pAyEkTxy4bY1H9BZUpxWeU3pXXvfdn8PMVbbPvG7gtV8rwLf5wZUjMLZZiIf3wjX6
+         Zzd0ZVw+5Mjvrm9DsiZKiOVeCDma7WY+mxOPQsuJso2xqZF3qgmrM2uuebEMe6VOkDBF
+         SlCM4vzxY7gUARIUqlMJli7b9jynxtuxy5kU4OBgB4PVLgwBqjlrNVVWFMgylzsvN/Nx
+         KlBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739269152; x=1739873952;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d1+7CYo2GEpNNd6dJTgksWpYBgWB3H8P41Hw271gq6M=;
+        b=PayEygJPGmj1rNRkf+V3DY9GSo9OGPR4nO6pAQiwCe2piKs1aOztszu3SyIcMj8f05
+         q1vPLvFtPLtKg01NAMcw38MQUKXgvksODq9t0qAf2BNrolAw10yb/dmOlJq8X/q+5r9E
+         WSq/5k2/BsatKFZG6mw9IN3jgJLjo98DZ0nmoeiC3vu0zXm403uluPBYVZUovrAEKcpH
+         V0gGSQdd02ofJmVDhK6JrrNdg+2QfF4x1g3Lg4uOU5Fyxd/FMv5w10TKk85F3qbVcO9A
+         P0ntQaOlAuIamgCy6txYVyuECueh4dD/Hq4Xzf5v98htn9B2jZFOEINqYcGodjuXmeK5
+         RUsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVhUE7OHxI6RBLY9gz/jr5gXkaqRosBupW7xxR/3ibs/CZgWYHKImrDHucknRjz1GpXSz3wlu9rUPsAZDiH@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywmij6ZbCg9FVbL3oAbFtOh4eoNoBgulB6WzpoOE/XQqF0wLpCq
+	3Tn4v+aINu+9ZqUAxGE+P0G7bBu22t+CosOSEyLhQs8nm+zVO4bQz3P0hvsUDTQ=
+X-Gm-Gg: ASbGncvXOYFpICmlfjlAP8sMZMMoasBPbcDrLaAZCJcGVBS6L0KuyxJ8Co1Wtiw1fFs
+	m4TM0JPNmwXBaFAsexaF3kUHkGaUVg6A0Zmy485lV12oiufgD4+VZth40A2IlptxANxOGERwXpK
+	NXFfI+rgWz0hCaAb497L/W0LwigcflYTuhYBMDspaDTgOQCXydiK7DzlFA0aj9m5uY7TLwE+Tj4
+	8RxxlpuAxuInxgrBMn43pHdi09v2VZAa43em21nwW6KFj4U6h4gXj+30V+BLFxfRm0ASSHc8uLo
+	BgVmR0MbeGCbJWdDCuQ4MKjeW11QgZYuDbquYnurfcIXu34vPlluOkE5fw==
+X-Google-Smtp-Source: AGHT+IHh4hDVGqmsMf5rJQ27Gh0Zf6r2TAYfUuWPHNsKZyYXSF39sDKmhxO9TOc6pLn17KWtWMv46Q==
+X-Received: by 2002:a5d:6d87:0:b0:38d:d69e:1326 with SMTP id ffacd0b85a97d-38dd69e1b18mr7568941f8f.9.1739269152351;
+        Tue, 11 Feb 2025 02:19:12 -0800 (PST)
+Received: from [192.168.0.156] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dd3dcca71sm9090007f8f.76.2025.02.11.02.19.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Feb 2025 02:19:12 -0800 (PST)
+Message-ID: <012b0381-a5d1-49bc-aa59-aae0d35aa034@linaro.org>
+Date: Tue, 11 Feb 2025 10:19:12 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,171 +81,72 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/8] scsi: ufs: core: Add a vop to map clock frequency
- to gear speed
-To: =?UTF-8?B?UGV0ZXIgV2FuZyAo546L5L+h5Y+LKQ==?= <peter.wang@mediatek.com>,
-        "beanhuo@micron.com" <beanhuo@micron.com>,
-        "avri.altman@wdc.com"
-	<avri.altman@wdc.com>,
-        "quic_rampraka@quicinc.com"
-	<quic_rampraka@quicinc.com>,
-        "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
-        "quic_nguyenb@quicinc.com" <quic_nguyenb@quicinc.com>,
-        "quic_nitirawa@quicinc.com" <quic_nitirawa@quicinc.com>,
-        "bvanassche@acm.org"
-	<bvanassche@acm.org>,
-        "junwoo80.lee@samsung.com" <junwoo80.lee@samsung.com>,
-        "mani@kernel.org" <mani@kernel.org>,
-        "martin.petersen@oracle.com"
-	<martin.petersen@oracle.com>
-CC: "ebiggers@google.com" <ebiggers@google.com>,
-        "neil.armstrong@linaro.org"
-	<neil.armstrong@linaro.org>,
-        "linux-scsi@vger.kernel.org"
-	<linux-scsi@vger.kernel.org>,
-        "manivannan.sadhasivam@linaro.org"
-	<manivannan.sadhasivam@linaro.org>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>,
-        "alim.akhtar@samsung.com"
-	<alim.akhtar@samsung.com>,
-        "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>,
-        "minwoo.im@samsung.com"
-	<minwoo.im@samsung.com>,
-        "James.Bottomley@HansenPartnership.com"
-	<James.Bottomley@HansenPartnership.com>
-References: <20250210100212.855127-1-quic_ziqichen@quicinc.com>
- <20250210100212.855127-4-quic_ziqichen@quicinc.com>
- <cb88b16e4207c649da8eba66f976c5039df7c77c.camel@mediatek.com>
+Subject: Re: [PATCH 0/3] media: qcom: camss: Add sa8775p camss TPG support
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250211-sa8775p_tpg-v1-0-3f76c5f8431f@quicinc.com>
 Content-Language: en-US
-From: Ziqi Chen <quic_ziqichen@quicinc.com>
-In-Reply-To: <cb88b16e4207c649da8eba66f976c5039df7c77c.camel@mediatek.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LN0kZQBdk9jqH1K5WUf7gOy93Bp8v9NC
-X-Proofpoint-ORIG-GUID: LN0kZQBdk9jqH1K5WUf7gOy93Bp8v9NC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-11_04,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
- mlxlogscore=999 clxscore=1015 lowpriorityscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502110064
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250211-sa8775p_tpg-v1-0-3f76c5f8431f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 11/02/2025 10:07, Wenmeng Liu wrote:
+> SA8775P is a Qualcomm SoC. This series adds driver changes to
+> bring up the TPG interfaces in SA8775P.
+> 
+> We have tested this on qcs9100-ride board with 'Test Pattern Generator'.
+> Unlike CSID TPG, this TPG can be seen as a combination of CSIPHY and sensor.
+> 
+> Tested with following commands:
+> - media-ctl --reset
+> - v4l2-ctl -d /dev/v4l-subdev0 -c test_pattern=0
+> - media-ctl -V '"msm_tpg0":0[fmt:SRGGB10/4608x2592 field:none]'
+> - media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4608x2592 field:none]'
+> - media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4608x2592 field:none]'
+> - media-ctl -l '"msm_tpg0":1->"msm_csid0":0[1]'
+> - media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> - v4l2-ctl -d /dev/v4l-subdev0 -c test_pattern=9
+> - yavta -B capture-mplane -n 5 -f SRGGB10P -s 4608x2592 /dev/video0
+>    --capture=7
+> 
+> Used following tools for the sanity check of these changes.
+> 
+> - make -j32 W=1
+> - ./scripts/checkpatch.pl
+> 
+> ---
+> This patch series depends on patch series:
+> https://lore.kernel.org/linux-media/20250210162843.609337-1-quic_vikramsa@quicinc.com/
+> ---
+> 
+> ---
+> Wenmeng Liu (3):
+>        media: qcom: camss: Add support for TPG common
+>        media: qcom: camss: Add link support for TPG common
+>        media: qcom: camss: tpg: Add TPG support for SA8775P
+> 
+>   drivers/media/platform/qcom/camss/Makefile         |   2 +
+>   drivers/media/platform/qcom/camss/camss-csid-690.c |  15 +
+>   drivers/media/platform/qcom/camss/camss-csid.c     |  44 +-
+>   drivers/media/platform/qcom/camss/camss-tpg-gen1.c | 245 +++++++
+>   drivers/media/platform/qcom/camss/camss-tpg.c      | 737 +++++++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss-tpg.h      | 130 ++++
+>   drivers/media/platform/qcom/camss/camss.c          | 113 ++++
+>   drivers/media/platform/qcom/camss/camss.h          |   5 +
+>   8 files changed, 1282 insertions(+), 9 deletions(-)
+> ---
+> base-commit: c1696380f08cf7cc68560a11f2e8c51cb24aa7ba
+> change-id: 20250211-sa8775p_tpg-7de227a82eb4
+> 
+> Best regards,
 
+Great to see this work.
 
-On 2/11/2025 2:02 PM, Peter Wang (王信友) wrote:
-> On Mon, 2025-02-10 at 18:02 +0800, Ziqi Chen wrote:
->>
->> External email : Please do not click links or open attachments until
->> you have verified the sender or the content.
->>
->>
->> From: Can Guo <quic_cang@quicinc.com>
->>
->> Add a vop to map UFS host controller clock frequencies to the
->> corresponding
->> maximum supported UFS high speed gear speeds. During clock scaling,
->> we can
->> map the target clock frequency, demanded by devfreq, to the maximum
->> supported gear speed, so that devfreq can scale the gear to the
->> highest
->> gear speed supported at the target clock frequency, instead of just
->> scaling
->> up/down the gear between the min and max gear speeds.
->>
->> Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
->> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
->> Signed-off-by: Can Guo <quic_cang@quicinc.com>
->> Reviewed-by: Bean Huo <beanhuo@micron.com>
->> Reviewed-by: Bart Van Assche <bvanassche@acm.org>
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->> v2 ->v3:
->> 1. Remove the parameter 'gear' and use it as function return result.
->> 2. Change "vops" into "vop" in commit message.
->> ---
->>   drivers/ufs/core/ufshcd-priv.h | 8 ++++++++
->>   include/ufs/ufshcd.h           | 2 ++
->>   2 files changed, 10 insertions(+)
->>
->> diff --git a/drivers/ufs/core/ufshcd-priv.h
->> b/drivers/ufs/core/ufshcd-priv.h
->> index 0549b65f71ed..4da3e65c6735 100644
->> --- a/drivers/ufs/core/ufshcd-priv.h
->> +++ b/drivers/ufs/core/ufshcd-priv.h
->> @@ -277,6 +277,14 @@ static inline int
->> ufshcd_mcq_vops_config_esi(struct ufs_hba *hba)
->>          return -EOPNOTSUPP;
->>   }
->>
->> +static inline int ufshcd_vops_freq_to_gear_speed(struct ufs_hba
-> 
-> Hi Ziqi,
-> 
-> Gear speed type in struct ufs_pa_layer_attr is u32.
-> I think it would be better to unify the type here.
-> 
-> 
-Hi Peter,
+I think the TPG should be another type of PHY.
 
-I changed the type of new_gear since V3 sue to I use it as return result 
-of vop ufshcd_vops_freq_to_gear_speed(). I think you already find the 
-reason in patch 4/8 and 5/8. I think your suggestion in patch 5/8 is 
-make sense. Let me discuss more with you in the patch 5/8.
-
--Ziqi
-
-> 
->> *hba, unsigned long freq)
->> +{
->> +       if (hba->vops && hba->vops->freq_to_gear_speed)
->> +               return hba->vops->freq_to_gear_speed(hba, freq);
->> +
->> +       return -EOPNOTSUPP;
->> +}
->> +
->>   extern const struct ufs_pm_lvl_states ufs_pm_lvl_states[];
->>
->>   /**
->> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
->> index f51d425696e7..cdb853f5b871 100644
->> --- a/include/ufs/ufshcd.h
->> +++ b/include/ufs/ufshcd.h
->> @@ -336,6 +336,7 @@ struct ufs_pwr_mode_info {
->>    * @get_outstanding_cqs: called to get outstanding completion queues
->>    * @config_esi: called to config Event Specific Interrupt
->>    * @config_scsi_dev: called to configure SCSI device parameters
->> + * @freq_to_gear_speed: called to map clock frequency to the max
->> supported gear speed
->>    */
->>   struct ufs_hba_variant_ops {
->>          const char *name;
->> @@ -387,6 +388,7 @@ struct ufs_hba_variant_ops {
->>                                         unsigned long *ocqs);
->>          int     (*config_esi)(struct ufs_hba *hba);
->>          void    (*config_scsi_dev)(struct scsi_device *sdev);
->> +       int (*freq_to_gear_speed)(struct ufs_hba *hba, unsigned long
->> freq);
->>
-> 
-> Please keep the indentation consistent too.
-> 
-> Thanks
-> Peter
-> 
->>   };
->>
->>   /* clock gating state  */
->> --
->> 2.34.1
->>
-> 
-
+---
+bod
 
