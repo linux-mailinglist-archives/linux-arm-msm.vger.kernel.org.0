@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-47502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21EFEA30112
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 02:49:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A44FBA30122
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 02:51:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 188D93A4856
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 01:49:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 656843A3295
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 01:51:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F3FA194141;
-	Tue, 11 Feb 2025 01:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1335426BD8B;
+	Tue, 11 Feb 2025 01:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c1GKcojs"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gvUlKOym"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21DE1386C9;
-	Tue, 11 Feb 2025 01:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4409C22318;
+	Tue, 11 Feb 2025 01:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739237875; cv=none; b=dhAcEW2xmfdT93Qaqxz+cVL4w1b5JNfiTKrIs9CccReDZf7wve0GTUbd7xkcYzBgBnnTikJWcXYaaNq9cBGs1oR3+WrvxifU0DmCo0XDfT4I8OakAk47jAJmVpTsBAwveD4qBFBvMxSMCFYsEzPlZK9BBaBMfp70WsMR4nUURX4=
+	t=1739238701; cv=none; b=ZLGr69CE5fxP0vJPCcwHee3G3VlrZIP1MztqviBzbf75ROtei7v7Zu3Bo+nIPV/U+2n0eKo/0DYBYAVbnBSDrGwWinZ5WtEAtKFQX823NWKkv6jGCAXvBoL/fSdehNfsxC06L/J0OC20t73y3jJiKuxdRtnoAOhXQTGjWZ2tfm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739237875; c=relaxed/simple;
-	bh=UMRoFkt8RzAbyIvY1hVEoE6cLgE/S+uQW/9TexCKjlc=;
+	s=arc-20240116; t=1739238701; c=relaxed/simple;
+	bh=nCIiUV1jtuHcR3eWZYKD3letQjclk1G0r5X/zLiu3Y8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KzzsA64i4K2Z549r7JTOP+WB4mYZSrOOL0rC+DiHO9x4m0iuIAHdu15EfNruXgulsZJNarBZ7nDW3f/eObUVFy4cbUQ3FvbwxD5rwYMC905OOSVjqUS5BFcaI1hVFZsjHPy5LnuDNc8q0a1ottHOa/JYroBY13GZp10YNxnXacw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c1GKcojs; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=CQSFlv5HBBohAm2U9RnDzCl8RQToML8m9ngQrsBwXyjKcza6c5fyiHGfXKP+DM9LUAlkfiRC6L10AnaSHFbvFvPGLlnfT7CFouopw/2z5l2eoSOU50XiB8xe0fckPIIHzQkssfYAARqvUsRtYtXUVhp7R7eSr4YlDMU5n4QXWDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gvUlKOym; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51AKIl6I004958;
-	Tue, 11 Feb 2025 01:37:50 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51AHtKVL006114;
+	Tue, 11 Feb 2025 01:51:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aVMhcUcXYHDKfScVR1dcxxM2/kVsgKdvRFIWrsnnuwg=; b=c1GKcojsu7Qi6xP+
-	8WjhB2v0Qqmi/e69+wTyypIu1oJrdK6NHQnvOh385QGOeyOhtUjuO5B4vwzpwA2p
-	rFPdNcUu8No7c2Lssgmv4mKF6OztpwNxCHUm2YFEqSLg7gtFB58kEBe4j1BeLp3j
-	iNKyK+0USshju2Qfcd2yxpWpwE5RKF4ZRrJRpku8CdJntZ5MOU02uxwYFPL98h9a
-	NQlZT/jZEJGbyvDP127TrhWvGxL2225SDQM4Ic0KuwtO13Ncoo0pXxZOaSvNNz4K
-	ngxfG50uFyb9A1/4iJWrUZQ09jhsvbJTcxprAZs+k9DhOZHPFJ5jkAS5TrXc+juS
-	2plwYw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dxp65y-1
+	1ggmpUlEH9eixLyKpXlpoLJ8PIqcM2pSQEaa1a9t2qg=; b=gvUlKOym++NFtjDO
+	dtj9SjXES6RMjChSYtntdYhOmTZuXZ5HL7yz3QcL7Qb7yva6Nfm26B+UdysJN2gD
+	t+Ei+WtfyF+7lmbnnFmb5eOlHwcAWc9Z3wg6LqyypHv/i7qf3JkPKMYNXyhhXVeo
+	+BHlNd8vC+QUBV8ngmn1SPRD+G8n2ImYt97UN/vR/DTuDWPE5avmXPDUDA3Od12k
+	9P7lvFUJnML75hq9G1L588F7LQjzblF5lMRUrIHRd0SsWbSPnkg39VoEHOIwTpXv
+	wx5r9Nlmu9JQMUdoqGAUVrP/5cIhizZ7V2pcnIa/nMcEtEH4icX2cVfZiX//WE12
+	VrlvzA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qe5mtg1w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 01:37:49 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51B1bmkw015764
+	Tue, 11 Feb 2025 01:51:24 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51B1pNme021339
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 01:37:48 GMT
-Received: from [10.133.33.12] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 11 Feb 2025 01:51:23 GMT
+Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Feb
- 2025 17:37:45 -0800
-Message-ID: <fe6c7c26-91d6-402f-80b6-018ee40e9ed7@quicinc.com>
-Date: Tue, 11 Feb 2025 09:37:43 +0800
+ 2025 17:51:23 -0800
+Message-ID: <887a8c60-ef53-4f46-9dd1-c74f266f8bb2@quicinc.com>
+Date: Mon, 10 Feb 2025 17:51:07 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,106 +65,157 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v5] arm64: dts: qcom: Add coresight nodes for
- x1e80100
-To: Johan Hovold <johan@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>,
-        Yushan Li <quic_yushli@quicinc.com>
-References: <20241205054904.535465-1-quic_jiegan@quicinc.com>
- <Z6oDdq-qAJPf9-ef@hovoldconsulting.com>
+Subject: Re: [PATCH v2 1/3] drm/msm/dsi: Use existing per-interface slice
+ count in DSC timing
 Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <Z6oDdq-qAJPf9-ef@hovoldconsulting.com>
+To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, "David
+ Airlie" <airlied@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>, Simona Vetter
+	<simona@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        "Jordan
+ Crouse" <jordan@cosmicpenguin.net>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+        "Martin
+ Botka" <martin.botka@somainline.org>,
+        Jami Kettunen
+	<jami.kettunen@somainline.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+References: <20250209-drm-msm-initial-dualpipe-dsc-fixes-v2-0-9a60184fdc36@somainline.org>
+ <20250209-drm-msm-initial-dualpipe-dsc-fixes-v2-1-9a60184fdc36@somainline.org>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20250209-drm-msm-initial-dualpipe-dsc-fixes-v2-1-9a60184fdc36@somainline.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bKcnPErKFaikX9472f4FL1Boz2luUmuT
-X-Proofpoint-ORIG-GUID: bKcnPErKFaikX9472f4FL1Boz2luUmuT
+X-Proofpoint-GUID: WVlzP2eybIJaV7B7JPZcca6eFxe4rx8v
+X-Proofpoint-ORIG-GUID: WVlzP2eybIJaV7B7JPZcca6eFxe4rx8v
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-11_01,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 bulkscore=0 clxscore=1011 adultscore=0
- lowpriorityscore=0 impostorscore=0 malwarescore=0 mlxscore=0 phishscore=0
- suspectscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2502110008
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 clxscore=1011 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 phishscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2501170000 definitions=main-2502110009
 
 
 
-On 2/10/2025 9:47 PM, Johan Hovold wrote:
-> On Thu, Dec 05, 2024 at 01:49:03PM +0800, Jie Gan wrote:
->> Add following coresight components for x1e80100 platform.
->> It includes CTI, dummy sink, dynamic Funnel, Replicator, STM,
->> TPDM, TPDA and TMC ETF.
->>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> Tested-by: Yushan Li <quic_yushli@quicinc.com>
->> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+On 2/9/2025 1:42 PM, Marijn Suijten wrote:
+> When configuring the timing of DSI hosts (interfaces) in
+> dsi_timing_setup() all values written to registers are taking
+> bonded-mode into account by dividing the original mode width by 2
+> (half the data is sent over each of the two DSI hosts), but the full
+> width instead of the interface width is passed as hdisplay parameter to
+> dsi_update_dsc_timing().
 > 
-> This patch is now in 6.14-rc1 and results in the logs being spammed with
-> 200+ messages about cyclic dependencies. I'd expect something like this
-> to at least be mentioned in the commit message:
+> Currently only msm_dsc_get_slices_per_intf() is called within
+> dsi_update_dsc_timing() with the `hdisplay` argument which clearly
+> documents that it wants the width of a single interface (which, again,
+> in bonded DSI mode is half the total width of the mode) resulting in all
+> subsequent values to be completely off.
 > 
-> [    0.250732] /soc@0/stm@10002000: Fixed dependency cycle(s) with /soc@0/funnel@10041000
-> [    0.250854] /soc@0/tpda@10004000: Fixed dependency cycle(s) with /soc@0/funnel@10041000
-> [    0.250881] /soc@0/tpda@10004000: Fixed dependency cycle(s) with /soc@0/tpdm@1000f000
-> [    0.251011] /soc@0/tpdm@1000f000: Fixed dependency cycle(s) with /soc@0/tpda@10004000
-> [    0.251128] /soc@0/funnel@10041000: Fixed dependency cycle(s) with /soc@0/funnel@10045000
-> [    0.251155] /soc@0/funnel@10041000: Fixed dependency cycle(s) with /soc@0/stm@10002000
-> [    0.251184] /soc@0/funnel@10041000: Fixed dependency cycle(s) with /soc@0/tpda@10004000
-> [    0.251251] /soc@0/funnel@10042000: Fixed dependency cycle(s) with /soc@0/funnel@10045000
-> [    0.251329] /soc@0/funnel@10042000: Fixed dependency cycle(s) with /soc@0/funnel@10c2c000
-> [    0.251359] /soc@0/funnel@10042000: Fixed dependency cycle(s) with /soc@0/funnel@10ac5000
-> [    0.251388] /soc@0/funnel@10042000: Fixed dependency cycle(s) with /soc@0/funnel@10cc5000
-> [    0.251449] /soc@0/funnel@10045000: Fixed dependency cycle(s) with /soc@0/funnel@10b04000
-> [    0.251538] /soc@0/funnel@10045000: Fixed dependency cycle(s) with /soc@0/funnel@10042000
-> [    0.251571] /soc@0/funnel@10045000: Fixed dependency cycle(s) with /soc@0/funnel@10041000
-> ...
-> [    0.301268] /soc@0/tpda@10d12000: Fixed dependency cycle(s) with /soc@0/tpdm@10d08000
-> [    0.301462] /soc@0/tpda@10d12000: Fixed dependency cycle(s) with /soc@0/funnel@10d13000
-> [    0.301520] /soc@0/funnel@10d04000: Fixed dependency cycle(s) with /soc@0/funnel@10d13000
-> [    0.301582] /soc@0/funnel@10d13000: Fixed dependency cycle(s) with /soc@0/funnel@10d04000
-> [    0.301639] /soc@0/funnel@10d13000: Fixed dependency cycle(s) with /soc@0/tpda@10d12000
+> However, as soon as we start to pass the halved hdisplay
+> into dsi_update_dsc_timing() we might as well discard
+> msm_dsc_get_slices_per_intf() since the value it calculates is already
+> available in dsc->slice_count which is per-interface by the current
+> design of MSM DPU/DSI implementations and their use of the DRM DSC
+> helpers.
 > 
-> [    0.317624] Callback from call_rcu_tasks() invoked.
-> 
-> Has anyone looked into what is causing this and if anything can be done
-> about it?
-> 
-> This is taking a fair amount of time to process and print.
-> 
-> Johan
+> Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-Hi Johan,
+Hi Marijn,
 
-These lines have been printed by following API, 
-fw_devlink_create_devlink, it's pr_info:
-
-...
-	device_links_write_lock();
-	if (__fw_devlink_relax_cycles(link->consumer, sup_handle)) {
-		__fwnode_link_cycle(link);
-		pr_debug("----- cycle: end -----\n");
-		pr_info("%pfwf: Fixed dependency cycle(s) with %pfwf\n",
-			link->consumer, sup_handle);
-	}
-...
-
-https://elixir.bootlin.com/linux/v6.14-rc1/source/drivers/base/core.c
-
-I am not sure we can change it to pr_debug to decrease annoying messages.
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 
 Thanks,
-Jie
+
+Jessica Zhang
+
+> ---
+>   drivers/gpu/drm/msm/dsi/dsi_host.c   |  8 ++++----
+>   drivers/gpu/drm/msm/msm_dsc_helper.h | 11 -----------
+>   2 files changed, 4 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 007311c21fdaa0462b05d53cd8a2aad0269b1727..42e100a8adca09d7b55afce0e2553e76d898744f 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -846,7 +846,7 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+>   		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
+>   }
+>   
+> -static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
+> +static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode)
+>   {
+>   	struct drm_dsc_config *dsc = msm_host->dsc;
+>   	u32 reg, reg_ctrl, reg_ctrl2;
+> @@ -858,7 +858,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+>   	/* first calculate dsc parameters and then program
+>   	 * compress mode registers
+>   	 */
+> -	slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
+> +	slice_per_intf = dsc->slice_count;
+>   
+>   	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
+>   	bytes_per_pkt = dsc->slice_chunk_size; /* * slice_per_pkt; */
+> @@ -991,7 +991,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   
+>   	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+>   		if (msm_host->dsc)
+> -			dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
+> +			dsi_update_dsc_timing(msm_host, false);
+>   
+>   		dsi_write(msm_host, REG_DSI_ACTIVE_H,
+>   			DSI_ACTIVE_H_START(ha_start) |
+> @@ -1012,7 +1012,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
+>   	} else {		/* command mode */
+>   		if (msm_host->dsc)
+> -			dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
+> +			dsi_update_dsc_timing(msm_host, true);
+>   
+>   		/* image data and 1 byte write_memory_start cmd */
+>   		if (!msm_host->dsc)
+> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.h b/drivers/gpu/drm/msm/msm_dsc_helper.h
+> index b9049fe1e2790703a6f42dd7e6cd3fa5eea29389..63f95523b2cbb48f822210ac47cdd3526f231a89 100644
+> --- a/drivers/gpu/drm/msm/msm_dsc_helper.h
+> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.h
+> @@ -12,17 +12,6 @@
+>   #include <linux/math.h>
+>   #include <drm/display/drm_dsc_helper.h>
+>   
+> -/**
+> - * msm_dsc_get_slices_per_intf() - calculate number of slices per interface
+> - * @dsc: Pointer to drm dsc config struct
+> - * @intf_width: interface width in pixels
+> - * Returns: Integer representing the number of slices for the given interface
+> - */
+> -static inline u32 msm_dsc_get_slices_per_intf(const struct drm_dsc_config *dsc, u32 intf_width)
+> -{
+> -	return DIV_ROUND_UP(intf_width, dsc->slice_width);
+> -}
+> -
+>   /**
+>    * msm_dsc_get_bytes_per_line() - calculate bytes per line
+>    * @dsc: Pointer to drm dsc config struct
+> 
+> -- 
+> 2.48.1
+> 
+> 
+
 
