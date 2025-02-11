@@ -1,131 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-47605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CB10A30F1B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 16:03:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8C7BA30F1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 16:04:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2D1CA167DBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 15:03:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E78153A34C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 15:03:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B273617C91;
-	Tue, 11 Feb 2025 15:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C393B3C3C;
+	Tue, 11 Feb 2025 15:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cxOnScG2"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="a38kv9CF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380C025335B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 15:02:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18FF17C91
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 15:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739286164; cv=none; b=JqIhgRiLjFCQjPEO0OldiEMVMb/cbvHE73Ns85C3/0F69mwHZBgIBcaPIjFgwjI1pj2pTFVkNnRpydKp1CL+LFidRxjv0ewoVBnw3vSsWTAxbiGzk8WsMjzvZrjALepYs2/eiyHkb3+VnKt4/2CMBujsQ41M0YnzMZ54fXdXZ74=
+	t=1739286225; cv=none; b=Hr8LhPsek7btt9HnrMXV7OvMwcyK7GPLCrmKmlLlkifWevG/zpbSFRm/ip6DkvoxupwSPOpKjoY3v/Avt9kjFfxXsH6IfCYfeIPI9E7juVpwXLmoOmnxc5CVXpICu+Tgqcv6kR0WDULGlQELVLt1ZrM5ZkNSwop5Us1HpQhreCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739286164; c=relaxed/simple;
-	bh=0MoAkeXGXl7JWzofzMauQ+F1BtvUSbi7MBO3YLF8uHs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VQ+dvlVFgyv/MlvQdNzEqp+siuuAfzjn4QbWU05zbNS66arjJqEeGssHwgXvGGCekkSajQ1IzRLtpCU5PxskXfsCcIVfAG4n/XWNEtGJ5naAO6xXeOHwn13tOslQQ+UVBn7sU0GAK+Ci+Ih4ySy7v2uHi8u5TJxAq9o0cT6EZto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cxOnScG2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BDHus4012444
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 15:02:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	K6Q5hm1OPHRpoa4kVXD8cbwi81K5xuOqGMfiWarlgEs=; b=cxOnScG2MS/OL3Jq
-	wy5ZpSpFLBMqDO9KZWGn2zTmKMVcDfTE16PHIjmTdhLSKfRvVj7jTdVrThdT7z/w
-	FOY5GkK+lyYIx6p1gZzLwdzyli6G/t+Uf7H5Aik8mAtjWZOIyIHUdHV6cBA2Ju23
-	fpmnoDCVb0lQqlHTKXFta/s3+3tbVPWHWw6Kcof4MckldGQydPIlfIjPgN02JUFe
-	Owst2k+jfWimKC+2Dp2luad6dbWAS3D9cAd7KsXTDiK3pgSJsnvGZSdi6NQul7i/
-	Zz3C9x9dK/kjaS2yilk8eb1kinWb5AcAjhjbT7Mbkkb6/JmuwL3JaZevyYbNmQly
-	+oznBA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qxv3sryx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 15:02:42 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-467bb3eea80so1638651cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 07:02:42 -0800 (PST)
+	s=arc-20240116; t=1739286225; c=relaxed/simple;
+	bh=TQQAbEM4Lc3ts4bruQy1Ce810J81S59Y8DQr6RiuK2g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YV6wEjCa1B0WDlS63JW1xfhyUnRXAjlZnlYfVkGFA+kibv28tbd6frEK1Z2bhjLTA+uUv+F4NRJSY2GrPlOM6Q8SDtMfb/lBh4gBDEN81V/jhs5PsKQqQ0WLSrsr3cG5jjjZuwlqvE9yiuIlKT0I4f2f+Kf6BxEZoAh8hskfe24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=a38kv9CF; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1739286222;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6K127Xqp01kwOLTDIHQix5w2cmmFKXaOgArwWedRCAs=;
+	b=a38kv9CFs1Tdiv9UCWkKAoZn1GRjzub9XvQ/Htqr3Wj94oiJ00nbiGjzLajRC/1NRacxTN
+	b4+bCay3YrP9wJx6zrn01Nzgc3kgdB2L5qBeNPrzF8/f7wyvRGh3Z/m/2zzHcg1CtM3usu
+	7pAYd9U+E1PU9wwAo+aR3pK+7H/Kbn0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-682-OuydCyWZOdOtz0vMGpspkw-1; Tue, 11 Feb 2025 10:03:41 -0500
+X-MC-Unique: OuydCyWZOdOtz0vMGpspkw-1
+X-Mimecast-MFC-AGG-ID: OuydCyWZOdOtz0vMGpspkw
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-43947979ce8so10286975e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 07:03:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739286161; x=1739890961;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1739286220; x=1739891020;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K6Q5hm1OPHRpoa4kVXD8cbwi81K5xuOqGMfiWarlgEs=;
-        b=aZIHf3ilYYUT/+j+43c7cgum8gYJ03m0eWINohIZkqUm61FEsFy9O/sQElvYzuDC0w
-         kiB6XU1Z+7pT9VIMVdZGx47Bzs0qpiYRoS9Jwujsnx4Bqf21KcXgUGV5tA3bqf6AHtOo
-         tqMmtrQrH2v8HQvTLAnW1b9tAtsGmld0cpgiKb7QtTREj6stfTnxQ13/57mQKUyTrADw
-         vTL2J/auTgmS16GSdMmcaK2PxOk6IXjcDez4AIjtsv54e+FL1iLbujdTK36NfXIw0MRP
-         rBCMcIbGm2PToK0iWld4FXOk6eiY36fVDcF+k5j9lepkuQceR4m6bjnRIr2WUZLgxq3X
-         UkDA==
-X-Gm-Message-State: AOJu0Yz9a+0ZySnDpMCgSkaAfEhxDlSHi0SpIepGVoW/6DMjV/447QL4
-	aw6LI2c5+1Jokx3kVf6nr0XV6jOVJjqWLPlpqZtp1pwYxf27a0AWXXPT3s16Dt91nWprnyPQK0a
-	gy7oG3CzvF3ZesqTIDBum0Bs4AFNzIE2ugNT0fqMsS38y6S3QWX61K4PgqIQ3c+4K
-X-Gm-Gg: ASbGncuPmNUAnES6S/Y8ecEn2qySbCJ6nvwrUs7puN4n/7ZrqesI3Te5YT2bA3+Das1
-	pH1Nj5HZ4+7tf/XfBuyS6i9Xut1SyTNQlAHWv+nVzBi8g99IiqD2nHS5mW+Cr8anfNxyoX5UCOO
-	CN3BkUllyyt3sYYUjrtRHg11jq4C30tefvdneZ5ktKrB6GHPK/mIs4bqngTu2Nfmmzsyf3LuFhr
-	06swRamUM8EElfcEURinJfPW4n9qFdu1e4ObfWtxn2OnipamfUvo1SmbUA5gDpLwkHvDTgty+5R
-	fdxfKy5qzeqNOsGA6Tja/XO5TxY1TI6/5g4BbIyFhqbmQwr7uObJMQRgteI=
-X-Received: by 2002:ac8:58c6:0:b0:471:9a74:f46 with SMTP id d75a77b69052e-471a3e27799mr15311301cf.15.1739286160813;
-        Tue, 11 Feb 2025 07:02:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFqOTD4B6Evza60wAUfKUybCDvikPI7vVxr1RuQkYFD1D2hK4fwRjHabOJVHvZhZQTg+r3eDQ==
-X-Received: by 2002:ac8:58c6:0:b0:471:9a74:f46 with SMTP id d75a77b69052e-471a3e27799mr15311081cf.15.1739286160410;
-        Tue, 11 Feb 2025 07:02:40 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5de4e6d60bbsm7827843a12.15.2025.02.11.07.02.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Feb 2025 07:02:39 -0800 (PST)
-Message-ID: <e2bccf9e-0a30-4177-b3e1-996230151d3f@oss.qualcomm.com>
-Date: Tue, 11 Feb 2025 16:02:38 +0100
+        bh=6K127Xqp01kwOLTDIHQix5w2cmmFKXaOgArwWedRCAs=;
+        b=DE1MNYVqiTdPeThs3L6K82M5e1KaM38YP/rFMc69YWQF80aobt5JnDnQUeu4F2cscq
+         ZxTBUuSVFnjiCfse8Q78Ip14xM9wutZWY7VYrRjuwBqdasjJH3TEaAogcsIt3JHGftfU
+         nkygA0l+U+ypcHtokLoiAVK137ASHtJJFyO4+WxYtIy935bqWVvDFDXrwy34ZWoALiyC
+         mBYl53LIwuEZqE1s59Pfb1M+woP0XC4VcITcaffaQAoJ4XcYzKC3zRW1N07ux/bes2Le
+         C4o6nGIroLT9E01lcK55GAgu7daEmUQ536DEuOi52uvZz8a7iMgfOcqmxHq8gef6QnKW
+         Cgeg==
+X-Forwarded-Encrypted: i=1; AJvYcCVu3nCPCsLgXsxDOIVgtPSKckXh6i9RWvF/6jmU1ZKWr/QSuAsge54IU3KaVP33HQEC87ZRIbe0BsL0UaW0@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTEC3ysKeEXnKdVduMD45jVsOmgdRkINSPgqYz2lqYUv65lnGj
+	0PNf78u2oGhvpRzntJBgkBhRfMjHUKc2y6HW3zUgHACUuV6109MDO2ukn2JuWEBTTvy5Ap5jFjG
+	0Ubi9lsAtvo7ajNeKUfOAzs+inzUWS2l90XRBcTO6n5sVTyFTpE0O8iN18aZVIQE=
+X-Gm-Gg: ASbGnct3BUk6P3UCsQ0MdUB+Z7pDFSCESdUG9cO59xj/RUD2032X1q4izIMYLwJkG0T
+	5/tGr+KGjCvSa5uaBNL54Fe3hcaXOOHSAlS/yzKQe5hqnR/VW/BZfjvJ7QvNqjAZv5elb9k0r5G
+	T92FcTi8Ehu6lt3BJMz12SMAUvWT9/i1KLxU4hGL7qC0IJFsgOCk72ptO/TOl31+thraCpymKVW
+	OhcQwgR6F7B8TMMJdo7FFG/MEZawSR3LE8ksf0wtdL938lu7vzWvKvcLAsdWBeo0ZMHOA==
+X-Received: by 2002:a05:600c:4448:b0:439:4740:20a2 with SMTP id 5b1f17b1804b1-4394c853a2dmr42858075e9.29.1739286220076;
+        Tue, 11 Feb 2025 07:03:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEN7+RaFI8Q1DlET/AqPOd5Q7ETC0Cm6eLK5eh5/vnngjAmjHCWD7Z20lqQzfUQw3dEBz+m0g==
+X-Received: by 2002:a05:600c:4448:b0:439:4740:20a2 with SMTP id 5b1f17b1804b1-4394c853a2dmr42856745e9.29.1739286219388;
+        Tue, 11 Feb 2025 07:03:39 -0800 (PST)
+Received: from pollux ([2a00:79c0:65c:c300:abf:b8ff:feee:998b])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dc5c8c37esm13267156f8f.2.2025.02.11.07.03.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 07:03:38 -0800 (PST)
+Date: Tue, 11 Feb 2025 16:03:36 +0100
+From: Danilo Krummrich <dakr@redhat.com>
+To: Philipp Stanner <phasta@kernel.org>
+Cc: Min Ma <min.ma@amd.com>, Lizhi Hou <lizhi.hou@amd.com>,
+	Oded Gabbay <ogabbay@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+	Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Russell King <linux+etnaviv@armlinux.org.uk>,
+	Christian Gmeiner <christian.gmeiner@gmail.com>,
+	Frank Binns <frank.binns@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Rob Herring <robh@kernel.org>, Steven Price <steven.price@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Melissa Wen <mwen@igalia.com>,
+	=?iso-8859-1?Q?Ma=EDra?= Canal <mcanal@igalia.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sunil Khatri <sunil.khatri@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Ma Jun <Jun.Ma2@amd.com>, Yunxiang Li <Yunxiang.Li@amd.com>,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
+	lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Subject: Re: [PATCH v4] drm/sched: Use struct for drm_sched_init() params
+Message-ID: <Z6tmyHpqnpkP2gKq@pollux>
+References: <20250211111422.21235-2-phasta@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Add the watchdog device
-To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <20250206-x1e80100-add-watchdog-v1-1-77147510c2d7@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250206-x1e80100-add-watchdog-v1-1-77147510c2d7@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: TwH6-yGy_XtbWpuaRxmsMIC7xq989svV
-X-Proofpoint-ORIG-GUID: TwH6-yGy_XtbWpuaRxmsMIC7xq989svV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-11_06,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=733
- suspectscore=0 phishscore=0 adultscore=0 spamscore=0 mlxscore=0
- bulkscore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0
- malwarescore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2502110100
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250211111422.21235-2-phasta@kernel.org>
 
-On 6.02.2025 11:37 AM, Abel Vesa wrote:
-> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+On Tue, Feb 11, 2025 at 12:14:23PM +0100, Philipp Stanner wrote:
+> drm_sched_init() has a great many parameters and upcoming new
+> functionality for the scheduler might add even more. Generally, the
+> great number of parameters reduces readability and has already caused
+> one missnaming, addressed in:
 > 
-> The X Elite implements Server Base System Architecture (SBSA) specification
-> compliant generic watchdog.
+> commit 6f1cacf4eba7 ("drm/nouveau: Improve variable name in
+> nouveau_sched_init()").
 > 
-> Describe it.
+> Introduce a new struct for the scheduler init parameters and port all
+> users.
 > 
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
+> Signed-off-by: Philipp Stanner <phasta@kernel.org>
+> Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+> Acked-by: Matthew Brost <matthew.brost@intel.com> # for Xe
+> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com> # for Panfrost and Panthor
+> Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com> # for Etnaviv
+> Reviewed-by: Frank Binns <frank.binns@imgtec.com> # for Imagination
+> Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com> # for Sched
+> Reviewed-by: Maíra Canal <mcanal@igalia.com> # for v3d
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
 
-Konrad
 
