@@ -1,206 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-47632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BC51A313E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 19:18:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B024A313F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 19:21:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB9E81888FE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 18:18:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF9243A227D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 18:21:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2DBC250BF5;
-	Tue, 11 Feb 2025 18:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 874201E231F;
+	Tue, 11 Feb 2025 18:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="PDqhrPsF";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="iH8+Ns8D";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="wke+i5Yb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tIcVLdU7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fallback18.i.mail.ru (fallback18.i.mail.ru [79.137.243.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531901E47C9;
-	Tue, 11 Feb 2025 18:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818371E4110
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 18:21:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739297887; cv=none; b=M4ehjxJM6ME7Rdgcu0WCr5g7lZBVtxlUbh2ksn3JqX89CWDxEBmDAd6exOpmjlMFDlPfFqJY0tbqcU+TnOc2J4V2qtSuntgzPIekWETWVlVJNY8yhiywC05VZG1FoZH9+gUtKfHsgq6rKHNQVfeTf2sOOzfAwAFMRcDNNcLL750=
+	t=1739298097; cv=none; b=MbW5s2Qnz0e+5ySkBC+GgADTGKdrD6rcES7h75bIcZdnLqQMlE0J2hcK7Z1rDMK2zm+CTcRgCApWt21ap5K8GOLZfbtnUa22guq+0yGuoXfEEvvDljDG/yVfNqLlbZ0XyrayMPsEweFr9PtrrM177TaF4KZUGykD9dfN97srOsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739297887; c=relaxed/simple;
-	bh=AkqOcohu3Ye5NQ5P5szWZwlCsKR3WH1pcS03zC+6o9o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kW7E/BvqqrY7ZBdjpFsEdQnbj9hPgAlTTSl1ZwBLZHYl3p7xRarUxQEWujVxyiFTNo5LJPV+4UznlguZhokP30ipgt/LgN6W2cUA59eq2Gskp0nGfxYCY5bhHlgtNgrCkp0h7wkOY0Ddy19hPhxItQYQbB4qHWUj88Vlcvf3I4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=PDqhrPsF; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=iH8+Ns8D; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=wke+i5Yb; arc=none smtp.client-ip=79.137.243.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
-	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=GOlY4F8lpo+TpRzMJN+a1bkfACVX6+oOge20VAskDeM=;
-	t=1739297883;x=1739387883; 
-	b=PDqhrPsFfbc9D9XH7vVm4FkG6fqRSR89dXcCDPno2Q2LXuCqGsQ9tImlwGyVKyFy7EEFlidZzCGz1dpaVDTkU8zxBi5IGypyz6gzpGBEAWzTzIqIsBZXljWV2vuvZhi3QTJmrErya3t8L6JaZcaPm212TZLNXD9boWzaERzBf88=;
-Received: from [10.113.174.102] (port=57642 helo=send78.i.mail.ru)
-	by fallback18.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1thuey-00EbAp-84; Tue, 11 Feb 2025 21:07:00 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=GOlY4F8lpo+TpRzMJN+a1bkfACVX6+oOge20VAskDeM=; t=1739297220; x=1739387220; 
-	b=iH8+Ns8DFBhg+UknYPXiRM7vvUMhx1Kfk19+9y9X1eRCewfPrDtNZyR4aPuFlsPI7JMeagDS+kg
-	boiFqeQnSFZb/kvWCvUcqzx+sEmdge1dBUOguM1AVxTMRWBPF/LXLLpLBzUqyIs0hoRbgIg9GLngR
-	vH/PkJaVH8DoUqgFJLg=;
-Received: from [10.113.97.165] (port=60280 helo=send127.i.mail.ru)
-	by exim-fallback-69886cc8d-gsgjn with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1thuep-00000000BbH-1cWr; Tue, 11 Feb 2025 21:06:51 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Sender:Reply-To:To
-	:Cc:Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
-	bh=GOlY4F8lpo+TpRzMJN+a1bkfACVX6+oOge20VAskDeM=; t=1739297211; x=1739387211; 
-	b=wke+i5Yb9DU6BJHbkpd9uMw0RcfE0z9+7ZlChSIxF2d1eOrhsJjvicvJpiQLnXPb2ettuRMEHIB
-	crtHTuqAcyOTKd+3ltMJ+qQUUa258UJyoBEmVCLGjyrpR3LA4krB/pLeK9KdzUjel7pMZzoRMu2Xr
-	Q431lYEVWpJulbmxAAY=;
-Received: by exim-smtp-79fd7578cb-7v4hj with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1thueW-00000000IrZ-3YE8; Tue, 11 Feb 2025 21:06:33 +0300
-Message-ID: <d7aa140d-ea0d-4288-8e31-29aab9a49077@jiaxyga.com>
-Date: Tue, 11 Feb 2025 21:06:19 +0300
+	s=arc-20240116; t=1739298097; c=relaxed/simple;
+	bh=yHzpB75qrt6L9V798dzn3nFGVe17ID9Yz9uDWiN5boM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qQDsl5xRDkwGocjBkyqq/UXc7L2cBX7bLXx2vFVQNzz7DDyJtDu7uwvm1iWSiklL2OEiVGcaPl/9IIoBq2L6aF1zPfABhFY/k4wrOWP/X/uRE46e+uNZs5IZlWvXbOAo22t73s4HB4UngqhBbLrxqcIeV6bRJM5KKKSeDiFMxtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tIcVLdU7; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-38dd0dc2226so3326009f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 10:21:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739298094; x=1739902894; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ltM+a2uxSbqNoll57t/hl+Ny/dwW4fSjhIoNqgR74iw=;
+        b=tIcVLdU7FyNx7JJwMtMB2sVdwIH3hPTSeIrA2vXoux4AEZx4LJ9jDMRPMHIax2dWhB
+         D120pHi71LGWs9iMtCAWuseBi7iE8s7FaFaoxiwxlXXr5cNgCJs8HIJ+ThDHDHnH+up5
+         bLbthEwW+FMcXbFA+7y5RCpnm604YPsLRN8Hcsbs9yT36Y8g2jtNe2YqcOdrASo6ql6T
+         RBjYmGR5GmDjfNtsWUxN4vjQeApM0WCJkDZbOqJByp7Jpp1xuMd0EMX+Yh/jpL6poNWz
+         evTwbKc0x15XEtNq4WgZ1ZRa2kHMOsfxvLIuX4JmFKyd5Dfx1gNnGZzcIUPNr0+ZP/tx
+         g1cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739298094; x=1739902894;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ltM+a2uxSbqNoll57t/hl+Ny/dwW4fSjhIoNqgR74iw=;
+        b=VVZ5/FyqQb0Cbp3sx5h8xBARxizQzLazqBaGqRUSRHhKNeu7Xxiplj8fEuaI5q7UnQ
+         AzjV4NFaibbHPi1pdGmp1xNDVjE/2NODvEx3Hg4GaoBPCeN3ChJ1KzQa+/xjyIleYvPi
+         /oED1ovL2ulfdTHARP0p+NMqNbDHWJXtEkn42OdXKWvgR8BkN6otn3r8swmjfcYQRIKW
+         6ThVsGMh410hovALn6szqSA8mMx7reOzHkGW2DQ0LNxiMiWCMqoh+bXIxU98klgXwmdN
+         T4uJOJZqZ0oRIjOEOpg0s88mjZtfWSSVa6PScYboIZQ1NRBoRfocUWx2T+bo1vZHWUzn
+         eN/g==
+X-Forwarded-Encrypted: i=1; AJvYcCWeJ7+tVVmWF7OJMPFX/Qo1/Vh1u7TdORcOTEBXFUrHoU4XppNXsV1xJX2f44CtuCYVFgfVidiUtTIy14Th@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzu+1aM1pL5hLvPn8yol3bDih+h9CTEsKRreACroAR9Uf9TeivX
+	ZqFVww7p5Ng/YqTQ/I//gyJ5OK6zzvJ+2VBa7Q9Y3p7RFiAyQTCpG4XTZ4YACU0=
+X-Gm-Gg: ASbGncvrRAJHL2dCKkBf19q21atJ55wPQbMY23dBwydOBo2fv/dpe6ToJfxr3VvELzJ
+	bmIQTdM//V76if3ciwxSSgpz1QGgiYeKtXZA3xHkX2r6/A1teld9gqEvv3ye5H07/E0Ax+BnWFY
+	fRG7GEdMxcbvJFsUCEOof0hXKuATAh40FLMwPtYOyV67dD7l2ScvwpNHuHtCQwqWr435Sg0/hc+
+	ck41OBX1HFbwpfFFh7sIL4kYhiszurvFB+Uwkl2yX7zYEA8WF6DlsLhZr/kbXxQ4bcIoscZ+Tkw
+	5oov09Y5KLDZS+/mAdCgQAUabg==
+X-Google-Smtp-Source: AGHT+IH8s48al3LraqkT+TOIwA1K8sIqTbw55FOvBNGZc+9PMaUyZNyKYXua1A0xWaVLj5G742ETew==
+X-Received: by 2002:a5d:47af:0:b0:38d:b051:5a0e with SMTP id ffacd0b85a97d-38dea2ea1d3mr4453f8f.49.1739298093651;
+        Tue, 11 Feb 2025 10:21:33 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef30:70a:7a19:231e:65aa])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dcde66729sm11842301f8f.81.2025.02.11.10.21.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 10:21:33 -0800 (PST)
+Date: Tue, 11 Feb 2025 19:21:25 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-qcp: Add WiFi/BT pwrseq
+Message-ID: <Z6uVJeQd1DXFFHG1@linaro.org>
+References: <20250211-x1e80100-pwrseq-qcp-v2-1-c4349ca974ab@linaro.org>
+ <Z6txevdftVNww0wD@hovoldconsulting.com>
+ <CAMRc=McApxN7TKKKAL2OmfkosKYA9gCYZXQZXFAE_A9a5qykmw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] drm/msm/dsi: Allow all bpc values
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: neil.armstrong@linaro.org, quic_jesszhan@quicinc.com,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de,
- airlied@gmail.com, simona@ffwll.ch, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
- robdclark@gmail.com, quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
- sean@poorly.run, jonathan@marek.ca, jun.nie@linaro.org, fekz115@gmail.com,
- dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, linux@mainlining.org,
- ~postmarketos/upstreaming@lists.sr.ht
-References: <20250203181436.87785-1-danila@jiaxyga.com>
- <20250203181436.87785-4-danila@jiaxyga.com>
- <rnuv4dieiy6s6c5s33hff7ntr6hkneemsq5qzk3u4ug2abwisd@6ahmijlayhhr>
-Content-Language: en-US
-From: Danila Tikhonov <danila@jiaxyga.com>
-In-Reply-To: <rnuv4dieiy6s6c5s33hff7ntr6hkneemsq5qzk3u4ug2abwisd@6ahmijlayhhr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD96946CDE51E80C51AD12667F9371EF4D01C0AF24C03CB1A09182A05F5380850405115B8D3FEFBD37D3DE06ABAFEAF6705F8F7DABAC8F41C254F212B46BA5BA54AD37E07BDF5347EEA
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7A179494B5629353BEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006370D3D68FCEFFDD9EA8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8C87E8B9AC694FCB02EE813EE8383639A8C4D35B05A705896CC7F00164DA146DAFE8445B8C89999728AA50765F790063793270F7220657A0A389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8FA486DC37A503D0BF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C4E7D9683544204AF302FCEF25BFAB3454AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C371330ADC0232E4BBBA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE71F4E386938175FB9731C566533BA786AA5CC5B56E945C8DA
-X-C1DE0DAB: 0D63561A33F958A58C921C112168955F5002B1117B3ED696DC67B5828A8B775D957033528158102E823CB91A9FED034534781492E4B8EEADE3800B164E348C91BDAD6C7F3747799A
-X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D340DAE5B306C240CF52A4A749E3CE031B824E66CC5080D15554FAE63F7707A68C42810D1D3F512E40F1D7E09C32AA3244C31DCC07445F678D777DD89D51EBB77423C27BC6E47C6A235EA455F16B58544A2381B1D8FD003179A5DA084F8E80FEBD322CFFF16B4474ECB4573B60270F1EB7C214C2BC1176D5C25
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj4p5EDZXZmhELJ0Bq/u6sgA==
-X-Mailru-Sender: 9EB879F2C80682A0D0AE6A344B45275F4BF7E89B5CACC366117A099264967948CDF0127AC1F2F4914C3BA25B859F83112C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: B8F34718100C35BD
-X-77F55803: 6242723A09DB00B40910A8BADE0CD7832638B662392E9B095D516DDB7B231B2868F3CF0E9FE49B6945DE3909ADCA5804A61C88484FD4ED652B506A067BAB3CD4226B82A55AF6BE472B6B6442568FA380
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSoSirc0Sa9/unvnsmttD4RG
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B40910A8BADE0CD783ED10998927330B56A4A45EE5564821D068F3CF0E9FE49B6945DE3909ADCA58042ACF2E6D713B8E5D483E6E4D9F4F04456A930ED086EA98B2
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSocc/adLt2YMrJdENjvzQK2
-X-Mailru-MI: 20000000000000800
-X-Mras: Ok
+In-Reply-To: <CAMRc=McApxN7TKKKAL2OmfkosKYA9gCYZXQZXFAE_A9a5qykmw@mail.gmail.com>
 
-On 2/9/25 01:09, Marijn Suijten wrote:
-> On 2025-02-03 21:14:26, Danila Tikhonov wrote:
->> From: Eugene Lepshy <fekz115@gmail.com>
->>
->> DRM DSC helper has parameters for various bpc values ​​other than 8:
-> Weird zero-width \u200b spaces here between "values" and "other", please delete
-> those.
-Thanks, I will fix it in the next version.
->> (8/10/12/14/16).
->>
->> Remove this guard.
->>
->> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
->> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> Should this patch elaborate that those "DRM DSC helper" don't have any
-> additional guarding for the values you mention either, i.e. passing 9 or 11 or
->> 16 don't seem to be checked anywhere else either?
-There are no other bpc checks, you are right. But to be honest I don't
-really see any sense in this. Anyway, if you still want us to leave the
-current guard and just extend it with new values ​​(for example via
-switch case) - let me know.
-> And your title might have space to spell out "Bits Per Component" entirely.
-I'll fix that too.
->> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 7 +------
->>   1 file changed, 1 insertion(+), 6 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 007311c21fda..d182af7bbb81 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -1767,11 +1767,6 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
->>   		return -EINVAL;
->>   	}
->>   
->> -	if (dsc->bits_per_component != 8) {
->> -		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support bits_per_component != 8 yet\n");
->> -		return -EOPNOTSUPP;
->> -	}
->> -
->>   	dsc->simple_422 = 0;
->>   	dsc->convert_rgb = 1;
->>   	dsc->vbr_enable = 0;
-> This seems supicous on the dpu1 side, in the original DSC 1.1 (not 1.2) block in
-> dpu_hw_dsc_config(), which has:
->
-> 	data |= (dsc->line_buf_depth << 3);
-> 	data |= (dsc->simple_422 << 2);
-> 	data |= (dsc->convert_rgb << 1);
-> 	data |= dsc->bits_per_component;
->
-> The original value of `8` would overlap with the lowest bit of line_buf_depth
-> (4th bit in `data`).  Now, the 2nd bit which will take the value from
-> convert_rgb, which is already set to 1 above, will overlap with the 2nd bit in
-> your new bpc value of 10.
->
-> Can you double-check that this code in DPU1 is actually valid?  I assume you
-> have tested this panel at least and it is working (worthy mention in the cover
-> letter?), this just seems like yet another mistake in the original bindings
-> (though the register always had a matching value with downstream on 8 BPC panels
-> for me).
+On Tue, Feb 11, 2025 at 06:51:02PM +0100, Bartosz Golaszewski wrote:
+> On Tue, Feb 11, 2025 at 4:49 PM Johan Hovold <johan@kernel.org> wrote:
+> >
+> > On Tue, Feb 11, 2025 at 04:01:56PM +0100, Stephan Gerhold wrote:
+> > > Add the WiFi/BT nodes for QCP and describe the regulators for the WCN7850
+> > > combo chip using the new power sequencing bindings. All voltages are
+> > > derived from chained fixed regulators controlled using a single GPIO.
+> > >
+> > > The same setup also works for CRD (and likely most of the other X1E80100
+> > > laptops). However, unlike the QCP they use soldered or removable M.2 cards
+> > > supplied by a single 3.3V fixed regulator. The other necessary voltages are
+> > > then derived inside the M.2 card. Describing this properly requires
+> > > new bindings, so this commit only adds QCP for now.
+> > >
+> > > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> > > ---
+> > > Changes in v2:
+> > > - Rebase on qcom for-next, patch 1-2 were applied already
+> > > - Mention dummy regulator warning
+> > > - Link to v1: https://lore.kernel.org/r/20241007-x1e80100-pwrseq-qcp-v1-0-f7166510ab17@linaro.org
+> > > ---
+> > > The Linux driver currently warns about a missing regulator supply:
+> > >
+> > >   pwrseq-qcom_wcn wcn7850-pmu: supply vddio1p2 not found, using dummy regulator
+> > >
+> > > This supply exists on the WCN7850 chip, but nothing is connected there on
+> > > the QCP. Discussion is still open how to hide this warning in the driver,
+> > > but since the DT is correct and the same setup is already used on SM8550
+> > > upstream, this shouldn't block this patch.
+> >
+> > I thought Bartosz was gonna fix his driver...
+> >
+> 
+> This is not the same issue. The one you're thinking about[1] was fixed
+> by commit ad783b9f8e78 ("PCI/pwrctl: Abandon QCom WCN probe on
+> pre-pwrseq device-trees").
+> 
+> This warning comes from the PMU driver, not the PCI pwrctrl one for
+> the WLAN module. One solution would be to make this supply optional in
+> bindings and use regulator_get_optional for the ones we know may be
+> unconnected. Does it sound correct?
+> 
 
-Of course I have tested the panel and it works, I just thought it would
-be obvious. We also have tested sm7150-xiaomi-courbet, sm8450-xiaomi-cupid
-and sm8475-nothing-pong, which already have bpp = bpc = 10 panels and
-with some hack it also work without any changes to the DRM.
+The supply is optional already in the bindings. It's not optional in the
+driver though, because that one uses the bulk regulator API and that
+currently provides no way to mark an individual regulator as optional.
 
->> @@ -1779,7 +1774,7 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
->>   	drm_dsc_set_const_params(dsc);
->>   	drm_dsc_set_rc_buf_thresh(dsc);
->>   
->> -	/* handle only bpp = bpc = 8, pre-SCR panels */
->> +	/* handle only pre-SCR panels */
->>   	ret = drm_dsc_setup_rc_params(dsc, DRM_DSC_1_1_PRE_SCR);
-> Good catch - this comment sounds like it's documenting a limitation of
-> this helper function, but the function does not have such limitations...
-> rc_parameters_pre_scr has values for all these combinations.
-Maybe we should remove this comment entirely?
+We did discuss this on v1 of this patch. I think you did not get back to
+Mark's last message yet [2]. :-)
 
-Regards,
-Danila
-> - Marijn
->
->>   	if (ret) {
->>   		DRM_DEV_ERROR(&msm_host->pdev->dev, "could not find DSC RC parameters\n");
->> -- 
->> 2.48.1
->>
+Thanks,
+Stephan
+
+[2]: https://lore.kernel.org/linux-arm-msm/f125c7d5-5f85-4ff6-999b-2098ff3103f9@sirena.org.uk/
 
