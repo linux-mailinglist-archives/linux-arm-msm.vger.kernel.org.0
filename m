@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-47501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D68BA30001
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 02:21:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 21EFEA30112
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 02:49:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 043AA3A3CF9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 01:21:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 188D93A4856
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 01:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FD39194141;
-	Tue, 11 Feb 2025 01:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F3FA194141;
+	Tue, 11 Feb 2025 01:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NC6uAbMK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c1GKcojs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918C0158538;
-	Tue, 11 Feb 2025 01:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21DE1386C9;
+	Tue, 11 Feb 2025 01:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739236875; cv=none; b=qkYjHFraI8ZZoQC02H/1+puSVDCeQXL67VLVC4wBsvQsVBx3G9X9eE7p2TRzbqc/8AcMWdopZnH+mpaexGL3dTdTPge22KCBtGWeqH8xYPj+roYVcVjGd8bfbbSf2b3wiYgHj8m71Fk/b56w59YJUWKCbFnqI8E3K3SXurqi7R0=
+	t=1739237875; cv=none; b=dhAcEW2xmfdT93Qaqxz+cVL4w1b5JNfiTKrIs9CccReDZf7wve0GTUbd7xkcYzBgBnnTikJWcXYaaNq9cBGs1oR3+WrvxifU0DmCo0XDfT4I8OakAk47jAJmVpTsBAwveD4qBFBvMxSMCFYsEzPlZK9BBaBMfp70WsMR4nUURX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739236875; c=relaxed/simple;
-	bh=iURoQpV90d9Rs//Ogmq+bSJCz4CRlpfHqq0YxSnxuec=;
+	s=arc-20240116; t=1739237875; c=relaxed/simple;
+	bh=UMRoFkt8RzAbyIvY1hVEoE6cLgE/S+uQW/9TexCKjlc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hWEwAP9qZWLbvZemsEp31QK9z6i9QMvN4bhIgPHqOCUsel5Ok6AgnEB0bsoYf1iEth445knH8bglo7nr8mU6+/LZll9dpFcC5fMH8gTSbpUPMUStjstFTx/W0j7BYa93gw7I7HR2eb0zG5m5wxe/J3Z03BEkknLrFUv2ogKzD5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NC6uAbMK; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=KzzsA64i4K2Z549r7JTOP+WB4mYZSrOOL0rC+DiHO9x4m0iuIAHdu15EfNruXgulsZJNarBZ7nDW3f/eObUVFy4cbUQ3FvbwxD5rwYMC905OOSVjqUS5BFcaI1hVFZsjHPy5LnuDNc8q0a1ottHOa/JYroBY13GZp10YNxnXacw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c1GKcojs; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51AKuNiO031300;
-	Tue, 11 Feb 2025 01:20:30 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51AKIl6I004958;
+	Tue, 11 Feb 2025 01:37:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Lgxx79rg+zY8ZhEl6UOYRyZEbwvUp3kyXUYU+30FnDM=; b=NC6uAbMK2VkWajXR
-	578zpcNbOhxTXpIOOQ/5c9+i54PQ3KlmV8F1EVNixJdcfzn0kDkPJGMqzYU+hwpP
-	7q+V0vSXWqEETvQqkI93bNb7pkC7ANgorZ6FF6tis8nqy/4H8JksO+n3JdPbAVu8
-	rtr59FceO3umtR+JW7GVATGyFuy0MyJ4i1hBoTg6B4d1fVKhAHqbcJSZsf1HdG57
-	wQPT4JLakhExqrBYZKlo+LvE0HjlwnjB57fZN8ShVBTTPlRa4apPGf43hJbkd/zh
-	R4BMbKnHe10PWMZLrXJIt1s1eGWwr9Gms1vAPXJiAjXeEN/RRaTNDfLRvz1niPkm
-	JdIkgg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0ese5cf-1
+	aVMhcUcXYHDKfScVR1dcxxM2/kVsgKdvRFIWrsnnuwg=; b=c1GKcojsu7Qi6xP+
+	8WjhB2v0Qqmi/e69+wTyypIu1oJrdK6NHQnvOh385QGOeyOhtUjuO5B4vwzpwA2p
+	rFPdNcUu8No7c2Lssgmv4mKF6OztpwNxCHUm2YFEqSLg7gtFB58kEBe4j1BeLp3j
+	iNKyK+0USshju2Qfcd2yxpWpwE5RKF4ZRrJRpku8CdJntZ5MOU02uxwYFPL98h9a
+	NQlZT/jZEJGbyvDP127TrhWvGxL2225SDQM4Ic0KuwtO13Ncoo0pXxZOaSvNNz4K
+	ngxfG50uFyb9A1/4iJWrUZQ09jhsvbJTcxprAZs+k9DhOZHPFJ5jkAS5TrXc+juS
+	2plwYw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0dxp65y-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 01:20:30 +0000 (GMT)
+	Tue, 11 Feb 2025 01:37:49 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51B1KTEG030819
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51B1bmkw015764
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 01:20:29 GMT
-Received: from [10.253.11.86] (10.80.80.8) by nalasex01c.na.qualcomm.com
+	Tue, 11 Feb 2025 01:37:48 GMT
+Received: from [10.133.33.12] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Feb
- 2025 17:20:23 -0800
-Message-ID: <80762356-f827-4a78-9ccf-dbe644248667@quicinc.com>
-Date: Tue, 11 Feb 2025 09:20:18 +0800
+ 2025 17:37:45 -0800
+Message-ID: <fe6c7c26-91d6-402f-80b6-018ee40e9ed7@quicinc.com>
+Date: Tue, 11 Feb 2025 09:37:43 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,157 +65,106 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] net: stmmac: dwmac-qcom-ethqos: Mask PHY mode if
- configured with rgmii-id
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>,
-        Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH RESEND v5] arm64: dts: qcom: Add coresight nodes for
+ x1e80100
+To: Johan Hovold <johan@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-CC: <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20250121-dts_qcs615-v3-0-fa4496950d8a@quicinc.com>
- <20250121-dts_qcs615-v3-2-fa4496950d8a@quicinc.com>
- <30450f09-83d4-4ff0-96b2-9f251f0c0896@kernel.org>
- <48ce7924-bbb7-4a0f-9f56-681c8b2a21bd@quicinc.com>
- <2bd19e9e-775d-41b0-99d4-accb9ae8262d@kernel.org>
- <71da0edf-9b2a-464e-8979-8e09f7828120@oss.qualcomm.com>
- <46423f11-9642-4239-af5d-3eb3b548b98c@quicinc.com>
- <60fecdb9-d039-4f76-a368-084664477160@oss.qualcomm.com>
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>,
+        Yushan Li <quic_yushli@quicinc.com>
+References: <20241205054904.535465-1-quic_jiegan@quicinc.com>
+ <Z6oDdq-qAJPf9-ef@hovoldconsulting.com>
 Content-Language: en-US
-From: Yijie Yang <quic_yijiyang@quicinc.com>
-In-Reply-To: <60fecdb9-d039-4f76-a368-084664477160@oss.qualcomm.com>
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <Z6oDdq-qAJPf9-ef@hovoldconsulting.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JmCXu3hZE9gZMZDOFI493sN8LmLBXd38
-X-Proofpoint-ORIG-GUID: JmCXu3hZE9gZMZDOFI493sN8LmLBXd38
+X-Proofpoint-GUID: bKcnPErKFaikX9472f4FL1Boz2luUmuT
+X-Proofpoint-ORIG-GUID: bKcnPErKFaikX9472f4FL1Boz2luUmuT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-11_01,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- suspectscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
- priorityscore=1501 mlxscore=0 adultscore=0 spamscore=0 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502110005
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1011 adultscore=0
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ suspectscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2501170000 definitions=main-2502110008
 
 
 
-On 2025-02-11 02:01, Konrad Dybcio wrote:
-> On 10.02.2025 4:09 AM, Yijie Yang wrote:
+On 2/10/2025 9:47 PM, Johan Hovold wrote:
+> On Thu, Dec 05, 2024 at 01:49:03PM +0800, Jie Gan wrote:
+>> Add following coresight components for x1e80100 platform.
+>> It includes CTI, dummy sink, dynamic Funnel, Replicator, STM,
+>> TPDM, TPDA and TMC ETF.
 >>
->>
->> On 2025-01-27 18:49, Konrad Dybcio wrote:
->>> On 22.01.2025 10:48 AM, Krzysztof Kozlowski wrote:
->>>> On 22/01/2025 09:56, Yijie Yang wrote:
->>>>>
->>>>>
->>>>> On 2025-01-21 20:47, Krzysztof Kozlowski wrote:
->>>>>> On 21/01/2025 08:54, Yijie Yang wrote:
->>>>>>> The Qualcomm board always chooses the MAC to provide the delay instead of
->>>>>>> the PHY, which is completely opposite to the suggestion of the Linux
->>>>>>> kernel.
->>>>>>
->>>>>>
->>>>>> How does the Linux kernel suggest it?
->>>>>>
->>>>>>> The usage of phy-mode in legacy DTS was also incorrect. Change the
->>>>>>> phy_mode passed from the DTS to the driver from PHY_INTERFACE_MODE_RGMII_ID
->>>>>>> to PHY_INTERFACE_MODE_RGMII to ensure correct operation and adherence to
->>>>>>> the definition.
->>>>>>> To address the ABI compatibility issue between the kernel and DTS caused by
->>>>>>> this change, handle the compatible string 'qcom,qcs404-evb-4000' in the
->>>>>>> code, as it is the only legacy board that mistakenly uses the 'rgmii'
->>>>>>> phy-mode.
->>>>>>>
->>>>>>> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
->>>>>>> ---
->>>>>>>     .../net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 18 +++++++++++++-----
->>>>>>>     1 file changed, 13 insertions(+), 5 deletions(-)
->>>>>>>
->>>>>>> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
->>>>>>> index 2a5b38723635b5ef9233ca4709e99dd5ddf06b77..e228a62723e221d58d8c4f104109e0dcf682d06d 100644
->>>>>>> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
->>>>>>> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
->>>>>>> @@ -401,14 +401,11 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
->>>>>>>     static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos)
->>>>>>>     {
->>>>>>>         struct device *dev = &ethqos->pdev->dev;
->>>>>>> -    int phase_shift;
->>>>>>> +    int phase_shift = 0;
->>>>>>>         int loopback;
->>>>>>>            /* Determine if the PHY adds a 2 ns TX delay or the MAC handles it */
->>>>>>> -    if (ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_ID ||
->>>>>>> -        ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_TXID)
->>>>>>> -        phase_shift = 0;
->>>>>>> -    else
->>>>>>> +    if (ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_ID)
->>>>>>>             phase_shift = RGMII_CONFIG2_TX_CLK_PHASE_SHIFT_EN;
->>>>>>>            /* Disable loopback mode */
->>>>>>> @@ -810,6 +807,17 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
->>>>>>>         ret = of_get_phy_mode(np, &ethqos->phy_mode);
->>>>>>>         if (ret)
->>>>>>>             return dev_err_probe(dev, ret, "Failed to get phy mode\n");
->>>>>>> +
->>>>>>> +    root = of_find_node_by_path("/");
->>>>>>> +    if (root && of_device_is_compatible(root, "qcom,qcs404-evb-4000"))
->>>>>>
->>>>>>
->>>>>> First, just check if machine is compatible, don't open code it.
->>>>>>
->>>>>> Second, drivers should really, really not rely on the machine. I don't
->>>>>> think how this resolves ABI break for other users at all.
->>>>>
->>>>> As detailed in the commit description, some boards mistakenly use the
->>>>> 'rgmii' phy-mode, and the MAC driver has also incorrectly parsed and
->>>>
->>>> That's a kind of an ABI now, assuming it worked fine.
->>>
->>> I'm inclined to think it's better to drop compatibility given we're talking
->>> about rather obscure boards here.
->>>
->>> $ rg 'mode.*=.*"rgmii"' arch/arm64/boot/dts/qcom -l
->>>
->>> arch/arm64/boot/dts/qcom/sa8155p-adp.dts
->>> arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts
->>>
->>> QCS404 seems to have zero interest from anyone (and has been considered
->>> for removal upstream..).
->>>
->>> The ADP doesn't see much traction either, last time around someone found
->>> a boot breaking issue months after it was committed.
->>
->> But what about the out-of-tree boards that Andrew mentioned? We need to ensure we don't break them, right?
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> Tested-by: Yushan Li <quic_yushli@quicinc.com>
+>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
 > 
-> No. What's not on the list, doesn't exist
-
-Okay, I understand.
-
+> This patch is now in 6.14-rc1 and results in the logs being spammed with
+> 200+ messages about cyclic dependencies. I'd expect something like this
+> to at least be mentioned in the commit message:
 > 
-> Konrad
+> [    0.250732] /soc@0/stm@10002000: Fixed dependency cycle(s) with /soc@0/funnel@10041000
+> [    0.250854] /soc@0/tpda@10004000: Fixed dependency cycle(s) with /soc@0/funnel@10041000
+> [    0.250881] /soc@0/tpda@10004000: Fixed dependency cycle(s) with /soc@0/tpdm@1000f000
+> [    0.251011] /soc@0/tpdm@1000f000: Fixed dependency cycle(s) with /soc@0/tpda@10004000
+> [    0.251128] /soc@0/funnel@10041000: Fixed dependency cycle(s) with /soc@0/funnel@10045000
+> [    0.251155] /soc@0/funnel@10041000: Fixed dependency cycle(s) with /soc@0/stm@10002000
+> [    0.251184] /soc@0/funnel@10041000: Fixed dependency cycle(s) with /soc@0/tpda@10004000
+> [    0.251251] /soc@0/funnel@10042000: Fixed dependency cycle(s) with /soc@0/funnel@10045000
+> [    0.251329] /soc@0/funnel@10042000: Fixed dependency cycle(s) with /soc@0/funnel@10c2c000
+> [    0.251359] /soc@0/funnel@10042000: Fixed dependency cycle(s) with /soc@0/funnel@10ac5000
+> [    0.251388] /soc@0/funnel@10042000: Fixed dependency cycle(s) with /soc@0/funnel@10cc5000
+> [    0.251449] /soc@0/funnel@10045000: Fixed dependency cycle(s) with /soc@0/funnel@10b04000
+> [    0.251538] /soc@0/funnel@10045000: Fixed dependency cycle(s) with /soc@0/funnel@10042000
+> [    0.251571] /soc@0/funnel@10045000: Fixed dependency cycle(s) with /soc@0/funnel@10041000
+> ...
+> [    0.301268] /soc@0/tpda@10d12000: Fixed dependency cycle(s) with /soc@0/tpdm@10d08000
+> [    0.301462] /soc@0/tpda@10d12000: Fixed dependency cycle(s) with /soc@0/funnel@10d13000
+> [    0.301520] /soc@0/funnel@10d04000: Fixed dependency cycle(s) with /soc@0/funnel@10d13000
+> [    0.301582] /soc@0/funnel@10d13000: Fixed dependency cycle(s) with /soc@0/funnel@10d04000
+> [    0.301639] /soc@0/funnel@10d13000: Fixed dependency cycle(s) with /soc@0/tpda@10d12000
+> 
+> [    0.317624] Callback from call_rcu_tasks() invoked.
+> 
+> Has anyone looked into what is causing this and if anything can be done
+> about it?
+> 
+> This is taking a fair amount of time to process and print.
+> 
+> Johan
 
--- 
-Best Regards,
-Yijie
+Hi Johan,
 
+These lines have been printed by following API, 
+fw_devlink_create_devlink, it's pr_info:
+
+...
+	device_links_write_lock();
+	if (__fw_devlink_relax_cycles(link->consumer, sup_handle)) {
+		__fwnode_link_cycle(link);
+		pr_debug("----- cycle: end -----\n");
+		pr_info("%pfwf: Fixed dependency cycle(s) with %pfwf\n",
+			link->consumer, sup_handle);
+	}
+...
+
+https://elixir.bootlin.com/linux/v6.14-rc1/source/drivers/base/core.c
+
+I am not sure we can change it to pr_debug to decrease annoying messages.
+
+Thanks,
+Jie
 
