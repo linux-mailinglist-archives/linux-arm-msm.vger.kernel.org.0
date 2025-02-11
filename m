@@ -1,162 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-47606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8C7BA30F1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 16:04:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36A07A30F56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 16:13:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E78153A34C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 15:03:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA6D13A185F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 15:13:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C393B3C3C;
-	Tue, 11 Feb 2025 15:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB0712512C7;
+	Tue, 11 Feb 2025 15:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="a38kv9CF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Pme/+Vj/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18FF17C91
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 15:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA983D69
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 15:13:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739286225; cv=none; b=Hr8LhPsek7btt9HnrMXV7OvMwcyK7GPLCrmKmlLlkifWevG/zpbSFRm/ip6DkvoxupwSPOpKjoY3v/Avt9kjFfxXsH6IfCYfeIPI9E7juVpwXLmoOmnxc5CVXpICu+Tgqcv6kR0WDULGlQELVLt1ZrM5ZkNSwop5Us1HpQhreCI=
+	t=1739286794; cv=none; b=lvxSrkEnIQk50DU75RS9noc2hAxZYyeyybEZlbquTVxZyH7IkvtKshRph02W/BclKWm+ibXhOWkYCN4IlMnRCwZXGbG2blqAH7zonQpTpK/RK0Z/QOEgdS+FMRxgTFJfs834/StCQPRO6QCcl7xsWMoGfZFEWRCuu8yeOiNcYps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739286225; c=relaxed/simple;
-	bh=TQQAbEM4Lc3ts4bruQy1Ce810J81S59Y8DQr6RiuK2g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YV6wEjCa1B0WDlS63JW1xfhyUnRXAjlZnlYfVkGFA+kibv28tbd6frEK1Z2bhjLTA+uUv+F4NRJSY2GrPlOM6Q8SDtMfb/lBh4gBDEN81V/jhs5PsKQqQ0WLSrsr3cG5jjjZuwlqvE9yiuIlKT0I4f2f+Kf6BxEZoAh8hskfe24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=a38kv9CF; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1739286222;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6K127Xqp01kwOLTDIHQix5w2cmmFKXaOgArwWedRCAs=;
-	b=a38kv9CFs1Tdiv9UCWkKAoZn1GRjzub9XvQ/Htqr3Wj94oiJ00nbiGjzLajRC/1NRacxTN
-	b4+bCay3YrP9wJx6zrn01Nzgc3kgdB2L5qBeNPrzF8/f7wyvRGh3Z/m/2zzHcg1CtM3usu
-	7pAYd9U+E1PU9wwAo+aR3pK+7H/Kbn0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-OuydCyWZOdOtz0vMGpspkw-1; Tue, 11 Feb 2025 10:03:41 -0500
-X-MC-Unique: OuydCyWZOdOtz0vMGpspkw-1
-X-Mimecast-MFC-AGG-ID: OuydCyWZOdOtz0vMGpspkw
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-43947979ce8so10286975e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 07:03:41 -0800 (PST)
+	s=arc-20240116; t=1739286794; c=relaxed/simple;
+	bh=SzpZB68mJtafxjD6jMIYoJsLxP06RagzsBfoAx4Ek38=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GeW/E8Q7GpXpfcJq9u5HFcolgPMiLZBypsSzqU+xocq+4LESX8CYAtBm3Q0YaQyWSobOKaLHKoPTRHOst05uFH5YBOE7qInJF2fnZN9SZiM6nQ9feP6ZFgSUu4ldiZiVRt0EvJW0pktWnQ6KM8G5e3CCNWtPYWn3bniVEJ6NiPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Pme/+Vj/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BD6Z52010369
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 15:13:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	o3ptLIxI2GDJlgvE4iDhhe0gDDPLD6Y0/FQeZw9uDu0=; b=Pme/+Vj/0UaMd7U2
+	usnZBDBkw/EJROGERztqdr3mQV+DrIJAOs2Hqr2gfO7lemKwATF8/JewnmJkRVcj
+	gvQ0RIZGcbguhZxec/KX1OievNMmkD0HQLmsSAivWQPF6lXAR5dHuj5xDx/kpxPG
+	yMyQHcyx1e5k3sQx8Agdd5EYiFxzDvQ6uTlqkxO35w/2WrMzuad6FFrzwBWSnFVk
+	PPRofxEI+JCy02mEy8UnSy0+2zcSb38A7iFAFNgDiva8v17jWsLuCztkKUUODGpL
+	u/A6dOoMoQUVJ7y2YrF7jl8/OQgyMC3wBHaXNcMQhCdbUPGfVy1i9fyZf24Kz9y2
+	+bqXbQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qcs5cuf7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 15:13:12 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-471ad2e69d6so308961cf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 07:13:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739286220; x=1739891020;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1739286791; x=1739891591;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6K127Xqp01kwOLTDIHQix5w2cmmFKXaOgArwWedRCAs=;
-        b=DE1MNYVqiTdPeThs3L6K82M5e1KaM38YP/rFMc69YWQF80aobt5JnDnQUeu4F2cscq
-         ZxTBUuSVFnjiCfse8Q78Ip14xM9wutZWY7VYrRjuwBqdasjJH3TEaAogcsIt3JHGftfU
-         nkygA0l+U+ypcHtokLoiAVK137ASHtJJFyO4+WxYtIy935bqWVvDFDXrwy34ZWoALiyC
-         mBYl53LIwuEZqE1s59Pfb1M+woP0XC4VcITcaffaQAoJ4XcYzKC3zRW1N07ux/bes2Le
-         C4o6nGIroLT9E01lcK55GAgu7daEmUQ536DEuOi52uvZz8a7iMgfOcqmxHq8gef6QnKW
-         Cgeg==
-X-Forwarded-Encrypted: i=1; AJvYcCVu3nCPCsLgXsxDOIVgtPSKckXh6i9RWvF/6jmU1ZKWr/QSuAsge54IU3KaVP33HQEC87ZRIbe0BsL0UaW0@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTEC3ysKeEXnKdVduMD45jVsOmgdRkINSPgqYz2lqYUv65lnGj
-	0PNf78u2oGhvpRzntJBgkBhRfMjHUKc2y6HW3zUgHACUuV6109MDO2ukn2JuWEBTTvy5Ap5jFjG
-	0Ubi9lsAtvo7ajNeKUfOAzs+inzUWS2l90XRBcTO6n5sVTyFTpE0O8iN18aZVIQE=
-X-Gm-Gg: ASbGnct3BUk6P3UCsQ0MdUB+Z7pDFSCESdUG9cO59xj/RUD2032X1q4izIMYLwJkG0T
-	5/tGr+KGjCvSa5uaBNL54Fe3hcaXOOHSAlS/yzKQe5hqnR/VW/BZfjvJ7QvNqjAZv5elb9k0r5G
-	T92FcTi8Ehu6lt3BJMz12SMAUvWT9/i1KLxU4hGL7qC0IJFsgOCk72ptO/TOl31+thraCpymKVW
-	OhcQwgR6F7B8TMMJdo7FFG/MEZawSR3LE8ksf0wtdL938lu7vzWvKvcLAsdWBeo0ZMHOA==
-X-Received: by 2002:a05:600c:4448:b0:439:4740:20a2 with SMTP id 5b1f17b1804b1-4394c853a2dmr42858075e9.29.1739286220076;
-        Tue, 11 Feb 2025 07:03:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEN7+RaFI8Q1DlET/AqPOd5Q7ETC0Cm6eLK5eh5/vnngjAmjHCWD7Z20lqQzfUQw3dEBz+m0g==
-X-Received: by 2002:a05:600c:4448:b0:439:4740:20a2 with SMTP id 5b1f17b1804b1-4394c853a2dmr42856745e9.29.1739286219388;
-        Tue, 11 Feb 2025 07:03:39 -0800 (PST)
-Received: from pollux ([2a00:79c0:65c:c300:abf:b8ff:feee:998b])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dc5c8c37esm13267156f8f.2.2025.02.11.07.03.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 07:03:38 -0800 (PST)
-Date: Tue, 11 Feb 2025 16:03:36 +0100
-From: Danilo Krummrich <dakr@redhat.com>
-To: Philipp Stanner <phasta@kernel.org>
-Cc: Min Ma <min.ma@amd.com>, Lizhi Hou <lizhi.hou@amd.com>,
-	Oded Gabbay <ogabbay@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-	Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Russell King <linux+etnaviv@armlinux.org.uk>,
-	Christian Gmeiner <christian.gmeiner@gmail.com>,
-	Frank Binns <frank.binns@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Rob Herring <robh@kernel.org>, Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Melissa Wen <mwen@igalia.com>,
-	=?iso-8859-1?Q?Ma=EDra?= Canal <mcanal@igalia.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sunil Khatri <sunil.khatri@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Ma Jun <Jun.Ma2@amd.com>, Yunxiang Li <Yunxiang.Li@amd.com>,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	amd-gfx@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
-	lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Subject: Re: [PATCH v4] drm/sched: Use struct for drm_sched_init() params
-Message-ID: <Z6tmyHpqnpkP2gKq@pollux>
-References: <20250211111422.21235-2-phasta@kernel.org>
+        bh=o3ptLIxI2GDJlgvE4iDhhe0gDDPLD6Y0/FQeZw9uDu0=;
+        b=CzSLirp5bE92rmeb6C1NCDDIe8/VcRWR/n11mWkp5srHN7Nn4Zf9tmFfjv1+W1ake8
+         XILphc3Uym3VhPn957vkXE6nAlw6bWs1L+yEFtyzuu5iWfYYE5Ii/niir+aVVSqeosIq
+         wG3POZ+T35usD5ULl3Iw1+HqDyGa28R2oprG83ogLQ4rudZSkomUYArboxIPnhMLVNZ5
+         r3jE1YIqyEvMoO/vDtwQDMyExmQRFbfby8SIZkeSlM99MmMfYacVvMjpktEFiig/6Y8y
+         47xEjk1VfSA0pxu6UTqywN28dwD0q6qFdhJNv6m959CcScfW5O0rAu9JZQYMY+Dv5wV6
+         4W+g==
+X-Forwarded-Encrypted: i=1; AJvYcCWNAtGvLXfTE0qanVYjEkVh9vtFyH51Vv+u2d00CvTZmK3MlBiBlZUctE1yAYJL854Dsb7rmEBGs7MTQIkl@vger.kernel.org
+X-Gm-Message-State: AOJu0YwqYJa5zxR2V0suLjE1O4zhmYTcbYRDFChFWv6+f7KfOLuyVukS
+	PqOnV2qhI8LxlNzRXxP8I4wv8XcE2bL6GQ37hGckAGpQSJQ8xzpym9WXMD2Wsp/wneU0X9uc9GX
+	0muQKKmlm0/2FHY59M7JSO1AClpe+gv1H2yhSyfi7pavpoyRTzGVE/QqStjb/yynZ
+X-Gm-Gg: ASbGncuHkrndxbGO6NzP2e/6HdKkgFec3v0QvwVa3NKkOcSf3ozVkBNy7WkcQw35FC5
+	SbrllFH9rXtcap65rNQdeIKxOjv0wKvFUVieYacexILDdxqWBhbzX2b6cbfVHtQmoY2Q1TbgHIk
+	7YTsjWgBuRHkULW2P2SaXY++ECLXmlH8s/xEvgJzQP3R5fpAuupHRB0r6LA6XIDhFJ2osYJ0b/r
+	8WqUtidrCjEHsFD+0tK74v4qxdfVthW03IwMzP5aMZ8Ay7SxKkbjDlh2j2IBhcHm6D3awYqSzpk
+	P7BVRez6QXpayuxE3sQffi6+NR4UmJGV7KlQWc7GXi695VDkQcZXd+cTK90=
+X-Received: by 2002:a05:622a:138f:b0:471:962e:2302 with SMTP id d75a77b69052e-471a3d77ae6mr15268061cf.2.1739286791283;
+        Tue, 11 Feb 2025 07:13:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEbaYhtVsfvrRBBMgTO+TLZoVbUvzKTD9jlKqJcBMoq8LTiiKXgnQ7YVQgUGvGJJ5VzVmrldQ==
+X-Received: by 2002:a05:622a:138f:b0:471:962e:2302 with SMTP id d75a77b69052e-471a3d77ae6mr15267751cf.2.1739286790711;
+        Tue, 11 Feb 2025 07:13:10 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5de483407efsm8239642a12.75.2025.02.11.07.13.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Feb 2025 07:13:09 -0800 (PST)
+Message-ID: <3f77d118-ae98-41a3-8a15-c8b5cada0e96@oss.qualcomm.com>
+Date: Tue, 11 Feb 2025 16:13:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250211111422.21235-2-phasta@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-qcp: Add WiFi/BT pwrseq
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20250211-x1e80100-pwrseq-qcp-v2-1-c4349ca974ab@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250211-x1e80100-pwrseq-qcp-v2-1-c4349ca974ab@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: oioqgt0HAM2i9AldgsQr8zx3dtr3gnXU
+X-Proofpoint-GUID: oioqgt0HAM2i9AldgsQr8zx3dtr3gnXU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-11_06,2025-02-11_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ mlxlogscore=999 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ adultscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
+ definitions=main-2502110101
 
-On Tue, Feb 11, 2025 at 12:14:23PM +0100, Philipp Stanner wrote:
-> drm_sched_init() has a great many parameters and upcoming new
-> functionality for the scheduler might add even more. Generally, the
-> great number of parameters reduces readability and has already caused
-> one missnaming, addressed in:
+On 11.02.2025 4:01 PM, Stephan Gerhold wrote:
+> Add the WiFi/BT nodes for QCP and describe the regulators for the WCN7850
+> combo chip using the new power sequencing bindings. All voltages are
+> derived from chained fixed regulators controlled using a single GPIO.
 > 
-> commit 6f1cacf4eba7 ("drm/nouveau: Improve variable name in
-> nouveau_sched_init()").
+> The same setup also works for CRD (and likely most of the other X1E80100
+> laptops). However, unlike the QCP they use soldered or removable M.2 cards
+> supplied by a single 3.3V fixed regulator. The other necessary voltages are
+> then derived inside the M.2 card. Describing this properly requires
+> new bindings, so this commit only adds QCP for now.
 > 
-> Introduce a new struct for the scheduler init parameters and port all
-> users.
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+> Changes in v2:
+> - Rebase on qcom for-next, patch 1-2 were applied already
+> - Mention dummy regulator warning
+> - Link to v1: https://lore.kernel.org/r/20241007-x1e80100-pwrseq-qcp-v1-0-f7166510ab17@linaro.org
+> ---
+> The Linux driver currently warns about a missing regulator supply:
 > 
-> Signed-off-by: Philipp Stanner <phasta@kernel.org>
-> Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-> Acked-by: Matthew Brost <matthew.brost@intel.com> # for Xe
-> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com> # for Panfrost and Panthor
-> Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com> # for Etnaviv
-> Reviewed-by: Frank Binns <frank.binns@imgtec.com> # for Imagination
-> Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com> # for Sched
-> Reviewed-by: Maíra Canal <mcanal@igalia.com> # for v3d
+>   pwrseq-qcom_wcn wcn7850-pmu: supply vddio1p2 not found, using dummy regulator
+> 
+> This supply exists on the WCN7850 chip, but nothing is connected there on
+> the QCP. Discussion is still open how to hide this warning in the driver,
+> but since the DT is correct and the same setup is already used on SM8550
+> upstream, this shouldn't block this patch.
+> ---
 
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Even with this warning:
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
+Konrad
 
