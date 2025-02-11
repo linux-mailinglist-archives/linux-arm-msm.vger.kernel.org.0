@@ -1,166 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-47581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14916A30C8B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 14:12:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD842A30CA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 14:15:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C65353A6638
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 13:11:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7692E3A6FB0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 13:15:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58517214811;
-	Tue, 11 Feb 2025 13:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48E4C221D8B;
+	Tue, 11 Feb 2025 13:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MbvFltSY"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="ecphhuHC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A529A1F152B;
-	Tue, 11 Feb 2025 13:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF9821D00B;
+	Tue, 11 Feb 2025 13:15:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739279524; cv=none; b=AOtuCPq2iwvxI+0Kip2TSZ09SPSlaA2jE/nTPG+zX0uyFnbcR09lcNio35i1B7pGjnk2niVLDkdGWfme+I0q670R1A/wxrmbwP730GUk4DGkY/blRB1vjcfYgSawE0QqdV7LW4OLBaFK/36WkbNw0Ef16MfE1nORGFqYqJxxNeo=
+	t=1739279705; cv=none; b=ovYDr7OerlvBqSImepisoR1CAGJFXnBJbrLvT+rtakRxEncEWSXMX0RAVMqvFMgiGtia6XEzCiitnzBAgq2e6qynVkkWMVKCXhQL2A+pjpQhgNckWIdTD2PTLnEae8DFjq7ibVV0TWD3EtGF2lYTA91mGtGRUhvkOJCQaLt5/nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739279524; c=relaxed/simple;
-	bh=P6B2BgV8kUxtH3yNi8dAVWWVraMhOlq9aqsEI+/qs7Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YXqu1ZwqXwF4PmsNREQKNb+IvBm1RjKqLpcVbHqKDHGLBoML6vD7P/hDOzEiNx0Vkrvb0Dkv62NXSKpozogQnpzqfeu6F+joQgA0ZMgP+F7C3XtR2lizXuMzqA5gY1xTRwQQEubA0UQAgzRo3g2Vx7U4nVYrYGI4uSODkpIhytE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MbvFltSY; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BBHiaZ025705;
-	Tue, 11 Feb 2025 13:11:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lVfdPTi5nRQrjao5/LJHP9xj6vjgUkDKr7iUSnXniTw=; b=MbvFltSYav3ESbcQ
-	vCIrklwr7yndHppcL3ex6xY1sw2XYGCLqYwGDRW3fMoX3kMMpRwXOWgELsHVhwrf
-	Bxyd2b33TX6bGTHKPa2lauJC8/W4cO+/RoSLac8+LMgo4jt/uRRmVP/XXzs1dQQd
-	ynZKOZNw6AUdDpLMAqZkGvEvVBE9VVRMqL47+uI4SImPRAnyhbMzQQoqFYVDZ5W6
-	/q83sXS1Ifjne7AZkgn7F/ktojccwvgJUTLedH3p1F5SKrRUN+UO3vSIwP0P4NEk
-	TskuWfs2ukylSgV5lvzBAQ1vzw1b3VOFvQzL0JOW/qjK+K6kgYZOCKCe0ZSUkBhX
-	H73gpg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44r5j58c6q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 13:11:50 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51BDBn3k009230
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 13:11:49 GMT
-Received: from [10.216.36.40] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Feb
- 2025 05:11:42 -0800
-Message-ID: <271e7b4f-454c-426e-a3f6-dcb55389374e@quicinc.com>
-Date: Tue, 11 Feb 2025 18:41:39 +0530
+	s=arc-20240116; t=1739279705; c=relaxed/simple;
+	bh=9A59qM/qw0l02R/clbPT49PZoQ0cDLl+GY/1uFLeQ9c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qeoS792d8dT2LzrV+w2jLfan5druBBKTCSsIf71pxNgwmYoH57SrWLhsiJvIqszjUnd4vl7an/pO4x7NZw77XNbLkZmpopoNhGGuQoKl9KsRZun+d5+cfp9jc4CfoQyLB3CSMaksdPgjqDr5lphqFhVMiQSQ/13l0dl5vegt8T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=ecphhuHC; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=r9ceLtlRJhS6F2F2NWLhZNuEBw0qSXHcZnna8TM1i58=; b=ecphhuHCYVnh2jgdAqTnarz0qn
+	MoiZ/LfXKYKy6M8WNWpqpRelLktMDLTRsbErd+YIGi/32nZlOZe/37nMm+G7FiH4JRUbnW19WRANV
+	V+VRYeRvehrtc50M3XTGUf91C4wzS0bVfqxtcC2WQHZBC1HlX8JixDHCSTJIeR8ioZPo=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1thq6J-00D41o-CR; Tue, 11 Feb 2025 14:14:55 +0100
+Date: Tue, 11 Feb 2025 14:14:55 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lei Wei <quic_leiwei@quicinc.com>,
+	Suruchi Agarwal <quic_suruchia@quicinc.com>,
+	Pavithra R <quic_pavir@quicinc.com>,
+	Simon Horman <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org,
+	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
+	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
+	john@phrozen.org
+Subject: Re: [PATCH net-next v3 04/14] net: ethernet: qualcomm: Initialize
+ PPE buffer management for IPQ9574
+Message-ID: <17d9f02c-3eb3-4bae-8a2c-0504747de6f2@lunn.ch>
+References: <20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com>
+ <20250209-qcom_ipq_ppe-v3-4-453ea18d3271@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sa8775p-ride: Enable Adreno 663
- GPU
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Connor Abbott <cwabbott0@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
-References: <20241030-a663-gpu-support-v3-0-bdf1d9ce6021@quicinc.com>
- <20241030-a663-gpu-support-v3-2-bdf1d9ce6021@quicinc.com>
- <4cfd1ebc-1a95-43d4-b36a-8b183c6dfd16@quicinc.com>
- <ah6nusoouth7ziu3iscxmafm6cxuwwebxt44ixsjmesp5adwc4@e5lnbztds2xd>
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <ah6nusoouth7ziu3iscxmafm6cxuwwebxt44ixsjmesp5adwc4@e5lnbztds2xd>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: pcXLBtDW7afzte1pcPYanHTRHxKleuwW
-X-Proofpoint-GUID: pcXLBtDW7afzte1pcPYanHTRHxKleuwW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-11_05,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 mlxscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- phishscore=0 adultscore=0 spamscore=0 clxscore=1015 impostorscore=0
- mlxlogscore=957 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502110087
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250209-qcom_ipq_ppe-v3-4-453ea18d3271@quicinc.com>
 
-On 2/9/2025 9:59 PM, Dmitry Baryshkov wrote:
-> On Wed, Nov 13, 2024 at 02:18:43AM +0530, Akhil P Oommen wrote:
->> On 10/30/2024 12:32 PM, Akhil P Oommen wrote:
->>> From: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
->>>
->>> Enable GPU for sa8775p-ride platform and provide path for zap
->>> shader.
->>>
->>> Signed-off-by: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
->>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 8 ++++++++
->>>  1 file changed, 8 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->>> index 0c1b21def4b6..4901163df8f3 100644
->>> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->>> @@ -407,6 +407,14 @@ queue3 {
->>>  	};
->>>  };
->>>  
->>> +&gpu {
->>> +	status = "okay";
->>> +};
->>> +
->>> +&gpu_zap_shader {
->>> +	firmware-name = "qcom/sa8775p/a663_zap.mbn";
->>> +};
->>> +
->>>  &i2c11 {
->>>  	clock-frequency = <400000>;
->>>  	pinctrl-0 = <&qup_i2c11_default>;
->>>
->>
->> Bjorn,
->>
->> Please ignore this patch for now. This is probably not the right
->> platform dtsi file where gpu should be enabled. I am discussing about
->> this internally. Will send a revision or a new patch based on the
->> conclusion.
-> 
-> Akhil, any updates on this?
-> 
+> +/* Assign the share buffer number 1550 to group 0 by default. */
+> +static const int ipq9574_ppe_bm_group_config = 1550;
 
-I am still waiting for the discussion about QCS9075 board dts files [1]
-to conclude.
+To a large extent, the comment is useless. What should be in the
+comment is why, not what.
 
-[1]
-https://lore.kernel.org/lkml/Z3eMxl1Af8TOAQW%2F@hu-wasimn-hyd.qualcomm.com/T/
-
--Akhil
+	Andrew
 
