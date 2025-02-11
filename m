@@ -1,147 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-47641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAB49A31782
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 22:20:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6990A317ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 22:42:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 798C73A331F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 21:19:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56DD71889D4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 21:42:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C5FA266F18;
-	Tue, 11 Feb 2025 21:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 118F3267AF0;
+	Tue, 11 Feb 2025 21:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SuTXjTZ1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aP4BATfY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D817266F08
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 21:19:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30CC2673B8;
+	Tue, 11 Feb 2025 21:39:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739308792; cv=none; b=HZh2VCIqlpcbBSmrfW1z/thNNqdzDUAV9iG05/e3KCq7a8FWQN7hSHaqR5Qu1K0GeWi2ltUkAOg9nLXPhGDZa+agrsf1OBjU7k03OYUgQJOirKRQVdoy9nIVgrLcfVukdOt8WKm95LOUytJEAC7FVpOGWwLqMTgHWZjmAdKSfoM=
+	t=1739309967; cv=none; b=HAYVAWoQY/9IbyYxxQSPLWhrPVq7ccEGEjVK7hz4gYmiwvtTb0YiU4+L2oJ1w2nPiAw/EklYIVCgiyUh34oIZ5xG7ViURz2cNpmWLQSnIv5CpZ0Oh8fq6ybJN6tCGMwY0WNRN6SlwoHqk7DzYQmdr71sb7Gas5ccHniFkUWwjGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739308792; c=relaxed/simple;
-	bh=v+NotQmkypHRHE+nHTFJOTzrbxnNJ6Og8Bo7qTcrXqM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q+DCQmBNlbM6IHCbNa2ktO+ZryxnkhOGjFcZnHu7okGXkswUQkaX/rr2fGp/kYjig+mhd2OcURTEyGzu4ai093ucT35ssg6Q0l2SbDO5Y+K+ITZPK0pIGuef0WWhTkFDY0pvq8j9wpxkP+Z03wPH28cvdq0Lq7pMaajRwUSyFAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SuTXjTZ1; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6f6715734d9so53900927b3.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 13:19:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739308789; x=1739913589; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8vMpnOzz24XlelaJjtEfRnOqqAth0NeggjrcIGJFxfY=;
-        b=SuTXjTZ19A00FUPjfW5OIYpo1Pj7eXvnzezX2PSBJxCZFMy3+xCG+hWTjB2jaEIDpp
-         r1yomxBrNYd9IoPPc573d51xwZSGdEHbMvAHDMCw7RfK13I/BObzcJIoy2n75sXqpNaM
-         rq1gakYpbMsWWRVB0K3XKyMbl18OZDuNSZgiGThJsLH63GB7eyz+7nF9ynT1GX+x96d4
-         e5Qihpk/If7a0cWz2lTQy7yHbFLmS7phf/SbiTVUlrWVReoVlWTBxmutO3hhnPVBF+6F
-         TqqFHR2art6vHV1f6BHNGY0t4rm2RVQReGSXdSkfsgB6IaXy1Z0Yd5pN0r7KmEswCkkD
-         3HKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739308789; x=1739913589;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8vMpnOzz24XlelaJjtEfRnOqqAth0NeggjrcIGJFxfY=;
-        b=V09tnqqydyRds+cT7rgvVlmgRkaA/mz/3uRUwhSZUI5fA1noUYZEDnJ68C8OKT7si4
-         3WoEmpLgmec6+5Bu5gi2KnatAJXbSSZFz8NhobCPmcUT6gdB40BGDyl5cmSm9vJUSKyd
-         VglkpU+KRSIw1jaofsR6VUltQjH81zVg31IbyK6dUxV58yzGpkxwviDJQPMUTfpS6JgW
-         Ek08zBzQ+79xgUoTT3ToEu8VdX8ICH9qdvx7aHtm6kPxpUnyCHorauvePMQyRWlsW1Os
-         DcdUt1sFHeR9m7KdhxiJbqi59gykjrg5vTQzV8+F4oKFFYXiQe/I/tMocDVAkptT9daR
-         2q+A==
-X-Forwarded-Encrypted: i=1; AJvYcCXDs/W2I50g9ssFHKXqr+WVJJ7sCBt6ggYoClbdxu2LEifS+fbr+au1m1bnDL9JHMhYUYQx2SP4DoDoWOyg@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFxZBRtnwXSdNf4+T36lXdmufw02KWV1ZBvrh/SDgzgXaeSUV1
-	dJCligsX+bKvBUTMgZbtOJ1JOwRtxGCw03KBrc6hrTJ8OHydjhlrRYF6JerE537TusGoTBzBhyq
-	cPVXMLfeQd2EaaONVoQKGBWY+mAbbxRhp367pFw==
-X-Gm-Gg: ASbGncvWu2XOfKSlbmlrP4QZS+sdXq9WnYJv9rK9QeDmkRapLxLX2d/Qv5/w/UURJsZ
-	4FNr/qF4sISvZprBjZO9C7vyrAEdXqTOZXCLoNVIAtTZHw1NIIufRwYBpS2me7SblyhovIpmXiT
-	btLD0ZzOq+fVPAreNJUeQHF/ozXNhw
-X-Google-Smtp-Source: AGHT+IH9PQWCcTuU3a/WUrp8QtPQgxzfoa0eG9D03GuXuge0++Qcj4dBm/Lk+WFXHD1fsOGrWKTo04Qt3z/nEYlknZk=
-X-Received: by 2002:a05:690c:638a:b0:6f9:88ba:aa5d with SMTP id
- 00721157ae682-6fb1f194f3dmr12585947b3.9.1739308789048; Tue, 11 Feb 2025
- 13:19:49 -0800 (PST)
+	s=arc-20240116; t=1739309967; c=relaxed/simple;
+	bh=FJycInZp7xLnccM2iFP10pmSMU2kK51uCue1d6X+XO8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UvNH1P17+OAKTZkVTdFCfYPfvHMbEHQWbIQmxzWoYAop6XKWJvxu5s7ioU5m2Svcf/b4NKAnAIqfPrHnqGVnoBtUQEdKYT1PP5cWwj11C678dHKcDOP1qqn0JVehebcJuYQiUwlOxPC1P9ZmyeacVlk5pDoZI4VkhefEjMWCbN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aP4BATfY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED68FC4CEDD;
+	Tue, 11 Feb 2025 21:39:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739309966;
+	bh=FJycInZp7xLnccM2iFP10pmSMU2kK51uCue1d6X+XO8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aP4BATfYQC25wggrvRK+B62zM9TQ+bR0hCVhUWH4cji6/wep0juNbEW2L9FxK1Eat
+	 sGvPeE8MrAnft7dpLlkUy5yUm8/hxi5ikl8+3Mc28c4tZEiRMJMy/fDd8D1xy0eQya
+	 pnhNKAswSjU3cbZei39Nm2iAeOSM7Wrq6uNn51EPfCn3dPPkEfYE5W5n6uIupuoWnM
+	 5FK5pxfOj5XCaSthnTiXPtAlyWeoDON2+i3O1N+vWtTrG03/cZZ6WqFWRbQ1aPPdoE
+	 DsYpKoDfrL2iHJSKnGKvtmG1XYAY7ERQF+XfoQz/XnQE9ubmFZboS3LEAw6bIpqFDG
+	 vZ0e7USejBvnQ==
+Date: Tue, 11 Feb 2025 15:39:24 -0600
+From: Rob Herring <robh@kernel.org>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, alexandre.belloni@bootlin.com,
+	krzk+dt@kernel.org, conor+dt@kernel.org,
+	jarkko.nikula@linux.intel.com, linux-i3c@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/3] dt-bindings: i3c: Add Qualcomm I3C master
+ controller bindings
+Message-ID: <20250211213924.GA1215572-robh@kernel.org>
+References: <20250205143109.2955321-1-quic_msavaliy@quicinc.com>
+ <20250205143109.2955321-2-quic_msavaliy@quicinc.com>
+ <248000f5-63db-492c-884d-ac72db337493@kernel.org>
+ <0ae3f754-edcb-4b22-9d49-b20ef264554b@quicinc.com>
+ <7c518972-75df-4c8a-8920-06d5aa2849ae@kernel.org>
+ <b7f2c973-e161-4b83-9b3a-415e84510bd2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250207-rb1-bt-v4-0-d810fc8c94a9@linaro.org> <20250207-rb1-bt-v4-6-d810fc8c94a9@linaro.org>
- <6e5bb2f7-a23b-4fab-914b-e67911eaf408@oss.qualcomm.com>
-In-Reply-To: <6e5bb2f7-a23b-4fab-914b-e67911eaf408@oss.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 11 Feb 2025 23:19:37 +0200
-X-Gm-Features: AWEUYZlP4_dHB7Swwx_XD496R58hsBttKN3cXZEWV8-yu1YbBT4qWLOogarYxpE
-Message-ID: <CAA8EJpq504V48qqSX0mzxCffUkq_xpu_UE+qubB46A7zon=0iw@mail.gmail.com>
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: qrb2210-rb1: add Bluetooth support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b7f2c973-e161-4b83-9b3a-415e84510bd2@quicinc.com>
 
-On Tue, 11 Feb 2025 at 16:52, Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 7.02.2025 9:41 PM, Dmitry Baryshkov wrote:
-> > Add support for the onboard WCN3950 BT/WiFi chip. Corresponding firmware
-> > has been merged to linux-firmware and should be available in the next
-> > release.
-> >
-> > Bluetooth: hci0: setting up wcn399x
-> > Bluetooth: hci0: QCA Product ID   :0x0000000f
-> > Bluetooth: hci0: QCA SOC Version  :0x40070120
-> > Bluetooth: hci0: QCA ROM Version  :0x00000102
-> > Bluetooth: hci0: QCA Patch Version:0x00000001
-> > Bluetooth: hci0: QCA controller version 0x01200102
-> > Bluetooth: hci0: QCA Downloading qca/cmbtfw12.tlv
-> > Bluetooth: hci0: QCA Downloading qca/cmnv12.bin
-> > Bluetooth: hci0: QCA setup on UART is completed
-> >
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
->
-> [...]
->
-> > +&uart3 {
-> > +     /delete-property/ interrupts;
-> > +     interrupts-extended = <&intc GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
-> > +                           <&tlmm 11 IRQ_TYPE_LEVEL_HIGH>;
-> > +     pinctrl-0 = <&uart3_default>;
-> > +     pinctrl-1 = <&uart3_sleep>;
-> > +     pinctrl-names = "default", "sleep";
-> > +
-> > +     status = "okay";
-> > +
-> > +     bluetooth {
-> > +             compatible = "qcom,wcn3950-bt";
-> > +
-> > +             vddio-supply = <&pm4125_l15>;
-> > +             vddxo-supply = <&pm4125_l13>;
-> > +             vddrf-supply = <&pm4125_l10>;
-> > +             vddch0-supply = <&pm4125_l22>;
-> > +             enable-gpios = <&tlmm 87 GPIO_ACTIVE_HIGH>;
-> > +             max-speed = <3200000>;
->
-> I suppose we don't need a power sequencer for this smaller,
-> tightly-integrated-via-snoc chip?
+On Mon, Feb 10, 2025 at 09:42:03PM +0530, Mukesh Kumar Savaliya wrote:
+> Thanks Krzysztof !
+> 
+> On 2/9/2025 5:15 PM, Krzysztof Kozlowski wrote:
+> > On 06/02/2025 14:43, Mukesh Kumar Savaliya wrote:
+> > > Hi Krzysztof,  Thanks !
+> > > 
+> > > On 2/5/2025 8:12 PM, Krzysztof Kozlowski wrote:
+> > > > On 05/02/2025 15:31, Mukesh Kumar Savaliya wrote:
+> > > > > Add device tree bindings for the Qualcomm I3C master controller. This
+> > > > > includes the necessary documentation and properties required to describe
+> > > > > the hardware in the device tree.
+> > > > 
+> > > > A nit, subject: drop second/last, redundant "bindings". The
+> > > > "dt-bindings" prefix is already stating that these are bindings.
+> > > Sure
+> > > > See also:
+> > > > https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+> > > > 
+> > > > Use modern terminology, which means:
+> > > > s/master/whatever else or even nothing/
+> > > > See other recent bindings and discussions.
+> > > > 
+> > > Sure
+> > > > 
+> > > > > 
+> > > > > Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> > > > > ---
+> > > > >    .../bindings/i3c/qcom,i3c-master.yaml         | 57 +++++++++++++++++++
+> > > > >    1 file changed, 57 insertions(+)
+> > > > >    create mode 100644 Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+> > > > > 
+> > > > > diff --git a/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+> > > > > new file mode 100644
+> > > > > index 000000000000..ad63ea779fd6
+> > > > > --- /dev/null
+> > > > > +++ b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+> > > > 
+> > > > Filename matching compatible.
+> > > > 
+> > > Changed compatible to "qcom,i3c-master"
+> > > > > @@ -0,0 +1,57 @@
+> > > > > +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> > > > > +%YAML 1.2
+> > > > > +---
+> > > > > +$id: http://devicetree.org/schemas/i3c/qcom,i3c-master.yaml#
+> > > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > > > +
+> > > > > +title: Qualcomm I3C master controller
+> > > > > +
+> > > > > +maintainers:
+> > > > > +  - Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> > > > > +
+> > > > > +allOf:
+> > > > > +  - $ref: i3c.yaml#
+> > > > > +
+> > > > > +properties:
+> > > > > +  compatible:
+> > > > > +    const: qcom,geni-i3c
+> > > > 
+> > > > No SoC? So to be sure: you claim all future SoCs will be using exactly
+> > > > the same interface. No new compatibles, no new properties will be added.
+> > > > 
+> > > I think i should remove const. kept it for now as no other compatible to
+> > > be added as of now.
+> > > 
+> > > let me remove const.
+> > 
+> > No, it does not matter. Keep const.
+> > 
+> Sure. I reviewed other files and seems i should write as below. Please help
+> confirm.
+> 
+>   compatible:
+>     items:
+>       - enum:
+>           - qcom,sm8550-i3c-master
+>       - const: qcom,i3c-master
 
-We can (and should) have it in a longer term. Currently none of
-wcm39xx chips have a powerseq implementation.
+No, that's even worse. I doubt there is some universal, never changing 
+QCom I3C master.
 
--- 
-With best wishes
-Dmitry
+> > > 
+> > > SoC name is not required, as this compatible is generic to all the SOCs.
+> > 
+> > That's the statement you make. I accept it. I will bookmark this thread
+> > and use it whenever you try to add any future property here (to be
+> > clear: you agree you will not add new properties to fulfill *FUTURE* SoC
+> > differences).
+> > 
+> Sorry, i am not saying there won't be any other compatible but i was saying
+> base driver will use "qcom,i3c-master".
+> After checking other files i realized there can be const compatible but
+> other SOC specific can be added as enum.  Hope above given way is fine.
+
+AIUI, "geni" is some firmware based multi-protocol serial i/o controller 
+and we already have other "geni" bindings. So really, it's probably more 
+coupled to firmware versions than SoC versions. If we haven't had 
+problems with per SoC quirks with the other geni bindings, then I think 
+using the same "geni" here is fine. But we won't be happy if we start 
+seeing per SoC quirk properties.
+
+Rob
 
