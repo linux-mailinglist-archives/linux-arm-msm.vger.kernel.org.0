@@ -1,185 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-47569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FD3DA30BE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 13:38:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C03F2A30C16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 13:55:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 23D663A9B8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 12:37:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27B1B3A521D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 12:55:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70E24206F02;
-	Tue, 11 Feb 2025 12:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A92662144AE;
+	Tue, 11 Feb 2025 12:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LFEZNeQU"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="SJq348vP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D28204873;
-	Tue, 11 Feb 2025 12:37:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21AF20C47F;
+	Tue, 11 Feb 2025 12:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739277476; cv=none; b=iNnvynZG3Ua4fuPWhsizv1HrM18rB7Mj9hqd4LUxy1NJnxhOXUK2Y00tJmaFXiem4LAFTdKhxJ627oG4V2lcJFeJ4MA/+ZbXvIVI8cAsVVZ4hn8H8porbIDQsP9C03DYEhRaGRh+yI+oArqmaAxBZi5I9/oZO12SR6kLM8r/PbU=
+	t=1739278508; cv=none; b=edMvi6iqpS8bdZUlD9VOJnjo4u1l0e1c4cR8silAYY/2ITc2pDh6yuONv/69rU8UOdiOHvkhdCBMZY4FWzcrJiLXZL3g5PAxx/xYAwTp8eEHkJquw9JL7uzC5Elgzkym5Mmn+u8SLB05O2W1OVSl2gUJQ9LbBlWXIJM/+RHaQ3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739277476; c=relaxed/simple;
-	bh=9FFcc2GB0jSxjG8mkUaYtqfXPHpoxeLtabpNTGFeG4g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nWH5y8FyjjXnDbtPKZa+9o5Vxpqu084keGD36LRHMTP21DB7Bo0xW4WjWo3PKPTRWDwkPap0VuR+2PyvClRtXeUyU4cJLZTPH9RImH3QpZtUHLgqeTMLIrCjgRNGxyMzlwbm4/j0dlge63sVV8yQEg2CBMFnstvqnafaSaKLSCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LFEZNeQU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51B94jQp008337;
-	Tue, 11 Feb 2025 12:37:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+ShQz5N2nxj49mik6Xuy9nBMQQOaIIynX9b3fSGhxsg=; b=LFEZNeQUlwmQ7HAZ
-	8Wyar+uSmq+UpgF3Ih6JZuM1oS8lZYmL40/ekviaI1v2aF3kzTW4Y15UdIBlliSr
-	PRPNAY0GPPbOSDSXx6QYj5e2RwbMaHPcPoLylvra5o4sCp3eGQmxQAGtLfuphxG0
-	j6pYLu2YSUcTfk+eKdIhWW2/2QOyk7Z41B49I0EmbqVKIDjxJUx2IISfmWUMdype
-	teialJ/uHKeYJhnOAOLfuK2Bn/TRmk6qlYz3u6hPYBfaTIg5fxZLZJrfq/xMUsVP
-	afKApbCNstTFFsIvzrr3kIfQYFaTyFPpY7jG1sl/XdKa9H6jv4oCfTfV/8eneqTR
-	1M6ehw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qewh41bh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 12:37:34 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51BCbXSP004532
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 12:37:33 GMT
-Received: from [10.253.72.242] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Feb
- 2025 04:37:26 -0800
-Message-ID: <387fbaa0-4210-4e75-aa15-003866c7735f@quicinc.com>
-Date: Tue, 11 Feb 2025 20:36:33 +0800
+	s=arc-20240116; t=1739278508; c=relaxed/simple;
+	bh=E/D4r8Njpis3Lv6czODLlg8GcE73pPznWAgOjZkvmMs=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=nTQN0NUgGy6qYjTYrik/Utl7jMrgNVtyxIVi1uuXAg2IbnFkaj2SDiJDgy19FHJMeygb+A1wzfFIJIWEnZtNcEm1t7ilGtIYiWxJ4hTDZZ9SWmlPqtLIcIi1W/iS6z44czSnVbBeTjaVNO0sW3yBdSiKLcjttJbA9LFML+M+Vuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=SJq348vP; arc=none smtp.client-ip=217.70.183.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 4A4EE4318D;
+	Tue, 11 Feb 2025 12:54:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1739278498;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LCp+sFwjp6X53Xy6vUp3gJOZ41+nmTUyiZmaz+Sg4LQ=;
+	b=SJq348vPQLBZmcy3A5kV8BgiAobDhxS8qQOy+ZMAe2bNi74xWjryciNfDqrAHEXGjTS9dZ
+	p8H9vVx/ArmWe5WiyNrqXQAwPR37GY2iYjXKxQApVBG/B5rc6GTHJSyOiFl830kk6U8Wr7
+	AmnqKnpoyJ/7hOj3r/vpbfNP0DO4DCCAKEWQrIn8ZcJS3B38HkAHnZV3u3PZzQAUFzlpde
+	4yIK1B836k+RUeK7+BUXkYKhtdxDy88GBylg82VbCksyyo39L0N5RPtKenw4GgLr2qT8HV
+	INeFOoRYZ+C5B84vCQ13mdKFOkQNSFHaebILSCWQkiHWg1BQ2PmkvMrxh/VPag==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
+ Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Christian Marangi <ansuelsmth@gmail.com>
+Cc: stable@vger.kernel.org, Robert Marko <robimarko@gmail.com>
+In-Reply-To: <20250209140941.16627-1-ansuelsmth@gmail.com>
+References: <20250209140941.16627-1-ansuelsmth@gmail.com>
+Subject: Re: [PATCH v2] mtd: rawnand: qcom: fix broken config in
+ qcom_param_page_type_exec
+Message-Id: <173927849590.126930.12542924757341380520.b4-ty@bootlin.com>
+Date: Tue, 11 Feb 2025 13:54:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v3 02/14] docs: networking: Add PPE driver
- documentation for Qualcomm IPQ9574 SoC
-To: Bagas Sanjaya <bagasdotme@gmail.com>, Luo Jie <quic_luoj@quicinc.com>,
-        Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        "Paolo
- Abeni" <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
-        Krzysztof
- Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Suruchi
- Agarwal <quic_suruchia@quicinc.com>,
-        Pavithra R <quic_pavir@quicinc.com>, "Simon Horman" <horms@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, Kees
- Cook <kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        "Philipp Zabel" <p.zabel@pengutronix.de>
-CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
-        <john@phrozen.org>
-References: <20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com>
- <20250209-qcom_ipq_ppe-v3-2-453ea18d3271@quicinc.com>
- <Z6lhPB1y3BBFI4ux@archie.me>
-Content-Language: en-US
-From: Lei Wei <quic_leiwei@quicinc.com>
-In-Reply-To: <Z6lhPB1y3BBFI4ux@archie.me>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JSPcQpJY_klIsepDx3cn02vvpTQmds5h
-X-Proofpoint-GUID: JSPcQpJY_klIsepDx3cn02vvpTQmds5h
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-11_05,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- impostorscore=0 mlxlogscore=999 phishscore=0 clxscore=1011 adultscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502110081
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeguddthecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvegjfhfukfffgggtgffosehtkeertdertdejnecuhfhrohhmpefoihhquhgvlhcutfgrhihnrghluceomhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepheeifffhueelgfdtleetgfelvefggfehudelvdehuddulefgheelgfehieevvdegnecukfhppeeltddrkeelrdduieefrdduvdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepledtrdekledrudeifedruddvjedphhgvlhhopegludelvddrudeikedrgedvrdegiegnpdhmrghilhhfrhhomhepmhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepuddupdhrtghpthhtohepshhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvhhighhnvghshhhrsehtihdrtghomhdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhitghhrghrugesnhhou
+ gdrrghtpdhrtghpthhtoheplhhinhhugidqmhhtugeslhhishhtshdrihhnfhhrrgguvggrugdrohhrghdprhgtphhtthhopehkohhnrhgrugdrugihsggtihhosehoshhsrdhquhgrlhgtohhmmhdrtghomhdprhgtphhtthhopegrnhhsuhgvlhhsmhhthhesghhmrghilhdrtghomh
+X-GND-Sasl: miquel.raynal@bootlin.com
 
-
-
-On 2/10/2025 10:15 AM, Bagas Sanjaya wrote:
-> On Sun, Feb 09, 2025 at 10:29:36PM +0800, Luo Jie wrote:
->> +The Ethernet functionality in the PPE (Packet Process Engine) is comprised of three
->> +components: the switch core, port wrapper and Ethernet DMA.
->> +
->> +The Switch core in the IPQ9574 PPE has maximum of 6 front panel ports and two FIFO
->> +interfaces. One of the two FIFO interfaces is used for Ethernet port to host CPU
->> +communication using Ethernet DMA. The other is used communicating to the EIP engine
->                                      "The other one is used ..."
-
-OK, I will fix here in next update.
-
->> +which is used for IPsec offload. On the IPQ9574, the PPE includes 6 GMAC/XGMACs that
->> +can be connected with external Ethernet PHY. Switch core also includes BM (Buffer
->> +Management), QM (Queue Management) and SCH (Scheduler) modules for supporting the
->> +packet processing.
->> +
->> <snipped>...
->> +The PPE driver files in drivers/net/ethernet/qualcomm/ppe/ are listed as below:
->> +
->> +- Makefile
->> +- ppe.c
->> +- ppe.h
->> +- ppe_config.c
->> +- ppe_config.h
->> +- ppe_debugfs.c
->> +- ppe_debugfs.h
->> +- ppe_regs.h
+On Sun, 09 Feb 2025 15:09:38 +0100, Christian Marangi wrote:
+> Fix broken config in qcom_param_page_type_exec caused by copy-paste error
+> from commit 0c08080fd71c ("mtd: rawnand: qcom: use FIELD_PREP and GENMASK")
 > 
-> If somehow new source files were added, should the list above be updated to
-> keep up?
+> In qcom_param_page_type_exec the value needs to be set to
+> nandc->regs->cfg0 instead of host->cfg0. This wrong configuration caused
+> the Qcom NANDC driver to malfunction on any device that makes use of it
+> (IPQ806x, IPQ40xx, IPQ807x, IPQ60xx) with the following error:
 > 
+> [...]
 
-Yes, the list will be updated when new files added in the following PPE 
-MAC and EDMA patch series.
+Applied to mtd/fixes, thanks!
 
->> +Enabling the Driver
->> +===================
->> +
->> +The driver is located in the menu structure at:
->> +
->> +  -> Device Drivers
->> +    -> Network device support (NETDEVICES [=y])
->> +      -> Ethernet driver support
->> +        -> Qualcomm devices
->> +          -> Qualcomm Technologies, Inc. PPE Ethernet support
-> 
-> Literal code block should format above nicer, but plain paragraph is fine.
-> 
+[1/1] mtd: rawnand: qcom: fix broken config in qcom_param_page_type_exec
+      commit: 86ede0a61f8576a84bb0a93c5d9861d2ec1cdf9a
 
-OK, I will use Literal code block by using "at::" to replace "at:" here. 
-hope it is fine.
+Patche(s) should be available on mtd/linux.git and will be
+part of the next PR (provided that no robot complains by then).
 
->> +
->> +If this driver is built as a module, we can use below commands to install and remove it:
->> +
->> +- insmod qcom-ppe.ko
->> +- rmmod qcom-ppe.ko
-> 
-> "If the driver is built as a module, the module will be called qcom-ppe."
-> (I assume that readers know how to insert/remove modules).
-> 
-
-OK, I will modify this sentence in next update.
-
-> Thanks.
-> 
+Kind regards,
+Miquèl
 
 
