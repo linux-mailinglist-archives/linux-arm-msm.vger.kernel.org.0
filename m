@@ -1,103 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-47643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EF26A317FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 22:43:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8DB9A318BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 23:38:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 21E5A18869E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 21:43:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69859164AA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 22:38:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 806FC26771B;
-	Tue, 11 Feb 2025 21:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38CBA26A0AE;
+	Tue, 11 Feb 2025 22:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aNGjIrdY"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="HMRhqZW2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A51267718;
-	Tue, 11 Feb 2025 21:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B212641CE;
+	Tue, 11 Feb 2025 22:38:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739310090; cv=none; b=iI/kC09MG9B2cCqQdJ3xG89BOkT9sP5pc1rLfmp//JK8EGp9Vd6/BwQqpin4v4EaHijsuHNVrVmhSxTXyfHWLHBIJg6gTtmHxJUdVpVYHsafK+ymsHRA4EPTgfaqrwLbCa2gSjxOmtXNDNoY14emeKaLiQI4jSU88FNlRDZR8lA=
+	t=1739313498; cv=none; b=nTLmdbcDAucWWXCEBJwfPLfPcp8n4uY88NEYS5E4dxdKOUu/zN5CaDiFX48vSxhtcB/4MeUjd2l7lG6qfE4/V66vBeohErz3Qq6V7vPIU8t/ixFkDk6Uger1hPvozvAz75jCt5u4s1gwU6dPbVukETfXWeiT365M0PZ7p7VK4fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739310090; c=relaxed/simple;
-	bh=hNpmTU9yt5SbnmDTLYLToBPf6tZDwvIKIuOvahPOfGQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MZtNIoOk7/PEypXE/uHUGvBssBfOVm88c4+z79et+DcHbRb7g+Zr3+DEAcXTnfrMSM+zu4G8CTNex8BTUf9m9A7MJ3Lyng2/xLYt6FTzxBjDMHwTKzMgrJdvAqaPhxff9SaoAFv+oIGOk5UafJOtNevVu5ygCDC6Qtr5Lfecs6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aNGjIrdY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB8BC4CEDD;
-	Tue, 11 Feb 2025 21:41:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739310089;
-	bh=hNpmTU9yt5SbnmDTLYLToBPf6tZDwvIKIuOvahPOfGQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aNGjIrdYDYdkZM7pguK7sMO7gXfRjF2mqrhZ4ExycwjVhX7dsQq6TCBX89Z4MBUIp
-	 ED45UhLiOfB9ppFAB9uT28dv/GKrdLWZf9fREVYNi1zF1KDYJWXfhjMa/OrbgqI1Qw
-	 nDyoARyL1KFsNAkI3RjvkKw5JePaNbAz2s67xrFBvXkg1S8BA3vR9BNO8VKwWcToN4
-	 616J1qqqzdG7juScjVjeA/Fwe1ThPbg8rTSKs8Wv89DeR68ws92at/x0yE/234DnF/
-	 ust+u29wdmUFioRZ6VWzzFCSOf4B3Je+1x4d0Kw8An03S5tcgvQGqinKwKihTlF7SG
-	 pKs7gHGuKaWLA==
-Date: Tue, 11 Feb 2025 15:41:28 -0600
-From: Rob Herring <robh@kernel.org>
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, alexandre.belloni@bootlin.com,
-	krzk+dt@kernel.org, conor+dt@kernel.org,
-	jarkko.nikula@linux.intel.com, linux-i3c@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 2/3] i3c: master: Add Qualcomm I3C master controller
- driver
-Message-ID: <20250211214128.GB1215572-robh@kernel.org>
-References: <20250205143109.2955321-1-quic_msavaliy@quicinc.com>
- <20250205143109.2955321-3-quic_msavaliy@quicinc.com>
- <fec85cd8-4c56-4b48-a15f-e7ae08352cc2@kernel.org>
- <e5cad9d0-e602-442f-b216-2f655a9526e3@quicinc.com>
- <1e3a103d-d468-40c6-b03c-723427d7bb41@kernel.org>
- <e5dcc2f0-df6d-46ed-b341-46de513c0728@quicinc.com>
+	s=arc-20240116; t=1739313498; c=relaxed/simple;
+	bh=5/bBkjGSiUyr0eyYTgTn6gVjdqK5S7jACaykAWc9lMg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NhqYyCwZbirgKqplA91kq28EeO8ImJJY2+2oBbQjj8Upj5ata+avbWbPd1SHNOe2YcxFWc09yPoNTjovTA3CVMreZq/F6p7Q8q62ZM1VDSkdCSjuUnkjA7Cq2oDP0gue8hZuEMQdWmH1gDqVl0Bseol2zP4vrG1suiQ4FWAqCcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=HMRhqZW2; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from [192.168.244.162] (254C21CD.nat.pool.telekom.hu [37.76.33.205])
+	by mail.mainlining.org (Postfix) with ESMTPSA id E83CEE4533;
+	Tue, 11 Feb 2025 22:38:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1739313486;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=iRA0rHhLejRTEHRY4py3J1wkqXCHBw6TYqdVvKcsqOc=;
+	b=HMRhqZW2bFbB3Q+a+V7tlkp1a8wbScExvcJGnyHov6/S0HdY6D63TUne51JjmrO5xBPZLi
+	VOGNEZ0f1Kjqbh1HPo2N+SVkt9IRVCNdMx9S7+NbxamVitYTRqV4dJFgyrronZsxowuaI4
+	WKShPEIBmKZiiTYxag2CmZ6KtJ0kzJ58o3N9hP08+ZbWtoZ6c1trHWCLmWk02wvZQhb5HR
+	ZGLMi1tY1bIgD6ssTid+XIqppegzmOlcU1YTNhtdFdE7Pq4sA+rrauDuTS+QAked6USmkD
+	RITJtymkN+HNIU4Q+zzMF4AP7dkCaJUxyuJJn31hkrcSLSFrG+2vkQKRJ3llTg==
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Subject: [PATCH 00/10] Initial support of MSM8937 and Xiaomi Redmi 3S
+Date: Tue, 11 Feb 2025 23:37:44 +0100
+Message-Id: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e5dcc2f0-df6d-46ed-b341-46de513c0728@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIADnRq2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDI0MD3dziXAtLY3NdIyOL1DSDlGTj1GRLJaDqgqLUtMwKsEnRsbW1ABk
+ AALlZAAAA
+X-Change-ID: 20250210-msm8937-228ef0dc3ec9
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
+ =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
+ Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
+ Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, iommu@lists.linux.dev, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
+ Daniil Titov <daniilt971@gmail.com>, Dang Huynh <danct12@riseup.net>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1739313484; l=2210;
+ i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
+ bh=5/bBkjGSiUyr0eyYTgTn6gVjdqK5S7jACaykAWc9lMg=;
+ b=mWTVmtj6I7bjnCl5io/j6l8G4RjSRRckn3ZyBcZbZoaR/xKWQU56znHHgQPNTJdKVM8aYV3Ve
+ o4dp4lyKed6Btxv5UAMSn2GmHfsYbmmWEBG5+TxOR6T+0bKWIYSYDMe
+X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
+ pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-On Mon, Feb 10, 2025 at 09:41:28PM +0530, Mukesh Kumar Savaliya wrote:
-> Thanks Krzysztof !
-> 
-> On 2/9/2025 5:10 PM, Krzysztof Kozlowski wrote:
-> > On 07/02/2025 13:03, Mukesh Kumar Savaliya wrote:
-> > > > > +	gi3c->se.clk = devm_clk_get(&pdev->dev, "se-clk");
-> > > > > +	if (IS_ERR(gi3c->se.clk)) {
-> > > > > +		ret = PTR_ERR(gi3c->se.clk);
-> > > > > +		dev_err(&pdev->dev, "Error getting SE Core clk %d\n", ret);
-> > > > > +		return ret;
-> > > > > +	}
-> > > > > +
-> > > > > +	ret = device_property_read_u32(&pdev->dev, "se-clock-frequency", &gi3c->clk_src_freq);
-> > > > 
-> > > > You never tested your DTS or this code... Drop
-> > > > 
-> > > I have tested on SM8550 MTP only. Below entry in my internal/local DTSI.
-> > 
-> > 
-> > And how is it supposed to work? Are you going to send us your local
-> > internal DTSI? Is it going to pass any checks?
-> was saying about code was testing with MTP. DTS was tested using dt-bindings
-> check.
+This patch series add initial support for MSM8937 SoC
+and Xiaomi Redmi 3S (land).
 
-make dtbs_check is how you test.
+The series is extending the MSM8917 gcc and pinctrl drivers
+because they are sibling SoCs.
+MSM8937 have 4 more A53 cores and have one more dsi port then
+MSM8917.
+It implements little-big architecture and uses Adreno 505.
 
-> I should add "se-clock-frequency" and "dfs-index"
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+---
+Barnabás Czémán (5):
+      dt-bindings: mfd: qcom,tcsr: Add compatible for MSM8937
+      dt-bindings: nvmem: Add compatible for MS8937
+      dt-bindings: iommu: qcom,iommu: Add MSM8937 IOMMU to SMMUv1 compatibles
+      dt-bindings: arm: qcom: Add Xiaomi Redmi 3S
+      arm64: dts: qcom: Add Xiaomi Redmi 3S
 
-No. We already have standard clock properties and we don't put indexes 
-into DT. 
+Dang Huynh (2):
+      pinctrl: qcom: msm8917: Add MSM8937 wsa_reset pin
+      arm64: dts: qcom: Add initial support for MSM8937
 
-Rob
+Daniil Titov (3):
+      dt-bindings: clock: gcc-msm8917: Split to separate schema
+      dt-bindings: clock: Add MSM8937 Global Clock controller compatible
+      clk: qcom: gcc: Add support for Global Clock controller found on MSM8937
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    7 +
+ .../bindings/clock/qcom,gcc-msm8909.yaml           |   10 +-
+ .../bindings/clock/qcom,gcc-msm8917.yaml           |   74 +
+ .../devicetree/bindings/iommu/qcom,iommu.yaml      |    1 +
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml         |    1 +
+ .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |    1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dts   |  402 ++++
+ arch/arm64/boot/dts/qcom/msm8937.dtsi              | 2145 ++++++++++++++++++++
+ drivers/clk/qcom/Kconfig                           |    6 +-
+ drivers/clk/qcom/gcc-msm8917.c                     |  617 +++++-
+ drivers/pinctrl/qcom/Kconfig.msm                   |    4 +-
+ drivers/pinctrl/qcom/pinctrl-msm8917.c             |    8 +-
+ include/dt-bindings/clock/qcom,gcc-msm8917.h       |   17 +
+ 14 files changed, 3277 insertions(+), 17 deletions(-)
+---
+base-commit: df5d6180169ae06a2eac57e33b077ad6f6252440
+change-id: 20250210-msm8937-228ef0dc3ec9
+
+Best regards,
+-- 
+Barnabás Czémán <barnabas.czeman@mainlining.org>
+
 
