@@ -1,166 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-47550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5A14A30903
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 11:45:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8A27A30928
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 11:55:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20A603A64E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 10:44:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E7391885F7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 10:55:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB8511F8918;
-	Tue, 11 Feb 2025 10:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BA371F3BBE;
+	Tue, 11 Feb 2025 10:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HkAHSF0m"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="aM2e2a5Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0871F7557;
-	Tue, 11 Feb 2025 10:44:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034DE1F193C;
+	Tue, 11 Feb 2025 10:55:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739270690; cv=none; b=UANtvVinDMcCbDsURinQx3kmuFTdsEZvarnGPxDqgSamjVSTO4ZwjQH7c7muUFhL5Ij6sGwk6w9KdyIPxIQLEROQjtzIblpdS57IEwjaQmgXKIvRxOAj3Mo7AegUu9+sFfCeHAri726gS9mC20Miad6trVnK/B3zhhwMeXxho+Y=
+	t=1739271327; cv=none; b=RIR8JSZVgPw75vczbVWSstIgNAHfTxDZsUHmStB54HvpyKn+qbHYuslVrKrZKIODJz9Dngk0F8tMYyBYXZtj7yJapHoMyV+4WIIwgxKgP/GwhCj6S4vT9Xn/z80AAHWpwEklPn9EfKwQMNkZTBiyv65bJ6ohOjxhpzokWcGx4PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739270690; c=relaxed/simple;
-	bh=fqSfSW3N86wX211OcP2cRDv+OWAKZZ8EZxIEcwBW6HI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ju9Fbp/uu2VqwhesgP1FzkoJLez+CXNMUVg65qtLp9cDlqvDWnGggS8+de1C5fv80bXukxr6yWaaIU8yjTDjY90RTrXOCtltgENQdsRWoJZYevLQTZkQ1l62Vcq/1GFeShzWQ2eF0dphAzldnXhMzy7bL7xga61hoaEJlZ2Vi/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HkAHSF0m; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BAaJ9q028737;
-	Tue, 11 Feb 2025 10:44:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=bS4scRVoEBm
-	S9TVfVUlmpiKHB60mJBvQ4MS0mSfwu64=; b=HkAHSF0mSbcGcU8Ro324IZz9rHr
-	b/uFrn28o0VgdvCkB5sNnFrSSun4qysy6irOdbEuR0SSxyRh16/sy2xKPGhzCQl/
-	TlPbQWgEbXC+s6w9PrIbZ8yewZ+zE80PqvduK/zNc9IR7NAG+thXsAjzSd4xQzBS
-	aZrvNyj7JTT+zHI8fZAmaX0OtVB39PT6+Jjk0q2j6THanlXu1nxxrcAJigtelqG9
-	5n56ldPSYvhZVJ3UqRv0SMXx9p8yp0oJgS8QkCWkCjIL9lf+vkkj/SqQ/KODF91U
-	ubWI1JkXK6k9+ML8giyee35imzenOYcT5FTdjnueRL0heLTwX5LU1aEOytw==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qxg9h2x2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 10:44:45 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 51BAigwT002171;
-	Tue, 11 Feb 2025 10:44:42 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 44p0bkpjtk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 10:44:42 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51BAigQ3002166;
-	Tue, 11 Feb 2025 10:44:42 GMT
-Received: from chejiang-gv.ap.qualcomm.com (chejiang-gv.qualcomm.com [10.233.43.239])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 51BAigbs002159
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Feb 2025 10:44:42 +0000
-Received: by chejiang-gv.ap.qualcomm.com (Postfix, from userid 37913)
-	id 59A6014F3; Tue, 11 Feb 2025 18:44:41 +0800 (CST)
-From: Cheng Jiang <quic_chejiang@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_chejiang@quicinc.com,
-        quic_jiaymao@quicinc.com, quic_shuaz@quicinc.com,
-        quic_zijuhu@quicinc.com, quic_mohamull@quicinc.com
-Subject: [PATCH v1 1/1] arm64: dts: qcom: qcs8300-ride: enable BT on qcs8300-ride
-Date: Tue, 11 Feb 2025 18:44:21 +0800
-Message-Id: <20250211104421.1172892-2-quic_chejiang@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250211104421.1172892-1-quic_chejiang@quicinc.com>
-References: <20250211104421.1172892-1-quic_chejiang@quicinc.com>
+	s=arc-20240116; t=1739271327; c=relaxed/simple;
+	bh=u8/Lnpmqqyug00ve4rh0Ch5QRFxC7d9Lp8kwRDFpdMY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QsKZ37UvEn9PuBadrozRs6ClRh7O47QtuJZzj5iOfz5m//gc6xua7xrcO28eO0GdyzmH56tdLa3uVrwEMFq2MyKHs6+RG064DUW7DfbrtRUjB2uKnz6bV9Ospse4/LJ35w40gXuRmB33DQQVqxdg3PqPt9pqX7r8TvZsCpKK2hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=aM2e2a5Z; arc=none smtp.client-ip=217.70.183.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 8707B41E0D;
+	Tue, 11 Feb 2025 10:55:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1739271323;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=aNAL4qcDpZADEcFGQJigZHn9NAqCEryKx7MhvZmyVLc=;
+	b=aM2e2a5ZRNus+//jkXB7rQ3t2k+vf14eyttffiLsJBwOBsqez1SCdQbPYuKbWzEJIIlCkf
+	4gwmrY4LpEfpXYkLwnNsuC1sawJ6twdSrAhsvQ0SCLZ3nI5wMTSWBNHKslJZsyXl1Yu4uq
+	tW7aiMLvURuBu19jzkHQXAs2//tHwA2Jem04Y2NoC/KL+WrwTwyTFFAj7yikHuluB2GBFC
+	O9DkGeOl2UuV33nAuEj4aSfs/mvo7IztjgTu9wFj7Pui7Vt4QM/lOUsbXb9nPSHgppcBSM
+	JaW3ygaW46SPDvDN22XP0YCafv5JahZFZqTJcRZpJoX9SpjpQ6oujETDBqSIKg==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,  Richard
+ Weinberger <richard@nod.at>,  Vignesh Raghavendra <vigneshr@ti.com>,
+  linux-mtd@lists.infradead.org,  linux-arm-msm@vger.kernel.org,
+  linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mtd: rawnand: qcom: finish converting register to
+ FIELD_PREP
+In-Reply-To: <67aa6527.050a0220.173001.b011@mx.google.com> (Christian
+	Marangi's message of "Mon, 10 Feb 2025 21:44:21 +0100")
+References: <20250209145439.19047-1-ansuelsmth@gmail.com>
+	<877c5xu8yt.fsf@bootlin.com>
+	<67aa6527.050a0220.173001.b011@mx.google.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Tue, 11 Feb 2025 11:55:22 +0100
+Message-ID: <87bjv8sqcl.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Uxs3c1a5POdb0kHSVw5-tXQZvzzlL2By
-X-Proofpoint-GUID: Uxs3c1a5POdb0kHSVw5-tXQZvzzlL2By
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-11_04,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- mlxscore=0 priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0
- mlxlogscore=999 lowpriorityscore=0 phishscore=0 clxscore=1015
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502110067
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegtdekudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffgffkfggtgfgsehtqhertddtreejnecuhfhrohhmpefoihhquhgvlhcutfgrhihnrghluceomhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepffeghfejtdefieeguddukedujeektdeihfelleeuieeuveehkedvleduheeivdefnecukfhppeeltddrkeelrdduieefrdduvdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepledtrdekledrudeifedruddvjedphhgvlhhopehlohgtrghlhhhoshhtpdhmrghilhhfrhhomhepmhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepjedprhgtphhtthhopegrnhhsuhgvlhhsmhhthhesghhmrghilhdrtghomhdprhgtphhtthhopehmrghnihhvrghnnhgrnhdrshgrughhrghsihhvrghmsehlihhnrghrohdrohhrghdprhgtphhtthhopehrihgthhgrrhgusehnohgurdgrthdprhgtphhtthhopehvihhgnhgvshhhrhesthhirdgtohhmpdhrtghpthhtoheplhhinhhugidqmhhtugeslhhishhtshdrihhnfhhrrgguvggrugdrohhrghdpr
+ hgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-GND-Sasl: miquel.raynal@bootlin.com
 
-Enable BT on qcs8300-ride by adding a node for the BT module. Since the
-platform uses the QCA6698 Bluetooth chip. While the QCA6698 shares th
-same IP core as the WCN6855, it has different RF components and RAM sizes,
-requiring new firmware files. Use the firmware-name property to specify
-the NVM and rampatch firmware to load.
+Hi Christian,
 
-Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 24 +++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+>> I'm fine with your two patches. I was about to apply them, but the first
+>> one needs to go through fixes, whereas the second through next, and they
+>> are dependent on each other. I propose the following modification:
+>> - create patch 1/2 with the content of the cleanup done just below, but
+>>   only adapted to the very specific spot that is touched by the fix "fix
+>>   broken config...". It would be a prerequisite for the fix.
+>> - patch 2/2 would be the content of "fix broken config..."
+>>=20
+>> And aside, a totally independent patch easy to apply on -rc1 with the
+>> rest of this patch.
+>>=20
+>> Would that work for you?
+>>
+>
+> Mhhh are they really dependent on each other?
+>
+> I posted them in 2 separate patch as one should have priority and be
+> applied ASAP. The other is really a cleanup and from what I can see no
+> delta in the patch gets affected by the fix in the other patch.
+>
+> In theory they should apply independently.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index a6991e8e2df6..93458773b72d 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -17,6 +17,7 @@ / {
- 
- 	aliases {
- 		serial0 = &uart7;
-+		serial1 = &uart2;
- 	};
- 
- 	chosen {
-@@ -451,6 +452,13 @@ &serdes0 {
- };
- 
- &tlmm {
-+	bt_en_state: bt-en-state {
-+		pins = "gpio55";
-+		function = "normal";
-+		output-low;
-+		bias-pull-down;
-+	};
-+
- 	ethernet0_default: ethernet0-default-state {
- 		ethernet0_mdc: ethernet0-mdc-pins {
- 			pins = "gpio5";
-@@ -544,6 +552,22 @@ wlan_en_state: wlan-en-state {
- 	};
- };
- 
-+&uart2 {
-+	status = "okay";
-+	bluetooth: bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+		firmware-name = "QCA6698/hpnv21", "QCA6698/hpbtfw21.tlv";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en_state>;
-+		enable-gpios = <&tlmm 55 GPIO_ACTIVE_HIGH>; /* BT_EN */
-+
-+		vddio-supply       = <&vreg_conn_pa>;         /* bt-vdd-ctrl1-supply */
-+		vddbtcxmx-supply   = <&vreg_conn_1p8>;        /* bt-vdd-ctrl2-supply */
-+		max-speed = <3200000>;
-+	};
-+};
-+
- &uart7 {
- 	status = "okay";
- };
--- 
-2.34.1
+Ah ok, I must have misread them, fine then.
 
+Thanks,
+Miqu=C3=A8l
 
