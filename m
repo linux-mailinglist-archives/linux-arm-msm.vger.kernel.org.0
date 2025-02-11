@@ -1,126 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-47506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B46DA3019C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 03:41:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47B8AA3023D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 04:41:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6DBCC7A2706
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 02:40:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A81A61888FC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 03:41:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A2D91C3C1C;
-	Tue, 11 Feb 2025 02:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABF471D514A;
+	Tue, 11 Feb 2025 03:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bfDz4OQU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GZB3zQ6Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21C21B6CE9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 02:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DB8257D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 03:40:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739241661; cv=none; b=d7Pnq/37u2b86jMBJMlaMbCC92X5xSP8FEYwlVS6Lb/hi62FITDgqP6B4POIMWRP5EQb123D9z3K56IMmC3rh7GKnsEwx9tzlET4loriRw3PxjGvdJOTY5Z8npgcM2a/2fGHNhOKYgoFlOfy9UR/t2MXPP928YbkNqyTBw8lyOU=
+	t=1739245259; cv=none; b=Ppi0UIo5ycq7HbduqkK//62SFP5aswuECCfCj/IfHXbVpEaNvEXmwe/LLcssvgWS6iNG1tzXuV961e1S4kaT6MWQY89OOUA4625mg+QtGMKyutOu5z8eXkwT0AG3TWb1ImbE9SE3Ewb/2acbKpG5EClIPgZicbuneAziO8ubecY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739241661; c=relaxed/simple;
-	bh=iP2ZFd9mmNM0UOkLQXqsOjEl6+6YiCtrboCdTCrEnOI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U+mn1sCppNGiuJwrmq8uCHGJnrEVZjNuugpL6zT0KjHB24lVC2eOXDVXyDsT30VWtYVWRgoQLq4dgKD/nfpm86ZOafxSQiJT/oeX8kXFgK+qBetAwrh6auBbt4pKicgeoCUttjzZ0H09e0tw3/jQGt3AqDS96buAo/C/52eZHl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bfDz4OQU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51ANSgwL031872
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 02:40:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	s5WY8N5ks8GYUyNu1nsdKVcNatvt1ZRhBofnP73+/Cc=; b=bfDz4OQURTIWt6vQ
-	wuUL9s1UUob+eLYOJ9ktApZV/AK4m3q6MPe5KKDL8OUhn7ShzF3YpuaF9vBvBTHa
-	qacOs0HFSpqJB0EXkJ66XQQhXsgEubPApLF+jEUyr36LsqM7s/WAICDUIK7evo1D
-	8CeJU9ABjGvFPOkWbWZ8MJUN5PFu3rdalVRHqb4XBnEm/8NTaCUMWNdk86tuyUUP
-	r3fXPvavzKcXmkTN1/FMC0JWQXItKgqYrfqWfCvJRyZcyHT9IDrpo2lyW1TkKbV8
-	O0+QRZHA9g7S7cPJ3NSYb/7LkiHxbCgvUW6usKflmqzaGuHs0olhOyFoJ7DCrzRM
-	gQR0vA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qgtk23b7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 02:40:58 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6e44e248dacso7437346d6.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 18:40:58 -0800 (PST)
+	s=arc-20240116; t=1739245259; c=relaxed/simple;
+	bh=m9JqgufdqQaa8IPvLWZeQy4BIn0ONuHz99VCtUR8O18=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hRnbTODZP96oyVZ63tSXJDUpQXwsJSJxUG3gTF1FxeO1ULrSmJIkPCko7NO+DHrZNrvFtSZsoHt+fRMqBTpmCgXaCf6BUeMkOl+S0MRQHMptXgu8xlIpO1yoky+hKw7JdJDLXBTPaZ7Rlnyv9ZAwAhXUgzW6x7e5mpB8OoEgjRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GZB3zQ6Z; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-543e49a10f5so5372647e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2025 19:40:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739245255; x=1739850055; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5vAtkbKujewPgE+URJArLsNmDebMF+/Ud9vX6A3NATY=;
+        b=GZB3zQ6Z5rSZpKtXwfGC16gPoVjk/gtAEqoz6Ril9occ9IKeU/whfMtpg2f8lsGYay
+         gknU7VrfM/ajcfIcup8izrSe3GB7fhzmElcbZ21/OTn7DJxG0tdM97DUdgCEIs23s5g/
+         f6Y2q/qBXZ51X+eowAmYgQLVW/rMO7PH7ua8oLLLTHtNlWnHLuliI+vBKHroIJ0TxIRI
+         tC7/KMhRAW8AuI6gD/QUMcYw26Jr7jAVabXxafKCIOgnCjwsOsmiKR2VeNR8ImKf5wC8
+         thb2+YiURQq4Cqrt6eOWzCC617/KACsF8U/gWCZD6S4JcaCgvDKBT+KVjZ7YSEu2wGhS
+         5zQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739241657; x=1739846457;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s5WY8N5ks8GYUyNu1nsdKVcNatvt1ZRhBofnP73+/Cc=;
-        b=jyIaztGG/SwLUEgcFUGwgijUcrOGBe6vuL1TrJaAFonM0XxLYHjMMy2xQinTuvLFVr
-         whdg7M6kgTR78FVttrniocP/VaQCfw4UKKUFBw2Rn7fDQpaZx217sRYV706uJeSigVdM
-         /QulaKZ9uU/o+cjeKpb9/OHU9IhzmBFSlWpaUc28LI01pv3XNKErEl88TGcRSiWI1wrE
-         I55wGRQ15HkLAHtCDbWAyAXmfC1tr0qd2DwJ6lN4GHWRN2arl61xsNEYm3yR3Udc2iIw
-         DBt6ipBlo/ReQ3CbpUDy9nFuxhg+2ANLl47qslenpuzsVkLjLAu9OOTb5F6rAa5kiBzB
-         g5oQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXB45ioVnzlHATkGuiZmIB5c9e8vTKnU8Q5sQjQw41PU3TRulS0moV7Yi1B/WHsQBDMkBNDn6igpjwTUXcZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwdoROeONV4oq6M1/T1wV18Eu0DAnlMlK54fboPGqUu59kjKNVv
-	2aJcE99wbCRahNTsdoeuBxIJ7gQWUIVMssoPmK0R8j/G9FvP77bA7u7jEPkQYHuZ+/DfOntEFAa
-	aCF3WXQ0+nhMCIE9FKnNkPYNNM2PYqLnsdB8TvvE1UMt49cGB38tIszin2dvgb5Xd
-X-Gm-Gg: ASbGncvqac1Qpv9OnsRJmZnjV85hlJC08BlgSKlwDmMGo0QP8QEin7wc+W0R0XLZBtQ
-	WczKWsRGLUvIiZWAiAxILYv3glB4N7TntzLb/xtFVc+fL4DRsu/wpXbkbdr8X3YYRINpYB04uLM
-	zZYuG7TAhig1/sxRfMn3J8yFKqoqXc++iB6/cbD+9W30Aurp068i/u9Kr/b6stqej/gfOSfBVUE
-	r/RdXDPS/uG85tzx6XYbMyTvruDgwMBOqkdWd3UWY+FQnlVPRiDwqa+0UXvfUtieULsNpONvAwW
-	Ro2zPxAiyZHRxXZS/6X80Sk+yjLYOQ/U5cNi1pvtzYh/PX9V22NLMwYE37c=
-X-Received: by 2002:a05:620a:24ce:b0:7b6:dc5c:de2 with SMTP id af79cd13be357-7c047c582c6mr862203785a.13.1739241657145;
-        Mon, 10 Feb 2025 18:40:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFXTZRkXlf6H0uaJ0li29IfhwzaEgg+uIjLZ5thLqRq3AgGpVeEiHBLdGiJWI4c0EUhvnEVXg==
-X-Received: by 2002:a05:620a:24ce:b0:7b6:dc5c:de2 with SMTP id af79cd13be357-7c047c582c6mr862202685a.13.1739241656794;
-        Mon, 10 Feb 2025 18:40:56 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5de61830117sm5320653a12.6.2025.02.10.18.40.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Feb 2025 18:40:55 -0800 (PST)
-Message-ID: <03df88a6-91d0-4504-b14a-223e55208162@oss.qualcomm.com>
-Date: Tue, 11 Feb 2025 03:40:52 +0100
+        d=1e100.net; s=20230601; t=1739245255; x=1739850055;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5vAtkbKujewPgE+URJArLsNmDebMF+/Ud9vX6A3NATY=;
+        b=lodkJ994C8qidemF9FlFuc8zP9n2/4FM6Od93AKXXoGE1JTuWq1wcQ7Q0/kT7QjQg+
+         hv698Ida6/A480qEZqo0XxTdW4meQxzULvh4eyS0p4wfN3Wwv2mACrM8kDNxc7I6mu6d
+         jY2TRGzZfwlY416QZM9Jw5kye44DJFut9Nzl3c2WijTqfPT9x/9eltkbDRDEfvcPQ357
+         PhDzlai1Ta5lOzt+YcR4OVErESrnsL5yWitc0ylmoONWOSarz11ZxUI2bBmkh/5me+cy
+         wQK81LFFItm/7p16m+PW/NQMPyfeGxOoIy+dnxQxUyDUWd2sCP4d70RvcQIyxyBzFLho
+         OYrg==
+X-Forwarded-Encrypted: i=1; AJvYcCUJ692gHU82K2PTUEshbUJ/nHyivTL6y5ntJ827BqvAfDz/SpBZ1U7MyX9QdF1djpLjAe0Z8++AfHNKRnmh@vger.kernel.org
+X-Gm-Message-State: AOJu0YziWnvDtYFX4w22PLz66cxGQhduYf0nY8Q3nOmjaWEETvrwDRHZ
+	sKgZnlo8dgaSj5rQz8+W/mZIMOBBF/nzCSFQtORmhKHYMAJnygJ19qnEDL7bXTQ=
+X-Gm-Gg: ASbGncuF1rd7JibXTau/QmjCK5GRO3qbEIbwRL/IHNSGwo13tfqMEyP0JzaYPuLp5F9
+	StkjqP2/9ACpFMr9P65DrCK19A81/O4T5MKdg2ofccJAWBvAzzhpVNK5Dvo44kblSIeBY4HhGdm
+	ISGTRtYdxaOoQsw/A+2UrMHqehzWUuQqEWKw9sMprMMqcBpoVI9djP3Y68rmWpRYaDOtZrSZ3AW
+	r7QPl9nc3E8/9o6U4bfdfwr7XzJ1T1LLJDGOcQNMee/Mltq6zavS2NtZxEN1+awSbWxPIF14lkw
+	3hr8jHi1njaoLK2ucDnnZISreCHSuTn2Thq7Gk3dpjZGwYwn+3i7oJ3CeV5mcMa1erOHT2Q=
+X-Google-Smtp-Source: AGHT+IESIZIApI82KNped+F8rDYKVVEqRChUa6PLhZuvZfiXsjK12HtxB4DBhx1h10YT3mchL9bAYA==
+X-Received: by 2002:a05:6512:a96:b0:545:10cf:3468 with SMTP id 2adb3069b0e04-54510cf366emr965052e87.37.1739245255377;
+        Mon, 10 Feb 2025 19:40:55 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54501e3fa93sm957117e87.17.2025.02.10.19.40.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Feb 2025 19:40:54 -0800 (PST)
+Date: Tue, 11 Feb 2025 05:40:51 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Vinod Koul <vkoul@kernel.org>, 
+	~postmarketos/upstreaming@lists.sr.ht, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Martin Botka <martin.botka@somainline.org>, Jami Kettunen <jami.kettunen@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: Don't leak bits_per_component into random
+ DSC_ENC fields
+Message-ID: <x6e3j2fbf7hjos7uel6b4kk5h5q7lwtqkacqxj43sntheguysg@k5weigzww6ac>
+References: <20250211-dsc-10-bit-v1-1-1c85a9430d9a@somainline.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/dpu: Don't leak bits_per_component into random
- DSC_ENC fields
-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Simona Vetter <simona@ffwll.ch>, Vinod Koul <vkoul@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250211-dsc-10-bit-v1-1-1c85a9430d9a@somainline.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20250211-dsc-10-bit-v1-1-1c85a9430d9a@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: I32IAgFlWQara7MOsodHNQgygXiBdScc
-X-Proofpoint-ORIG-GUID: I32IAgFlWQara7MOsodHNQgygXiBdScc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-11_01,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 impostorscore=0
- adultscore=0 clxscore=1015 mlxscore=0 malwarescore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2502110014
 
-On 11.02.2025 12:19 AM, Marijn Suijten wrote:
+On Tue, Feb 11, 2025 at 12:19:32AM +0100, Marijn Suijten wrote:
 > What used to be the input_10_bits boolean - feeding into the lowest
 > bit of DSC_ENC - on MSM downstream turned into an accidental OR with
 > the full bits_per_component number when it was ported to the upstream
@@ -146,8 +122,13 @@ On 11.02.2025 12:19 AM, Marijn Suijten wrote:
 > Fixes: c110cfd1753e ("drm/msm/disp/dpu1: Add support for DSC")
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Konrad
+-- 
+With best wishes
+Dmitry
 
