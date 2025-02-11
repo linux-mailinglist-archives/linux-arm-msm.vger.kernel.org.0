@@ -1,152 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-47589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E474A30CF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 14:32:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B0C3BA30D10
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 14:35:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E70D8165DF1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 13:32:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 55FE21605C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 13:35:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 229181FAC4A;
-	Tue, 11 Feb 2025 13:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAF11220698;
+	Tue, 11 Feb 2025 13:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="JeCc7Nq7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CXNDTq8S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69721B85FD;
-	Tue, 11 Feb 2025 13:32:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A5C1FAC4A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 13:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739280737; cv=none; b=t0DvVBMVfH6pDcVe0X2dTZ1mHBQDbpwgZdvpXZPC7Q5bBgzjmBS34TvM3BUXr4KoEIL5Sh9I60A5xT20p9s66hUNgRLHeNd7E8Ax5JTNOrZs62OD/eH5ri0zFTA0J03qOhsE9TZ2uCUPe5I+7SFf+WXFMxw9RKhzZR/XK530lWc=
+	t=1739280899; cv=none; b=o+l/e4d27DwJMybg7lyR6uPi9mFJO64U7mlMfiDw+cz/r8gg9SG8okwMnNQOEfOCy5eD/i1DSuoJq27SPyPp/xkXuRLtmLIPopV38YVugT+xDzGz7QHE+TW1j4/i+Om50JGGs+crX4GChBCJKBiTn/7hKD9ffaEulezgHbeUyZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739280737; c=relaxed/simple;
-	bh=pYTicEKav+wFq62fntSHoX3BaH1+s625FcTaodjBKDU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fX7oJkf5rWqG5mOrGr6oXkAgNYMta7TCHqeT7aPQZD/ZjejD0rYi5XXGI2EYPv7FzTcxKuvtYc8TctGwaSf2vT9PMBNd30fSs3Pm38aySKM/OTdIVwpGwJD7kc9Uxy6VHozfy9e6iHvhS3VAbMsxvplNDon+SaKS5ewyEBrMbT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=JeCc7Nq7; arc=none smtp.client-ip=217.70.183.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 41D31440EE;
-	Tue, 11 Feb 2025 13:32:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1739280732;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=AAvjdSvXA4nQGDvB1wQA7K1O0Rt2MZsbOsi/M4ix9QA=;
-	b=JeCc7Nq7QuZVANkyQtlKreTbbPTgWPvh3d2L7WcR3zrTNO8AFNoaw8YTSkIvHtfle0JW3s
-	AfmIQ0YizrhVqkDC+DIFvzKGxvfVPItYcmNtMEgTQgeZE0tUNf02nZ3DE8BLD7ewzh2wnK
-	DuY4HokoyCWirbuc7CNi1tK8m8OB4yrwoJgGTO+hz+3W8IRBPLPwgSLiuBd8HRQ4j0erbt
-	4n+482ULdQ09OUx6V7OTPvU/x6sSN+8OJ2fAwoArgVf/JJamnZMd5mffkN+v7kFUowk0fH
-	TWDjxARD8fqceclDh5MQFpXd8zV8tC+rjRyel8DdOjZmwhyRl4G0k0Vsn89eqQ==
-Date: Tue, 11 Feb 2025 14:32:09 +0100
-From: Kory Maincent <kory.maincent@bootlin.com>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
- <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
- Gantois <romain.gantois@bootlin.com>
-Subject: Re: [PATCH net-next 03/13] net: phy: Introduce PHY ports
- representation
-Message-ID: <20250211143209.74f84a10@kmaincent-XPS-13-7390>
-In-Reply-To: <20250207223634.600218-4-maxime.chevallier@bootlin.com>
-References: <20250207223634.600218-1-maxime.chevallier@bootlin.com>
- <20250207223634.600218-4-maxime.chevallier@bootlin.com>
-Organization: bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1739280899; c=relaxed/simple;
+	bh=jDmOTyojiikoo0IfvxOxgpPziU5nD3zAgqiOBfyXwxg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AFC36KstnlhGoSiE4/c917od2IE2T4hw11mabbdnY9Y6vCYtgrkxolJHUp41nGqgv2NkmagMGNvqoQorSTJjFgVC75zCwqovuiz36mCIrFi5GsY5x4zHn9qq7PWZPUaG9nMpl3YPf5lltkEjeDjYTKB0E2ZJzTCGtqPVEvKxXQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CXNDTq8S; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51B8k1V6001652
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 13:34:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	gdqMkX2dIK2G48mSPcv21J8TMTmaplncAXlkvHMiqFc=; b=CXNDTq8S4z/ICNkV
+	9BhjoeNMBsN4hKDX4h7bjR92q3iXRA8J6SJ7MsjBgw2nG1/MR56x1GnEz8T3FUUu
+	81ildL0d6sLAzdTqlsSSWHwMd+RzVMBwweqMc9hHzHxvaPqKMauJKtRDzN/pIawL
+	jrj30mYUYlZeNFVh2UvQB7JELLL1V5F+pI63DqqQ/miv2za64mblpgRklYid8GRP
+	I+HPWX+FfQ7BH4/Ydzsyzd8yvmOxSKG2qIuW9arnLWb+nktX4MVthDAjs293YETi
+	vZhfjs6lPDGBnMXmjrPDQJuY6gzzneeFtF3V5PaDwRUQn/OaFm9ip/UPejZd8YcX
+	guBTcw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qepxm6dd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 13:34:56 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4718a18521fso4122701cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 05:34:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739280896; x=1739885696;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gdqMkX2dIK2G48mSPcv21J8TMTmaplncAXlkvHMiqFc=;
+        b=A1D2ccFAn0MEhFDDF5JhsCM017ls9lMrKkpHn6wTitLRjWPY7RbYzxzHiH6IC5xBL2
+         FlRFJSyF6vzOqGS/chDv3V1NNWUllJaGb5zbvd4vNIBD+bBut+ZZeGoikRFeKreyKueO
+         H2lcVueTt5YluLzNCmWJq32FwrlTAGK+wCHrUDnaQn5hE214rpFxhGnKDJL7Apeq0VMd
+         IwU6rQDyAs1m8FS7XAvQmYwJBuHhIdhsV38ncsLRoSUtKk+1rLsz5xQZnLsIFzMLbvbh
+         qNrZc3MazGkYt8h8TppK1jtqG4Zz2TzEqcEkUvBLT9MRt78TDLQ3QBXqGkQy8U9WW7mS
+         U+ug==
+X-Gm-Message-State: AOJu0YyrE7NR4dLJTCPXjT7qj6YBiCna5C6rVhIDDCqoX92JY1D2XL5e
+	m4pZwDsGYvsSr6JpWjtgPdVuuCthB0BG85WbqssPrScc2aei+UCIYqlGfQ691hJkd8YF/ksWGeD
+	xiu/nCGMX7Z/ohrenciJXq1x92a5yiQ3T8+ArP4DRCWRKjU5eClvaiI/WC5b1ptjI
+X-Gm-Gg: ASbGnct7uoQOP9Qub3xq3jKytIyKQ62jqera0gb88tE1rPMitcplHLKeCJZv63Ptatd
+	Ie4D0SaIhq5Y7/VcAqKClaAbgAPWUG74vEDkiKMSIrsmwdKe9jAlbxujvdbdyFPS3QXvhHVvzob
+	OpmbkluCuuKMEIxZbgsM7v+u39CoYTfpeNB9fRZZAYM6RIE3tC3MobBt+Hom6JsusZ8Txvximk0
+	usMLXv1IsYubn7XLFQI3MdjNDdwlPDvivV6VAMwUG9vwe2rpAivfatyBiqoilpT1wGu2zMXlVwI
+	tk0/05lFMICfGrmOgt9mgHTmVH273sah7pGJ+q0PdRSuldUsLnf8+OR2FbY=
+X-Received: by 2002:a05:622a:1cc4:b0:471:9813:11da with SMTP id d75a77b69052e-47198131362mr34622111cf.2.1739280896126;
+        Tue, 11 Feb 2025 05:34:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF4p3W/WqcNZ9kEltf2wq42jRqj2H0gTl/tRoIEU90x/Lb7PwVN+UzDtYa9Y78eR/nsuib4Bg==
+X-Received: by 2002:a05:622a:1cc4:b0:471:9813:11da with SMTP id d75a77b69052e-47198131362mr34621961cf.2.1739280895804;
+        Tue, 11 Feb 2025 05:34:55 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab7bca07294sm457847466b.68.2025.02.11.05.34.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Feb 2025 05:34:55 -0800 (PST)
+Message-ID: <88e76385-c914-44a2-847b-09013cf4e752@oss.qualcomm.com>
+Date: Tue, 11 Feb 2025 14:34:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: sm8650: harmonize all
+ unregulated thermal trip points
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250203-topic-sm8650-thermal-cpu-idle-v4-0-65e35f307301@linaro.org>
+ <20250203-topic-sm8650-thermal-cpu-idle-v4-3-65e35f307301@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250203-topic-sm8650-thermal-cpu-idle-v4-3-65e35f307301@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeguddufecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthhqredtredtjeenucfhrhhomhepmfhorhihucforghinhgtvghnthcuoehkohhrhidrmhgrihhntggvnhhtsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpefguddtfeevtddugeevgfevtdfgvdfhtdeuleetffefffffhffgteekvdefudeiieenucffohhmrghinhepsghoohhtlhhinhdrtghomhenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghlohepkhhmrghinhgtvghnthdqigfrufdqudefqdejfeeltddpmhgrihhlfhhrohhmpehkohhrhidrmhgrihhntggvnhhtsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopedvkedprhgtphhtthhopehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgv
- ghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
-X-GND-Sasl: kory.maincent@bootlin.com
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: w6z8t11-kMaENSPiTLw3ce0LNNPmmSmB
+X-Proofpoint-ORIG-GUID: w6z8t11-kMaENSPiTLw3ce0LNNPmmSmB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-11_06,2025-02-11_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
+ mlxlogscore=999 clxscore=1015 lowpriorityscore=0 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502110089
 
-On Fri,  7 Feb 2025 23:36:22 +0100
-Maxime Chevallier <maxime.chevallier@bootlin.com> wrote:
+On 3.02.2025 2:23 PM, Neil Armstrong wrote:
+> While the CPUs thermal is handled by the LMH, and GPU has a passive
+> cooldowm via the HLOS DCVS, all the other thermal blocks only have
+> hot and critical and no passive/active trip points.
+> 
+> Passive or active thermal management for those blocks should
+> be either defined if somehow we can express those in DT or
+> in the board definition if there's an active cooling device
+> available.
+> 
+> The tsens MAX_THRESHOLD is set to 120C on those platforms, so set
+> the hot to 110C to leave a chance to HLOS to react and critical to
+> 115C to avoid the monitor thermal shutdown.
+> 
+> In the case a passive or active cooling device would be
+> available, the downstream reference implementation uses
+> the 95C "tj" trip point, as we already use for the
+> gpuss thermal blocks.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
 
-> Ethernet provides a wide variety of layer 1 protocols and standards for
-> data transmission. The front-facing ports of an interface have their own
-> complexity and configurability.
->=20
-> Introduce a representation of these front-facing ports. The current code
-> is minimalistic and only support ports controlled by PHY devices, but
-> the plan is to extend that to SFP as well as raw Ethernet MACs that
-> don't use PHY devices.
->=20
-> This minimal port representation allows describing the media and number
-> of lanes of a port. From that information, we can derive the linkmodes
-> usable on the port, which can be used to limit the capabilities of an
-> interface.
->=20
-> For now, the port lanes and medium is derived from devicetree, defined
-> by the PHY driver, or populated with default values (as we assume that
-> all PHYs expose at least one port).
->=20
-> The typical example is 100M ethernet. 100BaseT can work using only 2
-> lanes on a Cat 5 cables. However, in the situation where a 10/100/1000
-> capable PHY is wired to its RJ45 port through 2 lanes only, we have no
-> way of detecting that. The "max-speed" DT property can be used, but a
-> more accurate representation can be used :
->=20
-> mdi {
-> 	port@0 {
-> 		media =3D "BaseT";
-> 		lanes =3D <2>;
-> 	};
-> };
->=20
-> From that information, we can derive the max speed reachable on the
-> port.
->=20
-> Another benefit of having that is to avoid vendor-specific DT properties
-> (micrel,fiber-mode or ti,fiber-mode).
->=20
-> This basic representation is meant to be expanded, by the introduction
-> of port ops, userspace listing of ports, and support for multi-port
-> devices.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-This patch is tackling the support of ports only for the PHY API. Keeping in
-mind that this port abstraction support will also be of interest to the NIC=
-s.
-Isn't it preferable to handle port in a standalone API?
-
-With net drivers having PHY managed by the firmware or DSA, there is no lin=
-ux
-description of their PHYs. On that case, if we want to use port abstraction,
-what is the best? Register a virtual phy_device to use the abstraction port=
- or
-use the port abstraction API directly which meant that it is not related to=
- any
-PHY?
-
-Regards,
---=20
-K=C3=B6ry Maincent, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
+Konrad
 
