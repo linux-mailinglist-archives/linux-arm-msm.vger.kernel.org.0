@@ -1,518 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-47653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E272FA318E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 23:40:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 532BEA31959
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 00:16:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E32D16946B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 22:40:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B986C3A666C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 23:16:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9825126FD90;
-	Tue, 11 Feb 2025 22:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A55F272910;
+	Tue, 11 Feb 2025 23:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="cqN32ge8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bwJUtEBV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C83F26F45B;
-	Tue, 11 Feb 2025 22:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2BE26773A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 23:16:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739313505; cv=none; b=koCUY3AV1MD4uKdjUe5isGUVzHJkNouzAhNmaYkIhWdihEPwugUrSekiVDz8u/OLC/J54G2NzJUx5cvfcf24NDiu/o4e3LNoQVNt+7srcQXSaymp0p1KDYQoNTWtaKTYisSgTvM8fIbAm8UAwU/hrhWmSmT1sqVEh3wWAWNcW64=
+	t=1739315805; cv=none; b=WY+RKPIBN3scht3CgdTKMNfYzag/Ue1GaXUObwT1+9dKmoeafBMK8iRjA1fFy1R38jbSFrjtR3cWejegJT4U60WLxIcT6TrdIKOy8uLV8JjO4e0oqApS+F3eUNDwAw7T3+QlJQwj2NET4agD90oIMR6DLXmn4MG3fQrE468nttQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739313505; c=relaxed/simple;
-	bh=XrDG6cJ7Znm3MYNEA0g9g+f4KIS+HpIdNachXJLtRoE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AVByGrcPfT2MEJHzIc+P7tf2JEjA1fd2IPtQNL2HG5QJtQC5qWAfc/rUkiOQ9H41tfcg5DwBG1p1Z0dGZZiP/ukClJviI7EkpIl4WXiKuuNTaG7u75O8mdgHyIRthSPz24NBy5mBc9Uhx4NCU7io1ROf70/zLDIkD67CqlkQxic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=cqN32ge8; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.244.162] (254C21CD.nat.pool.telekom.hu [37.76.33.205])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 6B571E4533;
-	Tue, 11 Feb 2025 22:38:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1739313501;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=643BFBiyMT2GIqqHLVDLrJjWeBjJ/C+QADvp9Eruf1c=;
-	b=cqN32ge8f6MMJ6RG88K+arp2eoXsjXKnjqTD3dv892UeQmzfiH9/MaYXvdKHO6U1AEDY5e
-	M/Un86GwCB4VBn5tWzXPwZTkJ7fd4HPiWFPB7FjCPLixszfh0kwGt4nLg9re8lgX1fTCcs
-	1FusO34sunsGYwFJ1I9hcBrh3vxvQXP4kO8YkAW50VmqEQyF5PYyWZ8BuUt8GCyeTy6Znj
-	ihkNd4OWSlK5dt2LmFtplGJBudWkacgKeoTC7/z49GJfcXU8ITWD7kYa/FBRDVdxt/SL31
-	5yS8/iU1gEaRiavGTRX7fJBQWkG1kja7GXLmpphqQXMztFdtkdXHZpfJu5MZsQ==
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Tue, 11 Feb 2025 23:37:54 +0100
-Subject: [PATCH 10/10] arm64: dts: qcom: Add Xiaomi Redmi 3S
+	s=arc-20240116; t=1739315805; c=relaxed/simple;
+	bh=dCWsKsGHrypWkEy2BhbaTsLTiMr3Y+oercFl/4NqAkU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XQn1yN83mUGviCFhbyhsMMNRjQdNoO9H28W13xAAZy9XABm4BVorow5801tz0EHXkv5nYHavmKmhWcOSlqLu8WmMy0EhA5j/8CJFxk2nCsiNDLHMMg1egC4wNEX78uTaScrVR8xnPQI2eR79g4CpMzFPpB3BI8dZKXYOGJ8A3jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bwJUtEBV; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-543e47e93a3so6861450e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 15:16:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739315801; x=1739920601; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xdPjDM4Ktjpdiq8TPEXfIq9RN+Hdq37W2M7XnzEYgL8=;
+        b=bwJUtEBVtMjlTWzxwzyDduDM5gkE0yBQVASyQSiaCnfl8/KSUfaVRxwPuY/5vrQ8Vg
+         tHz98FEqMO3UjFVj2ZhEZ4TtOwyAExpZ1R1A7yN+dDgGpAKXjjYUN5zpSi9Ps2GRT4YD
+         2eRTr16prXz+8rkXR3Ip3yXycpMVaDJY4sMR8aijqIlz57AH/juYZoHavN3jdgv4Zivi
+         l71SWy3a+IzeOuYeQ7oV6WRc6F+nlDxJcxqXv9oUQq2Zcgu6i3a6H6fS5JOqEl/U8UcQ
+         0oy/WWvrnLBsid0eu8l3/cLl7abrF0KVKKU9ckOgmeiCQGpl2EPJrV8btTIXwoqmIeNT
+         jwMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739315801; x=1739920601;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xdPjDM4Ktjpdiq8TPEXfIq9RN+Hdq37W2M7XnzEYgL8=;
+        b=vMcIAPx2OqySLH0jKrxAQNUDgcZmGYFEg+qPbjDvknmn+opc6R2JyUXN5hJK/xbTEw
+         gmJXeYq9d582jCeATyv0ZBMwMtaVXd1Vu9kTtL7S6x/gscJ+ZFixgEU+X3H0PzfEEgaR
+         8HGVU++nMZ3a6ZSESHXGQzr7DqFN6M4Iqppd2qNLVOmESU7SZKwiW4DAEiB5xOoqr++U
+         V3sjzzvi5PnAVVWtwILhLtljERQDXAklE0+0V1FOd5654rrCP0RQaCA+XrgHDHtAJQEx
+         9K6a3LFX/Vb99dFQhQxkmwGlXIeW82Z9LR+I0ircSjW5FTO318ajzAQnCHCETegJWjFQ
+         eMRw==
+X-Gm-Message-State: AOJu0YycJNiAd8zvOls5tnKGUSTOQDsHBWowSswpfk5NChMRkKU7yi2u
+	abc7CbFUq6jPuNW1L6jiDk9lAKUhlSTbGOVRf8ZdnLiGoAZP6GRcwfBqBB3uFTw=
+X-Gm-Gg: ASbGncs32Jq/xk1T9HThemhbV9G8FfDGKK0CNqRPRRUI1NVkHJ8Fei6Gpt523/UDoph
+	pPbbatxND9/I7+A/INMzSsOTYB7v2VfPhPYGjtZ8Ha9gKBE4iZtGGJsRvFkYblG6JkoIsBRcYlf
+	BzwiZSIFmhceEjVpKyEVIp2WPKP2Hy1RAtBBRNO7FbfLSpNUlvOceCwgRnR4q9K6AbAvr42wiYX
+	113d5rC+wY/ICLjbrnC1vcEOqQeTwu+3mbI0bI3pMDwTS7wQhUtc8ESyiiOynP4d4jxG6iiSUSb
+	S+uDBHayDX+tJXAxR/ki/tWUQmy2Z9XsYqL/s1EzTc59GSXMcoTsJ2HB5kkpmSKD52pm6zM=
+X-Google-Smtp-Source: AGHT+IHt1P5dSEzek/rhSRYjyu1EcKb97y+OgEvT96wL/qYwjHZTpXFCGduS/FI+zG4gVD14oHfTjg==
+X-Received: by 2002:a05:6512:696:b0:545:a89:4dd3 with SMTP id 2adb3069b0e04-54518166ac8mr211738e87.46.1739315801127;
+        Tue, 11 Feb 2025 15:16:41 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5450e1121ebsm646692e87.136.2025.02.11.15.16.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 15:16:39 -0800 (PST)
+Date: Wed, 12 Feb 2025 01:16:37 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: "James A. MacInnes" <james.a.macinnes@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	quic_wcheng@quicinc.com, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	lgirdwood@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 2/3] regulator: qcom_usb_vbus: Add support for PMI8998
+ VBUS
+Message-ID: <aldyktqe5sypkb6tdzl5omraohn5ee272b2ww7vwax3sj7csbd@ccldsyvguuc7>
+References: <20250211194918.2517593-1-james.a.macinnes@gmail.com>
+ <20250211194918.2517593-3-james.a.macinnes@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250211-msm8937-v1-10-7d27ed67f708@mainlining.org>
-References: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
-In-Reply-To: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
- =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
- Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
- Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-gpio@vger.kernel.org, iommu@lists.linux.dev, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1739313484; l=10280;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=XrDG6cJ7Znm3MYNEA0g9g+f4KIS+HpIdNachXJLtRoE=;
- b=tUDswN3BrdPDkJrkeQCnazOPJAsjs+MBpj0HZzGOA/To+eh4nZxCeRXmxetZfLNzjdOpbLFbS
- c2KW9YyZneKBDHgkIMH232KDpSd5MIQet7T2TL5xFslNmxreG3lKIMT
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250211194918.2517593-3-james.a.macinnes@gmail.com>
 
-Add initial support for Xiaomi Redmi 3S (land).
+On Tue, Feb 11, 2025 at 11:49:15AM -0800, James A. MacInnes wrote:
+> This patch extends the Qualcomm USB VBUS regulator driver to support
+> PMI8998 PMIC alongside the existing support for PM8150B.
+> 
+> Key changes:
+> - Added current limit tables specific to PMI8998.
+> - Dynamically configure the VBUS regulator based on the PMIC type.
+> - Updated debug messages to reflect successful initialization for
+>   supported PMICs.
+> - Changed registration log message
+> 
+> These changes ensure proper VBUS current limit configuration and
+> compatibility across multiple Qualcomm PMICs.
+> 
+> Signed-off-by: James A. MacInnes <james.a.macinnes@gmail.com>
+> ---
+>  drivers/regulator/qcom_usb_vbus-regulator.c | 33 +++++++++++++++++----
+>  1 file changed, 28 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/regulator/qcom_usb_vbus-regulator.c b/drivers/regulator/qcom_usb_vbus-regulator.c
+> index cd94ed67621f..bfcb77698ba2 100644
+> --- a/drivers/regulator/qcom_usb_vbus-regulator.c
+> +++ b/drivers/regulator/qcom_usb_vbus-regulator.c
+> @@ -20,10 +20,15 @@
+>  #define OTG_CFG				0x53
+>  #define OTG_EN_SRC_CFG			BIT(1)
+>  
+> -static const unsigned int curr_table[] = {
+> +static const unsigned int curr_table_pm8150b[] = {
+>  	500000, 1000000, 1500000, 2000000, 2500000, 3000000,
+>  };
+>  
+> +static const unsigned int curr_table_pmi8998[] = {
+> +	250000, 500000, 750000, 1000000,
+> +	1250000, 1500000, 1750000, 2000000,
+> +};
+> +
+>  static const struct regulator_ops qcom_usb_vbus_reg_ops = {
+>  	.enable = regulator_enable_regmap,
+>  	.disable = regulator_disable_regmap,
+> @@ -37,8 +42,8 @@ static struct regulator_desc qcom_usb_vbus_rdesc = {
+>  	.ops = &qcom_usb_vbus_reg_ops,
+>  	.owner = THIS_MODULE,
+>  	.type = REGULATOR_VOLTAGE,
+> -	.curr_table = curr_table,
+> -	.n_current_limits = ARRAY_SIZE(curr_table),
+> +	.curr_table = NULL,
+> +	.n_current_limits = 0,
+>  };
+>  
+>  static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
+> @@ -50,6 +55,7 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
+>  	struct regulator_init_data *init_data;
+>  	int ret;
+>  	u32 base;
+> +	const char *pmic_type;
+>  
+>  	ret = of_property_read_u32(dev->of_node, "reg", &base);
+>  	if (ret < 0) {
+> @@ -68,6 +74,19 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
+>  	if (!init_data)
+>  		return -ENOMEM;
+>  
+> +	// Determine PMIC type
+> +	pmic_type = of_device_get_match_data(dev);
+> +	if (pmic_type && strcmp(pmic_type, "pmi8998") == 0) {
 
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- arch/arm64/boot/dts/qcom/Makefile                |   1 +
- arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dts | 402 +++++++++++++++++++++++
- 2 files changed, 403 insertions(+)
+I think a traditional way is to define an enum and then use that enum
+values as match data. Or you can just add a struct with curr_table and
+get that as a match data.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 140b0b2abfb555b8ef61bd9ed0217d8997800809..18f0c0f7ebadf86a36b02461c02bdba7bfebe397 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -64,6 +64,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8917-xiaomi-riva.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8937-xiaomi-land.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dts b/arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..3bc324851d54df01f08aa61548ce1794261c7313
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dts
-@@ -0,0 +1,402 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2024, Barnabas Czeman
-+ */
-+/dts-v1/;
-+
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
-+
-+#include "msm8937.dtsi"
-+#include "pm8937.dtsi"
-+#include "pmi8950.dtsi"
-+
-+/delete-node/ &qseecom_mem;
-+
-+/ {
-+	model = "Xiaomi Redmi 3S (land)";
-+	compatible = "xiaomi,land", "qcom,msm8937";
-+	chassis-type = "handset";
-+
-+	qcom,msm-id = <QCOM_ID_MSM8937 0x0>;
-+	qcom,board-id = <0x1000b 1>, <0x2000b 1>;
-+
-+	aliases {
-+		serial0 = &blsp1_uart2;
-+		mmc0 = &sdhc_1;
-+		mmc1 = &sdhc_2;
-+	};
-+
-+	speaker_amp: audio-amplifier {
-+		compatible = "awinic,aw8738";
-+		mode-gpios = <&tlmm 124 GPIO_ACTIVE_HIGH>;
-+		awinic,mode = <5>;
-+		sound-name-prefix = "Speaker Amp";
-+		pinctrl-0 = <&speaker_amp_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	headphones_switch: audio-switch {
-+		compatible = "simple-audio-amplifier";
-+		enable-gpios = <&tlmm 129 GPIO_ACTIVE_HIGH>;
-+		sound-name-prefix = "Headphones Switch";
-+		pinctrl-0 = <&headphones_switch_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	battery: battery {
-+		compatible = "simple-battery";
-+
-+		charge-full-design-microamp-hours = <4100000>;
-+		constant-charge-current-max-microamp = <1000000>;
-+		voltage-min-design-microvolt = <3400000>;
-+		voltage-max-design-microvolt = <4400000>;
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		stdout-path = "framebuffer0";
-+
-+		framebuffer0: framebuffer@8dd01000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x0 0x8dd01000 0x0 (720 * 1280 * 3)>;
-+			width = <720>;
-+			height = <1280>;
-+			stride = <(720 * 3)>;
-+			format = "r8g8b8";
-+
-+			clocks = <&gcc GCC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_MDSS_AXI_CLK>,
-+				 <&gcc GCC_MDSS_VSYNC_CLK>,
-+				 <&gcc GCC_MDSS_MDP_CLK>,
-+				 <&gcc GCC_MDSS_BYTE0_CLK>,
-+				 <&gcc GCC_MDSS_PCLK0_CLK>,
-+				 <&gcc GCC_MDSS_ESC0_CLK>;
-+			power-domains = <&gcc MDSS_GDSC>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-names = "default";
-+
-+		key-volup {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	irled {
-+		compatible = "gpio-ir-tx";
-+		gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	reserved-memory {
-+		reserved@84a00000 {
-+			reg = <0x0 0x84a00000 0x0 0x1900000>;
-+			no-map;
-+		};
-+
-+		framebuffer: memory@8dd01000 {
-+			reg = <0x0 0x8dd01000 0x0 (720 * 1280 * 3)>;
-+			no-map;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&blsp1_i2c2 {
-+	status = "okay";
-+
-+	led-controller@45 {
-+		compatible = "awinic,aw2013";
-+		reg = <0x45>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		vcc-supply = <&pm8937_l10>;
-+		vio-supply = <&pm8937_l5>;
-+
-+		led@0 {
-+			reg = <0>;
-+			function = LED_FUNCTION_INDICATOR;
-+			led-max-microamp = <5000>;
-+			color = <LED_COLOR_ID_RED>;
-+		};
-+
-+		led@1 {
-+			reg = <1>;
-+			function = LED_FUNCTION_INDICATOR;
-+			led-max-microamp = <5000>;
-+			color = <LED_COLOR_ID_GREEN>;
-+		};
-+	};
-+};
-+
-+&blsp1_i2c3 {
-+	status = "okay";
-+
-+	touchscreen@3e {
-+		compatible = "edt,edt-ft5306";
-+		reg = <0x3e>;
-+
-+		interrupts-extended = <&tlmm 65 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-+		vcc-supply = <&pm8937_l10>;
-+		iovcc-supply = <&pm8937_l5>;
-+
-+		pinctrl-0 = <&tsp_int_rst_default>;
-+		pinctrl-names = "default";
-+
-+		touchscreen-size-x = <720>;
-+		touchscreen-size-y = <1280>;
-+	};
-+};
-+
-+&pm8937_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&pm8937_spmi_regulators {
-+	pm8937_s5: s5 {
-+		regulator-min-microvolt = <1050000>;
-+		regulator-max-microvolt = <1350000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&pmi8950_wled {
-+	qcom,num-strings = <2>;
-+	qcom,external-pfet;
-+	qcom,current-limit-microamp = <20000>;
-+	qcom,ovp-millivolt = <29600>;
-+
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm8937-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_s2-supply = <&vph_pwr>;
-+		vdd_s3-supply = <&vph_pwr>;
-+		vdd_s4-supply = <&vph_pwr>;
-+
-+		vdd_l1_l19-supply = <&pm8937_s3>;
-+		vdd_l2_l23-supply = <&pm8937_s3>;
-+		vdd_l3-supply = <&pm8937_s3>;
-+		vdd_l4_l5_l6_l7_l16-supply = <&pm8937_s4>;
-+		vdd_l8_l11_l12_l17_l22-supply = <&vph_pwr>;
-+		vdd_l9_l10_l13_l14_l15_l18-supply = <&vph_pwr>;
-+
-+		pm8937_s1: s1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8937_s3: s3 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8937_s4: s4 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8937_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8937_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-always-on;
-+		};
-+
-+		pm8937_l7: l7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l8: l8 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+
-+		pm8937_l9: l9 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l10: l10 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8937_l11: l11 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+			regulator-system-load = <200000>;
-+		};
-+
-+		pm8937_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8937_l13: l13 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+
-+		pm8937_l14: l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l15: l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l16: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l17: l17 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+
-+		pm8937_l19: l19 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8937_l22: l22 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8937_l23: l23 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+	};
-+};
-+
-+&sdc2_cmd_default {
-+	drive-strength = <12>;
-+};
-+
-+&sdc2_data_default {
-+	drive-strength = <12>;
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8937_l8>;
-+	vqmmc-supply = <&pm8937_l5>;
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 67 GPIO_ACTIVE_LOW>;
-+	vmmc-supply = <&pm8937_l11>;
-+	vqmmc-supply = <&pm8937_l12>;
-+	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+	status = "okay";
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32768>;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <20 4>;
-+
-+	gpio_keys_default: gpio-keys-default-state {
-+		pins = "gpio91";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	headphones_switch_default: headphones-switch-default-state {
-+		pins = "gpio129";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio67";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	speaker_amp_default: speaker-amp-default-state {
-+		pins = "gpio124";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	tsp_int_rst_default: tsp-int-rst-default-state {
-+		pins = "gpio64", "gpio65";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&wcnss {
-+	vddpx-supply = <&pm8937_l5>;
-+	status = "okay";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3620";
-+	vddxo-supply = <&pm8937_l7>;
-+	vddrfa-supply = <&pm8937_l19>;
-+	vddpa-supply = <&pm8937_l9>;
-+	vdddig-supply = <&pm8937_l5>;
-+};
-+
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
-+&xo_board {
-+	clock-frequency = <19200000>;
-+};
+> +		qcom_usb_vbus_rdesc.curr_table = curr_table_pmi8998;
+> +		qcom_usb_vbus_rdesc.n_current_limits =
+> +			ARRAY_SIZE(curr_table_pmi8998);
+> +	} else if (pmic_type && strcmp(pmic_type, "pm8150b") == 0) {
+> +		qcom_usb_vbus_rdesc.curr_table = curr_table_pm8150b;
+> +		qcom_usb_vbus_rdesc.n_current_limits =
+> +			ARRAY_SIZE(curr_table_pm8150b);
+> +	} else {
+> +		return -ENODEV;
+> +	}
+>  	qcom_usb_vbus_rdesc.enable_reg = base + CMD_OTG;
+>  	qcom_usb_vbus_rdesc.enable_mask = OTG_EN;
+>  	qcom_usb_vbus_rdesc.csel_reg = base + OTG_CURRENT_LIMIT_CFG;
+> @@ -80,18 +99,22 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
+>  	rdev = devm_regulator_register(dev, &qcom_usb_vbus_rdesc, &config);
+>  	if (IS_ERR(rdev)) {
+>  		ret = PTR_ERR(rdev);
+> -		dev_err(dev, "not able to register vbus reg %d\n", ret);
+> +		dev_err(dev, "Failed to register vbus reg %d\n", ret);
+>  		return ret;
+>  	}
+>  
+>  	/* Disable HW logic for VBUS enable */
+>  	regmap_update_bits(regmap, base + OTG_CFG, OTG_EN_SRC_CFG, 0);
+>  
+> +	dev_info(dev, "Registered QCOM %s VBUS regulator\n",
+> +		 pmic_type);
+
+dev_dbg, the driver should be silent by default.
+
+> +
+>  	return 0;
+>  }
+>  
+>  static const struct of_device_id qcom_usb_vbus_regulator_match[] = {
+> -	{ .compatible = "qcom,pm8150b-vbus-reg" },
+> +	{ .compatible = "qcom,pm8150b-vbus-reg", .data = "pm8150b" },
+> +	{ .compatible = "qcom,pmi8998-vbus-reg", .data = "pmi8998" },
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_usb_vbus_regulator_match);
+> -- 
+> 2.43.0
+> 
 
 -- 
-2.48.1
-
+With best wishes
+Dmitry
 
