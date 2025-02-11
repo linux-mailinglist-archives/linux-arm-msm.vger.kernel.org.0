@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39ADFA30F68
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 16:15:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC8B5A30F6D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 16:16:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7027C7A1558
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 15:14:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 792CB163BD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 15:16:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11D6F2528FD;
-	Tue, 11 Feb 2025 15:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 025331FA856;
+	Tue, 11 Feb 2025 15:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tw1yLhyf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QwTlTUoD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D104C2512C2;
-	Tue, 11 Feb 2025 15:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B2779CD;
+	Tue, 11 Feb 2025 15:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739286923; cv=none; b=FAjFc/e9aINSBEvwPc0FGxlU+ZAfn9FhoP+9AeiKTnUEjWAcE+EX7w2x3JUy/d37aO+ZlBShdQGtmuWQbmVp3MkM833zJRT6Ae/g6mX9nuYetHIFISsrhCmdy8ETl+rFeGF9f4/cK/z2VbXjP2ytSIJDaxvpnnUIde3aTdXZQZE=
+	t=1739287014; cv=none; b=k/cwenZchjfmCsRp35amq1CGLM+c5JFQTvDm9aJoRFcLlD2d0raJmTsS8GTVyWmK5XLZUm5mekC+nOSF2K04GKLcUHVR7vLe9XMl5io/hZeBBY/t7RZqvyzX+iavY3qKhdaMcxZjOhYYDIgt0ic0zctwbVpfOKS2XM/7mocz3Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739286923; c=relaxed/simple;
-	bh=0E3vuDnjxTbAYMgDY7E6G0OZxfCEhA6gVmhQA5bwvH4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UCYyPl+5eRUpEq0VfMPrCKcVeOOzhUhGd4vKzUroGNNJNLHFxlem5CMIW1PpH6Oap3x6RhyfAVAArrP58B0a7ZakglUbDnRbDxxxQ8aKdFDLlDCDMIxbv5n+L5SCc+keEbJd7bcLlL0QxKxq7z6u3tDbPuQETmpWWURcOheCV2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tw1yLhyf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA3DC4CEDD;
-	Tue, 11 Feb 2025 15:15:18 +0000 (UTC)
+	s=arc-20240116; t=1739287014; c=relaxed/simple;
+	bh=RTGxW5AvzVSz8elarxvdv1y9lwLwzv8O6K/rF3m8CcQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=pLkiatQYAa7akK7ZM8cBBi22X3YcR0tYjllSNCioSMOmdO9cjPXDkwK1gP+i4CjhGYNpaWD3eiS+zmMRM6gS/zNCwfnsryEjiSqmVFohowWJl1xx8GR+A05TcNeFpr1uYhsHXbdP7S118KjG71zNugjidn383xKA4Iw4Cm7oyg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QwTlTUoD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB6DC4CEDD;
+	Tue, 11 Feb 2025 15:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739286922;
-	bh=0E3vuDnjxTbAYMgDY7E6G0OZxfCEhA6gVmhQA5bwvH4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Tw1yLhyfFlX9VTLH1mTGGFT5vFeXpMtl/e6WBF5Ho4uHpAaKPoPzcmYGrxUcMkD6a
-	 fyhdzbpOEFXA8uCoNLPe988PH+jcldsiRw4jt53VZVOixsfKE7C7FqWLjTlKye6z8i
-	 QUbcUdWrTocAEcT/FDORz85dx/jq++fSiXykVjBF4E9fKk1qnYxIzDNYC73z5A8A2y
-	 gT7C2ThzLd71LEqmXVLJttm1xaxjKFj68WWKFA4IO5lTtuP1f4DcMrV08ylb8GcD9n
-	 hT3iEetPmqVzz0qfwMpcezOnYaAuoyB2iSBX3uTGciWE/Zu/mNEIOrDQLQjN0jAsLR
-	 Qs6YqnvNtmgyg==
-Message-ID: <3158e911-c771-4186-b287-50d2395b8c94@kernel.org>
-Date: Tue, 11 Feb 2025 16:15:15 +0100
+	s=k20201202; t=1739287013;
+	bh=RTGxW5AvzVSz8elarxvdv1y9lwLwzv8O6K/rF3m8CcQ=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=QwTlTUoDPVBAmL6PatKWXdCQ+QVMTTRPm9XC2f6TrGQxaLAbtHdiLmSBWDFMJ0CtQ
+	 3sVWMc4uTCL+nvZ2LJrHadWa7vifrkgIwtCdO+rJ7urAFUC8dmGftSFWNaXZHWZ1Sa
+	 GgDS6umkL954588wZifcJ9c53s/bP10Brj0CEntMYkTRZW/cfChvlkV1QXTZWffVJD
+	 zqK793f2gVtSADLw2hf7ZQC0/1LbNW5aM+uq5w1cWQVdg65bmLMyBrbA2yoheQkOPC
+	 CWn3Iwlk/8xZbAR5vnVawqCecy5YFFSkDmiFwrNW+ySzf9dIsSSOfeHa3dbziu7Nop
+	 Fh/hvm7qilg2g==
+Message-ID: <f2dc2e86-efa3-488f-bb0a-33bc681525c5@kernel.org>
+Date: Tue, 11 Feb 2025 16:16:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: qcs8300: Add device node for
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: qcs8300: Add device node for
  gfx_smmu
-To: Pratyush Brahma <quic_pbrahma@quicinc.com>, Will Deacon
- <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250211-b4-branch-gfx-smmu-v5-0-ff0bcb6a3c51@quicinc.com>
- <20250211-b4-branch-gfx-smmu-v5-2-ff0bcb6a3c51@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Pratyush Brahma <quic_pbrahma@quicinc.com>
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ iommu@lists.linux.dev, joro@8bytes.org, konradybcio@kernel.org,
+ krzk+dt@kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ robh@kernel.org, robin.murphy@arm.com, will@kernel.org
+References: <20250203-b4-branch-gfx-smmu-v4-2-eaa7aa762f48@quicinc.com>
+ <ed3cc71a-426e-4044-86dd-945751e282d5@quicinc.com>
+ <990bb621-5056-4460-82db-9805699d8a8d@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -108,23 +106,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250211-b4-branch-gfx-smmu-v5-2-ff0bcb6a3c51@quicinc.com>
+In-Reply-To: <990bb621-5056-4460-82db-9805699d8a8d@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/02/2025 05:45, Pratyush Brahma wrote:
-> Add the device node for gfx smmu that is required for gpu
-> specific address translations.
+On 10/02/2025 12:41, Krzysztof Kozlowski wrote:
+> On 10/02/2025 05:58, Pratyush Brahma wrote:
+>> Hi
+>>
+>> Can someone kindly review this patch?
+>>
 > 
-> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi | 39 +++++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
+> After 7 days? Community is not working for you to make such demands.
+> Observe standard waiting time. Or better: Please relax, and help out by
+> reviewing other patches on the mailing lists in order to relieve the
+> burden of maintainers and move your patches higher up the list.
 
-As pointed out by Rob, this wasn't ever tested. One more example of work
-where you have the binding in the same patch but refuse to use it.
-
-NAK
+Before you start pinging us, test your patches. That's one of the
+easiest steps to get your patches reviewed or applied fast.
 
 Best regards,
 Krzysztof
