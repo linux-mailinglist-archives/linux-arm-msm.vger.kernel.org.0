@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94310A30439
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 08:13:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D1A3A3043A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 08:13:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07858188914F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 07:13:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCEF81652D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 07:13:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E54E1EA7D7;
-	Tue, 11 Feb 2025 07:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18CB51EA7D7;
+	Tue, 11 Feb 2025 07:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GsypkDoY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TkXvfBbi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634B11E9B12;
-	Tue, 11 Feb 2025 07:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EA01E9B12;
+	Tue, 11 Feb 2025 07:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739257984; cv=none; b=i8FhFGFuJtS0+POpibq5yhkQAdKTNCE/JAKvAZuxSx/BFEHelc2mkD74Lj3WUXUYWuc/rS7sp9lv6TL/m6NcxJbdVD+hnNd7Vj9pfJmmcHQsOC/TyDs4mnNV2ryLwyPZh3E6rzj0w7X2NCA+h5oF+HSSpajMMyYv5EkrgaJJK6A=
+	t=1739258033; cv=none; b=UhEmKOmomEEeBMFQfa6ztkT8Sul1H83OjoX+W7xoYz0b21fDp/Q8w/L4ImyX/ntr8NA85SFV4u+3v2NPiYpkHqrB6BBpWJUfjx61PSUBCua2OiB/6DH7uWuttP8QMMw+0mtEnGiqbWEbqMbhIxagamgKGuPFLTrFNbJDbF7heNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739257984; c=relaxed/simple;
-	bh=SHo2Eo4x7SWPRiKK2LnH2OCteBlbkMsB6rRtx7OOHFU=;
+	s=arc-20240116; t=1739258033; c=relaxed/simple;
+	bh=4DAQsktPNFniPo8AcqveyvA6AYvEpL1UDx7dN+uAgK0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZsseH711OpgG2J2r65E8Kl7d4JIEhgi3pqABdaESBkT16cgMj5xykKkrw4XolB7PePskW713D0JS+ecngSy/s0Ob096PowH/TcGEtu7URlkYVWVFBLYmftlvdg+itVo3Ze1IQhtybBDSJ+4rX5PfujNUjXd7YdD7S5K1AUx7uhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GsypkDoY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B41C4CEDD;
-	Tue, 11 Feb 2025 07:13:00 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YdxVuEkEd5oxnVC/+EmgqdL2t3BisnUgveNXurM+yr1jOFlaJbk8qO9Il/oDXHYocUY3CPK70l2J0r2jpBNuF6iBCMTBsO1KpaOL92hXq5lHcHtYt+rWuA/0XMEjIyGHJjC4dXA/BG1KeIMqsRAP5fuPCKy01WwbGf9b0bueGEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TkXvfBbi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA754C4CEDD;
+	Tue, 11 Feb 2025 07:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739257983;
-	bh=SHo2Eo4x7SWPRiKK2LnH2OCteBlbkMsB6rRtx7OOHFU=;
+	s=k20201202; t=1739258032;
+	bh=4DAQsktPNFniPo8AcqveyvA6AYvEpL1UDx7dN+uAgK0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GsypkDoYGM1Q6URs8U8jiIt2wTh+8woeq1z1ogp8BE/JXQEpdEV0WoRHv6lusH8kJ
-	 mgmVAJ3y5CgtGQ7djll+6GkJD7W3cvOh8OTH2ou0lE5UCMrXK/YzfMZ1SwAxpikRpF
-	 44mPELEn1uCqj25gm5A1gTNdnq48A9eXRpeA4oRUJJv7/KSko9UXXaNrdcwOYDwYLY
-	 6yq/o+9DPp34+i56/07hdHlSZtVSUyUvFpUI0VYxtNHLCksJ8TO0eXa7CTGwpyzLh1
-	 BYmgcQroB7HdtapQT9MLmB3G4jfVloOl9MilrM1ulMVRklzleNXGjhysEDdOBzpLgT
-	 0/Ryui1MzZ6oA==
-Message-ID: <0b5318be-4f48-46f9-9665-1a70fc9e4dcf@kernel.org>
-Date: Tue, 11 Feb 2025 08:12:58 +0100
+	b=TkXvfBbiFG2fPlrR8d41cjdvtCCA9ejwGIpmgGbaTsyCqdESnRtFxtHXYR4Agoa5o
+	 8MrbZC4hmLzp0s04GXJTUyl6Bme7vNVS5EQ+jKGiUgvti5B6oWKTZNQSAi9lijzRjS
+	 2FKx9iwRo16bzPg1Lw2pnTnltRPZfSVsmHtfACZ52AWpgmgj+VxARcReXULVkQbdWi
+	 HUVbM+43PwEALR3KVPUXdXaQh7NU8iYLVMWlIoaZsiunk1pyaJNlr24TRUWOGWlHC3
+	 uD6Jhv4iYRx+KbHxbzdaNVtLkez9kzcZ/d0oJAqoyghuk4+FgdYFZYqknJBgmKY9MG
+	 szr5jpoiPXG6g==
+Message-ID: <e5a60406-2354-431d-a9bc-4a234a83c824@kernel.org>
+Date: Tue, 11 Feb 2025 08:13:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,15 +51,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: dts: qcom: sdm845-oneplus: use guard pages
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Caleb Connolly <caleb.connolly@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>
-Cc: "Dr. Git" <drgitx@gmail.com>, devicetree@vger.kernel.org,
+To: Caleb Connolly <caleb.connolly@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ "Dr. Git" <drgitx@gmail.com>, devicetree@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
 References: <20250207151706.45031-1-caleb.connolly@linaro.org>
  <85c31e1f-20bc-4e48-b179-e44ee8e1f816@oss.qualcomm.com>
+ <CAC-n0DynNGkEm7Z8Epv9fU6D6iSzAo7hzhykmKLa4byHYbDxDg@mail.gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,26 +106,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <85c31e1f-20bc-4e48-b179-e44ee8e1f816@oss.qualcomm.com>
+In-Reply-To: <CAC-n0DynNGkEm7Z8Epv9fU6D6iSzAo7hzhykmKLa4byHYbDxDg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 07/02/2025 21:20, Konrad Dybcio wrote:
-> On 7.02.2025 4:17 PM, Caleb Connolly wrote:
->> From: "Dr. Git" <drgitx@gmail.com>
->>
->> Rather than manually define the guard pages, use the
->> "qcom,use-guard-pages" property for rmtfs.
->>
->> Signed-off-by: "Dr. Git" <drgitx@gmail.com>
+On 07/02/2025 21:24, Caleb Connolly wrote:
+> Linus & Greg explicitly allowed for aliases previously. Patches by "Asahi
+> Lina" and others have been merged.
+
+That's not alias but anonymous contribution. This was never accepted.
+
 > 
-> I'm not sure this ID is acceptable
+> Ive spoken with the author several time about this in the previous years
+> and they aren't interested in publicising their legal name. So the only
+> alternative here is that plagiarise these patches which I didn't write, or
+> i have to carry them forever downstream...
 
-It is not. We do not take anonymous contributions.
-
-This has to be known identity, you can achieve this by having your key
-signed and present in kernel keyring.
-
+Or get known identity verified.
 
 Best regards,
 Krzysztof
