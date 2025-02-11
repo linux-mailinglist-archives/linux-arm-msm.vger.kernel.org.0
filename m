@@ -1,160 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-47556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EB19A30AC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 12:50:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A6DCA30B67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 13:14:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2B9A16239B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 11:50:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1EE863A8D39
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 12:13:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8978E1F8AC5;
-	Tue, 11 Feb 2025 11:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C8841FCFF5;
+	Tue, 11 Feb 2025 12:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n31hD8Ni"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="n/95aNbI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F3E1F0E2C;
-	Tue, 11 Feb 2025 11:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A864E1FDA9E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 12:11:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739274623; cv=none; b=iA8CedXiiIcuA3q2I0fH7A0K7YwZoeeAk4hqOE+Q6EJcEJLlz76x+H01PiNQQ1uu406+uflTrN+HmmvrAoVkJmLdphYikwwhutNxX4TpHFg5Fe1ykoyTLLkxz1JJXkH+RibxCTw3mLSXqLwKR7YkpiyX/RqQZtW60m+UAcUimS8=
+	t=1739275893; cv=none; b=XCg6IbM0NUNtT1y9A/56dA5LMwuu2Tl6TiGcruWrM8y9WeJbLXHEbLSgDwYT2wK1d8vAaHzU/MahiQXR1y3ZokW2PPG9IkVUp0NM4LNKR+Q/8KwDoLf+q8yXAXCtP1AMjkuk64X748KKCPce3OTKXIs9UbocmkA0UPFURIwjF/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739274623; c=relaxed/simple;
-	bh=z7ig8G4ja3AfMZ4xQnC35j6cgjQp78dfBzJxrAhKF54=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MuL14YYbfE+29zwl6b5e6466c1Gd1IW2RQSiZRGPli9AyxkzrXViSb0NhpQ+1oUZG2q53SnAP8POljAUEWqSJOmOhLoALuiWT6b8Pif34mNkZ8GR1jRti85kcTCglIOBbBnMcVV+nS+ouDfRoYVKOKqeYWYaUaHtX8ypr4sEeCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n31hD8Ni; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BB9C4CEDD;
-	Tue, 11 Feb 2025 11:50:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739274622;
-	bh=z7ig8G4ja3AfMZ4xQnC35j6cgjQp78dfBzJxrAhKF54=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=n31hD8Ni6DJMrh3nvJ1L2L0R95t7dSJ06VWF5Fr+txvM/0hrpfR9el8L6QX1nzn/G
-	 9SlcGjMifj8ijihhSKnWYo0jvfz69UDyGACNXOPxr4XagmbkhA1W6rkJmjGJKDco3p
-	 QgsVihqJXeT5o0tTeTUYbI+N8gcM8FMV9q4FnnZw0+upNI5hTd7oDpPj0ZNvr/oQ+E
-	 DkoBtMtihVvUpXOiQXLqQpuHaeYP03vveVJaypBhtgpzuvwZNA950w8CYLfSNMZEt1
-	 FNNKwxhoXwCShlUwjzJZ3VwkvyjTiXiMkGJnBvniZxBtHUvhnnsmL6t9vLHKjzcIXn
-	 IzstWRa2ang3w==
-Message-ID: <c85903c6-6a89-4382-bfa2-2fed95f0cbc0@kernel.org>
-Date: Tue, 11 Feb 2025 12:50:12 +0100
+	s=arc-20240116; t=1739275893; c=relaxed/simple;
+	bh=JSrXPPELBYFDg9Ee8WTaY4hT2UgxTA4pQ+IsVkSX0kM=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=Dc77psrqo//o5S1G06J0mHESmgdB32NHvrbjJ5JysfvL0TZcNSI/OaPiUuqIrt4XsyrFM73PFJcJeP1iw65ZRuA2c0+tILBze4WXtay6LzjN7lDf619odK8ldbgC0irJMbPm8S0daCPK0shm6eO3MfLp7rdyuHrW8eUFJCZdIL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=n/95aNbI; arc=none smtp.client-ip=209.85.128.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
+Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-4394b8bd4e1so6865485e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 04:11:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1739275890; x=1739880690; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mSGC99esy4K1gjCxU9uriveObd85avu291zHKaN+p7Y=;
+        b=n/95aNbITiAqL+7wE3FDHrJtMfw3oZ87DVtxH4KWn7EoexPJmAY5eCJqAzsFUq6ZcC
+         21aH6jiDG3jzSkV2sD4VUfxJR4DItDKvBIUVcVCBITkTE1FNGy9SBBYGOnj+Jnueo0c1
+         J2aveKLeKvpMWO2czPzvfoxnLuPRdKhJrBZdm7z8sdqA+QpeJ6dLkVlj0kPtzjj4xyCi
+         +SdgOzaklrHDiBR6KOUK96wKPZdWD311S0Mb9+iv/Y7K9XseJVMaRpco4vmXlYgWVe2l
+         1TddZ9PZo97nCKDWJnUvMa0PB3kz3RIoGpQqey/AYer1UdwAOmftOoSvM3FTcNHma/K0
+         EyIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739275890; x=1739880690;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mSGC99esy4K1gjCxU9uriveObd85avu291zHKaN+p7Y=;
+        b=fMteoUz4I/arSN2iAi9EXo2aZ2QQLb27O37PyIG0q5J5tGCWlMsARuRLbqxLBxNcdf
+         XF6Gsc8g4pp+ebrVsWil74Fdjvl9T1HiSNv2b9Efu9yMKpavEJaEKfUTMAK4iyT6iCW7
+         dEPTPk9GtI1tXlh+Mcb0UlIpVucwAzZu5kRl8WFmY/6uuyC8+hYCwrCtGH3FqnvWG40p
+         Q+BIE3V6M2lpdtsjoFr6AbkU/HR/H322jsSNp5RZ7SBGZFn3MZYXpHLYvcVtbWwpNu//
+         W4wEUoSgN9y369elxD8DokuryI4jD+OIhwGYv1iAk/qLd6BqDOkY21DdveDgARzy0ZPN
+         cfvA==
+X-Forwarded-Encrypted: i=1; AJvYcCWkHot7WFphdIUeSUbNGvOAJDktulOZL7pIMCxTJsycl0+9qT3iAGXceqX9qORFYwcuLPxZmybtVPhz73Nr@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4QQ2IH0iaMb2WdEFl9YMRi6YCoJS9MBx60PCW9/bznO7D9dyg
+	NOj/AYJjyWYoa7k9eBWog1L49EE7TVLO10MHnLuPEBI5ghXoG13fDm7e1SZqFDymUg4bVk2zWA=
+	=
+X-Google-Smtp-Source: AGHT+IHGdelySS321A7XGIZkPN+94Y1egduUALJqfYnuOURIB5+SNjscxlIvh3DTSN8Ige7cFiCeTK5+5w==
+X-Received: from wmbbe15.prod.google.com ([2002:a05:600c:1e8f:b0:439:4525:5eb8])
+ (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:3d97:b0:439:34f0:cf86
+ with SMTP id 5b1f17b1804b1-43934f0d067mr96833635e9.20.1739275890091; Tue, 11
+ Feb 2025 04:11:30 -0800 (PST)
+Date: Tue, 11 Feb 2025 12:11:16 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 1/5] dt-bindings: thermal: Add MBG thermal monitor
- support
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
- Lars-Peter Clausen <lars@metafoo.de>, Lee Jones <lee@kernel.org>,
- Stephen Boyd <sboyd@kernel.org>, Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Ajit Pandey
- <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>,
- Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- quic_kamalw@quicinc.com, quic_jprakash@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-iio@vger.kernel.org
-References: <20241212-mbg-v2-support-v2-0-3249a4339b6e@quicinc.com>
- <20241212-mbg-v2-support-v2-1-3249a4339b6e@quicinc.com>
- <ojukpywkhu72cimujmijzidf26654g5vkjaj477imcf4suz2o6@cmow62jcqsfz>
- <7a5db383-914c-4c1e-846e-5d68cc6a7765@quicinc.com>
- <fcd718be-fe8a-466f-bd2b-7b75d5f8dd6c@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <fcd718be-fe8a-466f-bd2b-7b75d5f8dd6c@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.48.1.502.g6dc24dfdaf-goog
+Message-ID: <20250211121128.703390-1-tabba@google.com>
+Subject: [PATCH v3 00/11] KVM: Mapping guest_memfd backed memory at the host
+ for software protected VMs
+From: Fuad Tabba <tabba@google.com>
+To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/02/2025 12:46, Krzysztof Kozlowski wrote:
-> On 11/02/2025 12:15, Satya Priya Kakitapalli wrote:
->>
->> On 12/13/2024 2:08 PM, Krzysztof Kozlowski wrote:
->>> On Thu, Dec 12, 2024 at 09:41:20PM +0530, Satya Priya Kakitapalli wrote:
->>>> +
->>>> +required:
->>>> +  - compatible
->>>> +  - reg
->>>> +  - interrupts
->>>> +  - io-channels
->>>> +  - io-channel-names
->>> Binding looks ok, but this wasn't tested due to unneeded dependency.
->>> Please decouple from dependency, so automation can properly test it.
->>
->>
->> The dependency is needed because this mbg peripheral is present on only 
->> targets which have GEN3 ADC5, for which the bindings support is added in 
->> the series [1]
->>
->>
->> [1] 
->> https://lore.kernel.org/linux-arm-msm/c4ca0a4c-e421-4cf6-b073-8e9019400f4c@quicinc.com/
-> 
-> Sure. Then this cannot be merged due to resulting test failure.
-> 
-> Please don't post new versions before this can be actually tested and
-> applied.
+Changes since v2 [1]:
+- Added more documentation
+- Hook the folio_put callback as a stub with a warning
+- Tidying up and refactoring
+- Rebased on Linux 6.14-rc2
 
-Heh, you responded *after two months*, to an old email so even previous
-discussion is gone from my inbox.
+The purpose of this series is to serve as a base for _restricted_
+mmap() support for guest_memfd backed memory at the host [2]. It
+would allow experimentation with what that support would be like
+in the safe environment of the software VM types, which are meant
+for testing and experimentation.
 
-Best regards,
-Krzysztof
+For more background and how to test this series, please refer to v2 [1].
+
+Cheers,
+/fuad
+
+[1] https://lore.kernel.org/all/20250129172320.950523-1-tabba@google.com/
+[2] https://lore.kernel.org/all/20250117163001.2326672-1-tabba@google.com/
+
+Fuad Tabba (11):
+  mm: Consolidate freeing of typed folios on final folio_put()
+  KVM: guest_memfd: Handle final folio_put() of guest_memfd pages
+  KVM: guest_memfd: Allow host to map guest_memfd() pages
+  KVM: guest_memfd: Add KVM capability to check if guest_memfd is shared
+  KVM: guest_memfd: Handle in-place shared memory as guest_memfd backed
+    memory
+  KVM: x86: Mark KVM_X86_SW_PROTECTED_VM as supporting guest_memfd
+    shared memory
+  KVM: arm64: Refactor user_mem_abort() calculation of force_pte
+  KVM: arm64: Handle guest_memfd()-backed guest page faults
+  KVM: arm64: Introduce KVM_VM_TYPE_ARM_SW_PROTECTED machine type
+  KVM: arm64: Enable mapping guest_memfd in arm64
+  KVM: guest_memfd: selftests: guest_memfd mmap() test when mapping is
+    allowed
+
+ Documentation/virt/kvm/api.rst                |   5 +
+ arch/arm64/include/asm/kvm_host.h             |  10 ++
+ arch/arm64/kvm/Kconfig                        |   1 +
+ arch/arm64/kvm/arm.c                          |   5 +
+ arch/arm64/kvm/mmu.c                          |  91 ++++++++++------
+ arch/x86/include/asm/kvm_host.h               |   5 +
+ arch/x86/kvm/Kconfig                          |   3 +-
+ include/linux/kvm_host.h                      |  28 ++++-
+ include/linux/page-flags.h                    |  32 ++++++
+ include/uapi/linux/kvm.h                      |   7 ++
+ mm/debug.c                                    |   1 +
+ mm/swap.c                                     |  32 +++++-
+ tools/testing/selftests/kvm/Makefile.kvm      |   1 +
+ .../testing/selftests/kvm/guest_memfd_test.c  |  75 +++++++++++--
+ tools/testing/selftests/kvm/lib/kvm_util.c    |   3 +-
+ virt/kvm/Kconfig                              |   4 +
+ virt/kvm/guest_memfd.c                        | 100 ++++++++++++++++++
+ virt/kvm/kvm_main.c                           |   9 +-
+ 18 files changed, 360 insertions(+), 52 deletions(-)
+
+
+base-commit: a64dcfb451e254085a7daee5fe51bf22959d52d3
+-- 
+2.48.1.502.g6dc24dfdaf-goog
+
 
