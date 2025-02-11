@@ -1,75 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-47635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D9E9A315EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 20:51:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49CFFA315EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 20:51:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2ABC57A3456
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 19:50:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D193188B807
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 19:51:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3BEB2641D0;
-	Tue, 11 Feb 2025 19:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04A1C2641EF;
+	Tue, 11 Feb 2025 19:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GGkTLI1+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="URe19GbO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D80261590;
-	Tue, 11 Feb 2025 19:49:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BDA2641FA;
+	Tue, 11 Feb 2025 19:49:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739303388; cv=none; b=i9sNLbLNmIeCqi+Xk1uUb6R65vy4JrcZzmNmMoDKkKgsGAWF8tDB/MEMCrqJS5PCK+PV+vMvj3/xwiTFSBJhAOH5JQjE8MmpGD2mihV7XAbP22Hl6LWXjwAM4iH2GyGuD5nDXbyj3Sscwa4dVVoxE6swRSeqs5PPTAJtsu2IAoY=
+	t=1739303393; cv=none; b=oN00OeAZ8OtLXBcfT7Pfe7tumtm29AyU6ryF3N32hsFG/aL2FuFU3aZSNRQv2OmAFNrLPI3EAn4vyKg5TBLapgadaBIHubREk5mdxnsjmwY0bMNKkG0rFat9jADRK3T17u4TyMtq3eZfo53ngv//woPmSb2L5kH5PfsPujZORcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739303388; c=relaxed/simple;
-	bh=q7mudpGioXTvlqpq0msVddOb6NgEqKQnlQZT/L0oMxA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=J6TjpuBSt+nRGU/u5yrw1IW8R2wVLE0e1rVBvkumKarfYW5ClQaQFljmvzl+mxNvr2M1OqzhG9rrDCPSBd4NAb6azXzWag+mPcdgp6RhdWRR4H7qWBcGCHOH59oPpbq3vglpPBMtx3chB1eauwAFsfDeoTXUu3uCbTqXK17EyZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GGkTLI1+; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1739303393; c=relaxed/simple;
+	bh=mmPSG2J0wFLbRJe/3wTyhzBmBYWMvj3Prn3iKXV5pPI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=irD0JT1WNIDlQntd2PXlEIF2LFsrAxvivp4sFaMWMV/jUUvUjzF6C/gTRL9xHE3o8AblbG4UcLSUCfDuERVLVZEhDkfiR5g/BtwL77OFYj27S0mat8ozYXD2gw0BVZsXqSqEeTrczYdfoyQU7Hk/bBJKvY8YFgCJl5XEhUZmUTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=URe19GbO; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21f44e7eae4so101160265ad.2;
-        Tue, 11 Feb 2025 11:49:46 -0800 (PST)
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2fa1d9fb990so9544728a91.2;
+        Tue, 11 Feb 2025 11:49:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739303386; x=1739908186; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IjpUGXkhDfRXw7zSvgy8sT4jnZ7i9DN1kehwE4vfMW8=;
-        b=GGkTLI1+HIbKLsHQ1032NADSIZ2gS3giH0DnPVJkfev1uHN+Tp9Q207fcOM6tHP3wp
-         81rbsFG2HDe/XOSqKkzTBY+5tY5kPWY5VMf5HguUAcxUoyxiXQlO/O/mH+x4OQAh2yMy
-         M7KM2/L0MKtNwL/76swNZJ5yKMmky1L277tx3HUPtYkdjEeden8WLWPYIj3Cs1Dkb1O/
-         XwPDDUv/yhXRMWMdDVgHWAV2+LUGbp9Fhn6tleSYDck58qN+nauxgBnS2mpFYmlTnIuE
-         OF7xHDIWlmwG5zHvGfF5GgYxqRVYvpOgknu3mIGImdUW3VkMeGUEKqtVNoAscmOYEAl4
-         CP1A==
+        d=gmail.com; s=20230601; t=1739303391; x=1739908191; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SuFtRlkVwzfsd0hbMOfTOhdeC+NVKWiRoYV+k56NFus=;
+        b=URe19GbOR/l0TztQchLXCA9I+rRyF246wS7Qjxecd0v1/Tfu1LYARTXqSleaYt1eqC
+         OEeXYponvhkQtVr/C0nRXeNHwTDP4aq+q9d+ea+f+uYok9uyRVus0jlPfVuQ4Ps5VkDh
+         V2FZ1trwzvOf7pSdWUV8cCjMH1qQs2dxwB2khoA31XqenMYANPpzRh1M9zzxVQR3uIuI
+         rtwkhnKPejAXoc2HE4aMyZTFfs9r+SQH7PHKzE22fMlm5wEm4yNBFOaaD0XWd/FIgnSP
+         DSoqJAXvynAa+RThC3QU8Lz2ZxIYbjY3K8pUSXmwh9LF9v5e57uXsOBZ5Yj5VkoUCq7G
+         YqbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739303386; x=1739908186;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IjpUGXkhDfRXw7zSvgy8sT4jnZ7i9DN1kehwE4vfMW8=;
-        b=JwgU0RXujDhWsyZUi/uM4foiU+xdn+1cgjjh6jjqxeImRPH+4+gkEtEle2t3wyF9Ud
-         okuZMRebGF+RM8+dTzKExre2+neoTCF7hyoXojmTWu/a6Z5keAWzDZR+Lw87nQl/ti9M
-         Md1EbEe6KWeEgOVgVMnjP/CuOHPRUISmbQU1ZTkgsgUpBxMD3oFOCUSdnYRNmuQ/liZq
-         x+SUEGhBSLM+bncOIF6B/IqiKQwzZzP7Wxmby58X51fdKy/bXzgfObfz77D2ZXKJUPwN
-         OUXfdJU/VlKdtHyDPSEyLNPqbCM2Wc4Ur3GbadepzmrLW25wT7U343nxI+DbMqpPjYvN
-         2XyA==
-X-Forwarded-Encrypted: i=1; AJvYcCU9cM1ny1zqJEFSQzYzg8AjYMrQH7wt098X23mjCMGFgfcyBvCtABPjAUA/r7r8pPCZb7yKJwHoOLCa@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgdnCc+qi4AIIvYuHVoEzlU4p8tF+bgLd6cEUe6FVihSQUS16o
-	L/XxlAytFVpjUISxVhquCqm4m4OEqUDnHlN7MOVWjZWHH2RpmDmeQ52+bSiy
-X-Gm-Gg: ASbGncsVubaJ0kJwo65uhAV1cwO3mxVIfEx5ocVlHNEPnhGJQ4WPhRnmo0PLk4PtFhZ
-	wXzz/rWnwaX31oSAZleHibo0txpFd0VRPQd36Ccv0A2TvgPEv9UFyO9XfFU8AMJJLjJlzWuvDQ1
-	LikEOi4CgNHNh+cwWhYNnzBYlEwnZXZqUYKgYwtGyNhCrYyvS5A9X4C2XwD7UPJ0BxPb1Jd1q/S
-	mPxI704g/J/yR31H56OHMgRuLjXu7FYzTwP+WoTfQ8Os/hF0UKD3HqEncKqLrjZsRWnyumSCO6/
-	eIMb4Lf+3/83ceZdG4qeqCbmPQQAF0zkepSLPA==
-X-Google-Smtp-Source: AGHT+IH37wtYZVk9LnGGxycAwJeRYDRGUVpw8i2n95/wnOmXU3d48HFE1h5Jo+e4BCuHk/JSvIgI5A==
-X-Received: by 2002:a17:902:eccf:b0:215:acb3:3786 with SMTP id d9443c01a7336-220bbad0d25mr7605455ad.19.1739303386130;
-        Tue, 11 Feb 2025 11:49:46 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739303391; x=1739908191;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SuFtRlkVwzfsd0hbMOfTOhdeC+NVKWiRoYV+k56NFus=;
+        b=YzONgoIrBBId7btXji/ns1/ukOZntL+GK5hLcMmow6WeiPFwmFhYF/zkTeVMoRC2EB
+         sNzmpzsWzXvGQsCMkpe6YeY7gnTgZc2USxomu8QGGr9bUD8fTKmGFp9s7QM86OsmscrI
+         2YrY4tzJTBt2ZNVo46UMaoTVWhfTC0Ptb8v4mmibO/x+g4Y5+Lb6ovLUExsHv4gIsOki
+         TX4kzhQ7aeKxw+hAiaRLUdayXHDDfX6pdF4PNZ+DG0kzf26Mxq00yJyHs/RS0wljep5c
+         ufn4wDCTe01pN17PG4FDqVFTAn+IkXU9QpSQLCx2+vS27RQhbMJ+hYAt+Ny+hoUHTzNm
+         ZoIA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVpiqo/BozQ3X1AdHUqYXMWV4tiEz47MIg2WLI2rVEgAOIs2kmMB8jRzMoeA/rbr/FPY/t75uuPQQF@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+C+u1c/bp2rsLn96Xul3VkS5bwSdSf+Gm/2juSjtdR+luf+iv
+	h5pqcIByivWER2Mnn0SGVbbOl+Qei/pczhycqzDSpuY49fgxE+BsRGtZfyF4
+X-Gm-Gg: ASbGnctI26YK2EZyvKfDQpIw+sZD5a94QhSXQRqXIKd/RJUIPmOw2FhWacS5rGCwnGE
+	0AIyfOj4XbH0gqPfnwH5/2Zvf0GvzM7kfX6fnTfh7LHkdH8BQehQTSuiYK62umJ8Pskry612dwA
+	zSx9nTANPzdrOkRTlCCoF2fL2ZRWrJjPVjzKkmmd86l82ZZgi9QBI1JdR0Y9mT4OPSVwMyX+Ubr
+	tQiAdQtM1VYIDSfBVTQQsxCTICiQhEwkg5G3n8fhmO0shLkdb5OMrktjTB9qx5aMtrgj7IFZ3aT
+	XEbQ6zrK6Cxdj030JiZUJeov6OLwk8YFA+HW8w==
+X-Google-Smtp-Source: AGHT+IFi/gupW0gRt3BlxdcXao4XArg2Mfg/mTJVjvpk1+IGif2vaf/Fi+m7ypL9uHg744O/bjjJVw==
+X-Received: by 2002:a17:90b:2743:b0:2fa:17dd:6afa with SMTP id 98e67ed59e1d1-2fbf5c0f614mr621150a91.17.1739303391298;
+        Tue, 11 Feb 2025 11:49:51 -0800 (PST)
 Received: from localhost.localdomain ([66.119.214.127])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21f3687e68bsm99815035ad.169.2025.02.11.11.49.44
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21f3687e68bsm99815035ad.169.2025.02.11.11.49.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 11:49:45 -0800 (PST)
+        Tue, 11 Feb 2025 11:49:50 -0800 (PST)
 From: "James A. MacInnes" <james.a.macinnes@gmail.com>
 To: linux-arm-msm@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org,
@@ -83,60 +85,52 @@ Cc: linux-kernel@vger.kernel.org,
 	lgirdwood@gmail.com,
 	broonie@kernel.org,
 	"James A. MacInnes" <james.a.macinnes@gmail.com>
-Subject: [PATCH 0/3] Add PMI8998 VBUS Regulator Support
-Date: Tue, 11 Feb 2025 11:49:13 -0800
-Message-ID: <20250211194918.2517593-1-james.a.macinnes@gmail.com>
+Subject: [PATCH 1/3] regulator: qcom_usb_vbus: Update DTS binding for PMI8998 support
+Date: Tue, 11 Feb 2025 11:49:14 -0800
+Message-ID: <20250211194918.2517593-2-james.a.macinnes@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250211194918.2517593-1-james.a.macinnes@gmail.com>
+References: <20250211194918.2517593-1-james.a.macinnes@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Update the binding in
+Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+to include the compatible string "qcom,pmi8998-vbus-reg".
+This change adds PMI8998 support to the Qualcomm USB VBUS regulator
+bindings.
 
-This patch series adds support for the PMI8998 VBUS regulator in the Qualcomm USB VBUS regulator driver and the device tree. These changes enable proper VBUS current limit configuration and ensure compatibility across multiple Qualcomm PMICs.
+With this patch, device trees that describe a PMI8998 USB VBUS regulator
+using the "qcom,pmi8998-vbus-reg" compatible string will now validate
+correctly. This is required to support hardware based on PMI8998, which
+has different current limit tables and other regulator-specific
+configurations.
 
-Summary of Changes:
-- Patch 1/3: Updates the Device Tree Schema bindings to include "qcom,pmi8998-vbus-reg" for PMI8998 support.
-- Patch 2/3: Extends the Qualcomm USB VBUS regulator driver to support PMI8998, dynamically configuring the regulator based on the PMIC type.
-- Patch 3/3: Adds the VBUS regulator node to pmi8998.dtsi, enabling USB Type-C VBUS support.
+Tested: The next patch contains the driver and has been tested with
+Lantronix SOM.
 
-Motivation:
-A long time ago, in a conference room far, far away, I promised that USB Type-C capability would work on the SDM845 when we chose this chip for our instrument.
+Signed-off-by: James A. MacInnes <james.a.macinnes@gmail.com>
+---
+ .../devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml   | 1 +
+ 1 file changed, 1 insertion(+)
 
-That day never came.
-
-So I wrote it myself.
-
-This patch series finally adds the missing support for USB Type-C VBUS regulation on PMI8998-based platforms. Future generations of engineers will no longer have to mutter "Why doesn’t this work?" while digging through device trees.
-
-Kernel Version & Testing:
-- These patches were developed and tested on Linux 6.13.
-- Attempting to run Linux 6.14-rc2 on our Lantronix SOM resulted in a crash, making it unsuitable for validation.
-- Validation was performed using a modified device tree, confirming proper regulator configuration.
-- No regressions were observed on existing PMIC configurations.
-
-Next Steps:
-If there are any suggestions or required changes, please let me know. I will be happy to revise and address any concerns.
-
-Thanks again,
-James A. MacInnes
-james.a.macinnes@gmail.com
-
-James A. MacInnes (3):
-  regulator: qcom_usb_vbus: Update DTS binding for PMI8998 support
-  regulator: qcom_usb_vbus: Add support for PMI8998 VBUS
-  arm64: boot: dts: pmi8998.dtsi: Add VBUS regulator
-
- .../regulator/qcom,usb-vbus-regulator.yaml    |  1 +
- arch/arm64/boot/dts/qcom/pmi8998.dtsi         |  6 ++++
- drivers/regulator/qcom_usb_vbus-regulator.c   | 33 ++++++++++++++++---
- 3 files changed, 35 insertions(+), 5 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+index fcefc722ee2a..6092560e9048 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+@@ -22,6 +22,7 @@ properties:
+     oneOf:
+       - enum:
+           - qcom,pm8150b-vbus-reg
++          - qcom,pmi8998-vbus-reg
+       - items:
+           - enum:
+               - qcom,pm4125-vbus-reg
 -- 
 2.43.0
 
