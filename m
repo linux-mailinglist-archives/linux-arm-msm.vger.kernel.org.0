@@ -1,79 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-47546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 237B3A30853
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 11:19:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A24C6A3087D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 11:29:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8CFA3A2167
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 10:19:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 460B516528B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2025 10:28:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01C561F3FE5;
-	Tue, 11 Feb 2025 10:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 567D81F4182;
+	Tue, 11 Feb 2025 10:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FbIZsUL0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EiwYPo/I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E171F3FC1
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 10:19:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88ED11F37BC;
+	Tue, 11 Feb 2025 10:28:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739269155; cv=none; b=LXKgwy+htlJSDJSLfvF0a6d4tOLgTp+ZBWLvS3Khngfpz6mTQmlxB+FFBLzL7n8YFX0AjXYk9vLOApuVU2pk4SiNAc8OSoQ4IJ/ELYf2DXMChU471wYDKCmD5qmIkauvAG3mxLjJSdhpncq1NKKo9MmpzMKg1S5rrczcjwAdsFM=
+	t=1739269737; cv=none; b=hbvQ50yE/T/4Od1WiNbX93/cWENREI4ED0+QPsoPA3Qua0DWhhNFsM+if9KjNHp9BN8HHDTXQzNfSp/WWjD8okGYVHUhRLcDbYUta8vlAOo1M0g+qDbc5PgeGJqpRclBneoM0faAr0aqerNsP8tzaMw/DY2FWiNjDa0ajStxTT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739269155; c=relaxed/simple;
-	bh=mmYq0ka1rA31PoqSV1w1EnHuELlMe9cDQhIVsboEH4k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n5dITzbiz11+1d/9p11QyPKUWJNvAPpGGftcSQGBWhlID54qKokP7s1bk67NA5QHQnaYapOXQkOQRENQiPyT/Zf+fsBYb8QJWni4L9yL944VwzihDZtrpeGeskUJXnUXuqDxFTI43XFpuvCIfp2xmfXSoU8JRkUemo7kQApHn5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FbIZsUL0; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-38dd011ff8bso3023677f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 02:19:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739269152; x=1739873952; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=d1+7CYo2GEpNNd6dJTgksWpYBgWB3H8P41Hw271gq6M=;
-        b=FbIZsUL0E8B1mxv3MhwM5VVhhb8aivonj/oWvHc7eWMXRS6cREBKaKwbLbsVBJ3rCN
-         FN5D3/qGfyyyFBjiSkmObVbzwdaritTR8bpi16EVsMeXVIYvftwGO3XaOkBuGfREzlv6
-         6f+pAyEkTxy4bY1H9BZUpxWeU3pXXvfdn8PMVbbPvG7gtV8rwLf5wZUjMLZZiIf3wjX6
-         Zzd0ZVw+5Mjvrm9DsiZKiOVeCDma7WY+mxOPQsuJso2xqZF3qgmrM2uuebEMe6VOkDBF
-         SlCM4vzxY7gUARIUqlMJli7b9jynxtuxy5kU4OBgB4PVLgwBqjlrNVVWFMgylzsvN/Nx
-         KlBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739269152; x=1739873952;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d1+7CYo2GEpNNd6dJTgksWpYBgWB3H8P41Hw271gq6M=;
-        b=PayEygJPGmj1rNRkf+V3DY9GSo9OGPR4nO6pAQiwCe2piKs1aOztszu3SyIcMj8f05
-         q1vPLvFtPLtKg01NAMcw38MQUKXgvksODq9t0qAf2BNrolAw10yb/dmOlJq8X/q+5r9E
-         WSq/5k2/BsatKFZG6mw9IN3jgJLjo98DZ0nmoeiC3vu0zXm403uluPBYVZUovrAEKcpH
-         V0gGSQdd02ofJmVDhK6JrrNdg+2QfF4x1g3Lg4uOU5Fyxd/FMv5w10TKk85F3qbVcO9A
-         P0ntQaOlAuIamgCy6txYVyuECueh4dD/Hq4Xzf5v98htn9B2jZFOEINqYcGodjuXmeK5
-         RUsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVhUE7OHxI6RBLY9gz/jr5gXkaqRosBupW7xxR/3ibs/CZgWYHKImrDHucknRjz1GpXSz3wlu9rUPsAZDiH@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywmij6ZbCg9FVbL3oAbFtOh4eoNoBgulB6WzpoOE/XQqF0wLpCq
-	3Tn4v+aINu+9ZqUAxGE+P0G7bBu22t+CosOSEyLhQs8nm+zVO4bQz3P0hvsUDTQ=
-X-Gm-Gg: ASbGncvXOYFpICmlfjlAP8sMZMMoasBPbcDrLaAZCJcGVBS6L0KuyxJ8Co1Wtiw1fFs
-	m4TM0JPNmwXBaFAsexaF3kUHkGaUVg6A0Zmy485lV12oiufgD4+VZth40A2IlptxANxOGERwXpK
-	NXFfI+rgWz0hCaAb497L/W0LwigcflYTuhYBMDspaDTgOQCXydiK7DzlFA0aj9m5uY7TLwE+Tj4
-	8RxxlpuAxuInxgrBMn43pHdi09v2VZAa43em21nwW6KFj4U6h4gXj+30V+BLFxfRm0ASSHc8uLo
-	BgVmR0MbeGCbJWdDCuQ4MKjeW11QgZYuDbquYnurfcIXu34vPlluOkE5fw==
-X-Google-Smtp-Source: AGHT+IHh4hDVGqmsMf5rJQ27Gh0Zf6r2TAYfUuWPHNsKZyYXSF39sDKmhxO9TOc6pLn17KWtWMv46Q==
-X-Received: by 2002:a5d:6d87:0:b0:38d:d69e:1326 with SMTP id ffacd0b85a97d-38dd69e1b18mr7568941f8f.9.1739269152351;
-        Tue, 11 Feb 2025 02:19:12 -0800 (PST)
-Received: from [192.168.0.156] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dd3dcca71sm9090007f8f.76.2025.02.11.02.19.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Feb 2025 02:19:12 -0800 (PST)
-Message-ID: <012b0381-a5d1-49bc-aa59-aae0d35aa034@linaro.org>
-Date: Tue, 11 Feb 2025 10:19:12 +0000
+	s=arc-20240116; t=1739269737; c=relaxed/simple;
+	bh=ynQunNA9DkLEka57Mai3bSUDNP+xpo2IOYyyr3pLzcs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=inLlX4fI4k2OuZHPCS8gn7XBsBESKWn4XzQnqtwgj0YF4L1c3LTy51HXnET4w9QiUvE8yU+I1SInkKABqRNpZToeN/mxR1mwSPOmP8bP5DHEraqvjNydIHmM6QQ30zX4U5WdBqZ7SoIOfvnkbPJMYjR0WUW8NztlLo40KgnDCOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EiwYPo/I; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51B8wcqK008240;
+	Tue, 11 Feb 2025 10:28:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3WBZsc18HSHh6XL1jDUTlDZh3I+PuQToecs7ziSZm5Y=; b=EiwYPo/Izi0HnIIv
+	ydtu9V/d150ExyLZXOMNMOGx9IaGcXJgxdg7dppnVJTcNNaIv4mHWnR/RT9UJ4Ab
+	OFNfE0FCH8fEbyQ01zoSnSoKy2NlbhgsHbsQrt7+QJzs4Y1I+u81tejCzi65g1LZ
+	GPwUOMgtI1u7UFWaWeD8ETEvtad01Vf26PH3gXGn0QG7Pq9abkcQs3RMAQCCjR7L
+	A1Hnax4UD5EVXFSNWDLe8jtNVYXXpzN9wn69nzd2m2pS5Q4N1OQFZimgKP2k8rPD
+	wNp5UA75Iy9urCmSaS5HXBnhqan2ghBN7x+rcVOTJsingWIDK9aenDSqmoqpVTMK
+	VgQ2VA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qewh3mn8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Feb 2025 10:28:17 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51BASGpK022686
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Feb 2025 10:28:16 GMT
+Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Feb
+ 2025 02:28:12 -0800
+Message-ID: <59bf7be9-47bf-43f3-bc45-1af69b05ea91@quicinc.com>
+Date: Tue, 11 Feb 2025 18:28:09 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,72 +65,276 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] media: qcom: camss: Add sa8775p camss TPG support
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250211-sa8775p_tpg-v1-0-3f76c5f8431f@quicinc.com>
+Subject: Re: [PATCH v4 5/8] scsi: ufs: core: Enable multi-level gear scaling
+To: =?UTF-8?B?UGV0ZXIgV2FuZyAo546L5L+h5Y+LKQ==?= <peter.wang@mediatek.com>,
+        "beanhuo@micron.com" <beanhuo@micron.com>,
+        "avri.altman@wdc.com"
+	<avri.altman@wdc.com>,
+        "quic_rampraka@quicinc.com"
+	<quic_rampraka@quicinc.com>,
+        "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
+        "quic_nguyenb@quicinc.com" <quic_nguyenb@quicinc.com>,
+        "quic_nitirawa@quicinc.com" <quic_nitirawa@quicinc.com>,
+        "bvanassche@acm.org"
+	<bvanassche@acm.org>,
+        "junwoo80.lee@samsung.com" <junwoo80.lee@samsung.com>,
+        "mani@kernel.org" <mani@kernel.org>,
+        "martin.petersen@oracle.com"
+	<martin.petersen@oracle.com>
+CC: "ahalaney@redhat.com" <ahalaney@redhat.com>,
+        "neil.armstrong@linaro.org"
+	<neil.armstrong@linaro.org>,
+        "linux-scsi@vger.kernel.org"
+	<linux-scsi@vger.kernel.org>,
+        "manivannan.sadhasivam@linaro.org"
+	<manivannan.sadhasivam@linaro.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        "alim.akhtar@samsung.com"
+	<alim.akhtar@samsung.com>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "James.Bottomley@HansenPartnership.com"
+	<James.Bottomley@HansenPartnership.com>
+References: <20250210100212.855127-1-quic_ziqichen@quicinc.com>
+ <20250210100212.855127-6-quic_ziqichen@quicinc.com>
+ <5c2ae6c27ef0679d6664a759959ae604e560f60a.camel@mediatek.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250211-sa8775p_tpg-v1-0-3f76c5f8431f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Ziqi Chen <quic_ziqichen@quicinc.com>
+In-Reply-To: <5c2ae6c27ef0679d6664a759959ae604e560f60a.camel@mediatek.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Aa3z4lOIMtEMPr8Gl3XsdjhiO8I6v7fQ
+X-Proofpoint-GUID: Aa3z4lOIMtEMPr8Gl3XsdjhiO8I6v7fQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-11_04,2025-02-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 phishscore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502110065
 
-On 11/02/2025 10:07, Wenmeng Liu wrote:
-> SA8775P is a Qualcomm SoC. This series adds driver changes to
-> bring up the TPG interfaces in SA8775P.
-> 
-> We have tested this on qcs9100-ride board with 'Test Pattern Generator'.
-> Unlike CSID TPG, this TPG can be seen as a combination of CSIPHY and sensor.
-> 
-> Tested with following commands:
-> - media-ctl --reset
-> - v4l2-ctl -d /dev/v4l-subdev0 -c test_pattern=0
-> - media-ctl -V '"msm_tpg0":0[fmt:SRGGB10/4608x2592 field:none]'
-> - media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4608x2592 field:none]'
-> - media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4608x2592 field:none]'
-> - media-ctl -l '"msm_tpg0":1->"msm_csid0":0[1]'
-> - media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> - v4l2-ctl -d /dev/v4l-subdev0 -c test_pattern=9
-> - yavta -B capture-mplane -n 5 -f SRGGB10P -s 4608x2592 /dev/video0
->    --capture=7
-> 
-> Used following tools for the sanity check of these changes.
-> 
-> - make -j32 W=1
-> - ./scripts/checkpatch.pl
-> 
-> ---
-> This patch series depends on patch series:
-> https://lore.kernel.org/linux-media/20250210162843.609337-1-quic_vikramsa@quicinc.com/
-> ---
-> 
-> ---
-> Wenmeng Liu (3):
->        media: qcom: camss: Add support for TPG common
->        media: qcom: camss: Add link support for TPG common
->        media: qcom: camss: tpg: Add TPG support for SA8775P
-> 
->   drivers/media/platform/qcom/camss/Makefile         |   2 +
->   drivers/media/platform/qcom/camss/camss-csid-690.c |  15 +
->   drivers/media/platform/qcom/camss/camss-csid.c     |  44 +-
->   drivers/media/platform/qcom/camss/camss-tpg-gen1.c | 245 +++++++
->   drivers/media/platform/qcom/camss/camss-tpg.c      | 737 +++++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss-tpg.h      | 130 ++++
->   drivers/media/platform/qcom/camss/camss.c          | 113 ++++
->   drivers/media/platform/qcom/camss/camss.h          |   5 +
->   8 files changed, 1282 insertions(+), 9 deletions(-)
-> ---
-> base-commit: c1696380f08cf7cc68560a11f2e8c51cb24aa7ba
-> change-id: 20250211-sa8775p_tpg-7de227a82eb4
-> 
-> Best regards,
 
-Great to see this work.
 
-I think the TPG should be another type of PHY.
+On 2/11/2025 5:28 PM, Peter Wang (王信友) wrote:
+> On Mon, 2025-02-10 at 18:02 +0800, Ziqi Chen wrote:
+>>
+>> External email : Please do not click links or open attachments until
+>> you have verified the sender or the content.
+>>
+>>
+>> From: Can Guo <quic_cang@quicinc.com>
+>>
+>> With OPP V2 enabled, devfreq can scale clocks amongst multiple
+>> frequency
+>> plans. However, the gear speed is only toggled between min and max
+>> during
+>> clock scaling. Enable multi-level gear scaling by mapping clock
+>> frequencies
+>> to gear speeds, so that when devfreq scales clock frequencies we can
+>> put
+>> the UFS link at the appropriate gear speeds accordingly.
+>>
+>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>> Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+>> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+>> Reviewed-by: Bean Huo <beanhuo@micron.com>
+>> Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>
+>> v1 -> v2:
+>> Rename the lable "do_pmc" to "config_pwr_mode".
+>>
+>> v2 -> v3:
+>> Use assignment instead memcpy() in function ufshcd_scale_gear().
+>>
+>> v3 -> v4:
+>> Typo fixed for commit message.
+>> ---
+>>   drivers/ufs/core/ufshcd.c | 51 +++++++++++++++++++++++++++++++------
+>> --
+>>   1 file changed, 41 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+>> index 8d295cc827cc..ebab897080a6 100644
+>> --- a/drivers/ufs/core/ufshcd.c
+>> +++ b/drivers/ufs/core/ufshcd.c
+>> @@ -1308,16 +1308,26 @@ static int
+>> ufshcd_wait_for_doorbell_clr(struct ufs_hba *hba,
+>>   /**
+>>    * ufshcd_scale_gear - scale up/down UFS gear
+>>    * @hba: per adapter instance
+>> + * @target_gear: target gear to scale to
+>>    * @scale_up: True for scaling up gear and false for scaling down
+>>    *
+>>    * Return: 0 for success; -EBUSY if scaling can't happen at this
+>> time;
+>>    * non-zero for any other errors.
+>>    */
+>> -static int ufshcd_scale_gear(struct ufs_hba *hba, bool scale_up)
+>> +static int ufshcd_scale_gear(struct ufs_hba *hba, u32 target_gear,
+>> bool scale_up)
+>>   {
+>>          int ret = 0;
+>>          struct ufs_pa_layer_attr new_pwr_info;
+>>
+>> +       if (target_gear) {
+>> +               new_pwr_info = hba->pwr_info;
+>> +               new_pwr_info.gear_tx = target_gear;
+>> +               new_pwr_info.gear_rx = target_gear;
+>> +
+>> +               goto config_pwr_mode;
+>> +       }
+>> +
+>> +       /* Legacy gear scaling, in case vops_freq_to_gear_speed() is
+>> not implemented */
+>>          if (scale_up) {
+>>                  memcpy(&new_pwr_info, &hba-
+>>> clk_scaling.saved_pwr_info,
+>>                         sizeof(struct ufs_pa_layer_attr));
+>> @@ -1338,6 +1348,7 @@ static int ufshcd_scale_gear(struct ufs_hba
+>> *hba, bool scale_up)
+>>                  }
+>>          }
+>>
+>> +config_pwr_mode:
+>>          /* check if the power mode needs to be changed or not? */
+>>          ret = ufshcd_config_pwr_mode(hba, &new_pwr_info);
+>>          if (ret)
+>> @@ -1408,15 +1419,26 @@ static void
+>> ufshcd_clock_scaling_unprepare(struct ufs_hba *hba, int err, bool sc
+>>   static int ufshcd_devfreq_scale(struct ufs_hba *hba, unsigned long
+>> freq,
+>>                                  bool scale_up)
+>>   {
+>> +       u32 old_gear = hba->pwr_info.gear_rx;
+>> +       int new_gear = 0;
+>>          int ret = 0;
+>>
+>> +       new_gear = ufshcd_vops_freq_to_gear_speed(hba, freq);
+>> +       if (new_gear < 0)
+>> +               /*
+>> +                * return negative value means that the
+>> vops_freq_to_gear_speed() is not
+>> +                * implemented or didn't find matched gear speed,
+>> assign '0' to new_gear
+>> +                * to switch to legacy gear scaling sequence in
+>> ufshcd_scale_gear().
+>> +                */
+>> +               new_gear = 0;
+>> +
+>>
+> 
+> Hi Ziqi,
+> 
+> I think remove help function is better.
+> No need change new_gear type when use.
+> The readability is higher, and no need add that large amount comments.
+> 
+>         u32_new_gear = 0;
+>         if (hba->vops && hba->vops->freq_to_gear_speed)
+>                 new_gear = hba->vops->freq_to_gear_speed(hba, freq);
+> 
+> 
+> Thanks.
+> Peter
+> 
+> 
+Hi Peter,
 
----
-bod
+Thanks, Peter.
+Frankly, I also think this way has low readability. However, keep the 
+u32 type for new_gear is OK to me. But this vop would lose the ability 
+to indicate the error types. All types of error can only return "0".
+
+However, we don't need to deal with various types of errors up to now, I 
+can submit a new version to change back the new_gear and vop return 
+value type to u32 and make correspondingly change in patch 3/8 and 4/8.
+
+-Ziqi
+
+> 
+>>          ret = ufshcd_clock_scaling_prepare(hba, 1 * USEC_PER_SEC);
+>>          if (ret)
+>>                  return ret;
+>>
+>>          /* scale down the gear before scaling down clocks */
+>>          if (!scale_up) {
+>> -               ret = ufshcd_scale_gear(hba, false);
+>> +               ret = ufshcd_scale_gear(hba, (u32)new_gear, false);
+>>                  if (ret)
+>>                          goto out_unprepare;
+>>          }
+>> @@ -1424,13 +1446,13 @@ static int ufshcd_devfreq_scale(struct
+>> ufs_hba *hba, unsigned long freq,
+>>          ret = ufshcd_scale_clks(hba, freq, scale_up);
+>>          if (ret) {
+>>                  if (!scale_up)
+>> -                       ufshcd_scale_gear(hba, true);
+>> +                       ufshcd_scale_gear(hba, old_gear, true);
+>>                  goto out_unprepare;
+>>          }
+>>
+>>          /* scale up the gear after scaling up clocks */
+>>          if (scale_up) {
+>> -               ret = ufshcd_scale_gear(hba, true);
+>> +               ret = ufshcd_scale_gear(hba, (u32)new_gear, true);
+>>                  if (ret) {
+>>                          ufshcd_scale_clks(hba, hba->devfreq-
+>>> previous_freq,
+>>                                            false);
+>> @@ -1723,6 +1745,8 @@ static ssize_t
+>> ufshcd_clkscale_enable_store(struct device *dev,
+>>                  struct device_attribute *attr, const char *buf,
+>> size_t count)
+>>   {
+>>          struct ufs_hba *hba = dev_get_drvdata(dev);
+>> +       struct ufs_clk_info *clki;
+>> +       unsigned long freq;
+>>          u32 value;
+>>          int err = 0;
+>>
+>> @@ -1746,14 +1770,21 @@ static ssize_t
+>> ufshcd_clkscale_enable_store(struct device *dev,
+>>
+>>          if (value) {
+>>                  ufshcd_resume_clkscaling(hba);
+>> -       } else {
+>> -               ufshcd_suspend_clkscaling(hba);
+>> -               err = ufshcd_devfreq_scale(hba, ULONG_MAX, true);
+>> -               if (err)
+>> -                       dev_err(hba->dev, "%s: failed to scale clocks
+>> up %d\n",
+>> -                                       __func__, err);
+>> +               goto out_rel;
+>>          }
+>>
+>> +       clki = list_first_entry(&hba->clk_list_head, struct
+>> ufs_clk_info, list);
+>> +       freq = clki->max_freq;
+>> +
+>> +       ufshcd_suspend_clkscaling(hba);
+>> +       err = ufshcd_devfreq_scale(hba, freq, true);
+>> +       if (err)
+>> +               dev_err(hba->dev, "%s: failed to scale clocks up
+>> %d\n",
+>> +                               __func__, err);
+>> +       else
+>> +               hba->clk_scaling.target_freq = freq;
+>> +
+>> +out_rel:
+>>          ufshcd_release(hba);
+>>          ufshcd_rpm_put_sync(hba);
+>>   out:
+>> --
+>> 2.34.1
+>>
+> 
+
 
