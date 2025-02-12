@@ -1,244 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-47757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 300A9A325EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 13:37:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B091BA3263D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 13:50:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1D893A545D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 12:37:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F0A9188C6E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 12:50:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DE2020DD46;
-	Wed, 12 Feb 2025 12:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A1BA20C499;
+	Wed, 12 Feb 2025 12:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FrDqFZ56"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WbynotFb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814CF20CCDA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 12:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9470020B7F4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 12:49:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739363846; cv=none; b=m9c5tink4WLlqE/bRUKvaCOsl5cvm/Fc1h3NYENRQMrslPrFmDZQIcLjEiPFMp5P8GRy63QyGgE8QiYXHiQHb1SGmAr9WS42q5YAOWu5oErvNT2Xw0lb4rkN+60E/mIjlfKGtkCiOTEq8FW0OH/qU2455WNWloCgzlT/yl5lrxs=
+	t=1739364575; cv=none; b=DpJ970feZDM4ziWeVNdAXprzm/N2blL9MViS0Ji+CM6J1NxArgfVpu6fv7ah7yN780vJaNCZrTVCZAumJukp7qWvmEm0Yd66fuata4z4u3itsNIqudhrbp9D/6AsBuaer2WV0kYqA8uMNelcaP9TA7Hf8YjIjvF40Ry4vBwvW5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739363846; c=relaxed/simple;
-	bh=gf2ZQizGdSB2ftMlT3tO9mDn0opnFOrA9sp9p7fJyk4=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=lAPfGMNZ5AdKN8vpYizoDoS0vCumf6htL2AzIHG3sjd+Lqi72RD49ExYMeM9dWZ4MAn12OURon/sJ6iAS1N8fUIBYuSAZ4qc8JGBygmvdl2LAaJmvupWwcjAbtmoJUZIB96i57UxdgCuNxLChKIB3L9qxHs5IpgIsm/TlQME1ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FrDqFZ56; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5debbced002so374359a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 04:37:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739363843; x=1739968643; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7iOqKefoEOFgmHw7EHtaZsDTWYxKFbNx0Pt4RvoChu0=;
-        b=FrDqFZ56zmr9rWQPDTxULmI5BJ8gclmE20ELPCSZPTHMkWA/Z0WIq8mhX8L3MdiCef
-         ny8oC1obzMRcg6pNPXwm5Tm0FQ16i563coeoBS5g0PWpTfwQkv1CxbiFLotjXDKXbC7r
-         arr3p5Oy3Bc1urdo0R5Jfd+v3P93uqq1VZwvmDcyMmdfqgMHJZw0or6tA9XIweH3FvxZ
-         O0305IX4FpJBkO97tojYd1Rzhf18R4UNenjA9vCl4Iy9x14Em8LZjyKrtz779yTvDQbF
-         W9eslk7nnl38JYTXi4lJ7hc2IYYMMUMJVVcjyX24k/uvAXW7cdUi4EUCxhunvrgEkuOu
-         Gsqw==
+	s=arc-20240116; t=1739364575; c=relaxed/simple;
+	bh=ccZ3wHwDph8Tvn3up3Fk6WgFSGXex/Hllcw79JUd5dY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k4vnMe+QZnaOh1U29k1SUXlzpwWhmqkdHkND/eAFzih2b8p9ItuSSU2bVscJOCuz1UVXrWQypEo9SyHB4ItSXPKqVc3ZzYNWkDLOAHh1nr/V31pqaPAvgGYVNqyX14Aw81zdhrTS09hXXwtN8qRqy/0l+9y4R91SH8+CwNd8mKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WbynotFb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51CBbBNX010515
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 12:49:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	kuUQBdSITaMKfTHHScNQdiAZY5xZBj/1CJ4MXpafH+Q=; b=WbynotFb6reioGKh
+	1xF0YKHkh88XUhv0GA+CsFqKEXlV7m7+eXtxY3WBviWpih8tpkx0us8IvLZt1a7B
+	sJXFbGq45dvracfDF/UTmUbbRaa2WMqOomly7rIS6Vm5rTSBGZF/ZjshQrIOtCsY
+	WGRbDxoMPEWXQPFn9KnhlbB7zQB8SXIe2Bk8V10P2iPivtFlRamGKRMe6mo5Otte
+	B25qsR50tWsdoWHCciuSOD5psTx8M4ScOcj17fcYP9LNcvNJOAK969nDC+X8oCjq
+	WLcZv3uwTpnB/Xz2+P9QGuEfttIh/+U8jagSM7vEH+sGtvlLLHWOH3xWbKbcBSFQ
+	r7bt4A==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qcs5fv0x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 12:49:32 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4719ed0f8easo4437121cf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 04:49:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739363843; x=1739968643;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1739364571; x=1739969371;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7iOqKefoEOFgmHw7EHtaZsDTWYxKFbNx0Pt4RvoChu0=;
-        b=RDDQ68bFKzjk+ZCjVIYqBCBZjUk9cDYsWJXqGwnx4SF8ELX+Owy9ISbDBJ7SkpeyBA
-         MFXpFKqIIAGnJEEJX8Vw4OayCExqXh5qZco29gf1x8J+CTuPFkbQ9TY0Qll3RtDWVhVk
-         Tr9ENHB2Wcjn036wq3qnvCdu2Vhq1rDzJtqADdPQHNAynRiso9AhA0aOwRPyE+g4Wz+h
-         HCYsH7jc7vLl8Kszk6xv5uceua0NKrxSzbhlEdZb5KdS67G4w1PaZnpf6ecen87WPy+P
-         RE2m6K6jhHAbvN1jhb52/pGBgMTXUENLSSrAc8oOs2BnbG2ZoH0KLoHC+VFPEaXMxB1z
-         2o1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWY0uFNQqdII0RBlnJMo6yWUQz06OVSTyULSa7a5RKdmcLV38xNXzZL7Bk6C7VpUIiab73BK6+fKjJFkRMw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/fsRw3m/CZO7M3nG7VTRvhAPDFNifP54iefylNxAyXbk0ptuF
-	ue8ngyWVfo8TOfnuTvfnMu8tQbgNyZhmgqVwf4Y4ceifewU4Xcr3/YNLErhcfnrl0Vd3i1JVYW6
-	2
-X-Gm-Gg: ASbGnctbGEPDQqjo495lRKXs1gB45sBpjQpyxGYlq+gwiwy9UcHtFbCl8T0MutDsqmr
-	TvW8BzVOlSFXWEfIe4MXrd2CudIdtR1YKg22K1ZJeiatMxsoTymc7uXfcVhNTXRkaTOEbps7KGH
-	s2RrsAhiN5/rTHLmejaQM3VprWWH5xiz5eI4q+Ru1uH9d0YPFY325jcsf4w38ZkDSGw/DEgUYlf
-	FrdGa/wCSgAQ9QKA37x0qeLAUr4QpE9+hwhTr2+5B45hqicSQXIWSUpSlXly4Q+RanuvfmKRJFo
-	oTYow49bZjpNWO2TZhg8
-X-Google-Smtp-Source: AGHT+IGYTOzcUgHPJRW0kYCbQrRFecyM+6qv7h4XAq61LxCD0Pf+cDCJw3BGknJKHBSXeWLKG4xRig==
-X-Received: by 2002:a05:6402:358a:b0:5d9:3118:d0b8 with SMTP id 4fb4d7f45d1cf-5deae0b5caemr2250068a12.8.1739363842691;
-        Wed, 12 Feb 2025 04:37:22 -0800 (PST)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id 4fb4d7f45d1cf-5de52712538sm9275054a12.49.2025.02.12.04.37.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2025 04:37:22 -0800 (PST)
-Date: Wed, 12 Feb 2025 15:37:19 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Matthew Leung <quic_mattleun@quicinc.com>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
-Subject: [bug report] bus: mhi: host: Add a policy to enable image transfer
- via BHIe in PBL
-Message-ID: <e3148ac4-7bb8-422d-ae0f-18a8eb15e269@stanley.mountain>
+        bh=kuUQBdSITaMKfTHHScNQdiAZY5xZBj/1CJ4MXpafH+Q=;
+        b=SX0biIAJfVvwlpyL+Y9kG4UZaJUftgFTVd/wsx1Cc5V3/CAYSvhiXRVCVyIsSjXvOM
+         xDUDTMSNaT0dZh32wBnLZB5c6wKoPGEEmuuHlIU+pLs20gQlbYQk9q9chv5CziAjo+wS
+         GVAlVzfhDsuBlxxo4NQ5qp9p0m8FXS1b7KOCpT7TIbkr8LidbmN0yYW1aLPAZo7ItN/g
+         JciPfBHCeH6M2QWKXZrOhEloam+mopmUZuOSHCgsKpfEpni+C5uakemng2b/yqaS1zjd
+         JK7a5R518DZoK7OR96J0IvMiGeKa7mRrubdcsURjCJwVvnm3L6eW59Z+ljDjd174y4D+
+         hZ6w==
+X-Forwarded-Encrypted: i=1; AJvYcCX6OdqWlBFOEHCY5FWP/ZA/albe9pmXC3QqZkvG6Pl70Z+5PR/ICWABSL7U9xslEOQKDwR7NZNKJ3TA2AXF@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUJ4U/BweIypr2wei+EOLn7hOi1Is1rwVCxwd0qiW9mbApunLR
+	tWkIRvHUABCRcqi9t12lhx0SA5ehN3y5LnIZ3SFZTc1ivCPpiVoaPJpmbF8DXkI9ylRblBMl+a5
+	Wc6oMOYjDw9Gz7gY6T8NGJBjsR+Zmf1Sa61r51/eTscK/tObZfhZDTg3uKRYhD7YF
+X-Gm-Gg: ASbGncsyYZsaI2w7se1+DMaEiJWrK6S0f/XMoGtHfg7XrH5Hy2V0pyO6GO+TFrjv/3q
+	jNABvdSuscbpegJfpXhnDmGUG4dS9FTGDiexVGUmD2UR4LkNvHNYV4WTNTHhpn294TD7JcIMEix
+	kPx5aYgnsfEEeBGhEzTyUf4DbF5rvuNPT2fGcjXg39AccHVho8dZgEgogTKH95EkVzdXY8x+/XY
+	Y4GByNyIXCdBQGjREd1X9gEJL4rWtwENi/FAN56BT30l4h4nrLjU/wz0j5E0xzBiC/kdus6RsTy
+	OQgv5xyssS/zzIntuZ0ocrgxeYBqo4QUEr0g2kpFpaS/ND28XWhgeBFXygU=
+X-Received: by 2002:a05:622a:1ba1:b0:471:a14c:6847 with SMTP id d75a77b69052e-471afe44807mr14893201cf.5.1739364571543;
+        Wed, 12 Feb 2025 04:49:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXlvtCUv6kxGIVgm1ssWpPWbt6HtmfKifwsKGxI6ycuvSwhztswaJLUf+JCsS2rMyb9J3CYw==
+X-Received: by 2002:a05:622a:1ba1:b0:471:a14c:6847 with SMTP id d75a77b69052e-471afe44807mr14893081cf.5.1739364571150;
+        Wed, 12 Feb 2025 04:49:31 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab7736439bbsm1249652366b.162.2025.02.12.04.49.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Feb 2025 04:49:30 -0800 (PST)
+Message-ID: <9cdeb748-4f60-4050-9d7f-e4ff75ef1834@oss.qualcomm.com>
+Date: Wed, 12 Feb 2025 13:49:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] Add PMI8998 VBUS Regulator Support v2
+To: "James A. MacInnes" <james.a.macinnes@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        andersson@kernel.org, konradybcio@kernel.org, quic_wcheng@quicinc.com,
+        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        lgirdwood@gmail.com, broonie@kernel.org
+References: <20250212010744.2554574-1-james.a.macinnes@gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250212010744.2554574-1-james.a.macinnes@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: rpIVYxXeBQ2jR-_zxyA21I-_9cKZ4yTY
+X-Proofpoint-GUID: rpIVYxXeBQ2jR-_zxyA21I-_9cKZ4yTY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-12_04,2025-02-11_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ mlxlogscore=932 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ adultscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
+ definitions=main-2502120099
 
-Hello Matthew Leung,
+On 12.02.2025 2:07 AM, James A. MacInnes wrote:
+> Greetings,
+> 
+> Thank you all for your feedback. I have integrated your recommendations
+> into this revised patch series (v2); please disregard the previous thread.
+> 
+> Summary of Changes:
+> - Patch 1/3: Updates the Device Tree Schema bindings to include
+>   "qcom,pmi8998-vbus-reg" for PMI8998 support.
+> - Patch 2/3: Extends the Qualcomm USB VBUS regulator driver to support
+>   PMI8998, dynamically configuring the regulator based on the PMIC type.
+> - Patch 3/3: Adds the VBUS regulator node to pmi8998.dtsi, enabling
+>   USB Type-C VBUS support.
+> 
+> Motivation:
+> To enable VBUS operation on the SDM845 platform PMI8998 PMIC.
+> 
+> Kernel Version & Testing:
+> - These patches were developed and tested on Linux 6.13.
+> - Attempting to run Linux 6.14-rc2 on our Lantronix SOM resulted in a
+>   hard crash, making it unsuitable for validation.
 
-Commit f88f1d0998ea ("bus: mhi: host: Add a policy to enable image
-transfer via BHIe in PBL") from Jan 17, 2025 (linux-next), leads to
-the following Smatch static checker warning:
+Please try reverting 57a7138d0627309d469719f1845d2778c251f358
 
-	drivers/bus/mhi/host/boot.c:611 mhi_fw_load_handler()
-	error: uninitialized symbol 'fw_load_type'.
-
-drivers/bus/mhi/host/boot.c
-    491 void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
-    492 {
-    493         const struct firmware *firmware = NULL;
-    494         struct device *dev = &mhi_cntrl->mhi_dev->dev;
-    495         enum mhi_fw_load_type fw_load_type;
-    496         enum mhi_pm_state new_state;
-    497         const char *fw_name;
-    498         const u8 *fw_data;
-    499         size_t size, fw_sz;
-    500         int ret;
-    501 
-    502         if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
-    503                 dev_err(dev, "Device MHI is not in valid state\n");
-    504                 return;
-    505         }
-    506 
-    507         /* save hardware info from BHI */
-    508         ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_SERIALNU,
-    509                            &mhi_cntrl->serial_number);
-    510         if (ret)
-    511                 dev_err(dev, "Could not capture serial number via BHI\n");
-    512 
-    513         /* wait for ready on pass through or any other execution environment */
-    514         if (!MHI_FW_LOAD_CAPABLE(mhi_cntrl->ee))
-    515                 goto fw_load_ready_state;
-
-Assume we hit this goto.
-
-    516 
-    517         fw_name = (mhi_cntrl->ee == MHI_EE_EDL) ?
-    518                 mhi_cntrl->edl_image : mhi_cntrl->fw_image;
-    519 
-    520         /* check if the driver has already provided the firmware data */
-    521         if (!fw_name && mhi_cntrl->fbc_download &&
-    522             mhi_cntrl->fw_data && mhi_cntrl->fw_sz) {
-    523                 if (!mhi_cntrl->sbl_size) {
-    524                         dev_err(dev, "fw_data provided but no sbl_size\n");
-    525                         goto error_fw_load;
-    526                 }
-    527 
-    528                 size = mhi_cntrl->sbl_size;
-    529                 fw_data = mhi_cntrl->fw_data;
-    530                 fw_sz = mhi_cntrl->fw_sz;
-    531                 goto skip_req_fw;
-    532         }
-    533 
-    534         if (!fw_name || (mhi_cntrl->fbc_download && (!mhi_cntrl->sbl_size ||
-    535                                                      !mhi_cntrl->seg_len))) {
-    536                 dev_err(dev,
-    537                         "No firmware image defined or !sbl_size || !seg_len\n");
-    538                 goto error_fw_load;
-    539         }
-    540 
-    541         ret = request_firmware(&firmware, fw_name, dev);
-    542         if (ret) {
-    543                 dev_err(dev, "Error loading firmware: %d\n", ret);
-    544                 goto error_fw_load;
-    545         }
-    546 
-    547         size = (mhi_cntrl->fbc_download) ? mhi_cntrl->sbl_size : firmware->size;
-    548 
-    549         /* SBL size provided is maximum size, not necessarily the image size */
-    550         if (size > firmware->size)
-    551                 size = firmware->size;
-    552 
-    553         fw_data = firmware->data;
-    554         fw_sz = firmware->size;
-    555 
-    556 skip_req_fw:
-    557         fw_load_type = mhi_fw_load_type_get(mhi_cntrl);
-    558         if (fw_load_type == MHI_FW_LOAD_BHIE)
-    559                 ret = mhi_load_image_bhie(mhi_cntrl, fw_data, size);
-    560         else
-    561                 ret = mhi_load_image_bhi(mhi_cntrl, fw_data, size);
-    562 
-    563         /* Error or in EDL mode, we're done */
-    564         if (ret) {
-    565                 dev_err(dev, "MHI did not load image over BHI%s, ret: %d\n",
-    566                         fw_load_type == MHI_FW_LOAD_BHIE ? "e" : "",
-    567                         ret);
-    568                 release_firmware(firmware);
-    569                 goto error_fw_load;
-    570         }
-    571 
-    572         /* Wait for ready since EDL image was loaded */
-    573         if (fw_name && fw_name == mhi_cntrl->edl_image) {
-    574                 release_firmware(firmware);
-    575                 goto fw_load_ready_state;
-    576         }
-    577 
-    578         write_lock_irq(&mhi_cntrl->pm_lock);
-    579         mhi_cntrl->dev_state = MHI_STATE_RESET;
-    580         write_unlock_irq(&mhi_cntrl->pm_lock);
-    581 
-    582         /*
-    583          * If we're doing fbc, populate vector tables while
-    584          * device transitioning into MHI READY state
-    585          */
-    586         if (fw_load_type == MHI_FW_LOAD_FBC) {
-    587                 ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
-    588                 if (ret) {
-    589                         release_firmware(firmware);
-    590                         goto error_fw_load;
-    591                 }
-    592 
-    593                 /* Load the firmware into BHIE vec table */
-    594                 mhi_firmware_copy_bhie(mhi_cntrl, fw_data, fw_sz, mhi_cntrl->fbc_image);
-    595         }
-    596 
-    597         release_firmware(firmware);
-    598 
-    599 fw_load_ready_state:
-    600         /* Transitioning into MHI RESET->READY state */
-    601         ret = mhi_ready_state_transition(mhi_cntrl);
-    602         if (ret) {
-    603                 dev_err(dev, "MHI did not enter READY state\n");
-    604                 goto error_ready_state;
-
-And then this goto as well.
-
-    605         }
-    606 
-    607         dev_info(dev, "Wait for device to enter SBL or Mission mode\n");
-    608         return;
-    609 
-    610 error_ready_state:
---> 611         if (fw_load_type == MHI_FW_LOAD_FBC) {
-                    ^^^^^^^^^^^^
-Uninitialized.
-
-    612                 mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
-    613                 mhi_cntrl->fbc_image = NULL;
-    614         }
-    615 
-    616 error_fw_load:
-    617         write_lock_irq(&mhi_cntrl->pm_lock);
-    618         new_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_FW_DL_ERR);
-    619         write_unlock_irq(&mhi_cntrl->pm_lock);
-    620         if (new_state == MHI_PM_FW_DL_ERR)
-    621                 wake_up_all(&mhi_cntrl->state_event);
-    622 }
-
-regards,
-dan carpenter
+Konrad
 
