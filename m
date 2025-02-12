@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05DD0A31E27
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 06:45:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83EA4A31E78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 07:07:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3FFF3A0F84
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 05:45:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5BBE47A15FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 06:06:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 512EA1DDA3C;
-	Wed, 12 Feb 2025 05:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E46141FBC8C;
+	Wed, 12 Feb 2025 06:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TyYCbhO8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W0K3Ek+C"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AE82BD10;
-	Wed, 12 Feb 2025 05:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7CF11CA9;
+	Wed, 12 Feb 2025 06:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739339124; cv=none; b=mgGRKK9MIzrLTxdWSEnTddq4eTSwZM6RtI+BzL/QMd+tb5G5+0ikojrOxGNdqgKSzY9IjIHLwiDvB5eqYj1hnslWoIEmVlS4KeZ0qSIgAbWwFvWvSSYKDfRJucCiaf3VgVQt2hjNM552I+h2NPtDG5amcB075Typj1wtaXQsetw=
+	t=1739340428; cv=none; b=WVo2xzeV3cB9t1hyHlCk+1gRnqvn3bSe70Vs2vPz2dEsK31HCNpGvDZ1GjTtJlJhgFYF+2ZAPflcPkEE8n2O1rjUAB3OzpScK8dNW2XlyoM350JZtn5E0Q4aVxWWYqTRzKJuPgWzfCvSTSUIlCpQ9EB6fCtk/mG7aS73ttm7Cj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739339124; c=relaxed/simple;
-	bh=h2k2i8LYf5htvNu8p78HQ44yb3Ii/qEig/aPYBzvTIQ=;
+	s=arc-20240116; t=1739340428; c=relaxed/simple;
+	bh=xnpMPHYKZyIUkTsXMPC0zqMwSDXIWAxIdusy5ZDRwJc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KEB7b4RBt1GgtMhJU7IojQem7b4+pfBJJTMFDE+7XwylK5NZB50amA7SwxKnBQojbL0ycIg3+S1T0WnV0suPjkW5yMkbRe7ypjVPZorzB0rA+nv11PQBjoZ44d9Pa6S4bCy88mpMh7Ul0Xx3AYlqVFut7oz2/GlxOrCTvlDN6zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TyYCbhO8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DB4C4CEDF;
-	Wed, 12 Feb 2025 05:45:19 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=nR80AWetVE5D1i+fTxH/pR4VNw3EE1u8MvvN9QtWjM4Cv+prrS8f4Wa5bn4W1xEpcMWVB3cjigDnYyw6sGAKOoCO0DUgo3YD1BditdJW3ToCj+E2Z7xbQp8NQ3TM+Yj6zILb+IWJLPIWhVKl8JVXK7Gwwq5Pdt/Zhl9YI25+b0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W0K3Ek+C; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C914C4CEDF;
+	Wed, 12 Feb 2025 06:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739339123;
-	bh=h2k2i8LYf5htvNu8p78HQ44yb3Ii/qEig/aPYBzvTIQ=;
+	s=k20201202; t=1739340428;
+	bh=xnpMPHYKZyIUkTsXMPC0zqMwSDXIWAxIdusy5ZDRwJc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TyYCbhO80tUEHzbAP7SF5HwXb3pb3QiScpV/iQv3IMmXoIANLyeiqKk7HAMqoio78
-	 x19M9mn47bkZNA18tWycfZGmz57DE0eG+1RBLnGT1E7oMQg9mymooqr3nngQ9lRJ2l
-	 gd2kKxfW217jl8h1llclyRu1ZLg0NUNMcNKGoVsLmokACKP6C6LE4sGAKv8CPLE/Zf
-	 VZXjXFefyPRMrIHgz01GCzlUTjGVw+n7p5QRPUDR714Px01FgTneD92+hT2wSjVbEj
-	 XqlHJUb55cD+Ju4BjfE0LE7XEakiYreo46KqsHZK7BYgglR10pfMovTS5XsE0YFKJv
-	 fCLyPav1mbXyg==
-Message-ID: <9f8cf902-85a3-43db-bce9-4fc9b876c473@kernel.org>
-Date: Wed, 12 Feb 2025 06:45:17 +0100
+	b=W0K3Ek+CuhdtAjyOvAbbcydSnrG2zp1DflRdPjYFIRzXeEIDJwoAs9UUwOjN1RMV2
+	 KfFqS1LedukoTcMtdmNALtUlA0VLBdwA+dm4HseGyjz/p3n/D4/fKY0apKs+eG5jKW
+	 49B2i+ZewMoA1XDsBZEsYj+eCVyfMdjhDyr6cLCIziZchsLA/NFwYJqN9Uyb8Tvnsp
+	 wEj0Zc5LHq6zjcs+bjoJACvWZ3+Y64905TsWXeqyPmKAx4xBkL7c7lwj/zdyzLa6Xr
+	 4HirepD+r+1mbNUmm+ZEZw/kXDQUykGu2HNpVrJkW3a/h0qpM4UPjlBHVlZfdBiWU/
+	 MVnIvFF+DnleQ==
+Message-ID: <9a61e73d-29d1-4189-89eb-1299b8934af9@kernel.org>
+Date: Wed, 12 Feb 2025 07:06:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,33 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: pd-mapper: defer probing on sdm845
-To: Frank Oltmanns <frank@oltmanns.dev>,
+Subject: Re: [PATCH RFC v2 1/5] dt-bindings: thermal: Add MBG thermal monitor
+ support
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
+ Lars-Peter Clausen <lars@metafoo.de>, Lee Jones <lee@kernel.org>,
+ Stephen Boyd <sboyd@kernel.org>, Amit Kucheria <amitk@kernel.org>,
+ Thara Gopinath <thara.gopinath@gmail.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Chris Lew <quic_clew@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- Stephan Gerhold <stephan.gerhold@linaro.org>,
- Johan Hovold <johan+linaro@kernel.org>,
- Caleb Connolly <caleb.connolly@linaro.org>,
- Joel Selvaraj <joelselvaraj.oss@gmail.com>,
- Alexey Minnekhanov <alexeymin@postmarketos.org>, stable@vger.kernel.org
-References: <20250205-qcom_pdm_defer-v1-1-a2e9a39ea9b9@oltmanns.dev>
+ Konrad Dybcio <konradybcio@kernel.org>, Ajit Pandey
+ <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>,
+ Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
+ quic_kamalw@quicinc.com, quic_jprakash@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-iio@vger.kernel.org
+References: <20241212-mbg-v2-support-v2-0-3249a4339b6e@quicinc.com>
+ <20241212-mbg-v2-support-v2-1-3249a4339b6e@quicinc.com>
+ <ojukpywkhu72cimujmijzidf26654g5vkjaj477imcf4suz2o6@cmow62jcqsfz>
+ <7a5db383-914c-4c1e-846e-5d68cc6a7765@quicinc.com>
+ <fcd718be-fe8a-466f-bd2b-7b75d5f8dd6c@kernel.org>
+ <c85903c6-6a89-4382-bfa2-2fed95f0cbc0@kernel.org>
+ <sybrfmrpegq7fcqykgsfhm56wjyx5vp6zafqw2d73tiral64aw@hg4di55fzdle>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,38 +122,57 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250205-qcom_pdm_defer-v1-1-a2e9a39ea9b9@oltmanns.dev>
+In-Reply-To: <sybrfmrpegq7fcqykgsfhm56wjyx5vp6zafqw2d73tiral64aw@hg4di55fzdle>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 05/02/2025 22:57, Frank Oltmanns wrote:
-> +static const struct of_device_id qcom_pdm_defer[] __maybe_unused = {
-> +	{ .compatible = "qcom,sdm845", .data = &first_dev_remoteproc3, },
-> +	{},
-> +};
->  static void qcom_pdm_stop(struct qcom_pdm_data *data)
->  {
->  	qcom_pdm_free_domains(data);
-> @@ -637,6 +651,25 @@ static struct qcom_pdm_data *qcom_pdm_start(void)
->  	return ERR_PTR(ret);
->  }
->  
-> +static bool qcom_pdm_ready(struct auxiliary_device *auxdev)
-> +{
-> +	const struct of_device_id *match;
-> +	struct device_node *root;
-> +	struct qcom_pdm_probe_first_dev_quirk *first_dev;
-> +
-> +	root = of_find_node_by_path("/");
-> +	if (!root)
-> +		return true;
-> +
-> +	match = of_match_node(qcom_pdm_defer, root);
+On 12/02/2025 00:57, Dmitry Baryshkov wrote:
+> On Tue, Feb 11, 2025 at 12:50:12PM +0100, Krzysztof Kozlowski wrote:
+>> On 11/02/2025 12:46, Krzysztof Kozlowski wrote:
+>>> On 11/02/2025 12:15, Satya Priya Kakitapalli wrote:
+>>>>
+>>>> On 12/13/2024 2:08 PM, Krzysztof Kozlowski wrote:
+>>>>> On Thu, Dec 12, 2024 at 09:41:20PM +0530, Satya Priya Kakitapalli wrote:
+>>>>>> +
+>>>>>> +required:
+>>>>>> +  - compatible
+>>>>>> +  - reg
+>>>>>> +  - interrupts
+>>>>>> +  - io-channels
+>>>>>> +  - io-channel-names
+>>>>> Binding looks ok, but this wasn't tested due to unneeded dependency.
+>>>>> Please decouple from dependency, so automation can properly test it.
+>>>>
+>>>>
+>>>> The dependency is needed because this mbg peripheral is present on only 
+>>>> targets which have GEN3 ADC5, for which the bindings support is added in 
+>>>> the series [1]
+>>>>
+>>>>
+>>>> [1] 
+>>>> https://lore.kernel.org/linux-arm-msm/c4ca0a4c-e421-4cf6-b073-8e9019400f4c@quicinc.com/
+>>>
+>>> Sure. Then this cannot be merged due to resulting test failure.
+>>>
+>>> Please don't post new versions before this can be actually tested and
+>>> applied.
+>>
+>> Heh, you responded *after two months*, to an old email so even previous
+>> discussion is gone from my inbox.
+> 
+> Are you responding to your own email?
 
-Aren't you open-coding machine is compatible?
+Look at the timeline of these emails. Satya responded after two months
+with some comment. I responded now. Then I noticed that it is talk about
+something two months old, so I responded again. Two responses from me,
+that's correct.
 
+I recently got way too many such 2-month old clarifications.
 
-
+That's indeed right of the contributor to respond in their own pace, I
+am also sometimes slow, but really there should be some limit. It's
+putting unnecessary burden on reviewers as now I should dig some old
+discussion.
 Best regards,
 Krzysztof
 
