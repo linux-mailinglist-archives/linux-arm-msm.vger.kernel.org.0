@@ -1,163 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-47694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00A2FA31EB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 07:25:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DB42A31EE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 07:28:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2F2791886C35
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 06:26:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB105168209
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 06:28:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A69741FDA78;
-	Wed, 12 Feb 2025 06:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEFD71FBEBE;
+	Wed, 12 Feb 2025 06:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PalzXJ9Y"
+	dkim=pass (2048-bit key) header.d=oltmanns.dev header.i=@oltmanns.dev header.b="EMAxMEDK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B461FCD0F;
-	Wed, 12 Feb 2025 06:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A998D1FBEA6;
+	Wed, 12 Feb 2025 06:27:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739341528; cv=none; b=WcHsF/F37gn6x9iGZh6AU3/CMKK+X9WyzrKHn/L3NKTkX7jsGm5yrjLKG1xxZv+gWkwiD5Y5VIE/F7DepBkRyw+8iFelzf8/ETEujioqP/vyX9ZVE6asUFMFYpglg67nq5Pmd9344Np8ggBw00hhuThsxeotW0nDcH5LmNsKPQg=
+	t=1739341624; cv=none; b=XTYW1NT/E8A3AzZHANRpwaerdAF28xWIGsCNClzOaBmmvvpz72VA37dY2e0uu/rf1RWj1AQofAcxpFKrq6jRXSEENyYBKZhds2MJJElVOcY6IQU5ijegH101qAzDOoy1Z+3pmbh2OFB+CYVGaITuYIOnYxRZXeZRRoofnl21bh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739341528; c=relaxed/simple;
-	bh=3KVKWftS4v9GkHuIDUYvEWJA8wL+ta7vL74qDteO7js=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gpfhuntcXJq3/YIxule7c0zM3BQV1t7C/EgeZwY8RWWCHRUEw2Qn5rijqWIiPUVLYSCCY5pFawH9qQoqmRtcqJb2CjRR+4rLJPdBQIXxTgJqEzpJ7T0DrvZNEY+xZmtV8MC/RMH9UU6TPwxvoMJoU3HIAlz32jYMVGygo9NecPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PalzXJ9Y; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BKXtGR024202;
-	Wed, 12 Feb 2025 06:25:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	obAcn0wLmydAzYC4ajDkNvD0xynlCwHkkiRAYv1Vxec=; b=PalzXJ9Y97SyU5Yg
-	0EjzK/0EqHEvCeCZ32H+vfSvUasPWifm+GF1RnuZwVFsDjd7+1IStT7NpWYHhik5
-	8gQC3VR3ZHo1SyJ5rzPCoHZtS9FpbqMIPfSE+iycCTkzfjwGxmhojkqDkqic5yUc
-	0U1mIPCiHG/xqHYNwsjhfTD4r7mwF/9hc8S7CpEWYeZxMstMIz01p7r7V8bbWBGc
-	julwEpuESY8aKGRTPE/ZgcvpSOFKNHetgiIwiboV5VchFuUk1nIlV87Iy4viNEQM
-	4mqebk4oO9D3d3us+zPSQfVJqGTMtK8sWJWe0wGQ4/zuZIXHV0lmoYsE946e4tAH
-	3EtKsw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44p0gv24wg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Feb 2025 06:24:59 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51C6Owik026154
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Feb 2025 06:24:58 GMT
-Received: from [10.110.45.95] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Feb
- 2025 22:24:50 -0800
-Message-ID: <aec622a8-bc3f-4ecb-a020-72f1634b7bed@quicinc.com>
-Date: Wed, 12 Feb 2025 11:54:45 +0530
+	s=arc-20240116; t=1739341624; c=relaxed/simple;
+	bh=65IGQQyNlGL97eMSscE+Db1rh6uKwtQ4wn+Khd1QG0g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oOct6qB3ZseyUhGFiWT/NAefXDD4NTWi+6wS+sY+z9kaIxSAIfBWCU/d34wjo4kaVtaJ+D+x4Yi9k9Xr1Ylv7PU1Dyu50XP9ViJUehkaA47v+QYmtIXfJEL8CVLD27nM4tlofmvGTbH0BZThoctzMOMH2AnDWbFn/THDJaPUTyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oltmanns.dev; spf=pass smtp.mailfrom=oltmanns.dev; dkim=pass (2048-bit key) header.d=oltmanns.dev header.i=@oltmanns.dev header.b=EMAxMEDK; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oltmanns.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oltmanns.dev
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4Yt7d86tH4z9tFG;
+	Wed, 12 Feb 2025 07:26:52 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oltmanns.dev;
+	s=MBO0001; t=1739341613;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+7N+XpMkRRdoh+Bj42XO2iok1EBcqM54SUgrwByemnI=;
+	b=EMAxMEDKouOdv9tfDkWZG9Kxvn1mxdnuLb9WNeAiCvYXxc3nVbfTsgU1q415iHfhYwMkt3
+	zmElKwAwm9kd1tc9HhilRWGK6l26GIvDEdQrmRDVt4bGZYe9GdOiuy4xQs4hRe6WrQPMU4
+	RcmKm8z2Vq1eUAlNA5jGkJq6lZrpGrjOI12C8UNWS0+Cr9PAvkx7oTPy8VA3tGo3zw1JpP
+	aS13FsSF/ENWFui/8nYg3htTcVtf8MauFZB0Ecs0Ai81Rzlh0JT+1Igxkp9nCsJgKn/bTm
+	NKTlPIkeOMH+7bw99qXZ4Hmjkjphs8qfeznOTf2sOzwRoH7nKC2iQml3GjXbIw==
+From: Frank Oltmanns <frank@oltmanns.dev>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
+ <konradybcio@kernel.org>,  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+  Chris Lew <quic_clew@quicinc.com>,  linux-arm-msm@vger.kernel.org,
+  linux-kernel@vger.kernel.org,  Stephan Gerhold
+ <stephan.gerhold@linaro.org>,  Johan Hovold <johan+linaro@kernel.org>,
+  Caleb Connolly <caleb.connolly@linaro.org>,  Joel Selvaraj
+ <joelselvaraj.oss@gmail.com>,  Alexey Minnekhanov
+ <alexeymin@postmarketos.org>,  stable@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: pd-mapper: defer probing on sdm845
+In-Reply-To: <9f8cf902-85a3-43db-bce9-4fc9b876c473@kernel.org> (Krzysztof
+	Kozlowski's message of "Wed, 12 Feb 2025 06:45:17 +0100")
+References: <20250205-qcom_pdm_defer-v1-1-a2e9a39ea9b9@oltmanns.dev>
+	<9f8cf902-85a3-43db-bce9-4fc9b876c473@kernel.org>
+Date: Wed, 12 Feb 2025 07:26:43 +0100
+Message-ID: <871pw38yqk.fsf@oltmanns.dev>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 1/5] dt-bindings: thermal: Add MBG thermal monitor
- support
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano
-	<daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
-	<lukasz.luba@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jonathan Cameron
-	<jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>, Lee Jones
-	<lee@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, Amit Kucheria
-	<amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh
- Kona" <quic_jkona@quicinc.com>, <quic_kamalw@quicinc.com>,
-        <quic_jprakash@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-iio@vger.kernel.org>
-References: <20241212-mbg-v2-support-v2-0-3249a4339b6e@quicinc.com>
- <20241212-mbg-v2-support-v2-1-3249a4339b6e@quicinc.com>
- <ojukpywkhu72cimujmijzidf26654g5vkjaj477imcf4suz2o6@cmow62jcqsfz>
- <7a5db383-914c-4c1e-846e-5d68cc6a7765@quicinc.com>
- <fcd718be-fe8a-466f-bd2b-7b75d5f8dd6c@kernel.org>
- <c85903c6-6a89-4382-bfa2-2fed95f0cbc0@kernel.org>
-Content-Language: en-US
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-In-Reply-To: <c85903c6-6a89-4382-bfa2-2fed95f0cbc0@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tLL0HZPILgFGv8Z41KvAkM3OKCPn4gyD
-X-Proofpoint-GUID: tLL0HZPILgFGv8Z41KvAkM3OKCPn4gyD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-12_02,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
- clxscore=1015 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
- mlxlogscore=999 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2501170000 definitions=main-2502120048
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 4Yt7d86tH4z9tFG
 
+Hi Krzysztof,
 
-On 2/11/2025 5:20 PM, Krzysztof Kozlowski wrote:
-> On 11/02/2025 12:46, Krzysztof Kozlowski wrote:
->> On 11/02/2025 12:15, Satya Priya Kakitapalli wrote:
->>> On 12/13/2024 2:08 PM, Krzysztof Kozlowski wrote:
->>>> On Thu, Dec 12, 2024 at 09:41:20PM +0530, Satya Priya Kakitapalli wrote:
->>>>> +
->>>>> +required:
->>>>> +  - compatible
->>>>> +  - reg
->>>>> +  - interrupts
->>>>> +  - io-channels
->>>>> +  - io-channel-names
->>>> Binding looks ok, but this wasn't tested due to unneeded dependency.
->>>> Please decouple from dependency, so automation can properly test it.
->>>
->>> The dependency is needed because this mbg peripheral is present on only
->>> targets which have GEN3 ADC5, for which the bindings support is added in
->>> the series [1]
->>>
->>>
->>> [1]
->>> https://lore.kernel.org/linux-arm-msm/c4ca0a4c-e421-4cf6-b073-8e9019400f4c@quicinc.com/
->> Sure. Then this cannot be merged due to resulting test failure.
+On 2025-02-12 at 06:45:17 +0100, Krzysztof Kozlowski <krzk@kernel.org> wrot=
+e:
+> On 05/02/2025 22:57, Frank Oltmanns wrote:
+>> +static const struct of_device_id qcom_pdm_defer[] __maybe_unused =3D {
+>> +	{ .compatible =3D "qcom,sdm845", .data =3D &first_dev_remoteproc3, },
+>> +	{},
+>> +};
+>>  static void qcom_pdm_stop(struct qcom_pdm_data *data)
+>>  {
+>>  	qcom_pdm_free_domains(data);
+>> @@ -637,6 +651,25 @@ static struct qcom_pdm_data *qcom_pdm_start(void)
+>>  	return ERR_PTR(ret);
+>>  }
 >>
->> Please don't post new versions before this can be actually tested and
->> applied.
-> Heh, you responded *after two months*, to an old email so even previous
-> discussion is gone from my inbox.
+>> +static bool qcom_pdm_ready(struct auxiliary_device *auxdev)
+>> +{
+>> +	const struct of_device_id *match;
+>> +	struct device_node *root;
+>> +	struct qcom_pdm_probe_first_dev_quirk *first_dev;
+>> +
+>> +	root =3D of_find_node_by_path("/");
+>> +	if (!root)
+>> +		return true;
+>> +
+>> +	match =3D of_match_node(qcom_pdm_defer, root);
+>
+> Aren't you open-coding machine is compatible?
+>
 
+Thanks for pointing out of_machine_is_compatible =E2=80=94 I wasn't aware o=
+f it!
 
-Sorry about that, I initially misunderstood it was regarding the b4 deps 
-I created. I wanted to confirm before posting new version yesterday, 
-hence clarified about the dependency.
+The patch was already NACK'ed by Bjorn, but I still learned something
+from your feedback.
 
+Thanks,
+  Frank
 
+>
+>
+>
 > Best regards,
 > Krzysztof
 
