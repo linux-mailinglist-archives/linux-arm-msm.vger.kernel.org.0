@@ -1,81 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-47797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E89F6A32CEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 18:08:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C293A32CE8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 18:07:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7744116A943
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:06:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75095188D4E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:07:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3002E262802;
-	Wed, 12 Feb 2025 17:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36844262D23;
+	Wed, 12 Feb 2025 17:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FfwEZOHQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zCOJZoAk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2142725743B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 17:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F832627FE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 17:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739379869; cv=none; b=Vj62f9fF1RfGoPslfZULpaaz5urrz4Kujo2D5nu9ssR1vYNC7c7r5pWdq83ElIHdx4P2uT1bufMANjdWkeDFH0l8YKK/c5T39HqlLKlJW616rXkfBhpoYnJuBTF44yqWjsCJcPvaLtho5+uYMPZFw4DvFIhYweekVu9G/h7Cdd4=
+	t=1739379871; cv=none; b=ERlr8jzuslpninTxiMHqcfYLO34sHrqDJhZl44E607OOCcL+CQn/KK9koWCgzr+HMQFKG1HnyUH3Kc7Egs4cLLLQovV+GIoqSNeDcP8lIhr/ueRjX+og81NcGe73dAjrYd6ovOVdslOGQnsBbi654aMCfUweeC7uQ92EI61T07g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739379869; c=relaxed/simple;
-	bh=gm/du2YybA38W7YJqV/I0UhkP/ii9HBt6Lhq0K+G8zk=;
+	s=arc-20240116; t=1739379871; c=relaxed/simple;
+	bh=9GblvGNDG9q8+pnXs2ne763R+S7EoCxIKfwKsAhOSec=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Jkb4znKZOFnrXRmSartNZbZOC5gxgQffGOv9DQjfTptlBDPVvb3OYFN+EXHKhxwLZjJjmFQPvH8DI08clrVfsllSmsYU9mfWGW1vbGE6WbOd05y20jNQeTwxWWXOxPTQBieByncEP+WTcvN4HDLxFyJB6Rdvj1vde74vLOMEtcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FfwEZOHQ; arc=none smtp.client-ip=209.85.208.54
+	 In-Reply-To:To:Cc; b=Q+MUGnF+OmuVp7y4qBUc3akmxHcNBkvnO6jZVbUICw3UzK8vAH+bVe0bja7IfSxpNNcyOEznr7RoXP/du4RkD7OvWVmbPtuxtTkp0kdFSvEYDu1oy9bqXDDjzUi7ICSE/AaRD7ou44C6G76L6oPWK4cABP+HrHRoUQjm3ihWnyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zCOJZoAk; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5debbced002so943821a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 09:04:26 -0800 (PST)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-aaecf50578eso1382886766b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 09:04:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739379865; x=1739984665; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739379867; x=1739984667; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ImRVu3AddUI/G7N8wE6yWqCv2pDeO8zZgPLOwwAUrbQ=;
-        b=FfwEZOHQ5WfoIzMz/vMtt3jhfvrybbKssShql2Z4raVq2oeUWvBNQSNgbwv8X2DRot
-         d8rWvrXbZXXdae5XZ54YlP/7cDZ5EZZ0Nh9vgbPYmML7xL/qj4NXuwOWzzePKX5HAQpb
-         RGgGN2JILGHceifqelmt5Z8K5wMthd5g12gW9HpyLScSkrUp2FnNoizA/fMAfh8eVQx6
-         yeE4+bS9RsFDvYknZ9YB4lavp2FRqqWZvpABG4fWWUXMnn7IlfLGkkpiTV3kCL8y97Zn
-         08GiqlY526PhhQAY4nwig49fb3smD83/shfIaKAaZMxznC+WCFJvy4SPXL4F5PR5XjOk
-         N+Ag==
+        bh=2u45ykvEMjVQISq5rnr9y3KabZa4tYoR1OiGAmXhk4I=;
+        b=zCOJZoAkmZwNn/VaSbD0Kh5rRawMeIm8UJGZhx37Iy5x0RZ6Tv2IU5YaamE4o8YP3n
+         W5kLzFlG6B1h+OxvZMDKg0q/Yp780eKg5d9Aa/7mDMvhfrvuUVQbjm2aAcgin4+36e9V
+         r5ZNRwqtdIE33iVQISV+HxMKbXRJYbsAGl/7rk35zN1b2h3xp/Nl0FdCNr/dC2nPTAa9
+         CVCRsffpIGEW+z09RTkvuL9hu1BI2Q5+JTdwvz+HL/IylVqpptc8RfODS54hmIEU0RAt
+         F06xoSmKwiZUN2mJMM6Cs3ct9WKCkj3hJyBP0jK7O/DzY5t3scb9ZbOvdkXn1IOBhinm
+         xJWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739379865; x=1739984665;
+        d=1e100.net; s=20230601; t=1739379867; x=1739984667;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ImRVu3AddUI/G7N8wE6yWqCv2pDeO8zZgPLOwwAUrbQ=;
-        b=qoJPH/7Nz5lQSxKQ6Vmxq62u9bU4L4sX1YJWjTEmQh+T3/vZ1dh2mas86kpeSDsjEj
-         ZirTHRoKfjzMHDxKEKrbhR8jGsPoZyFCidOdy54BMzHCfTzXoGAtqOBwtWVgbOieUKAB
-         U47IS/WdUY0n8XUyffcEWv7PSyMqmgFFKZhgffh4vT9WS4J2m9sBJic+Jx+PTYPRJ2qT
-         2KAMAL27IyDDz12/ZeTMhR4IZEh+UmWt7J3tj3EVDtRQ80THz8267PFSBpC7RI6qJbpe
-         WEjZlki8SnixMw77LG3p2/jo9auRbI3MP+3HATLb3T3Um+lnkYylYj/UCHXpU7qiyc56
-         VYUw==
-X-Forwarded-Encrypted: i=1; AJvYcCXIeuW/LnhrU6xYTqSV8IAsnElpegqrYGWJL3aY7YGwQBent/6MfeDihVBDFd+fIxcifwziJAOIQ2JCH/fE@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0jLnmv4cXIIOlTatWmS/Pjg7wL96TlRAszmUXvyv9FF4JEZMo
-	Z5N3WMv2fpgreiIF5eWbuUG8t4TczGCdBa6kPncjvL4mCXPZ7gnuRSnVxRitchA=
-X-Gm-Gg: ASbGncsR8BS0scUPV1fx74gNdPzHJm3uAdC5z7f4LZPbE6u9/jcwT8q2U8NQu9TlIvk
-	tAE0rgcMxdajbod2JWl99L1OWjyBFGgElKqxGf+b1N+1iA8Vf3lj3sMuwn8z2FhC7TY9hsNeAOL
-	/PJFcjYl+XFQSaTrpTBqpSu0c/j7Hor7OJUTGtYt5EzON6mNj4JnArDPkxbmhk/CzbTYbX0RBuG
-	xIFgsMt/P8ZNbeGKR32qVPc5hNv72g/BWjvz1I9hEb+CVqFmnhtJKEfwaX1lF11b7ZXzKHdG19C
-	PA92pnARzRyPJ/loUafnNGIuLwbU
-X-Google-Smtp-Source: AGHT+IHcYXuecofg3yiMP0NUjYpDinedFykVXcImtUN6fTzgyJOzlkYtZX415Z33x8WimpPahFb58w==
-X-Received: by 2002:a05:6402:2755:b0:5de:5939:6c34 with SMTP id 4fb4d7f45d1cf-5dec9950b77mr20409a12.15.1739379865117;
-        Wed, 12 Feb 2025 09:04:25 -0800 (PST)
+        bh=2u45ykvEMjVQISq5rnr9y3KabZa4tYoR1OiGAmXhk4I=;
+        b=h31wf0IVnWzX00X1ab5iZJ6K+31d0TZNMji7E5vgv7tAlHnT0/CVMYedv7tNRWkoFr
+         s/ws9SSGtDSE7KlpQ87Dkd/ycvZqWA4NxeC+Of8JsvueO4AS1SNGUZBf9uOUsbA4+qaO
+         KvyVjctiFH9pwtn3kEJajeVaDKd8hALwWe33BIeIblBBnApk0JVoEzet76NpP95EB+iR
+         Ea0bRObynsUmhVV9els3D8aCfTP9Tp6T0Yoir5ysrRSnLlsGnRmmCNAKQqeuHl85X41f
+         /NiPQCow5q2NBS6uPNJnjRVEn/UjZPy/WJIxIwbmWXwxbJSpWOYudM3jRuKJygGDQcjP
+         ss4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVaGh1TK6QSiwZ0IpPcUdU0U2kypENzTdYlNuPJPU6nS4R0zpVkpu1KcITzPYZb4ztw5IObgzzqwwLHX0tM@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6ZyojhIzgGocK/z/xVczBHjYZkTfxrhxSAdWiJTDH6/TjyGN3
+	3GYtP5H2w73oGqcYxp6rzkK/CcDPf7ROd6MJpvqBIpktKiVr0LXjowlIYHIriWRGz7L0ObVsDtb
+	W
+X-Gm-Gg: ASbGncvGsgKs9A6Z7sTwrtm2iWsZCuzK/8xNMaeXmFF26H7cYAu6cye8ySbyrqohbno
+	VmcGJpgkhqDmePKWsGVnvQ5esV0MixZ4WapGaOi+/IUPJIPKF33MCPkUISU03USz1xqujnHTNPN
+	MijtTRwZDWw8CIZbTQsF1nhP+bHRHF0+IXYw7nmmIBSlKccgEWIKUP1ebyz2XgmBZVE7UmtK5ZF
+	OBexcwCx3cLG7k2kieAVVHFtoiiJ9lDIPsSkS1D7memGf4+Nm/9wD9edQ/C4e/P6B6NXL3LTJzh
+	Gs8RpP+ArnJV16aczJPpTlirK2AK
+X-Google-Smtp-Source: AGHT+IFU/2F6t8+fSl2upjgpc8WvZ1eQ0SNs2R3uJxgo7UkoEsUqfjjBa1zq+PYhAKq2aV9hNjVY/Q==
+X-Received: by 2002:a17:907:1c8c:b0:ab7:ee47:9928 with SMTP id a640c23a62f3a-ab7f334aa8amr340585366b.12.1739379866508;
+        Wed, 12 Feb 2025 09:04:26 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:52e8:f77:3aca:520e])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5deb9f6e46bsm819230a12.71.2025.02.12.09.04.23
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5deb9f6e46bsm819230a12.71.2025.02.12.09.04.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2025 09:04:24 -0800 (PST)
+        Wed, 12 Feb 2025 09:04:26 -0800 (PST)
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Wed, 12 Feb 2025 18:03:53 +0100
-Subject: [PATCH 7/8] dt-bindings: dma: qcom: bam-dma: Add missing required
- properties
+Date: Wed, 12 Feb 2025 18:03:54 +0100
+Subject: [PATCH 8/8] dmaengine: qcom: bam_dma: Fix DT error handling for
+ num-channels/ees
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250212-bam-dma-fixes-v1-7-f560889e65d8@linaro.org>
+Message-Id: <20250212-bam-dma-fixes-v1-8-f560889e65d8@linaro.org>
 References: <20250212-bam-dma-fixes-v1-0-f560889e65d8@linaro.org>
 In-Reply-To: <20250212-bam-dma-fixes-v1-0-f560889e65d8@linaro.org>
 To: Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -100,36 +101,60 @@ Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.2
 
-num-channels and qcom,num-ees are required when there are no clocks
-specified in the device tree, because we have no reliable way to read them
-from the hardware registers if we cannot ensure the BAM hardware is up when
-the device is being probed.
+When we don't have a clock specified in the device tree, we have no way to
+ensure the BAM is on. This is often the case for remotely-controlled or
+remotely-powered BAM instances. In this case, we need to read num-channels
+from the DT to have all the necessary information to complete probing.
 
-This has often been forgotten when adding new SoC device trees, so make
-this clear by describing this requirement in the schema.
+However, at the moment invalid device trees without clock and without
+num-channels still continue probing, because the error handling is missing
+return statements. The driver will then later try to read the number of
+channels from the registers. This is unsafe, because it relies on boot
+firmware and lucky timing to succeed. Unfortunately, the lack of proper
+error handling here has been abused for several Qualcomm SoCs upstream,
+causing early boot crashes in several situations [1, 2].
 
+Avoid these early crashes by erroring out when any of the required DT
+properties are missing. Note that this will break some of the existing DTs
+upstream (mainly BAM instances related to the crypto engine). However,
+clearly these DTs have never been tested properly, since the error in the
+kernel log was just ignored. It's safer to disable the crypto engine for
+these broken DTBs.
+
+[1]: https://lore.kernel.org/r/CY01EKQVWE36.B9X5TDXAREPF@fairphone.com/
+[2]: https://lore.kernel.org/r/20230626145959.646747-1-krzysztof.kozlowski@linaro.org/
+
+Cc: stable@vger.kernel.org
+Fixes: 48d163b1aa6e ("dmaengine: qcom: bam_dma: get num-channels and num-ees from dt")
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
- Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/qcom/bam_dma.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-index 3ad0d9b1fbc5e4f83dd316d1ad79773c288748ba..5f7e7763615578717651014cfd52745ea2132115 100644
---- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-+++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-@@ -90,8 +90,12 @@ required:
- anyOf:
-   - required:
-       - qcom,powered-remotely
-+      - num-channels
-+      - qcom,num-ees
-   - required:
-       - qcom,controlled-remotely
-+      - num-channels
-+      - qcom,num-ees
-   - required:
-       - clocks
-       - clock-names
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index c14557efd577046adc74fa83fd45eb239977b5fa..a2f1f8902c7f88398a5412e8673e24b3c10bb86f 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -1291,13 +1291,17 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	if (!bdev->bamclk) {
+ 		ret = of_property_read_u32(pdev->dev.of_node, "num-channels",
+ 					   &bdev->num_channels);
+-		if (ret)
++		if (ret) {
+ 			dev_err(bdev->dev, "num-channels unspecified in dt\n");
++			return ret;
++		}
+ 
+ 		ret = of_property_read_u32(pdev->dev.of_node, "qcom,num-ees",
+ 					   &bdev->num_ees);
+-		if (ret)
++		if (ret) {
+ 			dev_err(bdev->dev, "num-ees unspecified in dt\n");
++			return ret;
++		}
+ 	}
+ 
+ 	ret = clk_prepare_enable(bdev->bamclk);
 
 -- 
 2.47.2
