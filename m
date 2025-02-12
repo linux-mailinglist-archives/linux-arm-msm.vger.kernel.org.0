@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 857EDA31E0A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 06:38:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05DD0A31E27
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 06:45:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 08374188BCA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 05:38:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3FFF3A0F84
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 05:45:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB53C1F7561;
-	Wed, 12 Feb 2025 05:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 512EA1DDA3C;
+	Wed, 12 Feb 2025 05:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sgYXQukt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TyYCbhO8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75BCB67E;
-	Wed, 12 Feb 2025 05:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AE82BD10;
+	Wed, 12 Feb 2025 05:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739338678; cv=none; b=jkrTqBqkWoijTdbgiwVeVAGkwN2+J+AxgvB9KhNZyYe5OePw8Eoy+1kiAIFE4VsVPMhc8M7XvrRwlKTvoEqUX4sC9lrLuUsqkakl5fWWE4VG5xwtju4JyXqkf84DlmTpwWqNWLTMry8XJ3fKtLb6AbUv7LxSA69DRQupqrnYu2k=
+	t=1739339124; cv=none; b=mgGRKK9MIzrLTxdWSEnTddq4eTSwZM6RtI+BzL/QMd+tb5G5+0ikojrOxGNdqgKSzY9IjIHLwiDvB5eqYj1hnslWoIEmVlS4KeZ0qSIgAbWwFvWvSSYKDfRJucCiaf3VgVQt2hjNM552I+h2NPtDG5amcB075Typj1wtaXQsetw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739338678; c=relaxed/simple;
-	bh=/FoIxowu82Uq0ekKDPxc3Ge0hB+OhxoBukVa7JbIRgg=;
+	s=arc-20240116; t=1739339124; c=relaxed/simple;
+	bh=h2k2i8LYf5htvNu8p78HQ44yb3Ii/qEig/aPYBzvTIQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nPt8atnJNAT/1eHl5XcalmfywJj/qXVMwKQeZ+kXDhpEan2GQMHpG+W7yAarrMWwWVG8RdikoKUScUhsvrk/U8UhwxbExgNmXOdIf+5Tmxwp1RQtZjWQjcfepEsJE6ta3VMt/7CvubKh6ImzOuSdiP/PsvB2rT8KaFup7+aiTdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sgYXQukt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8FAC4CEDF;
-	Wed, 12 Feb 2025 05:37:53 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=KEB7b4RBt1GgtMhJU7IojQem7b4+pfBJJTMFDE+7XwylK5NZB50amA7SwxKnBQojbL0ycIg3+S1T0WnV0suPjkW5yMkbRe7ypjVPZorzB0rA+nv11PQBjoZ44d9Pa6S4bCy88mpMh7Ul0Xx3AYlqVFut7oz2/GlxOrCTvlDN6zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TyYCbhO8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DB4C4CEDF;
+	Wed, 12 Feb 2025 05:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739338678;
-	bh=/FoIxowu82Uq0ekKDPxc3Ge0hB+OhxoBukVa7JbIRgg=;
+	s=k20201202; t=1739339123;
+	bh=h2k2i8LYf5htvNu8p78HQ44yb3Ii/qEig/aPYBzvTIQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sgYXQuktcJybLgslFBB5cgnyRREDDC4dHe8hfP5RvfXwxe104eOnp4gdzc7jGT9Tx
-	 b5aRoXD3SDquih/nZjNBZiOQ3Xc2kNLJsNX6TeJbE2jnRaeAMOdN+JluwL8E77LWQQ
-	 B4yrtlp83DfXKvm+iWuXVOE+8DdRY0SEc/RYdvO3K6LmhTFi8DXyTJuQIf/bPH3HbY
-	 Rb6CWJOvej9QmXXl6i9bZA+Zltpluoh/JL/Sh43E7ILqhCpLH3OTDebRkuRmQr00Xr
-	 9rmEtbMHuXUizGMuj/7a4WaP5XaLIzjYO3qwkELzl139H+LQNHcq7n25SeNdlhs7t+
-	 QpOWtjZrJsUzQ==
-Message-ID: <09922fcf-f667-490b-bbd2-e5fc19c3f958@kernel.org>
-Date: Wed, 12 Feb 2025 06:37:50 +0100
+	b=TyYCbhO80tUEHzbAP7SF5HwXb3pb3QiScpV/iQv3IMmXoIANLyeiqKk7HAMqoio78
+	 x19M9mn47bkZNA18tWycfZGmz57DE0eG+1RBLnGT1E7oMQg9mymooqr3nngQ9lRJ2l
+	 gd2kKxfW217jl8h1llclyRu1ZLg0NUNMcNKGoVsLmokACKP6C6LE4sGAKv8CPLE/Zf
+	 VZXjXFefyPRMrIHgz01GCzlUTjGVw+n7p5QRPUDR714Px01FgTneD92+hT2wSjVbEj
+	 XqlHJUb55cD+Ju4BjfE0LE7XEakiYreo46KqsHZK7BYgglR10pfMovTS5XsE0YFKJv
+	 fCLyPav1mbXyg==
+Message-ID: <9f8cf902-85a3-43db-bce9-4fc9b876c473@kernel.org>
+Date: Wed, 12 Feb 2025 06:45:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: qcs8300: Add device node for
- gfx_smmu
-To: Pratyush Brahma <quic_pbrahma@quicinc.com>, Will Deacon
- <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250211-b4-branch-gfx-smmu-v5-0-ff0bcb6a3c51@quicinc.com>
- <20250211-b4-branch-gfx-smmu-v5-2-ff0bcb6a3c51@quicinc.com>
- <3158e911-c771-4186-b287-50d2395b8c94@kernel.org>
- <138b1c42-9580-41f4-9079-87740568b79c@quicinc.com>
- <075588ff-77e5-4b01-8c67-8fc30e51b8a9@quicinc.com>
+Subject: Re: [PATCH] soc: qcom: pd-mapper: defer probing on sdm845
+To: Frank Oltmanns <frank@oltmanns.dev>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Chris Lew <quic_clew@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Johan Hovold <johan+linaro@kernel.org>,
+ Caleb Connolly <caleb.connolly@linaro.org>,
+ Joel Selvaraj <joelselvaraj.oss@gmail.com>,
+ Alexey Minnekhanov <alexeymin@postmarketos.org>, stable@vger.kernel.org
+References: <20250205-qcom_pdm_defer-v1-1-a2e9a39ea9b9@oltmanns.dev>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,35 +108,36 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <075588ff-77e5-4b01-8c67-8fc30e51b8a9@quicinc.com>
+In-Reply-To: <20250205-qcom_pdm_defer-v1-1-a2e9a39ea9b9@oltmanns.dev>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/02/2025 06:19, Pratyush Brahma wrote:
-> 
-> On 2/12/2025 10:09 AM, Pratyush Brahma wrote:
->>
->>
->> On 2/11/2025 8:45 PM, Krzysztof Kozlowski wrote:
->>> On 11/02/2025 05:45, Pratyush Brahma wrote:
->>>> Add the device node for gfx smmu that is required for gpu
->>>> specific address translations.
->>>>
->>>> Signed-off-by: Pratyush Brahma<quic_pbrahma@quicinc.com>
->>>> ---
->>>>   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 39 +++++++++++++++++++++++++++++++++++
->>>>   1 file changed, 39 insertions(+)
->>> As pointed out by Rob, this wasn't ever tested. One more example of work
->>> where you have the binding in the same patch but refuse to use it.
-> No, I had tested these patches against the dt_bindings_check and didn't 
-> see these errors.
-> It seems I need to upgrade my dtschema as Rob pointed out, reorder the 
-> clocks and resend.
+On 05/02/2025 22:57, Frank Oltmanns wrote:
+> +static const struct of_device_id qcom_pdm_defer[] __maybe_unused = {
+> +	{ .compatible = "qcom,sdm845", .data = &first_dev_remoteproc3, },
+> +	{},
+> +};
+>  static void qcom_pdm_stop(struct qcom_pdm_data *data)
+>  {
+>  	qcom_pdm_free_domains(data);
+> @@ -637,6 +651,25 @@ static struct qcom_pdm_data *qcom_pdm_start(void)
+>  	return ERR_PTR(ret);
+>  }
+>  
+> +static bool qcom_pdm_ready(struct auxiliary_device *auxdev)
+> +{
+> +	const struct of_device_id *match;
+> +	struct device_node *root;
+> +	struct qcom_pdm_probe_first_dev_quirk *first_dev;
+> +
+> +	root = of_find_node_by_path("/");
+> +	if (!root)
+> +		return true;
+> +
+> +	match = of_match_node(qcom_pdm_defer, root);
 
-The reported errors are not relevant at all to upgraded or not upgraded
-dtschema. This just wasn't tested.
+Aren't you open-coding machine is compatible?
 
-> 
 
 
 Best regards,
