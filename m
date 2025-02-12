@@ -1,114 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-47783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2F0AA32BD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:37:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AB98A32BF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:38:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 582911697D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 16:36:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9261E188AF8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 16:38:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28764253353;
-	Wed, 12 Feb 2025 16:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 454CA250C13;
+	Wed, 12 Feb 2025 16:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FzQyaAEp"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VNNavu5R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35AA253340;
-	Wed, 12 Feb 2025 16:34:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B0A24C663
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 16:37:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739378071; cv=none; b=rqrn8PwRnce15271Lid48UiS9s+RHaAwbLQnmd3SzaE+slpXdLMdzsqqC6Rha0HakH4i8a34SBwasp9VVvM0QTUCECUsYE6gXlO0pygYp8o86i88MWqh8jHPQmVcgHTqd4W2bf8bknoMDN/NrPVlP4ahEy5slLblyvwp/zOpZIs=
+	t=1739378266; cv=none; b=b69eOcoEOZbsnveD+sEhSj0uTWefJFJol2wOpBl6Sij6XoYDygTVnrqGiZv/0v+wu748AF5MD8sKbn2VBwfYJiLXy+qQ9tGPOXntShSgKttq7c5ZYMiSsAlkHXdlVyyaTT7179AEmtYbAFxscX0bgFNlD7rvvc2Cwplr8ymzzB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739378071; c=relaxed/simple;
-	bh=dBQoUYaXa4d4ogi2nyqmcSgid6trtFQxYEtCTUyXRKY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K5GiJamqAy+BI6uq2gcIZb/3JwfNKdQT8BXIj8cd8TmnIjL8Vlj6mcV8J7seuF9lW8n4VGFZbJaGA9bFYnlk4+yq1wMt8oJ3TwNuPvZV8WL97dSa1LPzwisXp9OvQ+q3wSiPN/iSzxIlI+2iZ6c9yAVbzyDBR3WcAf7koJg1pD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FzQyaAEp; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-21f7f03d856so77351885ad.1;
-        Wed, 12 Feb 2025 08:34:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739378069; x=1739982869; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VHPS8ONfsNETWz2nc3cOX8k/kEuKPVG4fQ9/eH959Z0=;
-        b=FzQyaAEpBTr2dp2BJ1FAyiUZFe3CBV8urQlicoh9CJ5l7M6QD3Ds+Md3Hbt9C4Mgbm
-         K3QwbX6D6Bq3HLOYASxD+KVqfyAHN2NVwRX2qrQZqGArh8EYvczTO1hH08aIkFc6FiEK
-         HIxmHf7FUabZ5z+v4aEwnZ/q+3Q5zNgHvGIoUXujE97UM+Y12h7B4KGvcMF8x3WTDJNC
-         JjNqRGoPeUigii33I6pHSTLhlgw7Y2BAiVygrE3Hun6PVK7bWG+69khTx6J8Z3ZdsLhj
-         ywVKbp6MoXb8FeI4Y4lrnpV+UbjHPT1PQ92T1cgR15NigW0PSM1NNJ8w5J2OSyafCWrE
-         4c+w==
+	s=arc-20240116; t=1739378266; c=relaxed/simple;
+	bh=oFmEsmqKLnGWrNiUk/uj6NI/xelNFUkl2fa1/6tmHjE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=oPeIiPOzp7pLjluaIRdVWl6ga02aavhy+ZdNWRlLNE6nAkTdbafsYNOQeDMSGAA3oTSKa59V82vW5nrwH0dTXMPw3/e1zFbW1cCPieLxxuTlPpbvX5poI7jJdahGpx7+3D2T40CpWKKgG17WBVJQ8/klTq/f5Nl5YqSC9TvHtsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VNNavu5R; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51C9Cq6W031880
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 16:37:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=y83egAGdzBeY0pvIozCqMkJwXQ+7HxDQxf2
+	F6x80cao=; b=VNNavu5R0pRH+qYuBnBuxg18ZYTEfuMWEey813140cQ1P64kE4F
+	VMxYuVifUoZhEmbkiHVwk/Hp7R6qy8hQoG9KBtlouUILn+C7OED9ie9Kz+jAAgOV
+	6tTlcfqqt95IKypw6wj6VGmGTtcSYwqtyvvqJNLmmuV011M0LwPLUwUCDMVxKLGa
+	WB+qbEFSJuJgBuoCO71EJPPagor6WSHMzyBye+ZMfNWew9M7eRnHL7HfZIW8jmwH
+	gVxGpZHY1tVh+o3Zj5qrImor2OCZPRGY7ms7FXwKJOqoD5PPNCfqMzTDA63N42ya
+	CZGM0byXife94+CkBxzjnDtzjmHGuysnZkw==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qgtk7qcp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 16:37:42 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-220caea15ccso8969055ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 08:37:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739378069; x=1739982869;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VHPS8ONfsNETWz2nc3cOX8k/kEuKPVG4fQ9/eH959Z0=;
-        b=EZM62oYJJXdwfyJ4gU+i4ztyGSm67/92oT2QNDiJmQlSGsvmRyWj7nzZFYz0QVL/nQ
-         Jlk6DOILramjhApLHMAYM6tCotQCvWKMQQolKhTETublmXcp/6QbHOMUOCxS6Dw02xnT
-         7cMp59WNjtdPxt8aEisw6rUVJMQsVQ20BdBp3iu4/7OiIUheron7aZSni9YAJHqv9642
-         X3QbPKBqnpZTDx+yBrrv5Ryio6ifR7sjc+qw0PU4g+UT3V++85tou2uJvh9HIdBY8RjY
-         baBjY5Ccwv1uN/i2Dj0LFiYF4yWLT6Nk0W4YRSdkQcl9y+0IZSVbNDF74fzNDriECfZE
-         29Uw==
-X-Forwarded-Encrypted: i=1; AJvYcCV/Xn8O5zDmjnKoTZRBe35DnjvcV5ry3xLBmzp2+HgLcYTJ1OqGoAZnhixCUthz9GNAJkSEKbtb+ZQnUyo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRf9S9KNtHwB9QOaWAcW4s/h59mzDtT81jeP/MP0H0UtTPBXg3
-	wKJc9m4S03lBF/JwaDV9qlrJp6rgBtBmm3GkHmGcFGIAnTXbTR26
-X-Gm-Gg: ASbGncuQrRB8NlqCnW3lSoibBLVrGR21LZ8VC8VcMqD8aY7iCdBsltQqMgdfvoFnYDZ
-	VbPF3vGuBW46gmw6iWboC2f7X1Ws5S+vhIFajnr9bt/mENKgb3d66FwZAbLmQae/3u2tjuQUd0I
-	wlNnyfnjy54ZS+EfjFSGO9+5SIyPjA1b9R/hpzpNlFtEqXxz36p/vQl1iFuI4HTcWPiQmIb8PL0
-	0PLeU+QZhVdiRnAdtXueQE5LtVKiwmuYnE6B6APl5pHs6l+aQffcrNBe5RhYSmH/Sl/uumItWjL
-	Fv95cLqNg+JwVx0eLL7khyTUOcWR+G5EQwz45BQYqA==
-X-Google-Smtp-Source: AGHT+IHpWCKkyJHSEXStV4LCf+CwXDSfRaygI/Fta18M0uObTTXfOcrYoXNzZs2kPRJ5RVucDH+dfA==
-X-Received: by 2002:a05:6a00:4188:b0:730:9a55:d921 with SMTP id d2e1a72fcca58-7322c390464mr6068874b3a.14.1739378068903;
-        Wed, 12 Feb 2025 08:34:28 -0800 (PST)
-Received: from jamesmacinnes-VirtualBox ([66.119.214.127])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-730882d214fsm6596794b3a.18.2025.02.12.08.34.27
+        d=1e100.net; s=20230601; t=1739378261; x=1739983061;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y83egAGdzBeY0pvIozCqMkJwXQ+7HxDQxf2F6x80cao=;
+        b=gnCfuFC2tpTF2tGkYLWjeLLoJcfZt7b70Tq9jVme1IuXsIDF0OOvzNT1ogNwEofIeA
+         WGatoLL2CsCZ8udULx6R4YrdJWE8FF8WQYdvVHsWjpUah96fZNP4U/tpKtgSG74245DN
+         cqxyzdKsqbmcuqlKPDyo6sYD4I4BAVA9b6LB6OFYhk8zmKaEfYbIRDjlOXOitMi2szxC
+         y0SxMmV40H757db+T85twwW/oHqzOVyx0GDODMAT+29waTxBY40bsv6IspdNwuHOkplz
+         DV6SQjv6y0tq2wgNvL3BNgQ7/jRYMHCEUji4Ek0V836lQvNBp+d02RiRhOlqZcy1sIZt
+         zAKQ==
+X-Gm-Message-State: AOJu0Yxh0eJnYXekxNyBu2KcDpAKv+s3cXTmenIkKyrzUZiWHyU2OboJ
+	VB+QufYjO/AGfmTAgjy1w+YDg8cGV06NvEQv9AyhkP29kBKGfwoSOi2+U1kObcCtOsHy9jYa1bu
+	IAbKL06Ck9oBq4RUre1xRKbc72Y9SnJdguwqZ+ahu9RICVQmjCetynYIWGqTjqV+c
+X-Gm-Gg: ASbGncugP2GSrzHoOVfPOfRGD8JaDA1LHillEpFLLKmtPU760j6o7zjimbOPx8RWlj+
+	f7FGNPcFK/uuKvwPauXx4ak4cY7vMDLmOPxKcZO6hn7iZmNF71tgqL8rC+sOPwa/WsRhbzlh7PI
+	Y9oi//UVNxpEdUacQ/uk3/SODY6zT9IioMnIamxvosGWLPzL8sHTU5hzkQg/28Japs7BX+Q4oDr
+	32QRYwTdougCXq+IP2nISJVHGvfG0LOY0mbVHLOdg6s0CzYFCPLcZFFe0pF58kVQJKiCbOVqGoK
+	O5NX9bOGGtbxknFMNZg9hVDp3rglHFEp
+X-Received: by 2002:a05:6a20:a123:b0:1e6:5323:58d1 with SMTP id adf61e73a8af0-1ee5c841268mr5984218637.26.1739378261299;
+        Wed, 12 Feb 2025 08:37:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+d2rti2LBF2otvyKFstWvmONRSVusT12UG6tr9uR6qdn+lvkL9PTMuxuPerF6M2zV9ZSfcQ==
+X-Received: by 2002:a05:6a20:a123:b0:1e6:5323:58d1 with SMTP id adf61e73a8af0-1ee5c841268mr5984184637.26.1739378260874;
+        Wed, 12 Feb 2025 08:37:40 -0800 (PST)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73048ae7fdfsm11248596b3a.83.2025.02.12.08.37.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2025 08:34:28 -0800 (PST)
-Date: Wed, 12 Feb 2025 08:34:24 -0800
-From: "James A. MacInnes" <james.a.macinnes@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        Wed, 12 Feb 2025 08:37:38 -0800 (PST)
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
- marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch
-Subject: Re: [PATCH 0/2] drm/msm/dp: Fix Type-C Timing
-Message-ID: <20250212083424.2bf95a43@jamesmacinnes-VirtualBox>
-In-Reply-To: <yle4tv3rhxkygvxvq56pls2u4muzmuxlzg5mp6ibckkyhbaycm@mv4hmom2e46c>
-References: <20250212034225.2565069-1-james.a.macinnes@gmail.com>
-	<yle4tv3rhxkygvxvq56pls2u4muzmuxlzg5mp6ibckkyhbaycm@mv4hmom2e46c>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+        Saranya R <quic_sarar@quicinc.com>, stable@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Subject: [PATCH v3] soc: qcom: pdr: Fix the potential deadlock
+Date: Wed, 12 Feb 2025 22:07:20 +0530
+Message-Id: <20250212163720.1577876-1-mukesh.ojha@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 0g48x9CsnGLrvSr_xztUeXhPuRITNgR1
+X-Proofpoint-ORIG-GUID: 0g48x9CsnGLrvSr_xztUeXhPuRITNgR1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-12_05,2025-02-11_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 impostorscore=0
+ adultscore=0 clxscore=1015 mlxscore=0 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2501170000 definitions=main-2502120123
 
-On Wed, 12 Feb 2025 13:20:01 +0200
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+From: Saranya R <quic_sarar@quicinc.com>
 
-> On Tue, Feb 11, 2025 at 07:42:23PM -0800, James A. MacInnes wrote:
-> > SDM845 DisplayPort output inop on DP Monitor and tears on HDMI.
-> > 
-> > Fixed
-> >  - SDM845 does not support wide mode.
-> >  - SDM845 does not need porch shift.
-> > 
-> > Verified functionality on SDM845.  
-> 
-> Please use ./scripts/get_maintainer.pl to get the To / Cc lists. Your
-> messages missed several mailing lists and maybe some of maintainers.
-> 
+When some client process A call pdr_add_lookup() to add the look up for
+the service and does schedule locator work, later a process B got a new
+server packet indicating locator is up and call pdr_locator_new_server()
+which eventually sets pdr->locator_init_complete to true which process A
+sees and takes list lock and queries domain list but it will timeout due
+to deadlock as the response will queued to the same qmi->wq and it is
+ordered workqueue and process B is not able to complete new server
+request work due to deadlock on list lock.
 
-Will do. The list from get_maintainers.pl was very long and I was
-attempting to not spam everyone. On revision I will include everyone.
+Fix it by removing the unnecessary list iteration as the list iteration
+is already being done inside locator work, so avoid it here and just
+call schedule_work() here.
+
+       Process A                        Process B
+
+                                     process_scheduled_works()
+pdr_add_lookup()                      qmi_data_ready_work()
+ process_scheduled_works()             pdr_locator_new_server()
+                                         pdr->locator_init_complete=true;
+   pdr_locator_work()
+    mutex_lock(&pdr->list_lock);
+
+     pdr_locate_service()                  mutex_lock(&pdr->list_lock);
+
+      pdr_get_domain_list()
+       pr_err("PDR: %s get domain list
+               txn wait failed: %d\n",
+               req->service_name,
+               ret);
+
+
+Timeout error log due to deadlock:
+
+"
+ PDR: tms/servreg get domain list txn wait failed: -110
+ PDR: service lookup for msm/adsp/sensor_pd:tms/servreg failed: -110
+"
+
+Thanks to Bjorn and Johan for letting me know that this commit also fixes
+an audio regression when using the in-kernel pd-mapper as that makes it
+easier to hit this race. [1]
+
+Link: https://lore.kernel.org/lkml/Zqet8iInnDhnxkT9@hovoldconsulting.com/ # [1]
+Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+CC: stable@vger.kernel.org
+Reviewed-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Tested-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Saranya R <quic_sarar@quicinc.com>
+Co-developed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+---
+Changes in v3:
+ - Corrected author and added Co-developed-by for myself.
+ - Added T-by and R-by tags.
+ - Modified commit message updated with the link of the issue
+   which also gets fixed by this commit.
+
+Changes in v2:
+ - Added Fixes tag.
+
+
+ drivers/soc/qcom/pdr_interface.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+index 328b6153b2be..71be378d2e43 100644
+--- a/drivers/soc/qcom/pdr_interface.c
++++ b/drivers/soc/qcom/pdr_interface.c
+@@ -75,7 +75,6 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
+ {
+ 	struct pdr_handle *pdr = container_of(qmi, struct pdr_handle,
+ 					      locator_hdl);
+-	struct pdr_service *pds;
+ 
+ 	mutex_lock(&pdr->lock);
+ 	/* Create a local client port for QMI communication */
+@@ -87,12 +86,7 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
+ 	mutex_unlock(&pdr->lock);
+ 
+ 	/* Service pending lookup requests */
+-	mutex_lock(&pdr->list_lock);
+-	list_for_each_entry(pds, &pdr->lookups, node) {
+-		if (pds->need_locator_lookup)
+-			schedule_work(&pdr->locator_work);
+-	}
+-	mutex_unlock(&pdr->list_lock);
++	schedule_work(&pdr->locator_work);
+ 
+ 	return 0;
+ }
+-- 
+2.34.1
+
 
