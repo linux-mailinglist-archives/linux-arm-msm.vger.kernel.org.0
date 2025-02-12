@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F1EEA32131
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 09:34:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 882B8A32139
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 09:34:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0769A160A6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 08:34:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B4D741885D80
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 08:34:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7386A2045B9;
-	Wed, 12 Feb 2025 08:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7955A2054FC;
+	Wed, 12 Feb 2025 08:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HwR92lBC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bj5Voz4p"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444C42B9BC;
-	Wed, 12 Feb 2025 08:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C98C2045B9;
+	Wed, 12 Feb 2025 08:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739349253; cv=none; b=LG3FB225nKaD+ePv64pOTUbZFQD9yfBZFPNXK8i4eSckDL7QBVjet/TIg1onRYNLBWRDYfaXlMOrRInrqglzF+U4MoYz6auYl2Oam8Yuw/SeMHGdMey8yVpTv5YIm3Frn4SDnTr3n41/gsihOJy7zjRFMxuTLW5o7vfQV3UMqtA=
+	t=1739349279; cv=none; b=cLempndLCu//lO/bMDLRdLFiLPdEvTM3lMqD5icBuTroUFBhxEHOQWWkTsPYn6bE6QyhJqjL0WBkfBzHIOfSe0z9o/xSCk/c5mzKLjCqsjdU8tONMB0YIMGfoR7AX6/UYmPoyNQ/KUTpW/OXoe3JeLQdhIGNv19ktnoro6gYKgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739349253; c=relaxed/simple;
-	bh=PEbY1hpoZAUMu77nswKwlCvM1KB4M7kPypmGaG3VT8E=;
+	s=arc-20240116; t=1739349279; c=relaxed/simple;
+	bh=OQgmC29BlKjOVitpjcCwuT0//319+pxz/RUyRxXp5ME=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Qpe1u8ixMYVjka1HRpp3quCMTNUPNr3sdRZqFcSPMFJo4mFU0dWJLbZvocXByA88DehDTXRihJqtr+joS0MavLKojuqKAHk+ez98ulCivcSbFmawzts95lWt4QDAH0OCu+TgrhEmRchAOGEca/+k9urd1ghI7wUDSKuaLNzJu+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HwR92lBC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4EB1C4CEDF;
-	Wed, 12 Feb 2025 08:34:05 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=JNP3EgOUj7xGH4p8BbaxZoMVjnOlsv1PgV5wTh9+1N1Frb4T7RnhrBQfoe00Y2+cXd9pzb8TrS+8YzLC0L8fzZRoepAIJhOIhLziICkOBZyRVr4NKYuLZytKs6S3/PMnwSNsiLuUxOLmo3bgk+wHfoysAl8FZluFCqKXG/JUcvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bj5Voz4p; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50021C4CEE2;
+	Wed, 12 Feb 2025 08:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739349252;
-	bh=PEbY1hpoZAUMu77nswKwlCvM1KB4M7kPypmGaG3VT8E=;
+	s=k20201202; t=1739349278;
+	bh=OQgmC29BlKjOVitpjcCwuT0//319+pxz/RUyRxXp5ME=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HwR92lBCZSGCArK8rhY9/iIh1acpnlsk/sEGmRhaoTvSVsFQkFD7cmXBQmpF0nNz9
-	 ysEDSQDHDqacQVgA4zICqBEN9sQ8AAlzJ+8WaDY1iYOHotxZc/0KD+qZ9n0fLT811s
-	 uLMx6pHhd4xIAZirq2yRvHUaueavGyNaDjcM9Qk76ZEl/ouUjOdaQMa51lFkGWodj5
-	 V+QVV2uPxmaIzc/Hvmq5yFY/ZKyO7vMLTA3TeSZZCMBGoqslrpMJsCrLGn6E35q77j
-	 CmKfH0SNmodGiO15ocbHKTDYUR9fdJzk0plo2kc+WUH+I+xuYO1KKtfQCesf2amv5u
-	 SH64k2x5psdbw==
-Message-ID: <6ff25e41-536c-4871-a047-8aec38f359c4@kernel.org>
-Date: Wed, 12 Feb 2025 09:34:03 +0100
+	b=bj5Voz4p9yEkB5oUsfyHXH/sUF2JOwUyN3spqjAeU464h5Y38wgJuYYKYsZQFHh0j
+	 6MrNVdnFMwzNo+A4ceb696vUuF65F/hypIkkdAOZRX/tRV7PVPxp8tu8FcLVhJ/dUl
+	 cPUd9EVAjjQxfyV9fWx+xe1tUGjSHaBjHG7x7pJc4L/psBUD2FxfFlIQvvI9htToxs
+	 jNexYSPERTSsdoRUdWcCsfyq7dWjunJ8DAU41re0xcojJJ824csO8znqOHPlr2+G0l
+	 9cYD7f8PO8ascGz9LNgzXodG+WXqPqbFaKlkpZzUqLy/mcC/6n9qeOiYGSP1U3AObg
+	 DM547g1zpxHUA==
+Message-ID: <96a82d04-50c1-471d-90f4-9f1ae90f04a3@kernel.org>
+Date: Wed, 12 Feb 2025 09:34:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] dt-bindings: display/msm: Add stream 1 pixel clock
- for QCS8300
+Subject: Re: [PATCH v3 1/4] dt-bindings: display/msm: Document the DPU for
+ QCS8300
 To: Yongxing Mou <quic_yongmou@quicinc.com>, Rob Clark <robdclark@gmail.com>,
  Abhinav Kumar <quic_abhinavk@quicinc.com>,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
@@ -60,14 +60,17 @@ To: Yongxing Mou <quic_yongmou@quicinc.com>, Rob Clark <robdclark@gmail.com>,
  Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
  Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
+ Conor Dooley <conor+dt@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250212-mst_qcs8300-v1-0-38a8aa08394b@quicinc.com>
- <20250212-mst_qcs8300-v1-2-38a8aa08394b@quicinc.com>
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250113-mdssdt_qcs8300-v3-0-6c8e93459600@quicinc.com>
+ <20250113-mdssdt_qcs8300-v3-1-6c8e93459600@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,22 +116,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250212-mst_qcs8300-v1-2-38a8aa08394b@quicinc.com>
+In-Reply-To: <20250113-mdssdt_qcs8300-v3-1-6c8e93459600@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/02/2025 08:12, Yongxing Mou wrote:
-> Support mst for qcs8300 and add the stream 1 clock support in the mdss
-> dt-bindings.
+On 13/01/2025 09:03, Yongxing Mou wrote:
+> Document the DPU for Qualcomm QCS8300 platform. It use the same DPU
+> hardware with SA8775P and reuse it's driver.
 > 
-> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Your patchset leads to warnings - it is non-bisectable.
-
-Fix original code, don't post buggy patches just to fix them immediately.
-
-> 
-
+This also might not be correct, based on emails sent recently. No clue
+what to do with this patchset.
 
 Best regards,
 Krzysztof
