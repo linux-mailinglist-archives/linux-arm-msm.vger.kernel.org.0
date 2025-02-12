@@ -1,50 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-47730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 121C9A32322
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 11:04:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D18CA32331
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 11:06:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DADDB7A511A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 10:03:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 86FCA1888858
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 10:06:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E41732080E4;
-	Wed, 12 Feb 2025 10:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A787208960;
+	Wed, 12 Feb 2025 10:05:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QsTHGA0F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47294206F3F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 10:03:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760B92080EC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 10:05:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739354633; cv=none; b=mLYIJhor+0YftNdBBtCpk8zSQtmNh/QM6qUT3C+EZu7DqbiRj4pOcf9H0wVUl8hP0xa5Qr2O+JHJcIYrNh6u3RF3EabnxoFctPlxk4faJkWZjhpb/ICoBc4/0fkRLKExfh4NQ48ZKP/tmiMKe88z8V0wIqDP5VBDQTydTPO8Vrw=
+	t=1739354758; cv=none; b=eIc7m30ilRa6h/hoSr5hJxYMynHxhUkVCVYe7m30oT30WqQcuw1sqgfwdUqmqcmErngGNwNGcchNZk30b/Nuhmu8BG8Co93+y164WamXlYIOPOgFaQApL3mNobo3HDm4xpcJp58nliFU2rR3BOjlml/vHu4fWoDPMxD0uddmtWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739354633; c=relaxed/simple;
-	bh=wuj0iG1Z/7DDo1uuo7RxJ1HwxHsqkrQ7nsXo/GxX9OY=;
+	s=arc-20240116; t=1739354758; c=relaxed/simple;
+	bh=EHsJvTqyGwhk3LqjRdMjJz1ojxkbMBNLqjWWV/RXQ+Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LiEdq9xG2V/qq0kgekt94njrzqOoivQjER/ZbvLLgyu9uaZY1J3OhAj+fD3U55Vsn6HjVUKxYdC+45Ac2SSLx+NdArrwfuYYzKbInfHUN41H3uYN4ONTBoLstisv0urw4iZJ04IZQa1XWPtRArR/IyRDQ9iz8J1Eq+66LwFZ5Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B3D2F3F60B;
-	Wed, 12 Feb 2025 11:03:40 +0100 (CET)
-Date: Wed, 12 Feb 2025 11:03:39 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: "James A. MacInnes" <james.a.macinnes@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	robdclark@gmail.com, quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, 
-	sean@poorly.run, airlied@gmail.com, simona@ffwll.ch
-Subject: Re: [PATCH 1/2] drm/msm/dp: Disable wide bus support for SDM845
-Message-ID: <vl6cfjpckgndu5nacw3o5wvdfwaijactokby6q2lywcdccicgz@k27my3352m2k>
-References: <20250212034225.2565069-1-james.a.macinnes@gmail.com>
- <20250212034225.2565069-2-james.a.macinnes@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=lBi2yUbtb0ceaPh8FXaVpk8ODvvcLIPgw8M3gjT5zCIEuvK1qZQIpM1d31UCxwlqR5LlPaZ+0B4eDM1P1rubZNPSATpnxvBJMuC1CBtSv6MObNcyOiB6dZTofE1wRB1BTLPNpMnyiIRbU8B75uZHEB7sAPK7SmhDUESQwHzvmnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QsTHGA0F; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5450622b325so3928097e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 02:05:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739354754; x=1739959554; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rVn+uPBQWQ6NpvoZYnq/I1sJTX4u55kbRPPlDvjT25g=;
+        b=QsTHGA0FFO5SkiyXDgcIraOuPAuhwUo3QmqBqB32Xk3n0pIRS7b69gnwJ2sir1QnLJ
+         TF5NfRIz1EjbY8s1ZG6kRfpMBvhzs8Aa8ygqHls/2BmCWw97KSaaPHYvwUnJl7iEJf/h
+         Nb38iD3zf08pAZ9jknpLjTFx9c1Jmok5oUKyH8PlzZoe4RgHW6Y6mGDgzz3lFthG/2iV
+         4wtc7oi42IizS2dSRMh9X+Mn/K5AZM08vKVy+YCWx3CEIDtqP0omUxNjkG4qePAiYFaj
+         o1txB5d2NHv6nICRL3yrR5NAiCL0Gvam9FLa6QeY/p+6XvgD7r3jljvqkZA2EgInaHL9
+         lqwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739354754; x=1739959554;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rVn+uPBQWQ6NpvoZYnq/I1sJTX4u55kbRPPlDvjT25g=;
+        b=LMTtcZyckj5h9OyKuMpZKQ5Mu+vA7AGjEfN/5cUzxJcBKAie0ysnm1FeVvo5DarNqc
+         mz7gcKGCh9I6uHjJL2vUTUBmkEBVpIOYR3qE5XOI3b+Bp21PMEmSRjk9pPvzlNp8Q4ey
+         JtywrTma/aMyv62l7LSJG3O3HXV+ARmRDu03Ox35zxmaZkBuKKSEZ22o9hiYpxpWY0n6
+         F3V5mnrjPPmsydXcapYxEWK1Dslb0Yb7Msp0MHa3mQklh0vrVPIci7GRxKUEbEUE+5jS
+         SwfHzgLyWwTfWnpbMBbLtWgVEPOAFS+a0MpC5Hx1Bb+tbLPCHrJEyK9MBTSgNLn+7Jk4
+         J/fg==
+X-Forwarded-Encrypted: i=1; AJvYcCVk1pyfV4Ud86eqcfNHLVksNDhwK0KD8RllyuiZZ4HmEnIuS2Sl5qKokiRv/hy21xmsD1s0GhlJPVZNwClD@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDZFvKn5tGcdYM7REmX5BqBM7CMZMae4ulnixnJE5sxMT5aOiQ
+	GZeiJ8CvwyMF9Lbub+zFhbBoTgNNWQ9S2PFBSmdb0OkC+LL3/fzusbVG4lyUbSw=
+X-Gm-Gg: ASbGncsQZz6ooVI8rGu8wopWgaAXR2Yofmcg1uZ4zZresglVFwPxwxb7W4BPzgsOZfH
+	sOtFeJqnQ6nMnKP/K88X+Vbtb5V3s4OWPzArTvrKjzyuH7HTQBy6+DcSQ9cw7UvTpguBd0ED4sj
+	AxMCBNIAWVdY9cbRCunt30lHEgJ3Sn09PwS9Q4eJcENIYtkcLOJa+lpaz1u+5jz51JOo96QSJdk
+	MIi7oSqaLYUt/7Z0LdmHTmhhLMWUtu+nm/NwdcYaeEec/wNsXIsqNSHkMHp6m4EoV9q65FeWlaX
+	iglf4qvn88WY4Jgb75XQt0CCpv+vQGJD6Yk7k514gtDvBxwJaT5qsHD8w8n1P86rOOIy+Lc=
+X-Google-Smtp-Source: AGHT+IFcCCjr2F4j57iyCku2KMNTSNmgSM7kl23BAa4v+symeaOyRKmfomba9eHHUlGd0C+dHbaR+A==
+X-Received: by 2002:a05:6512:3c9c:b0:545:bda:f0d with SMTP id 2adb3069b0e04-5451815a1ccmr746030e87.37.1739354754502;
+        Wed, 12 Feb 2025 02:05:54 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54410555a3csm1825349e87.78.2025.02.12.02.05.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Feb 2025 02:05:53 -0800 (PST)
+Date: Wed, 12 Feb 2025 12:05:50 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Yongxing Mou <quic_yongmou@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-phy@lists.infradead.org
+Subject: Re: [PATCH v4 3/4] dt-bindings: display/msm: Document MDSS on QCS8300
+Message-ID: <emfd4gqstixawba64mywtsitbek5srrekoute3hjudi6xhfjhl@7ndrv3ua7uei>
+References: <20250120-mdssdt_qcs8300-v4-0-1687e7842125@quicinc.com>
+ <20250120-mdssdt_qcs8300-v4-3-1687e7842125@quicinc.com>
+ <e620e80d-afeb-4ce1-9798-2f5cdd92b3b1@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,80 +99,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250212034225.2565069-2-james.a.macinnes@gmail.com>
+In-Reply-To: <e620e80d-afeb-4ce1-9798-2f5cdd92b3b1@kernel.org>
 
-On 2025-02-11 19:42:24, James A. MacInnes wrote:
-> SDM845 DPU hardware is rev 4.0.0 per hardware document.
-
-Just checking: version 4.0.0 is not named in the code that you're changing: are
-you mentioning this because the patch you're fixing here [1] says that widebus
-is "recommended" on 5.x.x which includes sc7180, yet didn't account for that
-sc7180_dp_descs also being used in the SDM845 compatible which is 4.0.0?  That
-is something worth mentioning in the patch description.
-
-[1]: https://lore.kernel.org/linux-arm-msm/20240730195012.2595980-1-quic_abhinavk@quicinc.com/
-
+On Wed, Feb 12, 2025 at 09:38:07AM +0100, Krzysztof Kozlowski wrote:
+> On 20/01/2025 04:49, Yongxing Mou wrote:
+> > Document the MDSS hardware found on the Qualcomm QCS8300 platform.
+> > QCS8300 use the same DPU hardware version as SA8775P, so we reuse it's
+> > driver. But QCS8300 only have one DP controller, and offset is same with
+> > sm8650, so dp controller reuse the sm8650's driver.
+> > 
+> > Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> > ---
+> >  .../bindings/display/msm/qcom,qcs8300-mdss.yaml    | 244 +++++++++++++++++++++
+> >  1 file changed, 244 insertions(+)
 > 
-> Incorrect setting caused inop displayport.
+> Also wrong compatibles used.
 
-Inop doesn't seem to be a common abbreviation, there's enough space to spell
-out "inoperative".  And spend some more words on _why_ this is an "incorrect
-setting" in the first place  (based on the suggestion above)?
+Which compatibles are wrong here?
 
-I am trying to remember the details from the original widebus series: we
-discussed that the INTF_CFG2_DATABUS_WIDEN flag was available starting with DPU
-4.0.0 (IIRC, cannot find the source), yet the DSI host only supports it from
-6G v2.5 onwards (SC7280 and up?) [2].  Seems a similar limitation applies to
-DP hosts.
-
-[2]: https://lore.kernel.org/linux-arm-msm/20230822-add-widebus-support-v4-4-9dc86083d6ea@quicinc.com/
-
-> Corrected by separating SDM845 to own descriptor.
-
-its own*
-
-> 
-> Fixes: c7c412202623 ("drm/msm/dp: enable widebus on all relevant chipsets")
-> 
-
-No need for empty lines between trailing tags.
-
-> Signed-off-by: James A. MacInnes <james.a.macinnes@gmail.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index aff51bb973eb..2cbdbf85a85c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -126,6 +126,11 @@ static const struct msm_dp_desc msm_dp_desc_sa8775p[] = {
->  	{}
->  };
->  
-> +static const struct msm_dp_desc msm_dp_desc_sdm845[] = {
-> +	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = false },
-
-We can probably drop the assignment, it'll be false/0 by default.
-
-- Marijn
-
-> +	{}
-> +};
-> +
->  static const struct msm_dp_desc msm_dp_desc_sc7180[] = {
->  	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
->  	{}
-> @@ -178,7 +183,7 @@ static const struct of_device_id msm_dp_dt_match[] = {
->  	{ .compatible = "qcom,sc8180x-edp", .data = &msm_dp_desc_sc8180x },
->  	{ .compatible = "qcom,sc8280xp-dp", .data = &msm_dp_desc_sc8280xp },
->  	{ .compatible = "qcom,sc8280xp-edp", .data = &msm_dp_desc_sc8280xp },
-> -	{ .compatible = "qcom,sdm845-dp", .data = &msm_dp_desc_sc7180 },
-> +	{ .compatible = "qcom,sdm845-dp", .data = &msm_dp_desc_sdm845 },
->  	{ .compatible = "qcom,sm8350-dp", .data = &msm_dp_desc_sc7180 },
->  	{ .compatible = "qcom,sm8650-dp", .data = &msm_dp_desc_sm8650 },
->  	{ .compatible = "qcom,x1e80100-dp", .data = &msm_dp_desc_x1e80100 },
-> -- 
-> 2.43.0
-> 
+-- 
+With best wishes
+Dmitry
 
