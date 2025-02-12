@@ -1,142 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-47776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62F5CA32AFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:00:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0388DA32B30
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:09:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A6FB3A3A4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 16:00:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 983E31884A5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 16:09:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A28C253B49;
-	Wed, 12 Feb 2025 16:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D00B6220686;
+	Wed, 12 Feb 2025 16:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="CtyxxtQr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uiDQTNEl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B72324C689;
-	Wed, 12 Feb 2025 16:00:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC4A214A8F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 16:09:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739376007; cv=none; b=UJopmKoSqi5QJVsFtM1mjHEZ9PDiWesd2zzCyTOxBWp6uDNb+bLJjKPR8CRnbKH9lKjvUg8DzzDZ/9g307whhVOhtIM3ScYswn/0n+tYS3ebXthRXNsItG2KEqg8ZoM4CL0NtXtZNi+r8k+qQr8HPAss8n+jkVJuF7RFEPUA4V4=
+	t=1739376546; cv=none; b=nPqnQqGp79GeK2V93Zc3LXQzxBqhdjc7wN1JiLX5CWuErfh3y5AP0RETwsy/1djxLsklYJU5/9qE9BTWmxrTCzWyMCCtcZM7524OR3RwTJlbAa7TUIyCdl3+UZTlEvA5vI9yFmhNELGkurR4uRIllM74d3uzhtjX/q/zOnoFuus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739376007; c=relaxed/simple;
-	bh=A4s8XGUWb7zlkOoSQPDJTuTrIelwTXco0/iqa0sjMTw=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sL3pokU5xfnleidxg+xvT22/KlKznN/Ccq6bARc8Pe43nySyeNnf1ByejScXEQkUs466pWORm5XKLOEtx30Pp5haRAH5ox3UkAZWvFZeD7xZ25rjkPwsY1EPpSGL9FRXikNQa7CLl+F9n/G3WrNiOJiaxPmD4ObAHRC9fD4MSV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=CtyxxtQr; arc=none smtp.client-ip=217.70.183.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id D74B4442F8;
-	Wed, 12 Feb 2025 15:59:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1739376003;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=O1eBjozoNuRF1SRfHVlWdXHtFeACQZPvHsgrTM6WN9s=;
-	b=CtyxxtQrKkXhLEK27onKf7pLUVHTqU6rJ6GqsIIoOBDdn5+aoiWOqOaGohmUj5wYIWTLmm
-	tHISVD92pszINkDKtayJc0i22GXH23j3Xjasdu5e8BU03ckal4CTw5juS4HhsvoYvQGbki
-	7K1N+Vy3JW564uFPcoLKnhrsdRMcOtkrRnQfNp8xSDz4bR93HFDD3AvG8xvMvle2VHL6kh
-	NuqSJBLKae9r+aEPJ0CzcwWT8aQ0KRPTrFfrgs0oTkGFyczWlX5L5Bjd9yuy5hTpKRzTQi
-	GjbstaOz2XFK39C5abxl8aLci/7CSAallJKj7kD9AKOgdA/LkHJAAESMHWAZ6A==
-Date: Wed, 12 Feb 2025 16:59:58 +0100
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: davem@davemloft.net
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com, Andrew Lunn
- <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, Eric Dumazet
- <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Russell King
- <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, Christophe
- Leroy <christophe.leroy@csgroup.eu>, Herve Codina
- <herve.codina@bootlin.com>, Florian Fainelli <f.fainelli@gmail.com>, Heiner
- Kallweit <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
- Gantois <romain.gantois@bootlin.com>
-Subject: Re: [PATCH net-next 05/13] net: phy: Create a phy_port for
- PHY-driven SFPs
-Message-ID: <20250212165958.6baaf294@fedora.home>
-In-Reply-To: <20250207223634.600218-6-maxime.chevallier@bootlin.com>
-References: <20250207223634.600218-1-maxime.chevallier@bootlin.com>
-	<20250207223634.600218-6-maxime.chevallier@bootlin.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1739376546; c=relaxed/simple;
+	bh=ZKwXTXROh5P6mHKTAIdz8QlhSs8YJUr+oi3VUfVQJLU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eV095Xo6K4hXVfYWnIwziz60gnBaNhPS2sLbOHf/YF3oYf3sjNMLccuCbIvsML1gbGWdBLDRi6BjoX+cP92p/Lg5Zk97A5m/URfzY2DmGTSG2s2K9ezqw7l3fEI4iMBE+vbrEOC+RFHfPdF3Z+O8RqXPyU4NXzarFXFAadhmmJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uiDQTNEl; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43955067383so13957085e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 08:09:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739376543; x=1739981343; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pp5odaFIrW+nbf7Y7JXnx1TjySVWjHWY+ZwKogul8A0=;
+        b=uiDQTNElQR2FMi/AeJIdiJq5RzPZLAbvhcW2IHHckGiuIvw+R6tYloFqcnW9jmKCUd
+         PwIIv5lK0v6x90sm8QnkalU4y7wbQ//B5Z4rUT8hWxht4oHnjOjcS5scriGCIpZT+oEs
+         EiYn8j3CWiBHRhF5dgs3VT+LsZPzyyIyRFP4jCLWvKGEipuUAvFAtaq700KqDiUVNL1P
+         Tr8nHNS7ad2hxq4i/8sS5Jxw4lnyzW57PRzX4ImvV6DkSL8X4HXp3A6fkYsSce8tVQX2
+         1WMcG/cevucrHOo7nkbQtudZyGP7KBl2mTJNJ6fHVpqbLsb7jFbhEaP9beuKvmFFFPtj
+         o0Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739376543; x=1739981343;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pp5odaFIrW+nbf7Y7JXnx1TjySVWjHWY+ZwKogul8A0=;
+        b=XUD6BMRUQdQI8SjdUHp8KuJZvVPJDjNSP+Ms5zsG3oP2meMTJZ6jLG0I4Mgm3Uc/u6
+         bfY5kF/3u5ND/tLaqHWg3fL/iX9aeYcTcbkBBSHut4nyM2U1tpmpUR9K9SWw5+5alxEP
+         xSARi/jd+axYRBJQN/4R493xPjknmA50H3hFBSkijvGPED0qJD+rB7w143kADuA2udb8
+         LvhU0bkNi6eDeICMUiI6xR8c+HSYKK8XCB3Wal0AL6vHTRKvNT9ix+pd5I5+7eOk0Oal
+         /S7EefufZZPqxAy7WT3KSEcPoOBm+wMfjxj/U6xYJMw6FgIu9FvBRVAqUZrUqv/pUbnG
+         UYEA==
+X-Forwarded-Encrypted: i=1; AJvYcCWRi2fbhMPnxdiwUPGzXWldUZTY3q7oY9gQioWepjOadhOhKtcrGxxzr4UuHOo0ZZcLNE7JjNwpwrrQtSZl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7M5VlX10+M9yzAya9uUF/6C7rYVtEf0qqnJZZye1VBl/wi+Q0
+	Zqo7H0iPRjm12ILVX+UMqTWxHvbSiFV6jV1C3wHaRvUb7YsL/YMTOeouNrGDGog=
+X-Gm-Gg: ASbGnctZfXRMgAftCXSqK3YHxczcT7YLnMhp9Fm/Y/03JaorbwZ6xnW30wF800019/o
+	tWCeo/TN9YPSg+E20+gITRCiJMbRLL+5JK9Wvreuq4Mo1KyBxCKXk1TewiKoLTGvlg0pNB9f5H4
+	YM4HiJ6vs6Ui6ORnXCGnHc5doPhQb9Lk1Kz/BOz/NqCXj9c8Vqa2osNEbs183eus/k6pm7uvJw5
+	BJ73S7hNmNjaYXTGzCS0roD/9jPYNv+XWNPxmH5h4KC6oS40RXb0tryyuUGC4zlEoXQn6WejmPp
+	qFZAxF/7BCXLYC7+A3K535+myvkpmbRSq2+qEWap73YOTm+9TO6ULTR/jdWsPDYSTSsSkg==
+X-Google-Smtp-Source: AGHT+IHJzNcgMxYRPCB+0fE/E++AfEevWhqdpHHpCa2FP4tYjZxOsQp8n228+Yo/EzeDt2qB6MDYHw==
+X-Received: by 2002:a05:600c:1548:b0:436:1b08:4c78 with SMTP id 5b1f17b1804b1-43959a997a5mr31660955e9.31.1739376543290;
+        Wed, 12 Feb 2025 08:09:03 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:1d11:ab01:416b:3913:893e:bb4? ([2a0a:ef40:1d11:ab01:416b:3913:893e:bb4])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4395a1aa7f3sm24236205e9.29.2025.02.12.08.09.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Feb 2025 08:09:02 -0800 (PST)
+Message-ID: <3e8d6cb7-43e3-4375-94be-c6b28331da76@linaro.org>
+Date: Wed, 12 Feb 2025 16:09:01 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] regulator: qcom_usb_vbus: Add support for PMI8998
+ VBUS
+To: Mark Brown <broonie@kernel.org>
+Cc: "James A. MacInnes" <james.a.macinnes@gmail.com>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ quic_wcheng@quicinc.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, lgirdwood@gmail.com
+References: <20250212010744.2554574-1-james.a.macinnes@gmail.com>
+ <20250212010744.2554574-3-james.a.macinnes@gmail.com>
+ <fcf907a5-9fb7-4988-a30a-a555740ca817@linaro.org>
+ <8ec05fd8-1623-457f-a3b5-1095acd62cf7@sirena.org.uk>
+Content-Language: en-US
+From: Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <8ec05fd8-1623-457f-a3b5-1095acd62cf7@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeggeeftdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthejredtredtvdenucfhrhhomhepofgrgihimhgvucevhhgvvhgrlhhlihgvrhcuoehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeegveeltddvveeuhefhvefhlefhkeevfedtgfeiudefffeiledttdfgfeeuhfeukeenucfkphepvdgrtddumegtsgduleemkegugegtmeelfhdttdemsggtvddumeekkeelleemheegtdgtmegvheelvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudelmeekugegtgemlehftddtmegstgdvudemkeekleelmeehgedttgemvgehlegvpdhhvghlohepfhgvughorhgrrdhhohhmvgdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopedvkedprhgtphhtthhopegurghvvghmsegurghvvghmlhhofhhtrdhnvghtpdhrtghpthhtohepnhgvthguvghvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrk
- hgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgriiiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrnhgurhgvfieslhhunhhnrdgthhdprhgtphhtthhopehkuhgsrgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvgguuhhmrgiivghtsehgohhoghhlvgdrtghomh
-X-GND-Sasl: maxime.chevallier@bootlin.com
 
-On Fri,  7 Feb 2025 23:36:24 +0100
-Maxime Chevallier <maxime.chevallier@bootlin.com> wrote:
 
-> Some PHY devices may be used as media-converters to drive SFP ports (for
-> example, to allow using SFP when the SoC can only output RGMII). This is
-> already supported to some extend by allowing PHY drivers to registers
-> themselves as being SFP upstream.
+
+On 2/12/25 15:37, Mark Brown wrote:
+> On Wed, Feb 12, 2025 at 03:29:54PM +0000, Caleb Connolly wrote:
 > 
-> However, the logic to drive the SFP can actually be split to a per-port
-> control logic, allowing support for multi-port PHYs, or PHYs that can
-> either drive SFPs or Copper.
+>> I would suggest implementing a proper .is_enabled op to poll the status
+>> register for OTG_STATE_ENABLED and configuring
 > 
-> To that extent, create a phy_port when registering an SFP bus onto a
-> PHY. This port is considered a "serdes" port, in that it can feed data
-> to anther entity on the link. The PHY driver needs to specify the
-> various PHY_INTERFACE_MODE_XXX that this port supports.
-> 
-> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-[...]
->  
-> +/**
-> + * phylink_interfaces_to_linkmodes() - List all possible linkmodes based on a
-> + *				       set of supported interfaces, assuming no
-> + *				       rate matching.
-> + * @linkmodes: the supported linkmodes
-> + * @interfaces: Set of interfaces (PHY_INTERFACE_MODE_XXX)
-> + *
-> + * Compute the exhaustive list of modes that can conceivably be achieved from a
-> + * set of MII interfaces. This is derived from the possible speeds and duplex
-> + * achievable from these interfaces. This list is likely too exhaustive (there
-> + * may not exist any device out there that can convert from an interface to a
-> + * linkmode) and it needs further filtering based on real HW capabilities.
-> + */
-> +void phylink_interfaces_to_linkmodes(unsigned long *linkmodes,
-> +				     const unsigned long *interfaces)
-> +{
-> +	phy_interface_t interface;
-> +	unsigned long caps = 0;
-> +
-> +	linkmode_zero(linkmodes);
-> +
-> +	for_each_set_bit(interface, interfaces, PHY_INTERFACE_MODE_MAX)
-> +		caps = phylink_get_capabilities(interface,
-> +						GENMASK(__fls(MAC_400000FD),
-> +							__fls(MAC_10HD)),
-> +						RATE_MATCH_NONE);
+> No, that would be buggy.  Implement a get_status() operation if the
+> device can report status.  is_enabled() should report what the driver
+> asked for.
 
-Shoule be :
-		caps |= phylink_get_capabilities(...);
+Ahh yep, that's right. it should implement .get_status() (as per the 
+polling code in _regulator_do_enable()).
 
-I'll address that in V2, my bad...
+-- 
+Caleb (they/them)
 
-Maxime
 
