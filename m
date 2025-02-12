@@ -1,143 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-47667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B060EA31A44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 01:15:53 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1225DA31A49
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 01:16:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2F78818836B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 00:15:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B91913A27D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 00:16:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B97EC10E0;
-	Wed, 12 Feb 2025 00:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3C161367;
+	Wed, 12 Feb 2025 00:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="zhBXK1ev"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RQfYLtYd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D4E4A05
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 00:15:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C625179F2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 00:16:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739319350; cv=none; b=OwUL5W/kW7MRWtPfHaXHP0yUxc5z2JOuEovpBOYDWL42LSpSuZAD0AR/c1Z8RlMfVRtAobtO/OQaAebY9xy0eVhLpH6qEh3puJAVw752hMcMg8X8iulnKEbvlCKKZiWamweINzpjzQ6OGMtR2+GDn9kltObf9ka/C8y4GlUXkAQ=
+	t=1739319374; cv=none; b=CR3Qw/B59pQOByP9M/CUDAaJ6bb+dI8gZrHySpp0Tcbm4EHBk3fEl5EBKP5tz9+7Ehar0onmaLrEmz7kMKx72NnX0eYBUx2CqV2SjBt0LoKvdTb80m2EI6APDHviIIjPzDnfgAL1/Xq/CjN2sbh07r4JVpZxp4zaCdDmdBi4aAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739319350; c=relaxed/simple;
-	bh=Ke65lJuiw+IUfKsigUZZ+MBS7crW6DPAJmgQd269pYc=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=nfO8ZSb/cpvzGL2iYGORWx9a7m/sTJ5rPK204OTS+Mc5ptfPjcifW5xx6qZlvCPQyykyZclExk9217Q+C3fYK1dPI53if7J03U1eR1Wo0XMTf5yC9iGn8fwzRpwA6MYIf7RN1g1TQp48AfpJM9ytdra9vpO+emSizyU7ylteI/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=zhBXK1ev; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2f816a85facso12918855a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 16:15:49 -0800 (PST)
+	s=arc-20240116; t=1739319374; c=relaxed/simple;
+	bh=Fnjc85tFo+DRqushjTLDrAr2YQG02n0rclwpTAv2Swo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gsq8yiCRk/jIuO5i/B0T616Tn8ZUdFn9TZzq6FzzL3ZNWfHL9Eie0A1mzw+rQO2A0vcAi3lA8soXeS13fhgo9CX4lB7+DJHzoYRxa/uPsqYFFLjOR/s5fpWjfNoF3l0dWcYcwBVNByYY3skygGAma/5ssN0P/smI6qaWWxSM1iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RQfYLtYd; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5450cf0cb07so2281280e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 16:16:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1739319349; x=1739924149; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KszpPMWhiTphxF1n3ceF8GA/2mh4edAfa99QT34yVwg=;
-        b=zhBXK1evGbJq79mAQclpt7j5cnDGmjFyY7Mv/Zcf9Y43LeKqhAUq+hweNeyM8Yl6O2
-         Nl/mIev3x6wD92MWoxEa02y9PcPAoSs4UTLH8R0YQI0meg7H+gvYH4o2nxJstcyedHWe
-         XVJNjmf8vL9zbJIyWZ9Wm0ILdV8GQksy0zu7vbz5usovu9G5t1cHTz5IXw3kCCkcFHtz
-         hDNEBKa8Og6MqBQ8+H34Uidi0MKeq3i6y2BzQwFOYhKhhyjTEONo/LOFmelySUL2kqe2
-         rVFLS053e0NuccJs6ZfMauXLmsOAqGig9qRhp2+c3y8fIW6hYYuZQVuFadJHJyk9s9Xt
-         1i1A==
+        d=linaro.org; s=google; t=1739319371; x=1739924171; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xdffwztOvMIrK2jjolf4o8Wr6ci4Bs53P61Nbn3lItg=;
+        b=RQfYLtYdxr2g0RDE37LwdJH2jRiDZmakJ7p8zlyRwxTyxL7SDEFyHjuCVtFOp+Hl65
+         V6TU1Wo9MkNMDs0Wuife11Nwv3jL29vGCcmRNk/VjvznIWKU04vSWzCE4bbidN9IK7Sr
+         /oR40yfveV5qNYhWMXbjiTi1782y3o3C03i+8xk1iJCoqLvKuaKq2Yk5K0Gk6QvwH8YD
+         TwMm1uXfyiB2kPGeFf8QC6d8zlfN91SQJFVGL1Q4oP70UW5wPuhKiLa/DcPWT26a3PgQ
+         xyxcNVkrF+rmlnUwey09ZGmdaCo7W+07gW/s0fAi9B6yVqAXTAz3YGk7ihX5KACSoSDv
+         Oslw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739319349; x=1739924149;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KszpPMWhiTphxF1n3ceF8GA/2mh4edAfa99QT34yVwg=;
-        b=oOocpX/jQOFZG9HoFaZHo0kyvx+RjVzKWkeiHfrOhpk4afWztKN07kqcUC6moDG0BZ
-         Nq/t3CBQpJWBTFFENgffieJZyMX1VxSF0pM3r4uq7RHc5PfwyaEAjumeMFSrJL0Aqwwc
-         WSsmL1GL1VdhWiOr6VJhDPSQVj0fJMnxckcmM6fUXfohmt1uJKJOhxjTc2hqMSZfgUnb
-         +MfzGnKQxoON/GVB1gfkzae1WVA7TbN4Kgk0pkQjK+crFSPwalVfhN2fOiBh2csuR14x
-         x8lJYp8PpnByVfKwHqLXNEaU554vQd1DcIcTHtHiq0i9i0B+KR9G6v9Yq9Mi/lHY6P9r
-         SxYg==
-X-Forwarded-Encrypted: i=1; AJvYcCWeVAY1WMV2HbIjkITZ25IYR3SKLB0dCf8R51LFA+6TDMR273AxMxZ9n9F9ZsQI+boAvN3u2Vz5izOgI7kL@vger.kernel.org
-X-Gm-Message-State: AOJu0YxIiSDuRAmuV37ySVm/UAuYllX9vpYAnIf2yYsW2wYzml1q1Yrw
-	vtk7suN+XFqnFc9SCP1z6s5hIYupKbrwVswCJJQhXjzlzutvcVOTuR6mq8xCBQdlwQE4757kCHE
-	lSqaC8OvNfaHRLaM9bmI8Tg==
-X-Google-Smtp-Source: AGHT+IF4sKMX+KgxjFI4PsB328sWkz/ZZMywxzy98yOo2qwvaqGJzCDlFLnSzmt/3FCDRYVqBqf7nAmLzbgghsG8Ug==
-X-Received: from pji8.prod.google.com ([2002:a17:90b:3fc8:b0:2fa:1fac:269c])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90a:e185:b0:2ee:8430:b831 with SMTP id 98e67ed59e1d1-2fbf5bc0249mr1883029a91.2.1739319348587;
- Tue, 11 Feb 2025 16:15:48 -0800 (PST)
-Date: Wed, 12 Feb 2025 00:15:47 +0000
-In-Reply-To: <20250211121128.703390-6-tabba@google.com> (message from Fuad
- Tabba on Tue, 11 Feb 2025 12:11:21 +0000)
+        d=1e100.net; s=20230601; t=1739319371; x=1739924171;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xdffwztOvMIrK2jjolf4o8Wr6ci4Bs53P61Nbn3lItg=;
+        b=PVlsLcbIkns5LrQV31ALyazpd1kz7LohazhhGq5gVyFPXE2lCzJQTMt1VNkv5vSJ9b
+         vl92/XGllPaBAn3UMKlSpXh1aVjMB+rIioMyzrDrIbZz9q2liRX26jvCDheq4gNAHb3H
+         lDUl5enBnU2IbasJAB3jHaMB+SXKhE3DPtqD/Yl2VxUocatk2oC/P4XsFdoDvHUb5RC+
+         P/ALBgU0WHIV4uKRBqekjY4BeCB8wmP+tYAVPXNxt+DOuKlzz8RHvrBsQDsENGpRo4iU
+         e5Ly+DBEGJOLB4nAosVC8h14LAbIjzZPtYegZcRDGcx9WCm+wAvUkkOLK7n0/2BMMpww
+         vDdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXhiJz76QH66qRBvpOEMbgRVNsiaaoW84M5vUEYahukpjBkjzyWshf6KM0SnNDPrLuzWoGmyiTrkm2/DG73@vger.kernel.org
+X-Gm-Message-State: AOJu0YxeY3XW4hk98GBIfubSMltLnkz5CgUwplNYrw4xuCitmqFInhPl
+	wqecQHfJwTo3KUtmLLkBvGoSE03S7wRj/15lRroVCTtRBngOoZ1TTVZu/800QA4=
+X-Gm-Gg: ASbGncuHftpmT7yXrKuXIw1KlzojsovFB955qAE2E873Is9Tc8w+/kD8k4pJY9dAf1L
+	EV3aZ3wTNgq6aOkqqLr2fPexuKjAxYEeRlQDcji7q7yGPbKnu51cnK5BPuqU0uc5Q1q8XF73MX8
+	JACUZQYXX4MGmkN+DGBPiLEj+WquTn8G3NaU9bQ/xUUULljjV7ZZAPZXGD769XWSSFX7p/Y/ixa
+	N2VAjg/NvoyuE+X0f1lnmZ56U4wBSr0EBJA6GFVF1ObK1e8s34+uxGyOhU+RzUPrW1fFnIIRdzc
+	tpFUl3b+HcvYC4Ml9W8UuprEiG3Ibyuv5dyOwHIDu+ag0B+cdve3spKtf0sYyFiBr8SOevA=
+X-Google-Smtp-Source: AGHT+IHy0V/tdcXjGNazvy2Zt+CkmxrEZA7UjXkUXMZVFafXjdfWax/sQBr8F95GBvsvHUv1FZm7oQ==
+X-Received: by 2002:a05:6512:3e1e:b0:545:c89:2bc3 with SMTP id 2adb3069b0e04-54518178d4cmr243784e87.33.1739319370883;
+        Tue, 11 Feb 2025 16:16:10 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54506ef1733sm1053658e87.1.2025.02.11.16.16.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 16:16:09 -0800 (PST)
+Date: Wed, 12 Feb 2025 02:16:07 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Simona Vetter <simona.vetter@ffwll.ch>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 02/16] dt-bindings: display/msm: hdmi: drop hpd-gpios
+Message-ID: <ma7ur32qudbxaqt7fejgxiqf4vqvsd2o2oki6cz5enwchdli4n@xk5dptvjbkw2>
+References: <20250209-fd-hdmi-hpd-v4-0-6224568ed87f@linaro.org>
+ <20250209-fd-hdmi-hpd-v4-2-6224568ed87f@linaro.org>
+ <20250211-fuzzy-piculet-from-eldorado-6dce4e@krzk-bin>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzh65081cc.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v3 05/11] KVM: guest_memfd: Handle in-place shared memory
- as guest_memfd backed memory
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250211-fuzzy-piculet-from-eldorado-6dce4e@krzk-bin>
 
-Fuad Tabba <tabba@google.com> writes:
+On Tue, Feb 11, 2025 at 09:26:31AM +0100, Krzysztof Kozlowski wrote:
+> On Sun, Feb 09, 2025 at 07:04:46AM +0200, Dmitry Baryshkov wrote:
+> > Supporting simultaneous check of native HPD and the external GPIO proved
+> > to be less stable than just native HPD. Drop the hpd-gpios from the
+> > bindings. This is not a breaking change, since the HDMI block has been
+> > using both GPIO _and_ internal HPD anyway. In case the native HPD
+> > doesn't work users are urged to switch to specifying the hpd-gpios
+> > property to the hdmi-connector device.
+> 
+> In that case users would need to update their DTS/DTB, so that's an ABI
+> break.
+> 
+> Please deprecate the property here (deprecated: true) and keep support
+> in the driver.
 
-> For VMs that allow sharing guest_memfd backed memory in-place,
-> handle that memory the same as "private" guest_memfd memory. This
-> means that faulting that memory in the host or in the guest will
-> go through the guest_memfd subsystem.
->
-> Note that the word "private" in the name of the function
-> kvm_mem_is_private() doesn't necessarily indicate that the memory
-> isn't shared, but is due to the history and evolution of
-> guest_memfd and the various names it has received. In effect,
-> this function is used to multiplex between the path of a normal
-> page fault and the path of a guest_memfd backed page fault.
->
+I will expand the explanation for the need of the ABI break. Yes, it's a
+bad idea. No, it doesn't prevent the board from working. Yes, it needs
+to be done.
 
-Thanks for this summary! It has always been confusing and this really
-helps.
-
-Is there any chance we could rename the functions in KVM, or maybe add a
-comment at the function definitions? The name of the userspace flag will
-have to remain, of course.
-
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->  include/linux/kvm_host.h | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 438aa3df3175..39fd6e35c723 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -2521,7 +2521,8 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
->  #else
->  static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
->  {
-> -	return false;
-> +	return kvm_arch_gmem_supports_shared_mem(kvm) &&
-> +	       kvm_slot_can_be_private(gfn_to_memslot(kvm, gfn));
->  }
->  #endif /* CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES */
+-- 
+With best wishes
+Dmitry
 
