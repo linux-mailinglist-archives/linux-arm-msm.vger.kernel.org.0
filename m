@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A674A32155
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 09:38:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C386A321BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 10:07:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5A483A1E6A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 08:38:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F35FE1636EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 09:06:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE179205509;
-	Wed, 12 Feb 2025 08:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66140205AC7;
+	Wed, 12 Feb 2025 09:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RjOFk1/n"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ropywb80"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4D42054FC;
-	Wed, 12 Feb 2025 08:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356771D86F2;
+	Wed, 12 Feb 2025 09:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739349497; cv=none; b=UhIkvhaOt9G0EuGEGB7QgjRvgjeFKhhQg4nsH16/kO+CqoSw5NblYXmftuagOh4Ec6EhlIJ+TqIp258dpJSiQoYotyvtxRdyB3oAl220GtxUP6viLJ/7Pn9Ka6IdAzV1/lrnOv43xIk9ypn5Y6QK2mdJw6A+tnCa/YyeyrqLr9s=
+	t=1739351217; cv=none; b=jC/opf4nrVBo7tNj7I+iqJ5Wry0SGYXU4D7wG7/meI+Dz1VFRT8etwsK4P0EqjnjRlcqq8ibl0nrcUdbm3bZQqkhmErOtAZ0nXZqX685hmU5AEjZX3ueVRgOEsAPnkxcA+9MG3fgNDWt5RdWjZrBl/oWW/6SXaX80Eqn64qfFu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739349497; c=relaxed/simple;
-	bh=Fc2sNvHMZglmp/mhVCAXjnNImKTEggsLVKReblTkS4c=;
+	s=arc-20240116; t=1739351217; c=relaxed/simple;
+	bh=kvtU7FaLquS+mngxxp5iUwgDqQO7ICvYOqjOeGxRTIU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nsg400CF3EmC/54jnD3EKjGqrVkE4ZyYJqRvbEbD6bjhhQ5p9GNX0xH9enub8iryKMwbqIurNOZ51lal0NcC3hGd5N1MoIjiCg1lkMBUmSxkaf80kl1WaE7BfzLvEoYEAhOHbOw9yMl++byZpIvQw5ea8+65dyvNpyULYY/pWHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RjOFk1/n; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D546C4CEDF;
-	Wed, 12 Feb 2025 08:38:09 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=FPTuWGzpRqOR+6gNkRLao8d4W2gXcbee7GD+/tdxUTwY/rtkP5GaAUd5rnJ+4t2BfFzAsRlyFs0oJsbYNqJhJGy9m9LEN30zQZLMcdpa8Q5yX0n/q3rcelnctdz5YA2ZKxXR7aD2k03aVmyqeSK2ZZ38NCkkhPVffwGz2jNoamY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ropywb80; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29C4C4CEDF;
+	Wed, 12 Feb 2025 09:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739349497;
-	bh=Fc2sNvHMZglmp/mhVCAXjnNImKTEggsLVKReblTkS4c=;
+	s=k20201202; t=1739351216;
+	bh=kvtU7FaLquS+mngxxp5iUwgDqQO7ICvYOqjOeGxRTIU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RjOFk1/nGfTvDhLgRxvoT7W70PRC9OWbO5krgL8sVBWJOEbebA3UGSZhH63J0MnTj
-	 0gXSH+3MNwQFVuxUlcdULbYpvBgQ4d/bwgufqcZECVlK2IKa6pw6H5WuTBnWGaV1nC
-	 kLHMtAbdMIj+e+g7/+1aaJSeC5yDncouDDtBxME+WSZFhiN58BlkRW9hGqntdrB57U
-	 UShnOjulqc/FBlay6gd+e4yiQqeu7AXGNyBA/V/X0aK4FyljtlVYF97Ai1+qMPrq4A
-	 mwiXcdRI0cnzy0Ec+CjiD0d7iJrjXFs/2nNxRmeR0Ve95d4/Xw7FJ+IeNfuTRmWMj+
-	 xQ8UWu3i4QmVw==
-Message-ID: <e620e80d-afeb-4ce1-9798-2f5cdd92b3b1@kernel.org>
-Date: Wed, 12 Feb 2025 09:38:07 +0100
+	b=ropywb80THw4SZbMmalCvtlyvpR4oMugREoqC9oC9YcfkOMQb30uuM3Tg6PYpIWag
+	 DkO2Sofasghk8WV6t7X1v6S7yHkck/tDDeWJRQSFNXCmLZu3waQvhzONzHX8L6RWPi
+	 z3bjDvhUaPU0vfy41Xh2U7p2mCyeVw6Nn/qmNwsQluqgBSYTeVFAdIrHIwfqZT4AQK
+	 RRI7Tdb6ekf44Qo0YwtO3WxxtgETz324R5DPqsmDzvgmOfYCJx3dQEATkyL/Xf9bue
+	 ka9ZbWlb4b/DyjxF612gfgcVYqBfTpdUN+OADW43P9qp23HndIG9EYfhQAkF4Muavu
+	 kDRIgk8CA8zXw==
+Message-ID: <87058b73-8854-4dbd-9f27-1da2a8240c16@kernel.org>
+Date: Wed, 12 Feb 2025 10:06:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/4] dt-bindings: display/msm: Document MDSS on QCS8300
+Subject: Re: [PATCH 0/4] Add MST support for qcs8300 platform
 To: Yongxing Mou <quic_yongmou@quicinc.com>, Rob Clark <robdclark@gmail.com>,
  Abhinav Kumar <quic_abhinavk@quicinc.com>,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
@@ -59,16 +59,13 @@ To: Yongxing Mou <quic_yongmou@quicinc.com>, Rob Clark <robdclark@gmail.com>,
  Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
  Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>
+ Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20250120-mdssdt_qcs8300-v4-0-1687e7842125@quicinc.com>
- <20250120-mdssdt_qcs8300-v4-3-1687e7842125@quicinc.com>
+ linux-kernel@vger.kernel.org
+References: <20250212-mst_qcs8300-v1-0-38a8aa08394b@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,22 +111,32 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250120-mdssdt_qcs8300-v4-3-1687e7842125@quicinc.com>
+In-Reply-To: <20250212-mst_qcs8300-v1-0-38a8aa08394b@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/01/2025 04:49, Yongxing Mou wrote:
-> Document the MDSS hardware found on the Qualcomm QCS8300 platform.
-> QCS8300 use the same DPU hardware version as SA8775P, so we reuse it's
-> driver. But QCS8300 only have one DP controller, and offset is same with
-> sm8650, so dp controller reuse the sm8650's driver.
+On 12/02/2025 08:12, Yongxing Mou wrote:
+> This series of patches introduces how to enable MST functionality on
+> the qcs8300 platform. The qcs8300 platform uses dpu_8_4 hardware, which
+> is the same as the sa8775p, but it only has one DPU. So it only has one
+> DP0 controller, supporting 4-stream MST. This patch only enables 
+> 2-stream MST, using intf0 and intf3. The first and second patches are
+> modifications to the correspond dt-bindings, third patch is the dp 
+> controller driver after not reuse sm8650, fourth patch is the qcs8300
+> dts modification which add the clk support for stream 1.
 > 
 > Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
 > ---
->  .../bindings/display/msm/qcom,qcs8300-mdss.yaml    | 244 +++++++++++++++++++++
->  1 file changed, 244 insertions(+)
+> This patch depends on following series:
+> https://lore.kernel.org/all/20250120-mdssdt_qcs8300-v4-0-1687e7842125@quicinc.com/
+> https://lore.kernel.org/all/20250114-dts_qcs8300-v3-0-d114cc5e4af9@quicinc.com/
+> https://lore.kernel.org/all/20241202-dp_mst_bindings-v1-0-9a9a43b0624a@quicinc.com
+> https://lore.kernel.org/all/20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com/
 
-Also wrong compatibles used.
+Buggy patch cannot be the dependency. You need to fix the original patch
+instead. You are not supposed to wait till knowingly incorrect patches
+get merged so you can send a fix. You must respond to that patch
+stopping its merging process.
 
 Best regards,
 Krzysztof
