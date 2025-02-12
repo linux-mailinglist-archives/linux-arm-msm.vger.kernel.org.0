@@ -1,53 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-47788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1ED0BA32CBB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 18:04:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED1E1A32CC1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 18:04:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D7F01886EB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:04:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E9883AB872
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:04:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8628255E42;
-	Wed, 12 Feb 2025 17:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18917257AD7;
+	Wed, 12 Feb 2025 17:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="UEPGAcx/"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="tDBwMRXJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A20B21506D;
-	Wed, 12 Feb 2025 17:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5988F254AFB;
+	Wed, 12 Feb 2025 17:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739379855; cv=none; b=Wir6T6iPUe+9T9htWuIDK72cQzZrTI7eoBXWQ3ieOInBC+zDg6c3NiBm1HoB8OuH5YUjjZYuAlH8Eqox8p9AoV4KFdM+875yVgoWfCbq9J8PS1WIJKAYL1iZyYr+eReLoueAWh/kqqKZeL71OLBefOQeEqNAKYxXTW804Sg6ROs=
+	t=1739379857; cv=none; b=aZ518+FlNNHpf1cZZeaGUaPUxKhUVRnOQVP/c40oGLyC8LvXk0USDBMNNoya2Zw0NOh0yPoMTuZxQ+gbWjbKLyl4hLSslF5eCHUiA3pLoJ9xq2eXANZRUGazFmsf7JoUsKvz5CckRryz/hsjX1jbZHGhsZTUw+Z3kMOzbTIQCxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739379855; c=relaxed/simple;
-	bh=tnZzLK0VrYkfdiqwd0I3PQ34iy2elO2SJXYEtEvLPYk=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=StFfAnCsT8X82zcAy/47vJA9xz6vsGuvBXXUHxjGxSafNZs4MV7r5qj+DAoLc5g2omVvAH3De8vJUmHWCN0Zh30fzV4ohbN5J6gHfgvCH1hOJ2hLNSL/S4ManZoQV5/YFcgyXBSBep54bPyF/ThqhZ58eTZ2rL02E+D4sIX/sGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=UEPGAcx/; arc=none smtp.client-ip=5.75.144.95
+	s=arc-20240116; t=1739379857; c=relaxed/simple;
+	bh=qxSvwS7LGnVjmuaEB5mp+6ilFRpwQmLkMV8SxcXfcDQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=c3PGn3H9BAH/kiECo04hbp3Xrq//2VOsQyejY+ecDM+8HtcM7dHCx8T+WGCEyx7xBwwT3xsR7dW1TGgE2x+h3icKyGxWbPneExtcaamwHIYzNwzPw2v0Zo3dAmrc1i4a6zW3BxuWmBh+1h54mIugzhMiEdPF9TpyudeSbOlvRO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=tDBwMRXJ; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Received: from [192.168.244.162] (254C23D7.nat.pool.telekom.hu [37.76.35.215])
-	by mail.mainlining.org (Postfix) with ESMTPSA id E49C8BB837;
-	Wed, 12 Feb 2025 17:04:10 +0000 (UTC)
+	by mail.mainlining.org (Postfix) with ESMTPSA id D0A99BB839;
+	Wed, 12 Feb 2025 17:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1739379851;
+	s=psm; t=1739379852;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=VEZblu87lXUcJgL4iNC0ZVQuIsVOZGnLoGvOSnm1OIc=;
-	b=UEPGAcx/ilp0OeH5ZBzPkOF8j8chrb6i/pjq95+5Yc4MFxDR7+caSCK1PHFnBBxXXEAjcr
-	vMn+iuDjPihHAVDLjTKCeRuhaeW4JUWZmYxYLM6QgcVqibdW1/NWpxQQscDfQDMc8KMgxp
-	lNAMOfu9gGRRXcNSKPtktLiFJat2nj8slpsbT04NSBYgFdte1YcxWI2LvkPcxxr21m5DtO
-	OrspMvPHT/15oo4H87ymAQQ5MZhKeggAL9sBfqiORl/eYSYYBlJz6uyQaJi0kUVRU4o+HT
-	yQxk2Fx8gF3iZDdQWb288DDvuKakSFJfZs1u7012jBC7fqfKAhTUQtoo8EZTvw==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9bSfoy3QGNdxOB22ubtXeC9Plw+jq/RXeN8HXykGFPk=;
+	b=tDBwMRXJyYqw60qGc0eIrjuAgZ3Kxx5Vl4Dx28f3iqYWY6EyrcnL64/oMZwpL08ldZOjP8
+	xQNjyq/NHwNaQermnF1RVBXh3JvY2XpPRMJyvh/mZW27coShXBmPR7nboH7etGRbmC8Pdt
+	EXOT9HbsAuAYWSrSf5cuqjlZ16+9Y/VdBnH3FwP6cvq5oiooH5jzC1G7QpTON4sjmlkojg
+	rWJShkybERgKTNDueiAtZCWrXHEV8/u4ZDg2mbyo0TrXlZ6X1y/jWssEjNfRIq6NWSn613
+	UqHE7eKc4c19VJl0X31WMn5iH8crwZvq/FVh38tXLnn9RYCgqc5mX8rKj0UeAg==
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Subject: [PATCH 0/2] Add rpm clocks for SDM429
-Date: Wed, 12 Feb 2025 18:04:08 +0100
-Message-Id: <20250212-sdm429-rpm-v1-0-0a24ac19a478@mainlining.org>
+Date: Wed, 12 Feb 2025 18:04:09 +0100
+Subject: [PATCH 1/2] dt-bindings: clock: qcom,rpmcc: Add SDM429
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,10 +57,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAIjUrGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDI0Mj3eKUXBMjS92iglxds8TkFHNjUxML8xQzJaCGgqLUtMwKsGHRsbW
- 1ANlbcXZcAAAA
-X-Change-ID: 20250212-sdm429-rpm-6acd735487d6
+Message-Id: <20250212-sdm429-rpm-v1-1-0a24ac19a478@mainlining.org>
+References: <20250212-sdm429-rpm-v1-0-0a24ac19a478@mainlining.org>
+In-Reply-To: <20250212-sdm429-rpm-v1-0-0a24ac19a478@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -71,32 +71,62 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
  Daniil Titov <daniilt971@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1739379850; l=665;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1739379850; l=1852;
  i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=tnZzLK0VrYkfdiqwd0I3PQ34iy2elO2SJXYEtEvLPYk=;
- b=JRQX+ZzJXQjSUWM4qE43vBhdA/aVeV9x+vvla4hURtMxBfggPwI7oBm/2Izk3V0aIewIVbcCA
- JVBzOW/TZtDAPZ+/tSerFRq48OoAUY7rif1Oo5iD2CgOVXvg07xLaE0
+ bh=/Ekn+CdQ9U9BT5Q0YusVh0Gdma8Ee1JPB/ygvkgrYWI=;
+ b=cSQ40JP45cLZJqFy2jF+RQjbtbYw4mKK7H4lM0pE5xE1bTZ2DUAZtRITPlNn/X7WEiU67I40T
+ +NnhLAVi4Y2B+J/9ZV+rips3kKWmibDo/mdP9tAF28Q2K3J37p38n8E
 X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
  pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-This patch series add rpm clocks for SDM429 SoC.
+From: Daniil Titov <daniilt971@gmail.com>
 
+Document the qcom,rpmcc-sdm429 compatible and
+add BB_CLK3 clock definition.
+
+Signed-off-by: Daniil Titov <daniilt971@gmail.com>
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
-Daniil Titov (2):
-      dt-bindings: clock: qcom,rpmcc: Add SDM429
-      clk: qcom: smd-rpm: Add clocks for SDM429
+ Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml | 2 ++
+ include/dt-bindings/clock/qcom,rpmcc.h                  | 4 ++++
+ 2 files changed, 6 insertions(+)
 
- .../devicetree/bindings/clock/qcom,rpmcc.yaml      |  2 ++
- drivers/clk/qcom/clk-smd-rpm.c                     | 32 ++++++++++++++++++++++
- include/dt-bindings/clock/qcom,rpmcc.h             |  4 +++
- 3 files changed, 38 insertions(+)
----
-base-commit: c674aa7c289e51659e40dda0f954886ef7f80042
-change-id: 20250212-sdm429-rpm-6acd735487d6
+diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+index be3835e2e04303dad483bf4b9d2e4ef3aab98c07..90cd3feab5fa0053ba532a61520f6ebde5ede9c3 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+@@ -44,6 +44,7 @@ properties:
+           - qcom,rpmcc-msm8998
+           - qcom,rpmcc-qcm2290
+           - qcom,rpmcc-qcs404
++          - qcom,rpmcc-sdm429
+           - qcom,rpmcc-sdm660
+           - qcom,rpmcc-sm6115
+           - qcom,rpmcc-sm6125
+@@ -123,6 +124,7 @@ allOf:
+               - qcom,rpmcc-msm8998
+               - qcom,rpmcc-qcm2290
+               - qcom,rpmcc-qcs404
++              - qcom,rpmcc-sdm429
+               - qcom,rpmcc-sdm660
+               - qcom,rpmcc-sm6115
+               - qcom,rpmcc-sm6125
+diff --git a/include/dt-bindings/clock/qcom,rpmcc.h b/include/dt-bindings/clock/qcom,rpmcc.h
+index 46309c9953b2b668083fbdaabdc69ae0ead7aec4..1477a75e7f6d7b87b941ee2ec849b80407ca1958 100644
+--- a/include/dt-bindings/clock/qcom,rpmcc.h
++++ b/include/dt-bindings/clock/qcom,rpmcc.h
+@@ -170,5 +170,9 @@
+ #define RPM_SMD_BIMC_FREQ_LOG			124
+ #define RPM_SMD_LN_BB_CLK_PIN			125
+ #define RPM_SMD_LN_BB_A_CLK_PIN			126
++#define RPM_SMD_BB_CLK3				127
++#define RPM_SMD_BB_CLK3_A			128
++#define RPM_SMD_BB_CLK3_PIN			129
++#define RPM_SMD_BB_CLK3_A_PIN			130
+ 
+ #endif
 
-Best regards,
 -- 
-Barnabás Czémán <barnabas.czeman@mainlining.org>
+2.48.1
 
 
