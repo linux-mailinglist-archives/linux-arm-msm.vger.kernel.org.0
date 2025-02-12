@@ -1,62 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-47775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 382AFA32A5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 16:44:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62F5CA32AFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:00:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DDF52166DEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 15:44:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A6FB3A3A4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 16:00:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 840FA213232;
-	Wed, 12 Feb 2025 15:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A28C253B49;
+	Wed, 12 Feb 2025 16:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GQCOmaBS"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="CtyxxtQr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF7527180B;
-	Wed, 12 Feb 2025 15:44:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B72324C689;
+	Wed, 12 Feb 2025 16:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739375063; cv=none; b=OofSFeFHI92J/a04c8JjvFe7BLSwi7iKwkDbB8G0n59p86DzpDeUKU/XADxrqwai9FWQBVaU8xjrG3RiKFcf8UEXNUBojDmnkrHqrlmuxMYqGtdqof0xDKZ1/hWDhymusw5uU4o2jFC91BjHB2tCA6/KiOmZ2MYNQl1gOZYAAcs=
+	t=1739376007; cv=none; b=UJopmKoSqi5QJVsFtM1mjHEZ9PDiWesd2zzCyTOxBWp6uDNb+bLJjKPR8CRnbKH9lKjvUg8DzzDZ/9g307whhVOhtIM3ScYswn/0n+tYS3ebXthRXNsItG2KEqg8ZoM4CL0NtXtZNi+r8k+qQr8HPAss8n+jkVJuF7RFEPUA4V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739375063; c=relaxed/simple;
-	bh=u3RvzOgNrNM8mFoNbu1E+RUhbcpxb+sYPcFpWLzQLtY=;
+	s=arc-20240116; t=1739376007; c=relaxed/simple;
+	bh=A4s8XGUWb7zlkOoSQPDJTuTrIelwTXco0/iqa0sjMTw=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=arS2r27exRREr3rmMI8/3uV88/oIRqEsO1yGCJNB19ftElKPmyzsVON0f/DtzN+vOmUHt87MIU8mTzqBO6A3Vlt+ZcCrK8ayaEb8Zm5s99u3V7vI6fkMieFxohk45cXh/550rM4dlnAkKs6IVjid8oUaPgbuaHfgW5dPRdUCP5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GQCOmaBS; arc=none smtp.client-ip=217.70.183.193
+	 MIME-Version:Content-Type; b=sL3pokU5xfnleidxg+xvT22/KlKznN/Ccq6bARc8Pe43nySyeNnf1ByejScXEQkUs466pWORm5XKLOEtx30Pp5haRAH5ox3UkAZWvFZeD7xZ25rjkPwsY1EPpSGL9FRXikNQa7CLl+F9n/G3WrNiOJiaxPmD4ObAHRC9fD4MSV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=CtyxxtQr; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 1E980442D6;
-	Wed, 12 Feb 2025 15:44:16 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id D74B4442F8;
+	Wed, 12 Feb 2025 15:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1739375058;
+	t=1739376003;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=2Nvg4QglQodfKQr7m6fSz0niTjDrBbuKs7TKOdeAwXU=;
-	b=GQCOmaBSnC/i8iAsgY0efCfiAYTph6AI1qwgDbCc/xKGaEGtfOjA75c13OJfSiIX+WIlzW
-	39yW+7hD3mBQ8Y/uitR2/zs9njJpnio5rOM6ZZGHiJo4ZPwYmA3Pvy/D6TFIyh5Csu5Yev
-	kSMYw8PtUxEgE6yUCTzJuwjwjE466REOQAIFBtvWS1LrGOtnBmwja6nPstr5FvNNKkjKt3
-	vUjxrLnITnk50g3TFKciPai+9I4abS0fD/Xnixd9dtbv5jNlkh3UscX2V6l+J8h0oYeJAU
-	KOiqlTLOedhisvAE4IOeMpMn3Nk/vCpAtFprgSYfTw7OsBSL0AiMJVB8+FGPtw==
-Date: Wed, 12 Feb 2025 16:44:15 +0100
+	bh=O1eBjozoNuRF1SRfHVlWdXHtFeACQZPvHsgrTM6WN9s=;
+	b=CtyxxtQrKkXhLEK27onKf7pLUVHTqU6rJ6GqsIIoOBDdn5+aoiWOqOaGohmUj5wYIWTLmm
+	tHISVD92pszINkDKtayJc0i22GXH23j3Xjasdu5e8BU03ckal4CTw5juS4HhsvoYvQGbki
+	7K1N+Vy3JW564uFPcoLKnhrsdRMcOtkrRnQfNp8xSDz4bR93HFDD3AvG8xvMvle2VHL6kh
+	NuqSJBLKae9r+aEPJ0CzcwWT8aQ0KRPTrFfrgs0oTkGFyczWlX5L5Bjd9yuy5hTpKRzTQi
+	GjbstaOz2XFK39C5abxl8aLci/7CSAallJKj7kD9AKOgdA/LkHJAAESMHWAZ6A==
+Date: Wed, 12 Feb 2025 16:59:58 +0100
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: Sean Anderson <seanga2@gmail.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
- <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
+To: davem@davemloft.net
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com, Andrew Lunn
+ <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, Eric Dumazet
+ <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Russell King
+ <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, Christophe
+ Leroy <christophe.leroy@csgroup.eu>, Herve Codina
+ <herve.codina@bootlin.com>, Florian Fainelli <f.fainelli@gmail.com>, Heiner
+ Kallweit <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
  =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
  =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
  <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
@@ -65,14 +64,12 @@ Cc: davem@davemloft.net, netdev@vger.kernel.org,
  devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
  Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
  Gantois <romain.gantois@bootlin.com>
-Subject: Re: [PATCH net-next 00/13] Introduce an ethernet port
- representation
-Message-ID: <20250212164415.02ad5cec@fedora.home>
-In-Reply-To: <c927247b-e39c-8511-d95c-77fb23b82808@gmail.com>
+Subject: Re: [PATCH net-next 05/13] net: phy: Create a phy_port for
+ PHY-driven SFPs
+Message-ID: <20250212165958.6baaf294@fedora.home>
+In-Reply-To: <20250207223634.600218-6-maxime.chevallier@bootlin.com>
 References: <20250207223634.600218-1-maxime.chevallier@bootlin.com>
-	<8349c217-f0ef-3629-6a70-f35d36636635@gmail.com>
-	<20250210095542.721bf967@fedora-1.home>
-	<c927247b-e39c-8511-d95c-77fb23b82808@gmail.com>
+	<20250207223634.600218-6-maxime.chevallier@bootlin.com>
 Organization: Bootlin
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
@@ -85,26 +82,61 @@ Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 X-GND-State: clean
 X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeggedvjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthejredtredtvdenucfhrhhomhepofgrgihimhgvucevhhgvvhgrlhhlihgvrhcuoehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeegveeltddvveeuhefhvefhlefhkeevfedtgfeiudefffeiledttdfgfeeuhfeukeenucfkphepvdgrtddumegtsgduleemkegugegtmeelfhdttdemsggtvddumeekkeelleemheegtdgtmegvheelvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudelmeekugegtgemlehftddtmegstgdvudemkeekleelmeehgedttgemvgehlegvpdhhvghlohepfhgvughorhgrrdhhohhmvgdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopedvledprhgtphhtthhopehsvggrnhhgrgdvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrghdpr
- hgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeggeeftdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthejredtredtvdenucfhrhhomhepofgrgihimhgvucevhhgvvhgrlhhlihgvrhcuoehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeegveeltddvveeuhefhvefhlefhkeevfedtgfeiudefffeiledttdfgfeeuhfeukeenucfkphepvdgrtddumegtsgduleemkegugegtmeelfhdttdemsggtvddumeekkeelleemheegtdgtmegvheelvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudelmeekugegtgemlehftddtmegstgdvudemkeekleelmeehgedttgemvgehlegvpdhhvghlohepfhgvughorhgrrdhhohhmvgdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopedvkedprhgtphhtthhopegurghvvghmsegurghvvghmlhhofhhtrdhnvghtpdhrtghpthhtohepnhgvthguvghvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrk
+ hgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgriiiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrnhgurhgvfieslhhunhhnrdgthhdprhgtphhtthhopehkuhgsrgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvgguuhhmrgiivghtsehgohhoghhlvgdrtghomh
 X-GND-Sasl: maxime.chevallier@bootlin.com
 
-Hello Sean,
+On Fri,  7 Feb 2025 23:36:24 +0100
+Maxime Chevallier <maxime.chevallier@bootlin.com> wrote:
 
-On Wed, 12 Feb 2025 10:39:48 -0500
-Sean Anderson <seanga2@gmail.com> wrote:
-
-
-> > Sorry if all of that was blurry, I did make so good of a job linking to
-> > all previous discussions on the topic, I'll address that for the next
-> > round.  
+> Some PHY devices may be used as media-converters to drive SFP ports (for
+> example, to allow using SFP when the SoC can only output RGMII). This is
+> already supported to some extend by allowing PHY drivers to registers
+> themselves as being SFP upstream.
 > 
-> Thanks for the detailed explanation, especially regarding PHY redundancy.
-> Could you add it to a commit message (or even better to Documentation/)?
+> However, the logic to drive the SFP can actually be split to a per-port
+> control logic, allowing support for multi-port PHYs, or PHYs that can
+> either drive SFPs or Copper.
+> 
+> To that extent, create a phy_port when registering an SFP bus onto a
+> PHY. This port is considered a "serdes" port, in that it can feed data
+> to anther entity on the link. The PHY driver needs to specify the
+> various PHY_INTERFACE_MODE_XXX that this port supports.
+> 
+> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+[...]
+>  
+> +/**
+> + * phylink_interfaces_to_linkmodes() - List all possible linkmodes based on a
+> + *				       set of supported interfaces, assuming no
+> + *				       rate matching.
+> + * @linkmodes: the supported linkmodes
+> + * @interfaces: Set of interfaces (PHY_INTERFACE_MODE_XXX)
+> + *
+> + * Compute the exhaustive list of modes that can conceivably be achieved from a
+> + * set of MII interfaces. This is derived from the possible speeds and duplex
+> + * achievable from these interfaces. This list is likely too exhaustive (there
+> + * may not exist any device out there that can convert from an interface to a
+> + * linkmode) and it needs further filtering based on real HW capabilities.
+> + */
+> +void phylink_interfaces_to_linkmodes(unsigned long *linkmodes,
+> +				     const unsigned long *interfaces)
+> +{
+> +	phy_interface_t interface;
+> +	unsigned long caps = 0;
+> +
+> +	linkmode_zero(linkmodes);
+> +
+> +	for_each_set_bit(interface, interfaces, PHY_INTERFACE_MODE_MAX)
+> +		caps = phylink_get_capabilities(interface,
+> +						GENMASK(__fls(MAC_400000FD),
+> +							__fls(MAC_10HD)),
+> +						RATE_MATCH_NONE);
 
-Sure thing :)
+Shoule be :
+		caps |= phylink_get_capabilities(...);
 
-Thanks,
+I'll address that in V2, my bad...
 
 Maxime
 
