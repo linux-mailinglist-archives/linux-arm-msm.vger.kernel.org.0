@@ -1,216 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-47685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A184A31D11
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 04:49:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76969A31D32
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 05:00:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3AA633A8348
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 03:48:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28925165DD5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 04:00:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0151F1DED47;
-	Wed, 12 Feb 2025 03:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79D441E7C34;
+	Wed, 12 Feb 2025 04:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BesxhStF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lp+F64K1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6621DD9AB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 03:48:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2741DB124;
+	Wed, 12 Feb 2025 04:00:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739332137; cv=none; b=JSyErwJRvSpLxzlZzdSEcIrKJ7dKfR+KOJxA1+ZWH9hUzcyU6bukpAo5jZkVHJtqXFSrNn/dz/ItAYbsPNM+6XcqjzWW+ad0qUKkqrx83t0WvQ3pO6Pcgr7VCcGGa21gynS9tb40NxC5bGlLoOYruZsjzX/ob+toEF8VFdogxQo=
+	t=1739332805; cv=none; b=LO2r1flpkZOqXG6QEr4jRRh/6+bDzH85ddPwkFDamde2UZNnNdSiunrb0iiiT04waBFPYphsnsEBe1J+J3Xw2W5tkrL3ofbtAIIsdujk2TChbwBvayPjaen7q5taTpHitH3vr4C/C7EW9A7d2RmkGyQ20E7HgPCiBVGkEwL5L+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739332137; c=relaxed/simple;
-	bh=9ZY9RVhzuSiLS6BUP0ZFkF5aZ1Oqz8LAxFfyKUwk3j0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uHxNvTEARGgXgdMAW2v1nO6oUTqSfJc5z0Ik1sY6a5ApgRYNZOKLt1opnLjgGzicNnMXlM3aly6927RkclWYuAMkFz2GwYghbmPYnp5FYTY1CRYEx47MdB4PcZu2+HwRJU/+Mo9Z6GPmqLwrGltL1piSKyOFPDv0Iu5MYxwiDT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BesxhStF; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5450f2959f7so2508345e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 19:48:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739332134; x=1739936934; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=i8GuRuhmrPh3WYswydoKTB0sEDfpdVBJ4XAcY5g8knk=;
-        b=BesxhStF5JHq/F5bm6HNZrze+YXBVLKJNOsQBJQrLicemDD/3BMpJLM04eQt0zHHJ9
-         ITS8g3VXwj77NFpzvQKUrCdBx1xUVE/hV+2rNKyT92CAExK6gFEqEOuCea5xEGpoubVC
-         M0DW4A64eIWHsFMitrGYKtKelf2PWpOGr+ZY50hKTjOGUE491Hf8MpwJea9mzNVOoBu2
-         9VGIn4aIAjnuaZiTGLoBSwZuLsigaV4kgqk5chRcOfUkTKCogqDMX0T34NBJ5azgMQsE
-         xwi/LmNOBTXtpsSoOOKg/rCpADlBP4U2bAA5GRvtSn8PQAKbSI2/7OX2+uxK7Sr+PWe8
-         U/0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739332134; x=1739936934;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i8GuRuhmrPh3WYswydoKTB0sEDfpdVBJ4XAcY5g8knk=;
-        b=pwobIotfZXyQ7hWtt3PqtG3qSoa6lxC4I1RhQUTqB6U+Iq1QU55jUBl0I+qQaXH2zR
-         HrvTdpwC8VYrj9pU1Haz3WRtXXhIpIXs8k693155ogFpimT0frWeXeUvyTF/FBH+V+7q
-         +gc3dQKPC/5vvWBYAqRrvXssYRvb5EIGcVr6d0/nMDRhEjtpSjE3Gdh1FnaYae0GmO9q
-         AdJWOF8gUFaOvAjVNVgTMggocwLJLbtcuuv2QpF6aoj7UN481OFm+DggiGgj1HgJi8qa
-         cKEDQf7yhY9fTY+X1VCzR/H7tBC8OwjrQe4BzJmQv+NaO/WkUHEvrZBbcWclutppnqKr
-         LI2Q==
-X-Gm-Message-State: AOJu0Yy8uhM5wPyWzkwDVdaGjNRsV4MxHFEO2p1AVE99eIudWtDRVqqe
-	ZUm1/oq9M9pvUNZSxyeAreaRaJVu1+2JcqgL6LpJBxZum84NoGX/ngiORMiz5BY=
-X-Gm-Gg: ASbGnctRM0CEtPLwjTwx0XmM408GunGXf3JasaDT7yh+y8EAuAIFKQhUlhKjXJ1/25C
-	x6U1oXtZwMoIITxtahOWB8upZE8Trkb96DjCl3Tb0AJ2LWL6MMCeaWUVSM2N0WEmMM1noH8oins
-	eCU4i2t5U7hr0Lh0xzl3Isq/G8fdEtd4/tVAEjmHlmYoZ6nlSNsyRb6fIe935yR63mb1bJp/2HM
-	sdBbstzwRFqJlb5ETQf9gHGDzOpDtRiVQgx0JDlYSDhlua2vUdGuwnyo2crXOh7TPXgAlEuhkwV
-	BmiCFQH3VaIacHmp+u4R8KOhBYhV5JDvX46jKCo4yxUlLMt8eKVaFqRxkWDYASkuu9plZcY=
-X-Google-Smtp-Source: AGHT+IEVl+6pBKX6t+vx2HluRfI+C+04SxlsANu04QKZMiTiL9dgQU6uysyD6WpxI0RnIYuvm1wnRw==
-X-Received: by 2002:a05:6512:401e:b0:545:ab8:2be5 with SMTP id 2adb3069b0e04-545181232a7mr314922e87.25.1739332133741;
-        Tue, 11 Feb 2025 19:48:53 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54506cf59a4sm1098911e87.228.2025.02.11.19.48.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 19:48:52 -0800 (PST)
-Date: Wed, 12 Feb 2025 05:48:50 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: "James A. MacInnes" <james.a.macinnes@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
-	quic_wcheng@quicinc.com, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	lgirdwood@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 2/3] regulator: qcom_usb_vbus: Add support for PMI8998
- VBUS
-Message-ID: <kvdtyzkhnc7uzjzfdlngj3bko3cuuvmf6d7zbr7r27rlpkz7zk@247hx2uqhnvn>
-References: <20250212010744.2554574-1-james.a.macinnes@gmail.com>
- <20250212010744.2554574-3-james.a.macinnes@gmail.com>
+	s=arc-20240116; t=1739332805; c=relaxed/simple;
+	bh=8kcper8CAFRodFkRMBu4A1TuuFMoHJub3pdsXDGvIgo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=DUM5tJ9XhaybkPCna78eOQker5L5P/NKgjXG+5NZJpx0dFbGAwiTj9miBFXNYBjaSwjHwfoBWiRvUYBRwY+kd6mU1bOVIybdl/11au1UyVH1DLqq3Fxx5VJAXjXQBMOfcwlJ986eS7EtqNNC0esrKI4/xnUB3tP+NYCOsR4NytU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Lp+F64K1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BIEtd0001430;
+	Wed, 12 Feb 2025 03:59:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=hlrFOGNWh4gxUPbMjBQR/M
+	gi+eoX17QXqjhfpI/BVUU=; b=Lp+F64K1KHncd6IxgvU9UujYwhlk62hQ4moltz
+	Hj2kwdiVaPOJVycQh5vfQVKHmhNlrIeJUhV6pbNypU3/o1xWM3xRCe9+J1khKkih
+	LG7ia+tLTx9AHrQZusBtmiUoSwS/XpzIjlPzzGsUiTELpZpPS+hbd8N8XZf9bEar
+	uFCcp4sD7W1ba4c2Pv25Vo689QR/k2TmmNBh7IGsPelmJu+0bmgqEd6POnmxt/Ba
+	OXJm0Kl6+RbwcliNKYokblCo9mlYGrKWlWy48Udu/MhaJGdzsozdNUk3ascMTWji
+	nnZ0uY5XNFeS6BXpq7jphnjo+gWQSyFI3WWPxwo2lpDo5cEQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qepxp5c1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Feb 2025 03:59:55 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51C3xsXb010904
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Feb 2025 03:59:54 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 11 Feb 2025 19:59:54 -0800
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Date: Tue, 11 Feb 2025 19:59:19 -0800
+Subject: [PATCH] drm/msm/dpu: Disable dither in phys encoder cleanup
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250212010744.2554574-3-james.a.macinnes@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20250211-dither-disable-v1-1-ac2cb455f6b9@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAJYcrGcC/x2MQQqAIBAAvyJ7TnCNkPpKdNBccyEsNCII/550G
+ uYw80KhzFRgEi9kurnwkZpgJ2CNNm0k2TcHrfSgNKL0fEXKDcW6naQzxiH1OBoToEVnpsDPP5y
+ XWj8Bo4rbYAAAAA==
+X-Change-ID: 20250211-dither-disable-b77b1e31977f
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.15-dev-f0f05
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1739332794; l=1589;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=8kcper8CAFRodFkRMBu4A1TuuFMoHJub3pdsXDGvIgo=;
+ b=YcjriMXuxEwHpAJLvn2pYXby+nxL22zkTApcPQZgxH2kvcg5R1XVGLxETXPDdy37vvHhfSezp
+ R7N/hxUCfn3BSIwVoTzqOtfoZlTc+7pt7PYfKcOvs28WIwTrxOlZ8Gk
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: si1Do7P2oqDc3Kr0s6RXFpDYmXpN33Iu
+X-Proofpoint-ORIG-GUID: si1Do7P2oqDc3Kr0s6RXFpDYmXpN33Iu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-11_10,2025-02-11_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
+ mlxlogscore=803 clxscore=1015 lowpriorityscore=0 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502120028
 
-On Tue, Feb 11, 2025 at 05:07:43PM -0800, James A. MacInnes wrote:
-> This patch extends the Qualcomm USB VBUS regulator driver to support
-> PMI8998 PMIC alongside the existing support for PM8150B.
+Disable pingpong dither in dpu_encoder_helper_phys_cleanup().
 
-Please modify this commit message according to follow the example I
-provided for the patch 3. If you are unsure `git log drivers/regulator`
-will provide you with good enough examples.
+This avoids the issue where an encoder unknowingly uses dither after
+reserving a pingpong block that was previously bound to an encoder that
+had enabled dither.
 
-> 
-> Key changes:
-> - Added current limit tables specific to PMI8998.
-> - Dynamically configure the VBUS regulator based on the PMIC type.
-> - Updated debug messages to reflect successful initialization for
->   supported PMICs.
-> - Changed registration log message
-> 
-> These changes ensure proper VBUS current limit configuration and
-> compatibility across multiple Qualcomm PMICs.
-> 
-> Signed-off-by: James A. MacInnes <james.a.macinnes@gmail.com>
-> ---
->  drivers/regulator/qcom_usb_vbus-regulator.c | 38 ++++++++++++++++++---
->  1 file changed, 33 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/regulator/qcom_usb_vbus-regulator.c b/drivers/regulator/qcom_usb_vbus-regulator.c
-> index cd94ed67621f..804dd1a9e057 100644
-> --- a/drivers/regulator/qcom_usb_vbus-regulator.c
-> +++ b/drivers/regulator/qcom_usb_vbus-regulator.c
-> @@ -20,10 +20,30 @@
->  #define OTG_CFG				0x53
->  #define OTG_EN_SRC_CFG			BIT(1)
->  
-> -static const unsigned int curr_table[] = {
-> +struct msm_vbus_desc {
-> +	const unsigned int *curr_table;
-> +	unsigned int n_current_limits;
-> +};
-> +
-> +static const unsigned int curr_table_pm8150b[] = {
->  	500000, 1000000, 1500000, 2000000, 2500000, 3000000,
->  };
->  
-> +static const unsigned int curr_table_pmi8998[] = {
-> +	250000, 500000, 750000, 1000000,
-> +	1250000, 1500000, 1750000, 2000000,
-> +};
-> +
-> +static const struct msm_vbus_desc msm_vbus_desc_pm8150b = {
-> +	.curr_table = curr_table_pm8150b,
-> +	.n_current_limits = ARRAY_SIZE(curr_table_pm8150b),
-> +};
-> +
-> +static const struct msm_vbus_desc msm_vbus_desc_pmi8998 = {
-> +	.curr_table = curr_table_pmi8998,
-> +	.n_current_limits = ARRAY_SIZE(curr_table_pmi8998),
-> +};
-> +
->  static const struct regulator_ops qcom_usb_vbus_reg_ops = {
->  	.enable = regulator_enable_regmap,
->  	.disable = regulator_disable_regmap,
-> @@ -37,8 +57,6 @@ static struct regulator_desc qcom_usb_vbus_rdesc = {
->  	.ops = &qcom_usb_vbus_reg_ops,
->  	.owner = THIS_MODULE,
->  	.type = REGULATOR_VOLTAGE,
-> -	.curr_table = curr_table,
-> -	.n_current_limits = ARRAY_SIZE(curr_table),
->  };
->  
->  static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
-> @@ -48,6 +66,7 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
->  	struct regmap *regmap;
->  	struct regulator_config config = { };
->  	struct regulator_init_data *init_data;
-> +	const struct msm_vbus_desc *quirks;
->  	int ret;
->  	u32 base;
->  
-> @@ -68,6 +87,12 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
->  	if (!init_data)
->  		return -ENOMEM;
->  
-> +	quirks = of_device_get_match_data(dev);
-> +	if (!quirks)
-> +		return -ENODEV;
-> +
-> +	qcom_usb_vbus_rdesc.curr_table = quirks->curr_table;
-> +	qcom_usb_vbus_rdesc.n_current_limits = quirks->n_current_limits;
->  	qcom_usb_vbus_rdesc.enable_reg = base + CMD_OTG;
->  	qcom_usb_vbus_rdesc.enable_mask = OTG_EN;
->  	qcom_usb_vbus_rdesc.csel_reg = base + OTG_CURRENT_LIMIT_CFG;
-> @@ -80,18 +105,21 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
->  	rdev = devm_regulator_register(dev, &qcom_usb_vbus_rdesc, &config);
->  	if (IS_ERR(rdev)) {
->  		ret = PTR_ERR(rdev);
-> -		dev_err(dev, "not able to register vbus reg %d\n", ret);
-> +		dev_err(dev, "Failed to register vbus reg %d\n", ret);
->  		return ret;
->  	}
->  
->  	/* Disable HW logic for VBUS enable */
->  	regmap_update_bits(regmap, base + OTG_CFG, OTG_EN_SRC_CFG, 0);
->  
-> +	dev_dbg(dev, "Registered QCOM VBUS regulator\n");
-> +
->  	return 0;
->  }
->  
->  static const struct of_device_id qcom_usb_vbus_regulator_match[] = {
-> -	{ .compatible = "qcom,pm8150b-vbus-reg" },
-> +	{ .compatible = "qcom,pm8150b-vbus-reg", .data = &msm_vbus_desc_pm8150b },
-> +	{ .compatible = "qcom,pmi8998-vbus-reg", .data = &msm_vbus_desc_pmi8998 },
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, qcom_usb_vbus_regulator_match);
-> -- 
-> 2.43.0
-> 
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Closes: https://lore.kernel.org/all/jr7zbj5w7iq4apg3gofuvcwf4r2swzqjk7sshwcdjll4mn6ctt@l2n3qfpujg3q/
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+---
+This was tested on SC7180 Trogdor by pulling in the concurrent writeback
+series [1] and running the IGT kms_writeback@writeback_check_output
+subtest.
 
+[1] https://patchwork.freedesktop.org/series/144083/
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 5172ab4dea995..48e6e8d74c855 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -2281,6 +2281,9 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+ 		}
+ 	}
+ 
++	if (phys_enc->hw_pp && phys_enc->hw_pp->ops.setup_dither)
++		phys_enc->hw_pp->ops.setup_dither(phys_enc->hw_pp, NULL);
++
+ 	/* reset the merge 3D HW block */
+ 	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d) {
+ 		phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d,
+
+---
+base-commit: 866e43b945bf98f8e807dfa45eca92f931f3a032
+change-id: 20250211-dither-disable-b77b1e31977f
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Jessica Zhang <quic_jesszhan@quicinc.com>
+
 
