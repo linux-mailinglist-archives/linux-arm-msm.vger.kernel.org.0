@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A2EBA32147
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 09:36:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 796D8A3214B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 09:37:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 285DC1885D0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 08:36:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F264D1885D06
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 08:37:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22246205513;
-	Wed, 12 Feb 2025 08:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39502205513;
+	Wed, 12 Feb 2025 08:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NQyUhL3J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ed/iGqc8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B2B2054FC;
-	Wed, 12 Feb 2025 08:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD35204C00;
+	Wed, 12 Feb 2025 08:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739349396; cv=none; b=VB+gv5hVOEnLcaEFt6h68fmgeEO5okTWK3groayf21r8gt7KGbxDzyA40OSq8xpIXAuYMTzeJ8dk2XdyssFCGnnblY3q3vndYJKh+031PdQftmTzYCHhs0E5ozfny6kHvWFxbJepXqdcTc7K/xnhw7IMBlqT/NJhK7LaWxMJNL0=
+	t=1739349424; cv=none; b=TPT1hkBTJK6fcrxy74DZkYPwqbyLZs11vASWSh5VMvQZRdl4NGQ7rOD2uCdSlHJOnpgbVDtwuybWqaL39fqAGbFxMmMagx+eH7aX650Pzxoq23Q+bISnkjCV85rFqPHbnF792Tv3quM8TdM+351+PBdS1WGkOQn//qtb3X8XMTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739349396; c=relaxed/simple;
-	bh=Yli/Rj0Bqir/y9VFHGV2xBHE5uSmiO8Wr/m0gWsJabY=;
+	s=arc-20240116; t=1739349424; c=relaxed/simple;
+	bh=NimxGyvpxUA89pyuCJ4UFZNi8FrnQWl1Z2dxCckSZEw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VyBjKJfyoR4aPqrbiYAe1DarpoMGTNenDWFIzjTUMPn5WJ2WFzsdWPwnlsNGj7hHzyfIGI7pBxjlwNaLUvvImLL5wgOKG7zacvZZasf501lmf5icT9Dy6Ar5dJZvWuC7WOISwLv6wysguYDCsZQYcuxfh74te0Fck2jrR6Ojx7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NQyUhL3J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F57BC4CEE6;
-	Wed, 12 Feb 2025 08:36:32 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QKDdwsaFyK21AQKNKUZlbOVy4elCtKoPzYlGFoEKa2sE2A2Kfonm5SjZsklz/zDYM6zxl87v6unQoSgTLe2YrcEkyB8TGk9jqj3td9CGbRaUJIwhIcNXWHznAm+1NePubpw7LqxK7m2ZcN/zNM+G4ZjZBpbclPy84euEstTR26I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ed/iGqc8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5994C4CEE6;
+	Wed, 12 Feb 2025 08:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739349395;
-	bh=Yli/Rj0Bqir/y9VFHGV2xBHE5uSmiO8Wr/m0gWsJabY=;
+	s=k20201202; t=1739349423;
+	bh=NimxGyvpxUA89pyuCJ4UFZNi8FrnQWl1Z2dxCckSZEw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=NQyUhL3JJNBIVZTNMjQ9QLMyABrrmpTpD+KBnzsTEibdHoofA4vpnMHj81fGKlOaG
-	 Wx5zGEYixqbz1goaOmBTaCtaTco8RIUeyRkleeNyFrottA50kYJ4wmSFmhcnzpfjeU
-	 U0k1Al3HGr5gxxhdst6F49Oqql60kaTKM+4+YfXva2WWW4Xo/VcN9T3vOiFcLNEYcm
-	 /mVlUokNLFcnCRW2HbUhSGprsUm9igwoubRNfwzfY4o2vqaRfMRnCmcRPNr+u/p/Xy
-	 ibySkmmhRZXfaP+etSeQoqtdsQhezgoZVETqJU3SQsVZa8apodM2rhmnmjpv8z0x/G
-	 ZqYbhayUB6bMg==
-Message-ID: <fb9ee430-4c61-4e25-8097-546802880a0e@kernel.org>
-Date: Wed, 12 Feb 2025 09:36:29 +0100
+	b=Ed/iGqc81tOyHOHn/Pp9UUcdmN5YqwCcWFSjXGZJJL3wZ0RzTiU50XPagKo7mufke
+	 dwhzsc01Cf0ZcGZMsGA7Hiii7Ja3tH5cRgCD3dkcd6U/MVXszZa/dbYPVoSveS75A1
+	 ravRg3HJq2/0a7rVpdaPifS4SAe7KIU22pjWcNesIG9H3l3VflqK90wCih8VBd8mDe
+	 f2H/Li4DUnCzlP4k6zz7sGFwlqEecwbLh/tNGaO15Cw877U4xefKB776lJ7xI1qaOI
+	 BRAAQXSyTgRmts7j7fldIoDyIvYukRJGYXysVEkNzkD0EXtKVibHuf9LwPvc6osfWd
+	 fSgwks+OtSyxg==
+Message-ID: <ee16cd97-a2fe-48ec-bb9c-e9d806da7615@kernel.org>
+Date: Wed, 12 Feb 2025 09:36:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,7 +52,8 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: qcs8300: add display dt nodes
  for MDSS, DPU, DisplayPort and eDP PHY
-To: Yongxing Mou <quic_yongmou@quicinc.com>,
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Yongxing Mou <quic_yongmou@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -60,8 +61,10 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20250114-dts_qcs8300-v3-0-d114cc5e4af9@quicinc.com>
  <20250114-dts_qcs8300-v3-1-d114cc5e4af9@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <e66dd1b2-3257-448d-9c41-9be643652962@oss.qualcomm.com>
+ <7778b91c-aa94-4010-89bc-5e86f78ae275@oss.qualcomm.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -105,39 +108,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250114-dts_qcs8300-v3-1-d114cc5e4af9@quicinc.com>
+In-Reply-To: <7778b91c-aa94-4010-89bc-5e86f78ae275@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/01/2025 07:59, Yongxing Mou wrote:
-> +			mdss_dp0_phy: phy@aec2a00 {
-> +				compatible = "qcom,qcs8300-edp-phy", "qcom,sa8775p-edp-phy";
-> +
-> +				reg = <0x0 0x0aec2a00 0x0 0x19c>,
-> +				      <0x0 0x0aec2200 0x0 0xec>,
-> +				      <0x0 0x0aec2600 0x0 0xec>,
-> +				      <0x0 0x0aec2000 0x0 0x1c8>;
-> +
-> +				clocks = <&dispcc MDSS_DISP_CC_MDSS_DPTX0_AUX_CLK>,
-> +					 <&dispcc MDSS_DISP_CC_MDSS_AHB_CLK>;
-> +				clock-names = "aux",
-> +					      "cfg_ahb";
-> +
-> +				power-domains = <&rpmhpd RPMHPD_MX>;
-> +
-> +				#clock-cells = <1>;
-> +				#phy-cells = <0>;
-> +
-> +				status = "disabled";
-> +			};
-> +
-> +			mdss_dp0: displayport-controller@af54000 {
-> +				compatible = "qcom,qcs8300-dp", "qcom,sm8650-dp";
+On 03/02/2025 14:53, Konrad Dybcio wrote:
+> On 3.02.2025 2:43 PM, Konrad Dybcio wrote:
+>> On 14.01.2025 7:59 AM, Yongxing Mou wrote:
+>>> Add devicetree changes to enable MDSS display-subsystem,
+>>> display-controller(DPU), DisplayPort controller and eDP PHY for
+>>> Qualcomm QCS8300 platform.
+>>>
+>>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+>>> ---
+>>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> Wrong copypasta, please use this one instead:
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-NAK. This is not correct.
-
-You are sending known wrong code. Known by you.
-
+Author said it is wrong few days ago, so you can drop it.
 
 Best regards,
 Krzysztof
