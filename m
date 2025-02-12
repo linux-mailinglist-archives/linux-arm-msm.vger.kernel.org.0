@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-47673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A53CA31AF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 02:08:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0CBCA31AFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 02:08:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98480188AAE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 01:08:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B1561650A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 01:08:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A18F62D05E;
-	Wed, 12 Feb 2025 01:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1029A8633A;
+	Wed, 12 Feb 2025 01:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bs0fMwkz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RkNQ0TxJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2606C27181B;
-	Wed, 12 Feb 2025 01:08:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E28482CD;
+	Wed, 12 Feb 2025 01:08:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739322502; cv=none; b=L8ESuWFYAaTLJb9xJw66WMUvFFqzWhe/irxbGr9ahJHOZ1K5DJrn6nMxV/H1SAOAxzr9x5ubjLqjdxkd6Rs2AQWr375BirkWl0/JhF/C47OC+JUdwFr7qQHrH/grQ4cG5MVCYm4TsrpOOMdMwWS0PEAaXeO+KB4GYIG2zBhip4Y=
+	t=1739322505; cv=none; b=WH/o2v0Uz0vam7ZoJLGdseTOmnCnKhXH9s0m5gnFLp6uk9CH9nXnw26GnQ0n2l2vi1FInKK+8TZ2CHjAOAPqrCthI3PDghCF3x64Z9QtgwFJ9/D0yATKuESTlvJLpajZjRnOu83HGe9IfyyJNxcX7b0lb53tFBhAPTPNC5CqjyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739322502; c=relaxed/simple;
-	bh=mmPSG2J0wFLbRJe/3wTyhzBmBYWMvj3Prn3iKXV5pPI=;
+	s=arc-20240116; t=1739322505; c=relaxed/simple;
+	bh=NnPqFwECXlng2m0SEfvDcQ9fe7r5dK6tNvpp/cqfWJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cRS29N7MGQMfH+bbK8VgFAWR9eh4na/9PtG4H7usDzPR/eN1UeKL/xOj+BY9HjgT9oIEefgbfH7/LQPrNk39mZRfEQYO4xJUY2GdC0emQxImuAYtpYji63GnnbyzTaI6rfEsTW4Ix9m5j00yo/ATHXQGcrUZ9Dj7+x/NA+p3Xb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bs0fMwkz; arc=none smtp.client-ip=209.85.216.47
+	 MIME-Version; b=oQyxujGJI8lOcZZxLIkeJkQxIn3OU8ibbW5AlnPY+BKGsIcXqa29vPQVEmHBlS06rKwmjgjblICYXw3ATxqIbj+LzcXUkfDRJzLAhtCQHTdqXcgy5pyIDG3iRaz14n/63PbBiOhX+BKRooxgKlNHqSbZ8WseYBTbx6AhmvUGexE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RkNQ0TxJ; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2fa0f222530so11331602a91.0;
-        Tue, 11 Feb 2025 17:08:20 -0800 (PST)
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2fa1a3c88c5so8216116a91.3;
+        Tue, 11 Feb 2025 17:08:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739322500; x=1739927300; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739322502; x=1739927302; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SuFtRlkVwzfsd0hbMOfTOhdeC+NVKWiRoYV+k56NFus=;
-        b=bs0fMwkzZKgKBVn/klpJqEpFVNkda1CeiYPiuCy1YlNcI435KwsLpgoxaUt3RcGP2U
-         4+HWa4BHS4tuM9Vyze+gSGgqXTkGHomk1NsQmiBT9i0mhpeyUEFw7ws96CQQ2EvFDtiS
-         cY5H6mR/CN/9KzakXFuDSh2bhZ0EiuzC6HlC9FmcB8KpODrb4X/CLW98JbUcEvB3oqek
-         E8Frr+oNS3yUMYTD9Wx0TRwh526OOpWpoM1RxwpD0w8L8RluN7HQo7X6PrWCwVxKLSgq
-         Mm2ubT6dT+1fcu6BD7nGLh7LHO40qPvWEi5ICoxQpY3j199+tCSLKTSbAgImsd9OfHBF
-         trcA==
+        bh=shRMn7M37CuuTlRmUI4my+XR0Bdop4ipT1c9qnH219c=;
+        b=RkNQ0TxJhqZEkRLCX+vW3BloQ2/Cg8yi8VON7xVPboDTYQk4uf4u8/lUQoupiMhipr
+         +bUsB+N1Z/tiQLlvF/etlBEtvSprqz61PD9R7VBGFqSOhKwbSQ33y8IOoDg6fknWOr+3
+         ZRKZQqszD8+7R3SPnuFdyP0HIsxHgStPzUjeX3czE6wqAh5/9njJFDEmPjuBAeFCUuQ/
+         faANza7u8FUHx01q3iiX5mPWXhHndpYWhq85NfpMH69KA8cp22EjHcKIMjcGjA6Lr5GB
+         hdpcjHZZRT+RIaZHnqXyRA+RupNvOLxrFnWKzqytvm+c22Qta4Qy0XgqS4sMEyue/x1S
+         RTTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739322500; x=1739927300;
+        d=1e100.net; s=20230601; t=1739322502; x=1739927302;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SuFtRlkVwzfsd0hbMOfTOhdeC+NVKWiRoYV+k56NFus=;
-        b=ucJt2DvVMiQg0U/DBJVLO+Prz7cKDpobKXtrwzBBzmk03ZQ0oWZajfeYgKwCtsWi57
-         09gfqX9PDkZjAXEGORRrp9efmkqFh1Y28eKOVuJ6PKlkxigh9saoGaA2D+pY1UNOshak
-         qpUeTqXA/qk9PWRIiXu0sriwb/akpWb4I9SX78XTdkFUmL0zek+CiPb047ouPssz+a5l
-         JRu+rgYTXazaPwReSIN+J0qK8/dPLCq+0+JZAx51K3Pnd3PudgCAL+rl7y1LwSoWGIED
-         ygdtKIlzWGjvhauKBsbIFcnP2IzeXCqKmIBgYAPqJu3D6n1kSJyBNdFfI+ok6RdKR2iF
-         FTCg==
-X-Forwarded-Encrypted: i=1; AJvYcCUqkYfSLzQlVmK9HJ3ZRYF/DH1oqTxXzu57ZKF58Nq4Q5r1kiv331P2QLDoSv4Y0p0eWQNzCVD4pR9R@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVI3YnQk1Zl48wgW9rEN2C0gO0pytyeHRDCmHQhzKb+CxcIloK
-	SPMTcSA09PehZDsUnJHeGMVwmIO3l5ZxM6uDWocd7AlzKfRUyN9qEV7fI7na
-X-Gm-Gg: ASbGncs41LzMM1aQhNCRGWkKu3qLMAffNbwWHRGiFIAShbKFEWIxnXqkPYtM8DvH0+v
-	Ww4SoNrarr51CdoOzwN69phULORdfCNBnrp4FsxS4qxlh/qO5KVqTK3jkEe7PKs4F7iZttVLAxY
-	aPf/mAFT34xo+VZaEXACLKOn5DiE2fLkI9QwYcDRm+raWybZn1iVdcEkiW9VXQpia1uSy0HZfBJ
-	wx0a8J9UJ5XPrDUfavZzyJfqzB3GrVaxBviBauuYbp8w6f90V15cpbIYlu8DcgGfi7RE4MklfOA
-	qqx4xGBAJgP8YIYj/fJ0lENd9Im8b1d/TQkkWg==
-X-Google-Smtp-Source: AGHT+IETgEuwZJjqO3UZx0SzjlstZpkCiFzdvY/vm6/WjICg/cva4hg3J/CmQt+uPI8vn3sV2d6OtA==
-X-Received: by 2002:a17:90b:2704:b0:2fa:137f:5c61 with SMTP id 98e67ed59e1d1-2fbf5bf81ffmr2429717a91.12.1739322500225;
-        Tue, 11 Feb 2025 17:08:20 -0800 (PST)
+        bh=shRMn7M37CuuTlRmUI4my+XR0Bdop4ipT1c9qnH219c=;
+        b=Vto8U/Dv9R9/OX9ChOktIQbZDrqeABL497JGMZB7rjyX/bDlbm5r1xJ3IX+N+qkdL/
+         2FuYN6cJiIhDeACp7D5ZU9Sy5CPuoOKNBxD/SGUo51oKk47sW8wZZGeR9NTamXGyClWp
+         zpAfUwYeRUiyTzu7M9oPQg2nNt4xkn3hXI3hOLc7YEPjqv0H1YqLjYIxm+SajAgVY9kG
+         idJj8NFGQuFprL6m2EkU78WecKWezG3Z7O7jFitHQzPPj533nQvLwWZGDCYoNC0WwiQi
+         KbXSO/fwHSdek5zXGkANjmcwJnsHE7/aa20gl5yqhNtkT/9xAPlaFBMU18OvKhZ/aYq/
+         r5qQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV6BJp95avZHHHCfXEn6Q9hJ8OGCfMtmPszqITwQFadrRSiRjkFZoImzP4Rh/BoKMAunwOUCt+JK5ir@vger.kernel.org
+X-Gm-Message-State: AOJu0YxB4yVlOPM0Vn4WwzOSf8xnLgDB2lOuLGQUfeoaY8+2SVJl2k5c
+	y5oy/EZvpJJlgTD7ErgDsjzVX2Oly6/raolZjLxP1UL9aowNOpUi8rZmx8Kd
+X-Gm-Gg: ASbGnctKlQ8vCDK4eFguLTwJjdSV1VeKxAxSu2bwkzfgCdwn43c6BYuQXhcKf7LFKWH
+	dSNiG9/JeOdgWxCXC2g3IcA/u26A+lB0pgh2YbXqrGETg+dG0MDbXnxcIaruOdLx2+QQb7CgG+b
+	OAmAtPEw3ftZVQ4/BBL0879i2iJqd/Uq5S2/cyV+/9HaXqsEmHoL8mwOAXrqec1U4C+grfLuWi1
+	fYNOY/i6VGQPluTEVkK/XEORxmRvSAh9+z+COOh2UfQWQZ6JvweYvLkZz7W2T1sDpZHL1qJg1oS
+	ZKNNbA6xAyQ7TXiFQzFSfxaARm1zdLaVRjHsWQ==
+X-Google-Smtp-Source: AGHT+IHTR66kM/tAv6mAaJTtkOxLfcf9aWO/JCZcrvLxALl858qnRVi+bpFPjbNQGjoRnQ3h5DAwXw==
+X-Received: by 2002:a17:90b:54d0:b0:2f4:47fc:7f18 with SMTP id 98e67ed59e1d1-2fbf8f32cddmr1367234a91.10.1739322502371;
+        Tue, 11 Feb 2025 17:08:22 -0800 (PST)
 Received: from localhost.localdomain ([66.119.214.127])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fbf98d3d16sm190408a91.13.2025.02.11.17.08.19
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fbf98d3d16sm190408a91.13.2025.02.11.17.08.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 17:08:20 -0800 (PST)
+        Tue, 11 Feb 2025 17:08:22 -0800 (PST)
 From: "James A. MacInnes" <james.a.macinnes@gmail.com>
 To: linux-arm-msm@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org,
@@ -85,9 +85,9 @@ Cc: linux-kernel@vger.kernel.org,
 	lgirdwood@gmail.com,
 	broonie@kernel.org,
 	"James A. MacInnes" <james.a.macinnes@gmail.com>
-Subject: [PATCH 1/3] regulator: qcom_usb_vbus: Update DTS binding for PMI8998 support
-Date: Tue, 11 Feb 2025 17:07:42 -0800
-Message-ID: <20250212010744.2554574-2-james.a.macinnes@gmail.com>
+Subject: [PATCH 2/3] regulator: qcom_usb_vbus: Add support for PMI8998 VBUS
+Date: Tue, 11 Feb 2025 17:07:43 -0800
+Message-ID: <20250212010744.2554574-3-james.a.macinnes@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250212010744.2554574-1-james.a.macinnes@gmail.com>
 References: <20250212010744.2554574-1-james.a.macinnes@gmail.com>
@@ -99,38 +99,114 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update the binding in
-Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-to include the compatible string "qcom,pmi8998-vbus-reg".
-This change adds PMI8998 support to the Qualcomm USB VBUS regulator
-bindings.
+This patch extends the Qualcomm USB VBUS regulator driver to support
+PMI8998 PMIC alongside the existing support for PM8150B.
 
-With this patch, device trees that describe a PMI8998 USB VBUS regulator
-using the "qcom,pmi8998-vbus-reg" compatible string will now validate
-correctly. This is required to support hardware based on PMI8998, which
-has different current limit tables and other regulator-specific
-configurations.
+Key changes:
+- Added current limit tables specific to PMI8998.
+- Dynamically configure the VBUS regulator based on the PMIC type.
+- Updated debug messages to reflect successful initialization for
+  supported PMICs.
+- Changed registration log message
 
-Tested: The next patch contains the driver and has been tested with
-Lantronix SOM.
+These changes ensure proper VBUS current limit configuration and
+compatibility across multiple Qualcomm PMICs.
 
 Signed-off-by: James A. MacInnes <james.a.macinnes@gmail.com>
 ---
- .../devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml   | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/qcom_usb_vbus-regulator.c | 38 ++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-index fcefc722ee2a..6092560e9048 100644
---- a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-+++ b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-@@ -22,6 +22,7 @@ properties:
-     oneOf:
-       - enum:
-           - qcom,pm8150b-vbus-reg
-+          - qcom,pmi8998-vbus-reg
-       - items:
-           - enum:
-               - qcom,pm4125-vbus-reg
+diff --git a/drivers/regulator/qcom_usb_vbus-regulator.c b/drivers/regulator/qcom_usb_vbus-regulator.c
+index cd94ed67621f..804dd1a9e057 100644
+--- a/drivers/regulator/qcom_usb_vbus-regulator.c
++++ b/drivers/regulator/qcom_usb_vbus-regulator.c
+@@ -20,10 +20,30 @@
+ #define OTG_CFG				0x53
+ #define OTG_EN_SRC_CFG			BIT(1)
+ 
+-static const unsigned int curr_table[] = {
++struct msm_vbus_desc {
++	const unsigned int *curr_table;
++	unsigned int n_current_limits;
++};
++
++static const unsigned int curr_table_pm8150b[] = {
+ 	500000, 1000000, 1500000, 2000000, 2500000, 3000000,
+ };
+ 
++static const unsigned int curr_table_pmi8998[] = {
++	250000, 500000, 750000, 1000000,
++	1250000, 1500000, 1750000, 2000000,
++};
++
++static const struct msm_vbus_desc msm_vbus_desc_pm8150b = {
++	.curr_table = curr_table_pm8150b,
++	.n_current_limits = ARRAY_SIZE(curr_table_pm8150b),
++};
++
++static const struct msm_vbus_desc msm_vbus_desc_pmi8998 = {
++	.curr_table = curr_table_pmi8998,
++	.n_current_limits = ARRAY_SIZE(curr_table_pmi8998),
++};
++
+ static const struct regulator_ops qcom_usb_vbus_reg_ops = {
+ 	.enable = regulator_enable_regmap,
+ 	.disable = regulator_disable_regmap,
+@@ -37,8 +57,6 @@ static struct regulator_desc qcom_usb_vbus_rdesc = {
+ 	.ops = &qcom_usb_vbus_reg_ops,
+ 	.owner = THIS_MODULE,
+ 	.type = REGULATOR_VOLTAGE,
+-	.curr_table = curr_table,
+-	.n_current_limits = ARRAY_SIZE(curr_table),
+ };
+ 
+ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
+@@ -48,6 +66,7 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
+ 	struct regmap *regmap;
+ 	struct regulator_config config = { };
+ 	struct regulator_init_data *init_data;
++	const struct msm_vbus_desc *quirks;
+ 	int ret;
+ 	u32 base;
+ 
+@@ -68,6 +87,12 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
+ 	if (!init_data)
+ 		return -ENOMEM;
+ 
++	quirks = of_device_get_match_data(dev);
++	if (!quirks)
++		return -ENODEV;
++
++	qcom_usb_vbus_rdesc.curr_table = quirks->curr_table;
++	qcom_usb_vbus_rdesc.n_current_limits = quirks->n_current_limits;
+ 	qcom_usb_vbus_rdesc.enable_reg = base + CMD_OTG;
+ 	qcom_usb_vbus_rdesc.enable_mask = OTG_EN;
+ 	qcom_usb_vbus_rdesc.csel_reg = base + OTG_CURRENT_LIMIT_CFG;
+@@ -80,18 +105,21 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
+ 	rdev = devm_regulator_register(dev, &qcom_usb_vbus_rdesc, &config);
+ 	if (IS_ERR(rdev)) {
+ 		ret = PTR_ERR(rdev);
+-		dev_err(dev, "not able to register vbus reg %d\n", ret);
++		dev_err(dev, "Failed to register vbus reg %d\n", ret);
+ 		return ret;
+ 	}
+ 
+ 	/* Disable HW logic for VBUS enable */
+ 	regmap_update_bits(regmap, base + OTG_CFG, OTG_EN_SRC_CFG, 0);
+ 
++	dev_dbg(dev, "Registered QCOM VBUS regulator\n");
++
+ 	return 0;
+ }
+ 
+ static const struct of_device_id qcom_usb_vbus_regulator_match[] = {
+-	{ .compatible = "qcom,pm8150b-vbus-reg" },
++	{ .compatible = "qcom,pm8150b-vbus-reg", .data = &msm_vbus_desc_pm8150b },
++	{ .compatible = "qcom,pmi8998-vbus-reg", .data = &msm_vbus_desc_pmi8998 },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, qcom_usb_vbus_regulator_match);
 -- 
 2.43.0
 
