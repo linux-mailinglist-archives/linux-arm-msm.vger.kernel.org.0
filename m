@@ -1,63 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-47669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A7F3A31A5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 01:20:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 641F0A31A6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 01:23:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 675977A2528
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 00:19:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B10801885D65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 00:23:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C42F117C2;
-	Wed, 12 Feb 2025 00:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7552B673;
+	Wed, 12 Feb 2025 00:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cr6Uz/k+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VyTj5BbV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D1B184F;
-	Wed, 12 Feb 2025 00:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495715680
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 00:23:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739319613; cv=none; b=XVZvz8PXw9s5eu7gULPZGRFZoNQNampUJ9z212TQV0Bbf9eMrwpUgHZJYQPg+Vh5QJLU9zd3Z9/8gOZ8Z5Ad3t3TL90gkQVQwqj7/WiGCt2PyPisN7XAdWWoe5hfNEo6cikMa1Sn0SuNg1BoUfjhBVy+yYuca3UsYVdB4hzCq5k=
+	t=1739319795; cv=none; b=Q0MucwJ8+9SBfdFq48GJ72GnAqcJa+VJJiByII/AUIifC2nstglitBaIlD+Y17IBjcLAxe4tO8GqSl2qOc35kaUHQkmo1UtWlFDI+rT3fwYl46Vc1lJGroUOo+cek+KAYSvhYZLpuQQz4G6VhnOLFr73e8RzA9uBxn9PmNAy3GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739319613; c=relaxed/simple;
-	bh=uNhpK/uhZJl+vH2zILhptVnUBZWFzlkM2ddiuYDV5Is=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ITQU95y2NGvGga2niwb2Dbs4uB8HhcaiE7AteHpLOCJsEE6yVbn5K43UFfIvyH0Zt7TJUlzSTCpxAMEt+jigptynZ2/gElGW4USVlcDmLxgieTcCDLyUMWPkUnt8iAmkTOZWup2/bzWkcIdIVii5B2deGFUhXTj72d31iDZxqyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cr6Uz/k+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BCFLqW030181;
-	Wed, 12 Feb 2025 00:19:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wQPD/tKrNf/RHAhrEicL4v/5nkiDZnaTEbOUl3FUsmo=; b=cr6Uz/k+JWTHcTS3
-	LgqX7+ScnW7TbED9ir5sKVPOuj6H2CAskBxuTzut8fI9d1JMI2UDSGMdFXFEb8ge
-	LdKFPa6CnlCSLvqP9Fv2thPxn5tAGQMl/KLzEc4BETEFr0EeVYBKjlkdZocjLRcj
-	AA2ixq6k0P1RcJsbdP1/jRPRSlfa4jY6RUDhd82+l+7qqFetbgLLXmWFWrPuELJ7
-	mSzBf5eibqj3jVDcTYT25TumpsR4BB6nTWfWI4naWVS4gJorI+x0DFfht9TGFclr
-	QtjaXyol5uQdMnoxR+scTFhK+enYr59YOwAGV71UGmtSZBh2tzm8D3irisYzGR30
-	3p7Yyw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qxg9k3tj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Feb 2025 00:19:50 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51C0JnfV015787
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Feb 2025 00:19:49 GMT
-Received: from [10.71.110.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Feb
- 2025 16:19:49 -0800
-Message-ID: <22c97d77-5983-429b-ba0b-ce821a717a0e@quicinc.com>
-Date: Tue, 11 Feb 2025 16:19:39 -0800
+	s=arc-20240116; t=1739319795; c=relaxed/simple;
+	bh=Utq+Q/ZmLa394JBxgwSfGEoz74h2QKacDDwFYVqMVtQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oqEcukWUp4F3KQNUHzJEJZ59rx9L+iSDLDFsdmb+Q4GRqS2/OxJ5oP87TMcttYT7MIk/vkhAUXSoBAbXUg8PW1xLWKPbRj38hYrnx2piuNxl53pn85DQLQQBvc/TTD2ubEXwrxCHDH+SlFJN87Ceg0CExjW8+2vEzwjs132mij4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VyTj5BbV; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4364a37a1d7so61246115e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 16:23:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739319790; x=1739924590; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VnlE7khDpMh69ycUOLA2IVkmrLr9T2j4fKjX7UnC4mU=;
+        b=VyTj5BbVt8ExNlnlCCPGVswWkYM8Bi5btHyqtr2cpAMGpS3jd1g+jf+gmE/8FRjifH
+         C83ZvnjL8RTloEX5v05k8t8fhvyIbO05P1A/+fMfIWuTDQXafTAX3IpfwR/0T0a60BMG
+         LRYQu8AJLYF8g5jQc5kE+cptxD9AJ8LtJYlfSxghmT+BYb1X4hOYk9aRMQqSuxPD3Zzk
+         oNfebqlkVhN81QK4hj6F1PpilOZSQXpYjaaDR5iD9vaTEH8To1a+MTbQxuPFld/FUCQI
+         entkmgjnWcmqcdToAxFJHryOesbdlrIygYse+5XKCGAPukI0fmG+6Wz1cvMR4+hnEY94
+         PUdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739319790; x=1739924590;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VnlE7khDpMh69ycUOLA2IVkmrLr9T2j4fKjX7UnC4mU=;
+        b=r5DPeA/vOr6GSeGg5K6o/UNzYKrwZ/qyZ8BPte9OVJAr+HurjHLORWn9IHtI4RDG4K
+         9PsxlrKuj9zdSwIwUAu0vq0QcQ7AkFYm5B/Act7B40/7+OliKqpc7qvVF+I2+RWFh/Jh
+         C9awnSZhtX5LX6gEO2lmzl52HXPKnRYf5XSVrSRpercnnwKAwFBvwDFq4tkVH8IDxVNw
+         Tg/72UmvoQTqF2rnARTiDUYKEUrXwGdKUAiGxuYWQAXuvJ7GGBSZU2dtdv06VDUg09Ah
+         ZREEPw+vFbtEY8jObC3ijKMYGPRGuSZikmeKRmaFUZmbUdOetae7bzJvts8s5pH08tEX
+         /bZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWNLOI8j58RELPt8WA6xlaOcNcC9fs4btlJ8+2r6MgC//EiGWRhrDR4E3BFqyB91rykVodj3ub82ZA5U7XG@vger.kernel.org
+X-Gm-Message-State: AOJu0YxdydK3R7F995iL6i+5HSfA4uJy5diL+UyMsGejgbwrVE4fCcTR
+	FX+3f9QTAYlTlDHIE2C3XZhigU7ThthK9eXaaRYEsLitumnBXVN6ZCYbU7DJvsU=
+X-Gm-Gg: ASbGncul18wo1YC/8TTtUzbQFI1Bx1Q1e5uhrV4DmEupOvQ+1r67ZLc5r0zkPUOpUYH
+	kostOv92fWAbGkypiPk2yMpJJKAx2PwL5zVg72kXovg96IjTCe9rD7uL4I8EQ+5LMPsYc37HDi8
+	541xxHavXAvzeWw6Sj3oX2PwfPOzZMCXiF/uQwTU1RQK+Wx0FYhBGIiNve1nGl59/CkKGD2r655
+	6ziE8bG3Okgc2pOZuaXoF4T7o7lcNb1IAFgfeY5ZowMtDz3WBbBvk0Q8JV6H/gD4BkPDNg6J/3+
+	wWcNut1VNN16L+foMlPwFoLhT0XctsJ1gzP6Kbvr5jndPK9gpDYQXXIolQ==
+X-Google-Smtp-Source: AGHT+IE2XZTCvLa5wIAe0l2v3uJQ0/+yRfiX0oUpE/3gkJhHabA12Ks9gTNZMuWX4iswiWV7V4jZGw==
+X-Received: by 2002:a05:600c:1ca9:b0:431:58cd:b259 with SMTP id 5b1f17b1804b1-439581d1f44mr10950255e9.31.1739319790526;
+        Tue, 11 Feb 2025 16:23:10 -0800 (PST)
+Received: from [192.168.0.156] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4395a06cf2fsm3230235e9.19.2025.02.11.16.23.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Feb 2025 16:23:09 -0800 (PST)
+Message-ID: <8ec13935-2c7f-4b4e-a1cb-b5069e8e53f4@linaro.org>
+Date: Wed, 12 Feb 2025 00:23:07 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,128 +81,290 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/msm/dpu: Fix uninitialized variable
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Ethan Carter Edwards <ethan@ethancedwards.com>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>
-References: <20250209-dpu-v2-1-114dfd4ebefd@ethancedwards.com>
- <8e40c1bf-6da7-46b1-925c-53d1fa25f3ce@quicinc.com>
- <zj7sqsg3ruev4akl5paedsg65qyh53iddqvssrye2pjtfofs3q@u4g3kevpl2jn>
- <nllxmdfk4wwm2bbrg5jc4tt7la65rwqdtt4tqjp36j6dr4hgmx@ukszi5llldup>
+Subject: Re: [PATCH v4 2/4] media: venus: hfi_parser: refactor hfi packet
+ parsing logic
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Tomasz Figa
+ <tfiga@chromium.org>, Hans Verkuil <hans.verkuil@cisco.com>
+Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20250207-venus_oob_2-v4-0-522da0b68b22@quicinc.com>
+ <20250207-venus_oob_2-v4-2-522da0b68b22@quicinc.com>
 Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <nllxmdfk4wwm2bbrg5jc4tt7la65rwqdtt4tqjp36j6dr4hgmx@ukszi5llldup>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250207-venus_oob_2-v4-2-522da0b68b22@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xJSFfhadew4fjGUkI5e_3eSgux2B9IeH
-X-Proofpoint-GUID: xJSFfhadew4fjGUkI5e_3eSgux2B9IeH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-11_10,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- mlxscore=0 priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0
- mlxlogscore=999 lowpriorityscore=0 phishscore=0 clxscore=1015
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502120001
 
-
-
-On 2/11/2025 4:13 PM, Dmitry Baryshkov wrote:
-> On Tue, Feb 11, 2025 at 10:23:54AM +0100, Marijn Suijten wrote:
->> On 2025-02-10 14:14:14, Abhinav Kumar wrote:
->>>
->>>
->>> On 2/9/2025 7:51 PM, Ethan Carter Edwards wrote:
->>>> There is a possibility for an uninitialized *ret* variable to be
->>>> returned in some code paths.
->>>>
->>>> Fix this by initializing *ret* to 0.
->>>>
->>>> Addresses-Coverity-ID: 1642546 ("Uninitialized scalar variable")
->>>> Fixes: 774bcfb731765d ("drm/msm/dpu: add support for virtual planes")
->>>> Signed-off-by: Ethan Carter Edwards <ethan@ethancedwards.com>
->>>> ---
->>>> Changes in v2:
->>>> - Return explicit 0 when no error occurs
->>>> - Add hardening mailing lists
->>>> - Link to v1: https://lore.kernel.org/r/20250209-dpu-v1-1-0db666884f70@ethancedwards.com
->>>> ---
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 7 +++----
->>>>    1 file changed, 3 insertions(+), 4 deletions(-)
->>>>
->>>
->>> Thanks for your patch, this was addressed with
->>>
->>> https://patchwork.freedesktop.org/patch/631567/ but since this is better
->>> I am fine with this, will pick this one up
->>
->> The `return 0;` in this patch should certainly fix this issue entirely and we
->> don't need to inline the `int ret` for that, which I think is against mixed
->> declaration rules anyway?
->>
->> As far as I understand that's what Dmitry suggested in v1, but he r-b'd it in
->> this form.  Dmitry, was that intended?
+On 07/02/2025 08:24, Vikash Garodia wrote:
+> words_count denotes the number of words in total payload, while data
+> points to payload of various property within it. When words_count
+> reaches last word, data can access memory beyond the total payload. This
+> can lead to OOB access. With this patch, the utility api for handling
+> individual properties now returns the size of data consumed. Accordingly
+> remaining bytes are calculated before parsing the payload, thereby
+> eliminates the OOB access possibilities.
 > 
-> I think it should be fine, if the gcc doesn't warn against it.
+> Cc: stable@vger.kernel.org
+> Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/venus/hfi_parser.c | 95 +++++++++++++++++++-------
+>   1 file changed, 69 insertions(+), 26 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+> index 1cc17f3dc8948160ea6c3015d2c03e475b8aa29e..404c527329c5fa89ee885a6ad15620c9c90a99e4 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+> @@ -63,7 +63,7 @@ fill_buf_mode(struct hfi_plat_caps *cap, const void *data, unsigned int num)
+>   		cap->cap_bufs_mode_dynamic = true;
+>   }
+>   
+> -static void
+> +static int
+>   parse_alloc_mode(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   {
+>   	struct hfi_buffer_alloc_mode_supported *mode = data;
+> @@ -71,7 +71,7 @@ parse_alloc_mode(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   	u32 *type;
+>   
+>   	if (num_entries > MAX_ALLOC_MODE_ENTRIES)
+> -		return;
+> +		return -EINVAL;
+>   
+>   	type = mode->data;
+>   
+> @@ -83,6 +83,8 @@ parse_alloc_mode(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   
+>   		type++;
+>   	}
+> +
+> +	return sizeof(*mode);
+>   }
+>   
+>   static void fill_profile_level(struct hfi_plat_caps *cap, const void *data,
+> @@ -97,7 +99,7 @@ static void fill_profile_level(struct hfi_plat_caps *cap, const void *data,
+>   	cap->num_pl += num;
+>   }
+>   
+> -static void
+> +static int
+>   parse_profile_level(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   {
+>   	struct hfi_profile_level_supported *pl = data;
+> @@ -105,12 +107,14 @@ parse_profile_level(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   	struct hfi_profile_level pl_arr[HFI_MAX_PROFILE_COUNT] = {};
+>   
+>   	if (pl->profile_count > HFI_MAX_PROFILE_COUNT)
+> -		return;
+> +		return -EINVAL;
+>   
+>   	memcpy(pl_arr, proflevel, pl->profile_count * sizeof(*proflevel));
+>   
+>   	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
+>   		       fill_profile_level, pl_arr, pl->profile_count);
+> +
+> +	return pl->profile_count * sizeof(*proflevel) + sizeof(u32);
+
+I'm not going to check your maths here and will instead assume you've 
+corrected your own homework and these calculations are correct..
+
+>   }
+>   
+>   static void
+> @@ -125,7 +129,7 @@ fill_caps(struct hfi_plat_caps *cap, const void *data, unsigned int num)
+>   	cap->num_caps += num;
+>   }
+>   
+> -static void
+> +static int
+>   parse_caps(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   {
+>   	struct hfi_capabilities *caps = data;
+> @@ -134,12 +138,14 @@ parse_caps(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   	struct hfi_capability caps_arr[MAX_CAP_ENTRIES] = {};
+>   
+>   	if (num_caps > MAX_CAP_ENTRIES)
+> -		return;
+> +		return -EINVAL;
+>   
+>   	memcpy(caps_arr, cap, num_caps * sizeof(*cap));
+>   
+>   	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
+>   		       fill_caps, caps_arr, num_caps);
+> +
+> +	return sizeof(*caps);
+>   }
+>   
+>   static void fill_raw_fmts(struct hfi_plat_caps *cap, const void *fmts,
+> @@ -154,7 +160,7 @@ static void fill_raw_fmts(struct hfi_plat_caps *cap, const void *fmts,
+>   	cap->num_fmts += num_fmts;
+>   }
+>   
+> -static void
+> +static int
+>   parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   {
+>   	struct hfi_uncompressed_format_supported *fmt = data;
+> @@ -163,7 +169,8 @@ parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   	struct raw_formats rawfmts[MAX_FMT_ENTRIES] = {};
+>   	u32 entries = fmt->format_entries;
+>   	unsigned int i = 0;
+> -	u32 num_planes;
+> +	u32 num_planes = 0;
+> +	u32 size;
+>   
+>   	while (entries) {
+>   		num_planes = pinfo->num_planes;
+> @@ -173,7 +180,7 @@ parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   		i++;
+>   
+>   		if (i >= MAX_FMT_ENTRIES)
+> -			return;
+> +			return -EINVAL;
+>   
+>   		if (pinfo->num_planes > MAX_PLANES)
+>   			break;
+> @@ -185,9 +192,13 @@ parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>   
+>   	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
+>   		       fill_raw_fmts, rawfmts, i);
+> +	size = fmt->format_entries * (sizeof(*constr) * num_planes + 2 * sizeof(u32))
+> +		+ 2 * sizeof(u32);
+> +
+> +	return size;
+>   }
+>   
+> -static void parse_codecs(struct venus_core *core, void *data)
+> +static int parse_codecs(struct venus_core *core, void *data)
+>   {
+>   	struct hfi_codec_supported *codecs = data;
+>   
+> @@ -199,21 +210,27 @@ static void parse_codecs(struct venus_core *core, void *data)
+>   		core->dec_codecs &= ~HFI_VIDEO_CODEC_SPARK;
+>   		core->enc_codecs &= ~HFI_VIDEO_CODEC_HEVC;
+>   	}
+> +
+> +	return sizeof(*codecs);
+>   }
+>   
+> -static void parse_max_sessions(struct venus_core *core, const void *data)
+> +static int parse_max_sessions(struct venus_core *core, const void *data)
+>   {
+>   	const struct hfi_max_sessions_supported *sessions = data;
+>   
+>   	core->max_sessions_supported = sessions->max_sessions;
+> +
+> +	return sizeof(*sessions);
+>   }
+>   
+> -static void parse_codecs_mask(u32 *codecs, u32 *domain, void *data)
+> +static int parse_codecs_mask(u32 *codecs, u32 *domain, void *data)
+>   {
+>   	struct hfi_codec_mask_supported *mask = data;
+>   
+>   	*codecs = mask->codecs;
+>   	*domain = mask->video_domains;
+> +
+> +	return sizeof(*mask);
+>   }
+>   
+>   static void parser_init(struct venus_inst *inst, u32 *codecs, u32 *domain)
+> @@ -282,8 +299,9 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
+>   u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
+>   	       u32 size)
+>   {
+> -	unsigned int words_count = size >> 2;
+> -	u32 *word = buf, *data, codecs = 0, domain = 0;
+> +	u32 *words = buf, *payload, codecs = 0, domain = 0;
+> +	u32 *frame_size = buf + size;
+> +	u32 rem_bytes = size;
+>   	int ret;
+>   
+>   	ret = hfi_platform_parser(core, inst);
+> @@ -300,38 +318,63 @@ u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
+>   		memset(core->caps, 0, sizeof(core->caps));
+>   	}
+>   
+> -	while (words_count) {
+> -		data = word + 1;
+> +	while (words < frame_size) {
+> +		payload = words + 1;
+>   
+> -		switch (*word) {
+> +		switch (*words) {
+>   		case HFI_PROPERTY_PARAM_CODEC_SUPPORTED:
+> -			parse_codecs(core, data);
+> +			if (rem_bytes <= sizeof(struct hfi_codec_supported))
+> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+> +
+> +			ret = parse_codecs(core, payload);
+>   			init_codecs(core);
+>   			break;
+>   		case HFI_PROPERTY_PARAM_MAX_SESSIONS_SUPPORTED:
+> -			parse_max_sessions(core, data);
+> +			if (rem_bytes <= sizeof(struct hfi_max_sessions_supported))
+> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+> +
+> +			ret = parse_max_sessions(core, payload);
+>   			break;
+>   		case HFI_PROPERTY_PARAM_CODEC_MASK_SUPPORTED:
+> -			parse_codecs_mask(&codecs, &domain, data);
+> +			if (rem_bytes <= sizeof(struct hfi_codec_mask_supported))
+> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+> +
+> +			ret = parse_codecs_mask(&codecs, &domain, payload);
+>   			break;
+>   		case HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SUPPORTED:
+> -			parse_raw_formats(core, codecs, domain, data);
+> +			if (rem_bytes <= sizeof(struct hfi_uncompressed_format_supported))
+> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+> +
+> +			ret = parse_raw_formats(core, codecs, domain, payload);
+>   			break;
+>   		case HFI_PROPERTY_PARAM_CAPABILITY_SUPPORTED:
+> -			parse_caps(core, codecs, domain, data);
+> +			if (rem_bytes <= sizeof(struct hfi_capabilities))
+> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+> +
+> +			ret = parse_caps(core, codecs, domain, payload);
+>   			break;
+>   		case HFI_PROPERTY_PARAM_PROFILE_LEVEL_SUPPORTED:
+> -			parse_profile_level(core, codecs, domain, data);
+> +			if (rem_bytes <= sizeof(struct hfi_profile_level_supported))
+> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+> +
+> +			ret = parse_profile_level(core, codecs, domain, payload);
+>   			break;
+>   		case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE_SUPPORTED:
+> -			parse_alloc_mode(core, codecs, domain, data);
+> +			if (rem_bytes <= sizeof(struct hfi_buffer_alloc_mode_supported))
+> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+> +
+> +			ret = parse_alloc_mode(core, codecs, domain, payload);
+>   			break;
+>   		default:
+> +			ret = sizeof(u32);
+>   			break;
+>   		}
+>   
+> -		word++;
+> -		words_count--;
+> +		if (ret < 0)
+> +			return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+> +
+> +		words += ret / sizeof(u32);
+> +		rem_bytes -= ret;
+>   	}
+>   
+>   	if (!core->max_sessions_supported)
 > 
 
-Let me test out the compilation while applying and see if it throws any 
-errors. If it does, will report here and we can go with the other patch.
+LGTM
 
->>
->> - Marijn
->>
->>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>
->>>
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>>> index 098abc2c0003cde90ce6219c97ee18fa055a92a5..af3e541f60c303eb5212524e877129359b5ca98c 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>>> @@ -1164,7 +1164,6 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
->>>>    			       unsigned int num_planes)
->>>>    {
->>>>    	unsigned int i;
->>>> -	int ret;
->>>>    
->>>>    	for (i = 0; i < num_planes; i++) {
->>>>    		struct drm_plane_state *plane_state = states[i];
->>>> @@ -1173,13 +1172,13 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
->>>>    		    !plane_state->visible)
->>>>    			continue;
->>>>    
->>>> -		ret = dpu_plane_virtual_assign_resources(crtc, global_state,
->>>> +		int ret = dpu_plane_virtual_assign_resources(crtc, global_state,
->>>>    							 state, plane_state);
->>>>    		if (ret)
->>>> -			break;
->>>> +			return ret;
->>>>    	}
->>>>    
->>>> -	return ret;
->>>> +	return 0;
->>>>    }
->>>>    
->>>>    static void dpu_plane_flush_csc(struct dpu_plane *pdpu, struct dpu_sw_pipe *pipe)
->>>>
->>>> ---
->>>> base-commit: a64dcfb451e254085a7daee5fe51bf22959d52d3
->>>> change-id: 20250209-dpu-c3fac78fc617
->>>>
->>>> Best regards,
->>>
-> 
-
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
