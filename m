@@ -1,97 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-47661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19ED8A31A18
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 01:00:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97C95A31A1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 01:01:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85ACB3A3759
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 00:00:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E37361887BD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 00:01:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1F0520459F;
-	Wed, 12 Feb 2025 00:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCA4310E0;
+	Wed, 12 Feb 2025 00:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vx9igdcK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ezePk9VH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16115210F65
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 00:00:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDB2A31
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 00:01:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739318416; cv=none; b=YqKDPdOoSQ1Aet7mFEbDxVXBpzY6/J4MSeMRbTCxzzkY0Lcr4sPYHHByxQ8hiT6s1hzQwnRNZHtfR/vsiYcfhXa/L1N/5xEj8TweSP3bFtLpD1oTJlys5DDIeZFRchEsC44rkRRRoIOxUFsziVUtCHzsBOLzFzmKy6lfxrifIwg=
+	t=1739318475; cv=none; b=CYNcMchuQKALpmmhQ/iWoezqjmQTcroIgZi6gduiA4taPTMeL+PCm2Pb5P5xXs7nliDybel/TyPJzDGiy5YjpimrAlqzZAhw15pN8w+KY3mz5DLQKSFWD0HzZ1yNEQ4QE7SLsPpbA8rKnBqtRQ9UvRNAb2hp8LL+v5MZV/84WUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739318416; c=relaxed/simple;
-	bh=sMG/IApRfPR8ZSL4CUKV7cJ8QKGC6AJC501nGxT0gJU=;
+	s=arc-20240116; t=1739318475; c=relaxed/simple;
+	bh=sfiqhyC5KXkrQ7bt1jRVA16NcrjK/IIwrOgJPjQeFYQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OMVtOyTyx5/z3Ek5JAXuzuhS+oFFeTRO1BDkOKHheP9e9zvWPtJtuEMQD5YV8LNiRwJJCaAZUecC6EvIjpi2nCl2BQqExOoYfb7UDhSVSl5mWHINxerrS+KkcbxuLCbIok/4DSw6hYtbXHiQuM0pNZqxBKsOhaRx33x4+pqPg8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vx9igdcK; arc=none smtp.client-ip=209.85.208.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=PwLyc1bK0w3op/bKSzXfh411qBMLto1jaE2aIyNNPUm8LIuJCJboRsuJJPrYAIqCkqSS/WVk9dON4nDg0hCXyxrid8tJdiZ0pgegNJugR34TiUJM+uLxxNRyiIPG3muB05WwsmHDRpZVmGcOeVMgxfWsbvNFcb3DeCRfpv1QjyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ezePk9VH; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-308ef06b4e1so24297191fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 16:00:13 -0800 (PST)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-308dfea77e4so3036171fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 16:01:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739318412; x=1739923212; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739318472; x=1739923272; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZXlqploCpAbDafi9IQYW0m2Rs5Rua9IHjaJCRpBcJDI=;
-        b=vx9igdcKGgE+gtqKHhX8BvqI0xPLKF6SMj3I4piamZrqduTKwdLLvZVKQDDOFCdMbl
-         /qQv55Ke3JyfJ0+tm+KWXnJQBugdTouyBv+04zp7Ap7XfZlI3FEbV1nII/GQV6SirRHn
-         jFV+TD3Y48/tyPM47NLT0qNV4lGf7o8ZT3fbwU6AccCCcrtR5s3p28NxzQkqwajT3p1x
-         zLSoMHs8Mwg+ajI4/gpfgFhBmemFLQJ5k2zW07948ik0DSB01dKbgtf0WoRivw7jyWHX
-         V+bCT1HvBVsUWr6UUENbk8sbaXYT5Uxl/fH/sRsSUNLAW0FYU5zoaACKcjhxQ64uMn3H
-         KGqw==
+        bh=95tLd2a65K3uyAvTy76sH7lTP+WAFAT2AWBj4Cp36Os=;
+        b=ezePk9VHq8LpqZ6MY/4cPEr1y834J4pYPPrudlONA8uOcHwuEbVSPbU5bVLmX5yr2n
+         irPNvogQjdlVdhO4+KcC2pRAfe/eiGh5chAuIjq9kmArMfcmjE4pkdDluZB2Tku526LS
+         +eZzMMaTBpT0LM/MfnnWu0bnuXepNDLs94/ffc5vOIyARoriJq1xxhRu2TKusBg6Yjfv
+         QPh9fLbtoyKsC8sFFPHb1+JVqP9HMT27O9FtZrmkoxzPNeDMlxmQJnJPh3hm49tkxKSV
+         nqbvxpHN4RfP85pCFKU2aCngarg1XW8FlMaQUEfg+z/6ZpOMKeWgfhZCAJUubSkS0uup
+         MUUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739318412; x=1739923212;
+        d=1e100.net; s=20230601; t=1739318472; x=1739923272;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZXlqploCpAbDafi9IQYW0m2Rs5Rua9IHjaJCRpBcJDI=;
-        b=C+eJMg8ByVbx1XDgADXgdcAyVWM6yNEzA1Axk+Sx1M8mIdTxflEZr69UqZLbSo0oK0
-         mEOZW+NsyfecFWf76oKEin6x26a6J4BFC/FnWNlMW2w3o4QooPjWNArq9/InNzpt1yIt
-         DzKnQ7CLbrMBShePIWH7mgd2zczEctkO8CSd6b1U4Tbj8p/PxYAjQzuhZ7MzNgN5oHB4
-         X3qCmBiXUqyI1wedbavUguRLW8NqYjbSNqh8SSlEpTRssQFsNuHeGg6312sQIJA5r2v9
-         +K1BV9bEY0VZT5XRg24anxLTOqEvSU4Nvn1PILpQhu6+eXcP6Fm9ZrQ+SB9VMLSwLbmv
-         6duQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVaXBKBorJgNnZouBsi6sJ2l/yjX4WYF9e6CB0vrnFFz8+t7GXqv5FstzlhZZDz5UpEM1ir6TB1y+Ppt98B@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7OqoABAyHA7UtJD3mtlVrtObyO9Y3OkQQ0RuY03PMC1gp41ax
-	yz51pYligGMMz6b9nxb9cGBvIl5uw0bJxcgFKSsrT/KRpEELCLgzgW9EoHm/DU4=
-X-Gm-Gg: ASbGncuucyomD7AOHa0cmkVFoddyR3h6txs4Oyy4vX/MjZsMS8c8q9cmONk9Dzlwu88
-	N4NLiehq6tpkFF8tbMx0HPBMOvuAnK7O9aJfIHg4n4+61NT/w/Nm+cBXbW8qRBquHyCOAKLeeWz
-	3u0CHuQv0bI3ALE0BJcOzU2eKyzB/0+hvDXgbXcWgGxtvlNXSO1ya+X/F0VXSLhKM1OOeQh92/s
-	Gr7RtvY/FWmeDR+qdY/YX4eoA0bx/jP4eLKP0lFi0gkKtSaQuMcT2VKQDQ6g8JFInll7gs+ztf/
-	O88i5QWIH2pvkw09pvxdMWiiZ94wXXTvN6DPioIRbMT/qBbigR4PCbkdqTQ0SpIyie8YuJ8=
-X-Google-Smtp-Source: AGHT+IEtKS1j1XfkAmAx1DUeN3l7Ubdcq3ACfdQx+1tcVmJ21pVK1Fh04wiPd89wQLtVZljJuTb9ew==
-X-Received: by 2002:a05:651c:19a3:b0:308:fac7:9cc3 with SMTP id 38308e7fff4ca-30903651950mr6337401fa.14.1739318412131;
-        Tue, 11 Feb 2025 16:00:12 -0800 (PST)
+        bh=95tLd2a65K3uyAvTy76sH7lTP+WAFAT2AWBj4Cp36Os=;
+        b=m81cMAVeDUcpQhSbqqO7Kdno0dKzDGtZ+sxAPmjweMe31ObenW9WFZ5l12+cR7w9R9
+         RIicidqr/Ws1h/av2ZYjyeT5Tnyu1FSuW5JAdPg+LWPnHL8CFAsn7lEaNlbGM8cshcxz
+         2dZtnnP9PAMeEHj/mvdtnQJh/cXjLg9j3yD13YO5u0jPQu/R/RDh3GFHm51Th9EeFeUK
+         llxMiraMmhBSazSsFqJ7MhxK/UZF8eG0WxKWUXMh3o9pznQeYIAUu/AVfjfSPym4BH3C
+         edxk4t0DFCAIYs91x2X4GFbYnVDb58g82W4Tn5E1rUP9P4d+i5C6EzhRmuoaoYFAbqcJ
+         lk2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWTit1dfrL26yhMpTJ/w6yBlAiXVAzFZjWqQABQSD+KiitBJ8DWb4MnGdBbmHwNZc0mzffdMhDjH59cYEuM@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxfCWgN9wMYd+J22KW/oTzb3klVU32ils5DQSyR5Mdt23Wo1CU
+	B+6j6/Z2vLqTSRDtm67IsMT4cLArFuGh6kmKh83OdhXunLL2cavuuRVoAYTfKkk=
+X-Gm-Gg: ASbGncvIMpAP+TW3dVKW8wFoLF5llKABS28ZG4BDAz4EtIL8L1x10NwIniolOwlqByD
+	CG95LJjIBSIVpPTqnUMuxOI51kaghd014zOoR0o/e+RWnhH3mv8zzUyysKOx9zpHquX4P7/HRIa
+	g2FmNrw28YaoT3JOWZt0+eZlyWvuf869k3xCzV0syymepdgig1pzqYZVXr044cXgfEMZGdLXz5M
+	q6FeDrjphUU1NhpX4OG2hNqhD1j0nh/ZeNwAAGmiCnMoMwgYuq88UrbrUlqWPYKrc1pvvIeQy9O
+	k02HMiaTMAk/QriB32lcQ/f5mNHEOIdT2ALo3MJRq7wBd/gJ7ZMlm4ZG871gHChKh8aEvH8=
+X-Google-Smtp-Source: AGHT+IH/ZusE/nmTKQwFY64ppd0MMt5jL1ccy9acwns9FM9u2M/3kJwIx3fnSmtuKJScor3EBvhJ1g==
+X-Received: by 2002:a2e:965a:0:b0:308:eb31:df9c with SMTP id 38308e7fff4ca-308f90eb27fmr16259151fa.1.1739318472098;
+        Tue, 11 Feb 2025 16:01:12 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-308e2748fcdsm11095061fa.15.2025.02.11.16.00.09
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-308ed7e8621sm8024891fa.87.2025.02.11.16.01.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 16:00:10 -0800 (PST)
-Date: Wed, 12 Feb 2025 02:00:08 +0200
+        Tue, 11 Feb 2025 16:01:10 -0800 (PST)
+Date: Wed, 12 Feb 2025 02:01:08 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Connor Abbott <cwabbott0@gmail.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sa8775p-ride: Enable Adreno 663
- GPU
-Message-ID: <iymxe2hmjobctdimupp656xeyhctwd4yswbp2wobaneuzgxedu@cyhjb5ibkqmj>
-References: <20241030-a663-gpu-support-v3-0-bdf1d9ce6021@quicinc.com>
- <20241030-a663-gpu-support-v3-2-bdf1d9ce6021@quicinc.com>
- <4cfd1ebc-1a95-43d4-b36a-8b183c6dfd16@quicinc.com>
- <ah6nusoouth7ziu3iscxmafm6cxuwwebxt44ixsjmesp5adwc4@e5lnbztds2xd>
- <271e7b4f-454c-426e-a3f6-dcb55389374e@quicinc.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: sm8550: add missing cpu-cfg
+ interconnect path in the mdss node
+Message-ID: <ysk2lewb6qjhmrznt7xc7i3u7kczqliph2dzfg566aoj5cowks@qlbyk6nqakp4>
+References: <20250210-topic-sm8x50-mdss-interconnect-bindings-fix-v3-0-54c96a9d2b7f@linaro.org>
+ <20250210-topic-sm8x50-mdss-interconnect-bindings-fix-v3-3-54c96a9d2b7f@linaro.org>
+ <a3f7bef6-bfc8-4a2e-b979-4aac7908306f@oss.qualcomm.com>
+ <fcde9fab-b28a-4e09-b77b-f7c6c3840710@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,65 +99,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <271e7b4f-454c-426e-a3f6-dcb55389374e@quicinc.com>
+In-Reply-To: <fcde9fab-b28a-4e09-b77b-f7c6c3840710@linaro.org>
 
-On Tue, Feb 11, 2025 at 06:41:39PM +0530, Akhil P Oommen wrote:
-> On 2/9/2025 9:59 PM, Dmitry Baryshkov wrote:
-> > On Wed, Nov 13, 2024 at 02:18:43AM +0530, Akhil P Oommen wrote:
-> >> On 10/30/2024 12:32 PM, Akhil P Oommen wrote:
-> >>> From: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
-> >>>
-> >>> Enable GPU for sa8775p-ride platform and provide path for zap
-> >>> shader.
-> >>>
-> >>> Signed-off-by: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
-> >>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> >>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> ---
-> >>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 8 ++++++++
-> >>>  1 file changed, 8 insertions(+)
-> >>>
-> >>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> >>> index 0c1b21def4b6..4901163df8f3 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> >>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> >>> @@ -407,6 +407,14 @@ queue3 {
-> >>>  	};
-> >>>  };
-> >>>  
-> >>> +&gpu {
-> >>> +	status = "okay";
-> >>> +};
-> >>> +
-> >>> +&gpu_zap_shader {
-> >>> +	firmware-name = "qcom/sa8775p/a663_zap.mbn";
-> >>> +};
-> >>> +
-> >>>  &i2c11 {
-> >>>  	clock-frequency = <400000>;
-> >>>  	pinctrl-0 = <&qup_i2c11_default>;
-> >>>
-> >>
-> >> Bjorn,
-> >>
-> >> Please ignore this patch for now. This is probably not the right
-> >> platform dtsi file where gpu should be enabled. I am discussing about
-> >> this internally. Will send a revision or a new patch based on the
-> >> conclusion.
+On Tue, Feb 11, 2025 at 10:07:07AM +0100, Neil Armstrong wrote:
+> On 10/02/2025 17:32, Konrad Dybcio wrote:
+> > On 10.02.2025 10:32 AM, Neil Armstrong wrote:
+> > > The bindings requires the mdp0-mem and the cpu-cfg interconnect path,
+> > > add the missing cpu-cfg path to fix the dtbs check error.
+> > > 
+> > > Fixes: b8591df49cde ("arm64: dts: qcom: sm8550: correct MDSS interconnects")
+> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/sm8550.dtsi | 5 +++--
+> > >   1 file changed, 3 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > > index eac8de4005d82f246bc50f64f09515631d895c99..702b55296b18ff2f8ea62a3391b7de2804aa9f65 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > > @@ -3020,8 +3020,9 @@ mdss: display-subsystem@ae00000 {
+> > >   			power-domains = <&dispcc MDSS_GDSC>;
+> > > -			interconnects = <&mmss_noc MASTER_MDP 0 &mc_virt SLAVE_EBI1 0>;
+> > > -			interconnect-names = "mdp0-mem";
+> > > +			interconnects = <&mmss_noc MASTER_MDP 0 &mc_virt SLAVE_EBI1 0>,
 > > 
-> > Akhil, any updates on this?
+> > QCOM_ICC_TAG_ALWAYS
 > > 
+> > > +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_DISPLAY_CFG 0>;
+> > 
+> > QCOM_ICC_TAG_ACTIVE_ONLY
+> > 
+> > w that
 > 
-> I am still waiting for the discussion about QCS9075 board dts files [1]
-> to conclude.
+> So it depends how it articulates with https://lore.kernel.org/all/20250115-topic-sm8x50-upstream-dt-icc-update-v1-0-eaa8b10e2af7@linaro.org/
 > 
-> [1]
-> https://lore.kernel.org/lkml/Z3eMxl1Af8TOAQW%2F@hu-wasimn-hyd.qualcomm.com/T/
+> I can rebase on top of it, it would be simpler, but then the Fixes tag won't work anymore.
 
-Why? We currently have several boards supported. We can enable GPU on
-those as your patches are pretty fine. Then we can land Wasim's patches.
-Not to mention that the discussion seems to be dead, last message was
-sent almost a month ago.
+It works, it's just that the backporter would need to be slightly more
+careful.
+
+> 
+> > 
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > 
+> > Konrad
+> 
 
 -- 
 With best wishes
