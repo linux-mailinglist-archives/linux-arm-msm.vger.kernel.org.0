@@ -1,203 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-47780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07EFFA32B64
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:20:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 289D9A32B7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 17:23:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E77627A2F21
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 16:19:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7BD5718854C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 16:23:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D83CA212B05;
-	Wed, 12 Feb 2025 16:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76806211297;
+	Wed, 12 Feb 2025 16:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Byx1S3Df"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dc/7QO+Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59AD1D516D;
-	Wed, 12 Feb 2025 16:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDEA211A3F;
+	Wed, 12 Feb 2025 16:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739377227; cv=none; b=dLwSFRMkXtyFr+hb4g4KMpKRjiluKlLAAH/mGnhWtPcTDwZJ1Jsn1KVfGgDUC8ZqNKSqMY5ustgfPrlGlDeodgPiKDCmDhL6A0a1EYiDqzgsW9B2TVzrX1p2A8dUr6FQ9sAMg0j6jWJwWrXWMIOAhYktPcucj497QXGs4jvggZU=
+	t=1739377389; cv=none; b=jg3b2kmazM1AdF0QA3c8EZ77l/uiWHxUQvzFJZpgAlan9HrClXUmQ+G9FlI6ibSZnFvxkPwtrSLX/KGC38sE8OplkEWWyCJ7c7jfqJ6Ux8tlatgpxWqEqqfLoBQpzl7rTNeFqDjoQkOgnf9wX0HCfumt+2lCqaydA+JV62zMQGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739377227; c=relaxed/simple;
-	bh=IH6FJ/LOaKwyiedQHW7mKTCXkZR7qoVHrS4dm49fsuM=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=ZhQwkM6mZGHCVjCTIeBOGvh4hzx4GSfZ86pys+JvVXN2Q46G07dbEW2RbH5CWxcpX/FuLqQU53VLa3vo3W7yLyiOtbfpOCHvBp9japJIlSWhdB+okZuVWOjrt+ZOkxNli7cGhWthnB0zKzeFSVhtviNDhgy1F6ZcfgAOtTNNZSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Byx1S3Df; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (web.docker-mailserver_default [172.18.0.2])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 1EEE9BB835;
-	Wed, 12 Feb 2025 16:20:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1739377223;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QIxsFEW0fxFxc9Uh+/NGJ+ZhMAYCRBTTVCPuNqXBoWo=;
-	b=Byx1S3Df880pwgYYJt/jlleUmRcSPicWQL0Wc8t66UFcEb4Ymrj0X6U5GMcQUYlG72P2mw
-	AeaCaTksiVCGthozukYYKwjh3r55Uz37MR6DYqQJeSryK0a28AaAI628C8QpSgwcNHP8YN
-	Ugp1f/43WQ36lJKDc/0i2PQxPXa9x9s6e5JY19LUMUxLF26KtosgKVuDcScxwxfcNnXhTl
-	I2VksJS6LWy8Axv7ckWW8Blhfu29BQg92lauuTdMQbk2adwD+FDeA1/O/6pkjMXAnZ2L7e
-	27oLOvRuwFSq3zr1O60LashbJabjiwJfddqgNM7GEOJWHLXh+m8VAne7uyZi2Q==
+	s=arc-20240116; t=1739377389; c=relaxed/simple;
+	bh=m7akHSXGBiZpCcrZGA4GjfcD6mi18Eh1ekR0+/hfm5U=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Jvr0zyWDFrAWV1H3gLaopho+jkIujgGue+nR6D7Mupr2pbh93H+tXbYqBF9Cj1lUJkBMx05cstiyFJJKYg8kzcw3Mjtuw2vIBQpVWk595bMWl6Q8sDX0LGeR44pSZiPKk7AXx1bwO9gHs7dI8UsmEcv51g2XtNz0oeg1LeC0LlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dc/7QO+Y; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-21f6d2642faso114831265ad.1;
+        Wed, 12 Feb 2025 08:23:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739377387; x=1739982187; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IfS0qjYTR2lJzWWN3+qH19TLHAlA/gI2SPTg61bsso0=;
+        b=Dc/7QO+YEXYUdyG2r0l3aoxtDel48HCDWtkLvs4v7UhAmJgGHVHA18+M8yToMTXC3K
+         DYqnkMFQb0E1m+PxxeGeDCaL9THWwQewHzLZT1bH+KCZ1kDUm55j+jnBuxObR/EDRSh8
+         5DIGN6MgYuvA+vATkFNDykjM5blvrdFmmPCeoQi6durPAplKUAcyBaKOMcEWRHWYaG5t
+         2Hb2Am0/Mx4Xyurpt/qpQgXq87Y1dWM9srIaIjFac/9HYJe1Sriibsb7Ad6N5d/cISUu
+         /6VD/mhKrgcLcfRCyH7hUZOHUVfKp7ZDNKl1gM+Q3M2jbsnXvT0Lgtc6QdjUc1DaNayl
+         eoYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739377387; x=1739982187;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IfS0qjYTR2lJzWWN3+qH19TLHAlA/gI2SPTg61bsso0=;
+        b=SDexulzzGgqqWXxWpmPSJiDUF1/VGCv4sNBGQKz7PBT1g13YRhjivOv0ISdoNN/JD7
+         jp8B4wcIjj6/H46h/K2v0RSL6nWi10ikGwNDtjpAZPGN0Hrj9aYwAw8RHVwyhdv5yM5y
+         ufY4d/Dzdd2qUmRL+9MZRTKwNOOHsXk5Xg4bOj2p1zJRsarVjrzdI72k/9P94fhQe41W
+         6pdRY7FIkzBPVevrWdvk9INh1nNJUr8yMuAlz58mLsgHRFGMiIpEqMzxxXGO2NHbIPVy
+         8ZGTt5ciVW4cQM8VBpvr1cO/qJtFxNGaqO1RTmmiCb9cdER5xzbKBjgYX0IpFvOBd83c
+         F5eg==
+X-Forwarded-Encrypted: i=1; AJvYcCU+MGq176GppeTYcJLcNslOo4bUDzjC+u6RirMs+stQ5cXP0435KI46rXULHfWaQf5aB3zsI18uud6Twzs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvF30UCv2YVWTuUbZqg4TBT69aZYl18r7De9IPWB9oaYxAhruL
+	M0K9xFZ8R1+6kzVW/lWK+qOO9dCn6iD1l1dipEjzlFvXozQI/vj8
+X-Gm-Gg: ASbGncuUhs+yA7gH2ccILDW1C9j7TmKPRcUBjkzhigVcoFu8jIMZH2+LjJRL2Dg4Vq5
+	RHMTrvMAccXrwceJ3AowYxf8O2itHykIu0iIQKGVFa/+m2csVmUt9+fk8V84Q2a2LeA8zGh1k8f
+	rfZj906F77V6pcI+osp6CNN5Ek7sAhuLlSTHOTc4OJR5i8xPkoiQ3pmyaoB27SbFjaJn4BdqVts
+	FBZr0JS4cLKe8wUgtRex4GeKNZ0SEMfjb3VbGBKdsKajUf4mhlNGMJuWkUO/c2vx5c/pGa6qbCh
+	NHVozsm+f6whnmt9HIB32jMZpuEkn72jCTnOwQQyDw==
+X-Google-Smtp-Source: AGHT+IHIMv22mMXoA9eC/SwzcrvYhnZccCk9wE2WmNJ8twYqeBEQsS89jAatUo3dy0fvvDoXwOE8/w==
+X-Received: by 2002:a05:6a21:6e4c:b0:1ee:63d7:1d32 with SMTP id adf61e73a8af0-1ee63d72190mr4459813637.0.1739377387028;
+        Wed, 12 Feb 2025 08:23:07 -0800 (PST)
+Received: from jamesmacinnes-VirtualBox ([66.119.214.127])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73091b2a97asm5465683b3a.152.2025.02.12.08.23.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Feb 2025 08:23:06 -0800 (PST)
+Date: Wed, 12 Feb 2025 08:23:03 -0800
+From: "James A. MacInnes" <james.a.macinnes@gmail.com>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ robdclark@gmail.com, quic_abhinavk@quicinc.com,
+ dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+ simona@ffwll.ch
+Subject: Re: [PATCH 2/2] drm/msm/disp: Correct porch timing for SDM845
+Message-ID: <20250212082303.7c37f8fc@jamesmacinnes-VirtualBox>
+In-Reply-To: <v4lpt45c7miwt45ld4sfinixnpje6tb73dhqmahl6kin4i7wyj@6ss563kvk63v>
+References: <20250212034225.2565069-1-james.a.macinnes@gmail.com>
+	<20250212034225.2565069-3-james.a.macinnes@gmail.com>
+	<v4lpt45c7miwt45ld4sfinixnpje6tb73dhqmahl6kin4i7wyj@6ss563kvk63v>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 12 Feb 2025 17:20:23 +0100
-From: barnabas.czeman@mainlining.org
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette
- <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
- =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, Linus Walleij
- <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, Srinivas Kandagatla
- <srinivas.kandagatla@linaro.org>, Joerg Roedel <joro@8bytes.org>, Will
- Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio
- <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- iommu@lists.linux.dev, Dang Huynh <danct12@riseup.net>
-Subject: Re: [PATCH 08/10] arm64: dts: qcom: Add initial support for MSM8937
-In-Reply-To: <7664b71c-ed47-4765-9ac4-5dbe3ec80d3c@oss.qualcomm.com>
-References: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
- <20250211-msm8937-v1-8-7d27ed67f708@mainlining.org>
- <7664b71c-ed47-4765-9ac4-5dbe3ec80d3c@oss.qualcomm.com>
-Message-ID: <d4792e6323e2dd5392a0d9633df62174@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On 2025-02-12 14:07, Konrad Dybcio wrote:
-> On 11.02.2025 11:37 PM, Barnabás Czémán wrote:
->> From: Dang Huynh <danct12@riseup.net>
->> 
->> Add initial support for MSM8937 SoC.
->> 
->> Signed-off-by: Dang Huynh <danct12@riseup.net>
->> Co-developed-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> ---
-> 
-> So the computer tells me 8917 and 8937 are *very* similar. Have you
-> tried assessing how making 8937.dtsi an overlay atop 8917.dtsi would
-> work out?
+On Wed, 12 Feb 2025 11:13:24 +0100
+Marijn Suijten <marijn.suijten@somainline.org> wrote:
 
-They are similar but there are many small differences:
-- have two dsi
-- using adreno 505
-- different iommu it uses arm,smmu for gpu and qcom,iommu for 
-applications
-- 8 cores
-- camss will be a different a bit
-- venus will be different a bit
-- have more i2c and spi
-- different mdp version
+> On 2025-02-11 19:42:25, James A. MacInnes wrote:
+> > Type-C DisplayPort inop due to incorrect settings.
+> > 
+> > SDM845 (DPU 4.0) lacks wide_bus support; porch shift removed.
+> 
+> Same comment on "inop", elaborating the meaning of "incorrect
+> settings" and describing relevance to DPU 4.0 from patch 1/2.
+> 
 
-Maybe i can find more differences, originally it was based on 
-msm8917.dtsi
-but we have decided to keep it separate, also it have different license 
-from 8917.
-The plan is MSM8940 and SDM439 support will based on msm8937.dtsi in the 
-future.
+Again, happy to use more words.
 
+> > 
+> > Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
 > 
+> This commit came long before wide bus support, are you sure this is
+> the right Fixes tag?
 > 
->>  arch/arm64/boot/dts/qcom/msm8937.dtsi | 2145 
->> +++++++++++++++++++++++++++++++++
->>  1 file changed, 2145 insertions(+)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/msm8937.dtsi 
->> b/arch/arm64/boot/dts/qcom/msm8937.dtsi
->> new file mode 100644
->> index 
->> 0000000000000000000000000000000000000000..ef633c1694ad98165e58130cbeb186d2f0e2dcaa
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/msm8937.dtsi
->> @@ -0,0 +1,2145 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2023, Dang Huynh <danct12@riseup.net>
->> + */
->> +
->> +#include <dt-bindings/clock/qcom,gcc-msm8917.h>
->> +#include <dt-bindings/clock/qcom,rpmcc.h>
->> +#include <dt-bindings/interrupt-controller/arm-gic.h>
->> +#include <dt-bindings/power/qcom-rpmpd.h>
->> +#include <dt-bindings/thermal/thermal.h>
->> +
->> +/ {
->> +	interrupt-parent = <&intc>;
->> +
->> +	#address-cells = <2>;
->> +	#size-cells = <2>;
->> +
->> +	clocks {
->> +		xo_board: xo-board {
->> +			compatible = "fixed-clock";
->> +			#clock-cells = <0>;
->> +		};
->> +
->> +		sleep_clk: sleep-clk {
->> +			compatible = "fixed-clock";
->> +			#clock-cells = <0>;
->> +		};
->> +	};
->> +
->> +	cpus {
->> +		#address-cells = <1>;
->> +		#size-cells = <0>;
->> +
->> +		cpu4: cpu@0 {
+
+Yes, I went back to the Android 4.9 driver (that was working) and found
+that the porch shift was not there. After experimenting with removing
+the porch shift code, I had fully working video. As the SDM845 is the
+only chip that doesn't use wide_bus, the pair are not related, but each
+one contributes to no/poor video output.
+
+> > 
 > 
-> I'm pretty sure a CPU with a MPIDR of 0 should be called CPU0
+> Drop empty line between tags.
 > 
->> +			compatible = "arm,cortex-a53";
->> +			reg = <0x0>;
->> +			device_type = "cpu";
->> +			enable-method = "psci";
->> +			operating-points-v2 = <&cpu_opp_table_c0>;
->> +			next-level-cache = <&l2_0>;
->> +			#cooling-cells = <2>;
->> +			l2_0: l2-cache {
+> > Signed-off-by: James A. MacInnes <james.a.macinnes@gmail.com>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c index
+> > abd6600046cb..3e0fef0955ce 100644 ---
+> > a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c +++
+> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c @@ -94,17
+> > +94,17 @@ static void drm_mode_to_intf_timing_params(
+> > timing->vsync_polarity = 0; }
+> >  
+> > +	timing->wide_bus_en =
+> > dpu_encoder_is_widebus_enabled(phys_enc->parent);
+> > +	timing->compression_en =
+> > dpu_encoder_is_dsc_enabled(phys_enc->parent); +
+> >  	/* for DP/EDP, Shift timings to align it to bottom right */
+> > -	if (phys_enc->hw_intf->cap->type == INTF_DP) {
+> > +	if (phys_enc->hw_intf->cap->type == INTF_DP &&
+> > timing->wide_bus_en) {
 > 
-> Please add a newline between the last property and the subnode
+> This code existed long before widebus: are you sure this is correct?
 > 
->> +				compatible = "cache";
->> +				cache-level = <2>;
+> Note that an identical `if` condtion exists right below, under the
+> "for DP, divide the horizonal parameters by 2 when widebus is
+> enabled" comment.  If this "Shift timings to align it to bottom
+> right" should really only happen when widebus is enabled, move the
+> code into that instead.
 > 
-> cache-size = <0x80000>;
+> - Marijn
 > 
-> [...]
-> 
->> +		cpu0: cpu@100 {
->> +			compatible = "arm,cortex-a53";
->> +			reg = <0x100>;
->> +			device_type = "cpu";
->> +			next-level-cache = <&l2_1>;
->> +			enable-method = "psci";
->> +			operating-points-v2 = <&cpu_opp_table_c1>;
->> +			#cooling-cells = <2>;
->> +			power-domains = <&cpu_pd0>;
->> +			power-domain-names = "psci";
->> +			l2_1: l2-cache {
->> +				compatible = "cache";
->> +				cache-level = <2>;
-> 
-> cache-size = <0x100000>;
-> 
-> I'll do further review if you decide it makes sense to keep this
-> separate from 8917
-> 
-> Konrad
+
+Happy to condense it. I left it in two sections for clear review at
+this point. As stated above, I reused the wide_bus parameter as the
+SDM845 appears to be the only affected chip.
+
+> >  		timing->h_back_porch += timing->h_front_porch;
+> >  		timing->h_front_porch = 0;
+> >  		timing->v_back_porch += timing->v_front_porch;
+> >  		timing->v_front_porch = 0;
+> >  	}
+> >  
+> > -	timing->wide_bus_en =
+> > dpu_encoder_is_widebus_enabled(phys_enc->parent);
+> > -	timing->compression_en =
+> > dpu_encoder_is_dsc_enabled(phys_enc->parent); -
+> >  	/*
+> >  	 * for DP, divide the horizonal parameters by 2 when
+> >  	 * widebus is enabled
+> > -- 
+> > 2.43.0
+> > 
+
 
