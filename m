@@ -1,158 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-47766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36955A328C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 15:41:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B27D0A328F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 15:45:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18472169D32
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 14:40:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 444471885405
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 14:45:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6D6D25A351;
-	Wed, 12 Feb 2025 14:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18E511FBCA6;
+	Wed, 12 Feb 2025 14:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Je5v/O6R"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="wI5257yL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1CE25A33E;
-	Wed, 12 Feb 2025 14:37:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC10C18D65E;
+	Wed, 12 Feb 2025 14:45:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739371077; cv=none; b=oKgfhoP7P8/29+oiy+kWHcvIKba6n/33QfAdvVhAw/5IlNHrncRGEwxxLt1QrjCNCsJTBRCoXv3wLVca4HezUupoPvZ+Po7mD8iMjCrHJKB+vF+yjT538DhQxT0C0qSBh2HgmQ7bmgN5xlTqELUk7qgD5+dekhrvgCPwL47Jc1Y=
+	t=1739371543; cv=none; b=TOER2Ta8/oyLOv3k0+JhlIWc/ABitC2XK7JkWjMWQAaNguja0eBH7AmnO15fhhDgARQ8VVCB9XmdWOV6/0I78mHMOIkN/hNHy8VA5vjxt6zUsn/djOwWYk3y5hKBStZvZvEl4+mIhfm0B0BADktLdycnW9Mz4zkfH0Bow1x9q5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739371077; c=relaxed/simple;
-	bh=VUBM57jOz21qhzl4JgnGGgiFmJ16K4z/3nSk3V+odWQ=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=s2shW5vJglAG87cdDeYvL24imuL5UvQsf1AjZDX+Yeu2/TwaFKy9yTZxDAWk7sh7XliIjfQq/zfeqBWxeq2o1eTTNsnGLhQqRPaIXrR/fhNhYrDuA/7p062z5ukppZU4Y/6dMdpxFTk8Ao1cjjXMdX8OD15O72sLkw2Eah3N9D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Je5v/O6R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43F8C4CEE4;
-	Wed, 12 Feb 2025 14:37:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739371076;
-	bh=VUBM57jOz21qhzl4JgnGGgiFmJ16K4z/3nSk3V+odWQ=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=Je5v/O6RvOmLtL1lWrIBnUZdIB9qSs5EzOVdh0V7z1Wp5/q7Seycikmd3UDwzVhZd
-	 r60tyUtkLhGWXvRZua2EZbVry+x0exOrN9X7SVOi670+LrPax9T3ze+hHf3T2ZZQlx
-	 qJ3AfWEUNv2W3g7BTWsTnpXRct0ysuDJFPDaK4km1V1sbRsMa51ZkgF4LNXd/YgKfV
-	 8FLPNGgSpj8395pzX311yHjDr5sDyA5Hqhin4D4jIxNmmIMpqqWi3EcLZL9QstKpGG
-	 aTsR2kRVHbQCnBFJD15qKYbIyjx5k7u6LwWO/hTn/KMThp19m0vZvZEkAlWJ7UK6dK
-	 oA8B5HOGhqO1g==
-Date: Wed, 12 Feb 2025 08:37:55 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1739371543; c=relaxed/simple;
+	bh=zPPPVDyPCQy/uHZXmtEqFziYEoLwnzvm/k6HokPTs8Y=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=ReSfxEUqRdZDEV6vudAUHO7o0baFs/ro9DSJd/sZ6eahzcEQ3S3T7esCYkn0aMZS/x3rURn12OR+7+VpLT2RaN/ZOLVIWg35YCmVaYH5KxSHcGOQqTua34BOima48LNxr1lzwLMQqRBMNzc5ZmgDDPDioAMZ21DJQCyg+TeNG9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=wI5257yL; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1739371528; x=1739976328; i=markus.elfring@web.de;
+	bh=zPPPVDyPCQy/uHZXmtEqFziYEoLwnzvm/k6HokPTs8Y=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=wI5257yL/FVTiY5mUkYGejkdhVaRmGYvugLmvPDMzLMngyHvByBwQQQknYe+C3lg
+	 840gW3JUYmvLT8Z51sOVUamRng+HvfbWhyC+KycDYSjHzhU4YNWpHZh7dghAeLKrW
+	 zv4D2yi+Atoemvj3brYS4dAVEjYl+q8KZRceYtUxCWTJ3Aj+dipeP2TbrdwZ13K3x
+	 XA5aw8S4hoAeTzRsoHu3ZzIxTHt9vPx20OBmZLSSORekQBrwtMGaB0XyQ6z52ox3d
+	 PUblNMwdNVJco5ntQ7U3hP1X841h7TiFErFa/pBfi028I4v1UH6JXswlTzb2Zymvn
+	 67iPkISqALY+GVOOpA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.93.11]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MGgJK-1teKFu0sgk-009tly; Wed, 12
+ Feb 2025 15:45:28 +0100
+Message-ID: <f4757a63-c1f7-4b4f-854b-db533c8b70ad@web.de>
+Date: Wed, 12 Feb 2025 15:45:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Will Deacon <will@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Daniil Titov <daniilt971@gmail.com>, 
- =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
- Robin Murphy <robin.murphy@arm.com>, linux-kernel@vger.kernel.org, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Joerg Roedel <joro@8bytes.org>, Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org, 
- linux-clk@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>, 
- iommu@lists.linux.dev, Stephen Boyd <sboyd@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
- linux-gpio@vger.kernel.org, Dang Huynh <danct12@riseup.net>, 
- Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>
-To: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-In-Reply-To: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
-References: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
-Message-Id: <173937096484.3561919.15204410384855360487.robh@kernel.org>
-Subject: Re: [PATCH 00/10] Initial support of MSM8937 and Xiaomi Redmi 3S
+User-Agent: Mozilla Thunderbird
+To: vulab@iscas.ac.cn, linux-clk@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+References: <20250211092017.562-1-vulab@iscas.ac.cn>
+Subject: Re: [PATCH] clk: qcom: Fix missing error check for
+ dev_pm_domain_attach()
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20250211092017.562-1-vulab@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:9HptBoJr+kFWKWd/ACV89eXSi3Vqg5qVerrcCbM5ck8oPCJkGhW
+ H11Szp+hF184Zyod+1e14zLL/BbnjEBwuS49kqycnWHR0DDAgK+9/WwanAUkts7SfXTlFkA
+ s28hgN4rCw350nRlH2uI9aopBiBRaKTbrEIpMeLPnoFAl6+4h4+agoaC720zkQVBha04VTb
+ QRHR53cyeO8df3y/5GiiA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Qjil/6/MEY8=;B6S1G8rplb9b1l6QX8AOpnucNI6
+ dL/ZMmIeQJuyZU3DSZc/mQMrrp17/l7okkgDsGor1bbTU03dM3IjXTOd058vYbkunYfbNbxaw
+ fpSdFytDXDJE7OZ4k3tz+u+0Ocbi0RvvScIGnZWk3d+wl4n6XF12t6QT8lPhxnLUL5k+pIWZn
+ IjkwBMJ2uzlwLZ6et+cd7g1SrY7xVa10hsWE7Y4x8za6aSpchOCf7AalXz/EuKxwEVQ2NAFDn
+ Om6SwG8tgfr6genhda7+Z8qZYn4Tog7Ed99RBSJh9rjkJl3COkIsgUK71w0M41e4ygfbAt2Z0
+ 6WsZ3vHQqWTht8GH7lUWUJV7CGC4eXKLrNpdmhWc9ZhGvfGzwClJu8NnK3BeS4Q//z0U4tZ8E
+ WCak4R/GNZJZSdp49QtgBondz2kyVmJa0nBpHhHMQDQEpt/QwG5G+8XaepORSzXR6MTGhJh5x
+ uijktZ8jGBqHwUu8GSmzrwaMFPyaqO5MGLgGPp0XPuB8ONfEQJOIbVh1sPUrdr9PJSCgnAQy6
+ grcj2NrtklCHw2R6WbZbQ/hp1hkC94MPvp9shLFgUyX0QFbwXlTeqE5NpTjEbiy3RsInLCVwe
+ joAZkQpn+M3EEpRLrORHDC2+G/pdTcanjhgASpl226e8k9WHHvEWRXRQxeWUbgl6SJREMeY3Y
+ orjhjr0BbyGmo5/rCoRqwHsOShcHMA1Y6Cpq4db1h878NMNVD3LV6YS4HNF4Vja23A8BR8jD6
+ hbKpwsuGJcPxSPsWza/a2UaluKYM+aCnBD2Ke1NQ4S1oqU3KOBvy/oeksDtZpepNza9aMrJws
+ LMKb5Uudq9338WBAS7qRKLFTiml6IHK4Y1CW80VcWbTR1zne8vEoE9G+m4OLUNqK3UD6IMc2m
+ bjg2BudAoC6KUZuMJBQwgOgyWXnemQLPl04bmMFFx3d5nvZwXHB0axtiZOnsaDMXHcZ2ITlK9
+ VjzsPUZroZBJ4efIhjL6kdGQETijEci3VYHNhYWcAsUuDOxSwhS637bYly0qLr9lc7iEXWVdE
+ qv46FHaFt94pLc2l9mI9B6ZMz4LxmDi7t7InppklqN0fbDXJXMabLXLs4pclS3Ud5fKtPTPT7
+ drLuXxXwgfZ1QY2Cm2dtaB1QxAKM9/VfndG8k5xD3gjQeu1LFiwj6LbuZhpr2kD4R4ACzsOX3
+ dKtofWp5OrNcCP7aTNsAFOimsw5Gq0XiA1Vn8vFY5XjQBmWiF875sF0s2OHvmesHFoAo0By4c
+ 1LWEGWXBf+abj2nqn0zu5nP5S+GBTDZ86Ag42hjizZrOjerzW91+2xAHJ+8ktHwc+SgjcwOeC
+ 4b9+wL7PZ9BjgXYNp+h8wYW5ZW1K5UdalgKBweVjR/iK4FMwN1xwvOKBYUyPzKoQLeerLAyGq
+ lh8kXmt9EaS11HrydZNMXHJLzi3bOeh+dHnHb7RP/e22bEtTStuB4lj8L4UfvarJqS6qET1EV
+ u5EeQJQsc86cc4U4Kmz6MU91xEjg=
+
+=E2=80=A6
+> This patch adds a check for the return value =E2=80=A6
+
+See also:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/submitting-patches.rst?h=3Dv6.14-rc2#n94
 
 
-On Tue, 11 Feb 2025 23:37:44 +0100, Barnabás Czémán wrote:
-> This patch series add initial support for MSM8937 SoC
-> and Xiaomi Redmi 3S (land).
-> 
-> The series is extending the MSM8917 gcc and pinctrl drivers
-> because they are sibling SoCs.
-> MSM8937 have 4 more A53 cores and have one more dsi port then
-> MSM8917.
-> It implements little-big architecture and uses Adreno 505.
-> 
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> ---
-> Barnabás Czémán (5):
->       dt-bindings: mfd: qcom,tcsr: Add compatible for MSM8937
->       dt-bindings: nvmem: Add compatible for MS8937
->       dt-bindings: iommu: qcom,iommu: Add MSM8937 IOMMU to SMMUv1 compatibles
->       dt-bindings: arm: qcom: Add Xiaomi Redmi 3S
->       arm64: dts: qcom: Add Xiaomi Redmi 3S
-> 
-> Dang Huynh (2):
->       pinctrl: qcom: msm8917: Add MSM8937 wsa_reset pin
->       arm64: dts: qcom: Add initial support for MSM8937
-> 
-> Daniil Titov (3):
->       dt-bindings: clock: gcc-msm8917: Split to separate schema
->       dt-bindings: clock: Add MSM8937 Global Clock controller compatible
->       clk: qcom: gcc: Add support for Global Clock controller found on MSM8937
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml    |    7 +
->  .../bindings/clock/qcom,gcc-msm8909.yaml           |   10 +-
->  .../bindings/clock/qcom,gcc-msm8917.yaml           |   74 +
->  .../devicetree/bindings/iommu/qcom,iommu.yaml      |    1 +
->  .../devicetree/bindings/mfd/qcom,tcsr.yaml         |    1 +
->  .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |    1 +
->  arch/arm64/boot/dts/qcom/Makefile                  |    1 +
->  arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dts   |  402 ++++
->  arch/arm64/boot/dts/qcom/msm8937.dtsi              | 2145 ++++++++++++++++++++
->  drivers/clk/qcom/Kconfig                           |    6 +-
->  drivers/clk/qcom/gcc-msm8917.c                     |  617 +++++-
->  drivers/pinctrl/qcom/Kconfig.msm                   |    4 +-
->  drivers/pinctrl/qcom/pinctrl-msm8917.c             |    8 +-
->  include/dt-bindings/clock/qcom,gcc-msm8917.h       |   17 +
->  14 files changed, 3277 insertions(+), 17 deletions(-)
-> ---
-> base-commit: df5d6180169ae06a2eac57e33b077ad6f6252440
-> change-id: 20250210-msm8937-228ef0dc3ec9
-> 
-> Best regards,
-> --
-> Barnabás Czémán <barnabas.czeman@mainlining.org>
-> 
-> 
+How do you think about to add any tags (like =E2=80=9CFixes=E2=80=9D and =
+=E2=80=9CCc=E2=80=9D) accordingly?
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/submitting-patches.rst?h=3Dv6.14-rc2#n145
 
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250211-msm8937-v1-0-7d27ed67f708@mainlining.org:
-
-arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dtb: gpu@1c00000: clock-names:5: 'alwayson' is not one of ['core', 'iface', 'mem', 'mem_iface', 'alt_mem_iface', 'gfx3d', 'rbbmtimer', 'rbcpr']
-	from schema $id: http://devicetree.org/schemas/display/msm/gpu.yaml#
-arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dtb: clock-controller@1800000: clocks: [[18], [51], [52, 1], [52, 0]] is too short
-	from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-msm8917.yaml#
-arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dtb: clock-controller@1800000: clock-names: ['xo', 'sleep_clk', 'dsi0pll', 'dsi0pllbyte'] is too short
-	from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-msm8917.yaml#
-arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dtb: clock-controller@1800000: Unevaluated properties are not allowed ('clock-names', 'clocks' were unexpected)
-	from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-msm8917.yaml#
-
-
-
-
-
+Regards,
+Markus
 
