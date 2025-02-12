@@ -1,304 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-47689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A57AA31DBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 06:07:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EBDDA31DD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 06:20:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 421BB161354
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 05:07:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 962647A3CA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 05:19:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DCA4487A5;
-	Wed, 12 Feb 2025 05:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDA3B1E376E;
+	Wed, 12 Feb 2025 05:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="I5QyH4xW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Dhqhfngn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB19E2D600
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 05:07:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1636138FA3;
+	Wed, 12 Feb 2025 05:20:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739336876; cv=none; b=J3m+LP6SV7X3nqKnkaahxAlUWgwkuKIr4n0lUOnW4sSCptD9BGzg0AB8wHyL6+khQtCPY2XPYSHwwI32WNg1ayJFsedq7AijcWnm98l0BuwdDfHSrneA9Fp9QoR3ViAc4Ry1X3G5QO+G1IVr6SjBrEyXkJhLgVRZL/gei5A7ibw=
+	t=1739337627; cv=none; b=JbsHHvT0c67iIP3PpQJU9HzbXBshg1RrXsZn6x8rE3TEx8I+Vi9ygAp+kVL7HQ9ntzrCS2OnN//kqN8MXBgD0KuGyXSFUX2BFpMtPh7Gr1VMkSPGLBygt9pg/WDfLFH5Z+mpapLMa1qGhu7f4GWw/sez+ZRQd+nHvxTqytJP4WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739336876; c=relaxed/simple;
-	bh=p4LKk4ZdoFiJUlp2//n7xvv88iRTuP8XnvJuId+5tgA=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=OGMYPesazVWukOv7Sr1xv+z9K1SJsD7adjmYS2Njf9ArZZ6wlmPy0wIh/j6CYvV451rmggltiNoudR2Xjw6ywWb8SYKrtQQ35hTm/0aNeO7fHnS42ioXpG1paGh0iuRac2yHktMp3V9qw0aoyHkZK4Ygu4ld2sXelGb8alfUlMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=I5QyH4xW; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2f46b7851fcso19148613a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2025 21:07:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1739336874; x=1739941674; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zOJxpI1x9MLAiq9h9+DTjl81Sa/nSgc2QKSMD+NAq0c=;
-        b=I5QyH4xWlER47LM8sfV4SYpnl/mil0VVF0XPVllwfIvCdzchr545Vdeb06b4eI6z27
-         6ozROaM+XEjzerDLUu2WVlTMjl07tY8nHI+ABPBSFmB9NmGspY6+ys3Cv9t/XL7S/sKQ
-         A7P8UI/No3Hjgha9xQL7TgxcnN4hdwwysJgA3qDaqUA3DZgkNudSD6JR0KfazzFhO07L
-         o6fX4naLLxYbWPc+NCynLw5XeHp6zFQZUxhdYFFMPFUzYn4oG1hHogcZn+FB3meJE6t9
-         iL2Dca7ZJH8PUv61ZMXEprNV68IjJwmufODqRhb9GuzOs3Qu/pfDJ04pObwABClKAiPE
-         HYHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739336874; x=1739941674;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zOJxpI1x9MLAiq9h9+DTjl81Sa/nSgc2QKSMD+NAq0c=;
-        b=oIgaFPGQicrq/RYP5ksTsIrIz723Qkn1OwoPb7U1BX81hYQeDV57vywWn/xdRw5XxP
-         sKj+ziJlcYqZi0Kdb6TSNC2yeaQluC/w4ST74TuWNN51MeLp3t9KqYRNPF6bHm7oNiJh
-         2TopRi9q1Nw8tgOlTn1gpIi40vXyo+0fj3NXwCEGhO9D9ms15Jsj+DtxWfWgYL6TH6Vl
-         JvcrtZQtoDqP71l0i2kEdi2bBJgI/SZYavIdd9AZ9iLwyLvC8NcEabONMSB9peSX30AL
-         U59sn8mV+3OacAaqmglDSCkJhNeS50DDXBuoJsJr6CaK3vr8lDTZd09JDg91Al7cBR/u
-         Cb0w==
-X-Forwarded-Encrypted: i=1; AJvYcCUShAPYIGbpJLzhid+jen9qjWM4mqP/DlnK5OaFNsX1aRV4sWCzicroK6oiSDDlrYBb/5bgLBq/zE/SYdVg@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCjOhvSq0WYuyBhsUu3ma5gqeRIv0WrI39ZY2e5Z8mhD1uS4fg
-	IA1BW/Y+niSEaZ8FRRskI53GYsBPZ6+epkbZccDyx4rxjUt+4N2w5u4vfbWieY5VqjsxEQPy4BI
-	kfIcNsY3M9KpM6YycWE4BWQ==
-X-Google-Smtp-Source: AGHT+IH/xh6quStbzptBl/mL0TU0XPEI8Jdwu7q7FhIn9TFDXRLhgpliEbXcKvvkSkGPR9+aPEy3XINR4VxNZv86ug==
-X-Received: from pjbsv3.prod.google.com ([2002:a17:90b:5383:b0:2ef:71b9:f22f])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:2c8e:b0:2ea:712d:9a82 with SMTP id 98e67ed59e1d1-2fbf5c71357mr2767999a91.29.1739336874097;
- Tue, 11 Feb 2025 21:07:54 -0800 (PST)
-Date: Wed, 12 Feb 2025 05:07:52 +0000
-In-Reply-To: <20250211121128.703390-4-tabba@google.com> (message from Fuad
- Tabba on Tue, 11 Feb 2025 12:11:19 +0000)
+	s=arc-20240116; t=1739337627; c=relaxed/simple;
+	bh=WkKK2vXRCLnP7s87aUFVM2CILD3k86MlklY0Bm20GZg=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=dIhyf+QQtAFsiIJSsanNci20ZHYpSJyz+GUumYy70UetXokbPAEe/vNX4xoDXWV2klb0iDyAyZ8Z5m/CI9w07ArlF7+4+4fTFC/MPjIHNvp1qlQd2SY+ecXhuIpyuY0nUWm4e/OlJh13ApIgttHx8jqXb2GidSyzUNtigi46JyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Dhqhfngn; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51BJWurd024321;
+	Wed, 12 Feb 2025 05:20:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	LO1hZ5QXZ07rHxOlnZYLZWziODF69u3ncZnlC3UFwHU=; b=DhqhfngnfcAUO1K7
+	Lc0EfHPYMHI4ae0dn+TULM/GiV8I0A5Lq9GXj7K0PyRcnr3++eshDip0lj9bG3HM
+	0gYwtZ+JNq+9u+0A7LVFdoxQlllDBOtfGCwqckDsI53+CPeuFVKn5+0Y7OCmvkRC
+	6SNqaS/Mjuy9zJXjo7LFGNDxABK6Po72opAzGrZ4iLPX0cB6lmLeuqca1nuDlxKt
+	/aPicavxX/cQH5wEOakLcxETPiDZDBFjbXTbN0tVC8u7hMa4DgLeGkv/dNtklk0m
+	tyaiq5CQGG2Y+LwsXNxragusHTFvm6XNNNjeJ9aJPcDzdWRC/p80yqIAb0Wepivw
+	v1iNcA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44r4b5tuh7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Feb 2025 05:20:12 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51C5K6vG027315
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Feb 2025 05:20:06 GMT
+Received: from [10.216.0.248] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Feb
+ 2025 21:20:01 -0800
+Message-ID: <075588ff-77e5-4b01-8c67-8fc30e51b8a9@quicinc.com>
+Date: Wed, 12 Feb 2025 10:49:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzed0392dz.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v3 03/11] KVM: guest_memfd: Allow host to map
- guest_memfd() pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: qcs8300: Add device node for
+ gfx_smmu
+From: Pratyush Brahma <quic_pbrahma@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+        Rob
+ Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor
+ Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad
+ Dybcio <konradybcio@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20250211-b4-branch-gfx-smmu-v5-0-ff0bcb6a3c51@quicinc.com>
+ <20250211-b4-branch-gfx-smmu-v5-2-ff0bcb6a3c51@quicinc.com>
+ <3158e911-c771-4186-b287-50d2395b8c94@kernel.org>
+ <138b1c42-9580-41f4-9079-87740568b79c@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <138b1c42-9580-41f4-9079-87740568b79c@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2gaEzYFD5KsLXdsOPxP8DPtgDHJDbK1n
+X-Proofpoint-GUID: 2gaEzYFD5KsLXdsOPxP8DPtgDHJDbK1n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-12_01,2025-02-11_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 clxscore=1015 mlxscore=0 bulkscore=0
+ spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502120040
 
-Fuad Tabba <tabba@google.com> writes:
 
-> Add support for mmap() and fault() for guest_memfd backed memory
-> in the host for VMs that support in-place conversion between
-> shared and private (shared memory). To that end, this patch adds
-> the ability to check whether the VM type has that support, and
-> only allows mapping its memory if that's the case.
+On 2/12/2025 10:09 AM, Pratyush Brahma wrote:
 >
-> Additionally, this behavior is gated with a new configuration
-> option, CONFIG_KVM_GMEM_SHARED_MEM.
 >
-> Signed-off-by: Fuad Tabba <tabba@google.com>
->
-> ---
->
-> This patch series will allow shared memory support for software
-> VMs in x86. It will also introduce a similar VM type for arm64
-> and allow shared memory support for that. In the future, pKVM
-> will also support shared memory.
+> On 2/11/2025 8:45 PM, Krzysztof Kozlowski wrote:
+>> On 11/02/2025 05:45, Pratyush Brahma wrote:
+>>> Add the device node for gfx smmu that is required for gpu
+>>> specific address translations.
+>>>
+>>> Signed-off-by: Pratyush Brahma<quic_pbrahma@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 39 +++++++++++++++++++++++++++++++++++
+>>>   1 file changed, 39 insertions(+)
+>> As pointed out by Rob, this wasn't ever tested. One more example of work
+>> where you have the binding in the same patch but refuse to use it.
+No, I had tested these patches against the dt_bindings_check and didn't 
+see these errors.
+It seems I need to upgrade my dtschema as Rob pointed out, reorder the 
+clocks and resend.
+However, I guess I need to update the clock list in the bindings file as 
+per the order suggested
+by Konrad in version 3.
+>> NAK
+>>
+>> Best regards,
+>> Krzysztof
+> -- 
+> Thanks and Regards
+> Pratyush Brahma
 
-Thanks, I agree that introducing mmap this way could help in having it
-merged earlier, independently of conversion support, to support testing.
+-- 
+Thanks and Regards
+Pratyush Brahma
 
-I'll adopt this patch in the next revision of 1G page support for
-guest_memfd.
-
-> ---
->  include/linux/kvm_host.h | 11 +++++
->  virt/kvm/Kconfig         |  4 ++
->  virt/kvm/guest_memfd.c   | 93 ++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 108 insertions(+)
->
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 8b5f28f6efff..438aa3df3175 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -728,6 +728,17 @@ static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
->  }
->  #endif
->  
-> +/*
-> + * Arch code must define kvm_arch_gmem_supports_shared_mem if support for
-> + * private memory is enabled and it supports in-place shared/private conversion.
-> + */
-> +#if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_KVM_PRIVATE_MEM)
-> +static inline bool kvm_arch_gmem_supports_shared_mem(struct kvm *kvm)
-> +{
-> +	return false;
-> +}
-> +#endif
-
-Perhaps this could be declared in the #ifdef CONFIG_KVM_PRIVATE_MEM
-block?
-
-Could this be defined as a __weak symbol for architectures to override?
-Or perhaps that can be done once guest_memfd gets refactored separately
-since now the entire guest_memfd.c isn't even compiled if
-CONFIG_KVM_PRIVATE_MEM is not set.
-
-> +
->  #ifndef kvm_arch_has_readonly_mem
->  static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
->  {
-> diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
-> index 54e959e7d68f..4e759e8020c5 100644
-> --- a/virt/kvm/Kconfig
-> +++ b/virt/kvm/Kconfig
-> @@ -124,3 +124,7 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
->  config HAVE_KVM_ARCH_GMEM_INVALIDATE
->         bool
->         depends on KVM_PRIVATE_MEM
-> +
-> +config KVM_GMEM_SHARED_MEM
-> +       select KVM_PRIVATE_MEM
-> +       bool
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index c6f6792bec2a..85467a3ef8ea 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -317,9 +317,102 @@ void kvm_gmem_handle_folio_put(struct folio *folio)
->  {
->  	WARN_ONCE(1, "A placeholder that shouldn't trigger. Work in progress.");
->  }
-> +
-> +static bool kvm_gmem_offset_is_shared(struct file *file, pgoff_t index)
-> +{
-> +	struct kvm_gmem *gmem = file->private_data;
-> +
-> +	/* For now, VMs that support shared memory share all their memory. */
-> +	return kvm_arch_gmem_supports_shared_mem(gmem->kvm);
-> +}
-> +
-> +static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
-> +{
-> +	struct inode *inode = file_inode(vmf->vma->vm_file);
-> +	struct folio *folio;
-> +	vm_fault_t ret = VM_FAULT_LOCKED;
-> +
-> +	filemap_invalidate_lock_shared(inode->i_mapping);
-> +
-> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> +	if (IS_ERR(folio)) {
-> +		ret = VM_FAULT_SIGBUS;
-
-Will it always be a SIGBUS if there is some error getting a folio?
-
-> +		goto out_filemap;
-> +	}
-> +
-> +	if (folio_test_hwpoison(folio)) {
-> +		ret = VM_FAULT_HWPOISON;
-> +		goto out_folio;
-> +	}
-> +
-> +	/* Must be called with folio lock held, i.e., after kvm_gmem_get_folio() */
-> +	if (!kvm_gmem_offset_is_shared(vmf->vma->vm_file, vmf->pgoff)) {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	/*
-> +	 * Only private folios are marked as "guestmem" so far, and we never
-> +	 * expect private folios at this point.
-> +	 */
-
-Proposal - rephrase this comment as: before typed folios can be mapped,
-PGTY_guestmem is only tagged on folios so that guest_memfd will receive
-the kvm_gmem_handle_folio_put() callback. The tag is definitely not
-expected when a folio is about to be faulted in.
-
-I propose the above because I think technically when mappability is NONE
-the folio isn't private? Not sure if others see this differently.
-
-> +	if (WARN_ON_ONCE(folio_test_guestmem(folio)))  {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	/* No support for huge pages. */
-> +	if (WARN_ON_ONCE(folio_test_large(folio))) {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	if (!folio_test_uptodate(folio)) {
-> +		clear_highpage(folio_page(folio, 0));
-> +		kvm_gmem_mark_prepared(folio);
-> +	}
-> +
-> +	vmf->page = folio_file_page(folio, vmf->pgoff);
-> +
-> +out_folio:
-> +	if (ret != VM_FAULT_LOCKED) {
-> +		folio_unlock(folio);
-> +		folio_put(folio);
-> +	}
-> +
-> +out_filemap:
-> +	filemap_invalidate_unlock_shared(inode->i_mapping);
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct vm_operations_struct kvm_gmem_vm_ops = {
-> +	.fault = kvm_gmem_fault,
-> +};
-> +
-> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> +{
-> +	struct kvm_gmem *gmem = file->private_data;
-> +
-> +	if (!kvm_arch_gmem_supports_shared_mem(gmem->kvm))
-> +		return -ENODEV;
-> +
-> +	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> +	    (VM_SHARED | VM_MAYSHARE)) {
-> +		return -EINVAL;
-> +	}
-> +
-> +	file_accessed(file);
-> +	vm_flags_set(vma, VM_DONTDUMP);
-> +	vma->vm_ops = &kvm_gmem_vm_ops;
-> +
-> +	return 0;
-> +}
-> +#else
-> +#define kvm_gmem_mmap NULL
->  #endif /* CONFIG_KVM_GMEM_SHARED_MEM */
->  
->  static struct file_operations kvm_gmem_fops = {
-> +	.mmap		= kvm_gmem_mmap,
-
-I think it's better to surround this with #ifdef
-CONFIG_KVM_GMEM_SHARED_MEM so that when more code gets inserted between
-the struct declaration and the definition of kvm_gmem_mmap() it is more
-obvious that .mmap is only overridden when CONFIG_KVM_GMEM_SHARED_MEM is
-set.
-
->  	.open		= generic_file_open,
->  	.release	= kvm_gmem_release,
->  	.fallocate	= kvm_gmem_fallocate,
 
