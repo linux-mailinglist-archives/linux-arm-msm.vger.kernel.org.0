@@ -1,79 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-47829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59B4EA33328
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 00:04:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 159BBA3332A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 00:04:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0574B167A4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 23:04:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D56397A2F11
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 23:04:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 178D0205AD1;
-	Wed, 12 Feb 2025 23:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D39A24C692;
+	Wed, 12 Feb 2025 23:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZWUnh897"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aP9yvuqT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C722204587;
-	Wed, 12 Feb 2025 23:04:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED77D205ACF;
+	Wed, 12 Feb 2025 23:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739401485; cv=none; b=QuRgMY40XcFOJmp38lw0yIqUzUhrSvJaQeBWVBom1zOz+qPt9mV8F2uP/BbASgt6Nl7hYpeY0OCstvRHwJJ0GF24ZGbXK3DK/af6glQtFCYe6tpglb5JlWhD3CZu3xA1+StlL5HdIZe8vZHXNdYtdxPNYfkRMbTet4Y9VliSa3A=
+	t=1739401486; cv=none; b=aeOzLxcqUCPKv8YnFzCTpklfKG7zksyrmH8y8JHvt1hPDb6R83EDULRxShR2Lh6V6hyn6IcGSq8fuPwKN/U3AMqGmBUoXhTuTZhs4kMGg4OuiI2SkcGElaoVnyYu+H/TIIAs3+jLWWTSfoXNTju8TuJZOxGhsY23utTfGpNmEqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739401485; c=relaxed/simple;
-	bh=whc0meljq8d//xyWaoGWRpTBZvYd9FKdXjbcFve5bNw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RimwBl+3DB9pAw0RXxuUJuge+OuMWYHQBX/8eLThdgJ+sHaXUz64TCj19LJjmqya3KLhWff9JxbJkrWyxZ3J9r2/Pg1FbDh47KBYsfCBLvsEf7SbdTxMRZNmgYxTCgPcdBI+/9xKpKo6R36tiAeA1IoJq4r2ysPZvePmWu+jPks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZWUnh897; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1739401486; c=relaxed/simple;
+	bh=PoBx/4/qGynelh/uiB6nFH8WP+X7fpoOY2mipC9UhNY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=EEITX7iDxrboU/WMHHZ2s3XPF4BZLW8OrIsS1Cscm/iWinAUtuxxhsVDJj9mKL9xApkRxTV/al1aDOvrCTG8BMRCP83Rl0b/b3Rfj5uySH5RvobPtRrWB7j8b+yTfMU4ma3NIPbMl4bJsnRvWKHBMK/uwBSXGQEjl7502YJseTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aP9yvuqT; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-21f7f1e1194so4848845ad.2;
-        Wed, 12 Feb 2025 15:04:43 -0800 (PST)
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-220c8eb195aso4226725ad.0;
+        Wed, 12 Feb 2025 15:04:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739401482; x=1740006282; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=izwOSozCDTiy2Nz+ObEcnYlYVvdl0bBlgB59WdBOADk=;
-        b=ZWUnh8974EoaNC1Li8kuc1cQziQhaHrspdLAY6pj4dP/1nD9KhAvwbIIv4LQj+KvzG
-         MxGLqNkTQnVEPqGgiOKFBNDDSM+0JVvNH5r4mCd+JAYWGRHh7qWbjuPq79aOaPE4wjly
-         erzJVX13Jr76YnnKezvfAFXVHE1/yNd4s3tKvJ5bVKx6ue2xSuWaIlt0HHvIe4NDPnQG
-         EL8X9mWuUzqwDN4H0t4P2EDeqDv2IwamCep3XbfmicxcWmxSQjG4lQV03ehKDL45z5AC
-         jkhC7CEa/86dHCOB3Z3kIiCT8e9Ve15tt3cNOaLCN+nQnqjs0eeskdce0fluNcEYWSF+
-         Dugw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739401482; x=1740006282;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1739401484; x=1740006284; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=izwOSozCDTiy2Nz+ObEcnYlYVvdl0bBlgB59WdBOADk=;
-        b=P7PrI65HZL/1E2ON3bkthGM4d/k7GKFLQQUsdNMVN0gnOZpHgHB5PHzzOk1Bm6DQ25
-         +XTD7m+pMFtyIKrp7FoAAYRaOBTXuvGJ1d4YlLclmVH3IdO8VpVUzn1bvPDyScXNYWG5
-         ESytoMKETFUj3gLm3ithzNXI1NSNGuN5BZkP5NNd/7KJswo8xhE45+ca50nUSmSXmRU9
-         gPXtl5+W54As+Q94VYFzdYRx7vS48z8xQCSn0eAWA+jdgHnP95xHGTMkle/g7zKZNeM6
-         Ela+LOU7b+5kXpPgEcXR8jlNLrTyoGto7yrYymnttF/dXWXmCZf8Fssf5pOUBxQR4xjp
-         OeMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVKklQrp5SBrd+LL7kL2d0fZPL7u/L6Ib5KATuUuzlXALbGFJCyqmsLF6/o3YEroHjwGA+o1GgtQusbpCs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2/Hsustg4Qtf9qW9rwtamr6BmFYB/2DTaf+X5Mm9E9wn4avNs
-	kN7/dfkp/PWUSSJv0Um9hn4X5AbHfx36IHj6Yuic41zI7WK0z7v5
-X-Gm-Gg: ASbGncul4pMybg2t/FJqFzEpNcMGCw4/4ZyRdc+OiErq3ui7oVfDDvezy0sALHERfel
-	CC8zi/DDRixMoVFAi84tb8T1epXEZmfdLayO/21iX0kBDNbTQ0IVkg0SWDpeZvvQV/DiHjoajie
-	3r2U/hL+zCyIRGuDsb+ryT5rxRiScE1wgggGjjmgLf21Ef3JGMh5TugeKXyTsKNO1nn/BqfUxW+
-	FGVjuvA2Yl3K62vZ7L6NYD0Q78uY07zIlClvpPhROuDEV0SYiJwlNJu+RfU+oYXwWyhXVMApFSW
-	/rwdHjSs5nhHBRm6CszN4Itd
-X-Google-Smtp-Source: AGHT+IHYVNpBJ+hs2SKF43WLDbYcsITXIHpe9AoNBckhGg8EsmihGHFjjFi/bOt0ArQ9OzpKlr29tQ==
-X-Received: by 2002:a17:902:f541:b0:220:c067:7be0 with SMTP id d9443c01a7336-220c0677e32mr45783155ad.6.1739401482397;
-        Wed, 12 Feb 2025 15:04:42 -0800 (PST)
+        bh=iTjaCB1N1ydBQMqBry8fjIhD2HufxSwLUhUWeWGMn4w=;
+        b=aP9yvuqTG3kIzvDw5VHuLCDL79ZZJBV3a8illiVV+87RtnrtCufqFRfzf2R1/MN4Tz
+         uTfGoK6L6NwsuQZGQtusCW2bAPLeRK+o0JqMczp/BusfOvDNxgRWnkSgBbc+LcI270sJ
+         3Al0FQaJSlxuRiAoeIaaUoGUAzFncIheQxK3SNK51/O0q1yuvpaJ96mTqZv5YzBgsUbi
+         CmWgZbSaJMSiAWVpD8qcopGbcNibLq3R1dlpcKPa8+pAu0RFpNT8YLlpSpG8DaHUQvDc
+         dacvUDKM8unmTnOfjgV2pe0k//vgD2Q6/aBKsR9JzSeYoXVLNCgcsu6Y/uwib5e68eD8
+         EeWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739401484; x=1740006284;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iTjaCB1N1ydBQMqBry8fjIhD2HufxSwLUhUWeWGMn4w=;
+        b=afiS9x511yrk1VsC/7Ye1fXNPYbNPXZOTemm/IIkDaZaWB0SauudKyZDUR/osfbYQC
+         FJuu+dKMktRmgXvRrfMLepMbDd6n9f0zl7TFVXihiUag4YBTD4OAxLXzMniviuRtYIV9
+         JeLZNQIfw8d+eLCohq38W31DGMewuOjkN95KYkQP+vi0gN8L3ESrsDXlzkx8TYzq/FoC
+         YNOkmtUu/VC8k82JdcLgctsDWZ257SAgBsBx0tU/l26gEkiKlnW95Rxniz4X9LUw6aMW
+         MkT2UZR08fHaLPapuvYVUvFHE8umGoEGp33Naxl8P00jqGA8ibG6rgWB8QFTHRajH6zA
+         N98Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUvPrhowm4ea7Tr05VXHDSEB/5CL0xwqmhZIhDVqN8tpMsRZyqrdx6nuigWFeLjE65HohA6q5izcb76ntE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5yoVetdzSCsZNcIIAn+sxaqLzO32oIY4fxjqwdWjQfNh6phPi
+	nC6iAuprmaSakkQnaX/n6DtVqFj3DLYnW+5Lx8r1Q2HJTMXXcc4s
+X-Gm-Gg: ASbGncv1c2cdDET5toeQ4oWsbPOjJ6yS3A1azxTH4bjuDTVR5qDqjn1AOKU5QnYpCUo
+	C7K0HYm06reVCWjyWD4kJe0HtVJh+BAzAbMaKxN6W7owpdztOyLh7YgkFfjMj2KD7188D8Tsi+r
+	4JNj+1p12+N/k/Gswd32wxuTwhVmULa/vAqEJ5jfOxAYsjF28mD+ypyXMV/iWtHx+42UVxdydD7
+	WaYZte2ISCsiHYoG7iPYlkj4ER6wOKScoOHAcHNsJ2SgjYuY6PWuQvOSyH41P2U1JILHwl6Ui3V
+	3pT6ZuLOTiwkvSkqCOzriotk
+X-Google-Smtp-Source: AGHT+IGCJuRiPBEnF028173kRiuvUsRuqyiYHzbcY80Rfwz3Vr7Pl2PC2LVpfE2p9OX/RX5jivzdRQ==
+X-Received: by 2002:a17:903:2b06:b0:21f:8099:72d9 with SMTP id d9443c01a7336-220bbb0c43emr83000825ad.27.1739401484137;
+        Wed, 12 Feb 2025 15:04:44 -0800 (PST)
 Received: from [127.0.1.1] ([66.119.214.127])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d556da47sm695655ad.187.2025.02.12.15.04.40
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d556da47sm695655ad.187.2025.02.12.15.04.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2025 15:04:42 -0800 (PST)
+        Wed, 12 Feb 2025 15:04:43 -0800 (PST)
 From: "James A. MacInnes" <james.a.macinnes@gmail.com>
-Subject: [PATCH v2 0/2] drm/msm/dp: Fix Type-C Timing
-Date: Wed, 12 Feb 2025 15:03:45 -0800
-Message-Id: <20250212-sdm845_dp-v2-0-4954e51458f4@gmail.com>
+Date: Wed, 12 Feb 2025 15:03:46 -0800
+Subject: [PATCH v2 1/2] drm/msm/dp: Disable wide bus support for SDM845
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,10 +83,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANEorWcC/x3N0QqDIBTG8VcJrye0Y+ba1d5jjNHyaEJlO7oyo
- nefdPmDj/+3s4DkMLB7sTPCxQXnpwy4FKzr28kidzqbQQmyhCvwoMdbJd965jXqphGNUq0ULO9
- nQuPS2Xq+sg35kceesD0LlYFVbR8wwixWRtFvJPLZ1H2tsW746Yq26GNaxkS1kqDg4XFak+xMP
- cSBHccfhiwtAq0AAAA=
+Message-Id: <20250212-sdm845_dp-v2-1-4954e51458f4@gmail.com>
+References: <20250212-sdm845_dp-v2-0-4954e51458f4@gmail.com>
+In-Reply-To: <20250212-sdm845_dp-v2-0-4954e51458f4@gmail.com>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
@@ -99,67 +99,54 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  Guenter Roeck <groeck@chromium.org>, Rob Clark <robdclark@chromium.org>, 
  "James A. MacInnes" <james.a.macinnes@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1739401480; l=2022;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1739401480; l=1781;
  i=james.a.macinnes@gmail.com; h=from:subject:message-id;
- bh=whc0meljq8d//xyWaoGWRpTBZvYd9FKdXjbcFve5bNw=;
- b=/+dHVSi8w/zrS8YQiMpVK5J8B8OGqD9Fv40WhguqSpTjkv8yGf9TRXrA9AHGFEAiU5FDMMShT
- z3G7HubmMjpDk5krBpgj3hlVsYK8Y85dMXvheX1MU6UZ+9wOGk5NWEL
+ bh=PoBx/4/qGynelh/uiB6nFH8WP+X7fpoOY2mipC9UhNY=;
+ b=gJ5JFDtuCFVR/JXUlm0GmVoAyZl6jPM3zN4afSUKnfdEn71BBX5Wx/qHtZs2pnXItrHlC/VTN
+ B5dhn5ObKt8B7jzkMlIM28f9raC4LFJm3yLOwZ8jW6sXVY0WcxR3NIn
 X-Developer-Key: i=james.a.macinnes@gmail.com; a=ed25519;
  pk=3z+XoIMKkNT7N5GL2WOp/Lcz2ghtr7b8RBCa1usTz9U=
 
-SDM845 Type-C DisplayPort output inactive on DP Monitor and tears on HDMI.
+SDM845 DPU hardware is rev 4.0.0 per hardware documents.
+Original patch to enable wide_bus operation did not take into account
+the SDM845 and it got carried over by accident.
 
-During testing and research found that the dp and dpu drivers more
-closely match later incarnations of the Android driver.
-Compared against the 4.9 Android and found the porch timing and
-wide bus elements were disabled.
-Tested by commenting out code and the graphical glitches on
-HDMI improved.
-Fully turning off wide_bus resolved the single vertical line and
-vblank errors when using non-native resolutions.
-Removing the porch adjustment fixed HDMI and DisplayPort operated
-correctly (for the first time) for all monitor supported resolutions.
+- Incorrect setting caused inoperable DisplayPort.
+- Corrected by separating SDM845 into its own descriptor.
 
-Changes v1:
-- Patch 1/2: Separated the descriptor from the sc7180 and turned off
-             wide_bus support.
-- Patch 2/2: Removed porch timing adjustment.
-
-Changes v2:
-- Patch 1/2: Removed unneeded assignment.
-             Increased verbosity of commit message.
-- Patch 2/2: Added comments to explain use of wide_bus_en.
-             Increased verbosity of commit message.
-
-Verified functionality on SDM845 using Lantronix SOM.
-Tested with Type-C to DisplayPort and Dell Monitor.
-Tested with Type-C hub with HDMI to Samsung 4k TV.
-
-James A. MacInnes (2):
-  drm/msm/dp: Disable wide bus support for SDM845
-  drm/msm/disp: Correct porch timing for SDM845
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 8 ++++----
- drivers/gpu/drm/msm/dp/dp_display.c                  | 7 ++++++-
- 2 files changed, 10 insertions(+), 5 deletions(-)
-
---
-2.43.0
-
+Fixes: c7c412202623 ("drm/msm/dp: enable widebus on all relevant chipsets")
+Signed-off-by: James A. MacInnes <james.a.macinnes@gmail.com>
 ---
-James A. MacInnes (2):
-      drm/msm/dp: Disable wide bus support for SDM845
-      drm/msm/disp: Correct porch timing for SDM845
+ drivers/gpu/drm/msm/dp/dp_display.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 14 +++++++++-----
- drivers/gpu/drm/msm/dp/dp_display.c                  |  7 ++++++-
- 2 files changed, 15 insertions(+), 6 deletions(-)
----
-base-commit: ffd294d346d185b70e28b1a28abe367bbfe53c04
-change-id: 20250212-sdm845_dp-6ed993977a53
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index aff51bb973eb..e30cccd63910 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -126,6 +126,11 @@ static const struct msm_dp_desc msm_dp_desc_sa8775p[] = {
+ 	{}
+ };
+ 
++static const struct msm_dp_desc msm_dp_desc_sdm845[] = {
++	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
++	{}
++};
++
+ static const struct msm_dp_desc msm_dp_desc_sc7180[] = {
+ 	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{}
+@@ -178,7 +183,7 @@ static const struct of_device_id msm_dp_dt_match[] = {
+ 	{ .compatible = "qcom,sc8180x-edp", .data = &msm_dp_desc_sc8180x },
+ 	{ .compatible = "qcom,sc8280xp-dp", .data = &msm_dp_desc_sc8280xp },
+ 	{ .compatible = "qcom,sc8280xp-edp", .data = &msm_dp_desc_sc8280xp },
+-	{ .compatible = "qcom,sdm845-dp", .data = &msm_dp_desc_sc7180 },
++	{ .compatible = "qcom,sdm845-dp", .data = &msm_dp_desc_sdm845 },
+ 	{ .compatible = "qcom,sm8350-dp", .data = &msm_dp_desc_sc7180 },
+ 	{ .compatible = "qcom,sm8650-dp", .data = &msm_dp_desc_sm8650 },
+ 	{ .compatible = "qcom,x1e80100-dp", .data = &msm_dp_desc_x1e80100 },
 
-Best regards,
 -- 
-James A. MacInnes <james.a.macinnes@gmail.com>
+2.43.0
 
 
