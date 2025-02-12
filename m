@@ -1,114 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-47765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0C5BA32889
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 15:35:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36955A328C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 15:41:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48E291884BF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 14:35:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18472169D32
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 14:40:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C346520F092;
-	Wed, 12 Feb 2025 14:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6D6D25A351;
+	Wed, 12 Feb 2025 14:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sIxLR7y7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Je5v/O6R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9127020E314;
-	Wed, 12 Feb 2025 14:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1CE25A33E;
+	Wed, 12 Feb 2025 14:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739370940; cv=none; b=cBZoH3otNTob85XsxbcDGJjCFgKMXRRzNtDAOGdghpitebHvDpRexiFf2NZ6NlmHbB5BtX6LFXWj0FUCGo9XNZDLeXwkHa1tVH68LqzxAypLEy8sby1myKlJR4B1n0Dim+hkgk+6NmuvqxKqQ2H0htWXQFxg270rSuhWfF67BYg=
+	t=1739371077; cv=none; b=oKgfhoP7P8/29+oiy+kWHcvIKba6n/33QfAdvVhAw/5IlNHrncRGEwxxLt1QrjCNCsJTBRCoXv3wLVca4HezUupoPvZ+Po7mD8iMjCrHJKB+vF+yjT538DhQxT0C0qSBh2HgmQ7bmgN5xlTqELUk7qgD5+dekhrvgCPwL47Jc1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739370940; c=relaxed/simple;
-	bh=k9FJCp/EzqgT8t9ccuHwMGiXvLArAc9zO7kzZEzxqco=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZGTHnKP+kpa8oOmqyoKwjnoyU/cbzahxOzh6Y77inVXA2LVQQKbAKnPz+82T6nA4aCTj9pe5k+T7Q3+skkWpo3KCee3G80sS/L+6iyS0wnShABD+CPBBmtLfukmlTgzkm+m6JZXDv0Vb5MRxiwhKhDv1KfxoSjT0vDJGopDL3I4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sIxLR7y7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39E7C4CEDF;
-	Wed, 12 Feb 2025 14:35:39 +0000 (UTC)
+	s=arc-20240116; t=1739371077; c=relaxed/simple;
+	bh=VUBM57jOz21qhzl4JgnGGgiFmJ16K4z/3nSk3V+odWQ=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=s2shW5vJglAG87cdDeYvL24imuL5UvQsf1AjZDX+Yeu2/TwaFKy9yTZxDAWk7sh7XliIjfQq/zfeqBWxeq2o1eTTNsnGLhQqRPaIXrR/fhNhYrDuA/7p062z5ukppZU4Y/6dMdpxFTk8Ao1cjjXMdX8OD15O72sLkw2Eah3N9D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Je5v/O6R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43F8C4CEE4;
+	Wed, 12 Feb 2025 14:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739370940;
-	bh=k9FJCp/EzqgT8t9ccuHwMGiXvLArAc9zO7kzZEzxqco=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sIxLR7y7ahfCJf7INhdJVZuc2vgomq0+pFO44mEH0BAED2jguVIqmCKFOuZxbrsBv
-	 Mn4rCHDajZI2WJOxBV/4EVZmkyZTJVTrGr/h9alK1XA5QW9rE3spcS6QWI2czg/QGi
-	 hVvm+eLKAxi2itsBAInUkjXuI1j/e7+GDJe1gmRNOmMVsSUE+vAfCqFrVs+hKDs+mP
-	 CMRwKYbhxNykxXNYQQS8nz0dTK+W7BlC/NRe47EZ+dnePrzBKqbmenk6HIU35fU8vs
-	 CZaTf/PN5SOJUaw69mJZzofEHkAaaHvxttBzmDLTulfvBh9FS9qck4XPT2xjHDJpSt
-	 G+C0z+mE5bRrQ==
-Date: Wed, 12 Feb 2025 08:35:38 -0600
-From: Rob Herring <robh@kernel.org>
-To: Yongxing Mou <quic_yongmou@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/4] Add MST support for qcs8300 platform
-Message-ID: <20250212143538.GA3554863-robh@kernel.org>
-References: <20250212-mst_qcs8300-v1-0-38a8aa08394b@quicinc.com>
+	s=k20201202; t=1739371076;
+	bh=VUBM57jOz21qhzl4JgnGGgiFmJ16K4z/3nSk3V+odWQ=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=Je5v/O6RvOmLtL1lWrIBnUZdIB9qSs5EzOVdh0V7z1Wp5/q7Seycikmd3UDwzVhZd
+	 r60tyUtkLhGWXvRZua2EZbVry+x0exOrN9X7SVOi670+LrPax9T3ze+hHf3T2ZZQlx
+	 qJ3AfWEUNv2W3g7BTWsTnpXRct0ysuDJFPDaK4km1V1sbRsMa51ZkgF4LNXd/YgKfV
+	 8FLPNGgSpj8395pzX311yHjDr5sDyA5Hqhin4D4jIxNmmIMpqqWi3EcLZL9QstKpGG
+	 aTsR2kRVHbQCnBFJD15qKYbIyjx5k7u6LwWO/hTn/KMThp19m0vZvZEkAlWJ7UK6dK
+	 oA8B5HOGhqO1g==
+Date: Wed, 12 Feb 2025 08:37:55 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250212-mst_qcs8300-v1-0-38a8aa08394b@quicinc.com>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Will Deacon <will@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Daniil Titov <daniilt971@gmail.com>, 
+ =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
+ Robin Murphy <robin.murphy@arm.com>, linux-kernel@vger.kernel.org, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Joerg Roedel <joro@8bytes.org>, Conor Dooley <conor+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org, 
+ linux-clk@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>, 
+ iommu@lists.linux.dev, Stephen Boyd <sboyd@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, Dang Huynh <danct12@riseup.net>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>
+To: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+In-Reply-To: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
+References: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
+Message-Id: <173937096484.3561919.15204410384855360487.robh@kernel.org>
+Subject: Re: [PATCH 00/10] Initial support of MSM8937 and Xiaomi Redmi 3S
 
-On Wed, Feb 12, 2025 at 03:12:23PM +0800, Yongxing Mou wrote:
-> This series of patches introduces how to enable MST functionality on
-> the qcs8300 platform. The qcs8300 platform uses dpu_8_4 hardware, which
-> is the same as the sa8775p, but it only has one DPU. So it only has one
-> DP0 controller, supporting 4-stream MST. This patch only enables 
-> 2-stream MST, using intf0 and intf3. The first and second patches are
-> modifications to the correspond dt-bindings, third patch is the dp 
-> controller driver after not reuse sm8650, fourth patch is the qcs8300
-> dts modification which add the clk support for stream 1.
-> 
-> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
-> ---
-> This patch depends on following series:
-> https://lore.kernel.org/all/20250120-mdssdt_qcs8300-v4-0-1687e7842125@quicinc.com/
-> https://lore.kernel.org/all/20250114-dts_qcs8300-v3-0-d114cc5e4af9@quicinc.com/
-> https://lore.kernel.org/all/20241202-dp_mst_bindings-v1-0-9a9a43b0624a@quicinc.com
-> https://lore.kernel.org/all/20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com/
-> 
-> ---
-> Yongxing Mou (4):
->       dt-bindings: display/msm: Redocument the dp-controller for QCS8300
->       dt-bindings: display/msm: Add stream 1 pixel clock for QCS8300
->       drm/msm/dp: Populate the max_streams for qcs8300 mst controller
->       arm64: dts: qcom: qcs8300: Add support for stream 1 clk for DP MST
-> 
->  .../devicetree/bindings/display/msm/dp-controller.yaml     |  5 +----
->  .../devicetree/bindings/display/msm/qcom,qcs8300-mdss.yaml | 14 ++++++++------
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi                      | 12 ++++++++----
->  drivers/gpu/drm/msm/dp/dp_display.c                        |  8 ++++++++
->  4 files changed, 25 insertions(+), 14 deletions(-)
-> ---
-> base-commit: 7ba9bcc5090556c007d9a718d7176e097fe54f19
 
-Your series doesn't apply because this commit doesn't exist in any repo 
-I have.
+On Tue, 11 Feb 2025 23:37:44 +0100, Barnabás Czémán wrote:
+> This patch series add initial support for MSM8937 SoC
+> and Xiaomi Redmi 3S (land).
+> 
+> The series is extending the MSM8917 gcc and pinctrl drivers
+> because they are sibling SoCs.
+> MSM8937 have 4 more A53 cores and have one more dsi port then
+> MSM8917.
+> It implements little-big architecture and uses Adreno 505.
+> 
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
+> Barnabás Czémán (5):
+>       dt-bindings: mfd: qcom,tcsr: Add compatible for MSM8937
+>       dt-bindings: nvmem: Add compatible for MS8937
+>       dt-bindings: iommu: qcom,iommu: Add MSM8937 IOMMU to SMMUv1 compatibles
+>       dt-bindings: arm: qcom: Add Xiaomi Redmi 3S
+>       arm64: dts: qcom: Add Xiaomi Redmi 3S
+> 
+> Dang Huynh (2):
+>       pinctrl: qcom: msm8917: Add MSM8937 wsa_reset pin
+>       arm64: dts: qcom: Add initial support for MSM8937
+> 
+> Daniil Titov (3):
+>       dt-bindings: clock: gcc-msm8917: Split to separate schema
+>       dt-bindings: clock: Add MSM8937 Global Clock controller compatible
+>       clk: qcom: gcc: Add support for Global Clock controller found on MSM8937
+> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |    7 +
+>  .../bindings/clock/qcom,gcc-msm8909.yaml           |   10 +-
+>  .../bindings/clock/qcom,gcc-msm8917.yaml           |   74 +
+>  .../devicetree/bindings/iommu/qcom,iommu.yaml      |    1 +
+>  .../devicetree/bindings/mfd/qcom,tcsr.yaml         |    1 +
+>  .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |    1 +
+>  arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+>  arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dts   |  402 ++++
+>  arch/arm64/boot/dts/qcom/msm8937.dtsi              | 2145 ++++++++++++++++++++
+>  drivers/clk/qcom/Kconfig                           |    6 +-
+>  drivers/clk/qcom/gcc-msm8917.c                     |  617 +++++-
+>  drivers/pinctrl/qcom/Kconfig.msm                   |    4 +-
+>  drivers/pinctrl/qcom/pinctrl-msm8917.c             |    8 +-
+>  include/dt-bindings/clock/qcom,gcc-msm8917.h       |   17 +
+>  14 files changed, 3277 insertions(+), 17 deletions(-)
+> ---
+> base-commit: df5d6180169ae06a2eac57e33b077ad6f6252440
+> change-id: 20250210-msm8937-228ef0dc3ec9
+> 
+> Best regards,
+> --
+> Barnabás Czémán <barnabas.czeman@mainlining.org>
+> 
+> 
 
-Rob
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250211-msm8937-v1-0-7d27ed67f708@mainlining.org:
+
+arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dtb: gpu@1c00000: clock-names:5: 'alwayson' is not one of ['core', 'iface', 'mem', 'mem_iface', 'alt_mem_iface', 'gfx3d', 'rbbmtimer', 'rbcpr']
+	from schema $id: http://devicetree.org/schemas/display/msm/gpu.yaml#
+arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dtb: clock-controller@1800000: clocks: [[18], [51], [52, 1], [52, 0]] is too short
+	from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-msm8917.yaml#
+arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dtb: clock-controller@1800000: clock-names: ['xo', 'sleep_clk', 'dsi0pll', 'dsi0pllbyte'] is too short
+	from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-msm8917.yaml#
+arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dtb: clock-controller@1800000: Unevaluated properties are not allowed ('clock-names', 'clocks' were unexpected)
+	from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-msm8917.yaml#
+
+
+
+
+
 
