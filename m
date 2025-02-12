@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-47724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7880FA3214F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 09:37:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A674A32155
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 09:38:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3CE6D160DF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 08:37:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5A483A1E6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 08:38:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F4912054FC;
-	Wed, 12 Feb 2025 08:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE179205509;
+	Wed, 12 Feb 2025 08:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S86myunx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RjOFk1/n"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622CE1FAC56;
-	Wed, 12 Feb 2025 08:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4D42054FC;
+	Wed, 12 Feb 2025 08:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739349473; cv=none; b=Eu+7EtOcf527AfA+pGEaaxyRVPk5EDxAwKLINh2tgN6VqphPig0wiG7p0FfnjR3zDAY0uCUnca87SrmGGXhDRaVewfszF5+MDhMeueW6Z2XuusuAjo5lrQ/Uh37m1lEdN6HqrMoVoFprCzvDuPeRBW/24ZMz9SYBmHHVqqbuWoA=
+	t=1739349497; cv=none; b=UhIkvhaOt9G0EuGEGB7QgjRvgjeFKhhQg4nsH16/kO+CqoSw5NblYXmftuagOh4Ec6EhlIJ+TqIp258dpJSiQoYotyvtxRdyB3oAl220GtxUP6viLJ/7Pn9Ka6IdAzV1/lrnOv43xIk9ypn5Y6QK2mdJw6A+tnCa/YyeyrqLr9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739349473; c=relaxed/simple;
-	bh=vSk1vLdngX9mcfOhOr0BrHcNNmv+3X4JGjHSGrHYxdo=;
+	s=arc-20240116; t=1739349497; c=relaxed/simple;
+	bh=Fc2sNvHMZglmp/mhVCAXjnNImKTEggsLVKReblTkS4c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gfohoqkofK2L/Vo6A6QVibLRPNfJR8jyIkljpxt1Vlg6y6rgVkJDrWz9Px8jjZtRXRCZbwyCmoATt0q1WqfdeTH3wVXF3cBB/jf1UCLHC7W7qWg68ht9AasYhzskCQcRf8FdvoIlQoOW45mYy7BFYxnAFtECOUgYXwDP9NeT6QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S86myunx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82CCBC4CEE2;
-	Wed, 12 Feb 2025 08:37:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Nsg400CF3EmC/54jnD3EKjGqrVkE4ZyYJqRvbEbD6bjhhQ5p9GNX0xH9enub8iryKMwbqIurNOZ51lal0NcC3hGd5N1MoIjiCg1lkMBUmSxkaf80kl1WaE7BfzLvEoYEAhOHbOw9yMl++byZpIvQw5ea8+65dyvNpyULYY/pWHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RjOFk1/n; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D546C4CEDF;
+	Wed, 12 Feb 2025 08:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739349472;
-	bh=vSk1vLdngX9mcfOhOr0BrHcNNmv+3X4JGjHSGrHYxdo=;
+	s=k20201202; t=1739349497;
+	bh=Fc2sNvHMZglmp/mhVCAXjnNImKTEggsLVKReblTkS4c=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=S86myunxRhD6mumM3HXOHNgu6qAgxsLQx+qbNNh+Kr6akvtC37rJF1qySSfKPsPvg
-	 1eq8kkhfuovd36EXsbWTsIpH4K5L840rUENgwA4PKFBiRcmT0R/nPS7Pv3NpiwfNqz
-	 2BO3zplzJrkcJCqJFcv8Ki97CdyKiOV4XhpOVA1k5HqyViGD/oLm40Gfm3pHkbUDjI
-	 3JtbLjjTFBcHCzetRzDpkKDnnxfHHJRmb/2Rji4prLuFbgn9NYPI2XxbOwYwJkSeOM
-	 HoIgJyFNs1jWKV4zl0ZPcyGsZdN9nxNv0HEFwK7vVvGzbottZ4eGuiiRD3joIZsa1j
-	 zTFEvifzynh3Q==
-Message-ID: <0b684d95-9461-4da3-8016-9c74c9dd03ce@kernel.org>
-Date: Wed, 12 Feb 2025 09:37:42 +0100
+	b=RjOFk1/nGfTvDhLgRxvoT7W70PRC9OWbO5krgL8sVBWJOEbebA3UGSZhH63J0MnTj
+	 0gXSH+3MNwQFVuxUlcdULbYpvBgQ4d/bwgufqcZECVlK2IKa6pw6H5WuTBnWGaV1nC
+	 kLHMtAbdMIj+e+g7/+1aaJSeC5yDncouDDtBxME+WSZFhiN58BlkRW9hGqntdrB57U
+	 UShnOjulqc/FBlay6gd+e4yiQqeu7AXGNyBA/V/X0aK4FyljtlVYF97Ai1+qMPrq4A
+	 mwiXcdRI0cnzy0Ec+CjiD0d7iJrjXFs/2nNxRmeR0Ve95d4/Xw7FJ+IeNfuTRmWMj+
+	 xQ8UWu3i4QmVw==
+Message-ID: <e620e80d-afeb-4ce1-9798-2f5cdd92b3b1@kernel.org>
+Date: Wed, 12 Feb 2025 09:38:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] dt-bindings: display/msm: Document the
- dp-controller for QCS8300
+Subject: Re: [PATCH v4 3/4] dt-bindings: display/msm: Document MDSS on QCS8300
 To: Yongxing Mou <quic_yongmou@quicinc.com>, Rob Clark <robdclark@gmail.com>,
  Abhinav Kumar <quic_abhinavk@quicinc.com>,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
@@ -67,10 +66,9 @@ To: Yongxing Mou <quic_yongmou@quicinc.com>, Rob Clark <robdclark@gmail.com>,
  Bjorn Andersson <andersson@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
 References: <20250120-mdssdt_qcs8300-v4-0-1687e7842125@quicinc.com>
- <20250120-mdssdt_qcs8300-v4-2-1687e7842125@quicinc.com>
+ <20250120-mdssdt_qcs8300-v4-3-1687e7842125@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -116,19 +114,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250120-mdssdt_qcs8300-v4-2-1687e7842125@quicinc.com>
+In-Reply-To: <20250120-mdssdt_qcs8300-v4-3-1687e7842125@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/01/2025 04:49, Yongxing Mou wrote:
-> Add compatible string for the DisplayPort controller found on the
-> Qualcomm QCS8300 platform.QCS8300 only support one DisplayPort
-> controller and have the same base offset with sm8650, so we reuse
-> the sm8650 DisplayPort driver.
+> Document the MDSS hardware found on the Qualcomm QCS8300 platform.
+> QCS8300 use the same DPU hardware version as SA8775P, so we reuse it's
+> driver. But QCS8300 only have one DP controller, and offset is same with
+> sm8650, so dp controller reuse the sm8650's driver.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-NAK, unreviewed. See all other emails about this mess.
+> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> ---
+>  .../bindings/display/msm/qcom,qcs8300-mdss.yaml    | 244 +++++++++++++++++++++
+>  1 file changed, 244 insertions(+)
 
+Also wrong compatibles used.
 
 Best regards,
 Krzysztof
