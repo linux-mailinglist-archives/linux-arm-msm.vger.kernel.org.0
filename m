@@ -1,137 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-47828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48717A332BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 23:37:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59B4EA33328
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 00:04:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBF96188903F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 22:37:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0574B167A4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2025 23:04:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1460A2036F4;
-	Wed, 12 Feb 2025 22:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 178D0205AD1;
+	Wed, 12 Feb 2025 23:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="jAr2bHxl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZWUnh897"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5FC1FFC59;
-	Wed, 12 Feb 2025 22:37:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C722204587;
+	Wed, 12 Feb 2025 23:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739399822; cv=none; b=RQSEwZRWacFKrqgym1SFItRPtkiQcS/HmvzDXhvkijgMcSnTn3Iuf3Epj/AQ0J5YWz0xOdZwq8GV+Wsaes7EK5SiMmklw3un6Qe9EZ5LAmIoeptasQsXV0OdEXRrznhn+aDppHHGlbqb1mphtjq0bZv4NtxvqyPHSNeY1f37nm0=
+	t=1739401485; cv=none; b=QuRgMY40XcFOJmp38lw0yIqUzUhrSvJaQeBWVBom1zOz+qPt9mV8F2uP/BbASgt6Nl7hYpeY0OCstvRHwJJ0GF24ZGbXK3DK/af6glQtFCYe6tpglb5JlWhD3CZu3xA1+StlL5HdIZe8vZHXNdYtdxPNYfkRMbTet4Y9VliSa3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739399822; c=relaxed/simple;
-	bh=cKI6iOzIMfA0rNKfSsAF/i1GDPKMHGcEWOZBDuLpg1E=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=tMF8KTBKsDfBEQQUHzw7Fibih1AAUjY1Pi46Ap+1WFXIAFBGHvFaue9gly1MkygnzCBXf31SMy4tompxzTlWsvxx+9BLzkYxoxfPtE0Ya6xUpzamCxSaRko4J6ulS1BjELpw5md75a+c2D+ty9EMlz+c1WoVNdxGUFHXzEku4LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=jAr2bHxl; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (web.docker-mailserver_default [172.18.0.2])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 2708ABB837;
-	Wed, 12 Feb 2025 22:36:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1739399818;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qdqWEqbVFWgWcKXIBp4Jh3qH6ciNVBQ+WPGChrj19ng=;
-	b=jAr2bHxlTPJfEM6bh9gMeU82GrEWeDCkUhhgvCUW440q+y0BOUa5zYboG/sSG8v1BZhZBy
-	PLAPA8kdfj/205uv5zL1kZ5y9aTJfPb0ya+aIMDz4Hd7Lg202g2l7RTuSwQnpH95qoGvPz
-	HVA3IZzZ8DHo4d5Nn9fPua946BWtzPFppy5L2/wt6J438qdH4IL0FWhvfbJ67ohKxdx7AB
-	RaBeTai6RtvrICBrtFFl9yuEl7g7fYOLTlOdokZX/vO2ZtqGeAsehM1o7S7xeZKcJyasDb
-	/1rpywX/wFUsT/oYkNKX2it1mbLx43Y4W4/xV0HVu3Tb+lkVRYEK2CC+rljNwg==
+	s=arc-20240116; t=1739401485; c=relaxed/simple;
+	bh=whc0meljq8d//xyWaoGWRpTBZvYd9FKdXjbcFve5bNw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RimwBl+3DB9pAw0RXxuUJuge+OuMWYHQBX/8eLThdgJ+sHaXUz64TCj19LJjmqya3KLhWff9JxbJkrWyxZ3J9r2/Pg1FbDh47KBYsfCBLvsEf7SbdTxMRZNmgYxTCgPcdBI+/9xKpKo6R36tiAeA1IoJq4r2ysPZvePmWu+jPks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZWUnh897; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-21f7f1e1194so4848845ad.2;
+        Wed, 12 Feb 2025 15:04:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739401482; x=1740006282; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=izwOSozCDTiy2Nz+ObEcnYlYVvdl0bBlgB59WdBOADk=;
+        b=ZWUnh8974EoaNC1Li8kuc1cQziQhaHrspdLAY6pj4dP/1nD9KhAvwbIIv4LQj+KvzG
+         MxGLqNkTQnVEPqGgiOKFBNDDSM+0JVvNH5r4mCd+JAYWGRHh7qWbjuPq79aOaPE4wjly
+         erzJVX13Jr76YnnKezvfAFXVHE1/yNd4s3tKvJ5bVKx6ue2xSuWaIlt0HHvIe4NDPnQG
+         EL8X9mWuUzqwDN4H0t4P2EDeqDv2IwamCep3XbfmicxcWmxSQjG4lQV03ehKDL45z5AC
+         jkhC7CEa/86dHCOB3Z3kIiCT8e9Ve15tt3cNOaLCN+nQnqjs0eeskdce0fluNcEYWSF+
+         Dugw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739401482; x=1740006282;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=izwOSozCDTiy2Nz+ObEcnYlYVvdl0bBlgB59WdBOADk=;
+        b=P7PrI65HZL/1E2ON3bkthGM4d/k7GKFLQQUsdNMVN0gnOZpHgHB5PHzzOk1Bm6DQ25
+         +XTD7m+pMFtyIKrp7FoAAYRaOBTXuvGJ1d4YlLclmVH3IdO8VpVUzn1bvPDyScXNYWG5
+         ESytoMKETFUj3gLm3ithzNXI1NSNGuN5BZkP5NNd/7KJswo8xhE45+ca50nUSmSXmRU9
+         gPXtl5+W54As+Q94VYFzdYRx7vS48z8xQCSn0eAWA+jdgHnP95xHGTMkle/g7zKZNeM6
+         Ela+LOU7b+5kXpPgEcXR8jlNLrTyoGto7yrYymnttF/dXWXmCZf8Fssf5pOUBxQR4xjp
+         OeMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVKklQrp5SBrd+LL7kL2d0fZPL7u/L6Ib5KATuUuzlXALbGFJCyqmsLF6/o3YEroHjwGA+o1GgtQusbpCs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2/Hsustg4Qtf9qW9rwtamr6BmFYB/2DTaf+X5Mm9E9wn4avNs
+	kN7/dfkp/PWUSSJv0Um9hn4X5AbHfx36IHj6Yuic41zI7WK0z7v5
+X-Gm-Gg: ASbGncul4pMybg2t/FJqFzEpNcMGCw4/4ZyRdc+OiErq3ui7oVfDDvezy0sALHERfel
+	CC8zi/DDRixMoVFAi84tb8T1epXEZmfdLayO/21iX0kBDNbTQ0IVkg0SWDpeZvvQV/DiHjoajie
+	3r2U/hL+zCyIRGuDsb+ryT5rxRiScE1wgggGjjmgLf21Ef3JGMh5TugeKXyTsKNO1nn/BqfUxW+
+	FGVjuvA2Yl3K62vZ7L6NYD0Q78uY07zIlClvpPhROuDEV0SYiJwlNJu+RfU+oYXwWyhXVMApFSW
+	/rwdHjSs5nhHBRm6CszN4Itd
+X-Google-Smtp-Source: AGHT+IHYVNpBJ+hs2SKF43WLDbYcsITXIHpe9AoNBckhGg8EsmihGHFjjFi/bOt0ArQ9OzpKlr29tQ==
+X-Received: by 2002:a17:902:f541:b0:220:c067:7be0 with SMTP id d9443c01a7336-220c0677e32mr45783155ad.6.1739401482397;
+        Wed, 12 Feb 2025 15:04:42 -0800 (PST)
+Received: from [127.0.1.1] ([66.119.214.127])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d556da47sm695655ad.187.2025.02.12.15.04.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Feb 2025 15:04:42 -0800 (PST)
+From: "James A. MacInnes" <james.a.macinnes@gmail.com>
+Subject: [PATCH v2 0/2] drm/msm/dp: Fix Type-C Timing
+Date: Wed, 12 Feb 2025 15:03:45 -0800
+Message-Id: <20250212-sdm845_dp-v2-0-4954e51458f4@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 12 Feb 2025 23:36:58 +0100
-From: barnabas.czeman@mainlining.org
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
- <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: msm8917-xiaomi-riva: Add display
- backlight
-In-Reply-To: <0d540105-1da7-459b-a812-dbc13097520e@oss.qualcomm.com>
-References: <20250212-pm8937-pwm-v1-0-a900a779b4ad@mainlining.org>
- <20250212-pm8937-pwm-v1-2-a900a779b4ad@mainlining.org>
- <0d540105-1da7-459b-a812-dbc13097520e@oss.qualcomm.com>
-Message-ID: <c299f30205b602031905ed972fc6ea9f@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANEorWcC/x3N0QqDIBTG8VcJrye0Y+ba1d5jjNHyaEJlO7oyo
+ nefdPmDj/+3s4DkMLB7sTPCxQXnpwy4FKzr28kidzqbQQmyhCvwoMdbJd965jXqphGNUq0ULO9
+ nQuPS2Xq+sg35kceesD0LlYFVbR8wwixWRtFvJPLZ1H2tsW746Yq26GNaxkS1kqDg4XFak+xMP
+ cSBHccfhiwtAq0AAAA=
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Chandan Uddaraju <chandanu@codeaurora.org>, 
+ Stephen Boyd <swboyd@chromium.org>, Vara Reddy <quic_varar@quicinc.com>, 
+ Tanmay Shah <tanmay@codeaurora.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Guenter Roeck <groeck@chromium.org>, Rob Clark <robdclark@chromium.org>, 
+ "James A. MacInnes" <james.a.macinnes@gmail.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1739401480; l=2022;
+ i=james.a.macinnes@gmail.com; h=from:subject:message-id;
+ bh=whc0meljq8d//xyWaoGWRpTBZvYd9FKdXjbcFve5bNw=;
+ b=/+dHVSi8w/zrS8YQiMpVK5J8B8OGqD9Fv40WhguqSpTjkv8yGf9TRXrA9AHGFEAiU5FDMMShT
+ z3G7HubmMjpDk5krBpgj3hlVsYK8Y85dMXvheX1MU6UZ+9wOGk5NWEL
+X-Developer-Key: i=james.a.macinnes@gmail.com; a=ed25519;
+ pk=3z+XoIMKkNT7N5GL2WOp/Lcz2ghtr7b8RBCa1usTz9U=
 
-On 2025-02-12 23:31, Konrad Dybcio wrote:
-> On 12.02.2025 11:21 PM, Barnabás Czémán wrote:
->> Redmi 5A display uses pwm backlight, add support for it.
->> 
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> ---
->>  arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts | 25 
->> ++++++++++++++++++++++++
->>  1 file changed, 25 insertions(+)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts 
->> b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
->> index 
->> f1d22535fedd94467ba3f0a88b2110ce5360e7e1..8808306c989f54116052667887f9bf36b63c4c64 
->> 100644
->> --- a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
->> +++ b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
->> @@ -20,6 +20,14 @@ / {
->>  	qcom,msm-id = <QCOM_ID_MSM8917 0>;
->>  	qcom,board-id = <0x1000b 2>, <0x2000b 2>;
->> 
->> +	pwm_backlight: backlight {
->> +		compatible = "pwm-backlight";
->> +		pwms = <&pm8937_pwm 0 100000>;
->> +		brightness-levels = <0 255>;
->> +		num-interpolated-steps = <255>;
->> +		default-brightness-level = <128>;
->> +	};
->> +
->>  	battery: battery {
->>  		compatible = "simple-battery";
->>  		charge-full-design-microamp-hours = <3000000>;
->> @@ -131,6 +139,23 @@ bq25601@6b{
->>  	};
->>  };
->> 
->> +&pm8937_gpios {
->> +	pwm_enable_default: pwm-enable-default-state {
->> +		pins = "gpio8";
->> +		function = "dtest2";
-> 
-> Are you sure?
-Yes, 
-https://github.com/Mi-Thorium/kernel_devicetree_xiaomi-msm8937/blob/dts/mi8937/4.9/master/wingtech/msm8917/common/pm8937.dtsi#L24-L31
->> +		output-low;
->> +		bias-disable;
->> +		qcom,drive-strength = <2>;
->> +	};
->> +};
->> +
->> +&pm8937_pwm {
->> +	pinctrl-0 = <&pwm_enable_default>;
->> +	pinctrl-names = "default";
-> 
-> We normally put this under the backlight node, but I'm not sure which
-> one is more correct.. it may be that this one is, given we're
-> controlling the pin that the PWM signal is sent through
+SDM845 Type-C DisplayPort output inactive on DP Monitor and tears on HDMI.
 
-It is for enabling pwm and not backlight,
-it should be placed here otherwise backlight will not work correctly.
-> 
-> Konrad
+During testing and research found that the dp and dpu drivers more
+closely match later incarnations of the Android driver.
+Compared against the 4.9 Android and found the porch timing and
+wide bus elements were disabled.
+Tested by commenting out code and the graphical glitches on
+HDMI improved.
+Fully turning off wide_bus resolved the single vertical line and
+vblank errors when using non-native resolutions.
+Removing the porch adjustment fixed HDMI and DisplayPort operated
+correctly (for the first time) for all monitor supported resolutions.
+
+Changes v1:
+- Patch 1/2: Separated the descriptor from the sc7180 and turned off
+             wide_bus support.
+- Patch 2/2: Removed porch timing adjustment.
+
+Changes v2:
+- Patch 1/2: Removed unneeded assignment.
+             Increased verbosity of commit message.
+- Patch 2/2: Added comments to explain use of wide_bus_en.
+             Increased verbosity of commit message.
+
+Verified functionality on SDM845 using Lantronix SOM.
+Tested with Type-C to DisplayPort and Dell Monitor.
+Tested with Type-C hub with HDMI to Samsung 4k TV.
+
+James A. MacInnes (2):
+  drm/msm/dp: Disable wide bus support for SDM845
+  drm/msm/disp: Correct porch timing for SDM845
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 8 ++++----
+ drivers/gpu/drm/msm/dp/dp_display.c                  | 7 ++++++-
+ 2 files changed, 10 insertions(+), 5 deletions(-)
+
+--
+2.43.0
+
+---
+James A. MacInnes (2):
+      drm/msm/dp: Disable wide bus support for SDM845
+      drm/msm/disp: Correct porch timing for SDM845
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 14 +++++++++-----
+ drivers/gpu/drm/msm/dp/dp_display.c                  |  7 ++++++-
+ 2 files changed, 15 insertions(+), 6 deletions(-)
+---
+base-commit: ffd294d346d185b70e28b1a28abe367bbfe53c04
+change-id: 20250212-sdm845_dp-6ed993977a53
+
+Best regards,
+-- 
+James A. MacInnes <james.a.macinnes@gmail.com>
+
 
