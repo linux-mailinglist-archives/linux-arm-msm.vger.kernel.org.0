@@ -1,307 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-47872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AA7FA33A0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 09:35:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 475B1A33AE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 10:17:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9B5E43A92EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 08:35:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 243BB3AB2B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 09:14:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9606220C009;
-	Thu, 13 Feb 2025 08:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7826F206F0F;
+	Thu, 13 Feb 2025 09:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kkhE0lcF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dr3ugRme"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D721EF08E;
-	Thu, 13 Feb 2025 08:35:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3844820CCF8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 09:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739435746; cv=none; b=KXJPEEcFnr/E4cHDXcwS+Q9XlXdvREL03nMIfpnxJi/DhTEDsrGktiO3fkwXyfZ8MAqf890FCImdN6I4q5hta1VSMaIf/IRQiTBjxaikfvddh56f7sqidQeMaxLgpJJTiBVQdKO2Yz30EVvMTRw1j3PqGb/83aSaouR/aB/juIc=
+	t=1739438046; cv=none; b=nkvCKIxiEAQ+dkDW4BcNLn71wetuqnfolwhuKrv7xwDGTWIQY4rjkm1bes3RZqhCXQE7hl94VXK9Bue6aD+ixCkXGcIuTOM1PhybLn2X7UGqdgMM+FzNeTqHeqG7QXjQm7Rx7IkMXqPegq7qfd+R2DYEDhiOx1atD9fHTnik/Mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739435746; c=relaxed/simple;
-	bh=evzxK7uTI4aJ6NKaIESUYYOKhPNXCflTacCAL5slQmQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=eEWH3zENN05Pfj4TdS+pL7SAkWPa6iROPHVN33nG2Zs5pnNmLFQehXgbFg6Sc775wyEmOoeCcTjWOXVqTZJGSFfEVywN5KXoSCsQCzsschjeBxN6ddPhVOVvVdEbTCv0m9p1AB8YF6HFhbfYuKJspWvWuR6krVZyCsuSZDPuz5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kkhE0lcF; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51D05dlI002169;
-	Thu, 13 Feb 2025 08:35:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mdNMrUbka+vEkjfm7h5OmjUYCZ4V3qbNAs/+bWU3Mxk=; b=kkhE0lcFyRmxBYn2
-	Rr6xdV4gIyRLWYHs7QAMtoB5dxY5NHNkxHGC6qbZFw7rhblC9PukkYMc3ZH4FWuj
-	Oef8SJNU/qMKkgWrWWE9Pz5QpH4dAuLakkBnZ58MU+neR67djrkJskcEZyz7ZihA
-	HmOduxf6TuXM57GFadmMX4pCNXZvG3FrTujBHYbK6X10giJf7vUuLdCgbi+ku2Iq
-	fWl3YTpSDPgEwj4S3WcUCieqGxaq1mVX1G8K7t8MX2/0dx6GOKHz2aNN5h26AIjA
-	q/5zDiX0DQIrbooapuGMfcITH978YuEhM4dEP0TFd/wxeF1JjKfl0tBc9TncfC/k
-	KkURPw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44s5w491wn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Feb 2025 08:35:35 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51D8ZYbi011448
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Feb 2025 08:35:34 GMT
-Received: from [10.239.28.138] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 13 Feb
- 2025 00:35:31 -0800
-Message-ID: <b35bea63-9030-6fa9-9b43-0e5558382715@quicinc.com>
-Date: Thu, 13 Feb 2025 16:35:29 +0800
+	s=arc-20240116; t=1739438046; c=relaxed/simple;
+	bh=30HWgi7vTsnHsMHIdE9kQ0IaMR5R8G7DHrbFokXG3po=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DmNm5hncOj5eA0GphfohaZJ5MFVPV+YN2SCPJgcG7xOYvTTalBI9SaoarwGwGMkTN7HDy07uKL+MrwVe6tcEt92PEQd7StiL//4HYT5qGYyV0gPpiUAtMamEBmvJ+A5KWnexsC3EAw3d70PVAFZz6w8kRn6bbS48lq7vSIfp3DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Dr3ugRme; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ab7d583d2afso326783366b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 01:14:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739438042; x=1740042842; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7AuG/ss21p8Rkezi+mFzCeDZN/8oyjr+HjN6pWHmLEY=;
+        b=Dr3ugRmebrnC2hRm9FahoJIPS0D6CYzTWwyKiQBNVGFoTKvRzbdBB2R4CSYxsHu4T+
+         vZtg0BltQlFT9bkmWnygmJDRSy5Wb/LSDg6JdbLYltgqNgwq+yr1bIQ2c+tG0jD3zOWE
+         l8tgeM6AcZ7ojdjIgk484xBz+CxSejbj1yWIcQ9w1D34S79Op3czk/FS0vV1oLXcXrgp
+         w1VwhiTr0jhmp/Qv+i5MSjFyLLSn2FoJ3vP9wIHmASatD4Pw+dsIx6Io8QI7N7iuwIcg
+         l3fF+SwLIHG4WyPOiET5wWV0+3lolAhw6fbr/V7w0ZuEy5HzSXs278F73Hz7NTBk+9kr
+         t2Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739438042; x=1740042842;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7AuG/ss21p8Rkezi+mFzCeDZN/8oyjr+HjN6pWHmLEY=;
+        b=HY6pzaxd8LZWbDJigUzP48fggL7krrvjQkIuf5DRmlLIXbITBpDN1PwbikE6jaV2GN
+         tor7WHC8XFWAeIe3+SQxQVErTl9FNZLNi4nm8Bzu6aUld6vvgCyZHYGwtfiZX4V+lc6O
+         3cTRiDrbkVOeE7N2QrEJXeRbjg8xEgcnVTvGrLtJhsZvDDaJl2S4XbPui0k4RKOn6diU
+         T/KJByBYIxOWUGeFxKHSgd+Oq+afD4xGExV3XzHcvkkzDhAs3J2rc9Wr+80UWpO9oPj2
+         fEhUZhp91NkLHryT1ikkbunoSz5YQI5D/q+Fu9VZkf0nNO2lUTQS/hBP0PkSJx2L5TcJ
+         WlEw==
+X-Forwarded-Encrypted: i=1; AJvYcCWLldLmadspPynneGHAbv9cKZWPQr0VdNrGH0W9HYI8sLML8cj4KU+dhStlGzLtLqbaNyGba2K2FFTOUE4Y@vger.kernel.org
+X-Gm-Message-State: AOJu0YygrhNzLe6lDOtONT4WxAoL2ioZJQEqg3aUtsv9VG72I3M6Iwc8
+	KwysEZAuLQB5S82EG56O3JEFyFVO5RXRHwJeKKqgBOqz5/ieaw2hsNTo2V6so5c=
+X-Gm-Gg: ASbGncsoZWT2WGRyPqMHxzG2pm9atLhyn3LvMZFupLtYbwTmLS03G984foKuFwfMxQa
+	9skTtrCxWl8y/V15Z4FqADwmj9zKc65+/ZG6fdy2s0Ein4b00QLSfNZMG5L5fo1i2W5YUDoK12x
+	U3chNyU27+opp1FHEcAbQWgtJPuKegdwuc1g382+ZFkahtBri1CdZV/VQalMyVivMNW1YtCpiN8
+	5T/aS1WbM6dUt7ItEXj8hkZvC6Dx5sNfX3zJWYmOgH2Mdf2S1tXX5qtTlGaYFU6zYI2X/R4neIm
+	CgAr9APELllu90GlGOtMvx0U
+X-Google-Smtp-Source: AGHT+IEXo2jU1kEu8aaOTnhvjItCP8ixDD0lckNHArfb/LW2ZwYI68wZOQsDjd228D5rNwIDkn/ZhA==
+X-Received: by 2002:a17:907:3dab:b0:ab7:d66f:c872 with SMTP id a640c23a62f3a-aba51503279mr194336266b.19.1739438042352;
+        Thu, 13 Feb 2025 01:14:02 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef30:546e:a2d:e86:b3d6])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aba532322dbsm91900266b.10.2025.02.13.01.14.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2025 01:14:01 -0800 (PST)
+Date: Thu, 13 Feb 2025 10:13:57 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
+	Anusha Rao <quic_anusha@quicinc.com>,
+	Md Sadre Alam <quic_mdalam@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: Re: [PATCH 7/8] dt-bindings: dma: qcom: bam-dma: Add missing
+ required properties
+Message-ID: <Z6231bBqNhA2M4Ap@linaro.org>
+References: <20250212-bam-dma-fixes-v1-0-f560889e65d8@linaro.org>
+ <20250212-bam-dma-fixes-v1-7-f560889e65d8@linaro.org>
+ <22ce4c8d-1f3b-42c9-b588-b7d74812f7b0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v2 2/2] phy: qcom: qmp-pcie: Add PHY register retention
- support
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <vkoul@kernel.org>, <kishon@kernel.org>, <p.zabel@pengutronix.de>,
-        <abel.vesa@linaro.org>, <quic_qianyu@quicinc.com>,
-        <neil.armstrong@linaro.org>, <manivannan.sadhasivam@linaro.org>,
-        <quic_devipriy@quicinc.com>, <konrad.dybcio@oss.qualcomm.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250211094231.1813558-1-quic_wenbyao@quicinc.com>
- <20250211094231.1813558-3-quic_wenbyao@quicinc.com>
- <7deghiadmomrz7w7vq3v7nkzq2kabq4xbhkouswjrexif7pip3@tvjlpvuulxvp>
- <791fa29e-a2b5-d5f6-3cbc-0f499b463262@quicinc.com>
- <ycunwk7pz4h2vvtztbo27ae64u2g6prsndks4uxtnyh75yvcka@4r6haszju6sw>
-From: "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>
-In-Reply-To: <ycunwk7pz4h2vvtztbo27ae64u2g6prsndks4uxtnyh75yvcka@4r6haszju6sw>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JTPIWHQvCXLFnNbGzXh-_RY3lERk_JYB
-X-Proofpoint-ORIG-GUID: JTPIWHQvCXLFnNbGzXh-_RY3lERk_JYB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-13_03,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015
- suspectscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
- malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502130065
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <22ce4c8d-1f3b-42c9-b588-b7d74812f7b0@oss.qualcomm.com>
 
-On 2/12/2025 7:06 PM, Dmitry Baryshkov wrote:
-> On Wed, Feb 12, 2025 at 04:31:21PM +0800, Wenbin Yao (Consultant) wrote:
->> On 2/12/2025 8:13 AM, Dmitry Baryshkov wrote:
->>> On Tue, Feb 11, 2025 at 05:42:31PM +0800, Wenbin Yao wrote:
->>>> From: Qiang Yu <quic_qianyu@quicinc.com>
->>>>
->>>> Some QCOM PCIe PHYs support no_csr reset. Unlike BCR reset which resets the
->>>> whole PHY (hardware and register), no_csr reset only resets PHY hardware
->>>> but retains register values, which means PHY setting can be skipped during
->>>> PHY init if PCIe link is enabled in booltloader and only no_csr is toggled
->>>> after that.
->>>>
->>>> Hence, determine whether the PHY has been enabled in bootloader by
->>>> verifying QPHY_START_CTRL register. If it's programmed and no_csr reset is
->>>> available, skip BCR reset and PHY register setting to establish the PCIe
->>>> link with bootloader - programmed PHY settings.
->>>>
->>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
->>>> ---
->>>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 91 +++++++++++++++---------
->>>>    1 file changed, 58 insertions(+), 33 deletions(-)
->>>>
->>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>>> index ac42e4b01065..7f0802d09812 100644
->>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>>> @@ -2805,6 +2805,7 @@ struct qmp_pcie {
->>>>    	const struct qmp_phy_cfg *cfg;
->>>>    	bool tcsr_4ln_config;
->>>> +	bool phy_initialized;
->>>>    	void __iomem *serdes;
->>>>    	void __iomem *pcs;
->>>> @@ -3976,6 +3977,7 @@ static int qmp_pcie_init(struct phy *phy)
->>>>    {
->>>>    	struct qmp_pcie *qmp = phy_get_drvdata(phy);
->>>>    	const struct qmp_phy_cfg *cfg = qmp->cfg;
->>>> +	void __iomem *pcs = qmp->pcs;
->>>>    	int ret;
->>>>    	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
->>>> @@ -3984,10 +3986,17 @@ static int qmp_pcie_init(struct phy *phy)
->>>>    		return ret;
->>>>    	}
->>>> -	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->>>> -	if (ret) {
->>>> -		dev_err(qmp->dev, "reset assert failed\n");
->>>> -		goto err_disable_regulators;
->>>> +	qmp->phy_initialized = !!(readl(pcs + cfg->regs[QPHY_START_CTRL]));
->>>> +	/*
->>>> +	 * Toggle BCR reset for phy that doesn't support no_csr
->>>> +	 * reset or has not been initialized
->>>> +	 */
->>>> +	if (!qmp->nocsr_reset || !qmp->phy_initialized) {
->>> Instead of having phy_initialized please add another boolean field,
->>> qmp->skip_init = !!qmp->nocsr_reset && !!phy_initialized;
->>> Use qmp->skip_init through the code.
->> In qmp_pcie_power_off and qmp_pcie_exit, we only check qmp->nocsr_reset. It
->>
->> seems unnecessary to combine qmp->nocsr_reset with phy_initialized.
-> The PHY is going to be initialized after qmp_pcie_init() completes, but
-> you are not updating phy_initialized. On the other hand skip_init still
-> does what it is supposed to do: tells the driver to skip (re-)init of
-> the registers.
+On Wed, Feb 12, 2025 at 10:01:59PM +0100, Konrad Dybcio wrote:
+> On 12.02.2025 6:03 PM, Stephan Gerhold wrote:
+> > num-channels and qcom,num-ees are required when there are no clocks
+> > specified in the device tree, because we have no reliable way to read them
+> > from the hardware registers if we cannot ensure the BAM hardware is up when
+> > the device is being probed.
+> > 
+> > This has often been forgotten when adding new SoC device trees, so make
+> > this clear by describing this requirement in the schema.
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> > index 3ad0d9b1fbc5e4f83dd316d1ad79773c288748ba..5f7e7763615578717651014cfd52745ea2132115 100644
+> > --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> > +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> > @@ -90,8 +90,12 @@ required:
+> >  anyOf:
+> >    - required:
+> >        - qcom,powered-remotely
+> > +      - num-channels
+> > +      - qcom,num-ees
+> >    - required:
+> >        - qcom,controlled-remotely
+> > +      - num-channels
+> > +      - qcom,num-ees
+> 
+> I think I'd rather see these deprecated and add the clock everywhere..
+> Do we know which one we need to add on newer platforms? Or maybe it's
+> been transformed into an icc path?
 
-make sense, will use skip_init.
+This isn't feasible, there are too many different setups. Also often the
+BAM power management is tightly integrated into the consumer interface.
+To give a short excerpt (I'm sure there are even more obscure uses):
 
->
->>>> +		ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->>>> +		if (ret) {
->>>> +			dev_err(qmp->dev, "reset assert failed\n");
->>>> +			goto err_disable_regulators;
->>>> +		}
->>>>    	}
->>>>    	ret = reset_control_assert(qmp->nocsr_reset);
->>>> @@ -3998,10 +4007,12 @@ static int qmp_pcie_init(struct phy *phy)
->>>>    	usleep_range(200, 300);
->>>> -	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
->>>> -	if (ret) {
->>>> -		dev_err(qmp->dev, "reset deassert failed\n");
->>>> -		goto err_assert_reset;
->>>> +	if (!qmp->nocsr_reset || !qmp->phy_initialized) {
->>>> +		ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
->>>> +		if (ret) {
->>>> +			dev_err(qmp->dev, "reset deassert failed\n");
->>>> +			goto err_assert_reset;
->>>> +		}
->>>>    	}
->>>>    	ret = clk_bulk_prepare_enable(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
->>>> @@ -4011,7 +4022,8 @@ static int qmp_pcie_init(struct phy *phy)
->>>>    	return 0;
->>>>    err_assert_reset:
->>>> -	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->>>> +	if (!qmp->nocsr_reset || !qmp->phy_initialized)
->>>> +		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->>>>    err_disable_regulators:
->>>>    	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
->>>> @@ -4023,7 +4035,10 @@ static int qmp_pcie_exit(struct phy *phy)
->>>>    	struct qmp_pcie *qmp = phy_get_drvdata(phy);
->>>>    	const struct qmp_phy_cfg *cfg = qmp->cfg;
->>>> -	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->>>> +	if (!qmp->nocsr_reset)
->>>> +		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->>>> +	else
->>>> +		reset_control_assert(qmp->nocsr_reset);
->>>>    	clk_bulk_disable_unprepare(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
->>>> @@ -4042,16 +4057,22 @@ static int qmp_pcie_power_on(struct phy *phy)
->>>>    	unsigned int mask, val;
->>>>    	int ret;
->>>> -	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
->>>> -			cfg->pwrdn_ctrl);
->>>> +	/*
->>>> +	 * Write CSR register for phy that doesn't support no_csr
->>> what is CSR register?
->> The registers of PHY.
->>>> +	 * reset or has not been initialized
->>>> +	 */
->>>> +	if (!qmp->nocsr_reset || !qmp->phy_initialized) {
->>>> +		qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
->>>> +				cfg->pwrdn_ctrl);
->>>> -	if (qmp->mode == PHY_MODE_PCIE_RC)
->>>> -		mode_tbls = cfg->tbls_rc;
->>>> -	else
->>>> -		mode_tbls = cfg->tbls_ep;
->>>> +		if (qmp->mode == PHY_MODE_PCIE_RC)
->>>> +			mode_tbls = cfg->tbls_rc;
->>>> +		else
->>>> +			mode_tbls = cfg->tbls_ep;
->>>> -	qmp_pcie_init_registers(qmp, &cfg->tbls);
->>>> -	qmp_pcie_init_registers(qmp, mode_tbls);
->>>> +		qmp_pcie_init_registers(qmp, &cfg->tbls);
->>>> +		qmp_pcie_init_registers(qmp, mode_tbls);
->>>> +	}
->>>>    	ret = clk_bulk_prepare_enable(qmp->num_pipe_clks, qmp->pipe_clks);
->>>>    	if (ret)
->>>> @@ -4063,15 +4084,16 @@ static int qmp_pcie_power_on(struct phy *phy)
->>>>    		goto err_disable_pipe_clk;
->>>>    	}
->>>> -	/* Pull PHY out of reset state */
->>>> -	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
->>>> +	if (!qmp->nocsr_reset || !qmp->phy_initialized) {
->>>> +		/* Pull PHY out of reset state */
->>>> +		qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
->>>> -	/* start SerDes and Phy-Coding-Sublayer */
->>>> -	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], SERDES_START | PCS_START);
->>>> -
->>>> -	if (!cfg->skip_start_delay)
->>>> -		usleep_range(1000, 1200);
->>>> +		/* start SerDes and Phy-Coding-Sublayer */
->>>> +		qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], SERDES_START | PCS_START);
->>>> +		if (!cfg->skip_start_delay)
->>>> +			usleep_range(1000, 1200);
->>>> +	}
->>>>    	status = pcs + cfg->regs[QPHY_PCS_STATUS];
->>>>    	mask = cfg->phy_status;
->>>>    	ret = readl_poll_timeout(status, val, !(val & mask), 200,
->>>> @@ -4096,16 +4118,19 @@ static int qmp_pcie_power_off(struct phy *phy)
->>>>    	clk_bulk_disable_unprepare(qmp->num_pipe_clks, qmp->pipe_clks);
->>>> -	/* PHY reset */
->>>> -	qphy_setbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
->>>> -	/* stop SerDes and Phy-Coding-Sublayer */
->>>> -	qphy_clrbits(qmp->pcs, cfg->regs[QPHY_START_CTRL],
->>>> -			SERDES_START | PCS_START);
->>>> +	if (!qmp->nocsr_reset) {
->>> Why this one doesn't check for the qmp->phy_initialized?
->> If a PHY supports no_csr reset but isn't enabled in the bootloader, we
->>
->> still need to program the phy settings only once so that we can reuse them
->>
->> during the D3cold -> D0 cycle. Therefore, we don't check
->>
->> qmp->phy_initialized here.
-> Please add a comment. In future please make sure that your answer
-> doesn't contain unnecessary empty lines. It makes it harder to read your
-> response.
+ - BLSP BAM (UART, I2C, SPI on older SoCs):
+    1. Enable GCC_BLSP_AHB_CLK
+    -> This is what the bam_dma driver supports currently.
 
-Will add a comment in patch v3.
+ - Crypto BAM: Either
+    OR 1. Vote for single RPM clock
+    OR 1. Enable 3 separate clocks (CE, CE_AHB, CE_AXI)
+    OR 1. Vote dummy bandwidth for interconnect
 
->
->>>> +		/* PHY reset */
->>>> +		qphy_setbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
->>>> -	/* Put PHY into POWER DOWN state: active low */
->>>> -	qphy_clrbits(qmp->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
->>>> -			cfg->pwrdn_ctrl);
->>>> +		/* stop SerDes and Phy-Coding-Sublayer */
->>>> +		qphy_clrbits(qmp->pcs, cfg->regs[QPHY_START_CTRL],
->>>> +				SERDES_START | PCS_START);
->>>> +
->>>> +		/* Put PHY into POWER DOWN state: active low */
->>>> +		qphy_clrbits(qmp->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
->>>> +				cfg->pwrdn_ctrl);
->>>> +	}
->>>>    	return 0;
->>>>    }
->>>> -- 
->>>> 2.34.1
->>>>
->> -- 
->> With best wishes
->> Wenbin
+ - BAM DMUX (WWAN on older SoCs):
+    1. Start modem firmware
+    2. Wait for BAM DMUX service to be up
+    3. Vote for power up via the BAM-DMUX-specific SMEM state
+    4. Hope the firmware agrees and brings up the BAM
 
--- 
-With best wishes
-Wenbin
+ - SLIMbus BAM (audio on some SoCs):
+    1. Start ADSP firmware
+    2. Wait for QMI SLIMBUS service to be up via QRTR
+    3. Vote for power up via SLIMbus-specific QMI messages
+    4. Hope the firmware agrees and brings up the BAM
 
+Especially for the last two, we can't implement support for those
+consumer-specific interfaces in the BAM driver. Implementing support for
+the 3 variants of the Crypto BAM would be possible, but it's honestly
+the least interesting use case of all these. It's not really clear why
+we are bothing with the crypto engine on newer SoCs at all, see e.g. [1].
+
+[1]: https://lore.kernel.org/linux-arm-msm/20250118080604.GA721573@sol.localdomain/
+
+> Reading back things from this piece of HW only to add it to DT to avoid
+> reading it later is a really messy solution.
+
+In retrospect, it could have been cleaner to avoid describing the BAM as
+device node independent of the consumer. We wouldn't have this problem
+if the BAM driver would only probe when the consumer is already ready.
+
+But I think specifying num-channels in the device tree is the cleanest
+way out of this mess. I have a second patch series ready that drops
+qcom,num-ees and validates the num-channels once it's safe reading from
+the BAM registers. That way, you just need one boot test to ensure the
+device tree description is really correct.
+
+Thanks,
+Stephan
 
