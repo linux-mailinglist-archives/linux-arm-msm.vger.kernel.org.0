@@ -1,210 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-47844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E99EA334FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 02:51:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC1FFA3355A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 03:13:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F221A3A616D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 01:51:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2143D188A63C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 02:13:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9544E132117;
-	Thu, 13 Feb 2025 01:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99879146588;
+	Thu, 13 Feb 2025 02:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o8dBWt+P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HyyqECEt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3251078F37;
-	Thu, 13 Feb 2025 01:51:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE62BA2D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 02:13:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739411494; cv=none; b=amCTEyEFBpMExs2OW6rwRHzV3GDVUEo26yh18RxdtVXzZntb5WAJtxeukMgrTzjXzv4t0JEG8b6yLTb1yR/qG6PENzYIIkB7JLrIGVXUxU75fc6H4o33hFMKqTYAEUqbm1xiW/Mklzj0wDYbG6Q66gJvtA47NIW7eIzC/qmrWTc=
+	t=1739412794; cv=none; b=ZeT0+YSMRddmO1CUQSSrcjPrQW1CLfzYV22hxpQWJNrYPqL+Tg34kViZ87sUm2NolEGR8MAx5lvRxmACsWZ28qdjf+cHeqgBubKLvSZ66F5R3HpnUWPikhtq+acpeg865DHd6vMT2fiz4f1wl6wkLO6ClgovxHRRsBWIzvWK7Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739411494; c=relaxed/simple;
-	bh=lfxTwf02fmuNW3qU/mwRbtMRstP2+Lho/oafqg0kr/g=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=kSuWp3M/QJurUJJMDBVdQS2Lohess1QE38PSaoihyuizEn9l2Z9bMAoiTfA3eacven1073GMngb2s20/8g0mj3p2uwZsAJFn96dAoHQZbwGPw0qtvsZto0AA7gairhowkvlE1ZZf1Nb49rIA7/2m+Baa2A25Qz5FQAAbnEmNC5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o8dBWt+P; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51CC0tpk010369;
-	Thu, 13 Feb 2025 01:51:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3RrZzmUxHHLNiwmSBc6F03gaN3NGBJVAFD86s91Ywkc=; b=o8dBWt+PDDIM70HK
-	TkjewlcXP16lYl3eJITecig+zLoCQacFF7Ygb0o+PAhguk6fMGtUhjUYQ88uuK2H
-	S6ekHu/M9Hoye3s0mJKS9c4qEzwnD2qdRmLPt/aDcgHUdqzVmlR3hHXMMG4c2s5u
-	gkJfdcMAGz0e+apXZn4TE7vbb60a82mmoDCjvsphQpLtM5jqB//H2YP+5d8I6F40
-	sYMF40SzkhPqtEcIzfcyFPfZeu5HEkQ+Id3Sr/BE65bQ42Tkq2ACPJOO/Hn3urOX
-	82koA/jE4cA25Fs3I5XkoWhwqeo/KW7KGcY2fqd9vSDe88l9U8ZmV0NSGHEEK1z7
-	n+qMJw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qcs5hm71-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Feb 2025 01:51:14 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51D1pDbb001781
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Feb 2025 01:51:13 GMT
-Received: from [10.71.110.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 12 Feb
- 2025 17:51:12 -0800
-Message-ID: <eb0e478f-87c8-4d1d-a491-d0b1120d60b7@quicinc.com>
-Date: Wed, 12 Feb 2025 17:51:11 -0800
+	s=arc-20240116; t=1739412794; c=relaxed/simple;
+	bh=8MJIRbb7WsM8a3n0MKIH5Jbu69Pr1rZ/BDRDPU7I4wk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=scPBULV9/H58rJvDWhF5HFzkkWnPjQJ+IWiYg+NAK9mlfyO6h18hE9vwpx5HrZdrPpkAjN2+rDhuha+6N993J1g8I0cwWd0QcMYvQ8MAPyyR45C6LjnlBYqYO0pdjwE0B6OMQ3WcX8VAuPT1RC4eS49H1XYjTnsygLZV1jUXS0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HyyqECEt; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-308e3bd8286so3765721fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2025 18:13:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739412790; x=1740017590; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=JGMi3Hp+9/bQmjultqdLIF1nZcd4s1BR7J7PwlZZx/0=;
+        b=HyyqECEt1uqagSxdVMcR85dODeGb63118e6yXi/xPpEF7dW0RfzmKx+DR/qaEISmkv
+         4/mAVvDfvkQwOE4mYiNpK4KusiCYNYQvTt6Eo7iE/E6SQgfIooDb7TaauouqkSNn3usc
+         py5OuQWLp5DrrS+zxxXklL2amh07DGjlh2Ak6M7+2i1jWlkmogC22/zOADCtYO27vb91
+         b4lxkgWN50V0TpJcwRDlC1L/bUu965U4Q5XJSwe60PYQACYbCKo8UYCNSXiUuBYrR0Le
+         SLC8r5G0xza4vGWytySZzCmgCwt5wRTZwQIpqaJeDYBY1CyAE3l39jEoO7A+LLXbNXg0
+         /DTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739412790; x=1740017590;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JGMi3Hp+9/bQmjultqdLIF1nZcd4s1BR7J7PwlZZx/0=;
+        b=kVzCVWdYX101+TPMzn4oVmwFE9rWmlGzcQSG9nWVUN5k1mUVaeV5mWemA+TVZeXiec
+         kOy+tlF7CeyJO/1hElSGviXttraJElFs3i5mugTXRFsFBPyvE6fAdcWLcm7i57MmZ7cy
+         NXyoYxHawsg0NH3Bvr0qrQ0aFG6uyIunBXqhPs9kSWuRUMSHiQoU2clC5zmmKgYDHzgD
+         MzyiBsszQoIjpF2a5Y3pVp2f/IcW3LDjMjjYegI/e8KDrOjohpjteO5aFnd2oaqYcqrN
+         0Xa56XZHqh1qXVCkdRDLDdpG4VLM66c6r0ADRCaHkqHrUVGhcBAHPJSg2wmRz9/hR1Rp
+         9szQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUSMrs8NqPovV2VaZM9Poc3+w0rw6AYnNZpBNnTzjvuKeaCzJ6JxbhRL4eRy0Xhid8lwmyz4gdtIuZ5gMIj@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIFfiyxvaJo7z/fl6wwfWlDf3vlh+IBYEt5CBwoqpTBesWtYCF
+	YrwzZpSPj3ixQnlN27qLSXpxNy6KGvzDD6D2lCgboDwqq8MqdqLn1vqSDxIngdw=
+X-Gm-Gg: ASbGnct328rXuMEUf/Zdz94FpOLcApzz5g/j+f12/M3XxYUlSlVFaOUjjM5LMFbq1UF
+	VDycUzcDHAIrmFWD3LNZitPZmtnd6NR9jJrryXMfpAxDUbHvlg5JY3YyU8A+6za+atR5Yrs2uir
+	s08jI6nTqDEHy+21+dt5agZPgRWm23J8psBQVVC/MHw/oHGLEgTFbEtmCYDdau7U9Jl3v5CtGdh
+	Wou+fRSLxrAASFteh1wKAgOCAJ/cHK0amEbNQCT5VMQabVr2CJ1jGP+L0UEwHLkYleYypog1Zzp
+	6vLC9f5TwlXT5ZULyTqVJwQKxQBcJ9BPFQdlCeDF/ZPL/nS5sDBI0EUFGe8GNb4SPctUUtY=
+X-Google-Smtp-Source: AGHT+IEmMbELCnUbRJwClshsnX4iixkLoQEOYZtcE+7298TlajRpBP1u+uXg5U1gx43ozlPd0fUbow==
+X-Received: by 2002:a05:651c:211b:b0:308:fac7:9cc3 with SMTP id 38308e7fff4ca-3090dce23b7mr6496371fa.14.1739412790482;
+        Wed, 12 Feb 2025 18:13:10 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-309100effbasm548781fa.29.2025.02.12.18.13.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Feb 2025 18:13:09 -0800 (PST)
+Date: Thu, 13 Feb 2025 04:13:06 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
+	Vinod Koul <vkoul@kernel.org>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Jordan Crouse <jordan@cosmicpenguin.net>, ~postmarketos/upstreaming@lists.sr.ht, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Martin Botka <martin.botka@somainline.org>, 
+	Jami Kettunen <jami.kettunen@somainline.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2 2/3] drm/msm/dsi: Set PHY usescase (and mode) before
+ registering DSI host
+Message-ID: <hvwpqzvdoeosz34ptbksc44ad7ohi6uwioy6o7qc4ewwcvx4d4@g3kksn3rwk6j>
+References: <20250209-drm-msm-initial-dualpipe-dsc-fixes-v2-0-9a60184fdc36@somainline.org>
+ <20250209-drm-msm-initial-dualpipe-dsc-fixes-v2-2-9a60184fdc36@somainline.org>
+ <nzm3tokbvho3hxz3e5vblp5ndagfcv5ah3j7gtkqjmt7ynr6f3@v36juvu73i5v>
+ <vsxfi43d7rxh5xxc7ctivjslf6w4yy5iprqpqid3u3diylrtwd@wayafjlgzz7v>
+ <x4jced57uhdfnq4d7tdqsozxbdosu2fcmsjlqtuuvh25ltx2rc@2eqsa7e4vcdv>
+ <c5503020-0224-428a-9452-f8d668b47caf@quicinc.com>
+ <ca80bd37-3b3f-48d3-a57d-2440d20d0c6c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/msm/dpu: Fix uninitialized variable
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Ethan Carter Edwards <ethan@ethancedwards.com>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>
-References: <20250209-dpu-v2-1-114dfd4ebefd@ethancedwards.com>
- <8e40c1bf-6da7-46b1-925c-53d1fa25f3ce@quicinc.com>
- <zj7sqsg3ruev4akl5paedsg65qyh53iddqvssrye2pjtfofs3q@u4g3kevpl2jn>
- <nllxmdfk4wwm2bbrg5jc4tt7la65rwqdtt4tqjp36j6dr4hgmx@ukszi5llldup>
- <22c97d77-5983-429b-ba0b-ce821a717a0e@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <22c97d77-5983-429b-ba0b-ce821a717a0e@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2IV3np8f94ir8rTqzL9pcxLh27P2A1Wp
-X-Proofpoint-GUID: 2IV3np8f94ir8rTqzL9pcxLh27P2A1Wp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-12_08,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- mlxlogscore=999 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- adultscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
- definitions=main-2502130012
+In-Reply-To: <ca80bd37-3b3f-48d3-a57d-2440d20d0c6c@quicinc.com>
 
-
-
-On 2/11/2025 4:19 PM, Abhinav Kumar wrote:
+On Wed, Feb 12, 2025 at 05:13:08PM -0800, Abhinav Kumar wrote:
+> Hi Marijn
 > 
+> On 2/10/2025 2:17 PM, Abhinav Kumar wrote:
+> > 
+> > 
+> > On 2/10/2025 6:24 AM, Dmitry Baryshkov wrote:
+> > > On Mon, Feb 10, 2025 at 01:54:29PM +0100, Marijn Suijten wrote:
+> > > > On 2025-02-10 01:11:59, Dmitry Baryshkov wrote:
+> > > > > On Sun, Feb 09, 2025 at 10:42:53PM +0100, Marijn Suijten wrote:
+> > > > > > Ordering issues here cause an uninitialized (default STANDALONE)
+> > > > > > usecase to be programmed (which appears to be a MUX) in some cases
+> > > > > > when msm_dsi_host_register() is called, leading to the slave PLL in
+> > > > > > bonded-DSI mode to source from a clock parent (dsi1vco) that is off.
+> > > > > > 
+> > > > > > This should seemingly not be a problem as the actual
+> > > > > > dispcc clocks from
+> > > > > > DSI1 that are muxed in the clock tree of DSI0 are way
+> > > > > > further down, this
+> > > > > > bit still seems to have an effect on them somehow and causes the right
+> > > > > > side of the panel controlled by DSI1 to not function.
+> > > > > > 
+> > > > > > In an ideal world this code is refactored to no longer have such
+> > > > > > error-prone calls "across subsystems", and instead model the "PLL src"
+> > > > > > register field as a regular mux so that changing the clock parents
+> > > > > > programmatically or in DTS via `assigned-clock-parents` has the
+> > > > > > desired effect.
+> > > > > > But for the avid reader, the clocks that we *are* muxing into DSI0's
+> > > > > > tree are way further down, so if this bit turns out to be a simple mux
+> > > > > > between dsiXvco and out_div, that shouldn't have any effect as this
+> > > > > > whole tree is off anyway.
+> > > > > > 
+> > > > > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > > > > ---
+> > > > > >   drivers/gpu/drm/msm/dsi/dsi_manager.c | 30
+> > > > > > ++++++++++++++++++ +-----------
+> > > > > >   1 file changed, 19 insertions(+), 11 deletions(-)
+> > > > > 
+> > > > > 
+> > > > > Fixes: 57bf43389337 ("drm/msm/dsi: Pass down use case to PHY")
+> > > > 
+> > > > I'm not exactly confident about that.  Abhinav pointed out in
+> > > > https://gitlab.freedesktop.org/drm/msm/-/issues/41#note_2375646 that
+> > > > msm_dsi_host_register() was not supposed to be enabling the PHY, which I
+> > > > provided a counter-stacktrace for to show that is indeed the case.
+> > > > 
+> > > > Either this was always a problem that's only become visible now
+> > > > (and it's an
+> > > > issue with that patch), or a different change causes
+> > > > msm_dsi_host_register()
+> > > > to enable the PHY and program the usecase too early?
+> > > 
+> > > As currently usecase is being programmed after the DSI host being
+> > > registered, there might be a race condition between panel driver probe
+> > > _and_ usecase programming.
+> > > 
+> > > > 
+> > > > What do you think?
+> > > > 
+> > > > - Marijn
+> > > > 
+> > 
+> > Yes I agree with Dmitry's explanation. The race condition between the
+> > two can cause this. Hence I am also fine with this change.
+> > 
+> > > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > 
+> > > > > > 
+> > > > > > diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > > > > > b/drivers/gpu/ drm/msm/dsi/dsi_manager.c
+> > > > > > index a210b7c9e5ca281a46fbdb226e25832719a684ea..b93205c034e4acc73d536deeddce6ebd694b4a80
+> > > > > > 100644
+> > > > > > --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > > > > > +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > > > > > @@ -74,17 +74,33 @@ static int dsi_mgr_setup_components(int id)
+> > > > > >       int ret;
+> > > > > >       if (!IS_BONDED_DSI()) {
+> > > > > > +        /* Set the usecase before calling
+> > > > > > msm_dsi_host_register(), which would
+> > > > > > +         * already program the PLL source mux based on
+> > > > > > a default usecase.
+> > > > > > +         */
+> > > > > > +        msm_dsi_phy_set_usecase(msm_dsi->phy,
+> > > > > > MSM_DSI_PHY_STANDALONE);
+> > > > > > +        msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
+> > > > > > +
+> > > > > >           ret = msm_dsi_host_register(msm_dsi->host);
+> > > > > >           if (ret)
+> > > > > >               return ret;
+> > > > > > -
+> > > > > > -        msm_dsi_phy_set_usecase(msm_dsi->phy,
+> > > > > > MSM_DSI_PHY_STANDALONE);
+> > > > > > -        msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
+> > > > > >       } else if (other_dsi) {
+> > > > > >           struct msm_dsi *master_link_dsi = IS_MASTER_DSI_LINK(id) ?
+> > > > > >                               msm_dsi : other_dsi;
+> > > > > >           struct msm_dsi *slave_link_dsi = IS_MASTER_DSI_LINK(id) ?
+> > > > > >                               other_dsi : msm_dsi;
+> > > > > > +
+> > > > > > +        /* PLL0 is to drive both DSI link clocks in bonded DSI mode.
+> > > > > > +         *
+> > > > > > +        /* Set the usecase before calling
+> > > > > > msm_dsi_host_register(), which would
+> > > > > > +         * already program the PLL source mux based on
+> > > > > > a default usecase.
+> > > > > > +         */
 > 
-> On 2/11/2025 4:13 PM, Dmitry Baryshkov wrote:
->> On Tue, Feb 11, 2025 at 10:23:54AM +0100, Marijn Suijten wrote:
->>> On 2025-02-10 14:14:14, Abhinav Kumar wrote:
->>>>
->>>>
->>>> On 2/9/2025 7:51 PM, Ethan Carter Edwards wrote:
->>>>> There is a possibility for an uninitialized *ret* variable to be
->>>>> returned in some code paths.
->>>>>
->>>>> Fix this by initializing *ret* to 0.
->>>>>
->>>>> Addresses-Coverity-ID: 1642546 ("Uninitialized scalar variable")
->>>>> Fixes: 774bcfb731765d ("drm/msm/dpu: add support for virtual planes")
->>>>> Signed-off-by: Ethan Carter Edwards <ethan@ethancedwards.com>
->>>>> ---
->>>>> Changes in v2:
->>>>> - Return explicit 0 when no error occurs
->>>>> - Add hardening mailing lists
->>>>> - Link to v1: https://lore.kernel.org/r/20250209-dpu- 
->>>>> v1-1-0db666884f70@ethancedwards.com
->>>>> ---
->>>>> Â Â  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 7 +++----
->>>>> Â Â  1 file changed, 3 insertions(+), 4 deletions(-)
->>>>>
->>>>
->>>> Thanks for your patch, this was addressed with
->>>>
->>>> https://patchwork.freedesktop.org/patch/631567/ but since this is 
->>>> better
->>>> I am fine with this, will pick this one up
->>>
->>> The `return 0;` in this patch should certainly fix this issue 
->>> entirely and we
->>> don't need to inline the `int ret` for that, which I think is against 
->>> mixed
->>> declaration rules anyway?
->>>
->>> As far as I understand that's what Dmitry suggested in v1, but he r- 
->>> b'd it in
->>> this form.Â  Dmitry, was that intended?
->>
->> I think it should be fine, if the gcc doesn't warn against it.
->>
+> My compiler is throwing a warning here
 > 
-> Let me test out the compilation while applying and see if it throws any 
-> errors. If it does, will report here and we can go with the other patch.
+> drivers/gpu/drm/msm/dsi/dsi_manager.c: In function
+> 'dsi_mgr_setup_components':
+> drivers/gpu/drm/msm/dsi/dsi_manager.c:94:3: warning: "/*" within comment
+> [-Wcomment]
+>    /* Set the usecase before calling msm_dsi_host_register(), which would
+>    ^
+> drivers/gpu/drm/msm/dsi/dsi_manager.c: At top level:
 > 
+> Can you pls address this one so that I can pick this one up?
 
-On my end, compilation looks fine, so will pickup this version.
+While you are at it, Marijn, could you please also fix the first comment
+to be properly formatted?
 
-Thanks
-
-Abhinav
->>>
->>> - Marijn
->>>
->>>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>>
->>>>
->>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/ 
->>>>> gpu/drm/msm/disp/dpu1/dpu_plane.c
->>>>> index 
->>>>> 098abc2c0003cde90ce6219c97ee18fa055a92a5..af3e541f60c303eb5212524e877129359b5ca98c 100644
->>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>>>> @@ -1164,7 +1164,6 @@ int dpu_assign_plane_resources(struct 
->>>>> dpu_global_state *global_state,
->>>>> Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  unsigned int num_planes)
->>>>> Â Â  {
->>>>> Â Â Â Â Â Â  unsigned int i;
->>>>> -Â Â Â  int ret;
->>>>> Â Â Â Â Â Â  for (i = 0; i < num_planes; i++) {
->>>>> Â Â Â Â Â Â Â Â Â Â  struct drm_plane_state *plane_state = states[i];
->>>>> @@ -1173,13 +1172,13 @@ int dpu_assign_plane_resources(struct 
->>>>> dpu_global_state *global_state,
->>>>> Â Â Â Â Â Â Â Â Â Â Â Â Â Â  !plane_state->visible)
->>>>> Â Â Â Â Â Â Â Â Â Â Â Â Â Â  continue;
->>>>> -Â Â Â Â Â Â Â  ret = dpu_plane_virtual_assign_resources(crtc, global_state,
->>>>> +Â Â Â Â Â Â Â  int ret = dpu_plane_virtual_assign_resources(crtc, 
->>>>> global_state,
->>>>> Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  state, plane_state);
->>>>> Â Â Â Â Â Â Â Â Â Â  if (ret)
->>>>> -Â Â Â Â Â Â Â Â Â Â Â  break;
->>>>> +Â Â Â Â Â Â Â Â Â Â Â  return ret;
->>>>> Â Â Â Â Â Â  }
->>>>> -Â Â Â  return ret;
->>>>> +Â Â Â  return 0;
->>>>> Â Â  }
->>>>> Â Â  static void dpu_plane_flush_csc(struct dpu_plane *pdpu, struct 
->>>>> dpu_sw_pipe *pipe)
->>>>>
->>>>> ---
->>>>> base-commit: a64dcfb451e254085a7daee5fe51bf22959d52d3
->>>>> change-id: 20250209-dpu-c3fac78fc617
->>>>>
->>>>> Best regards,
->>>>
->>
-> 
-
+-- 
+With best wishes
+Dmitry
 
