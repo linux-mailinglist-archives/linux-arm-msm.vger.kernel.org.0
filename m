@@ -1,154 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-47924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F24AA34B21
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 18:01:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43AAAA34B09
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 17:58:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B20113BD749
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 16:51:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC8851892C14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 16:53:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F78C1547F5;
-	Thu, 13 Feb 2025 16:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58C8C28A2B3;
+	Thu, 13 Feb 2025 16:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PmR6xa6R"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qX6ZSR6R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F3228A2D0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 16:47:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A83128A2B0;
+	Thu, 13 Feb 2025 16:51:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739465252; cv=none; b=Bv59x4Vfmtv/GAa6qW5zf8OcFAZWGoOE0Tnoy820Dbg02PrHLzPYn76U912Nydt5oaNT/g/hoDleZS1FkSJBnq3Jn89KNDZ+AyPPFNVsArRG+tYtzV+ZQx2sdVPuxWzcDjYA/E3e1gRTd/T52uYERvdSiEqx1AYSzQpvtux5f5s=
+	t=1739465518; cv=none; b=Pxn3wKFghMqWwaMwjQvCpPQWyb3FaZY+GsvJswEOX3tICwwMEz9fZ/jdubNSvCtaAB7PHKJDQy8YvsxYsJV/QezRSxCvtDpDQtRCsTExtcZGaKSnPP5jsnhZNQcgP/k0FhglsfSo3bb3Q1mF17w5WifETxj4QVqAhYotGqY1ZB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739465252; c=relaxed/simple;
-	bh=AMKzVi/B0d2Jn9OIPZ2LweH4Dmo3yJ/iCGhV8aOlMPI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fU1AgQ1AW8FNSGxfhWz6dmc6YJM9plxAeJs0GYUM4LdyOVigoHlgBztQIdn2HYMkIXpNfVL2gp8qI+oALYXiebKI/uzQTmEERPqiRrcqOYvbm9F/tW42Lpv5AlEEAaEGmkniALRv+3yjGlgTli1zr+oOUI6CfbPwrhKUlIDxzAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PmR6xa6R; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51DBWPgr011927
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 16:47:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pdPqwdhySUYtLxO6ZXkv3AyokTUz8gph0Rz4I17smjk=; b=PmR6xa6RZSIyGQYa
-	1ohpI/2W5xKQVxwfYPJ0awefbsNAr4lfM/CAAqFZteBUfN/Hk7lWv7DgZJ67Q5J4
-	c0rzp3k/0BDNkKkZbheK4pWx9AWAuimPWGQ2kl3MU6uY8pepcnELWRO2Utp+QssC
-	3iJvGz1SVsAiFYPQZc2cFWZyG0Q1mQkeZU/+yhfEmsa/yNWF/2RnPo/YP4MLkElr
-	mb9Wc4i+X9gNSB1zhyDWEAYcEG6eYMdgP87W9Jo+OJ0ZKkeAu5n8kB0Qxk0geN4c
-	FBJ3kU3ek6CgDpgJv2DrnjUB3TCBNFMwvjiD6YLH3shOCg9/8l1ZfdjNV+Onap//
-	GLxRbA==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44sfxw8sjg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 16:47:28 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e45cd4145bso2867116d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 08:47:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739465247; x=1740070047;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pdPqwdhySUYtLxO6ZXkv3AyokTUz8gph0Rz4I17smjk=;
-        b=j3cUzcj6Boy/WFmVVkP/W84yUr9H3Gp9zJVjxNx0WbeOkay9zLrK9HV3ApLBVS/oFB
-         5zTlcMIU5VRtNGrPDmWraa23Y/gLfyQI8u22SaGieb2QljeumVgFQZFIADNG9i4vgFJU
-         YYm6voo5l9dT47o0MVp0J/NnZb+TVsiZr5aEZndwngIeF1B4XetrrIs9J8QoQp980zKM
-         Y8siUIM2KWB0+4ayre1/FNXHrXzs0GHrvQtbAJE8ivtz4f7M1brTrmkKyAZDJMjrAHp0
-         L95+xCpEBRT74DDDzuwvSwoITHUqkHGKE3zJuh4ijcVQsLLx2C94N4SBIh08oDcJ1SPe
-         a0Qw==
-X-Forwarded-Encrypted: i=1; AJvYcCVY1r0U4Z2fMSnO6moONJG+PCMdwwtZrQbAvvo2RdOraCp/5RGHigxZ1s1aeNZDJ1Rz5IerKBUlTbn5GU3G@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOl1Ik1XbI18rETJ7WHo1aa+e5l2NyOKRslbEKfydvcuPty2mJ
-	smzaWJWqurCoFWaS2Y6RZokc74H6jbTaaQQej0KiovkgYfawTPodRnTCX1wdW5e1MDztjQqaczg
-	I+Cct2WCN0ZBWdJ0ebFlCLP0hih1QW7mhy4Ehj8cRIDs32GKgLLhjfTqbaC8Gv5hg
-X-Gm-Gg: ASbGncuJL/DkSJQO5Gj7ooLPW3Rw64mRD4stk62lmMmKoubOBFoqxVgm1OZ3xSHYt1b
-	xYJhdOktHNPiVu9JqnAYkMGdxr6O1CvTHkVxGh57DH0Dt0YOXRZwhY/nnR9tpY7JK55LDtpTfD6
-	ycrTvmko3+buZ/bhQxpgA5IMjlIDSg/ItCK8OfFb0gIlc9xmqkD1huymoMylS35FhGblsoX59ZD
-	Cbbj1taBrtmpg9nZS6xixFsULsNlnQhRkLydfW+HOh5Uin1B4P/k4ZhGKAJCCiudOnjX5EDeY2S
-	DZUuGoAOeTn2WC+RDrkh37FKDl/JWv6v3BmUzyz5oRfER0e8Ft8qKuKvAbM=
-X-Received: by 2002:a05:6214:1d0e:b0:6d8:967a:1a60 with SMTP id 6a1803df08f44-6e46ed93ca3mr48905716d6.2.1739465247514;
-        Thu, 13 Feb 2025 08:47:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGEetTXePMyTND5uVB//0Cph5yyIkXDH1QnV5NVQnh4WczSnYALFJyWUjGFeD039hxpYavxng==
-X-Received: by 2002:a05:6214:1d0e:b0:6d8:967a:1a60 with SMTP id 6a1803df08f44-6e46ed93ca3mr48905226d6.2.1739465247027;
-        Thu, 13 Feb 2025 08:47:27 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aba533bee4asm162967666b.170.2025.02.13.08.47.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Feb 2025 08:47:26 -0800 (PST)
-Message-ID: <eb7ec79c-a9d1-4d8e-975e-30f12bf583e5@oss.qualcomm.com>
-Date: Thu, 13 Feb 2025 17:47:23 +0100
+	s=arc-20240116; t=1739465518; c=relaxed/simple;
+	bh=odlb6+92LTfYeJcLKPY87bv0xB6K2iBjaAxL4Nwu4rY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bY+6D8XBZ19SlwDqtVUnTiVb+eW8W+RVofGhTo8lsdK7IxHmxIOEOzvTbjGoqCrjSBxSM6OIvlY/5lclu+Zh5QfpUcgPB4pPohvUsNS6JAN8WQXN66py+41tCgd/EwmVf4bA94tWWh81wGWxE7lwhKIUSHLC1EzqXx0+YnL/sWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qX6ZSR6R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9804BC4CED1;
+	Thu, 13 Feb 2025 16:51:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739465517;
+	bh=odlb6+92LTfYeJcLKPY87bv0xB6K2iBjaAxL4Nwu4rY=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=qX6ZSR6Rr9O72Ad1jBqyNdHPNGsqTTbuIDJJ4ycXhR3iHQsEzfg5+RBLX305I+SQ9
+	 UtV0WEB5oksCSVYcck6RcEtVJ02TTN7aKPudS1KnlUTugIqfOZCdnKR4EQhPRePa4Y
+	 2SV27aFq6KQRUpdiSYOA+cyipwTc99uMGsd3+GYO6hH/fl8czaP5iuUvyqa1TDuCk2
+	 l4NpaQa2+0DZFH1GwvCtN4JonmbWaluMbglx3NI3nDn8Zbv36MtP3fcbBIp/0bM4iQ
+	 EcNdtLAffmaDJK1AgWzyWKH1Idqvzx8PkgfVXYQFnDxGqHeYU8NIsHPPhLNW2U/17O
+	 v2RYYpHG5ODBw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82107C021A0;
+	Thu, 13 Feb 2025 16:51:57 +0000 (UTC)
+From: Anthony Ruhier via B4 Relay <devnull+aruhier.mailbox.org@kernel.org>
+Date: Thu, 13 Feb 2025 17:51:38 +0100
+Subject: [PATCH RESEND] power: supply: qcom_battmgr: abs() on POWER_NOW
+ property
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] drm/msm/a6xx: Print GMU core firmware version at boot
-To: Thomas Zimmermann <tzimmermann@suse.de>, Abel Vesa
- <abel.vesa@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20241219-topic-gmu_fw_ver-v1-0-d403a70052d8@oss.qualcomm.com>
- <20241219-topic-gmu_fw_ver-v1-2-d403a70052d8@oss.qualcomm.com>
- <Z64fUjIfFzs4R8Im@linaro.org> <b8004a16-6130-4232-91fd-85d62c2b84ec@suse.de>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <b8004a16-6130-4232-91fd-85d62c2b84ec@suse.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: mdvqIlkvMC3xOd8fmYo6xjahUqiXNlo6
-X-Proofpoint-GUID: mdvqIlkvMC3xOd8fmYo6xjahUqiXNlo6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-13_07,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 adultscore=0 mlxlogscore=999 mlxscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502130120
+Message-Id: <20250213-patch-qcomm-bat-uint-power-v1-1-16e7e2a77a02@mailbox.org>
+To: Sebastian Reichel <sre@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Anthony Ruhier <aruhier@mailbox.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2103;
+ i=aruhier@mailbox.org; h=from:subject:message-id;
+ bh=lSOxkdOf6gRdpUszCsRF5pZ7uZYHKUdsGgP+kJrQraU=;
+ b=owGbwMvMwCVW2Nrw47jsO3/G02pJDOnrlLUlpUtWJmwo37z5H7fgTxWLRTtP/zPi65D4fydhx
+ 9Te0vlmHaUsDGJcDLJiiiwl+6OEb6t03HdYu5wFZg4rE8gQBi5OAZhIzgqGfwq3Mw1zP1pMVFH7
+ X3J796T3nvfVzJimaOUbqQVOsknYzMLIsPPMo7TopmVuYQ0bZtTt2a3VZcVRcyjm86W1T3z1JTW
+ ZWAA=
+X-Developer-Key: i=aruhier@mailbox.org; a=openpgp;
+ fpr=F4A378DD8D494AE48EBA554CB00FBC7D08D231D9
+X-Endpoint-Received: by B4 Relay for aruhier@mailbox.org/default with
+ auth_id=302
+X-Original-From: Anthony Ruhier <aruhier@mailbox.org>
+Reply-To: aruhier@mailbox.org
 
-On 13.02.2025 5:41 PM, Thomas Zimmermann wrote:
-> Hi
-> 
-> Am 13.02.25 um 17:35 schrieb Abel Vesa:
->> On 24-12-19 23:36:56, Konrad Dybcio wrote:
->>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>
->>> Log the version for informational purposes, such as for keeping track
->>> of possible GMU fw-related failures in crash / CI logs.
->>>
->>> Intentionally not implemented on the if (gmu->legacy) codepath, as
->>> these registers seem not to be used on there.
->>>
->>> Downstream additionally warns if the firmware version is too old for
->>> a given GPU, but we already pair the binary to a given GPU, so let's
->>> not go there at the moment.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>> ---
+From: Anthony Ruhier <aruhier@mailbox.org>
 
-[...]
+The value for the POWER_NOW property is by default negative when the
+battery is discharging, positive when charging.
 
->> So maybe DRM_INFO_ONCE instead ?
-> 
-> drm_dbg() seems appropriate. Most of the time, firmware versions are not interesting.
+However on x1e laptops it breaks several userland tools that give a
+prediction of the battery run time (such as the acpi command, powertop
+or the waybar battery module), as these tools do not expect a negative
+value for /sys/class/power_supply/qcom-battmgr-bat/power_now. They
+estimate the battery run time by dividing the value of energy_full by
+power_now. The battery percentage is calculated by dividing energy_full
+by energy_now, therefore it is not impacted.
 
-Unfortunately, in our case they are, given users source them from all
-kinds of places..
+While having a negative number during discharge makes sense, it is not
+standard with how other battery drivers expose it. Instead, it seems
+standard to have a positive value for power_now, and rely on the status
+file instead to know if the battery is charging or discharging. It is
+what other x86 laptops do.
 
-Konrad
+Without the patch:
+    $ acpi
+    Battery 0: Discharging, 98%, discharging at zero rate - will never fully discharge.
+
+With the patch:
+    $ acpi
+    Battery 0: Discharging, 97%, 10:18:27 remaining
+
+---
+Signed-off-by: Anthony Ruhier <aruhier@mailbox.org>
+---
+ drivers/power/supply/qcom_battmgr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index 47d29271ddf400b76dd5b0a1b8d1ba86c017afc0..3e2e0c5af2814df0eb0bfc408d4b3d26399ab4e4 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -530,7 +530,7 @@ static int qcom_battmgr_bat_get_property(struct power_supply *psy,
+ 		val->intval = battmgr->status.current_now;
+ 		break;
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		val->intval = battmgr->status.power_now;
++		val->intval = abs(battmgr->status.power_now);
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 		if (unit != QCOM_BATTMGR_UNIT_mAh)
+
+---
+base-commit: ffd294d346d185b70e28b1a28abe367bbfe53c04
+change-id: 20250128-patch-qcomm-bat-uint-power-5793f3638c56
+
+Best regards,
+-- 
+Anthony Ruhier <aruhier@mailbox.org>
+
+
 
