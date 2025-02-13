@@ -1,230 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-47904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D49AFA346FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 16:30:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 73379A348F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 17:05:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4D873B2C1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 15:22:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 087953ABA8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 16:00:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5BF814A605;
-	Thu, 13 Feb 2025 15:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA0DB20013E;
+	Thu, 13 Feb 2025 16:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fpTpMGGF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EN0qjHgl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B10326B0B9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 15:22:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDB015B0EF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 16:00:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460145; cv=none; b=KNGRxHG3Ir1Ye2D9YzyQcF1XCCLvZDQZzR1klUqYQuXwyuXDT8xBnCOegfSpP6hMSpXC29q2ZQDQf1fAoNtfWw8SnYV6Cn44a5Ntr5cPw7bX8sBkoqaqi/CyqMhcxu7wMReNgEWKnYEtB2dZ0gWYmRNA47cI/32dOMxjGV4enJQ=
+	t=1739462413; cv=none; b=JbXpPpCstm1SG5bMg78WkSJTNR2wfgIq8AZQfjWtO+fTR4+AI7XBe4x0XHihuAQzundOONbM7zn69IOtcnPtYomdhXVd7mXflhb8lid0nLSbvqKaT2u2NK/q1x7isS8j8HIn+kkcEoCL1tfeIlI+2/NAo31QmhRCFf73eBCzg5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460145; c=relaxed/simple;
-	bh=fVVtX3HUcTgbiTiZF7li1VO3hMUCMHwjas9kjcWLS+E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b2CASD9MWwr2NT6mGZZtDUIKqOWE/lLRZpTbhBwHSlIh9dd34w2W7sNc3BPyaCk4BZJjDQ1/f6LeliRWvJtRJbtI8H9UwYQIlxMw9XsnOv5egZAmVWhpv4ArYq86VXMW7lxxg9vPtcMsjfXbf3KaGbw6U45j0U+g8OgaQMtbNb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fpTpMGGF; arc=none smtp.client-ip=209.85.218.50
+	s=arc-20240116; t=1739462413; c=relaxed/simple;
+	bh=tlRPiujx2gpWjfA34WayAz3yoK4kn0l7/eSxXnmoqwo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XJoju8WLUKDpDGS3RRGSV91sW+QZn1TIkPgdpJw6lZEjWVaQmacjRYdjiDfcAxUkfT48hctQW1Nl1yOBHVYao07b/5fsC6n68T6Hbs/BjLfRPQ/RA5Xd3HduiZ6Q/c8vHBnqMbSa1xeG/Br+uT6HUJ7Ku+JPBJPfBtGJsbJSJ/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EN0qjHgl; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ab7fa1bc957so195815066b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 07:22:23 -0800 (PST)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so7509095e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 08:00:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739460142; x=1740064942; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aKv4T9EGZ11sX6un84F2CqVjaIUgrojaEdOl4TjT83I=;
-        b=fpTpMGGF9v/6CRS9dZ0G6+D9wxHtLWLlzceMYcrgH6OFJ4NZpDl6Ek/VNlejHu5ShE
-         5r/SSd5tQnUCeSxuvbyjTjfqJewvPKmeSBX0vKhuFOeDHJ8ZC6rbJ4R6xcG0+IhcRbT3
-         /ppSwT2jpHXMlxUibk/KKDRfqyNKu8gaI7zNhXlTsM5CIDl9LFaQfabgE4JoRebkDzZ+
-         Fc1sA/EvVqClZg3MxWfqsWYku8JcX30Aa7hoCm15l4M2DSt50T7QLI3aOEVUTry4mikn
-         4DHSnekMbK3B2j/hFJwhj94W25tkE1KW4jIRlzpgox6bGPL4SvUsdm6KNY4i0mA607wT
-         RaWQ==
+        d=linaro.org; s=google; t=1739462410; x=1740067210; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pgDN29uKkb88V0um0RfTC0vvM9HPPQBtETeV1yITKoQ=;
+        b=EN0qjHglBCoTCzA3Ds2BSJiJ6m9xNeIJ0oiFNXfvnMbcZ21hr9u/2BAUX09eke7JWM
+         0RZs86NWHB3dCVdFz+TvVZPjPDa3cA/6LV2/FI+TeDhYrUETU1Fd0KVyQDbfMzoz3eOI
+         JdVsZ6jsKnv9AB6VEJURIrkCXayWr29OATehm0vGQ8V4vXxEY0TsQRuhl+Q5Xh/BYwnG
+         mwNU+Je7dKBM4x/qEAcOIZA/CN4BhnlU16y4fUwVJVWzUf//2gPMINxJzLcVQbXQ29NN
+         R8DW6thZo0RYqTZ4ZB+YVFyfWXU93nozAZF0EKuQXRrRAQgxEr3DU9fqu934KFN+KUZh
+         wYHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739460142; x=1740064942;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aKv4T9EGZ11sX6un84F2CqVjaIUgrojaEdOl4TjT83I=;
-        b=DpKQ8nVOh9qoTiW/Lnodd/WeUS7+REhACAMQvZYKE2d5pgf84asrQPzz//afUhgq/I
-         Hbw95QLKHQmsBLY4gaxcfdVIHXiJ85m+xXceAwqrvz4NNIRyaL4IbBrzfKf57BZYLtEY
-         aoX7dY6gcgeZyUYZoiBLP4YP2V1v536yboZ5yD7pPxjrcMCnX4xmpDIOQPaWKH3Yxte3
-         RM4aVmnZ7A5kuRAyhbs7dJz/t4X7wl7YephMd3xkPvwT3fTwPsnng6Z4xriHCGdgYd9/
-         5v0259zgJFbw8bZqoUTjFCzMeq5FIDk7fjzER8UibrbUzZVp7SW/O67NZsxRoWsga9aw
-         PIDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUcrdajonAifLXhBjQz10rqc0K9HHUHGv7FhuulSTSHm1zOBVlV8LHBShbrkRdecuzFzl6llam2Gd9rhOkC@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywo2iYw3K/UmeEN8zzinQ7dEEc68Hy4Fa6i+ErOygb0tdQ1jlnH
-	Ay5xN5SZvkWZAfafSorKZ65yKpCpkwvB4lLcS8b2avmEqqDF9606YfzMWv3yLeA=
-X-Gm-Gg: ASbGncv7gESZg5Nrv1HsXNcI6K10AD96bAz7Q76AQnDns/YMTAuOrgWZbW7yn0BeAmy
-	zTqD1Q5wAo+MIa77Cyu0YOSH5qEzcUPyA79oUpOH21sJEI7BEwp9dKAshWBA04fiCpMo2WZxWUu
-	2IS60Gw4tissn5JdIrPy8aR9p/2huYqxweiU/W5ZeJqNFVSOWH0OQoKsMnXm+LQq3m9fsajxsVQ
-	wdhRCcMr/3jTQkWhWmUQkCpErKoWWaWdMeS/c7cC69vFKFsXLlq4HbEXTf9V8D2ZjYyYqynIfFA
-	qHf6U7jJfK7+6+haInLbqD33I2Q=
-X-Google-Smtp-Source: AGHT+IESTpTFEWvOGpKKzQ4gwb1JLkDFCIgEkd3tqqI05AtRvmxPRwsC4nDvvOfqZzoTZCApQ+e5ow==
-X-Received: by 2002:a17:907:3da5:b0:ab7:1012:3ccb with SMTP id a640c23a62f3a-aba4eba8493mr379957966b.14.1739460141676;
-        Thu, 13 Feb 2025 07:22:21 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef30:e29e:2d52:429a:d097])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aba5a4f4cb4sm70935366b.118.2025.02.13.07.22.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2025 07:22:21 -0800 (PST)
-Date: Thu, 13 Feb 2025 16:22:17 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
-	Anusha Rao <quic_anusha@quicinc.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: Re: [PATCH 7/8] dt-bindings: dma: qcom: bam-dma: Add missing
- required properties
-Message-ID: <Z64OKcj9Ns1NkUea@linaro.org>
-References: <20250212-bam-dma-fixes-v1-0-f560889e65d8@linaro.org>
- <20250212-bam-dma-fixes-v1-7-f560889e65d8@linaro.org>
- <22ce4c8d-1f3b-42c9-b588-b7d74812f7b0@oss.qualcomm.com>
- <Z6231bBqNhA2M4Ap@linaro.org>
- <d674d626-e6a3-4683-8f45-81b09200849f@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1739462410; x=1740067210;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pgDN29uKkb88V0um0RfTC0vvM9HPPQBtETeV1yITKoQ=;
+        b=EXkkpq341BOS69llDRIFKMmgerCmcgKrZBWLbjHAP9no9nypEfP6oAVeLAboHiaeSb
+         v83W+TRMFb7NdNaFL54I9yeZYKZeYNZkyMRHb+u4ioGS1iYcNZXpcCQBdWElEkyVMukH
+         SxMcJ1Xl/lWgsfDdb3bfRImaEWtd3B7dAC1GX3AFG485HE+Dz4XguljRuDtiiGEE9+cq
+         9SkuNflVXUuYUjzZHrmSIkil1iIt8SbZJ6iqcBkA4KGm2Zr2RWZ/lFWg925b+S9hLMXk
+         OKfclqOhIgWQmjqcawayDgUS1Rspsh6FRFPS5GOv6oPTUPtESQoFw4cbpnprBeqVPbxa
+         y0uA==
+X-Forwarded-Encrypted: i=1; AJvYcCUsKrv7hCLrO20Id4Gef0KmYt2oyAcqu+qxc1ugsjAnBgmEa24KIIVkVXgdIQdDNkLOvophV+i8I0BXKK7P@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/We84clNtCrOVGxw9agw39SCiR+MtCrjWTrNcIkPOMxmLsXIy
+	lDvzvshP69QB2BKUCpWPEmnvGFKknnDZPFO82aoYL2U7pscLtlLlIK+IdUQvCk/lt4Nth2xDV1d
+	X9ck=
+X-Gm-Gg: ASbGnctjcTEI/y411vnCamWzfkKun+WEKjr7GKsFKk7m5UjD9QSMhXBvESdw6r5guJ+
+	S/VOts4Ebsjv301t5gMVWCMaZttLTALAzu8mmLnuryev0qYs4RV1x9BuM4srSxG1je+W3ta883j
+	5D85uyLELRDiIRqDszlGz1no8+W6zCvuO2eZYQJhFSXVcFWXdPBxjbH1fP4qngrqrxsqK9xOiCc
+	nLPtM+KDjxfbt9kzqOyx8+kO9vgC5VA7muMFdAMRwvjnF3ZC9/ShaouJb+xyiVetdho1/txrv2+
+	meT/mr/Ei7OcA+KUa5Jm7A6qmg==
+X-Google-Smtp-Source: AGHT+IF/wXtprc1U4VPmJ1pAueprsYzKR20H2MkrRTKmejrcGzsEoDZgejq84H03liicKIeACJ4WAA==
+X-Received: by 2002:a05:6000:2ce:b0:38f:287a:43e2 with SMTP id ffacd0b85a97d-38f287a45b1mr2767766f8f.11.1739462408125;
+        Thu, 13 Feb 2025 08:00:08 -0800 (PST)
+Received: from [192.168.68.163] ([145.224.90.174])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258dd5acsm2283106f8f.35.2025.02.13.08.00.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Feb 2025 08:00:07 -0800 (PST)
+Message-ID: <a633f52c-81e8-4c0d-aca7-cc18360866eb@linaro.org>
+Date: Thu, 13 Feb 2025 16:00:04 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d674d626-e6a3-4683-8f45-81b09200849f@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 4/7] Coresight: Introduce a new struct coresight_path
+To: Jie Gan <quic_jiegan@quicinc.com>
+Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Jinlong Mao <quic_jinlmao@quicinc.com>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+References: <20250207064213.2314482-1-quic_jiegan@quicinc.com>
+ <20250207064213.2314482-5-quic_jiegan@quicinc.com>
+Content-Language: en-US
+From: James Clark <james.clark@linaro.org>
+In-Reply-To: <20250207064213.2314482-5-quic_jiegan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Feb 13, 2025 at 03:00:00PM +0100, Konrad Dybcio wrote:
-> On 13.02.2025 10:13 AM, Stephan Gerhold wrote:
-> > On Wed, Feb 12, 2025 at 10:01:59PM +0100, Konrad Dybcio wrote:
-> >> On 12.02.2025 6:03 PM, Stephan Gerhold wrote:
-> >>> num-channels and qcom,num-ees are required when there are no clocks
-> >>> specified in the device tree, because we have no reliable way to read them
-> >>> from the hardware registers if we cannot ensure the BAM hardware is up when
-> >>> the device is being probed.
-> >>>
-> >>> This has often been forgotten when adding new SoC device trees, so make
-> >>> this clear by describing this requirement in the schema.
-> >>>
-> >>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> >>> ---
-> >>>  Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 4 ++++
-> >>>  1 file changed, 4 insertions(+)
-> >>>
-> >>> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> >>> index 3ad0d9b1fbc5e4f83dd316d1ad79773c288748ba..5f7e7763615578717651014cfd52745ea2132115 100644
-> >>> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> >>> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> >>> @@ -90,8 +90,12 @@ required:
-> >>>  anyOf:
-> >>>    - required:
-> >>>        - qcom,powered-remotely
-> >>> +      - num-channels
-> >>> +      - qcom,num-ees
-> >>>    - required:
-> >>>        - qcom,controlled-remotely
-> >>> +      - num-channels
-> >>> +      - qcom,num-ees
-> >>
-> >> I think I'd rather see these deprecated and add the clock everywhere..
-> >> Do we know which one we need to add on newer platforms? Or maybe it's
-> >> been transformed into an icc path?
-> > 
-> > This isn't feasible, there are too many different setups. Also often the
-> > BAM power management is tightly integrated into the consumer interface.
-> > To give a short excerpt (I'm sure there are even more obscure uses):
-> > 
-> >  - BLSP BAM (UART, I2C, SPI on older SoCs):
-> >     1. Enable GCC_BLSP_AHB_CLK
-> >     -> This is what the bam_dma driver supports currently.
-> > 
-> >  - Crypto BAM: Either
-> >     OR 1. Vote for single RPM clock
-> >     OR 1. Enable 3 separate clocks (CE, CE_AHB, CE_AXI)
-> >     OR 1. Vote dummy bandwidth for interconnect
-> > 
-> >  - BAM DMUX (WWAN on older SoCs):
-> >     1. Start modem firmware
-> >     2. Wait for BAM DMUX service to be up
-> >     3. Vote for power up via the BAM-DMUX-specific SMEM state
-> >     4. Hope the firmware agrees and brings up the BAM
-> > 
-> >  - SLIMbus BAM (audio on some SoCs):
-> >     1. Start ADSP firmware
-> >     2. Wait for QMI SLIMBUS service to be up via QRTR
-> >     3. Vote for power up via SLIMbus-specific QMI messages
-> >     4. Hope the firmware agrees and brings up the BAM
-> > 
-> > Especially for the last two, we can't implement support for those
-> > consumer-specific interfaces in the BAM driver. Implementing support for
-> > the 3 variants of the Crypto BAM would be possible, but it's honestly
-> > the least interesting use case of all these. It's not really clear why
-> > we are bothing with the crypto engine on newer SoCs at all, see e.g. [1].
-> > 
-> > [1]: https://lore.kernel.org/linux-arm-msm/20250118080604.GA721573@sol.localdomain/
-> > 
-> >> Reading back things from this piece of HW only to add it to DT to avoid
-> >> reading it later is a really messy solution.
-> > 
-> > In retrospect, it could have been cleaner to avoid describing the BAM as
-> > device node independent of the consumer. We wouldn't have this problem
-> > if the BAM driver would only probe when the consumer is already ready.
-> > 
-> > But I think specifying num-channels in the device tree is the cleanest
-> > way out of this mess. I have a second patch series ready that drops
-> > qcom,num-ees and validates the num-channels once it's safe reading from
-> > the BAM registers. That way, you just need one boot test to ensure the
-> > device tree description is really correct.
+
+
+On 07/02/2025 6:42 am, Jie Gan wrote:
+> Add 'struct coresight_path' to store the data that is needed by
+> coresight_enable_path/coresight_disable_path. The structure will be
+> transmitted to any required devices to enable related funcationalities.
 > 
-> Thanks for the detailed explanation!
+> The trace_id will be allocated after the path is built. Consequently,
+> The ETM3x and ETM4x devices will directly read the trace_id from path
+> which result in etm_read_alloc_trace_id and etm4_read_alloc_trace_id
+> being deleted.
 > 
-> Do you think it could maybe make sense to expose a clock/power-domain
-> from the modem/adsp rproc and feed it to the DMUX / SLIM instances when
-> an appropriate ping arrives? This way we'd also defer probing the drivers
-> until the device is actually accessible.
+> Co-developed-by: James Clark <james.clark@linaro.org>
+> Signed-off-by: James Clark <james.clark@linaro.org>
+> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-core.c  | 106 +++++++++++++-----
+>   drivers/hwtracing/coresight/coresight-dummy.c |   5 +-
+>   .../hwtracing/coresight/coresight-etm-perf.c  |  30 +++--
+>   .../hwtracing/coresight/coresight-etm-perf.h  |   2 +-
+>   drivers/hwtracing/coresight/coresight-etm.h   |   1 -
+>   .../coresight/coresight-etm3x-core.c          |  54 ++-------
+>   .../coresight/coresight-etm4x-core.c          |  54 ++-------
+>   drivers/hwtracing/coresight/coresight-etm4x.h |   1 -
+>   drivers/hwtracing/coresight/coresight-priv.h  |  12 +-
+>   drivers/hwtracing/coresight/coresight-stm.c   |   3 +-
+>   drivers/hwtracing/coresight/coresight-sysfs.c |  17 ++-
+>   drivers/hwtracing/coresight/coresight-tpdm.c  |   3 +-
+>   include/linux/coresight.h                     |  12 +-
+>   13 files changed, 143 insertions(+), 157 deletions(-)
 > 
+[...]
+> @@ -352,7 +352,7 @@ static void *etm_setup_aux(struct perf_event *event, void **pages,
+>   	 * CPUs, we can handle it and fail the session.
+>   	 */
+>   	for_each_cpu(cpu, mask) {
+> -		struct list_head *path;
+> +		struct coresight_path *path;
+>   		struct coresight_device *csdev;
+>   
+>   		csdev = per_cpu(csdev_src, cpu);
+> @@ -405,15 +405,15 @@ static void *etm_setup_aux(struct perf_event *event, void **pages,
+>   			cpumask_clear_cpu(cpu, mask);
+>   			continue;
+>   		}
+> -
+>   		/* ensure we can allocate a trace ID for this CPU */
+> -		trace_id = coresight_trace_id_get_cpu_id_map(cpu, &sink->perf_sink_id_map);
+> -		if (!IS_VALID_CS_TRACE_ID(trace_id)) {
+> +		trace_id = coresight_path_assign_trace_id(path, CS_MODE_PERF);
+> +
+> +		/* Can be 0 and valid, ETE doesn't need an ID */
+> +		if (trace_id < 0) {
 
-Maybe, but that would result in a cyclic dependency between the DMA
-provider and consumer. E.g.
+Not sure why I wrote it like this, but I think we should leave it as it 
+was with !IS_VALID_CS_TRACE_ID(). Even with ETE it calls the trace ID 
+allocator, so nothing has changed here.
 
-	bam_dmux_dma: dma-controller@ {
-		#dma-cells = <1>;
-		power-domains = <&bam_dmux>;
-	};
-
-	remoteproc@ {
-		/* ... */
-
-		bam_dmux: bam-dmux {
-			dmas = <&bam_dmux_dma 4>, <&bam_dmux_dma 5>;
-			dma-names = "tx", "rx";
-		};
-	};
-
-fw_devlink will likely get confused by that.
-
-At the end my thought process here is the following:
-
- 1. BAM-DMA is a legacy block at this point, it doesn't look like there
-    are any new use cases being added on new SoCs
- 2. We need to preserve compatibility with the old bindings anyway
- 3. I trimmed it down to having to specify just "num-channels"
- 4. Everything else is read from the hardware registers, and
-    num-channels gets validated when the first DMA channel is requested
-
-I think it's the best we can do here at this point.
-
-Thanks,
-Stephan
 
