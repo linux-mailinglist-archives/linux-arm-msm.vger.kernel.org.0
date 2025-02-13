@@ -1,159 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-47867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8930A339B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 09:10:24 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 536B3A339B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 09:11:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F02341887900
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 08:10:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 588757A139B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2025 08:10:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D181A20B20B;
-	Thu, 13 Feb 2025 08:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 108F020B21D;
+	Thu, 13 Feb 2025 08:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HRi1o3Hw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FyCJf4vf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4012C20AF82;
-	Thu, 13 Feb 2025 08:10:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDACA20AF82;
+	Thu, 13 Feb 2025 08:11:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739434221; cv=none; b=Yf5qXEbvzRyWMNJ4Xh9suObVVKWz3Q0O/kNZyaeGs+cAEmFdQQZKy8x/2KFFqzr7j2nCB2nurWKg6Y4IgcIgL0CT4/h/7oyvfCnPkC5GfuZvs4XmWkeX/oHtdjJp0Lg7TapBcNzUJtc9e/Q6+XdiNtOszdm7S7vGcxyhpaKIYCU=
+	t=1739434289; cv=none; b=XAhw8y95aypt1xdtbctCkxrOOArt7+fGn4qqxeqWr2bt3bBviEtroY/l1Sce6gIJhGUqPaX5ozuprmfo6hWYP6iJDWt+6VFYf5TO2++xO3iP5+KcjEswNJmITRsvnUq9psOVIURuuOdzLhZrqX6c0lhA7ynmAGL8AJjpgTYyaOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739434221; c=relaxed/simple;
-	bh=7DHVYrB1piNwVc4gJVmBnpK+nOIN57XoDX+W+G6P7gk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=WHOP8UICbGnvCWWqRi9esuOg3J2m/7Uwq9FRdj3CcKIaEXfLW0igxfvqoeqe8t+72Id1MkOXLczwD4OC0UHlaf9bHjCqkIs6YolvbYMr8uXVG7kkfejcfjpGJMreir4f4vwDmoVJ6l/P+TIGL9+jyThFSqY9DIyo+FCDIz/Ukl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HRi1o3Hw; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51CLRYi7013725;
-	Thu, 13 Feb 2025 08:10:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Y864eHeHSAEv/3coz6iIkCoZUwrDr88ZpoAZMvN/W7w=; b=HRi1o3HwkxhHD4dH
-	cqQqd8ciqbN7cvXULBAjLukH6QSnz4wbe8u9vmrvz35awi6UWHs6cjqdgBG8y7QT
-	NS1sEmTkK2uWMapxZzm2u0k6UT18wzACiB+5FMvbEZH+Ihf0juoU7fCM5MHOPqiu
-	6yNVUCy+O+L7DVMO24/7AGEXg6WaXXlB6fJMhCK/XDYUqJTGpYKITKbeXWZWUzGU
-	WmA0obwr6FVKNE2cE8CmOivKmjv5c2U1qis1IQf5pRG70vab3ZRHULb0KL/3Jz4V
-	3DIf5YUTWGC+w6HRc/aZs07pOeHhLnf5kJi6Wx9LWb0cCuzLtyFYPU/EJ9w26XKm
-	+p0uDg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44rsd7tyyb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Feb 2025 08:10:11 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51D8AADi015183
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Feb 2025 08:10:10 GMT
-Received: from [10.239.28.138] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 13 Feb
- 2025 00:10:07 -0800
-Message-ID: <5bbd6b38-5c8d-65b2-f910-b125519bd037@quicinc.com>
-Date: Thu, 13 Feb 2025 16:09:53 +0800
+	s=arc-20240116; t=1739434289; c=relaxed/simple;
+	bh=qhnwGyQaoi8IJLlrTunEkZvhO/0CPiOFnmcJQERWVIE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S/yntcidHZhHKYc+8Ke156BT/LjFshX9iGJ/lV+oJGmkdyIAjfKDoPZMHlBkeWOSHbqTdtPHjuIb3xSPGPn+5yvSa1AEzHaDb50J0ML2As7dkVbAJG3gsgYmxV+LCzM9JLcBHjfOe7LBBnZAtiNhf/huJ1Gx6A5izMQb7Nx+xrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FyCJf4vf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861BDC4CED1;
+	Thu, 13 Feb 2025 08:11:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739434289;
+	bh=qhnwGyQaoi8IJLlrTunEkZvhO/0CPiOFnmcJQERWVIE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FyCJf4vf8SHTu1ZLyRnOUf9D03imj38LoyNLC9jTU6wEtitmAjg2ffn9K9pgPJEvY
+	 Xx6FbFdlNW6fMjHIe/hMYWPTM1c7j8xkoPpAJN8fDeppnNoi7TfiT/4cAXLzjLkYRZ
+	 jMkno97LtGAv6xvEtT+8p6tL1hJ4aBjkPvHmRqPW+KhsK6YPvPKmRq35tRmipCcdvB
+	 u5Jj/6zOyJ6NiQsnhAo5TzUzHOF7F+xF7QsuPdkotHw3v7tuGatrxyGPnUd8lt3tyQ
+	 xxrGGMiSD4rxgIyZOp4ODrAFptxGYhgl1WeX+VDR18UXXxD7MnYgT8NY9U/jbbCdb9
+	 hvxmzgr2zlC6g==
+Date: Thu, 13 Feb 2025 09:11:25 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Benson Leung <bleung@chromium.org>, devicetree@vger.kernel.org, chrome-platform@lists.linux.dev, 
+	Pin-yen Lin <treapking@chromium.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: usb: Add binding for ChromeOS Pogo
+ pin keyboard connector
+Message-ID: <20250213-amigurumi-shrew-of-grandeur-bb1a13@krzk-bin>
+References: <20250210225714.1073618-1-swboyd@chromium.org>
+ <20250210225714.1073618-2-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v2 1/2] phy: qcom: pcie: Determine has_nocsr_reset
- dynamically
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Philipp Zabel
-	<p.zabel@pengutronix.de>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <abel.vesa@linaro.org>, <quic_qianyu@quicinc.com>,
-        <neil.armstrong@linaro.org>, <manivannan.sadhasivam@linaro.org>,
-        <quic_devipriy@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-References: <20250211094231.1813558-1-quic_wenbyao@quicinc.com>
- <20250211094231.1813558-2-quic_wenbyao@quicinc.com>
- <6c38b6e028858662aa5d45f4a14b993860b73cc0.camel@pengutronix.de>
- <93f1f01e-e6b4-4dc2-9485-aba168c6d88c@oss.qualcomm.com>
-From: "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>
-In-Reply-To: <93f1f01e-e6b4-4dc2-9485-aba168c6d88c@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3mvR0qXlMqjg2uBt2sDeiqHdIXHJTI6Y
-X-Proofpoint-GUID: 3mvR0qXlMqjg2uBt2sDeiqHdIXHJTI6Y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-13_03,2025-02-11_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- mlxlogscore=999 mlxscore=0 adultscore=0 spamscore=0 phishscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502130061
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250210225714.1073618-2-swboyd@chromium.org>
 
-On 2/12/2025 8:31 PM, Konrad Dybcio wrote:
-> On 11.02.2025 10:53 AM, Philipp Zabel wrote:
->> On Di, 2025-02-11 at 17:42 +0800, Wenbin Yao wrote:
->>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>
->>> Decide the in-driver logic based on whether the nocsr reset is present
->>> and defer checking the appropriateness of that to dt-bindings to save
->>> on boilerplate.
->>>
->>> Reset controller APIs are fine consuming a nullptr, so no additional
->>> checks are necessary there.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
->>> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
->>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> ---
-> [...]
->
->>>   static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tbls *tbls)
->>> @@ -4203,11 +4196,14 @@ static int qmp_pcie_reset_init(struct qmp_pcie *qmp)
->>>   	if (ret)
->>>   		return dev_err_probe(dev, ret, "failed to get resets\n");
->>>   
->>> -	if (cfg->has_nocsr_reset) {
->>> -		qmp->nocsr_reset = devm_reset_control_get_exclusive(dev, "phy_nocsr");
->>> -		if (IS_ERR(qmp->nocsr_reset))
->>> +	qmp->nocsr_reset = devm_reset_control_get_exclusive(dev, "phy_nocsr");
->>> +	if (IS_ERR(qmp->nocsr_reset)) {
->>> +		if (PTR_ERR(qmp->nocsr_reset) == -ENOENT ||
->>> +		    PTR_ERR(qmp->nocsr_reset) == -EINVAL)
->> Why is -EINVAL ignored here?
-> If the NOCSR (partial) reset is missing, we can still assert the "full" reset
-> and program the hardware from the ground up. It's also needed for backwards
-> dt compat as not all platforms described it when originally added.
+On Mon, Feb 10, 2025 at 02:57:11PM -0800, Stephen Boyd wrote:
+> +$id: http://devicetree.org/schemas/usb/google,usb-pogo-keyboard.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Google USB Pogo Pin Keyboard
+> +
+> +maintainers:
+> +  - Stephen Boyd <swboyd@chromium.org>
+> +
+> +description:
+> +  ChromeOS devices with a detachable keyboard have a set of five pogo pins that
+> +  are the typical four pins for USB (D+/D-, VBUS, GND) and an extra pin for
+> +  base detection. The detachable keyboard is a USB device that connects to the
+> +  four USB pogo pins.
+> +
+> +properties:
+> +  compatible:
+> +    const: google,usb-pogo-keyboard
+> +
+> +  '#address-cells':
 
-Seems like we really can't ignore -EINVAL. If no_csr reset is missing in
-dts, it will return -ENOENT, which is turned into NULL by
-devm_reset_control_get_optional_exclusive. -EINVAL indicates something
-wrong in args we passed to the function and the reset property that need to
-be fixed.
+If there is going to be any new version: please use consistent quotes,
+either ' or "
 
->
->> Without this you could just use
->> devm_reset_control_get_optional_exclusive(), which already turns -
->> ENOENT into NULL. That seems to me the correct thing to do, as from
->> driver point-of-view, this reset control is optional.
-> Good point, I forgot _optional_ was a thing in the reset framework
->
-> Konrad
+> +    const: 1
+> +
+> +  '#size-cells':
+> +    const: 0
+> +
+> +  port:
+> +    $ref: /schemas/graph.yaml#/properties/port
+> +    description: Connection to USB2 port providing USB HS signals
+> +    required:
+> +      - endpoint
+> +
+> +patternProperties:
+> +  "^keyboard@[0-9a-f]{1,2}$":
 
-Will use devm_reset_control_get_optional_exclusive function in patch v3.
+What does the unit address represent here? Why this isn't just
+"keyboard"? One connector usually has only one keyboard, right?
 
--- 
-With best wishes
-Wenbin
+Maybe it is only to fulfill the usb-device schema? The reg is there to
+represent USB hub or controller port, which is not true here.
+
+I don't have any idea how to solve it. I assume you need the keyboard
+child, right?
+
+Best regards,
+Krzysztof
+
 
