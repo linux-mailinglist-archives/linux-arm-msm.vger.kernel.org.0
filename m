@@ -1,80 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-48036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5D4EA35F74
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:51:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A75DA35FBC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 15:03:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B3BE169547
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 13:51:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCB9F168D7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:03:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56E1E263C82;
-	Fri, 14 Feb 2025 13:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD68A263F57;
+	Fri, 14 Feb 2025 14:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ajopEHBO"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="ffutnsRo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C57015199D;
-	Fri, 14 Feb 2025 13:51:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFCB7081C;
+	Fri, 14 Feb 2025 14:03:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739541085; cv=none; b=SRaKNfLQWWm5M2O1T08YbL5QkQI9VaQdviwo7MC2zNi7vGaSqRGIOtUYQONECWIGCfOmLIY88R5/KN6LIMBgOC4GfaZpeW6ZjunzWjWODzrkz+A+bMZFnE6/4l6fmFPZz1lhCHwfjZ95NZwe/JCpvj+xXSbBQgTzDM6mZ/ew5KI=
+	t=1739541788; cv=none; b=KgGtfIvjxbMY+wDKDRIGL5i+rTEJlBCOJKViCGu9J+UENMFdw6FkZhDXMol9Ayr6kDkZbojZvfAnG6y2TU1A3de8iErP+B1ndw7igps6vo7rxgIn3EHiqtjFaIKtIw7zQwqqlU5WlfkebRrWoNwaX7vJF+Nt6TX/pkBzEkvXyK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739541085; c=relaxed/simple;
-	bh=4RYb0V938Hvh8XfpOfW2FPzt2ThKIlaPfePtmuDjHvc=;
+	s=arc-20240116; t=1739541788; c=relaxed/simple;
+	bh=HPjrAGuqBs30Xqla0S08E7D+Vsk8nak+FoJqatHVKqs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p9A+In/a43QbGaymK8cF0owrTW46FIdUTr+hQAgk7qP6p+LNhrbpY/VfOtfo79BESovK0ULAT94GzzAZFYta5TvJgnXwCvMu2kgcWkMVxXcqgGbQTTWduMjb1YYH57JxNNu1rcY8ytVDQ+0vF8FMOuMEOaVr5yxhRJXatydfKxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ajopEHBO; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739541084; x=1771077084;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4RYb0V938Hvh8XfpOfW2FPzt2ThKIlaPfePtmuDjHvc=;
-  b=ajopEHBOv8Zaajqeto9xrTkVQbhzgjZlsjVeyOpgKTEQlx0QOMXtzoSh
-   RXRbhZDNzXN+CiatTBx+aH+NYtWlnlt62ZGwU6/aQGD3eqElWEypPcMVT
-   QcmOeYmPtKpQb6KjXoFnnyom1GzwUtrv8jWvgJKYFdDqE0ZTqWsAXfmcl
-   VxBvpXplg1aD/96/sNnGCDYsZC1ySJVVorCqo2a35uEjtrBZ6n21viChS
-   +Hx74D1PQSdUx+KHslbO5O56ZHPEHiouf4AvXLeN/DzultfRAVPW20H+x
-   1hllQ31pGP4AFHRDex/mSdrUoN6yCe7Ule96mL8QAPp8hd0On77YVYdZm
-   w==;
-X-CSE-ConnectionGUID: yVCtjxg8SvGC80AV8Wz30Q==
-X-CSE-MsgGUID: vPyRbgCrSEGgKjQARKlBhQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11345"; a="40323767"
-X-IronPort-AV: E=Sophos;i="6.13,286,1732608000"; 
-   d="scan'208";a="40323767"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2025 05:51:23 -0800
-X-CSE-ConnectionGUID: PSBcuQ5sRpC62aaIV9z4VQ==
-X-CSE-MsgGUID: jEzRNxGUQIiWWnjKYiY9Qw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,286,1732608000"; 
-   d="scan'208";a="113650248"
-Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
-  by fmviesa008.fm.intel.com with ESMTP; 14 Feb 2025 05:51:19 -0800
-Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tiw69-0019c7-0D;
-	Fri, 14 Feb 2025 13:51:17 +0000
-Date: Fri, 14 Feb 2025 21:50:23 +0800
-From: kernel test robot <lkp@intel.com>
-To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
-	amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
-	daniel.lezcano@linaro.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	rui.zhang@intel.com, lukasz.luba@arm.com,
-	david.collins@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] thermal: qcom-spmi-temp-alarm: Add temp alarm data
- struct based on HW subtype
-Message-ID: <202502142135.ez2QBdYV-lkp@intel.com>
-References: <20250213210403.3396392-3-anjelique.melendez@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=GEbxC9LFJZAeVC2jywQgScFjENM+hOLdOT7QtFvgA6UapXlLwv8TvxYwVew1rSx1P9AF9MwxveQDWAVP0RCO3ym4PzT0J7s0iK8tb4z3F+ycq0p+IYI6Ckizug9Nlrz+87v1I5GHa1vwq5Fez6GISeCQ/O2ALfiPmMQzUS7VcXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=ffutnsRo; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=YPfqLp9fbZ/8JOO2RhhN9couacnmyf0ld4MXnUIvALM=; b=ffutnsRoSZY8FyHYndFd/8kLiJ
+	I4KHxo35/Ek9TxhoUWtM8unvMnPGhWSEmkPTEcDT3jYClEQEnUPZhUgdZ2ziMHH55Gx8f8Cqx5dY+
+	TMUNkVQeXvIecwSFy4vJcLw7LskEMPFSJgDfs890xo04TQ/QG3ANEnPgdKm5ofEn2wRI=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1tiwHO-00E5L7-4X; Fri, 14 Feb 2025 15:02:54 +0100
+Date: Fri, 14 Feb 2025 15:02:54 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Jie Luo <quic_luoj@quicinc.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lei Wei <quic_leiwei@quicinc.com>,
+	Suruchi Agarwal <quic_suruchia@quicinc.com>,
+	Pavithra R <quic_pavir@quicinc.com>,
+	Simon Horman <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org,
+	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
+	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
+	john@phrozen.org
+Subject: Re: [PATCH net-next v3 13/14] net: ethernet: qualcomm: Add PPE
+ debugfs support for PPE counters
+Message-ID: <72171304-9a98-4734-85a3-d1302d053602@lunn.ch>
+References: <20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com>
+ <20250209-qcom_ipq_ppe-v3-13-453ea18d3271@quicinc.com>
+ <5a53333b-e94c-4fb7-b23d-e1d38d2dad8e@lunn.ch>
+ <a455a2f6-ca0b-43e0-b18c-53f73344981f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,65 +80,41 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250213210403.3396392-3-anjelique.melendez@oss.qualcomm.com>
+In-Reply-To: <a455a2f6-ca0b-43e0-b18c-53f73344981f@quicinc.com>
 
-Hi Anjelique,
+> > > +/* The number of packets dropped because of no buffer available, no PPE
+> > > + * buffer assigned to these packets.
+> > > + */
+> > > +static void ppe_port_rx_drop_counter_get(struct ppe_device *ppe_dev,
+> > > +					 struct seq_file *seq)
+> > > +{
+> > > +	u32 reg, drop_cnt = 0;
+> > > +	int ret, i, tag = 0;
+> > > +
+> > > +	PRINT_COUNTER_PREFIX("PRX_DROP_CNT", "SILENT_DROP:");
+> > > +	for (i = 0; i < PPE_DROP_CNT_TBL_ENTRIES; i++) {
+> > > +		reg = PPE_DROP_CNT_TBL_ADDR + i * PPE_DROP_CNT_TBL_INC;
+> > > +		ret = ppe_pkt_cnt_get(ppe_dev, reg, PPE_PKT_CNT_SIZE_1WORD,
+> > > +				      &drop_cnt, NULL);
+> > > +		if (ret) {
+> > > +			seq_printf(seq, "ERROR %d\n", ret);
+> > > +			return;
+> > > +		}
+> > 
+> > This is an error getting the value from the hardware? You should not
+> > put that into the debugfs itself, you want the read() call to return
+> > it.
+> > 
+> 
+> Yes, this error code is returned by regmap read functions in
+> ppe_pkt_cnt_get() when the hardware counter read fails. I will
+> remove it from debugfs file and instead log the error to the
+> console (dev_info).
 
-kernel test robot noticed the following build errors:
+and return it to user space via the read() call. These functions
+normally return the number of bytes put into the buffer. But you can
+also return a negative error code which gets passed back to user space
+instead.
 
-[auto build test ERROR on rafael-pm/thermal]
-[also build test ERROR on linus/master v6.14-rc2 next-20250214]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Anjelique-Melendez/thermal-qcom-spmi-temp-alarm-enable-stage-2-shutdown-when-required/20250214-050700
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git thermal
-patch link:    https://lore.kernel.org/r/20250213210403.3396392-3-anjelique.melendez%40oss.qualcomm.com
-patch subject: [PATCH 2/4] thermal: qcom-spmi-temp-alarm: Add temp alarm data struct based on HW subtype
-config: i386-buildonly-randconfig-003-20250214 (https://download.01.org/0day-ci/archive/20250214/202502142135.ez2QBdYV-lkp@intel.com/config)
-compiler: clang version 19.1.3 (https://github.com/llvm/llvm-project ab51eccf88f5321e7c60591c5546b254b6afab99)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250214/202502142135.ez2QBdYV-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202502142135.ez2QBdYV-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/thermal/qcom/qcom-spmi-temp-alarm.c:148:9: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     148 |         return FIELD_GET(STATUS_GEN1_STAGE_MASK, reg);
-         |                ^
-   drivers/thermal/qcom/qcom-spmi-temp-alarm.c:169:8: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     169 |         ret = FIELD_GET(STATUS_GEN2_STATE_MASK, reg);
-         |               ^
-   2 errors generated.
-
-
-vim +/FIELD_GET +148 drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-
-   132	
-   133	/**
-   134	 * qpnp_tm_get_temp_stage() - return over-temperature stage
-   135	 * @chip:		Pointer to the qpnp_tm chip
-   136	 *
-   137	 * Return: stage on success, or errno on failure.
-   138	 */
-   139	static int qpnp_tm_get_temp_stage(struct qpnp_tm_chip *chip)
-   140	{
-   141		u8 reg = 0;
-   142		int ret;
-   143	
-   144		ret = qpnp_tm_read(chip, QPNP_TM_REG_STATUS, &reg);
-   145		if (ret < 0)
-   146			return ret;
-   147	
- > 148		return FIELD_GET(STATUS_GEN1_STAGE_MASK, reg);
-   149	}
-   150	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+	Andrew
 
