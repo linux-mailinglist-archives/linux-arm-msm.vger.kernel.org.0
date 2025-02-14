@@ -1,148 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-47996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEC07A35957
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 09:50:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2270FA35960
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 09:52:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 640EC16D4EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 08:50:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B9BC3ABE7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 08:52:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B9062222AE;
-	Fri, 14 Feb 2025 08:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5848C227BA4;
+	Fri, 14 Feb 2025 08:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WieMddbH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nULD+FBX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59E4275401;
-	Fri, 14 Feb 2025 08:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23989275401;
+	Fri, 14 Feb 2025 08:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739523034; cv=none; b=T80mcKscxwthnWcGt6xkDbxqGVYEf39/f9B1NtsHx9bXl6mNkJlZxUFt6568l8vaI65guaAXFrBoXGHiu6oROl9PvNNO+vAZQ3Tl7g5GPaKR75mpbGRuP3IWcidovdq38ovWjQdOgsfLmXtSSgm5p9fZkFTToH/AQUv3IunO3oc=
+	t=1739523145; cv=none; b=pT/q7nQ3PhyBAsULDdIY5C2+eFE6bQp2avzmofQnLYCErQcb8jrfjwWRMpPl96Q7wBHBlBmpgfnZ5T5yWAY0OCkn8cPYMXSMKjzKyVDyt022TAebb2nCvPrz8okB/6Zb0pzS1j2mvYXGpAZmq/E3RR10KqcFirI2IlOUUFmd8lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739523034; c=relaxed/simple;
-	bh=3+AcZdnU8FdOjumClIF2GqlG4CDw+OX6zeEh4DONsJM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=teqISBvNlbOd4gMjXmPpgUSM+sd5bmy9S4VMpefCAUzDbH+2CiV9fvmlM4jAeDAas6+mVmmuLP4WJtmM3eIsYAv26z0PPyelgt7vfGdenRuv2Kxt7DZS4MBUme5UkQRv+IDuOw/IO1RC6QzVsVeY4UW+VaQas+9FRAJ1UAKLa3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WieMddbH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51E6tEMR008247;
-	Fri, 14 Feb 2025 08:50:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5UFHztiYBs5W6zR2fUSuxAZIpyicf7kYd3Jnr4/XuBE=; b=WieMddbHrkMECZ3h
-	2pK86iWTna+RWPM4WWpSjYAYE0APL+bi9giHcOCe6ImnGpaMOMedvxHMm4GSr6ay
-	g0ENvukalKw253cwkG29G4NR0PtM0deKCS3ZyDNlA/Ir8GPNe175r1W/ob9epu15
-	JYPhk4nHnVaf3DlWPIZBbhiUgvz74/R3m8eoizfAJ0xKJeJld5fB57HBJBfDBzOU
-	8Z1nfUk0osNguaQ0o918geDzRLPzNJVofjhwV1FZGSZi5FjEHGHIloiVhX6uBxX2
-	xFJFQTwwebZZM0ngy/ANhsaqZJ8lCKP3VPCDV/Y4qCwXmW3zTXjDnOVNnR8UdDR2
-	8i9nMg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qewhdgqb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Feb 2025 08:50:19 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51E8oIuJ031881
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Feb 2025 08:50:18 GMT
-Received: from [10.216.33.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 14 Feb
- 2025 00:50:12 -0800
-Message-ID: <be824a70-380e-84d0-8ada-f849b9453ac0@quicinc.com>
-Date: Fri, 14 Feb 2025 14:18:48 +0530
+	s=arc-20240116; t=1739523145; c=relaxed/simple;
+	bh=GZu6aMzoNVpjWfc+Cmd+0SQtCa8Q39Ci/9y7ROkb0/U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KjiONtl22A8SfJVUUWQlxotGs9R598+5CVBQJc+Iu68N7CQWM7QsMdKVzo9px4NfbGREIBSOt+uUpNRjoq47OwysCdvk1BusC0eAUzn38GEY7Lyr+VrINusFRx3hWbP+HIWBUCc/l3upW0eT3rQCZBu5uksHOgvwagUAFgAGat4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nULD+FBX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D51C4CED1;
+	Fri, 14 Feb 2025 08:52:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739523144;
+	bh=GZu6aMzoNVpjWfc+Cmd+0SQtCa8Q39Ci/9y7ROkb0/U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nULD+FBXO7Nyg0V+vAR3lGslXs5hgaONCMXA0GAfGIiJqpoFF3lcdZPJElyxQ5Ser
+	 IVvEOGnmBdednlfW/hsWWreHo4TRvyrvqd84L1b6c4EcKBdwM3JkUpjpm4VO78Ihjz
+	 uSESuyvuIDJaHG/b+DHfCEk0jm8V1Jr0yS2QAVa3JZ1rLBxk4g4CS1vpH1yRBTgz+w
+	 azyiKEiI8bjJrezXMu9+cMe69AbdJZr3BTYlKsDK6RxzHCK/eO9qoQ1rFEnmADI6En
+	 7fNGyXh/0moF5egq7bQfYdb28If5NmQV18E25+HMsA7IXzwh5uEePn9Fp/Xv7QpuQs
+	 9oYSyePi1CirA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tirR3-00000000658-2iw9;
+	Fri, 14 Feb 2025 09:52:33 +0100
+Date: Fri, 14 Feb 2025 09:52:33 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 2/2] usb: typec: Add support for Parade PS8830 Type-C
+ Retimer
+Message-ID: <Z68EUTlHcm6TxjlY@hovoldconsulting.com>
+References: <20250206-x1e80100-ps8830-v6-0-60b1e49cfa8d@linaro.org>
+ <20250206-x1e80100-ps8830-v6-2-60b1e49cfa8d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v6 1/4] arm64: dts: qcom: x1e80100: Add PCIe lane
- equalization preset properties
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "Krishna
- Chaitanya Chundru" <krishna.chundru@oss.qualcomm.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Helgaas
-	<bhelgaas@google.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
-	<kw@linux.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <quic_mrana@quicinc.com>, <quic_vbadigan@quicinc.com>
-References: <20250210-preset_v6-v6-0-cbd837d0028d@oss.qualcomm.com>
- <20250210-preset_v6-v6-1-cbd837d0028d@oss.qualcomm.com>
- <20250214084427.5ciy5ks6oypr3dvg@thinkpad>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20250214084427.5ciy5ks6oypr3dvg@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -VFvbxQa7YG4cDu-8xuobTdRL3HM24Vb
-X-Proofpoint-GUID: -VFvbxQa7YG4cDu-8xuobTdRL3HM24Vb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-14_03,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- impostorscore=0 mlxlogscore=958 phishscore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502140063
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250206-x1e80100-ps8830-v6-2-60b1e49cfa8d@linaro.org>
 
+On Thu, Feb 06, 2025 at 11:28:28AM +0200, Abel Vesa wrote:
+> The Parade PS8830 is a USB4, DisplayPort and Thunderbolt 4 retimer,
+> controlled over I2C. It usually sits between a USB/DisplayPort PHY
+> and the Type-C connector, and provides orientation and altmode handling.
 
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Parade ps883x usb retimer driver
 
-On 2/14/2025 2:14 PM, Manivannan Sadhasivam wrote:
-> On Mon, Feb 10, 2025 at 01:00:00PM +0530, Krishna Chaitanya Chundru wrote:
->> Add PCIe lane equalization preset properties for 8 GT/s and 16 GT/s data
->> rates used in lane equalization procedure.
->>
->> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
->> ---
->> This patch depends on the this dt binding pull request which got recently
->> merged: https://github.com/devicetree-org/dt-schema/pull/146
->> ---
->> ---
->>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 13 +++++++++++++
->>   1 file changed, 13 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> index 4936fa5b98ff..1b815d4eed5c 100644
->> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> @@ -3209,6 +3209,11 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->>   			phys = <&pcie3_phy>;
->>   			phy-names = "pciephy";
->>   
->> +			eq-presets-8gts = /bits/ 16 <0x5555 0x5555 0x5555 0x5555>,
->> +					  /bits/ 16 <0x5555 0x5555 0x5555 0x5555>;
-> 
-> Why 2 16bit arrays?
-> 
-Just to keep line length below 100, if I use single line it is crossing
-100 lines.
+Nit: USB
 
-- Krishna Chaitanya.
-> - Mani
-> 
+> + *
+> + * Copyright (C) 2024 Linaro Ltd.
+> + */
+
+> +static int ps883x_set(struct ps883x_retimer *retimer)
+> +{
+> +	int cfg0 = CONN_STATUS_0_CONNECTION_PRESENT;
+> +	int cfg1 = 0x00;
+> +	int cfg2 = 0x00;
+> +
+> +	if (retimer->orientation == TYPEC_ORIENTATION_NONE ||
+> +	    retimer->mode == TYPEC_STATE_SAFE) {
+> +		ps883x_configure(retimer, cfg0, cfg1, cfg2);
+> +		return 0;
+> +	}
+> +
+> +	if (retimer->mode != TYPEC_STATE_USB && retimer->svid != USB_TYPEC_DP_SID)
+> +		return -EINVAL;
+> +
+> +	if (retimer->orientation == TYPEC_ORIENTATION_REVERSE)
+> +		cfg0 |= CONN_STATUS_0_ORIENTATION_REVERSED;
+> +
+> +	switch (retimer->mode) {
+> +	case TYPEC_STATE_USB:
+> +		cfg0 |= CONN_STATUS_0_USB_3_1_CONNECTED;
+> +		break;
+> +
+
+I'd drop these newlines before case statements, but your choice.
+
+> +	case TYPEC_DP_STATE_C:
+> +		cfg1 = CONN_STATUS_1_DP_CONNECTED |
+> +		       CONN_STATUS_1_DP_SINK_REQUESTED |
+> +		       CONN_STATUS_1_DP_PIN_ASSIGNMENT_C_D |
+> +		       CONN_STATUS_1_DP_HPD_LEVEL;
+> +		break;
+> +
+> +	case TYPEC_DP_STATE_D:
+> +		cfg0 |= CONN_STATUS_0_USB_3_1_CONNECTED;
+> +		cfg1 = CONN_STATUS_1_DP_CONNECTED |
+> +		       CONN_STATUS_1_DP_SINK_REQUESTED |
+> +		       CONN_STATUS_1_DP_PIN_ASSIGNMENT_C_D |
+> +		       CONN_STATUS_1_DP_HPD_LEVEL;
+> +		break;
+> +
+> +	case TYPEC_DP_STATE_E:
+> +		cfg1 = CONN_STATUS_1_DP_CONNECTED |
+> +		       CONN_STATUS_1_DP_HPD_LEVEL;
+> +		break;
+> +
+> +	default:
+> +		return -EOPNOTSUPP;
+> +	}
+
+> +static int ps883x_retimer_probe(struct i2c_client *client)
+> +{
+> +	struct device *dev = &client->dev;
+> +	struct typec_switch_desc sw_desc = { };
+> +	struct typec_retimer_desc rtmr_desc = { };
+> +	struct ps883x_retimer *retimer;
+> +	int ret;
+> +
+> +	retimer = devm_kzalloc(dev, sizeof(*retimer), GFP_KERNEL);
+> +	if (!retimer)
+> +		return -ENOMEM;
+> +
+> +	retimer->client = client;
+> +
+> +	mutex_init(&retimer->lock);
+> +
+> +	retimer->regmap = devm_regmap_init_i2c(client, &ps883x_retimer_regmap);
+> +	if (IS_ERR(retimer->regmap))
+> +		return dev_err_probe(dev, PTR_ERR(retimer->regmap),
+> +				     "failed to allocate register map\n");
+> +
+> +	ret = ps883x_get_vregs(retimer);
+> +	if (ret)
+> +		return ret;
+> +
+> +	retimer->xo_clk = devm_clk_get(dev, NULL);
+> +	if (IS_ERR(retimer->xo_clk))
+> +		return dev_err_probe(dev, PTR_ERR(retimer->xo_clk),
+> +				     "failed to get xo clock\n");
+> +
+> +	retimer->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_ASIS);
+
+What if the reset pin has not been configured by the boot firmware? Then
+this input the to device will be floating when you power it on,
+something which you'd typically try to avoid by asserting reset before
+enabling power.
+
+> +	if (IS_ERR(retimer->reset_gpio))
+> +		return dev_err_probe(dev, PTR_ERR(retimer->reset_gpio),
+> +				     "failed to get reset gpio\n");
+> +
+> +	retimer->typec_switch = typec_switch_get(dev);
+> +	if (IS_ERR(retimer->typec_switch))
+> +		return dev_err_probe(dev, PTR_ERR(retimer->typec_switch),
+> +				     "failed to acquire orientation-switch\n");
+> +
+> +	retimer->typec_mux = typec_mux_get(dev);
+> +	if (IS_ERR(retimer->typec_mux)) {
+> +		ret = dev_err_probe(dev, PTR_ERR(retimer->typec_mux),
+> +				    "failed to acquire mode-mux\n");
+> +		goto err_switch_put;
+> +	}
+> +
+> +	ret = drm_aux_bridge_register(dev);
+> +	if (ret)
+> +		goto err_mux_put;
+> +
+> +	ret = ps883x_enable_vregs(retimer);
+> +	if (ret)
+> +		goto err_mux_put;
+> +
+> +	ret = clk_prepare_enable(retimer->xo_clk);
+> +	if (ret) {
+> +		dev_err(dev, "failed to enable XO: %d\n", ret);
+> +		goto err_vregs_disable;
+> +	}
+> +
+> +	sw_desc.drvdata = retimer;
+> +	sw_desc.fwnode = dev_fwnode(dev);
+> +	sw_desc.set = ps883x_sw_set;
+> +
+> +	retimer->sw = typec_switch_register(dev, &sw_desc);
+> +	if (IS_ERR(retimer->sw)) {
+> +		ret = PTR_ERR(retimer->sw);
+> +		dev_err(dev, "failed to register typec switch: %d\n", ret);
+> +		goto err_clk_disable;
+> +	}
+> +
+> +	rtmr_desc.drvdata = retimer;
+> +	rtmr_desc.fwnode = dev_fwnode(dev);
+> +	rtmr_desc.set = ps883x_retimer_set;
+> +
+> +	retimer->retimer = typec_retimer_register(dev, &rtmr_desc);
+> +	if (IS_ERR(retimer->retimer)) {
+> +		ret = PTR_ERR(retimer->retimer);
+> +		dev_err(dev, "failed to register typec retimer: %d\n", ret);
+> +		goto err_switch_unregister;
+> +	}
+> +
+> +	/* skip resetting if already configured */
+> +	if (regmap_test_bits(retimer->regmap, REG_USB_PORT_CONN_STATUS_0,
+> +			     CONN_STATUS_0_CONNECTION_PRESENT) == 1)
+> +		return gpiod_direction_output(retimer->reset_gpio, 0);
+
+I'm still a little concerned about this. Won't you end up with i2c
+timeout errors in the logs if the device is held in reset before probe?
+
+Have you tried unbinding the device and rebinding to test this?
+
+And what about the CONN_STATUS_0_CONNECTION_PRESENT bit; it sounds like
+it just reflects the connected status. Are you sure it will not be set
+for a device that has not yet been configured?
+
+> +
+> +	gpiod_direction_output(retimer->reset_gpio, 1);
+> +
+> +	/* VDD IO supply enable to reset release delay */
+> +	usleep_range(4000, 14000);
+> +
+> +	gpiod_set_value(retimer->reset_gpio, 0);
+> +
+> +	/* firmware initialization delay */
+> +	msleep(60);
+> +
+> +	return 0;
+> +
+> +err_switch_unregister:
+> +	typec_switch_unregister(retimer->sw);
+> +err_vregs_disable:
+> +	ps883x_disable_vregs(retimer);
+> +err_clk_disable:
+> +	clk_disable_unprepare(retimer->xo_clk);
+
+This one should go above err_vregs_disable or can end up with an
+unbalanced clock disable or regulators left on after probe failure.
+
+And you should assert reset before disabling clocks as well to avoid
+driving the pin after disabling power.
+
+> +err_mux_put:
+> +	typec_mux_put(retimer->typec_mux);
+> +err_switch_put:
+> +	typec_switch_put(retimer->typec_switch);
+> +
+> +	return ret;
+> +}
+> +
+> +static void ps883x_retimer_remove(struct i2c_client *client)
+> +{
+> +	struct ps883x_retimer *retimer = i2c_get_clientdata(client);
+> +
+> +	typec_retimer_unregister(retimer->retimer);
+> +	typec_switch_unregister(retimer->sw);
+> +
+> +	gpiod_set_value(retimer->reset_gpio, 1);
+> +
+> +	clk_disable_unprepare(retimer->xo_clk);
+> +
+> +	ps883x_disable_vregs(retimer);
+> +
+> +	typec_mux_put(retimer->typec_mux);
+> +	typec_switch_put(retimer->typec_switch);
+> +}
+
+Johan
 
