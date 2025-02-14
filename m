@@ -1,257 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-48058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6820A362F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 17:23:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81EB1A36355
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 17:43:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3E2F916B222
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 16:23:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB1933A534F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 16:43:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB4622676CE;
-	Fri, 14 Feb 2025 16:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A3922673A5;
+	Fri, 14 Feb 2025 16:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jUkQXO2i"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AZYdMw8w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A4F2753FD;
-	Fri, 14 Feb 2025 16:23:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3589E26738E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 16:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739550186; cv=none; b=AvZ3fENM9kNQuUX+h4w6pDHs3tbdxMoETWp35iegQ+bDHAgMR6v6Hl5dmD8bMLzvUzk1UQM3L6FB6Nhll+jTWLhGjlNWSrjg/QsKXarEE1eWZTSIdck+7kRrWk8aBAvlUczB0+O9L2hD4rcp9vxdtIBn5fHyNSI8EYdraMAJ0RA=
+	t=1739551409; cv=none; b=Hgou+JAoQ2pkh8vW59GnwYJy/fKBLtzr7Ne2Sje/R1KxBAhBhiXuwCh72AvlgXsP2ia4M913dLzv266IY3yV7aXpOKB9jXcY0yDzpYoWC8goBWAe5Pob356snrZyPmcz2c84bIsAx5eowreGnw1fwarazs7UQcenhgqycWZ4eL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739550186; c=relaxed/simple;
-	bh=YncaHrreIkQNL5ZfDYqGAT3nT32xPMMZx1Gg0Yy0sgk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gfQ6E6h0MwNPlLRpSi/aHBiopzxcei/eb3PAYAXO+u7CfjjpbskHixA+HgExf/YeB4U4xdK2bs9eBfmGgRuMfqBlXMeGvhJ+OfPykXQ1mIw3/tiM6MPygDNyzFzJQLu2ap7FezyjzLPoyUNQ9Y64T39+YAyrnfIhlAKLvU0X3wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jUkQXO2i; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51E9JNNb032747;
-	Fri, 14 Feb 2025 16:23:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9Y1JutvbctGcBNKK/CKo1aMWn2/iRrZKHeTlnLO05GY=; b=jUkQXO2iKbuvKOfT
-	J8WSseVjq/rIGblEi4xohQLh1qaF1lWVncN3bF4Rnc5lNZ485I2AU+sXhOBiZHKo
-	5tVZOpeQmipWOSRQdmLMIAlKj/EO2raH9ePQF58gt3UffpvdOoVp9AB4obLaZQ/T
-	OZh5ekPHCNiXAqKiNO495/WZ/2aa9jMa98suZxxsX9P4bC/WpkUlKNy+HMWvQHol
-	U5+rjPwdWIUQHpmnMitFZXobG4cZbz5PbQlez34BZ2rFes0mOeDCc7ydLRq5wX6U
-	/Qasyhl33wdM9T1WWrWqSZOyoqA705SHBGcwlBFo20LxzxgZ6Lc9gHvHLx7Yjmxb
-	ufw5Ow==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44seq043x5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Feb 2025 16:23:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51EGN1UY000343
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Feb 2025 16:23:02 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 14 Feb
- 2025 08:23:01 -0800
-Message-ID: <6d0d1eb4-4f83-1f10-a7cb-123692b86fc6@quicinc.com>
-Date: Fri, 14 Feb 2025 09:23:00 -0700
+	s=arc-20240116; t=1739551409; c=relaxed/simple;
+	bh=T0Cc+z6SRVu7e06KR11IEZ4n79dP/59PiGxBJJsikh0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=IxaWzo1E6Z1ISQNuFuwYhpCphxCrF537m6pcAzdYB28ZGT5f1Ypan7RjiPdj9jHXlPC9fT03JjJuLUDp9LVq+RzM4BtpwfU5AaYy2yOTpX1j9kVvug9iS4G49vov5uOcxQ2T7tjO3/aa6JEBi9Pfs7k1/+H7p1VPRPr/yvfVnmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AZYdMw8w; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5de56ff9851so4070800a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 08:43:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739551405; x=1740156205; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LRqWZT3EBc1tCny87S20bhNlMrhX8IzD8m5JUC/YP94=;
+        b=AZYdMw8wDlSUhHRLXRMOgWEsqhys4efbjNsUbYoGDWZOFFD1xxN2QslDnUvDhQDL9V
+         tzA0UiJ6OQf57/3sLypnrUt7X3ZkIdpMhsL3upcFE1VRXHIxMIRQAEcNZvRJYz/NoPUQ
+         zqtpRxZ0a/fr90L1RDp0gDWd49VUdCm1yNx0UQCqRGriwB6QwHTAs7VoSExSdx/Gn9T8
+         HOMKTKYqB2fWwoJ+YroQ/vWj9P7sEXNbr9VZMbQ95XPfx4WNCk9PEC7YBmO0d1Z68QdP
+         HrP67iqAKjR8JCqY0VSW+7H4PMSBdH1CrcoqaaTa8T5Z6kQ75qRMcTwhiz6T0fI5ched
+         aDcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739551405; x=1740156205;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LRqWZT3EBc1tCny87S20bhNlMrhX8IzD8m5JUC/YP94=;
+        b=ZDLESbzPP1cKDDT8HAfoAUwIeCHkGlcqH4gf/lp6cKqAj/qhlSEgTq8MWxDGXNzfLx
+         q2aA4oqRGts5vxyM1pRF753Z+eQnJpmgc7F1sjJtz/y8mdXeh1qQraTZUroRycqDtzvf
+         0YpFzReYWLloAlCvUCuXr9dYI2BLoL4166lBZw6FJVzXhsXnfbh+X7t7dILKvSp6FzMu
+         1IjEaA8Bysg+Do3Qt74/IHl0JtU8YBHgl/03+3YU7J9RC2VNo9ChB6klER8A+bP0OaEF
+         QDUIaDBmsj5GjCwW/iVlfTiJ+b0uqZLOBf4+JGprAK8DW/M6UKWxKxN6gfGilz/szCWL
+         hvnw==
+X-Gm-Message-State: AOJu0Yxxa0niWzCSVUyi/dJvPDZvXqX8xSYX4iQJ/fC/lEfEbSsfbIO2
+	EnofUcsxAVj2+6JcufHn4OtO3UOCc/94Xw+UURqp57PFDchgjzF5Wy6YgxXyrqE2drGgNYEt/D2
+	R
+X-Gm-Gg: ASbGncvuqh9y/ovUoBLHDX1EDIEoOU7hsmGDhG/mX13JCbc1HD18REe48Yx+vbhtRuS
+	Hli1eAB76B7ApBswyDUjG05qXeIRXkx0K65G04gn3d6sJYjl+UpjVCn8YGk8pi0EV8hxX4McUfn
+	Y5nIKmuAMeY6j6xHDjzVp56jO3XeBHVdE+D+7DKqdnoJkuqSzaoqeIqVwQ8c3siPNFGQa44sPz4
+	3E3WIJipl3TE/F5LP1PQvzv3DQ55BGuYCn4qxuINYXQmPAKEAEfHy6t56F567zAsKGbjQA28Wl2
+	iwPrT8Mx+QyzlQnWIma1j9HESbtFcNdRNwyO003TLbshHnEVfGqx4RXWClW1y/1aR/GK
+X-Google-Smtp-Source: AGHT+IFJuSESmgIJ+f/guNQjZTVvQM42EUhcNb7YjZIMzJarYW5+AD5ul67Inm+uaDqq7havtVXdPQ==
+X-Received: by 2002:a17:906:c112:b0:aab:eefd:bfd8 with SMTP id a640c23a62f3a-ab7f389f31dmr1360440466b.49.1739551405379;
+        Fri, 14 Feb 2025 08:43:25 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:cd94:8ae7:d2b7:7369? ([2a01:e0a:982:cbb0:cd94:8ae7:d2b7:7369])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb6cb77994sm11523366b.64.2025.02.14.08.43.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Feb 2025 08:43:25 -0800 (PST)
+Message-ID: <0dcab844-d9df-421b-bf6d-462b40da7a14@linaro.org>
+Date: Fri, 14 Feb 2025 17:43:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [bug report] bus: mhi: host: Add a policy to enable image
- transfer via BHIe in PBL
-Content-Language: en-US
-To: Dan Carpenter <dan.carpenter@linaro.org>,
-        Matthew Leung
-	<quic_mattleun@quicinc.com>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>
-References: <e3148ac4-7bb8-422d-ae0f-18a8eb15e269@stanley.mountain>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <e3148ac4-7bb8-422d-ae0f-18a8eb15e269@stanley.mountain>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] arm64: defconfig: enable DRM_DISPLAY_CONNECTOR as a
+ module
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+References: <20250214-arm64-display-connector-v1-1-306bca76316e@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250214-arm64-display-connector-v1-1-306bca76316e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4lcL3QpgIjnDtfi2xNuZ4KPWdPmsjgrX
-X-Proofpoint-ORIG-GUID: 4lcL3QpgIjnDtfi2xNuZ4KPWdPmsjgrX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-14_07,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 adultscore=0
- mlxscore=0 malwarescore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502140116
 
-On 2/12/2025 5:37 AM, Dan Carpenter wrote:
-> Hello Matthew Leung,
+On 14/02/2025 15:57, Dmitry Baryshkov wrote:
+> The display connector family of bridges is used on a plenty of ARM64
+> platforms (including, but not being limited to several Qualcomm Robotics
+> and Dragonboard platforms). It doesn't make sense for the DRM drivers to
+> select the driver, so select it via the defconfig.
 > 
-> Commit f88f1d0998ea ("bus: mhi: host: Add a policy to enable image
-> transfer via BHIe in PBL") from Jan 17, 2025 (linux-next), leads to
-> the following Smatch static checker warning:
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   arch/arm64/configs/defconfig | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> 	drivers/bus/mhi/host/boot.c:611 mhi_fw_load_handler()
-> 	error: uninitialized symbol 'fw_load_type'.
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index cb7da44155999b59aff95966f4cdc9107f2af46a..dfcc754962f7a40377d1f8e0f16983af5ace28f4 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -911,6 +911,7 @@ CONFIG_DRM_PANEL_SAMSUNG_ATNA33XC20=m
+>   CONFIG_DRM_PANEL_SITRONIX_ST7703=m
+>   CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA=m
+>   CONFIG_DRM_PANEL_VISIONOX_VTDR6130=m
+> +CONFIG_DRM_DISPLAY_CONNECTOR=m
+>   CONFIG_DRM_FSL_LDB=m
+>   CONFIG_DRM_ITE_IT6263=m
+>   CONFIG_DRM_LONTIUM_LT8912B=m
 > 
-> drivers/bus/mhi/host/boot.c
->      491 void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->      492 {
->      493         const struct firmware *firmware = NULL;
->      494         struct device *dev = &mhi_cntrl->mhi_dev->dev;
->      495         enum mhi_fw_load_type fw_load_type;
->      496         enum mhi_pm_state new_state;
->      497         const char *fw_name;
->      498         const u8 *fw_data;
->      499         size_t size, fw_sz;
->      500         int ret;
->      501
->      502         if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
->      503                 dev_err(dev, "Device MHI is not in valid state\n");
->      504                 return;
->      505         }
->      506
->      507         /* save hardware info from BHI */
->      508         ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_SERIALNU,
->      509                            &mhi_cntrl->serial_number);
->      510         if (ret)
->      511                 dev_err(dev, "Could not capture serial number via BHI\n");
->      512
->      513         /* wait for ready on pass through or any other execution environment */
->      514         if (!MHI_FW_LOAD_CAPABLE(mhi_cntrl->ee))
->      515                 goto fw_load_ready_state;
+> ---
+> base-commit: ed58d103e6da15a442ff87567898768dc3a66987
+> change-id: 20250214-arm64-display-connector-c1c1569f9799
 > 
-> Assume we hit this goto.
-> 
->      516
->      517         fw_name = (mhi_cntrl->ee == MHI_EE_EDL) ?
->      518                 mhi_cntrl->edl_image : mhi_cntrl->fw_image;
->      519
->      520         /* check if the driver has already provided the firmware data */
->      521         if (!fw_name && mhi_cntrl->fbc_download &&
->      522             mhi_cntrl->fw_data && mhi_cntrl->fw_sz) {
->      523                 if (!mhi_cntrl->sbl_size) {
->      524                         dev_err(dev, "fw_data provided but no sbl_size\n");
->      525                         goto error_fw_load;
->      526                 }
->      527
->      528                 size = mhi_cntrl->sbl_size;
->      529                 fw_data = mhi_cntrl->fw_data;
->      530                 fw_sz = mhi_cntrl->fw_sz;
->      531                 goto skip_req_fw;
->      532         }
->      533
->      534         if (!fw_name || (mhi_cntrl->fbc_download && (!mhi_cntrl->sbl_size ||
->      535                                                      !mhi_cntrl->seg_len))) {
->      536                 dev_err(dev,
->      537                         "No firmware image defined or !sbl_size || !seg_len\n");
->      538                 goto error_fw_load;
->      539         }
->      540
->      541         ret = request_firmware(&firmware, fw_name, dev);
->      542         if (ret) {
->      543                 dev_err(dev, "Error loading firmware: %d\n", ret);
->      544                 goto error_fw_load;
->      545         }
->      546
->      547         size = (mhi_cntrl->fbc_download) ? mhi_cntrl->sbl_size : firmware->size;
->      548
->      549         /* SBL size provided is maximum size, not necessarily the image size */
->      550         if (size > firmware->size)
->      551                 size = firmware->size;
->      552
->      553         fw_data = firmware->data;
->      554         fw_sz = firmware->size;
->      555
->      556 skip_req_fw:
->      557         fw_load_type = mhi_fw_load_type_get(mhi_cntrl);
->      558         if (fw_load_type == MHI_FW_LOAD_BHIE)
->      559                 ret = mhi_load_image_bhie(mhi_cntrl, fw_data, size);
->      560         else
->      561                 ret = mhi_load_image_bhi(mhi_cntrl, fw_data, size);
->      562
->      563         /* Error or in EDL mode, we're done */
->      564         if (ret) {
->      565                 dev_err(dev, "MHI did not load image over BHI%s, ret: %d\n",
->      566                         fw_load_type == MHI_FW_LOAD_BHIE ? "e" : "",
->      567                         ret);
->      568                 release_firmware(firmware);
->      569                 goto error_fw_load;
->      570         }
->      571
->      572         /* Wait for ready since EDL image was loaded */
->      573         if (fw_name && fw_name == mhi_cntrl->edl_image) {
->      574                 release_firmware(firmware);
->      575                 goto fw_load_ready_state;
->      576         }
->      577
->      578         write_lock_irq(&mhi_cntrl->pm_lock);
->      579         mhi_cntrl->dev_state = MHI_STATE_RESET;
->      580         write_unlock_irq(&mhi_cntrl->pm_lock);
->      581
->      582         /*
->      583          * If we're doing fbc, populate vector tables while
->      584          * device transitioning into MHI READY state
->      585          */
->      586         if (fw_load_type == MHI_FW_LOAD_FBC) {
->      587                 ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
->      588                 if (ret) {
->      589                         release_firmware(firmware);
->      590                         goto error_fw_load;
->      591                 }
->      592
->      593                 /* Load the firmware into BHIE vec table */
->      594                 mhi_firmware_copy_bhie(mhi_cntrl, fw_data, fw_sz, mhi_cntrl->fbc_image);
->      595         }
->      596
->      597         release_firmware(firmware);
->      598
->      599 fw_load_ready_state:
->      600         /* Transitioning into MHI RESET->READY state */
->      601         ret = mhi_ready_state_transition(mhi_cntrl);
->      602         if (ret) {
->      603                 dev_err(dev, "MHI did not enter READY state\n");
->      604                 goto error_ready_state;
-> 
-> And then this goto as well.
-> 
->      605         }
->      606
->      607         dev_info(dev, "Wait for device to enter SBL or Mission mode\n");
->      608         return;
->      609
->      610 error_ready_state:
-> --> 611         if (fw_load_type == MHI_FW_LOAD_FBC) {
->                      ^^^^^^^^^^^^
-> Uninitialized.
-> 
->      612                 mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
->      613                 mhi_cntrl->fbc_image = NULL;
->      614         }
->      615
->      616 error_fw_load:
->      617         write_lock_irq(&mhi_cntrl->pm_lock);
->      618         new_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_FW_DL_ERR);
->      619         write_unlock_irq(&mhi_cntrl->pm_lock);
->      620         if (new_state == MHI_PM_FW_DL_ERR)
->      621                 wake_up_all(&mhi_cntrl->state_event);
->      622 }
-> 
-> regards,
-> dan carpenter
-> 
+> Best regards,
 
-Thank you for the excellent bug report. I have posted a possible fix at 
-https://lore.kernel.org/all/20250214162109.3555300-1-quic_jhugo@quicinc.com/
-
--Jeff
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
