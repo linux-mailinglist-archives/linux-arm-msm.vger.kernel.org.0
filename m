@@ -1,129 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-48056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C042DA36263
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 16:56:51 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74401A362F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 17:21:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85DD93B1436
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 15:53:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C46447A4830
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 16:20:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3ABC267383;
-	Fri, 14 Feb 2025 15:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 546F72676FB;
+	Fri, 14 Feb 2025 16:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pgw+OeXv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fGnZ+ia0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB954266F03
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 15:53:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0062676DF;
+	Fri, 14 Feb 2025 16:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739548440; cv=none; b=CCHJrfE4AxYvPbSs+53vhmx4VO3BUlqzp4B+B0cI4GmjYExU0wyhikLzMwTZBHKu0EmtsPEMLmcqSO+QV9Cepd+KsMJrxrToigc8S9i8/sSLUxgnAnixSBlYWiniHhmjtn6bApnSv7Aq1Rq5lqGcm6izBYYpZcbEf7mtyle/fkM=
+	t=1739550096; cv=none; b=GsBTMpIh330zfk9F2wyVH0VKCAvRoYIH1jzgUvJnGkozI73cMe2DOJZa1FieoTe91ictdNUDMLtBX8fAegphODhuVWePbG9wlKaOMfKosjIweOGmchTPHaH74STROVYKseGDXHqiy4PXpvs19pUFo+L9I6YsuLA2ZW+ChL9vgkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739548440; c=relaxed/simple;
-	bh=zg9ob+Rge09Gs5vUf0FzgVmgKbYNJdwP9pJiZCyaWZ8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MigvcZDpaxOFSe7w9Pe4iJ/G4SGVxHCUvCcY59JGlbiOmVd7tHAY/vFq6LM65QDgkfIduL+IYQU1uobLuJVh2kDmQ3OXGUfd9KcrX7HOi8o6SEV7nsmUKM51M1dSGeVvREVmoMvFutXIJX0shNJi87mGNuVrhdqS/3H6RRItils=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pgw+OeXv; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5450475df18so2364069e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 07:53:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739548437; x=1740153237; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HS3uecu9TMJRaOEOUKVJiydyZFBfgEQCXWB2WvE0/0A=;
-        b=pgw+OeXvlAC4MPGbS4byXG2QMCf2kZfU/Sts1/UIeUeXLnZS0d0yscQHPSv5J95U/w
-         1X8fr+0N1C+2BopTDFE3XDDDVNhRz1CR8QnYe4MYldliLjuvPrG+PjoNQP54Xr9emXvq
-         C5X2lGhift2ZPLO774MkFdUIoV+qeulqsjlBkxBBWdZbBYpzpqQ969ag2nQ5fimmNz/u
-         JBmdW8EPYeS5eSuuvR98NRXtb+1qhfgNpPNoLTf3fvkO0fGXeWGq7I++Re7EOwzhatnN
-         3MoktWgVEzXcij7DN/Vx6FIQWYrP7xpt01rJYXbE8sqBdXUfsGuECwRUl1qJk0LGPlKE
-         yKGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739548437; x=1740153237;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HS3uecu9TMJRaOEOUKVJiydyZFBfgEQCXWB2WvE0/0A=;
-        b=azZo6W5I2d60/EHdfOfBIzspCIXmhsV2mXtIp7jIle4S5oKZax816GofccvhIoudhA
-         PKqnv0z0cRk6mxdT6/CHjdpPiqN/T/Z/8l6e9/PUz7VORcMBna0BdtFo1g0K6c6Gxiwy
-         vDt3+yXaXnBImWejMqxBVUKPwe2rCCSWfzUO5JVakSQvFegW6blBfIsi57ySj9T6rvfi
-         moK3SLjBWcfE5/WxATB2E8AagWFWjU/Rd/IaLiS7azgmylTiuIF2RcqJWu27ezuVyBZD
-         9JHBaqhnIHpaS/KMYFHkSyYaLh9RJbtniOs2dHntzxDczmWX6bnjfVhliUecAG/0vOJW
-         KE3g==
-X-Forwarded-Encrypted: i=1; AJvYcCUPvsNg0ANfygUDr/PPv5dWuZy+kF8vjBQbmUnU2HpcyImV1objf7cZJAndLYK72ASdZ1ysXZUHHjjsyS01@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHnZ2sCrMfY6x3u1eGaCGYO4ytgBVC0niNhBo4RGESiJf67lgj
-	0BSZmc7LZrFQXIouAIGgswZ3fhLaExlcBzlOkomzm9dUsySv10HQ0IFwRU2XWV4=
-X-Gm-Gg: ASbGnctYXCQ8+OImXH9PlKh519cmxfRvauiAsb+hgHUr+l3otLeX24i0zKNoeRVgsG8
-	4BtFao1R/wpk6S1ZXL2wVuhpx9GWCuaU4Rrt1sE2x5f/E0aKcZyQvbvGJIcBse5xxGrE16pTdjA
-	DBkYplYacy0iMtMensLdMWAU7h1TWCrlstLIzzj9kGTowu5fi7xi5WkRjiNECHWJ6vTEFmRUqdb
-	kwQjNWlgG7oVOncH6tWlD7X+EBDleh1kYj2wC8nKi2nEoEQp4K72VSa4q5yel3yu5NOjCz/B6re
-	lg5BYUtKmpN22QlKLAbHLg1PLiPA5mFbJXAAe0UG6J7WCk8jVWSupnh/XWWZfJ2u2d4T0vw=
-X-Google-Smtp-Source: AGHT+IFktQPbauJ0wmVAOA4Ond5xWCTpVxR1gtGYr0ljgsIR7j0dZM8PNLyip+zKlVCTBnd9Mquj6w==
-X-Received: by 2002:a05:6512:230d:b0:543:e406:6363 with SMTP id 2adb3069b0e04-545180e5dd9mr4710520e87.3.1739548436771;
-        Fri, 14 Feb 2025 07:53:56 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5451f0834desm566000e87.37.2025.02.14.07.53.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 07:53:55 -0800 (PST)
-Date: Fri, 14 Feb 2025 17:53:53 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] drm/msm/dsi: Drop redundant NULL-ifying of clocks
- on error paths
-Message-ID: <e4u52y7mvalcqncjwpwavmw3xevp7pgdshp75rjmk7sddmhg4z@5m2fmm4qzuaz>
-References: <20250214-drm-msm-cleanups-v2-0-1bec50f37dc1@linaro.org>
- <20250214-drm-msm-cleanups-v2-1-1bec50f37dc1@linaro.org>
- <aarbydttw4zexzkorcr4yb4swscw3crn65u6eactutpfgpnt4y@fg4zyd45xwln>
- <a0391156-8d37-4595-a490-2b828170ab65@linaro.org>
+	s=arc-20240116; t=1739550096; c=relaxed/simple;
+	bh=QYfIoDbJrIRX9j2H5Pus9J971+iWbQMyEVxZ+TzQtko=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=iJmyTmlQS/Bhf1RIDeWJmXRSTuhhRbLmMzmOuDsPKci+/5+ilA6nh0Yqht1wBJ6j70OEtoeVrd6uunaRXaotqKPomApA4hcJkMEFGrJNykcWR/tbo0vWsYKOOBFP/vh7sZlAFm4LdDisl+q/aJOsDTZxUYJ8tIQ3RFqzrtxWrXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fGnZ+ia0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51EA1V65002177;
+	Fri, 14 Feb 2025 16:21:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=NVnm+AUzb+AsgjEH/WbmgG
+	A4MAY/gS8zfiTbRA1f2wM=; b=fGnZ+ia02qfcPVHbBkg++vD9Zi7K77fR7BLTUG
+	fW10rudP8Ckm8ngjql7P6BjyoSJlZlra/GSkWqYiVFKPwM96k0zDu0TB+jO9MLw7
+	6t9SK3Gk0eCnFNedyzIDQ2MxSmHwui6RJjJZflVLydHwJBFguTf94s6AtsdvHfY9
+	uQlaFUc1BObi18folgmvUgp8DE0lEpF7IEICWoKka3M5xFp3eh4ynbpvQ7BgQ1JE
+	h/XgakERtmGpsmNE0VUpUKDNmqvT/LQO7KjVHODfL5HXImDdrIkGvgd8ZVJfNB7a
+	iZlj/gYIDXHd6z1NotjiyLV5fu9qhoVlZL5h1iCsrY2wkR5Q==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44s5w4dh81-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 14 Feb 2025 16:21:24 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51EGLOiG007290
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 14 Feb 2025 16:21:24 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 14 Feb 2025 08:21:23 -0800
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+To: <quic_carlv@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
+        <quic_yabdulra@quicinc.com>, <quic_mattleun@quicinc.com>,
+        <quic_thanson@quicinc.com>, <dan.carpenter@linaro.org>
+CC: <ogabbay@kernel.org>, <lizhi.hou@amd.com>,
+        <jacek.lawrynowicz@linux.intel.com>, <linux-arm-msm@vger.kernel.org>,
+        <mhi@lists.linux.dev>, <dri-devel@lists.freedesktop.org>,
+        Jeffrey Hugo
+	<quic_jhugo@quicinc.com>
+Subject: [PATCH] bus: mhi: host: Avoid possible uninitialized fw_load_type
+Date: Fri, 14 Feb 2025 09:21:09 -0700
+Message-ID: <20250214162109.3555300-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a0391156-8d37-4595-a490-2b828170ab65@linaro.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Otn26q5AMZMaRI2PVtlu4xW01uAzvm2D
+X-Proofpoint-ORIG-GUID: Otn26q5AMZMaRI2PVtlu4xW01uAzvm2D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-14_07,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1011
+ suspectscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502140116
 
-On Fri, Feb 14, 2025 at 04:28:45PM +0100, Krzysztof Kozlowski wrote:
-> On 14/02/2025 16:22, Dmitry Baryshkov wrote:
-> > On Fri, Feb 14, 2025 at 02:17:44PM +0100, Krzysztof Kozlowski wrote:
-> >> dsi_clk_init(), which gets the clocks, is called only through platform
-> >> driver probe and its failure is a failure of the probe.  Therefore
-> >> NULL-ifying specific clocks is pointless and redundant - the PTR_ERR
-> >> value stored there won't be used/dereferenced afterwards.  What's more,
-> >> variant-specific clock init calls like dsi_clk_init_6g_v2() are not
-> >> doing this cleanup.  Dropping redundant code allows later to make this a
-> >> bit simpler.
-> >>
-> >> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >> ---
-> >>  drivers/gpu/drm/msm/dsi/dsi_host.c | 3 ---
-> >>  1 file changed, 3 deletions(-)
-> >>
-> > 
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > 
-> 
-> 
-> Thanks for reviews. Both you and Abhinav reviewed, so I assume this will
-> be applied by Rob?
+If mhi_fw_load_handler() bails out early because the EE is not capable
+of loading firmware, we may reference fw_load_type in cleanup which is
+uninitialized at this point. The cleanup code checks fw_load_type as a
+proxy for knowing if fbc_image was allocated and needs to be freed, but
+we can directly test for that. This avoids the possible uninitialized
+access and appears to be clearer code.
 
-I will pick it up once Abhinav posts msm-fixes
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/e3148ac4-7bb8-422d-ae0f-18a8eb15e269@stanley.mountain/
+Fixes: f88f1d0998ea ("bus: mhi: host: Add a policy to enable image transfer via BHIe in PBL")
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+---
+ drivers/bus/mhi/host/boot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+index c8e48f621a8c..efa3b6dddf4d 100644
+--- a/drivers/bus/mhi/host/boot.c
++++ b/drivers/bus/mhi/host/boot.c
+@@ -608,7 +608,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+ 	return;
+ 
+ error_ready_state:
+-	if (fw_load_type == MHI_FW_LOAD_FBC) {
++	if (mhi_cntrl->fbc_image) {
+ 		mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
+ 		mhi_cntrl->fbc_image = NULL;
+ 	}
 -- 
-With best wishes
-Dmitry
+2.34.1
+
 
