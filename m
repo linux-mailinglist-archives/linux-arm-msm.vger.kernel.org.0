@@ -1,66 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-48073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5EBCA36861
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 23:39:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74A54A3687E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 23:41:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 24D7116D086
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 22:38:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 25BA518943E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 22:39:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24DC11FDA86;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2A491FDE1A;
 	Fri, 14 Feb 2025 22:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W/wdHpEm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VOmXrHzZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26831FDA62;
-	Fri, 14 Feb 2025 22:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D1B1FDE12;
+	Fri, 14 Feb 2025 22:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739572713; cv=none; b=NF5+jWzZprlqxHU8CWt60/215JyOv9dcAhDhi7vbpXmo8q0XNT4MYMOk9BQq+VYhMMnoIHgqAo7WjNL9LgNU/73LdXDYeY3b4Q4POp0ilVUmToC1ond8DKwV9D8IJIlFVXKnkHrz+cfUh/Fhv+ElxWZKT2yMbd7CAVYNIm3u4zo=
+	t=1739572713; cv=none; b=UkzW4iDVF10E9PHN13uvvqHZb3oYRbsRZfuSVhD524IMC0RCc7vQZwA4cuyEo7A/++h145lH//EVg8DHSWQgMpbTTghxzyRgHlw1f/1lVfa9Ta9JVOCDuREr4jtbZ4W4jjBKmLNui9CfAP6yBbJD0+hdh07zFbuRdPZudZi31lI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1739572713; c=relaxed/simple;
-	bh=PHjW0RMguI28CAUU14mM2YyB64lw4CLpFFVRYJYdQoI=;
+	bh=jabKirllUxcwql5mR6xctWDxwPEvXktLTMG69gr5hJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AAB/of+1jH/vxYoKEVQd4WJkvxYwgxXvlTy4r6cxgi77DlZJeB9xB6qXJ7iQ4IeBoKxAfF97/kWI/u81Jk/SR2BpjHuDccKifacIBksL/t0ZZafJ9EtoX1W66d4BpR0WmgBCMOAZJ6D5rMErks8oS+C/zHC8h55F70tifUBBl4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W/wdHpEm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2D8C4CEE2;
-	Fri, 14 Feb 2025 22:38:31 +0000 (UTC)
+	 MIME-Version:Content-Type; b=iBPd3JVG1Ou/gcrk7AbCL9BCg58fi8Z2cumMN+BjVBO7AzAiwzp6trXOTngHwvXxL5WOeCXFYcH2k9f3EKwgcUBgaTj6cb0NpgojeRkC23U3UvedVtmxC2v6W20Eoc2iEeTkwpaSgd/egy61oxq1a0N8u3radPmhu1WMExYBSn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VOmXrHzZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAAD0C4CEE9;
+	Fri, 14 Feb 2025 22:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739572712;
-	bh=PHjW0RMguI28CAUU14mM2YyB64lw4CLpFFVRYJYdQoI=;
+	s=k20201202; t=1739572713;
+	bh=jabKirllUxcwql5mR6xctWDxwPEvXktLTMG69gr5hJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/wdHpEmRZpvFzWRvM7zbOLZJN/7/RGnasZ0i3t18BjSABcrCqk4Od7vp9YO7RC5n
-	 iD7iG5/GCagNkTi1uBqE3hL/r981v6FG7aVAHMP2UsJmM4Vl0xVTPmb0lWBrJkC9+Q
-	 DOU8IQ9gYvuoy9ILk3Q7QRHTB4PkKQ6aV2P53cyaug41HcS3Q0zY+jCsgoq16Oppvb
-	 /ZF/yHbzabxR7zQkl2K0mVkNllYrwq/MBmOxMYS2gfurxUDELKQ+FLXzso9bGRnpZj
-	 GJ0HWU7rQfhwcH7hw572t388ikJJIzILuBwFLhCJzFlziui3xpq95W5vtwbjXvlPig
-	 ykAvUPnmAi1wQ==
+	b=VOmXrHzZaXXkXfSVouoMSU9Dfg0pH4OkmALQfloSpneEDDOxgglyaXb2k1YHGofX0
+	 W6D5bW9ImnKDn93bO4qvNLmXTe4dQwFU7pAjUf5MTte1964TrcsMC4JOdIA3Z18Y1T
+	 Zp5/402IBCVIa1wmOZgyiQM94Gk3/mEXGUUggCepAyIog7XCM2nV0vpl1o9m58qFI+
+	 Igg870aUIiXlT5rJs2BdAEKU0RI43S25PYHG8ULoHOi1CasPRdIAGAOrhHNVj7jr4g
+	 JFS8bdIEVrrXeHH9evHW+6RRSqfn4MCBF2fBihFAOcI/VmOcUrMaSv3anmTX2XX2Er
+	 wnwni88zIjcMA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-arm-msm@vger.kernel.org,
-	Karl Chan <exxxxkc@getgoogleoff.me>
-Cc: konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	linus.walleij@linaro.org,
-	devicetree@vger.kernel.org,
+To: Maximilian Luz <luzmaximilian@gmail.com>,
+	Johan Hovold <johan+linaro@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-gpio@vger.kernel.org
-Subject: Re: (subset) [PATCH v6 0/5] Initial Support for Linksys EA9350 V3 (linksys-jamaica)
-Date: Fri, 14 Feb 2025 16:38:14 -0600
-Message-ID: <173957268928.110887.13654522511111181644.b4-ty@kernel.org>
+	stable@vger.kernel.org
+Subject: Re: [PATCH] firmware: qcom: uefisecapp: fix efivars registration race
+Date: Fri, 14 Feb 2025 16:38:15 -0600
+Message-ID: <173957268919.110887.5072726541164891700.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20241007163414.32458-1-exxxxkc@getgoogleoff.me>
-References: <20241007163414.32458-1-exxxxkc@getgoogleoff.me>
+In-Reply-To: <20250120151000.13870-1-johan+linaro@kernel.org>
+References: <20250120151000.13870-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,21 +66,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 08 Oct 2024 00:34:09 +0800, Karl Chan wrote:
-> Add device tree source for Linksys EA9350 V3 which is a WiFi router based on the IPQ5018 SoC.
+On Mon, 20 Jan 2025 16:10:00 +0100, Johan Hovold wrote:
+> Since the conversion to using the TZ allocator, the efivars service is
+> registered before the memory pool has been allocated, something which
+> can lead to a NULL-pointer dereference in case of a racing EFI variable
+> access.
 > 
-> As of now , only the UART,USB,USB LED,buttons is working.The front PWM LED require the IPQ PWM driver.Therefore the PWM LED isn't configed in the tree.
-> 
-> Also The original firmware from Linksys can only boot ARM32 kernels.
-> 
-> As of now There seems to be no way to boot ARM64 kernels on those device.
+> Make sure that all resources have been set up before registering the
+> efivars.
 > 
 > [...]
 
 Applied, thanks!
 
-[3/5] clk: qcom: ipq5018: allow it to be bulid on arm32
-      commit: 5d02941c83997b58e8fc15390290c7c6975acaff
+[1/1] firmware: qcom: uefisecapp: fix efivars registration race
+      commit: da8d493a80993972c427002684d0742560f3be4a
 
 Best regards,
 -- 
