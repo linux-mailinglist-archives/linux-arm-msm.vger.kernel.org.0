@@ -1,300 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-47997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2270FA35960
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 09:52:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3657CA35963
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 09:53:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B9BC3ABE7A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 08:52:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AAC111891284
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 08:53:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5848C227BA4;
-	Fri, 14 Feb 2025 08:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F9C4227BA6;
+	Fri, 14 Feb 2025 08:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nULD+FBX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ol7xMxVC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23989275401;
-	Fri, 14 Feb 2025 08:52:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72966227BA3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 08:53:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739523145; cv=none; b=pT/q7nQ3PhyBAsULDdIY5C2+eFE6bQp2avzmofQnLYCErQcb8jrfjwWRMpPl96Q7wBHBlBmpgfnZ5T5yWAY0OCkn8cPYMXSMKjzKyVDyt022TAebb2nCvPrz8okB/6Zb0pzS1j2mvYXGpAZmq/E3RR10KqcFirI2IlOUUFmd8lU=
+	t=1739523205; cv=none; b=LTMcMOEqbb/5VF9hD+PAMGCrIXmgH4yGv8FlH8tq12qEJdm0/3dv4CCmuWI48vVtUU5UrC5jLbaNfGBnuQx3FBJEILXQmHPV95bWHcPdjR36/y7S25+1+xO/vLZJYk00ieAD470UbndnAjXPAVvwmPLLt+JTGUTENeQT8BbCF0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739523145; c=relaxed/simple;
-	bh=GZu6aMzoNVpjWfc+Cmd+0SQtCa8Q39Ci/9y7ROkb0/U=;
+	s=arc-20240116; t=1739523205; c=relaxed/simple;
+	bh=oxSLdh0CAtNN9mbiAlU8ndwTUsmha2ZOppGLISI9ek4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KjiONtl22A8SfJVUUWQlxotGs9R598+5CVBQJc+Iu68N7CQWM7QsMdKVzo9px4NfbGREIBSOt+uUpNRjoq47OwysCdvk1BusC0eAUzn38GEY7Lyr+VrINusFRx3hWbP+HIWBUCc/l3upW0eT3rQCZBu5uksHOgvwagUAFgAGat4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nULD+FBX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D51C4CED1;
-	Fri, 14 Feb 2025 08:52:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739523144;
-	bh=GZu6aMzoNVpjWfc+Cmd+0SQtCa8Q39Ci/9y7ROkb0/U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nULD+FBXO7Nyg0V+vAR3lGslXs5hgaONCMXA0GAfGIiJqpoFF3lcdZPJElyxQ5Ser
-	 IVvEOGnmBdednlfW/hsWWreHo4TRvyrvqd84L1b6c4EcKBdwM3JkUpjpm4VO78Ihjz
-	 uSESuyvuIDJaHG/b+DHfCEk0jm8V1Jr0yS2QAVa3JZ1rLBxk4g4CS1vpH1yRBTgz+w
-	 azyiKEiI8bjJrezXMu9+cMe69AbdJZr3BTYlKsDK6RxzHCK/eO9qoQ1rFEnmADI6En
-	 7fNGyXh/0moF5egq7bQfYdb28If5NmQV18E25+HMsA7IXzwh5uEePn9Fp/Xv7QpuQs
-	 9oYSyePi1CirA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tirR3-00000000658-2iw9;
-	Fri, 14 Feb 2025 09:52:33 +0100
-Date: Fri, 14 Feb 2025 09:52:33 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=LMrx/vZs59XQ10iLAq4nu7YV9AWAdBmQsKYmLIPcxusN1lomLQZItxVOfx5Rbi68qlUJd2A+dkQ+XpHo0xBLlJZojBi49JY2nyGdThlCAf7+8USJ6Jz9dYA5IQ0rzqyp1LnQt+Ou4aA9+IqZrBFdwJYP5ErjqtoUDd5AgGNk6Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ol7xMxVC; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-21f62cc4088so32693925ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 00:53:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739523203; x=1740128003; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=AYHkDvFZNVkfObVYojFKLXtrACdRdRJzIR6CHM3ZvzU=;
+        b=Ol7xMxVCh88aEhgfoiDYhjqNxsucquL3TipwzXjr8YnHTtmOuk5w7EBupCESHf8Hzi
+         tbYU162MVc8bdvUcWTzuEh3mcI/Uv/lOlFah1YWNsS8azW7ZbNXAF/7Dfc1A0iTXcjog
+         Xt/zalKHfZ2a8TKXLjIpQDVf/ju1nxmOspeKzv2HXX6RMnbHkbtAg3L6gTC4EYFz7dU6
+         LcTFxg1+dBGWvV7Dph6WHpCxLiMJSVRLZZZVvdeisQALxUf+92RECEKMTxxNmirmPbWf
+         sXwFm73oXlZ/YAa3l2mSbQJboGRYks0TmRlR64w2lXq4courpQH160llJSu+khlsp752
+         qdoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739523203; x=1740128003;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AYHkDvFZNVkfObVYojFKLXtrACdRdRJzIR6CHM3ZvzU=;
+        b=BwglKIfVmM4F/eUa4PmvQGg1uCmpyrZpDke5ZcGG83JheorQVJ8qpHEBJ5OJcJc0xH
+         MmCD70fO7XHhs49R0k9Q6Yd3yxNAzEyjY7RLrIX4sYUaxkzigqCJwtde5uGEC8IgpCI+
+         dKCIsoZVETrK+s3OQarReCJPas0k31wVmBykyidWAF5fZJwC6oUFBX/QtoS39EDCYvu6
+         +eC80r0sDP3BOCM8+RR9BNiQu8fPE++5Nf9PMqVwNtnZhDRYB959pu2TWQ3FCtdqifZ8
+         24NaLpBM9zop1NQtCBiK2hT8pG4jB3w9bh0pVQjAmWgGvhABqu7Ua2ZIBohkRmfGUjfM
+         2ktA==
+X-Forwarded-Encrypted: i=1; AJvYcCXYA2QaZuiky3T9JkUCWJ13RYxg9B9SpHAC2tviZZCS3G7CGC+Vc4vyP3M3SjZ8/MAvkCxUtpNvEBcqQp0i@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxoy8144jTqPJCuErNyNwBE/l6V1MiW/PYS6CFD9MBiwiK+zqtR
+	Iu/h1C9Z4p+HsxxE6Fw3kApsBJhCHE8Uli38PlCYqNL35ag50BjjEGuJDYRmjQ==
+X-Gm-Gg: ASbGncsJhZCblUiW1AbHrd8S1gwUX9USXGH9SgY3AyfaxHOnru/mrAG/QTXxZ2aAYqG
+	OvYoT9B5vWE8w6eoTTA6jlVFlmuhj133Ud5iWSZSe/tEwd7XF9jY5p7q10MjTHDzbv+Ozh1bdTJ
+	+U5vTiSIvugwgUsxgst4RfVH1X9z6YSsoFQiGpagg31Uhiiu9g/Z5Q1SmIIrLa13DexrA8XHNXE
+	XWXXcLjFZEqTO6E0ew1yNRn89mIfEB8dd1+/xkmD38UKrDYYUI2nqZnoEqgyI2c3KSCQ3M38maP
+	EilzkNWGhhXIdlamXPBTN/TUURYoidk=
+X-Google-Smtp-Source: AGHT+IEp9nHrk4n//TzcHWHZFgsOhlQQ2Xlq67D0I3zF/1xWdNgg2JYRrRN4bc6mqpBquWG6UVXYBw==
+X-Received: by 2002:a17:902:d485:b0:215:522d:72d6 with SMTP id d9443c01a7336-220d213ee2emr115416505ad.38.1739523202739;
+        Fri, 14 Feb 2025 00:53:22 -0800 (PST)
+Received: from thinkpad ([2409:40f4:304f:ad8a:a164:8397:3a17:bb49])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d5348e68sm24798765ad.28.2025.02.14.00.53.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Feb 2025 00:53:22 -0800 (PST)
+Date: Fri, 14 Feb 2025 14:23:15 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] usb: typec: Add support for Parade PS8830 Type-C
- Retimer
-Message-ID: <Z68EUTlHcm6TxjlY@hovoldconsulting.com>
-References: <20250206-x1e80100-ps8830-v6-0-60b1e49cfa8d@linaro.org>
- <20250206-x1e80100-ps8830-v6-2-60b1e49cfa8d@linaro.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	quic_mrana@quicinc.com, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v6 2/4] PCI: of: Add API to retrieve equalization presets
+ from device tree
+Message-ID: <20250214085315.bp6hpcsxu2ndegb2@thinkpad>
+References: <20250210-preset_v6-v6-0-cbd837d0028d@oss.qualcomm.com>
+ <20250210-preset_v6-v6-2-cbd837d0028d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250206-x1e80100-ps8830-v6-2-60b1e49cfa8d@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250210-preset_v6-v6-2-cbd837d0028d@oss.qualcomm.com>
 
-On Thu, Feb 06, 2025 at 11:28:28AM +0200, Abel Vesa wrote:
-> The Parade PS8830 is a USB4, DisplayPort and Thunderbolt 4 retimer,
-> controlled over I2C. It usually sits between a USB/DisplayPort PHY
-> and the Type-C connector, and provides orientation and altmode handling.
+On Mon, Feb 10, 2025 at 01:00:01PM +0530, Krishna Chaitanya Chundru wrote:
+> PCIe equalization presets are predefined settings used to optimize
+> signal integrity by compensating for signal loss and distortion in
+> high-speed data transmission.
+> 
+> As per PCIe spec 6.0.1 revision section 8.3.3.3 & 4.2.4 for data rates
+> of 8.0 GT/s, 16.0 GT/s, 32.0 GT/s, and 64.0 GT/s, there is a way to
+> configure lane equalization presets for each lane to enhance the PCIe
+> link reliability. Each preset value represents a different combination
+> of pre-shoot and de-emphasis values. For each data rate, different
+> registers are defined: for 8.0 GT/s, registers are defined in section
+> 7.7.3.4; for 16.0 GT/s, in section 7.7.5.9, etc. The 8.0 GT/s rate has
+> an extra receiver preset hint, requiring 16 bits per lane, while the
+> remaining data rates use 8 bits per lane.
+> 
+> Based on the number of lanes and the supported data rate, this function
+> reads the device tree property and stores in the presets structure.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/of.c  | 43 +++++++++++++++++++++++++++++++++++++++++++
+>  drivers/pci/pci.h | 27 ++++++++++++++++++++++++++-
+>  2 files changed, 69 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+> index 7a806f5c0d20..705d5529fa95 100644
+> --- a/drivers/pci/of.c
+> +++ b/drivers/pci/of.c
+> @@ -851,3 +851,46 @@ u32 of_pci_get_slot_power_limit(struct device_node *node,
+>  	return slot_power_limit_mw;
+>  }
+>  EXPORT_SYMBOL_GPL(of_pci_get_slot_power_limit);
+> +
+> +/**
+> + * of_pci_get_equalization_presets - Parses the "eq-presets-ngts" property.
 
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Parade ps883x usb retimer driver
-
-Nit: USB
+nit: eq-presets-Ngts
 
 > + *
-> + * Copyright (C) 2024 Linaro Ltd.
+> + * @dev: Device containing the properties.
+> + * @presets: Pointer to store the parsed data.
+> + * @num_lanes: Maximum number of lanes supported.
+> + *
+> + * If the property is present read and store the data in the preset structure
+> + * assign default value 0xff to indicate property is not present.
+
+'else assign...'
+
+> + *
+> + * Return: 0 if the property is not available or successfully parsed; errno otherwise.
 > + */
-
-> +static int ps883x_set(struct ps883x_retimer *retimer)
+> +int of_pci_get_equalization_presets(struct device *dev,
+> +				    struct pci_eq_presets *presets,
+> +				    int num_lanes)
 > +{
-> +	int cfg0 = CONN_STATUS_0_CONNECTION_PRESENT;
-> +	int cfg1 = 0x00;
-> +	int cfg2 = 0x00;
-> +
-> +	if (retimer->orientation == TYPEC_ORIENTATION_NONE ||
-> +	    retimer->mode == TYPEC_STATE_SAFE) {
-> +		ps883x_configure(retimer, cfg0, cfg1, cfg2);
-> +		return 0;
-> +	}
-> +
-> +	if (retimer->mode != TYPEC_STATE_USB && retimer->svid != USB_TYPEC_DP_SID)
-> +		return -EINVAL;
-> +
-> +	if (retimer->orientation == TYPEC_ORIENTATION_REVERSE)
-> +		cfg0 |= CONN_STATUS_0_ORIENTATION_REVERSED;
-> +
-> +	switch (retimer->mode) {
-> +	case TYPEC_STATE_USB:
-> +		cfg0 |= CONN_STATUS_0_USB_3_1_CONNECTED;
-> +		break;
-> +
-
-I'd drop these newlines before case statements, but your choice.
-
-> +	case TYPEC_DP_STATE_C:
-> +		cfg1 = CONN_STATUS_1_DP_CONNECTED |
-> +		       CONN_STATUS_1_DP_SINK_REQUESTED |
-> +		       CONN_STATUS_1_DP_PIN_ASSIGNMENT_C_D |
-> +		       CONN_STATUS_1_DP_HPD_LEVEL;
-> +		break;
-> +
-> +	case TYPEC_DP_STATE_D:
-> +		cfg0 |= CONN_STATUS_0_USB_3_1_CONNECTED;
-> +		cfg1 = CONN_STATUS_1_DP_CONNECTED |
-> +		       CONN_STATUS_1_DP_SINK_REQUESTED |
-> +		       CONN_STATUS_1_DP_PIN_ASSIGNMENT_C_D |
-> +		       CONN_STATUS_1_DP_HPD_LEVEL;
-> +		break;
-> +
-> +	case TYPEC_DP_STATE_E:
-> +		cfg1 = CONN_STATUS_1_DP_CONNECTED |
-> +		       CONN_STATUS_1_DP_HPD_LEVEL;
-> +		break;
-> +
-> +	default:
-> +		return -EOPNOTSUPP;
-> +	}
-
-> +static int ps883x_retimer_probe(struct i2c_client *client)
-> +{
-> +	struct device *dev = &client->dev;
-> +	struct typec_switch_desc sw_desc = { };
-> +	struct typec_retimer_desc rtmr_desc = { };
-> +	struct ps883x_retimer *retimer;
+> +	char name[20];
 > +	int ret;
 > +
-> +	retimer = devm_kzalloc(dev, sizeof(*retimer), GFP_KERNEL);
-> +	if (!retimer)
-> +		return -ENOMEM;
-> +
-> +	retimer->client = client;
-> +
-> +	mutex_init(&retimer->lock);
-> +
-> +	retimer->regmap = devm_regmap_init_i2c(client, &ps883x_retimer_regmap);
-> +	if (IS_ERR(retimer->regmap))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->regmap),
-> +				     "failed to allocate register map\n");
-> +
-> +	ret = ps883x_get_vregs(retimer);
-> +	if (ret)
+> +	presets->eq_presets_8gts[0] = PCI_EQ_RESV;
+> +	ret = of_property_read_u16_array(dev->of_node, "eq-presets-8gts",
+> +					 presets->eq_presets_8gts, num_lanes);
+> +	if (ret && ret != -EINVAL) {
+> +		dev_err(dev, "Error reading eq-presets-8gts %d\n", ret);
+
+nit: add ': ' before '%d' to make it clear that the printed value is an errno.
+
 > +		return ret;
-> +
-> +	retimer->xo_clk = devm_clk_get(dev, NULL);
-> +	if (IS_ERR(retimer->xo_clk))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->xo_clk),
-> +				     "failed to get xo clock\n");
-> +
-> +	retimer->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_ASIS);
-
-What if the reset pin has not been configured by the boot firmware? Then
-this input the to device will be floating when you power it on,
-something which you'd typically try to avoid by asserting reset before
-enabling power.
-
-> +	if (IS_ERR(retimer->reset_gpio))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->reset_gpio),
-> +				     "failed to get reset gpio\n");
-> +
-> +	retimer->typec_switch = typec_switch_get(dev);
-> +	if (IS_ERR(retimer->typec_switch))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->typec_switch),
-> +				     "failed to acquire orientation-switch\n");
-> +
-> +	retimer->typec_mux = typec_mux_get(dev);
-> +	if (IS_ERR(retimer->typec_mux)) {
-> +		ret = dev_err_probe(dev, PTR_ERR(retimer->typec_mux),
-> +				    "failed to acquire mode-mux\n");
-> +		goto err_switch_put;
 > +	}
 > +
-> +	ret = drm_aux_bridge_register(dev);
-> +	if (ret)
-> +		goto err_mux_put;
-> +
-> +	ret = ps883x_enable_vregs(retimer);
-> +	if (ret)
-> +		goto err_mux_put;
-> +
-> +	ret = clk_prepare_enable(retimer->xo_clk);
-> +	if (ret) {
-> +		dev_err(dev, "failed to enable XO: %d\n", ret);
-> +		goto err_vregs_disable;
+> +	for (int i = 0; i < EQ_PRESET_TYPE_MAX; i++) {
+> +		presets->eq_presets_Ngts[i][0] = PCI_EQ_RESV;
+> +		snprintf(name, sizeof(name), "eq-presets-%dgts", 8 << (i + 1));
+> +		ret = of_property_read_u8_array(dev->of_node, name,
+> +						presets->eq_presets_Ngts[i],
+> +						num_lanes);
+> +		if (ret && ret != -EINVAL) {
+> +			dev_err(dev, "Error reading %s %d\n", name, ret);
+> +			return ret;
+> +		}
 > +	}
-> +
-> +	sw_desc.drvdata = retimer;
-> +	sw_desc.fwnode = dev_fwnode(dev);
-> +	sw_desc.set = ps883x_sw_set;
-> +
-> +	retimer->sw = typec_switch_register(dev, &sw_desc);
-> +	if (IS_ERR(retimer->sw)) {
-> +		ret = PTR_ERR(retimer->sw);
-> +		dev_err(dev, "failed to register typec switch: %d\n", ret);
-> +		goto err_clk_disable;
-> +	}
-> +
-> +	rtmr_desc.drvdata = retimer;
-> +	rtmr_desc.fwnode = dev_fwnode(dev);
-> +	rtmr_desc.set = ps883x_retimer_set;
-> +
-> +	retimer->retimer = typec_retimer_register(dev, &rtmr_desc);
-> +	if (IS_ERR(retimer->retimer)) {
-> +		ret = PTR_ERR(retimer->retimer);
-> +		dev_err(dev, "failed to register typec retimer: %d\n", ret);
-> +		goto err_switch_unregister;
-> +	}
-> +
-> +	/* skip resetting if already configured */
-> +	if (regmap_test_bits(retimer->regmap, REG_USB_PORT_CONN_STATUS_0,
-> +			     CONN_STATUS_0_CONNECTION_PRESENT) == 1)
-> +		return gpiod_direction_output(retimer->reset_gpio, 0);
-
-I'm still a little concerned about this. Won't you end up with i2c
-timeout errors in the logs if the device is held in reset before probe?
-
-Have you tried unbinding the device and rebinding to test this?
-
-And what about the CONN_STATUS_0_CONNECTION_PRESENT bit; it sounds like
-it just reflects the connected status. Are you sure it will not be set
-for a device that has not yet been configured?
-
-> +
-> +	gpiod_direction_output(retimer->reset_gpio, 1);
-> +
-> +	/* VDD IO supply enable to reset release delay */
-> +	usleep_range(4000, 14000);
-> +
-> +	gpiod_set_value(retimer->reset_gpio, 0);
-> +
-> +	/* firmware initialization delay */
-> +	msleep(60);
 > +
 > +	return 0;
-> +
-> +err_switch_unregister:
-> +	typec_switch_unregister(retimer->sw);
-> +err_vregs_disable:
-> +	ps883x_disable_vregs(retimer);
-> +err_clk_disable:
-> +	clk_disable_unprepare(retimer->xo_clk);
-
-This one should go above err_vregs_disable or can end up with an
-unbalanced clock disable or regulators left on after probe failure.
-
-And you should assert reset before disabling clocks as well to avoid
-driving the pin after disabling power.
-
-> +err_mux_put:
-> +	typec_mux_put(retimer->typec_mux);
-> +err_switch_put:
-> +	typec_switch_put(retimer->typec_switch);
-> +
-> +	return ret;
 > +}
+> +EXPORT_SYMBOL_GPL(of_pci_get_equalization_presets);
+> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+> index 01e51db8d285..e87c2ffd1e85 100644
+> --- a/drivers/pci/pci.h
+> +++ b/drivers/pci/pci.h
+> @@ -9,6 +9,8 @@ struct pcie_tlp_log;
+>  /* Number of possible devfns: 0.0 to 1f.7 inclusive */
+>  #define MAX_NR_DEVFNS 256
+>  
+> +#define MAX_NR_LANES 16
 > +
-> +static void ps883x_retimer_remove(struct i2c_client *client)
-> +{
-> +	struct ps883x_retimer *retimer = i2c_get_clientdata(client);
-> +
-> +	typec_retimer_unregister(retimer->retimer);
-> +	typec_switch_unregister(retimer->sw);
-> +
-> +	gpiod_set_value(retimer->reset_gpio, 1);
-> +
-> +	clk_disable_unprepare(retimer->xo_clk);
-> +
-> +	ps883x_disable_vregs(retimer);
-> +
-> +	typec_mux_put(retimer->typec_mux);
-> +	typec_switch_put(retimer->typec_switch);
-> +}
+>  #define PCI_FIND_CAP_TTL	48
+>  
+>  #define PCI_VSEC_ID_INTEL_TBT	0x1234	/* Thunderbolt */
+> @@ -808,6 +810,20 @@ static inline u64 pci_rebar_size_to_bytes(int size)
+>  
+>  struct device_node;
+>  
+> +#define	PCI_EQ_RESV	0xff
 
-Johan
+Just a single space is enough after 'define'
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
