@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-48030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2A64A35EC9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:22:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63139A35EE4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:24:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DBA183AD3D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 13:18:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F213A17100B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 13:18:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7693D265CD3;
-	Fri, 14 Feb 2025 13:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9308426619D;
+	Fri, 14 Feb 2025 13:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cx3Dw1jk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ymAM7X1x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65964265CAA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 13:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FE9265CCF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 13:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739539085; cv=none; b=dc7QRtFg7kv0yIMQwbKwrSBoCIL5xsADRE9kI3284botklzXod4+74she148zEzfJnBSlcap/jpXgBGZ2TYmO5uqWZx4uWb1HMgNOFfRE7WNJ3AVHCxIB6ebrPGybBsj4y2V38WUyWnzne4rsPAIbm6OU0BR3Pvys1/M9cmA6Ik=
+	t=1739539086; cv=none; b=uRVlhjGyN2ZI8FJ3YRGL6ISKZbsT2xbA4KpjOa199zQ3scGjQmOb1+DYFgFrOF7mKKFg3Jil56MiS6Ejh0oCHBieWJxgkAfW3fc3PwTJua3HjcqQeN172Tz7j9joOWu22/9zYZ31T2wOAWbMB/LkbToQvuGKFHffxR+Jt/3DV2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739539085; c=relaxed/simple;
-	bh=wrQ7FEvkfGwe1RgjRIh0czcnhsj69UfOzjSd6eJUfEs=;
+	s=arc-20240116; t=1739539086; c=relaxed/simple;
+	bh=d16enuUHr2tsjXZlT4oW1ZXn1HEuh8ApCU8a6MrU7bs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Hf4QB2rdCIfAkLi2WMQxVlXqfFVTKjM92g9sJbK7vIWBKZEGaBm1efPORCI1+hQ/+h7GMdXzyVDpmR9tPQyEPazaaJTT9SL3FqDc2L0JI+o5uiNx91l/mvGBOpRXuy0hPq5Tv41pJ0sey64eILQwWrwkMRReKb+pEddZIdoMKvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cx3Dw1jk; arc=none smtp.client-ip=209.85.221.44
+	 In-Reply-To:To:Cc; b=QoaEcz+JDGiynUyFEi/dpjVj/QMdj46o85NH7DkEKH9LRt71HAIPNi2PyzpxaUy6kXlVCdXkKo/con88AxJjo00aRa5R6rVlifIlZg92rZ52813Om53INM4NPmBlGUzUpBxHvXKiJ2FK+POxHq482IYa0qBLBLyi2w9chDK+usk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ymAM7X1x; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-38f240ec571so113870f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 05:18:03 -0800 (PST)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-38bec08834dso109619f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 05:18:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739539082; x=1740143882; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739539083; x=1740143883; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4LE456UUhTzImlgmj9NPbG9NBfxzf+5xtSodgSen1s8=;
-        b=cx3Dw1jkBr4brsojr40fDYdqNYNFVsud3FT3dYFd4ZmyB6NRhZIdSs9/nc5CsLuh40
-         +UXZD6HyVKiuSHc4qG5d4IbbfcxV590KUqbT4DO8Ii3Lh482/kfjP7ed7FQ2uQphfB0F
-         EJDhlQ9kRJjjNFie55tJTzOkpi4kDarxF1uY9CCZgKAHITBMzLjUQApSvSfPn34JpMRZ
-         In/mnpQipeCon9/ZJkFcFJiywaX1GelgM0scMDh9jbN09WkZYBxGhyCNXdSWjd2F/hfE
-         yLoMJsAoLvAxOognhi1CovjKqAZWCQ4oXNCAAlmyecXhxHMLJ+F4PqUl3hgFOuiBLn/4
-         pA6g==
+        bh=WI6/TNYNauOLLkWpwha0LbPDDPCCxmIwr+Pcoxb9Ezo=;
+        b=ymAM7X1xvxcY73UAQRU/rT8BRyPGmJ5i8g8zM6mAe39eOpyChE1ZPOHS6pt17swi8g
+         JyXhMC6ye+df8b/8ihZzkYlpqtZnDzpFzCUWdyvYQrO+rM2D8Qy723uNrpZYw1P/oPZ7
+         raiu8PScXzY8swtJZa5RMhUkYThEPyEwT9lvG2V90KqggqDjOUmwHYXcdqwQCpilUwTo
+         RjxYfcgroR+1yUOOGCwCmnuuxGKDwgBYAsmsn6mI3WnV3Sy2Zl7anDSMwJKUNtVZ5irx
+         bEw2W1I6Ut+w1elOIDBDCxW6K7ccyvWWx5vRXUEZP4BnNpD3yrKS8wXLWbFDXNXUsukC
+         kNkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739539082; x=1740143882;
+        d=1e100.net; s=20230601; t=1739539083; x=1740143883;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4LE456UUhTzImlgmj9NPbG9NBfxzf+5xtSodgSen1s8=;
-        b=ksJ8945BE5Y6jnFZYr83iSMNchV5eGwcNk2QnipvOQWZqfHCNOXMOW2MWfMuOzxXtp
-         5J9PmzP1HHqpXT9uvp18r68fwJxCK+Tf2g7SXE0XXm8lc4kYDcijkdPlB6yJvgqcuFNA
-         jHpLLtYxSxpDvf+UXNxYUud+VLJxsoM0cxMXBPUz0GkDQO3Yhw/Jn1zQ6KtvlfAmkDFY
-         NSznWdutvlb5pJzVcv1+L9mpwBzUuerhb3wnsqenP2o9p8bpdKETJqsZ8o9+iG/YGbZs
-         im2yhnpyJAP1PYRnpXul66MJddRIwm+FSLyFr1rrqsg0/lGX05W8+HvIvcnAWAzDxxDl
-         twbg==
-X-Gm-Message-State: AOJu0YynTsahrv1w5uwAthfLqfXiipjS3TLFVcpVWvWKA1P66GXh/d3j
-	L5XfC3AeumMVMCCWQeMFrvDRfZTUVeiMuFaTz2M9p+J9dhtUqyGLPXzxMLVlPMc=
-X-Gm-Gg: ASbGncswULcJe80gtpR0W37d6wlKcFfvJcuCXhax3dJasCy45ETNl92I8MQ2TVeVC8r
-	BjWLqvh8K0kCXWeAOaOhTY/RIqAG1JPLQ9FoH+4trd4x5soHg78hfz9Rxwg3tUMC6yJc1l0B6fh
-	Fz5FHe/iC5rXV2pDKAGilewe1SOnWPFrC2lTlYm2Ekh7Y+fMjUMRWSgAPLMjlkIE40A+K3cj+nn
-	zbfGCRYBv/44/YAdxONH+zbjpPRZOkCK5AK8v7cCeHKb9/tknjZrsG54NWJU3ZkcBvIX+TJ5872
-	z/mvVcl5g3XBbHVpETyTPbxzJBXSD5A=
-X-Google-Smtp-Source: AGHT+IERsb8pyYVEmTlSzt9ruB1hZL+QbDlon6/7017auPvH48KZTGyTGNiDtGRYQSA7i3P3XQptBw==
-X-Received: by 2002:a05:6000:2104:b0:38d:daf3:be5a with SMTP id ffacd0b85a97d-38f2c777a53mr1413782f8f.7.1739539081555;
-        Fri, 14 Feb 2025 05:18:01 -0800 (PST)
+        bh=WI6/TNYNauOLLkWpwha0LbPDDPCCxmIwr+Pcoxb9Ezo=;
+        b=tkdqNkegRKtGINIBEiB5ahQg5VA+wBSU+cxiDd3I2YIuuopDIFsGwehK+xIPssFBE5
+         +lyo7bQ665ALFtEdQ1PuUZLvFi8+j25ILaORQNfQVsUsVZC7pXsTiEWbN3YxwVsKQU0t
+         QL9H7MLBDcsgwOeBpeQn5hmstnNz6RU+bBc/N28kp/XHH/o3GmKFY6TCkj7V4X9chQTz
+         ebSMMw/SASPnBuRtFTDkFPpm0DYoBp+NQMm5GWqBkLsPzkmKkzyaYo6eGh56m2YwZlFL
+         p7ebSxDgTFtRjIUEALkdWehpwOqqxG7glWwaito0s3FzZrTDV4LsFVb6Dd5y0czdtyOy
+         Sx5A==
+X-Gm-Message-State: AOJu0YyVCSIwIMy+KdkeEOXgOhpGnwjzmvZf3Faq1CSngEWyFoxzuERu
+	9vNOlStY6mC4h9z6ea7qzXJFShkT9NuBqY9GkKqbIUOIUonGiXl/papdbDu3BMc=
+X-Gm-Gg: ASbGncsp74V01qg0kQ1msOWKsICi/+UvTkdGnHJzwEFj9/F09Og15PSzBMeLKdhIyQI
+	JQZa0i8foSxGvpopniOsBi2YVB+zO4GBL6nvRzC0U+afykr2Sco36e+Tctc+KjiQqic/iTomgWK
+	34h9HdnluLbCq1jwlfz9gmoopO2ziCVGyzRsAQdishLsaPlyU1JNN7CLTdLZfHyjzmdXgmtaBwj
+	zzpGqAR5H0z/yu/q752f+zjFZtTIFWVQH4sm8hzVgOLN+WzMnirNZrTSPxnBigoOerYRHaTQjl8
+	RCUIIqjwRrvtv8/40go/3KaI9V19BsI=
+X-Google-Smtp-Source: AGHT+IFL1PyC7Gr+eB+jAKZETUep7XKaMZD3nNdLMQxR8ZPDBgf5ouh3/XF1rDv2ZuwsE2CUo4Jr1A==
+X-Received: by 2002:a5d:6484:0:b0:38f:2685:8457 with SMTP id ffacd0b85a97d-38f2c5e60e5mr1589269f8f.0.1739539082916;
+        Fri, 14 Feb 2025 05:18:02 -0800 (PST)
 Received: from [127.0.1.1] ([178.197.218.144])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259d5655sm4607690f8f.77.2025.02.14.05.18.00
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259d5655sm4607690f8f.77.2025.02.14.05.18.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 05:18:01 -0800 (PST)
+        Fri, 14 Feb 2025 05:18:02 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Fri, 14 Feb 2025 14:17:46 +0100
-Subject: [PATCH v2 3/4] drm/msm/dsi: Minor whitespace and style cleanup
+Date: Fri, 14 Feb 2025 14:17:47 +0100
+Subject: [PATCH v2 4/4] drm/msm/dsi: Drop unnecessary -ENOMEM message
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250214-drm-msm-cleanups-v2-3-1bec50f37dc1@linaro.org>
+Message-Id: <20250214-drm-msm-cleanups-v2-4-1bec50f37dc1@linaro.org>
 References: <20250214-drm-msm-cleanups-v2-0-1bec50f37dc1@linaro.org>
 In-Reply-To: <20250214-drm-msm-cleanups-v2-0-1bec50f37dc1@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -94,180 +94,49 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5028;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1080;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=wrQ7FEvkfGwe1RgjRIh0czcnhsj69UfOzjSd6eJUfEs=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnr0KBNopLG/nMFbPRPRRezQK48CkRgIUqrVvGU
- /bI1eQlugiJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ69CgQAKCRDBN2bmhouD
- 173sEACJr+2WUT8DaXnwjiufyWp84sk2wSRe2HDObjXTu9WK7LuVDYkXOFjAs9FmcKBXTFns+8G
- Z8qr4n8qQ8u5vK7XlonY/C5UWCgTDZy6P7LTH8z1PEWq2Q+Ld8Sw8Nesgew2V0jrhr7btKu/elH
- WNwaOPUUZLvQ+Lz+LHE6I2n1iuR/rY8yx3jfphh4fUlEQ0qJ1Hu8hDohVmwS+UBCEFWnqji9GSO
- T6/YPokGX/2sU2kTzfQ41/ykcmb5RfUE3djbJxz5LMQL/dUUv3PFgps1lmrjHdf0OHgVrmbgcQu
- tz44nF3BAl6CtaRBbpxqq7cfuq+kNh0c7XzDdnf/b86ohnwV4YPmb7f044GND9XUjZcRvoByOlM
- yzbjKOBhDbBtJ9MvKUMlFIEyBde7QgGe6o7hiLHGWmx129NtaWtya850nF/ddDM9HGU1f4Estnb
- oeUruJdIHDfgqNgUMJyjjGS/SaAfAp41+XmOWkwksgOYFioA95PI+uwwJaytHPzlcvlqtjbUJfq
- E9F910mNvtRSGVIyHbr8M4v7exsKitd0vo9VxLS/Fxwx90d+R7igmbsP5xv4JQzNjegKNxW5+bP
- ScnaAIntXwHjKmnI4GC5wANqKFQb1xS7iZr5yiEPVDwono8kmj5JNVu7CE/4sn3jRtHIrUc9xN6
- TfOEjLa9cL4A2Yw==
+ bh=d16enuUHr2tsjXZlT4oW1ZXn1HEuh8ApCU8a6MrU7bs=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnr0KCwJWc8DDG4UnvVS1DRfS8YoAu1sErX0eRq
+ 9XLMHspTXeJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ69CggAKCRDBN2bmhouD
+ 1wymD/0XLt6GJCvc0hRmyqQAQeQ2Xl6T5oInv1r89dudN+E6TGz+0kVkW66XvIlulKZ5QbZZeZt
+ XLP1rhSZTNo5C4hsYZJ1FXXS6vFbrpiJHMfXtrDAFebnrfp0oGDCaoPfj+2JuCPPh3EId3Fo2pV
+ zgKF6maGiUM1mfNUQ/TzH/wRuMKhVM7d/efMHMf/lAtZcRkra4lSoH4slPLQF/iBN1dHa3cIQaJ
+ R6pJwOQ501mGT9ovA26GCWVN3a68CfGlgO8q+NQv7ZTcP3/cMEIGmoI5RUUnhfUlf4G886LbPaT
+ nLlZUg6neWgVaCkcAYry6hPxjx74KuWlJ+7QIVeumlWICWwCRDNAoMMK2Hx56xG7z/z1RvxSPF/
+ ECVYAUoz6x8S8yp4tfSsxN1/o4FQqH1rYX8L/AslqjaUxcog0B+PdIuRmPRrCTBWir2DSJr+IUM
+ oVPxb25Dc8eZV+jjjkmXjbkitDNLYwGdEbst4YLnf9vo3u1CphW80Em4SF7Lsgh+rQ57IgWnsRm
+ Siweuta9/F+p9n0frosueEF0hVXodaPwyq3iQ7EHaARqq1qDrSFFalI45hxFiMpdq5GlmZPKARq
+ fD4AZ1bLjVVQ43zSmqGTq8a5F5AWnRsKF8ZVcyQS2Ym0bQY9b48rsBFMXfBQSTN7bQBuTMITJzV
+ P4QTwq+mvFuP70Q==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Cleanup few obvious kernel coding style violations: missing or
-unnecessary braces in 'if-else', unnecessary break lines, incorrect
-breaking of long function declarations, unnecessary 'else' after a
-'return'.  No functional impact expected.
+Kernel core already prints detailed report about memory allocation
+failures, so drivers should not have their own error messages.
 
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 51 +++++++++++++++++++-------------------
- 1 file changed, 26 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 8fc9f5486aebd3c08914409cd3c7824fa0b97515..051e26ae1b7f20d47969c3aff4e7fc6234f18d1a 100644
+index 051e26ae1b7f20d47969c3aff4e7fc6234f18d1a..2218d4f0c5130a0b13f428e89aa30ba2921da572 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -179,18 +179,18 @@ struct msm_dsi_host {
- 	int irq;
- };
+@@ -1910,10 +1910,8 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+ 		return dev_err_probe(&pdev->dev, ret, "%s: unable to initialize dsi clks\n", __func__);
  
--
- static inline u32 dsi_read(struct msm_dsi_host *msm_host, u32 reg)
- {
- 	return readl(msm_host->ctrl_base + reg);
- }
-+
- static inline void dsi_write(struct msm_dsi_host *msm_host, u32 reg, u32 data)
- {
- 	writel(data, msm_host->ctrl_base + reg);
- }
- 
--static const struct msm_dsi_cfg_handler *dsi_get_config(
--						struct msm_dsi_host *msm_host)
-+static const struct msm_dsi_cfg_handler *
-+dsi_get_config(struct msm_dsi_host *msm_host)
- {
- 	const struct msm_dsi_cfg_handler *cfg_hnd = NULL;
- 	struct device *dev = &msm_host->pdev->dev;
-@@ -370,7 +370,6 @@ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
- 	return 0;
- }
- 
--
- int dsi_link_clk_enable_6g(struct msm_dsi_host *msm_host)
- {
- 	int ret;
-@@ -588,7 +587,6 @@ static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 
- 	DBG("pclk=%lu, bclk=%lu", msm_host->pixel_clk_rate,
- 				msm_host->byte_clk_rate);
--
- }
- 
- int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-@@ -677,8 +675,8 @@ static inline enum dsi_traffic_mode dsi_get_traffic_mode(const u32 mode_flags)
- 	return NON_BURST_SYNCH_EVENT;
- }
- 
--static inline enum dsi_vid_dst_format dsi_get_vid_fmt(
--				const enum mipi_dsi_pixel_format mipi_fmt)
-+static inline enum dsi_vid_dst_format
-+dsi_get_vid_fmt(const enum mipi_dsi_pixel_format mipi_fmt)
- {
- 	switch (mipi_fmt) {
- 	case MIPI_DSI_FMT_RGB888:	return VID_DST_FORMAT_RGB888;
-@@ -689,8 +687,8 @@ static inline enum dsi_vid_dst_format dsi_get_vid_fmt(
- 	}
- }
- 
--static inline enum dsi_cmd_dst_format dsi_get_cmd_fmt(
--				const enum mipi_dsi_pixel_format mipi_fmt)
-+static inline enum dsi_cmd_dst_format
-+dsi_get_cmd_fmt(const enum mipi_dsi_pixel_format mipi_fmt)
- {
- 	switch (mipi_fmt) {
- 	case MIPI_DSI_FMT_RGB888:	return CMD_DST_FORMAT_RGB888;
-@@ -1282,14 +1280,15 @@ static int dsi_cmd_dma_add(struct msm_dsi_host *msm_host,
- static int dsi_short_read1_resp(u8 *buf, const struct mipi_dsi_msg *msg)
- {
- 	u8 *data = msg->rx_buf;
-+
- 	if (data && (msg->rx_len >= 1)) {
- 		*data = buf[1]; /* strip out dcs type */
- 		return 1;
--	} else {
--		pr_err("%s: read data does not match with rx_buf len %zu\n",
--			__func__, msg->rx_len);
--		return -EINVAL;
- 	}
-+
-+	pr_err("%s: read data does not match with rx_buf len %zu\n",
-+		__func__, msg->rx_len);
-+	return -EINVAL;
- }
- 
- /*
-@@ -1298,15 +1297,16 @@ static int dsi_short_read1_resp(u8 *buf, const struct mipi_dsi_msg *msg)
- static int dsi_short_read2_resp(u8 *buf, const struct mipi_dsi_msg *msg)
- {
- 	u8 *data = msg->rx_buf;
-+
- 	if (data && (msg->rx_len >= 2)) {
- 		data[0] = buf[1]; /* strip out dcs type */
- 		data[1] = buf[2];
- 		return 2;
--	} else {
--		pr_err("%s: read data does not match with rx_buf len %zu\n",
--			__func__, msg->rx_len);
--		return -EINVAL;
- 	}
-+
-+	pr_err("%s: read data does not match with rx_buf len %zu\n",
-+		__func__, msg->rx_len);
-+	return -EINVAL;
- }
- 
- static int dsi_long_read_resp(u8 *buf, const struct mipi_dsi_msg *msg)
-@@ -1366,8 +1366,9 @@ static int dsi_cmd_dma_tx(struct msm_dsi_host *msm_host, int len)
- 			ret = -ETIMEDOUT;
- 		else
- 			ret = len;
--	} else
-+	} else {
- 		ret = len;
-+	}
- 
- 	return ret;
- }
-@@ -1435,11 +1436,12 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
- 		return len;
- 	}
- 
--	/* for video mode, do not send cmds more than
--	* one pixel line, since it only transmit it
--	* during BLLP.
--	*/
--	/* TODO: if the command is sent in LP mode, the bit rate is only
-+	/*
-+	 * for video mode, do not send cmds more than
-+	 * one pixel line, since it only transmit it
-+	 * during BLLP.
-+	 *
-+	 * TODO: if the command is sent in LP mode, the bit rate is only
- 	 * half of esc clk rate. In this case, if the video is already
- 	 * actively streaming, we need to check more carefully if the
- 	 * command can be fit into one BLLP.
-@@ -1864,9 +1866,8 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 	int ret;
- 
- 	msm_host = devm_kzalloc(&pdev->dev, sizeof(*msm_host), GFP_KERNEL);
--	if (!msm_host) {
-+	if (!msm_host)
+ 	msm_host->rx_buf = devm_kzalloc(&pdev->dev, SZ_4K, GFP_KERNEL);
+-	if (!msm_host->rx_buf) {
+-		pr_err("%s: alloc rx temp buf failed\n", __func__);
++	if (!msm_host->rx_buf)
  		return -ENOMEM;
 -	}
  
- 	msm_host->pdev = pdev;
- 	msm_dsi->host = &msm_host->base;
+ 	ret = devm_pm_opp_set_clkname(&pdev->dev, "byte");
+ 	if (ret)
 
 -- 
 2.43.0
