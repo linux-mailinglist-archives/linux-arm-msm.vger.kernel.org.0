@@ -1,61 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-48079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15942A3686F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 23:40:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EAABA36870
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 23:40:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DE0316AAB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 22:40:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B4E447A1C0E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 22:39:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48A5120C000;
-	Fri, 14 Feb 2025 22:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96FE120D514;
+	Fri, 14 Feb 2025 22:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EhrR7CWo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RJ3s9U5/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDC2206F0A;
-	Fri, 14 Feb 2025 22:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A75220D4E9;
+	Fri, 14 Feb 2025 22:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739572718; cv=none; b=tXKWGchNMFIfotJb79vfj7DCksEMhE050ROKcJQ3LjcZj4M1rI+aruxfojDxLdM4cOngNipFH/V5FIxbqTEq6+DBY8E4ijAyvssxVxpOxSbmVzwvO5I2JlaQgGCHxTEDMcZ73E/yKXc/JnKI2YYizdL/bTwQ6X/kgLuIDPewLxU=
+	t=1739572719; cv=none; b=Hj2Ho5T1GbcYiZHtvMrXkXngXmsloXYqOmQqF7BpxsCkOPoPf696xBij7vySj8FDeD60COLdwalG7e6t7GU39aaGA+7hPSbqZsW4sc+LiJovTaFTH94HaX7GwFmp24nT2/lnGsPoSH+TvaEh3m7VheZFK+4+jYJxDJx1BiP8Lcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739572718; c=relaxed/simple;
-	bh=J4XFtM72YIIZ5v4c9kn+15GubKLzOEbPKqnB4di7mb0=;
+	s=arc-20240116; t=1739572719; c=relaxed/simple;
+	bh=xDRjkoq49fN5QWGt0b9QSpCT3PtKMrVhMm1SOfpdKPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mRKX5hSWRs+CpTG432aOHuM2ec0Oy+yr1m839+jm1+KTQetb01k4L4ujh4YOgWFaIxHaOLI/60ueXQO+UpDAywrSSa7AWtLkdTHnCQRMPspnDB2BFXT29ST9mg1SnsXzy4ewAw0f14uMIXWKP1gAaH9vhVrZh5msLaDW1sU1ivY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EhrR7CWo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD88CC4CEE9;
-	Fri, 14 Feb 2025 22:38:36 +0000 (UTC)
+	 MIME-Version:Content-Type; b=uIVcKRzXB45WqUmQzs/7w6l+hsYOIS5qXhlLYlxLPgBMt33ceaQW30P6P8i8axfHsXR82oyTzhmkNljHNCc6OotrbkKiht7zYly/wHtXscAiZV3/Kg97JWDf0YK/aBGCwpvisVE50uHXXx1SvJbnX/kB61hF6a+iqarkg+A24yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RJ3s9U5/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17E7C4CED1;
+	Fri, 14 Feb 2025 22:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739572717;
-	bh=J4XFtM72YIIZ5v4c9kn+15GubKLzOEbPKqnB4di7mb0=;
+	s=k20201202; t=1739572718;
+	bh=xDRjkoq49fN5QWGt0b9QSpCT3PtKMrVhMm1SOfpdKPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhrR7CWo9V7uBYwJGWCHrmzkETuoB09T2jMorfHLYzmIFojyVVZ+5+0g+WakQ3W4o
-	 2CLuQFk1mwdGer0Wu9vGrccnIG072lK8GFzz+tdkh0DUFyUpQznfBWTQ9jq8MyD5RU
-	 22heFPmZ3fy2wLbA7zZAQK1Q9MnwBgKH42zsAQfZTMCwcQXsuTcza1YUZHdA89vh2v
-	 zSbS0wS/pSYwXzU9KToPhU7bJR6xVSfF1/e7yrYrxoi7CU0KgHpjIYArwykfUl7ps5
-	 Xp/3Q+iPTONnbPhCwh4PJdrW/HBLFh6ZgqU/khMZKyoPQ43M4gxtgtuWzfpcWPXlG9
-	 PrI2pvUmRB5Eg==
+	b=RJ3s9U5/xVLvrhJtrVAICAfzHIe2IbNIe5GMogNRdg3ZcY0o7aNzJEHbiGYoI3StU
+	 +k9+8TXx/T3qxUF04L/KDb7ZavvUvulC6Zlvq/Qs8fnZIdqSDD5eGAKYf9hci+qYlQ
+	 p7PVC3PcXssZFPxOXyDGoaFJNT7TG1WJ0AGznIdskGiPCt5eULKnlG557WgD16OBfT
+	 CDneEeC8mLQl1kGMdZeE2uj+N1KP8xaUEes8PCluqetcWqRGzDXT5ec7d8xwE1489H
+	 QPIHfOO86bjAad4YI1ePesUYA2D6MtvFFSV2QGLsERNFBAtxr6jO8c+oK5jt8x5tZh
+	 1lqreX/89+kKg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Ajit Pandey <quic_ajipan@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Saranya R <quic_sarar@quicinc.com>,
-	stable@vger.kernel.org,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v3] soc: qcom: pdr: Fix the potential deadlock
-Date: Fri, 14 Feb 2025 16:38:20 -0600
-Message-ID: <173957268922.110887.5172881427439356224.b4-ty@kernel.org>
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: clk-branch: Fix invert halt status bit check for votable clocks
+Date: Fri, 14 Feb 2025 16:38:21 -0600
+Message-ID: <173957268925.110887.10413617559768642492.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250212163720.1577876-1-mukesh.ojha@oss.qualcomm.com>
-References: <20250212163720.1577876-1-mukesh.ojha@oss.qualcomm.com>
+In-Reply-To: <20250128-push_fix-v1-1-fafec6747881@quicinc.com>
+References: <20250128-push_fix-v1-1-fafec6747881@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,22 +69,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 12 Feb 2025 22:07:20 +0530, Mukesh Ojha wrote:
-> When some client process A call pdr_add_lookup() to add the look up for
-> the service and does schedule locator work, later a process B got a new
-> server packet indicating locator is up and call pdr_locator_new_server()
-> which eventually sets pdr->locator_init_complete to true which process A
-> sees and takes list lock and queries domain list but it will timeout due
-> to deadlock as the response will queued to the same qmi->wq and it is
-> ordered workqueue and process B is not able to complete new server
-> request work due to deadlock on list lock.
+On Tue, 28 Jan 2025 17:08:35 +0530, Ajit Pandey wrote:
+> BRANCH_HALT_ENABLE and BRANCH_HALT_ENABLE_VOTED flags are used to check
+> halt status of branch clocks, which have an inverted logic for the halt
+> bit in CBCR register. However, the current logic in the _check_halt()
+> method only compares the BRANCH_HALT_ENABLE flags, ignoring the votable
+> branch clocks.
+> 
+> Update the logic to correctly handle the invert logic for votable clocks
+> using the BRANCH_HALT_ENABLE_VOTED flags.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] soc: qcom: pdr: Fix the potential deadlock
-      commit: 2eeb03ad9f42dfece63051be2400af487ddb96d2
+[1/1] clk: qcom: clk-branch: Fix invert halt status bit check for votable clocks
+      commit: 5eac348182d2b5ed1066459abedb7bc6b5466f81
 
 Best regards,
 -- 
