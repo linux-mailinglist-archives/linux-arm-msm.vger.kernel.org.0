@@ -1,142 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-48032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 511C6A35ECE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:23:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C120A35EEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:25:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1A1A3A7A3D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 13:19:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C8D8316A92E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 13:19:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89040264A8F;
-	Fri, 14 Feb 2025 13:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65F7B265CA0;
+	Fri, 14 Feb 2025 13:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VAsTH2DE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ctv0z7XD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E32C22D786;
-	Fri, 14 Feb 2025 13:18:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE05E22D786
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 13:18:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739539101; cv=none; b=QhEX96UaIGvduf9KpFyoKvGhv6VwP08b/hPnoVGx4EfTesoHTsbNN7EsW9NMhW5N6I1kSOc08u/cbGMyY7khVCYUOjLs6P8BL+9xILp9rIhfcVOj4oFXxAMR6u1vP59z5DszQg6z7YH4kB02MetQd9sRsaMAwEU+tVtO1pEjN0o=
+	t=1739539129; cv=none; b=ujadlaEa5WdzFj2zvYf4FsCxNO+PopSOul7SOJv9gB7OdLTXK6MtrtASrZYremnGVOo99AUjoqoImR3ng+NJ5m3bFip4GPKPtJ5/Ub9XD6FkBG8mG7KuH0o2LRbJZVDSfyVeSRYD7DoJMgeGVIQKCFvD3SD2XSTs53kD7sz18aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739539101; c=relaxed/simple;
-	bh=jPuAmynmOel3ZYS+nralVAlab6we2cU4t4qrzTZ2XBs=;
+	s=arc-20240116; t=1739539129; c=relaxed/simple;
+	bh=pToG4Ksx6o1gvuZY9Gnggq0zrKIa+mtMW6XKamS6PUA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XX3lu3uRaDP1eew2904NRZaq/cqxsdRbEAXeUDAzepEX09cmw2KpmIvvtGnsJQwxLxU7OYMLl6hMzuzCpvFazersHDbBW+1sBTiMcyZ5h9yi3Hfks5B//OL3rb60YQA0Zzw1B11n5vfeySQB6qdaxdhB9W1r+y7GD0a+3bIOM1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VAsTH2DE; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739539099; x=1771075099;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=jPuAmynmOel3ZYS+nralVAlab6we2cU4t4qrzTZ2XBs=;
-  b=VAsTH2DEydKtvogLLPeK/8IWWWaxjxRewVVaOnX/hrdTXrdczOjWISDU
-   VpNE0zNuLAY6NQnuabp+p6T8fUPIJVJ8USvUuFNmCv5jb5Z/fFM/dQ+d1
-   +Puyipu2xDVnl4xXniejICAcb8KuM+S68BGQT8XU3ZEZRLyjAI8YIsLlw
-   baObUpUM+gEUcjyM7xPzj8viatuQfKA34CAVnuFS+m5Xy9LpCO7RavE12
-   5WB3KXTNHL4eVpBwrT60NV1u9dTmKCaonVUtpqfoN6ZJ1gCD+FyyVk5CX
-   jRLqjaZvfS/yis2f3l6HuSg2DfECkUUYispVOrItWMHEpQGvySe8zL+yr
-   g==;
-X-CSE-ConnectionGUID: J/abtWp3S/GGa4RwREheLg==
-X-CSE-MsgGUID: y6Xu/VUwTN2cxCwf1YNf9w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11345"; a="50914015"
-X-IronPort-AV: E=Sophos;i="6.13,286,1732608000"; 
-   d="scan'208";a="50914015"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2025 05:18:18 -0800
-X-CSE-ConnectionGUID: FrGF59/FRKi0aL1+JQPXSQ==
-X-CSE-MsgGUID: 1wesBdFHQuu6y47xyf5zKw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="136679212"
-Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
-  by fmviesa002.fm.intel.com with ESMTP; 14 Feb 2025 05:18:15 -0800
-Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tiva8-0019Zj-2T;
-	Fri, 14 Feb 2025 13:18:12 +0000
-Date: Fri, 14 Feb 2025 21:18:04 +0800
-From: kernel test robot <lkp@intel.com>
-To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
-	amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
-	daniel.lezcano@linaro.org
-Cc: oe-kbuild-all@lists.linux.dev, rui.zhang@intel.com, lukasz.luba@arm.com,
-	david.collins@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] thermal: qcom-spmi-temp-alarm: Add temp alarm data
- struct based on HW subtype
-Message-ID: <202502142142.SOgv2k2t-lkp@intel.com>
-References: <20250213210403.3396392-3-anjelique.melendez@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=KWxg/T7V1lvV4DgjwlG4BisM9KTtXfUbUr8CZGXGnTYHPMBwzI8O1NQFNnrwDrldLqUZRUG96PMkAnV4spO745r4NdccBqg/8QJqWDZWoK7hjKJSP/G+e5gKd3bO0dsMlhV5NkRW/IclYFFzgJYDqmkgZPPzHrWNxyXWhqPhmC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ctv0z7XD; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-220c2a87378so28798515ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 05:18:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739539127; x=1740143927; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UIFBSo0KZ65tGs7lIwblNS9Ead+3QceXTUKjiZlNVB8=;
+        b=ctv0z7XDuXK31acl9Devz0DHtUVZ3OKiM/qZGpi4P7YQjA5VxyuHJWoei3OQG2YNzt
+         Rg8vJ9t9t5wemGYZs8kL1aPvfR1AHMUBKqo2yJ3tcobva2pkiKFUkOO6XDUm82s+Kzla
+         qfxId+xZqpCpQdeZnfHQf+mTzlw7YPVLpy2kMBA2h6qOY7d2exzHYP+/sTSCYAzwEhaS
+         DaUsm/LD3+S1NvEPeOFZkJ4GyGzxe3jSZtEZLJO1GYS5TxIchAn543+h8R034+mtfnBP
+         Ii/wQGcOWrjzh8op1Psicu5G9uUIPmmfyJzQnXV7My2ubez36cZLnHL+ua7sA3Ve7cEZ
+         a9jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739539127; x=1740143927;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UIFBSo0KZ65tGs7lIwblNS9Ead+3QceXTUKjiZlNVB8=;
+        b=bZdFhtfIsKy40NcxlUHDT6ql8Nb7S/8B6aZx20mLuqpxoDDiGcvtSI+8Yklk0ha1E0
+         bNX3C4VK3i01YJr4vQspNwhxx3JLIdg9QzIRLg+gtnqSEM68JRP0Jv7yLxQt1soN//jC
+         8CAFjWBkRNoHBxk4XPqbM3TzTZ5t+w1pIRgd2iaxf/d+HUw51+EIVgbDr0/C5cmrOoOm
+         mS6ebNg2rAscRn4A6ieLP1oIptZUuc3CNhRPjqtK1Il8KaZKeWWlxZRNxOym6YeLGtnU
+         7vCijDMkiVFjdxa3oPMrP4kaJEYqN91faHzOaxN+Y8+dtS5Ao/9PLruo/LFTCPNDOl64
+         HJBw==
+X-Forwarded-Encrypted: i=1; AJvYcCXbdrP/Fo5DXqI9C1LGW/1jH0lrOqKbvuTG8W+e3/OvJUuwDB6+2G20iDmT0Us84sabWFRHVy88Waktp+8T@vger.kernel.org
+X-Gm-Message-State: AOJu0YxyFvakPdB5aJTKB47YvTeho0W9O0RaS8V9GTQflFeriTWO3A8O
+	0uMhEUS0sPwy02iITGwN33gFC5oqadWkOT0F5DBoJWwFn7P9A09vStGxqoj/4g==
+X-Gm-Gg: ASbGnctYlI5IXd1r/qG19SQ3744C9VQ6SzBEd1FFIqY6TueJKOmkZiVshriD68x5Z1G
+	JMb6C6LApbyIVBFXDs1brkT4d+FadQjqGB0Y7guT6BmV2cFHSukIp+LGhPnEp11fjZR3Tfa7ktA
+	x1JjzpIutcijJnJJJCKXyZPnzM2+0l5Ndu/aOoMgWxfXNVoTVW4ALL0vRNYeSoBb3FIrQAjramO
+	T1NHW0pzeEOTIgj3OIMXB7dinuYpUdMrgg3K81mNqUea/A45yX9rfq/VQJlYs8+Ca2g/gNHE6sP
+	xspH7Mikd0fQee9v98qTY0dZcpny/us=
+X-Google-Smtp-Source: AGHT+IEEFI+Q6slwYq+gvb8gGXdWQdiInLwAAJ5utThRzTzCUAO3SUSNbGpqXGLiGQM61ve1oAUoYA==
+X-Received: by 2002:a17:902:e887:b0:220:e8a1:c819 with SMTP id d9443c01a7336-220e8a1cb06mr72616895ad.34.1739539127170;
+        Fri, 14 Feb 2025 05:18:47 -0800 (PST)
+Received: from thinkpad ([2409:40f4:304f:ad8a:250c:8408:d2ac:10db])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d53491ecsm28668465ad.9.2025.02.14.05.18.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Feb 2025 05:18:46 -0800 (PST)
+Date: Fri, 14 Feb 2025 18:48:40 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc: bp@alien8.de, tony.luck@intel.com, james.morse@arm.com,
+	mchehab@kernel.org, rric@kernel.org, andy.gross@linaro.org,
+	vnkgutta@codeaurora.org, linux-arm-msm@vger.kernel.org,
+	linux-edac@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] qcom: llcc/edac: Correct interrupt enable register
+ configuration
+Message-ID: <20250214131840.desyshjr3dbb5lyl@thinkpad>
+References: <20241119064608.12326-1-quic_kbajaj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250213210403.3396392-3-anjelique.melendez@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241119064608.12326-1-quic_kbajaj@quicinc.com>
 
-Hi Anjelique,
+On Tue, Nov 19, 2024 at 12:16:08PM +0530, Komal Bajaj wrote:
+> The previous implementation incorrectly configured the cmn_interrupt_2_enable
+> register for interrupt handling. Using cmn_interrupt_2_enable to configure Tag,
+> Data RAM ECC interrupts would lead to issues like double handling of the
+> interrupts (EL1 and EL3) as cmn_interrupt_2_enable is meant to be configured
+> for interrupts which needs to be handled by EL3.
+> 
+> EL1 LLCC EDAC driver needs to use cmn_interrupt_0_enable register to
+> configure Tag, Data RAM ECC interrupts instead of cmn_interrupt_2_enable.
+> 
 
-kernel test robot noticed the following build warnings:
+Cc: stable@vger.kernel.org
 
-[auto build test WARNING on rafael-pm/thermal]
-[also build test WARNING on linus/master v6.14-rc2 next-20250214]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Anjelique-Melendez/thermal-qcom-spmi-temp-alarm-enable-stage-2-shutdown-when-required/20250214-050700
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git thermal
-patch link:    https://lore.kernel.org/r/20250213210403.3396392-3-anjelique.melendez%40oss.qualcomm.com
-patch subject: [PATCH 2/4] thermal: qcom-spmi-temp-alarm: Add temp alarm data struct based on HW subtype
-config: loongarch-allmodconfig (https://download.01.org/0day-ci/archive/20250214/202502142142.SOgv2k2t-lkp@intel.com/config)
-compiler: loongarch64-linux-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250214/202502142142.SOgv2k2t-lkp@intel.com/reproduce)
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202502142142.SOgv2k2t-lkp@intel.com/
+- Mani
 
-All warnings (new ones prefixed by >>):
-
->> drivers/thermal/qcom/qcom-spmi-temp-alarm.c:161: warning: expecting prototype for qpnp_tm_get_gen2_temp_stage(). Prototype was for qpnp_tm_gen2_get_temp_stage() instead
-
-
-vim +161 drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-
-   153	
-   154	/**
-   155	 * qpnp_tm_get_gen2_temp_stage() - return over-temperature stage
-   156	 * @chip:		Pointer to the qpnp_tm chip
-   157	 *
-   158	 * Return: stage on success, or errno on failure.
-   159	 */
-   160	static int qpnp_tm_gen2_get_temp_stage(struct qpnp_tm_chip *chip)
- > 161	{
-   162		u8 reg = 0;
-   163		int ret;
-   164	
-   165		ret = qpnp_tm_read(chip, QPNP_TM_REG_STATUS, &reg);
-   166		if (ret < 0)
-   167			return ret;
-   168	
-   169		ret = FIELD_GET(STATUS_GEN2_STATE_MASK, reg);
-   170	
-   171		return alarm_state_map[ret];
-   172	}
-   173	
+> ---
+>  drivers/edac/qcom_edac.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
+> index a9a8ba067007..0fd7a777fe7d 100644
+> --- a/drivers/edac/qcom_edac.c
+> +++ b/drivers/edac/qcom_edac.c
+> @@ -95,7 +95,7 @@ static int qcom_llcc_core_setup(struct llcc_drv_data *drv, struct regmap *llcc_b
+>  	 * Configure interrupt enable registers such that Tag, Data RAM related
+>  	 * interrupts are propagated to interrupt controller for servicing
+>  	 */
+> -	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_2_enable,
+> +	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_0_enable,
+>  				 TRP0_INTERRUPT_ENABLE,
+>  				 TRP0_INTERRUPT_ENABLE);
+>  	if (ret)
+> @@ -113,7 +113,7 @@ static int qcom_llcc_core_setup(struct llcc_drv_data *drv, struct regmap *llcc_b
+>  	if (ret)
+>  		return ret;
+> 
+> -	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_2_enable,
+> +	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_0_enable,
+>  				 DRP0_INTERRUPT_ENABLE,
+>  				 DRP0_INTERRUPT_ENABLE);
+>  	if (ret)
+> --
+> 2.46.0
+> 
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+மணிவண்ணன் சதாசிவம்
 
