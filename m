@@ -1,101 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-47961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF757A353AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 02:26:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E7D26A353BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 02:35:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9A5077A44BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 01:25:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7F0237A4278
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 01:34:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D44EF24B26;
-	Fri, 14 Feb 2025 01:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7E0B524B0;
+	Fri, 14 Feb 2025 01:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mxKqnOdy"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="StqYn5vG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FD13BBC9;
-	Fri, 14 Feb 2025 01:26:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D5D173;
+	Fri, 14 Feb 2025 01:35:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739496397; cv=none; b=CR0kqteyU2ke8CseFBk/qf6jqiV4eVmq+hUcAXSLUp1GWUBMmHtYUbfPk2ZffB98Auwjm7E+h0s/lYq1ONfAzNqAHHK1ryx4KH9QohjYHBgpELvrYM2VxTkD3I6GEQAPi9Q+7BggQE5X/TDv/QFuQFGF4/JYvri0T+stIxeSNUg=
+	t=1739496910; cv=none; b=G3NJQIJXZBNRZSub8edIHX671WbF/alHo0nBawmr65FdyRFERlzP7UUZz+oYUpFyAH9q6tP8mekjbdlhyHk4EAvNUid9avibgfj6CzIWSkjafzgWMSBweUiaC84Zq0dUmiNeuT/2sEs8Npq0OyqDeLoanxozfuX9+1oq8nrDP/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739496397; c=relaxed/simple;
-	bh=G8hTgtv6xtDpJIkrBRZ4qjU+rHdUlOoYA5e5Wg78bgQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gpP6MLPsYQIwPTGSAvZ9w63K5hkm4UzBFCKpiAvnt5xgvHlQHoNgL51P+tux0S6Mz6xuRbDwxdbnUau02FOWYxShq7r1PP8gpvRFmQsI3RD+pUe/lShRWlGNZVJz2gmX7m0RkOrsmkWUCbiqoHbPTe5ThA+kET/Emnj1Qv4A56s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mxKqnOdy; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7c07441f14cso139222785a.0;
-        Thu, 13 Feb 2025 17:26:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739496395; x=1740101195; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=G8hTgtv6xtDpJIkrBRZ4qjU+rHdUlOoYA5e5Wg78bgQ=;
-        b=mxKqnOdygdA+2R/t3a+ewxlwkTZLodJBtjrKQo5OjLQP7FlUEVbcJj6X95p0IUFE5z
-         j7wS3+2rNc59LIJv1/XFQuXLXpJtfcip4fE1sbo5Jx9EvQGdiDq/FyY517AQ8V9nqimC
-         Kvy5UoQ1CEF8xcbWyhmmPJ3sPFD0Tau4rK7LI5EO9XTn9MBg9n0DS9Q/jRK9xW63PmdG
-         x9H+odMji2ipzziVRW3F5NoKxVXZ0Mw4JJlBPtMHG1wKrsdFeQTeq3PenJn4PGmYbovU
-         0MK45xg8beMefV15Ot7kHTmw8YCohPRlw9RiWgv7CzSvZhm6qBRLOYygW+4mDyJR5Omp
-         Pocw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739496395; x=1740101195;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=G8hTgtv6xtDpJIkrBRZ4qjU+rHdUlOoYA5e5Wg78bgQ=;
-        b=b9dBvhgFWt/WtAIb5mOyoAiCpVa/gRFs+lCYYjS4XDYhKuq1AOifaBMA1rfVjOJVBy
-         dvlS1VqbZRzNNRR1a0B8CAqqgvQgLC4TLifMylQ1owEvdfFJ8XSk5ze5SFfRitl6yeEX
-         YiCAdTePzypo6kJZDIU9StMMdb+dEgKX0uDsThlWZpDNgTtcAIW5t9hbmiyJ5kazncFn
-         I2tbbSPVzFIoUaxGbYIlXEBn9xeVGcW+O4KzfewmFoCWeeu85JqYbytfRKTLzqkm3H9Q
-         b2xawty5VQqZVDTGlFus6imPMFUB46qY6sI7zRwJatlm+6K1F+32OZw8o+J2CG9of3oc
-         2c3w==
-X-Forwarded-Encrypted: i=1; AJvYcCU9PjILJQFelCtzzBdVXMgcftgiaAlI6rQjswff29HkwdFH6FJtcGGiZzFpVjOGZ2GcqWsPvNgBXFcsU4NszQ==@vger.kernel.org, AJvYcCUqhpCRBEG+wpWLTyaM2yRLAhuQHn7zeIc2MuLbKWjsM8kKMNw1RRmoUhH0gACSpPNlHFYhhO1EBn6zoB5L@vger.kernel.org, AJvYcCVZgOJypde8KsC5l27LKNNuNV3sICfuhpX6XYOWFn29Hn2UTfXLC42gHEgRv/AdUjKE3Je0t97oK/BV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFM7HqrzCGIX5yuQVF5MoPsmtjXtURW6oRYOc209GwRCMQPZOf
-	g346rSz0r6xmoWW2Ee+Bs+G5U5lMtkjhbIMBsjxxhWRMPogTV/YwYA20qVP8AjYankQLVo/NBe2
-	vMvJaCLW1CoXVtd6LJeCVqMT6O6k=
-X-Gm-Gg: ASbGncuwiGayFk41/yXa3zF3+S8dRd6dg9LrhScLKdaiBldSxjx0AtYblfsg8K9Kfy8
-	zcf2XU8wg0cExb6YqxJv4kmrpbe8Ysq3IivkxeJx5yx76NPggdJmmyVCjpVeblfvRvAh+7Y2xYA
-	C5JVHhWVSAKH+tbBN45lPpO6lkJ/SFJQ==
-X-Google-Smtp-Source: AGHT+IEBVKcOBVhM8OlM6KvmDZ2LHJ4t7YKg+z62/NHldWlFPcMoO6e/4QFFOml970Glnp/tgfdZiTPGYt4nfcVJwuU=
-X-Received: by 2002:a05:620a:390d:b0:7b8:5520:1888 with SMTP id
- af79cd13be357-7c07a201f4dmr850156285a.57.1739496395134; Thu, 13 Feb 2025
- 17:26:35 -0800 (PST)
+	s=arc-20240116; t=1739496910; c=relaxed/simple;
+	bh=ZWt0zWIGHZCtCGdxQ34gtori/xJbd7F3pVB/O+GNaYg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Dn18776t7ZRzKo5mEo2X3Mx5YS8JxEcXLvUY7T5YSfcptNglj50si6GG8ApOvkK4AjxBlNZLXK2VhDGO4mwT1Up0+oTXW723c/GN2G1Kalk3CNdyI1RFIti/EclgvJQTuv0EujD6rLD9jeSf/wI8uOmjaBR8QVzX80SEKnsU+0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=StqYn5vG; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51DH0kde007790;
+	Fri, 14 Feb 2025 01:34:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0u3fEONfKvAuvIGM4UDfbVuyo9+YhA7NYskf4eKIEGw=; b=StqYn5vGkivbyXUP
+	nYds6W25WCsGmIo62reZdI3y2GJXRs9TQcQ7VNjl4etHRwi04QCk2lolppH/5/Kw
+	rIk48jDGO28QHwaYah2GzknALYxMBhyiBl+InNYOXGhRQwb9Uykw4UE1SOVt9Mzh
+	oUgT18t6BqbQpQuV0zNwi0mWfNJ1xqq9/XiCqNfN0qbyP7vzCD0e3He6zLKZSZjB
+	incs4uZKUIrlmRAwdsPl++IGO0mUi2bnrx1Z5aAsK9YofJpOa5Uq1gVVesTjO7Qy
+	DMe8TiFtszV2HWP+qyk+oIFqRDe+Ai2/ItY8a7CsouPofL6Kx3qZ6M3wJ4epOWQH
+	dvQSlA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44rr1qwqjv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 14 Feb 2025 01:34:42 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51E1YgIW030624
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 14 Feb 2025 01:34:42 GMT
+Received: from [10.133.33.20] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 13 Feb
+ 2025 17:34:37 -0800
+Message-ID: <4b521b49-7104-4f25-82cb-4f9be7b235f4@quicinc.com>
+Date: Fri, 14 Feb 2025 09:34:34 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250209-expressatt-bam-v2-1-e6c01c5d8292@gmail.com>
- <e0ef29dd-afe4-4ad7-95db-d21326744c92@oss.qualcomm.com> <CABhZbsXo69FL-xUfg3a20RybO_uRmsOKyMJ2w3qnpk+8pYyUqw@mail.gmail.com>
- <e2b31450-c428-43c3-b25c-3ec130171011@oss.qualcomm.com>
-In-Reply-To: <e2b31450-c428-43c3-b25c-3ec130171011@oss.qualcomm.com>
-From: Rudraksha Gupta <guptarud@gmail.com>
-Date: Thu, 13 Feb 2025 17:25:58 -0800
-X-Gm-Features: AWEUYZlDekcFh2N9hGoaQ0GH2wo-ndBEZF4n-0ZfGdmF0-s_s9ADbmWRBST7cW8
-Message-ID: <CABhZbsVUY5n3bL-vbzO-xdDH6amC7FYmZHuRTh3Cb3OiQSa-3Q@mail.gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: qcom: msm8960: Add BAM
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Sam Day <me@samcday.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 4/7] Coresight: Introduce a new struct coresight_path
+To: James Clark <james.clark@linaro.org>
+CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao
+	<quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+References: <20250207064213.2314482-1-quic_jiegan@quicinc.com>
+ <20250207064213.2314482-5-quic_jiegan@quicinc.com>
+ <a633f52c-81e8-4c0d-aca7-cc18360866eb@linaro.org>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <a633f52c-81e8-4c0d-aca7-cc18360866eb@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: n12lx9MUXtTmuN9oW17JdwUUnfTKoQSB
+X-Proofpoint-ORIG-GUID: n12lx9MUXtTmuN9oW17JdwUUnfTKoQSB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-13_09,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ mlxscore=0 impostorscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 mlxlogscore=792 priorityscore=1501 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502140008
 
-> Did you keep your changes that shortened the sd controllers address space?
 
-No, I changed sdcc3, sdcc3bam, sdcc1, sdcc1bam from 0x2000 to 0x4000
-(2nd param of reg) as you requested, however, I got a splat.
 
-Please let me know if I did anything wrong. Thanks.
+On 2/14/2025 12:00 AM, James Clark wrote:
+> 
+> 
+> On 07/02/2025 6:42 am, Jie Gan wrote:
+>> Add 'struct coresight_path' to store the data that is needed by
+>> coresight_enable_path/coresight_disable_path. The structure will be
+>> transmitted to any required devices to enable related funcationalities.
+>>
+>> The trace_id will be allocated after the path is built. Consequently,
+>> The ETM3x and ETM4x devices will directly read the trace_id from path
+>> which result in etm_read_alloc_trace_id and etm4_read_alloc_trace_id
+>> being deleted.
+>>
+>> Co-developed-by: James Clark <james.clark@linaro.org>
+>> Signed-off-by: James Clark <james.clark@linaro.org>
+>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-core.c  | 106 +++++++++++++-----
+>>   drivers/hwtracing/coresight/coresight-dummy.c |   5 +-
+>>   .../hwtracing/coresight/coresight-etm-perf.c  |  30 +++--
+>>   .../hwtracing/coresight/coresight-etm-perf.h  |   2 +-
+>>   drivers/hwtracing/coresight/coresight-etm.h   |   1 -
+>>   .../coresight/coresight-etm3x-core.c          |  54 ++-------
+>>   .../coresight/coresight-etm4x-core.c          |  54 ++-------
+>>   drivers/hwtracing/coresight/coresight-etm4x.h |   1 -
+>>   drivers/hwtracing/coresight/coresight-priv.h  |  12 +-
+>>   drivers/hwtracing/coresight/coresight-stm.c   |   3 +-
+>>   drivers/hwtracing/coresight/coresight-sysfs.c |  17 ++-
+>>   drivers/hwtracing/coresight/coresight-tpdm.c  |   3 +-
+>>   include/linux/coresight.h                     |  12 +-
+>>   13 files changed, 143 insertions(+), 157 deletions(-)
+>>
+> [...]
+>> @@ -352,7 +352,7 @@ static void *etm_setup_aux(struct perf_event 
+>> *event, void **pages,
+>>        * CPUs, we can handle it and fail the session.
+>>        */
+>>       for_each_cpu(cpu, mask) {
+>> -        struct list_head *path;
+>> +        struct coresight_path *path;
+>>           struct coresight_device *csdev;
+>>           csdev = per_cpu(csdev_src, cpu);
+>> @@ -405,15 +405,15 @@ static void *etm_setup_aux(struct perf_event 
+>> *event, void **pages,
+>>               cpumask_clear_cpu(cpu, mask);
+>>               continue;
+>>           }
+>> -
+>>           /* ensure we can allocate a trace ID for this CPU */
+>> -        trace_id = coresight_trace_id_get_cpu_id_map(cpu, &sink- 
+>> >perf_sink_id_map);
+>> -        if (!IS_VALID_CS_TRACE_ID(trace_id)) {
+>> +        trace_id = coresight_path_assign_trace_id(path, CS_MODE_PERF);
+>> +
+>> +        /* Can be 0 and valid, ETE doesn't need an ID */
+>> +        if (trace_id < 0) {
+> 
+> Not sure why I wrote it like this, but I think we should leave it as it 
+> was with !IS_VALID_CS_TRACE_ID(). Even with ETE it calls the trace ID 
+> allocator, so nothing has changed here.
+> 
+Sure, Will restore. For ETE or ETM, we dont need traverse the path, just 
+directly allocate the trace id based on cpu id.
 
->
-> Konrad
+Jie
+
+
 
