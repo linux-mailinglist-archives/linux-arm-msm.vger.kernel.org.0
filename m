@@ -1,67 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-48008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE685A35BBC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 11:46:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65C45A35BBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 11:46:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9DE087A144E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 10:45:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBF1C3AD915
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 10:45:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06823207A18;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5123B245B0B;
 	Fri, 14 Feb 2025 10:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NXp5D6qh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BiYpQjTj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8134720A5FC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5572211497;
 	Fri, 14 Feb 2025 10:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739529958; cv=none; b=DdNAvoLiwN4XHFlu6BwhrXIaqmR6UQODVUQJwZg8xXZ9c9CQPfiHx6pM1KXyFhLzoG+4OFYdkmvUeW2BnfPi+MgSJa9t20cKg5BxX9foDLqBePsv5tidcjroJVHhbbrfpn/rUk8+9nWqxl53EBBCc2R0+RA9R/13wYXTuaDuJSQ=
+	t=1739529959; cv=none; b=BVwmGBLNg4g0oOBQOA0VEYlzUDEErKUkGSiGx41ohT6U2k2eQg8YxZTexrpNGgcdaq97l9Ai3NJIv+XdpUcOXCR4vdUqwyQjpL4XCco9CfJHF9cxC0X/yPq2mrgfpiJTSxmZ/mG4Lp0PTI4TR3XB8Ko537GxNuEhnrB7NemleL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739529958; c=relaxed/simple;
-	bh=+iHC4MGSu5T0avjokdxOiYMYJ/l/fXBugbDK8GJSNGA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VLafxcIxZK0k2oDNQ1H1iTcdkj0dQ0N242S8NhUn2GIIuRQCTxoXZ8kgkWZnlLWZFfxQ2V/XAs5Y+2G1OvLp9fILPwyEb71c2uLWKeqeIXuRLMkjYEd7SIYNPhuURBkcSi9Sg35z09r/ZKdLJHpC7Xy+slhy7erQMd57UlPDvLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NXp5D6qh; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1739529959; c=relaxed/simple;
+	bh=YUAKeC0doSW/WVGFBb10y5vtuPuYZbjma+/Dq6UmjWk=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=LdihzkQfp5HVeia398M4FDPX8Uch3E4ZqCmIh8WtjnwJ7jyq5EVEntJAKQOo12xsxYcOPdOmmcx7i18ZPdI9EFm88t6kPbueF9O6WGHBvvoGvqZRKVDy4+9hPjA1IjLUTWAZKjY/Xnklj+asGNKjDNSR3dJInY14I4iVQf7/M8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BiYpQjTj; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51E9dDKg002731;
-	Fri, 14 Feb 2025 10:45:47 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51E9RBwm015774;
+	Fri, 14 Feb 2025 10:45:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=rcKNt6rVY+kHP6dSWsyhVK9ewhfyy3goRu8
-	GUZrnS54=; b=NXp5D6qhGznLLz1h4zd+cgR6PDi0OHYnJ/TIc0cN25yHy5AtcAe
-	FWqOyuGM01aXLs4SIkcgXr6SceZN9SRiMjO0SnO/i5pla9Njc9zAzJu55BiN6ZmH
-	uhPKChl2xP7RCMrt76Ug8Qw2SXIoO2AWAVGGxhwbc5jb02n4KT7OVQanSld1AJ3b
-	zDE7pOKTvZYBtQKQF1mQt7nwX1XiDzgRTUpgNd+/pDCz1qVl54SOyRM0qieTIQEC
-	tzvz7T3M8sE6xPS9fQkNs8gRRg6M5t2uQQUzsY3Bro+IdvRD8lzfDLrynjrWhk0e
-	RauQUUVwDqEmzL3uNUrQsYCULf73LSH4Xog==
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=d99FY47Ls3a
+	93+7l68xLJLovNrBa6XG+FOuKOwGMUK4=; b=BiYpQjTjIIx9lprtbi8bRPEKLZm
+	0k+cQ3Akt2RSzx5pLrB9r25YEgiqABHKY3P3E+pZmZY75rAa1sWFAgER6yPD8/Tp
+	EhrS3cazDsYqc7AIDuSCGvr3yCdsZzajJzXgpl4OIETqmx5RXfZfs04X5sWyvuQt
+	JjeGKUelyKbsoLdlvYOHw9JD1IJnq3CdYtvJmsg4e+1jJ+dHZ8GX1Z6EsRFTmHEZ
+	zmHz+U2uFu09trf0OSityqV/g4ImzyPAAEOQqcSw1X7JC6Tx0pywDB+I6jHvQNCb
+	P6mhRCGqK+b5r8qmCHjgz1XiCDqtDL1bMPr3qVqtrZJvmS6UZVoFhoiE6cw==
 Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44s5w4cp9y-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44rgpgr0ag-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Feb 2025 10:45:47 +0000 (GMT)
+	Fri, 14 Feb 2025 10:45:50 +0000 (GMT)
 Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 51EAjjqe010489;
-	Fri, 14 Feb 2025 10:45:45 GMT
+	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 51EAjmgj010514;
+	Fri, 14 Feb 2025 10:45:48 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 44p0bm4h34-1
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 44p0bm4h3f-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Feb 2025 10:45:45 +0000
+	Fri, 14 Feb 2025 10:45:48 +0000
 Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EAjjC6010482;
-	Fri, 14 Feb 2025 10:45:45 GMT
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51EAjmX6010501;
+	Fri, 14 Feb 2025 10:45:48 GMT
 Received: from cbsp-sh-gv.ap.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 51EAjiqF010480
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 51EAjmWZ010500
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Feb 2025 10:45:45 +0000
+	Fri, 14 Feb 2025 10:45:48 +0000
 Received: by cbsp-sh-gv.ap.qualcomm.com (Postfix, from userid 4635958)
-	id 7357B40BE6; Fri, 14 Feb 2025 18:45:43 +0800 (CST)
+	id 92AB940BE6; Fri, 14 Feb 2025 18:45:47 +0800 (CST)
 From: Wenbin Yao <quic_wenbyao@quicinc.com>
 To: vkoul@kernel.org, kishon@kernel.org, p.zabel@pengutronix.de,
         dmitry.baryshkov@linaro.org, abel.vesa@linaro.org,
@@ -70,10 +71,12 @@ To: vkoul@kernel.org, kishon@kernel.org, p.zabel@pengutronix.de,
         konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
         linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
 Cc: Wenbin Yao <quic_wenbyao@quicinc.com>
-Subject: [PATCH v3 0/2] phy: qcom: qmp-pcie: Add PCIe PHY no_csr reset support
-Date: Fri, 14 Feb 2025 18:45:37 +0800
-Message-Id: <20250214104539.281846-1-quic_wenbyao@quicinc.com>
+Subject: [PATCH v3 1/2] phy: qcom: pcie: Determine has_nocsr_reset dynamically
+Date: Fri, 14 Feb 2025 18:45:38 +0800
+Message-Id: <20250214104539.281846-2-quic_wenbyao@quicinc.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250214104539.281846-1-quic_wenbyao@quicinc.com>
+References: <20250214104539.281846-1-quic_wenbyao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,62 +88,104 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3SCmvXt0MfeKsmlQCMbwqjt3aQBkhBti
-X-Proofpoint-ORIG-GUID: 3SCmvXt0MfeKsmlQCMbwqjt3aQBkhBti
+X-Proofpoint-ORIG-GUID: oZgry3hriptqT8HHTOZ3iKyhsRwg0ern
+X-Proofpoint-GUID: oZgry3hriptqT8HHTOZ3iKyhsRwg0ern
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-14_04,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015
- suspectscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
- malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502140078
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
+ priorityscore=1501 mlxscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
+ definitions=main-2502140077
 
-The series aims to skip phy register programming and drive PCIe PHY with
-register setting programmed in bootloader by simply toggling no_csr reset,
-which once togglled, PHY hardware will be reset while PHY registers are
-retained.
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-First, determine whether PHY setting can be skipped by checking
-QPHY_START_CTRL register and the existence of nocsr reset. If it is
-programmed and no_csr reset is supported, do no_csr reset and skip BCR
-reset which will reset entire PHY.
+Decide the in-driver logic based on whether the nocsr reset is present
+and defer checking the appropriateness of that to dt-bindings to save
+on boilerplate.
 
-This series also remove has_nocsr_reset flag in qmp_phy_cfg structure and
-decide whether the PHY supports nocsr reset by checking the existence of
-nocsr reset in device tree.
+Reset controller APIs are fine consuming a nullptr, so no additional
+checks are necessary there.
 
-The series are tested on X1E80100-QCP and HDK8550.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
-The commit messages of this patchset have been modified based on comments
-and suggestions.
-
-Changes in v3:
-- Replace devm_reset_control_get_exclusive with
-  devm_reset_control_get_optional_exclusive when get phy_nocsr reset
-  control in Patch 1/2.
-- Do not ignore -EINVAL when get phy_nocsr reset control in Patch 1/2.
-- Replace phy_initialized with skip_init in struct qmp_pcie in Patch 2/2.
-- Add a comment to why not check qmp->skip_init in function
-  qmp_pcie_power_off in Patch 2/2.
-- Link to v2: https://lore.kernel.org/all/20250211094231.1813558-1-quic_wenbyao@quicinc.com/
-
-Changes in v2:
-- Add Abel's and Manivannan's Reviewed-by tag to Patch 1/2.
-- Refine commit msg of Patch 2/2.
-- Link to v1: https://lore.kernel.org/all/20250121094140.4006801-1-quic_wenbyao@quicinc.com/
-
-Konrad Dybcio (1):
-  phy: qcom: pcie: Determine has_nocsr_reset dynamically
-
-Qiang Yu (1):
-  phy: qcom: qmp-pcie: Add PHY register retention support
-
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 113 ++++++++++++++---------
- 1 file changed, 67 insertions(+), 46 deletions(-)
-
-
-base-commit: bcf2acd8f64b0a5783deeeb5fd70c6163ec5acd7
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 873f2f9844c6..219266125cf2 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -2793,8 +2793,6 @@ struct qmp_phy_cfg {
+ 
+ 	bool skip_start_delay;
+ 
+-	bool has_nocsr_reset;
+-
+ 	/* QMP PHY pipe clock interface rate */
+ 	unsigned long pipe_clock_rate;
+ 
+@@ -3685,7 +3683,6 @@ static const struct qmp_phy_cfg sm8550_qmp_gen4x2_pciephy_cfg = {
+ 
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+ 	.phy_status		= PHYSTATUS_4_20,
+-	.has_nocsr_reset	= true,
+ 
+ 	/* 20MHz PHY AUX Clock */
+ 	.aux_clock_rate		= 20000000,
+@@ -3718,7 +3715,6 @@ static const struct qmp_phy_cfg sm8650_qmp_gen4x2_pciephy_cfg = {
+ 
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+ 	.phy_status		= PHYSTATUS_4_20,
+-	.has_nocsr_reset	= true,
+ 
+ 	/* 20MHz PHY AUX Clock */
+ 	.aux_clock_rate		= 20000000,
+@@ -3836,7 +3832,6 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x2_pciephy_cfg = {
+ 
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+ 	.phy_status		= PHYSTATUS_4_20,
+-	.has_nocsr_reset	= true,
+ };
+ 
+ static const struct qmp_phy_cfg x1e80100_qmp_gen4x4_pciephy_cfg = {
+@@ -3870,7 +3865,6 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x4_pciephy_cfg = {
+ 
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+ 	.phy_status		= PHYSTATUS_4_20,
+-	.has_nocsr_reset	= true,
+ };
+ 
+ static const struct qmp_phy_cfg x1e80100_qmp_gen4x8_pciephy_cfg = {
+@@ -3902,7 +3896,6 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x8_pciephy_cfg = {
+ 
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+ 	.phy_status		= PHYSTATUS_4_20,
+-	.has_nocsr_reset	= true,
+ };
+ 
+ static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tbls *tbls)
+@@ -4203,12 +4196,10 @@ static int qmp_pcie_reset_init(struct qmp_pcie *qmp)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "failed to get resets\n");
+ 
+-	if (cfg->has_nocsr_reset) {
+-		qmp->nocsr_reset = devm_reset_control_get_exclusive(dev, "phy_nocsr");
+-		if (IS_ERR(qmp->nocsr_reset))
+-			return dev_err_probe(dev, PTR_ERR(qmp->nocsr_reset),
+-						"failed to get no-csr reset\n");
+-	}
++	qmp->nocsr_reset = devm_reset_control_get_optional_exclusive(dev, "phy_nocsr");
++	if (IS_ERR(qmp->nocsr_reset))
++		return dev_err_probe(dev, PTR_ERR(qmp->nocsr_reset),
++				     "failed to get no-csr reset\n");
+ 
+ 	return 0;
+ }
 -- 
 2.34.1
 
