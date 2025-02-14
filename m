@@ -1,148 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-48035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAA55A35F1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:29:57 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5D4EA35F74
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:51:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C82C3AE3C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 13:23:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B3BE169547
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 13:51:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5B29264A65;
-	Fri, 14 Feb 2025 13:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56E1E263C82;
+	Fri, 14 Feb 2025 13:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e2IAxK2y"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ajopEHBO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BE6263F29
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 13:22:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C57015199D;
+	Fri, 14 Feb 2025 13:51:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739539376; cv=none; b=X4FHxlyamdvlMQjDu8Uu+rLJqQr+P8mEJKiXC8atVfln6+ftFPEtQ0orHd31agY7Yl1lIu6lJBZiO05m0kios/rSVMed4ORp/EhveeSlZmpaOEcwHnXPSNkJS76oA6WG404t1Ll8a+slrdAT6wvEdwh+uKCli/7VMfhHqVmXsGI=
+	t=1739541085; cv=none; b=SRaKNfLQWWm5M2O1T08YbL5QkQI9VaQdviwo7MC2zNi7vGaSqRGIOtUYQONECWIGCfOmLIY88R5/KN6LIMBgOC4GfaZpeW6ZjunzWjWODzrkz+A+bMZFnE6/4l6fmFPZz1lhCHwfjZ95NZwe/JCpvj+xXSbBQgTzDM6mZ/ew5KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739539376; c=relaxed/simple;
-	bh=pWZjOIvAdjT6JfA3vcCeZG20HLsqwLE8w4nVMAYXnl0=;
+	s=arc-20240116; t=1739541085; c=relaxed/simple;
+	bh=4RYb0V938Hvh8XfpOfW2FPzt2ThKIlaPfePtmuDjHvc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KG2juOee6SRT8DXEcMbavlKERdfizLbSc8Ic2CintFeQ67r06mLLTekpqnL0fAPizOy5eA/4SNkbOucWJQC8MvpM5pJmGRQ8zG0uKAWOCU9MEhGy45HO9CePjZnZzQ2utOsZDE05b5m5SBp7zJVtINLwe3Vhc/OjIMA0OoJQDrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e2IAxK2y; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-220c2a87378so28873825ad.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 05:22:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739539374; x=1740144174; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=S9I+jjcPbUp0BbQYQVtg0pUppikDLXkHzO0OowWPexo=;
-        b=e2IAxK2yaF2CN1op+zXJgA4yg6c9ldAN9Vo6Ufy0jSptzmscRlNXkO9+MHFZyckEdF
-         0IXMWEs0VsdWpyWAk1F3F0WPJcrrQ/mqdKP92EppCRkarZ7yKd7VtptgGWcG02fSMcY6
-         /MhZJlNTJMamRc5wA6uLLdJ5PNkIZnzFOvj67SMbzHa5lOmnyxp/ipxXq8TrLUh8h8wf
-         VDi1tTSSZQ0eNAyHNpQDtQule5GN5/Ki/rB39J1n/yFNn87VTZIuPCzE+bwTyP5G0Dbs
-         6buLXVpXfBdIxx7KaIWLtV/SBioDRAxlBoBCcGu63dL0YkaGbzOlFxkY1itlW5WwkK43
-         NpLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739539374; x=1740144174;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S9I+jjcPbUp0BbQYQVtg0pUppikDLXkHzO0OowWPexo=;
-        b=BUkqtKJbOehC8ebzNunbsSnMxDgPiRlNz3J1PJWwwL0d0AYAaKJgF945KlvFHbCbYr
-         hs2S+7VJZzLKCMjHwxAtboGIDQ3BEdVvZdHrEulvWp1OgaYXIiSNgmHJRSgNLnlI7HWq
-         kdxWwsr7NJUp3F8FYso0CVrf9mWQGszdCXd+kZ0hfKz4eOOz7+8rvZuiwIlldfqB3H5s
-         fYfiBc/c10UF42osFMHxlNF26Xl6DOSjba0H8ABrM6Q0yj5jiJ1+okWouzDfbwn9jJ4T
-         CT5ZW8xlH66nYz3y7gF1oMsZvyDTI/8n4WTjyIxrUIY54nzxcvqy4/X7XM8ug/P1yPgP
-         C6Kg==
-X-Forwarded-Encrypted: i=1; AJvYcCVy5PuwKxYCRYQqY7+2ORbt0Yv9MbW+7gPdGdO7jJ7qw9pV1yPOyvren7DIHtzD8eDP5QKzyf9jQXytOp+7@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGNm+EBIcgUTnMGAWY6w+ghEtwKKNK/SOtt8d1s2vhJbR+CEJI
-	3pFmPedEd8gzZkbSMod/JrDk33pYest2oaZCGWx6L6LX8RBJv2+QevAv98lW7Q==
-X-Gm-Gg: ASbGncv9WM8wnxi+RCPOUOXUcbMjfDnesd323VqUf+p8q9iMj/w+M5cFWBF6I9uUGCm
-	AbUWJBL3a4bacYXvyL9fhFpaz5+uxh9s01c4M1L/okvF0KkamrYLc2JQX1iiYwaF/MX7JktpBiG
-	7uxLn5TVDiQegUFqFFI2o35LARcRzNWobJJpSyjowMRtYfoJr2KrIbKNf+eZI8TxU0oZUZkPZ+x
-	dtTaHIzwonl8J7n995XBpZM26w14IIUtvorSzb1VGlPBtrJJa3XXqn97JY+sx6DelxmykgQ4FpI
-	lq6bPRYY6PvkTjM2t+JmjRm2arhuNPY=
-X-Google-Smtp-Source: AGHT+IFjWeTr8NsPM9DoEj6yyWP+W7LUbBHpeCWXKCgYoJEQixcGBYlU/CED0PUuiTC1uWtJJjfaNQ==
-X-Received: by 2002:a17:902:d543:b0:216:501e:e314 with SMTP id d9443c01a7336-220bbafa000mr181903825ad.20.1739539374586;
-        Fri, 14 Feb 2025 05:22:54 -0800 (PST)
-Received: from thinkpad ([2409:40f4:304f:ad8a:250c:8408:d2ac:10db])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d556d7bbsm28739255ad.182.2025.02.14.05.22.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 05:22:54 -0800 (PST)
-Date: Fri, 14 Feb 2025 18:52:46 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	quic_mrana@quicinc.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v6 1/4] arm64: dts: qcom: x1e80100: Add PCIe lane
- equalization preset properties
-Message-ID: <20250214132246.o5oimrm5ojrcbf4z@thinkpad>
-References: <20250210-preset_v6-v6-0-cbd837d0028d@oss.qualcomm.com>
- <20250210-preset_v6-v6-1-cbd837d0028d@oss.qualcomm.com>
- <20250214084427.5ciy5ks6oypr3dvg@thinkpad>
- <be824a70-380e-84d0-8ada-f849b9453ac0@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=p9A+In/a43QbGaymK8cF0owrTW46FIdUTr+hQAgk7qP6p+LNhrbpY/VfOtfo79BESovK0ULAT94GzzAZFYta5TvJgnXwCvMu2kgcWkMVxXcqgGbQTTWduMjb1YYH57JxNNu1rcY8ytVDQ+0vF8FMOuMEOaVr5yxhRJXatydfKxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ajopEHBO; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1739541084; x=1771077084;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4RYb0V938Hvh8XfpOfW2FPzt2ThKIlaPfePtmuDjHvc=;
+  b=ajopEHBOv8Zaajqeto9xrTkVQbhzgjZlsjVeyOpgKTEQlx0QOMXtzoSh
+   RXRbhZDNzXN+CiatTBx+aH+NYtWlnlt62ZGwU6/aQGD3eqElWEypPcMVT
+   QcmOeYmPtKpQb6KjXoFnnyom1GzwUtrv8jWvgJKYFdDqE0ZTqWsAXfmcl
+   VxBvpXplg1aD/96/sNnGCDYsZC1ySJVVorCqo2a35uEjtrBZ6n21viChS
+   +Hx74D1PQSdUx+KHslbO5O56ZHPEHiouf4AvXLeN/DzultfRAVPW20H+x
+   1hllQ31pGP4AFHRDex/mSdrUoN6yCe7Ule96mL8QAPp8hd0On77YVYdZm
+   w==;
+X-CSE-ConnectionGUID: yVCtjxg8SvGC80AV8Wz30Q==
+X-CSE-MsgGUID: vPyRbgCrSEGgKjQARKlBhQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11345"; a="40323767"
+X-IronPort-AV: E=Sophos;i="6.13,286,1732608000"; 
+   d="scan'208";a="40323767"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2025 05:51:23 -0800
+X-CSE-ConnectionGUID: PSBcuQ5sRpC62aaIV9z4VQ==
+X-CSE-MsgGUID: jEzRNxGUQIiWWnjKYiY9Qw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,286,1732608000"; 
+   d="scan'208";a="113650248"
+Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
+  by fmviesa008.fm.intel.com with ESMTP; 14 Feb 2025 05:51:19 -0800
+Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tiw69-0019c7-0D;
+	Fri, 14 Feb 2025 13:51:17 +0000
+Date: Fri, 14 Feb 2025 21:50:23 +0800
+From: kernel test robot <lkp@intel.com>
+To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
+	amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+	daniel.lezcano@linaro.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	rui.zhang@intel.com, lukasz.luba@arm.com,
+	david.collins@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/4] thermal: qcom-spmi-temp-alarm: Add temp alarm data
+ struct based on HW subtype
+Message-ID: <202502142135.ez2QBdYV-lkp@intel.com>
+References: <20250213210403.3396392-3-anjelique.melendez@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <be824a70-380e-84d0-8ada-f849b9453ac0@quicinc.com>
+In-Reply-To: <20250213210403.3396392-3-anjelique.melendez@oss.qualcomm.com>
 
-On Fri, Feb 14, 2025 at 02:18:48PM +0530, Krishna Chaitanya Chundru wrote:
-> 
-> 
-> On 2/14/2025 2:14 PM, Manivannan Sadhasivam wrote:
-> > On Mon, Feb 10, 2025 at 01:00:00PM +0530, Krishna Chaitanya Chundru wrote:
-> > > Add PCIe lane equalization preset properties for 8 GT/s and 16 GT/s data
-> > > rates used in lane equalization procedure.
-> > > 
-> > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > > ---
-> > > This patch depends on the this dt binding pull request which got recently
-> > > merged: https://github.com/devicetree-org/dt-schema/pull/146
-> > > ---
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 13 +++++++++++++
-> > >   1 file changed, 13 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > > index 4936fa5b98ff..1b815d4eed5c 100644
-> > > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > > @@ -3209,6 +3209,11 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> > >   			phys = <&pcie3_phy>;
-> > >   			phy-names = "pciephy";
-> > > +			eq-presets-8gts = /bits/ 16 <0x5555 0x5555 0x5555 0x5555>,
-> > > +					  /bits/ 16 <0x5555 0x5555 0x5555 0x5555>;
-> > 
-> > Why 2 16bit arrays?
-> > 
-> Just to keep line length below 100, if I use single line it is crossing
-> 100 lines.
-> 
+Hi Anjelique,
 
-You *should* keep it as a single array even if it crosses 100 column width.
+kernel test robot noticed the following build errors:
 
-- Mani
+[auto build test ERROR on rafael-pm/thermal]
+[also build test ERROR on linus/master v6.14-rc2 next-20250214]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Anjelique-Melendez/thermal-qcom-spmi-temp-alarm-enable-stage-2-shutdown-when-required/20250214-050700
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git thermal
+patch link:    https://lore.kernel.org/r/20250213210403.3396392-3-anjelique.melendez%40oss.qualcomm.com
+patch subject: [PATCH 2/4] thermal: qcom-spmi-temp-alarm: Add temp alarm data struct based on HW subtype
+config: i386-buildonly-randconfig-003-20250214 (https://download.01.org/0day-ci/archive/20250214/202502142135.ez2QBdYV-lkp@intel.com/config)
+compiler: clang version 19.1.3 (https://github.com/llvm/llvm-project ab51eccf88f5321e7c60591c5546b254b6afab99)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250214/202502142135.ez2QBdYV-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202502142135.ez2QBdYV-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/thermal/qcom/qcom-spmi-temp-alarm.c:148:9: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+     148 |         return FIELD_GET(STATUS_GEN1_STAGE_MASK, reg);
+         |                ^
+   drivers/thermal/qcom/qcom-spmi-temp-alarm.c:169:8: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+     169 |         ret = FIELD_GET(STATUS_GEN2_STATE_MASK, reg);
+         |               ^
+   2 errors generated.
+
+
+vim +/FIELD_GET +148 drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+
+   132	
+   133	/**
+   134	 * qpnp_tm_get_temp_stage() - return over-temperature stage
+   135	 * @chip:		Pointer to the qpnp_tm chip
+   136	 *
+   137	 * Return: stage on success, or errno on failure.
+   138	 */
+   139	static int qpnp_tm_get_temp_stage(struct qpnp_tm_chip *chip)
+   140	{
+   141		u8 reg = 0;
+   142		int ret;
+   143	
+   144		ret = qpnp_tm_read(chip, QPNP_TM_REG_STATUS, &reg);
+   145		if (ret < 0)
+   146			return ret;
+   147	
+ > 148		return FIELD_GET(STATUS_GEN1_STAGE_MASK, reg);
+   149	}
+   150	
 
 -- 
-மணிவண்ணன் சதாசிவம்
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
