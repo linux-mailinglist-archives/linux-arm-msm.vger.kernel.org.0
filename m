@@ -1,120 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-48037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A75DA35FBC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 15:03:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CCDE7A36056
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 15:25:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCB9F168D7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:03:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29C1B170673
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:25:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD68A263F57;
-	Fri, 14 Feb 2025 14:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BA31264FB9;
+	Fri, 14 Feb 2025 14:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="ffutnsRo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pLhsbqXO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFCB7081C;
-	Fri, 14 Feb 2025 14:03:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58545BAF0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 14:25:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739541788; cv=none; b=KgGtfIvjxbMY+wDKDRIGL5i+rTEJlBCOJKViCGu9J+UENMFdw6FkZhDXMol9Ayr6kDkZbojZvfAnG6y2TU1A3de8iErP+B1ndw7igps6vo7rxgIn3EHiqtjFaIKtIw7zQwqqlU5WlfkebRrWoNwaX7vJF+Nt6TX/pkBzEkvXyK8=
+	t=1739543148; cv=none; b=VU11qdyQSGfTzybu4t7l2OdOugfM7OjcYbQkDfjEZ6k0gK5EBNB5DtY4lqotDl9ecwYrDkOFaZWCI7D9pDO0vkXbXIK94tHA1Z0I2ruksNKuNTk22OhcB0uZbqKq/csq7rtTpyxu0ceBxkQHa9oYT00tNudpbgJ9vDNDM8SvcE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739541788; c=relaxed/simple;
-	bh=HPjrAGuqBs30Xqla0S08E7D+Vsk8nak+FoJqatHVKqs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GEbxC9LFJZAeVC2jywQgScFjENM+hOLdOT7QtFvgA6UapXlLwv8TvxYwVew1rSx1P9AF9MwxveQDWAVP0RCO3ym4PzT0J7s0iK8tb4z3F+ycq0p+IYI6Ckizug9Nlrz+87v1I5GHa1vwq5Fez6GISeCQ/O2ALfiPmMQzUS7VcXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=ffutnsRo; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=YPfqLp9fbZ/8JOO2RhhN9couacnmyf0ld4MXnUIvALM=; b=ffutnsRoSZY8FyHYndFd/8kLiJ
-	I4KHxo35/Ek9TxhoUWtM8unvMnPGhWSEmkPTEcDT3jYClEQEnUPZhUgdZ2ziMHH55Gx8f8Cqx5dY+
-	TMUNkVQeXvIecwSFy4vJcLw7LskEMPFSJgDfs890xo04TQ/QG3ANEnPgdKm5ofEn2wRI=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tiwHO-00E5L7-4X; Fri, 14 Feb 2025 15:02:54 +0100
-Date: Fri, 14 Feb 2025 15:02:54 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Lei Wei <quic_leiwei@quicinc.com>,
-	Suruchi Agarwal <quic_suruchia@quicinc.com>,
-	Pavithra R <quic_pavir@quicinc.com>,
-	Simon Horman <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org,
-	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
-	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
-	john@phrozen.org
-Subject: Re: [PATCH net-next v3 13/14] net: ethernet: qualcomm: Add PPE
- debugfs support for PPE counters
-Message-ID: <72171304-9a98-4734-85a3-d1302d053602@lunn.ch>
-References: <20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com>
- <20250209-qcom_ipq_ppe-v3-13-453ea18d3271@quicinc.com>
- <5a53333b-e94c-4fb7-b23d-e1d38d2dad8e@lunn.ch>
- <a455a2f6-ca0b-43e0-b18c-53f73344981f@quicinc.com>
+	s=arc-20240116; t=1739543148; c=relaxed/simple;
+	bh=6xxF8rN9zTbbJvAKtEFfPHJFOxmzYocfsTr66zyc7NE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Uk4i4uh8+0Z3Pi6WPyyEJM1RdrwqiSlW4rhP0MGoBpD8AaK6dFFiIo9oK36PavCDjs/eGP6/K0/AWijgJWPTPIvrXzqjYTetzg//0GW8oRGSSfN7wsmegwjH7+lHqBMytV2WcvenMbixagOrQPeOv/MlxdPD1AcSDHPER/8pOfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pLhsbqXO; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-543e47e93a3so2236468e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 06:25:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739543145; x=1740147945; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Dl5R/TPlYSsamCEAGU/chHrDqvXleYXJuMFs3tfWros=;
+        b=pLhsbqXOkUiLgZmQNrlhIL+npPiAG4DD02qteoxNI2Enz7ISAco6BnlZslGFA9Np0e
+         VqOp6TdxRnaj+xhhiFgEv46/UYJDnuVr7gjQF3ha0RgG65GPyAd0oYY7NUMjjS8SA5hT
+         208D+z/F4iwMkS66Eppjbgi4w+gVhi5vCL2Yw8OK8pH1V4ZueCFc/InVYk71SfBmJ1Mb
+         2TPHCFVdfjMINcrF/eMWKqPX0VqI6X3XU0TtzpK+iqB442IPHjtKrYa6LqolYqJzHyp/
+         WLvidx14zh1B96zm5wnpsMcmZ/0Er+5+WcHZp3M20gcIRFqEMUv8seo9GmRLqpF4S1uM
+         jyoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739543145; x=1740147945;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Dl5R/TPlYSsamCEAGU/chHrDqvXleYXJuMFs3tfWros=;
+        b=eftotKaUNyzzVKtFte1qIcbkDHcdTk+110p0gxQ9lEuOyigExx3AAXE+Ru2ZY4dNrU
+         IOgIoRwrV3lWswulgRq6+55psp88RMsroR2/LY179pMXz3yYO8EvZ2PkLIz7Ce2uuRjy
+         Z0yCw05y/iTUEyrR7dhCIuhfA9T1eIqQaNUXm05OVkqOL5hR1Uq2PuVDwGDuS7eGRt3b
+         qwUp+e/qLp+elG8VGG/5GIePIgMzNsdoSxtqaPw4TuVcOD2Y58paasoOtPfFOmLlldpt
+         Q2qyXWYKKgIZXTTnFowNArXgFIEbnt75SrXE2/pZ/uGqhJDRvo4cd5b2EXh+vXNpWcjC
+         vU0w==
+X-Gm-Message-State: AOJu0Ywr1LMNIEHHRz+JRcNOu7Sk8yBG/xqx/LfMcMywas/j2zbl0yQ0
+	KQtf4apTuozSpo2SMQDdEwxMIV5JYBf0G4xBcAKGlCWhxR1jpEUT+VrHZ415bkNyG4uvXXGWPPb
+	7IWo=
+X-Gm-Gg: ASbGncuvAFRCpq9GuAY6z15ZDBnYEsnx4q9W0wurLfrAMmi62DCaxeqlHwWNedF4Z4E
+	Ri1raHlRnT+/RhGUH+95s3TF4G3RNHzGul9OBahm8i2erM7u8A0AP8pH7EJ4zpEJAbIImX5ilXa
+	TFGekaSSiG9BhMxe8kHJDVEcfwNXB74bcIkeqbCC0HC4k0yLJeINAnsBzUhTRYbRQYP55X2/7/7
+	mkJ9a/tNpjW0seIOdnW2oxg0uPB3PVBh1HdBJ4RVuQPDxAUBl0ux3atGacR3RFVhB5dXDSFcXPy
+	sC58iDft64z5T8BRdRWlpvY=
+X-Google-Smtp-Source: AGHT+IG3qQ7eIYwNQ5AV7acWuEKmZCbpl/3HmRIO72Nu4b3+s5EH8gvvqKp/+KRrPfoqr1QpJz7Ybw==
+X-Received: by 2002:a05:6512:31d3:b0:545:1ce0:6409 with SMTP id 2adb3069b0e04-54525c863e1mr1333734e87.17.1739543144772;
+        Fri, 14 Feb 2025 06:25:44 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5451f11ed9asm537281e87.228.2025.02.14.06.25.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Feb 2025 06:25:44 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 14 Feb 2025 16:25:39 +0200
+Subject: [PATCH] arm64: defconfig: Enable Qualcomm QCM2290 GPU clock
+ controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a455a2f6-ca0b-43e0-b18c-53f73344981f@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250214-rb1-enable-gpucc-v1-1-346b5b579fca@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGJSr2cC/x3MSwqAMAwA0atI1gaa4ge8irhI26gBqdKiCOLdL
+ S7fYuaBLEklw1A9kOTSrHssoLoCv3JcBDUUgzW2NZYaTI5QIrtNcDlO77FnMUxu7gIxlOxIMuv
+ 9L8fpfT9gW9QVYgAAAA==
+X-Change-ID: 20250214-rb1-enable-gpucc-7ae0a1bf6d1a
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1033;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=6xxF8rN9zTbbJvAKtEFfPHJFOxmzYocfsTr66zyc7NE=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnr1JmrZctNMY2SC0FwBsqAPL/Wa4leScAw+aOH
+ c/U0nJ3IVWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ69SZgAKCRCLPIo+Aiko
+ 1ev8B/96pSdQHwskzz8nqCgS4dPCDq5EuP9h3QpyDtwik9pLtkKqs2W224QjBPgecx/ZB3L17xo
+ M+dTkK35qmTS66cimuorUsXjJJbyHvrPjl3ck7FGaQy4fx6uCTQz3z8YZ/PEFWJ+R0+cLZojGCv
+ sanq5j0Z1XDajo/l3FUNzBNFVNCyL5ysqXLLuImchG1y1BBriELDs+gapjymBGApxH93rMfqYPe
+ pwchqjMJticrGkG22vs5rcSezkRYs8+LKBOdI2xyHYMVatP0ycjZTXuRCrxveIcNWXx5ReQfPS5
+ XeC2eM0q2VTPMaf1Tm3yqQ3nOWki1OedRrL7PYrX/glNddbp
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-> > > +/* The number of packets dropped because of no buffer available, no PPE
-> > > + * buffer assigned to these packets.
-> > > + */
-> > > +static void ppe_port_rx_drop_counter_get(struct ppe_device *ppe_dev,
-> > > +					 struct seq_file *seq)
-> > > +{
-> > > +	u32 reg, drop_cnt = 0;
-> > > +	int ret, i, tag = 0;
-> > > +
-> > > +	PRINT_COUNTER_PREFIX("PRX_DROP_CNT", "SILENT_DROP:");
-> > > +	for (i = 0; i < PPE_DROP_CNT_TBL_ENTRIES; i++) {
-> > > +		reg = PPE_DROP_CNT_TBL_ADDR + i * PPE_DROP_CNT_TBL_INC;
-> > > +		ret = ppe_pkt_cnt_get(ppe_dev, reg, PPE_PKT_CNT_SIZE_1WORD,
-> > > +				      &drop_cnt, NULL);
-> > > +		if (ret) {
-> > > +			seq_printf(seq, "ERROR %d\n", ret);
-> > > +			return;
-> > > +		}
-> > 
-> > This is an error getting the value from the hardware? You should not
-> > put that into the debugfs itself, you want the read() call to return
-> > it.
-> > 
-> 
-> Yes, this error code is returned by regmap read functions in
-> ppe_pkt_cnt_get() when the hardware counter read fails. I will
-> remove it from debugfs file and instead log the error to the
-> console (dev_info).
+Enable GPU clock controller for the Qualcomm QCM2290 SoC. This chip is
+used e.g. on the Qualcomm Robotics RB1 platform. The clock controller is
+required for the GPU and GPU IOMMU to work on that device.
 
-and return it to user space via the read() call. These functions
-normally return the number of bytes put into the buffer. But you can
-also return a negative error code which gets passed back to user space
-instead.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-	Andrew
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index cb7da44155999b59aff95966f4cdc9107f2af46a..7e475f38f3e1146dc0f742d13ffbc2d0648e2de5 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1320,6 +1320,7 @@ CONFIG_CLK_X1E80100_DISPCC=m
+ CONFIG_CLK_X1E80100_GCC=y
+ CONFIG_CLK_X1E80100_GPUCC=m
+ CONFIG_CLK_X1E80100_TCSRCC=y
++CONFIG_CLK_QCM2290_GPUCC=m
+ CONFIG_QCOM_A53PLL=y
+ CONFIG_QCOM_CLK_APCS_MSM8916=y
+ CONFIG_QCOM_CLK_APCC_MSM8996=y
+
+---
+base-commit: ed58d103e6da15a442ff87567898768dc3a66987
+change-id: 20250214-rb1-enable-gpucc-7ae0a1bf6d1a
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
