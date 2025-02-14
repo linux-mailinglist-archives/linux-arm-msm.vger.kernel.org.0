@@ -1,90 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-48049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8BDFA36185
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 16:23:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83674A36189
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 16:24:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5D3297A59B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 15:20:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA5CE188C810
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 15:22:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33919266F17;
-	Fri, 14 Feb 2025 15:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40CEF266591;
+	Fri, 14 Feb 2025 15:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V1uniPrt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wP+u+xHV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C122F266EED
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 15:21:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4279E4D8C8
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 15:22:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739546463; cv=none; b=puHGiU8N2KWULRIqwpERjoly9ikxGeQYAKlCDdEyDxUqkzJ+8/+z9gLX8qCo1wARm8JUFT3+P4KysoREkuzl28ctsrNt2EogpHllS9P6zhpy9q70ZgkyHlmtJcxQE5gFA0I202M/Jba95CPpLvXo5wKZB4WWU+dULRjvXxA2Pqk=
+	t=1739546552; cv=none; b=n667YqClg3FtirLi0FTXTNE3jhuXM0QcHwlI3N15Xast3Cl+TA+PfL+BFisSOeJqo+tE6GgSsOdz3nrYbvClK6mC6K6EzjoFnv3HMviTtctvVnFNJszEgZLTr6N8dhpBHTmIfOv6CqLlIVkOgHOGh4j9zW5sCbA70yIVOCjhdtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739546463; c=relaxed/simple;
-	bh=s2ed4dxhAcHLxAWiBMx1aLVkelooDVhuHjVkLeCVcWo=;
+	s=arc-20240116; t=1739546552; c=relaxed/simple;
+	bh=qAZ+7NciQnpT5One0BQKVQ6jDdDNpz7ei39w2YEACvs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EUA2vmQgQNaqQIM5I8eIQL/G9udmmkF/mMxLcgn/IHdfxGoHuhSdAjnGcAPlkGMkDAhpZySkudl14pHPZhzO/S64rZAt7NN36nSbl/ffcPtoLtFj8AzhoYC2E5b0X4ni1jp4A3r1x4f4WrTAbzMG2VF4vD+kiFnwzKpHMhKq2VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V1uniPrt; arc=none smtp.client-ip=209.85.208.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=r0BcAF7QJVR5WTIdCIJSGmi05RM+qNMzj7jXJxFlBZHYEdSJjgxd0po1KD3yVlSLoXH8kFPt7dXf5oZkCjX37sRbRwgOa8Wiu0Bn8bLCOShaLVWA/ngzZwmrjLlq3fC7QvCNUPNkadY0wTrBJB7DhIU3kRbJXMR0QB70nPYvf50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wP+u+xHV; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3072f8dc069so22343721fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 07:21:01 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-54509f46614so2261772e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 07:22:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739546460; x=1740151260; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739546548; x=1740151348; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=u+alm7ANPxaEHKbieUa+EyZgstYms8w4wOcWOnAHGY4=;
-        b=V1uniPrtzjvPS4dEBG11kujGTCxpMR52EsL0tb+1N5q9HZmSYDkXQlRReceARA3WXD
-         pAUY5rIk2OUH6TSuqE5hy36TJn1xOstJI/lv9YWGl5J35qy58LfR0/2dlZtWVzZDQQt3
-         RFrYDxEUsyfqOGWW4lUVFwWybFpxSiA3cJAzko2JJZDpMkBtMufm8WLR/1ZXr71WA6e4
-         IB5kSqynv2qJ6xt4E1Dy/G4oKXfEDuTVaeVEAi2h7t4/InRaku6blpW7Su2L908hveY0
-         i8n4Kr/O3ubKCd+JkO0ZY4ITQWm1A0017/o2lCOJDmygf5yXlzFn3qavxn7ejLke4joW
-         00Bg==
+        bh=fJot5B8/dqhQxIfQ8JsIVVHPjrU/SK2cqPunhk+EjbA=;
+        b=wP+u+xHVZaiIXHzELGCWPAy87LoEGMClZXHM+BZUfUcjb6/w4F0CjhznOEu+zEdeNW
+         sIdD9VOqyI+cqRPnIR5uP64fEI+gGZOvCTvldqTvZWJ0lCYJaGwoYU+/0kNRfmTah4Hp
+         iaVzuXhGdUjjjcdjK69ufclY2WBHQ1VRd4dsRCF3gC3gxN2CEUdx3PjHr63bahc7+7uX
+         2kZF/m/oLHSgmOAn7BNJvxbHZ+uog0CRSnjOiW/UvBfGl0eEfzasfvPrFOSiEmTzX72v
+         BkMnXquQAe7ItqrwAMBEr2PbwNbISunD9d+hfRsYmlTyHPpKx7BlDlw6RE3KH5OTUqVZ
+         Ui9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739546460; x=1740151260;
+        d=1e100.net; s=20230601; t=1739546548; x=1740151348;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=u+alm7ANPxaEHKbieUa+EyZgstYms8w4wOcWOnAHGY4=;
-        b=GkI7Q+xn12d+m5WZ5BBk9Y5YPXsS8hqw3+V60SBVegM3sSKZsRB8Buq4+dRk7rO77f
-         rRhm7o9z6qm+TP7HMwSTRy8f7quXPJznIMwv7430W01VQDAIxwZJO0PGGFLIeiALYx/5
-         fVvjeH2yAhJ5szu0iWH0fQ+q4sFHC4oL3WwEr1xMtQF33/o0qboVdprthZiahgUkhvTU
-         Ovm2lhDCr3LzY4s7zf7dW5YDhqF+k18RgeNOyPB7+VQpjrpxNdzDMyvmsHa041PMomjf
-         piW8Vq0/Xaq7VmfgWgHxGqbrpt+V4ve3C5hhD7QV05p8HC3R4tQSFuZQ7f6VcNzhDShK
-         tMSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWTxHwirnr/FBx0u9UbcyPQkiZxCSKnX88IJXUlnsNPv99BJk5lr4BkP0Ssf50M8BuxMiw5Ixs1TBIcL9os@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3BS0jDM/RxVyw5XOU/NwPc9QbXa2n2ien6OV84eGhQDFiczcK
-	9C6ij4E1gqGm4J/Qu+ubEEyc5mdxCauGM20fEBgWVQibgnY6nnTfRmzSYmMoJpo=
-X-Gm-Gg: ASbGncu66kJ8Bqq4M3csnzZrf7Smow2cw0xXeC4tL1Qs1Dl/nVEgiyEvp1zqgKvg5vB
-	uDHxfgZhu/LXqW3av/xUw0B+yxHzsvEgUp5ctky5Bt+Pfm9dHpCK+cINZ7PnCwfe2tDZ9CDHTVO
-	t8nhS5AwIoCHG+q508LCWlDmFjqVdVFOSctxLPp2o28jvt2ex9hSeHBFgEjExgInUe4HkpUJ8w4
-	hnTNU1hGldm91J3H8i7WCMebENfWU5l8DeyvlfJipSpxz+snkLEK6HZRIRN8byyAjBJ0K+A4w3x
-	6kp8KaUUzDHAl8TpY0amXDz+ZcRkNKl8UnXp20TmXJMrcCql+Tcq1+SG7TBsGxwYqBMDeHM=
-X-Google-Smtp-Source: AGHT+IGf/JDHOwptwq9aBdssKrkB2UDHATM0RmE6UZ1L0ih5y99blcApSprlvyWk9/7mxO1xfUKYMQ==
-X-Received: by 2002:a2e:bc18:0:b0:308:eb58:657d with SMTP id 38308e7fff4ca-30903553746mr44817971fa.0.1739546459775;
-        Fri, 14 Feb 2025 07:20:59 -0800 (PST)
+        bh=fJot5B8/dqhQxIfQ8JsIVVHPjrU/SK2cqPunhk+EjbA=;
+        b=CtkOKlFM7pdgjaWZpaKCKgicjYpsIsroulQOIlAN9eOG06meIx0c6nT9NooKHZxK1m
+         sZuvnwbkYyRk8Jncy+28SDDw/4Lnai6U84AwWvP2AmWoYQmKZ2oAAo4EQZBSu55zcXRr
+         utTUMoQvxmtzoi6A79yW4z1n6PbZQkScyCjL7ar4NDva0fbb9T3k0On5+3VsChy0UO3a
+         lKVxi567x/E3Y4tlqnQJUzNnhfhs8Rqd9dqeNhgtG7RabX1LFTe2h8CYUsUGcLizaWH3
+         GDBbUgpmle+McK8OGKcYyBjdpnwDejhKnQGdtS8y5x7+M9Z2uAlIqvLwtObhQortxQ5I
+         I1pA==
+X-Forwarded-Encrypted: i=1; AJvYcCVMm2bpa2UuuVIPjcMl8DAChx87LkkJmtHyfwhf5B+KazzXZ3CLhsXOPTi23f1sMUJNhP2PjPa92oRx9GyX@vger.kernel.org
+X-Gm-Message-State: AOJu0YxbVzNnKID1YfiheAeMjEQ372Yp93x4DPO8Y2oa+8XuQt8odTUZ
+	cTB5Qp/GqV4T9FJXCPDOh2d7Jzm3pbIVI69J3qpUN/qstVNOBC38h4lthUa4Tgs=
+X-Gm-Gg: ASbGncsxeV4JRnK5rnfRy+gT26Hz+L4nu9NS5gj9R2zh6U0VmxLxJTaU2Pnx4rUGvqh
+	kN+fw8Lwi/j/5xcYp+BjlqqTjkeQG6BBvjE65d/LNRNBb+n8iXJHClL2DW+N0F9M24HH3UxgKZR
+	Q558VmnKz3/1Ow3UzPQjNmd03HordfIace4jWexgkrVwr2IRMKSGXmje5Om2ivRXFuFpQn/10Nq
+	QnKbpAgCvEdyAPFNXaD14NlE+XdTiTWS4kyEIxqLsBdWIvohMSuu0+eu+oND1HkZg6B6p0ohtKQ
+	oIwMmHEqEGlWQneA14hJhILAZpa7hY/X70ulrdKNayI0uLIFJDgCXlMMlKOiOQC37ssQmpo=
+X-Google-Smtp-Source: AGHT+IHd6YyZaJ0gJzVV6IzMidNDXlHHAg8FDIw7tYf8COTL3g2DYgMEui7KrHFl59zy7pcT2QzHdg==
+X-Received: by 2002:a05:6512:3c86:b0:545:2a7f:8f79 with SMTP id 2adb3069b0e04-5452a7f908cmr1095665e87.16.1739546548279;
+        Fri, 14 Feb 2025 07:22:28 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3091029b07asm5963421fa.92.2025.02.14.07.20.58
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5451f09aae0sm569393e87.64.2025.02.14.07.22.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 07:20:58 -0800 (PST)
-Date: Fri, 14 Feb 2025 17:20:57 +0200
+        Fri, 14 Feb 2025 07:22:26 -0800 (PST)
+Date: Fri, 14 Feb 2025 17:22:24 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: Rob Clark <robdclark@gmail.com>, 
 	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
 	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Jonathan Marek <jonathan@marek.ca>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
-Subject: Re: [PATCH v3 4/4] drm/msm/dsi/phy: Define PHY_CMN_CLK_CFG[01]
- bitfields and simplify saving
-Message-ID: <vuqd6hfiobmbnll7flgltiivhbhksgz6r4uaxlmsp6dvfgmirv@mt5zkhgfl5ak>
-References: <20250214-drm-msm-phy-pll-cfg-reg-v3-0-0943b850722c@linaro.org>
- <20250214-drm-msm-phy-pll-cfg-reg-v3-4-0943b850722c@linaro.org>
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] drm/msm/dsi: Drop redundant NULL-ifying of clocks
+ on error paths
+Message-ID: <aarbydttw4zexzkorcr4yb4swscw3crn65u6eactutpfgpnt4y@fg4zyd45xwln>
+References: <20250214-drm-msm-cleanups-v2-0-1bec50f37dc1@linaro.org>
+ <20250214-drm-msm-cleanups-v2-1-1bec50f37dc1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,96 +92,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250214-drm-msm-phy-pll-cfg-reg-v3-4-0943b850722c@linaro.org>
+In-Reply-To: <20250214-drm-msm-cleanups-v2-1-1bec50f37dc1@linaro.org>
 
-On Fri, Feb 14, 2025 at 04:08:44PM +0100, Krzysztof Kozlowski wrote:
-> Add bitfields for PHY_CMN_CLK_CFG0 and PHY_CMN_CLK_CFG1 registers to
-> avoid hard-coding bit masks and shifts and make the code a bit more
-> readable.  While touching the lines in dsi_7nm_pll_save_state()
-> resulting cached->pix_clk_div assignment would be too big, so just
-> combine pix_clk_div and bit_clk_div into one cached state to make
-> everything simpler.
+On Fri, Feb 14, 2025 at 02:17:44PM +0100, Krzysztof Kozlowski wrote:
+> dsi_clk_init(), which gets the clocks, is called only through platform
+> driver probe and its failure is a failure of the probe.  Therefore
+> NULL-ifying specific clocks is pointless and redundant - the PTR_ERR
+> value stored there won't be used/dereferenced afterwards.  What's more,
+> variant-specific clock init calls like dsi_clk_init_6g_v2() are not
+> doing this cleanup.  Dropping redundant code allows later to make this a
+> bit simpler.
 > 
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
 > ---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 3 ---
+>  1 file changed, 3 deletions(-)
 > 
-> Changes in v3:
-> 1. Use FIELD_GET
-> 2. Keep separate bit_clk_div and pix_clk_div
-> 3. Rebase (some things moved to previous patches)
-> 
-> Changes in v2:
-> 1. New patch
-> ---
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c             | 12 +++++++-----
->  drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml |  1 +
->  2 files changed, 8 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> index 798168180c1ab6c96ec2384f854302720cb27932..a8a5b41b63fb78348038c8f9fbb141aab2b07c7a 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> @@ -572,11 +572,11 @@ static void dsi_7nm_pll_save_state(struct msm_dsi_phy *phy)
->  	cached->pll_out_div &= 0x3;
->  
->  	cmn_clk_cfg0 = readl(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG0);
-> -	cached->bit_clk_div = cmn_clk_cfg0 & 0xf;
-> -	cached->pix_clk_div = (cmn_clk_cfg0 & 0xf0) >> 4;
-> +	cached->bit_clk_div = FIELD_GET(DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_3_0__MASK, cmn_clk_cfg0);
-> +	cached->pix_clk_div = FIELD_GET(DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_7_4__MASK, cmn_clk_cfg0);
->  
->  	cmn_clk_cfg1 = readl(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-> -	cached->pll_mux = cmn_clk_cfg1 & 0x3;
-> +	cached->pll_mux = cmn_clk_cfg1 & DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL__MASK;
 
-FIELD_GET.
-
->  
->  	DBG("DSI PLL%d outdiv %x bit_clk_div %x pix_clk_div %x pll_mux %x",
->  	    pll_7nm->phy->id, cached->pll_out_div, cached->bit_clk_div,
-> @@ -598,7 +598,8 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
->  	dsi_pll_cmn_clk_cfg0_write(pll_7nm,
->  				   DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_3_0(cached->bit_clk_div) |
->  				   DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_7_4(cached->pix_clk_div));
-> -	dsi_pll_cmn_clk_cfg1_update(pll_7nm, 0x3, cached->pll_mux);
-> +	dsi_pll_cmn_clk_cfg1_update(pll_7nm, DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL__MASK,
-> +				    cached->pll_mux);
-
-DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL(cached->pll_mux)
-
->  
->  	ret = dsi_pll_7nm_vco_set_rate(phy->vco_hw,
->  			pll_7nm->vco_current_rate,
-> @@ -739,7 +740,8 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
->  		u32 data;
->  
->  		data = readl(pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-> -		writel(data | 3, pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-> +		writel(data | DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL__MASK,
-
-data | DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL(3)
-
-> +		       pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
->  
->  		phy_pll_out_dsi_parent = pll_post_out_div;
->  	} else {
-> diff --git a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-> index 35f7f40e405b7dd9687725eae754522a7136725e..d2c8c46bb04159da6e539bfe80a4b5dc9ffdf367 100644
-> --- a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-> +++ b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-> @@ -17,6 +17,7 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
->  		<bitfield name="CLK_EN" pos="5" type="boolean"/>
->  		<bitfield name="CLK_EN_SEL" pos="4" type="boolean"/>
->  		<bitfield name="BITCLK_SEL" low="2" high="3" type="uint"/>
-> +		<bitfield name="DSICLK_SEL" low="0" high="1" type="uint"/>
->  	</reg32>
->  	<reg32 offset="0x00018" name="GLBL_CTRL"/>
->  	<reg32 offset="0x0001c" name="RBUF_CTRL"/>
-> 
-> -- 
-> 2.43.0
-> 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
