@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-48015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3B8EA35C26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 12:09:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E3EBA35C35
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 12:11:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 58ADD7A471F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 11:08:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A78D83AE565
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 11:11:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4231825D539;
-	Fri, 14 Feb 2025 11:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3513D25D541;
+	Fri, 14 Feb 2025 11:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AlbSIDu1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QeaxT/w6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4977A25A64E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 11:09:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE6225E44A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 11:11:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739531362; cv=none; b=MrRBdOuy4rdQNT4okVDjO4pD02xicmNYzyujGjlIXgNbA6J9Of37tfYnIyzWlhoZPr+hbOKaKzGLLw0NnUH2/fjDBeYLvdDYMKYL1PB+G3Tgs9F7SuozmvdwII6zBivzwDGtZbiDlm8zJRBwJ61htYlpSWDumuwmVLCuqH3CGjA=
+	t=1739531463; cv=none; b=kyB1vF/MrrPjjcfTCIsVRGGbaEZArO2J1MStaIcwmkhPeka3zYIPqHGMEUmDNeDj3RL3a2F165OSIwVFOs7xCGs9HNOJ53o8+gxIdRAZBPe7Nbzb564RbvRJmD0qOGLvAQoRn+3+wpmEC7nCLBRgfBMavugLu8JlTBsCSkmvVSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739531362; c=relaxed/simple;
-	bh=kbVminQweP0edHX60DRMOZAmpRtqyibJvpWKml9aMvQ=;
+	s=arc-20240116; t=1739531463; c=relaxed/simple;
+	bh=DxZVOhLjEJPHFDpuJdpUVc9PaIyKgLPZGxYXktC7+mI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TWnKnWcIfp7VH2pzkMphvwhmwDLcDNqWZosVfDNz8NlyKc4ANjIArtB1SnOrkLPUzo7/INAF5CEfvpTT/SYPwBedgtGl/OE+qetSemWdhAoO6p6LnQxKB6ZqUbAJZkwALBDRO/++wxh+CLHxe2uWRx4yHb7sAXcOjzzHi/CS/pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AlbSIDu1; arc=none smtp.client-ip=209.85.221.42
+	 In-Reply-To:Content-Type; b=uFTUSQnfwaPx9mDk9PtV2dAUdflnpjbfxz825d9jHurlkYs432rPK57OrTxM16lrFgG3U8bxTlSD245psyLeijPmEey8PJvPanvyRHag+cjkAqcChzIax2Fx/kxX+4HZC5RhGe0Ow9JuA0sRLKjt4t/03RVbbJqcb6fu+9Bv+CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QeaxT/w6; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-38dc6d55ebaso1955505f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 03:09:19 -0800 (PST)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43948f77f1aso12941965e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 03:11:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739531358; x=1740136158; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739531459; x=1740136259; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=V7+4mem2ft+RVvvLEGTsxFIwY8eDWNZdbE4U/VEn5OU=;
-        b=AlbSIDu165La21uG3l8xxHp4sIcrOvyT/PpKJPpjoPVm4PRnFFXveBPXKEtBY0bcID
-         wInc7wKjISPR86md30Hv2YiK7vazo/8JtCzcmU8WjnMJwPw7LhBF7/q9zA459eLHTRvf
-         BPhaeCciifwpI4EffHABAeRMOQqKD2yK/3w1XKWWLXokPIJVXC+tP0AQAL23a4mHlEG/
-         NtWjq+fz9qspZmoNMFeWk94fMp4AY/qJeueqlITHIyiS7gyF0IKkX90eBNbczFPdQe1q
-         oxfgglXoHzqJR+SL50spwK/MB+9oD8gX65P96lvfuyEgc7pgnJD1a9SQ8OQBGM0zpeXI
-         Dd+Q==
+        bh=qeZsog2iIKuGpA11cPJmZ8pu44QO3rd34voFuR0wY1Q=;
+        b=QeaxT/w6OprTesd9CwkH8JgU/2xvdKNyWCwHnlsCR7CcbohOJOAjxRKrXQ/nscm3VK
+         C/8pukwZz8fUcdXkBIYovXG1Paw2GT3yvL69EzoO6b9uVJGERPdNsjJF8d2KLDkDXW3v
+         Js0AiKZVmP3XmGktHFqWk7NM1mqNSi1JhRp0gQg0jcDHbGuem6d0/N3Q8cuVwoupDHEr
+         7/ZPqJafoQ1PVq7kn846JwCguplWfKwgU6cx9xbdDQRDjHh7YsDK6qmuO7XhIt33RFfJ
+         X23dG7oZPk22I01q5v2q5OrFLGsJIJz3x+uvwmcZ4ZFCjYjmEnf3mK7OQouSioM5VS3Y
+         9h6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739531358; x=1740136158;
+        d=1e100.net; s=20230601; t=1739531459; x=1740136259;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V7+4mem2ft+RVvvLEGTsxFIwY8eDWNZdbE4U/VEn5OU=;
-        b=kf6svEKHVEkNSnMr3c4RlW96dSiq+OkKNr6qwPbBAMYtyj0ynBFX2rjkWGK2O7VNr2
-         K9330X771bfIur9zVXW4xSfxv7gVIv7rhkBn/4U9q4m4uL9HV5ivnjBXtWPWSkC6xzU4
-         V37Vr2k+Ve6bTcxH1y1GGScGZs2Zuybh0N6kJfNN5YjxrvBLfjcP7JQdL2op/zOzC2U3
-         JbDd3HxujmG8oMvuZ+x1MNZMFwwKcvGIzB7vYdtDkqA9DJcqvDjOOQIK5cPKtRd7LK5B
-         dty/b/nWoUeyhk7CNI+LBr5+CrSud6LeO783gaTY8/TvWLuFb35Bm3qqmAT2d22I4/nb
-         DbXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUrtMkcLpCem9gBlxXFq2ZHw2uArtMUclwnUlbhTIMXKLV8E9MhmVVxN1dhOggZPYU9Ak7mn2812ng4T7AW@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAs37TqmEywr9QxJ5Vm6YK/WquuNUCSOZPcZarVxIm/c1tViyi
-	UgOdEr6k8U9FKo06SfHrKV+G2qkWuiLdjub5r5IvchG7tCOkTtoF4tLGaRokgH4=
-X-Gm-Gg: ASbGnctYgyJ5u9q+uiHPmlSwrqGVt3lyzzj76LytllZQPG5TTyC9ZU3eEhE0Gxe/7S2
-	D5qTlPt2AIJieBufcuPxLDI7kucKYftrZGeFrq1nVQKp/9WclZs0yz3/MQZi0n8JX4ITT4s+Mtj
-	tfXK1y6RE/4zsxad90nbp8/wYrSf0QKDhhz8tWLMoaaxacDaZMmZ5Didz726MPeTbWI1titu3no
-	fTOhiQ7YwLAATeSRv0aPGct/r3KDg2bSQyPWJyE1j3DWo63DlQ0VSwWfCLthasFN3JL13TQXBjk
-	/QRJmjOzQmESRRcvcEVts6Co8w==
-X-Google-Smtp-Source: AGHT+IHSYzmRWK6x5dqInVV0CJ5pE2+xfHMxdXlGP6JgPhn1Wonrdhujy16nNDJTyIehflsH4kOBJw==
-X-Received: by 2002:a05:6000:71c:b0:38f:2b64:5327 with SMTP id ffacd0b85a97d-38f2b6457ccmr2854936f8f.24.1739531358487;
-        Fri, 14 Feb 2025 03:09:18 -0800 (PST)
+        bh=qeZsog2iIKuGpA11cPJmZ8pu44QO3rd34voFuR0wY1Q=;
+        b=eynTtzpNkqwKQqa52bNsi5zHCDlmI4kFpT0pioE8hXw1WrSxvkerZQQBEJqnOANfq6
+         FUInv/C58zWMRbkVWtaiy3Aue24gjI1pdVrbf1evrpFuFqr7xQhdBJ4glpE10xbP1NVg
+         HiLA3jkzWfNJKqE9XelG+YucuDEielClPT0nj4uRE9gDNrwB99sDAN/Ogq9LdYkkhJlE
+         PJnBCZG26TxCXAU/XLM+g6nq6gT9OF8VhYVsf4W179GxlWzthgeuLC8b9Tqs1x3r8R5E
+         LfNms96kb9uVWnM1iSzRC0Qgp2HaCslhdmQB0FZ/yootj9pSp2lkyWUYHKD8mijFoeGG
+         TKJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUAWwjFTc7BN0JLzhRrq9omSHK3iPn0ufQjkbHZjKZXStVAU7pLrZYAGrSJB1LGrL26kYvB3xs6PK8DEgp8@vger.kernel.org
+X-Gm-Message-State: AOJu0YyMEv9jD7BVoA2YMJ3ojTv2Nwv4VxKiowu8FBrsVFGVSh4Sk4dh
+	xya24W7xlHCABASGhCHQfGu9HspE18PEaBrySELK1MJ79Yjpr4GXRtyuAEz/Pok=
+X-Gm-Gg: ASbGncvJE6yMcTs9tDK2MSQYTjekCMn+XLON0Rzhyt8RpQMEKCkfJD7hoqZltbxKY85
+	JYKFhxnSgekPKJkZQPE9PnY+9S9M4+WSOJho0Ia3N2youg+YhtSHyGSl1MU4+RedoKx2biXJG2V
+	pyUf3ktOgTNzOSbYVAjrI7LcdH4rGxdS/4B/MGebLd2N4Woinnmqn7mzvKW337jx+TrxcW31cKt
+	5ytF3HwL0j8LwgMe4F2o0f9D9tZZSd3+r+Aw+20fyjmkpmlhuMw0WaxeGqHrUro/+ipykXIx99z
+	6QqAbk0CwUB162ILWZHFM5pIOw==
+X-Google-Smtp-Source: AGHT+IG0FqoM1XNBiFLdY+14wrQsmMAdQi4bqFYD8ks4h0kO06myymwcWJElrH0RMxv71I5w/kY5xw==
+X-Received: by 2002:a5d:6484:0:b0:38d:e48b:1766 with SMTP id ffacd0b85a97d-38f244d5466mr8728379f8f.6.1739531459463;
+        Fri, 14 Feb 2025 03:10:59 -0800 (PST)
 Received: from [192.168.68.163] ([145.224.90.202])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f25913eb6sm4373298f8f.51.2025.02.14.03.09.17
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259d5e92sm4398625f8f.66.2025.02.14.03.10.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Feb 2025 03:09:18 -0800 (PST)
-Message-ID: <b61af324-7488-4a4f-9f9e-2ecb004fc4c7@linaro.org>
-Date: Fri, 14 Feb 2025 11:09:16 +0000
+        Fri, 14 Feb 2025 03:10:59 -0800 (PST)
+Message-ID: <44123d40-aae3-4248-95c9-21fb9335020a@linaro.org>
+Date: Fri, 14 Feb 2025 11:10:57 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,7 +81,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 4/7] Coresight: Introduce a new struct coresight_path
+Subject: Re: [PATCH v11 0/7] Coresight: Add Coresight TMC Control Unit driver
 To: Jie Gan <quic_jiegan@quicinc.com>
 Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
  Jinlong Mao <quic_jinlmao@quicinc.com>, coresight@lists.linaro.org,
@@ -96,92 +96,113 @@ Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
-References: <20250207064213.2314482-1-quic_jiegan@quicinc.com>
- <20250207064213.2314482-5-quic_jiegan@quicinc.com>
- <a633f52c-81e8-4c0d-aca7-cc18360866eb@linaro.org>
- <4b521b49-7104-4f25-82cb-4f9be7b235f4@quicinc.com>
+References: <20250214024021.249655-1-quic_jiegan@quicinc.com>
 Content-Language: en-US
 From: James Clark <james.clark@linaro.org>
-In-Reply-To: <4b521b49-7104-4f25-82cb-4f9be7b235f4@quicinc.com>
+In-Reply-To: <20250214024021.249655-1-quic_jiegan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 
 
-On 14/02/2025 1:34 am, Jie Gan wrote:
+On 14/02/2025 2:40 am, Jie Gan wrote:
+> From: Jie Gan <jie.gan@oss.qualcomm.com>
 > 
+> The Coresight TMC Control Unit(CTCU) device hosts miscellaneous configuration
+> registers to control various features related to TMC ETR device.
 > 
-> On 2/14/2025 12:00 AM, James Clark wrote:
->>
->>
->> On 07/02/2025 6:42 am, Jie Gan wrote:
->>> Add 'struct coresight_path' to store the data that is needed by
->>> coresight_enable_path/coresight_disable_path. The structure will be
->>> transmitted to any required devices to enable related funcationalities.
->>>
->>> The trace_id will be allocated after the path is built. Consequently,
->>> The ETM3x and ETM4x devices will directly read the trace_id from path
->>> which result in etm_read_alloc_trace_id and etm4_read_alloc_trace_id
->>> being deleted.
->>>
->>> Co-developed-by: James Clark <james.clark@linaro.org>
->>> Signed-off-by: James Clark <james.clark@linaro.org>
->>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/coresight-core.c  | 106 +++++++++++++-----
->>>   drivers/hwtracing/coresight/coresight-dummy.c |   5 +-
->>>   .../hwtracing/coresight/coresight-etm-perf.c  |  30 +++--
->>>   .../hwtracing/coresight/coresight-etm-perf.h  |   2 +-
->>>   drivers/hwtracing/coresight/coresight-etm.h   |   1 -
->>>   .../coresight/coresight-etm3x-core.c          |  54 ++-------
->>>   .../coresight/coresight-etm4x-core.c          |  54 ++-------
->>>   drivers/hwtracing/coresight/coresight-etm4x.h |   1 -
->>>   drivers/hwtracing/coresight/coresight-priv.h  |  12 +-
->>>   drivers/hwtracing/coresight/coresight-stm.c   |   3 +-
->>>   drivers/hwtracing/coresight/coresight-sysfs.c |  17 ++-
->>>   drivers/hwtracing/coresight/coresight-tpdm.c  |   3 +-
->>>   include/linux/coresight.h                     |  12 +-
->>>   13 files changed, 143 insertions(+), 157 deletions(-)
->>>
->> [...]
->>> @@ -352,7 +352,7 @@ static void *etm_setup_aux(struct perf_event 
->>> *event, void **pages,
->>>        * CPUs, we can handle it and fail the session.
->>>        */
->>>       for_each_cpu(cpu, mask) {
->>> -        struct list_head *path;
->>> +        struct coresight_path *path;
->>>           struct coresight_device *csdev;
->>>           csdev = per_cpu(csdev_src, cpu);
->>> @@ -405,15 +405,15 @@ static void *etm_setup_aux(struct perf_event 
->>> *event, void **pages,
->>>               cpumask_clear_cpu(cpu, mask);
->>>               continue;
->>>           }
->>> -
->>>           /* ensure we can allocate a trace ID for this CPU */
->>> -        trace_id = coresight_trace_id_get_cpu_id_map(cpu, &sink- 
->>> >perf_sink_id_map);
->>> -        if (!IS_VALID_CS_TRACE_ID(trace_id)) {
->>> +        trace_id = coresight_path_assign_trace_id(path, CS_MODE_PERF);
->>> +
->>> +        /* Can be 0 and valid, ETE doesn't need an ID */
->>> +        if (trace_id < 0) {
->>
->> Not sure why I wrote it like this, but I think we should leave it as 
->> it was with !IS_VALID_CS_TRACE_ID(). Even with ETE it calls the trace 
->> ID allocator, so nothing has changed here.
->>
-> Sure, Will restore. For ETE or ETM, we dont need traverse the path, just 
-> directly allocate the trace id based on cpu id.
+> The CTCU device works as a helper device physically connected to the TMC ETR device.
+> ---------------------------------------------------------
+>               |ETR0|             |ETR1|
+>                . \                 / .
+>                .  \               /  .
+>                .   \             /   .
+>                .    \           /    .
+> ---------------------------------------------------
+> ETR0ATID0-ETR0ATID3     CTCU    ETR1ATID0-ETR1ATID3
+> ---------------------------------------------------
+> Each ETR has four ATID registers with 128 bits long in total.
+> e.g. ETR0ATID0-ETR0ATID3 registers are used by ETR0 device.
 > 
-> Jie
+> Based on the trace id which is programed in CTCU ATID register of
+> specific ETR, trace data with that trace id can get into ETR's buffer
+> while other trace data gets ignored. The number of CTCU ATID registers
+> depends on the number of defined TMC ETR devices. For example, two TMC
+> ETR devices need eight ATID registers. ETR0 with ETR0ATID0-ETR0ATID3
+> and ETR1 with ETR1ATID0-ETRATID3.
 > 
+> The significant challenge in enabling the data filter function is how
+> to collect the trace ID of the source device. The introduction of
+> trace_id callback function addresses this challenge. The callback function
+> collects trace ID of the device and return it back. The trace ID will be
+> stored in the structure called coresight_path and transmitted to helper
+> and sink devices.
+> 
+> The coresight_path structure is created to address how to transmit
+> parameters needs by coresight_enable_path/coresight_disbale_path
+> functions.
+> 
+> Here is the definition of the struct coresight_path:
+> /**
+>   * struct coresight_path - data needed by enable/disable path
+>   * @path:               path from source to sink.
+>   * @trace_id:           trace_id of the whole path.
+>   */
+> struct coresight_path {
+>          struct list_head                *path;
+>          u8                              trace_id;
+> };
+> 
+> The atid_offset mentioned before is the offset to ATID register in CTCU
+> device.
+> 
+> Enabling the source device will configure one bit in the ATID register based
+> on its trace ID.
+> Disabling the source devices will reset the bit in the AITD register
+> based on its trace ID.
+> 
+> Useage:
+> Enable:
+> STM device with trace ID 5 and ETR0 is activated.
+> Bitmap before the enablement:
+> ETR0ATID0:
+> 31..................543210
+> ==========================
+> 0000000000000000000000...0
+> ==========================
+> 
+> Bitmap after the enablement:
+> 31..................543210
+> ==========================
+> 0000000000000...0000100000
+> ==========================
+> 
+> The bit 5 of the ETR0ATID0 register is configured to 1 when enabling the
+> STM device.
+> 
+> Disable:
+> STM device with trace ID 5 and ETR0 is activated.
+> Bitmap before the disablement:
+> ETR0ATID0:
+> 31................6543210
+> =========================
+> 000000000010111...0100000
+> =========================
+> 
+> Bitmap after the disablement
+> ETR0ATID0:
+> 31................6543210
+> =========================
+> 000000000010111...0000000
+> =========================
+> 
+> The bit 5 of the ETR0ATID0 register is reset to 0 when disabling the STM
+> device.
+> 
+> Sincere thanks to James Clark for providing an excellent idea to handle
+> the trace_id of the path.
 > 
 
-Sorry I meant to only keep the !IS_VALID_CS_TRACE_ID() bit. We still 
-need to call the new coresight_path_assign_trace_id() otherwise it 
-doesn't get assigned to the path. I saw that got removed in v11.
-
+No worries! Thanks for working on Coresight too.
 
 
