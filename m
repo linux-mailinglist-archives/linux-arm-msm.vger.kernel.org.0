@@ -1,108 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-47985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-47986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C987DA35728
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 07:33:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FA6BA35768
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 07:50:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2ADB33AD5FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 06:33:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E374D7A4181
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 06:49:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5583B201032;
-	Fri, 14 Feb 2025 06:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45AAE20103A;
+	Fri, 14 Feb 2025 06:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dDgazr/x"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kWG7NGIc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB9E1FFC72;
-	Fri, 14 Feb 2025 06:33:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7204A20459C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 06:50:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739514835; cv=none; b=HPfwDFxeCnKJgW0rILfMNkxT3mjjcnP6gk1VoOg3/aow3sEJB42kERDQTvjYNiTdXdzeLQGH+vK2afu/qXm6nKXhHadqq44MPhI8re474NR8gt4zbJ3S67iVDmKbS4LVumvrDu5JRasC7o32z8ZAvQWKYihb8DSj7IcTIBOjLZc=
+	t=1739515823; cv=none; b=g9///emG6Kvg+WQyjtblH2VLu4CZ4Zk2LGaYwPcySU2SBr/HedTtYJJwg+jkALAKXKTy2rWK5Bo934/jc4Z/2HpFz2DZziH6ejkOURJ5xEoosTeDwb6dSD25T6ntmyxvVWELkYgjVhPcumhCTrEhbeI9uL0gRCG75oes8n/PVIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739514835; c=relaxed/simple;
-	bh=3YylV6a5qke/A59cwLco3GMGBxueUouJ9ac0mNKgY7k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CohSr68cZd3KIRFhHeHILrJ9jXF4rC6W3yxZbujK7gjh7kd0+xMPVJi7MkmmIbN32v9DB4D6/mSdgMAoyjGRX8/9wE8uJ+M7D1w5fwQZtAkL3guvsb/2Eo8Kl/wr5/Jeda0wgIZGE/nUHww2yVsUdskqK7dj1PWcnZrP7/B9Kds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dDgazr/x; arc=none smtp.client-ip=209.85.222.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7c0848d475cso34069685a.2;
-        Thu, 13 Feb 2025 22:33:53 -0800 (PST)
+	s=arc-20240116; t=1739515823; c=relaxed/simple;
+	bh=82IhPvdg6sgV4AQAagdaD2oscL5iIeWGWtD6mhOA0m0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ljwjUvNqo1+9GqP3Wy5dm5vsZTsozKDvWtxoJFfOsfkMNUVKIonF8K0Bo1sl0S7xDlVO8OQgLA1MYjzKTBgKtqwkqtbgxiFl422/b3CaXfM7nAAt6GKBSyQXvwDNFHKhWbWnsq1UbarjBRcEtgX93ztOqi2eJ5juQ8kbixoL2Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kWG7NGIc; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2fc291f7ddbso1057288a91.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2025 22:50:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739514832; x=1740119632; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3YylV6a5qke/A59cwLco3GMGBxueUouJ9ac0mNKgY7k=;
-        b=dDgazr/xH3SB6czOXpyVffW3oURGABWAU4ls+D29ISnweizCJx1/CoAi6x3sylxckq
-         yTobocN3wcf+rTQ61UQViKPOMyuuoe+SXNfRbwQP/SuKNxMJcNjaitgC/qvezTRxxJqK
-         Vs0QM11qlbcFQ+3aBNHU4G/pB9EH2OW6pUSVbTZoTNQfONCIHkMICXC/gQkX9zzBO+IM
-         lxyu8SCBff0hwAiL6OpX5Oho3Pz+3uTx3BwgJ4YFUSD8h6iSWL+CoTSROBffCSp/AdaQ
-         Ae589gdlN+l2ZnIqgkNnTetwAqnWZmflMo2Sg0JVoU40qd10AqNQApE8AJjk86YeOGV2
-         2n0Q==
+        d=linaro.org; s=google; t=1739515820; x=1740120620; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=u/bwpmhibqCSWXsfxMuekBQiCAQCaSoqpsC6Q1WLM/g=;
+        b=kWG7NGIcPob5Ad6qh0RT+apdx+8oxTs+DrubaZT5gSIMdMnnhB+Gsq54f6k94DCqFl
+         boehNSDMt0A3U+uHjXPQyzjfp9ezcexPRa1EcsEzldIqxRZzJWRCxS8Tr3h6ZCkvAh8H
+         F9477cEpDDJC7lPzveHCCjv7BJZCOTKDnKOOnLpztxy1xbnIU3rNF/Gz1fuwDaJjM7/3
+         NoZDr1sISYtgw+NexjScPyTgm7CO7V4pScr3hnQkbSUsgb7CpOWjlDY/BsUHtixYnK2c
+         wPZ+iluTs0Xxy1wJQdcoQbcjik+Eb02xLMQkcAwKK56/I+xm3gF9faaVzSa21cfPhSbh
+         Gq9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739514832; x=1740119632;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3YylV6a5qke/A59cwLco3GMGBxueUouJ9ac0mNKgY7k=;
-        b=J/tPSf2SqpQn+RlGkv2VnS8hc/Jx7GZMbp8nsrpXLn2zfDFAG8kmVB/GWTCf6VxpQf
-         6WTHolNeEAMhgSRaB0XSBywvbfeTTOIOopkvQo0/XavjyB+ocVr+FSziZQ4sHztZngoN
-         CBzOT2HWjtsqPNFAJRBvaOigU/a2sHL9nbJSWFdir/UTTfrCHevPnFyXQnFG2VYfztdJ
-         Cd2DGxrrLwhXs8CgY6SBJgnlcRG8YwtFB3xgody0nuj1NMu50Eu/YmKpq1zTbF2Kg1in
-         YFTjcYzLKGw7Swp1miuaZsgrnDZi+RUdWiVjURNZHLtDJswCS3H4QjqwPg5Z2SfcriHy
-         K8QQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU/iTkYHzG2Tee3WMOhSBn89jzalKnzY2DlYTtkpl3yUQFDqaf6WtjPHc084Mezufv+eJWLMFiKmbmWlK/81w==@vger.kernel.org, AJvYcCUg8tL4zsRUA7OSkggQj1zjGKiC+0KCjFNXknxr4Hgi8iSGqg0GFPYjr9KOFYRU6qGC3ej8J0iM15TOYXZB@vger.kernel.org, AJvYcCXPmChGiUIVWNXdSHnsXQH3AkVmdW+gcd098vgEKmrZKpyG56enTBGKTMIOWaWOU6coXta2mhXlNtL+@vger.kernel.org
-X-Gm-Message-State: AOJu0YyB4Q8jSkwUXPj4e0ee0Mxcgl3BZ+hfP2STQwl5DmjYSQkCT3fj
-	WqCyj60zuo4a9leNSxjs2CUhk6PFeBSVhadOIwi1rlbV7wS0i2F49ync2N9XxHnevGVQVuFokfE
-	lWlLFaQMzBUHwiNskbTMm/z/YSVs=
-X-Gm-Gg: ASbGncvuO4889HOaTSRBfXS3LEhzrIfzRRUU+bMjIm5uERZTFXaDxlqxNvIA8ymPjD+
-	9GczTj1WgDAqRbSy0hpFtw7uoJ5uCI7zd5KKR4+Q55bBgb9SoneII4BP7vAL3dLlPx3ShkWBckX
-	pTTAu6Cr4c0ghjTt24DM0wXx9YsSuK0A==
-X-Google-Smtp-Source: AGHT+IGyVXZtFFDe8q4nyybwQyqyryUw5IPXa64vnFzvytCZMtXTGbRuiT7JwooJr/+vv7fe33kyUdisx2JLKGcnroc=
-X-Received: by 2002:a05:620a:4154:b0:7c0:6c5b:d6f8 with SMTP id
- af79cd13be357-7c07a14ecd7mr863405585a.30.1739514832447; Thu, 13 Feb 2025
- 22:33:52 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739515820; x=1740120620;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u/bwpmhibqCSWXsfxMuekBQiCAQCaSoqpsC6Q1WLM/g=;
+        b=q+hm85imttsSQAfGoD3+x7HNXozaO084/gTFlNWHZ+hjRt5z2is/gTXaiTLdC5q9Cu
+         CBytjmHTDhEtKMJmwqZlGA6Po/yahZsCmeuUA/YLr0L1RuBBP2mlu8pKMcsGjeYQgTOp
+         dHYOjgsjAgBOjmImtM/PbzCWEt/M9fmccb7ZSARzMPT/vhO8dD0r2iRB6lvEzp8wsc5h
+         zjkONe94WPRJMlxr5MpBoKFtaBcUZP9hr8YUXk/mqXpSfsTR0gZBh2CmJwb4AINq9/l0
+         HTxIoM9u9/+Fm+HeqHmsMBh/u+Uyq9ONpNoiOIoeTF7Vnp7+Xtd8WkGe6chvYmV2f3Su
+         U7ow==
+X-Forwarded-Encrypted: i=1; AJvYcCWKvktLy10rmerTF59pwCb4CSFUmQ057NOJkuS8Reit2YUGOHiQ2BGIhXkcT3ItGJWDKghQKPyqmgu/AYfb@vger.kernel.org
+X-Gm-Message-State: AOJu0YxyGzm9nFlNzEo1I53kEgoQYec19Y9idsS1vmZb0E6ourH0tZ3d
+	eFekCjFnn1zqe85Ir5iTOvovMs3aNrZjNA++TyvR0p5MR2MLOarrl9sw3mAPuw==
+X-Gm-Gg: ASbGncuwFWP2Esu/jDWGW4L9/50G8M2E4qLQNBtvySv7+jkr9ozF+geZO3KfyHHeCQu
+	/qrJ3yTY2ofANmEy1Pfy4+6SIYu9iyzR8EXLh5bJ0nkEK0DvIT6tNFXz8zZkWzcZTHFjDdytFu9
+	T0CbnRZTHaobqGxs09eAotLtjFCF7rDAVLz6BdnJS5w2dR7VPDvxKZmdi3QMJgPfZjyDk0Z3u+Q
+	hewHqT3lGBLPASgdhSXL2q18jCzCGlPBRXmrN0DbDoJjoGzAZmrm0p5Z+iQ/BuZi+QUEZ7jBQUu
+	GtdnJaBtVCUYyD72zFrH1dg8vEgNhng=
+X-Google-Smtp-Source: AGHT+IFX6zS1A/v/lAX87GhqlIvEXShQyFVA3goXMvKLoqOPdD6mgLwijiX503q7RrCZ5DU1xqruYQ==
+X-Received: by 2002:a17:90b:4d08:b0:2fa:ba3:5455 with SMTP id 98e67ed59e1d1-2fc0ddd3602mr8941895a91.7.1739515820426;
+        Thu, 13 Feb 2025 22:50:20 -0800 (PST)
+Received: from thinkpad ([2409:40f4:304f:ad8a:8cb7:72db:3a5e:1287])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fc13ac2984sm2376439a91.20.2025.02.13.22.50.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2025 22:50:19 -0800 (PST)
+Date: Fri, 14 Feb 2025 12:20:09 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Melody Olvera <quic_molvera@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
+	Manish Pandey <quic_mapa@quicinc.com>
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: sm8750: Add UFS nodes for SM8750
+ SoC
+Message-ID: <20250214065009.w4rmrbbejnywh6nt@thinkpad>
+References: <20250113-sm8750_ufs_master-v1-0-b3774120eb8c@quicinc.com>
+ <20250113-sm8750_ufs_master-v1-4-b3774120eb8c@quicinc.com>
+ <vifyx2lcaq3lhani5ovmxxqsknhkx24ggbu7sxnulrxv4gxzsk@bvmk3znm2ivl>
+ <be8a4f65-3b36-4740-a4f7-312126cfd547@quicinc.com>
+ <ferdaevlfrpf2ewzcct7mqyxltvmt6aaar4fujxfehrmizm3qw@aaroprnpwlxq>
+ <354f8710-a5ec-47b5-bcfa-bff75ac3ca71@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250209-expressatt-bam-v2-1-e6c01c5d8292@gmail.com>
- <e0ef29dd-afe4-4ad7-95db-d21326744c92@oss.qualcomm.com> <CABhZbsXo69FL-xUfg3a20RybO_uRmsOKyMJ2w3qnpk+8pYyUqw@mail.gmail.com>
- <e2b31450-c428-43c3-b25c-3ec130171011@oss.qualcomm.com> <CABhZbsVUY5n3bL-vbzO-xdDH6amC7FYmZHuRTh3Cb3OiQSa-3Q@mail.gmail.com>
- <v5eipkz7daurxueft66f5kxzm7fnjamtzivzoldztxjy2f7vbv@2ju4jvcrpefc>
-In-Reply-To: <v5eipkz7daurxueft66f5kxzm7fnjamtzivzoldztxjy2f7vbv@2ju4jvcrpefc>
-From: Rudraksha Gupta <guptarud@gmail.com>
-Date: Thu, 13 Feb 2025 22:33:15 -0800
-X-Gm-Features: AWEUYZmtpnj-SIsHTZyHh0UJeT3TrUN--0DgW9XOgFOXYfPWLU8iJ946RgxJ85o
-Message-ID: <CABhZbsUo309c5OePr25tD+W_vp3HcAXMt2fc=yjij9wHx0wQnw@mail.gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: qcom: msm8960: Add BAM
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Sam Day <me@samcday.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <354f8710-a5ec-47b5-bcfa-bff75ac3ca71@oss.qualcomm.com>
 
-> Konrad asked you to increase the size of the BAM devices. You've
-> increased it for both BAM and SDCC controllers. Please revert the size
-> of the arm,pl18x devices (sdcc1, sdcc3) to 0x2000.
+On Mon, Feb 10, 2025 at 08:20:27PM +0100, Konrad Dybcio wrote:
+> On 8.02.2025 11:06 PM, Dmitry Baryshkov wrote:
+> > On Sun, Feb 09, 2025 at 12:47:56AM +0530, Nitin Rawat wrote:
+> >>
+> >>
+> >> On 1/14/2025 4:22 PM, Dmitry Baryshkov wrote:
+> >>> On Mon, Jan 13, 2025 at 01:46:27PM -0800, Melody Olvera wrote:
+> >>>> From: Nitin Rawat <quic_nitirawa@quicinc.com>
+> >>>>
+> >>>> Add UFS host controller and PHY nodes for SM8750 SoC.
+> >>>>
+> >>>> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
+> >>>> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> >>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> >>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> >>>> ---
+> 
+> [...]
+> 
+> >>> Use OPP table instead
+> >>
+> >> Currently, OPP is not enabled in the device tree for any previous targets. I
+> > 
+> > Excuse me? ufs_opp_table is present on SM8250, SM8550 and SDM845 (and
+> > QCS615). So this is not correct
+> > 
+> >> plan to enable OPP in a separate patch at a later stage. This is because
+> >> there is an ongoing patch in the upstream that aims to enable multiple-level
+> >> clock scaling using OPP, which may introduce changes to the device tree
+> >> entries. To avoid extra efforts, I intend to enable OPP once that patch is
+> >> merged.
+> > 
+> > Whatever changes are introduced, old DT must still continue to work.
+> > There is no reason to use legacy freq-table-hz if you can use OPP table.
+> > 
+> >> Please let me know if you have any concerns.
+> 
+> Go ahead with the OPP table. freq-table-hz is ancient and doesn't describe
+> e.g. the required RPMh levels for core clock frequencies.
+> 
+> You should then drop required-opps from the UFS node.
+> 
+> >>>> +
+> >>>> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> >>>> +			reset-names = "rst";
+> >>>> +
+> >>>> +
+> >>>> +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
+> >>>> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+> >>>> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> >>>> +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
+> >>>
+> >>> Shouldn't cpu-ufs be ACTIVE_ONLY?
+> >>
+> >> As per ufs driver implementation, Icc voting from ufs driver is removed as
+> >> part of low power mode (suspend or clock gating) and voted again in
+> >> resume/ungating path. Hence TAG_ALWAYS will have no power concern.
+> >> All previous targets have the same configuration.
+> > 
+> > arch/arm64/boot/dts/qcom/qcs615.dtsi:                                    &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
+> > 
+> > It might be a mistake for that target though. Your explanation sounds
+> > fine to me.
+> 
+> Let's use QCOM_ICC_TAG_ACTIVE_ONLY for the CPU path to clear up confusion.
+> 
+> Toggling it from the driver makes sense for UFS-idling-while-CPUs-are-online
+> cases and accidentally also does what RPMh does internally in the other case.
+> 
 
-Oh, I see now, thanks! Seems like I took Konrad's words literally. Sent in v3 :)
+Shouldn't it be applied to config path of all peripherals then? If
+QCOM_ICC_TAG_ACTIVE_ONLY translates to 'resource getting voted only if the CPUSS
+is active', then the same constraint should apply to all peripherals, isn't it?
 
->
-> >
-> > >
-> > > Konrad
->
-> --
-> With best wishes
-> Dmitry
+I'm not sure who is accessing the config path other than the CPUs.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
