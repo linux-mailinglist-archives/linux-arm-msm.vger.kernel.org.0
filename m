@@ -1,67 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-48024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B97AA35DBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 13:38:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E84C5A35E92
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 14:17:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D31CE188E56C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 12:38:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A60A316A28A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 13:11:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB9B263F5D;
-	Fri, 14 Feb 2025 12:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DA57263F4D;
+	Fri, 14 Feb 2025 13:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="Tg5XSocf"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nPQlIjKa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-80009.amazon.com (smtp-fw-80009.amazon.com [99.78.197.220])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B875263C73;
-	Fri, 14 Feb 2025 12:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.220
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64260263F2E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 13:11:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739536674; cv=none; b=A+hEsZbmcWcr6uIN70VFDVgFg1IvZCzjt+70Z536aP6q5cL4YwTctatEfPKMBSy8Qk75V4OY0+izhG3MpxOWnYQznOrEr1jWuGaiQBY0eVl+v9WfykDYlvyEgesHXfdd/Nw/8E7UGsFpA412YnAZo8UF8XdEVoqcOWIE4qxZHwY=
+	t=1739538665; cv=none; b=LSYn9DvHNXRaPl7i2uNyxvyOfzFItSrgjKy1VjeX4HrY7iQunWXR8M4Ec7Tjdf7rY2WlrBGgUuDAdKwlwH9ETJdjRZZhDABl/XWu9yNWepyRLU5moHqJMrtXl3FBpEgEMOQJSLaHtqV92C0JEtwT5NFP0JAsktfHVUAJMSSifSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739536674; c=relaxed/simple;
-	bh=MpYdylY++8VfkEnM5IvLalLzcXbKo9j+8NV8nQx4n+s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=emNSTEVCRxD9b0cy+H/A0P0xk9Smzu/dSENCv1Lfb7b8TDsgZhD8fSDlIVmn5cFsEUY+pb8BhdgNXSI2MSwRgJDiNu313PdAEeb++Ul2YfZluoF7gVKAAcQp5C33gw2f/4zr65Vdp7cec+wY9geNzG95+a5/gEczNwp7fGyVmNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=Tg5XSocf; arc=none smtp.client-ip=99.78.197.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
-  s=amazon201209; t=1739536672; x=1771072672;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Tm+osB2yjHRvqWpYOEEHWB+vgVWcduhdO4iqJ02ZEQY=;
-  b=Tg5XSocf3LCg98/2PQ2hYprXk7S9or23utbHWK3ZI6pTwrMdY3nGJ4Ne
-   ni9PNiCDiPafuDwdjHgxUxTwKoeSc6dazSnvVAJaW1M+qXwpqZKu0hjFr
-   rrDp2Oy8AoG9bxoMaWV3Bhpu21CtsXfM9tKPDUV+ShPubY3SZqppKvR5s
-   I=;
-X-IronPort-AV: E=Sophos;i="6.13,285,1732579200"; 
-   d="scan'208";a="172485778"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.25.36.210])
-  by smtp-border-fw-80009.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2025 12:37:49 +0000
-Received: from EX19MTAUEA001.ant.amazon.com [10.0.0.204:50712]
- by smtpin.naws.us-east-1.prod.farcaster.email.amazon.dev [10.0.24.55:2525] with esmtp (Farcaster)
- id 47e06a44-bd11-4a3c-b37d-53c7e5121d00; Fri, 14 Feb 2025 12:37:48 +0000 (UTC)
-X-Farcaster-Flow-ID: 47e06a44-bd11-4a3c-b37d-53c7e5121d00
-Received: from EX19MTAUEB001.ant.amazon.com (10.252.135.35) by
- EX19MTAUEA001.ant.amazon.com (10.252.134.203) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Fri, 14 Feb 2025 12:37:48 +0000
-Received: from email-imr-corp-prod-iad-1box-1a-6851662a.us-east-1.amazon.com
- (10.43.8.2) by mail-relay.amazon.com (10.252.135.35) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
- 15.2.1258.39 via Frontend Transport; Fri, 14 Feb 2025 12:37:48 +0000
-Received: from [127.0.0.1] (dev-dsk-roypat-1c-dbe2a224.eu-west-1.amazon.com [172.19.88.180])
-	by email-imr-corp-prod-iad-1box-1a-6851662a.us-east-1.amazon.com (Postfix) with ESMTPS id 1720A40627;
-	Fri, 14 Feb 2025 12:37:40 +0000 (UTC)
-Message-ID: <ebbc4523-6bec-4f4f-a509-d10a264a9a97@amazon.co.uk>
-Date: Fri, 14 Feb 2025 12:37:40 +0000
+	s=arc-20240116; t=1739538665; c=relaxed/simple;
+	bh=6qmhCZ/VNbfXLMvjVMotO5S9MhLkOwAbj5PUvPSdtkQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VxVKLj7miehEgFuYqRfSwB5yBu9juHNq1cTdqZVTKGDgvi++e1pjQrRgxjTXMCMdojuNqX6bUDfI7UafNA556I7fuvS7dYd77NEB+38OybAs7ty7HePwlWaTa57ZKLnO4BQOVngzui2pHHSF67TU3MAGt5q7/Lt+UM8XXUyhCsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nPQlIjKa; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51E6jIf2008337
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 13:11:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fTW/+eSXYK27SAIhtTq5ZN9ZI4lOMHVi64iiQFK1Qbo=; b=nPQlIjKaTrY/dTcy
+	pxyj8+wG9yovtgNaXTA3gf1gCSlfA4RPjaMf4NNsWNdLFZa1KLRZuvMueopIk/aE
+	LfO5NNoatF3tkqZq5IC1ny8axu+jW7Xv+09J23MqRvP7nDQK9BzxXGA5GUQK5Rkx
+	WMDIJhzO9xItTp+D9qABBPKuvavlwUH4ELighfUmzLsNphcXZHR/CWcpBwqIidxV
+	ub3I1aM+ce9HvBP0LkalZXIYZwsW6b1MJrssGhVo5tmdpKFWiUOQnWAqugtvdxms
+	9BviAUmUs9u8oaWexzcZxmaO8hUrZhJiM5vQvclYxH53Yl1hjWSb96B32esM3u7s
+	y80cKA==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qewhe55t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 13:11:02 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6e249d117b7so3909366d6.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 05:11:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739538661; x=1740143461;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fTW/+eSXYK27SAIhtTq5ZN9ZI4lOMHVi64iiQFK1Qbo=;
+        b=mGHRsNtlHNiQwIXvUfOk86x9oi0wCLrjQ+jEjyEmfljqk7qhqBqR/fHBRM2RZ1HAbV
+         ebdT919NgtQBqrC58+jsRpCBy+8Rd1BZSEzOROpxOGZnWogWx9CU1ioj1ryyrbEks3Cy
+         /oeO1kAoE94KHJa4uxv4L7mMHNDJHuLDKjy9IdWRndu6mL2FBI6lnxxPWgxAxPMwJQ8U
+         lKCeEZ6swlZSiqHgxmUzBb4RCG3oXxVBW8XOObkoNqm3wL6Bm3lLKJdr4Tz0YasIr8hc
+         UQ3gP0zGi5NvFoiFshfCoAhr4f8lCvy4rMLt10mQVGz45dqDDr8aM/piWgSIjKU2u1vh
+         rapw==
+X-Forwarded-Encrypted: i=1; AJvYcCWxMeVeuJlwabTFkfvlKugOVNrZJ64mtuDyoC8H25izl0JSfM7QiNZR2LtRoOOMJgJmGEHv1fOFmURhY2We@vger.kernel.org
+X-Gm-Message-State: AOJu0YyFShwleJR+rZZxzpmbndWsAq0FxM7GvzGVzyBFWVZ4I8GUUEi1
+	5WcT9gDrv8/es7qzXISalwPO9ViqLTAPTrMzFcqHZA7RtlXjiAuV1U0Igntr6Zvv4/0sS94rsOJ
+	vCwfgw3IfxIxg1aCzNMsObNVDdx1z0uWx1u911ReVteROxIO5i3xSKPdHpTSNRiuC
+X-Gm-Gg: ASbGnctS1yntbv7jWd5SjKyKFzUbT4jHCGeUq5aruk2ByNfIy0kkozZax5WztO50tj1
+	Y7HpD2MNioHe6tXY4UW4OvX38aXvY4lz27+eTdjznNQsPeKeXZBDO6L0tHTunIcx8G5tTyAVth0
+	XrKguoGF8bexGci9ELDIasiNPp8a5EGZ04/dcdtyW19ZX1wa9y2fCjfYclabMtrm3FKXHl8nvGs
+	Kcuv3hzOGheQUKuglLdUvs1OrYliubkHMogEma4Fx8L7y4LAp9od/PkmUZ2koAIJ3Div/tUMkQq
+	dF6s/bf0yVlGRya9hY0yJ4Igv14F5933QDMx3IocLNaKHdbj9Ndv7UbXgyY=
+X-Received: by 2002:a05:6214:301e:b0:6e6:5bd5:f3b5 with SMTP id 6a1803df08f44-6e66520e0d3mr14986926d6.8.1739538660992;
+        Fri, 14 Feb 2025 05:11:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEij9NAIiSKVCTx7RPlhN8aNMMVTWNYr9ptSc3QOaFHm7mvQ0JMabORxG1HdQlMS7ugfZxdPQ==
+X-Received: by 2002:a05:6214:301e:b0:6e6:5bd5:f3b5 with SMTP id 6a1803df08f44-6e66520e0d3mr14986596d6.8.1739538660507;
+        Fri, 14 Feb 2025 05:11:00 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aba532832d1sm336935366b.81.2025.02.14.05.10.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Feb 2025 05:10:59 -0800 (PST)
+Message-ID: <659ba3dd-0991-4660-9dd6-feda682f15e1@oss.qualcomm.com>
+Date: Fri, 14 Feb 2025 14:10:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,123 +89,87 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/11] KVM: arm64: Introduce
- KVM_VM_TYPE_ARM_SW_PROTECTED machine type
-To: Fuad Tabba <tabba@google.com>, Quentin Perret <qperret@google.com>,
-	<seanjc@google.com>
-CC: <kvm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-mm@kvack.org>, <pbonzini@redhat.com>, <chenhuacai@kernel.org>,
-	<mpe@ellerman.id.au>, <anup@brainfault.org>, <paul.walmsley@sifive.com>,
-	<palmer@dabbelt.com>, <aou@eecs.berkeley.edu>, <viro@zeniv.linux.org.uk>,
-	<brauner@kernel.org>, <willy@infradead.org>, <akpm@linux-foundation.org>,
-	<xiaoyao.li@intel.com>, <yilun.xu@intel.com>, <chao.p.peng@linux.intel.com>,
-	<jarkko@kernel.org>, <amoorthy@google.com>, <dmatlack@google.com>,
-	<yu.c.zhang@linux.intel.com>, <isaku.yamahata@intel.com>, <mic@digikod.net>,
-	<vbabka@suse.cz>, <vannapurve@google.com>, <ackerleytng@google.com>,
-	<mail@maciej.szmigiero.name>, <david@redhat.com>, <michael.roth@amd.com>,
-	<wei.w.wang@intel.com>, <liam.merwick@oracle.com>,
-	<isaku.yamahata@gmail.com>, <kirill.shutemov@linux.intel.com>,
-	<suzuki.poulose@arm.com>, <steven.price@arm.com>, <quic_eberman@quicinc.com>,
-	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
-	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
-	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
-	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
-	<keirf@google.com>, <shuah@kernel.org>, <hch@infradead.org>,
-	<jgg@nvidia.com>, <rientjes@google.com>, <jhubbard@nvidia.com>,
-	<fvdl@google.com>, <hughd@google.com>, <jthoughton@google.com>
-References: <20250211121128.703390-1-tabba@google.com>
- <20250211121128.703390-10-tabba@google.com> <Z6t227f31unTnQQt@google.com>
- <CA+EHjTweTLDzhcCoEZYP4iyuti+8TU3HbtLHh+u5ark6WDjbsA@mail.gmail.com>
- <Z6t6_M8un1Cf3nmk@google.com>
- <d9645330-3a0d-4950-a50b-ce82b428e08c@amazon.co.uk>
- <Z6uEQFDbMGboHYx7@google.com> <Z68lZUeGWwIe-tEK@google.com>
- <CA+EHjTz=d99Mz9jXt5onmtkJgxDetZ32NYkFv98L50BJgSbgGg@mail.gmail.com>
-From: Patrick Roy <roypat@amazon.co.uk>
+Subject: Re: [PATCH v6 1/4] arm64: dts: qcom: x1e80100: Add PCIe lane
+ equalization preset properties
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>,
+        Lorenzo Pieralisi
+ <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?=
+ <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        quic_mrana@quicinc.com, quic_vbadigan@quicinc.com
+References: <20250210-preset_v6-v6-0-cbd837d0028d@oss.qualcomm.com>
+ <20250210-preset_v6-v6-1-cbd837d0028d@oss.qualcomm.com>
+ <20250214084427.5ciy5ks6oypr3dvg@thinkpad>
+ <be824a70-380e-84d0-8ada-f849b9453ac0@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=roypat@amazon.co.uk; keydata=
- xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
- NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
- wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
- CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
- AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
- AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
- IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
- 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
- 8hlxFQM=
-In-Reply-To: <CA+EHjTz=d99Mz9jXt5onmtkJgxDetZ32NYkFv98L50BJgSbgGg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <be824a70-380e-84d0-8ada-f849b9453ac0@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: EyUTFdLFeShQ08WkVkzsQbu3fbKyEPlR
+X-Proofpoint-GUID: EyUTFdLFeShQ08WkVkzsQbu3fbKyEPlR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-14_05,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 phishscore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502140097
 
-
-
-On Fri, 2025-02-14 at 11:33 +0000, Fuad Tabba wrote:
-> Hi Quentin,
+On 14.02.2025 9:48 AM, Krishna Chaitanya Chundru wrote:
 > 
-> On Fri, 14 Feb 2025 at 11:13, Quentin Perret <qperret@google.com> wrote:
+> 
+> On 2/14/2025 2:14 PM, Manivannan Sadhasivam wrote:
+>> On Mon, Feb 10, 2025 at 01:00:00PM +0530, Krishna Chaitanya Chundru wrote:
+>>> Add PCIe lane equalization preset properties for 8 GT/s and 16 GT/s data
+>>> rates used in lane equalization procedure.
+>>>
+>>> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+>>> ---
+>>> This patch depends on the this dt binding pull request which got recently
+>>> merged: https://github.com/devicetree-org/dt-schema/pull/146
+>>> ---
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 13 +++++++++++++
+>>>   1 file changed, 13 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>> index 4936fa5b98ff..1b815d4eed5c 100644
+>>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>> @@ -3209,6 +3209,11 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>>>               phys = <&pcie3_phy>;
+>>>               phy-names = "pciephy";
+>>>   +            eq-presets-8gts = /bits/ 16 <0x5555 0x5555 0x5555 0x5555>,
+>>> +                      /bits/ 16 <0x5555 0x5555 0x5555 0x5555>;
 >>
->> On Tuesday 11 Feb 2025 at 17:09:20 (+0000), Quentin Perret wrote:
->>> Hi Patrick,
->>>
->>> On Tuesday 11 Feb 2025 at 16:32:31 (+0000), Patrick Roy wrote:
->>>> I was hoping that SW_PROTECTED_VM will be the VM type that something
->>>> like Firecracker could use, e.g. an interface to guest_memfd specifically
->>>> _without_ pKVM, as Fuad was saying.
->>>
->>> I had, probably incorrectly, assumed that we'd eventually want to allow
->>> gmem for all VMs, including traditional KVM VMs that don't have anything
->>> special. Perhaps the gmem support could be exposed via a KVM_CAP in this
->>> case?
->>>
->>> Anyway, no objection to the proposed approach in this patch assuming we
->>> will eventually have HW_PROTECTED_VM for pKVM VMs, and that _that_ can be
->>> bit 31 :).
+>> Why 2 16bit arrays?
 >>
->> Thinking about this a bit deeper, I am still wondering what this new
->> SW_PROTECTED VM type is buying us? Given that SW_PROTECTED VMs accept
->> both guest-memfd backed memslots and traditional HVA-backed memslots, we
->> could just make normal KVM guests accept guest-memfd memslots and get
->> the same thing? Is there any reason not to do that instead? Even though
->> SW_PROTECTED VMs are documented as 'unstable', the reality is this is
->> UAPI and you can bet it will end up being relied upon, so I would prefer
->> to have a solid reason for introducing this new VM type.
-> 
-> The more I think about it, I agree with you. I think that reasonable
-> behavior (for kvm/arm64) would be to allow using guest_memfd with all
-> VM types. If the VM type is a non-protected type, then its memory is
-> considered shared by default and is mappable --- as long as the
-> kconfig option is enabled. If VM is protected then the memory is not
-> shared by default.
-> 
-> What do you think Patrick? Do you need an explicit VM type?
+> Just to keep line length below 100, if I use single line it is crossing
+> 100 lines.
 
-Mhh, no, if "normal" VMs support guest_memfd, then that works too. I
-suggested the VM type because that's how x86 works
-(KVM_X86_SW_PROTECTED_VM), but never actually stopped to think about
-whether it makes sense for ARM. Maybe Sean knows something we're missing?
+Oh I didn't notice this.. Ideally we would have <A0>, <A1>, ..., <An>;
 
-I wonder whether having the "default sharedness" depend on the vm type
-works out though - whether a range of gmem is shared or private is a
-property of the guest_memfd instance, not the VM it's attached to, so I
-guess the default behavior needs to be based solely on the guest_memfd
-as well (and then if someone tries to attach a gmem to a VM whose desire
-of protection doesnt match the guest_memfd's configuration, that
-operation would fail)?
+But it seems like /bits/ applies individually to each entry? That's a bit
+weird, but I'll add it to my list of things I don't like about dtc..
 
-Tangentially related, does KVM_GMEM_SHARED to you mean "guest_memfd also
-supports shared sections", or "guest_memfd does not support private
-memory anymore"? (the difference being that in the former, then
-KVM_GMEM_SHARED would later get the ability to convert ranges private,
-and the EOPNOSUPP is just a transient state until conversion support is
-merged) - doesnt matter for my usecase, but I got curious as some other
-threads implied the second option to me and I ended up wondering why.
+Let's do:
+eq-presets-8gts = /bits/ 16 <0x5555 0x5555 0x5555 0x5555
+			     0x5555 0x5555 0x5555 0x5555>;
 
-Best,
-Patrick
+for now
 
-> Cheers,
-> /fuad
-> 
->> Cheers,
->> Quentin
+
+Konrad
 
