@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-48075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4A17A36865
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 23:39:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 742F4A3686C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 23:39:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18153171235
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 22:39:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CBB093B2740
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 22:39:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F9CE1FE45D;
-	Fri, 14 Feb 2025 22:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 602C11FECC1;
+	Fri, 14 Feb 2025 22:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qcxn7uo0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UkPXlsYE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D141FE44F;
-	Fri, 14 Feb 2025 22:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344071FECB1;
+	Fri, 14 Feb 2025 22:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739572714; cv=none; b=c+QLU10gh6Bp2NXZZGAH9PySiKG3XSTfsZQi3kCHuMARJlEOshS1E5vuH9VQWkVTCfpF92gdfVkVLhTAQ10wH2nn9h7jWhfjXR8E9rcOUe5J9CqOfCewgAZ7PqpZYKhmlE66bohkZzybiMYr0SpNRsrUtYbqSn6EMD6lGaERaJY=
+	t=1739572715; cv=none; b=qH6axGGy06p2c8i+LHouKlqYn9+AFwkvmHmx7AQW2VD/HpUWpud5V1zBjslLv04h+qrTnYcbPJXDlT8CGHyfqZ+P9LqDz7MkJqXn6sCnHKXR9NTIatwXhQG8daRp72OyMEfdoRw9uMjBCBUfC7XSM0jAUAhGIFY70UB6WgZaSxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739572714; c=relaxed/simple;
-	bh=x27UVrWMW/myIDVNYtLb5KAqSyNByrFFZ98VEUwmg2g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TlhytQq77Jm/DUHkUDTdhK2/qLaZGrEEeT5hBeYV3vaLM0VH6pEOn2Sg5Eec0+bXkFIwoB4DVcvvBcqyKNFwhGSvWiYB5bx8zR9U12gBqVpFNkCTAdei69Izd/KI8M4roND7r3zTDeqBDEOjCCorwRFQs9iAJ1jfeNWPicEWsP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qcxn7uo0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95056C4CEE8;
-	Fri, 14 Feb 2025 22:38:33 +0000 (UTC)
+	s=arc-20240116; t=1739572715; c=relaxed/simple;
+	bh=SonK1RL6LWHVqF6G4bq4fgSAbCdSHpjIaRoELfh8dFk=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KwqX7OHxmXoHXfnwNYckBHhslx85YSXDH/5VOGjcwDsmLXW0GAowyQW3jr/nqz+XbLwUq7YkWK2fqd93Ohl7s5RBF6Ry9u2XPvvL+VmSRSmU475/EqOmQ39Sz+/GMiPbpPPQPlnI57ZE4fbVPV8XOOpAlN80bVyNbNJwV0zg/WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UkPXlsYE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0E3C4CED1;
+	Fri, 14 Feb 2025 22:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739572714;
-	bh=x27UVrWMW/myIDVNYtLb5KAqSyNByrFFZ98VEUwmg2g=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qcxn7uo0WCNiQpj8I48P8yysVe1iqT6ruHQ+jUWeAC5aiPp10Nx4pLeKiCA/XEm+L
-	 OnCs8f3cvyAGX7xkwMT5jVtJUFt7xFsAmEVIPCDoW9P44Gl+c5GsozVsRqHT3KK0g2
-	 35ZRrv6KxVqWWHo8eHTLc2wEFjZ/dFi2tVh7l/YHhO6iT2+Zhq7NVhSfTTUTeBU/Ua
-	 qTRi64Kdt+vwYxy3yOj9PYzvYQQOmuOXwIHDjiS4RT0KTBf9Fg1GBHLM89U+qi4jGe
-	 6SuzD4DWrO1rOlcT5BfK84JbyySAA6VXguW897qdM48O/u3ACU/brnf1gkHqdrG313
-	 +LWzggkj/kcaw==
+	s=k20201202; t=1739572715;
+	bh=SonK1RL6LWHVqF6G4bq4fgSAbCdSHpjIaRoELfh8dFk=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=UkPXlsYEEN/NPUxKPEYnFnfIGQxg/8gORTj/v2vZjRZlZ6pHHp+x18W6mpXm8+4iE
+	 MAm6H/W0oTEVdlesldMiashSRfX6ie1x/ZZEXozFwfA4L+G7VR0t/36yDjJf7jwIxQ
+	 UNYf8zTDgGIjC2JjjHnUyZUhaVCEK8MZ72JCtF/qQGKUwh6czX1pQDRtANa1U/4kAY
+	 jt2k+QwOT7XeBzPfQxo07wgQ/Iw2S8Ncx3WrhRO4JWfuIJVMqhOTFO/LcFZGW398aM
+	 BqZA8RUwUC1tjmSCb553PP/HxM3ngzwPSmc8PPOEjaS/uJMZCAxrVlGE3aG40KWA2S
+	 r2/Ano4BGeUcA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-arm-msm@vger.kernel.org,
-	Jordan Crouse <jorcrous@amazon.com>
-Cc: Michael Turquette <mturquette@baylibre.com>,
+To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] clk: qcom: camcc-sm8250: Use clk_rcg2_shared_ops for some RCGs
-Date: Fri, 14 Feb 2025 16:38:16 -0600
-Message-ID: <173957268927.110887.1989860299812471198.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] clk: qcom: dispcc-sm8750: Allow dumping regmap
+Date: Fri, 14 Feb 2025 16:38:17 -0600
+Message-ID: <173957268922.110887.3323253803073136690.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250122222612.32351-1-jorcrous@amazon.com>
-References: <20250122222612.32351-1-jorcrous@amazon.com>
+In-Reply-To: <20250212163243.237658-1-krzysztof.kozlowski@linaro.org>
+References: <20250212163243.237658-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,20 +64,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 22 Jan 2025 22:26:12 +0000, Jordan Crouse wrote:
-> Update some RCGs on the sm8250 camera clock controller to use
-> clk_rcg2_shared_ops. The shared_ops ensure the RCGs get parked
-> to the XO during clock disable to prevent the clocks from locking up
-> when the GDSC is enabled. These mirror similar fixes for other controllers
-> such as commit e5c359f70e4b ("clk: qcom: camcc: Update the clock ops for
-> the SC7180").
+On Wed, 12 Feb 2025 17:32:43 +0100, Krzysztof Kozlowski wrote:
+> Reading few registers at the end of the block (e.g. 0x10000, 0x10004)
+> results in synchronous external abort, so limit the regmap to the last
+> readable register which allows dumping the regs for debugging.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[1/1] clk: qcom: camcc-sm8250: Use clk_rcg2_shared_ops for some RCGs
-      commit: 52b10b591f83dc6d9a1d6c2dc89433470a787ecd
+[1/1] clk: qcom: dispcc-sm8750: Allow dumping regmap
+      commit: d81901a5406eaf65a097b80ab48edc398de598a5
 
 Best regards,
 -- 
