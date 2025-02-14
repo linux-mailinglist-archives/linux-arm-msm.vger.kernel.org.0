@@ -1,122 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-48019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59F5BA35C93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 12:31:38 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82818A35C9B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 12:34:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 785A17A4D01
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 11:30:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37AF7162983
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2025 11:34:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E00D262D30;
-	Fri, 14 Feb 2025 11:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52467262D11;
+	Fri, 14 Feb 2025 11:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sFNnp2sq"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="y4hKNkw6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BC6257439
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 11:31:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE56A2627ED
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 11:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739532690; cv=none; b=eGIazSwCVJ+hlsPCggXFiaT6Tqr00C62Sl6oeVQLUcxhng5L4/f0n0FskyY/1l51/k0MJloOEBCF3zkwU7vQZPz7h+JIMLocRPkrW7LP/1xSI7uQ7y89+SAR8bgAxYYDd25OoWA+MgMXrPTM5YPnRvbVLgm8TJUdDZKBSEBsZs4=
+	t=1739532860; cv=none; b=hw7vyGW84SfxT7Cat4BuurP8HoAVMkdlfwhMDcYWGwn1g3F1e5oHQ6kzKcSB2PZ2RX2aRlsKl/G/Wylv8o0VH0wVL4AdFdGQ2MZcqht2c0Ru19LcUYYT4D3a/1FEttA1vWc9/FPDBB//y8reM/R5hNQMv5FfCV00rVBWov74DV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739532690; c=relaxed/simple;
-	bh=2U0g1+m0tosU4qQlWPu1j9YKUDgGDzukDvuljJcEnVU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mq3nMCmiC9fFMZ4ZSMQEeUyeja9BKFqLb9x6jt4bLNqvp/1YnMToZiBn5/Ipuqpdod/957uBr7XdhpTdZfI0WOgpkY066D6mFXlSatRF4DaFfE/VgK6OABBjaVuqtqPMAWtgTbhdkqrAg4cSSdl07Lb1V9AjROCFw27thSf1o2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sFNnp2sq; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-545097ff67cso1942664e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 03:31:28 -0800 (PST)
+	s=arc-20240116; t=1739532860; c=relaxed/simple;
+	bh=oIIxZXp55qHUezW1KXD6M19h0CDt+B15X3kzsrT1cbg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fdhFnxEtJ6LryS5D1kQHcED4lcwFbw8XrfsUk7IrR8KY/uaL3blIhbOOxQ0jBzBLEretWMArvsMaSrlpR1ncXIpQl/RwD+S3u5hMSvSzGv40VxRbTeLPKROzrfOzAwi+uDGJCoX6on+WOG/S5mD0wC5EONi6fqwtUxvISE5X3qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=y4hKNkw6; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-471c9947bb5so192431cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 03:34:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739532687; x=1740137487; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZQrrMIIcsdepuAUZtYMG2ibPJAIlpej8VrcFVh4LEgA=;
-        b=sFNnp2sqD7mjLqfNrs/1f501u+5IytNpwB0hTBLpq5dLCrIpxV0Z59e7XHuoC3lB0p
-         J+Gz9sNGFhGZMPLJ5ZwW7VifwETi80zCLQZ6lPKoPKblO3Cqiq5eoll7E96QTMpbOyyV
-         tcEUO9Sq/IjlkO8imriCpyG746jvnAtieoCz2IHWxsz27QoA1lU6QMZ9ciqrQAOZMfhb
-         14c/oGsfRph0UWKGO5r0Dm+dIhzBWWqf99EDujoUMnmKUB0kJwlRPzQZOK2CiJ3XsC+o
-         1iH/S+Tx6tnJ+ez29pe1Qj6hlEpR2FRfHnAvODb2WtBtHzR4xVkkziJbzkqMU8tV9YDW
-         SNQQ==
+        d=google.com; s=20230601; t=1739532857; x=1740137657; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oIIxZXp55qHUezW1KXD6M19h0CDt+B15X3kzsrT1cbg=;
+        b=y4hKNkw6c2iAGVkR8HIhYcttA6Od+6RqkuCPtgBJu9Ar7apnIdqM7ULZhjV5VkpfEZ
+         UhEsvJ6o9pEBIY+SfmIngx6araktNFAolgg+rG8u84w+hzWgJ99cxo4fuCuT8zqYTB3T
+         jUDVT1+nuFLsYjf5LzfAmdGIFDW1mjFUVV9feY9T9l3X09dQ5YJ05ywC6Lw3/tKYd1lF
+         z9r3l2tkR0YMioZBaGD0Sh0sofS4z7rntgL+pEUN1AbS7rmQLuQnXT8evRBSyjwTJ5uc
+         epHGAF64DJaYD9sc2/WjxygZfEXPEoN/MaGDhEZu0KDkhpv4OCoRTAlCCtLVLlEHALDu
+         NVYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739532687; x=1740137487;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZQrrMIIcsdepuAUZtYMG2ibPJAIlpej8VrcFVh4LEgA=;
-        b=FNz5DNV1ZyaiILGNnkrSJsal7l2OS7u4NZh9gKHQSFWaV5Ln5DDp5t2DhOIDoDMji2
-         7Li6+FiiVJWbryM7SxiSn7t0MIbM4sF6T+uw4eLqzpqxAM7S0vxPZAwBSumAfMS25xEv
-         oan1LJryF4QaBAz2EeRt8EfD2H+C5ASM7WA98++SLG87tnfVw6YpiYe+InuGvYwuN35b
-         +jJHQlO2Jmt6X0zu7Ke/tL6urI3G5jfPnFMKhtIgcyP1XlcVlGgkUeGJWj77p/gChkFe
-         SPM4WyyUuW76jzMd7b5tCqe9NwfvMPp/Tc40p5u4QefRkimS6vlJvs+fxh9LTGVAhJaq
-         +kpA==
-X-Forwarded-Encrypted: i=1; AJvYcCXAFesFHQmiyTfI7y3p5XF16+sUr9Ws7bniSt1Oy1+i5cF9+WgImg/hJ1lfSi1/VzfLzT+pT/jRtJFlMErX@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXK2Yg19MWI8vD4hgTwB9/nrCpCka6wgeVeqIWw7Iy6xbl/MJn
-	fs33Ddzc6G0ezQzsFjluPWTac9pHfcbosG7OqYQl0pTjZK1sPSBHbMXp4HkuNec=
-X-Gm-Gg: ASbGncu0G8sgoM/Pwh45ymaLQDU0BVMt9gEcXB/m7yG1tvIMo3heetzUnwdiYdXmtnT
-	k08fXlpyoBg8s/IfsiPlrgwoOKQrRQ0sfj8PWDjVAyoa5TueTjNMwP8yyfRQ7njXCUOJwFdGwRQ
-	Z2eny9f/sBSwpLIQrqMavw6qoqDZx/gQIWFDdaQKqdl+WDFN7pajAYhPj9rRNyswk5sAfaSjYTu
-	eCISKf3sNS0r9zP6pvUgeuqsn7WNmkHtOYl1BUO2uaGvvS7fLObFYw3MvEPXKNItfv/5uEAfNsV
-	HZdSUBcolmSbXkAuk3K2N6Y65h815auw4PIrtDRVbBbaBWs36hhKw1mOIbstoegjC1Q+CaE=
-X-Google-Smtp-Source: AGHT+IGjs9yMg+iCQr3IF2oWlxeySoJlOZkKJgyEb8x4vfVkiQxa9wP3j61Oy3tVPMRng/3g23DMxw==
-X-Received: by 2002:a05:6512:2216:b0:545:62c:4b13 with SMTP id 2adb3069b0e04-545184a2e51mr2906212e87.40.1739532686682;
-        Fri, 14 Feb 2025 03:31:26 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5451f083593sm487198e87.18.2025.02.14.03.31.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 03:31:25 -0800 (PST)
-Date: Fri, 14 Feb 2025 13:31:22 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: display/msm/dsi-phy: Add header with
- exposed clock IDs
-Message-ID: <cpem2v3z5slkihza4h4kaocxitpmdpnkrnl3iksevbewsqo5tb@zugjn5ng6oci>
-References: <20250127132105.107138-1-krzysztof.kozlowski@linaro.org>
- <b4d07c0a-5b09-4a89-84b0-e8508ae12ba5@linaro.org>
+        d=1e100.net; s=20230601; t=1739532857; x=1740137657;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oIIxZXp55qHUezW1KXD6M19h0CDt+B15X3kzsrT1cbg=;
+        b=UZBgAhy0+LMhBQlIK0ot52lgm/T7PM+ZtMgZSoxhKGjJtsve7UNpfuaV/PJKKJSSkq
+         Kld9dpm8DZKGSQ8UYq+xue8Y8yF0MBKs9ptS0qo6vif1iWFISLjixZr3WkFiUaR6yW6+
+         gpHy7wudNeJN0WcqRZT3r5MaaSl9yxnYXBtEARDvX9JZ4ULLlYGSKcB2mSJ1FEo6Lqqt
+         7oHY5j6F4hmVmPFTuHgBZu9x2PSpYnW+6jULzjFpmeztJXFGj56dHyGgnzDiwYMLDTOB
+         tBBjX81q2PQcwh2PY1Q545BePLHErwbb6FQtjAdcljfcIWr4DX7xKThSrWNNBbMCm7V+
+         Jo1w==
+X-Forwarded-Encrypted: i=1; AJvYcCWayDXllRwgqmKwHTCIaOaWVaXsgARETcGPMj3+52mxpnkyKHhSB6DU2GOJ+hDmbcBkwjw/k8fpE12M59B2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9yM2j1n0gQDp24SKWn024v4HfTyljxpcDxjSDqGvkw0cv8v12
+	M7xg7CHlD8YuYMWSbVa2oHdOqqR1q9v93xgfdgicGPvH7iuGRwiY5wpB/+ct75J65jouaCzKNVo
+	IfgtBBRYFHKZ32l6wDSAlLHztrl3eByPb4rr1
+X-Gm-Gg: ASbGncvLpwVSEW53aIunBnP0RSCgFCSmQEDHBkAzruu2wRcHBPNeDEL1BaGMDnNweZl
+	JBv0I7xgwNsBa8101rNcfZgzCBlg4tTZxLAGuvuMGJFu2//T71KkX20TeyQM6PVVMxkVYZ+0=
+X-Google-Smtp-Source: AGHT+IHtlxcMR3vxqJWY40h6ajM6F3iajxeDdssyRx/Y0YsmLzdFANWrYFIiKj2QO/E2Jl5nbjtDGwGC4XIUy4DvM7w=
+X-Received: by 2002:a05:622a:d0:b0:467:7c30:3446 with SMTP id
+ d75a77b69052e-471cf9817a6mr2328871cf.25.1739532857266; Fri, 14 Feb 2025
+ 03:34:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b4d07c0a-5b09-4a89-84b0-e8508ae12ba5@linaro.org>
+References: <20250211121128.703390-1-tabba@google.com> <20250211121128.703390-10-tabba@google.com>
+ <Z6t227f31unTnQQt@google.com> <CA+EHjTweTLDzhcCoEZYP4iyuti+8TU3HbtLHh+u5ark6WDjbsA@mail.gmail.com>
+ <Z6t6_M8un1Cf3nmk@google.com> <d9645330-3a0d-4950-a50b-ce82b428e08c@amazon.co.uk>
+ <Z6uEQFDbMGboHYx7@google.com> <Z68lZUeGWwIe-tEK@google.com>
+In-Reply-To: <Z68lZUeGWwIe-tEK@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Fri, 14 Feb 2025 11:33:40 +0000
+X-Gm-Features: AWEUYZkg9ciLMmzUzGdibdWHAPxNuB7L-_G6HGADGpvsMSO9kriMESSOnmZ50-k
+Message-ID: <CA+EHjTz=d99Mz9jXt5onmtkJgxDetZ32NYkFv98L50BJgSbgGg@mail.gmail.com>
+Subject: Re: [PATCH v3 09/11] KVM: arm64: Introduce KVM_VM_TYPE_ARM_SW_PROTECTED
+ machine type
+To: Quentin Perret <qperret@google.com>
+Cc: Patrick Roy <roypat@amazon.co.uk>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mm@kvack.org, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, 
+	mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
+	ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, keirf@google.com, 
+	shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, 
+	jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Feb 14, 2025 at 11:50:14AM +0100, Krzysztof Kozlowski wrote:
-> On 27/01/2025 14:21, Krzysztof Kozlowski wrote:
-> > DSI phys, from earliest (28 nm) up to newest (3 nm) generation, provide
-> > two clocks.  The respective clock ID is used by drivers and DTS, so it
-> > should be documented as explicit ABI.
-> > 
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > 
-> > ---
-> > 
-> > Patch for Display tree, although with Ack from clock.
-> 
-> 
-> Any more comments from DRM side? Can it be merged?
+Hi Quentin,
 
-Yes, it can.
+On Fri, 14 Feb 2025 at 11:13, Quentin Perret <qperret@google.com> wrote:
+>
+> On Tuesday 11 Feb 2025 at 17:09:20 (+0000), Quentin Perret wrote:
+> > Hi Patrick,
+> >
+> > On Tuesday 11 Feb 2025 at 16:32:31 (+0000), Patrick Roy wrote:
+> > > I was hoping that SW_PROTECTED_VM will be the VM type that something
+> > > like Firecracker could use, e.g. an interface to guest_memfd specifically
+> > > _without_ pKVM, as Fuad was saying.
+> >
+> > I had, probably incorrectly, assumed that we'd eventually want to allow
+> > gmem for all VMs, including traditional KVM VMs that don't have anything
+> > special. Perhaps the gmem support could be exposed via a KVM_CAP in this
+> > case?
+> >
+> > Anyway, no objection to the proposed approach in this patch assuming we
+> > will eventually have HW_PROTECTED_VM for pKVM VMs, and that _that_ can be
+> > bit 31 :).
+>
+> Thinking about this a bit deeper, I am still wondering what this new
+> SW_PROTECTED VM type is buying us? Given that SW_PROTECTED VMs accept
+> both guest-memfd backed memslots and traditional HVA-backed memslots, we
+> could just make normal KVM guests accept guest-memfd memslots and get
+> the same thing? Is there any reason not to do that instead? Even though
+> SW_PROTECTED VMs are documented as 'unstable', the reality is this is
+> UAPI and you can bet it will end up being relied upon, so I would prefer
+> to have a solid reason for introducing this new VM type.
 
--- 
-With best wishes
-Dmitry
+The more I think about it, I agree with you. I think that reasonable
+behavior (for kvm/arm64) would be to allow using guest_memfd with all
+VM types. If the VM type is a non-protected type, then its memory is
+considered shared by default and is mappable --- as long as the
+kconfig option is enabled. If VM is protected then the memory is not
+shared by default.
+
+What do you think Patrick? Do you need an explicit VM type?
+
+Cheers,
+/fuad
+
+> Cheers,
+> Quentin
 
