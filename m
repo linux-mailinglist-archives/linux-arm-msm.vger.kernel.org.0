@@ -1,118 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-48115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 799D0A36F1D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 16:28:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DBE2A36FB9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 18:20:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB83A1892587
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 15:28:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C03F167B91
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 17:20:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADD451DDC37;
-	Sat, 15 Feb 2025 15:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69D861E5B9A;
+	Sat, 15 Feb 2025 17:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VltFOaff"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nZi1tzdp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45BD42AA5
-	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Feb 2025 15:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89ED1C7011;
+	Sat, 15 Feb 2025 17:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739633282; cv=none; b=ZbcakOhLo9LgkicCryMDQxORBS/70Os0SsxkNhUVyr0kVPI9QaNqsJkqWKTQDmbPuUU2m11CcpAL4kDU8/s/mN3EqrovvLEhj9hmhJKHnagB24NGF6KAe2uf+d5AjIKolfj/B/k3VQOMrXlx+59MZy1gFbfhLMawPqtxAjiJb9k=
+	t=1739640003; cv=none; b=c9AsESU7wDSdauDgBiQ/mLgT2KdcpWyaS1e5V4jWT/P/qtSjpTCp88CVSDbLnvTB2jldGM39x77YM2yvpZAjagD+GNylNRoF4x6DI84YJKzHcgMGc9tSiAlPIghSzviX7sBRTV/L7bhtEFuDbNEC/bQ8X3PM0cM3CvJhIQyamuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739633282; c=relaxed/simple;
-	bh=8VTYB10hPqOrf/u1pOI7j4P8G7PEOPP5ICNgU/q4IVU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HBVt7u/1IANsT7Qru5F0M8RmlyYFGPHjyd0Jmd5bsn/QnYpVgo5HAT2wbtnCR/R9EG+yf3hKz2GYgU2KRuqO5m4QIh0edkREYl0p2f4tAlBx6ZaLMWwhAV9k6sRAjQSH0OjHhPKdhSAD9qICCyMpxH6iawlaoV7EkBPPq0+PfVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VltFOaff; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-54527a7270eso1793232e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Feb 2025 07:28:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739633279; x=1740238079; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AGf5rmg49p6MaNgIwMB/5odZQ50Ill9b6G6pRafnfic=;
-        b=VltFOaffPDmZg/3+DKf838X7LTcmAYhHUDmL/QYgJQZaP94OAxCi+S90iVYwSoQ0r1
-         Jfctnwoy/dhzYl5FkZzOcd7wcTml6ZqIJgBNp5UMSlOLn1tKE0rj1rNz+mLnaic8+bD9
-         ZHd6+H8+4ODmi+KkZcFGH/PSjKkcccM4tpUCqWr3V0cx3JOnKEzvF+7hoNIUny90pWjN
-         sx1Gqa/Wvf4Q3Jk/zoxVoWMpbgmHzn8AWABStZ4U6Xky2zKu1pRZ+nZQEc3H+z0PM67o
-         j7tJFkXUo4wE5f2V1rZuPICR1cTAtGZOtnYxR9zngEDGpjcIHB8ew5TYI2GCHYOWuDBQ
-         B+LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739633279; x=1740238079;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AGf5rmg49p6MaNgIwMB/5odZQ50Ill9b6G6pRafnfic=;
-        b=ClqW9+YB3wqDY9iNvqpfmkoErUS6lNZi+Bdz+wA/wmWWiXV0QCgpX4O/8smrzweDTM
-         4zA+XyTISP9uqLooBb3CmtsPl9z/BWZ7OZ/1eytBwpUBJ3M2cF18OgQk15jmVePAUSLl
-         Z2gd5OqyKoxsfMGs7uBLKjMNkmjRblwczPVHXJK3AiENly9RQ+BEo3DgSG5Q3j3TXm2F
-         DgRrinrI2Ls1ojfkteRXTv0sWATtvxOxPrtkyi1xZHm9i/IaQY5mq2iRBdN4eQ7rltVH
-         fcmbfPJB4QWnqqj/K/UihUxe++rTWFJFyZB9xLohH5X0l5m+T3hTZeONBcP4rV/P1ZcQ
-         RFTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU0HbDGSlRJ8XtBJ8PYbyFylF2kDhmy+XAALL5H/JBobKxHmhJzUwg0zrNh09v58bvuTMSI78q9sPxgBQwQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5nf05RU6LP0ZRdLJBr2py3CU0hxaxRv5Df363TM47qzyJbzbC
-	2EBVbQbzTAFMm8bzZl75Eg1EQ3cqz8bE7VYcdqLiff2i2F4UXtJ/HJ8MgBwVjZY=
-X-Gm-Gg: ASbGncsfO1W3ZR+l3kPygquax/viw1w6kZfa+uZFk6oqQ3p933o2bBGdgfxp8MdRDuR
-	lKhemyWkvYunHJy2llQB10LK5zokTWJxHtmvqERNVN+3/eyBzExl+ypk4mP6NrsrJwnaVGZnMeG
-	5vM+S3qLOQyp2hrngbxTOnyvw/n1woLz8Nzwgyv3xijO9NEF7xhf2AcFDU31rtE7lwSemGwGT0l
-	jTNGxsQaLURDW4TYuLME+GeTfAUoNP7kCcNO1GSd0+GprlWQzZ8qIULjNQpxN2AzdW0GPKOkmB+
-	MD/NGaPT60wk8KMOlSDfFr6HhV6bjqvRgW9gcj39h/E3dxt73LrqewowZ0PacamXsxnFPTw=
-X-Google-Smtp-Source: AGHT+IGM2zzla/sAtpjhHsDca+TA2fL77Ecg4EGheoA5N95v+ACAAM7LoIlZRAUhg5mZDNj9h6xYJw==
-X-Received: by 2002:a05:6512:401b:b0:545:fc8:e155 with SMTP id 2adb3069b0e04-5452fe4dc30mr1064901e87.20.1739633278874;
-        Sat, 15 Feb 2025 07:27:58 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5453197f3f9sm162596e87.53.2025.02.15.07.27.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Feb 2025 07:27:57 -0800 (PST)
-Date: Sat, 15 Feb 2025 17:27:54 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Simona Vetter <simona@ffwll.ch>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Subject: Re: [PATCH v6 07/14] drm/msm/dpu: Reserve resources for CWB
-Message-ID: <55njf2p4cg24bihrp7n4laaize7onslfgke6bwqw4jfofsaxq2@epwug3zfs2ow>
-References: <20250214-concurrent-wb-v6-0-a44c293cf422@quicinc.com>
- <20250214-concurrent-wb-v6-7-a44c293cf422@quicinc.com>
+	s=arc-20240116; t=1739640003; c=relaxed/simple;
+	bh=wjMtty1P/TZeJwZqk+ZTs2YapwDSfXFL1ffdETjYSeE=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=I5bopOuJ6NMCnMrAIcPpve+iTGTj9ji2B+9agyKZx+IPj4ytHSx3IP2AzA5nuDD8nxbOy4npBQmyaNCa23SGxXvPy1KPW1lS6n09beWf6dqPb7tDSv47I6hyghMwtmKa9KzmFV+fZLvgh0J7Grb34chqD4dmLCxpSt14BFdvtTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nZi1tzdp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51FFtxYH014424;
+	Sat, 15 Feb 2025 17:19:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=GSpMxkuAD8/H93jnPMckPT
+	Mev7qkO4tSzrd5dTYZfho=; b=nZi1tzdpkv1k1p2qF2MMzWN1NniC2XB53QTJPX
+	DZLFbQaNaa/VlIjSkJuxkyPcoSWvHgV9jaPvXnxE8kFl7vuCE9yOrzI77RIT+YHw
+	4aDj7soYH5GWewUbMNpJUFW5HCVK9zq1B6COpG3/Y+6z4UgnxDe+Er91nuga/wC9
+	bBfQVbZi142YwKxfy9FJ08rj7buwiyBmBTE6n0DeG5MFmfSS2IF2JKwXy9UpgahT
+	EiZVWDOT5XK7DMmJDzcemCf1wgwjeivwBsHSICI6lANsLbkAfyiBezXjRKqxrAK2
+	bXzi1VbR1Om0CoA7OL6JGc5Oo1EiC7UEcKcSETwteG7hso4A==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44tktf8tum-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 15 Feb 2025 17:19:44 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51FHJhkl010763
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 15 Feb 2025 17:19:43 GMT
+Received: from [10.213.96.105] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 15 Feb
+ 2025 09:19:40 -0800
+From: Vedang Nagar <quic_vnagar@quicinc.com>
+Subject: [PATCH v2 0/2] venus driver fixes to avoid possible OOB read
+ access
+Date: Sat, 15 Feb 2025 22:49:31 +0530
+Message-ID: <20250215-venus-security-fixes-v2-0-cfc7e4b87168@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250214-concurrent-wb-v6-7-a44c293cf422@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKPMsGcC/22NsQ7CMAxEf6XKjFFiJUhl4j9QB3AM9UAKcRtRV
+ f130s6M707vbjHKWVjNuVlM5iIqQ6qAh8ZQf0tPBomVDVr0Dp2DwmlSUKYpyzjDQ76sECwhMoa
+ Tj8FU9Z15L6p57Sr3ouOQ5/2luC3dBoN11v8fLA4stNHG6EPr6e4vn0lIEh1peJluXdcfX9UFc
+ LoAAAA=
+X-Change-ID: 20241211-venus-security-fixes-50c22e2564d5
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Vedang Nagar <quic_vnagar@quicinc.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1739639980; l=1037;
+ i=quic_vnagar@quicinc.com; s=20240917; h=from:subject:message-id;
+ bh=wjMtty1P/TZeJwZqk+ZTs2YapwDSfXFL1ffdETjYSeE=;
+ b=GrIfzgozeGn5OBMoFJ71tCI2A/dPOXn/BjwnTxtSdoNUSfRG5iulzhbnsT0uaYK0KDXTXszkR
+ d9YowtNInH6Cr5EpPD195uvlMb76NRXlcdvr6yEmFnSqdeTAjPZJza4
+X-Developer-Key: i=quic_vnagar@quicinc.com; a=ed25519;
+ pk=GHqLT8NPue4v+CDHbZork8Ps39CBHq345GQKvCZ1glE=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: azLACqECN641a7bDtj3ZUr4oOKkFD_55
+X-Proofpoint-GUID: azLACqECN641a7bDtj3ZUr4oOKkFD_55
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-15_07,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 mlxlogscore=776 impostorscore=0
+ priorityscore=1501 adultscore=0 phishscore=0 suspectscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502150153
 
-On Fri, Feb 14, 2025 at 04:14:30PM -0800, Jessica Zhang wrote:
-> Add support for RM to reserve dedicated CWB PINGPONGs and CWB muxes
-> 
-> For concurrent writeback, even-indexed CWB muxes must be assigned to
-> even-indexed LMs and odd-indexed CWB muxes for odd-indexed LMs. The same
-> even/odd rule applies for dedicated CWB PINGPONGs.
-> 
-> Track the CWB muxes in the global state and add a CWB-specific helper to
-> reserve the correct CWB muxes and dedicated PINGPONGs following the
-> even/odd rule.
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> 
+This series primarily adds check at relevant places in venus driver
+where there are possible OOB accesses due to unexpected payload
+from venus firmware. The patches describes the specific OOB possibility.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+---
+Changes in v2:
+- Decompose sequence change event function. 
+- Fix repopulating the packet .with the first read during read_queue.
+- Link to v1: https://lore.kernel.org/r/20250104-venus-security-fixes-v1-0-9d0dd4594cb4@quicinc.com
 
+---
+Vedang Nagar (2):
+      media: venus: fix OOB read issue due to double read
+      media: venus: fix OOB access issue while reading sequence changed events
+
+ drivers/media/platform/qcom/venus/hfi_msgs.c  | 72 +++++++++++++++++++++++----
+ drivers/media/platform/qcom/venus/hfi_venus.c |  1 +
+ 2 files changed, 63 insertions(+), 10 deletions(-)
+---
+base-commit: 91e71d606356e50f238d7a87aacdee4abc427f07
+change-id: 20241211-venus-security-fixes-50c22e2564d5
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Vedang Nagar <quic_vnagar@quicinc.com>
+
 
