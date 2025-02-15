@@ -1,159 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-48107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FFBFA36B94
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 04:09:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 04AF1A36C0E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 05:54:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 292FA1893B2A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 03:09:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9ED611895D87
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 04:54:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E72315A843;
-	Sat, 15 Feb 2025 03:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 260C217BEC6;
+	Sat, 15 Feb 2025 04:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="Ug88F8Yc"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="DGNF3scO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420961426C;
-	Sat, 15 Feb 2025 03:08:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739588937; cv=pass; b=S95xKWRmy+7ayT/VgXZtXSSgJhJTu3NKY8iEkX8xB2daW6kApszlbNuroC5YWqp3DMxTWyjo8hGwTVLlcg0jvcpEH/3EWid+hw/THdW1WJHK+eRRqij99lcD1yCWymQ695KkJJddUSHrdGYzYDm83tgJiV2hJECI/tzl4t+yEeU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739588937; c=relaxed/simple;
-	bh=TSid2wpEec/JFZ0X5ZNXOZleNNrkpu60/3D5KVKRcXQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X8GyPcbf2vcZ5HYmH+QFLSq7W9rSzF4pMQ5chPL9K5MhWC2/6sbbU3cZtl/ykmxLYS35l+Vi1UffntpPf6/f46DFZjbByaMDnb7XFIOlq8vy9cLdF3OsL+ZmC1+uTnOjsM1IwxZzz8DTL2c7Wr/YCxRgZp7RyCUK1ffp61VZLyQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=Ug88F8Yc; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1739588911; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ScNgEi08Rzryh3YAb2G/uBfB+/IyMVix5Tf4N8C3OocWx84bQRoR+rqQ0G/nis8Nu5rsiW8eOlBcrQ2j1MP7F+6Uwne9dM5Bv5MvgWJYfcLOrK8lbpMpI3CsJZK3eiToT2crTBp57yzlsPgJWUvcIEHsSC+KWGjtwMgkERmVmb0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1739588911; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=0GHUWF87oUo/UusENMIAUFzoIF3dJeB1mxddebspI48=; 
-	b=kn//SUcCOawuARBkxx44NS/oMktPImJzl2g/HeC69XtJNsCokCrzgHjHQtyVhT11X4y59fO+bBK7ZYlwPgvGoSBYF8kF5d9QUEBilzQ4Hy0YIlqvzfvq3F/Sjw91ETKKRfnDEtPxQ0jjKR1bbJ3pcJUspDeEY8v3MWqdtI2J2xY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
-	dmarc=pass header.from=<sebastian.reichel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1739588911;
-	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=0GHUWF87oUo/UusENMIAUFzoIF3dJeB1mxddebspI48=;
-	b=Ug88F8YcLkHOa6do1KcAGr+3xPh4BCwc/H2WB+MVJeHDoMMrCXqf6Lp0nNQYzT9t
-	NNmILtV1wNYwZ8UluL7N2unJmYp39ahg5JKgRxuhK7A/VLyDDVV/1cQN3IqgTc+uljF
-	YsDIo5eFqtsCGAzDfFif0dy3AjRGVqrD9+kAEgVQ=
-Received: by mx.zohomail.com with SMTPS id 173958890899237.694036789018924;
-	Fri, 14 Feb 2025 19:08:28 -0800 (PST)
-Received: by venus (Postfix, from userid 1000)
-	id 83CBF180CEF; Sat, 15 Feb 2025 04:08:25 +0100 (CET)
-Date: Sat, 15 Feb 2025 04:08:25 +0100
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: aruhier@mailbox.org, linux-arm-msm@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND] power: supply: qcom_battmgr: abs() on POWER_NOW
- property
-Message-ID: <7wbot7sxm3y5y7in5ashcn5lpx3mi55abnbfrkz2jta7nm6jep@zk6zvocd3tuz>
-References: <20250213-patch-qcomm-bat-uint-power-v1-1-16e7e2a77a02@mailbox.org>
- <yfbgbdugk4xdjpemozdzcuxczx4xd5aphykuksf3lhn22dsgkf@fcfgddu6gpyt>
- <ioiy4ixlvx5gxl3f4pqshwxz35ktrqghju2circpnd3qicgemc@oohazfsfvuag>
- <p5tszocxa7mcazgxsnt3gnv547m523gde2hj2yekiuoimm6rsy@pzofvxngb4ul>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECD315A850
+	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Feb 2025 04:54:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1739595255; cv=none; b=Rz5nA8nJbs3Sw3Jkgx5khdEUKl6E7zEWrFr0P74t0YFj906fVIvp8wBGk883PbKGbLfWcBpUQWJvdQ6t0MAbPEAN8e+Zo6+T5+1r3Osl1AMLbB/varowCSZEtCFRWUyL9sSg3QGsVuTusDfJYHC0JnPjnyEWVBIYpyJAweti2Xw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1739595255; c=relaxed/simple;
+	bh=Qd+3HqLIBmzspnj051AjsoWB0jQ1fLQfmy2L2Kb+xZ0=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eRnhYb6LmBDLmP1q4EbTQmlWmCB3tihkNsvOyTuA9f1sx8vSbR9ptMxxnWPRQEYDg6LVFD+CqwJenEp5PJV9OoINt2oEejJqL31KOTvMETOe8Er31pKqHXeIYlcdUot+DKCKWRbW48lAbqtampl7PUMApvUhvG6UIuYYQ+PpaFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=DGNF3scO; arc=none smtp.client-ip=209.85.219.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6dd15d03eacso26612196d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2025 20:54:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1739595252; x=1740200052; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xk5ud9oKcdPfSa08b0yRfW7p4KmWGP1BqSd4dcIlPyY=;
+        b=DGNF3scOsOiSGIfblQujujVvl9SAKWxkYh7Ey9iSrHzLbZnUoOMxC0vnuMZEgIC3fe
+         vg3KYHfISFjKYGyUreKJcgi5FJwAT7VdsGWRqN1bmFapVunjLy+/t2OpTrH6iNGQRhlQ
+         dJtmKbF0rdxpOnc0qGL1EG5clhwhSm9FPpX3A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739595252; x=1740200052;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xk5ud9oKcdPfSa08b0yRfW7p4KmWGP1BqSd4dcIlPyY=;
+        b=gG0a1/JOupXB2l8alXsnkpPM0X29kyBBSN2OrMx6rtg/mCshP7R0UpxSF52mly+H8B
+         f4OklaB1GM7hm+PgI0tuphsfIiCUeCIheOsGJRYOY6mZovbt329dnzz1IEDLbT7r2nYi
+         LzVnSTlIVK+qzdzvv2l/0cQy4uPgkw6FtGNahNdwbERxzqye2tfGv5bxM4r8RXqa7mEu
+         mFHnZCl4QNsKlbCx7dwxh0Nk1OznSnzHTLoOyB5HP7dA+VgjKXJAuProWL063bAzIi0j
+         wNuzrL7ZIWqZSUeFLa3H+kiHx8Tja3xXUXDLQTRF8wIrqzURUfDt8jW9ZJh1sK2HyAV7
+         bnlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWd0IZ5WtuvwMQ+B/cOOMwgruYG6KXtJO30UR8zUyhaEe9gIytHOXzWSrMLHaclsp/rjq8035IXWXg7h8PE@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKRor8UOg9n3jM1oiFX6GfBX8zJJr4d23YXEcOJK1a9rlURhXj
+	dcYBPFjaps+gcs6bAgbm8WkbeRGlJplLxGLCPE+srYVHSlmNCGIbOrdG/N4T7IQqeYgKnf9SKlv
+	PpAZb2GCeb8Z5rxeBsGkNEcTtQ+xtIC9tI6/b
+X-Gm-Gg: ASbGncsZmLYSPA18j+6LB+DZJtqTKx+SUvhoDmtyZp6IrkQw0XP+dFsHajm/DB0VBT0
+	o6oMcUDlYKgCCl4oR6CZIQKs/0aNZKg0i/r1mBxHpeJlj6E6sUn3o/Wg4zdM8yfL1mm2hoqK7kH
+	qFpho3sSiKt4PG2jqTGOCK/rzv
+X-Google-Smtp-Source: AGHT+IGzK9Xw2SmDlUW8aMokwQq0lVBTGu1ZfRfxjaN3RAOn85fLCKnVOv/nBSKRqAiwjG3tNqoev++XhSLCxsebavE=
+X-Received: by 2002:a05:6214:d09:b0:6e2:49eb:fb7 with SMTP id
+ 6a1803df08f44-6e65c8c0796mr145135586d6.3.1739595252358; Fri, 14 Feb 2025
+ 20:54:12 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 14 Feb 2025 20:54:11 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 14 Feb 2025 20:54:11 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <p5tszocxa7mcazgxsnt3gnv547m523gde2hj2yekiuoimm6rsy@pzofvxngb4ul>
-X-ZohoMailClient: External
+In-Reply-To: <20250213-amigurumi-shrew-of-grandeur-bb1a13@krzk-bin>
+References: <20250210225714.1073618-1-swboyd@chromium.org> <20250210225714.1073618-2-swboyd@chromium.org>
+ <20250213-amigurumi-shrew-of-grandeur-bb1a13@krzk-bin>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.12.dev1+gaa8c22fdeedb
+Date: Fri, 14 Feb 2025 20:54:11 -0800
+X-Gm-Features: AWEUYZm38Pxk6_mjiF-w5FYKquBrOAN7Cotkk66MVQ85J6cLXb_xLqE4js1sOZU
+Message-ID: <CAE-0n53Q=HFtZqgTNN2iq-XEaedr2zMJ63=k5+Rn3PsOf69fiQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: usb: Add binding for ChromeOS Pogo
+ pin keyboard connector
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Benson Leung <bleung@chromium.org>, devicetree@vger.kernel.org, 
+	chrome-platform@lists.linux.dev, Pin-yen Lin <treapking@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+Quoting Krzysztof Kozlowski (2025-02-13 00:11:25)
+> On Mon, Feb 10, 2025 at 02:57:11PM -0800, Stephen Boyd wrote:
+> > +    const: 1
+> > +
+> > +  '#size-cells':
+> > +    const: 0
+> > +
+> > +  port:
+> > +    $ref: /schemas/graph.yaml#/properties/port
+> > +    description: Connection to USB2 port providing USB HS signals
+> > +    required:
+> > +      - endpoint
+> > +
+> > +patternProperties:
+> > +  "^keyboard@[0-9a-f]{1,2}$":
+>
+> What does the unit address represent here? Why this isn't just
+> "keyboard"? One connector usually has only one keyboard, right?
 
-On Fri, Feb 14, 2025 at 05:01:08AM +0200, Dmitry Baryshkov wrote:
-> On Fri, Feb 14, 2025 at 02:36:17AM +0100, aruhier@mailbox.org wrote:
-> > On Fri, Feb 14, 2025 at 12:24:18AM +0200, Dmitry Baryshkov wrote:
-> > > On Thu, Feb 13, 2025 at 05:51:38PM +0100, Anthony Ruhier via B4 Relay wrote:
-> > > > From: Anthony Ruhier <aruhier@mailbox.org>
-> > > >
-> > > > The value for the POWER_NOW property is by default negative when the
-> > > > battery is discharging, positive when charging.
-> > > >
-> > > > However on x1e laptops it breaks several userland tools that give a
-> > > > prediction of the battery run time (such as the acpi command, powertop
-> > > > or the waybar battery module), as these tools do not expect a negative
-> > > > value for /sys/class/power_supply/qcom-battmgr-bat/power_now. They
-> > > > estimate the battery run time by dividing the value of energy_full by
-> > > > power_now. The battery percentage is calculated by dividing energy_full
-> > > > by energy_now, therefore it is not impacted.
-> > > >
-> > > > While having a negative number during discharge makes sense, it is not
-> > > > standard with how other battery drivers expose it. Instead, it seems
-> > > > standard to have a positive value for power_now, and rely on the status
-> > > > file instead to know if the battery is charging or discharging. It is
-> > > > what other x86 laptops do.
-> > >
-> > > Documentation/ABI does not define ABI for the power_now. However for
-> > > current_now it clearly defines that it can be positive or negative.
-> > >
-> > > >
-> > > > Without the patch:
-> > > >     $ acpi
-> > > >     Battery 0: Discharging, 98%, discharging at zero rate - will never fully discharge.
-> > > >
-> > > > With the patch:
-> > > >     $ acpi
-> > > >     Battery 0: Discharging, 97%, 10:18:27 remaining
-> > > >
-> > > > ---
-> > > > Signed-off-by: Anthony Ruhier <aruhier@mailbox.org>
-> > > > ---
-> > > >  drivers/power/supply/qcom_battmgr.c | 2 +-
-> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > >
-> > > --
-> > > With best wishes
-> > > Dmitry
-> > 
-> > I see. But as it breaks existing tools when power_now is negative, should we
-> > change the behavior of these tools or adapt the driver?
-> > 
-> > As it does not seem common that power_now and current_now are negative in
-> > other drivers, tools using these values rely on the status anyway. I'm
-> > wondering if it provides anything to keep this behavior.
+Yes one connector has one keyboard.
 
-There are other drivers reporting negative values as documented.
-Most of the embedded ones do this actually and there surely are
-(embedded) userspace programs relying on this by now. But the
-most used driver - generic ACPI battery - does not. That's why
-quite a few userspace tools handle it wrong without anyone
-noticing for quite some time. Fixing it to follow the ABI would
-obviously end up in a bunch of regression reports, so things are
-a bit messy :(
+>
+> Maybe it is only to fulfill the usb-device schema? The reg is there to
+> represent USB hub or controller port, which is not true here.
 
-> I think it is a problem of the 'acpi' tool. At least 'upower -d' uses
-> fabs internally since the initial commit in 2008.
+Right, this is to fulfill the schema. These pins are connected to a USB
+hub or controller port, so we use that as the unit address.
 
-It's definitely sensible to fix the userspace tools. We can't change
-the documented ABI for current_now after that many years and while
-documentation for power_now is missing, it would be quite unexpected
-to have it behave differently than current_now. Also userspace
-tooling needs to handle current_now and power_now anyways. And we
-surely can't change the behaviour for all drivers reporting signed
-data. So let's keep qcom_battmgr as is. It follows the documented
-ABI and hopefully helps giving this more exposure (I'm typing this
-on a X1E laptop right now and can see your problem with waybar).
+>
+> I don't have any idea how to solve it. I assume you need the keyboard
+> child, right?
 
-But we should document the power_now property. It somehow fell
-through the cracks :)
-
--- Sebastian
+Yes we need the keyboard child so that we can make sure the keyboard
+that's expected is plugged in instead of some other one that doesn't
+pair with the device. We treat the detachable keyboard as 'not external'
+or 'expected' when it matches this VID/PID we have listed in DT so that
+we trust it slightly more than a standard USB keyboard that you could
+plug in to a USB connector.
 
