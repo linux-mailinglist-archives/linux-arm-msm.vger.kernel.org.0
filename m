@@ -1,106 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-48109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B00EA36C6B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 08:25:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5CCAA36C88
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 08:52:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9336E3B1D18
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 07:24:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0778A7A2602
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2025 07:51:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A804618C01E;
-	Sat, 15 Feb 2025 07:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5199D1953BD;
+	Sat, 15 Feb 2025 07:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oltmanns.dev header.i=@oltmanns.dev header.b="u+5RnPZz"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7UlnbKr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4828715A843;
-	Sat, 15 Feb 2025 07:24:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D5718B484;
+	Sat, 15 Feb 2025 07:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739604301; cv=none; b=nz23OqSVXo0BLhzF66KYzTQytVgYu3UpITFAGQ7QOdSv0dz0e/TB2o2aGfYtkjfm0BVJizt6vyB/JAoPHEMSTFQLdt71d71DrnJ8pbcM/5mNCOJBzobTQ0MhiUi7yvA/cYwxrVcMOlUHXKv51EvZwlitZNLrWXMDTcn7e+6sjQc=
+	t=1739605937; cv=none; b=A4tpJeqgJLql4vLTaI3nEgPDKfxt1eeil37aF0EM3X1rd9yYpr2aA72OT041TOHLxN4CNAw/3Kzgi+jwCTsa6UOPA5FzSoj0BuK0zmd4Kby3NajEbOPP4t4ZaaLOp03JH9UadtePwhpFYkITXDeZGlpHhPK+s6OUQ2dGdHzODGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739604301; c=relaxed/simple;
-	bh=g0DserNjnh4CPfXzi6skQIf2mt9+TFY4JYtcJczP3I4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FjZqUSGfoMKPUn5sWLEfRX7hGkO7BmGdcGxxa4Rlj4ANeCZyl6nrRGZEdTQiK6tzSR5/NgS//XHyg6mz5kEY9zCePsDQdOYiwZOOX9FJib3g1DOZAZvcHKIwzuKkFWtz77ogW8pEyWf+0qjlsVre/fevqzF7RqLYDB8zkvmgHhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oltmanns.dev; spf=pass smtp.mailfrom=oltmanns.dev; dkim=pass (2048-bit key) header.d=oltmanns.dev header.i=@oltmanns.dev header.b=u+5RnPZz; arc=none smtp.client-ip=80.241.56.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oltmanns.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oltmanns.dev
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4Yw0md5Bcxz9sp0;
-	Sat, 15 Feb 2025 08:24:49 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oltmanns.dev;
-	s=MBO0001; t=1739604289;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=AftpR5FhL9ZRrXGJ0FAdsd9x50d7E72otdacK1ldixc=;
-	b=u+5RnPZzkcE2cz10+O8ddBZKRm+ZHb+nqhxMraSTBSK1BHclf1Y6YJ/l9aDVr9z3ld/IFP
-	aqZtISvhvhO8Ttrzsfgi5VMttKnXXwOwO5qV55zmTKD9e8LEg65I+tnOeHk0meYnjYhPh8
-	gwSyC89DfIycc4wQXa9YqZFYXr2sHYCoAebJXAbpcypoAUxE/WloVK+V2kpmSrB7VesXgg
-	DMNOg24pdvkFAtw8pcCW1Ip9o1BdetFuBnhnWssUAJZPnxKHU+7PzmPfDcCz3b+efTDEen
-	ubWkZ68bFpQRdIcXmr8zBsA5lvv2if1Uw9ANtf0ZOcRheIZa+NBacA0Nh82Bzw==
-From: Frank Oltmanns <frank@oltmanns.dev>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,  Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>,  Chris Lew <quic_clew@quicinc.com>,
-  linux-arm-msm@vger.kernel.org,  linux-kernel@vger.kernel.org,  Stephan
- Gerhold <stephan.gerhold@linaro.org>,  Johan Hovold
- <johan+linaro@kernel.org>,  Caleb Connolly <caleb.connolly@linaro.org>,
-  Joel Selvaraj <joelselvaraj.oss@gmail.com>,  Alexey Minnekhanov
- <alexeymin@postmarketos.org>,  stable@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: pd-mapper: defer probing on sdm845
-In-Reply-To: <aujp6tbyug66jamddd5mlpdnobiazapyzwtkkwo23uckd6x7yx@b73cwtszcjlr>
-	(Bjorn Andersson's message of "Tue, 11 Feb 2025 20:48:36 -0600")
-References: <20250205-qcom_pdm_defer-v1-1-a2e9a39ea9b9@oltmanns.dev>
-	<2vfwtuiorefq64ood4k7y7ukt34ubdomyezfebkeu2wu5omvkb@c5h2sbqs47ya>
-	<87y0yj1up1.fsf@oltmanns.dev> <87msez1sim.fsf@oltmanns.dev>
-	<87seon9vq6.fsf@oltmanns.dev>
-	<aujp6tbyug66jamddd5mlpdnobiazapyzwtkkwo23uckd6x7yx@b73cwtszcjlr>
-Date: Sat, 15 Feb 2025 08:24:40 +0100
-Message-ID: <874j0vy8jr.fsf@oltmanns.dev>
+	s=arc-20240116; t=1739605937; c=relaxed/simple;
+	bh=iEO4fZVVqTnk+DHtCerwPLANOhBbouzKPWaUP8b/LgI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RbiqVp9kvnpnLE3o2EeLJjpnONWtPTdTnX0v9gViadnqN6yL6BAmo9xZSJrZXnUDhc/yB8kdHLJhUCQ0vOGR94pxOmGMwxF+KMC88JfdHVJgGZ2nscVY5KZcMG3kkLzRJDNhohP9JLF8XCWQ4udr2MRMAc8/AStbGANC+Za02Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7UlnbKr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EF4C4CEDF;
+	Sat, 15 Feb 2025 07:52:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1739605936;
+	bh=iEO4fZVVqTnk+DHtCerwPLANOhBbouzKPWaUP8b/LgI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=O7UlnbKrM3z04uhmrFgA8uEAq5rEViUUqd0AYd13/LDeu31ccU+fw4BUo6lqSaurF
+	 VRbdHPy/7IBAiQagjEurhJKemUnOaajIAgoRZf1Bs1fgjnBLlanW4N9+THzs/DONUT
+	 q2kKNkIf1yvRcl8gJNdWYeHE0MZfFLaBZPfVg6So=
+Date: Sat, 15 Feb 2025 08:52:13 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz,
+	conor+dt@kernel.org, dmitry.torokhov@gmail.com, corbet@lwn.net,
+	broonie@kernel.org, lgirdwood@gmail.com, tiwai@suse.com,
+	krzk+dt@kernel.org, pierre-louis.bossart@linux.intel.com,
+	Thinh.Nguyen@synopsys.com, robh@kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-sound@vger.kernel.org, linux-input@vger.kernel.org,
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-doc@vger.kernel.org
+Subject: Re: [PATCH v34 00/31] Introduce QC USB SND audio offloading support
+Message-ID: <2025021500-clang-suspect-0cb3@gregkh>
+References: <20250121210518.2436771-1-quic_wcheng@quicinc.com>
+ <3b9447e2-4be8-479b-a418-5fd45369fb55@quicinc.com>
+ <2025021413-favorable-manatee-6859@gregkh>
+ <f5dfc875-d5bd-49d7-b998-6d25f59e849a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 4Yw0md5Bcxz9sp0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f5dfc875-d5bd-49d7-b998-6d25f59e849a@quicinc.com>
 
-On 2025-02-11 at 20:48:36 -0600, Bjorn Andersson <andersson@kernel.org> wrote:
-> On Sun, Feb 09, 2025 at 12:57:21PM +0100, Frank Oltmanns wrote:
-[snip]
->> Just wanted to let you know that I've tested Mukesh Ojha's and Saranya
->> R's patch [1]. Thanks, Bjorn for cc'ing me in your response.
->>
->> Unfortunately, it seems to fix a different issue than the one I'm
->> experiencing. The phone's mic still doesn't work. As I wrote elsewhere
->> [2], I don't see the PDR error messages on xiaomi-beryllium, so, as
->> Johan expected, the issue I'm experiencing is indeed a different one.
->>
->
-> Yes, it sounds like you have another race following this. [1] resolves
-> an issue where we get a timeout as we're trying to learn about which PDs
-> exist - which results in no notification about the adsp coming up, which
-> in turn means no audio services.
->
-> Do you have the userspace pd-mapper still running btw?
+On Fri, Feb 14, 2025 at 07:07:15PM -0800, Wesley Cheng wrote:
+> Hi Greg,
+> 
+> On 2/14/2025 12:33 AM, Greg KH wrote:
+> > On Tue, Feb 11, 2025 at 12:35:23PM -0800, Wesley Cheng wrote:
+> >> Hi,
+> >>
+> >> On 1/21/2025 1:04 PM, Wesley Cheng wrote:
+> >>> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
+> >>>
+> >>
+> >> Just seeing if we have any further feedback on this series? Thanks.
+> > 
+> > Given the lack of responses, and the huge number of iterations of this,
+> > I've applied it now to my usb-testing branch to give 0-day some better
+> > runs at it.  If it passes that in a few days, I'll move it to my
+> > usb-next branch for inclusion into linux-next and hopefully 6.15-rc1.
+> > 
+> > thanks for sticking with this!
+> > 
+> 
+> I saw that kernel test bot reported some sparse errors.  I had some issue with my config and looks like sparse wasn't actually scanning the files I added.  Will fix that and resubmit another rev that addresses any errors.  Apologies for not catching this beforehand.
 
-I don't.
+Not a problem, I've dropped them all from my tree now.
 
-Best regards,
-  Frank
+thanks,
 
->
-> Regards,
-> Bjorn
+greg k-h
 
