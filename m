@@ -1,181 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-48128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA2EFA375DB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Feb 2025 17:39:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AF28A37623
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Feb 2025 18:04:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C9A5A7A1675
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Feb 2025 16:38:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7BEA23AD5A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Feb 2025 17:04:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A63C219ADA2;
-	Sun, 16 Feb 2025 16:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F32A4315C;
+	Sun, 16 Feb 2025 17:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="esO2Fg5n"
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="vvhusSAt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from forward203a.mail.yandex.net (forward203a.mail.yandex.net [178.154.239.90])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD5A3D6F;
-	Sun, 16 Feb 2025 16:39:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819993A1DB;
+	Sun, 16 Feb 2025 17:04:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.90
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739723965; cv=none; b=t11ZDaGH4ggbpA0O6xRTveQhuKxajiyJDRfGJT21Ud0rFCQCD6benBm0qS69q09DUnG2z6m0TibaCVF1SHBm73wt7t8+mqNMhcx40qV4SAlJfvhE7iiagO/JfgzW6QJAb6mbJ9h/Va+Ku2C/AKhKdvRV9Gj5VQLJGtOJw91jUpA=
+	t=1739725467; cv=none; b=juVMLU6Xr9wme1COluQ0go1uoEOkOqvTyWvLEO7/ugnOvCd4fMq80biqb0mvUP7LZTfebWTINojXgHERhssaAGtAKC9PFuSlrfPeNo1iXlbdO1yY8jkCsFgXGopG2df0OSfyQRlcUZUVI3v1HEipVCdF2xLntsknbDDFYewY9U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739723965; c=relaxed/simple;
-	bh=F7lxG+YyUpyZN5BDO1TWo52GvkiZpf4iGTTc9DJNJZo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kQNwpk7j2Kx4J+XSKfh4oXX/Z36m9y2HzPJB6Ox6iYh9yk+YPneBS2mcrntnEYKTzTUTL7LpHBLTG2bBV/4HTQVR5YeS+oj+DS9nOpllysESUAIZ/5pW6tpEOG+kamaXHJ2uxDnHl1TgSeSuEgnyF9zK0LaslOWpgRSDvBsZYj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=esO2Fg5n; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51GEsrNq018208;
-	Sun, 16 Feb 2025 16:39:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jybwYLBxnC29e5G9/7UFhw8l7MCD8xAgH5D9/8Aq3Wc=; b=esO2Fg5nYbgHipOi
-	D36/g3dkeCDxeKMAX51sotQeJW9QXiI8pXWFUhLZKv+WLe3oHb/Ohe0sexN8Ofzd
-	GdIqDJk/NsJvD5Feg/zS27q8SEpF9XrkrUt36thEax0ou3jxSghuIHgifFdg6zgn
-	DE72sU7Uxi6zwEn8g8sbZswQg9awcjwAD63PRdb3VzPVYtWNmTV1/YarJLmHxen+
-	l1iPMb1XguwwRyMoSjc84hJO9aggJioms6LtISAUCFZ4Zc7P9AEUQZKGYdeRQ2HU
-	RInRbvH8PJiRFmDQwtcAaUC0Ox+BzE++XELearLbtozEwKw7fEV2ffs6emBWPVUN
-	c7F21Q==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44tkwnaaee-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 16 Feb 2025 16:39:14 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51GGdE5r019692
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 16 Feb 2025 16:39:14 GMT
-Received: from [10.216.15.99] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 16 Feb
- 2025 08:38:54 -0800
-Message-ID: <f40f6b9d-8f31-4ce6-a912-1aa484863d5e@quicinc.com>
-Date: Sun, 16 Feb 2025 22:08:51 +0530
+	s=arc-20240116; t=1739725467; c=relaxed/simple;
+	bh=ED000R7CGxdNtKDlDHRKxmYs52Ndr/ydlRA87y4O+80=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VaKJajHToa1/uvkwAY2zECBP+K4WFupfOc2b4JfuOqiV4nxTHgB1Hp1Uu7GAZRTXSWKjbQDW8jRBUAQdQtfHz6r5X/lYZYOu5fCm/2dsX6IOInXwmgDGSuNWlvgLrA65xKtrBIcdPu30REWVgxuXJwwUz3p6aNGBVGwknUoq1Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=vvhusSAt; arc=none smtp.client-ip=178.154.239.90
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
+Received: from forward100a.mail.yandex.net (forward100a.mail.yandex.net [IPv6:2a02:6b8:c0e:500:1:45:d181:d100])
+	by forward203a.mail.yandex.net (Yandex) with ESMTPS id 933E564981;
+	Sun, 16 Feb 2025 20:04:14 +0300 (MSK)
+Received: from mail-nwsmtp-smtp-production-main-18.vla.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-18.vla.yp-c.yandex.net [IPv6:2a02:6b8:c15:288c:0:640:a70:0])
+	by forward100a.mail.yandex.net (Yandex) with ESMTPS id 5C42D46F0D;
+	Sun, 16 Feb 2025 20:04:05 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-18.vla.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id 44XEhxbOe4Y0-XFoFckBR;
+	Sun, 16 Feb 2025 20:04:04 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1739725444; bh=8tV7UnZY7VDH2HYULsYCbQms7CqS73RMo5q418k03tk=;
+	h=Message-ID:Date:Cc:Subject:To:From;
+	b=vvhusSAt0kJxtH3wMepL161mtDH/PPv+ts1nph2YOI1eV+CVqWcAE+A3nz27sCNTI
+	 YPtzFBYDoIuBM4lqDP4DYHR0TxHnSnAPimyUKHaYUwRqJ+as4VFsRSd05YWDlh2rls
+	 ZJgwo8n9zEQU/PvrwrFHVchE/WEqVS1NheFhwQXs=
+Authentication-Results: mail-nwsmtp-smtp-production-main-18.vla.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
+From: Dmitry Antipov <dmantipov@yandex.ru>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	David Collins <quic_collinsd@quicinc.com>
+Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Anjelique Melendez <quic_amelende@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-input@vger.kernel.org,
+	Dmitry Antipov <dmantipov@yandex.ru>
+Subject: [PATCH] input: pm8941-pwrkey: fix dev_dbg() output in pm8941_pwrkey_irq()
+Date: Sun, 16 Feb 2025 20:03:36 +0300
+Message-ID: <20250216170336.861025-1-dmantipov@yandex.ru>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V8 2/7] interconnect: core: Add dynamic id allocation
- support
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Odelu Kukatla <quic_okukatla@quicinc.com>,
-        "Mike
- Tipton" <quic_mdtipton@quicinc.com>,
-        Jeff Johnson
-	<quic_jjohnson@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Sibi
- Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250205182743.915-1-quic_rlaggysh@quicinc.com>
- <20250205182743.915-3-quic_rlaggysh@quicinc.com>
- <bwiuhfgv4jw7tlwjqffgrxvskxbpf4forz46nn5g3vihz3z5od@w25y7hdprykf>
-Content-Language: en-US
-From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-In-Reply-To: <bwiuhfgv4jw7tlwjqffgrxvskxbpf4forz46nn5g3vihz3z5od@w25y7hdprykf>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3Y1V5aHKQunWBqCnAPPXtUPZVUhoxVbT
-X-Proofpoint-ORIG-GUID: 3Y1V5aHKQunWBqCnAPPXtUPZVUhoxVbT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-16_05,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- suspectscore=0 malwarescore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- mlxscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2501170000
- definitions=main-2502160151
+Content-Transfer-Encoding: 8bit
 
+Since 'sw_debounce_end_time' of 'struct pm8941_pwrkey' is of type
+'ktime_t', use 'ktime_to_us()' to print the value in microseconds
+as it is announced in a call to 'dev_dbg()'. Compile tested only.
 
+Fixes: 0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press debouncing support")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+---
+ drivers/input/misc/pm8941-pwrkey.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-On 2/10/2025 4:20 PM, Dmitry Baryshkov wrote:
-> On Wed, Feb 05, 2025 at 06:27:38PM +0000, Raviteja Laggyshetty wrote:
->> The current interconnect framework relies on static IDs for node
->> creation and registration, which limits topologies with multiple
->> instances of the same interconnect provider. To address this, update
->> the interconnect framework APIs icc_node_create() and icc_link_create()
->> APIs to dynamically allocate IDs for interconnect nodes during creation.
->> This change removes the dependency on static IDs, allowing multiple
->> instances of the same hardware, such as EPSS L3.
->>
->> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
->> ---
->>  drivers/interconnect/core.c | 13 ++++++++++++-
->>  1 file changed, 12 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
->> index 9d5404a07e8a..40700246f1b6 100644
->> --- a/drivers/interconnect/core.c
->> +++ b/drivers/interconnect/core.c
->> @@ -20,6 +20,8 @@
->>  
->>  #include "internal.h"
->>  
->> +#define ICC_DYN_ID_START 10000
->> +
->>  #define CREATE_TRACE_POINTS
->>  #include "trace.h"
->>  
->> @@ -826,7 +828,12 @@ static struct icc_node *icc_node_create_nolock(int id)
->>  	if (!node)
->>  		return ERR_PTR(-ENOMEM);
->>  
->> -	id = idr_alloc(&icc_idr, node, id, id + 1, GFP_KERNEL);
->> +	/* negative id indicates dynamic id allocation */
->> +	if (id < 0)
-> 
-> Nit: I think it might be better to add an explicit define for that and
-> to decline all other negatdive values. Please leave us some room for
-> future expansion.
-> 
-Do you mean to replace the value of ALLOC_DYN_ID from -1 to some
-positive value like 100000 and to use it as initial ID for the nodes
-requiring the dynamic allocation ? This explicit define can be used as
-check for dynamic allocation and also as argument to idr_alloc min value
-argument. Is my interpretation of the comment correct ?
-
->> +		id = idr_alloc(&icc_idr, node, ICC_DYN_ID_START, 0, GFP_KERNEL);
->> +	else
->> +		id = idr_alloc(&icc_idr, node, id, id + 1, GFP_KERNEL);
->> +
->>  	if (id < 0) {
->>  		WARN(1, "%s: couldn't get idr\n", __func__);
->>  		kfree(node);
->> @@ -962,6 +969,10 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
->>  	node->avg_bw = node->init_avg;
->>  	node->peak_bw = node->init_peak;
->>  
->> +	if (node->id >= ICC_DYN_ID_START)
->> +		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
->> +					    node->name, dev_name(provider->dev));
->> +
->>  	if (node->avg_bw || node->peak_bw) {
->>  		if (provider->pre_aggregate)
->>  			provider->pre_aggregate(node);
->> -- 
->> 2.39.2
->>
-> 
+diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
+index d0c46665e527..d952c16f2458 100644
+--- a/drivers/input/misc/pm8941-pwrkey.c
++++ b/drivers/input/misc/pm8941-pwrkey.c
+@@ -154,8 +154,8 @@ static irqreturn_t pm8941_pwrkey_irq(int irq, void *_data)
+ 	if (pwrkey->sw_debounce_time_us) {
+ 		if (ktime_before(ktime_get(), pwrkey->sw_debounce_end_time)) {
+ 			dev_dbg(pwrkey->dev,
+-				"ignoring key event received before debounce end %llu us\n",
+-				pwrkey->sw_debounce_end_time);
++				"ignoring key event received before debounce end %lld us\n",
++				ktime_to_us(pwrkey->sw_debounce_end_time));
+ 			return IRQ_HANDLED;
+ 		}
+ 	}
+-- 
+2.48.1
 
 
