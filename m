@@ -1,97 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-48129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AF28A37623
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Feb 2025 18:04:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8A00A3765E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Feb 2025 18:44:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7BEA23AD5A8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Feb 2025 17:04:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF7243B0169
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Feb 2025 17:44:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F32A4315C;
-	Sun, 16 Feb 2025 17:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9B0519D08F;
+	Sun, 16 Feb 2025 17:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="vvhusSAt"
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="j/9JlxT4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from forward203a.mail.yandex.net (forward203a.mail.yandex.net [178.154.239.90])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819993A1DB;
-	Sun, 16 Feb 2025 17:04:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.90
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50F042070;
+	Sun, 16 Feb 2025 17:44:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739725467; cv=none; b=juVMLU6Xr9wme1COluQ0go1uoEOkOqvTyWvLEO7/ugnOvCd4fMq80biqb0mvUP7LZTfebWTINojXgHERhssaAGtAKC9PFuSlrfPeNo1iXlbdO1yY8jkCsFgXGopG2df0OSfyQRlcUZUVI3v1HEipVCdF2xLntsknbDDFYewY9U4=
+	t=1739727852; cv=none; b=sQGf98zRT+KxSyPAJfbNswC1CUHmjIcdfP0DZeb1h5LK25rFOx+xrVZwdehLdBLo3g5wqAOqNnkEl2FQMfTQP7uOP0Vm+wAs2/2Ngt5uxf9nb8NLJekmNRQZMfbHsNls5jEhUpTtLubFqhle2hxlNl5tkmzxDtPypembW2sRgw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739725467; c=relaxed/simple;
-	bh=ED000R7CGxdNtKDlDHRKxmYs52Ndr/ydlRA87y4O+80=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VaKJajHToa1/uvkwAY2zECBP+K4WFupfOc2b4JfuOqiV4nxTHgB1Hp1Uu7GAZRTXSWKjbQDW8jRBUAQdQtfHz6r5X/lYZYOu5fCm/2dsX6IOInXwmgDGSuNWlvgLrA65xKtrBIcdPu30REWVgxuXJwwUz3p6aNGBVGwknUoq1Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=vvhusSAt; arc=none smtp.client-ip=178.154.239.90
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
-Received: from forward100a.mail.yandex.net (forward100a.mail.yandex.net [IPv6:2a02:6b8:c0e:500:1:45:d181:d100])
-	by forward203a.mail.yandex.net (Yandex) with ESMTPS id 933E564981;
-	Sun, 16 Feb 2025 20:04:14 +0300 (MSK)
-Received: from mail-nwsmtp-smtp-production-main-18.vla.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-18.vla.yp-c.yandex.net [IPv6:2a02:6b8:c15:288c:0:640:a70:0])
-	by forward100a.mail.yandex.net (Yandex) with ESMTPS id 5C42D46F0D;
-	Sun, 16 Feb 2025 20:04:05 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-18.vla.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id 44XEhxbOe4Y0-XFoFckBR;
-	Sun, 16 Feb 2025 20:04:04 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1739725444; bh=8tV7UnZY7VDH2HYULsYCbQms7CqS73RMo5q418k03tk=;
-	h=Message-ID:Date:Cc:Subject:To:From;
-	b=vvhusSAt0kJxtH3wMepL161mtDH/PPv+ts1nph2YOI1eV+CVqWcAE+A3nz27sCNTI
-	 YPtzFBYDoIuBM4lqDP4DYHR0TxHnSnAPimyUKHaYUwRqJ+as4VFsRSd05YWDlh2rls
-	 ZJgwo8n9zEQU/PvrwrFHVchE/WEqVS1NheFhwQXs=
-Authentication-Results: mail-nwsmtp-smtp-production-main-18.vla.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
-From: Dmitry Antipov <dmantipov@yandex.ru>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	David Collins <quic_collinsd@quicinc.com>
-Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Anjelique Melendez <quic_amelende@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-input@vger.kernel.org,
-	Dmitry Antipov <dmantipov@yandex.ru>
-Subject: [PATCH] input: pm8941-pwrkey: fix dev_dbg() output in pm8941_pwrkey_irq()
-Date: Sun, 16 Feb 2025 20:03:36 +0300
-Message-ID: <20250216170336.861025-1-dmantipov@yandex.ru>
-X-Mailer: git-send-email 2.48.1
+	s=arc-20240116; t=1739727852; c=relaxed/simple;
+	bh=LTOjVk+4QHTyDDma3KbEPH1FY8x5w5DWJiaF31yDOKw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jRDHxHJTO+SfRsBXPSeLc3PQGoDcylqsBrwFS38ZzZgJwizlrcVwBzte0vyauskL3bR8Bo8OcYWnr0PvmBMq6QZu1YeooOvh6CpH3GpRWFRjs2zyp/lqWO8IJ5PCg97q9Q7SODKn7gCfEix2MRifuhd7BYAQ9ttg8kdFdVPJ818=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=j/9JlxT4; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4YwtSd0Dcwz9sp5;
+	Sun, 16 Feb 2025 18:44:01 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1739727841;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LTOjVk+4QHTyDDma3KbEPH1FY8x5w5DWJiaF31yDOKw=;
+	b=j/9JlxT4IEo8QlXbMmRMOo+zggf7UGKFoUqsQ0TIh/KrGxM32QNQUWhx2IeiOCej30RQ2e
+	CT4n0x9tf8bX8S8hZs+pW69StYwip1QI9HBA56jmauFh33umaQc4197JFw10j3Vdn6UGG/
+	lg5mh2sg3Qlz5ireoieZQBDcPA7cweJ2E2ZKk/P/RATxgQouOwLYEwHmPifCemGZwGGzVX
+	awMR8T+LvB5IqWS8PH2TOOlVxATsxNBykxIPJlLM2KcVSkZGea7fEbDqGEnjEyCxHZvO69
+	oRZOQ4XZW+qBxFad7NaoZdNpEpllZJPKiIjwDw/RCfTzW4U8p5AgG/qf/vRpJw==
+Date: Sun, 16 Feb 2025 18:43:58 +0100
+From: Anthony Ruhier <aruhier@mailbox.org>
+To: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RESEND] power: supply: qcom_battmgr: abs() on POWER_NOW
+ property
+Message-ID: <6w6pq2d2nlrun6cz6tq4fjzqri52n3sskrf2frj6wj4jxzzrcg@z3a5bykeixsu>
+References: <20250213-patch-qcomm-bat-uint-power-v1-1-16e7e2a77a02@mailbox.org>
+ <yfbgbdugk4xdjpemozdzcuxczx4xd5aphykuksf3lhn22dsgkf@fcfgddu6gpyt>
+ <ioiy4ixlvx5gxl3f4pqshwxz35ktrqghju2circpnd3qicgemc@oohazfsfvuag>
+ <p5tszocxa7mcazgxsnt3gnv547m523gde2hj2yekiuoimm6rsy@pzofvxngb4ul>
+ <7wbot7sxm3y5y7in5ashcn5lpx3mi55abnbfrkz2jta7nm6jep@zk6zvocd3tuz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7wbot7sxm3y5y7in5ashcn5lpx3mi55abnbfrkz2jta7nm6jep@zk6zvocd3tuz>
+X-MBO-RS-ID: 093cea7cce9679a1858
+X-MBO-RS-META: a9sgno18t6wer8kquh3rbd78d1597mc4
 
-Since 'sw_debounce_end_time' of 'struct pm8941_pwrkey' is of type
-'ktime_t', use 'ktime_to_us()' to print the value in microseconds
-as it is announced in a call to 'dev_dbg()'. Compile tested only.
+On Sat, Feb 15, 2025 at 04:08:25AM +0100, Sebastian Reichel wrote:
+>
+> There are other drivers reporting negative values as documented.
+> Most of the embedded ones do this actually and there surely are
+> (embedded) userspace programs relying on this by now. But the
+> most used driver - generic ACPI battery - does not. That's why
+> quite a few userspace tools handle it wrong without anyone
+> noticing for quite some time. Fixing it to follow the ABI would
+> obviously end up in a bunch of regression reports, so things are
+> a bit messy :(
+>
+> > I think it is a problem of the 'acpi' tool. At least 'upower -d' uses
+> > fabs internally since the initial commit in 2008.
+>
+> It's definitely sensible to fix the userspace tools. We can't change
+> the documented ABI for current_now after that many years and while
+> documentation for power_now is missing, it would be quite unexpected
+> to have it behave differently than current_now. Also userspace
+> tooling needs to handle current_now and power_now anyways. And we
+> surely can't change the behaviour for all drivers reporting signed
+> data. So let's keep qcom_battmgr as is. It follows the documented
+> ABI and hopefully helps giving this more exposure (I'm typing this
+> on a X1E laptop right now and can see your problem with waybar).
+>
+> But we should document the power_now property. It somehow fell
+> through the cracks :)
+>
+> -- Sebastian
 
-Fixes: 0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press debouncing support")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
----
- drivers/input/misc/pm8941-pwrkey.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Hi Sebastian,
+Thanks a lot for the detailed answer, that makes sense for me.
+I was sending this patch more to know which direction to follow (changing the
+driver or the userspace tools), and you answered it perfectly.
 
-diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-index d0c46665e527..d952c16f2458 100644
---- a/drivers/input/misc/pm8941-pwrkey.c
-+++ b/drivers/input/misc/pm8941-pwrkey.c
-@@ -154,8 +154,8 @@ static irqreturn_t pm8941_pwrkey_irq(int irq, void *_data)
- 	if (pwrkey->sw_debounce_time_us) {
- 		if (ktime_before(ktime_get(), pwrkey->sw_debounce_end_time)) {
- 			dev_dbg(pwrkey->dev,
--				"ignoring key event received before debounce end %llu us\n",
--				pwrkey->sw_debounce_end_time);
-+				"ignoring key event received before debounce end %lld us\n",
-+				ktime_to_us(pwrkey->sw_debounce_end_time));
- 			return IRQ_HANDLED;
- 		}
- 	}
--- 
-2.48.1
+I started fixing the different desktop tools I use, starting with Waybar:
+https://github.com/Alexays/Waybar/pull/3942
 
+For powertop, the fix seems straightforward. For acpiclient, due to no activity
+in almost 10 years, we'll see if it goes through.
+
+--
+Thanks,
+Anthony Ruhier
 
