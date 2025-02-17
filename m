@@ -1,314 +1,259 @@
-Return-Path: <linux-arm-msm+bounces-48172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E25FA37FA4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:15:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 309DEA37F7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:11:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 803F61898D34
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 388443A2E59
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 10:10:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 229961A0BF3;
-	Mon, 17 Feb 2025 10:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E45D2216394;
+	Mon, 17 Feb 2025 10:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fhBJu1rx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K91MX+8h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DD221771F;
-	Mon, 17 Feb 2025 10:08:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FF82165EC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 10:10:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739786935; cv=none; b=QfwjfkmdogiTm+jeeWW2+4tbWMeUxQIiKpc8e+D4Rzc6fc0KAlvLa4/uamtYDA/oeNc/cnV0VQZA3Z7NCRVBtBoNRxN7ctQaI9XQlnpuVHPZdbe6AHQ9fDiiF2Zx41gCP0ivkpclpJkssppjCOE745LiuYs3y7yLbTi/uvM+wV0=
+	t=1739787010; cv=none; b=gf5n9qPCgc0JArAcFWYYl/KnE/trMQ9pO221vwoQDcFNoCNHjEJChFBL2YDVacfGSDK9I3gM/Cno2HVnqJuCtKIhpNCaTxbTHzLQT0pjGY5lC4OWeax1Aw18R76TKsHSnlJJvbUpPtQYcL0wQvQtq8rDFZOWs3yru5LlcoPsLvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739786935; c=relaxed/simple;
-	bh=WaexI+GTMLB9LD3SzzT+vgAJbuAuabXPQ/ESv9lZrBc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JIsP06zxxNItiAFRKCP3UDNnE+tIsPLBn9tvHHtgIq/5Gq5BCwB79lD/doDQ6sMOXZRNC0qJGxcPbtLJ5OVolbgqSRZpqGAGqMO7kBb61ZzuLiy8T4pNHLsFzoJDV7TI5G4LVUr0dvCJzR0689Qa6rMZz0Uj9Il7Rhm5cboCMF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fhBJu1rx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51H03EEB032018;
-	Mon, 17 Feb 2025 10:08:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kmBx0vh9UKMEbN00/TAgFMn8gz1XFk6ODAvDM+ARmlM=; b=fhBJu1rxLrWEddFN
-	V34QJRgX5kryCAxPUBLwI87kgVgXBQBP3g6yhuMsk2xJ+ih6HO3vW4I94MkwouGz
-	UJWQokjlvEITgvba5HyfwgIMo0Q7bG8K7ip61XbuCrxYjhTQ0QMnBoiU0BrZVQsH
-	g+fBIl82BB3QKH7uhqm52DQIW6bD+/NlKgbkJQxSmt2i6WvMcsJI/l06hJRrz5yD
-	fTjLOkdmq/Jd+ay9JdWXty1XoOEuh2S1+Vm3YXQvcqU1dyoV0bdBqcFo3T6LAhrh
-	WZTUez5vo7/76Jiut4kK7rp3Dd7FOXPq8gASW0rCRNBI9v/+KXc3BiPebryZ858A
-	EZ16YQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ut7ws90n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Feb 2025 10:08:43 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51HA8grZ002553
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Feb 2025 10:08:42 GMT
-Received: from [10.233.19.224] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 17 Feb
- 2025 02:08:38 -0800
-Message-ID: <abd2244b-d222-35e8-9aec-5c72ca2ace01@quicinc.com>
-Date: Mon, 17 Feb 2025 18:08:35 +0800
+	s=arc-20240116; t=1739787010; c=relaxed/simple;
+	bh=j32aHlewcxZHgt72stBZMlPca6hXMaSDHk5y3S0Dhak=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LIrnS7urACBTcbb7MdS/OuRDIEKO4wg72OKq82im76rdRF1kPQaPq36E9j8vOw89utfViVNi/uEc/0ZAE+mCojnt1AWmxjnLIwgHq5xO/bd69qGsX+muyHmh7ksVgfxh8ktKyc2yKRjxkQnIo10Oq8u3IB9Rjd+xgTe31W2kSbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K91MX+8h; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5e02eba02e8so2885651a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 02:10:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739787007; x=1740391807; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Uv151NG0pvPS5npwfEoUptwhovQw5OQ671qB8TdfkUA=;
+        b=K91MX+8h97CtNHY+J6Hcpv3TjveiWPoIsuvYHFjfbsfVFJ96KHJRxALDwc+dNlLKLv
+         jwKBRNkWOSiiA1+TShr2O643K65Uy1hqW725GefzNYyTqIWpic6rb6XyAfXEpJxbAPio
+         rcJiLrasiex4ZjCKyT/JHn2hCFPYcbn/iqecrHTskiukWl/OnAdsirfYbMa04/u0+Rcg
+         UWOF52DAyd30QNH20klAo8T3iN/0jx9dp7qtYVH76rUrWq5WniaJYUQpGGqmDzpd3QyY
+         pG/xTDbNRUR1eqfyRISVVfiTBzfjAVAV+93wdwLJd8WVZT9IEj9t59U3zvBaKUiIDiRg
+         H03w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739787007; x=1740391807;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Uv151NG0pvPS5npwfEoUptwhovQw5OQ671qB8TdfkUA=;
+        b=NhMZt47dWnQPBA4+zZ36MAqohcvzW3/MuveGlkC+qm9fs91K/RBntRnMDtoNAcDdCl
+         N+JNSb4FfwfwEl0eLDp78jc++uLB3QXtV58INI3pf/JyjtAQ5qthZgVorvZLx61Oj9DF
+         gdq6/DeB5mM4HjV5XQAFPmP4uQrLyxwz335DzH0ymeIklRjLwpv2CbIBlJqxZ6nPfQ7C
+         qyHN9lMjqdzN62hdi3D0HMW+8WMZjzEf2zdeQw55gwA8sanhpQI3nonGT5Zrnx6D2Z5n
+         iOgNLhbaEM0PJivqPxDmUUVCt3XHIwBbqnj4jSlVg7hN6fJB8fu7kWXtch2arWcZHHXv
+         VH5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXH5OQlp81+PrnoC2vevFlHMqHnPq4+ecPTE68zCk0yTtY/1gxFSy0aywUr2u0FT3sdMHbjDhP6EbbhrFaL@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaFnyuGUQBxz+gTsofaOi6PijTaMET1PUXE4FA8+UYeeJPtPLh
+	lugvO8z5j5s/2Zj+4zmCi89AmOhBApj7dfpjoVuMlaCXOdWs9lr0qz7f5oftY8E=
+X-Gm-Gg: ASbGnctAXX9G5ThEHN6UYi9H6ZBJHZCN1naKHVgSu969m8RocRLeaXPxLPGfSLGtlyG
+	fHLn7gea91KrzmQdoNven/SYa/dV+7VN09WrFCFFHa3gvmPoYLGM3kNR1KF1ncxVl6zBtmaZ3cr
+	s/L5Ij089JKRW1mSWc9X8FdG06vs41Tt76/hM3Zb/Rfo3ggiczUi9xjQv9bAe8S+2Tmk33I4JbD
+	o+rXluSBfxaB/WOJTIfl6cBkL96M+fitRDJLdetHx/DOU2pPFQomQr3iSfZBjiFK3+fZZOF1iSI
+	W/irT+wR/bJAHksx++zx0llKDaMdNrJLO68ylJESLUFrJyhgLXKwWxADPg==
+X-Google-Smtp-Source: AGHT+IGH+62O5WSEtHOlv1+RJOf1VZEfwtFti2ZEDmplBYjZuEVlS2Rl2AjyECic5SaKbQp0V/wtzA==
+X-Received: by 2002:a05:6402:5246:b0:5dc:ad49:ba1a with SMTP id 4fb4d7f45d1cf-5e035f2631bmr10793683a12.0.1739787006494;
+        Mon, 17 Feb 2025 02:10:06 -0800 (PST)
+Received: from rayden (h-98-128-140-123.A175.priv.bahnhof.se. [98.128.140.123])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece287cebsm6971482a12.74.2025.02.17.02.10.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Feb 2025 02:10:05 -0800 (PST)
+Date: Mon, 17 Feb 2025 11:10:03 +0100
+From: Jens Wiklander <jens.wiklander@linaro.org>
+To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Cc: Sumit Garg <sumit.garg@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-doc@vger.kernel.org
+Subject: Re: [PATCH v2 3/8] tee: add TEE_IOCTL_PARAM_ATTR_TYPE_UBUF
+Message-ID: <20250217101003.GB2637163@rayden>
+References: <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-0-297eacd0d34f@quicinc.com>
+ <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-3-297eacd0d34f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v3 2/2] phy: qcom: qmp-pcie: Add PHY register retention
- support
-Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: <vkoul@kernel.org>, <kishon@kernel.org>, <p.zabel@pengutronix.de>,
-        <dmitry.baryshkov@linaro.org>, <abel.vesa@linaro.org>,
-        <quic_qianyu@quicinc.com>, <neil.armstrong@linaro.org>,
-        <manivannan.sadhasivam@linaro.org>, <quic_devipriy@quicinc.com>,
-        <konrad.dybcio@oss.qualcomm.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-References: <20250214104539.281846-1-quic_wenbyao@quicinc.com>
- <20250214104539.281846-3-quic_wenbyao@quicinc.com>
- <20250214144623.fvjr2bytliqhektr@thinkpad>
-From: "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>
-In-Reply-To: <20250214144623.fvjr2bytliqhektr@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sE-UBibzRpJ7ZkIp72AKVWUX3bhJeZWX
-X-Proofpoint-ORIG-GUID: sE-UBibzRpJ7ZkIp72AKVWUX3bhJeZWX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-17_04,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1011 malwarescore=0
- bulkscore=0 mlxlogscore=999 spamscore=0 adultscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502170089
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-3-297eacd0d34f@quicinc.com>
 
-On 2/14/2025 10:46 PM, Manivannan Sadhasivam wrote:
-> On Fri, Feb 14, 2025 at 06:45:39PM +0800, Wenbin Yao wrote:
->> From: Qiang Yu <quic_qianyu@quicinc.com>
->>
->> Some QCOM PCIe PHYs support no_csr reset. Unlike BCR reset which resets the
->> whole PHY (hardware and register), no_csr reset only resets PHY hardware
->> but retains register values, which means PHY setting can be skipped during
->> PHY init if PCIe link is enabled in booltloader and only no_csr is toggled
->> after that.
->>
->> Hence, determine whether the PHY has been enabled in bootloader by
->> verifying QPHY_START_CTRL register. If it's programmed and no_csr reset is
->> available, skip BCR reset and PHY register setting to establish the PCIe
->> link with bootloader - programmed PHY settings.
->>
->> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 96 ++++++++++++++++--------
->>   1 file changed, 63 insertions(+), 33 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> index 219266125cf2..b3912c1a6de8 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> @@ -2805,6 +2805,7 @@ struct qmp_pcie {
->>   
->>   	const struct qmp_phy_cfg *cfg;
->>   	bool tcsr_4ln_config;
->> +	bool skip_init;
->>   
->>   	void __iomem *serdes;
->>   	void __iomem *pcs;
->> @@ -3976,7 +3977,9 @@ static int qmp_pcie_init(struct phy *phy)
->>   {
->>   	struct qmp_pcie *qmp = phy_get_drvdata(phy);
->>   	const struct qmp_phy_cfg *cfg = qmp->cfg;
->> +	void __iomem *pcs = qmp->pcs;
->>   	int ret;
->> +	bool phy_initialized;
->>   
->>   	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
->>   	if (ret) {
->> @@ -3984,10 +3987,18 @@ static int qmp_pcie_init(struct phy *phy)
->>   		return ret;
->>   	}
->>   
->> -	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->> -	if (ret) {
->> -		dev_err(qmp->dev, "reset assert failed\n");
->> -		goto err_disable_regulators;
->> +	phy_initialized = !!(readl(pcs + cfg->regs[QPHY_START_CTRL]));
->> +	qmp->skip_init = qmp->nocsr_reset && phy_initialized;
->> +	/*
->> +	 * Toggle BCR reset for phy that doesn't support no_csr
-> s/phy/PHY. Here and below.
+On Sun, Feb 02, 2025 at 06:43:31PM -0800, Amirreza Zarrabi wrote:
+> For drivers that can transfer data to the TEE without using shared
+> memory from client, it is necessary to receive the user address
+> directly, bypassing any processing by the TEE subsystem. Introduce
+> TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_INPUT/OUTPUT/INOUT to represent
+> userspace buffers.
+> 
+> Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+> ---
+>  drivers/tee/tee_core.c   | 27 +++++++++++++++++++++++++++
+>  include/linux/tee_drv.h  |  6 ++++++
+>  include/uapi/linux/tee.h | 22 ++++++++++++++++------
+>  3 files changed, 49 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
+> index 721522fe5c63..9f4b9a995e16 100644
+> --- a/drivers/tee/tee_core.c
+> +++ b/drivers/tee/tee_core.c
+> @@ -386,6 +386,16 @@ static int params_from_user(struct tee_context *ctx, struct tee_param *params,
+>  			params[n].u.value.b = ip.b;
+>  			params[n].u.value.c = ip.c;
+>  			break;
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_INPUT:
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_OUTPUT:
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_INOUT:
+> +			params[n].u.ubuf.uaddr = u64_to_user_ptr(ip.a);
+> +			params[n].u.ubuf.size = ip.b;
+> +
+> +			if (!access_ok(params[n].u.ubuf.uaddr, params[n].u.ubuf.size))
 
-Will use PHY instead.
+This line is over 80 columns,
+https://docs.kernel.org/process/coding-style.html#breaking-long-lines-and-strings
 
->
->> +	 * reset or has not been initialized
->> +	 */
->> +	if (!qmp->skip_init) {
->> +		ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->> +		if (ret) {
->> +			dev_err(qmp->dev, "reset assert failed\n");
->> +			goto err_disable_regulators;
->> +		}
->>   	}
->>   
->>   	ret = reset_control_assert(qmp->nocsr_reset);
->> @@ -3998,10 +4009,12 @@ static int qmp_pcie_init(struct phy *phy)
->>   
->>   	usleep_range(200, 300);
->>   
->> -	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
->> -	if (ret) {
->> -		dev_err(qmp->dev, "reset deassert failed\n");
->> -		goto err_assert_reset;
->> +	if (!qmp->skip_init) {
->> +		ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
->> +		if (ret) {
->> +			dev_err(qmp->dev, "reset deassert failed\n");
->> +			goto err_assert_reset;
->> +		}
->>   	}
->>   
->>   	ret = clk_bulk_prepare_enable(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
->> @@ -4011,7 +4024,8 @@ static int qmp_pcie_init(struct phy *phy)
->>   	return 0;
->>   
->>   err_assert_reset:
->> -	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->> +	if (!qmp->skip_init)
->> +		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->>   err_disable_regulators:
->>   	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
->>   
->> @@ -4023,7 +4037,10 @@ static int qmp_pcie_exit(struct phy *phy)
->>   	struct qmp_pcie *qmp = phy_get_drvdata(phy);
->>   	const struct qmp_phy_cfg *cfg = qmp->cfg;
->>   
->> -	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->> +	if (!qmp->nocsr_reset)
->> +		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->> +	else
->> +		reset_control_assert(qmp->nocsr_reset);
-> I'd flip the if condition for readability:
->
-> 	if (qmp->nocsr_reset)
-> 		...
-> 	else
-> 		...
+> +				return -EFAULT;
+> +
+> +			break;
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INPUT:
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_OUTPUT:
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INOUT:
+> @@ -454,6 +464,11 @@ static int params_to_user(struct tee_ioctl_param __user *uparams,
+>  			    put_user(p->u.value.c, &up->c))
+>  				return -EFAULT;
+>  			break;
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_OUTPUT:
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_INOUT:
+> +			if (put_user((u64)p->u.ubuf.size, &up->b))
+> +				return -EFAULT;
+> +			break;
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_OUTPUT:
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INOUT:
+>  			if (put_user((u64)p->u.memref.size, &up->b))
+> @@ -654,6 +669,13 @@ static int params_to_supp(struct tee_context *ctx,
+>  			ip.b = p->u.value.b;
+>  			ip.c = p->u.value.c;
+>  			break;
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_INPUT:
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_OUTPUT:
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_INOUT:
+> +			ip.a = (u64)p->u.ubuf.uaddr;
+> +			ip.b = p->u.ubuf.size;
+> +			ip.c = 0;
+> +			break;
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INPUT:
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_OUTPUT:
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INOUT:
+> @@ -756,6 +778,11 @@ static int params_from_supp(struct tee_param *params, size_t num_params,
+>  			p->u.value.b = ip.b;
+>  			p->u.value.c = ip.c;
+>  			break;
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_OUTPUT:
+> +		case TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_INOUT:
+> +			p->u.ubuf.uaddr = u64_to_user_ptr(ip.a);
 
-Will flip the if condition.
+Is this needed? Compare with how TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_* is
+handled below. If it's indeed needed, please add an access_ok() check.
 
->>   
->>   	clk_bulk_disable_unprepare(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
->>   
->> @@ -4042,16 +4059,22 @@ static int qmp_pcie_power_on(struct phy *phy)
->>   	unsigned int mask, val;
->>   	int ret;
->>   
->> -	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
->> -			cfg->pwrdn_ctrl);
->> +	/*
->> +	 * Write CSR register for phy that doesn't support no_csr
->> +	 * reset or has not been initialized
->> +	 */
->> +	if (!qmp->skip_init) {
-> How about:
-> 	if (qmp->skip_init)
-> 		goto skip_phy_init;
->
-> This is my personal preference btw. If anyone feels the other way, feel free
-> to drop this suggestion.
+> +			p->u.ubuf.size = ip.b;
+> +			break;
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_OUTPUT:
+>  		case TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INOUT:
+>  			/*
+> diff --git a/include/linux/tee_drv.h b/include/linux/tee_drv.h
+> index d5f0c70ac95c..130782d4d5f6 100644
+> --- a/include/linux/tee_drv.h
+> +++ b/include/linux/tee_drv.h
+> @@ -82,6 +82,11 @@ struct tee_param_memref {
+>  	struct tee_shm *shm;
+>  };
+>  
+> +struct tee_param_ubuf {
+> +	void * __user uaddr;
+> +	size_t size;
+> +};
+> +
+>  struct tee_param_value {
+>  	u64 a;
+>  	u64 b;
+> @@ -92,6 +97,7 @@ struct tee_param {
+>  	u64 attr;
+>  	union {
+>  		struct tee_param_memref memref;
+> +		struct tee_param_ubuf ubuf;
+>  		struct tee_param_value value;
+>  	} u;
+>  };
+> diff --git a/include/uapi/linux/tee.h b/include/uapi/linux/tee.h
+> index d0430bee8292..4a1dcfb4290e 100644
+> --- a/include/uapi/linux/tee.h
+> +++ b/include/uapi/linux/tee.h
+> @@ -151,6 +151,13 @@ struct tee_ioctl_buf_data {
+>  #define TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_OUTPUT	6
+>  #define TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INOUT	7	/* input and output */
+>  
+> +/*
+> + * These defines userspace buffer parameters.
+> + */
+> +#define TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_INPUT	8
+> +#define TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_OUTPUT	9
+> +#define TEE_IOCTL_PARAM_ATTR_TYPE_UBUF_INOUT	10	/* input and output */
+> +
+>  /*
+>   * Mask for the type part of the attribute, leaves room for more types
+>   */
+> @@ -186,14 +193,17 @@ struct tee_ioctl_buf_data {
+>  /**
+>   * struct tee_ioctl_param - parameter
+>   * @attr: attributes
+> - * @a: if a memref, offset into the shared memory object, else a value parameter
+> - * @b: if a memref, size of the buffer, else a value parameter
+> + * @a: if a memref, offset into the shared memory object,
+> + *     else if a ubuf, address into the user buffer,
 
-Will use goto statements.
+address _of_ the user buffer?
 
->
->> +		qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
->> +				cfg->pwrdn_ctrl);
->>   
->> -	if (qmp->mode == PHY_MODE_PCIE_RC)
->> -		mode_tbls = cfg->tbls_rc;
->> -	else
->> -		mode_tbls = cfg->tbls_ep;
->> +		if (qmp->mode == PHY_MODE_PCIE_RC)
->> +			mode_tbls = cfg->tbls_rc;
->> +		else
->> +			mode_tbls = cfg->tbls_ep;
->>   
->> -	qmp_pcie_init_registers(qmp, &cfg->tbls);
->> -	qmp_pcie_init_registers(qmp, mode_tbls);
->> +		qmp_pcie_init_registers(qmp, &cfg->tbls);
->> +		qmp_pcie_init_registers(qmp, mode_tbls);
->> +	}
->>   
->>   	ret = clk_bulk_prepare_enable(qmp->num_pipe_clks, qmp->pipe_clks);
->>   	if (ret)
->> @@ -4063,15 +4086,16 @@ static int qmp_pcie_power_on(struct phy *phy)
->>   		goto err_disable_pipe_clk;
->>   	}
->>   
->> -	/* Pull PHY out of reset state */
->> -	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
->> +	if (!qmp->skip_init) {
-> 	if (qmp->skip_init)
-> 		goto skip_serdes_start;
+Thanks,
+Jens
 
-Will use goto statements.
-
->
->> +		/* Pull PHY out of reset state */
->> +		qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
->>   
->> -	/* start SerDes and Phy-Coding-Sublayer */
->> -	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], SERDES_START | PCS_START);
->> -
->> -	if (!cfg->skip_start_delay)
->> -		usleep_range(1000, 1200);
->> +		/* start SerDes and Phy-Coding-Sublayer */
->> +		qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], SERDES_START | PCS_START);
->>   
->> +		if (!cfg->skip_start_delay)
->> +			usleep_range(1000, 1200);
->> +	}
->>   	status = pcs + cfg->regs[QPHY_PCS_STATUS];
->>   	mask = cfg->phy_status;
->>   	ret = readl_poll_timeout(status, val, !(val & mask), 200,
->> @@ -4096,16 +4120,22 @@ static int qmp_pcie_power_off(struct phy *phy)
->>   
->>   	clk_bulk_disable_unprepare(qmp->num_pipe_clks, qmp->pipe_clks);
->>   
->> -	/* PHY reset */
->> -	qphy_setbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
->> +	/* If a PHY supports no_csr reset but isn't enabled in the bootloader,
->> +	 * phy settings can be reused during the D3cold -> D0 cycle. So it is
-> I cannot parse this sentence. If PHY is not initialized, how can you reuse the
-> settings? Also what is the D3cold->D0 reference?
->
->> +	 * unnecessary to check qmp->skip_init.
->> +	 */
->> +	if (!qmp->nocsr_reset) {
-> 	if (qmp->nocsr_reset)
-> 		goto skip_phy_reset;
->
-> - Mani
->
--- 
-With best wishes
-Wenbin
-
+> + *     else a value parameter
+> + * @b: if a memref or ubuf, size of the buffer, else a value parameter
+>   * @c: if a memref, shared memory identifier, else a value parameter
+>   *
+> - * @attr & TEE_PARAM_ATTR_TYPE_MASK indicates if memref or value is used in
+> - * the union. TEE_PARAM_ATTR_TYPE_VALUE_* indicates value and
+> - * TEE_PARAM_ATTR_TYPE_MEMREF_* indicates memref. TEE_PARAM_ATTR_TYPE_NONE
+> - * indicates that none of the members are used.
+> + * @attr & TEE_PARAM_ATTR_TYPE_MASK indicates if memref, ubuf, or value is
+> + * used in the union. TEE_PARAM_ATTR_TYPE_VALUE_* indicates value,
+> + * TEE_PARAM_ATTR_TYPE_MEMREF_* indicates memref, and TEE_PARAM_ATTR_TYPE_UBUF_*
+> + * indicates ubuf. TEE_PARAM_ATTR_TYPE_NONE indicates that none of the members
+> + * are used.
+>   *
+>   * Shared memory is allocated with TEE_IOC_SHM_ALLOC which returns an
+>   * identifier representing the shared memory object. A memref can reference
+> 
+> -- 
+> 2.34.1
+> 
 
