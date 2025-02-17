@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-48176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBA3BA37FA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:16:12 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D05CBA37FCC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:19:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1BA53A5784
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 10:16:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00690188814D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 10:16:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A552215197;
-	Mon, 17 Feb 2025 10:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C38F216E08;
+	Mon, 17 Feb 2025 10:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F/pmuLRf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ToDPQVtt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829E81A2380;
-	Mon, 17 Feb 2025 10:16:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EE31DE2CC;
+	Mon, 17 Feb 2025 10:16:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739787367; cv=none; b=fJKOFoP4c9MUOIKT4AcFPMGzmwSUNNB1QDn9dBr6/saAa7IxGQw3UWe45gCCw++9IP4myDIfxUkosHMApT8lHjpf+X4nVBDz0bVvoU+0i8lNc4Ox0OtjhxRex4kQ/pMZwMN4d3YBZQaN1HQXArxkbvnLguo5ldb8+hrI+nFDr8c=
+	t=1739787385; cv=none; b=ArOEQqFYmu7X9XTzT7+W90jCIw8kB0UyfucpC9jW0NFq3gOVmOovDy4kAdbPGvV4BuzOcuwEckHqLtIrr8yNzeRx12P3MFvXRU+dz47IcA7ebohUIpOcfRvyoKUJG1OLy96x572e0NAAtQSJGzgHZQOb6tr63RIrcvTg3r0Y32o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739787367; c=relaxed/simple;
-	bh=Dzn9lEoIN6eg5dYcexk1ycmvzDStXkXQ6o3w7H6EWXs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ehqSWOFT//DlS/Xs2SEVqX9UMyYK+imfBepaDAeruj5scYu3rEsBab2p5K8NUxGb2dskEbV6cqIn/lE6o2XmdWrGEiZQbqSmgt+CEBf3gDCZWcLnZgdk06+D6yiF3YWZ9Um1i5rYGRVktysokYS3RHoCLyxOETkG227lWvkF7Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=F/pmuLRf; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1739787385; c=relaxed/simple;
+	bh=EepYzkCHB0rsnka4KljNMJk8FzzQcmIUFi+FBoSl4qE=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=QfqbybrEs/iYJ5A06GS7oMMlbPtyBMnIX0FtBE1nezTP9C6+QQt0t87DnwRtb2dEno779VdRn6NEmdAmUxWHjII0Cr+nx5y54ngncdN9RrxO6X4POZNerU68Iu8MCmsgvCB8JufgznaL5Msjiz8Z8ZtmGC1QZGcX1hOheWcTPW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ToDPQVtt; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51H030c9002910;
-	Mon, 17 Feb 2025 10:15:51 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51H02t8J026647;
+	Mon, 17 Feb 2025 10:16:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7hjqKwAEjBQEmoqd+2ugTsyb6OUqNmOcwB/Gk2YNfnE=; b=F/pmuLRfn6c4NBZK
-	9tZU2fCc604KUl4L9SEJnQhanqQ6lJLmxSErU+937agx6vjAGZFIAeI3YH1CsbxC
-	T6S/HgwIt/Oet0N8C3RUuaTkdZwIsDqYpMgD+9HmbvXffg4qwS2tVm6bd3Tpswdt
-	iKswX/eVmDpCTwGS7t2u0aebKVmFzZE8fn0+/J5GOMkzefUxv6mJay6lpoUcZB2r
-	zvaRGlZu9D4/qLuANJ3oweI2Yy1mvdwKX/nt0fIsbZ8gzkmXSmPVATc0euUFs7eO
-	jXKMFOOG9diS6870nYkAdUHMdMzkBgIgG3LI42dIt/B62pZtLP/VZa5/pDo5IWL6
-	jVcWGA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ut7tsa2t-1
+	WyWuVGSGYphL0Y244NpcdJRuqh/Em99Ndt8snuKmv/Q=; b=ToDPQVttdKVMJrGI
+	mwKBrX60Kly312gRPCUvheid6d6nDsJY5OmDusWknJW+S3+3MBw3bMHMnLDNR1C8
+	gJNMJ4VC1ALiYQowtzXS0POUvciK1n1Ul1XSEAh3Xv9c41M8XiXnWBBxdOpL8sq+
+	ligSncZYJ7Pu8x+vaY4+nlxUy+1/faHTySAn/TJW7pLJH2uVtyiOkMS9f6BAJOgv
+	Y60fHn6pKBYVtEo5dEUWqduiqUiDSBZIpy6slayD/kGT3zI5Y1WOxmoBM6UGtEFJ
+	Zo71VSMiaKAl+iLUVizi+n6nwNMW/qXU94R4zUsZidp9zULdoXIHItzq6BuSZ2nx
+	02ifng==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ut7sha6m-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Feb 2025 10:15:50 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51HAFn2o021933
+	Mon, 17 Feb 2025 10:16:19 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51HAGIRl009198
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Feb 2025 10:15:49 GMT
-Received: from [10.151.37.100] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 17 Feb 2025 10:16:18 GMT
+Received: from [10.231.216.103] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 17 Feb
- 2025 02:15:43 -0800
-Message-ID: <779a23f9-868a-4fe3-abc6-9240fd3ab491@quicinc.com>
-Date: Mon, 17 Feb 2025 15:45:24 +0530
+ 2025 02:16:15 -0800
+Message-ID: <dbeace93-ed19-4719-a72e-53be8999b0b3@quicinc.com>
+Date: Mon, 17 Feb 2025 18:15:30 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,63 +65,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: (subset) [PATCH V5 0/6] Add minimal boot support for IPQ5424
-To: Bjorn Andersson <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <ulf.hansson@linaro.org>, <linus.walleij@linaro.org>,
-        <catalin.marinas@arm.com>, <p.zabel@pengutronix.de>,
-        <geert+renesas@glider.be>, <dmitry.baryshkov@linaro.org>,
-        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-CC: <quic_varada@quicinc.com>
-References: <20241028060506.246606-1-quic_srichara@quicinc.com>
- <173085441672.26510.12002868497417768812.b4-ty@kernel.org>
+Subject: Re: [PATCH v3 0/3] Use APIs in gdsc genpd to switch gdsc mode for
+ venus v4 core
+From: Renjiang Han <quic_renjiang@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+References: <20250115-switch_gdsc_mode-v3-0-9a24d2fd724c@quicinc.com>
+ <bkjthw5osu5dkwpr46zanwyfqquo45gaivlojqp6n7ixwbdnua@3t3ap2yor5z4>
+ <00449451-d97f-47fe-b0ab-cddb9d2b0e93@quicinc.com>
 Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <173085441672.26510.12002868497417768812.b4-ty@kernel.org>
+In-Reply-To: <00449451-d97f-47fe-b0ab-cddb9d2b0e93@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 0vfDTzgoZsBo6oayox3MWP30CzYjNDKX
-X-Proofpoint-ORIG-GUID: 0vfDTzgoZsBo6oayox3MWP30CzYjNDKX
+X-Proofpoint-GUID: lPtMAZwyvINoLSY2k07M5JjZq5dSjKo5
+X-Proofpoint-ORIG-GUID: lPtMAZwyvINoLSY2k07M5JjZq5dSjKo5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-17_05,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0
- mlxscore=0 mlxlogscore=842 clxscore=1011 phishscore=0 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 impostorscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ suspectscore=0 malwarescore=0 mlxscore=0 mlxlogscore=843 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2501170000 definitions=main-2502170090
 
 
-
-On 11/6/2024 6:23 AM, Bjorn Andersson wrote:
-> 
-> On Mon, 28 Oct 2024 11:35:00 +0530, Sricharan R wrote:
->> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+On 1/17/2025 12:17 PM, Renjiang Han wrote:
+>
+> On 1/15/2025 5:59 PM, Dmitry Baryshkov wrote:
+>>> If only the clock patch or the venus driver patch is merged, the venus
+>>> driver will not work properly. Although it does not affect other system
+>>> functions, it is still recommended to wait until both the clock patch
+>>> and the venus driver patch are reviewed and passed, and then merge them
+>>> into the same release by their respective maintainers.
+>> NO! This will not work, as both -media and arm-soc branches will be
+>> broken. Please read about the git-bisect before making such suggestions.
 >>
->> The IPQ5424 is Qualcomm's 802.11be SoC for Routers, Gateways and
->> Access Points.
+>> A proper plan would be:
+>> - implement a function which allows one to check that hwmode is
+>>    supported by the genpd driver
+>> - Change Venus to use hwmode for those platforms if it is enabled
+>> - Enable HWMODE support in the clock driver. Clearly identify that this
+>>    patch should be merged together and after Venus changes if all
+>>    maintainers agree with that
+>> - Clean up now-dead code.
 >>
->> This series adds minimal board boot support for ipq5424-rdp466 board.
->>
->> [...]
-> 
-> Applied, thanks!
-> 
-> [6/6] arm64: defconfig: Enable IPQ5424 RDP466 base configs
->        commit: fd516bb4f48fc527744cae42d8e156fb09bce157
+>> Doing it in any other way would result in the broken kernels.
+>  Thanks for your comment. dev_pm_genpd_set_hwmode() has a check function.
+>  So I think I can do it like this to add compatibility in venus driver:
+>  - 1. the dev_pm_genpd_set_hwmode() is used to switch the GDSC mode by
+>  default.
+>  - 2. If it fails and dev_pm_genpd_set_hwmode() returns -EOPNOTSUPP, it
+>  means that the clock driver uses the HW_CTRL flag. At this time, the
+>  GDSC mode is switched by writing the POWER_CONTROL register.
+>
+>  In addition, the merged code needs to follow this order.
+>  - 1. Add compatibility in venus driver.
+>  - 2. Use the HW_CTRL_TRIGGER flag in clock driver
+>  - 3. Remove the dead code in venus driver.
+>
+  As internal discussion, in order to merge the patches in the correct order, we
+  plan to submit two patch series.
+  One patch series uses dev_pm_genpd_set_hwmode() to check if hwmode is supported,
+  and the venus driver is compatible with the two methods of switching GDSC mode.
+  Then the clock driver enables hwmode.
+  The other patch series will clean up the dead code.
+  Do you agree to submit two patch series or one?
 
-Hi Bjorn,
-    This patch is not appearing in mainline. Can you please
-    help ?
+-- 
+Best Regards,
+Renjiang
 
-Regards,
-  Sricharan
 
