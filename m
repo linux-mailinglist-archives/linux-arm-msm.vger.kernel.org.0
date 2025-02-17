@@ -1,80 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-48244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85A62A38944
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 17:35:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43471A389D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 17:44:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E65AD3ABF9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 16:34:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A5243A781A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 16:41:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31033225792;
-	Mon, 17 Feb 2025 16:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EDEA225771;
+	Mon, 17 Feb 2025 16:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oGaecDA4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UvTZhrf9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2FC224AFF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 16:33:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8547C225391
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 16:41:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739810024; cv=none; b=FYDEs6ntx3eDe8/XNV8PD4gzq7Rm9c8VnljZrVYfJP8pA5pN5ZXgcAEQqFmpuESvr+P9NGtRCJCtvGpeoLeUCmlMnFaPf6rZOlAQBp1VIFxYwQuxqB68x2oUjShQqOm0KyAUueFj1fZo7fryXQVTZcRvAAlpwyT7QFcW5nZMq8k=
+	t=1739810508; cv=none; b=aa0ASvDJR4zmGNcMbvjBpZwO/zD4PmfCVwzYZgCTQh8ff9J6cqfWdZN+QzWAZy+xVwPnukey86mmWda+6bJcvw8sqR52Yu70BVCBK5cmkQn4GKaBA2dxnqRjWjUtp75iJQA9MqWtT+v03CUbn5YL3FZVk5oje7dM9BKaXFnToos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739810024; c=relaxed/simple;
-	bh=Weli6Ud1pnhnVMQNhXbarzN29phyH4B6NUF7IDp6kk8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bBa7VWL79qh94942OtChKaKtsAiftNKaGzs8bnp9B3vvhlpjcABLgsSuzXuBmNvAR/rGYHYwuOtq/8LI99uWCMZzNxQb/L899pkWJ7uw/Gj7q3bhbFKxn1z928fnIw7YZeKcTYwjJTOQgwvMPNtPh3YVmIeE4Cw4vWyMo0o1Kv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oGaecDA4; arc=none smtp.client-ip=209.85.208.180
+	s=arc-20240116; t=1739810508; c=relaxed/simple;
+	bh=4GpjtyPhX2tIp7jKFxe8+OhXpy9WD8kHJbcuRQ6OQrE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=FdfowEd+4gYE7m9rt7x75dMJzKHybr6/JzUjLDL4+MPnP1k9nKcnMLwuUohs2jbZJual1fcSiT+NTlDyBinsWS7/QAMCg90b1QKPC8Impa8hsr0rtH6eD3M8H06qavy0Oy9ji1aG8jTDRAMnFgT64rn5l0d7nuJkTrNfWE9yCG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UvTZhrf9; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-30930b0b420so18190561fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 08:33:41 -0800 (PST)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-abb9e81c408so26027366b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 08:41:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739810020; x=1740414820; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lOzuf/LkISp9KTJoorQzqPXBIv79BHB/w9fYq6gMhqs=;
-        b=oGaecDA42/x9VyO56dlpj0BEff7MpruB4MAv+uQeci+Xlc7XCaz26XRGYj46R15OfJ
-         EEpF6LodR6uC2YJ7e6MbMaiWDPuvH+HKG7n2rDvxqD0ei+A5CGPF1f8dChaaKR/UeDuZ
-         nyefNvJJvwN/EkmYMJmvtaYMjo5Qe7cUfz4X12jC6OQ5VoAUuStKT7eIC9i42RZq+XLZ
-         0KwBAI+IuqzpNy31nW4dXNSJNazpFaiMY75NXw2sXP0/TqHP3U/FANT+S0yyalJVuyTE
-         R+Dpb8yn31Pbp96awPHHFg8axLZMJmnYnIVnKiQJD29NnM5JhqaUMDF/6zAwnm8U7Is8
-         kYnA==
+        d=linaro.org; s=google; t=1739810504; x=1740415304; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tl1qk986xZ9hRS1Mx9gWyhQ2tNCZt95h0ZGTwuGdgzE=;
+        b=UvTZhrf9VfYKLukqhkHdj6jGZ73OtoZLG/DyJHH3J8qP7dksB7w5TjVcH/DkS+XBm9
+         HcwZST8jKWPuQwdk6715mZzbV7YNQ9b8Gyuv2iXb6/E7Vd9Y00R7BtEdm/U4/yBechPH
+         0BeU6ISnMumsnaTiPqbMjheyLZfLcRXvlYP9a8f+S59LWVL2ulHqwC1MlpL75E7DKeMw
+         rs28EOB1Cz7xexwe6z/FDe1dsDbz2IH6ygQqwfLCayAOyIpvVM8MUYS0g2fnKLMN2WO4
+         2rS3FCkNZCtWPmzjFIiLw7W4dBtYvleqNVmP4pY7hMFcA+HgELv9NJN+4eRjs+UkGv+r
+         gLOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739810020; x=1740414820;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lOzuf/LkISp9KTJoorQzqPXBIv79BHB/w9fYq6gMhqs=;
-        b=MFQneRjkTzGH96s3Pfu9KAymALV9usAv1cjXzhDtuPTmOfwzAEP1i4g+EEquGnZ8zv
-         9+D/LgQGIOWVjn13mpOdd0j+JnZTHpsjvuJEwNeN0Y5NJos+IkINDkvPfgVNiHkuqPa5
-         4DSIHLFzUQGH9EiUuEVEWpDBgcfVTjdxpb52KyrqbLTtwl0uSQa5eqC+JhvU2kiYUG+K
-         B4sylzbK4608S6TiRpZGEuOgyY/cuinR3IfrZ+qmk5dTPm6g8k2wtHvPu7Azbb0fZOay
-         lC5k+E0gLJha1tyObrm1hna+UomooUbDlVTdALDuI/AiUnS+2nhbCBS8/jTS1dovW5xZ
-         rPGA==
-X-Forwarded-Encrypted: i=1; AJvYcCWvScZ2N5h3jyLBYpXuodSXvUdWcDxb9vylQt969hXoptcu088giOkle2bLpn863y+BQL5Mxn780iO87wXb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRL/dQyZMu/JXeVdyzB34W+0mf+JzrdMJ1uMyEYZpqxF4s42ul
-	U80DFmWM+BgLn0VCL7Zswlj4bVhSWk8ML1pOIi0NMdgttSo819e92X58l92vxJw=
-X-Gm-Gg: ASbGncv1njPvcHh3bGgde/4dao7f/sCdiBayu9Tx3qLVMqaKvDakzzYiYA8UTc28260
-	Rgx3UbatkyzGVZ+IAQCpD4hqrcHoUQGxN4bmH4WNKXcKdnJvDk+JatUq8hHaycdF/5bzyEGlyLs
-	chCcjebsCkPxgUGm82L5bLGalgdFBCpvp33LAj38mjg7CSm31mPR5BArnwq/KWf2SKo4QC7AgZ/
-	O0x7RqnALpIoofzLCuUzgqav2NzGVXZt7d+KEssXK6Ks6Fs4CBsdyf1lr0OEXgEylbUpzRtrh3z
-	zPp1SNLmCLugmGOaGuL7LqpEs4AR7fmnPclbKFRqlFEVsLe90nhta2xc7Uc=
-X-Google-Smtp-Source: AGHT+IGIDtOFP2+bSYh/mhrfrW4NqVSHnZ5dGinaXXwTY0e6knbNZgSm7OMksnK3maAilj31D2fOfg==
-X-Received: by 2002:a2e:7210:0:b0:308:f4cc:952e with SMTP id 38308e7fff4ca-30927a72098mr23385241fa.11.1739810020144;
-        Mon, 17 Feb 2025 08:33:40 -0800 (PST)
-Received: from [127.0.1.1] (2001-14ba-a0c3-3a00--782.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::782])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30a2cef18d1sm5695991fa.76.2025.02.17.08.33.38
+        d=1e100.net; s=20230601; t=1739810504; x=1740415304;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tl1qk986xZ9hRS1Mx9gWyhQ2tNCZt95h0ZGTwuGdgzE=;
+        b=JBGTEBLytrEAy2ufRX4CWeydHWpxKboq0JUlHxD7zXqNXnGEQ3bOIWhZOuc1upSeGr
+         /6XL6BJnNrFuZPFFRFWq235TBP81BmZaJNi6a/zxklcPP6tOWKdVZJhRdiYa0E82RwV6
+         3bHut+7J4pUchNFqWCZVQ4kpvzkT6H2kRBkyhakIAaUFNGowOPAdTaMFyFkveIMzSEA/
+         0jtCdn7Zh2SS3AXCiCfMT0TiNaaB26lOM7BszqmtaVY2i7bswPNQ1+PwFG5a3k7C5ebl
+         c2NIoSBFpRH0AcSLQxn25sHrgoGFRhG88ZH4VeXrKe80RD05H3SV3oXIgoBvTZ2DPr+s
+         9C9g==
+X-Gm-Message-State: AOJu0YxQ9XS8qqMAoI80Nc/Pv7ZJ29SiDFVPkJIYZCZ/RQWz+x6KROor
+	X2hBOGsmKahnBvOIgukZL+9PYXEmKLKxOV0CsXxf7hTE1Q0Ksvo3zJ2D+9s72qo=
+X-Gm-Gg: ASbGncv5kZGrDyzhSz6mzpFrps6ezQQsAOwjqr7TX3mjxZmr/rnVBdowdx7HYN6S+MX
+	8juOSZPHzaV0ii8IRGWGzk4Gb0kftrTjXnK8w+YGCQ4LHBf/iJ3hegXdlBAze81TcGQ6P1G7Piq
+	H+2As0mKWUQE+RdRmAQIZkTTVznb7BQhMirT1T+cd2HleJFxGKwtId4RivNxrGXHaUH/FvwIvJd
+	FTG3kbXmznUDTn6Qlc416vJJGlOVZB8uzlVKdfpIVqJf2I2ivqC6H3WlNmQW/JHISuvkPHO2kNA
+	l3YwatKyWVghRSSQbE9+R8Jc/YtRDFc=
+X-Google-Smtp-Source: AGHT+IFcQeNVHnsKf9IkLIKYVAi4SxUUfp260hQPfDzut6VqqPWdr13KL6UsKqTMH8NkbWY8oez30A==
+X-Received: by 2002:a17:906:6a03:b0:ab7:425d:1fa2 with SMTP id a640c23a62f3a-abb70d95991mr424723366b.10.1739810503738;
+        Mon, 17 Feb 2025 08:41:43 -0800 (PST)
+Received: from [127.0.1.1] ([178.197.206.225])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abbac781b78sm82647966b.60.2025.02.17.08.41.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2025 08:33:38 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 17 Feb 2025 18:33:22 +0200
-Subject: [PATCH v5 5/5] nvmem: qfprom: switch to 4-byte aligned reads
+        Mon, 17 Feb 2025 08:41:43 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 00/16] drm/msm: Add support for SM8750
+Date: Mon, 17 Feb 2025 17:41:21 +0100
+Message-Id: <20250217-b4-sm8750-display-v2-0-d201dcdda6a4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,105 +81,129 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250217-sar2130p-nvmem-v5-5-2f01049d1eea@linaro.org>
-References: <20250217-sar2130p-nvmem-v5-0-2f01049d1eea@linaro.org>
-In-Reply-To: <20250217-sar2130p-nvmem-v5-0-2f01049d1eea@linaro.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+X-B4-Tracking: v=1; b=H4sIALFms2cC/32NQQ6DIBBFr2Jm3WkAoVRXvUfjAhV0EisGGlJju
+ HupB+jyveS/f0C0gWyEtjog2ESR/FpAXCoYZrNOFmksDIIJxThrsJcYX3etGI4Ut8XseLNG1Vo
+ raRyHstuCdfQ5m8+u8Ezx7cN+XiT+s/9qiSPDvnZcOePk0OjHQqsJ/urDBF3O+QvwbVf7swAAA
+ A==
+X-Change-ID: 20250109-b4-sm8750-display-6ea537754af1
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, 
- =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org
+ Krishna Manikandan <quic_mkrishn@quicinc.com>, 
+ Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2302;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=Weli6Ud1pnhnVMQNhXbarzN29phyH4B6NUF7IDp6kk8=;
- b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBns2TSEqPikNYmi8q8gYeJniJgTWX3+m9/QROU1
- jibeXVol7mJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZ7Nk0gAKCRAU23LtvoBl
- uMHoEAC7JTtcprKualFbLDEYz0ZLnmBdS9s1aY6ScpflApOneIGCdgFh8r5RHCue9Dlxhf1PlzR
- g/1e/On5LZDovcxK7Piaa6tlTN1yr7AjVZt6l/+qe3McCPNTAh54pu80TJlhbdtwgeF8KL3L1OE
- DQFs4r+69FYZbMAL9omS+myH94hnOSA4/FFnovSkulO3ODRFEeZNT+4Shsls9u/lMdCRB6TkdQ/
- t8AutkJr8o60JOW+54SHl94w6Fyr32T8N9ZVd82xm6LlihzASy/I8eagL9H8YP5fGVT0OR8cpSJ
- l1DtIFpMoGWezZZCdskf+kAsxInYtqNu1yGcrj0Bflao5KHlpwwgbqKyGBcMocrm2Wx6vyuDdti
- D+N86w1mBxTr2iN136CE+HVx5UlojfKc82FSK6BV+5eeCztMijOlUfKSFyam8slyH6sicCCyGkh
- TzC5T615kkdaiA+ldrPJ1hMmgsrIOPwtZ0b9YkfZfl/0446dCTiKNIZCpbvliAqzOptxW8ZQTae
- MEPvyIjHm/NmDfj9ip2eyWeCN06NCXFsV4flcBEN49+g4q6rc2W+oAljnLJZT75LSMxLTeXO4iL
- O7W41b5mDHoyzh8GHZgQ88xULRjOqU0jgw3nDBH5VVzyajqtue3O5MGh/Mi5JvUISGGP0X2CWk2
- XqPfkyLdoQVkMWg==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3920;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=4GpjtyPhX2tIp7jKFxe8+OhXpy9WD8kHJbcuRQ6OQrE=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBns2a03lqV9dIyHRAwlUHltfCOEPr1IiF36ellm
+ Mlcs/X8ZX2JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ7NmtAAKCRDBN2bmhouD
+ 14NnD/9a4pjkt2J6S54Y+zsdMes7Q8++B4dMo0E+BAcDVAIW+FD7aMnvRQY+gsH8ZrDSV8wrXWa
+ Zt+3ARMZ+s6bjYynoZ3saHvO8tYiCPojMUn6UPnpBQ/jAJZ7KGvukfWJ6IKN2geKNqyy4FZPaH6
+ U7ARb55Vt/7KAbdceUn1TaNEMFlzZeFWPu5jM1o1Hc+4XjrdsCfQ7lfDIFqCPJIMp7q1di1RH3n
+ sWxrXBfcEv93aAQJUj24Vf+oaq61tMLVRp+N1EN6k/n7WYcP7RCpQaEIaN6f9XKJfBeg1UIGhWY
+ slvUnjub3z53iIgvdtLYuz5/EGqm+ChSCL9fQ3o08gh62U3DgpRTJ3kddlqR8QmxJPK9Q2qMCAp
+ xvSz8WYJnLAA128U4V78rc3RVgN14inNw5LJOfa15BNYLdfRDdznWN+ol5A5EWgMlCm80EU/vUI
+ 2V+NH+57BieX1jEWvb7jE8dYiwOZuDNAJ0pBsApZaCX1J80jV5IG6gndFpyKisLY3HnH9xfy0Ci
+ AWMdNov83jiCl6ZI42MYxqPzvyO8j6gGtVTb30BoDJRz+PuWlcuR69etka/UnwBk0Pdil0fX8bK
+ JBwFHSG/eu3ORZDfeFyROJrnpQZaxdQvfIOt2uPHx+BsMpOsTlIPRvHhkBB5IX4GXt6u4nb7p2W
+ rQQJXEiVe/CnP8Q==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-All platforms since Snapdragon 8 Gen1 (SM8450) require using 4-byte
-reads to access QFPROM data. While older platforms were more than happy
-with 1-byte reads, change the qfprom driver to use 4-byte reads for all
-the platforms. Specify stride and word size of 4 bytes. To retain
-compatibility with the existing DT and to simplify porting data from
-vendor kernels, use fixup_dt_cell_info in order to bump alignment
-requirements.
+Hi,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Dependency / Rabased on top of:
+https://lore.kernel.org/all/20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org/
+
+Changes in v2:
+- Implement LM crossbar, 10-bit alpha and active layer changes:
+  New patch: drm/msm/dpu: Implement new v12.0 DPU differences
+- New patch: drm/msm/dpu: Add missing "fetch" name to set_active_pipes()
+- Add CDM
+- Split some DPU patch pieces into separate patches:
+  drm/msm/dpu: Drop useless comments
+  drm/msm/dpu: Add LM_7, DSC_[67], PP_[67] and MERGE_3D_5
+  drm/msm/dpu: Add handling of LM_6 and LM_7 bits in pending flush mask
+- Split DSI and DSI PHY patches
+- Mention CLK_OPS_PARENT_ENABLE in DSI commit
+- Mention DSI PHY PLL work:
+  https://patchwork.freedesktop.org/patch/542000/?series=119177&rev=1
+- DPU: Drop SSPP_VIG4 comments
+- DPU: Add CDM
+- Link to v1: https://lore.kernel.org/r/20250109-b4-sm8750-display-v1-0-b3f15faf4c97@linaro.org
+
+Description:
+=============
+I got modetest writeback working, but DSI panel on MTP8750 still shows
+darkness.
+
+Best regards,
+Krzysztof
+
 ---
- drivers/nvmem/qfprom.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+Krzysztof Kozlowski (16):
+      dt-bindings: display/msm: dsi-controller-main: Combine if:then: entries
+      dt-bindings: display/msm: dsi-controller-main: Add missing minItems
+      dt-bindings: display/msm: dsi-phy-7nm: Add SM8750
+      dt-bindings: display/msm: dsi-controller-main: Add SM8750
+      dt-bindings: display/msm: dp-controller: Add SM8750
+      dt-bindings: display/msm: qcom,sm8650-dpu: Add SM8750
+      dt-bindings: display/msm: qcom,sm8750-mdss: Add SM8750
+      drm/msm/dpu: Drop useless comments
+      drm/msm/dpu: Add LM_7, DSC_[67], PP_[67] and MERGE_3D_5
+      drm/msm/dpu: Add handling of LM_6 and LM_7 bits in pending flush mask
+      drm/msm/dsi/phy: Add support for SM8750
+      drm/msm/dsi: Add support for SM8750
+      drm/msm/dpu: Add support for SM8750
+      drm/msm/dpu: Add missing "fetch" name to set_active_pipes()
+      drm/msm/dpu: Implement new v12.0 DPU differences
+      drm/msm/mdss: Add support for SM8750
 
-diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-index 116a39e804c70b4a0374f8ea3ac6ba1dd612109d..a872c640b8c5a558da9ea00e3804c904f8987247 100644
---- a/drivers/nvmem/qfprom.c
-+++ b/drivers/nvmem/qfprom.c
-@@ -321,19 +321,32 @@ static int qfprom_reg_read(void *context,
- 			unsigned int reg, void *_val, size_t bytes)
- {
- 	struct qfprom_priv *priv = context;
--	u8 *val = _val;
--	int i = 0, words = bytes;
-+	u32 *val = _val;
- 	void __iomem *base = priv->qfpcorrected;
-+	int words = DIV_ROUND_UP(bytes, sizeof(u32));
-+	int i;
- 
- 	if (read_raw_data && priv->qfpraw)
- 		base = priv->qfpraw;
- 
--	while (words--)
--		*val++ = readb(base + reg + i++);
-+	for (i = 0; i < words; i++)
-+		*val++ = readl(base + reg + i * sizeof(u32));
- 
- 	return 0;
- }
- 
-+/* Align reads to word boundary */
-+static void qfprom_fixup_dt_cell_info(struct nvmem_device *nvmem,
-+				      struct nvmem_cell_info *cell)
-+{
-+	unsigned int byte_offset = cell->offset % sizeof(u32);
-+
-+	cell->bit_offset += byte_offset * BITS_PER_BYTE;
-+	cell->offset -= byte_offset;
-+	if (byte_offset && !cell->nbits)
-+		cell->nbits = cell->bytes * BITS_PER_BYTE;
-+}
-+
- static void qfprom_runtime_disable(void *data)
- {
- 	pm_runtime_disable(data);
-@@ -358,10 +371,11 @@ static int qfprom_probe(struct platform_device *pdev)
- 	struct nvmem_config econfig = {
- 		.name = "qfprom",
- 		.add_legacy_fixed_of_cells = true,
--		.stride = 1,
--		.word_size = 1,
-+		.stride = 4,
-+		.word_size = 4,
- 		.id = NVMEM_DEVID_AUTO,
- 		.reg_read = qfprom_reg_read,
-+		.fixup_dt_cell_info = qfprom_fixup_dt_cell_info,
- 	};
- 	struct device *dev = &pdev->dev;
- 	struct resource *res;
+ .../bindings/display/msm/dp-controller.yaml        |   4 +
+ .../bindings/display/msm/dsi-controller-main.yaml  | 124 +++---
+ .../bindings/display/msm/dsi-phy-7nm.yaml          |   1 +
+ .../bindings/display/msm/qcom,sm8650-dpu.yaml      |   1 +
+ .../bindings/display/msm/qcom,sm8750-mdss.yaml     | 460 +++++++++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_12_0_sm8750.h    | 496 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  59 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  12 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  35 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  71 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  19 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          | 210 ++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h          |  18 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   6 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/dsi/dsi.h                      |   2 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |  25 ++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |  80 ++++
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |  79 +++-
+ drivers/gpu/drm/msm/msm_mdss.c                     |  33 ++
+ drivers/gpu/drm/msm/msm_mdss.h                     |   1 +
+ .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  |  14 +
+ 26 files changed, 1655 insertions(+), 101 deletions(-)
+---
+base-commit: 44ddcc7604ae61eadc748ccc6156bf4b98697978
+change-id: 20250109-b4-sm8750-display-6ea537754af1
 
+Best regards,
 -- 
-2.39.5
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
