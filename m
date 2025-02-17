@@ -1,170 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-48236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F0C3A386F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 15:51:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19E9EA38753
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 16:16:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09EF816C975
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 14:49:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 12FEF7A40BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 15:15:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 409AB224898;
-	Mon, 17 Feb 2025 14:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8B79212B3A;
+	Mon, 17 Feb 2025 15:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="FuKbJGTP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VGliM71j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11528223324;
-	Mon, 17 Feb 2025 14:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8693398B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 15:16:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739803782; cv=none; b=jO+TDoeabCgusOW1QBc3FvVKW6Wq7uEtS1BJUmwbQuGA0iBLdJ09uoSfiL7S78jsPKSzzhkPI72hvMdYUeiBaaKLIcvwPH0ItPntZUuXp29pDj6hNxUP+zVCe02zLHaUfJq25oUy/v43r3fT9Wq+H6JNrshdAj6PLcgYRI7RR0c=
+	t=1739805394; cv=none; b=nA5LOjaCvPaKnqnfiB35e2uYpT/OQwjMtQFfxy88ilicyLCOsAkJoMF09bJc16FAvQ5XJb4i7pxpAkMIY/APg+8C5EuEkks+CC8Px65cL+Q12gwadM+0HKcXnV3vzIWmelHIn19iuXRyYuq/Mmvh2uf03gg7LH6tFviSilyQ2yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739803782; c=relaxed/simple;
-	bh=noBWesDhIHu2UKaR18tw6XBMmfBZeqYD391YNtBjELo=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NPxJ3CPMev7TwTi0X2hg75EaLEP4pXpJdPlRczduxu9yY/7Of3khN+34zcK30tvotYBSgkeWv6E5dowT9e2Sh1iGctAk+hwjxoEgCFSZLSy38dgzKtQUf11CKv/7cpELtTwJ7PDu3SDJumcrruE2oYfUM48s8u2qC9HvW1+F0T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=FuKbJGTP; arc=none smtp.client-ip=217.70.183.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 64A4A44430;
-	Mon, 17 Feb 2025 14:49:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1739803777;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PCSw3bmWjwYwuAQWl8doOYDVdqtoYKvVbYaoog5r6cI=;
-	b=FuKbJGTPideoR9c6VeuSbGxTWhWv12fvminuJ8DDMWnRMjtEVQxnV/c1g4jtSw+pBHf3A6
-	RQBlVhGKexKMWaPV/8ju+UkrJ4fsyEhpPDWgeSW8hNw3tJkQRjPC9cU+sOxOlNvfA/by7C
-	h3P+/mW1/rFJ8UnPvJzgZHg52sj3CdJtWQc0TXqfKYgM0+7f+eZZ+hqZV5jTXhMHl06IU3
-	Ln8wHc7cu4kdYfBxzCeKT2Wd5Puw1/vFTMCGyOSWgqfOOP2CXY5j0yg5IO3/FFnlK0npwb
-	jvf1FZ3mskLOe3QP0WqZIcWoA2+0A9b1MUBCanwxV9yTMgSLsDf+eYpxkyErmA==
-Date: Mon, 17 Feb 2025 15:49:34 +0100
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
- <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, linux-arm-kernel@lists.infradead.org, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
- Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>, Sean Anderson
- <seanga2@gmail.com>
-Subject: Re: [PATCH net-next v4 05/15] net: phy: Create a phy_port for
- PHY-driven SFPs
-Message-ID: <20250217154934.76ec03e5@fedora.home>
-In-Reply-To: <Z7NF6ciz4RHMaGo6@shell.armlinux.org.uk>
-References: <20250213101606.1154014-1-maxime.chevallier@bootlin.com>
-	<20250213101606.1154014-6-maxime.chevallier@bootlin.com>
-	<Z7DjfRwd3dbcEXTY@shell.armlinux.org.uk>
-	<20250217092911.772da5d0@fedora.home>
-	<Z7NF6ciz4RHMaGo6@shell.armlinux.org.uk>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1739805394; c=relaxed/simple;
+	bh=G2gQZTBQ4WkAjjo748dOhOV1vedDR35EheFeys46r78=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oOHLcDzPf+ASba61wjetRfekdIFaI5T6TiVNd4yii5v2O7hto60tSFeJ8pErvSgrcJOg6ziGxcXwZDW8sPYZnahBk71cUeJ2i4fTlHYJga4qzUZTdVuRoyTqHEvmbOG7dpGKXipANkY+ppMggsUeRavYt7f3NN/lSUxh+LWTa7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VGliM71j; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-54622940ef7so1082288e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 07:16:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739805391; x=1740410191; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PsHNJZf4gBUaXZ8wW29cD/eT1WPiatSWZEkxIO7LMjQ=;
+        b=VGliM71jSvWNFiJk3wdfEYcv+fsXNjsjxiFJBVEtJA91EY2VE2pv8UnHSv4gLtNg2X
+         HLqNlgMTxxlYvGVcDndWf0lkiWkBy2drQenF0VDKXjn+0zQBT+0g/DOwzKC+Eyt8/tFT
+         LD+Qr2OHs8M+khs0QrvN9N8rN/Nx5mU2EUBafCgRNz413vSN6JLE/wjQybtgmHhq3M5u
+         al0GWLQIc0k3V84IpYXv6TdGq5rsXbLxYYIdK88boYh3LwwBe4S1NunSfuTAawqnFFO5
+         InP08qb7DH3ezwLufE4jVbIIPB3abMTM1aPbb3fPWzFjPx4UH2WQso5EBmBW3W3KSzro
+         h03g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739805391; x=1740410191;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PsHNJZf4gBUaXZ8wW29cD/eT1WPiatSWZEkxIO7LMjQ=;
+        b=MGl9JsGfIWBQ8bKimU5jci0BbzLI6/8MD1+O3y6VceBpELrILXWl0lOoe/TiIMaR3S
+         nM9mO1W4amFwuz0fS7uMBhk1sV+ZNr+nBR3u16OmynER8FWfK+r7aed5VCgkZhOXoJGt
+         ZjkeYaAcWluYzeUTqlHiFdcgeh9jbYaFy9ShJyZg+KuU54fvmjdRpF0CN9vZZuweDCFZ
+         LlgmMz02Llg3FjGUdFQyCa9xdIPTA41mAVEM3IQ21o1Lumi0h0yla6z1p8BuDsof1Uio
+         rJBskz1Utd863p5ebvXZeY0Oqk3NJHrQSN/0Z0nDRk1Bxfl2lnbIollz97Hpv5MX/WTF
+         HpUA==
+X-Forwarded-Encrypted: i=1; AJvYcCXfVzjSSxr8lF1CFSp5QvR1tLzGZyNRHjczGAMp8jQAO8nuTMMcQjPIQAlGirV+Zypifeoyk4TCQWg/DD2v@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmRb0HWN5EoqLRyhrkrRr3Ws5VHoFdIAx73Xjaqbxf8v3ofOr9
+	QS8BHVhfCOEUUV/BxIiNjaWT4pdjb9nbsEtKtHAPbtcuTA9NP8YwhydtJdRjfQA=
+X-Gm-Gg: ASbGncs2AatKnfcMpFo//3Q4FoAenhAm34l+sfGiNoODy+Y2rxOXOTpghGQdYBkW/GK
+	8qEzvyTZCxI/wZ5uMkbvj6Q3sb+uv6O7Bgf11yR7ZfDDYoxUtFXASAg2BkGF0H3c1USg+ZAfCQG
+	zdEYKCYBNWfwvJgkrONQJMpFSTOr/afcVEV0vKunH9TraHzBECR5C+tgC5Rzlf3H/TOmePJH4oR
+	3qJ+uLaNeP1sKpkRBJb1pM5GBiMmtFq3RQ+CzM6AWLz4Oc/+2DDUmQQUNNZEOt5tO+zKSeLmb0+
+	PSNgqErrmZZl8IIvspbUV8Q2bx4WTaot4S+I0+ykd8eAg6ASp9i9f0zzIT4klwRqFcrR/rY=
+X-Google-Smtp-Source: AGHT+IFYw6tpGjpP7jPGRzku+1SoU+IGeFXOMCovWE5Iolwo1XU7UJdyi6AK5Q+nHB2rwXLxH+SKuQ==
+X-Received: by 2002:a05:6512:238a:b0:545:381:70a with SMTP id 2adb3069b0e04-5452fe42483mr3989060e87.15.1739805390495;
+        Mon, 17 Feb 2025 07:16:30 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5452fb59e8bsm1043600e87.173.2025.02.17.07.16.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Feb 2025 07:16:30 -0800 (PST)
+Date: Mon, 17 Feb 2025 17:16:27 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Jonathan Marek <jonathan@marek.ca>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH v4 4/4] drm/msm/dsi/phy: Define PHY_CMN_CLK_CFG[01]
+ bitfields and simplify saving
+Message-ID: <waevglqatvykntxnmaahjpgbhipxhtcfpn7gfwud4sdidqh3dz@bfm7foignlm4>
+References: <20250217-drm-msm-phy-pll-cfg-reg-v4-0-106b0d1df51e@linaro.org>
+ <20250217-drm-msm-phy-pll-cfg-reg-v4-4-106b0d1df51e@linaro.org>
+ <ocxifv24wxghio3gfoychilmmjsxpeypxkzidspoq2e4dor7ja@wc54pryzyjge>
+ <df4cfdb1-66be-4264-aed3-0d5567e721f7@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehkeeikecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthejredtredtvdenucfhrhhomhepofgrgihimhgvucevhhgvvhgrlhhlihgvrhcuoehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeegveeltddvveeuhefhvefhlefhkeevfedtgfeiudefffeiledttdfgfeeuhfeukeenucfkphepvdgrtddumegtsgduleemkegugegtmeelfhdttdemsggtvddumeekkeelleemheegtdgtmegvheelvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudelmeekugegtgemlehftddtmegstgdvudemkeekleelmeehgedttgemvgehlegvpdhhvghlohepfhgvughorhgrrdhhohhmvgdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefuddprhgtphhtthhopehlihhnuhigsegrrhhmlhhinhhugidrohhrghdruhhkpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdro
- hhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
-X-GND-Sasl: maxime.chevallier@bootlin.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <df4cfdb1-66be-4264-aed3-0d5567e721f7@linaro.org>
 
-On Mon, 17 Feb 2025 14:21:29 +0000
-"Russell King (Oracle)" <linux@armlinux.org.uk> wrote:
-
-> On Mon, Feb 17, 2025 at 09:29:11AM +0100, Maxime Chevallier wrote:
-> > Hello Russell,
+On Mon, Feb 17, 2025 at 02:37:31PM +0100, Krzysztof Kozlowski wrote:
+> On 17/02/2025 14:13, Dmitry Baryshkov wrote:
+> > On Mon, Feb 17, 2025 at 12:53:17PM +0100, Krzysztof Kozlowski wrote:
+> >> Add bitfields for PHY_CMN_CLK_CFG0 and PHY_CMN_CLK_CFG1 registers to
+> >> avoid hard-coding bit masks and shifts and make the code a bit more
+> >> readable.  While touching the lines in dsi_7nm_pll_save_state()
+> >> resulting cached->pix_clk_div assignment would be too big, so just
+> >> combine pix_clk_div and bit_clk_div into one cached state to make
+> >> everything simpler.
+> >>
+> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>
+> >> ---
+> >>
+> >> Changes in v4:
+> >> 1. Add mising bitfield.h include
+> >> 2. One more FIELD_GET and DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL (Dmitry)
+> >>
+> >> Changes in v3:
+> >> 1. Use FIELD_GET
+> >> 2. Keep separate bit_clk_div and pix_clk_div
+> >> 3. Rebase (some things moved to previous patches)
+> >>
+> >> Changes in v2:
+> >> 1. New patch
+> >> ---
+> >>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c             | 13 ++++++++-----
+> >>  drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml |  1 +
+> >>  2 files changed, 9 insertions(+), 5 deletions(-)
+> >>
+> >> @@ -739,7 +741,8 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
+> >>  		u32 data;
+> >>  
+> >>  		data = readl(pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
+> >> -		writel(data | 3, pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
+> >> +		writel(data | DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL(3),
+> >> +		       pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
 > > 
-> > On Sat, 15 Feb 2025 18:57:01 +0000
-> > "Russell King (Oracle)" <linux@armlinux.org.uk> wrote:
-> >   
-> > > On Thu, Feb 13, 2025 at 11:15:53AM +0100, Maxime Chevallier wrote:  
-> > > > Some PHY devices may be used as media-converters to drive SFP ports (for
-> > > > example, to allow using SFP when the SoC can only output RGMII). This is
-> > > > already supported to some extend by allowing PHY drivers to registers
-> > > > themselves as being SFP upstream.
-> > > > 
-> > > > However, the logic to drive the SFP can actually be split to a per-port
-> > > > control logic, allowing support for multi-port PHYs, or PHYs that can
-> > > > either drive SFPs or Copper.
-> > > > 
-> > > > To that extent, create a phy_port when registering an SFP bus onto a
-> > > > PHY. This port is considered a "serdes" port, in that it can feed data
-> > > > to anther entity on the link. The PHY driver needs to specify the
-> > > > various PHY_INTERFACE_MODE_XXX that this port supports.
-> > > > 
-> > > > Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>    
-> > > 
-> > > With this change, using phy_port requires phylink to also be built in
-> > > an appropriate manner. Currently, phylink depends on phylib. phy_port
-> > > becomes part of phylib. This patch makes phylib depend on phylink,
-> > > thereby creating a circular dependency when modular.
-> > > 
-> > > I think a different approach is needed here.  
-> > 
-> > That's true.
-> > 
-> > One way to avoid that would be to extract out of phylink/phylib all the
-> > functions for linkmode handling that aren't tied to phylink/phylib
-> > directly, but are about managing the capabilities of each interface,
-> > linkmode, speed, duplex, etc. For phylink, that would be :
-> > 
-> > phylink_merge_link_mode
-> > phylink_get_capabilities
-> > phylink_cap_from_speed_duplex
-> > phylink_limit_mac_speed
-> > phylink_caps_to_linkmodes
-> > phylink_interface_max_speed
-> > phylink_interface_signal_rate
-> > phylink_is_empty_linkmode
-> > phylink_an_mode_str
-> > phylink_set_port_modes
-> > 
-> > For now all these are phylink internal and that makes sense, but if we want
-> > phy-driven SFP support, stackable PHYs and so on, we'll need some ways for
-> > the PHY to expose its media-side capabilities, and we'd reuse these.
-> > 
-> > These would go into linkmode.c/h for example, and we'd have a shared set
-> > of helpers that we can use in phylink, phylib and phy_port.
-> > 
-> > Before I go around and rearrange that, are you OK with this approach ?  
+> > Nit: should this also be using dsi_pll_cmn_clk_cfg1_update() ?
 > 
-> I'm not convinced. If you're thinking of that level of re-use, you're
-> probably going to miss out on a lot of logic that's in phylink. Maybe
-> there should be a way to re-use phylink in its entirety between the
-> PHY and SFP.
 > 
-> Some of the above (that deal only with linkmodes) would make sense
-> to move out though.
+> This is before clocks are registered so there is really no chance for
+> simultaneous access.
+> 
+> It is rather then question of code readability or obviousness.
 
-Yeah I'm thinking about moving only stuff that is phylink-independent
-and only deals with linkmodes indeed. I'll spin a quick series to see
-what it looks like then :)
+That's why I added it as a nit. I don't think that it's required, but I
+think it might improve the patch.
 
-Thanks,
-
-Maxime
-
+-- 
+With best wishes
+Dmitry
 
