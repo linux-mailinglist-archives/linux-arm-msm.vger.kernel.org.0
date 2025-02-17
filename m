@@ -1,46 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-48293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62D4FA38EAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 23:09:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E35AA38EAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 23:09:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 283B03A648C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 22:06:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F1203A665A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 22:06:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69D741B4141;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BC251B4152;
 	Mon, 17 Feb 2025 22:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="nO6GCS4y"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="CgXwaQk7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC28B1AF0B7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3B51AF0B8;
 	Mon, 17 Feb 2025 22:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739829962; cv=none; b=Yt/hFKCG/pcDLpDLFCUsQcna4oNA5Tt9q5pR+T9rW6Ii4LDD9SwGlrwiY2TiXDXFZD6e5+UqEFX1oZGsl2NmNqQaIx6+IUsd492oHbV/JcfPnlmyMDMDlMr+nYuG1DHSngXDRurqXD8grXgtny/Fudm1bkpiH0fMJg+GIgepa+g=
+	t=1739829962; cv=none; b=nCwJZZdAl9qkt4RlxQQHhL2BB0zk926zzdw1bc2UrGSnrDfg2yq6zG34f4anvv2ugSxBUpewlYCmzzbb1QKUJrKRAX11wSj8kQFnnd0hU+bA1XvpU9aSZ3WDEMC5fWErU1WW3Oe2F5dqnSkhGCwAT2lDDornIBDJnyeLQbu8VPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1739829962; c=relaxed/simple;
-	bh=jpy5uWscm5n25aeooQjOuugzo/l5xnqC2dhnFTaNXq0=;
+	bh=c3OdZXsHQl8Hpj942CA3+f4fIQmaWKu9wILF5OxwWc8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SouBlKyp1hz9wqkUjwX0gaNiJjWFs27dtLVQ0K25rgtnVA9+dQ24lq4sr8W0Iv+RyDjZ5L3kaxgnQ4oqRJ5vrWN8SmeZvGCuU55iu4iCnxBGLS/5Ik6V288BMcYHyQJF4ZYQMOrgC60j+AyRPubCBNQXpKIh1mL5whpp281lBDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=nO6GCS4y; arc=none smtp.client-ip=128.199.32.197
+	 In-Reply-To:To:Cc; b=qsgcBh53kpmLuIXbVxQSYsvA9DFWBZ3oJZUSfwjRzgq1aOBC6ZS3EJp4AQF4YPJQ4oX7TBApoKiC3ez6STc0ATQhRLsneLrgA7zKmlC/CSIphmPNmUtszfNHxlEqyiiTAr+lh+p/+f1TmfXCshTM9YroaNUaPoBVmDOWfEqJXVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=CgXwaQk7; arc=none smtp.client-ip=128.199.32.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1739829949; bh=jpy5uWscm5n25aeooQjOuugzo/l5xnqC2dhnFTaNXq0=;
+	t=1739829950; bh=c3OdZXsHQl8Hpj942CA3+f4fIQmaWKu9wILF5OxwWc8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=nO6GCS4yu2/3IjXpqMOIDjQqbzHEhEF0vd7rG2Qmi6lvEpuRN3MvaArFlctnvZtzC
-	 DBIpcbfA6X2/YSug1aaGQUmVW8rI145twBcaUU2WvLm3NCR5MVCPy8NzLTiT1PmyXv
-	 YjbQZSVEQ0HwikoY3QP7Manj5YCTmMhP2tmiKJjE=
+	b=CgXwaQk7cADGv53QDsnXhsjJGIMO7YbnS5LycnugXlnTnqSt7MxT9MQmi6CyUHyx7
+	 dHmIwwmwmcl28kTcBgXqCb2kHeoP3dAgKKPlkNRIbHKde+J3ygj4IbgSTDWZj2LeRH
+	 BUeY1VdXNOSQP/R6/dkMUrqrTzGVd71wiNUrYT5k=
 From: Luca Weiss <luca@lucaweiss.eu>
-Date: Mon, 17 Feb 2025 23:05:21 +0100
-Subject: [PATCH v5 07/13] ARM: dts: qcom: msm8226: Add node for TCSR halt
- regs
+Date: Mon, 17 Feb 2025 23:05:22 +0100
+Subject: [PATCH v5 08/13] ARM: dts: qcom: msm8226: Add smsm node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,7 +48,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250217-msm8226-modem-v5-7-2bc74b80e0ae@lucaweiss.eu>
+Message-Id: <20250217-msm8226-modem-v5-8-2bc74b80e0ae@lucaweiss.eu>
 References: <20250217-msm8226-modem-v5-0-2bc74b80e0ae@lucaweiss.eu>
 In-Reply-To: <20250217-msm8226-modem-v5-0-2bc74b80e0ae@lucaweiss.eu>
 To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
@@ -62,53 +61,82 @@ To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
 Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Luca Weiss <luca@lucaweiss.eu>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+ Stephan Gerhold <stephan.gerhold@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=977; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=EG1Yxy7Ssf9FR6CqB3nM5wo8JTRgwLQbA7US32NjMDg=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBns7K1h2ZEO1NoQMm7lsMw/nevMv/6YlcD7SfrQ
- +uMfUXDO6SJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ7OytQAKCRBy2EO4nU3X
- VvoIEADaXo8Yg1ff5ApnAnwmd81sgu+nlCM2k99JFmBSM72AtDKaCgATLSKD9w9gul/TB03vjNo
- KXnTX5KdvsFvrZzOYVfjMvDTu973BLO4r4emD7n1GZq6rEYew58GF6SE89Kqmy725QuCz0L25mY
- cC8oWajHcsQ8Qc2el+VgDbe0tirKuKsAKxIaD5/YhhiniIAGJk+riIR0U9K/Hxj92u6MEF4jQA5
- nfWaqzk85hdHPQYPuVw7guHburDNt2d45PijS+ErfwYCtUChfYPA96BzJR78JgEeXqnHcuds2iH
- oqtzoSTbRX7ePMzypIXymgKPCSxgt+ncAUYplKjwpN8nlLXZUmGhOjGotobi15olq0WZue1yj7x
- pJGipVNbq2uJZr1tJqdf1JIJ6kuknaJZF6acgevdt8mdUF4N8p9jHCzwxgYp6Hip13s11oDelPN
- Zfp551CKIoEmUKxwuLoGRRm5ujY7c8h0roHBy3wPuZ8H+Yr1Q5FyOMmOMyI/RAWC7XHbx2Gpwty
- 4QdMQimmfpDqE97ZM3wfMhzJEqVJrhPk8GkAwK/iDKJRRk32oNg1+izScYLoP7WCkXzHMSBvg7i
- hkRQM8QyUotM2NvxUGaRnPc/AjhIW6SlH7QCPyn12X8Vzh4fcW8MNJR/vXWj0Y7fldfi6kY1akC
- aWyfJ1Yv6LI9mXg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1545; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=eoHX87/Yfz6a9HStDewruF7nDlvvxRzf55C1aXv2xuE=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBns7K2Ehl12Gf4BDTiHen3xgTdq7MqB7K2BsV64
+ O60M3MlRP6JAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ7OytgAKCRBy2EO4nU3X
+ VpUBEACeBtYEOeRYSJ0gKjXahxWLUUvKV/LLHwevWDlt9oeIIr52/q3sRBCXFeBZOLAloUcr3en
+ +pDO3NxZEyrD8/cN4PfTOSmtvb0cUDpY5SZ0cgLHOqOHPw0v+tm1WleQkJZFO+lFADNvsn0GkeV
+ Yx+WCd7qXm/ZuzyCM08Dh0QbEjsq5usY0jQ9civUkfYnxMpZMXFdIXvLjgtSBCasp+mkv+cKqpu
+ qkQafK928eGqttUXVSV2Sb0hLPggnbeIlaA7GJZUPYZrkeDjJ97US+h8NkBTiFY5NKpUJ6Cna8L
+ yY6i17x7U+2CsWRTkwNKUU4f/+5Sezay4+4slDxc8hAanpGJzNvpO0//BE+rjP4Yv9RzY/cRSbw
+ oMPcrbMVUJpBxbZvBgvR1MaSGySXqkZSFyT/PxJOX1Gt3gdoHrDLIut64a24xcHbSprXRm1Fkse
+ ypEOyl9rZ7EP44XDUP0NCrHUTwDKuc6HqNlqwlAGjdcb5Xa0UzmSJa9Pr4Gk1nh+a/r3/dp8JvD
+ TYP5lKL3rVmEzteNu3neN2/pvwN8fHjQ8H4aSqNE0Q6VJvfareArlF8KnKXRXrzn/aSB0nugkrr
+ 2+HUrjFkyir1Z/OQwqCiDKidXfufeAPDd8SPQ+MtZX0GWcAWe2s0NFsXPuGIRKY1klxZ4ZrzzWG
+ CKn8CYlosfLcYLA==
 X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
  fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
 From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 
-Add a syscon device node for the TCSR halt regs needed by
-modem and other remoteprocs.
+Add smsm node for remoteproc cores.
 
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Co-developed-by: Luca Weiss <luca@lucaweiss.eu>
 Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 ---
- arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 34 ++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
 diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-index 64c8ac94f352e46dc4a18f902d2c30114ecd91d2..caaeeadf289f78d29403312738bbb714eaad74d2 100644
+index caaeeadf289f78d29403312738bbb714eaad74d2..7e0838af6c2d0dc26e0082471b70578bc627491d 100644
 --- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
 +++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-@@ -851,6 +851,11 @@ tcsr_mutex: hwlock@fd484000 {
- 			#hwlock-cells = <1>;
+@@ -253,6 +253,40 @@ adsp_smp2p_in: slave-kernel {
  		};
+ 	};
  
-+		tcsr_regs_1: syscon@fd485000 {
-+			compatible = "qcom,tcsr-msm8226", "syscon";
-+			reg = <0xfd485000 0x1000>;
++	smsm {
++		compatible = "qcom,smsm";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		mboxes = <0>, <&apcs 13>, <&apcs 9>, <&apcs 19>;
++
++		apps_smsm: apps@0 {
++			reg = <0>;
++			#qcom,smem-state-cells = <1>;
 +		};
 +
- 		tlmm: pinctrl@fd510000 {
- 			compatible = "qcom,msm8226-pinctrl";
- 			reg = <0xfd510000 0x4000>;
++		modem_smsm: modem@1 {
++			reg = <1>;
++			interrupts = <GIC_SPI 26 IRQ_TYPE_EDGE_RISING>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++
++		adsp_smsm: adsp@2 {
++			reg = <2>;
++			interrupts = <GIC_SPI 157 IRQ_TYPE_EDGE_RISING>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++
++		wcnss_smsm: wcnss@7 {
++			reg = <7>;
++			interrupts = <GIC_SPI 144 IRQ_TYPE_EDGE_RISING>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++
+ 	soc: soc {
+ 		compatible = "simple-bus";
+ 		#address-cells = <1>;
 
 -- 
 2.48.1
