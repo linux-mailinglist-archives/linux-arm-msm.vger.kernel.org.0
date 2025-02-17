@@ -1,46 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-48298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20927A38EA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 23:07:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 840A9A38EE0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 23:13:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF75118898E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 22:07:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8419A189626E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 22:12:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0925C1C7019;
-	Mon, 17 Feb 2025 22:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 866E41AA1E0;
+	Mon, 17 Feb 2025 22:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="ClVkGORw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L/otBlqE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF7C1B0F34;
-	Mon, 17 Feb 2025 22:06:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B721A8402;
+	Mon, 17 Feb 2025 22:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739829963; cv=none; b=RqmpYNnRGF+aNe3jdB6zjoCQRoBmQjdXTlAcMwIzDBHrzd/YIM6sja36aOMXBRmxGqdEvzQ20NwY76jgEI9Z3BAZ39OWDWt54MCAswMe/ci5X5UKsiaIowDrkAHGElMQCLDPDsNir5m1FFF0E0inFX8taRsvfTqVyyAk8EFmXZc=
+	t=1739830259; cv=none; b=mpnsTUX5AcWG/Lkj+VldMZx6Ve3I7fGxwp0Al1wh9Nac07YF9/VJrg8oilA5xIO2HirwqCNxm1omqt9Ufs7mR1sAvfNQ6tzVchi8gx1eXsBIdAI9lHnLN8/zuI4NyAGGjmDkad/h6ZYsBI3//lSLUcclfPYphqZlBmx2AmheHto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739829963; c=relaxed/simple;
-	bh=SS4BWu9ddGsvTH1RzieVss0jVfXjz9CbopGLiQCpdOU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=L8o0WCqjvY7Un/nbg9CSn0qdgSXbHYRiayXxyEwLSofF+dUeVJ7zsRUlEbiakIrEeqlhWiONpMyCriFqE/iSeRG+hIwYe6kofn4zMmW9q5fHkrdo5+r9f7bP00ykeYRKpUIQYXid/1xemFMOLoLkPXGBLtA/mhmJ6zqe1lBL1JE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=ClVkGORw; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1739829951; bh=SS4BWu9ddGsvTH1RzieVss0jVfXjz9CbopGLiQCpdOU=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=ClVkGORwEWoJkvhKoz45oNHDsSy5UpNU1a8ZgF7UTkQ5HpnjF5xV2i5gHC40x0v6R
-	 3Lwt+FrvRnvBZc3SL1BSo0mLYnoTKWTVlqqqbp0qhwDDnJV4MGl+iAh3SNRes43KoM
-	 1LV4EVzsFh5Vte3qaIlLsfEZJ7dKw0MqCPLQYQOE=
-From: Luca Weiss <luca@lucaweiss.eu>
-Date: Mon, 17 Feb 2025 23:05:27 +0100
-Subject: [PATCH v5 13/13] ARM: dts: qcom: msm8226-samsung-matisse-common:
- Enable modem
+	s=arc-20240116; t=1739830259; c=relaxed/simple;
+	bh=kz2joIaUFNhKMcE7TsiNBZLC3yx9ts0wwnhOk56savA=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FOH3y6Dv+MKnAgQb6o4HEHfikeAOIbN2NLVrOoOqgWSu+zK+cSZ08ygLZan7eBTAyw4Lll2Zm82iF6O7zqOyRqN5AzZXbfFfBekG40O5LuuPZjFUDnI+a6UUrZiHnE/MDZ4zV4eTlODFKDxrF0g1FLqWrCpvkFAMnwB7o/5duIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L/otBlqE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51HAisBn004459;
+	Mon, 17 Feb 2025 22:10:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	LZO4RmAwdWvHhYb8qMLxm/nSTg9V+VwwT6x0u1skeEc=; b=L/otBlqE+gbq85BM
+	WgeeUrcJCMrF36W4W3MNERaOVQUehpx5Uka7cr1KpRacic2xBhZCLac+K2MC3P1i
+	zju9KIh6k3FjaOpD8g95dSrdM9xr7azTUYO/BX4p//ucL1OdfA7vsFrlLQ0Ck7zj
+	kWyBiVr5YLWj1JRZJ4R9qfaiQ59n67iQlnobHQDb4yyBsYpUcxLeSrzh9Zxwtfxy
+	SLV/kg0Gdt8DC+avPjcLhz27hFMyIw5G145d7c25KSoNuqBNViKe/zCcn/zHO/+R
+	4wvVPdaQkBCZay5MNZDpye56Na/9LK1sDj2HXIsXEg/YZj1W7jN/SHyan2uu/5pm
+	5Wglfw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44v3mg1duj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Feb 2025 22:10:46 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51HMAiIR004908
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Feb 2025 22:10:44 GMT
+Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 17 Feb 2025 14:10:44 -0800
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Abhinav Kumar <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: (subset) [PATCH 00/35] drm/msm/dpu: rework HW block feature handling
+Date: Mon, 17 Feb 2025 14:10:26 -0800
+Message-ID: <173982978188.1706705.18136509869048284263.b4-ty@quicinc.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
+References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,88 +81,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250217-msm8226-modem-v5-13-2bc74b80e0ae@lucaweiss.eu>
-References: <20250217-msm8226-modem-v5-0-2bc74b80e0ae@lucaweiss.eu>
-In-Reply-To: <20250217-msm8226-modem-v5-0-2bc74b80e0ae@lucaweiss.eu>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca@lucaweiss.eu>, 
- Stephan Gerhold <stephan.gerhold@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1724; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=W7bAKRt8yj2yIFDoK8M8DwUBnwPfc/tZ4V5bO84GQEk=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBns7K7LIAhgKul/TdrfYZ9rF6wKCXg+b/I7C1WP
- GRIwYlBNlyJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ7OyuwAKCRBy2EO4nU3X
- VtGdD/9wZhOyZ9rqin2j9RUel1qYSGfVJoksozm9qVZfWKaAaD7ZPNajnbtu7G2e6k0GqkEXJra
- 8OTTchrK56xrWlLUXonpMIx4WYBCfsRGWfGz0mBQGns6ZDz7wt+B6XN1/Dj2+Gq2mWiTV5bryZ2
- pNCMEgxK49Wg1e91+N2CcTWi417ooi0iCvE2Ja08P3u1X6x9GtYTvL7vOZQTiRyxOb/HGienK1J
- R1L1vUblNN7ACA9c622zpbjBGXJHBI7KLizuyePTZ9JB5R+CqUhgYrn7a7EoQkmMnov+ef+OOXb
- UsRthJJvyvRwMiCg+KQCc+qj/SK+GowteJQQj1xt3Ue40f09Rwsp0QfW+wunKZoQo76jVOKgPXc
- v0S5ht7d6RafWcBZvm4ND+VeU1sZbRhy4uw0NvEpuc4pdlYQ6S1Y+L/HRIVYqLePvx1YAErqz7u
- pJq7uldLt5on7ydlUxjfkGn4P+9LJhPX0rDv6ueMamISWhfMpuxXussjWTsEYQJR4EGMyTpv1Cm
- oz8JehNasLUIUdiG31biObEDwg2KhnX2I3vDBQsQYAzESn1IXW9RleW44DSVTUNflu10tVIPqxv
- VRHqkknRDzbJDeD3IkgSXhuXpq4lhqITbnP7ye/cutjZzweKEDoCVkrX4LFbB3IcQV1fMXbtnmD
- ID3/idDqhhRDIzg==
-X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rlyp48cn0jiv6PkP1lfCgzG4n7DNNeOI
+X-Proofpoint-ORIG-GUID: rlyp48cn0jiv6PkP1lfCgzG4n7DNNeOI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-17_08,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 clxscore=1015 adultscore=0 priorityscore=1501 mlxscore=0
+ phishscore=0 spamscore=0 mlxlogscore=927 impostorscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502170173
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 
-Enable modem remoteproc on samsung,matisse-wifi & matisselte.
+On Sat, 14 Dec 2024 00:14:16 +0200, Dmitry Baryshkov wrote:
+> Some time ago we started the process of converting HW blocks to use
+> revision-based checks instead of having feature bits (which are easy to
+> miss or to set incorrectly). Then the process of such a conversion was
+> postponed. (Mostly) finish the conversion. The only blocks which still
+> have feature bits are SSPP, WB and VBIF. In the rare cases where
+> behaviour actually differs from platform to platform (or from block to
+> block) use unsigned long bitfields, they have simpler syntax to be
+> checked and don't involve test_bit() invocation.
+> 
+> [...]
 
-The mattisselte - being msm8926 - requires an extra mss-supply, so add
-that as well.
+Applied to msm-fixes, thanks!
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
----
- arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi | 7 +++++++
- arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts      | 4 ++++
- 2 files changed, 11 insertions(+)
+[01/35] drm/msm/dpu: skip watchdog timer programming through TOP on >= SM8450
+        https://gitlab.freedesktop.org/drm/msm/-/commit/2f69e5458447
+[02/35] drm/msm/dpu: enable DPU_WB_INPUT_CTRL for DPU 5.x
+        https://gitlab.freedesktop.org/drm/msm/-/commit/af0a4a2090cc
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
-index 0a3147656f36ca2616e0e3cc7c1dd808b55f3a88..f1544a7e8369c329360e235c48291a5d4c261fdc 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
-@@ -229,6 +229,13 @@ &blsp1_uart3 {
- 	status = "okay";
- };
- 
-+&modem {
-+	mx-supply = <&pm8226_l3>;
-+	pll-supply = <&pm8226_l8>;
-+
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators {
- 		compatible = "qcom,rpm-pm8226-regulators";
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts
-index 772827cad972ad4ff032cfb9310568c5d2f0170f..73e19176eb97af569d99580c6b28fb2e0ec7f1b3 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts
-@@ -28,6 +28,10 @@ reg_tsp_3p3v: regulator-tsp-3p3v {
- 	};
- };
- 
-+&modem {
-+	mss-supply = <&pm8226_s5>;
-+};
-+
- &tlmm {
- 	tsp_en1_default_state: tsp-en1-default-state {
- 		pins = "gpio32";
-
+Best regards,
 -- 
-2.48.1
-
+Abhinav Kumar <quic_abhinavk@quicinc.com>
 
