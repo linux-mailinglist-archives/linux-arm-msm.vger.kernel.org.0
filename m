@@ -1,134 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-48152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 928BFA37CD5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 09:13:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD3B1A37D32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 09:29:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABB3F3AE9B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 08:12:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 81AD517120E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 08:29:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C36BB19CD13;
-	Mon, 17 Feb 2025 08:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43B3A1A0731;
+	Mon, 17 Feb 2025 08:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mGBbQZe9"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="LnBzlFkc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F9418F2EA;
-	Mon, 17 Feb 2025 08:12:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515A419F115;
+	Mon, 17 Feb 2025 08:29:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739779976; cv=none; b=lQakALDAff4QqYu+AbLs4SNvSJKTzjZ6rQyfqrsXBtBpfAstIZ0U6JONj4zOh9oryosgJD70+EfJT9cgU2SWO3S01j8XkuJZu7+/X58g+6FLoccMRdhqwLbyBoAZdWXde5fhFo3oGEcbyo1ZYzPE6udSy+Ndov2U8otOUyTz3PI=
+	t=1739780968; cv=none; b=UgLhFDn9/5EEKGViZW88KkzmXHhJoMCV+EncpkZwsXvlykcjj0k8sL+ddR2mv2HKwfXwd1vQMxwLnfvYtxiWYuddSfIG+fFBvMvlrnRV9x9x3ZhELtMzqkn7fohh9cuyqW5FXMo3idjV1CK4WuGWT/TlK70YjyvTh5QWStEOfJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739779976; c=relaxed/simple;
-	bh=9vBf6PHSw2DclbWEGznCOiYAGAY/r4Uos7XN/FYSSNc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HSuplLEnUBtcTVeLHmhI3Ps3ljv9xOJW0WR2S2mbu4hZDxrKTeoa73x1IAEs1dGhLspj19XzBWlQsnRk5sgcy1J7zXCbbiSHKdAPJAd/lTk6FvzBK4ksjXWRu0gmyJOI57Wa+1D6L5qyIYRDGsMYRPNRVLhSbO7buhJ3CsuZjT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mGBbQZe9; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51H043m2019710;
-	Mon, 17 Feb 2025 08:12:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5xRVJ1YevyiW1l2CaOUFUwAyZv+xv67AGIg/GfedxXw=; b=mGBbQZe9QZSZInp9
-	pt87237NtDM6mqOnObyJlU+XUC5M8mWohb0mkgcx/oEvSEMfP6IJo9d6IfTB0aht
-	LRCVBl92t7boJFnGzrsNGtISG4phQrXm+gR/pxXKA/9kRTjSgAH51t0tAeOh9ovM
-	ixG1j6DOzRcBMNtSv0ro7dXbXC1iKa5b7cVIt/g1UCYupdQxJvv5dVLoSoLYwAwt
-	w0RbAXhhSUiUYe2kCnJrd3iEGqkTCCc4QrFiDhyV7W9fQ4R5kEGuNfLsSWaG3SQB
-	JVefYj+il43Zpur6JBFi+YeZO2NffalcZcUABvzUwe4SQRS7faPDIOXKlprnNMjF
-	VDVF/w==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ut7urxu7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Feb 2025 08:12:50 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51H8Cnvf011978
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Feb 2025 08:12:49 GMT
-Received: from [10.204.101.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 17 Feb
- 2025 00:12:45 -0800
-Message-ID: <4206de50-2970-a93b-867a-03ae6cdcedd3@quicinc.com>
-Date: Mon, 17 Feb 2025 13:42:42 +0530
+	s=arc-20240116; t=1739780968; c=relaxed/simple;
+	bh=NgVWQqvEGgkg3GF7x4d8/TavathxvBCSBC50VSh54eI=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iSCdKAFAEcVfBxLDLfCP9QzDY1CivwidKHKjjFGzr0qzT1LwCojo1xsUFO6GVVGBFvYG6nJ21AJK5JLbJ4r3CObqSRaQVMC+VRNIr1f1MVET6ur3kIW7xr+X/iV07fjEslc2eJlOt/WymGJJTAZXeqyMT4xxHcnT9bW0X3cY5UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=LnBzlFkc; arc=none smtp.client-ip=217.70.183.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id E51C0442AA;
+	Mon, 17 Feb 2025 08:29:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1739780956;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=v5AnTb28mQKtjEHDL/Wk7VuZHdL8LuplyEfPirr+QDY=;
+	b=LnBzlFkcgZdoEtjFLY3rmc7Fv9NnY81cKg9mYY/HiYt9UxhsWLnGxsV9cIF4Abzd17XhGe
+	4kneXCqLG+QzaJNapTEBQyXVi3//cC7NdpLsTv0XhY9/D58ZsnH3ydpdOf2L7ccHO7XJ8A
+	wKjo7XpWTprsPoUai+IAO8+AXYJFX2vDlszT6+M+C2Hjp+jxk07z3k+uFp2DJslPVfeZKo
+	a3UI3mIZfkEjWMjNCMu+3dqfBqnc0acxFIPL5CS7+yDfws9QkU2fQGYfs5GFu9Y7Sfivrv
+	5khQc4Kx7WRi6T55WBGbKgEjBGPRn15o176YQsxsQvxbgJWTtOJraFEVzc5kNA==
+Date: Mon, 17 Feb 2025 09:29:11 +0100
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
+ <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, linux-arm-kernel@lists.infradead.org, Christophe Leroy
+ <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>,
+ Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
+ <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
+ =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
+ =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
+ <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
+ <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
+ mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
+ devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
+ Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
+ Dimitri Fedrau <dimitri.fedrau@liebherr.com>, Sean Anderson
+ <seanga2@gmail.com>
+Subject: Re: [PATCH net-next v4 05/15] net: phy: Create a phy_port for
+ PHY-driven SFPs
+Message-ID: <20250217092911.772da5d0@fedora.home>
+In-Reply-To: <Z7DjfRwd3dbcEXTY@shell.armlinux.org.uk>
+References: <20250213101606.1154014-1-maxime.chevallier@bootlin.com>
+	<20250213101606.1154014-6-maxime.chevallier@bootlin.com>
+	<Z7DjfRwd3dbcEXTY@shell.armlinux.org.uk>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH next] media: iris: fix error code in
- iris_load_fw_to_memory()
-Content-Language: en-US
-To: Dan Carpenter <dan.carpenter@linaro.org>
-CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Hans Verkuil
-	<hverkuil@xs4all.nl>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel-janitors@vger.kernel.org>
-References: <a1d9e082-a4d5-4440-996f-7ee7e850de60@stanley.mountain>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <a1d9e082-a4d5-4440-996f-7ee7e850de60@stanley.mountain>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VgubdHpLUZe94Q8YIvhITZ4x8kCuY0bO
-X-Proofpoint-ORIG-GUID: VgubdHpLUZe94Q8YIvhITZ4x8kCuY0bO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-17_04,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=999 spamscore=0 clxscore=1011 malwarescore=0 bulkscore=0
- mlxscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502170071
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehjeeltdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthejredtredtvdenucfhrhhomhepofgrgihimhgvucevhhgvvhgrlhhlihgvrhcuoehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeegveeltddvveeuhefhvefhlefhkeevfedtgfeiudefffeiledttdfgfeeuhfeukeenucfkphepvdgrtddumegtsgduleemkegugegtmeelfhdttdemsggtvddumeekkeelleemheegtdgtmegvheelvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudelmeekugegtgemlehftddtmegstgdvudemkeekleelmeehgedttgemvgehlegvpdhhvghlohepfhgvughorhgrrdhhohhmvgdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefuddprhgtphhtthhopehlihhnuhigsegrrhhmlhhinhhugidrohhrghdruhhkpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdro
+ hhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
+X-GND-Sasl: maxime.chevallier@bootlin.com
 
+Hello Russell,
 
+On Sat, 15 Feb 2025 18:57:01 +0000
+"Russell King (Oracle)" <linux@armlinux.org.uk> wrote:
 
-On 2/17/2025 1:38 PM, Dan Carpenter wrote:
-> Return -ENOMEM if memremap() fails.  Don't return success.
+> On Thu, Feb 13, 2025 at 11:15:53AM +0100, Maxime Chevallier wrote:
+> > Some PHY devices may be used as media-converters to drive SFP ports (for
+> > example, to allow using SFP when the SoC can only output RGMII). This is
+> > already supported to some extend by allowing PHY drivers to registers
+> > themselves as being SFP upstream.
+> > 
+> > However, the logic to drive the SFP can actually be split to a per-port
+> > control logic, allowing support for multi-port PHYs, or PHYs that can
+> > either drive SFPs or Copper.
+> > 
+> > To that extent, create a phy_port when registering an SFP bus onto a
+> > PHY. This port is considered a "serdes" port, in that it can feed data
+> > to anther entity on the link. The PHY driver needs to specify the
+> > various PHY_INTERFACE_MODE_XXX that this port supports.
+> > 
+> > Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>  
 > 
-> Fixes: d19b163356b8 ("media: iris: implement video firmware load/unload")
-> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-> ---
->  drivers/media/platform/qcom/iris/iris_firmware.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> With this change, using phy_port requires phylink to also be built in
+> an appropriate manner. Currently, phylink depends on phylib. phy_port
+> becomes part of phylib. This patch makes phylib depend on phylink,
+> thereby creating a circular dependency when modular.
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
-> index 7c493b4a75db..f1b5cd56db32 100644
-> --- a/drivers/media/platform/qcom/iris/iris_firmware.c
-> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
-> @@ -53,8 +53,10 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
->  	}
->  
->  	mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
-> -	if (!mem_virt)
-> +	if (!mem_virt) {
-> +		ret = -ENOMEM;
->  		goto err_release_fw;
-> +	}>
->  	ret = qcom_mdt_load(dev, firmware, fw_name,
->  			    pas_id, mem_virt, mem_phys, res_size, NULL);
+> I think a different approach is needed here.
 
-Thanks for the fix.
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+That's true.
 
-Thanks,
-Dikshita
+One way to avoid that would be to extract out of phylink/phylib all the
+functions for linkmode handling that aren't tied to phylink/phylib
+directly, but are about managing the capabilities of each interface,
+linkmode, speed, duplex, etc. For phylink, that would be :
+
+phylink_merge_link_mode
+phylink_get_capabilities
+phylink_cap_from_speed_duplex
+phylink_limit_mac_speed
+phylink_caps_to_linkmodes
+phylink_interface_max_speed
+phylink_interface_signal_rate
+phylink_is_empty_linkmode
+phylink_an_mode_str
+phylink_set_port_modes
+
+For now all these are phylink internal and that makes sense, but if we want
+phy-driven SFP support, stackable PHYs and so on, we'll need some ways for
+the PHY to expose its media-side capabilities, and we'd reuse these.
+
+These would go into linkmode.c/h for example, and we'd have a shared set
+of helpers that we can use in phylink, phylib and phy_port.
+
+Before I go around and rearrange that, are you OK with this approach ?
+
+Maxime
 
