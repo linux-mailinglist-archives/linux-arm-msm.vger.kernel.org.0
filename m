@@ -1,293 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-48194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DAB9A380F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:59:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4357AA3817E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 12:18:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 54A481890133
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 10:58:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9542016FD5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:18:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CA5C218E85;
-	Mon, 17 Feb 2025 10:56:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lTnPBV0I"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEB9221773E;
+	Mon, 17 Feb 2025 11:18:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5D6217711;
-	Mon, 17 Feb 2025 10:56:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE611A5B8A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 11:18:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739789794; cv=none; b=M8aGGBBBWh9s/K0rEFFV4eMQF4rS7eTsvktLKhfAuLXcrGLDDYN86dORisrcF4Q+40rZ5C2XjC7ys+/KrwbkM/gbLO6WRX36fi+uW9mPtlSSmJyFVyCbTQRAVfffaX+re+02f5yw/rU/izwQvrUEZSF9Wx3O6/PU6TsBxNRjS5Y=
+	t=1739791084; cv=none; b=bATFqWy6NwhYIIS/aN5T2PEZqtC8/M4OnJGrxpt7jZhx5y9bmOqQl4X0LOXjfDOzJEgUE09gP+CA7z4oZPZ3PHsvByB1kSbps8bhOMuaemG8nZSJy6qpiIDh/qnCtGPubBIdlfhMadHn2uEjwFvypc250xS9MGLYdfWQfft1Hj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739789794; c=relaxed/simple;
-	bh=hDLOgY+mA75Ymn1iBk9Z4iLCk4JLS5jTuILN+eQ4yqo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s3rpXXu/RKjmu0tclFka90+E0iPYd48dQ5HcoFA3cJjXn59Zr3GVld7PF2AQf3qeP1c5ZJHcs2i340eRYZ1eUz82cGguoNy58977xBEtldf7wpsyUE1qv8+ticYm305iyR8YUdQ4J6WSzWkMu5IAkMXze38+IU9xQCe5wCvbw5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lTnPBV0I; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739789792; x=1771325792;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=hDLOgY+mA75Ymn1iBk9Z4iLCk4JLS5jTuILN+eQ4yqo=;
-  b=lTnPBV0IU4esVwvCGq4KRZo+9bXio1nrGTEUv4NX6IZDNQhT5Py21+RG
-   YNHAKJbkSQzp5e9xDCehLqnw31RCIOBkLsW1u46nO27yj8S1tK+PjOlNC
-   U7qgblQJSDzvL2aOYeZ4A9fbC/nugJGpZ9CsILCBLeceUlFvq3aIc1Bk5
-   R/jeAvgo/zZMZZkYNFK7uwOQCGO/kjht2j+9sKxGUF6rsqvhIRahlJs6b
-   qdZN9bE5kUhTvp//zPh0rDFQWx2oEVX2il+d9aGOWnhecsDVM6fZat/jW
-   nRmM1GDvR/DiW1nbjxA9SIPVQ2vP5qKzC/k3HzDa8nT9AiBrzZhIs6r+9
-   g==;
-X-CSE-ConnectionGUID: KZcytm0MRSaymEoNWZXFJw==
-X-CSE-MsgGUID: SVhxAqNqShOzkIdQRQPAlQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11347"; a="39695321"
-X-IronPort-AV: E=Sophos;i="6.13,292,1732608000"; 
-   d="scan'208";a="39695321"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Feb 2025 02:56:31 -0800
-X-CSE-ConnectionGUID: Y7CuIuy7RWWBpOkgyg8jpA==
-X-CSE-MsgGUID: aFmpx/LzTN6y0ale2QzYlg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="119012041"
-Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
-  by orviesa003.jf.intel.com with ESMTP; 17 Feb 2025 02:56:23 -0800
-Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tjynV-001D0p-0I;
-	Mon, 17 Feb 2025 10:56:21 +0000
-Date: Mon, 17 Feb 2025 18:55:43 +0800
-From: kernel test robot <lkp@intel.com>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Bjorn Helgaas <helgaas@kernel.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Jeff Johnson <jjohnson@kernel.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
-	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
-	quic_jjohnson@quicinc.com, quic_pyarlaga@quicinc.com,
-	quic_vbadigan@quicinc.com, quic_vpernami@quicinc.com,
-	quic_mrana@quicinc.com,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: Re: [PATCH 6/8] bus: mhi: host: Add support for Bandwidth scale
-Message-ID: <202502171823.5VC7a1E6-lkp@intel.com>
-References: <20250217-mhi_bw_up-v1-6-9bad1e42bdb1@oss.qualcomm.com>
+	s=arc-20240116; t=1739791084; c=relaxed/simple;
+	bh=XlYKleX94y6B66dSSrT2H1qCHvUu0eQ2CYD3wdZHzm4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WQjxIYuAXjpLI9IhwOT2bc+HMmzTPP3MrGBRUi5z+yQImxG0KPa+1jUESLE0Fbr8apAIBEaz1GSwGTBo6X4gUxz5+JZNLdy18l/fHv0+mjVLOow2OM4yYm6S0iIt3EMCbyKVNlgmVGW8/jG9ayNMixVhiRSYhXf5LHgZPhUQjXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 664A71F784;
+	Mon, 17 Feb 2025 12:17:52 +0100 (CET)
+From: Marijn Suijten <marijn.suijten@somainline.org>
+Subject: [PATCH v3 0/3] drm/msm: Initial fixes for DUALPIPE (+DSC) topology
+Date: Mon, 17 Feb 2025 12:17:40 +0100
+Message-Id: <20250217-drm-msm-initial-dualpipe-dsc-fixes-v3-0-913100d6103f@somainline.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250217-mhi_bw_up-v1-6-9bad1e42bdb1@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANQas2cC/43QzW7DIAwH8FeJOM8TEL4STdPeY9qBBtMihZBBG
+ q2q+u4jqXrZLr1hLP1s/6+kYA5YSN9cScY1lJCmWrQvDRlOdjoiBFdrwikXVDAFLkeIJUKYwhL
+ sCO5sxznMCK4M4MMPFmg91UweaHvwglRozrg3qvP5VetTKEvKl33myrbfB6+f4VcGFLSx2CJ2V
+ nX6o6RowzSGCV9TPpJtxsofrqScdk+5vLoVpMwI74ZW/XNv92Myfp9rUMv9IhKxFLsH1Tdv+0D
+ GObj5DIwxWNKcxnS8bDwDSSV2slPC+u4P/75FdbAFYUgxhqVv0EnjGG1ROcukFYJ7b7RU2nRGK
+ 1NXtErVZ13s9gu/pSb2yQEAAA==
+X-Change-ID: 20240416-drm-msm-initial-dualpipe-dsc-fixes-3f0715b03bf4
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ David Airlie <airlied@gmail.com>, Vinod Koul <vkoul@kernel.org>, 
+ Simona Vetter <simona@ffwll.ch>, Archit Taneja <architt@codeaurora.org>, 
+ Hai Li <hali@codeaurora.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Jordan Crouse <jordan@cosmicpenguin.net>, 
+ ~postmarketos/upstreaming@lists.sr.ht, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Martin Botka <martin.botka@somainline.org>, 
+ Jami Kettunen <jami.kettunen@somainline.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3328;
+ i=marijn.suijten@somainline.org; h=from:subject:message-id;
+ bh=XlYKleX94y6B66dSSrT2H1qCHvUu0eQ2CYD3wdZHzm4=;
+ b=owEBbQKS/ZANAwAIAfFi0jHH5IZ2AcsmYgBnsxrfcr9CYslQNi/zZFAiBjHbrUr4GF+oa/EUK
+ iAVRzHzeCyJAjMEAAEIAB0WIQROiwG5pb6la1/WZxbxYtIxx+SGdgUCZ7Ma3wAKCRDxYtIxx+SG
+ duhXD/4gXtpsLfvjMzmOIHqN/Zv2OqY0dRVcboIQIYcdpzRrMREfIwRUyqqkBzwf+qsjgNnBlvH
+ YoGrVBOWgoNMscgxFGV1FQDtzqb7h50V6JI2ojvBvBag4IoByJwPMvuIZ9nzcn93BbcteHSUek8
+ Wz09Ks4EgC5pXQwH7MC5ZIjfPazGP1CqvHDrGAv6u5Fgmofk+G5pqaCS7GvUEQ09riEtrPLh04l
+ lBdC1MjREMk1qCXFVzdCWRG1K7eaIX6tSahgdI07VzCqYb3zCrNPSZ9ZFA7WMNFEvDesWh2bYgx
+ yIsTrvThd/FFX8GQ2NNS+da+Yk9CCRyMJvrIOzQZC/qLelstds+D8dik/NL4TmNL2sNnvcoqBfV
+ 0vGGAQlgJh1NLXJ7fQkiNAU+cPKFBPebtmmtt5ENjS9xZvkt6C6MQ7x4a2pEaCcUjgE14KQi4i6
+ jdEiSitQJc1oDBIl5gVQ9rIibD7djr4cTD6xIVPektqkum9ReXwe2pKOIZTrPw+d4N8xQoxwWAZ
+ cwpMHt40AaXIlk4BSbDShyGHj0A2b6K7SL6JT+8+hP8h/45ldHWb17JWK52bbQrWMAylFGKzUX6
+ 1XLIknD3t13ZJ4iehPlsnsWSQg/jgZJhbM00zNfEMe6QK0L4joa4opzELj9mChTJU7MyWBFARml
+ Ft/t1hSHSQYORTg==
+X-Developer-Key: i=marijn.suijten@somainline.org; a=openpgp;
+ fpr=4E8B01B9A5BEA56B5FD66716F162D231C7E48676
 
-Hi Krishna,
+This series covers a step-up towards supporting the DUALPIPE DSC
+topology, also known as 2:2:2 topology (on active-CTL hardware).  It
+involves 2 layer mixers, 2 DSC compression encoders, and 2 interfaces
+(on DSI, this is called bonded-DSI) where bandwidth constraints (e.g. 4k
+panels at 120Hz) require two interfaces to transmit pixel data.
 
-kernel test robot noticed the following build warnings:
+Enabling this topology will be hard(er) than downstream as hacking a
+layout type in DTS won't be describing the hardware, but "dynamically"
+determining it at runtime may pose some of a challenge that is left to a
+future series.  Such changes will also involve the 1:1:1 topology needed
+for constrained hardware like the Fairphone 5 on SC7280 with access to
+only one DSC encoder and thus ruled out of the current 2:2:1 topology.
 
-[auto build test WARNING on 0ad2507d5d93f39619fc42372c347d6006b64319]
+Likewise, the patches and discussions around improving active-CTL
+configuration to support bonded interfaces (that share a single CTL
+block) are still in full swing and hence elided from this series, apart
+from one patch to fix the ACTIVE_DSC register coding to support updates,
+so that it is not forgotten about.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Chaitanya-Chundru/PCI-update-current-bus-speed-as-part-of-pci_bus_add_devices/20250217-144050
-base:   0ad2507d5d93f39619fc42372c347d6006b64319
-patch link:    https://lore.kernel.org/r/20250217-mhi_bw_up-v1-6-9bad1e42bdb1%40oss.qualcomm.com
-patch subject: [PATCH 6/8] bus: mhi: host: Add support for Bandwidth scale
-config: x86_64-buildonly-randconfig-006-20250217 (https://download.01.org/0day-ci/archive/20250217/202502171823.5VC7a1E6-lkp@intel.com/config)
-compiler: clang version 19.1.3 (https://github.com/llvm/llvm-project ab51eccf88f5321e7c60591c5546b254b6afab99)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250217/202502171823.5VC7a1E6-lkp@intel.com/reproduce)
+This issue and successful resolution of all the problems is discussed
+and demonstrated in https://gitlab.freedesktop.org/drm/msm/-/issues/41.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202502171823.5VC7a1E6-lkp@intel.com/
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
+Changes in v3:
+- Removed start of multiline comment inside another comment
+  (editor detritus from merging two comments in v2);
+- Inserted empty newline after the start of multi-line comments (per
+  kernel coding style).
+- Link to v2: https://lore.kernel.org/r/20250209-drm-msm-initial-dualpipe-dsc-fixes-v2-0-9a60184fdc36@somainline.org
 
-All warnings (new ones prefixed by >>):
+Changes in v2:
+- Dropped patches that were applied;
+- dsi_mgr_setup_components() now sets both the usecase and phy_mode
+  prior to calling msm_dsi_host_register(), and for non-bonded too;
+- Added patch to remove a forced num_intf = 1 when DSC is enabled;
+- Reworked hdisplay/2 "fix" when calculating "DSC timing" to instead use
+  dsc->slice_count, allowing us to remove msm_dsc_get_slices_per_intf()
+  entirely;
+- Link to v1: https://lore.kernel.org/r/20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org
 
->> drivers/bus/mhi/host/init.c:682:6: warning: variable 'doorbell' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
-     682 |         if (mhi_cntrl->get_misc_doorbell)
-         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/bus/mhi/host/init.c:685:6: note: uninitialized use occurs here
-     685 |         if (doorbell > 0) {
-         |             ^~~~~~~~
-   drivers/bus/mhi/host/init.c:682:2: note: remove the 'if' if its condition is always true
-     682 |         if (mhi_cntrl->get_misc_doorbell)
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     683 |                 doorbell = mhi_cntrl->get_misc_doorbell(mhi_cntrl, MHI_ER_BW_SCALE);
-   drivers/bus/mhi/host/init.c:548:22: note: initialize the variable 'doorbell' to silence this warning
-     548 |         int i, ret, doorbell;
-         |                             ^
-         |                              = 0
-   1 warning generated.
+Depends on:
+- https://lore.kernel.org/linux-arm-msm/20250122-dpu-111-topology-v2-1-505e95964af9@somainline.org/
+  (only to prevent conflicts with the patch that removes a hardcoded
+   num_intf = 1;).
 
+---
+Marijn Suijten (3):
+      drm/msm/dsi: Use existing per-interface slice count in DSC timing
+      drm/msm/dsi: Set PHY usescase (and mode) before registering DSI host
+      drm/msm/dpu: Remove arbitrary limit of 1 interface in DSC topology
 
-vim +682 drivers/bus/mhi/host/init.c
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  7 ++++---
+ drivers/gpu/drm/msm/dsi/dsi_host.c          |  8 ++++----
+ drivers/gpu/drm/msm/dsi/dsi_manager.c       | 32 +++++++++++++++++++----------
+ drivers/gpu/drm/msm/msm_dsc_helper.h        | 11 ----------
+ 4 files changed, 29 insertions(+), 29 deletions(-)
+---
+base-commit: ed58d103e6da15a442ff87567898768dc3a66987
+change-id: 20240416-drm-msm-initial-dualpipe-dsc-fixes-3f0715b03bf4
+prerequisite-message-id: <20250122-dpu-111-topology-v2-1-505e95964af9@somainline.org>
+prerequisite-patch-id: 9ed44ae089b173f452a6603e6739b0b3bf2d9274
 
-   544	
-   545	int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
-   546	{
-   547		u32 val;
-   548		int i, ret, doorbell;
-   549		struct mhi_chan *mhi_chan;
-   550		struct mhi_event *mhi_event;
-   551		void __iomem *base = mhi_cntrl->regs;
-   552		struct device *dev = &mhi_cntrl->mhi_dev->dev;
-   553		struct {
-   554			u32 offset;
-   555			u32 val;
-   556		} reg_info[] = {
-   557			{
-   558				CCABAP_HIGHER,
-   559				upper_32_bits(mhi_cntrl->mhi_ctxt->chan_ctxt_addr),
-   560			},
-   561			{
-   562				CCABAP_LOWER,
-   563				lower_32_bits(mhi_cntrl->mhi_ctxt->chan_ctxt_addr),
-   564			},
-   565			{
-   566				ECABAP_HIGHER,
-   567				upper_32_bits(mhi_cntrl->mhi_ctxt->er_ctxt_addr),
-   568			},
-   569			{
-   570				ECABAP_LOWER,
-   571				lower_32_bits(mhi_cntrl->mhi_ctxt->er_ctxt_addr),
-   572			},
-   573			{
-   574				CRCBAP_HIGHER,
-   575				upper_32_bits(mhi_cntrl->mhi_ctxt->cmd_ctxt_addr),
-   576			},
-   577			{
-   578				CRCBAP_LOWER,
-   579				lower_32_bits(mhi_cntrl->mhi_ctxt->cmd_ctxt_addr),
-   580			},
-   581			{
-   582				MHICTRLBASE_HIGHER,
-   583				upper_32_bits(mhi_cntrl->iova_start),
-   584			},
-   585			{
-   586				MHICTRLBASE_LOWER,
-   587				lower_32_bits(mhi_cntrl->iova_start),
-   588			},
-   589			{
-   590				MHIDATABASE_HIGHER,
-   591				upper_32_bits(mhi_cntrl->iova_start),
-   592			},
-   593			{
-   594				MHIDATABASE_LOWER,
-   595				lower_32_bits(mhi_cntrl->iova_start),
-   596			},
-   597			{
-   598				MHICTRLLIMIT_HIGHER,
-   599				upper_32_bits(mhi_cntrl->iova_stop),
-   600			},
-   601			{
-   602				MHICTRLLIMIT_LOWER,
-   603				lower_32_bits(mhi_cntrl->iova_stop),
-   604			},
-   605			{
-   606				MHIDATALIMIT_HIGHER,
-   607				upper_32_bits(mhi_cntrl->iova_stop),
-   608			},
-   609			{
-   610				MHIDATALIMIT_LOWER,
-   611				lower_32_bits(mhi_cntrl->iova_stop),
-   612			},
-   613			{0, 0}
-   614		};
-   615	
-   616		dev_dbg(dev, "Initializing MHI registers\n");
-   617	
-   618		/* Read channel db offset */
-   619		ret = mhi_get_channel_doorbell_offset(mhi_cntrl, &val);
-   620		if (ret)
-   621			return ret;
-   622	
-   623		if (val >= mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB)) {
-   624			dev_err(dev, "CHDB offset: 0x%x is out of range: 0x%zx\n",
-   625				val, mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB));
-   626			return -ERANGE;
-   627		}
-   628	
-   629		/* Setup wake db */
-   630		mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
-   631		mhi_cntrl->wake_set = false;
-   632	
-   633		/* Setup channel db address for each channel in tre_ring */
-   634		mhi_chan = mhi_cntrl->mhi_chan;
-   635		for (i = 0; i < mhi_cntrl->max_chan; i++, val += 8, mhi_chan++)
-   636			mhi_chan->tre_ring.db_addr = base + val;
-   637	
-   638		/* Read event ring db offset */
-   639		ret = mhi_read_reg(mhi_cntrl, base, ERDBOFF, &val);
-   640		if (ret) {
-   641			dev_err(dev, "Unable to read ERDBOFF register\n");
-   642			return -EIO;
-   643		}
-   644	
-   645		if (val >= mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings)) {
-   646			dev_err(dev, "ERDB offset: 0x%x is out of range: 0x%zx\n",
-   647				val, mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings));
-   648			return -ERANGE;
-   649		}
-   650	
-   651		/* Setup event db address for each ev_ring */
-   652		mhi_event = mhi_cntrl->mhi_event;
-   653		for (i = 0; i < mhi_cntrl->total_ev_rings; i++, val += 8, mhi_event++) {
-   654			if (mhi_event->offload_ev)
-   655				continue;
-   656	
-   657			mhi_event->ring.db_addr = base + val;
-   658		}
-   659	
-   660		/* Setup DB register for primary CMD rings */
-   661		mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING].ring.db_addr = base + CRDB_LOWER;
-   662	
-   663		/* Write to MMIO registers */
-   664		for (i = 0; reg_info[i].offset; i++)
-   665			mhi_write_reg(mhi_cntrl, base, reg_info[i].offset,
-   666				      reg_info[i].val);
-   667	
-   668		ret = mhi_write_reg_field(mhi_cntrl, base, MHICFG, MHICFG_NER_MASK,
-   669					  mhi_cntrl->total_ev_rings);
-   670		if (ret) {
-   671			dev_err(dev, "Unable to write MHICFG register\n");
-   672			return ret;
-   673		}
-   674	
-   675		ret = mhi_write_reg_field(mhi_cntrl, base, MHICFG, MHICFG_NHWER_MASK,
-   676					  mhi_cntrl->hw_ev_rings);
-   677		if (ret) {
-   678			dev_err(dev, "Unable to write MHICFG register\n");
-   679			return ret;
-   680		}
-   681	
- > 682		if (mhi_cntrl->get_misc_doorbell)
-   683			doorbell = mhi_cntrl->get_misc_doorbell(mhi_cntrl, MHI_ER_BW_SCALE);
-   684	
-   685		if (doorbell > 0) {
-   686			ret = mhi_init_bw_scale(mhi_cntrl, doorbell);
-   687			if (!ret)
-   688				mhi_cntrl->bw_scale_db = base + val + (8 * doorbell);
-   689			else
-   690				dev_warn(dev, "BW scale setup failure\n");
-   691		}
-   692		return 0;
-   693	}
-   694	
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Marijn Suijten <marijn.suijten@somainline.org>
+
 
