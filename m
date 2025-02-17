@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-48287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFF7EA38E84
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 23:06:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFF11A38E7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 23:06:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34FA93B1C32
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 22:05:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 61B2617171D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 22:06:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64D591AA7BA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 548CD1AA78E;
 	Mon, 17 Feb 2025 22:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="UBO6j8wu"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="gxxYgQO6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A305F1A83F4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30071A5BA7;
 	Mon, 17 Feb 2025 22:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739829958; cv=none; b=RwbKyBUZQHyuJwX1diqoHc+31B6uu40UO0MCnSU0I6eJxvPJqPx5h6ikvriKiB6eeUwtYN74wpYdB96awHYbBlJgFWaVBOpO5kd2eSNaNlSokD3vl9VQnVzJEN1crsgY75UpW6T/5P0ezPC6VCE6rZmduEhRslRP102F0QkFyz8=
+	t=1739829958; cv=none; b=J0Xi1rqOcRK4cUvNgEHALOMDjXGXEyHtc9XNfBoeCv1aJR3kldGSO6l+616g7i/QDa6O34pSmv6dCevag5PMSPRWygGnPvY5uY6XbxNQyO8VFNhF3rWE1Nec+LnNJX3RExT3bX7K6vob72erGLihDHrYjA6TqHZVUUrQR4wggeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1739829958; c=relaxed/simple;
-	bh=KM6RJ3fNafu0TIY7cIBZDDJ6AdV0OzMiHaeG4NSr7Nk=;
+	bh=iEhQRD3Keoeoouk9DWfMQfOJfESRFe9YF/R0gxoyNW8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JwNv4oOMhWKBNCQSfxv5iOHAEmEB5d9Hw4pfvJ7cQgRKBQ1NJGmv7gZWCAZA2p65qitQaJt3BCP9poIMmZdYsqgc/lUkyHy31tQ7QsDgdYMbWYtEg71KnqAKcucYzb5SNZ3VCoqfNavcS0t4De6vdIV7XPU3LuSPY3fzrN+31Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=UBO6j8wu; arc=none smtp.client-ip=128.199.32.197
+	 In-Reply-To:To:Cc; b=rQM3dm0Ez8lQzGSN4isuaNteUP5+bmliylVKNAIrh3ENmmk6n6rWfILhm4hLOI63b6Icr1dDG6QrV+kukK8F8duRHsRIrLC6GHC3gCT5f2iG98cCiKCOacL4WDLESCkUHvEeT6KOaWRqcqHfu/kn6T1ugdrBqbAGa2I2WrzCZHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=gxxYgQO6; arc=none smtp.client-ip=128.199.32.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1739829948; bh=KM6RJ3fNafu0TIY7cIBZDDJ6AdV0OzMiHaeG4NSr7Nk=;
+	t=1739829949; bh=iEhQRD3Keoeoouk9DWfMQfOJfESRFe9YF/R0gxoyNW8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=UBO6j8wu3MXiG4bj+FMQfDQ6gisNVxZPXfeSJj0P4RnsGA0qfYSw4ysk3x+vSMl1H
-	 XlfrP95YrDuB38GytTjaLv0Hx2yrXVNpUiKm1iNtMsOW857Qy1wCEcjek9xtY5d3QU
-	 IloPF1UVLflzzP+Jg3BvyyTIGWdPbMQkUAnpuFMg=
+	b=gxxYgQO6um3+XKzhor97Ikd7DDlNzVfUiis2bgxQHPijjo4qdQAZBB+W91ncMnQKJ
+	 +5eB5kkC7CJU7GuOP48tI80ikzB6jIA8suOhoQW+rtHfxbWHDhqwS65VAX9k/N9Dz/
+	 /OM/oClWxdyfns3TEtpE4dZ0UL/cka0Twz/Bc3ng=
 From: Luca Weiss <luca@lucaweiss.eu>
-Date: Mon, 17 Feb 2025 23:05:16 +0100
-Subject: [PATCH v5 02/13] dt-bindings: remoteproc: qcom,msm8916-mss-pil:
- Add MSM8226
+Date: Mon, 17 Feb 2025 23:05:17 +0100
+Subject: [PATCH v5 03/13] dt-bindings: remoteproc: qcom,msm8916-mss-pil:
+ Add MSM8926
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,8 +48,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250217-msm8226-modem-v5-2-2bc74b80e0ae@lucaweiss.eu>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250217-msm8226-modem-v5-3-2bc74b80e0ae@lucaweiss.eu>
 References: <20250217-msm8226-modem-v5-0-2bc74b80e0ae@lucaweiss.eu>
 In-Reply-To: <20250217-msm8226-modem-v5-0-2bc74b80e0ae@lucaweiss.eu>
 To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
@@ -64,108 +64,83 @@ Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
  Luca Weiss <luca@lucaweiss.eu>, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3045; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=QOX+y9xJxQtU5fC+FAiwYeTe935qVnVO1l/TnrWDH7A=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBns7KwnGz2F99BxIg4tDY+j3yTQ2j19Bu/aiJvT
- NRluNsHxrGJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ7OysAAKCRBy2EO4nU3X
- VmajEADHMnBT88CzWp8SYFNIs+WaivAKGNW4D70e/dKgE4aYdx8bykKi2NIZ25B4K5UoEwZ1bDn
- O8My2xHAMXJEPq++VpeNAnxYUDmPt24Xix6Gkup1ENGEy39v7zaCFQiY+W0o5diFT6AA8KmWj3t
- 3HFPvUHs0RY1Er8VbF2c1leR14y0frEBPRJXXoghCQ3/gTPARGINuiIToapirUQ0Bpj4l5LoaYG
- Nr9w0blEVaOyJytpBP9oeZASsDopX1EFdABbIUXJsx4jXr3M6airCYadd3MguF2SNMTEM9qAEj/
- AkFGIoTKiJKlMHaazkcW60OEVf1ZL7IB5vhGtI8FcaITE6tVMrivf8s+bhiRk84B/sg425lsfMl
- KDG79fVlkN2aV99HkE3USklDfGC3+shUHR7WAt6VQYG41RKzBiTCkDUgN4GDuqaeH2oNt6tWNzw
- SJFjEWvoWO/s8wmuPaW8W0HhMK5klwt3vyrK8QdhlGT1hz9QEhIPCOGPybQJgm4xeQXh3IGDIBC
- t8BMtC0R7wbFpzDehFnBLe6yZd/davGPq/o/yM0w5tA+xGrpTnjZZaOmrVsh4ewGKw+EEiQ4k8+
- jOeONVB3DEnz8y3tj5kBGhl2TcXPn8t6VtyLwz3J7grxOXfKAkS/y9MpE9t7ts9QmOYoElXKyZn
- KdDBniAXAaFNjIA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2475; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=iEhQRD3Keoeoouk9DWfMQfOJfESRFe9YF/R0gxoyNW8=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBns7Kx/peYKLZJ5ho16oMmSW2WyVmeDNzYDCLf9
+ FG1rOwNr/uJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ7OysQAKCRBy2EO4nU3X
+ VrybEACfyRe2GsWOu1/2BtwQnISjxdRuWVLe3em3TjRqQFhzQLnPvYBijgFuN+JjIDyyPq5X2gL
+ wYzjx546fUhb/B7EeX1yL8mSpQVbAhg2yiTvxGkBNEHJQA3s7CCm3+vUS/ib4CBticEFaqNhpWJ
+ 8KulC5Eo6fqY6nVScEPGVl2T+SpDxtAzWvS/MlN3pUWoWR1kiWRFacZrQrA/+tXY/kI5Hb9Z7BF
+ rw/WXyA+H0BHvd+uwfktSTDsyhgk0oG1oV8S2IQI65etHJWALJM1QY+w76wzUQheapcqOsn4Zfv
+ vu67V5UkgMS/FmQsddhE5OaU857e+uEPuaMuuDVOucqOR2Z39n3JKHD3ASmDETU25uXN+DEslcr
+ 3T+kcg2ZtLnhFP5nndvDHMWHckrCpZ+pzaAFuLUXdMhOeYToTAVcORXkZjYDxgQyQTEqJYAjj9k
+ KchyItl5y3atKldYNw5aK/Jah8YfAwrvQPrZqzJ0r0s0rL/bfDXz0dc4V0tjjjAgryG0g0bZ+KH
+ ZEbqnbjVkAKkltls8fKFJ+RnWIvGjvlQRVC0wyYi9SbFFI0HUx84aNpcCwQV8hsN3vk/6relIw+
+ wkpa5U57pEhSTah8ZfQNpznTL9ZkL17SAfuui1Fo0S0bDF/q3dmeJaptx35u8NIDJ5dXna1lxwK
+ tm3kWivIKzBmG0A==
 X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
  fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+Compared to MSM8226 the LTE-capable MSM8926 requires mss-supply and
+doesn't require qcom,ext-bhs-reg.
 
-Add support for external power block headswitch (BHS) registers.
-Similarly to MSM8974 also MSM8226 has the mx voltage rail exposed as
-regulator and only cx voltage rail as power domain.
-
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 ---
- .../bindings/remoteproc/qcom,msm8916-mss-pil.yaml  | 26 ++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ .../devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
-index c81364daa34b545e99261bf1f94ae2ad28d48ea7..0a3e39c55ec3dcfc9a4d4ac28f5debd77dc49b99 100644
+index 0a3e39c55ec3dcfc9a4d4ac28f5debd77dc49b99..c179b560572b2c1aa85521e4bd01d1857530f6c4 100644
 --- a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
 +++ b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
-@@ -17,6 +17,7 @@ properties:
-   compatible:
-     oneOf:
-       - enum:
-+          - qcom,msm8226-mss-pil
+@@ -20,6 +20,7 @@ properties:
+           - qcom,msm8226-mss-pil
            - qcom,msm8909-mss-pil
            - qcom,msm8916-mss-pil
++          - qcom,msm8926-mss-pil
            - qcom,msm8953-mss-pil
-@@ -70,7 +71,7 @@ properties:
+           - qcom,msm8974-mss-pil
+ 
+@@ -71,7 +72,8 @@ properties:
      items:
        - description: CX proxy power domain (control handed over after startup)
        - description: MX proxy power domain (control handed over after startup)
--                     (not valid for qcom,msm8974-mss-pil)
-+                     (not valid for qcom,msm8226-mss-pil or qcom,msm8974-mss-pil)
+-                     (not valid for qcom,msm8226-mss-pil or qcom,msm8974-mss-pil)
++                     (not valid for qcom,msm8226-mss-pil, qcom,msm8926-mss-pil
++                     and qcom,msm8974-mss-pil)
        - description: MSS proxy power domain (control handed over after startup)
                       (only valid for qcom,msm8953-mss-pil)
      minItems: 1
-@@ -78,7 +79,7 @@ properties:
+@@ -79,7 +81,7 @@ properties:
    power-domain-names:
      items:
        - const: cx
--      - const: mx # not valid for qcom,msm8974-mss-pil
-+      - const: mx # not valid for qcom,msm8226-mss-pil or qcom,msm8974-mss-pil
+-      - const: mx # not valid for qcom,msm8226-mss-pil or qcom,msm8974-mss-pil
++      - const: mx # not valid for qcom,msm8226-mss-pil, qcom-msm8926-mss-pil and qcom,msm8974-mss-pil
        - const: mss # only valid for qcom,msm8953-mss-pil
      minItems: 1
  
-@@ -107,6 +108,15 @@ properties:
-     items:
-       - const: stop
- 
-+  qcom,ext-bhs-reg:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description: External power block headswitch (BHS) register
-+                 (only valid for qcom,msm8226-mss-pil)
-+    items:
-+      - items:
-+          - description: phandle to external BHS syscon region
-+          - description: offset to the external BHS register
-+
-   qcom,halt-regs:
-     $ref: /schemas/types.yaml#/definitions/phandle-array
-     description:
-@@ -230,6 +240,7 @@ allOf:
-         compatible:
+@@ -241,6 +243,7 @@ allOf:
            contains:
              enum:
-+              - qcom,msm8226-mss-pil
+               - qcom,msm8226-mss-pil
++              - qcom,msm8926-mss-pil
                - qcom,msm8974-mss-pil
      then:
        properties:
-@@ -240,6 +251,17 @@ allOf:
-       required:
-         - mx-supply
- 
-+  - if:
-+      properties:
-+        compatible:
-+          const: qcom,msm8226-mss-pil
-+    then:
-+      required:
-+        - qcom,ext-bhs-reg
-+    else:
-+      properties:
-+        qcom,ext-bhs-reg: false
-+
+@@ -265,7 +268,10 @@ allOf:
    - if:
        properties:
          compatible:
+-          const: qcom,msm8974-mss-pil
++          contains:
++            enum:
++              - qcom,msm8926-mss-pil
++              - qcom,msm8974-mss-pil
+     then:
+       required:
+         - mss-supply
 
 -- 
 2.48.1
