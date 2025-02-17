@@ -1,180 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-48283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0BBBA38CD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 20:57:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03F2DA38D56
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 21:37:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A00CD7A2D41
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 19:56:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 080BC3B1B8B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 20:37:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA4F822B5A3;
-	Mon, 17 Feb 2025 19:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 621E12376FF;
+	Mon, 17 Feb 2025 20:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h9YGrElv"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CCuI9sh/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A6E22B8BC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 19:57:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37BF237180
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 20:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739822251; cv=none; b=FBzMxoMS6ok++m7LLGSQMFAFmEFengFLUI1l0vx06R5mjEgywXSzaTKPo24kKbJXHzU1fi4MnM6qE0Z63gNm+/NWxmKq7E1XxrRGIOtQDaQxq/V/aEJOjyyWUJkCBRiJH0K+mC9bKJ3OQ/YTrCxNssSEc+fkWrePGylfbu127jg=
+	t=1739824654; cv=none; b=kdzY4TTOSiZXvlZQeYKQH3N+TpcLyIMeDxWoWd0gL7h4v9GJVY2Sw52rsGFoOQ312z71qH0ziO7YmUoSGQuYAOJvbqoWsyrv7JHDPmPNR0R+o5856UsBOzYMavcnqYI80C6/AhfLrEmm6c5/ARbbS9Stx8CYhJz0Pww0hJoWsNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739822251; c=relaxed/simple;
-	bh=uxosyCl70LpiSt1WhJu3o8EZgk1aMrkeBZvPkx2TuyQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CJyDcIV+8qCwuru+FS710RHPEbhkOcWd4zoyPaAGzlm2vHbbvCkiSTCzJk0QdZ94NvlOhPgkT5tY8AhNA3/p6+Wkj7sOgXPVEBJ57LgxzBG5MVbkoi8KhQv3GwES2PFzXv/AtN47t4lxY2aNWBp7DXAV+fVrOLI8TshEhR989FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h9YGrElv; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-546237cd3cbso1277530e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 11:57:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739822248; x=1740427048; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xMGI211LrxE7ViIhzCm1kjlvh1GVYdKtuIIj0ObyhHo=;
-        b=h9YGrElv3RhlZn7j45I/L2TfFtufsmqzf8Gknr7PRjUCjpUDn+fYcXWZB/iWbz8fHf
-         Q/qZHDelwu5PJ3I2jwSaPQ+IhEhPi9BT1JXZsZB/X0O1TcxdEJyUE2eofMVAwx/BZ/6j
-         fNBCkzlM9FbMAiAcDtZTS05g1FU58Q6ZM293r4Fu933mEoQvvmILgfGwGRDWqA96SBMU
-         SEkuuuYGwfFScs035tHbGBrVjS5eFFu/gnK7MmJXi6mHmdLtdnSVUEdS2P2DEmz62I3/
-         VB99XHQJhN923r/hqr6R4Ib2PC437/M5sttKuEVUmHZt8XZnI3IF1mVEcaStCTP7EiJp
-         eHSA==
+	s=arc-20240116; t=1739824654; c=relaxed/simple;
+	bh=40yunI3yQW/2DdKCzEtatR7phgE4kq+dY4t2RGcCxM4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rmcroe/uXcfgnVWO+6rUa6VdNKIiuRwTpg5i16TjvL42BiMCSlKCp+FbGXirrUFFokc/8EEv5ZQfHvABREpahmWNSeJ+VBXhjBEZzwRHwuQ7U5+6IkSQ2W2myIOnBZdGU7qQPxus7XxJblnBJ5k07ciYLOap6VkB8yvIou6b/Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CCuI9sh/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51HAYdUT018265
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 20:37:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	CV29D+VkgPF5aICSXzzJ3Sj2koCJ4HZ6NDnOP1bLDuI=; b=CCuI9sh/QQ/Kwo/s
+	wf77AoI9MclxtLFrzGIgZPGik88XpTbCshnaefKPYlIwjM2hStDf5DO1r5w6e33p
+	GQDloP1qV19bUvL8udgpMDsAVcRJ7EJTcivQAi1PWT4GZHSI7vKhuE0aroDuA6SY
+	cJILg28P+hxnUmLXb77tNM5IqL4U7XKPTfjtiGXda+P3EZu+G63h2oiSVcc09zqg
+	b8RsC4b8Vz63eyeV88z9kBUAIhUi6nCVX3Cr6Ru4yjPGAF4s4/Tj2/mXXhWsTbD2
+	6nOljOdAxALpQvibh/kq1pUDu8k0VhtRV2AbpjHq6lYzT4Sc0IfJMrBZ9Q2A2YhR
+	2KBRmg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ut7stsbw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 20:37:30 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c0a0d6831aso24632285a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 12:37:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739822248; x=1740427048;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xMGI211LrxE7ViIhzCm1kjlvh1GVYdKtuIIj0ObyhHo=;
-        b=R3MtFDXpJ0zJnRN3jMXHW1voWWB+3kLVQteugXJxFrw6P2AQ/OmK7i+mgYV4k+sTkV
-         15hf3gFo2nQQuLEGA3XfXSU51VMItlXSx4O++oTt1RPrqeUHociVXxdGGngL5ZZiQjxe
-         ELhAxK0w5SytRpspEyxAv9IOjmbNG4SG1/D/79URcAK590oCKM36tpHD5JoX/DrFBEge
-         Bw0s1cAT2YdyUnZ9JLy/8V9SMyAhXreEXWTopR6cOLrFtH/4TPoFkXmnuW+aWXwHqcmW
-         QwqKikrC/0YC2qNbPZ/QWDyw9d+yWnuTBPMK7+X6Az8UQ5MOmQbg9GJ3rSMRyUBavwCo
-         GaNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUbf9yalg5cGtkZJkwN4LEnuwP54oI1wg1RtLiayoabByA9cnE1peojjZubJr6SNv8oJJTEwV/opqbHPus3@vger.kernel.org
-X-Gm-Message-State: AOJu0Yww3BJuer6dYIsvC8uvSZrrgwSBYobNS8jUTByMbmTahI7SxG7Z
-	eIfhbMIL2EFmPvdr+Ic+EDmLAJCZCBY9USd9KIbRq4A2jh7/uJc1Qaj5yR5nNb0=
-X-Gm-Gg: ASbGnctNM1Nd7FIju41fr94Ir2DMJKrE/bbFn0a/2xzXi/eO0hKBHn8SZJ80BWnMGx9
-	sIzpQB2BYV4dvXnsn/Y+nFSZf443U9xQRKkwMcrT4w9NDTSUdif6yixvjURwL3Le0OCSROSDKZJ
-	OVYpYD9ayvNgHIzJySbIm8kiM+RcVo0yzGJ5RIYqELyf1lLlbsuYqynE0XvXP0fSSg6C5jMFg8U
-	qqfI6FWeNPRl+1QNryAiPnkiWdNaflwoxmbp6Qpph5BiqiONPC6UgrOeEngMjaNGKllBmH7UaUL
-	chgLyy+eZTHiBl7UYeod8g0Q+acMf2t+3ddpl0G1YD7MWwpOpioou70pMPIjd8vdT1amogg=
-X-Google-Smtp-Source: AGHT+IHWktoREaaIkncp+ihbbZRuJV4rft7CykmfmlbEHdRBo5ws85YTHgTILXgtZzP9D8cAmBMh+Q==
-X-Received: by 2002:a05:6512:108a:b0:545:d72:95f0 with SMTP id 2adb3069b0e04-5452fe5bd70mr4139939e87.24.1739822247806;
-        Mon, 17 Feb 2025 11:57:27 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54530993e36sm1035359e87.3.2025.02.17.11.57.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2025 11:57:26 -0800 (PST)
-Date: Mon, 17 Feb 2025 21:57:23 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 12/15] drm/msm/dpu: blend pipes per mixer pairs config
-Message-ID: <qrwo5jtdj64vu27jn3v2wwyuxu25bjqrybj5jjfc5ifiotgzit@6vx2km46j7b3>
-References: <20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-0-c11402574367@linaro.org>
- <20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-12-c11402574367@linaro.org>
+        d=1e100.net; s=20230601; t=1739824649; x=1740429449;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CV29D+VkgPF5aICSXzzJ3Sj2koCJ4HZ6NDnOP1bLDuI=;
+        b=wzuAUUYfRZOe29i4GqRlAaOdBL3UUjeOKogmNvUm6ZIzTlpiowPOi6oFo3Vc1/VLjf
+         SEPT8btqQjXlf5BiatHHUBrnFGyg5akFEWiq2Qa2UjW/IT/LMQV6UsK5worfcs5b1ZO2
+         zd21uA8F0YYS7BVS5kHNfUDdF87HpccwYlv00x8EykkbflTm8bH9oXs7Ln2azaKDfP94
+         WDfzsywUoLnnSQx5Z/8cZAgTDwgB5/6RtD3zulas0kRUT2USNuX3Ae5lbycgg1PEZa7f
+         fE+JgnOGvM6YHRUT2azLAey3dMUv3RAJCFqz14XonyLxTcldSesVb+HyCXC5aUEGIUrf
+         ilzQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXL5gjIGS7vZl7y7fHLBoyPVlBQ7Gl4UCtbt0lMqYYb/HBOplw/nGDzvBQraPCAz2yLJd0bS2mCydcX1YfY@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzj/VMdngKubp1IX3VJdHQ/Wb2nmTpsmqrf7I3JxM8pvB0K8DUK
+	8paPaVxp8GnjJIY0iJkZ56j8b2HHt2A/hRIjkQOkC/ux5qUgJFzZHZ6/PHTvQ/M5xRN0k89Jlsw
+	7nSytxPFTKZ6t7XFB1WykDg75e++Nmc79rMUE/cr6F62VImgoPcbBhEW1avSR3DSX
+X-Gm-Gg: ASbGncsNTEoCUU7XZsQ08akSKW2+XBTbxyOXJxL+vkbDHWQztAOBxmkifobruqqgXu1
+	f5+UnnyqEp2BRwID7uqmutBwmjMb2FJ7hf+7LNO6z7q79z2EV2K4td/wsglcHshg765bbUmppO1
+	rOUAPHGMkoC3GWPnvxLx06SMyJHCav8vpUS/mi4zZbkaz6l0dvF0/zU8kcvEK0Ko3V9QbWrcT8T
+	i6Qi8S+cIaYAg4gi2t5ht9gN0LBZlUHeQ5WyQdwyyN3QdDEgrfJOgmrlq+LECjJJZdyXxrQOgM4
+	0QusRiXGVOmsMaJY6kHacwhX/g2d4gPbwhmo8oBWJB2KZNJw9DFGxBAr1aA=
+X-Received: by 2002:a05:6214:2486:b0:6e6:60f6:56db with SMTP id 6a1803df08f44-6e66ccec03amr55360116d6.6.1739824649403;
+        Mon, 17 Feb 2025 12:37:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGHv+qR2wsgQJ90G8fUvLKPqMsKYbwLEjQtGdVt1KH2wyx/HZgHBqQJnVnTbguYokKhiD4oEg==
+X-Received: by 2002:a05:6214:2486:b0:6e6:60f6:56db with SMTP id 6a1803df08f44-6e66ccec03amr55359946d6.6.1739824649033;
+        Mon, 17 Feb 2025 12:37:29 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb9553fbd0sm310488366b.84.2025.02.17.12.37.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Feb 2025 12:37:28 -0800 (PST)
+Message-ID: <33f5d722-da5d-4b9b-bddf-922e820d8b7a@oss.qualcomm.com>
+Date: Mon, 17 Feb 2025 21:37:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-12-c11402574367@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8450: add PCIe EP device nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250217-sar2130p-pci-v1-0-94b20ec70a14@linaro.org>
+ <20250217-sar2130p-pci-v1-6-94b20ec70a14@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250217-sar2130p-pci-v1-6-94b20ec70a14@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: R5WTTMNzpFN_L92mRmDdBNh9ijwot-Wm
+X-Proofpoint-ORIG-GUID: R5WTTMNzpFN_L92mRmDdBNh9ijwot-Wm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-17_08,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=932 phishscore=0 spamscore=0 clxscore=1015
+ mlxscore=0 suspectscore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502170160
 
-On Mon, Feb 17, 2025 at 10:16:01PM +0800, Jun Nie wrote:
-> Currently, only 2 pipes are used at most for a plane. A stage structure
-> describes the configuration for a mixer pair. So only one stage is needed
-> for current usage cases. The quad-pipe case will be added in future and 2
-> stages are used in the case. So extend the stage to an array with array size
-> STAGES_PER_PLANE and blend pipes per mixer pair with configuration in the
-> stage structure.
+On 17.02.2025 7:56 PM, Dmitry Baryshkov wrote:
+> On the Qualcomm SM8450 platform the second PCIe host can be used
+> either as an RC or as an EP device. Add device node for the PCIe EP.
 > 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 45 +++++++++++++++++++----------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
->  2 files changed, 30 insertions(+), 16 deletions(-)
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 52 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 52 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 81474823e6799132db71c9712046d359e3535d90..50acaf25a3ffcc94354faaa816fe74566784844c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -401,7 +401,7 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
->  				       struct dpu_hw_stage_cfg *stage_cfg
->  				      )
->  {
-> -	uint32_t lm_idx;
-> +	uint32_t lm_idx, lm_in_pair;
->  	enum dpu_sspp sspp_idx;
->  	struct drm_plane_state *state;
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 9c809fc5fa45a98ff5441a0b6809931588897243..ad0ec15b18e5ca7bea196be1564152f7faf51d9f 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -2262,6 +2262,58 @@ pcie@0 {
+>  			};
+>  		};
 >  
-> @@ -426,7 +426,8 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
->  	stage_cfg->multirect_index[stage][stage_idx] = pipe->multirect_index;
->  
->  	/* blend config update */
-> -	for (lm_idx = 0; lm_idx < num_mixers; lm_idx++)
-> +	lm_in_pair = num_mixers > 1 ? 2 : 1;
-> +	for (lm_idx = 0; lm_idx < lm_in_pair; lm_idx++)
->  		mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
+> +		pcie1_ep: pcie-ep@1c08000 {
+> +			compatible = "qcom,sm8450-pcie-ep";
+> +			reg = <0x0 0x01c08000 0x0 0x3000>,
+> +			      <0x0 0x40000000 0x0 0xf1d>,
+> +			      <0x0 0x40000f20 0x0 0xa8>,
+> +			      <0x0 0x40001000 0x0 0x1000>,
+> +			      <0x0 0x40200000 0x0 0x1000000>,
+> +			      <0x0 0x01c0b000 0x0 0x1000>,
+> +			      <0x0 0x40002000 0x0 0x1000>;
+> +			reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
+> +				    "mmio", "dma";
+> +
+> +			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
+> +				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+> +				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
+> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>;
+> +			clock-names = "aux",
+> +				      "cfg",
+> +				      "bus_master",
+> +				      "bus_slave",
+> +				      "slave_q2a",
+> +				      "ref",
+> +				      "ddrss_sf_tbu",
+> +				      "aggre_noc_axi";
+> +
+> +			interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 440 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "global", "doorbell", "dma";
+> +
+> +			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_1 0>;
 
-I almost missed this. Why is this necessary?
+same comments as patch 5, plus please use tags
 
->  }
->  
-
-[...]
-
-> @@ -535,8 +543,13 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
->  			mixer[i].mixer_op_mode,
->  			ctl->idx - CTL_0);
->  
-> +		/*
-> +		 * call dpu_hw_ctl_setup_blendstage() to blend layers per stage cfg.
-> +		 * There are 4 mixers at most. The first 2 are for the left half, and
-> +		 * the later 2 are for the right half.
-> +		 */
-
-The comment is invalid until you introduce quad pipe, currently there
-are 2 mixers at most. However you can just say something like 'stage
-data is shared between PIPES_PER_STAGE pipes'.
-
->  		ctl->ops.setup_blendstage(ctl, mixer[i].hw_lm->idx,
-> -			&stage_cfg);
-> +			&stage_cfg[i / PIPES_PER_STAGE]);
->  	}
->  }
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> index 5f010d36672cc6440c69779908b315aab285eaf0..64e220987be5682f26d02074505c5474a547a814 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> @@ -34,6 +34,7 @@
->  #define DPU_MAX_PLANES			4
->  #endif
->  
-> +#define STAGES_PER_PLANE		2
->  #define PIPES_PER_PLANE			2
->  #define PIPES_PER_STAGE			2
->  #ifndef DPU_MAX_DE_CURVES
-> 
-> -- 
-> 2.34.1
-> 
-
--- 
-With best wishes
-Dmitry
+Konrad
 
