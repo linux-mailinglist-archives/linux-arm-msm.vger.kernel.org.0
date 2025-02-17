@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-48276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03EC7A38BFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 20:08:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32F8FA38C34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 20:18:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF44E168D08
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 19:08:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CDBD07A3253
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 19:17:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D394E236421;
-	Mon, 17 Feb 2025 19:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABFCE235BFF;
+	Mon, 17 Feb 2025 19:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NOaO5h1+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BDOYIYOB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E4F22B8BC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 19:08:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69C170814
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 19:18:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739819313; cv=none; b=R2kVVYKikXNgrYPDwmo8DALS+CJOwIPDQ8RlApjHJMNgWDz0vQnKiGyJlsSvG2CH1o17RkqL3UZGk+x3uKH83i2PZRxffyAXHxet4HXccs1bFACcuGDi9ZMAEEFJac4Z0D87mCzhofvRxg8Du+qXURf74ifU3uD/vTysXtkTvUU=
+	t=1739819926; cv=none; b=IvcqFeafKWag7s0fYCRm0oLY1uMS2ZMDOxCSlHWXjPubFoBertVk08lU24CAVcMFRFB2nkDJiQyx8FWQuXr8ynvPMLADMvQVYRUGfqmTgIoJVxn1GUjQqGk39fXrL8wPtDAeUxqoIgDqZkubE8YeU/Nj4FVSWIXZLdgvYep0fCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739819313; c=relaxed/simple;
-	bh=Oo7Lrcl2ZPC6VhucruHTwVeLY63vJvWzZsAVRWNt6Sc=;
+	s=arc-20240116; t=1739819926; c=relaxed/simple;
+	bh=mhMQAL+ZuCppMLZz3hGC1V1w1m+yQ2xV52Svf7YNBBY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T9KVGMt4mEvGpJ81vNC/nMvXC7r7WxWaToSDMAH9hvXdy8r/qb84OAEujbGOmDQMhST5DlwyI9UWyG3CaPZb71NFt/PEDwsBAEpDdAWKQO5NId+9hppQXGVbXiEvicqoJ92977RxuuX4jjGYOTmbnyXdu2imzeDDwsgEghT9QVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NOaO5h1+; arc=none smtp.client-ip=209.85.167.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=N0/IBu1kBXz4j87EtVSZXymr221Nr00BwNbU9ApuF0DTCJjSgXaz9fnsWuAFpkI2tHhHVUjal+rAx9NjeMh9q47oQbI8bzvijqSgtSkUWyFnz/hF4OFQ8E4m+n4JwCLIpUlCUyIm7x9l4fvWYT0kRZ/4h3vg899WuCf5uyYh0UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BDOYIYOB; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5461b5281bcso1615583e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 11:08:31 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-546210287c1so1401431e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 11:18:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739819310; x=1740424110; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739819923; x=1740424723; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wdRXWfwJ/W21WH+kqrSD6iNAMN48NhyL/UJXo71GHvM=;
-        b=NOaO5h1+ZbcRANW28dsryouRppVIC4WVVrnetnm1lpGqzlRpdjn8eZUhdXmudHEYEJ
-         liLuanI9DAORgGUAabEsXzA7S9Cc+Qhy+rFHwTRx9C2EWZ7spOQ+GJ6TxMHxTiKbHnUt
-         WCGKe2rpJtRcYRuCwou2Pr00v8JFcFg/o/au9KZ4+nqmgDvae35JW3v/8UtguKgByeqJ
-         Yw0sFZeU5BV5itUXc/2k98xbH1OT1lpDd5sp6StXVPGqVoBf//aLzBV9DCV9JVuFmRRt
-         imRolMyIys59TGj9dAFcgNY4Iws2lOD/eWg/+i0vQAXG2JELH09yQCdPN82gmOutPgfM
-         pV9w==
+        bh=DK+fqhLw+0oSKSvkhmUshysfw/dArV7Gb0FGu6H8pRM=;
+        b=BDOYIYOBgxrYEXkVTg9BNQkdzk2Hk/0TDeHpNhz8Rr0L2ZSG9mRKe/f1U2e3isBkKE
+         PHdjNJZ3n4CT1WlAAfTEChtcsFEYTxpA6YS1K4nmGkDq8btB6S1CQ3lMndViSv3eZz7T
+         qWoqQ50kqY7wdbOCEc2UN4bhuNT9wiCMy6Kb2I9UePtYAcacHyOrqAQ35w61DOA0Sqwo
+         HoDxN3QjiaX02qY5qi62tCUKwKjLbuJ/uzdolThFyQcrgg4cBjxaFADyNA3gEydedpv1
+         Z9hduDbGsBk0+5vsNuRWySc+f4BfP5ZAuaqf7U6bgNf7LcH7VynAMsvv1ZZgwgAF60zO
+         3CSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739819310; x=1740424110;
+        d=1e100.net; s=20230601; t=1739819923; x=1740424723;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wdRXWfwJ/W21WH+kqrSD6iNAMN48NhyL/UJXo71GHvM=;
-        b=gfhvQPbdqA7LJuxPYAIowiByJu/A+ZU5A22wq3XiPfNgHJXkRfIXgUQOSkmgzSbNFg
-         aWp3mfTTxvSUGr5OQ05BF5zFoWKYoTO3tLCjG+MoLpjhZuMOEguUfSTBUL5PlgGozDuS
-         F3/P2vLbCtj14qg7afLl59CiTmhK1zdr/GzR1krCFMo1useqH2LnHQPtEmAdypesQW2D
-         eHDMPVQYI/1D1rfWzRJ/saUR8ftPpZ1Ik67xiAeVbHyaapLCvaqnfSgF8MIYkE/BJ0Ee
-         sNrXVvOotvNaj2czx2rV8/wcnRik044ZNwX4U+MWWmlp7UoJMvPd2ELY4keAaJTSLRj+
-         N+rg==
-X-Forwarded-Encrypted: i=1; AJvYcCXvBbV2UAO1Y3VI8nC+c6V90tfnv1uf9QCNulFvWvIDlMTmbhofBOJCLMnCqX5oaQeQHpzZvvLYRD1n+zHn@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz1oBT6Opco3b+u5sUPjsM8Je4n9Up7RgS09KvmhDyIJA4oyJ3n
-	rHHa/cC58l1JkHttLE0hDP3bPfCZDyNnW52ZTMMFAngZPPgWsHAIe314Q/+3e74=
-X-Gm-Gg: ASbGncvEJXzW9/9aN1Lg0xeZodj/56ilZNIHeEdND7u7yNSOxO9xQkcrj0BT7EuW3xS
-	r4hBxMUspM18EONtn6V5a4UjPqNlZubUvI2emhBvQo+u1DG3HCctttttjZooRJaWpyvTWd/496Z
-	XGmFpGUnXmO740mbJXJ3AugkGX6U/7gfiGxH2j0kWGz4hi7XcN+Hxp597xALGHiATFxqBcLIL8n
-	sdNG4VnGBwqb6BS9bcPqQFoBJj6E96+PN7935hOP2LNYl/ENLzx7VCoalkOyZwbp75cxmUKkWE0
-	OzVTAOD3hYHJCdXYqWQbcvNOWEv4arRkoAR2V4RiWCEIOpO0nYFSM5CarmEMSfYE+XJSgEg=
-X-Google-Smtp-Source: AGHT+IHamycJDA8JS60gP7tbbymnAwBhYuHbKpt67zrHM+Y3j+U5GzOFbCQPJZF1gEw20AZA/az6qQ==
-X-Received: by 2002:a05:6512:2823:b0:545:4cb:b25d with SMTP id 2adb3069b0e04-5452fe37326mr3178556e87.13.1739819310163;
-        Mon, 17 Feb 2025 11:08:30 -0800 (PST)
+        bh=DK+fqhLw+0oSKSvkhmUshysfw/dArV7Gb0FGu6H8pRM=;
+        b=taTvykUZQDcc/zbPVkuGayGmoOdIEqBQgPYVa/XFJbIqFrwjhO59A3/dUbsO5MXGKA
+         M3s8ipo9Pu1AKf3XE9Zk7BWUf2PDE8/XtfBoQGuUy6yJqlgsAZfMUuygOBKHbfoUfA0l
+         qCjCSlN9PtDh+/El9k971a1uJrvjziQ8weQ1z6RhB5rgXLhdor1BlkF00rE1g28DjIbU
+         ckxC7P2fHfpoirGzOU2vjWbMj1y9gZnHGNNzgtiIrTgtjxX/20e6SxA+9dunuacmxfsk
+         C8nJUztaWydtTuUxsW1O7hiJbWiBBLmdKv5IDnpWf/fHMkobmoBuz3PdRtubMghjTrzy
+         +4tw==
+X-Forwarded-Encrypted: i=1; AJvYcCXUkdVUlIWW2+oq+eP09OmyIhTyzauwAlN5qPmn+PjslZwc4QqUZI08nMdKVngaeHoJdgSh//LImAEIcHFF@vger.kernel.org
+X-Gm-Message-State: AOJu0YxX6hFQyl/ULblwNAfF0+LotfCNGSzfmlOHSi00txNprlOlKcgx
+	VLJBxs57TtDzESKCUEwHep+AAYLIMqp/LDUpfqNhncVvXbLTEXW3Ad1QXl5ubd8=
+X-Gm-Gg: ASbGncukDdTjpDrMCsIzJO3yoQmzCawyFjXG7Dlz97TwfOn9CrM57GoZXzXsCTvy/sf
+	qthzF6/7+bvhC9asBeil09CkLu3GReEqXEg0hQ0XcikAjDrjk50/xPqG1RKXvyiYhgejINJ7R4P
+	pLAE0Yj6wP0Xf6IdSq7YhklZbgkrBISWcMNjs/BpoMFQYVhr9OlTYHn8G5LLjIP4qpNEG2jqCjE
+	VdhQdq6xKlu1DvugusybPSHUk9TKk+SiuEb13FvvI+Nfug2nbqQAYW1IhsTtbo+P5/RRgaQ3NMx
+	POJi3L/YRdQ1DZTgtKPHKB5831SaOm/mfzOjqejnxUrIHwO05hKiLRhSD8qMY5mzRn6Q/L0=
+X-Google-Smtp-Source: AGHT+IH7pPe9WdA9acnmeu4tM6FBkJrCmOJkB/cGc23MUQGTJZAedW80zQq+KjfFc7YHQvnbMFONmg==
+X-Received: by 2002:a19:2d11:0:b0:546:27f0:21a7 with SMTP id 2adb3069b0e04-54627f02773mr695030e87.49.1739819922816;
+        Mon, 17 Feb 2025 11:18:42 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54526dc0461sm1398133e87.246.2025.02.17.11.08.27
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5461d4f2aa5sm694294e87.0.2025.02.17.11.18.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2025 11:08:28 -0800 (PST)
-Date: Mon, 17 Feb 2025 21:08:26 +0200
+        Mon, 17 Feb 2025 11:18:41 -0800 (PST)
+Date: Mon, 17 Feb 2025 21:18:39 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: Rob Clark <robdclark@gmail.com>, 
@@ -85,11 +85,10 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v2 14/16] drm/msm/dpu: Add missing "fetch" name to
- set_active_pipes()
-Message-ID: <hnarfrrealmd6uma6ahbnw6v63yqtjw5a4idkp44mu73t6gyfm@4zcb6xkbpwry>
+Subject: Re: [PATCH v2 15/16] drm/msm/dpu: Implement new v12.0 DPU differences
+Message-ID: <qlotuliwnm5spneolztca7avmh2a46pz2xqlxzqbw5kwa53m6q@oyhnzz7fhay3>
 References: <20250217-b4-sm8750-display-v2-0-d201dcdda6a4@linaro.org>
- <20250217-b4-sm8750-display-v2-14-d201dcdda6a4@linaro.org>
+ <20250217-b4-sm8750-display-v2-15-d201dcdda6a4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,12 +97,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250217-b4-sm8750-display-v2-14-d201dcdda6a4@linaro.org>
+In-Reply-To: <20250217-b4-sm8750-display-v2-15-d201dcdda6a4@linaro.org>
 
-On Mon, Feb 17, 2025 at 05:41:35PM +0100, Krzysztof Kozlowski wrote:
-> The set_active_pipes() callback configures CTL_FETCH_PIPE_ACTIVE and
-> newer DPU v12.0 comes with CTL_PIPE_ACTIVE, thus rename it to
-> set_active_fetch_pipes() to better match the purpose.
+On Mon, Feb 17, 2025 at 05:41:36PM +0100, Krzysztof Kozlowski wrote:
+> Implement new features and differences coming in v12.0 of DPU present on
+> Qualcomm SM8750 SoC:
+> 1. 10-bit color alpha.
+> 2. New CTL_PIPE_ACTIVE and CTL_LAYER_ACTIVE registers for pipes and
+>    layer mixers.
+> 2. Several differences in LM registers (also changed offsets) for LM
+>    crossbar hardware changes.
+
+I'd really prefer for this patch to be split into a logical chunks
+rather than "everything for 12.x"
+
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
@@ -112,13 +119,14 @@ On Mon, Feb 17, 2025 at 05:41:35PM +0100, Krzysztof Kozlowski wrote:
 > Changes in v2:
 > 1. New patch
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c   | 12 ++++++------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c |  6 +++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h |  2 +-
->  3 files changed, 10 insertions(+), 10 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  49 +++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  12 ++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  |  59 +++++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h  |  17 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 210 +++++++++++++++++++++++++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h   |  18 +++
+>  6 files changed, 350 insertions(+), 15 deletions(-)
 > 
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
