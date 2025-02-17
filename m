@@ -1,183 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-48284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03F2DA38D56
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 21:37:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00C6AA38E7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 23:06:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 080BC3B1B8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 20:37:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 066253B0EE2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 22:05:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 621E12376FF;
-	Mon, 17 Feb 2025 20:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE7F61A8F68;
+	Mon, 17 Feb 2025 22:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CCuI9sh/"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="jcNLYGo7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37BF237180
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 20:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5A219E999;
+	Mon, 17 Feb 2025 22:05:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739824654; cv=none; b=kdzY4TTOSiZXvlZQeYKQH3N+TpcLyIMeDxWoWd0gL7h4v9GJVY2Sw52rsGFoOQ312z71qH0ziO7YmUoSGQuYAOJvbqoWsyrv7JHDPmPNR0R+o5856UsBOzYMavcnqYI80C6/AhfLrEmm6c5/ARbbS9Stx8CYhJz0Pww0hJoWsNA=
+	t=1739829957; cv=none; b=hjInwDEj4jNPNZZ3btS/nUFHnZEqhjzf6GYew/Ukcjz4JLeBThTeFItck2MfjfKTphimeJqePKdjq4ulJyiMt0PnBZAG9JKC5L6gPai+rXBViT2WXcuZPBTTacQQRk0bzS8DRn0b2WF9EVDr9S5CXeISbwXoTMZMwGMwqx0zLEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739824654; c=relaxed/simple;
-	bh=40yunI3yQW/2DdKCzEtatR7phgE4kq+dY4t2RGcCxM4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rmcroe/uXcfgnVWO+6rUa6VdNKIiuRwTpg5i16TjvL42BiMCSlKCp+FbGXirrUFFokc/8EEv5ZQfHvABREpahmWNSeJ+VBXhjBEZzwRHwuQ7U5+6IkSQ2W2myIOnBZdGU7qQPxus7XxJblnBJ5k07ciYLOap6VkB8yvIou6b/Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CCuI9sh/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51HAYdUT018265
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 20:37:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CV29D+VkgPF5aICSXzzJ3Sj2koCJ4HZ6NDnOP1bLDuI=; b=CCuI9sh/QQ/Kwo/s
-	wf77AoI9MclxtLFrzGIgZPGik88XpTbCshnaefKPYlIwjM2hStDf5DO1r5w6e33p
-	GQDloP1qV19bUvL8udgpMDsAVcRJ7EJTcivQAi1PWT4GZHSI7vKhuE0aroDuA6SY
-	cJILg28P+hxnUmLXb77tNM5IqL4U7XKPTfjtiGXda+P3EZu+G63h2oiSVcc09zqg
-	b8RsC4b8Vz63eyeV88z9kBUAIhUi6nCVX3Cr6Ru4yjPGAF4s4/Tj2/mXXhWsTbD2
-	6nOljOdAxALpQvibh/kq1pUDu8k0VhtRV2AbpjHq6lYzT4Sc0IfJMrBZ9Q2A2YhR
-	2KBRmg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ut7stsbw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 20:37:30 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c0a0d6831aso24632285a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 12:37:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739824649; x=1740429449;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CV29D+VkgPF5aICSXzzJ3Sj2koCJ4HZ6NDnOP1bLDuI=;
-        b=wzuAUUYfRZOe29i4GqRlAaOdBL3UUjeOKogmNvUm6ZIzTlpiowPOi6oFo3Vc1/VLjf
-         SEPT8btqQjXlf5BiatHHUBrnFGyg5akFEWiq2Qa2UjW/IT/LMQV6UsK5worfcs5b1ZO2
-         zd21uA8F0YYS7BVS5kHNfUDdF87HpccwYlv00x8EykkbflTm8bH9oXs7Ln2azaKDfP94
-         WDfzsywUoLnnSQx5Z/8cZAgTDwgB5/6RtD3zulas0kRUT2USNuX3Ae5lbycgg1PEZa7f
-         fE+JgnOGvM6YHRUT2azLAey3dMUv3RAJCFqz14XonyLxTcldSesVb+HyCXC5aUEGIUrf
-         ilzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXL5gjIGS7vZl7y7fHLBoyPVlBQ7Gl4UCtbt0lMqYYb/HBOplw/nGDzvBQraPCAz2yLJd0bS2mCydcX1YfY@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzj/VMdngKubp1IX3VJdHQ/Wb2nmTpsmqrf7I3JxM8pvB0K8DUK
-	8paPaVxp8GnjJIY0iJkZ56j8b2HHt2A/hRIjkQOkC/ux5qUgJFzZHZ6/PHTvQ/M5xRN0k89Jlsw
-	7nSytxPFTKZ6t7XFB1WykDg75e++Nmc79rMUE/cr6F62VImgoPcbBhEW1avSR3DSX
-X-Gm-Gg: ASbGncsNTEoCUU7XZsQ08akSKW2+XBTbxyOXJxL+vkbDHWQztAOBxmkifobruqqgXu1
-	f5+UnnyqEp2BRwID7uqmutBwmjMb2FJ7hf+7LNO6z7q79z2EV2K4td/wsglcHshg765bbUmppO1
-	rOUAPHGMkoC3GWPnvxLx06SMyJHCav8vpUS/mi4zZbkaz6l0dvF0/zU8kcvEK0Ko3V9QbWrcT8T
-	i6Qi8S+cIaYAg4gi2t5ht9gN0LBZlUHeQ5WyQdwyyN3QdDEgrfJOgmrlq+LECjJJZdyXxrQOgM4
-	0QusRiXGVOmsMaJY6kHacwhX/g2d4gPbwhmo8oBWJB2KZNJw9DFGxBAr1aA=
-X-Received: by 2002:a05:6214:2486:b0:6e6:60f6:56db with SMTP id 6a1803df08f44-6e66ccec03amr55360116d6.6.1739824649403;
-        Mon, 17 Feb 2025 12:37:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGHv+qR2wsgQJ90G8fUvLKPqMsKYbwLEjQtGdVt1KH2wyx/HZgHBqQJnVnTbguYokKhiD4oEg==
-X-Received: by 2002:a05:6214:2486:b0:6e6:60f6:56db with SMTP id 6a1803df08f44-6e66ccec03amr55359946d6.6.1739824649033;
-        Mon, 17 Feb 2025 12:37:29 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb9553fbd0sm310488366b.84.2025.02.17.12.37.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Feb 2025 12:37:28 -0800 (PST)
-Message-ID: <33f5d722-da5d-4b9b-bddf-922e820d8b7a@oss.qualcomm.com>
-Date: Mon, 17 Feb 2025 21:37:25 +0100
+	s=arc-20240116; t=1739829957; c=relaxed/simple;
+	bh=/qaJsStPtUj7Dtxjelp0zf9wVWGxYbmiDlfb9PgmI9M=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=q1k6B+kdyr7ohlt/qfyvIfIE8xta2l+Q1Ww9EVejT+uUDsq5naJ3MuFhNF//jK+FxTbW/SqyDJpSnJFR2YAJ/BqjdKnqSF1Bzm8wEt8BWmFxtro6mXM0yXZW4yiG0S9UQZcfm6DwFrPflcu7DI3PNOkhMaMrByhTNMWLJCD9oU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=jcNLYGo7; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1739829948; bh=/qaJsStPtUj7Dtxjelp0zf9wVWGxYbmiDlfb9PgmI9M=;
+	h=From:Subject:Date:To:Cc;
+	b=jcNLYGo7cV4HC4Kfj6L3ydJiPzBJ9E9bsBbaflZ41L56UOA6dywKg3M4PRYVUhyWZ
+	 VKs4gzPpacJ8qgaXCzte9fbVia8YO4braqe0o/eEBLyH8B6kFS5NcXzfGDFKMN9fcp
+	 BaV9GIF6q9Wv51eWaBGUCQQGDfrqlKbUBXn75t9o=
+From: Luca Weiss <luca@lucaweiss.eu>
+Subject: [PATCH v5 00/13] Modem support for MSM8226
+Date: Mon, 17 Feb 2025 23:05:14 +0100
+Message-Id: <20250217-msm8226-modem-v5-0-2bc74b80e0ae@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8450: add PCIe EP device nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250217-sar2130p-pci-v1-0-94b20ec70a14@linaro.org>
- <20250217-sar2130p-pci-v1-6-94b20ec70a14@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250217-sar2130p-pci-v1-6-94b20ec70a14@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: R5WTTMNzpFN_L92mRmDdBNh9ijwot-Wm
-X-Proofpoint-ORIG-GUID: R5WTTMNzpFN_L92mRmDdBNh9ijwot-Wm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-17_08,2025-02-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 mlxlogscore=932 phishscore=0 spamscore=0 clxscore=1015
- mlxscore=0 suspectscore=0 adultscore=0 priorityscore=1501 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502170160
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAJqys2cC/23OQQ6CMBCF4auYrq1pB2iLK+9hXBQ6lSYCppWqI
+ dzdQlwgcfm/ZL7MSAJ6h4EcdyPxGF1wfZei2O9I3ejuitSZ1AQYFIwzSdvQKgBB295gSy0vNEd
+ hlVE5STd3j9a9Fu98Sd248Oj9e+EjzOtXmoUfKQJlFJUyUhhhtLWn21DrJ7oQDjiQGYvZGti+E
+ rMECImlUFJJxH9AvgbKLZAnACoGaGQlLa83wDRNH9/USeEvAQAA
+X-Change-ID: 20250107-msm8226-modem-f15a1e6f8d84
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca@lucaweiss.eu>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3863; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=/qaJsStPtUj7Dtxjelp0zf9wVWGxYbmiDlfb9PgmI9M=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBns7Ki2dMZmP7kneJGVFMIjVn+chD02F+5dBekW
+ COsFwYlmleJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ7OyogAKCRBy2EO4nU3X
+ ViIwEACquEC1CDHx0kvtplJyUIoSdp+Y4qZtD8GaCh/LGxCNyv/7ShGraqSYMnfPH123YXk4wyc
+ yocyqIuMhqkQIu2tVRZoFKx5nr3ruj7qSDJYMqQmbBfar/niK+ADA27cskYwG/pG+kA2a9sMQSy
+ bCNxTSv0cgXODv8UybYbTmKLNQVHHaiAX/XyG8KQCj6fCQseuxRGf4U047T8sIEO/y9IcA38n3Z
+ bgyUBZGFyQ2+Z/BycfultZVC250RrOJhGD8Kn964BKwVGHVGe9Cl3M5/ImZ8N7FGm8YkH249X/G
+ 6AtpByZxTfHB5iPVI3g4lLXoDIFf6GT3Mx1RhvTexKCu15RTW3K9fPmS73nHGly4f1IgQoGtH/o
+ b8ArZnguJ8zC5g5LxgNSP06rf0K8lvpca07UXy0eWVhKdQUdAqIXmDT+nhzNNDzWbqOjKwO4hY+
+ ZklILebwX+nHH2lPDZ4NYuUhmHDNEGvFVQFZi4FTl1ozsRVik3Jx6NthjxMQgRRPUjXVRlgC/zH
+ Fzi9lKK0NwzOhL1oWd16azwmt+7bG8xvnWk7u/XpDrNzoRyBfYcGGEK5fSLour2wl49y6wZWHm9
+ /LQT/jVU1MJaNOHUU5tmHpy7lLH0V+m/5ey45AYGCtW87+nW3BDTDdI3euAQQFOmTsoK8rvGhgs
+ x6ZR3YhraPVX9rg==
+X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On 17.02.2025 7:56 PM, Dmitry Baryshkov wrote:
-> On the Qualcomm SM8450 platform the second PCIe host can be used
-> either as an RC or as an EP device. Add device node for the PCIe EP.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 52 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 52 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 9c809fc5fa45a98ff5441a0b6809931588897243..ad0ec15b18e5ca7bea196be1564152f7faf51d9f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -2262,6 +2262,58 @@ pcie@0 {
->  			};
->  		};
->  
-> +		pcie1_ep: pcie-ep@1c08000 {
-> +			compatible = "qcom,sm8450-pcie-ep";
-> +			reg = <0x0 0x01c08000 0x0 0x3000>,
-> +			      <0x0 0x40000000 0x0 0xf1d>,
-> +			      <0x0 0x40000f20 0x0 0xa8>,
-> +			      <0x0 0x40001000 0x0 0x1000>,
-> +			      <0x0 0x40200000 0x0 0x1000000>,
-> +			      <0x0 0x01c0b000 0x0 0x1000>,
-> +			      <0x0 0x40002000 0x0 0x1000>;
-> +			reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
-> +				    "mmio", "dma";
-> +
-> +			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "ref",
-> +				      "ddrss_sf_tbu",
-> +				      "aggre_noc_axi";
-> +
-> +			interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 440 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "global", "doorbell", "dma";
-> +
-> +			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_1 0>;
+This series adds support for modem remoteproc found on MSM8226.
+It also adds needed device tree nodes and enables modem used for
+location service on matisse-wifi.
 
-same comments as patch 5, plus please use tags
+Also bam-dmux node is added for mobile data which is used on
+3G/4G-enabled devices.
 
-Konrad
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+---
+Changes in v5:
+- Correct size of register areas for modem (Konrad)
+- Use XO from rpmcc for modem (Konrad)
+- Make reg-names & interrupt-names & clock-names be 1 per line, just
+  like the base properties (Konrad)
+- Pick up tags for PATCH 5/13
+- Link to v4: https://lore.kernel.org/r/20250129-msm8226-modem-v4-0-2b02ed7b7f1c@lucaweiss.eu
+
+Changes in v4:
+- Drop mx from .proxy_pd_names for msm8974 as it's always a regulator
+  @Stephan: Please check that one also since I still picked up your R-b
+- Move q6v5_external_bhs_enable to just after regulator enable and
+  _disable to just before regulator disable, instead of them being in
+  _probe and _remove (Stephan)
+- Pick up tags
+- Link to v3: https://lore.kernel.org/r/20250127-msm8226-modem-v3-0-67e968787eef@lucaweiss.eu
+
+Changes in v3:
+- Include dt-bindings & driver patch for MSM8926 modem which is slightly
+  different
+- Include patch to add msm8926.dtsi with modified modem
+- Include patch to enable modem on MSM8926 HTC memul
+- In single-pd driver patch modify if conditions to only trigger for
+  8226, even for misconfigured dts (Stephan)
+- Don't /delete-node/ & /delete-property/ for no-modem smartwatches,
+  just make mpss_region & mba_region be disabled by default (Stephan)
+- Configure matisselts mss-supply correctly (Stephan)
+- Pick up tags
+- Link to v2: https://lore.kernel.org/r/20250126-msm8226-modem-v2-0-e88d76d6daff@lucaweiss.eu
+
+---
+Luca Weiss (8):
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8926
+      remoteproc: qcom_q6v5_mss: Handle platforms with one power domain
+      remoteproc: qcom_q6v5_mss: Add modem support on MSM8226
+      remoteproc: qcom_q6v5_mss: Add modem support on MSM8926
+      ARM: dts: qcom: msm8226: Add modem remoteproc node
+      ARM: dts: qcom: msm8226: Add BAM DMUX Ethernet/IP device
+      ARM: dts: qcom: Introduce dtsi for LTE-capable MSM8926
+      ARM: dts: qcom: msm8926-htc-memul: Enable modem
+
+Matti Lehtimäki (5):
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Support platforms with one power domain
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8226
+      ARM: dts: qcom: msm8226: Add node for TCSR halt regs
+      ARM: dts: qcom: msm8226: Add smsm node
+      ARM: dts: qcom: msm8226-samsung-matisse-common: Enable modem
+
+ .../bindings/remoteproc/qcom,msm8916-mss-pil.yaml  |  64 ++++++-
+ arch/arm/boot/dts/qcom/msm8926.dtsi                |  11 ++
+ .../dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts |   1 +
+ .../dts/qcom/qcom-apq8026-samsung-milletwifi.dts   |   2 +
+ .../dts/qcom/qcom-msm8226-microsoft-common.dtsi    |   6 +-
+ .../dts/qcom/qcom-msm8226-microsoft-dempsey.dts    |   1 +
+ .../dts/qcom/qcom-msm8226-microsoft-makepeace.dts  |   1 +
+ .../dts/qcom/qcom-msm8226-microsoft-moneypenny.dts |   1 +
+ .../qcom/qcom-msm8226-samsung-matisse-common.dtsi  |  19 ++-
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi           | 155 +++++++++++++++++
+ arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts  |  14 +-
+ .../qcom/qcom-msm8926-microsoft-superman-lte.dts   |   1 +
+ .../boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts |   1 +
+ .../dts/qcom/qcom-msm8926-motorola-peregrine.dts   |   2 +-
+ .../dts/qcom/qcom-msm8926-samsung-matisselte.dts   |   5 +
+ drivers/remoteproc/qcom_q6v5_mss.c                 | 186 ++++++++++++++++++++-
+ 16 files changed, 454 insertions(+), 16 deletions(-)
+---
+base-commit: 30e923ec5b1c3e4f8f2ee8967db4907d36be8c00
+change-id: 20250107-msm8226-modem-f15a1e6f8d84
+
+Best regards,
+-- 
+Luca Weiss <luca@lucaweiss.eu>
+
 
