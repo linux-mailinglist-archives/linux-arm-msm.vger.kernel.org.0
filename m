@@ -1,90 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-48150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2752BA37C59
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 08:35:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37FB6A37CC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 09:08:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C73A5188774A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 07:34:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 961CB188E483
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 08:08:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7192F1AAE08;
-	Mon, 17 Feb 2025 07:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1307519D07E;
+	Mon, 17 Feb 2025 08:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m9KU0cwi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fcb+1zgw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76FF1AA795
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 07:32:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223DE18DB23
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 08:08:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739777540; cv=none; b=t4hDnewP8jOzsisKik+V/DK9v6JQzxkiVuwla9t2o1NFrrTg1ZGfXHEq5C+sgNSYaeet3DxbPfZbLBut7aP1ZS6PB+bGmubFL0wQdAnoHfDjxRAxF6+9dywlfcxlyclKNSwLSy518HeAH0TSlVc7AJN8wfncPgtULGB9AlhEHO0=
+	t=1739779688; cv=none; b=fdoERTl+ywy2Im+lyRsOxwXaHmo5Q5e12+Fl8EuDVyluIWYIlDpFj4uL85vr1YPROevu9f4la1deSmNidqpLt4vyXzS6GLaspL/LY1ytAgY99mVkrGz7MCrqJ9yg14aZuiyeXspkfGnzrJ5BcM7fUiCRIgTNkAlVY+aNMQMPBag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739777540; c=relaxed/simple;
-	bh=D1P6HRkRSuWuGIyFa3FIxyItrNqE/YBTIxKXZkYDpZs=;
+	s=arc-20240116; t=1739779688; c=relaxed/simple;
+	bh=2ikSgfGf1exOnsFu88z+5kxpMPTxBzklFFNfq0MBXfk=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=WYaFC2gRJHaupIqoDIT1gL9Bc8PofG+bTy3FXbfDpV22gYOa+3DC3HHGhF1lKlddvcgPeZbx+jONNWI8K3rIWneirN1WKSV+Pc2Xwjg1vn7bqYyZYQTNDs0gVJt8Zo1fzrN7KCOmXxEqlGMSqIFNIDqIdbUVLbxbY07H7QvbhDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m9KU0cwi; arc=none smtp.client-ip=209.85.218.46
+	 Content-Disposition; b=Nq407V6vLRsfRQfOqDbbW78OpKXlWPpSO1/5MA4eIanQkckcGghPqR3+3UkoiwsIX2z71FNp5neA7PObhG17f6asae9KQ5I+kqXQCGNYONUKgxuA5sziXoQ+NHDSFuKd9Ep5yyNwb10/TfagWnf21v1p+k3+4sOjcgtyzYH+dis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fcb+1zgw; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-abb90f68f8cso174397666b.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Feb 2025 23:32:16 -0800 (PST)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5e04f87584dso1293661a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 00:08:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739777535; x=1740382335; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739779684; x=1740384484; darn=vger.kernel.org;
         h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hO2J1j2m5X6qQF5wOtrAqeimkscPDnsoO2uRIRbK0t0=;
-        b=m9KU0cwiicIeYiizaiCHFyu2MmbjQPk2nn5VQp0Mdq20mf2kJ+F+9Lfe2cKph/Vo+R
-         z33sb3x3NZVYSPD0d3Ab85S/88jJn1P+rHuRSSe+u2RO3sQ0//PPS3N/hu/9SajP6+6g
-         MRrwf66gM31TmiU5RWwv7Z1GAU08Xjc4yXIwQtnYBO5IiCy3XDBlQbvR17I1UQL1ZHKn
-         H/K24yVfO+v2RdkdcKC3MUJKfvbslQhc2pjwT6p0g1Itj9VVv2PLx9RRzc3PeMYa9E9+
-         5fnGcrGldDNKaZbJfgmFrLP2ENhoxluMuHwk00katDPwEqUKZMlEMvQd706geiJZsNLB
-         y1HA==
+        bh=ziFzV0Y9ZdSXReLGJPFeArO5FCiM55hkxr4sd1Sn0do=;
+        b=fcb+1zgwh2mXX1AMSgeEnNFcHK5Mf2w1i1Zi0KaTTmM6YjVrBKmIqVF1Dc2OFwd0w4
+         OkysB3CFui06AqR3Sk+//iriDKsbGWA5+75okgn7Pd/y6gB1a9c65uhxsQf9QVEjQj+p
+         pYLpvTcmk8+JfzbiK74fRLqJ+doBD4LlaNhbaHaFIia4IlSWlkGDVoiIzp9BcKj2lMnB
+         mPxFgDXsCMZyRh8pPEGOt6Nsz+oKrLcQJ6DIWl9twHMwuUVTsb90XG4GE0IRFXiGjFbd
+         GcBaWkPvfwK2bOl4XTIzLeDeWBe5ijlYbDz/5ajO58lVXKFXPdg+Vdh9BcuDKk3Og786
+         gJEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739777535; x=1740382335;
+        d=1e100.net; s=20230601; t=1739779684; x=1740384484;
         h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hO2J1j2m5X6qQF5wOtrAqeimkscPDnsoO2uRIRbK0t0=;
-        b=LT3J+kzcccd3n/SBfyGrpnQmGC30VYdfF2OmOnzQGPpeteeLi53zTmbgVcc9pzQswp
-         VBa8etNV7wSi4R97pJ4OUgZmdmrvsG0nziN/UpJx8x39kJUltMa75rMoyo2ZDo2uUfPl
-         k2F8AxEe0DoDfDz7ULPGM5pewp01MVumljC/LhgQLCcZweP6tiO+ROw+IeYtgE/Qz1Vb
-         0YSD5ys3NGi9s2Pr/Yck4Y7UYoPq4IKqsnC+mLvXfd78E3Bf0I7sNmN9N7Wr1nugJSyA
-         KtqGg1Xu3xBhcubc2C6CRDdHiTe6s0+q9RIGojzCGIAZvtirC/ICBcunkM+RJBM4BvPg
-         buFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVrPBBXz25eBeJ+jWPf6eglsAH9N8X5FYr9y2KjFkbkBgLk9jrtLEhOFh4BZLnbEvdOtF3pxgncmBKUF0TU@vger.kernel.org
-X-Gm-Message-State: AOJu0YxuXHpee9VLHFEoU5H7RoWbwKnLpGGJATncI0cOfcsswpn6+rH1
-	nXNARTuC5jiF1A6bjHlm1O+xr04L2rLGo3ib+7JobonvZJPssC5QdeO5LKkuh4E=
-X-Gm-Gg: ASbGnct2uK1kL4Lyr2fVs7EBDh58YD5xIkAx3djtSb28y8tH9adstxUDWFzfv4aQtxu
-	Rujm24I+Y6iLRQQhDk543w5rsfdt7R1zs2sRkvVR0eNajM24C1nXU9IStn5OdESuw+TK/BQ2JzV
-	wEwyEt2W/FJgM3x3Z1qV7e+yITfTjBo3J7EFjP/BHGaKZjjQ1KU2HbgDXXMnUIgH/Efo5O0phG/
-	7Z/aZxuFYGNWL12Eb/ajU8Bat5KTfXj8ceX872ULx5nnqhNZ7PfIGFZTfcOvUBTzMdFHouxGX4R
-	alZ6zRm3Js40+7PNw6Ua
-X-Google-Smtp-Source: AGHT+IEXChx9P0XiKZoNkZiSog2lL7kqWeWWaA+fbxmQW7+pyPDaxfCj2UqyTeAJOchNetAsSy3KVQ==
-X-Received: by 2002:a17:907:c1f:b0:ab6:8bc1:9b5a with SMTP id a640c23a62f3a-abb70da2ad5mr751573366b.41.1739777534951;
-        Sun, 16 Feb 2025 23:32:14 -0800 (PST)
+        bh=ziFzV0Y9ZdSXReLGJPFeArO5FCiM55hkxr4sd1Sn0do=;
+        b=tH3zWuxiquFCLp8RE11+5DN11Mx8QOUWXLSq3TkdXYUKa06l4LMOYHrx3mkDKRRhzw
+         ameJxFNYE5A0laCx8Hwb2MQ8j2zGY8+49itpVGRAyCtX1AcZC6b20G92WaPPWfr4cuY0
+         6PFU4p/vfDWIv+LmrZjm/mQqSDHcuImluTkvww9i7fnPrCt7ZR3JrzE8ZU/d9YV1WZFR
+         wUlLZU2vodHXX78Fcx8GXpWxaNDnAi05Mrgq6uMdMQZsSf1Z0RuMUHf4xaJeWHWjQfPI
+         vI+9U4eU13fc3vPHypjCWd32tRSTW3qQHGTMU4p4SQoC10qIFtJgQ/KBgmcGGu4WPRQp
+         F1Xg==
+X-Forwarded-Encrypted: i=1; AJvYcCVPNTaOVifVMSWclu7zsoslBRFWBy92NlZ8h0M+ltBCWzprKob4mtHq+/3vKasdT6Qlu368tvUjL9hv53Kt@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxw3iUlQKuz5FeJCcbWacywJOoP+YtHuQAPBszBsFoRSQ3V38wA
+	ON8QIEHo34/+ny8nGEzb/bXe5I5GOS5VFHNsNd2DfM8TehPtiT8FZXWKf/EiDqo=
+X-Gm-Gg: ASbGncsE5suvJFtqr73uDvVgnTYOnBgMytJybM69c++KxmiYWw3v+/xm5Mg0VV+N9US
+	4UurWwvWXCvdG4vBNR5Y4dppKagUd/ygwhePAm/qXSR4NJb3qyKUIHadZRDW31Sz9Ooup0Z4EjJ
+	klMKcy2bReyHh0MuJ8cHD/cCqbfQJpB5jVbPuCjptUsw+Eh5CkDN0cPuzWS2CbsAYYHUeld/DTi
+	4KQ0WUfDTcN5JmsFPGtrKPF0tkXQggZ8ORXgOJvsTwJo1HgFef7SpYHYy0Uh1TvkkH037CJWuu3
+	y8jX9jzJW7uEQToLgpeK
+X-Google-Smtp-Source: AGHT+IFBXYQnvhbaTs+R1+H9kU9Himyc237EX2vSSmBY82Bm6sjx/eueayJNYvLdiOzneYVu+KD0DQ==
+X-Received: by 2002:a05:6402:348d:b0:5dc:882f:74b7 with SMTP id 4fb4d7f45d1cf-5e0361747fbmr10164192a12.30.1739779684400;
+        Mon, 17 Feb 2025 00:08:04 -0800 (PST)
 Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-aba910e8b11sm556516266b.21.2025.02.16.23.32.13
+        by smtp.gmail.com with UTF8SMTPSA id 4fb4d7f45d1cf-5dece287cebsm6843141a12.74.2025.02.17.00.08.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Feb 2025 23:32:14 -0800 (PST)
-Date: Mon, 17 Feb 2025 10:32:11 +0300
+        Mon, 17 Feb 2025 00:08:04 -0800 (PST)
+Date: Mon, 17 Feb 2025 11:08:00 +0300
 From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Rob Clark <robdclark@chromium.org>
-Cc: Rob Clark <robdclark@gmail.com>,
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Stefan Schmidt <stefan.schmidt@linaro.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
 	kernel-janitors@vger.kernel.org
-Subject: [PATCH] drm/msm/gem: Fix error code msm_parse_deps()
-Message-ID: <75a78610-281b-458e-b703-57c7e7de573c@stanley.mountain>
+Subject: [PATCH next] media: iris: fix error code in iris_load_fw_to_memory()
+Message-ID: <a1d9e082-a4d5-4440-996f-7ee7e850de60@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,30 +92,30 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 X-Mailer: git-send-email haha only kidding
 
-The SUBMIT_ERROR() macro turns the error code negative.  This extra '-'
-operation turns it back to positive EINVAL again.  The error code is
-passed to ERR_PTR() and since positive values are not an IS_ERR() it
-eventually will lead to an oops.  Delete the '-'.
+Return -ENOMEM if memremap() fails.  Don't return success.
 
-Fixes: 866e43b945bf ("drm/msm: UAPI error reporting")
+Fixes: d19b163356b8 ("media: iris: implement video firmware load/unload")
 Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/iris/iris_firmware.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index dee470403036..3e9aa2cc38ef 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -509,7 +509,7 @@ static struct drm_syncobj **msm_parse_deps(struct msm_gem_submit *submit,
- 		}
+diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
+index 7c493b4a75db..f1b5cd56db32 100644
+--- a/drivers/media/platform/qcom/iris/iris_firmware.c
++++ b/drivers/media/platform/qcom/iris/iris_firmware.c
+@@ -53,8 +53,10 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+ 	}
  
- 		if (syncobj_desc.flags & ~MSM_SUBMIT_SYNCOBJ_FLAGS) {
--			ret = -SUBMIT_ERROR(EINVAL, submit, "invalid syncobj flags: %x", syncobj_desc.flags);
-+			ret = SUBMIT_ERROR(EINVAL, submit, "invalid syncobj flags: %x", syncobj_desc.flags);
- 			break;
- 		}
+ 	mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
+-	if (!mem_virt)
++	if (!mem_virt) {
++		ret = -ENOMEM;
+ 		goto err_release_fw;
++	}
  
+ 	ret = qcom_mdt_load(dev, firmware, fw_name,
+ 			    pas_id, mem_virt, mem_phys, res_size, NULL);
 -- 
 2.47.2
 
