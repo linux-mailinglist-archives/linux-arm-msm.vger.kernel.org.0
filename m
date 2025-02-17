@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-48261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB230A389F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 17:47:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14ED5A38AF1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 18:55:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F380189298A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 16:46:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B98E188E9D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 17:56:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7DAD22A4E0;
-	Mon, 17 Feb 2025 16:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94E9D232363;
+	Mon, 17 Feb 2025 17:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vgv06a6C"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ub8l+g/X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097B422A1CA
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 16:42:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDDAD528
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 17:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739810540; cv=none; b=rEOp1tFH/+gHE/m4t+BogL2Tb9CX+hn0aM0B47GD0fFvAivjtpP490RwFtcI/AkfcJGcUWLw1O6XbvP1zkZRxmO9rO6AgpDlCIaRFz4XNblejB4ZWiFvkBqNWzaEfnjaCdUIPTluefcPcfmw8kR5PPSdqA876ubo2QpFlFXb3xE=
+	t=1739814950; cv=none; b=V/ZN29rfcckTDSScryFYoElGO9e6IrZiWHPYgAtGpkUUYzUmf//q1CMXMPUtf80XoXmNH5KcHvuz37kQ+UlS0LrcjFyU2rf32ZXMKMEbLFfCFt6Wn2mAatavl2F1XzhfchYWy6kyN004V9y5twlgiEIEccMEnh9r3+kMdI7RBLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739810540; c=relaxed/simple;
-	bh=npT/AUk70cBHCRbn81WnGX4UoVxSXbDYwaGyJuk3VME=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PhpujIqmUeEqwaT1kilx8SGoA6Ne4eYpE5qLDBrHn/9IVRygh55zmsjC4puDUs+cuOgd5mzvDnPpEVY9+dpVru9aZXE4MquDKlGgqqgDda04zbdDXMCTaeAxfL3M5eKmx5RO7FEnWXOpSjgQrqI4fuT+XTEtHpmJD55AVEgbeKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vgv06a6C; arc=none smtp.client-ip=209.85.218.53
+	s=arc-20240116; t=1739814950; c=relaxed/simple;
+	bh=5hkUoC3+amsHF1qrXInhFICP1KnhED+w7Ap95nJYZaQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hULBXGqGFLuN7MbMvvdw1hMXu/e5mvsokdRzUdwq6ZS8rNq+TNMzBm+0+BkxbRfM7IwgIbFjJYAtHzD1Au1WB/5X0ePErxZSusPdCY688vwSE9X2PXXqGhYLimFm/zYZ8iQsZytmcIFS/kTWpDE7+ikB3sOTB99m0/vUOvkTlJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ub8l+g/X; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ab7098af6fdso64049766b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 08:42:18 -0800 (PST)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4394a823036so48539255e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 09:55:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739810537; x=1740415337; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a3bwniejdI/OPbevpLj33tIqt0/bau3qVCvVDzBOjOY=;
-        b=Vgv06a6CemgZ/j8GsoTKX8FMDtria0VXNve53gO1Dkt1KvC5azJ62y1MKJBNeJXhsw
-         5OlPFa3OmugVNgXa0MfGna9C4lV9Es6wGpJUbg7hfEwagPIOoo0cofhlizTa+MZUj5kL
-         A/0ggTmCGJseyo7WIpGJaLeijIqI9tGAAPgAEpNG2Aynds2mW7WjWQrNq8alkd0Rysjm
-         Xr4iJgZB2UW+ht0IgprCPhRj4kMr6gXl5vAmh/68EzeJdKzCgM5HdRnad+UZt2mFW5WI
-         wzeZxp0mCECuiu5khw7nhlqC/rFi5AoM6uHuAHhJZgtaS5bDMvH5FnAwyinX48RJwxZp
-         b0Qg==
+        d=linaro.org; s=google; t=1739814946; x=1740419746; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9Bstxg6aAtD9jX2Uqr4kULz226chVwc5s2P7OWkQ6aI=;
+        b=Ub8l+g/X26s++7qr21hrad88TzYxm5DGAGcJoaLW9i2JuoFDgNNWmYm+Bfl/uvVBNw
+         aMOYtoBoLZC8gE8K5S+ErsXzRP1y0yYV+/Hlv4cZ3QHKvNuBT3oMfNy4VhWial4dz2gA
+         zqP2/3NIOjb2D8rNGuEYezYFDNZjIypb9tPQ44Wf9a9764EmRSy9er+N8NfuEtXV3pFk
+         0w4orMdPTqbksWv+fKIFWC1m8wFFft3WtkPowX0wTvUO/TWUpfqu+2mf4MoC8k4xca2Y
+         Hndp7malX4cSUU0FT9xvEnS8JyAzO3tzvbiJuV7NnqrwA/IfLo8Zapht2vKKw0kNUuWt
+         LILQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739810537; x=1740415337;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a3bwniejdI/OPbevpLj33tIqt0/bau3qVCvVDzBOjOY=;
-        b=NHIpFo3shDlPeUjh7SvCo64+v8o5NANYNZRNFMY0tqtOmLVc2qbHK1AMmAqoTwM2Jn
-         7obCJC7cgiIxuzZ22q9rvyLjZS7PKIsH8rVVUOLUktFDBpkcbHXyXipk8fWF91h/4IoL
-         pOOSToGTwz/lVmSy2Ca1sIYc/V2n9Wnvae0Db+HAeN42oEI7zCN4s+SNvA6wxQIUUZLS
-         AmBTNDgzkXiL1O5oiWKl/tRLhvgr+bDOA5BJt/B+8C2Rd1PFQtdY9746MphrkXh62aYd
-         syCSWYVOcNGXLyDke4WT2F/vl3PO8BoJ28PPHFgB4MKDvnDi+Rl4ECmF+vj5k3aMZmnG
-         +UCw==
-X-Gm-Message-State: AOJu0YxIgJ++JxBicfnKTF1qtZiWFpX/+Eme9VLs2x2WqU5YISVgm6FN
-	IWQBCnyt8L9luu8zvVVwepaTptgJpJQRujdlS0U90NNeMKiUI4DoYXSGe/jAEdU=
-X-Gm-Gg: ASbGncvUF659Umqy3wgKNkZzd9BsZn+T4oYB3jeTfr73+P8keenpkLg2VxzBnt4YaHW
-	bEjh26oYxATKm6vj6kBfVQSW+av3HNNp1Hrn3irQiPW/IWCqbF5TuVThECpPQzF/8QqnTOEJr/1
-	8P+FZHlhWbIjlpOREeu6XUxqnofF9T0Xy5ZsZO7s929wj5p3quoguFuQfyXOA+N/0L6+oF5rihS
-	6IwiTxEzLffN/GBCrHS99DJ/G1Lm/vq4RWaPNMVo+mT3f2F03RV+brcIE93dPPlmm7IcFv85OAS
-	i3fu0Hdq15QqsAZe4F6ygihdaUpHGyM=
-X-Google-Smtp-Source: AGHT+IFYF0nsGqkCnhvNcX42NuzRrOaSu5qMxI91MpfvgKlb990wc6+bQ0tjBdLkitfFsrwJbfj/Uw==
-X-Received: by 2002:a17:906:7310:b0:abb:6f35:f514 with SMTP id a640c23a62f3a-abb70df3426mr352695766b.13.1739810537368;
-        Mon, 17 Feb 2025 08:42:17 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.206.225])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abbac781b78sm82647966b.60.2025.02.17.08.42.15
+        d=1e100.net; s=20230601; t=1739814946; x=1740419746;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9Bstxg6aAtD9jX2Uqr4kULz226chVwc5s2P7OWkQ6aI=;
+        b=s6Ut/h6ghFx1GwBO2JYTIp2nCQqW8kSf6DHxpNOWHPSOK0DaaQlulrliQ8dhv24wMe
+         FOI5ShL4zenGYmLCxiJq4QdNozsFMQChqnWPqZ+4XNuUwgL6NMdbeKAWA2HgiHdme0c+
+         3OYAk3NNV8MLiOK6e4Wg7gBgQVJ6My2TUldV9pcvAzT2nCBGs+sc8oDi6ZDrnb9fupU0
+         8ocsTS9R6TxjGXba9S7XV+3gq+HWLrR57R2783H8Cbjqsee0EA4cQvnAai547nssq+5h
+         wdUDCf0ze4gD31UFX4JdfCstFYwuUo2dCfsHuedgiCcd7/4QfqFyUnEH3O+7u7jGo8N+
+         N85A==
+X-Forwarded-Encrypted: i=1; AJvYcCUvdAZPhC0q9ZtU8xmbmOgJZSEj0jBX2SN8HDB3MBMnheyijQylAWcPT09ihDsVwzPC2Zi+u0/QkudD7rE7@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjNwVUeuiwQcbE1/jpfTleOu3b5yp1qsF7mClg6LEyR6ve5p7C
+	+qiZmyY0KdmEHhknBYQ0EzKrw7G/IrC/aOho6/XqgPqu3tTKEwo8fcW/4Qe1AKQ=
+X-Gm-Gg: ASbGncucxpeBLF6SDtVwo+/1qnexNkNxUmZrMqGwNxc2yEkOqcvGAVtoZefxDISoqRp
+	+rxbUXrQfjC+btS5lc6niy40hkDG4c5AZ+GE7ZsEgF8yQDBe/SGIr1EIjosZOXw2legEPy6k0tp
+	JekEETQQUSAU9KJf7g3F6TVSuL+vg/NW2zoSznhkIzd/kZwQ9q3gac34JfbeldBGSWi57CPSrKE
+	jImGa88a3CiG5PjgAW19uSxa7Hyrar2/p2BN91cQkzPcCCDJqqaRLBxw8ITE+MoSt4Q1uB3IWup
+	dmGQilg7cRKSY7vfkC42qBjHfGbuvw==
+X-Google-Smtp-Source: AGHT+IFTLcWChe/TpfcRU31PaZWkMA3HiydKUWofMaadNMzdOJpsLlbL3BnV3RVInRO37VebIyUiLA==
+X-Received: by 2002:a05:6000:1a88:b0:38f:3471:71c8 with SMTP id ffacd0b85a97d-38f34717a8cmr10251107f8f.3.1739814945937;
+        Mon, 17 Feb 2025 09:55:45 -0800 (PST)
+Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:70ff:3068:45e8:b844])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258dcc50sm13090095f8f.34.2025.02.17.09.55.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2025 08:42:16 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Mon, 17 Feb 2025 17:41:37 +0100
-Subject: [PATCH v2 16/16] drm/msm/mdss: Add support for SM8750
+        Mon, 17 Feb 2025 09:55:45 -0800 (PST)
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+Date: Mon, 17 Feb 2025 18:55:23 +0100
+Subject: [PATCH v3] arm64: dts: qcom: x1e80100-qcp: Add WiFi/BT pwrseq
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,133 +81,245 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250217-b4-sm8750-display-v2-16-d201dcdda6a4@linaro.org>
-References: <20250217-b4-sm8750-display-v2-0-d201dcdda6a4@linaro.org>
-In-Reply-To: <20250217-b4-sm8750-display-v2-0-d201dcdda6a4@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krishna Manikandan <quic_mkrishn@quicinc.com>, 
- Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Message-Id: <20250217-x1e80100-pwrseq-qcp-v3-1-a0525cc01666@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAAp4s2cC/33NzQrCMAzA8VcZPRtJ2m7dPPke4qGr3VaQfbRSJ
+ 2PvbjfwIIi3/AP5ZWHBemcDO2UL8za64IY+hThkzHS6by24W2rGkUtCVDCTLTFNMD59sBNMZgR
+ eN2VVmgJFLli6HL1t3Lyrl2vqzoXH4F/7k0jb9r8XCRAaRUWRE+qa1Pnueu2H4+BbtoGRf5AcO
+ dFvhAOBkUJWRldK6voLWdf1DSWeJrz8AAAA
+X-Change-ID: 20241007-x1e80100-pwrseq-qcp-2bf898c60353
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3191;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=npT/AUk70cBHCRbn81WnGX4UoVxSXbDYwaGyJuk3VME=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBns2bFZ2hu1MzBH0BCrv5flO9CVwu0Y6SnKx404
- uBGg2GNXWWJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ7NmxQAKCRDBN2bmhouD
- 10PMD/0TpbFaxlve+q6sBLe+kZnWI2gpgxVajSa1kKSerRKqRlJChd49nL352VlDKP/tMekaOEs
- Hb+KkarBrXjIt1LRA2FYHygGYffOZZlJMYLt9K6DJP+qi9ZE0PmomB1e6ts3j/67P8jPEWgxlkn
- Tfgp4kdXfC3LVggeXPlZwbo3ZQ6y8KV9H4yVmLD1/PM28bB2n+0e+w5Beakfc/tL4OkJEhdIKdb
- duCjqZlQ55c6i4V+4Nan08qanQM/h5pF5aL7rZDU8lNetrF5mmf/GmoYLbyN7I5UuDpZLN448bq
- QDjQF6UY3z/i5PmmQPvLrKjwqWrx3gs5sIXcF7247NEhs5WEJdAfQQuys7WKxupcs4+jSWxoL8v
- 2FcnAiaC6f3wSJMj64CoKlzNWp2nMFo+dnjnNNvu1L4vchGFXJV62dskce116r3MrL4M0tGNbd1
- mrx66nqmfy4dJRI1d8Xv1zTHqyY/tMTtX0QlKt6vhH2hVBC+sGHaHN9OUSaE622SNF42CMHxDDM
- /I2VKh72af99OKFHIczKQBOg6W4n8EGdOipZXaOk1UInIOKm5gfifVhem5dvShouRRGzPODRZrU
- zWLuLnb9ywEZbVSysnWrgIUQvGSLy+trxx4CIH6m5QhIZDWZBAnyN5JwE8bLrMw1ZUJbJobSZ5A
- nTciEaLHS497GBQ==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Add support for the Qualcomm SM8750 platform.
+Add the WiFi/BT nodes for QCP and describe the regulators for the WCN7850
+combo chip using the new power sequencing bindings. All voltages are
+derived from chained fixed regulators controlled using a single GPIO.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+The same setup also works for CRD (and likely most of the other X1E80100
+laptops). However, unlike the QCP they use soldered or removable M.2 cards
+supplied by a single 3.3V fixed regulator. The other necessary voltages are
+then derived inside the M.2 card. Describing this properly requires
+new bindings, so this commit only adds QCP for now.
+
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_mdss.c | 33 +++++++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/msm_mdss.h |  1 +
- 2 files changed, 34 insertions(+)
+Changes in v3:
+- Fix node ordering (Johan)
+- Link to v2: https://lore.kernel.org/r/20250211-x1e80100-pwrseq-qcp-v2-1-c4349ca974ab@linaro.org
 
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index dcb49fd30402b80edd2cb5971f95a78eaad6081f..3f00eb6de3a9d2bee7637c6f516efff78b7d872b 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -222,6 +222,24 @@ static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
- 	}
- }
+Changes in v2:
+- Rebase on qcom for-next, patch 1-2 were applied already
+- Mention dummy regulator warning
+- Link to v1: https://lore.kernel.org/r/20241007-x1e80100-pwrseq-qcp-v1-0-f7166510ab17@linaro.org
+---
+The Linux driver currently warns about a missing regulator supply:
+
+  pwrseq-qcom_wcn wcn7850-pmu: supply vddio1p2 not found, using dummy regulator
+
+This supply exists on the WCN7850 chip, but nothing is connected there on
+the QCP. Bartosz is working on hiding this warning in the driver. Since the
+DT is correct and the same setup is already used on SM8550 upstream, this
+doesn't block this patch.
+---
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 144 ++++++++++++++++++++++++++++++
+ 1 file changed, 144 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+index ec594628304a9ab9fe2dd7cdc0467953cd82dc1f..4254e9a364001f076eb066651bae8743bd1e31ec 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+@@ -17,6 +17,7 @@ / {
  
-+static void msm_mdss_setup_ubwc_dec_50(struct msm_mdss *msm_mdss)
-+{
-+	const struct msm_mdss_data *data = msm_mdss->mdss_data;
-+	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
-+		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit);
-+
-+	if (data->ubwc_bank_spread)
-+		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
-+
-+	if (data->macrotile_mode)
-+		value |= MDSS_UBWC_STATIC_MACROTILE_MODE;
-+
-+	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
-+
-+	writel_relaxed(4, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
-+	writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
-+}
-+
- #define MDSS_HW_MAJ_MIN		\
- 	(MDSS_HW_VERSION_MAJOR__MASK | MDSS_HW_VERSION_MINOR__MASK)
+ 	aliases {
+ 		serial0 = &uart21;
++		serial1 = &uart14;
+ 	};
  
-@@ -339,6 +357,9 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
- 	case UBWC_4_3:
- 		msm_mdss_setup_ubwc_dec_40(msm_mdss);
- 		break;
-+	case UBWC_5_0:
-+		msm_mdss_setup_ubwc_dec_50(msm_mdss);
-+		break;
- 	default:
- 		dev_err(msm_mdss->dev, "Unsupported UBWC decoder version %x\n",
- 			msm_mdss->mdss_data->ubwc_dec_version);
-@@ -722,6 +743,17 @@ static const struct msm_mdss_data sm8550_data = {
- 	.reg_bus_bw = 57000,
+ 	wcd938x: audio-codec {
+@@ -281,6 +282,42 @@ vreg_nvme: regulator-nvme {
+ 		regulator-boot-on;
+ 	};
+ 
++	vreg_wcn_0p95: regulator-wcn-0p95 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_0P95";
++		regulator-min-microvolt = <950000>;
++		regulator-max-microvolt = <950000>;
++
++		vin-supply = <&vreg_wcn_3p3>;
++	};
++
++	vreg_wcn_1p9: regulator-wcn-1p9 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_1P9";
++		regulator-min-microvolt = <1900000>;
++		regulator-max-microvolt = <1900000>;
++
++		vin-supply = <&vreg_wcn_3p3>;
++	};
++
++	vreg_wcn_3p3: regulator-wcn-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&wcn_sw_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
+ 	usb-1-ss0-sbu-mux {
+ 		compatible = "onnn,fsusb42", "gpio-sbu-mux";
+ 
+@@ -337,6 +374,65 @@ usb_1_ss2_sbu_mux: endpoint {
+ 			};
+ 		};
+ 	};
++
++	wcn7850-pmu {
++		compatible = "qcom,wcn7850-pmu";
++
++		vdd-supply = <&vreg_wcn_0p95>;
++		vddio-supply = <&vreg_l15b_1p8>;
++		vddaon-supply = <&vreg_wcn_0p95>;
++		vdddig-supply = <&vreg_wcn_0p95>;
++		vddrfa1p2-supply = <&vreg_wcn_1p9>;
++		vddrfa1p8-supply = <&vreg_wcn_1p9>;
++
++		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
++		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&wcn_wlan_bt_en>;
++		pinctrl-names = "default";
++
++		regulators {
++			vreg_pmu_rfa_cmn: ldo0 {
++				regulator-name = "vreg_pmu_rfa_cmn";
++			};
++
++			vreg_pmu_aon_0p59: ldo1 {
++				regulator-name = "vreg_pmu_aon_0p59";
++			};
++
++			vreg_pmu_wlcx_0p8: ldo2 {
++				regulator-name = "vreg_pmu_wlcx_0p8";
++			};
++
++			vreg_pmu_wlmx_0p85: ldo3 {
++				regulator-name = "vreg_pmu_wlmx_0p85";
++			};
++
++			vreg_pmu_btcmx_0p85: ldo4 {
++				regulator-name = "vreg_pmu_btcmx_0p85";
++			};
++
++			vreg_pmu_rfa_0p8: ldo5 {
++				regulator-name = "vreg_pmu_rfa_0p8";
++			};
++
++			vreg_pmu_rfa_1p2: ldo6 {
++				regulator-name = "vreg_pmu_rfa_1p2";
++			};
++
++			vreg_pmu_rfa_1p8: ldo7 {
++				regulator-name = "vreg_pmu_rfa_1p8";
++			};
++
++			vreg_pmu_pcie_0p9: ldo8 {
++				regulator-name = "vreg_pmu_pcie_0p9";
++			};
++
++			vreg_pmu_pcie_1p8: ldo9 {
++				regulator-name = "vreg_pmu_pcie_1p8";
++			};
++		};
++	};
  };
  
-+static const struct msm_mdss_data sm8750_data = {
-+	.ubwc_enc_version = UBWC_5_0,
-+	.ubwc_dec_version = UBWC_5_0,
-+	.ubwc_swizzle = 6,
-+	.ubwc_bank_spread = true,
-+	/* TODO: highest_bank_bit = 2 for LP_DDR4 */
-+	.highest_bank_bit = 3,
-+	.macrotile_mode = true,
-+	.reg_bus_bw = 57000,
+ &apps_rsc {
+@@ -825,6 +921,23 @@ &pcie4_phy {
+ 	status = "okay";
+ };
+ 
++&pcie4_port0 {
++	wifi@0 {
++		compatible = "pci17cb,1107";
++		reg = <0x10000 0x0 0x0 0x0 0x0>;
++
++		vddaon-supply = <&vreg_pmu_aon_0p59>;
++		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
++		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
++		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
++		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
++		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
++		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
++		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
++		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
++	};
 +};
 +
- static const struct msm_mdss_data x1e80100_data = {
- 	.ubwc_enc_version = UBWC_4_0,
- 	.ubwc_dec_version = UBWC_4_3,
-@@ -756,6 +788,7 @@ static const struct of_device_id mdss_dt_match[] = {
- 	{ .compatible = "qcom,sm8450-mdss", .data = &sm8350_data },
- 	{ .compatible = "qcom,sm8550-mdss", .data = &sm8550_data },
- 	{ .compatible = "qcom,sm8650-mdss", .data = &sm8550_data},
-+	{ .compatible = "qcom,sm8750-mdss", .data = &sm8750_data},
- 	{ .compatible = "qcom,x1e80100-mdss", .data = &x1e80100_data},
- 	{}
+ &pcie6a {
+ 	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
+ 	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
+@@ -1135,6 +1248,37 @@ wcd_default: wcd-reset-n-active-state {
+ 		bias-disable;
+ 		output-low;
+ 	};
++
++	wcn_wlan_bt_en: wcn-wlan-bt-en-state {
++		pins = "gpio116", "gpio117";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	wcn_sw_en: wcn-sw-en-state {
++		pins = "gpio214";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++};
++
++&uart14 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn7850-bt";
++		max-speed = <3200000>;
++
++		vddaon-supply = <&vreg_pmu_aon_0p59>;
++		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
++		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
++		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
++		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
++		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
++		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
++	};
  };
-diff --git a/drivers/gpu/drm/msm/msm_mdss.h b/drivers/gpu/drm/msm/msm_mdss.h
-index 14dc53704314558841ee1fe08d93309fd2233812..dd0160c6ba1a297cea5b87cd8b03895b2aa08213 100644
---- a/drivers/gpu/drm/msm/msm_mdss.h
-+++ b/drivers/gpu/drm/msm/msm_mdss.h
-@@ -22,6 +22,7 @@ struct msm_mdss_data {
- #define UBWC_3_0 0x30000000
- #define UBWC_4_0 0x40000000
- #define UBWC_4_3 0x40030000
-+#define UBWC_5_0 0x50000000
  
- const struct msm_mdss_data *msm_mdss_get_mdss_data(struct device *dev);
- 
+ &uart21 {
 
+---
+base-commit: c177fed7617d6306541305e93e575c0c01600ff0
+change-id: 20241007-x1e80100-pwrseq-qcp-2bf898c60353
+
+Best regards,
 -- 
-2.43.0
+Stephan Gerhold <stephan.gerhold@linaro.org>
 
 
