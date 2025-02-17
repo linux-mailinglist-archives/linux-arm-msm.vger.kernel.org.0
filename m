@@ -1,127 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-48190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24517A37FF0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:23:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 742FCA38012
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:27:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 99C02174E7F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 10:21:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4F686169CFE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 10:23:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB632217F36;
-	Mon, 17 Feb 2025 10:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91D98216E1E;
+	Mon, 17 Feb 2025 10:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bgbWDzl0"
+	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="BFnG4wDc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C30216E2B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 10:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AA5215F4B;
+	Mon, 17 Feb 2025 10:23:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739787543; cv=none; b=Zg2CFvebf944r2xEh41/YZNl2SDunAvYhm0dBUyXs8K0d4N3zFbqbM4M4m3ocb7ZHhJwTQ4Q1rpnNtLAYa2qNOXefcQChDUGktqAp4SXuyXYRMrYNoF1FiKHEowCbBNcQoz3o+jANMfVBtCDaJlwfG7STCiNZr/pl+rJJiZTJOY=
+	t=1739787830; cv=none; b=FOEcY60JEATUY3hYELCJEFX/QRUOH2V5tnjY1RMF4Nsdhnj4tK+vffyaBEe3LPC7of7aNFfCRrb4RWIu0oweQdt+IozRXC4F0wEG7MjnzqIfzy/85j/yM2bEtTRQ9LKfG9qqLnUUxayiT39ZqSfqCoWI1FnXQipewfszxOMu+rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739787543; c=relaxed/simple;
-	bh=6aGtaVpBLW3kX82mTVYH8G/6ueq7kvdSb7JTLpAZZLc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=LcEL3ayET0svL1H8rRn2s/BMnNxUjnH/Zzq7oYbVUbOx3QE0XcFq5jYjOLr4ymj+5E4U6uZL3a1xZbjPHdiGJVvxNA2tjRNnsGfraO/L12qbT4iJM61n0KKv0MNwy/SU5YSzTpyVjobREVITExic6luuw+ipDbt+oiAaxwIqv90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bgbWDzl0; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4397dff185fso9299365e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 02:19:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739787540; x=1740392340; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I16xu1ecVLtS/758jqaD8vtXmxaLQ5I+Y1leyu/ANx0=;
-        b=bgbWDzl0YMN13FktJuVGVCN4x1e4OQk4q605e0tnV+NHr8DMp8x3r8EP++thgdcgz/
-         biCxqVMH4kggn9jnMbmtA4EgMyAgMLJ60VmfB0qF3zH+VxqP7sjZDu3P3HuYorNJw4TN
-         9wkwEi/C380Kt33h1fvFWQIgckv9U5TiHwae8k0AKjoQvypnI8GNcGpXFy3FpcHs50n9
-         NoEQAYZRvC1vr1iiIOPCC8DLI4HHTmZLxXY+9KlDzw0zgbgiCVrj3pSg8kwTBIy8nd5S
-         wQ6LoPpxy0ueRrbBGFKnS/N4z7szEmtcHRo4M7yEmohz5/M2an3sTJdWoPLHh4Wr7Twh
-         IzOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739787540; x=1740392340;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I16xu1ecVLtS/758jqaD8vtXmxaLQ5I+Y1leyu/ANx0=;
-        b=hwzOXaJmXId0OY7+swoxlcKm9QBsWJIGD0R0kPv5db795YIuw5h4Lc+FXGwpw6GNH2
-         DnSFzapeZjrXcmoyO0qwhNifsH0GGHUNy8zBjXRRmEcI1Nc5aaqymt+A/afXcjh3OhKg
-         JhInXJEpn6/4CMq4KsbY2BkX65fnsaw9en4jbuya6P8nsZR5yRTA/FneMaNGSFNysDcM
-         MuYHqusTKK8b0hihBfC6l995D5IQ5bodrsMs0AF1kzM9MIgInw1GAW4FUs/1h84tTgdo
-         4VkPIMQgjFbXswAn8Y/dVYzOGnIQDTQb02n3PiPbNx/pwjzg60wVJHLPAd07j1MExM4j
-         dAZw==
-X-Gm-Message-State: AOJu0Yz+5pSnk8W+L0SwGdjgsRJ1M1knsFNy6GTMU2I3nqvN2+H/C+rp
-	MhCido+7i24mBolRXHbIEbpTLiOdqbeO5G+Un+jSBZmS2UYPJ7ScgOQ9lhM2ozo=
-X-Gm-Gg: ASbGncshORkOfjXD3RCyRlwN3Y/2VUjQc1ElORp8WV36q94h+EgtfTyfRe0cUDGdYrU
-	qX2KYsPytQNSMulqTpJBvjoHDAto9GBOubpcAEi62rcZRyhcHuI/yo7e7q2viSKxHzyeUEsSEbG
-	/YZC3jKg7dNR2OJdHrnhS22v745c198EwLXu0yXP4F+U9j1Vj99Ku/1jeE2o0yAQ44RlivVyCfj
-	J6t/3+f4cMronLmuT2c/iSy+6U24WjdF6Jpn568OzOvwWb+COA0oaUiIahZCwjAtCLlgujjlRcC
-	10ESHANw3vol5CKe6C5CRX0e67HQjHegaw==
-X-Google-Smtp-Source: AGHT+IHCqlAmBeWIh3RQpDK/wqa/aOOAMFIkBi6CvjLI3mDlej3LMKvDj2NLspjgKzRYrxIEx1isLQ==
-X-Received: by 2002:a05:600c:3b0f:b0:439:8c6d:7ad9 with SMTP id 5b1f17b1804b1-4398c6d7da4mr9647825e9.31.1739787540052;
-        Mon, 17 Feb 2025 02:19:00 -0800 (PST)
-Received: from [192.168.68.111] ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43970c8fed9sm35658385e9.0.2025.02.17.02.18.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2025 02:18:59 -0800 (PST)
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
- =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
- Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, 
- Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
- Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-gpio@vger.kernel.org, iommu@lists.linux.dev, 
- Daniil Titov <daniilt971@gmail.com>, Dang Huynh <danct12@riseup.net>
-In-Reply-To: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
-References: <20250211-msm8937-v1-0-7d27ed67f708@mainlining.org>
-Subject: Re: (subset) [PATCH 00/10] Initial support of MSM8937 and Xiaomi
- Redmi 3S
-Message-Id: <173978753882.27418.10124969396742370731.b4-ty@linaro.org>
-Date: Mon, 17 Feb 2025 10:18:58 +0000
+	s=arc-20240116; t=1739787830; c=relaxed/simple;
+	bh=WovgSGbvNWLLRcAWn+Mya6CHxmCESkWIMuKX5gtD5aI=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=iq7UNIX8uvNQwOVsMZeg1Q75RmXHSktasPQ6TI82TVSMnHN3+cKvsOffFRbAwxHV8MogPkhigKKVJnEtk1IznaenaBC4Tz/LwcaH3zQeP51ZS7xHNWaAq1sLh2sw8GrQ3yfc+sp9aF6W6RoILrKnRp1Zfps6XQDq/6fygOeFfmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=BFnG4wDc; arc=none smtp.client-ip=168.119.38.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=WovgSGbvNWLLRcAWn+Mya6CHxmCESkWIMuKX5gtD5aI=;
+	t=1739787829; x=1740997429; b=BFnG4wDccXfm9v/YgG2uOh+/7hulCLBJphafC4pVRr4USz0
+	1Dg0Hmpazntti/JFpt1WVvz9jIw+C07U7Us6lpZFIlLbJu4lrxC1kvogUCJpEMhbWyl8VH6E8SACw
+	WAp/Jj7xju02PUPSzpSd/H30k9pxHqBKYYrQfCKDHRM3eVJIt3MJj/3SwG3KVVmxZLXQe573UZR4X
+	dNroxTxY+47E9reHGW6qY4Dy50NC/DJja9/21i8HUAH130zQ1TSIKIvOeoghbRi5HyrKR4JDGy3m2
+	BZHUGhzr3sRYhHE4dvgd7FlkL855IhhNwwKxzknQ7+hRTLyu4oqK7OoTqLrtGUYA==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.98)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1tjyHp-00000000GpA-1DBY;
+	Mon, 17 Feb 2025 11:23:37 +0100
+Message-ID: <c4b48faeae8531e670ea5909800d1a0bfed69862.camel@sipsolutions.net>
+Subject: Re: [RFC][PATCH 00/10] pstore: directly mapped regions
+From: Johannes Berg <johannes@sipsolutions.net>
+To: Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
+ 	linux-hardening@vger.kernel.org, kees@kernel.org
+Cc: linux-kernel@vger.kernel.org, gregkh@linuxfoundation.org,
+ rafael@kernel.org, 	dakr@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, tony.luck@intel.com, 	gpiccoli@igalia.com,
+ pmladek@suse.com, rostedt@goodmis.org, 	john.ogness@linutronix.de,
+ senozhatsky@chromium.org, quic_mojha@quicinc.com, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com
+Date: Mon, 17 Feb 2025 11:23:35 +0100
+In-Reply-To: <20250217101706.2104498-1-eugen.hristev@linaro.org>
+References: <20250217101706.2104498-1-eugen.hristev@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.12.2
+X-malware-bazaar: not-scanned
 
+On Mon, 2025-02-17 at 12:16 +0200, Eugen Hristev wrote:
 
-On Tue, 11 Feb 2025 23:37:44 +0100, Barnabás Czémán wrote:
-> This patch series add initial support for MSM8937 SoC
-> and Xiaomi Redmi 3S (land).
-> 
-> The series is extending the MSM8917 gcc and pinctrl drivers
-> because they are sibling SoCs.
-> MSM8937 have 4 more A53 cores and have one more dsi port then
-> MSM8917.
-> It implements little-big architecture and uses Adreno 505.
-> 
-> [...]
+> This series comes as an RFC proposed solution to enhance pstore and
+> devcoredump with the following functionality:
 
-Applied, thanks!
+...
 
-[06/10] dt-bindings: nvmem: Add compatible for MS8937
-        commit: 07d914dd683f9ccb62a530fad76c36d5d4e6d894
+> This patch series attempts to solve this by reusing existing
+> infrastructure in pstore and devcoredump, and provide a copy-free
 
-Best regards,
--- 
-Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+...
 
+You mention devcoredump multiple times, but it almost seems like you
+don't even know what devcoredump does? I don't see how there's any
+relation at all, and the code added to it seems to have no relation to
+the actual functionality of devcoredump either?
+
+johannes
 
