@@ -1,213 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-48166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0210DA37ED3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 10:40:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 171D9A37ED8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 10:41:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A966A7A65C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 09:33:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 27B2A7A39DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 09:35:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D86F2153E2;
-	Mon, 17 Feb 2025 09:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5F0D215766;
+	Mon, 17 Feb 2025 09:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="Ue+xc2EG";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="Djo+uGfA";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="Ue+xc2EG";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="Djo+uGfA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KVtPD/YN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3895F215187
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 09:34:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BB72153C7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 09:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739784844; cv=none; b=QHk8meboLa6WMoKe773dssXnwxGHdGvUN7jievu5oRQplXuOXfgcr47Mya7CAIjemWcws8/+aT6+/s2NFJt9P9HHdWHoK/XDLG8clbbbBMw536wnFmwG0f7AGDgA4fyU2Jh3vDUOSu2ShBjusTnHz3iDFBbpVTpGd90WOpyjSr0=
+	t=1739784953; cv=none; b=ZFHgbe4VGoCMWI+3r4xNgqj12BOSRYxKHynKw2pbTh2mLAHBpVZzYTTH8MZRJs9ov78VTBDppgjArn7gSNHbG8ezlDw6vPz+bE4vXZSpbClvFVMVMk+HwPBxDrWyj9/KTk28B9Z+XSaLrzAZtyAz4UKjYa+LA9uVqPpU/9EKIYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739784844; c=relaxed/simple;
-	bh=8KrEfsN2h0+2qft71XFSnmsZdMaLfo2B/5YWMT3WO1A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YksFAifXYRL5hdBiV7DepuIKOa+gaPKITkjVBTQoq2AMLqRWIGK2ouAvGmHIFF1bszpgKmJIao7sFur0oyhwsB7ZHBrGTDrLV7xjgbRjWj3WkhNJMbw3BabvShYvfljcprjTsAL9ujxLVVmVeu7u9g0AWPqdJBm38CzKta+utqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=fail smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=Ue+xc2EG; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=Djo+uGfA; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=Ue+xc2EG; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=Djo+uGfA; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=suse.cz
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 45C4F211A2;
-	Mon, 17 Feb 2025 09:33:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1739784839; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=bve/fdz3O3XRa9+QX9XWZ84C/aVBGPJZUCZOGTW1EKw=;
-	b=Ue+xc2EGNRHca/KvyrY0e/ZdSzCQPhHwy/bO/bUKEMAEE0kVnErO5ZsvFt6DopTNyXYjUJ
-	Eg+Z8Pz5I/nhgl2Mw7P6Pex4eKuRajiCYZXo9TGz0DGP2G5ZFNALTJ1kTAP90+M4CblUkY
-	Oz5K1dpFL0PAtKuwAfeX8mW4u4wjGFw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1739784839;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=bve/fdz3O3XRa9+QX9XWZ84C/aVBGPJZUCZOGTW1EKw=;
-	b=Djo+uGfAxmfWFdeJYqIorfnOjjDn1wUSsjXLGoofVeouPqXVvh3GIMtmH+vMnDi62IU8av
-	AJWROrTUZk1QFdAA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1739784839; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=bve/fdz3O3XRa9+QX9XWZ84C/aVBGPJZUCZOGTW1EKw=;
-	b=Ue+xc2EGNRHca/KvyrY0e/ZdSzCQPhHwy/bO/bUKEMAEE0kVnErO5ZsvFt6DopTNyXYjUJ
-	Eg+Z8Pz5I/nhgl2Mw7P6Pex4eKuRajiCYZXo9TGz0DGP2G5ZFNALTJ1kTAP90+M4CblUkY
-	Oz5K1dpFL0PAtKuwAfeX8mW4u4wjGFw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1739784839;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=bve/fdz3O3XRa9+QX9XWZ84C/aVBGPJZUCZOGTW1EKw=;
-	b=Djo+uGfAxmfWFdeJYqIorfnOjjDn1wUSsjXLGoofVeouPqXVvh3GIMtmH+vMnDi62IU8av
-	AJWROrTUZk1QFdAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C48A6133F9;
-	Mon, 17 Feb 2025 09:33:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id i7A5LoYCs2cwPwAAD6G6ig
-	(envelope-from <vbabka@suse.cz>); Mon, 17 Feb 2025 09:33:58 +0000
-Message-ID: <f581bc97-c47b-4354-9ce3-1a7b3cdf484c@suse.cz>
-Date: Mon, 17 Feb 2025 10:33:58 +0100
+	s=arc-20240116; t=1739784953; c=relaxed/simple;
+	bh=JTI+nXaNVcWoaa6VtHM2Ui/wbUmlIKJDUru+uibjB9o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W+W1raDZITgAEMYod9KFxX6NxeQnhGiwGHxvxhWOYsG474QMM8g/cvr/b3TbMldgIrmsSHVCv1Lqd6TRTONtMuuXkuBjCf1L0YnxeTSk631koC27eZuES4f30UL6S6zGE4LJQ7t0qhICEEzURHUC5d0GivqLXcs7/4f7PDdUo/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KVtPD/YN; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ab7c07e8b9bso702892166b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 01:35:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739784949; x=1740389749; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=XwnXWIR7yWtk2UMxmi/Y1HFxh5rFGAzJa074zoBARm4=;
+        b=KVtPD/YNS/zVrFhXIldANdwa+7t1UxBt7jQ5cDch+4z/3Nfh3ZqhGhXOjaCa0OUPM+
+         G/glpjLrR8dxPUpO+Q83Ok/S2leRme4aBjTqGAz/ch6cSidwEnWNiM7hr2nj0H/I7Crn
+         y0zLlKgMt2gvE5TTBf0TG/iSANhz7gomm98byHIrUox1sUJBbaHW96nR6Gia03UqlIJx
+         wSCGoSMK4cq6NMWkR2n7LTOgDSFWwKh7UOz0A4Y7d37BS2r1KtsPH9rbcK2fykbwQQjZ
+         3xwBMLbxU4lI5ToHKbQ1kgrETUItaTmDLoUFbubN+gSsVJgmEqPOt5AEXYB9R26KoVdW
+         XHVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739784949; x=1740389749;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XwnXWIR7yWtk2UMxmi/Y1HFxh5rFGAzJa074zoBARm4=;
+        b=SrlHrKU6hHbVBzIzdblZfuX6ZBNsS/CQT3TIHq8lIrx7zss04uRZnzvn40+5ftLtZt
+         suA5Y6eSOy2vA4ac/M3cDT4bj6+16arsOWKewd0cfplmpD+u51xCFkLjYRrdKcp2PKet
+         DSSiilrBpJ0GJ/pFLOz0DAc69WviuKo7ZYgC/xfdDzpjcivqX+GUaF3lBmi68EEOcwQN
+         9R+GSjr0bFLWEfo3FKO4vTTu4pNs7f+bAKL+yCx97KT6admeHt/JovoLfeeeH96Uey96
+         a1cNJWyv5qqcQBYHmusNuI6b28s2j+A99c1F0gK0VJD17adTYBwU6jsZA1lNP4ygPtJX
+         YweA==
+X-Forwarded-Encrypted: i=1; AJvYcCVuT/t5MXtyZ5Dke30+HCfenA7qt36f93FOo3Ym1RdHTYhb7OZA99qwXNxAgwdqZI9dbJH5iexpcRpUpa5t@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyavbvz+IIMJOyLj9MlV0vj9lXKjWTVs+HGLwYZ1rKZ9Ncl3F94
+	rm4vH28qBXMZEOb3U4AoCd2zlvnkjUbCqsGBGIGfXBwUEKE9ady56QjUdxelR4E=
+X-Gm-Gg: ASbGnctyhKMY3ZrJ100jFooMCzGxM4JA9pkNnEOUV7TZmw6zrsm5cLxnopCNW4gGO0U
+	dTB5A1SFTQpKKbl1xezRdMB9n/D4Y+1bWnf5X3gku+9gwyu+OaMnovO8nRPT0o7TJK7IYptaTwL
+	rk06FhyD48zogDRs7cfWbwDMbc1rTwJzhpna/GR30FOJZoCtjUU5Xx96gJQw/JlQ2ZFJJBV6wxz
+	sWfOstcUQ4x8IiR9/rcJe3eZ0J8qY+VxTobSDWwhAOR8GH3raY2CizVBM9b5n6ypOPG1bHsWjs9
+	3MFGnsfm7DQJt/DsyNCY0Rbxj6hgLuCYHftihrqoeerAF4RTuqGZ3unWfA==
+X-Google-Smtp-Source: AGHT+IGPu+N0KS3lXOQEYdhyiGIqpvFCM2BgrYLAGEe4LpMcMFyVdNaQDKGPYwLgyDJwrEbqrrj5cQ==
+X-Received: by 2002:a17:907:72c8:b0:ab7:85e2:18bb with SMTP id a640c23a62f3a-abb7093022cmr900296366b.6.1739784949040;
+        Mon, 17 Feb 2025 01:35:49 -0800 (PST)
+Received: from rayden (h-98-128-140-123.A175.priv.bahnhof.se. [98.128.140.123])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aba53376abbsm861900766b.93.2025.02.17.01.35.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Feb 2025 01:35:48 -0800 (PST)
+Date: Mon, 17 Feb 2025 10:35:46 +0100
+From: Jens Wiklander <jens.wiklander@linaro.org>
+To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Cc: Sumit Garg <sumit.garg@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-doc@vger.kernel.org
+Subject: Re: [PATCH v2 2/8] tee: add close_context to TEE driver operation
+Message-ID: <20250217093546.GA2637163@rayden>
+References: <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-0-297eacd0d34f@quicinc.com>
+ <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-2-297eacd0d34f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/11] mm: Consolidate freeing of typed folios on final
- folio_put()
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com,
- liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
-References: <20250211121128.703390-1-tabba@google.com>
- <20250211121128.703390-2-tabba@google.com>
-Content-Language: en-US
-From: Vlastimil Babka <vbabka@suse.cz>
-Autocrypt: addr=vbabka@suse.cz; keydata=
- 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
- EP+ylKVEKb0Q2A==
-In-Reply-To: <20250211121128.703390-2-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	FREEMAIL_CC(0.00)[redhat.com,kernel.org,ellerman.id.au,brainfault.org,sifive.com,dabbelt.com,eecs.berkeley.edu,google.com,zeniv.linux.org.uk,infradead.org,linux-foundation.org,intel.com,linux.intel.com,digikod.net,maciej.szmigiero.name,amd.com,oracle.com,gmail.com,arm.com,quicinc.com,huawei.com,linux.dev,amazon.co.uk,nvidia.com];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	ARC_NA(0.00)[];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	TO_MATCH_ENVRCPT_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[60];
-	TAGGED_RCPT(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.cz:email,suse.cz:mid]
-X-Spam-Score: -2.80
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250202-qcom-tee-using-tee-ss-without-mem-obj-v2-2-297eacd0d34f@quicinc.com>
 
-On 2/11/25 13:11, Fuad Tabba wrote:
-> Some folio types, such as hugetlb, handle freeing their own
-> folios. Moreover, guest_memfd will require being notified once a
-> folio's reference count reaches 0 to facilitate shared to private
-> folio conversion, without the folio actually being freed at that
-> point.
+Hi,
+
+On Sun, Feb 02, 2025 at 06:43:30PM -0800, Amirreza Zarrabi wrote:
+> The tee_context can be used to manage TEE user resources, including
+> those allocated by the driver for the TEE on behalf of the user.
+> The release() callback is invoked only when all resources, such as
+> tee_shm, are released and there are no references to the tee_context.
 > 
-> As a first step towards that, this patch consolidates freeing
-> folios that have a type. The first user is hugetlb folios. Later
-> in this patch series, guest_memfd will become the second user of
-> this.
+> When a user closes the device file, the driver should notify the
+> TEE to release any resources it may hold and drop the context
+> references. To achieve this, a close_context() callback is
+> introduced to initiate resource release in the TEE driver when
+> the device file is closed.
 > 
-> Suggested-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
+> Relocate teedev_ctx_get, teedev_ctx_put, tee_device_get, and
+> tee_device_get functions to tee_drv.h to make them accessible
+> outside the TEE subsystem.
+> 
+> Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+> ---
+>  drivers/tee/tee_core.c    |  7 +++++++
+>  drivers/tee/tee_private.h |  6 ------
+>  include/linux/tee_core.h  | 11 +++++++++--
+>  include/linux/tee_drv.h   |  6 ++++++
+>  4 files changed, 22 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
+> index 24edce4cdbaa..721522fe5c63 100644
+> --- a/drivers/tee/tee_core.c
+> +++ b/drivers/tee/tee_core.c
+> @@ -79,6 +79,7 @@ void teedev_ctx_get(struct tee_context *ctx)
+>  
+>  	kref_get(&ctx->refcount);
+>  }
+> +EXPORT_SYMBOL_GPL(teedev_ctx_get);
+>  
+>  static void teedev_ctx_release(struct kref *ref)
+>  {
+> @@ -96,11 +97,15 @@ void teedev_ctx_put(struct tee_context *ctx)
+>  
+>  	kref_put(&ctx->refcount, teedev_ctx_release);
+>  }
+> +EXPORT_SYMBOL_GPL(teedev_ctx_put);
+>  
+>  void teedev_close_context(struct tee_context *ctx)
+>  {
+>  	struct tee_device *teedev = ctx->teedev;
+>  
+> +	if (teedev->desc->ops->close_context)
+> +		teedev->desc->ops->close_context(ctx);
+> +
+>  	teedev_ctx_put(ctx);
+>  	tee_device_put(teedev);
+>  }
+> @@ -1037,6 +1042,7 @@ void tee_device_put(struct tee_device *teedev)
+>  	}
+>  	mutex_unlock(&teedev->mutex);
+>  }
+> +EXPORT_SYMBOL_GPL(tee_device_put);
+>  
+>  bool tee_device_get(struct tee_device *teedev)
+>  {
+> @@ -1049,6 +1055,7 @@ bool tee_device_get(struct tee_device *teedev)
+>  	mutex_unlock(&teedev->mutex);
+>  	return true;
+>  }
+> +EXPORT_SYMBOL_GPL(tee_device_get);
+>  
+>  /**
+>   * tee_device_unregister() - Removes a TEE device
+> diff --git a/drivers/tee/tee_private.h b/drivers/tee/tee_private.h
+> index 9bc50605227c..d3f40a03de36 100644
+> --- a/drivers/tee/tee_private.h
+> +++ b/drivers/tee/tee_private.h
+> @@ -14,12 +14,6 @@
+>  
+>  int tee_shm_get_fd(struct tee_shm *shm);
+>  
+> -bool tee_device_get(struct tee_device *teedev);
+> -void tee_device_put(struct tee_device *teedev);
+> -
+> -void teedev_ctx_get(struct tee_context *ctx);
+> -void teedev_ctx_put(struct tee_context *ctx);
+> -
+>  struct tee_shm *tee_shm_alloc_user_buf(struct tee_context *ctx, size_t size);
+>  struct tee_shm *tee_shm_register_user_buf(struct tee_context *ctx,
+>  					  unsigned long addr, size_t length);
+> diff --git a/include/linux/tee_core.h b/include/linux/tee_core.h
+> index a38494d6b5f4..8a4c9e30b652 100644
+> --- a/include/linux/tee_core.h
+> +++ b/include/linux/tee_core.h
+> @@ -65,8 +65,9 @@ struct tee_device {
+>  /**
+>   * struct tee_driver_ops - driver operations vtable
+>   * @get_version:	returns version of driver
+> - * @open:		called when the device file is opened
+> - * @release:		release this open file
+> + * @open:		called for a context when the device file is opened
+> + * @close_context:	called when the device file is closed
+> + * @release:		called to release the context
+>   * @open_session:	open a new session
+>   * @close_session:	close a session
+>   * @system_session:	declare session as a system session
+> @@ -76,11 +77,17 @@ struct tee_device {
+>   * @supp_send:		called for supplicant to send a response
+>   * @shm_register:	register shared memory buffer in TEE
+>   * @shm_unregister:	unregister shared memory buffer in TEE
+> + *
+> + * The context given to @open might last longer than the device file if it is
+> + * tied to other resources in the TEE driver. @close_context is called when the
+> + * client closes the device file, even if there are existing references to the
+> + * context. The TEE driver can use @close_context to start cleaning up.
+>   */
+>  struct tee_driver_ops {
+>  	void (*get_version)(struct tee_device *teedev,
+>  			    struct tee_ioctl_version_data *vers);
+>  	int (*open)(struct tee_context *ctx);
+> +	void (*close_context)(struct tee_context *ctx);
+>  	void (*release)(struct tee_context *ctx);
+>  	int (*open_session)(struct tee_context *ctx,
+>  			    struct tee_ioctl_open_session_arg *arg,
+> diff --git a/include/linux/tee_drv.h b/include/linux/tee_drv.h
+> index a54c203000ed..d5f0c70ac95c 100644
+> --- a/include/linux/tee_drv.h
+> +++ b/include/linux/tee_drv.h
+> @@ -96,6 +96,12 @@ struct tee_param {
+>  	} u;
+>  };
+>  
+> +bool tee_device_get(struct tee_device *teedev);
+> +void tee_device_put(struct tee_device *teedev);
+> +
+> +void teedev_ctx_get(struct tee_context *ctx);
+> +void teedev_ctx_put(struct tee_context *ctx);
+> +
 
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Now that these functions are available to all the backend drivers,
+please add some documentation for them so it more clear how they are
+supposed to be used.
 
+Thanks,
+Jens
 
+>  /**
+>   * tee_shm_alloc_kernel_buf() - Allocate kernel shared memory for a
+>   *                              particular TEE client driver
+> 
+> -- 
+> 2.34.1
+> 
 
