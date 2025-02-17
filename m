@@ -1,313 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-48134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F5C3A37968
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 02:08:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEA86A3796F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 02:15:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 380153A9B3E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 01:08:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B1515188E660
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 01:15:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA335DDCD;
-	Mon, 17 Feb 2025 01:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0398D528;
+	Mon, 17 Feb 2025 01:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="htb9FbjW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iyT66gWy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1C9DDAB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2025 01:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A223FF1;
+	Mon, 17 Feb 2025 01:15:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739754504; cv=none; b=OFonL/57mikdEbJeuJEDaFFDrAeQAAjdxMjV1Mf2t1NuBvODKanAYynsg2GTLPlYkedN+v9I6N8s+Z/y5Ul5LBf3kkkVrOtZZ1FJKrAE9g/hJlmhGBcNkaTLRgDtXbCCXw8kwHZc5Bw053shFeo6tQTwUG12wMn49Ar7FYpYUzM=
+	t=1739754937; cv=none; b=aXMCQOnlHQFHJb7AKmhJE3apDYb9eOlEnIs3ScbtepZL6Q+EQXQmR1hMohRHzIWID7XxyOXUzE/O6+f0BJ6PFvTUBI2IDefd4o1IPFj6IQr8VC/PyA1lkVf/k98SsEnOcU2ulMv5r1b/rZLrKMPEf7M1oGnEP/QY3cMGId0KwCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739754504; c=relaxed/simple;
-	bh=u3YxH15cjWWJ3E/10audjE1bxiQ6GUHOtodwSzvDMlI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RP4nbIpFJeftubMaxZJFIZgN8KPsLcMHFHSVQzTfnFNNytcVFeh22mXdjbUDcilQHGVraEHq03lg44yvNXlLtc1Sle67fYt+k6LREuKXZv6ybR75hERSM1roxWxwUsnxxhcvLGGY8mkfhwPvK/ns/VlkatUQDxVmkN111eCoTww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=htb9FbjW; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5454f00fc8dso1104469e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Feb 2025 17:08:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739754501; x=1740359301; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3MN2ZxY65wgcbMugjNj5As5w/ekQkDx89GK80XWoyKk=;
-        b=htb9FbjW35wzEr/w8U83A1x2HqyryyRxx8aoaGEWk4Hht0ryFT8zlruv+3YjVSOBcX
-         qrbXxTHH4mPeASkfpXXRLQVyXKGYgmVBAvTkxSxxved7wXL7374hwsabpJ0SFMvo1XBT
-         h+uSGJtkoZbssImJ90c+IVNa3+WeHxcO62Za7QJwpuB5Yxt41XT9C5i9VEiShdwects0
-         O3I6Q7GSS7wbrdhvKznsEDEYLGVELEEciDXTuDruUD7huhfSGLwDgbLJ3aDky5jama8o
-         v/xdieGHtApL7NoqkpVKuCObnd/CZRprlqVrVXRXuKgLYS5phUzrrI9ONjU1AX8amgId
-         XbAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739754501; x=1740359301;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3MN2ZxY65wgcbMugjNj5As5w/ekQkDx89GK80XWoyKk=;
-        b=vJgCdyXdwAqAyQQgnJencHzj7C1uiCw8b0B6aE1CqDAcS+wrwKw8o7eoq0cwPGgi+C
-         +JuItVbJf8OXsT4ZWQRu9t0eEzDArePX9MqLhcIi0gvqk1XPRf4glXwEM8VJBbW2nzjh
-         LVR7O7hunIwgr7dt14YmyJp/LCieVAUwSA4kJ6XymxcIY1U0Ipqob70PnqCT+DDc5/jO
-         r/Fs229HwRelrjpkqs3qRIRVuOrtKayDR2Ub6jEnVwWP+8lWG5Og6TVvfNL21zwcP3kw
-         KlFE6V05EmM6Ad9KCrirnXy91Vz6MvBAznyIHssQ/jml49PZcZpylh6gfsL/ocwk+Lsj
-         MDxg==
-X-Forwarded-Encrypted: i=1; AJvYcCX79U9txYtq8z7UnuzrC4rlxOGu7RCGK/MSXA+GRAYepZ+DpRletjiHP+eqYDSce2PZdpZiuXY+wwPxbhbB@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTC+HEjdl+hwQQ17ctXEybrDxfR1jzuFWj9criEcB85oZCqPU/
-	57hwYM1Fc4YlbG4iPPj2nWNxQl8k94aCRXxwG8N/DQT0Fxxni4SHrgk2kh7vzro=
-X-Gm-Gg: ASbGncvEQASL80XEYKcgMa1dB2g88hCVCn4BuXe8JsVrb//yYTPemjPlCT5sIhjrLBs
-	ciLVRpdbaxLMLUyk87uFQoFO+lvfxFWXvQBCNS3VvHi9qPzdIir4iThWskpOtZnBdK5IfNzwmJ/
-	jdpBGcgRVoccuBxv3QKLN/X/BRlL+Kc1n5YvkSdCBYCZPmgTGJCKYZpoZHK3b/wtl0bNkM7QoMV
-	mFyCWt0hH2erS7V6nCbMJMbgl2vufF8fAzSx+mcjZLliJFaoZu+y7v7Uqvg12WZsfSg1qoarn3X
-	pA147P7XpDMthqZ5BR3oJUMFRCcPtv9DbUk02lWUcStKTCu3pjdzUqCneF6Eica6YXwYwN8=
-X-Google-Smtp-Source: AGHT+IGZ1x+tVaZyUAcDWjHsFFF95dHEbPaN1Bn3GkymkP9Y4varLpg8emLi8GEW1T50We92UzbRYA==
-X-Received: by 2002:a05:6512:3094:b0:545:2f04:31da with SMTP id 2adb3069b0e04-5452fe8fd5dmr2174156e87.46.1739754500571;
-        Sun, 16 Feb 2025 17:08:20 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5461c03bbdbsm456325e87.214.2025.02.16.17.08.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Feb 2025 17:08:19 -0800 (PST)
-Date: Mon, 17 Feb 2025 03:08:16 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Odelu Kukatla <quic_okukatla@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>, 
-	Jeff Johnson <quic_jjohnson@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
-	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V8 3/7] interconnect: qcom: Add multidev EPSS L3 support
-Message-ID: <ii33reyezniliytyom2u6k33nqcdrf5c444s76uwb2rs2hodno@q6exlaj6pqug>
-References: <20250205182743.915-1-quic_rlaggysh@quicinc.com>
- <20250205182743.915-4-quic_rlaggysh@quicinc.com>
- <fclfywuw3p43pcj42gi2w5kutvnto3rcrdng2zl2pzgpvz7dis@cjx2e6v4skfm>
- <4482b900-2ec0-44c1-9b68-3b403a1df7d8@quicinc.com>
+	s=arc-20240116; t=1739754937; c=relaxed/simple;
+	bh=5P08xLcOpAO3kfg5pPvJsQqW2bZsqQ0jUbu3vxmaH5A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bkqv56hdgSe0y4fkp4CiBNGr9jZ3AEIRKKZhdz4plYX6YIa1ajhxPnS59UyGsPGUk21O3jXq7lSHnMbui9EVUzA5LBRHbwYyV6MbRiDFxhn4QUt1rFCTDN9yFMCgEi/8HHfh0mfX1FE7E2qG+aUKfOsN+jYXvSUQ26N9APgAMuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iyT66gWy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51H03ATu003101;
+	Mon, 17 Feb 2025 01:15:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QEWtjHoNU9NHeQt4i7TL5SjyB4mbjcKUSANV4HeIacY=; b=iyT66gWyEWb+iNmP
+	W0DOspffSWoDU+ma/fpk4gHVCpQWKKqngH/NAJQdvnsZ9eVuKwRBmaA1uw9e27/l
+	sptmnes6vjQejj9mb66SntVkNIR4FdlhbfpH1GqM4bsbBhyhgL7qMzGMS+5xw3gm
+	KaxIQpKn6ClN3IUrNDn/oVfctl6HeOu/iFsKgoTAREhgw3b753z8GjICBaE0VVUB
+	M7Ap0WOq2+mW4Tvibpi4kjOfcgxo7URn3eXDHt3eTWF21tPgIJrTQpL+qLFaUJ8A
+	M2aAN4U5L4bO+zvG4bSkus78SEqD/wsWh8kkGykXdRbkzdAclKx0sVlDBgxSOWHj
+	42sbTw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ut7v839a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Feb 2025 01:14:59 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51H1EwWC029430
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Feb 2025 01:14:58 GMT
+Received: from [10.133.33.23] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 16 Feb
+ 2025 17:14:54 -0800
+Message-ID: <5e6edfce-ef2e-48d2-ad0c-0120606394fb@quicinc.com>
+Date: Mon, 17 Feb 2025 09:14:51 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4482b900-2ec0-44c1-9b68-3b403a1df7d8@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 4/7] Coresight: Introduce a new struct coresight_path
+To: James Clark <james.clark@linaro.org>
+CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao
+	<quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+References: <20250207064213.2314482-1-quic_jiegan@quicinc.com>
+ <20250207064213.2314482-5-quic_jiegan@quicinc.com>
+ <a633f52c-81e8-4c0d-aca7-cc18360866eb@linaro.org>
+ <4b521b49-7104-4f25-82cb-4f9be7b235f4@quicinc.com>
+ <b61af324-7488-4a4f-9f9e-2ecb004fc4c7@linaro.org>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <b61af324-7488-4a4f-9f9e-2ecb004fc4c7@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ncpn-UUadyPb6vXM7jc6XjlAZmOQIyol
+X-Proofpoint-GUID: ncpn-UUadyPb6vXM7jc6XjlAZmOQIyol
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-17_01,2025-02-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 suspectscore=0 mlxscore=0 mlxlogscore=908 priorityscore=1501
+ impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0 malwarescore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502170007
 
-On Sun, Feb 16, 2025 at 09:58:41PM +0530, Raviteja Laggyshetty wrote:
-> 
-> 
-> On 2/10/2025 4:27 PM, Dmitry Baryshkov wrote:
-> > On Wed, Feb 05, 2025 at 06:27:39PM +0000, Raviteja Laggyshetty wrote:
-> >> EPSS on SA8775P has two instances, necessitating the creation of two
-> >> device nodes with different compatibles due to the unique ICC node ID
-> >> and name limitations in the interconnect framework. Add multidevice
-> >> support for the OSM-L3 provider to dynamically obtain unique node IDs
-> >> and register with the framework.
-> >>
-> >> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-> >> ---
-> >>  drivers/interconnect/qcom/osm-l3.c | 46 +++++++++++++++++-------------
-> >>  1 file changed, 26 insertions(+), 20 deletions(-)
-> >>
-> >> diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-> >> index 6a656ed44d49..da2d82700b5a 100644
-> >> --- a/drivers/interconnect/qcom/osm-l3.c
-> >> +++ b/drivers/interconnect/qcom/osm-l3.c
-> >> @@ -1,6 +1,7 @@
-> >>  // SPDX-License-Identifier: GPL-2.0
-> >>  /*
-> >>   * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> >> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> >>   */
-> >>  
-> >>  #include <linux/args.h>
-> >> @@ -33,6 +34,7 @@
-> >>  #define EPSS_REG_PERF_STATE		0x320
-> >>  
-> >>  #define OSM_L3_MAX_LINKS		1
-> >> +#define ALLOC_DYN_ID			-1
-> > 
-> > This should be defined by ICC framework.
-> 
-> ok, I will move this to framework.
-> > 
-> >>  
-> >>  #define to_osm_l3_provider(_provider) \
-> >>  	container_of(_provider, struct qcom_osm_l3_icc_provider, provider)
-> >> @@ -55,46 +57,40 @@ struct qcom_osm_l3_icc_provider {
-> >>   */
-> >>  struct qcom_osm_l3_node {
-> >>  	const char *name;
-> >> -	u16 links[OSM_L3_MAX_LINKS];
-> >> -	u16 id;
-> >> +	struct qcom_osm_l3_node *links[OSM_L3_MAX_LINKS];
-> >> +	int id;
-> >>  	u16 num_links;
-> >>  	u16 buswidth;
-> >>  };
-> >>  
-> >>  struct qcom_osm_l3_desc {
-> >> -	const struct qcom_osm_l3_node * const *nodes;
-> >> +	struct qcom_osm_l3_node * const *nodes;
-> >>  	size_t num_nodes;
-> >>  	unsigned int lut_row_size;
-> >>  	unsigned int reg_freq_lut;
-> >>  	unsigned int reg_perf_state;
-> >>  };
-> >>  
-> >> -enum {
-> >> -	OSM_L3_MASTER_NODE = 10000,
-> >> -	OSM_L3_SLAVE_NODE,
-> >> -};
-> >> -
-> >> -#define DEFINE_QNODE(_name, _id, _buswidth, ...)			\
-> >> -	static const struct qcom_osm_l3_node _name = {			\
-> >> +#define DEFINE_QNODE(_name, _buswidth, ...)			\
-> >> +	static struct qcom_osm_l3_node _name = {			\
 
-No. Global data _must_ remain const.
 
-> >>  		.name = #_name,						\
-> >> -		.id = _id,						\
-> >>  		.buswidth = _buswidth,					\
-> >>  		.num_links = COUNT_ARGS(__VA_ARGS__),			\
-> >>  		.links = { __VA_ARGS__ },				\
-> >>  	}
-> >>  
-> >> -DEFINE_QNODE(osm_l3_master, OSM_L3_MASTER_NODE, 16, OSM_L3_SLAVE_NODE);
-> >> -DEFINE_QNODE(osm_l3_slave, OSM_L3_SLAVE_NODE, 16);
-> >> +DEFINE_QNODE(osm_l3_slave, 16);
-> >> +DEFINE_QNODE(osm_l3_master, 16, &osm_l3_slave);
-> >>  
-> >> -static const struct qcom_osm_l3_node * const osm_l3_nodes[] = {
-> >> +static struct qcom_osm_l3_node * const osm_l3_nodes[] = {
-> >>  	[MASTER_OSM_L3_APPS] = &osm_l3_master,
-> >>  	[SLAVE_OSM_L3] = &osm_l3_slave,
-> >>  };
-> >>  
-> >> -DEFINE_QNODE(epss_l3_master, OSM_L3_MASTER_NODE, 32, OSM_L3_SLAVE_NODE);
-> >> -DEFINE_QNODE(epss_l3_slave, OSM_L3_SLAVE_NODE, 32);
-> >> +DEFINE_QNODE(epss_l3_slave, 32);
-> >> +DEFINE_QNODE(epss_l3_master, 32, &epss_l3_slave);
-> >>  
-> >> -static const struct qcom_osm_l3_node * const epss_l3_nodes[] = {
-> >> +static struct qcom_osm_l3_node * const epss_l3_nodes[] = {
-> >>  	[MASTER_EPSS_L3_APPS] = &epss_l3_master,
-> >>  	[SLAVE_EPSS_L3_SHARED] = &epss_l3_slave,
-> >>  };
-> >> @@ -164,7 +160,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
-> >>  	const struct qcom_osm_l3_desc *desc;
-> >>  	struct icc_onecell_data *data;
-> >>  	struct icc_provider *provider;
-> >> -	const struct qcom_osm_l3_node * const *qnodes;
-> >> +	struct qcom_osm_l3_node * const *qnodes;
-> >>  	struct icc_node *node;
-> >>  	size_t num_nodes;
-> >>  	struct clk *clk;
-> >> @@ -242,6 +238,10 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
-> >>  
-> >>  	icc_provider_init(provider);
-> >>  
-> >> +	/*Initialize IDs to ALLOC_DYN_ID to indicate dynamic id allocation*/
-> >> +	for (i = 0; i < num_nodes; i++)
-> >> +		qnodes[i]->id = ALLOC_DYN_ID;
-> > 
-> > This can be initialized statically.
-> 
-> There are two instances of EPSS L3 and the target specific compatible
-> data is global which requires resetting the IDs for the second instance
-> probe. If we don't the reset the IDs back to ALLOC_DYN_ID, then ICC
-> framework assumes that ID has been already allocated and doesn't create
-> the new ICC nodes for the second instance.
-
-Well, don't use global data for shared purposes. Consider both your
-instances probing at the same time. So, please drop the
-qcom_osm_l3_node.id, pass ALLOC_DYN_ID directly to the
-icc_node_create(), store returned nodes in a local array and pass node
-pointers to icc_link_create().
-
-> 
-> > 
-> >> +
-> >>  	for (i = 0; i < num_nodes; i++) {
-> >>  		size_t j;
-> >>  
-> >> @@ -250,14 +250,19 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
-> >>  			ret = PTR_ERR(node);
-> >>  			goto err;
-> >>  		}
-> >> +		qnodes[i]->id = node->id;
-> > 
-> > Should not be necessary.
-> This is required, each qnode corresponds to a ICC node in framework and
-> some nodes get created in icc_node_create() API and some in
-> icc_link_create() API, to have a track of node creation qnode->id is
-> used, hence initializing qnode->id with id allocated during icc node
-> creation and avoid creation of duplicate nodes.
-
-Basically, no. You cannot do that. Create nodes first, create links
-afterwards.
-
-> > 
-> >>  
-> >>  		node->name = qnodes[i]->name;
-> >>  		/* Cast away const and add it back in qcom_osm_l3_set() */
-> >>  		node->data = (void *)qnodes[i];
-> >>  		icc_node_add(node, provider);
-> >>  
-> >> -		for (j = 0; j < qnodes[i]->num_links; j++)
-> >> -			icc_link_create(node, qnodes[i]->links[j]);
-> >> +		for (j = 0; j < qnodes[i]->num_links; j++) {
-> >> +			struct qcom_osm_l3_node *link_node = qnodes[i]->links[j];
-> >> +
-> >> +			icc_link_create(node, link_node->id);
-> > 
-> > Please add icc_link_nodes() (or something like that), taking two struct
-> > icc_node instances. Then you can use it here, instead of reading back
-> > the ID. Ideally the 'ID' should become an internal detail which is of no
-> > concern for the ICC drivers.
-> >
-> 
-> Instead of reading back the link node id from the framework, I will call
-> icc_node_create before calling the icc_link_create() API and assign the
-> allocated id to respective qnode in the following way:
-> 
-> struct qcom_osm_l3_node *qn_link_node = qnodes[i]->links[j];
-> struct icc_node *link_node = icc_node_create(qnodes[i]->links[j]->id);
-> qn_link_node->id = link_node->id;
-> icc_link_create(node, link_node->id);
-> 
-> This looks cleaner than reading back the id.
-
-As you might have guessed from the the earlier comments, no. Don't write
-_anything_ to a global data.
-
+On 2/14/2025 7:09 PM, James Clark wrote:
 > 
 > 
-> >> +			link_node->id = (node->links[node->num_links - 1])->id;
-> >> +		}
-> >>  
-> >>  		data->nodes[i] = node;
-> >>  	}
-> >> @@ -278,6 +283,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
-> >>  static const struct of_device_id osm_l3_of_match[] = {
-> >>  	{ .compatible = "qcom,epss-l3", .data = &epss_l3_l3_vote },
-> >>  	{ .compatible = "qcom,osm-l3", .data = &osm_l3 },
-> >> +	{ .compatible = "qcom,sa8775p-epss-l3", .data = &epss_l3_perf_state },
-> >>  	{ .compatible = "qcom,sc7180-osm-l3", .data = &osm_l3 },
-> >>  	{ .compatible = "qcom,sc7280-epss-l3", .data = &epss_l3_perf_state },
-> >>  	{ .compatible = "qcom,sdm845-osm-l3", .data = &osm_l3 },
-> >> -- 
-> >> 2.39.2
-> >>
-> > 
+> On 14/02/2025 1:34 am, Jie Gan wrote:
+>>
+>>
+>> On 2/14/2025 12:00 AM, James Clark wrote:
+>>>
+>>>
+>>> On 07/02/2025 6:42 am, Jie Gan wrote:
+>>>> Add 'struct coresight_path' to store the data that is needed by
+>>>> coresight_enable_path/coresight_disable_path. The structure will be
+>>>> transmitted to any required devices to enable related funcationalities.
+>>>>
+>>>> The trace_id will be allocated after the path is built. Consequently,
+>>>> The ETM3x and ETM4x devices will directly read the trace_id from path
+>>>> which result in etm_read_alloc_trace_id and etm4_read_alloc_trace_id
+>>>> being deleted.
+>>>>
+>>>> Co-developed-by: James Clark <james.clark@linaro.org>
+>>>> Signed-off-by: James Clark <james.clark@linaro.org>
+>>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+>>>> ---
+>>>>   drivers/hwtracing/coresight/coresight-core.c  | 106 ++++++++++++ 
+>>>> +-----
+>>>>   drivers/hwtracing/coresight/coresight-dummy.c |   5 +-
+>>>>   .../hwtracing/coresight/coresight-etm-perf.c  |  30 +++--
+>>>>   .../hwtracing/coresight/coresight-etm-perf.h  |   2 +-
+>>>>   drivers/hwtracing/coresight/coresight-etm.h   |   1 -
+>>>>   .../coresight/coresight-etm3x-core.c          |  54 ++-------
+>>>>   .../coresight/coresight-etm4x-core.c          |  54 ++-------
+>>>>   drivers/hwtracing/coresight/coresight-etm4x.h |   1 -
+>>>>   drivers/hwtracing/coresight/coresight-priv.h  |  12 +-
+>>>>   drivers/hwtracing/coresight/coresight-stm.c   |   3 +-
+>>>>   drivers/hwtracing/coresight/coresight-sysfs.c |  17 ++-
+>>>>   drivers/hwtracing/coresight/coresight-tpdm.c  |   3 +-
+>>>>   include/linux/coresight.h                     |  12 +-
+>>>>   13 files changed, 143 insertions(+), 157 deletions(-)
+>>>>
+>>> [...]
+>>>> @@ -352,7 +352,7 @@ static void *etm_setup_aux(struct perf_event 
+>>>> *event, void **pages,
+>>>>        * CPUs, we can handle it and fail the session.
+>>>>        */
+>>>>       for_each_cpu(cpu, mask) {
+>>>> -        struct list_head *path;
+>>>> +        struct coresight_path *path;
+>>>>           struct coresight_device *csdev;
+>>>>           csdev = per_cpu(csdev_src, cpu);
+>>>> @@ -405,15 +405,15 @@ static void *etm_setup_aux(struct perf_event 
+>>>> *event, void **pages,
+>>>>               cpumask_clear_cpu(cpu, mask);
+>>>>               continue;
+>>>>           }
+>>>> -
+>>>>           /* ensure we can allocate a trace ID for this CPU */
+>>>> -        trace_id = coresight_trace_id_get_cpu_id_map(cpu, &sink- 
+>>>> >perf_sink_id_map);
+>>>> -        if (!IS_VALID_CS_TRACE_ID(trace_id)) {
+>>>> +        trace_id = coresight_path_assign_trace_id(path, CS_MODE_PERF);
+>>>> +
+>>>> +        /* Can be 0 and valid, ETE doesn't need an ID */
+>>>> +        if (trace_id < 0) {
+>>>
+>>> Not sure why I wrote it like this, but I think we should leave it as 
+>>> it was with !IS_VALID_CS_TRACE_ID(). Even with ETE it calls the trace 
+>>> ID allocator, so nothing has changed here.
+>>>
+>> Sure, Will restore. For ETE or ETM, we dont need traverse the path, 
+>> just directly allocate the trace id based on cpu id.
+>>
+>> Jie
+>>
+>>
 > 
+> Sorry I meant to only keep the !IS_VALID_CS_TRACE_ID() bit. We still 
+> need to call the new coresight_path_assign_trace_id() otherwise it 
+> doesn't get assigned to the path. I saw that got removed in v11.
+> 
+> 
+Sorry for the misunderstanding, I was focused on "nothing has changed 
+here", lol.
 
--- 
-With best wishes
-Dmitry
+I got your point here.
+So the updated codes should be:
+...
+                 /* ensure we can allocate a trace ID for this CPU */
+                 trace_id = coresight_path_assign_trace_id(path, 
+CS_MODE_PERF);
+                 if (!IS_VALID_CS_TRACE_ID(trace_id)) {
+                         cpumask_clear_cpu(cpu, mask);
+                         coresight_release_path(path);
+                         continue;
+                 }
+...
+
+
+Thanks,
+Jie
 
