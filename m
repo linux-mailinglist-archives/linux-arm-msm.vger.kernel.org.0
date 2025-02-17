@@ -1,53 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-48203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EDE1A381D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 12:34:41 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 107A2A381C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 12:33:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 020423B54B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:33:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ABF89163C0B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2025 11:33:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C401F219A79;
-	Mon, 17 Feb 2025 11:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65A2A218E81;
+	Mon, 17 Feb 2025 11:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="NOArn+RH"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="D0JKTd0v"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B062199E94;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B005194C8B;
 	Mon, 17 Feb 2025 11:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739791996; cv=none; b=VdK+Nb+m8SPm4/i2ZsMVpiFRiXdE4q80M/xrFPNahHir0LiFNBhcQigPn3Jm7wihvggcRkEo7HwrnBY6KMHSdYzz1WQhQBj8ZABfF4G1FfaxPrZdmMqVeNHNmTtrJtDEvXk0dPzjXDoRkNkEbivfx/KHwCCC7ZvCgpEaGU90wjI=
+	t=1739791995; cv=none; b=FND0MWTDPgJBMVj0y4yTOtEeOpaa0AciNQB2x9Qet+mmW1dy7N1pa4O3JSiwwQb60A411haMgMvZd8SqosZbcnBKOFA5yKoMvCkOEdp9IiJR7UGfUNwLaea2CyHEgCStxOwH8fykWXNZhUCzpamoo1fS3bwzdMv6EJ8OP9p0yL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739791996; c=relaxed/simple;
-	bh=UDT0MbenfufvyYQGcudZnPkdHOYTHrC+tdPUYnJVXt8=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CkCwVPE9Jo+KqVITB6s5fo/mHGIm29Zq2GawjhgrQDiIIPZIFSrsYgmIzGCEeiWOITJlyoajTBxdDcSvILWa4JKbhrh22OhZitRENmASN8TXJcQuaFJb1oBU8T9T6fSpIvwRNQ+MgeTwfyRVEGj9eSu/ClSovO4Y6RYMKj06qQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=NOArn+RH; arc=none smtp.client-ip=5.75.144.95
+	s=arc-20240116; t=1739791995; c=relaxed/simple;
+	bh=Dl7utaiEnQlj/hKxhHW+FMXmb9HcfGdO+crpYltGeLY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=BPNw30pcRFKkuy80A6V38hF+hrzofCJrwVAhdr9MxeES7gxWHynOsKsRs9OaJoQq4oP1u4wJWYZaw1zECbZnXXLzqs90kn78T0QcZB3FQKS+9EXnZmLDqrIjRYUywI3XbOazcKIYLHEWKhYr/nKPXPZmaQdj2bTipYenZnpb0XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=D0JKTd0v; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Received: from [192.168.64.32] (ipbcc3a93c.dynamic.kabel-deutschland.de [188.195.169.60])
-	by mail.mainlining.org (Postfix) with ESMTPSA id E93DABB835;
-	Mon, 17 Feb 2025 11:33:04 +0000 (UTC)
+	by mail.mainlining.org (Postfix) with ESMTPSA id BE643BB839;
+	Mon, 17 Feb 2025 11:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1739791985;
+	s=psm; t=1739791986;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=+uJ7k1VwVXanEeFp3q+wFgfuRJstHzHvr9nezblCw4c=;
-	b=NOArn+RHTILkOM4HWj+Vk6G7JooZNTPXO+UuVeFfk5L9MpUhEQzglrvn47jXjy3nlefrcV
-	g7PwfZhNgtaBciBRM1m6utZQDhrFEzZwY7tTbnYaNvjZng4Ijak35R3Skoc8OKUkm9MXha
-	3azefjex1bckECiw+MHikNstpPGyZNba1+GOQC3uYjO85gRP5YylcSh+oyTL82Bx9uoA0x
-	ouoGU4WwiMM/hlg5V7vhea2Lg+YpsjuXvIa6uoPeHUJu8/OLMhIDtftcoYJPuyT0nRWtgo
-	dea/wQwtHs3J+uBccgAvwj1+QM+eNALX78IkBNFw0P9DNkl+dvA3/u+9KRBQfQ==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HPiKB53HMN0y5S2cyyt+prAfI9wInGI1FgoyZ2Gls0M=;
+	b=D0JKTd0vL/GgWFpuyFBiW9Q6qyLpnol7Iua/zHhzbj+QlJTsUXbuT9FlyLk8LEG0DD5Rgv
+	EGZEBXYfdiu1mkSYLbGM4vDc+BOUTwGPb2hgWw74Eibw391AWR3CGzMiyiMm29eRAdIWVQ
+	mJqvwDu+IZHqScFXJVspgMSBRoyxYfrhobsN0whEh7HvIugB0LM5HGBVlzx9CDiyoLTwgd
+	7GS4qlNcLANobdnG7rGJj5YOKec7E6RWEpKn+tTEglnT2WOiZIUzsxIOKwC1ZZcHBm2Vfn
+	xHS6JD/RZZpvuTWtNFznE7disX9ppRqW/QUCxsxQ7n4rCaLwTfMVFdtVvsxn2Q==
 From: David Wronek <david@mainlining.org>
-Subject: [PATCH 0/2] Add initial devicetree for Lenovo Xiaoxin Pad Pro 2021
-Date: Mon, 17 Feb 2025 12:32:53 +0100
-Message-Id: <20250217-lenovo-j716f-v1-0-b749cf4f6cd7@mainlining.org>
+Date: Mon, 17 Feb 2025 12:32:54 +0100
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: Add Lenovo Xiaoxin Pad Pro
+ 2021
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,10 +58,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAGUes2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDI0Nz3ZzUvPyyfN0sc0OzNF1zy2QjizQz41TTFDMloJaCotS0zAqwcdG
- xtbUAJ+k0/l4AAAA=
-X-Change-ID: 20250217-lenovo-j716f-79c28f63e5d6
+Message-Id: <20250217-lenovo-j716f-v1-1-b749cf4f6cd7@mainlining.org>
+References: <20250217-lenovo-j716f-v1-0-b749cf4f6cd7@mainlining.org>
+In-Reply-To: <20250217-lenovo-j716f-v1-0-b749cf4f6cd7@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -69,41 +70,36 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org, 
  David Wronek <david@mainlining.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1739791984; l=1049;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1739791984; l=805;
  i=david@mainlining.org; s=20250217; h=from:subject:message-id;
- bh=UDT0MbenfufvyYQGcudZnPkdHOYTHrC+tdPUYnJVXt8=;
- b=i8FaGO90Pst/twpaeSaFYfZ26+SBAtva9porE5Xykn+XLRLDw0ppDsM5Y5LexcElv9s1w2i7P
- NhADW0TED19AhSCWhXJBXhd43qtQzlZTITqmdii2k8Jb6fk9DVoRfN9
+ bh=Dl7utaiEnQlj/hKxhHW+FMXmb9HcfGdO+crpYltGeLY=;
+ b=H8YslMZexwth7jyXo0Ab8z5etBt7naM9eVtmOMFUQqhy5EAB3jwVNYLcL9i1wi1GHnEMjlqlA
+ sSWUKNVGsS3BMnEa8UGjTlyQh8ebZxmEKvEvRfOsv7UbjhjE+W6Ocoy
 X-Developer-Key: i=david@mainlining.org; a=ed25519;
  pk=W+lFosPYSaRRoKxJR6X8SrF90iGKs6McC6NWUyNo9Jo=
 
-This series add inital support for the Lenovo Xiaoxin Pad Pro 2021
-Android tablet.
-
-The command mode display panel on this tablet is using dual DSI without
-DSC. Currently, some extra DPU patches are needed to get the panel
-working.
-
-Lenovo has unfortunately not released the downstream sources for this
-device. Attempts at contacting Lenovo have been unsuccessful, since this
-tablet is primarily being sold in China.
+Document the Lenovo Xiaoxin Pad Pro 2021 Android tablet based on the
+Qualcomm Snapdragon 870 (SM8250-AC) SoC.
 
 Signed-off-by: David Wronek <david@mainlining.org>
 ---
-David Wronek (2):
-      dt-bindings: arm: qcom: Add Lenovo Xiaoxin Pad Pro 2021
-      arm64: dts: qcom: sm8250: Add support for Lenovo Xiaoxin Pad Pro 2021
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
- Documentation/devicetree/bindings/arm/qcom.yaml  |   1 +
- arch/arm64/boot/dts/qcom/Makefile                |   1 +
- arch/arm64/boot/dts/qcom/sm8250-lenovo-j716f.dts | 746 +++++++++++++++++++++++
- 3 files changed, 748 insertions(+)
----
-base-commit: 253c82b3a2cec22bf9db65645f934fbe095899a3
-change-id: 20250217-lenovo-j716f-79c28f63e5d6
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 618a87693ac1dc32b40a2201bc219a4f12e9f3e8..7b48857decc2aac2694f922754cbc434d48d4796 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -1060,6 +1060,7 @@ properties:
+ 
+       - items:
+           - enum:
++              - lenovo,j716f
+               - qcom,qrb5165-rb5
+               - qcom,sm8250-hdk
+               - qcom,sm8250-mtp
 
-Best regards,
 -- 
-David Wronek <david@mainlining.org>
+2.48.1
 
 
