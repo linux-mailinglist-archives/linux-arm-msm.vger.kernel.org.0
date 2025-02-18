@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-48393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EA05A3A1A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 16:46:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8F51A3A1AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 16:49:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 271517A2BF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 15:45:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8EFC91894A4D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 15:49:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DA3426AABB;
-	Tue, 18 Feb 2025 15:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF4FE26B2CA;
+	Tue, 18 Feb 2025 15:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jYcnuSx4"
+	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="v5LlfeBM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D393199239
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 15:46:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50ED207A06
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 15:49:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739893580; cv=none; b=EuOU1BRerxOqCDPY2S6lkhmsJAWodTfiUrbIKuYPT5u2+b3CSEdXBgV7E7JiMCskyy53KLh/aW6ObtmiL9PRgY1+dI54hGUmC8ZP8EeCS+drNCVru6/9X81wuu0dmH3UqghcJ0jg/wH/P1aXcrRuZLOPA8cMArTiJQ8UytIVXhg=
+	t=1739893771; cv=none; b=QyNEzDm+TGloIgKMDPIu54kVjOAmRWHHxhXcmpemYrE3YJscR9Owo/CjbO9Vq6PkvVLnTnh0I1gBwCWHqxgRwONPe8FVugoCp2FLlnHBcxvdiwbTg5U3gcXhwpBppzppX63r5U/OW6+31zBDSjiJnRDBrKtzHRUm8c+2kyePo2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739893580; c=relaxed/simple;
-	bh=natQqwqvpTM4A8Kit7p6e55YJWa67GNvNJc5yP+W5xA=;
+	s=arc-20240116; t=1739893771; c=relaxed/simple;
+	bh=KnYpb6bE0eyQCr84HbKFpqpurHoiaGGJGPLTOYYxz18=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nNQrkOaR4UOxXwXTPrIKn/ENrUyoHyUaCmuWibPZesD1zpTAgaog3WjSDtJXTV93EE1Tki1fV1EeSRCuBOuMJOApGcWBlnmUO8Yy5bigZ6Bem/Rz6um/gt9dopvBCzO8O2zuwN8/Qu9wMVMo3nTMtmYdVBDUtUWHEsurt+GY5Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jYcnuSx4; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43996e95114so5185825e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 07:46:18 -0800 (PST)
+	 In-Reply-To:Content-Type; b=MO4cPMx0IYKctdaYAmXqsemUkN6r/9NKoaqivqMZ+kkA43sY+wZdnIu4O/5hTLw7FQLvg/13gz/7cug9fmEdo59be6UfBDNGNkE+X6UEG7kpEBKBjEjRmcL/+ay29grnoZ3WQhniCkLJXW2/webLsVvQyKWDtbUYmSApfiTe81Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=v5LlfeBM; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-38f2cb1ba55so3334317f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 07:49:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739893577; x=1740498377; darn=vger.kernel.org;
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1739893768; x=1740498568; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WzXPNVEIO0ktgw6x8v211u9KQdCOQpvJxEt97diBw0c=;
-        b=jYcnuSx4Fx6djgpcR16YuqSPbz4DCFvhXtqBgl0h8hsIG4zZnZqnuzYvVb0c+0m0oj
-         mz/h1WEtYQyrEmsj6zEV5RnzMD9V/33csitKZe7C9zaOBfCDpaVFXEAa2TZji3DOMHsC
-         rNxLIVWZOeDCPO5T1qYjLxsqaGKqLo2mAT3Y1aBl6PBt9UHJNp0z/r3TSaIZZzNccaX4
-         kF/bBCK5rd6tmPvvKOTe0ne+Vywi4xT4NHPMxSKAnEXl5YSN7G0zTLSmJwixakp2A1eT
-         ZO0MB8AnAwkXD6aar0uaIVnl/M7t7aZg33R+GSGueSiHR3BrVcNQkOBc+VQEsB8WYEfm
-         5Y6w==
+        bh=k5lpfrcaL2Is2w5mfT4nI0tpu6NUg+OVNgUbEulgO5s=;
+        b=v5LlfeBM+1XbvFnvDOUwev5A72L5lowwCEGWlDMQrlsi17LyMPlFW5IITO+ETfxUrM
+         Ns+81FZ0ndU6Q/r6wYTLxsGblbhITj75UV6122y0OuYNO+P3N0wuLVvUaDNW5N/yrgUt
+         AA5dtoXdi9BMOjrW9gc9a2A6Tnmf3+O/vqFx66CepAHcruNlpe83sauTdT/yFT/kjbiu
+         jcTRuxauGTKPb5O4CitP9pHBh9qlMOSMNe9x8WQbX+P7uTXrxwZOCa9oK+XnVHqFe9Mq
+         OHduk5vBuINEU4groW8C7TUAZ95L1YVAHtyvzR5Cj7E/MouachcvZle/PsmUOLqCixKd
+         MN6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739893577; x=1740498377;
+        d=1e100.net; s=20230601; t=1739893768; x=1740498568;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WzXPNVEIO0ktgw6x8v211u9KQdCOQpvJxEt97diBw0c=;
-        b=YN05h6KDZnBdKqRvwvB6fIiT6Dk+DUTixVBNAR6g+5JTguAl2BdzyNIJCY5qa32Bz0
-         swnZ52LDOEebSdK3AdwBUhzyXYxzeMu9k8EAGoCqqR7k96EByYIty0/+Eo+CDvymRAOE
-         VaOMy4fzQMmoSy1YYHYwjR/E3W7vDSXfwW4xRSbDjXem2WpF6lRZe3cpS7LSIVlZ0lKS
-         PMNBDEajTLH2O9tOz9/DLMIkNKjYvniYs+QbKjgxsAML1MuvwmrKiqbYGL/jPWiGOsyN
-         BGJUSzNGsMDWZd8Q1yjwpFhnYkmWtwjEtGNv2lx2eQPZ6GiuFG8GuuRjAeM3+6j97xRA
-         1UVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUMrDz+v1mfS2fZ4VIcg3LQj2yVupungAbQgeizV35LJfcNocH9NWlBFpnRLFauI2WSQU+PuOop+cs6fbzN@vger.kernel.org
-X-Gm-Message-State: AOJu0YxYU2c2iTvIwujtMXUSbeMhrrziec8krM6zU9wQW6C+CGG/84K2
-	uqvsSnmugnO8G71hs6tia9BTPdNKXLUoNy1nFcgnQhNk0Gk2EB4iZw3LeV9pGIo=
-X-Gm-Gg: ASbGncthYGOsEqD78Gt0jOrQn5X4LsSONF+JmAiC1YKGJQKGGI+n2RP1Kr5xj8gwVHz
-	6Ynd8HvYswWpS6GrGx5hr/AEwyimhQXntcCiz8WsYQfZGf5EfNzBNTnu6n6gSJccjlJbi2D/PGd
-	YDnsuplQdo0JLUciXTKkqThDqDTDpuf0EmxllK2v2M2RHC3SvpMkrlV7rboh4jt3vMPNUkW1Ezn
-	C3+2ubYB7u7uIin5Nwyuqk6s05piFYaRYIzxAdWBwQeZVn75bXhtP6lVdGeaI/6fMxNJ7TJvNn7
-	gwHMLO0iql1qJGS0G/nSw5U+vvzjV/96pinKomWVlXTHnEcOE+t3Mvyf
-X-Google-Smtp-Source: AGHT+IElh5d3sTutspymotVQAtk9NGNlV45zvDe426ZYEjVuuh1cgCu7k0Gx3xBQRtNoHXBzuxtrCQ==
-X-Received: by 2002:a5d:5f4d:0:b0:38f:31b5:b33e with SMTP id ffacd0b85a97d-38f33f43726mr15149054f8f.35.1739893577459;
-        Tue, 18 Feb 2025 07:46:17 -0800 (PST)
+        bh=k5lpfrcaL2Is2w5mfT4nI0tpu6NUg+OVNgUbEulgO5s=;
+        b=POKyzbQCmYtux0FoyDRXtDZA49adoPHFQ6FscEAodKaVgiXO+r/I1rNJh/97P8EFui
+         WKW08A0w5UP3Y/OIyLps1i6LG9EMr39vvZLfKbMArQW+RhDWUPBNkVyUaVk1TIQx0zJv
+         r79lRY7iQnlzWZyfaNHulELfgTUNJA7O9Xk7OZkTTVh88Ui29IJna5QPnRDxRj6Ya1Jn
+         3uQGClYZIuXsX4Gbygy3uaphWoKTr9Bggag+9jCf1pg4cEdGH/FZuxbWaeYP/0a44FFV
+         4ZUU9Jn8ny1Wza1Vf6XTOci8YWHVMG/FAMlLD6Ve4rVzlLd3S3iJZR9vJ/CpeSUTW46o
+         YxOA==
+X-Forwarded-Encrypted: i=1; AJvYcCWew5rWQ6wpSVQ0cKEZoXOObMW4ZcvAVN8yf8zJcIlwvSaV3jddbKcx02sc30vsvUMlVemDEoO2d2BsYfb2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwNtZQSGYV5dveRfPtnBN32BckHTn/0Jv9iXm6EiuTuLmzGG8iR
+	boZj45cWKUPu+RErUUgwz296wEvI6gbx1EoQ22WkVyIiO9ax8z6HkUifSgOq3S0=
+X-Gm-Gg: ASbGncsbmbUiwyiyeiO8gRMkKccUXkLN2bijKQau4s70D4wmAbIrdXqAEv4iYLsYsDF
+	LBRbtl3M7qnag06gmLEBpsrabHCZHDAt3dEpbVrPQ/cK3vOCRmv6Z7xR5PmdvfElBBr9/A5nz8k
+	cKtRGnMnlAJX6S8WAsUaQNfeYkA3qVUhF32vXDINYPNSbaujMSWhH71Z1oUiPvB4q/Gi8nwD3ha
+	JC/GWUcNqNjXwwSPYI1MCbe9EGngEtvimcUrI+kCJfWAVr67/6QJXmBjyLUJJhTQJd/s1FfferU
+	NfYbzu28B4hb1VTmTnAllmnxSxuR/Gj/tCpZp+OFZvyreeHSkjtAJcYENQ0=
+X-Google-Smtp-Source: AGHT+IHzHPbfVt1Tel29A+epxPfb2KB2d12lkNDmgHGe0o8ZVjMIavmijEOcnrw/jRAI4QZkUMylUg==
+X-Received: by 2002:a05:6000:1568:b0:38f:5481:1160 with SMTP id ffacd0b85a97d-38f54811294mr1777787f8f.15.1739893768059;
+        Tue, 18 Feb 2025 07:49:28 -0800 (PST)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259f7fe6sm15067537f8f.86.2025.02.18.07.46.16
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f25913f5asm15548613f8f.52.2025.02.18.07.49.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Feb 2025 07:46:17 -0800 (PST)
-Message-ID: <eec2869a-fa8f-4aaf-9fc5-e7a8baf0f864@linaro.org>
-Date: Tue, 18 Feb 2025 15:46:15 +0000
+        Tue, 18 Feb 2025 07:49:27 -0800 (PST)
+Message-ID: <a38ad793-8660-4942-ba29-aa5f297336ea@nexus-software.ie>
+Date: Tue, 18 Feb 2025 15:49:26 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,8 +81,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] clk: qcom: videocc: Add support to attach multiple
- power domains
+Subject: Re: [PATCH 1/5] dt-bindings: clock: qcom,sm8450-videocc: Add MXC
+ power domain
 To: Jagadeesh Kona <quic_jkona@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -95,77 +95,54 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
- <20250218-videocc-pll-multi-pd-voting-v1-4-cfe6289ea29b@quicinc.com>
+ <20250218-videocc-pll-multi-pd-voting-v1-1-cfe6289ea29b@quicinc.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250218-videocc-pll-multi-pd-voting-v1-4-cfe6289ea29b@quicinc.com>
+From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20250218-videocc-pll-multi-pd-voting-v1-1-cfe6289ea29b@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 18/02/2025 14:26, Jagadeesh Kona wrote:
-> During boot-up, the PLL configuration might be missed even after
-> calling pll_configure() from the clock controller probe. This can
-> happen because the PLL is connected to one or more rails that are
-> turned off, and the current clock controller code cannot enable
-> multiple rails during probe. Consequently, the PLL may be activated
-> with suboptimal settings, causing functional issues.
+> To configure the video PLLs and enable the video GDSCs on SM8450,
+> SM8475, SM8550 and SM8650 platforms, the MXC rail must be ON along
+> with MMCX. Therefore, update the videocc bindings to include
+> the MXC power domain on these platforms.
 > 
-> To properly configure the video PLLs in the probe on SM8450, SM8475,
-> SM8550, and SM8650 platforms, the MXC rail must be ON along with MMCX.
-> Therefore, add support to attach multiple power domains to videocc on
-> these platforms.
-> 
+> Fixes: 1e910b2ba0ed ("dt-bindings: clock: qcom: Add SM8450 video clock controller")
 > Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 > ---
->   drivers/clk/qcom/videocc-sm8450.c | 4 ++++
->   drivers/clk/qcom/videocc-sm8550.c | 4 ++++
->   2 files changed, 8 insertions(+)
+>   Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/clk/qcom/videocc-sm8450.c b/drivers/clk/qcom/videocc-sm8450.c
-> index f26c7eccb62e7eb8dbd022e2f01fa496eb570b3f..b50a14547336580de88a741f1d33b126e9daa848 100644
-> --- a/drivers/clk/qcom/videocc-sm8450.c
-> +++ b/drivers/clk/qcom/videocc-sm8450.c
-> @@ -437,6 +437,10 @@ static int video_cc_sm8450_probe(struct platform_device *pdev)
->   	struct regmap *regmap;
->   	int ret;
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> index 62714fa54db82491a7a108f7f18a253d737f8d61..737efc4b46564c1e475b02873d2dc124329fb775 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> @@ -32,9 +32,11 @@ properties:
+>         - description: Video AHB clock from GCC
 >   
-> +	ret = qcom_cc_attach_pds(&pdev->dev, &video_cc_sm8450_desc);
-> +	if (ret)
-> +		return ret;
-> +
->   	ret = devm_pm_runtime_enable(&pdev->dev);
->   	if (ret)
->   		return ret;
-> diff --git a/drivers/clk/qcom/videocc-sm8550.c b/drivers/clk/qcom/videocc-sm8550.c
-> index 7c25a50cfa970dff55d701cb24bc3aa5924ca12d..d4b223d1392f0721afd1b582ed35d5061294079e 100644
-> --- a/drivers/clk/qcom/videocc-sm8550.c
-> +++ b/drivers/clk/qcom/videocc-sm8550.c
-> @@ -542,6 +542,10 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
->   	int ret;
->   	u32 sleep_clk_offset = 0x8140;
+>     power-domains:
+> -    maxItems: 1
+>       description:
+> -      MMCX power domain.
+> +      Power domains required for the clock controller to operate
+> +    items:
+> +      - description: MMCX power domain
+> +      - description: MXC power domain
 >   
-> +	ret = qcom_cc_attach_pds(&pdev->dev, &video_cc_sm8550_desc);
-> +	if (ret)
-> +		return ret;
-> +
->   	ret = devm_pm_runtime_enable(&pdev->dev);
->   	if (ret)
->   		return ret;
+>     required-opps:
+>       maxItems: 1
+> @@ -72,7 +74,8 @@ examples:
+>         reg = <0x0aaf0000 0x10000>;
+>         clocks = <&rpmhcc RPMH_CXO_CLK>,
+>                  <&gcc GCC_VIDEO_AHB_CLK>;
+> -      power-domains = <&rpmhpd RPMHPD_MMCX>;
+> +      power-domains = <&rpmhpd RPMHPD_MMCX>,
+> +                      <&rpmhpd RPMHPD_MXC>;
+>         required-opps = <&rpmhpd_opp_low_svs>;
+>         #clock-cells = <1>;
+>         #reset-cells = <1>;
 > 
 
-What's the difference between doing the attach here or doing it in 
-really_probe() ?
-
-There doesn't seem to be any difference except that we will have an 
-additional delay introduced.
-
-Are you describing a race condition ?
-
-I don't see _logic_ here to moving the call into the controller's higher 
-level probe.
-
-Can you describe some more ?
-
----
-bod
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
