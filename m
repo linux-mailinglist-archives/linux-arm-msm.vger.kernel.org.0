@@ -1,156 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-48402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11917A3A319
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 17:45:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1179A3A3EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 18:18:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1C0B9170112
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 16:44:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F8CB3A564E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 17:18:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E384726E65D;
-	Tue, 18 Feb 2025 16:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14A7126FA53;
+	Tue, 18 Feb 2025 17:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LLnSo7/W"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EVNvjlRT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED62A26BD8E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 16:44:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351EA26FA40
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 17:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739897052; cv=none; b=uDYhGfHUSlIap53I6envt8WrqP1TUK/5zNLQJd6qxESUTKWeaCWZMNNVyz2iU5sDTUgOl+9SRo8lGkaeGTL7Jhnus8cBGPyduajjV/utQUTl39xXZBXqB5a6QK1K6oaQ++WXjwxamfSDNp96SGLJSqs+Q1O8oSBB3ZsQh+MHy5o=
+	t=1739899087; cv=none; b=YDtg6DrkDIz6TVsA6KR5d3Bf3NuWTD42huCt0YdsBndc1547+9XtEYslKA/9hYFzp8S44JZnhLjYV75fhwgwkaCa4xrlz4NHAO+5McciWWhkERaGE0eW+PzVu5+FdnKu211TfyIQDpRfZm4EzqjcvP/tRpSxnqcuBXsei8nX8xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739897052; c=relaxed/simple;
-	bh=ecVY+gv1Bw65DvJhP3WRsBzu8IgIbbZITzxHtqJ/Ow0=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=tFbmJ3ZLpbUHEwuJ/Xhj4ktClDy4EUw6VJHR1znts7ntrNvsBpgvRwKK7IlnhWKSeAbzTgk5fe6oU1pQdKYXyqCXSKdhrsuidigB5yLR0tSqwoPdP5V5xH32Hkk6Lmu7MQJGdOUOqK+5YWy3IKrQHqfpAuwzuOJl4CtOCNGtuLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LLnSo7/W; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1739899087; c=relaxed/simple;
+	bh=+HqbUx3NMhsdQmv5gJG5aY4LXcTPtScM4DxHwm+OZQE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uiKA4wcmFjWR6hSWsX+5XRhrFr5gWavk2SFtsGxU+O3ad1nuiEoczqtFkWDCUX09zrAOECW86muUOlH2XOOC7l9uRdzabw26MLBEvs2q6noU7FXY0FziI4hyubsZQ2n4NJXbwFsB+67tqAzuqH4bBZh104Z5AYn34d3QQakhGGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EVNvjlRT; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43989226283so14282155e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 08:44:10 -0800 (PST)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-307325f2436so48833541fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 09:18:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739897049; x=1740501849; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rNolTsZiemwL3MqHvmSKz5sOO+WofguQrhSb8yM7bJM=;
-        b=LLnSo7/Wrx/TOXZwwpTh5iDQKrGRXm0/eyiHuMxnt2ej+x4bPCI9hWm6PLXr6QZsCP
-         ltxaopu5I0UNowQbvj5DnMtVAOZbQ3ntdERzRyBKoKvGJJ6CB/fpr+O/L7N1Xb34Ybbh
-         b6XAP+nF/lV2+YoWBu1rKlIXX6eMekxmrdbYlREwWrKiRkEgmxmgY37SI3qpsItnLNPM
-         kko4UmjalEHMmp8LgZNybTuzmE0MAPF7qWGDnB5ceu45ClJv3aINB56mEGxCtYRkO+yg
-         fq8M51JKcmw1BiYmAnZxZRdFGJr/fP9LJ0N3GnzrsbParooItfs3q679uDyemXe5WoIx
-         OsFA==
+        d=linaro.org; s=google; t=1739899083; x=1740503883; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vFCpXaDjW046OAnqXzChWWxg9c6BmmKNGNdZCuQPouY=;
+        b=EVNvjlRTUjkWqiPgbRWJw+S1FY9HkvT9IlDK2h1m0AJwDk16lysLtGRpnmF6DDGZ/u
+         wA1eVgnaopeOtemJJSeb+neL4Xf+y63zfagZhIEiSEzYDwlXQiabOLHkJ5DQdR+vkglT
+         RATECJW+hfCEci9yB+imfuLfJen7QC6TP2si8Vc86GA0FauTPr6rzMWaTw+hKJFkV+DA
+         8x3PvFxtfec23ZKgOPtaRvQzj7gUXJgaXuFDdecqiowCO4AmkaUjfXPtYb8g+MCCbL4+
+         LEtn6VylQrUhQc8Dg+BwO12JvMA/IiByyvbaNotBh+gTHGqHzgULgOqpRDYfaCqzfbsC
+         YDLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739897049; x=1740501849;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rNolTsZiemwL3MqHvmSKz5sOO+WofguQrhSb8yM7bJM=;
-        b=OlAs2NjTbqw+WnPg333XuYjcJz72yaLwNs5vzsvG9/fd8sdqyBxOyGuaSmhv3Yv+1v
-         MNyfoAiQqkICQKbmKMnU8air0JtJyEXTdfpxcwSAG5ZHiqb5bBixlikCA1ZJKTzTUnEN
-         Yp3NgFsHWfKGvZeI7q+JhCVVWuYiR9KVTsaiZ1RoppUDyOBrQFrKtZgWlidF+ZWDbCrf
-         F5Kq54MJ6sGGUa+jmPhp+Pq4PskQFPGDtM6UIDDTKIsDprNNqoFICELf2UMdALG9yU9Y
-         uOnBYx+lF1t5vqz8KfHF2UMYNRq+GK9aaTg7xlUDGaREy3FHZ2n3f60v2KyUhlCOmwKh
-         Ccng==
-X-Forwarded-Encrypted: i=1; AJvYcCXYnu8SViOyjY9bqLl/fu00IYFm177v+uUI1XW1nw32MOMaml/lkd7kVcgbcL3S30XmtOm1VK5kRyVO3e8k@vger.kernel.org
-X-Gm-Message-State: AOJu0YypOUbAmIvFqTr9yZGz4uEFBKaP63UfPW3UXMpGOtErJ1Q21Rq9
-	TBTqHdy99J0YFLzUwYxgj2ZHJdmHAkdqsDxnKF9jciqvgbuolo3Cz53V9PB0aq8=
-X-Gm-Gg: ASbGncv6FTnf+W5iN7TQ0y86mK/jP+U98jYFq4t2DW2xEYKqyZbnh9MnRB8Z1wm+7Vz
-	WLwFKbusPDfvZ+utEOosygTjB8XrPTEyFDOhFt4wZqNDAINGsgrR94nNiDbviUYv/BCCnNymBht
-	/I2gWVsOUB8HZhS7+vrTxCprr8rTEB3nGR5H0keFsTu+wDKuvFeLBoEwUIHXw/HJKOS6gbTn6Ta
-	NIxL1lhfwiBgB6EDRprFMtE0KzSqn4N6KALcZUxt4VJyMjVdOIiMSDiPH5ZVNRNRMPnDQ5m1G4j
-	MiM9EM+bSq7tXXUZhSrxHVddxYOKojlbj9xREulwZ37IDuTX1spGAXaI
-X-Google-Smtp-Source: AGHT+IHRNK4mSxCdis54SwXkqCDZrb5jymOcpWY4wAXt2MV8r6iy6nxS/LiPmAc4W5Fyl5byIMaTTA==
-X-Received: by 2002:a5d:5f50:0:b0:38f:28dc:db50 with SMTP id ffacd0b85a97d-38f33f11953mr14595414f8f.1.1739897049224;
-        Tue, 18 Feb 2025 08:44:09 -0800 (PST)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258ddbbdsm15567675f8f.37.2025.02.18.08.44.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Feb 2025 08:44:08 -0800 (PST)
-Message-ID: <9e9f742a-2972-476a-91cf-fc596221bedb@linaro.org>
-Date: Tue, 18 Feb 2025 16:44:07 +0000
+        d=1e100.net; s=20230601; t=1739899083; x=1740503883;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vFCpXaDjW046OAnqXzChWWxg9c6BmmKNGNdZCuQPouY=;
+        b=SQxj5sCJieDa+pqzNZq4vPYCEmw/TTumMH3YwQ+8Dny79dVaifrH796DhV6XT5lY7B
+         apB56k8jbjybs1BlhdCxwOTNrsPH+356WwDF8eh17MBf5JDulbQkFPWt6CbMsFqZBcTS
+         N0tQPoOnGWZ0iErBXsDpy2i8z6l5DdW3wx2I0ze+7V9axK5/FseHxpjEsgBGnQvdPHuq
+         zoIRNE2yVPn82kQE2Q/wzuPqnUjvkshJRaAWwcPf6K+G70XPTPvP17aAS5+oblyMSHs8
+         +xtEyFbYYIjsyZhcvV/v5lgoVufdeYsS6epm5DdPWEIqW041tLWuTFhq37o8xWFvBZoU
+         +tFA==
+X-Forwarded-Encrypted: i=1; AJvYcCUMF8g5/fbW7KN65sF24RGlKnHEcXRx+Y2QgTLXWi7myMLzvTkcoec9P9o8Z+Y/5s7Jnrohz4GRDrJzN3lI@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyo25LIbtzq+RI7KI6GjXdHi064YCPKoJhDwbbbD5Y8ZzaroQ/4
+	wHGA8ijUjBuOAaumU5OEYsQvP5mwiNfb2Y60tHGiM4bF2lhMDpIzNkNePVwzrP8=
+X-Gm-Gg: ASbGnctRdcZ5npa6qhtjz4sQMBkPIUwf4iHV+pWD1ziL81t7/G+TGfKNAP2n4IBtoQM
+	EmVPD8SPGeYaoZKwO9SWVM576bBhe94a464O3wo8bui4QKlreL3wZgFzo2LBezx5+zEKNYTJ3Bx
+	CMN131TaV7tyzOnhvunVIFpAtTAh1Ehz0pq7ez3czPU+mRRqjwpR9c6Axsx26UWqbfCbX5iNrDp
+	oIScJifVZ+JT3UTCVtdJCN16bZGwTxCixM794buKFHG/NiSmditqgUsErMxtzTZs65EjP7qAgHG
+	x8cAbBEDFfxDzdwCMb6vzEM0G81yB5W/OJJ0Saa9eUzL2KmISDsM4PmIxInthdDKwjzq34Y=
+X-Google-Smtp-Source: AGHT+IE6rXImPRtO7WIVZArsGTCop6s7h35hJORLydABfahalgPYT5N99LSGxqzFHXrjk0jBaudiMg==
+X-Received: by 2002:a05:651c:94:b0:309:1c03:d2d3 with SMTP id 38308e7fff4ca-30a45035a02mr559491fa.25.1739899083255;
+        Tue, 18 Feb 2025 09:18:03 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-309311777a8sm12756301fa.25.2025.02.18.09.18.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Feb 2025 09:18:02 -0800 (PST)
+Date: Tue, 18 Feb 2025 19:18:01 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/5] clk: qcom: common: Attach clock power domains
+ conditionally
+Message-ID: <2c5rbbpe5muw53oemyq6vhsmhzpzcpn7on4ujl5v7i7s3fdlob@eh37gy5dpfnp>
+References: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
+ <20250218-videocc-pll-multi-pd-voting-v1-3-cfe6289ea29b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] clk: qcom: videocc: Add support to attach multiple
- power domains
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
- <20250218-videocc-pll-multi-pd-voting-v1-4-cfe6289ea29b@quicinc.com>
- <eec2869a-fa8f-4aaf-9fc5-e7a8baf0f864@linaro.org>
-Content-Language: en-US
-In-Reply-To: <eec2869a-fa8f-4aaf-9fc5-e7a8baf0f864@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250218-videocc-pll-multi-pd-voting-v1-3-cfe6289ea29b@quicinc.com>
 
-On 18/02/2025 15:46, Bryan O'Donoghue wrote:
->> +    ret = qcom_cc_attach_pds(&pdev->dev, &video_cc_sm8550_desc);
->> +    if (ret)
->> +        return ret;
->> +
->>       ret = devm_pm_runtime_enable(&pdev->dev);
->>       if (ret)
->>           return ret;
->>
+On Tue, Feb 18, 2025 at 07:56:48PM +0530, Jagadeesh Kona wrote:
+> Attach clock power domains in qcom_cc_really_probe() only
+> if the clock controller has not already attached to them.
+
+Squash this to the previous patch and call the new function. No need to
+duplicate the code.
+
 > 
-> What's the difference between doing the attach here or doing it in 
-> really_probe() ?
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+>  drivers/clk/qcom/common.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 > 
-> There doesn't seem to be any difference except that we will have an 
-> additional delay introduced.
+> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+> index ec27f70b24bdec24edd2f6b3df0d766fc1cdcbf0..eb7e2a56d1d135f839fd9bd470ba6231ce775a8c 100644
+> --- a/drivers/clk/qcom/common.c
+> +++ b/drivers/clk/qcom/common.c
+> @@ -300,9 +300,12 @@ int qcom_cc_really_probe(struct device *dev,
+>  	if (!cc)
+>  		return -ENOMEM;
+>  
+> -	ret = devm_pm_domain_attach_list(dev, NULL, &cc->pd_list);
+> -	if (ret < 0 && ret != -EEXIST)
+> -		return ret;
+> +	cc->pd_list = desc->pd_list;
+> +	if (!cc->pd_list) {
+> +		ret = devm_pm_domain_attach_list(dev, NULL, &cc->pd_list);
+> +		if (ret < 0 && ret != -EEXIST)
+> +			return ret;
+> +	}
+>  
+>  	reset = &cc->reset;
+>  	reset->rcdev.of_node = dev->of_node;
 > 
-> Are you describing a race condition ?
+> -- 
+> 2.34.1
 > 
-> I don't see _logic_ here to moving the call into the controller's higher 
-> level probe.
 
-I see you're saying do this before waking up the local PLLs prior to 
-really_probe.
-
-hmm.. the existing code works for me on the CRD but not on the Dell 
-Insprion14 so I missed this on my series.
-
-Instead of pushing qcom_cc_attach_pds() back up one level and having to 
-do that over and over again for each clock controller that has multiple 
-power domains, we could just move the configure pll logic to a callback.
-
-Add a new callback to qcom_cc_desc()->configure_plls()
-
-Then qcom_cc_really_probe() would look like:
-
-ret = devm_pm_domain_attach_list();
-if (ret < 0 && ret != -EEXIST);
-	return ret;
-
-desc->configure_plls();
-
-There's no point in having devm_pm_domain_attach_list() twice within < 
-20 LOC we should just force the sequencing in the right order once and 
-IMO do it in really_probe() so that we don't keep adding custom logic to 
-multi-pd controllers.
-
-Its a generic problem we can solve closer to the core logic.
-
----
-bod
+-- 
+With best wishes
+Dmitry
 
