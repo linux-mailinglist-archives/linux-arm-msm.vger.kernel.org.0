@@ -1,140 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-48383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF451A3A033
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 15:43:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08346A3A088
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 15:55:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 282683A9799
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 14:37:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 046C31885F36
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 14:55:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0888326B09B;
-	Tue, 18 Feb 2025 14:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2A39268688;
+	Tue, 18 Feb 2025 14:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mi1FAJjd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kxZopk+M"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB0826AA8D;
-	Tue, 18 Feb 2025 14:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735642309B5;
+	Tue, 18 Feb 2025 14:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739889418; cv=none; b=DdjZ9Y34dQnPStZziv9+VjLjEEmHL++WQDNAC3TSKu/SFcqvHzqB0tqxP/lHwl6lTkulhN9IiW7t+QnYCnGFHeJ2Xf6JEQYsSxwUMwyD6jBVQed08D8nsqHA1l6qgrbNYFcn1p2vcVTd5nEZs0PA5BQihkXEyVxIYjC+oA7jX/Y=
+	t=1739890504; cv=none; b=IXmhhqM7At+8xuaqojiFH+zRcjt0O1ezHHIymdplzATp+YzKGIHBDPfywL+inlmw6WCh0OYV40Kzxvz3gDxvjlmI8WSRJG7EiZax0+EdAp9K1rXQkZrsgY6y6TwL9AsHr3ysXCse9SA0BkjEZ/3lMFjyhsVFlA/mHqdqHheitEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739889418; c=relaxed/simple;
-	bh=96dzHbNUlonjbIF4OjJogOraBYUUAqyVClMsMXe91/E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VYP3kBJKfR19+4Sj4rRTXfl4k+DvNNik+zpLssh75R2E2GF7ZNZaK0IjSRfUgKKArijwGvxYBaZYfPExmdYJ572B+rjs5v0lRM1AV1Fe6IX5BTepPPOYxXH3UUYX6e0DdUYXv/VCv0SHgMVkEf8EouJM+guNfILqQyWmkB8or1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mi1FAJjd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7882BC4CEEC;
-	Tue, 18 Feb 2025 14:36:58 +0000 (UTC)
+	s=arc-20240116; t=1739890504; c=relaxed/simple;
+	bh=vhd1qtpo1JdzpatIl3cLegasb4zvWEmr+5D4nvmUfsE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hm8qaUYQTQWtoEZ1QjKGK5Ki0aCRsscKRcEAnT8ZyVDZLzRdy1Xx9+eUXKJLq39qXmzefX+esCHZxF+oZko7gq/1MyIz6JZgnLvZ6N2mRO5QyCSaV98GWhhQ8rAU8FSL+QjGwzbLaDyi41kP21EhV3JFz9I/K1guzDVeWmComEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kxZopk+M; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE7CC4CEE2;
+	Tue, 18 Feb 2025 14:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739889418;
-	bh=96dzHbNUlonjbIF4OjJogOraBYUUAqyVClMsMXe91/E=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=mi1FAJjdE5tCGT+xgGO+2PtN+j4OMI4wQjoObwvkV+7oSqqLTI9nt/kXTO9ajuliB
-	 W2DfOFP4siqKsKWg4IeVTVFVbLPJ/WoifbO7m8VcwmYUPuTLsCOHm0YgMLEfdYt859
-	 odnppm7yEz+HFsZJz+B5cQZQv6lZdMNw6r7GXqK8OprqJrfmWvLlJN+ancb+33hKZC
-	 rz+S67v0YrRRukViKCmg9n2FYz0r0i77dwaBsm19YU/tKDcrUxYLFdHAKcSBx6RhZa
-	 N/m7NjSYWHK5gYT6varQ3sF+UPFvLFbzTU9WY8jho2OJMqlHhIjFbzf0zGbBDfJe6A
-	 aZ4uQXgkWheNw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E8F5C02198;
-	Tue, 18 Feb 2025 14:36:58 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
-Date: Tue, 18 Feb 2025 20:06:43 +0530
-Subject: [PATCH 4/4] PCI: qcom-ep: Mask PTM_UPDATING interrupt
+	s=k20201202; t=1739890504;
+	bh=vhd1qtpo1JdzpatIl3cLegasb4zvWEmr+5D4nvmUfsE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kxZopk+MmDffn+I+qcaMFBBKtmDMxSu5jiCHbVgP2o0gEMQ8lBFDEatsOKaeKK8i5
+	 MwHKorHaYBLgQ6TQ+A82YzaEhYoYcSxBUBaIdpT+0KzLBbXu9LKI5BPC4RQwN5NqlA
+	 MxCiCmzfiQEVfKXxl7krYfU6Nc5j/RPPaim/vbxVB8EkzjxtkZobed+vKfJxjP45Vx
+	 8L+UYhveZHIA90yeFmnlx5M+mGVrLMGRgJfXNpFFvGbKCW/ISK/B2B0p4jE5XWNmZk
+	 o+fWujqNzPxQCitaXCFcYCcc7mivMuqbE9aYnW/42IxGYgOIvSBAkOjj60SWfsuAyF
+	 TyOxBKAd0gdVg==
+Date: Tue, 18 Feb 2025 14:54:59 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>, andersson@kernel.org,
+	konradybcio@kernel.org, richard@nod.at, vigneshr@ti.com,
+	manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+	linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-mtd@lists.infradead.org,
+	Tudor Ambarus <Tudor.Ambarus@linaro.org>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Michael Walle <michael@walle.cc>,
+	Pratyush Yadav <pratyush@kernel.org>, quic_srichara@quicinc.com,
+	quic_varada@quicinc.com
+Subject: Re: [GIT PULL] mtd: topic branch for spi with Qcom changes
+Message-ID: <Z7SfQ4lu2fponEiX@finisterre.sirena.org.uk>
+References: <87jzbp9hnt.fsf@bootlin.com>
+ <87bjwkoxwh.fsf@bootlin.com>
+ <96bdefb1-4607-4a4a-8bed-b4d9b5971171@sirena.org.uk>
+ <80746729-2b32-9a13-93f5-8d5c222ce4d8@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250218-pcie-qcom-ptm-v1-4-16d7e480d73e@linaro.org>
-References: <20250218-pcie-qcom-ptm-v1-0-16d7e480d73e@linaro.org>
-In-Reply-To: <20250218-pcie-qcom-ptm-v1-0-16d7e480d73e@linaro.org>
-To: Shuai Xue <xueshuai@linux.alibaba.com>, 
- Jing Zhang <renyu.zj@linux.alibaba.com>, Will Deacon <will@kernel.org>, 
- Mark Rutland <mark.rutland@arm.com>, Jingoo Han <jingoohan1@gmail.com>, 
- Bjorn Helgaas <bhelgaas@google.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Rob Herring <robh@kernel.org>
-Cc: Shradha Todi <shradha.t@samsung.com>, linux-kernel@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-perf-users@vger.kernel.org, 
- linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1708;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=X8FrHGG/Y5bqtzA78r7NFQEcJV50dm29EwABf+RgvWo=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBntJsHhjGbHY6Q7I/y/ze6vd3blhN1A0HrKeF+F
- yr/ctlRT0KJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZ7SbBwAKCRBVnxHm/pHO
- 9UzoCACPUS9F6y/oWa2xHAIMf40x74TmzYyirduM/fPhPjn597iCw0IwZxVLOEI3IRYlnVT1RDo
- mcd10VKMQ8VlNnJ6x6frBvsGlur7q3MQUIsXcV+THeCgIKy3OgtpFTtTK6bhZn37Zrd+x0PcNpV
- y1yl7ZfgaYktanFCAigjXnpuMsmP+tuxXilWIwARjnCON+sVJ9qVyGaa6yRoUR/YCWUbQmLTM2H
- PAbIM1OB/mBew1IK24SX65V+vKmT3MjdFlhSMmcrLDugije2FR0DUSTUqffXehJjYmMZ1OHV+eR
- MxuVOFB27w1mdmz7fWLLwKEMcOgDestH4kocGjtFMi3tE/8U
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@linaro.org/default with auth_id=185
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reply-To: manivannan.sadhasivam@linaro.org
-
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-When PTM is enabled, PTM_UPDATING interrupt will be fired for each PTM
-context update, which will be once every 10ms in the case of auto context
-update. Since the interrupt is not strictly needed for making use of PTM,
-mask it to avoid the overhead of processing it.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index c08f64d7a825..940edb7be1b9 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -60,6 +60,7 @@
- #define PARF_DEVICE_TYPE			0x1000
- #define PARF_BDF_TO_SID_CFG			0x2c00
- #define PARF_INT_ALL_5_MASK			0x2dcc
-+#define PARF_INT_ALL_3_MASK			0x2e18
- 
- /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
- #define PARF_INT_ALL_LINK_DOWN			BIT(1)
-@@ -132,6 +133,9 @@
- /* PARF_INT_ALL_5_MASK fields */
- #define PARF_INT_ALL_5_MHI_RAM_DATA_PARITY_ERR	BIT(0)
- 
-+/* PARF_INT_ALL_3_MASK fields */
-+#define PARF_INT_ALL_3_PTM_UPDATING		BIT(4)
-+
- /* ELBI registers */
- #define ELBI_SYS_STTS				0x08
- #define ELBI_CS2_ENABLE				0xa4
-@@ -497,6 +501,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
- 		writel_relaxed(val, pcie_ep->parf + PARF_INT_ALL_5_MASK);
- 	}
- 
-+	val = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_3_MASK);
-+	val &= ~PARF_INT_ALL_3_PTM_UPDATING;
-+	writel_relaxed(val, pcie_ep->parf + PARF_INT_ALL_3_MASK);
-+
- 	ret = dw_pcie_ep_init_registers(&pcie_ep->pci.ep);
- 	if (ret) {
- 		dev_err(dev, "Failed to complete initialization: %d\n", ret);
-
--- 
-2.25.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="KvxwJgM+dWb73Ypq"
+Content-Disposition: inline
+In-Reply-To: <80746729-2b32-9a13-93f5-8d5c222ce4d8@quicinc.com>
+X-Cookie: Editing is a rewording activity.
 
 
+--KvxwJgM+dWb73Ypq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Feb 17, 2025 at 11:25:24AM +0530, Md Sadre Alam wrote:
+> On 1/6/2025 9:06 PM, Mark Brown wrote:
+
+> > Thanks for the heads up - I didn't pull it yet so as you suggest I can
+> > just leave it and pick things up from mainline.
+
+> The QPIC raw nand patches are available in the linux-next. could you plea=
+se
+> pick the QPIC SPI NAND patches [1]
+> [1]
+> https://lore.kernel.org/all/20241120091507.1404368-7-quic_mdalam@quicinc.=
+com/
+
+That looks like it was posted back in November, I'd have expected
+anything for this release to have been posted after the merge window...
+
+Please don't send content free pings and please allow a reasonable time
+for review.  People get busy, go on holiday, attend conferences and so=20
+on so unless there is some reason for urgency (like critical bug fixes)
+please allow at least a couple of weeks for review.  If there have been
+review comments then people may be waiting for those to be addressed.
+
+Sending content free pings adds to the mail volume (if they are seen at
+all) which is often the problem and since they can't be reviewed
+directly if something has gone wrong you'll have to resend the patches
+anyway, so sending again is generally a better approach though there are
+some other maintainers who like them - if in doubt look at how patches
+for the subsystem are normally handled.
+
+--KvxwJgM+dWb73Ypq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAme0n0AACgkQJNaLcl1U
+h9C7CAf9GhX9iaL8H1BWXp96KRzkYlHWeeIWT7O52PE08NkbOC8mnuDlYL5yyG45
+wbBly4US/3NeyEf7EtuOS/lXTPfcC1+6w7fEcIGk30BiEfQTsvKNjtR4+vUBAdXB
+8qbv/RCZt77TJbd933SHZF3Lf8PWBCSxv34/DOA9vAsI7X68OKEu+UN4AwK3C3jP
+PRobiMSnnvgZ1MGRHzTXk4KASUthkdbZJp6TEbQhq6rVL9P5M1XCMF+OR8NgCmva
+TR2A42a1jT+kyCR0GCchbqf+dqjvKpGSsD85h4hp77vjJpwJ5r35PdO4XGNwoYRh
+5cF/iganN6NcwFjn2l6Qtn70IX53kA==
+=nmaR
+-----END PGP SIGNATURE-----
+
+--KvxwJgM+dWb73Ypq--
 
