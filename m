@@ -1,80 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-48392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8072AA3A184
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 16:41:18 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EA05A3A1A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 16:46:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7ECC71893EF1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 15:41:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 271517A2BF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 15:45:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FEB526D5DC;
-	Tue, 18 Feb 2025 15:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DA3426AABB;
+	Tue, 18 Feb 2025 15:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="z1zSPrkR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jYcnuSx4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853B52500BF
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 15:41:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D393199239
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 15:46:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739893272; cv=none; b=ESoAAteM+v3KMysAWQxf7lqGmw7DbwJG6DPtoWgyKXzlUGDvI/ewM62rr+/owrusu6+o6r0NvHxcVWR5/QPeyFQ4+u/OiZwOrTTyngdYL46cBgLKKe7OxPlzWwBYsnYh7igvakDIjZwiB6ot2GVo1GLCLpeWKqAe5vtd5U6siWw=
+	t=1739893580; cv=none; b=EuOU1BRerxOqCDPY2S6lkhmsJAWodTfiUrbIKuYPT5u2+b3CSEdXBgV7E7JiMCskyy53KLh/aW6ObtmiL9PRgY1+dI54hGUmC8ZP8EeCS+drNCVru6/9X81wuu0dmH3UqghcJ0jg/wH/P1aXcrRuZLOPA8cMArTiJQ8UytIVXhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739893272; c=relaxed/simple;
-	bh=2lp8XQ80q8YzfZF+FMF8cPlkqzqEkoCXL7zcnd5prZw=;
+	s=arc-20240116; t=1739893580; c=relaxed/simple;
+	bh=natQqwqvpTM4A8Kit7p6e55YJWa67GNvNJc5yP+W5xA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qrv2fdHGvegJhlfzOoIT3IpJsG+ZQh0B2YL+gCzuGn+lIOnrv3ZmwsOMVN3fhqJVOoqXexuv7CiADIghoZ1jcLPg+eWPyvSGD8F6OiOJCu8uYbNUDpmK8uXD/DNFKWLLEDBzCv7X8AJqWcz4GengsxTi4vU+uIKO6+thhl9TWsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=z1zSPrkR; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4394a823036so59006825e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 07:41:09 -0800 (PST)
+	 In-Reply-To:Content-Type; b=nNQrkOaR4UOxXwXTPrIKn/ENrUyoHyUaCmuWibPZesD1zpTAgaog3WjSDtJXTV93EE1Tki1fV1EeSRCuBOuMJOApGcWBlnmUO8Yy5bigZ6Bem/Rz6um/gt9dopvBCzO8O2zuwN8/Qu9wMVMo3nTMtmYdVBDUtUWHEsurt+GY5Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jYcnuSx4; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43996e95114so5185825e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 07:46:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1739893268; x=1740498068; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739893577; x=1740498377; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5Q30dDgKfgVMd6trtVKX22J5bpFlivRbZkay2aGYd+k=;
-        b=z1zSPrkR826ZNcLA/4xd8KolRGXCF0HWxsyHcOKLSP9YqAJkV8wWuCWVR30KXoLBsl
-         24/wUZmXzbFUb9C1MJqa+zsPpHb/0hIr7b/hOWabK5wLxFZUJPJvlYQjZ/N/h64Qx4jV
-         kVT3BXo01H0mdXrGtC9LIl/pruabPD170d08KTht+dqXzo8pf9DblPLDjiWN7z6IrcE4
-         2yBMFiwwmkrxF+/qy9oVpYXduSNqRoWaaEznHZVLFBJf+I3N6luf/Y+SKmOc/qm+gR4l
-         KWL7nNjug9xUY88BD7p2jHIoWFC6RVznjzge+OQvR4dbauBVJgzeuD8mJZOyQxD/3IuY
-         gr9g==
+        bh=WzXPNVEIO0ktgw6x8v211u9KQdCOQpvJxEt97diBw0c=;
+        b=jYcnuSx4Fx6djgpcR16YuqSPbz4DCFvhXtqBgl0h8hsIG4zZnZqnuzYvVb0c+0m0oj
+         mz/h1WEtYQyrEmsj6zEV5RnzMD9V/33csitKZe7C9zaOBfCDpaVFXEAa2TZji3DOMHsC
+         rNxLIVWZOeDCPO5T1qYjLxsqaGKqLo2mAT3Y1aBl6PBt9UHJNp0z/r3TSaIZZzNccaX4
+         kF/bBCK5rd6tmPvvKOTe0ne+Vywi4xT4NHPMxSKAnEXl5YSN7G0zTLSmJwixakp2A1eT
+         ZO0MB8AnAwkXD6aar0uaIVnl/M7t7aZg33R+GSGueSiHR3BrVcNQkOBc+VQEsB8WYEfm
+         5Y6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739893268; x=1740498068;
+        d=1e100.net; s=20230601; t=1739893577; x=1740498377;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5Q30dDgKfgVMd6trtVKX22J5bpFlivRbZkay2aGYd+k=;
-        b=GOzdFQkJ/5xLJWkYeNgOaEU1CR9SSdNhPEcThpQsiLFB8Fd9nk1aGtqEHgQBybdco4
-         Z2iGBNA0um8sgEVA4Pwk4rWQUDd51P/RnisM5YNO4yVd0fAAktw0e6kzOF9ZRKznHwnv
-         uaViYkvkQqVAr+u083i/45rifYShsnf2wkKP1JRLOLKb28IVP9kgw89dBdaUvX/C4UF1
-         lIMKbgtlXHSB7FbgpxIFvAIE9XuN7rjVYU+SKjqDNMLMX8bq47K0wwN0uK8xqbtgfxQ0
-         /udSDUgUzRjBRMoOvu390alT7l0ZHtjMf5KMIh3rbsw4nXEQ+mzS2Wyn0396+EkhrWQI
-         QoYA==
-X-Forwarded-Encrypted: i=1; AJvYcCUZkQw2Y5FWw6p/FOdw4cGgZR5r01LJK7kuGN4iiXJXGjfeVl+kFPCbsevaL14Mvz4XB9pHl10yboaTNZY3@vger.kernel.org
-X-Gm-Message-State: AOJu0YzdhPultBUAjDYHrJMX63tkjwSKTQt5Y6z+V6d97wO8Gw6AP8/b
-	X+stLGG6fmgrrr9900Bo9HDiy+UvgXammUG4qGW22bY2aT6wwlhMOIX8z99EihUyMo0KP7pW9Ld
-	o//Y=
-X-Gm-Gg: ASbGncuYu4mWgZZTvmpH0/DBausv/85mC6Om1S0iI4UFn22ObIqMx0ZVSltclgGhgIz
-	oReKnzSflIjdedTLRJDmMBCbFubYtKWTZ1Uaxz/dvSbSf0vMDE33X26h9gbfpNkYP/c/KiU14RK
-	yN0EIyujjUm+8Wutykvnn1buBKTG4nrx1FvL74BY5RWS5Hb3+0bG+1QdvViKIt6fbWuRiZV3LfQ
-	cRt17PeKuZVFgYU8J2P8+XQ/hY4L+fYqeEBonaPfJN4PGO0HQG0Cb4RCQWhTus8JTr5OZBTrSRB
-	i/FXz17z2P4OejyqFc/Zdpk8RsipKegN1D8YEX5VI5Z6W6MGaSJO9K3e/28=
-X-Google-Smtp-Source: AGHT+IFgVQ/HTJovzYkHnF+vnnWUMuB0Qc49CucuSwBa0CgxZYS3J4v1QXbcy58eSkagjvpjaclFuw==
-X-Received: by 2002:a05:600c:1d95:b0:439:8829:aa69 with SMTP id 5b1f17b1804b1-4398829abd0mr61277115e9.17.1739893267405;
-        Tue, 18 Feb 2025 07:41:07 -0800 (PST)
+        bh=WzXPNVEIO0ktgw6x8v211u9KQdCOQpvJxEt97diBw0c=;
+        b=YN05h6KDZnBdKqRvwvB6fIiT6Dk+DUTixVBNAR6g+5JTguAl2BdzyNIJCY5qa32Bz0
+         swnZ52LDOEebSdK3AdwBUhzyXYxzeMu9k8EAGoCqqR7k96EByYIty0/+Eo+CDvymRAOE
+         VaOMy4fzQMmoSy1YYHYwjR/E3W7vDSXfwW4xRSbDjXem2WpF6lRZe3cpS7LSIVlZ0lKS
+         PMNBDEajTLH2O9tOz9/DLMIkNKjYvniYs+QbKjgxsAML1MuvwmrKiqbYGL/jPWiGOsyN
+         BGJUSzNGsMDWZd8Q1yjwpFhnYkmWtwjEtGNv2lx2eQPZ6GiuFG8GuuRjAeM3+6j97xRA
+         1UVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUMrDz+v1mfS2fZ4VIcg3LQj2yVupungAbQgeizV35LJfcNocH9NWlBFpnRLFauI2WSQU+PuOop+cs6fbzN@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYU2c2iTvIwujtMXUSbeMhrrziec8krM6zU9wQW6C+CGG/84K2
+	uqvsSnmugnO8G71hs6tia9BTPdNKXLUoNy1nFcgnQhNk0Gk2EB4iZw3LeV9pGIo=
+X-Gm-Gg: ASbGncthYGOsEqD78Gt0jOrQn5X4LsSONF+JmAiC1YKGJQKGGI+n2RP1Kr5xj8gwVHz
+	6Ynd8HvYswWpS6GrGx5hr/AEwyimhQXntcCiz8WsYQfZGf5EfNzBNTnu6n6gSJccjlJbi2D/PGd
+	YDnsuplQdo0JLUciXTKkqThDqDTDpuf0EmxllK2v2M2RHC3SvpMkrlV7rboh4jt3vMPNUkW1Ezn
+	C3+2ubYB7u7uIin5Nwyuqk6s05piFYaRYIzxAdWBwQeZVn75bXhtP6lVdGeaI/6fMxNJ7TJvNn7
+	gwHMLO0iql1qJGS0G/nSw5U+vvzjV/96pinKomWVlXTHnEcOE+t3Mvyf
+X-Google-Smtp-Source: AGHT+IElh5d3sTutspymotVQAtk9NGNlV45zvDe426ZYEjVuuh1cgCu7k0Gx3xBQRtNoHXBzuxtrCQ==
+X-Received: by 2002:a5d:5f4d:0:b0:38f:31b5:b33e with SMTP id ffacd0b85a97d-38f33f43726mr15149054f8f.35.1739893577459;
+        Tue, 18 Feb 2025 07:46:17 -0800 (PST)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f25915785sm15777430f8f.58.2025.02.18.07.41.05
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259f7fe6sm15067537f8f.86.2025.02.18.07.46.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Feb 2025 07:41:06 -0800 (PST)
-Message-ID: <72c01aae-33d1-45f8-94ce-b0fcfe4fec00@nexus-software.ie>
-Date: Tue, 18 Feb 2025 15:41:05 +0000
+        Tue, 18 Feb 2025 07:46:17 -0800 (PST)
+Message-ID: <eec2869a-fa8f-4aaf-9fc5-e7a8baf0f864@linaro.org>
+Date: Tue, 18 Feb 2025 15:46:15 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +81,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: Add MXC power domain to videocc
- nodes
+Subject: Re: [PATCH 4/5] clk: qcom: videocc: Add support to attach multiple
+ power domains
 To: Jagadeesh Kona <quic_jkona@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -96,69 +95,77 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
- <20250218-videocc-pll-multi-pd-voting-v1-5-cfe6289ea29b@quicinc.com>
+ <20250218-videocc-pll-multi-pd-voting-v1-4-cfe6289ea29b@quicinc.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20250218-videocc-pll-multi-pd-voting-v1-5-cfe6289ea29b@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250218-videocc-pll-multi-pd-voting-v1-4-cfe6289ea29b@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 18/02/2025 14:26, Jagadeesh Kona wrote:
-> Videocc requires both MMCX and MXC rails to be powered ON
-> to configure the video PLLs on SM8450, SM8550 and SM8650
-> platforms. Hence add MXC power domain to videocc node on
+> During boot-up, the PLL configuration might be missed even after
+> calling pll_configure() from the clock controller probe. This can
+> happen because the PLL is connected to one or more rails that are
+> turned off, and the current clock controller code cannot enable
+> multiple rails during probe. Consequently, the PLL may be activated
+> with suboptimal settings, causing functional issues.
+> 
+> To properly configure the video PLLs in the probe on SM8450, SM8475,
+> SM8550, and SM8650 platforms, the MXC rail must be ON along with MMCX.
+> Therefore, add support to attach multiple power domains to videocc on
 > these platforms.
 > 
 > Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 > ---
->   arch/arm64/boot/dts/qcom/sm8450.dtsi | 3 ++-
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 3 ++-
->   arch/arm64/boot/dts/qcom/sm8650.dtsi | 3 ++-
->   3 files changed, 6 insertions(+), 3 deletions(-)
+>   drivers/clk/qcom/videocc-sm8450.c | 4 ++++
+>   drivers/clk/qcom/videocc-sm8550.c | 4 ++++
+>   2 files changed, 8 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 9c809fc5fa45a98ff5441a0b6809931588897243..4f8dca8fc64212191780067c5d8815e3a2bb137f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -3136,7 +3136,8 @@ videocc: clock-controller@aaf0000 {
->   			reg = <0 0x0aaf0000 0 0x10000>;
->   			clocks = <&rpmhcc RPMH_CXO_CLK>,
->   				 <&gcc GCC_VIDEO_AHB_CLK>;
-> -			power-domains = <&rpmhpd RPMHPD_MMCX>;
-> +			power-domains = <&rpmhpd RPMHPD_MMCX>,
-> +					<&rpmhpd RPMHPD_MXC>;
->   			required-opps = <&rpmhpd_opp_low_svs>;
->   			#clock-cells = <1>;
->   			#reset-cells = <1>;
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index eac8de4005d82f246bc50f64f09515631d895c99..a039ae71e1b7bba8124128d19de5e00c65217770 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -2889,7 +2889,8 @@ videocc: clock-controller@aaf0000 {
->   			reg = <0 0x0aaf0000 0 0x10000>;
->   			clocks = <&bi_tcxo_div2>,
->   				 <&gcc GCC_VIDEO_AHB_CLK>;
-> -			power-domains = <&rpmhpd RPMHPD_MMCX>;
-> +			power-domains = <&rpmhpd RPMHPD_MMCX>,
-> +					<&rpmhpd RPMHPD_MXC>;
->   			required-opps = <&rpmhpd_opp_low_svs>;
->   			#clock-cells = <1>;
->   			#reset-cells = <1>;
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index 86684cb9a9325618ddb74458621cf4bbdc1cc0d1..32af2a0f7a0030f155b7d8c93faeffa384a42768 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -3524,7 +3524,8 @@ videocc: clock-controller@aaf0000 {
->   			reg = <0 0x0aaf0000 0 0x10000>;
->   			clocks = <&bi_tcxo_div2>,
->   				 <&gcc GCC_VIDEO_AHB_CLK>;
-> -			power-domains = <&rpmhpd RPMHPD_MMCX>;
-> +			power-domains = <&rpmhpd RPMHPD_MMCX>,
-> +					<&rpmhpd RPMHPD_MXC>;
->   			#clock-cells = <1>;
->   			#reset-cells = <1>;
->   			#power-domain-cells = <1>;
+> diff --git a/drivers/clk/qcom/videocc-sm8450.c b/drivers/clk/qcom/videocc-sm8450.c
+> index f26c7eccb62e7eb8dbd022e2f01fa496eb570b3f..b50a14547336580de88a741f1d33b126e9daa848 100644
+> --- a/drivers/clk/qcom/videocc-sm8450.c
+> +++ b/drivers/clk/qcom/videocc-sm8450.c
+> @@ -437,6 +437,10 @@ static int video_cc_sm8450_probe(struct platform_device *pdev)
+>   	struct regmap *regmap;
+>   	int ret;
+>   
+> +	ret = qcom_cc_attach_pds(&pdev->dev, &video_cc_sm8450_desc);
+> +	if (ret)
+> +		return ret;
+> +
+>   	ret = devm_pm_runtime_enable(&pdev->dev);
+>   	if (ret)
+>   		return ret;
+> diff --git a/drivers/clk/qcom/videocc-sm8550.c b/drivers/clk/qcom/videocc-sm8550.c
+> index 7c25a50cfa970dff55d701cb24bc3aa5924ca12d..d4b223d1392f0721afd1b582ed35d5061294079e 100644
+> --- a/drivers/clk/qcom/videocc-sm8550.c
+> +++ b/drivers/clk/qcom/videocc-sm8550.c
+> @@ -542,6 +542,10 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
+>   	int ret;
+>   	u32 sleep_clk_offset = 0x8140;
+>   
+> +	ret = qcom_cc_attach_pds(&pdev->dev, &video_cc_sm8550_desc);
+> +	if (ret)
+> +		return ret;
+> +
+>   	ret = devm_pm_runtime_enable(&pdev->dev);
+>   	if (ret)
+>   		return ret;
 > 
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+What's the difference between doing the attach here or doing it in 
+really_probe() ?
+
+There doesn't seem to be any difference except that we will have an 
+additional delay introduced.
+
+Are you describing a race condition ?
+
+I don't see _logic_ here to moving the call into the controller's higher 
+level probe.
+
+Can you describe some more ?
+
+---
+bod
 
