@@ -1,185 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-48345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90963A39B3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 12:43:42 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C538FA39C26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 13:29:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87CD13A1C52
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 11:43:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1A4AB7A4FD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 12:28:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 429B1234973;
-	Tue, 18 Feb 2025 11:43:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GB+XRPh/"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE1E82417FD;
+	Tue, 18 Feb 2025 12:29:21 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589CE23C8AA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 11:43:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AA32417F7;
+	Tue, 18 Feb 2025 12:29:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739879019; cv=none; b=cqg1HkQMFj7vWa6GCMDH6Z8HoCgO8zOZ+GcG3y/mz/29GwTrDGUDWz2L1Q50ddFGNWbBxUS5jq/hqAvzfadK8/WarQhzp2QYJYllBWKHIYEO/ZdhdgKGZwx0mWbL4YIN7mLAmduCnxeR8FQmAYBQyOJBhvjMWUIIbrq87LtC3mg=
+	t=1739881761; cv=none; b=hN/tI/nf+35FISOBrDSzZ/1OrTuGbqKU5EkmbjDtGXtKHAcwDM1mSNhaMuwBpbL7/br+fLHP4JY3wedrlAzEdM5L/1NtbRM56MflSD7i0+4FdVMbR4c5/eiwtzQMIOYpe7S6mOxlYqt4Lhi9E6rCYciko4ZerjI5GuDUqjTEh2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739879019; c=relaxed/simple;
-	bh=1mN+xNgaFFvNE9UYqlV3tBQki4fbSbB7xoygLiCSzbQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J7uC1zLSbCkN1wZBCPBFGVuXPqwT68YXnI6u4RFrqnPV++tMbmh2PmsYgqBviZxZ3LmY4djIYcp49LKEA6ryexOeMnO0rE0xNduEzu85Z6mbWkxMkhSYeLca6GTvMqYEC/LvfMRRBEmCA8K7BQyI6Z8BVa4eGIf5E5RB9Q2K1Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GB+XRPh/; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-543cc81ddebso5700905e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 03:43:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739879015; x=1740483815; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TDh3LF7I2VAOvbuYPKV/iG9cnLKgilP672D2NsUsYOM=;
-        b=GB+XRPh/KuwVxzzVET95bIwFd4RYRV4299ywjOQ62fWhQ2s1zEw2PK2sxauNE7PyCq
-         bpE2Ikmlfh7PhWNZGmxbc0YEKnTT3WddQFILl9YsRLM1nT1165fTx4nBXN1E1pgytwLU
-         jBSJqUamdr/mx9Ht9+Tdz5i8uUsPGT9Yfm9FugiIghlX/fHD46P87TnGjeHZyStoaCsO
-         g8EJFU/jTONwe4CAqPycMGjBqKmbtkzgD0B0mAcSQN5trbIy34irUD3NjYv19ygurvQI
-         lQqskxo8v0YRus/BuyB0nkOXUgQ9EsvKv5s9mTR4g16M5g5mRwNJmdd0pkP8AFFjMaL0
-         0MFg==
+	s=arc-20240116; t=1739881761; c=relaxed/simple;
+	bh=tMVRAzuzBpRTZlihfsRY9cdts21bPdJ/6WhLJlq511k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QVOxArYpNbJBt3Z13LDMt42mCVvUTYdoGPDgE0Ld1dvgerw3I4SxYZWhwhTWr1vE4JaL0jPm8VF56CH2XzH1d2yYTA6bZ+0PeUUxwAkEHfRmQpUrfqv/7WTCtUOvCs2CXxX984R/1W1P92/OOq1hRXmf70ui+NEknkWEm1SUduM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-30762598511so51381451fa.0;
+        Tue, 18 Feb 2025 04:29:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739879015; x=1740483815;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TDh3LF7I2VAOvbuYPKV/iG9cnLKgilP672D2NsUsYOM=;
-        b=VGarwrpcCepfbMwSTI7dxmrLBFzN1xOQB7nROivGn/SDAv+hh5q3kYVcqI5XNm4vYR
-         zqL4Efg1lXigg+zT9lSiW7tRFPZtEJTiDafrgcB7F64plMQRbqGE0gaGgnqUQBHPD6Co
-         0f5lcTDg7yqgq9w6sVq3BYV8s/Yq6W8XUlvo85m9JREl22nGw2l4XxFePNEZuHSitXLE
-         S3AfakXSLd7n0WMsQ2/PeKEOrrOcGwRikWcbc3SiBqfhzVDPcJFn6Y5trz9427q2hb09
-         xA7Q7+30qHz6XI2hlPQUR41IiPHd9SM6dt7ZznPQPAR0yAoer4XWIC1I+F1fbDK3Dufs
-         wrZA==
-X-Forwarded-Encrypted: i=1; AJvYcCWbFgog95uyhD4Qq4PPDoiCXEwO+JpkTwwNWBRlbv2Alzp3jvovzkHj9pUsepe426vKAAuNeXnQfWtcKx7c@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw67o2bofzZNZ5ooQxUvtZL/J9PH/a/brft3OalnL+VfmwxnmqZ
-	Jx66Ca2UftQ8RYCI3KPtUy2gAWaLJgIChXOImVhS5oSFG7Fy3rc+DmNcPZ1ptx4=
-X-Gm-Gg: ASbGncu4ENUCAADwQ8gs6zP/PQDXd50tuUPwXZVDjWeFu2KAKbgGzZ/IQVYuwTic7/x
-	C24rzL+82xW2f804EXcA9BfnA2/JQ2aYvE7cBtsI7QCaVUejFhf7On1J6CDmB3uo+Sfoc1Dl6IV
-	HT6ijjZX2h4nykEPXNF1v5PLKmeniBImOm4yMYTq+ULHoOqpg0uNJUVaR7OB9BIVJR2w8pR7P89
-	HPe1YDpmv9651EtXlj8obevvGKaX770Z3SwTvW2WgSnS5zXBGKMXcI0FCrmZMIcxauT2DDNPBUC
-	al39uerKS1EZXpSAvvKtDlo8K/pOMTNzdq0C3ecX7u5rLroDUlPbzwNiEmOHShChh+rOJlY=
-X-Google-Smtp-Source: AGHT+IHO9NwIK+TdHNEcDP9zUALpP+YltWjVqof/wrSV+s+68TLTGCq/F5NabaF825FmYPwW4CFqtA==
-X-Received: by 2002:a05:6512:ea5:b0:545:6cf:6f3e with SMTP id 2adb3069b0e04-5452fea6e3fmr4013685e87.49.1739879015479;
-        Tue, 18 Feb 2025 03:43:35 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5461a6efd88sm980973e87.69.2025.02.18.03.43.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Feb 2025 03:43:35 -0800 (PST)
-Date: Tue, 18 Feb 2025 13:43:32 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Taniya Das <quic_tdas@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/4] clk: qcom: lpassaudiocc-sc7280: Add support for
- LPASS resets for QCM6490
-Message-ID: <jxhkddeu32v5fg6avsa7pnzicreisrlzpws2nixaie2znn3eei@mstncyeqqfgg>
-References: <20250212-lpass_qcm6490_resets-v3-0-0b1cfb35b38e@quicinc.com>
- <20250212-lpass_qcm6490_resets-v3-2-0b1cfb35b38e@quicinc.com>
- <exyxni7td5vow2n6jarav5euje6dnbue5f5yxzu6az554dthfe@zn5yd2byvkoj>
- <ccc87c55-d157-4ffc-8081-1a5900752931@quicinc.com>
- <CAA8EJpp7e5q36jGmB-TZX5A=XVGKsDtmBF8kJmxoga8NqGZP1A@mail.gmail.com>
- <c820c697-c3ec-4ae3-9720-fb80cb3a0450@quicinc.com>
- <CAA8EJpon5+R5s0HXUmoikjtuyEf3sQUqBVYvWrxuh14h2DvjQg@mail.gmail.com>
- <30e84d27-6047-492a-8602-8822b5d492fe@quicinc.com>
+        d=1e100.net; s=20230601; t=1739881756; x=1740486556;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=h+VJIQ0ApMIfEX8niiA/w5UOINZk4mk6qd15CEV+pRs=;
+        b=uwXzOH6eaVOdI5dmlT8bqPljesLEhncN1lf5pLZZ5bov8357KYvNsseRqaX5VQvEil
+         FSvtTxw78C82eceJxzFt3v6P9hFqH4iOm7+O3QEixeM7XQjvdcGicIZs02FHs7QiB3ko
+         omfanrNzDihn42kqmmM56JJ5RuQ4So+Eaivexc4cauYl0Bcnq1qp/Zt9n32nxoDQ4eqJ
+         2dVgdJbMia/v55xgvIoYjfqTI6Ebs5R1uGpbzzPRM4msZLBs1DRjiqPGwNQwri/Ya+Ji
+         uyEnRzmKggrQwuwzynMxCJ8uEIl1RnU77rWsoXMPuaO/Egc34kvmCPVKLl30Vbw55Gln
+         CYTw==
+X-Forwarded-Encrypted: i=1; AJvYcCVbCvpIi+cqJTe2g11HGDucIsrZBuzBl+gOlycLWLjkYNSea2/Y94dzwqfL1dABpi8tP0JhGOM1A+4dd83A@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2GROJlTLDtBbDcnOaW0fGQ6P0FLC3wlbZBhBAl88DAF00vj3k
+	D7YpJruqpDSs2GLK2kXvgwTERPHGJBCLSp3TGGDO/a9qjlBVs1eOxvG8ipzNvA0=
+X-Gm-Gg: ASbGncv/mx7e+o2sP6BmZ8Ee3BkZ3ahcJf7P68t9Y8HcGfnuSWvhIFNJLc+XYReyq1i
+	kyq9u8z2j6PYn0894/++TmCZMvXqSPJTTPuPpyoubwQrAOrolInPcso7piUVdyP4WE4AAMds0lX
+	ZRIl043WXLJqVLedVuqjPpm2xHJmh5ctJAvRhSWwPPjry0OcJ3UrOAX6scdRiGJc1hfU36Wyz7F
+	WU2Z3icfgkdmUOkRpz2AHeZxhh9cD/IRNP2DqtdT0XliXGzsvg3biI72fYV3NGVP4AgwpD/eY+i
+	ctAgHpFyX1lAY6NoQmNLtp417LBGvi9AOa3WKM877ijsYYdo
+X-Google-Smtp-Source: AGHT+IHRJ4OuefJFzGrcxp3a99PyY/zCwGM+nBztZhpHnJZUfZvbuBwAxABp3dky7vx89bNLmnzLlA==
+X-Received: by 2002:a05:6512:238a:b0:545:2871:7cd5 with SMTP id 2adb3069b0e04-5452fe2e9e0mr5338187e87.15.1739881755308;
+        Tue, 18 Feb 2025 04:29:15 -0800 (PST)
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com. [209.85.208.180])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5462bfe33f4sm136084e87.82.2025.02.18.04.29.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Feb 2025 04:29:15 -0800 (PST)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-30a317e4c27so18774161fa.2;
+        Tue, 18 Feb 2025 04:29:15 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUZvEPLNv4ieTgg5xER8MBGCw9rDU8O8RIgPrVxMueNl+DNv5psvjsYVRMvc9gEiCvFQZYGmWyOcbvmv3F9@vger.kernel.org
+X-Received: by 2002:a2e:9995:0:b0:308:fac7:9cc9 with SMTP id
+ 38308e7fff4ca-30927a474acmr41266951fa.14.1739881754898; Tue, 18 Feb 2025
+ 04:29:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <30e84d27-6047-492a-8602-8822b5d492fe@quicinc.com>
+References: <Z7Rf2daOaf778TOg@shell.armlinux.org.uk> <E1tkKmN-004ObM-Ge@rmk-PC.armlinux.org.uk>
+In-Reply-To: <E1tkKmN-004ObM-Ge@rmk-PC.armlinux.org.uk>
+Reply-To: wens@csie.org
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 18 Feb 2025 20:29:02 +0800
+X-Gmail-Original-Message-ID: <CAGb2v67xPoo-LQp9Z70yEBDXmgJTD=RvLP0tYYEXUJZr6B+Xkw@mail.gmail.com>
+X-Gm-Features: AWEUYZmOiTlBF_l0MM194DGfKDDxifchVc42QrgCh8BPzRfhHgMRNbv9Q3dSaz0
+Message-ID: <CAGb2v67xPoo-LQp9Z70yEBDXmgJTD=RvLP0tYYEXUJZr6B+Xkw@mail.gmail.com>
+Subject: Re: [PATCH net-next 3/3] net: stmmac: "speed" passed to fix_mac_speed
+ is an int
+To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Cc: netdev@vger.kernel.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
+	Drew Fustini <drew@pdp7.com>, Emil Renner Berthing <kernel@esmil.dk>, Eric Dumazet <edumazet@google.com>, 
+	Fabio Estevam <festevam@gmail.com>, Fu Wei <wefu@redhat.com>, Guo Ren <guoren@kernel.org>, 
+	imx@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>, 
+	Jan Petrous <jan.petrous@oss.nxp.com>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Jerome Brunet <jbrunet@baylibre.com>, Kevin Hilman <khilman@baylibre.com>, 
+	linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Minda Chen <minda.chen@starfivetech.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, 
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>, NXP S32 Linux Team <s32@nxp.com>, 
+	Paolo Abeni <pabeni@redhat.com>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Samuel Holland <samuel@sholland.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 18, 2025 at 10:53:05AM +0530, Taniya Das wrote:
-> 
-> 
-> On 2/13/2025 7:58 PM, Dmitry Baryshkov wrote:
-> >>>>>>  static const struct qcom_cc_desc lpass_audio_cc_reset_sc7280_desc = {
-> >>>>>> -    .config = &lpass_audio_cc_sc7280_regmap_config,
-> >>>>>> +    .config = &lpass_audio_cc_sc7280_reset_regmap_config,
-> >>>>>>      .resets = lpass_audio_cc_sc7280_resets,
-> >>>>>>      .num_resets = ARRAY_SIZE(lpass_audio_cc_sc7280_resets),
-> >>>>>>  };
-> >>>>>>
-> >>>>>>  static const struct of_device_id lpass_audio_cc_sc7280_match_table[] = {
-> >>>>>> -    { .compatible = "qcom,sc7280-lpassaudiocc" },
-> >>>>>> +    { .compatible = "qcom,qcm6490-lpassaudiocc", .data = &lpass_audio_cc_reset_sc7280_desc },
-> >>>>>> +    { .compatible = "qcom,sc7280-lpassaudiocc", .data = &lpass_audio_cc_sc7280_desc },
-> >>>>>>      { }
-> >>>>>>  };
-> >>>>>>  MODULE_DEVICE_TABLE(of, lpass_audio_cc_sc7280_match_table);
-> >>>>>> @@ -752,13 +763,17 @@ static int lpass_audio_cc_sc7280_probe(struct platform_device *pdev)
-> >>>>>>      struct regmap *regmap;
-> >>>>>>      int ret;
-> >>>>>>
-> >>>>>> +    desc = device_get_match_data(&pdev->dev);
-> >>>>>> +
-> >>>>>> +    if (desc->num_resets)
-> >>>>>> +            return qcom_cc_probe_by_index(pdev, 1, desc);
-> >>>>> Won't this break SC7280 support by causing an early return?
-> >>>>>
-> >>>> The resets are not defined for SC7280.
-> >>>> static const struct qcom_cc_desc lpass_audio_cc_sc7280_desc = {
-> >>>>         .config = &lpass_audio_cc_sc7280_regmap_config,
-> >>>>         .clks = lpass_audio_cc_sc7280_clocks,
-> >>>>         .num_clks = ARRAY_SIZE(lpass_audio_cc_sc7280_clocks),
-> >>>> };
-> >>>>
-> >>>> The reset get registered for SC7280 after the clocks are registered.
-> >>>> qcom_cc_probe_by_index(pdev, 1,  &lpass_audio_cc_reset_sc7280_desc);
-> >>> Could you please make this condition more obvious and error-prone
-> >>> rather than checking one particular non-obvious property?
-> >>>
-> >> Dmitry, we had earlier tried [1], but seems like we could not align on
-> >> this patchset.
-> >>
-> >> If you are aligned, please let me know I can fall back on the approach.
-> > You have been using of_device_is_compatible(). Krzysztof suggested
-> > using mach data. Both approaches are fine with me (I'm sorry,
-> > Krzysztof, this is a clock driver for a single platform, it doesn't
-> > need to scale).
-> > 
-> > You've settled on the second one. So far so good.
-> 
-> Sure, I will go ahead with the existing approach, but ensure I replace
-> the num_resets check with the of_device_is_compatible(), so it is more
-> readable. Hope this aligns with your thoughts as well.
+On Tue, Feb 18, 2025 at 6:25=E2=80=AFPM Russell King (Oracle)
+<rmk+kernel@armlinux.org.uk> wrote:
+>
+> priv->plat->fix_mac_speed() is called from stmmac_mac_link_up(), which
+> is passed the speed as an "int". However, fix_mac_speed() implicitly
+> casts this to an unsigned int. Some platform glue code print this value
+> using %u, others with %d. Some implicitly cast it back to an int, and
+> others to u32.
+>
+> Good practice is to use one type and only one type to represent a value
+> being passed around a driver.
+>
+> Switch all of these over to consistently use "int" when dealing with a
+> speed passed from stmmac_mac_link_up(), even though the speed will
+> always be positive.
+>
+> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+> ---
 
-Ack, thanks.
+>  drivers/net/ethernet/stmicro/stmmac/dwmac-sunxi.c       | 2 +-
 
-> 
-> > 
-> > But! The problem is in readability. Checking for desc->num_resets is a
-> > _hidden_ or cryptic way of checking whether to register only a first
-> > controller or both.
-> > 
-> > BTW: the commit message also tells nothing about the dropped power
-> > domain and skipped PM code. Is it not required anymore? Is it handled
-> > automatically by the firmware? But I see that audio codecs still use
-> > that power domain.
-> Yes, it will be taken care in the firmware and I will update in the
-> commit text.
-
-Ack, thanks.
-
-> 
-> 
-> Thanks,
-> Taniya.
-
--- 
-With best wishes
-Dmitry
+Acked-by: Chen-Yu Tsai <wens@csie.org>
 
