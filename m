@@ -1,194 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-48374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10A4BA39FCB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 15:31:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D39EA39FC7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 15:31:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C040E167DED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 14:28:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F0483B3E0C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 14:28:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42C6E26B97D;
-	Tue, 18 Feb 2025 14:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5364326A1A4;
+	Tue, 18 Feb 2025 14:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="190kenVq";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3WGJD+HJ";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="190kenVq";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3WGJD+HJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hRq1BfKI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8901C26B975
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 14:27:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9972226A0DA;
+	Tue, 18 Feb 2025 14:27:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739888825; cv=none; b=FHIL8YaWneF7R0Ix9gG39BcAYRESOBbZDRqU3utC885Ih3fNm9tyZrjZdoVGeW5lZjUORmxpqeZ9tfyQq+u/pT9ePrSmiKRFnbM/d9MS4U2gP6ZOp/O/uqoZJBmr+0QIRvnNkN/ie1CY6MUkpDQ1lVSnlJFMSDAqR1YsCPUalFI=
+	t=1739888840; cv=none; b=YYQpFURAr7kV4QK6y0YhidrIBuveawfmkMHNP0f82q1mNFZUmaZZ/Ct4oKHN9M2mS+ONk+ifpgGcY7U/GpxMNCEeJIfuSPc+QPD1LlkpYpgB3p2JZ509+DdhsU4eBW/JlLzuJ12541FAm0+LYDS3tAPyvY4QsNXe6Lv3RaLdjpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739888825; c=relaxed/simple;
-	bh=FoSAEyAX/tNPTSF9PKyXW7ZtWGgMQB8OqAepwVmIb9o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C1ceZP2NJRPmNLQNPTQcsYkhfnYBlzCmbxGQaf1IyOyI+b8Pfbs1wPrAaZTxw2AFWQGQLmvAGJfDWdtQJyYPN1TqraeuVNeVS+7nYz+KR7IOi6OxvyQ9gMV1txOIv6NF1nzxS/evPtH5GT5ob5O3DJu/6rITraP66n5et1gKSH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=fail smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=190kenVq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3WGJD+HJ; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=190kenVq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3WGJD+HJ; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 878272118A;
-	Tue, 18 Feb 2025 14:26:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1739888761; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Rf5dFpikKn5c3GIrBSRRcQu3Wk8DqddBNdtAqBZYLZM=;
-	b=190kenVqsCIkfwCNWhUv74teu7wn1MucOGEWDXJMOuGH3BVCNsV5RKh69Tiypc8p5n/Fly
-	ftAq9sgrpubLfKrEItKWS4OF1GfndEwbdsbgf5ZHEjLNmdVXvyJje1OFP+jMrgLVB1hUtU
-	Mc5xwtNsB/LGnXYBa3FjRW9Jgee7zT0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1739888761;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Rf5dFpikKn5c3GIrBSRRcQu3Wk8DqddBNdtAqBZYLZM=;
-	b=3WGJD+HJNmhJaK2BWcoX3u7EG9d/GqYizKxZXEainLFl8UVdjZhK5Ys0J1djmSCeSegPKk
-	bCqa4ZgY/KXltlCg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1739888761; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Rf5dFpikKn5c3GIrBSRRcQu3Wk8DqddBNdtAqBZYLZM=;
-	b=190kenVqsCIkfwCNWhUv74teu7wn1MucOGEWDXJMOuGH3BVCNsV5RKh69Tiypc8p5n/Fly
-	ftAq9sgrpubLfKrEItKWS4OF1GfndEwbdsbgf5ZHEjLNmdVXvyJje1OFP+jMrgLVB1hUtU
-	Mc5xwtNsB/LGnXYBa3FjRW9Jgee7zT0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1739888761;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Rf5dFpikKn5c3GIrBSRRcQu3Wk8DqddBNdtAqBZYLZM=;
-	b=3WGJD+HJNmhJaK2BWcoX3u7EG9d/GqYizKxZXEainLFl8UVdjZhK5Ys0J1djmSCeSegPKk
-	bCqa4ZgY/KXltlCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F368D13A82;
-	Tue, 18 Feb 2025 14:26:00 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id AE0jOniYtGdXYQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Tue, 18 Feb 2025 14:26:00 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org,
-	linux-mediatek@lists.infradead.org,
-	freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-samsung-soc@vger.kernel.org,
-	nouveau@lists.freedesktop.org,
-	virtualization@lists.linux.dev,
-	spice-devel@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-tegra@vger.kernel.org,
-	intel-xe@lists.freedesktop.org,
-	xen-devel@lists.xenproject.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH v3 25/25] drm/xlnx: Compute dumb-buffer sizes with drm_mode_size_dumb()
-Date: Tue, 18 Feb 2025 15:23:48 +0100
-Message-ID: <20250218142542.438557-26-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250218142542.438557-1-tzimmermann@suse.de>
-References: <20250218142542.438557-1-tzimmermann@suse.de>
+	s=arc-20240116; t=1739888840; c=relaxed/simple;
+	bh=QH903NIb9GJyvYyKPIRRFqRFCxhLcmgmnr5XXY1E+CY=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=rbDemHJdFmFTcs2QxAPr4HJbNIf52iM4zMruvmhGtYdp0mH1GBv+bl/I0Ui3W876ZkANoKSH1BI9xTj7zeQfJqFOIE8GdQHAvFVV9cZ+XZLVQMqsb+hMDUyu/pGG3fyay0uVVFlR6cBlSym3kYmg2qqp9IP9f7xYqWGxVOpkz1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hRq1BfKI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51IAmPmW020884;
+	Tue, 18 Feb 2025 14:27:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=9iwfL+tR5+6OVjLiIJa571
+	ZpVFtFKi21lmL2m7+nQz0=; b=hRq1BfKIBzarL8E3t4zsaSaBsLbWg0p0rrHbce
+	vcubzs4rPrh1MiDWKJa4856Gq73/0W669++cF+Xs751vZq8zq40c3TvCNtxQ0MVx
+	XmieVMPtA3+cgr0zAP2Kc9TBPHyeySdUl+2sGY1ASiHSxzgwtzH/brJeP4l2xw/J
+	BdO8LBqxq34DZuOyyRPK1e1Wbwvjv60ZugrrKVvJivyUjpLz8x7jIDZyOzMZPv5H
+	xSEwn437/GdGCytR2zqQ28wMz5qtIukCf8PUAhHCTXLbalLOe6kdIEnJxHWgz6tW
+	Lw8O6H/KG8rN2iZegMH2+GW1IsrvmwDbyxoTvT9uAvYY61yw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ut7sw530-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Feb 2025 14:27:14 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51IERD4Y012465
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Feb 2025 14:27:13 GMT
+Received: from [10.213.98.28] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 18 Feb
+ 2025 06:27:09 -0800
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+Subject: [PATCH 0/5] clk: qcom: Add support to attach multiple power
+ domains in cc probe
+Date: Tue, 18 Feb 2025 19:56:45 +0530
+Message-ID: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Score: -1.30
-X-Spamd-Result: default: False [-1.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	R_RATELIMIT(0.00)[to(RLbwen1niosrcqbxsafh1),to_ip_from(RLqirfcw6gnbcr9a9yhi49fhi6)];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Flag: NO
-X-Spam-Level: 
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKWYtGcC/x3MQQqDMBAAwK/InruQBKu2XykeJLvqQkxCEkNB/
+ HtDj3OZCzIn4Qzv7oLEVbIE36AfHdh98RujUDMYZZ7K6AmrEAdrMTqHx+mKYCSsoYjfkAbdk+W
+ XVjxCG2LiVb7//TPf9w/GonXMbQAAAA==
+X-Change-ID: 20250218-videocc-pll-multi-pd-voting-d614dce910e7
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Satya Priya
+ Kakitapalli" <quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+X-Mailer: b4 0.14.2
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DyjMi4cZoWxtEdqa8PrD4YZOxeKRWxC1
+X-Proofpoint-ORIG-GUID: DyjMi4cZoWxtEdqa8PrD4YZOxeKRWxC1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-18_07,2025-02-18_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=975 phishscore=0 spamscore=0 clxscore=1011
+ mlxscore=0 suspectscore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502180108
 
-Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch and
-buffer size. Align the pitch according to hardware requirements.
+During boot-up, the PLL configuration might be missed even after
+calling pll_configure() from the clock controller probe. This can
+happen because the PLL is connected to one or more rails that
+are turned off, and the current clock controller code cannot
+enable multiple rails during probe. Consequently, the PLL may
+be activated with suboptimal settings, causing functional issues.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+The support to attach multiple power domains to clock controllers
+was recently added in Bryan's series[1] but it currently doesn't
+enable all clock controller power domains during probe which are
+needed for PLL configuration.
+
+This series adds required support to enable the multiple power
+domains during clock controllers probe and adds support to enable
+both MMCX & MXC rails during probe for videocc on SM8450, SM8475,
+SM8550 and SM8650 platforms to configure the video PLLs properly.
+
+This fixes the below warning reported in SM8550 venus testing due
+to video_cc_pll0 not properly getting configured during videocc probe
+
+[   46.535132] Lucid PLL latch failed. Output may be unstable!
+
+[1]: https://lore.kernel.org/all/20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-0-13f2bb656dad@linaro.org/ 
+
+Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 ---
- drivers/gpu/drm/xlnx/zynqmp_kms.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Jagadeesh Kona (4):
+      dt-bindings: clock: qcom,sm8450-videocc: Add MXC power domain
+      clk: qcom: common: Attach clock power domains conditionally
+      clk: qcom: videocc: Add support to attach multiple power domains
+      arm64: dts: qcom: Add MXC power domain to videocc nodes
 
-diff --git a/drivers/gpu/drm/xlnx/zynqmp_kms.c b/drivers/gpu/drm/xlnx/zynqmp_kms.c
-index b47463473472..7ea0cd4f71d3 100644
---- a/drivers/gpu/drm/xlnx/zynqmp_kms.c
-+++ b/drivers/gpu/drm/xlnx/zynqmp_kms.c
-@@ -19,6 +19,7 @@
- #include <drm/drm_crtc.h>
- #include <drm/drm_device.h>
- #include <drm/drm_drv.h>
-+#include <drm/drm_dumb_buffers.h>
- #include <drm/drm_encoder.h>
- #include <drm/drm_fbdev_dma.h>
- #include <drm/drm_fourcc.h>
-@@ -363,10 +364,12 @@ static int zynqmp_dpsub_dumb_create(struct drm_file *file_priv,
- 				    struct drm_mode_create_dumb *args)
- {
- 	struct zynqmp_dpsub *dpsub = to_zynqmp_dpsub(drm);
--	unsigned int pitch = DIV_ROUND_UP(args->width * args->bpp, 8);
-+	int ret;
- 
- 	/* Enforce the alignment constraints of the DMA engine. */
--	args->pitch = ALIGN(pitch, dpsub->dma_align);
-+	ret = drm_mode_size_dumb(drm, args, dpsub->dma_align, 0);
-+	if (ret)
-+		return ret;
- 
- 	return drm_gem_dma_dumb_create_internal(file_priv, drm, args);
- }
+Taniya Das (1):
+      clk: qcom: common: Add support to attach multiple power domains
+
+ .../bindings/clock/qcom,sm8450-videocc.yaml         |  9 ++++++---
+ arch/arm64/boot/dts/qcom/sm8450.dtsi                |  3 ++-
+ arch/arm64/boot/dts/qcom/sm8550.dtsi                |  3 ++-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi                |  3 ++-
+ drivers/clk/qcom/common.c                           | 21 ++++++++++++++++++---
+ drivers/clk/qcom/common.h                           |  2 ++
+ drivers/clk/qcom/videocc-sm8450.c                   |  4 ++++
+ drivers/clk/qcom/videocc-sm8550.c                   |  4 ++++
+ 8 files changed, 40 insertions(+), 9 deletions(-)
+---
+base-commit: e5d3fd687aac5eceb1721fa92b9f49afcf4c3717
+change-id: 20250218-videocc-pll-multi-pd-voting-d614dce910e7
+
+Best regards,
 -- 
-2.48.1
+Jagadeesh Kona <quic_jkona@quicinc.com>
 
 
