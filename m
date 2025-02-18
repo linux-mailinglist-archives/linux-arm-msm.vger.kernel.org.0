@@ -1,129 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-48349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60D45A39E0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 14:56:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BB0CA39EBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 15:25:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFE433A172D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 13:52:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0A363A74D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2025 14:25:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B75B267387;
-	Tue, 18 Feb 2025 13:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BADF26A0D7;
+	Tue, 18 Feb 2025 14:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eh77LHYh"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="LlSs4fnK";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="zfjHjFGY";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="LlSs4fnK";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="zfjHjFGY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681F138DF9;
-	Tue, 18 Feb 2025 13:52:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055D726A0C3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 14:25:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739886732; cv=none; b=fQS/AizV5ekdKnX6OCdOubG4OYgLCmreolql1ic8WlWFTG5eopOece0iSLxN0UOJUjoUkCczjcw1o9Ha+DeqWKQUwicWemGWAFXgiATKMzHQ65yv5/Oct8eix8b6pAkiyyL2iEHMKvEpInus/Ak9ArWHtbllk0HMw9OhoxvahP0=
+	t=1739888751; cv=none; b=XiIdj/PP6CvT0em5J6qx8724U5YMm1j1RRiV9Asb2Q3jMVaB6SWREJg4ZwySt4YN/XnYIb2dH3G+DMpW1KSdEtMHP8GwI837b4MNLsQAJVlFcrmE/8ksIS3a5ldYS/J59VLr88YiO978P6PCV6xnm19qr3BusGwRSf+Dw/UrWZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739886732; c=relaxed/simple;
-	bh=6os8B4XbcvZxjfjyCSazf2jcK8wpCRHlXqzF/FXZmYY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FdDZbMqjCAE1AoC2LAoA/m7VjR+5IlphQYMwsYPRFYRd3hfhxcm7YPGF1oiv1U0ctXUwaDYXzza/+iffb8DEyryLxMDZ6r9dvaKCZZI3c3ILGhQ5RvNR1FIgN+TcDOLX0jPyIjqiByNxlQXVj37HqgqYbFRrG2UOhs1Fk6Mgadk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eh77LHYh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61A7C4CEE7;
-	Tue, 18 Feb 2025 13:52:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739886731;
-	bh=6os8B4XbcvZxjfjyCSazf2jcK8wpCRHlXqzF/FXZmYY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eh77LHYh56PLxmjWomqLix3Gly0tjESwTi3B8tKNuKNMczXX8PFMlXUW6hJ6w+WoJ
-	 GuSB3UBkh41GWieXtuPzcbt0qffqiRCfIrTpnVRmdfPS22iZE6I2r8wpC4gPp+DfOD
-	 Jwaosf6I+SHvH1zp6yGVJP6E47HCsauQcdJWavGVvVVwZczE5SRgW6zInPZrx/ZsUY
-	 wQHqxinOne0bmMGiE7/nzfwL/dh7K7/EHNhks681vW/2Nl8Z6zxzvXr3jegxsth0o4
-	 Mb5qOATzsJdaSmg0YB2/+G3uhQ2ZedZc6p/ecNvvP0Nu0M69EwT8PeEm33rdBUyXy2
-	 KQ0eB5ljU2Mmg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tkO1L-000000003WT-3L5a;
-	Tue, 18 Feb 2025 14:52:19 +0100
-Date: Tue, 18 Feb 2025 14:52:19 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] usb: typec: Add support for Parade PS8830 Type-C
- Retimer
-Message-ID: <Z7SQk2UmuXo3jfBQ@hovoldconsulting.com>
-References: <20250206-x1e80100-ps8830-v6-0-60b1e49cfa8d@linaro.org>
- <20250206-x1e80100-ps8830-v6-2-60b1e49cfa8d@linaro.org>
- <Z68EUTlHcm6TxjlY@hovoldconsulting.com>
- <Z7Q8xwcfeE3tcBLL@hovoldconsulting.com>
- <Z7RSYqQx72v-sPSt@linaro.org>
+	s=arc-20240116; t=1739888751; c=relaxed/simple;
+	bh=WrgzNluLaqFPsXEEB9LgRldYkU+k7hdd90o6F5KHDlY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XAdqir5Du/SiewHFDbTu2aPoQOBUHtLHPTY/Aql1tI9xS0wkGoOMkdQyoWktIa84g3iqORIhUl8xhMPJgkhe0YPCkG7Saxn8ptJaBWH9jsR7lpDZOvqPSjSFrdOH6Whahad4a/J2AUitmjsZuDYfmWQbzF1jFyC8WyNSlbIgJxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=fail smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=LlSs4fnK; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=zfjHjFGY; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=LlSs4fnK; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=zfjHjFGY; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 3493B21178;
+	Tue, 18 Feb 2025 14:25:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1739888747; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=QM5J5/B9G8ujP3c8N205nGSWXTw5wg263Hg0+XOJCnY=;
+	b=LlSs4fnKPUxG0YDSkxS+AScK2zHHU6AUFcTXFMqoBfjmib46R4TId977rux8ciCDiPyIUV
+	S2M449+jRQKbixMD2cad0wE/SD6qgyzDKj00hFbcDdJfgbzsUVwJFPiG2BfVfKVadK/8z3
+	73pLe+yXwh/4zHCYJ+glSBbIdv8wtIM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1739888747;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=QM5J5/B9G8ujP3c8N205nGSWXTw5wg263Hg0+XOJCnY=;
+	b=zfjHjFGYF0dL+zF8PaNbOFZbq2k6XV3o4mDpz+e90ubbpxZi99z68oCRZhaGD9oDnmQBXN
+	FbDkD4gD2J20JMDQ==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=LlSs4fnK;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=zfjHjFGY
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1739888747; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=QM5J5/B9G8ujP3c8N205nGSWXTw5wg263Hg0+XOJCnY=;
+	b=LlSs4fnKPUxG0YDSkxS+AScK2zHHU6AUFcTXFMqoBfjmib46R4TId977rux8ciCDiPyIUV
+	S2M449+jRQKbixMD2cad0wE/SD6qgyzDKj00hFbcDdJfgbzsUVwJFPiG2BfVfKVadK/8z3
+	73pLe+yXwh/4zHCYJ+glSBbIdv8wtIM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1739888747;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=QM5J5/B9G8ujP3c8N205nGSWXTw5wg263Hg0+XOJCnY=;
+	b=zfjHjFGYF0dL+zF8PaNbOFZbq2k6XV3o4mDpz+e90ubbpxZi99z68oCRZhaGD9oDnmQBXN
+	FbDkD4gD2J20JMDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A7E59132C7;
+	Tue, 18 Feb 2025 14:25:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id jEGGJ2qYtGdXYQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Tue, 18 Feb 2025 14:25:46 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch
+Cc: dri-devel@lists.freedesktop.org,
+	linux-mediatek@lists.infradead.org,
+	freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-samsung-soc@vger.kernel.org,
+	nouveau@lists.freedesktop.org,
+	virtualization@lists.linux.dev,
+	spice-devel@lists.freedesktop.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-tegra@vger.kernel.org,
+	intel-xe@lists.freedesktop.org,
+	xen-devel@lists.xenproject.org,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v3 00/25] drm/dumb-buffers: Fix and improve buffer-size calculation
+Date: Tue, 18 Feb 2025 15:23:23 +0100
+Message-ID: <20250218142542.438557-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z7RSYqQx72v-sPSt@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 3493B21178
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+	RCVD_COUNT_TWO(0.00)[2];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Score: -2.01
+X-Spam-Flag: NO
 
-On Tue, Feb 18, 2025 at 10:26:58AM +0100, Stephan Gerhold wrote:
-> On Tue, Feb 18, 2025 at 08:54:47AM +0100, Johan Hovold wrote:
-> > On Fri, Feb 14, 2025 at 09:52:33AM +0100, Johan Hovold wrote:
-> > > On Thu, Feb 06, 2025 at 11:28:28AM +0200, Abel Vesa wrote:
-> > > > The Parade PS8830 is a USB4, DisplayPort and Thunderbolt 4 retimer,
-> > > > controlled over I2C. It usually sits between a USB/DisplayPort PHY
-> > > > and the Type-C connector, and provides orientation and altmode handling.
-> > [...]
-> > > > +	/* skip resetting if already configured */
-> > > > +	if (regmap_test_bits(retimer->regmap, REG_USB_PORT_CONN_STATUS_0,
-> > > > +			     CONN_STATUS_0_CONNECTION_PRESENT) == 1)
-> > > > +		return gpiod_direction_output(retimer->reset_gpio, 0);
-> > > 
-> > > I'm still a little concerned about this. Won't you end up with i2c
-> > > timeout errors in the logs if the device is held in reset before probe?
-> > 
-> > You should be able to use i2c_smbus_read_byte() to avoid logging errors
-> > when the boot firmware has *not* enabled the device.
-> 
-> FWIW, regmap_test_bits() doesn't seem to print any errors either, so I
-> don't think switching to i2c_smbus_read_byte() is necessary.
+Dumb-buffer pitch and size is specified by width, height, bits-per-pixel
+plus various hardware-specific alignments. The calculation of these
+values is inconsistent and duplicated among drivers. The results for
+formats with bpp < 8 are incorrect.
 
-Thanks for checking.
+This series fixes this for most drivers. Default scanline pitch and
+buffer size are now calculated with the existing 4CC helpers. There is
+a new helper drm_mode_size_dumb() that calculates scanline pitch and
+buffer size according to driver requirements.
 
-> Since I was curious, I tried booting the X1E80100 with
->  1. One PS8830 instance left as-is
->  2. One PS8830 instance changed to invalid I2C address
->  3. One PS8830 instance changed to have reset pin asserted via pinctrl
-> 
-> There are no errors whatsoever, even for the one with invalid I2C
-> address. In other words, the slightly more concerning part is that the
-> driver doesn't check that any of the regmap reads/writes actually
-> succeed.
+The series fixes the common GEM implementations for DMA, SHMEM and
+VRAM. It further changes most implementations of dumb_create to use
+the new helper. A small number of drivers has more complicated
+calculations and will be updated by a later patches.
 
-Indeed.
- 
-> The diff I used for testing is below. (1) prints "skipping reset", (2)
-> and (3) print "continuing reset".
+v3:
+- document UAPI semantics
+- fall back to bpp-based allocation for unknown color modes
+- cleanups
+v2:
+- rewrite series
+- convert many individual drivers besides the shared GEM helpers
 
-And thanks for confirming.
+Thomas Zimmermann (25):
+  drm/dumb-buffers: Sanitize output on errors
+  drm/dumb-buffers: Provide helper to set pitch and size
+  drm/gem-dma: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/gem-shmem: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/gem-vram: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/armada: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/exynos: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/gma500: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/hibmc: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/imx/ipuv3: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/loongson: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/mediatek: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/msm: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/nouveau: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/omapdrm: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/qxl: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/renesas/rcar-du: Compute dumb-buffer sizes with
+    drm_mode_size_dumb()
+  drm/renesas/rz-du: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/rockchip: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/tegra: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/virtio: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/vmwgfx: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/xe: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/xen: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/xlnx: Compute dumb-buffer sizes with drm_mode_size_dumb()
 
-I've found a few more issues that should be addressed so I'm preparing
-follow-up series.
+ drivers/gpu/drm/armada/armada_gem.c           |  16 +-
+ drivers/gpu/drm/drm_dumb_buffers.c            | 156 ++++++++++++++++--
+ drivers/gpu/drm/drm_gem_dma_helper.c          |   7 +-
+ drivers/gpu/drm/drm_gem_shmem_helper.c        |  16 +-
+ drivers/gpu/drm/drm_gem_vram_helper.c         |  89 +++-------
+ drivers/gpu/drm/exynos/exynos_drm_gem.c       |   8 +-
+ drivers/gpu/drm/gma500/gem.c                  |  21 +--
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   |  25 ++-
+ drivers/gpu/drm/imx/ipuv3/imx-drm-core.c      |  29 +++-
+ drivers/gpu/drm/loongson/lsdc_gem.c           |  29 +---
+ drivers/gpu/drm/mediatek/mtk_gem.c            |  13 +-
+ drivers/gpu/drm/msm/msm_gem.c                 |  27 ++-
+ drivers/gpu/drm/nouveau/nouveau_display.c     |   7 +-
+ drivers/gpu/drm/omapdrm/omap_gem.c            |  15 +-
+ drivers/gpu/drm/qxl/qxl_dumb.c                |  17 +-
+ drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c |   7 +-
+ drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c  |   7 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c   |  12 +-
+ drivers/gpu/drm/tegra/gem.c                   |   8 +-
+ drivers/gpu/drm/virtio/virtgpu_gem.c          |  11 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_surface.c       |  21 +--
+ drivers/gpu/drm/xe/xe_bo.c                    |   8 +-
+ drivers/gpu/drm/xen/xen_drm_front.c           |   7 +-
+ drivers/gpu/drm/xlnx/zynqmp_kms.c             |   7 +-
+ include/drm/drm_dumb_buffers.h                |  14 ++
+ include/drm/drm_gem_vram_helper.h             |   6 -
+ include/uapi/drm/drm_mode.h                   |  46 +++++-
+ 27 files changed, 401 insertions(+), 228 deletions(-)
+ create mode 100644 include/drm/drm_dumb_buffers.h
 
-Johan
+-- 
+2.48.1
+
 
