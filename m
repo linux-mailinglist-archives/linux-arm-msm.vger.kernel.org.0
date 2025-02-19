@@ -1,134 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-48509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59A6EA3BF89
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 14:12:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13DBEA3BFA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 14:15:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 26DE816520B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 13:09:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 31B831899951
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 13:13:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CBE6198E81;
-	Wed, 19 Feb 2025 13:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDEBC1E102A;
+	Wed, 19 Feb 2025 13:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UZqr+ilV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iiT9M1QW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4546B12B73;
-	Wed, 19 Feb 2025 13:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0777F1DE3A5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 13:13:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739970596; cv=none; b=TU2Bu4VuPQ/MU+0BM5GRKkh6lOFUu4et4zpFCEdOcUuXSd7YWMS7rz0oBxnxCIr+JZrWBIApdPQGYPUvYDvUe95a+Y30DNgwYZxpnZYKD8fzA2qFT3cS/N+rYZwJ8MR9f23XUUPHyMWWPq/PLVCutVurXFIhbtGcFHWNXX83qsA=
+	t=1739970811; cv=none; b=G3fBZGT1L1V5ObMAZXDWLsOJhAKWUVBgqS75EEeJpTVxV/YXkwgg3Wssf6AZE13WMByKsbeu3RX4Hj6keVb9j+39FpxX2jrr5vlLa1T2u8Tu0YVJVxPCtxDOk9tgwB0PycTdcQCzoY1wZyUeFvCuINnxF+2OzFNT7LQ7pyRR3EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739970596; c=relaxed/simple;
-	bh=lbm9EMvHSC3HGg8sbayokeiGq1GS4Q8HOslmFXwOhlw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ldMhzAqJeQflk4ZxcmJQO0MDQCSbdPFU05QSmd2b3cfov9Tzh/ATJMhXiobL7R+JeFhGij78LwM1+4Y2wAlwuk/BS6aXdb6nHtxoH8M80m/qRgENMTv4FshuTV66sxOj3f2jNGVKfSf+Zbvv8gDen97OyxpXva/3/HYVOrSHzzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UZqr+ilV; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-38dd9b3419cso3614753f8f.0;
-        Wed, 19 Feb 2025 05:09:54 -0800 (PST)
+	s=arc-20240116; t=1739970811; c=relaxed/simple;
+	bh=N1DHUdSnvmt36V2m5nNLQz+GAkBLimsA64IQtEB74XI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WRfGM/gCNI/eD7QLMl6bH1IZKG2G9wfLpANOJe5zNmD61cmVYgPl/W0NTmSN39mKxsc624UhvUJsyZh0602M0MM2E1ANGL1AZ+T+jKWpmQOdVyJ3/3FpTlsNJDrhTe6j0zZ4xb8ssST1iQAfUisos7f/VHD51QuG5ZbhsTOGDcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iiT9M1QW; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2211cd4463cso68894175ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 05:13:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739970593; x=1740575393; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=z0Kbyp7CupAYs5UbQsl7w/FVHCaTEohFav94XT7tXLI=;
-        b=UZqr+ilVTqQQq+vAJlF+eiF0EYBu519vGaoATPDBR2qVufM/JsKw0je0lQFVvYZxre
-         x/DuRLNC7McYKVZxcRn/lNJZzfhVorJWsl+ocAer71OUmbRlQ5g+JRRsawL9y8tVnGzM
-         M2+Rgx5hkW1nVRcGBbHY17UtmdfflrpMAdsEXDYhjhhxyjvzGT8S39AhB7W0NwqMX2hB
-         Jh5tMzIcUM3w9Gwf27YlUyDKGJWE1g+JnRasdFwNXrScCNqdw7mD5/g1kPObJcwQpwEX
-         OdzXLNXMHmUJqt4at0v59F62WoPZJMufaGmXlJNCdHGuf92LolhLcnUGwxalvcuymPGh
-         f79A==
+        d=linaro.org; s=google; t=1739970808; x=1740575608; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8+URBwMiBnKyGY5kPdMN3kkeBQNC7Y+f9MSb7kdc35Q=;
+        b=iiT9M1QWVkFukFNm1xyjzR9+TX9qJMrwEOOnKzUo09FwBOYBWSzySYhKxWFRIzt/gZ
+         IJkY4I51ys4OnKVJ22z8o1fu7f8daMVqITwZAkcO3wG8IlRlXaGTbnFAN9HjMLNqT8L1
+         lm20WLjV9f3TuX7sidxL8DVYQDgyWaF3DxJwhJVXsq8TmlscjGPiuPRwM6sUe54O96kw
+         kqOOTpe+UAnSs/BzqtWwmeRfk9QKVmfzSOw88tKr7eVWoWsnS51faHrAPeWOexIPmCxH
+         6k6a2kT02PfJTIx1dvBdUGV/0lVLmmJ2xwnUe1DfKwOLjwu2UOscxabIlepYpA8b+Em8
+         dfIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739970593; x=1740575393;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=z0Kbyp7CupAYs5UbQsl7w/FVHCaTEohFav94XT7tXLI=;
-        b=LIBRXeO0oDAvsKYMl0gtQIZRvdC1TDICxggi+b1lO932HSaLfDhN4qdoL1HYGvTzi1
-         78rCfyiDsqLCp2aHLhnLeoJ396+E8WP90acNgZmcBLeK40hMn6FxYyMONuWt9GwW0N2N
-         jcUQWu6F1sn1JJzAehDhLKmjpQE0PkbmJeiHyxCblgq7g2NWIdWIkYNTrBFMvyiRP41m
-         Vn9BscpEyN1jmiOLSWj1zZwKhApnc/Srb6bkvzNkqnX7593CXUa1zrvVZMSySINly9Wa
-         81W3Iu9Yhjji1IhHRiECtp3ktE4rHqK31WiYLPhlsniorpbfFWpBKzKt81fmpgts1Hh7
-         QdvA==
-X-Forwarded-Encrypted: i=1; AJvYcCU9l6XC6lli1qeSqEp2qw9q9AQ8Nkd3ccwGBTZ3/A2Xv0TVuBAYmZh7x7Y4w332tEBy5DDXnO/KJgLGs70g@vger.kernel.org, AJvYcCUrfH6JurghnjrONS5kwrq65XDpb0qSArkGhELMQ6EpjEXfWNRpeHfxJcqIOOIgsd2yCqEGkPo3@vger.kernel.org, AJvYcCUrjzgwqpR2gR3rpWQNpdqj84ZN8PcyAdVO8vBCo1LBHwBYjRVWhRFHiKOhuBkBINUjg3gKBWcU4BazEUW/@vger.kernel.org
-X-Gm-Message-State: AOJu0YwiRgpODYwImhTzosGp8UXQa021fcydT780Vu/QLPM6TYqFZWzo
-	FAG62wS8NKyYstDNyDiML1WhWINflo2H3ePl8pqGRZFUs6urBQey
-X-Gm-Gg: ASbGnctJcjesBzxOjNf3oaRmvry/JSL8mQGOEY46uIQ/m7xrVdvybGyrgo3Y1CLeZ8g
-	/gnY0Io8u1gfHrOHpspVmP2SpTV2d8aM8njv9eL7m8SKp/6SoEB5B45yXUXK3Ob+wT0z0a5R9Sg
-	6YHe+xx+Zus6JRdkQlDscqIp4bgfhzcITr/YEj9ywwkrLzsClc0GfKD6loKwS9RbO8VCp2jbvbi
-	k9tkhL8QJx/a5wsq6Mu/IpHO8jMOoRQjHksGPq5WcFra8Ch8Zw0Q+nAyZdGHoobGy37xYpE3EX6
-	TO+lbIoah80rjS7DsuIQhqqZE6SMqxin1lqcAkxLkCIl1H7qjlEoyKGg690aIQ3My8NJstI=
-X-Google-Smtp-Source: AGHT+IFCaHY0kzUOzM91PMiUlVU3mwEfBxBS9L99pdJlK6WgwXE5yUiGE5nRgxRPTq9PSpDKdeDk5g==
-X-Received: by 2002:a05:6000:154f:b0:38f:2093:6e75 with SMTP id ffacd0b85a97d-38f33f3599fmr17480037f8f.33.1739970593210;
-        Wed, 19 Feb 2025 05:09:53 -0800 (PST)
-Received: from localhost.localdomain (host-87-11-14-46.retail.telecomitalia.it. [87.11.14.46])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-38f259f7979sm17576873f8f.83.2025.02.19.05.09.51
+        d=1e100.net; s=20230601; t=1739970808; x=1740575608;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8+URBwMiBnKyGY5kPdMN3kkeBQNC7Y+f9MSb7kdc35Q=;
+        b=CO5jblvu0+prYcozwtKSb+MCGaaTQH1OsazYkmmNIvicu1jnf9uBJXss6LypscTS+k
+         nwuDISI3CRLt4kvm1U5OysK05R1WPDs0VOv2nqhL6gBZY/gikbuyue3+1lz9yfY/WLZh
+         QSBECq/9DzLiHnNJiiV8Dj/KH5dbQhLbLK8j2PWyBK9xuyKWILuXO6MwZY7tosc6rAz2
+         PtbgkcrEGh/7golw2j0nSzK4r0oY8w97KpVl6ZZwmx9Z/DSyZdYqDMUU/bqLiAB5XyHd
+         qU7WG+11yFAb4Q/H2vls9Dli84wYd63tHu5QXDtjLKekk1N5WNnp1/2WCls6RNyHF2+i
+         A8ow==
+X-Forwarded-Encrypted: i=1; AJvYcCWlS8YTC0b3tzUmYIeFpd5XNiRthAUIGjq9nwtu72qBEnQsZvYk81d+LsqEzcN6ksuCKMNZy+Srax2S5ORV@vger.kernel.org
+X-Gm-Message-State: AOJu0YxT+nAYV9JSXbeeGuph9amFv9wfSHGEFJQUKS1cdFkYP5SmTLme
+	5RX48oDAq57/MyxKv+y/DiZOW/DgUlNYfJ6CPe6SoYfHqv9ad8dulhiq5pMoBw==
+X-Gm-Gg: ASbGnctmM7yqz7DjXL9Vn9y4nsIBGCxDqgXAtwaHFeJIunOpAx/q1YydUKR4DShHI7T
+	BmbfJrbUyx368yXQtrNSrivm/my767WT9PjNxfPwRhitC60U9R5q01bRVtFsoxvW0+DbSi/hsI2
+	nN9NcZylKhFP0S33Yt6vtchlSbjGEcx5FnZ0YwS3rOrWwxh81qT7+zrzoEeKlYn4vTEtbabyooW
+	fKLVWS5Dgv71OzKKODdufUNuvQdw7ImRfjOdYNCL8Az4BxQtAHmhbiWR1pmKZmcGJQJDmTeaZfj
+	kF5p2Dx/hV14Db7wnBXe9rbiqX0=
+X-Google-Smtp-Source: AGHT+IHkVE5PfzgLunRYfW7LOverW0PdjTWo0Wwm0ksUnlxjHfmqNgrs9+yjaxVIVMFyRcmK9zw8KQ==
+X-Received: by 2002:a17:902:ef49:b0:216:6769:9ed7 with SMTP id d9443c01a7336-221040b131dmr298362555ad.40.1739970808214;
+        Wed, 19 Feb 2025 05:13:28 -0800 (PST)
+Received: from thinkpad ([120.56.197.245])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d537c921sm104190715ad.104.2025.02.19.05.13.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 05:09:52 -0800 (PST)
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Robert Marko <robimarko@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	George Moussalem <george.moussalem@outlook.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Subject: [net PATCH] net: phy: qcom: qca807x fix condition for DAC_DSP_BIAS_CURRENT
-Date: Wed, 19 Feb 2025 14:09:21 +0100
-Message-ID: <20250219130923.7216-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.47.1
+        Wed, 19 Feb 2025 05:13:27 -0800 (PST)
+Date: Wed, 19 Feb 2025 18:43:24 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: mhi@lists.linux.dev, Loic Poulain <loic.poulain@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] bus: mhi: host: pci_generic: Use
+ pci_try_reset_function() to avoid deadlock
+Message-ID: <20250219131324.ohfrkuj32fifkmkt@thinkpad>
+References: <20250108-mhi_recovery_fix-v1-0-a0a00a17da46@linaro.org>
+ <20250108-mhi_recovery_fix-v1-1-a0a00a17da46@linaro.org>
+ <Z5EKrbXMTK9WBsbq@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z5EKrbXMTK9WBsbq@hovoldconsulting.com>
 
-From: George Moussalem <george.moussalem@outlook.com>
+On Wed, Jan 22, 2025 at 04:11:41PM +0100, Johan Hovold wrote:
+> On Wed, Jan 08, 2025 at 07:09:27PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > There are multiple places from where the recovery work gets scheduled
+> > asynchronously. Also, there are multiple places where the caller waits
+> > synchronously for the recovery to be completed. One such place is during
+> > the PM shutdown() callback.
+> > 
+> > If the device is not alive during recovery_work, it will try to reset the
+> > device using pci_reset_function(). This function internally will take the
+> > device_lock() first before resetting the device. By this time, if the lock
+> > has already been acquired, then recovery_work will get stalled while
+> > waiting for the lock. And if the lock was already acquired by the caller
+> > which waits for the recovery_work to be completed, it will lead to
+> > deadlock.
+> > 
+> > This is what happened on the X1E80100 CRD device when the device died
+> > before shutdown() callback. Driver core calls the driver's shutdown()
+> > callback while holding the device_lock() leading to deadlock.
+> > 
+> > And this deadlock scenario can occur on other paths as well, like during
+> > the PM suspend() callback, where the driver core would hold the
+> > device_lock() before calling driver's suspend() callback. And if the
+> > recovery_work was already started, it could lead to deadlock. This is also
+> > observed on the X1E80100 CRD.
+> > 
+> > So to fix both issues, use pci_try_reset_function() in recovery_work. This
+> > function first checks for the availability of the device_lock() before
+> > trying to reset the device. If the lock is available, it will acquire it
+> > and reset the device. Otherwise, it will return -EAGAIN. If that happens,
+> > recovery_work will fail with the error message "Recovery failed" as not
+> > much could be done.
+> 
+> I can confirm that this patch (alone) fixes the deadlock on shutdown
+> and suspend as expected, but it does leave the system state that blocks
+> further suspend (this is with patches that tear down the PCI link).
 
-While setting the DAC value, the wrong boolean value is evaluated to set
-the DSP bias current. So let's correct the conditional statement and use
-the right boolean value read from the DTS set in the priv.
+Yeah, we wouldn't know when not to return an error to unblock the suspend. So
+this is acceptable.
 
-Cc: stable@vger.kernel.org
-Fixes: d1cb613efbd3 ("net: phy: qcom: add support for QCA807x PHY Family")
-Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- drivers/net/phy/qcom/qca807x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Looks like the modem is also hosed.
+> 
+> [  267.454616] mhi-pci-generic 0005:01:00.0: mhi_pci_runtime_resume
+> [  267.461165] mhi mhi0: Resuming from non M3 state (SYS ERROR)
+> [  267.467102] mhi-pci-generic 0005:01:00.0: failed to resume device: -22
+> [  267.473968] mhi-pci-generic 0005:01:00.0: device recovery started
+> [  267.477460] mhi-pci-generic 0005:01:00.0: mhi_pci_suspend
+> [  267.480331] mhi-pci-generic 0005:01:00.0: __mhi_power_down
+> [  267.485917] mhi-pci-generic 0005:01:00.0: mhi_pci_runtime_suspend
+> [  267.498339] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm mutex taken
+> [  267.505618] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm lock taken
+> [  267.513372] wwan wwan0: port wwan0qcdm0 disconnected
+> [  267.519556] wwan wwan0: port wwan0mbim0 disconnected
+> [  267.525544] wwan wwan0: port wwan0qmi0 disconnected
+> [  267.573773] mhi-pci-generic 0005:01:00.0: __mhi_power_down - returns
+> [  267.591199] mhi mhi0: Requested to power ON
+> [  267.914688] mhi mhi0: Power on setup success
+> [  267.914875] mhi mhi0: Wait for device to enter SBL or Mission mode
+> [  267.919179] mhi-pci-generic 0005:01:00.0: mhi_sync_power_up - wait event timeout_ms = 8000
+> [  276.189399] mhi-pci-generic 0005:01:00.0: mhi_sync_power_up - wait event returns, ret = -110
+> [  276.198240] mhi-pci-generic 0005:01:00.0: __mhi_power_down
+> [  276.203990] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm mutex taken
+> [  276.211269] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm lock taken
+> [  276.220024] mhi-pci-generic 0005:01:00.0: __mhi_power_down - returns
+> [  276.226680] mhi-pci-generic 0005:01:00.0: mhi_sync_power_up - returns
+> [  276.233417] mhi-pci-generic 0005:01:00.0: mhi_pci_recovery_work - mhi unprepare after power down
+> [  276.242604] mhi-pci-generic 0005:01:00.0: mhi_pci_recovery_work - pci reset
+> [  276.249881] mhi-pci-generic 0005:01:00.0: Recovery failed
+> [  276.255536] mhi-pci-generic 0005:01:00.0: mhi_pci_recovery_work - returns
+> [  276.328878] qcom-pcie 1bf8000.pci: qcom_pcie_suspend_noirq
+> [  276.368851] qcom-pcie 1c00000.pci: qcom_pcie_suspend_noirq
+> [  276.477900] qcom-pcie 1c00000.pci: Failed to enter L2/L3
+> [  276.483535] qcom-pcie 1c00000.pci: PM: dpm_run_callback(): genpd_suspend_noirq returns -110
+> [  276.492292] qcom-pcie 1c00000.pci: PM: failed to suspend noirq: error -110
+> [  276.500218] qcom-pcie 1bf8000.pci: qcom_pcie_resume_noirq
+> [  276.721401] qcom-pcie 1bf8000.pci: PCIe Gen.4 x4 link up
+> [  276.730639] PM: noirq suspend of devices failed
+> [  276.818943] mhi-pci-generic 0005:01:00.0: mhi_pci_resume
+> [  276.824582] mhi-pci-generic 0005:01:00.0: mhi_pci_runtime_resume
+> 
+> Still better than hanging the machine, but perhaps not much point in
+> having recovery code that can't recover the device.
+> 
 
-diff --git a/drivers/net/phy/qcom/qca807x.c b/drivers/net/phy/qcom/qca807x.c
-index 3279de857b47..2ad8c2586d64 100644
---- a/drivers/net/phy/qcom/qca807x.c
-+++ b/drivers/net/phy/qcom/qca807x.c
-@@ -774,7 +774,7 @@ static int qca807x_config_init(struct phy_device *phydev)
- 	control_dac &= ~QCA807X_CONTROL_DAC_MASK;
- 	if (!priv->dac_full_amplitude)
- 		control_dac |= QCA807X_CONTROL_DAC_DSP_AMPLITUDE;
--	if (!priv->dac_full_amplitude)
-+	if (!priv->dac_full_bias_current)
- 		control_dac |= QCA807X_CONTROL_DAC_DSP_BIAS_CURRENT;
- 	if (!priv->dac_disable_bias_current_tweak)
- 		control_dac |= QCA807X_CONTROL_DAC_BIAS_CURRENT_TWEAK;
+Unfortunately, we cannot know if we could not recover the device.
+
+> We obviously need to track down what is causing the modem to fail to
+> resume since 6.13-rc1 too.
+> 
+
+Yeah, this is worth tracing down.
+
+> > Cc: stable@vger.kernel.org # 5.12
+> > Reported-by: Johan Hovold <johan@kernel.org>
+> > Closes: https://lore.kernel.org/mhi/Z1me8iaK7cwgjL92@hovoldconsulting.com
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> And since I've spent way to much time debugging this and provided the
+> analysis of the deadlock:
+> 
+> Analyzed-by: Johan Hovold <johan@kernel.org>
+> Link: https://lore.kernel.org/mhi/Z2KKjWY2mPen6GPL@hovoldconsulting.com/
+> 
+
+Sure.
+
+> > Fixes: 7389337f0a78 ("mhi: pci_generic: Add suspend/resume/recovery procedure")
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/bus/mhi/host/pci_generic.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> > index 07645ce2119a..e92df380c785 100644
+> > --- a/drivers/bus/mhi/host/pci_generic.c
+> > +++ b/drivers/bus/mhi/host/pci_generic.c
+> > @@ -1040,7 +1040,7 @@ static void mhi_pci_recovery_work(struct work_struct *work)
+> >  err_unprepare:
+> >  	mhi_unprepare_after_power_down(mhi_cntrl);
+> >  err_try_reset:
+> > -	if (pci_reset_function(pdev))
+> > +	if (pci_try_reset_function(pdev))
+> >  		dev_err(&pdev->dev, "Recovery failed\n");
+> 
+> Perhaps you should log the returned error here as a part of this patch
+> so we can tell when the recovery code failed due to the device lock
+> being held.
+> 
+
+Makes sense. Added the errno to the log and applied to patch to mhi/next with
+your tags. Thanks a lot!
+
+- Mani
+
 -- 
-2.47.1
-
+மணிவண்ணன் சதாசிவம்
 
