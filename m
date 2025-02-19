@@ -1,192 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-48541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7C3FA3C632
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 18:28:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4381A3C64F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 18:37:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF7683A9C82
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 17:27:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ACA243B45E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 17:36:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC69A21423F;
-	Wed, 19 Feb 2025 17:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E71A2144DF;
+	Wed, 19 Feb 2025 17:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WMIIVk5X"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Uez5vy9/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131DF1FDE09
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 17:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8669A211710
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 17:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739986083; cv=none; b=KIq987sERWJltQ/8IIva+VVlVTGs3LgAMpo7UbSTUq8IBNCBqiw5O95EeDQRh62oJG6fbOgtsBrrfjlLcRYHdrSXTQpHJXkVIZhdR4HhBgHsh94NGJv8VNCZz0GKCYeiWENeLeAyYizR2oOEGo1DZldhXHjQrfJVFRnxPgrocgU=
+	t=1739986600; cv=none; b=ZGRTXSwNwkmYSRGzWvm7urq3Izu5avr2wKduJDbN6ZvwRbq6X5xyxNohXw2K5rBG6+QFdgKf5mL9f/xUgq05krmnoagcmL+cTDREs1AgdBC01Fztybzr7QW/OgKU6WKBfRGUKiiktx4s/AR407KlCloah6INSNTBKEivdUPxeGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739986083; c=relaxed/simple;
-	bh=A2+HN4X0kozADOMd8HPrxpMBAxhu8YWTaMSPkwDk7qU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p7ydmW7R5aF2e+otcdkKkH39A69NeV6BwMkVG5/p8nxMUjtDCYl5DlH7b6P7QDr3TJEwIxreLmvYqLmCm5dB5F0yROhYwo0OF1mQfINJoDK3FEcXavE50Ye8vOOFeUmoUgXommZ/eW7zUT4HQskczycOJc6Xw/ZCuu0PINJWmBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WMIIVk5X; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2fc1c80cdc8so52751a91.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 09:28:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739986081; x=1740590881; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6NzngaP+OJcFLsyG7y1oBQVz797WX/iYaGWrcxV/1GA=;
-        b=WMIIVk5X/P+UcTpYed8sUaeBw6DrbuXb7SgnrczGTSV8LecrH+o+PyTU3QQcdj+E15
-         Y2LPES0UK3byQR0gsU5DLnrE1Q9hVq4H/FSpF3HnSQ7VboN5lyJieC0B9SSKcDZmqtut
-         OpzXX2/Od0w9rDn82DN8c/Nz0YNoMn9V2jxYorO9EPqhN5z69JpHX4HvwyT3Y0fqGcRp
-         u5uHrVKTf7EbafgQtPj6pXS4LEjLpshA3no4C9tKoTF+q/nvI4OxiOoMGQH20tdrOBeS
-         mN1h9gbNSiqN2oI5RKT5DtO0WDDZNSsQDViQYbIzMBX3v+fHq3pv//8vQ64/iQR41Ijc
-         IzbQ==
+	s=arc-20240116; t=1739986600; c=relaxed/simple;
+	bh=cTRVC5cVHHMwudxEBc5SELgNQq75C7XYr5CxcEbuix0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m/gVAPFskBr3+wmghVy+oO2SfIIQRyDUIj8fjtmI20Fi1+RByFVKyFbhj7MINrPGp4Y/EhB/Y7MsAdG2lzmjwI0I8XPk4cyKKjS2ZkaO5qkVhHi5ZMnyQW7b2CVCMDNdmvcoQQ2OnT75JQPl9zS6OKvB4aLD0zXZaA6ET6NMvsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Uez5vy9/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51JGXMeH015948
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 17:36:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Ee6+eorvO+pF3kR9F+2d8nZr7k36mhnL8mV9SwVW8g0=; b=Uez5vy9/RyiB0tv/
+	f+sAocr9hCj/X06Z3bMHTU+2ai1VgItIHof8aKzgmHvGInh5ayGKtEfnXeb8ay+A
+	42eTidUs9ObQN05SdI57k7/45KJWBJRKZuAceU+KJGrJE3HYVbLjhxbDA6hLOcBC
+	jenY1OhDJbmYu3n3RPlwv8rn23DJZg0QzteZ2BFAObmStL5ANhGoz3dxZtqVKtY8
+	QlTkh28gT6Ar9FJgpxTvoovJ/eG/z/AabQFRSV0uKIiiyoPVlg2b+Hvp3HRTTwJv
+	9YlWggH5LJlgFvV8apnkfboxrm8dYbZwu2sPVuqpm94SVbwgBWIz8U55bnXOFW7S
+	cyBPXA==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy4bfy2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 17:36:37 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-2f46b7851fcso119231a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 09:36:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739986081; x=1740590881;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1739986596; x=1740591396;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6NzngaP+OJcFLsyG7y1oBQVz797WX/iYaGWrcxV/1GA=;
-        b=N0LotAuGuyYRjePKIztP9f/9gwc/Ngy8aLeinQ5vJgE1rknnrNdPYiLO2moc4gMHVu
-         gMHjb5ts45W9+ji19OA8fHAxD0pkMPPtNgC9jQj/KH+uFO0w2VFHPF3g+zwFJIuf+dhw
-         ZTmIwBsackJ5vn4B5d5lqr/PdSAXiBav7wbL+w5WxAfsaZ8qiyKNWYehChpvbkm9RySY
-         HiZV1JMG+JQmZVrxyzMYiPEBiJAP1AlKukZ0ajPYcd4tVP622D7lPV3LhPXwR2k4ikmq
-         HvNJuKQfYX62N/P9I2kIAmkDqCjnRTOOLQVdKzQoiE2Dg3PxamE9mEz0iHJ3WMu4OWbF
-         O2zg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4jzUf3/Ii0mnZAg45TeoBASTvxhZvcn0HFlK6jl9jV9Az8DlzCK9Qngmxr0OhSbNUyrLGzngxigRHmCGk@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOh2VAjfik2M74x2oi+/qxaTIzVm1LkCJbZ7CLTYMIt6MSEcdz
-	iP+SBArtU7atCtyrZJ8OsY17+bgas/OHwIKARmdqEWdOFhiH1Q70h1HxI6W9DA==
-X-Gm-Gg: ASbGnctvulLwXPP0ZAlxIDGZjnH07QWpxoLyT1YgqVlZHRK2EBbh2ugr0xGhZIHurED
-	z+anMXuZbNQZK3y07P+Eom7b3tiAIhRTxVIPB1eNcRyWGOWFcdwTZBYRJckvgBaZTUt+vSqDUtB
-	DwZLhglB7gRkjOYjr6QcArWtLbpCKGD2hhq73doxTeAbT26wtP337IZfNGTe9+YtAnXiEaGIlbG
-	iTTfneKlxKZslSxW9wW0Oy9N3Ig1LWTiC27ctfauAj4s1v65qHs/MC4AOeSusEseIDEk9BhYK+P
-	fvlHQKcbSVazHDM7xA/YmHdJvg==
-X-Google-Smtp-Source: AGHT+IHOShpnSsF84pZmQWIv/xBAmLajjHNqHii8bXec9NnuKW9M7BOSWjuz/fRYPwl+0byTPs9X6w==
-X-Received: by 2002:a17:90b:1b06:b0:2ea:2a8d:dd2a with SMTP id 98e67ed59e1d1-2fcb5a996cdmr6581509a91.27.1739986081323;
-        Wed, 19 Feb 2025 09:28:01 -0800 (PST)
-Received: from thinkpad ([120.60.141.99])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fbf999b5b4sm15735500a91.30.2025.02.19.09.27.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 09:28:01 -0800 (PST)
-Date: Wed, 19 Feb 2025 22:57:55 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-Cc: quic_cang@quicinc.com, quic_nitirawa@quicinc.com, bvanassche@acm.org,
-	avri.altman@wdc.com, peter.wang@mediatek.com, minwoo.im@samsung.com,
-	adrian.hunter@intel.com, martin.petersen@oracle.com,
-	linux-scsi@vger.kernel.org,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." <linux-arm-msm@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/1] scsi: ufs: qcom: Remove dead code in
- ufs_qcom_cfg_timers()
-Message-ID: <20250219172755.b2jq5joh7nrrf6rr@thinkpad>
-References: <547c484ce80fe3624ee746954b84cae28bd38a09.1739985266.git.quic_nguyenb@quicinc.com>
+        bh=Ee6+eorvO+pF3kR9F+2d8nZr7k36mhnL8mV9SwVW8g0=;
+        b=VlMIN0T8F9MSpKYfcDIYtac7PY/foE5nZpoI2yFQ+938ths3RRMwSLdWTj8q1KiWhb
+         cMsrod6JaqE7UK2XCvBJOL61FOM9Rf1YQvSrEBog/f59co5zvsGMF+NIoZuH5KTg2d5Q
+         fruyxlwt6m54pu3UjjJjS2CfWZ1FbnCJ+R1iwA8DJSUMi+eYz2TH5F6SLUjzrRBplmMC
+         FWk4/WkfzA5hhW+1YA3ImQEi2hj6mWif6kAsoNtWK9vzpAbzTywTecDug985iSG4h1Af
+         0SYWtH1gwSR2X2qgzN8R5+JgpQAV0QIjku2AgD7qu9t0qvJHufD0/qJLv/1boWTowJIC
+         rsIA==
+X-Forwarded-Encrypted: i=1; AJvYcCWA/d9SOvZJvWkMvOIwTEBdvKhYNJ9SUhamxq14o2m5rqRUHov33QzathxFvyYo6MqRb57nZlCwShe7nnnd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxv71jTl2C402PyLOnC1RY1b+WMCSa2CFBNSXFySD4g3wJAmTHj
+	UOgADA2LLy6zftvQfoLvr/J9GbACF0qB9+XFoa3yScZA1po26MjeKt3RwlMoOPJv6CDkCDda6De
+	ppJqRKVcH9TfjnONenHaWhWFChSM2EFDMBY8mV4o6wLpd5XAdQAZyF64bzcMX9CbL/LC2u4mI
+X-Gm-Gg: ASbGnctvuVtm2VcWUXlTYVTFTwBM40m2u24PbKKpTiKFq0kyE+Q85p0LUkcEeDcALkA
+	hHKl0um5rMMelC9MT3hU8KKuBi81P1FElVG+6iTgmh6FGn8sZMsHB+qjEqDzOsIUq2zQKKz2aiV
+	fQ19/WUkQ+RS/jKCnMhtobMQupyJqO7kGQuJIMj6orWPcydpVSuDjmOW1Nu3sbPMmx1LUu4KvaD
+	Y2n/TNOVA97cPZfm3aCJsPj9YYWwwEFoEs9CWHuxWNXDUcp/L8dc8K50waNWjJcl7+wTPH6qRu6
+	0Whf7RZK2y2578RgD4JaiZkFau8uqVQyarEB3zYjxG5b1fickZPZF/0lLCzg
+X-Received: by 2002:a17:90b:3b92:b0:2fc:3264:365d with SMTP id 98e67ed59e1d1-2fc40f0ea25mr29237107a91.11.1739986595761;
+        Wed, 19 Feb 2025 09:36:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHJWmXWsxGjClVm/zthfCXF+H+3XyeXB7GQZrRmqkGHU6xzsOjlVcHnjYZJYGEt/oE92j+xNw==
+X-Received: by 2002:a17:90b:3b92:b0:2fc:3264:365d with SMTP id 98e67ed59e1d1-2fc40f0ea25mr29237070a91.11.1739986595423;
+        Wed, 19 Feb 2025 09:36:35 -0800 (PST)
+Received: from [10.227.110.203] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fbf98f4f62sm14557474a91.26.2025.02.19.09.36.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Feb 2025 09:36:35 -0800 (PST)
+Message-ID: <b0027c1e-cc0b-46ff-8b46-774259f3ed0f@oss.qualcomm.com>
+Date: Wed, 19 Feb 2025 09:36:32 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <547c484ce80fe3624ee746954b84cae28bd38a09.1739985266.git.quic_nguyenb@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/8] PCI: Make pcie_link_speed variable public & export
+ pci_set_target_speed()
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Jeff Johnson <jjohnson@kernel.org>
+Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+        quic_jjohnson@quicinc.com, quic_pyarlaga@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_vpernami@quicinc.com,
+        quic_mrana@quicinc.com
+References: <20250217-mhi_bw_up-v1-0-9bad1e42bdb1@oss.qualcomm.com>
+ <20250217-mhi_bw_up-v1-7-9bad1e42bdb1@oss.qualcomm.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20250217-mhi_bw_up-v1-7-9bad1e42bdb1@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: cshb6yq4sOy8V2PnS8yP7cevztQJ7lfV
+X-Proofpoint-ORIG-GUID: cshb6yq4sOy8V2PnS8yP7cevztQJ7lfV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-19_07,2025-02-19_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ lowpriorityscore=0 mlxlogscore=586 spamscore=0 adultscore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502190136
 
-On Wed, Feb 19, 2025 at 09:16:06AM -0800, Bao D. Nguyen wrote:
-> Since 'commit 104cd58d9af8 ("scsi: ufs: qcom:
-> Remove support for host controllers older than v2.0")',
-> some of the parameters passed into the ufs_qcom_cfg_timers()
-> function have become dead code. Clean up ufs_qcom_cfg_timers()
-> function to improve the readability.
-> 
-> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-- Mani
-
-> ---
->  drivers/ufs/host/ufs-qcom.c | 25 ++++---------------------
->  1 file changed, 4 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 23b9f6e..d89faf6 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -509,16 +509,10 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
->   * ufs_qcom_cfg_timers - Configure ufs qcom cfg timers
->   *
->   * @hba: host controller instance
-> - * @gear: Current operating gear
-> - * @hs: current power mode
-> - * @rate: current operating rate (A or B)
-> - * @update_link_startup_timer: indicate if link_start ongoing
->   * @is_pre_scale_up: flag to check if pre scale up condition.
->   * Return: zero for success and non-zero in case of a failure.
->   */
-> -static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
-> -			       u32 hs, u32 rate, bool update_link_startup_timer,
-> -			       bool is_pre_scale_up)
-> +static int ufs_qcom_cfg_timers(struct ufs_hba *hba, bool is_pre_scale_up)
->  {
->  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->  	struct ufs_clk_info *clki;
-> @@ -534,11 +528,6 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
->  	if (host->hw_ver.major < 4 && !ufshcd_is_intr_aggr_allowed(hba))
->  		return 0;
+On 2/16/2025 10:34 PM, Krishna Chaitanya Chundru wrote:
+> diff --git a/include/linux/pci.h b/include/linux/pci.h
+> index 58f1de626c37..8a3b3195122d 100644
+> --- a/include/linux/pci.h
+> +++ b/include/linux/pci.h
+> @@ -305,6 +305,7 @@ enum pci_bus_speed {
 >  
-> -	if (gear == 0) {
-> -		dev_err(hba->dev, "%s: invalid gear = %d\n", __func__, gear);
-> -		return -EINVAL;
-> -	}
-> -
->  	list_for_each_entry(clki, &hba->clk_list_head, list) {
->  		if (!strcmp(clki->name, "core_clk")) {
->  			if (is_pre_scale_up)
-> @@ -574,8 +563,7 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
->  
->  	switch (status) {
->  	case PRE_CHANGE:
-> -		if (ufs_qcom_cfg_timers(hba, UFS_PWM_G1, SLOWAUTO_MODE,
-> -					0, true, false)) {
-> +		if (ufs_qcom_cfg_timers(hba, false)) {
->  			dev_err(hba->dev, "%s: ufs_qcom_cfg_timers() failed\n",
->  				__func__);
->  			return -EINVAL;
-> @@ -831,9 +819,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
->  		}
->  		break;
->  	case POST_CHANGE:
-> -		if (ufs_qcom_cfg_timers(hba, dev_req_params->gear_rx,
-> -					dev_req_params->pwr_rx,
-> -					dev_req_params->hs_rate, false, false)) {
-> +		if (ufs_qcom_cfg_timers(hba, false)) {
->  			dev_err(hba->dev, "%s: ufs_qcom_cfg_timers() failed\n",
->  				__func__);
->  			/*
-> @@ -1348,12 +1334,9 @@ static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up)
->  
->  static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
->  {
-> -	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> -	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
->  	int ret;
->  
-> -	ret = ufs_qcom_cfg_timers(hba, attr->gear_rx, attr->pwr_rx,
-> -				  attr->hs_rate, false, true);
-> +	ret = ufs_qcom_cfg_timers(hba, true);
->  	if (ret) {
->  		dev_err(hba->dev, "%s ufs cfg timer failed\n", __func__);
->  		return ret;
-> -- 
-> 2.7.4
-> 
+>  enum pci_bus_speed pcie_get_speed_cap(struct pci_dev *dev);
+>  enum pcie_link_width pcie_get_width_cap(struct pci_dev *dev);
+> +extern const unsigned char pcie_link_speed[];
 
--- 
-மணிவண்ணன் சதாசிவம்
+This, and the Patch 8/8 change that uses it, make me cringe.
+
+Should we instead have a functional interface so that the client calls a
+function to perform the lookup?
+
+/jeff
 
