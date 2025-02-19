@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-48469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39BF3A3B2CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 08:49:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2235A3B2DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 08:56:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43D93188886B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 07:49:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90004171E09
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 07:56:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5B921C4604;
-	Wed, 19 Feb 2025 07:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 027EB1C5D6F;
+	Wed, 19 Feb 2025 07:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GXsCk5vt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fHJBZIai"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8901C173F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 07:49:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377721C1AB4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 07:55:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739951362; cv=none; b=opLV40D2mS9i6XpIDhnDbZroUAU5kXj2YbLmK5hbc375OdbSfBl9Xw04jCM3WGPQCXFCeZL6sURN/uu/26TsiDeb7784VV9+5+mzQmjMS+CgbntGpeB1MQAMkPPf+D2S3pRU6X9ytfI68KmURzZldoXgncMtF0hjYHhBhtFouE4=
+	t=1739951742; cv=none; b=JLzqfMt9mDiO9bwcQ/o8HAnnlmo9QrE07M3qpdi0qzo/ZHh7VRodtAapeZtBlZZp6Nt/WowGuCs5WqjjUycG0NpZgQFZspGcntfY58U4ZD09bH0Nd3xmlOmh5FBf6b2QPy11QAw4K8n8r/6NXuYlK3/C2aaZC+6oNC5AeovGhzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739951362; c=relaxed/simple;
-	bh=9W51922lZcRv+WfFDa8r/ahBXeZgRii7HNNotr9H40A=;
+	s=arc-20240116; t=1739951742; c=relaxed/simple;
+	bh=ss6647Vq7Cy6U+GNIlcy6ezE7ATXTzSydGRry2X6VVk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AoZc86LntMyaQyhOfJ6Rd7owmkFjRi9TsWlRU65HhBPtizTRIfMj4xnwM5RpM0d2KkTD+jpiatrB10jA6kjT5Ere61Ge1RpB3f31ybB9YH/sNz0zDvtB7V6nQLmtX287qGUmysKqTYX5Sw6EMFozXaJ0PJLI7frykeb2aU/xtqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GXsCk5vt; arc=none smtp.client-ip=209.85.214.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=Phito54FzWyLc1k0NMWwpwqSse6v7PgkcnN6ofGatzhQwTqMQ2S6+XRITCENSzBtu3MR0c9So5PKceQCAzOS/Yb5tIGW9h0wbNFVvRi8QoQF2VedhESl20V8yV1Hx9KX9XXfMbZDUh45aXOW2JlKXJzMP1Mv+i2H9tEV11jTw1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fHJBZIai; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-22101839807so86525315ad.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 23:49:20 -0800 (PST)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-220f4dd756eso87856685ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 23:55:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739951360; x=1740556160; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739951739; x=1740556539; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=9sOSWz9/b/A8wxbS7QG6N98UoPE8+0el0tVSZ986HeU=;
-        b=GXsCk5vtZXWbfyUxd6XjAq2xuH65zsHjsXCvFr1C5CT3/RIJqmJKYJCWm+/bS1s1Pq
-         ZV0uEGGiXETFK06QHk1SNbOPVZbmUTeG9Vt5VD9biKBZUtCPcx/E9p/w1ADwtUFHUFOv
-         mDOmmc1V0hGySc9PydoflYRDMr5GydahqeXgECmJwSLRR1+A0J5T23y19mWC2GMjc1XD
-         9PhTzb0hTz9fd52R54WraenDme75YJQcICBWAlr7l1GhqeGXqwkIbfp+0NzrrvBTQX1B
-         wL3jo/e+1fCpGBf6/ecccVke7EHG1VSVL4eT5afGbwB8RV/m559dMDTqWXU6uQrL826B
-         JScQ==
+        bh=KQ8YbWKKN0JUEDEyejcT43K2AZBg1IVNzkk5e0M7RQ0=;
+        b=fHJBZIaiB+bzCM0QcuUFSBATA7NHiXJ+fGEharNp8aR62bTJmJ/Tz37czbMa/HpchK
+         5UVI3B2zuwdLMWOz2CmrdWgRG/WrPSC1sx+9uLlibXj7NEwa3utt9X9+d7qpfUWXoDo5
+         KMlpJVPX8KFIeBL5BIvLtdPqlPiqGU1aMnv7VHIExx2ggdCGaTyJGLfRyPxzwPRsMstL
+         CtE4w4qv7H9Np+7UHhB86MbHKgBTujhgecBVx1SSIbMCzqbvDnWqKGxR3IvYhOn/hNVB
+         y+8NRreta6VijmITbN09iIFZkXafyqNUsfaoqKnhiY8ixx2U3/VQC+uoRrmH0Pk9fhgQ
+         zHtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739951360; x=1740556160;
+        d=1e100.net; s=20230601; t=1739951739; x=1740556539;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9sOSWz9/b/A8wxbS7QG6N98UoPE8+0el0tVSZ986HeU=;
-        b=ta+OEy8X2NdVMJ6O+Imy2W8IZxN5FFxJRDSK3WkTwrqVaLkXeMDhjsinlnGHYy9VS2
-         /qyeozyFmxraEPm7btGdU5bih2xc/cU4+pFqZ5h6mswruMj+BbwAeo+5+546jA/UPud/
-         y0cb68YcCSi/5gZEikdzYXKVWYX9YkbXNWtl5+FEtfk8lbDP+eWryHs9k/kVLq2b7yX+
-         3l/2IfILgGochK1gK7r1zbSdlUbQkXM0IRBYY8pqlEFPJQNUW6/Tgg3BwV4nSM+GZTXl
-         fGpsoHji4LAotqawfSIoLdpT+Dr/wETJZGn5MVQl1yq6BqCbbjs6gkhkdD8/F+lHloBM
-         nYEg==
-X-Forwarded-Encrypted: i=1; AJvYcCVtQswMAIimPK1eAowh0QzP6bd5WeH2V6LWQU/4EkJn8E+zjRMzQJK88mMwPfYE7U+k+WM+kLvFFDHPlZDL@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQf1rFp6wsDI/QRuBrKT+EmsCc7SveGHzDsiqgE9g8HHDmzymT
-	oUKoB4frPVqxBaaTrlByHmvrv2HArunrOVPo1EUp+GAgtkJFkHi23W+HkqMMvQ==
-X-Gm-Gg: ASbGncsRepSwIrV3+zuBxkWxOETkCFEIbyFkK+Mh6hssoR1882R4xZIMcznVxKcDuom
-	SqKEmapwp6BENPhFt/PAPLRtSQOlUGa3AB1SLoEHSrgrMNmAHSNw18onxWKvBgtxg9hkdWdpNz7
-	JlaQ1Ohd6WT+7d8NecxKpAn/cNKKcqlSXfMD6ZOZkoHy19+e3/PR13jXxXueaXOtPc3ki+W5Kql
-	yfCYvq2TK80nyvo3Z+ds7aRmpAkZ87E8G7T2Ud9zHMSe46wYecafm+pqEgnrf9Pepqs7Ihw43mW
-	RnV8tCI0ih9fW59ZWT+S7tlsQ9M=
-X-Google-Smtp-Source: AGHT+IFoGyzNx30oj5QPZ8kXyITKzcMTpTQ6sfoOeGpNaqW8WOSxc+hSdJl3P3R9gIDdbaeQkXzR7w==
-X-Received: by 2002:a05:6a21:103:b0:1ee:c7c8:c9e with SMTP id adf61e73a8af0-1eed4e5240fmr4788072637.2.1739951360379;
-        Tue, 18 Feb 2025 23:49:20 -0800 (PST)
+        bh=KQ8YbWKKN0JUEDEyejcT43K2AZBg1IVNzkk5e0M7RQ0=;
+        b=ueiWNErTeWbniTe77zBANXm8LDJ4xGrUptO1T6shl9Ag8C4wvkf1J0DRkwEqyyL/O/
+         D0ntG7R4rZGOqRKDXJWdJgTSpdVUY8EDEA4tRFN6V4pnmADxnyjtOuh6xN6Hr7/acvaG
+         kZvGffLBHDHR3ctwmLe0ZSZduvFWmKayzdEN6fJ5fK6KDWUfpfzn/0TMRJGQP0+OsOQf
+         76UHQkUdkqEnp52JKZ75fRE0hZOu+y14pzEa5dPGJDDZQYndrR8TKAPHdM5KzMYXoaBO
+         qJCedJRGIvKwS8LI728CnreuIahQuhG+VidFKaL6aGKGM4ROTWiTJK9M/czeLJIYRR5j
+         1h4A==
+X-Forwarded-Encrypted: i=1; AJvYcCVHH/9Ty7Nz0x4+jOVodd3kRHCtrYHb1QcmPG55QXVI26PiMJLD2UOohXA6Zl/29HUgEf3CTsHAScvbE4Sy@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXPUCh3ox6hMa4aNZnFXibQR1MWQOJO2WGrGNud4cMkgoezXKc
+	xoMmb8z1KI1/sDc0gym4/rwxLt/JZlFVYi5vbP0NxN0qEoE4+UDjxSdxEa/WNA==
+X-Gm-Gg: ASbGncueOHK5okIjPGT95HTKfY50ZeaWVutZzRPALgHYjmk1h0i+xmU5+TzG5XbJKEB
+	3MuDq8Nugp/n196xJgMuCflhigVGRpadKP4Sr0prpEFR/P87O7H9DQoHD96Z3sU3PfaO4V5Uy8b
+	1p/fQ1RaiBlczr4RU3YIcusASTk/XHnjiUBSCqORsDZwjb5Xe6cvtFfxC/eZWyPCLBiaz7+liwM
+	kb5tdCE+69Vx/0U/ZJl8cIhG3G5qYm1+FHy4L8daZhYXL8MHbI69LivC5vH31lGy0OtiHUsGp84
+	G/VDpiW4oor17S5vMjBvXcDFjZA=
+X-Google-Smtp-Source: AGHT+IG4njE0mVfhwsbo461mQskQTrTqKLJp04nKx1lPyB6/OYKMHkjA+8znL3Lf5HXh3/3N1AgKoQ==
+X-Received: by 2002:a17:903:283:b0:215:ae3d:1dd7 with SMTP id d9443c01a7336-221040269bbmr278400085ad.19.1739951739441;
+        Tue, 18 Feb 2025 23:55:39 -0800 (PST)
 Received: from thinkpad ([120.56.197.245])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-732425467d1sm11672713b3a.12.2025.02.18.23.49.15
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d53491ecsm99383825ad.9.2025.02.18.23.55.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Feb 2025 23:49:20 -0800 (PST)
-Date: Wed, 19 Feb 2025 13:19:13 +0530
+        Tue, 18 Feb 2025 23:55:39 -0800 (PST)
+Date: Wed, 19 Feb 2025 13:25:33 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Frank Li <Frank.li@nxp.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Shuai Xue <xueshuai@linux.alibaba.com>,
 	Jing Zhang <renyu.zj@linux.alibaba.com>,
 	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
@@ -86,10 +86,12 @@ Cc: Shuai Xue <xueshuai@linux.alibaba.com>,
 	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
 	linux-perf-users@vger.kernel.org, linux-pci@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/4] PCI: dwc: Add PTM sysfs support
-Message-ID: <20250219074913.e4rtyup3m3yv66po@thinkpad>
+Subject: Re: [PATCH 1/4] perf/dwc_pcie: Move common DWC struct definitions to
+ 'pcie-dwc.h'
+Message-ID: <20250219075533.dqj4rqeskilg76lj@thinkpad>
 References: <20250218-pcie-qcom-ptm-v1-0-16d7e480d73e@linaro.org>
- <Z7Syf2LXEuKFToV4@lizhi-Precision-Tower-5810>
+ <20250218-pcie-qcom-ptm-v1-1-16d7e480d73e@linaro.org>
+ <4nnikepf7ay4ml3audn34gmq5jttjcfz3syfnxeowmjb4no2cj@lyawl4saa3sa>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,87 +101,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z7Syf2LXEuKFToV4@lizhi-Precision-Tower-5810>
+In-Reply-To: <4nnikepf7ay4ml3audn34gmq5jttjcfz3syfnxeowmjb4no2cj@lyawl4saa3sa>
 
-On Tue, Feb 18, 2025 at 11:17:03AM -0500, Frank Li wrote:
-> On Tue, Feb 18, 2025 at 08:06:39PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > Hi,
-> >
-> > This series adds sysfs support for PCIe PTM in Synopsys Designware IPs.
-> >
-> > First patch moves the common DWC struct definitions (dwc_pcie_vsec_id) to
-> > include/pci/pcie-dwc.h from dwc-pcie-pmu driver. This allows reusing the same
-> > definitions in pcie-designware-sysfs driver introduced in this series and also
-> > in the debugfs series by Shradha [1].
-> >
-> > Second patch adds support for searching the Vendor Specific Extended Capability
-> > (VSEC) in the pcie-designware driver. This patch was originally based on
-> > Shradha's patch [2], but modified to accept 'struct dwc_pcie_vsec_id' to avoid
-> > iterating through the vsec_ids in the driver.
-> >
-> > Third patch adds the actual sysfs support for PTM in a new file
-> > pcie-designware-sysfs.c built along with pcie-designware.c.
-> >
-> > Finally, fourth patch masks the PTM_UPDATING interrupt in the pcie-qcom-ep
-> > driver to avoid processing the interrupt for each PTM context update.
-> >
-> > Testing
-> > =======
-> >
-> > This series is tested on Qcom SA8775p Ride Mx platform where one SA8775p acts as
-> > RC and another as EP with following instructions:
-> >
-> > RC
-> > --
-> >
-> > $ echo 1 > /sys/devices/platform/1c10000.pcie/dwc/ptm/ptm_context_valid
-> >
-> > EP
-> > --
-> >
-> > $ echo auto > /sys/devices/platform/1c10000.pcie-ep/dwc/ptm/ptm_context_update
-> >
-> > $ cat /sys/devices/platform/1c10000.pcie-ep/dwc/ptm/ptm_local_clock
-> > 159612570424
-> >
-> > $ cat /sys/devices/platform/1c10000.pcie-ep/dwc/ptm/ptm_master_clock
-> > 159609466232
-> >
-> > $ cat /sys/devices/platform/1c10000.pcie-ep/dwc/ptm/ptm_t1
-> > 159609466112
-> >
-> > $ cat /sys/devices/platform/1c10000.pcie-ep/dwc/ptm/ptm_t4
-> > 159609466518
+On Tue, Feb 18, 2025 at 06:31:02PM +0200, Dmitry Baryshkov wrote:
+> On Tue, Feb 18, 2025 at 08:06:40PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > Since these are common to all Desginware PCIe IPs, move them to a new
+> > header, 'pcie-dwc.h' so that other drivers could make use of them.
 > 
-> 
-> I am not sure what real means by only show these number.
-
-These values are supposed to be consumed by the userspace applications to make
-sure that whether the PTM feature is working as expected or not. For instance,
-once the PTM dialog is established with PTM root, PTM requester's local clock
-should be synchronized with PTM master clock. And these can be verified using
-these sysfs attributes.
-
-> It is quite
-> similar to network 1588, ptp. There were already linux-ptp
-> https://www.kernel.org/doc/html/v5.5/driver-api/ptp.html
+> Which drivers are going to use it? Please provide an explanation.
 > 
 
-PTP and PTM are different even though both are meant to synchronize times across
-devices. PTM is limited to PCIe hierarchy and the actual synchronization is
-performed at the hw level, limited to PCIe clock source (core_clk in DWC terms).
+I can certainly add reference as 'upcoming pcie-designware-sysfs' driver.
 
-> Can we use similar method to sync local timer to master? I think it is real
-> purpuse of PTM.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  MAINTAINERS                 |  1 +
+> >  drivers/perf/dwc_pcie_pmu.c | 23 ++---------------------
+> >  include/linux/pcie-dwc.h    | 34 ++++++++++++++++++++++++++++++++++
+> >  3 files changed, 37 insertions(+), 21 deletions(-)
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 896a307fa065..b4d09d52a750 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -18123,6 +18123,7 @@ S:	Maintained
+> >  F:	Documentation/devicetree/bindings/pci/snps,dw-pcie-ep.yaml
+> >  F:	Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
+> >  F:	drivers/pci/controller/dwc/*designware*
+> > +F:	include/linux/pcie-dwc.h
+> >  
+> >  PCI DRIVER FOR TI DRA7XX/J721E
+> >  M:	Vignesh Raghavendra <vigneshr@ti.com>
+> > diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
+> > index cccecae9823f..05b37ea7cf16 100644
+> > --- a/drivers/perf/dwc_pcie_pmu.c
+> > +++ b/drivers/perf/dwc_pcie_pmu.c
+> > @@ -13,6 +13,7 @@
+> >  #include <linux/errno.h>
+> >  #include <linux/kernel.h>
+> >  #include <linux/list.h>
+> > +#include <linux/pcie-dwc.h>
+> >  #include <linux/perf_event.h>
+> >  #include <linux/pci.h>
+> >  #include <linux/platform_device.h>
+> > @@ -99,26 +100,6 @@ struct dwc_pcie_dev_info {
+> >  	struct list_head dev_node;
+> >  };
+> >  
+> > -struct dwc_pcie_pmu_vsec_id {
+> > -	u16 vendor_id;
+> > -	u16 vsec_id;
+> > -	u8 vsec_rev;
+> > -};
+> > -
+> > -/*
+> > - * VSEC IDs are allocated by the vendor, so a given ID may mean different
+> > - * things to different vendors.  See PCIe r6.0, sec 7.9.5.2.
+> > - */
+> > -static const struct dwc_pcie_pmu_vsec_id dwc_pcie_pmu_vsec_ids[] = {
+> > -	{ .vendor_id = PCI_VENDOR_ID_ALIBABA,
+> > -	  .vsec_id = 0x02, .vsec_rev = 0x4 },
+> > -	{ .vendor_id = PCI_VENDOR_ID_AMPERE,
+> > -	  .vsec_id = 0x02, .vsec_rev = 0x4 },
+> > -	{ .vendor_id = PCI_VENDOR_ID_QCOM,
+> > -	  .vsec_id = 0x02, .vsec_rev = 0x4 },
+> > -	{} /* terminator */
+> > -};
+> > -
+> >  static ssize_t cpumask_show(struct device *dev,
+> >  					 struct device_attribute *attr,
+> >  					 char *buf)
+> > @@ -529,7 +510,7 @@ static void dwc_pcie_unregister_pmu(void *data)
+> >  
+> >  static u16 dwc_pcie_des_cap(struct pci_dev *pdev)
+> >  {
+> > -	const struct dwc_pcie_pmu_vsec_id *vid;
+> > +	const struct dwc_pcie_vsec_id *vid;
+> >  	u16 vsec;
+> >  	u32 val;
+> >  
+> > diff --git a/include/linux/pcie-dwc.h b/include/linux/pcie-dwc.h
+> > new file mode 100644
+> > index 000000000000..261ae11d75a4
+> > --- /dev/null
+> > +++ b/include/linux/pcie-dwc.h
+> > @@ -0,0 +1,34 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 */
+> > +/*
+> > + * Copyright (C) 2021-2023 Alibaba Inc.
+> > + *
+> > + * Copyright 2025 Linaro Ltd.
+> > + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > + */
+> > +
+> > +#ifndef LINUX_PCIE_DWC_H
+> > +#define LINUX_PCIE_DWC_H
+> > +
+> > +#include <linux/pci_ids.h>
+> > +
+> > +struct dwc_pcie_vsec_id {
+> > +	u16 vendor_id;
+> > +	u16 vsec_id;
+> > +	u8 vsec_rev;
+> > +};
+> > +
+> > +/*
+> > + * VSEC IDs are allocated by the vendor, so a given ID may mean different
+> > + * things to different vendors.  See PCIe r6.0, sec 7.9.5.2.
+> > + */
+> > +static const struct dwc_pcie_vsec_id dwc_pcie_pmu_vsec_ids[] = {
+> 
+> Having it in the header means that there are going to be several
+> copies of this data. Is that expected?
 > 
 
-Actual synchronization happens in the hardware itself as I explained above.
-Software is not intended to do anything (if not using any external master clock
-source) to synchronize the clocks.
-
-I think you are referring to synchronizing the global clock source (the one used
-by the kernel) of the endpoint based on PTM. But I don't think that is what
-intended by this feature.
+Yes. I wanted to consolidate these ids in a single file to make it easy to track
+them. Otherwise, these are spread across different subsystems, making it harder
+to maintain.
 
 - Mani
 
