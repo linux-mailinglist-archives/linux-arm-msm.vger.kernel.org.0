@@ -1,71 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-48580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15058A3CD60
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 00:21:42 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A3FCA3CD66
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 00:23:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 39169189A38B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 23:21:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8A4F67A8134
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 23:22:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 108C725A621;
-	Wed, 19 Feb 2025 23:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFCD125C712;
+	Wed, 19 Feb 2025 23:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+wcL5cT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UjXMjadB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D931CAA65;
-	Wed, 19 Feb 2025 23:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04541D7E30;
+	Wed, 19 Feb 2025 23:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740007298; cv=none; b=djxgqF1crNDKTBk4i7xv6OyiY6rJI4xTMj26zqXVU5vn6k4csGXfZR8uKQ5HYQWem2yTN/Yb1aM1SuR7s8ODZm0FXDfhLx6RLYVYHuQ0N6GeglqDMcHpzqktF/kUWAu4Q4dbAw3u0TWkeTEyAQA+SmdM7bf+tl5ZyMhy5GUK8lc=
+	t=1740007410; cv=none; b=AJdikGQWNpDAk+5EvZVo999bmbiCwpAziecIxFBJtVFp3v5oKMrK0cGJtWkSwLueoETi5CgZRRTHinjyoRuZDkGy9MRN/aN94TSJy1v9pEDDeaaZOR0td6O8APIJwCqh1km+gIoc9PSL2AbBNWYlJSscOhgQod2twbRWl7uH0q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740007298; c=relaxed/simple;
-	bh=LMS1nLB7BGuN+tfhQGVp3lwyass1VSu3itpL87r5DTw=;
+	s=arc-20240116; t=1740007410; c=relaxed/simple;
+	bh=Cd2Np4M20fSpi/82K1zTOjFJqunVLAcIuWe2TC4Vl/Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eQGq+sBzxaOmgkqXKT5xjZrLJ6cPjyvoD8yTB4aNhQ79AzJCmmVXzzz2ncoD3EGupWHqqCo+T5Np4lxvfFs+FJ+9bY0BHkmznlO9ujJdyFxarC9B9G0X+lc0Y7SgakbKhYRp4+ET7Zi2+lgIok+273Me1MbZVHcBy7FO7Y9bCSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+wcL5cT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D2CC4CED1;
-	Wed, 19 Feb 2025 23:21:37 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=pGIabQloPn4xil+mT2ZuEPGbK6Vko0+29EFbnA6ZiU2+vRAm2FGpnIujbJ8ZrK+ZHNDi/9CzHKSaD+tZL8VFaAp7EZLwuQqSJtAOuwErEh5/iPxOrOHyg5APUrBbZ6Uz3H3k6uA0pOPr3euyJpax1/GHWv/i3JRs+Zyoy6W/atI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UjXMjadB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC8AC4CED1;
+	Wed, 19 Feb 2025 23:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740007297;
-	bh=LMS1nLB7BGuN+tfhQGVp3lwyass1VSu3itpL87r5DTw=;
+	s=k20201202; t=1740007410;
+	bh=Cd2Np4M20fSpi/82K1zTOjFJqunVLAcIuWe2TC4Vl/Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=H+wcL5cTtkCr1j28mNbUZQWDmq/2yXOcPj+MU8854KsvoAX9B12+Y/YyoNxEu89z0
-	 yGV1NAG0SY2ER3PwFHcl7JVa5vBfPQe7u0fhX9tS9eARAI+vYJ0UMm9qk+g34kkotm
-	 VRwPohu93V4gK6SQs7QEKH6J3J1p3JoYcYJ0WOavM2PvVuZ+44dkeVB4f0DcIZTBS0
-	 JaQDaDkX+9ybbgoOkGA16b6LFbENUnt8YgzYpelU9qQ5QWc2umiVDmRbUbW2caiAVT
-	 NzIJm0ldEsOpxJg0zMiW4Jrz7GvZZJ4MnlUmpUpUDwd4WwlUx7RSi/vB0jUlZthYtC
-	 Sm59WZb54NGjQ==
-Date: Wed, 19 Feb 2025 17:21:36 -0600
+	b=UjXMjadBtm34ehttlKyk7q8n1voYSStfaXA/lyaiOKp7S9wO88FTOBcNgdKf/wLSV
+	 kIr7RoTfBYAnMlo213m9LpXh0VWtIhNCVah4gyg7wVEgK+mkFYbjIIkh4J+Yi0+jRt
+	 SrQE4IfUgDMOmqKeZabFFZMhnTjpJyqBpQRvCsOcqhuNACaHl2LybIQj46iVSucLUm
+	 0rRDWnev62H3IMueTxLN0avHYcPddYa0B1dPeEDINxlL5oIAPzlCWNgTYWEizJiA+x
+	 SJ9WIAx9OeDo2rT8LRZQ7v+GLdNMu+uihrZCQpt4l7zftA1Z59B87oByTaCrSseXOd
+	 G2yjZ3cvhMi3w==
+Date: Wed, 19 Feb 2025 17:23:29 -0600
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sean Paul <sean@poorly.run>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	David Airlie <airlied@gmail.com>,
+Cc: Simona Vetter <simona@ffwll.ch>, Sean Paul <sean@poorly.run>,
+	linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
-	Krishna Manikandan <quic_mkrishn@quicinc.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-kernel@vger.kernel.org, Simona Vetter <simona@ffwll.ch>
-Subject: Re: [PATCH v2 04/16] dt-bindings: display/msm: dsi-controller-main:
- Add SM8750
-Message-ID: <174000729541.3163430.2531640843485250752.robh@kernel.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	freedreno@lists.freedesktop.org, David Airlie <airlied@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Krishna Manikandan <quic_mkrishn@quicinc.com>,
+	devicetree@vger.kernel.org,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH v2 06/16] dt-bindings: display/msm: qcom,sm8650-dpu: Add
+ SM8750
+Message-ID: <174000740841.3166289.94560145914383982.robh@kernel.org>
 References: <20250217-b4-sm8750-display-v2-0-d201dcdda6a4@linaro.org>
- <20250217-b4-sm8750-display-v2-4-d201dcdda6a4@linaro.org>
+ <20250217-b4-sm8750-display-v2-6-d201dcdda6a4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,29 +75,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250217-b4-sm8750-display-v2-4-d201dcdda6a4@linaro.org>
+In-Reply-To: <20250217-b4-sm8750-display-v2-6-d201dcdda6a4@linaro.org>
 
 
-On Mon, 17 Feb 2025 17:41:25 +0100, Krzysztof Kozlowski wrote:
-> Add DSI controller for Qualcomm SM8750 SoC which is quite different from
-> previous (SM8650) generation.
-> 
-> It does not allow the display clock controller clocks like "byte" and
-> "pixel" to be reparented to DSI PHY PLLs while the DSI PHY PLL is not
-> configured (not prepared, rate not set).  Therefore
-> assigned-clock-parents are not working here and driver is responsible
-> for reparenting clocks with proper procedure.  These clocks are now
-> inputs to the DSI controller device.
-> 
-> Except that SM8750 DSI comes with several differences, new blocks and
-> changes in registers, making it incompatible with SM8650.
+On Mon, 17 Feb 2025 17:41:27 +0100, Krzysztof Kozlowski wrote:
+> Add DPU for Qualcomm SM8750 SoC which has several differences, new
+> blocks and changes in registers, making it incompatible with SM8650.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../bindings/display/msm/dsi-controller-main.yaml  | 54 ++++++++++++++++++++--
->  1 file changed, 49 insertions(+), 5 deletions(-)
+>  Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
 
