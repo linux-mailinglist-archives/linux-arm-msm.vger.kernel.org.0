@@ -1,133 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-48540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3217A3C617
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 18:24:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7C3FA3C632
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 18:28:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0058A1899814
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 17:24:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF7683A9C82
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 17:27:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CF8C21423C;
-	Wed, 19 Feb 2025 17:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC69A21423F;
+	Wed, 19 Feb 2025 17:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="USYItg2a"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WMIIVk5X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3DE286284
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 17:24:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131DF1FDE09
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 17:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739985868; cv=none; b=ttCEnrHzbSDw1aMz3WhLRPs302kEtqlHz+57vcJk8tHMcintf5p4wKUMFaVRbueMQjz3OxiupaS6FKH9IrNfcbDMwmZyMBqaEVURyspvZA8WVj2+sreWcH+KvcQSYdp5Wi1CGOLmHn873PrYiVfYp+VcqvCqU1czkHmTbwB9FMU=
+	t=1739986083; cv=none; b=KIq987sERWJltQ/8IIva+VVlVTGs3LgAMpo7UbSTUq8IBNCBqiw5O95EeDQRh62oJG6fbOgtsBrrfjlLcRYHdrSXTQpHJXkVIZhdR4HhBgHsh94NGJv8VNCZz0GKCYeiWENeLeAyYizR2oOEGo1DZldhXHjQrfJVFRnxPgrocgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739985868; c=relaxed/simple;
-	bh=T4rhPGu2ce6iGJAzGw9LsW3+86E8MFAkFApyKPgUGY8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lO98sip3pzXXEa10LF3L9vbwmEzgBMfJBMHuErrqzss8sg0IQpZv837Oc+VTYii+CDHB+wDVkM3ZUQmJlcA0QT1E/LtV4gla0TMe1/dNYBNE+veV4JVEfGeloyjLzi8f9S7HVWHKldR5Rvph16hKbdGgDIOIKPobjzYjTdmFEds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=USYItg2a; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1739986083; c=relaxed/simple;
+	bh=A2+HN4X0kozADOMd8HPrxpMBAxhu8YWTaMSPkwDk7qU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p7ydmW7R5aF2e+otcdkKkH39A69NeV6BwMkVG5/p8nxMUjtDCYl5DlH7b6P7QDr3TJEwIxreLmvYqLmCm5dB5F0yROhYwo0OF1mQfINJoDK3FEcXavE50Ye8vOOFeUmoUgXommZ/eW7zUT4HQskczycOJc6Xw/ZCuu0PINJWmBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WMIIVk5X; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6fb95249855so18313877b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 09:24:26 -0800 (PST)
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2fc1c80cdc8so52751a91.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 09:28:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739985865; x=1740590665; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0cr90zEajdAaEBjcRfisPPDqVdNWUpvTZCFRKVO9Uh4=;
-        b=USYItg2am6boBNLd50xfUs2toBOCLT5QK7hQ+Na9cSN2hijH2ZLVOrxyATQngnj2C+
-         RFrijO+J5aOC+XS2UXnerjjtsIRLyiZf++e3SF85MzIRZr7mC9bIHI6Q3SfbKKFntiFm
-         gwxm3c93yDBmm+YhwFxK3iVaZBHSYASG9A1ZwV/QJQUGxxvSDRaKs+zX3iImdeN6bnpZ
-         WmGSPO4TZ2O6shy+H4uTm4Sry+jXb5I9LPtLZmpdI37RFCSxs1wKgE5W6xOMTVBxac7d
-         GZ8ZQavutbVPy8NTpawwvbD9L7v3FNWwO+BVqufnHCnVCgGnzWpauk+dZrhn1oLx+5SP
-         pGfQ==
+        d=linaro.org; s=google; t=1739986081; x=1740590881; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6NzngaP+OJcFLsyG7y1oBQVz797WX/iYaGWrcxV/1GA=;
+        b=WMIIVk5X/P+UcTpYed8sUaeBw6DrbuXb7SgnrczGTSV8LecrH+o+PyTU3QQcdj+E15
+         Y2LPES0UK3byQR0gsU5DLnrE1Q9hVq4H/FSpF3HnSQ7VboN5lyJieC0B9SSKcDZmqtut
+         OpzXX2/Od0w9rDn82DN8c/Nz0YNoMn9V2jxYorO9EPqhN5z69JpHX4HvwyT3Y0fqGcRp
+         u5uHrVKTf7EbafgQtPj6pXS4LEjLpshA3no4C9tKoTF+q/nvI4OxiOoMGQH20tdrOBeS
+         mN1h9gbNSiqN2oI5RKT5DtO0WDDZNSsQDViQYbIzMBX3v+fHq3pv//8vQ64/iQR41Ijc
+         IzbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739985865; x=1740590665;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0cr90zEajdAaEBjcRfisPPDqVdNWUpvTZCFRKVO9Uh4=;
-        b=H2G1K0t8Bneqn5gSoeBKtYLm6nhRLGD209xrvY18CS8PFmMZ9zBPwZXzdDRhg1/Y2b
-         +DVPCpb5KRYHfsOwr2kh3hqYV5319WFVVwy5IRib1xMf7NEl/hy10fGyJZsnRuVVJ0Lm
-         U9H+fX8rRjx2A/hlpioE+gRrGT2nTKuxQEjre+UqY69GxaVOzRuze56p3w5Wh926uwkq
-         o1ZhpfsBwtqKb1Zjbq0xmIMzyPjmXeskmFnyDkVwYkhHxHxvpSrMUZI2y75++Cv+Ar6e
-         xUVSOHdLzW3F16aEtcKqDSaAb+P4HEJqksFiR209+z+5OvLZw1IQJJTRgZyExe6xmL2Y
-         V0PQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVFaVvNbrEkPyxKupIA8HIsUSpxDP7Bu3EKg9Bo3iWCQ5Z4sd5Ma4wHxOVQl/XtRt4Itv6BHoxPjsfWI2Ub@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfNano7/+VNzsJPSSzrJgpxWTAyStQtVG1zAr6tdkGJ/X1yOku
-	ics2Rnh4ez1Nh0EeSCP8oXcVApuLRR/WJ5XqKO9zTtVc0zBNd/6yWF5B5oTysCJv5qvKpVzJmLq
-	gIEdUrlf3ms2kGFmKECnsK+yNrSETvFm97AS89Q==
-X-Gm-Gg: ASbGncsE4Wzz+1hm7A4+G9tnaDP5ZYzOMq3tDphGLxy2DkJOJd5sMc9Uvk1wbRUtWv5
-	fcevIS3fN0+YoLAhfY1IpYJV/AA7rUp8doweJF8qKHofldgxtCAF12/roMDdZxEanBen7EgyYRt
-	ugPNY5lcoJLOM=
-X-Google-Smtp-Source: AGHT+IHPYcZfjn7eucK8FvixqCR2I2msLnTZntlahztuzdBpXoxW57EO45la9a3FzKXUns8U3FOZ+w7YFPg8lisWjjs=
-X-Received: by 2002:a05:690c:7445:b0:6ef:7dde:bdef with SMTP id
- 00721157ae682-6fb58359ca6mr143804167b3.23.1739985865461; Wed, 19 Feb 2025
- 09:24:25 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739986081; x=1740590881;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6NzngaP+OJcFLsyG7y1oBQVz797WX/iYaGWrcxV/1GA=;
+        b=N0LotAuGuyYRjePKIztP9f/9gwc/Ngy8aLeinQ5vJgE1rknnrNdPYiLO2moc4gMHVu
+         gMHjb5ts45W9+ji19OA8fHAxD0pkMPPtNgC9jQj/KH+uFO0w2VFHPF3g+zwFJIuf+dhw
+         ZTmIwBsackJ5vn4B5d5lqr/PdSAXiBav7wbL+w5WxAfsaZ8qiyKNWYehChpvbkm9RySY
+         HiZV1JMG+JQmZVrxyzMYiPEBiJAP1AlKukZ0ajPYcd4tVP622D7lPV3LhPXwR2k4ikmq
+         HvNJuKQfYX62N/P9I2kIAmkDqCjnRTOOLQVdKzQoiE2Dg3PxamE9mEz0iHJ3WMu4OWbF
+         O2zg==
+X-Forwarded-Encrypted: i=1; AJvYcCW4jzUf3/Ii0mnZAg45TeoBASTvxhZvcn0HFlK6jl9jV9Az8DlzCK9Qngmxr0OhSbNUyrLGzngxigRHmCGk@vger.kernel.org
+X-Gm-Message-State: AOJu0YzOh2VAjfik2M74x2oi+/qxaTIzVm1LkCJbZ7CLTYMIt6MSEcdz
+	iP+SBArtU7atCtyrZJ8OsY17+bgas/OHwIKARmdqEWdOFhiH1Q70h1HxI6W9DA==
+X-Gm-Gg: ASbGnctvulLwXPP0ZAlxIDGZjnH07QWpxoLyT1YgqVlZHRK2EBbh2ugr0xGhZIHurED
+	z+anMXuZbNQZK3y07P+Eom7b3tiAIhRTxVIPB1eNcRyWGOWFcdwTZBYRJckvgBaZTUt+vSqDUtB
+	DwZLhglB7gRkjOYjr6QcArWtLbpCKGD2hhq73doxTeAbT26wtP337IZfNGTe9+YtAnXiEaGIlbG
+	iTTfneKlxKZslSxW9wW0Oy9N3Ig1LWTiC27ctfauAj4s1v65qHs/MC4AOeSusEseIDEk9BhYK+P
+	fvlHQKcbSVazHDM7xA/YmHdJvg==
+X-Google-Smtp-Source: AGHT+IHOShpnSsF84pZmQWIv/xBAmLajjHNqHii8bXec9NnuKW9M7BOSWjuz/fRYPwl+0byTPs9X6w==
+X-Received: by 2002:a17:90b:1b06:b0:2ea:2a8d:dd2a with SMTP id 98e67ed59e1d1-2fcb5a996cdmr6581509a91.27.1739986081323;
+        Wed, 19 Feb 2025 09:28:01 -0800 (PST)
+Received: from thinkpad ([120.60.141.99])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fbf999b5b4sm15735500a91.30.2025.02.19.09.27.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 09:28:01 -0800 (PST)
+Date: Wed, 19 Feb 2025 22:57:55 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+Cc: quic_cang@quicinc.com, quic_nitirawa@quicinc.com, bvanassche@acm.org,
+	avri.altman@wdc.com, peter.wang@mediatek.com, minwoo.im@samsung.com,
+	adrian.hunter@intel.com, martin.petersen@oracle.com,
+	linux-scsi@vger.kernel.org,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	"open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." <linux-arm-msm@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/1] scsi: ufs: qcom: Remove dead code in
+ ufs_qcom_cfg_timers()
+Message-ID: <20250219172755.b2jq5joh7nrrf6rr@thinkpad>
+References: <547c484ce80fe3624ee746954b84cae28bd38a09.1739985266.git.quic_nguyenb@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250217-b4-sm8750-display-v2-0-d201dcdda6a4@linaro.org>
- <20250217-b4-sm8750-display-v2-15-d201dcdda6a4@linaro.org>
- <qlotuliwnm5spneolztca7avmh2a46pz2xqlxzqbw5kwa53m6q@oyhnzz7fhay3> <4b2426d2-a7bb-4c19-9ebe-77f6a90caf5e@linaro.org>
-In-Reply-To: <4b2426d2-a7bb-4c19-9ebe-77f6a90caf5e@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 19 Feb 2025 19:24:14 +0200
-X-Gm-Features: AWEUYZmAr3QYLaFayeHeppxyHSH1mnwXmz4zOX0FGc46bc3FPvsfNyKPQb2_VV4
-Message-ID: <CAA8EJpquBhQeac0E66NqeagkxP-qY0whmah2ND0xziUQdxc_7g@mail.gmail.com>
-Subject: Re: [PATCH v2 15/16] drm/msm/dpu: Implement new v12.0 DPU differences
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Krishna Manikandan <quic_mkrishn@quicinc.com>, Jonathan Marek <jonathan@marek.ca>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <547c484ce80fe3624ee746954b84cae28bd38a09.1739985266.git.quic_nguyenb@quicinc.com>
 
-On Wed, 19 Feb 2025 at 19:04, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 17/02/2025 20:18, Dmitry Baryshkov wrote:
-> > On Mon, Feb 17, 2025 at 05:41:36PM +0100, Krzysztof Kozlowski wrote:
-> >> Implement new features and differences coming in v12.0 of DPU present on
-> >> Qualcomm SM8750 SoC:
-> >> 1. 10-bit color alpha.
-> >> 2. New CTL_PIPE_ACTIVE and CTL_LAYER_ACTIVE registers for pipes and
-> >>    layer mixers.
-> >> 2. Several differences in LM registers (also changed offsets) for LM
-> >>    crossbar hardware changes.
-> >
-> > I'd really prefer for this patch to be split into a logical chunks
-> > rather than "everything for 12.x"
-> everything 12.x is still logical chunk. I can split more, but without
-> guidance what is here logical chunk, will be tricky.
->
-> For example 10-bit color alpha looks like separate feature. But
-> remaining PIPE/LAYER active - not sure.
->
-> I can split them but I would not call such split necessarily logical.
+On Wed, Feb 19, 2025 at 09:16:06AM -0800, Bao D. Nguyen wrote:
+> Since 'commit 104cd58d9af8 ("scsi: ufs: qcom:
+> Remove support for host controllers older than v2.0")',
+> some of the parameters passed into the ufs_qcom_cfg_timers()
+> function have become dead code. Clean up ufs_qcom_cfg_timers()
+> function to improve the readability.
+> 
+> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
 
-I'd say, the following items are logical chunks:
-- ctl->ops.active_fetch_pipes in dpu_encoder_helper_reset_mixers() and
-dpu_hw_ctl_reset_intf_cfg_v1() (with a proper Fixes tag?)
-- 10-bit alpha, border color,
-- active_pipes
-- blend stage in LM + set_active_lms
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 25 ++++---------------------
+>  1 file changed, 4 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 23b9f6e..d89faf6 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -509,16 +509,10 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
+>   * ufs_qcom_cfg_timers - Configure ufs qcom cfg timers
+>   *
+>   * @hba: host controller instance
+> - * @gear: Current operating gear
+> - * @hs: current power mode
+> - * @rate: current operating rate (A or B)
+> - * @update_link_startup_timer: indicate if link_start ongoing
+>   * @is_pre_scale_up: flag to check if pre scale up condition.
+>   * Return: zero for success and non-zero in case of a failure.
+>   */
+> -static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+> -			       u32 hs, u32 rate, bool update_link_startup_timer,
+> -			       bool is_pre_scale_up)
+> +static int ufs_qcom_cfg_timers(struct ufs_hba *hba, bool is_pre_scale_up)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>  	struct ufs_clk_info *clki;
+> @@ -534,11 +528,6 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+>  	if (host->hw_ver.major < 4 && !ufshcd_is_intr_aggr_allowed(hba))
+>  		return 0;
+>  
+> -	if (gear == 0) {
+> -		dev_err(hba->dev, "%s: invalid gear = %d\n", __func__, gear);
+> -		return -EINVAL;
+> -	}
+> -
+>  	list_for_each_entry(clki, &hba->clk_list_head, list) {
+>  		if (!strcmp(clki->name, "core_clk")) {
+>  			if (is_pre_scale_up)
+> @@ -574,8 +563,7 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+>  
+>  	switch (status) {
+>  	case PRE_CHANGE:
+> -		if (ufs_qcom_cfg_timers(hba, UFS_PWM_G1, SLOWAUTO_MODE,
+> -					0, true, false)) {
+> +		if (ufs_qcom_cfg_timers(hba, false)) {
+>  			dev_err(hba->dev, "%s: ufs_qcom_cfg_timers() failed\n",
+>  				__func__);
+>  			return -EINVAL;
+> @@ -831,9 +819,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>  		}
+>  		break;
+>  	case POST_CHANGE:
+> -		if (ufs_qcom_cfg_timers(hba, dev_req_params->gear_rx,
+> -					dev_req_params->pwr_rx,
+> -					dev_req_params->hs_rate, false, false)) {
+> +		if (ufs_qcom_cfg_timers(hba, false)) {
+>  			dev_err(hba->dev, "%s: ufs_qcom_cfg_timers() failed\n",
+>  				__func__);
+>  			/*
+> @@ -1348,12 +1334,9 @@ static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up)
+>  
+>  static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
+>  {
+> -	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> -	struct ufs_pa_layer_attr *attr = &host->dev_req_params;
+>  	int ret;
+>  
+> -	ret = ufs_qcom_cfg_timers(hba, attr->gear_rx, attr->pwr_rx,
+> -				  attr->hs_rate, false, true);
+> +	ret = ufs_qcom_cfg_timers(hba, true);
+>  	if (ret) {
+>  		dev_err(hba->dev, "%s ufs cfg timer failed\n", __func__);
+>  		return ret;
+> -- 
+> 2.7.4
+> 
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
