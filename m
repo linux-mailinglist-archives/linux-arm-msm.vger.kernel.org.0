@@ -1,210 +1,321 @@
-Return-Path: <linux-arm-msm+bounces-48473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E2C4A3B34D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 09:10:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD9FEA3B36A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 09:14:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6267616F895
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 08:10:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E30616A9DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 08:14:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEE8E1C4A2D;
-	Wed, 19 Feb 2025 08:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 678C11C5F05;
+	Wed, 19 Feb 2025 08:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="dKPf/W8O";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="MeWi0m6i";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="dKPf/W8O";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="MeWi0m6i"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yXZKsptq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155B51C54A6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 08:10:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3041C5D46
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 08:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739952606; cv=none; b=UdBWhX5Ut1AeKfeVoprTdRa2jFkL0+kZ8Y+/5/1S0zgekt4LiHN8U38h+4utnQBIrdsXlbgtPfDR4BLfZwgMrvkJLUPuz2MDuYpT7kOyh5/lJEm/RN2VlvmyJW6DZ8RgpziQww2JycL2/qulefhJGty7enS/6ZJTxKKUk006urY=
+	t=1739952890; cv=none; b=RtrZmgsyIKmSfbjwFkWJ12GNtkzX08ly3PUTrQyidhzmiAPSMNkSxYoquLMqSr5txfFx3bXcZD2/QtmCiLHHktSSe7xlvF9DU8pMXMTWA0rq0vwH3TyvyRImevvTV4pCkF6uHKpIUQ8AVLIZvNJy+aL73aNxeaEXa8yxFIHno+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739952606; c=relaxed/simple;
-	bh=c2Q0P13UZz4aWmHg7pSHLaZiCbXWTYiI29CLyzh8Cdo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qvlZA3BEGM34wsKPcFCbZdFrs/IOZxIpQl3LVA9IcwwYCH1cnxZqjZMggXwrLMPQkLkbars6oocy10u401OoTBJBZJJxjxWmZtrif1z2OTSwHVzZM0gTQJbwLc8R9ijTBFBnFMMo8mKnnNFP9vzm2MqHaOCWOtTqWWWo00gZ+J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=fail smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=dKPf/W8O; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=MeWi0m6i; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=dKPf/W8O; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=MeWi0m6i; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 1D76821940;
-	Wed, 19 Feb 2025 08:09:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1739952599; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7n22irSeGWIqSBNiIIhY8dUu78jzeyktmwLlH058QWI=;
-	b=dKPf/W8OQXbxt6ftlFfGpxSgQu7gVp2dstzZ3XzqVgl5Z357Tinp+N+mnS5eZMNrmbpIct
-	ERkIgZLFbCqLer2bR/7cT4Nal5dezMobDUN5PBm/4ffPV3aQDn17w9FIeMBLCA5L6STVWi
-	Fu675OecpkfIKo5+vbkkfz5g/IUDu/c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1739952599;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7n22irSeGWIqSBNiIIhY8dUu78jzeyktmwLlH058QWI=;
-	b=MeWi0m6iVBnfg747H1LUoCuWVrL86D9smnRpv47ULAXeqgfodW1nBInmL14qgH8vx7K4fX
-	EIRt6Mg5pinhPRCA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="dKPf/W8O";
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MeWi0m6i
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1739952599; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7n22irSeGWIqSBNiIIhY8dUu78jzeyktmwLlH058QWI=;
-	b=dKPf/W8OQXbxt6ftlFfGpxSgQu7gVp2dstzZ3XzqVgl5Z357Tinp+N+mnS5eZMNrmbpIct
-	ERkIgZLFbCqLer2bR/7cT4Nal5dezMobDUN5PBm/4ffPV3aQDn17w9FIeMBLCA5L6STVWi
-	Fu675OecpkfIKo5+vbkkfz5g/IUDu/c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1739952599;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7n22irSeGWIqSBNiIIhY8dUu78jzeyktmwLlH058QWI=;
-	b=MeWi0m6iVBnfg747H1LUoCuWVrL86D9smnRpv47ULAXeqgfodW1nBInmL14qgH8vx7K4fX
-	EIRt6Mg5pinhPRCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 93F3213806;
-	Wed, 19 Feb 2025 08:09:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id p5PBItaRtWd5FwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Wed, 19 Feb 2025 08:09:58 +0000
-Message-ID: <0b68b63f-a826-45f5-8845-11db9b46757d@suse.de>
-Date: Wed, 19 Feb 2025 09:09:58 +0100
+	s=arc-20240116; t=1739952890; c=relaxed/simple;
+	bh=aOW+Yf0535bZ0SI0BsWWcmOtsx/1+kasCAcIMhgpuLQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dGIE4swDPZHyQbuWy8WccK4B9gAzwvSz9nlSt83c5ObecwQo3CKfHbMb9iA77BfaYnsue2h5sSYUn8aaVgywdzhuX+TzapX1tQZWiKrm6Tnyux7gffGHqmcHXbNBW5/VWI0KCGZK2umwSD78yHcPbJDwEj1SXlImqfDJsA75EJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yXZKsptq; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-221057b6ac4so67122775ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 00:14:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739952883; x=1740557683; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MsT69ZOLMdFZIvD1YxUdjLqp4nB+JO3UK8B0xhjxIJ4=;
+        b=yXZKsptqDyWGo4CC4vHOOH2FUo+i31JbNYKU9WH3lOvs5UUQUG2bYyLk8gSvDUEAzV
+         WPSmslSmy/BWEoMftjV62Js4hHJhftjW3+QO04XOVTKX4DP6ByUe7q2qnIu9FXDN46tR
+         2dEMj1sWLgqLalbNvZ1aDSOv3Ta7B+imPbkzuFUkvBiaXRzDmZ0FqPchr8g5Vwkz9qgV
+         2uCP8ZtQjVg1K4N8PqesACMUHA81NwXg+SgwvVFTup94lBl42MYGPvGLljisiHLlP3Ct
+         GKTBBCmnntBF/xwe+VpYypAHbAFI0fcWJO7sQHPGb+lw2nHEj7xkipaCHzbxQb5TvQpf
+         4P8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739952883; x=1740557683;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MsT69ZOLMdFZIvD1YxUdjLqp4nB+JO3UK8B0xhjxIJ4=;
+        b=DNmd+EXQT8D2TChTai6RblSEWlOkMAR0He5ywrvbYqYpdF7/mKpiiypanwgg0wZi9I
+         JlDNdly1vwtw+1Hbrmie2bA3GHzmZvNuhNO1c4bEf10wsTWuYtyDK7N0i1SonsV1NXu4
+         pNel1iATRCliVUlWGP1zX50C1VCRjehlWlCqEau5Ee7k97MOBSm9Uy7LBPJn3Feq8xRX
+         fOTWf0CBQe4al4w3bb9km1inP83FRdodcAkGliCBlei6tT2JHtHeud04imjGqLbCizPf
+         G8gJWuqERnLY41ZXAw9yzHEEwQpiZxhSw22YEqQAVkivOi9tPYfkVA3CS7t8Ss1hivak
+         f7Rw==
+X-Forwarded-Encrypted: i=1; AJvYcCU/2v54nuTMnPNdgAsk7eVh/v2Vk1M7O4tXbmGC5inxu2iSIJVTZ0AzcevPNVTXpw53dYV3gGGbeaPQj1RT@vger.kernel.org
+X-Gm-Message-State: AOJu0YxAh58qbfAdIis7O3qZ0uXorMa6+w2ys5oB76X7n+Rlsb9m15CD
+	TJFn01PlPcOVT5CS1zacOYoexzStJuXXnRdr0e3qLE9xiJWTZ10CaOhQpNACmg==
+X-Gm-Gg: ASbGnctc8YvtLtgOhFiaBTCx3177xzXWEODd74rH1aO9N8MFs7c5LdAcGOamIi5GzyA
+	s663zSNYL5iADC4tHEuok9NeB6MCbALziYScAknr8Zn9KyHXVcx+Y+BaemdttcywyBObz+8MWM6
+	hjp5lsU7+VVGkAgI9U+rB82vqVTtrMLVsMx9SmuRluDQj/lz10UHfxu5/vIhpRfwI1zgpMwIDAp
+	bX0uHcbPRB7Gt2aHuWNfH4vNKNCbiEaC3lhx4pRpv7/kYPFVIOqrE3c2heYuT3ZIXjpYmOOM88I
+	swY029wmSn7cmwLRXv7GF5eEX/k=
+X-Google-Smtp-Source: AGHT+IENOnfR6SSjOBhgQxo3L/XeWd+wkkORnG1gESsnoAjwgiA1eIzRjF76GYaTtPte8EUQzIdbFg==
+X-Received: by 2002:a17:903:1a2d:b0:220:c813:dfd1 with SMTP id d9443c01a7336-221040bd77bmr283520705ad.36.1739952882676;
+        Wed, 19 Feb 2025 00:14:42 -0800 (PST)
+Received: from thinkpad ([120.56.197.245])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22178514287sm4640175ad.175.2025.02.19.00.14.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 00:14:42 -0800 (PST)
+Date: Wed, 19 Feb 2025 13:44:36 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Shuai Xue <xueshuai@linux.alibaba.com>,
+	Jing Zhang <renyu.zj@linux.alibaba.com>,
+	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Shradha Todi <shradha.t@samsung.com>,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-perf-users@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/4] PCI: dwc: Add sysfs support for PTM
+Message-ID: <20250219081436.ivllsfctvjgtyu25@thinkpad>
+References: <20250218-pcie-qcom-ptm-v1-0-16d7e480d73e@linaro.org>
+ <20250218-pcie-qcom-ptm-v1-3-16d7e480d73e@linaro.org>
+ <qvkpasuxn54dpsvsq6vinuyjvnphvnvfcedqzvmhkpgbrgurvm@7e55l7rkkqo4>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/25] drm/armada: Compute dumb-buffer sizes with
- drm_mode_size_dumb()
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, dri-devel@lists.freedesktop.org,
- linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
- linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
- virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-tegra@vger.kernel.org, intel-xe@lists.freedesktop.org,
- xen-devel@lists.xenproject.org
-References: <20250218142542.438557-1-tzimmermann@suse.de>
- <20250218142542.438557-7-tzimmermann@suse.de>
- <Z7St0O3A_mXEYK49@shell.armlinux.org.uk>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <Z7St0O3A_mXEYK49@shell.armlinux.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 1D76821940
-X-Spam-Level: 
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_ALL(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,lists.freedesktop.org,lists.infradead.org,vger.kernel.org,lists.linux.dev,lists.xenproject.org];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
-	RCVD_COUNT_TWO(0.00)[2];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -3.01
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <qvkpasuxn54dpsvsq6vinuyjvnphvnvfcedqzvmhkpgbrgurvm@7e55l7rkkqo4>
 
-Hi
+On Tue, Feb 18, 2025 at 07:54:24PM +0200, Dmitry Baryshkov wrote:
+> On Tue, Feb 18, 2025 at 08:06:42PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > Precision Time Management (PTM) mechanism defined in PCIe spec r6.0,
+> > sec 6.22 allows precise coordination of timing information across multiple
+> > components in a PCIe hierarchy with independent local time clocks.
+> > 
+> > While the PTM support itself is indicated by the presence of PTM Extended
+> > Capability structure, Synopsys Designware IPs expose the PTM context
+> > (timing information) through Vendor Specific Extended Capability (VSEC)
+> > registers.
+> > 
+> > Hence, add the sysfs support to expose the PTM context information to
+> > userspace from both PCIe RC and EP controllers. Below PTM context are
+> > exposed through sysfs:
+> > 
+> > PCIe RC
+> > =======
+> > 
+> > 1. PTM Local clock
+> > 2. PTM T2 timestamp
+> > 3. PTM T3 timestamp
+> > 4. PTM Context valid
+> > 
+> > PCIe EP
+> > =======
+> > 
+> > 1. PTM Local clock
+> > 2. PTM T1 timestamp
+> > 3. PTM T4 timestamp
+> > 4. PTM Master clock
+> > 5. PTM Context update
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  Documentation/ABI/testing/sysfs-platform-dwc-pcie  |  70 ++++++
+> >  MAINTAINERS                                        |   1 +
+> >  drivers/pci/controller/dwc/Makefile                |   2 +-
+> >  drivers/pci/controller/dwc/pcie-designware-ep.c    |   3 +
+> >  drivers/pci/controller/dwc/pcie-designware-host.c  |   4 +
+> >  drivers/pci/controller/dwc/pcie-designware-sysfs.c | 278 +++++++++++++++++++++
+> >  drivers/pci/controller/dwc/pcie-designware.c       |   6 +
+> >  drivers/pci/controller/dwc/pcie-designware.h       |  22 ++
+> >  include/linux/pcie-dwc.h                           |   8 +
+> >  9 files changed, 393 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/Documentation/ABI/testing/sysfs-platform-dwc-pcie b/Documentation/ABI/testing/sysfs-platform-dwc-pcie
+> > new file mode 100644
+> > index 000000000000..6b429108cd09
+> > --- /dev/null
+> > +++ b/Documentation/ABI/testing/sysfs-platform-dwc-pcie
+> 
+> Should be a class or just a ptm group in the PCIe controller device? How
+> generic are those attributes?
+> 
 
-Am 18.02.25 um 16:57 schrieb Russell King (Oracle):
-> On Tue, Feb 18, 2025 at 03:23:29PM +0100, Thomas Zimmermann wrote:
->> Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch and
->> buffer size. No alignment required.
->>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> Cc: Russell King <linux@armlinux.org.uk>
-> armada_pitch() does have some special alignment (it aligns the pitch to
-> 128 bytes). I've no idea what drm_mode_size_dumb() does. Can you check
-> whether it does the same please?
->
-> If it doesn't, then this patch is incorrect.
+Even though these are generic attributes, the way PTM support is exposed in
+kernel right now makes it harder to make these as generic attributes. These
+attributes are specific to RC/EP controllers and the generic PTM driver is for
+endpoint devices. Maybe I could think of exposing it for RC/EP controller
+drivers (not just DWC). But still then these would be exposed as a group under
+each platform device.
 
-Indeed, I should have noticed. Will be fixed in the next iteration. 
-Thanks for the review.
+> > @@ -0,0 +1,70 @@
+> > +What:		/sys/devices/platform/*/dwc/ptm/ptm_local_clock
+> > +Date:		February 2025
+> > +Contact:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > +Description:
+> > +		(RO) PTM local clock in nanoseconds. Applicable for both Root
+> > +		Complex and Endpoint mode.
 
-Best regards
-Thomas
+[...]
 
->
+> > +static umode_t ptm_attr_visible(struct kobject *kobj, struct attribute *attr,
+> > +				int n)
+> > +{
+> > +	struct device *dev = container_of(kobj, struct device, kobj);
+> > +	struct dw_pcie *pci = dev_get_drvdata(dev);
+> > +
+> > +	/* RC only needs local, t2 and t3 clocks and context_valid */
+> > +	if ((attr == &dev_attr_ptm_t1.attr && pci->mode == DW_PCIE_RC_TYPE) ||
+> > +	    (attr == &dev_attr_ptm_t4.attr && pci->mode == DW_PCIE_RC_TYPE) ||
+> > +	    (attr == &dev_attr_ptm_master_clock.attr && pci->mode == DW_PCIE_RC_TYPE) ||
+> > +	    (attr == &dev_attr_ptm_context_update.attr && pci->mode == DW_PCIE_RC_TYPE))
+> > +		return 0;
+> 
+> The pci->mode checks definitely can be refactored to a top-level instead
+> of being repeated on each line.
+> 
+
+Ok.
+
+> > +
+> > +	/* EP only needs local, master, t1, and t4 clocks and context_update */
+> > +	if ((attr == &dev_attr_ptm_t2.attr && pci->mode == DW_PCIE_EP_TYPE) ||
+> > +	    (attr == &dev_attr_ptm_t3.attr && pci->mode == DW_PCIE_EP_TYPE) ||
+> > +	    (attr == &dev_attr_ptm_context_valid.attr && pci->mode == DW_PCIE_EP_TYPE))
+> > +		return 0;
+> > +
+> > +	return attr->mode;
+> 
+> I think it might be better to register two separate groups, one for RC,
+> one for EP and use presense of the corresponding capability in the
+> .is_visible callback to check if the PTM attributes should be visible at
+> all.
+> 
+
+What benefit does it provide? I did thought about this idea, but then I didn't
+find useful since the top level platform device (RC/EP) should itself
+distinguish between PTM requester and responder. So one more differentiation
+seemed overkill to me.
+
+> > +}
+> > +
+> > +static const struct attribute_group ptm_attr_group = {
+> > +	.name = "ptm",
+> > +	.attrs = ptm_attrs,
+> > +	.is_visible = ptm_attr_visible,
+> > +};
+> > +
+> > +static const struct attribute_group *dwc_pcie_attr_groups[] = {
+> > +	&ptm_attr_group,
+> > +	NULL,
+> > +};
+> > +
+> > +static void pcie_designware_sysfs_release(struct device *dev)
+> > +{
+> > +	kfree(dev);
+> > +}
+> > +
+> > +void pcie_designware_sysfs_init(struct dw_pcie *pci,
+> > +				    enum dw_pcie_device_mode mode)
+> > +{
+> > +	struct device *dev;
+> > +	int ret;
+> > +
+> > +	/* Check for capabilities before creating sysfs attrbutes */
+> > +	ret = dw_pcie_find_ptm_capability(pci);
+> > +	if (!ret) {
+> > +		dev_dbg(pci->dev, "PTM capability not present\n");
+> > +		return;
+> > +	}
+> > +
+> > +	pci->ptm_vsec_offset = ret;
+> > +	pci->mode = mode;
+> > +
+> > +	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+> > +	if (!dev)
+> > +		return;
+> > +
+> > +	device_initialize(dev);
+> > +	dev->groups = dwc_pcie_attr_groups;
+> > +	dev->release = pcie_designware_sysfs_release;
+> > +	dev->parent = pci->dev;
+> > +	dev_set_drvdata(dev, pci);
+> > +
+> > +	ret = dev_set_name(dev, "dwc");
+> > +	if (ret)
+> > +		goto err_free;
+> > +
+> > +	ret = device_add(dev);
+> > +	if (ret)
+> > +		goto err_free;
+> > +
+> > +	pci->sysfs_dev = dev;
+> 
+> Why do you need to add a new device under the PCIe controller?
+> 
+
+Just because we cannot reference the 'struct dw_pcie' from the 'struct device'
+belonging to the platform device. All the controller drivers are already setting
+their own private structure as drvdata.
+
+> > +
+> > +	return;
+> > +
+> > +err_free:
+> > +	put_device(dev);
+> > +}
+> > +
+> > +void pcie_designware_sysfs_exit(struct dw_pcie *pci)
+> > +{
+> > +	if (pci->sysfs_dev)
+> > +		device_unregister(pci->sysfs_dev);
+> > +}
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> > index a7c0671c6715..30825ec0648e 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> > @@ -323,6 +323,12 @@ static u16 dw_pcie_find_vsec_capability(struct dw_pcie *pci,
+> >  	return 0;
+> >  }
+> >  
+> > +u16 dw_pcie_find_ptm_capability(struct dw_pcie *pci)
+> > +{
+> > +	return dw_pcie_find_vsec_capability(pci, dwc_pcie_ptm_vsec_ids);
+> > +}
+> > +EXPORT_SYMBOL_GPL(dw_pcie_find_ptm_capability);
+> 
+> This API should go into the previous patch. Otherwise it will result in
+> unused function warnings.
+> 
+
+Yes, but that should be fine. Unused warnings are generally acceptable if the
+function is defined in subsequent patch. Only rule is that the build should not
+be broken when using defconfig.
+
+Moreover, the previous patch just adds the VSEC helpers and I inherited them
+from Shradha's patch. Clubbing PTM API would make it look like two separate
+changes in a single patch.
+
+- Mani
 
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-HRB 36809 (AG Nuernberg)
-
+மணிவண்ணன் சதாசிவம்
 
