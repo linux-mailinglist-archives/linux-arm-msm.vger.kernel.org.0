@@ -1,389 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-48487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24B34A3BC00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 11:48:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B969A3BC40
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 11:59:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2DFA3B4FBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 10:47:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7ECE97A5379
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 10:58:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A73161CC8B0;
-	Wed, 19 Feb 2025 10:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C748D1DE8BE;
+	Wed, 19 Feb 2025 10:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q9wvSndC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dXfcfunG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE750146593;
-	Wed, 19 Feb 2025 10:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18BC1B425A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 10:58:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739962079; cv=none; b=ekbJ4BvpKW2O1kYylNfEsZjg40qUVyQaj797W1e0VWe0wgNosphsmPrpa0skgzCJWf1iIaV5EsuNxrF0wW4ihU0yWP4QOZ86XSos2NWOllSOoO2kohcd+1niqbgzyBoRCzbeOQ61yEsdyB3z83jykIMrsXzoV3gwxadafxhwdYU=
+	t=1739962737; cv=none; b=ur0q34ZNQNJgIgk8KBziAq90ojv/fpU/FHgoZpTFWyoSmotRN38ADCDJr8rs7zQwnJIStU9eimjv3PudnrgCWYRZmo3ah1qN+nVdC9Yhtedsn91mZe1E8/LN+3+gnTLI/GvDGM+TxhvW0lJ76ABUYYVbV6vK2SejySx9CrOAnZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739962079; c=relaxed/simple;
-	bh=CKiUJGgfvtLb77ojn/A7vtyBMoOEV4iUx8KXZkXU8Zw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=oojE0xNCF8pdun3kCYkpR0XOydU7uEnXFAt6NOHx/qRU3q0yID7cIPrUtaZFYdOO2db/d2fE+1AVt9IyRw21pBcrAWC+9oErqi8VQQW39rKrdi6LaiMurASQRvkiWWlngkF/0/oAdKdHSeGcpgC/Am0VZIVwh4uWWQgSRIOG+qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q9wvSndC; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51J7wOS0017720;
-	Wed, 19 Feb 2025 10:47:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	m1Z7rXqy+eGuA+HYsm39wI7Bp+qf53XHLQZDXkDjjsE=; b=Q9wvSndCArtaCsVx
-	sVxsXIimAS5fU2ws3VD3wFn2QP/bMCFzHhy5+uupYrAL5AeHTbIYGhvXKjq0zPL3
-	46zjb9zh/auONvn38VLxBZVK/ZHOhDVQ0r4XHkZ4AgfHarh3WAocfpm/vDbDfGgj
-	PM07Fks5GvzAzoID+7R6J5+0wkxgm4a97lygt3I97V5gF3jymg/hWnRxlKZsw3zd
-	UZwRheFwwnP06qC1LOzrEz1MVVrPnX4IoCiglpVwPhVmN1Y65BSaWvHQKRV6ps6v
-	bdUDVXxKCM5t8NDpv+RRCPtEEkd7L/ESP5o/A9qX96BJkPCOGz8rkN4yiiKtd1ks
-	AxEM8g==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy0a7gf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Feb 2025 10:47:35 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51JAlYiY011765
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Feb 2025 10:47:34 GMT
-Received: from [10.253.73.86] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 19 Feb
- 2025 02:47:28 -0800
-Message-ID: <71a69eb6-9e24-48ab-8301-93ec3ff43cc7@quicinc.com>
-Date: Wed, 19 Feb 2025 18:46:57 +0800
+	s=arc-20240116; t=1739962737; c=relaxed/simple;
+	bh=CvEuSAg+nVFG6qjJEiGbScYYldX03GA1lX/QwghhTd0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H6t/Pvj9vewFiwmEKKBdWaRtD8nXunk+Ar+HPUabVBL7SgIfSuy4JvYplsdJHOQ0Zgq4F5YlGJb5bQzLMqgm1VsHkPFSeHeItpjzyEf98zeRThkWVKU1b1FAWx/YS39AoqLDkB9EG5U6iL8wQzI6ppD7tQ49z5ZnAs+8Lf0I60M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dXfcfunG; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-30a317e4c27so29823101fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 02:58:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739962734; x=1740567534; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=01B6M3B/6e8fBJbhUwGqxldkm9jDFUlKOIpIo2WPDw8=;
+        b=dXfcfunGsCOyRyQGqbUrdL2QDRdpdSqqtmedHNgKcSGW1Yyj5j5xzp5nyOKNoGAZc6
+         oqIBasn7CdYzeoZv81v11xudZqz+xzp08ErLTKfU2KYVqqgTPBsGYdiI1HrHkeAfCAx0
+         CWhqCOsLl4/pXa4snN0pu7DosLiYf6WCCKAgaJx6oFmhMS8vD61PREyp0JyY2wlINCKD
+         qd//FS5l8F8/AXhlzbID15+J9VX3FkBqeWks+cK1OJfrcylqCIts1qHd1WMXDNyVkRD2
+         WO4lkHX0i4oWbhE9dpcAW60wutXsD/fTd4YY4VrCn2o7RxFgzHl3B0S1aA9O5uuvAJy0
+         JsIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739962734; x=1740567534;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=01B6M3B/6e8fBJbhUwGqxldkm9jDFUlKOIpIo2WPDw8=;
+        b=XHsvVr3X7hSzHKlCZL+t/YvaZ9Jnmdh/wlEKrp9pT2/NkDs/TwlWb1R3GZuTJGbSWc
+         ve5GXPGBFvRAABwmpQzBF6hhGfBfFczdy+O5wDjhCZXq1j3arPfwHdKEc0XAz4THtdUl
+         608KaQQIAxanqcROlPsAlUjqziplr50MigoE2kKPfKFedN3xotBGjvu2QST4XSpOeuLK
+         0ovMn+H0ae/OtFVm1s7jPHQmBhmJ0AJIIM1dnYMKGRJ8RfWYmmm91Ij37WWRH/eKbDFL
+         HQFRG5AwVViCQ/vysayocOx18MTAN/LU/aA4cOdQiwxc03ZryS7pOAZCXRQwhc3aURuj
+         AjNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW4KxFRHjjWuUWwfJXAH0+mKexXt2GMwCF2SE2WsOfuXZdY/bXvoeVN/XFABVu2AhdXW2VolliqrGPbjqij@vger.kernel.org
+X-Gm-Message-State: AOJu0YwoFIKGCKdv0cwoUIj5DjDkqIG6hTyHwB/JEtypoK1Zkwrc+GSQ
+	ToYGhPwXDUc5CVP/VuCQB+ONgeEdtWStT3mXIoHneo28/+t6rDbMRkCSjqLFoVw=
+X-Gm-Gg: ASbGncutuEWwnaQpfzf4TCHITUWGGB+lQhuBUIiNMha/OySsj6hX1AH1KAnaVLGEn9b
+	6A45S+0DJajTyCvfOZ1Mhkef3nrrxye9KA+WFv9HUdrZw+LZXWjmq3BhuexHxRNzR/n57A8aoOQ
+	G9ul0L4gJzCvtBdpO1DZcVOBy2i43sqhTc8SQdCLbPPJgr5lY8c3RLr/e6jP6kw8kwfE0yy6A5e
+	7yZFtXFVsW9HCxn9kmSkMN+HZ0vHGXfmPs12xJ6Bc+qhbWGeTFj6TvRm477mFhoxKITg4eax4zR
+	5JTtEBPoWYyMGzpd+o9HSaMMd4iaR5ZuPBl8j4anvA9/nzTC/FZqqscCUXrAXbvnBho0TkA=
+X-Google-Smtp-Source: AGHT+IGcisYXxPQLC+b5+fYSrjvm5AAYIjBDylh4x2pSEkaI839acVqUHx0018XYsObzYf9DMzTOXA==
+X-Received: by 2002:a2e:91c6:0:b0:300:1ea5:1655 with SMTP id 38308e7fff4ca-30927a47351mr50492061fa.15.1739962733885;
+        Wed, 19 Feb 2025 02:58:53 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30941da3978sm14149531fa.112.2025.02.19.02.58.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 02:58:53 -0800 (PST)
+Date: Wed, 19 Feb 2025 12:58:51 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/4] Add MST support for qcs8300 platform
+Message-ID: <ylotx2i5wvkitezd3ilqg67g2fj2emjigvnxhsdfl5nmoscsbf@kybjxritnslb>
+References: <20250212-mst_qcs8300-v1-0-38a8aa08394b@quicinc.com>
+ <87058b73-8854-4dbd-9f27-1da2a8240c16@kernel.org>
+ <2ede97c5-a4f2-42fb-b3cd-68f26297150b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Lei Wei <quic_leiwei@quicinc.com>
-Subject: Re: [PATCH net-next v5 0/5] Add PCS support for Qualcomm IPQ9574 SoC
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>,
-        Jakub Kicinski
-	<kuba@kernel.org>
-CC: Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Paolo Abeni
-	<pabeni@redhat.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Andrew Lunn
-	<andrew@lunn.ch>,
-        Heiner Kallweit <hkallweit1@gmail.com>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_kkumarcs@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_luoj@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
-        <vsmuthu@qti.qualcomm.com>, <john@phrozen.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20250207-ipq_pcs_6-14_rc1-v5-0-be2ebec32921@quicinc.com>
- <20250211195934.47943371@kernel.org> <Z6x1xD0krK0_eycB@shell.armlinux.org.uk>
-Content-Language: en-US
-In-Reply-To: <Z6x1xD0krK0_eycB@shell.armlinux.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _XOLtV0QUCIqSGpWiKqs2A2sdXHytmIO
-X-Proofpoint-ORIG-GUID: _XOLtV0QUCIqSGpWiKqs2A2sdXHytmIO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-19_04,2025-02-19_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=999 clxscore=1015 mlxscore=0 lowpriorityscore=0 adultscore=0
- phishscore=0 suspectscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502190087
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2ede97c5-a4f2-42fb-b3cd-68f26297150b@quicinc.com>
 
-
-
-On 2/12/2025 6:19 PM, Russell King (Oracle) wrote:
-> On Tue, Feb 11, 2025 at 07:59:34PM -0800, Jakub Kicinski wrote:
->> On Fri, 7 Feb 2025 23:53:11 +0800 Lei Wei wrote:
->>> The 'UNIPHY' PCS block in the Qualcomm IPQ9574 SoC provides Ethernet
->>> PCS and SerDes functions. It supports 1Gbps mode PCS and 10-Gigabit
->>> mode PCS (XPCS) functions, and supports various interface modes for
->>> the connectivity between the Ethernet MAC and the external PHYs/Switch.
->>> There are three UNIPHY (PCS) instances in IPQ9574, supporting the six
->>> Ethernet ports.
->>>
->>> This patch series adds base driver support for initializing the PCS,
->>> and PCS phylink ops for managing the PCS modes/states. Support for
->>> SGMII/QSGMII (PCS) and USXGMII (XPCS) modes is being added initially.
->>>
->>> The Ethernet driver which handles the MAC operations will create the
->>> PCS instances and phylink for the MAC, by utilizing the API exported
->>> by this driver.
->>>
->>> While support is being added initially for IPQ9574, the driver is
->>> expected to be easily extendable later for other SoCs in the IPQ
->>> family such as IPQ5332.
->>
->> Could someone with PHY, or even, dare I say, phylink expertise
->> take a look here?
+On Wed, Feb 19, 2025 at 06:02:27PM +0800, Yongxing Mou wrote:
 > 
-> I've not had the time, sorry. Looking at it now, I have lots of
-> questions over this.
 > 
-> 1) clocks.
-> 
-> - Patch 2 provides clocks from this driver which are exported to the
->    NSCCC block that are then used to provide the MII clocks.
-> - Patch 3 consumes clocks from the NSCCC block for use with each PCS.
-> 
-> Surely this leads to a circular dependency, where the MSCCC driver
-> can't get the clocks it needs until this driver has initialised, but
-> this driver can't get the clocks it needs for each PCS from the NSCCC
-> because the MSCCC driver needs this driver to initialise.
-> 
+> On 2025/2/12 17:06, Krzysztof Kozlowski wrote:
+> > On 12/02/2025 08:12, Yongxing Mou wrote:
+> > > This series of patches introduces how to enable MST functionality on
+> > > the qcs8300 platform. The qcs8300 platform uses dpu_8_4 hardware, which
+> > > is the same as the sa8775p, but it only has one DPU. So it only has one
+> > > DP0 controller, supporting 4-stream MST. This patch only enables
+> > > 2-stream MST, using intf0 and intf3. The first and second patches are
+> > > modifications to the correspond dt-bindings, third patch is the dp
+> > > controller driver after not reuse sm8650, fourth patch is the qcs8300
+> > > dts modification which add the clk support for stream 1.
+> > > 
+> > > Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> > > ---
+> > > This patch depends on following series:
+> > > https://lore.kernel.org/all/20250120-mdssdt_qcs8300-v4-0-1687e7842125@quicinc.com/
+> > > https://lore.kernel.org/all/20250114-dts_qcs8300-v3-0-d114cc5e4af9@quicinc.com/
+> > > https://lore.kernel.org/all/20241202-dp_mst_bindings-v1-0-9a9a43b0624a@quicinc.com
+> > > https://lore.kernel.org/all/20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com/
+> > 
+> > Buggy patch cannot be the dependency. You need to fix the original patch
+> > instead. You are not supposed to wait till knowingly incorrect patches
+> > get merged so you can send a fix. You must respond to that patch
+> > stopping its merging process.
+> > 
+> > Best regards,
+> > Krzysztof
+> Thanks for the reminder. I hadn't noticed that before. We will wait for our
+> dependencies to be ready before sending the new patchset.
 
-Sorry for the delay in response. Below is a description of the 
-dependencies between the PCS/NSSCC drivers during initialization time 
-and how the clock relationships are set up. Based on this, there should 
-not any issue due to circular dependency, but please let me know if any 
-improvement is possible here given the hardware clock dependency. The 
-module loading order is as follows:
+Hmm, no. Work with Abhinav and send the bindings (including all 4
+stream clocks) and platform enablement. Then MST support can come up
+together with the rest of MST patchset.
 
-Step 1.) NSCC driver module
-Step 2.) PCS driver module
-Step 3.) Ethernet driver module
-
-The 'UNIPHY' PCS clocks (from Serdes to NSSCC) are not needed to be 
-available at the time of registration of PCS MII clocks (NSSCC to PCS 
-MII) by the NSSCC driver (Step 1). The PCS MII clocks is registered 
-before 'UNIPHY' PCS clock is registered, since by default the parent is 
-initialized to 'xo' clock. Below is the output of clock tree on the 
-board before the PCS driver is loaded.
-
-xo-board-clk
-     nss_cc_port1_rx_clk_src
-         nss_cc_port1_rx_div_clk_src
-             nss_cc_uniphy_port1_rx_clk
-             nss_cc_port1_rx_clk
-
-The 'UNIPHY' PCS clock is later configured as a parent to the PCS MII 
-clock at the time when the Ethernet and PCS drivers are enabled (step3) 
-and the MAC links up. At link up time, the NSSCC driver sets the NSSCC 
-port clock rate (by configuring the divider) based on the link speed, 
-during which time the NSSCC port clock's parent is switched to 'UNIPHY' 
-PCS clock. Below is the clock tree dump after this step.
-
-7a00000.ethernet-pcs::rx_clk
-     nss_cc_port1_rx_clk_src
-         nss_cc_port1_rx_div_clk_src
-             nss_cc_uniphy_port1_rx_clk
-             nss_cc_port1_rx_clk
-
-> 2) there's yet another open coded "_get" function for getting the
-> PCS given a DT node which is different from every other "_get"
-> function - this one checks the parent DT node has an appropriate
-> compatible whereas others don't. The whole poliferation of "_get"
-> methods that are specific to each PCS still needs solving, and I
-> still have the big question around what happens when the PCS driver
-> gets unbound - and whether that causes the kernel to oops. I'm also
-> not a fan of "look up the struct device and then get its driver data".
-> There is *no* locking over accessing the driver data.
-> 
-
-The PCS device in IPQ9574 chipset is built into the SoC chip and is not 
-pluggable. Also, the PCS driver module is not unloadable until the MAC 
-driver that depends on it is unloaded. Therefore, marking the driver 
-'.suppress_bind_attrs = true' to disable user unbind action may be good 
-enough to cover all possible scenarios of device going away for IPQ9574 
-PCS driver.
-
-To avoid looking up the device and getting its driver data (which is 
-also seen in other PCS device drivers currently), a common 
-infrastructure is certainly preferable for the longer term to have a 
-consistent lookup. As far as I understand, the urgency for the common 
-infrastructure for lookup is perhaps more to resolve the issue of 
-hot-pluggable devices going away, and less for devices that do not 
-support it.
-
-Also, the _get() API is only called once during MAC port initialization 
-and never later, so if the device is not pluggable and unbind is not 
-possible, there may not be any race concerns when accessing the driver 
-data using the _get() API. Please let me know if this understanding is 
-incorrect.
-
-> 3) doesn't populate supported_interfaces for the PCS - which would
-> make ipq_pcs_validate() unnecessary until patch 4 (but see 6 below.)
-> 
-
-Agree, we will update the patch to advertise 'supported interfaces' and 
-use the 'pcs_validate' op only for patch4 as you pointed (for filtering 
-half duplex modes for USXGMII.).
-[The 'pcs_validate()' was suggested by you and added in the version 3 of 
-this driver, and at that time, the pcs supported_interfaces is not 
-introduced.]
-
-> 4)
-> "+       /* Nothing to do here as in-band autoneg mode is enabled
-> +        * by default for each PCS MII port."
-> 
-> "by default" doesn't matter - what if in-band is disabled and then
-> subsequently enabled.
-> 
-
-OK, I will fix this function to handle both in-band neg enabled and 
-disabled cases in next update.
-
-> 5) there seems to be an open-coded decision about the clock rate but
-> there's also ipq_pcs_clk_rate_get() which seems to make the same
-> decision.
-> 
-
-I think you may be referring to both ipq_pcs_config_mode() and 
-ipq_pcs_clk_rate_get() functions having the similar switch case to 
-decide the clock rate based on the interface mode. I do agree, we can 
-simplify this by saving the clock rate in ipq_pcs_config_mode() before 
-the clk_set_rate() is called, and then simply returning this clock rate 
-from the recalc_rate() op.
-
-
-> 6) it seems this block has N PCS, but all PCS must operate in the same
-> mode (e.g. one PCS can't operate in SGMII mode, another in USXGMII
-> mode.) Currently, the last "config" wins over previous configs across
-> all interfaces. Is this the best solution? Should we be detecting
-> conflicting configurations? Unfortunately, pcs->supported_interfaces
-> can't really be changed after the PCS is being used, so I guess
-> any such restrictions would need to go in ipq_pcs_validate() which
-> should work fine - although it would mean that a MAC populating
-> its phylink_config->supported_interfaces using pcs->supported_interfaces
-> may end up with too many interface bits set.
-> 
-
-I would like to clarify on the hardware supported configurations for the
-UNIPHY PCS hardware instances. [Note: There are three instances of 
-'UNIPHY PCS' in IPQ9574. However we take the example here for PCS0]
-
-UNIPHY PCS0 --> pcs0_mii0..pcs0_mii4 (5 PCS MII channels maximum).
-Possible combinations: QSGMII (4x 1 SGMII)
-			PSGMII (5 x 1 SGMII),
-			SGMII (1 x 1 SGMII)
-			USXGMII (1 x 1 USXGMII)
-	
-As we can see above, different PCS channels in a 'UNIPHY' PCS block 
-working in different PHY interface modes is not supported by the 
-hardware. So, it might not be necessary to detect that conflict. If the 
-interface mode changes from one to another, the same interface mode is 
-applicable to all the PCS channels that are associated with the UNIPHY 
-PCS block.
-
-Below is an example of a DTS configuration which depicts one board 
-configuration where one 'UNIPHY' (PCS0) is connected with a QCA8075 Quad 
-PHY, it has 4 MII channels enabled and connected with 4 PPE MAC ports, 
-and all the PCS MII channels are in QSGMII mode. For the 'UNIPHY' 
-connected with single SGMII or USXGMII PHY (PCS1), only one MII channel 
-is enabled and connected with one PPE MAC port.
-
-PHY:
-&mdio {
-	ethernet-phy-package@0 {
-                 compatible = "qcom,qca8075-package";
-                 #address-cells = <1>;
-                 #size-cells = <0>;
-                 reg = <0x10>;
-                 qcom,package-mode = "qsgmii";
-
-                 phy0: ethernet-phy@10 {
-                         reg = <0x10>;
-                 };
-
-                 phy1: ethernet-phy@11 {
-                         reg = <0x11>;
-                 };
-
-                 phy2: ethernet-phy@12 {
-                         reg = <0x12>;
-                 };
-
-                 phy3: ethernet-phy@13 {
-                         reg = <0x13>;
-                 };
-	};
-	phy4: ethernet-phy@8 {
-                 compatible ="ethernet-phy-ieee802.3-c45";
-                 reg = <8>;
-         };
-}
-
-PCS:
-pcs0: ethernet-pcs@7a00000 {
-	......
-	pcs0_mii0: pcs-mii@0 {
-		reg = <0>;
-		status = "enabled";
-	};
-
-	......
-
-	pcs0_mii3: pcs-mii@3 {
-		reg = <3>;
-		status = "enabled";
-	};
-};
-
-pcs1: ethernet-pcs@7a10000 {
-	......
-
-	pcs1_mii0: pcs-mii@0 {
-		reg = <0>;
-		status = "enabled";
-	};
-};
-
-MAC:
-port@1 {
-	phy-mode = "qsgmii";
-	phy-handle = <&phy0>;
-	pcs-handle = <&pcs0_mii0>;
-}
-
-port@2 {
-	phy-mode = "qsgmii";
-	phy-handle = <&phy1>;
-	pcs-handle = <&pcs0_mii1>;
-}
-port@3 {
-	phy-mode = "qsgmii";
-	phy-handle = <&phy2>;
-	pcs-handle = <&pcs0_mii2>;
-}
-port@4 {
-	phy-mode = "qsgmii";
-	phy-handle = <&phy3>;
-	pcs-handle = <&pcs0_mii3>;
-}
-port@5 {
-         phy-mode = "usxgmii";
-         phy-handle = <&phy4>;
-         pcs-handle = <&pcs1_mii0>;
-}
-
-> (1), (2) and (6) are probably the major issues at the moment, and (2)
-> has been around for a while.
-> 
-> Given (1), I'm just left wondering whether this has been runtime
-> tested, and how the driver model's driver dependencies cope with it
-> if the NSCCC driver is both a clock consumer of/provider to this
-> driver.
-> 
-
-Yes, I have tested the PCS driver along with NSSCC driver and PPE 
-Ethernet driver.
+-- 
+With best wishes
+Dmitry
 
