@@ -1,159 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-48489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC3A2A3BCA9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 12:24:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C254A3BD06
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 12:36:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D2ED57A5680
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 11:23:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4DB15170E11
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 11:36:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9CD31DF263;
-	Wed, 19 Feb 2025 11:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA73C1DDA09;
+	Wed, 19 Feb 2025 11:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q5vS1YIY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VIZYRwxT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490031DEFF5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 11:24:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B0E1D89EF;
+	Wed, 19 Feb 2025 11:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739964257; cv=none; b=UbBQnV5kJauaKBJhT0xEtk5zZ1y+V3t6+5ianBJOjfXPG7ahC8ZrjdFzcCyxbOGA7b63DTcgAM6qvKA7lV7TwizLIz33qzu6bA3lpWBG8aLjOmL+/nSf9SFKftcJugRYHJuAJOYLRjNunMerE92zSnsCXXqM5rxUy+ZZ2T1Gmlg=
+	t=1739964986; cv=none; b=cEd1nIg/7gvRA4Y/WMHE3BpW3kEb3VNz27FOLCzz31GFDm94jJX4WMg+0Z1PXZRKdm6S7YFmAdOEeo8kwLsy+R0/Pu518L/IbHRZBVXJSA4SZN9q7o3efxzexknfstA513J/YH+mt6usuqVuCKan1pr3MZDEoF3D3qxHtBaizv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739964257; c=relaxed/simple;
-	bh=3IlmgeaiPcaakLVe2YScE/woJneyFZcSXJq5bqdngbw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q2pvG2sIzykhzk1eKVZsT9NlYvlqd+rMYjr12pSLYSiqND2sh2a5kX3vOoFY0sulf1YnxBcCfhp54onjCrfQFzLfmSWMK1yUu1oDshFhLJR+QSBpn9ge2G3uYzttRR4Huw2bEaonScccd3rI4c9GwmKHSHRhtnNRU/u+AaM+nJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Q5vS1YIY; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4399a1eada3so7776015e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 03:24:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739964253; x=1740569053; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tdPhTPgNb5WdAwuNYkFk04LlQR8UkULvprs/hSb+yyI=;
-        b=Q5vS1YIY7lYTNSNgI7OTgjuJ17bFqhTU5i2mw0UjNn5eVsfe+q6aGOu4g6Oz9Vu2gh
-         VY6etKU1zT+j05fs9hdjdxiuDu8pz6bSLgP+7pMVdi/0PdCzFnksTt+lYOtDAlUnP7Zl
-         pdW1pf598RJC3r9gW87TWDOJUNogkDbvvlYafZzE18MXs3gmS4JjFAklM6Cl8ip4iuMo
-         qeGs/QwfrsyhBkwre2IRRyoSef0qNv36C/aGKSqd9tLTqMVo93reNoghnnAmoUTsRJzL
-         XXjkm0wWzbBNGX48R3C4ABCP1E7fKnBFEzI2BT5Mu83WCbEtdC+XI1A/EKDXDjY9VGGc
-         36xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739964253; x=1740569053;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tdPhTPgNb5WdAwuNYkFk04LlQR8UkULvprs/hSb+yyI=;
-        b=klLxhrtpb0H9YYobhDOougXFj9vEuA224SyEKVUBpRaLIkyAorVYp84MKeuFQkTDkx
-         wXnchRdUDjJgOGs4k5vFMs5+YwQcTEaONP8oewZfR1b5wswINhHnqy/lSpyP7jO5wt22
-         xGaAuOszJlNKGdUaYqsDr6EYRf4RDJxkDt2HYbY/bnA6HI5EOdKrGOmQKpQVoLf0tTrU
-         ghIK/lsLxqnRgQwPuik+M/q6X9opCzeOOB6GJPrXUsgU2wh+vVSKMVcuxgQhzt9yfGxL
-         Dqw+IcrPzBqhzE6t/qxzyIAXLk/WQSJzrzWIdfSWt60AQCqiChIMX5Kt+ijh8Z0dqm7t
-         hKbA==
-X-Forwarded-Encrypted: i=1; AJvYcCWw+DlVvOOD5T0b6C6bk79Qj++H57zY2TYx57bi7LPX2avxO27AApdilrbW6DOa2JT1o8DDmaoxrZATnjdt@vger.kernel.org
-X-Gm-Message-State: AOJu0YxA+M/9LeDTTH8qaVeeZIZ92RUovv1xsIimIcnvroyVTiZcwYPZ
-	9oaZTSNGVp+iCR/GofzaTVcV8K5PC6BEIAZR0v97qkp+JaTfQgCpVc8sj1BnyNc=
-X-Gm-Gg: ASbGncs/0AuCLnEDqunGDdvMtC39B+VCdNbP4L/1Dvwm/fEAIn4dXgMYUexl4QYuEWa
-	RjgSOZKyC0jTuYEqg3XGw2K6hNZlQxX2WOwQyS6skVyT8/NkjN6lYGXtqn1JZRb69MG/g91wV3m
-	+ecktza/z7wyRSEtW7ow1+MlNw8e9eoIdUojV5SM4hX3MKki11AQG7hmA9B0YZvCrY8XHhl1mg5
-	7Vif4S7nvOgCgrAOtjs//lCGCLq2v1eJ36Xbf9/VDP53reIHYAKGtkxhX4k6uYSOknSEXLOF2Kx
-	UpVWoR4tuof+ou7LdnSCL6XX+3E=
-X-Google-Smtp-Source: AGHT+IHyRalKTLx08DMpyY8D7tJnSYBfCjrsKNqbrlJWe/vLGSVDWGPykiVGFecncMvPPlaiWmLh0w==
-X-Received: by 2002:a05:600c:3b9c:b0:439:967b:46fc with SMTP id 5b1f17b1804b1-43999d8f506mr31097145e9.8.1739964253497;
-        Wed, 19 Feb 2025 03:24:13 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef30:6f72:6161:57cf:1c9a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43992ad82cfsm51235505e9.37.2025.02.19.03.24.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 03:24:12 -0800 (PST)
-Date: Wed, 19 Feb 2025 12:24:07 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Wesley Cheng <quic_wcheng@quicinc.com>,
-	Greg KH <gregkh@linuxfoundation.org>
-Cc: srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz,
-	conor+dt@kernel.org, dmitry.torokhov@gmail.com, corbet@lwn.net,
-	broonie@kernel.org, lgirdwood@gmail.com, tiwai@suse.com,
-	krzk+dt@kernel.org, pierre-louis.bossart@linux.intel.com,
-	Thinh.Nguyen@synopsys.com, robh@kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-sound@vger.kernel.org, linux-input@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-doc@vger.kernel.org
-Subject: Re: [PATCH v35 00/31] Introduce QC USB SND audio offloading support
-Message-ID: <Z7W_Vz_kVDjIcp5N@linaro.org>
-References: <20250219004754.497985-1-quic_wcheng@quicinc.com>
+	s=arc-20240116; t=1739964986; c=relaxed/simple;
+	bh=Hrhm8ZOZuubzIILX41WZlVH62W+mf1qv/FdAr8wjFzA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=to40CSBzB+unTcw1Q+IcmVZCxpjDcLkM3IGXgFChyyoQQAmBtU//iFiONnTRntNOLRN2SHOt3w3WO/pvUKbka2qAXzTEYFlWWAFbh70Cm/A0mSUXXu3sAtedaub0NPTboN+wG7dQlrV+MDBfzAA/fzYyiO47Sz4H28sdZklsCSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VIZYRwxT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51J8O9hJ025856;
+	Wed, 19 Feb 2025 11:36:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	kpHWra1j8U0cduwkB1QA5CNFxHWMO3hb7yfQ2ym/77Y=; b=VIZYRwxT5hed08/e
+	axXMqiWeWOdO0dDGQz8rXYSmBOJJToLNG6LI2/uoWUTzkoNTKgqNgw8lqPpniyG8
+	/3+baTutN9C/w5co1kJvSeHi+N9Z9fnZ6LSu/fn2dbGDherf3RGjQYsxxfA8Q2SZ
+	pml5IzK9qNbDNUSh6nUfezxFPV8EpXtqGRA+Cf8+9tE8hrw6mW68+suHDX/5VkNc
+	gSHIk9p3IgYM6CoeE6tY3LH6OOdncNhWHawjGRQAXotQekVfDBMUsmlBP4nHJsoB
+	SInczN4EiEHAMd7l8aIIDX8g0VYpHWcFB0/OuMmVQ/oTmOYZoH8TZ3+2/JNEd3UK
+	KkMuBg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy0jcv1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 19 Feb 2025 11:36:20 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51JBaK6q015289
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 19 Feb 2025 11:36:20 GMT
+Received: from [10.217.216.47] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 19 Feb
+ 2025 03:36:14 -0800
+Message-ID: <bb4cd14e-a9ea-4c13-9774-cca169dcb8d1@quicinc.com>
+Date: Wed, 19 Feb 2025 17:06:11 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250219004754.497985-1-quic_wcheng@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] clk: qcom: common: Attach clock power domains
+ conditionally
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Taniya
+ Das" <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
+ <20250218-videocc-pll-multi-pd-voting-v1-3-cfe6289ea29b@quicinc.com>
+ <2c5rbbpe5muw53oemyq6vhsmhzpzcpn7on4ujl5v7i7s3fdlob@eh37gy5dpfnp>
+Content-Language: en-US
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <2c5rbbpe5muw53oemyq6vhsmhzpzcpn7on4ujl5v7i7s3fdlob@eh37gy5dpfnp>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wMMnjRm96n-OsUxyvWDGUckbEY77SpnE
+X-Proofpoint-ORIG-GUID: wMMnjRm96n-OsUxyvWDGUckbEY77SpnE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-19_05,2025-02-19_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ impostorscore=0 lowpriorityscore=0 mlxlogscore=620 spamscore=0
+ clxscore=1015 priorityscore=1501 phishscore=0 mlxscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502190093
 
-On Tue, Feb 18, 2025 at 04:47:23PM -0800, Wesley Cheng wrote:
-> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
+
+
+On 2/18/2025 10:48 PM, Dmitry Baryshkov wrote:
+> On Tue, Feb 18, 2025 at 07:56:48PM +0530, Jagadeesh Kona wrote:
+>> Attach clock power domains in qcom_cc_really_probe() only
+>> if the clock controller has not already attached to them.
 > 
-> Several Qualcomm based chipsets can support USB audio offloading to a
-> dedicated audio DSP, which can take over issuing transfers to the USB
-> host controller.  The intention is to reduce the load on the main
-> processors in the SoC, and allow them to be placed into lower power modes.
-> There are several parts to this design:
->   1. Adding ASoC binding layer
->   2. Create a USB backend for Q6DSP
->   3. Introduce XHCI interrupter support
->   4. Create vendor ops for the USB SND driver
-> 
->       USB                          |            ASoC
-> --------------------------------------------------------------------
->                                    |  _________________________
->                                    | |sm8250 platform card     |
->                                    | |_________________________|
->                                    |         |           |
->                                    |      ___V____   ____V____
->                                    |     |Q6USB   | |Q6AFE    |  
->                                    |     |"codec" | |"cpu"    |
->                                    |     |________| |_________|
->                                    |         ^  ^        ^
->                                    |         |  |________|
->                                    |      ___V____    |
->                                    |     |SOC-USB |   |
->    ________       ________               |        |   |
->   |USB SND |<--->|QC offld|<------------>|________|   |
->   |(card.c)|     |        |<----------                |
->   |________|     |________|___     | |                |
->       ^               ^       |    | |    ____________V_________
->       |               |       |    | |   |APR/GLINK             |
->    __ V_______________V_____  |    | |   |______________________|
->   |USB SND (endpoint.c)     | |    | |              ^
->   |_________________________| |    | |              |
->               ^               |    | |   ___________V___________
->               |               |    | |->|audio DSP              |
->    ___________V_____________  |    |    |_______________________|
->   |XHCI HCD                 |<-    |
->   |_________________________|      |
+> Squash this to the previous patch and call the new function. No need to
+> duplicate the code.
 > 
 
-As I noted on v34 [1], this version is still missing instructions and
-changes needed for testing this series. The device tree changes don't
-need to be part of the same series, but there should be at least a link
-provided to give other people the chance to provide Tested-by tags.
+I tried calling the new function here instead of duplicating code, but that
+is leading to below warning since the desc passed to qcom_cc_really_probe()
+has a const qualifier and hence we cannot update desc->pd_list inside
+qcom_cc_really_probe().
 
-IMO we shouldn't merge this series without those instructions, otherwise
-we risk that this just ends up being dead code that no one can use.
-
-Can you please share the device tree changes for a board upstream and
-any other changes needed to be able to test this series? E.g. for
-sm8250-mtp.dts, based on the examples in your cover letter.
+drivers/clk/qcom/common.c:305:33:   WARNING : passing argument 2 of ‘qcom_cc_attach_pds’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
 
 Thanks,
-Stephan
+Jagadeesh
 
-[1]: https://lore.kernel.org/linux-arm-msm/Z63B_UE61OdrgEJY@linaro.org/
+>>
+>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>> ---
+>>  drivers/clk/qcom/common.c | 9 ++++++---
+>>  1 file changed, 6 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+>> index ec27f70b24bdec24edd2f6b3df0d766fc1cdcbf0..eb7e2a56d1d135f839fd9bd470ba6231ce775a8c 100644
+>> --- a/drivers/clk/qcom/common.c
+>> +++ b/drivers/clk/qcom/common.c
+>> @@ -300,9 +300,12 @@ int qcom_cc_really_probe(struct device *dev,
+>>  	if (!cc)
+>>  		return -ENOMEM;
+>>  
+>> -	ret = devm_pm_domain_attach_list(dev, NULL, &cc->pd_list);
+>> -	if (ret < 0 && ret != -EEXIST)
+>> -		return ret;
+>> +	cc->pd_list = desc->pd_list;
+>> +	if (!cc->pd_list) {
+>> +		ret = devm_pm_domain_attach_list(dev, NULL, &cc->pd_list);
+>> +		if (ret < 0 && ret != -EEXIST)
+>> +			return ret;
+>> +	}
+>>  
+>>  	reset = &cc->reset;
+>>  	reset->rcdev.of_node = dev->of_node;
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
