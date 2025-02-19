@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-48565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDD51A3CB0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 22:11:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74BA6A3CB15
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 22:12:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7F5697A9CEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 21:08:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E04F189CFA7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 21:09:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DFCC257433;
-	Wed, 19 Feb 2025 21:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3CD1253F13;
+	Wed, 19 Feb 2025 21:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kSIZ9CC7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A8xLZQKQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D6E257452;
-	Wed, 19 Feb 2025 21:06:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F07253F0B;
+	Wed, 19 Feb 2025 21:06:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739999174; cv=none; b=aDyoA34rpoMuC+VG5xbSm/AruiBMuDxIAYYkUb1oK1+2FhDsUISsop1YAa+3JrU6ZSIRRAMTgyXu/9BgfwSC+qTJLgXSuU6ch0hx7d/hybKQrNYP5PskRnBq7qz79qBoK8wKR24BSiSoiY4at3AiB3vXvHw6mKHS7PZc+MZfTrA=
+	t=1739999210; cv=none; b=tWjslxUZlJrYR0AmvzyRNMxbGzrV+TG7aXRO2PIJILr04/W3LbDJxCu5SoYn61e7iPtLS6kwjzneG50KFjgNL2e8D5LCuQH5IX25jb3CNAkXKoqSgH7+ZERlrm0w3L9uanLzVY0ETMfVU8DhJRZZz65hv7iPP4G7xQRdD16Am84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739999174; c=relaxed/simple;
-	bh=DEd9YDMcRs++3m+nIPwOpi2GEVrjgaqZav5MBaBjFjU=;
+	s=arc-20240116; t=1739999210; c=relaxed/simple;
+	bh=hjpnTi4N47guyVdYhYYYQAn/UxFSdHZEDgOBDY7fSQo=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ISLJXroF3O1yw/bChxDyG0q3cUdj8K1ZWhY7zY6wOR5vYOtKsnIO0Mcz/DwUEkzKLAzrtg8o+EqRz+8fChJe8pXebA5C0E7zEmT0UJnLZnaZ63ywF0mIkZkC3zp+WGp8HS2YdCyhscqtjA3wesQJ5CrgwxZRovp5hj7oimYYxV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kSIZ9CC7; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:Content-Type; b=kLnIJX+C781i+ocexosihM9ak8Yv10mnny2cXZ3ytpTQX5fmYqfsb3rrCCSfwZbp6WVYbIfYF/vgd2y4ZUcDLTl5j0VkhPVEgbJTVGhZQCPFGaqrmRhu5P4gSko63khMRzRgK2mDA8sdmHsKTk9lqeREopBGLl54tqLwAtArXTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A8xLZQKQ; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ab7483b9bf7so40297866b.3;
-        Wed, 19 Feb 2025 13:06:12 -0800 (PST)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-abbac134a19so48060466b.0;
+        Wed, 19 Feb 2025 13:06:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739999171; x=1740603971; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739999207; x=1740604007; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=VbZmcot8Eg1esviTkY9r0HKtYQa8aOZEhqkLR6boS78=;
-        b=kSIZ9CC7OpwguiejXtIoyJ8KL0g4Nx4/Tjucjtqgom6OWs42PiY1lN0QD9WPrdZqTI
-         DkdXrJXlfHOIKDDGCnvY5VrGO33sOvUmmpxaHuW8UImwp7eBjmmiWNwYkp4kL4nqzJiO
-         qixBZ+rI8wDRBi5FTiBt1FfkOlJyiOfuqc9cTuTZztfU07OGGulrRkuJme/p/g/Y8ReU
-         qdiWEeGcYUriJIZbApy3hd9fRcf3UDHuTcqfSWbhbO3E6FEgamLtNtO6F7zPaDnqlgge
-         93UYPtyt5Udvz1npVyvnTwvrfearn6A+IMaf7WfupT4RKBAfc8O9ZtrGsHvdReuJSMbn
-         ZXSQ==
+        bh=sQOC6VBdO7JTZWJW4HQ8BotVjJhyczmNPNqI6tVh0A0=;
+        b=A8xLZQKQi8A50stR7EojQhSwoxmCCZWimVNyk/DXH1OK4t/ALK/gJmgUQIWV2eGs4J
+         jg64PCTepiATveH0ydvgfpEHJp1UvneGMEXeXB7nfT9Gtg/RhJcatEkeIT5GlfGb6DMJ
+         cyDDgZvNt/pEpjnXeaNvqjraqZLvBuVpAjsCKe3gNrrt6TEbU9e+BMosxUnxC78uHZ6N
+         nCpqQWrQPE2Ez5jtTPsiqXJgEK90SN4/JzMaSFI2QqeNlFr+TydC0BWRX8/APCYsXrD2
+         PPL0Y+Z/EHb5Bl2AHjzVrzhlNvInTDi06QbK43waytxbbfkZinGtuCJDay2dE0yCU4HG
+         47iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739999171; x=1740603971;
+        d=1e100.net; s=20230601; t=1739999207; x=1740604007;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VbZmcot8Eg1esviTkY9r0HKtYQa8aOZEhqkLR6boS78=;
-        b=rTg5w36f4T7J8aX2c4B5wlWzKWsRH4B8ovFVc+SyoxURrRURX8bP5ppbghkn+nSPzp
-         0A4/WYv5UO9QcwjJJZCHq9fv/ciQYpTMtpvfE2kU0pIHXwy4/roLmZnpt96c7+sfrBp9
-         AjiT2n2soEVP0hKM8rEzW00pQONL6lUo5G9Cg46tykCrwO542bZjocOrg0VOqj8Hr7l+
-         tzafVCqKh3t4yqiwB6KqGXZWBX+/cIkv0CECIyJk7dPU4swEzt6X2IXWtNGXddoNEkB4
-         0HKvWizUWJV1YMpeVAcwxGU9cD3hsMSaqs6eWpZC5AXKynT6ko5XsAg//xlQyxCMlCCs
-         Hlww==
-X-Forwarded-Encrypted: i=1; AJvYcCVPeFBT3euhfKyfReQcsEJky2dTGzevii+bxtm3p0JHvUbrgbk/TGwHdZ3xE0lhUp/s7JCpYD4smX78o7+o@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+iejFlBq+vdoP9BzECVTR60CXXhba19S+BTQRJ1WDDwsePwd4
-	su/naGe3Tn1w+rpEvQP3xYlte6wMiiETixjZfXGNTs1ZA2Orr45j
-X-Gm-Gg: ASbGnct43d8epoz0n6mjKnj1N19Td9mkkAEQv4Jv11uuGpumleWQqsH3SoAvisrv12X
-	Z9Hc2Ste6jz86yy1ygWpYznATbUjkpLWLy/I9j2WSvAGa79tmcs9oi9ECVdoAVo7aqIf+pA0Yct
-	nlZlg1WQWtFEg3ibwqgORLBLFle8pJalLV+HQ76VKD2We6r0rkkJlR3uXPco3UEp3ByB9azcOqY
-	BgpmkAAVLVf/fWqKf9TilThXqCzf2T2/CrnaJxD7piuf4ykxhaDtNO1aVK/jcLT3R1v0sd4fqK1
-	cku027XrFdnMUI/3stkQzUiNAPKwnefKAfWw1bBk7WHsjwVBgJdhutCIug6nf5RaU/KsvNb3Y24
-	ypYTapiJC+ucV1EMCnJA253+FCQO+EwsaF/MyL+/1n7zwdl40zR1RsG6632a0ya6Q+pP6yGH8zX
-	0j5hgtWMM=
-X-Google-Smtp-Source: AGHT+IHjndRED0hE6QMhUpOfvHONTajTDrwGIQ97O3LRboYxeIOv3iux1jtAZ5e2Nn+9QtnWU2VtqQ==
-X-Received: by 2002:a17:907:60d6:b0:ab7:f0fa:1340 with SMTP id a640c23a62f3a-abbcd0b2d3dmr580914866b.50.1739999170486;
-        Wed, 19 Feb 2025 13:06:10 -0800 (PST)
+        bh=sQOC6VBdO7JTZWJW4HQ8BotVjJhyczmNPNqI6tVh0A0=;
+        b=QqEAg/Cbn2yUjBImaNzd6/2dup+6DdDooqPQi+Xpb7+FVtDz5QmLHpA8pUUC5lTUpW
+         r0yjNlNXwaXROCjkaTlD8FUSDRkjZJPyPLEMyqADlfMD5nwpljrW+t3h7n93UW4LnmfK
+         kE+5Krzofjc1D23QVPeRSxF77u1r1t+SYsB1jNxVFAT+/s2f7g8LhAl6nMC2UYD7MLNP
+         du+tyQIGRTE3QU0lklk2wteLIkXJ5Y6rFDhprlIOVeFY2xJlYeVRzX4Clucp/ssJBVlE
+         CMakHxahZm9ya5+VQleJijpY9Sk7FicLDRg4iLjILl1w8fUuzwwVYZHkponZEeX//Lpz
+         Je+A==
+X-Forwarded-Encrypted: i=1; AJvYcCXqa4M5ne6A7iYnY+GS9hZDRIeD+t0sMHNkNxWS0LfxpJgJiavJAJLMqu+vckSsG2UodGp/UlPqqlvraCSu@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqYh3azwqE/HGhIm/pRw4X2Mmgk4Vq4dTOq8KqG2P6xQkaOmJ1
+	uL4rdmEorBrbBjmCtHamChsLcvS/VvHVAGk5XjnHIQYy6bNs7B9T
+X-Gm-Gg: ASbGncu5wPwSAAtNIov/dibO2ttN4dWEAYywqeIwKghHFkvszjPK4t0/uBWxwji1Tv4
+	n2Yll8IQCPhclRa+PRoeuCHy952zpmOjRj6UgIdEmfB4QLfFHk6eKH5r/76TCdivGiWWZf7yHsx
+	en3YVIf4VQV3+Me8PtyHOTdU16pHH0SoicICDUEy/ws1Kqke6JBpCCZnycFjwRg3wMVihYrbYn7
+	VRmwqacbnAcGf2JjjBv3y0D/Xyn1hzYLPx10eR9o4sUMJmWWYsr5nj+ySq9oWkkcO/exEDNYapl
+	ef1cLbxwqLc5Cb8+5LiXlVVVz3R/QcyaeMkm8OTGhwFuNWhrzCO9nao61T9kRSOPdwFX6nWRmaT
+	YB9a7kuLDNl3WM2GZTO2HDljiq6kEnPl4ly/+WtRl0utcn2mPp3yMWQvfj1KwhfZZzSg4aZE+kS
+	UFn34EXIo=
+X-Google-Smtp-Source: AGHT+IGu7yDhimqarpn/Kul5ATaQYK3XNF+RsBue2iV/8jImfh2cK1HapM9OHJ5Cw2ex5dYQq6jdSw==
+X-Received: by 2002:a17:907:9494:b0:aba:6385:b46d with SMTP id a640c23a62f3a-abb711c8145mr2105807966b.50.1739999207287;
+        Wed, 19 Feb 2025 13:06:47 -0800 (PST)
 Received: from ?IPV6:2a02:3100:a982:e400:6dd0:628c:981b:2783? (dynamic-2a02-3100-a982-e400-6dd0-628c-981b-2783.310.pool.telefonica.de. [2a02:3100:a982:e400:6dd0:628c:981b:2783])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abb989d89edsm681114166b.81.2025.02.19.13.06.08
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abb9553fbd0sm712082766b.84.2025.02.19.13.06.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Feb 2025 13:06:09 -0800 (PST)
-Message-ID: <bbf97a74-c601-4eff-a302-15f5d525f85e@gmail.com>
-Date: Wed, 19 Feb 2025 22:06:53 +0100
+        Wed, 19 Feb 2025 13:06:46 -0800 (PST)
+Message-ID: <3ea191bd-7b59-40b4-b357-7fe7a9565420@gmail.com>
+Date: Wed, 19 Feb 2025 22:07:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH net-next 6/8] net: phy: mtk-ge-soc: use new phy_package_shared
+Subject: [PATCH net-next 7/8] net: phy: mscc: use new phy_package_shared
  getters
 From: Heiner Kallweit <hkallweit1@gmail.com>
 To: Andrew Lunn <andrew@lunn.ch>,
@@ -153,50 +153,55 @@ Use the new getters for members of struct phy_package_shared.
 
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 ---
- drivers/net/phy/mediatek/mtk-ge-soc.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/phy/mscc/mscc_ptp.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/phy/mediatek/mtk-ge-soc.c b/drivers/net/phy/mediatek/mtk-ge-soc.c
-index bdf99b327..c3ed97937 100644
---- a/drivers/net/phy/mediatek/mtk-ge-soc.c
-+++ b/drivers/net/phy/mediatek/mtk-ge-soc.c
-@@ -1190,9 +1190,11 @@ static int mt798x_phy_led_hw_control_set(struct phy_device *phydev, u8 index,
- 
- static bool mt7988_phy_led_get_polarity(struct phy_device *phydev, int led_num)
+diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
+index 738a8822f..ca4203d6a 100644
+--- a/drivers/net/phy/mscc/mscc_ptp.c
++++ b/drivers/net/phy/mscc/mscc_ptp.c
+@@ -645,11 +645,12 @@ static int __vsc85xx_gettime(struct ptp_clock_info *info, struct timespec64 *ts)
  {
--	struct mtk_socphy_shared *priv = phydev->shared->priv;
-+	struct mtk_socphy_shared *priv;
- 	u32 polarities;
- 
-+	priv = phy_package_shared_get_priv(phydev);
-+
- 	if (led_num == 0)
- 		polarities = ~(priv->boottrap);
- 	else
-@@ -1229,11 +1231,13 @@ static int mt7988_phy_fix_leds_polarities(struct phy_device *phydev)
- static int mt7988_phy_probe_shared(struct phy_device *phydev)
- {
- 	struct device_node *np = dev_of_node(&phydev->mdio.bus->dev);
--	struct mtk_socphy_shared *shared = phydev->shared->priv;
-+	struct mtk_socphy_shared *shared;
- 	struct regmap *regmap;
- 	u32 reg;
- 	int ret;
+ 	struct vsc85xx_ptp *ptp = container_of(info, struct vsc85xx_ptp, caps);
+ 	struct phy_device *phydev = ptp->phydev;
+-	struct vsc85xx_shared_private *shared =
+-		(struct vsc85xx_shared_private *)phydev->shared->priv;
+ 	struct vsc8531_private *priv = phydev->priv;
++	struct vsc85xx_shared_private *shared;
+ 	u32 val;
  
 +	shared = phy_package_shared_get_priv(phydev);
 +
- 	/* The LED0 of the 4 PHYs in MT7988 are wired to SoC pins LED_A, LED_B,
- 	 * LED_C and LED_D respectively. At the same time those pins are used to
- 	 * bootstrap configuration of the reference clock source (LED_A),
-@@ -1280,7 +1284,7 @@ static int mt7988_phy_probe(struct phy_device *phydev)
- 			return err;
- 	}
+ 	val = vsc85xx_ts_read_csr(phydev, PROCESSOR, MSCC_PHY_PTP_LTC_CTRL);
+ 	val |= PTP_LTC_CTRL_SAVE_ENA;
+ 	vsc85xx_ts_write_csr(phydev, PROCESSOR, MSCC_PHY_PTP_LTC_CTRL, val);
+@@ -696,11 +697,12 @@ static int __vsc85xx_settime(struct ptp_clock_info *info,
+ {
+ 	struct vsc85xx_ptp *ptp = container_of(info, struct vsc85xx_ptp, caps);
+ 	struct phy_device *phydev = ptp->phydev;
+-	struct vsc85xx_shared_private *shared =
+-		(struct vsc85xx_shared_private *)phydev->shared->priv;
+ 	struct vsc8531_private *priv = phydev->priv;
++	struct vsc85xx_shared_private *shared;
+ 	u32 val;
  
--	shared = phydev->shared->priv;
 +	shared = phy_package_shared_get_priv(phydev);
- 	priv = &shared->priv[phydev->mdio.addr];
++
+ 	vsc85xx_ts_write_csr(phydev, PROCESSOR, MSCC_PHY_PTP_LTC_LOAD_SEC_MSB,
+ 			     PTP_LTC_LOAD_SEC_MSB(ts->tv_sec));
+ 	vsc85xx_ts_write_csr(phydev, PROCESSOR, MSCC_PHY_PTP_LTC_LOAD_SEC_LSB,
+@@ -1580,8 +1582,9 @@ int vsc8584_ptp_probe(struct phy_device *phydev)
  
- 	phydev->priv = priv;
+ int vsc8584_ptp_probe_once(struct phy_device *phydev)
+ {
+-	struct vsc85xx_shared_private *shared =
+-		(struct vsc85xx_shared_private *)phydev->shared->priv;
++	struct vsc85xx_shared_private *shared;
++
++	shared = phy_package_shared_get_priv(phydev);
+ 
+ 	/* Initialize shared GPIO lock */
+ 	mutex_init(&shared->gpio_lock);
 -- 
 2.48.1
 
