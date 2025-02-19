@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-48493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0682A3BD0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 12:37:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8329A3BD0B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 12:37:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9CEB7170D84
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 11:37:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE246189A8C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 11:37:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBECD1DF74E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A20671DF742;
 	Wed, 19 Feb 2025 11:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V+J8iX7Q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ic7iNTZl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F86A1DED5E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 11:36:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4F61DEFE6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 11:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739965015; cv=none; b=nUHX9j3QfjMcDnrYP1GC+5nc7e3uqAfcxaK3mFxIhj8STjZ4hCUzcWxE8R/lfuVT/R/mKt2TIJWN5wjE3DZp2QJMglrigFVF/PiVjSaZTpyStTO6JR/rEWHipEABIbDwD9XUnsanzhaid2sQpsIr51RBPRnHok+I/3ruya2Iwyc=
+	t=1739965015; cv=none; b=TRiwM/CWr10/Rz/WwCdgWfXryNumRqcVVAVCtycrJ6ptIaWYLdk3GQnd1QneMed47agEre/5ZJp3VxjkYMdMGitt4ck6M/9HII9ZlMZwUQoAt7IJM9HT5puG9RjwG/94qCthSY2dozXyPtT5yL8ZQaky/Mg2vAM1tasnuuAiRCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1739965015; c=relaxed/simple;
-	bh=3H69X3Cqj2JbC59hSmaYbJvrvfm7od4X1ekR5TALqp8=;
+	bh=33cm5WS/G6VY/dc2qmZDX/V+SsLvyzcbRcvB37CSYbI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OCQZ2oXzByz2jNnjfNnpbaf9d4edUBSJFtZZ8ljzHpw6uNsOrsWIWBWNN71QBxafyn3sxg0IiBsD3vPZk6KQBA136qHwgHMNWM7r2OcT74APoB3CQ9Ozbp08p4qYjTN4L25kDPky75WKbHl94TkLHgaTAxk+KEslTzxv0lyn1JQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V+J8iX7Q; arc=none smtp.client-ip=209.85.221.43
+	 In-Reply-To:To:Cc; b=ZbyKrc4+zbJbTeNmEtzQgulhOtiwl+pDZISbMzQxgZdQSVHfCVaOILH0N63pghJ0JH3qUGZd5A7uV99dx6R1luE9NQGJwPxCf7dr+IMvBsDIqam8j6kj3uPNYqL1Rpd8pJ47vfxMFTK8oSmyq1iN5rbKEmS6EEQ6RK5cbMJc4gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ic7iNTZl; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-38f488f3161so1485028f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 03:36:52 -0800 (PST)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-38f22fe889aso5195643f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 03:36:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739965011; x=1740569811; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1739965012; x=1740569812; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ueWur+NN/gkMnNOeqW0FEJmxaSPUKRn8QUh96pYaGz4=;
-        b=V+J8iX7QZLwH0YkXfbzbrUUBQJ4e5VhNgw7gYbEn/VZIgTTP0Htff234eXbOtYg3Fn
-         YW/B0DTFyAlOfd1F1dlk27rmiTrqQYaFuI1WRnkFrxDij7OBsF0oCvJVZTRCy6u4PyoN
-         mr6VYXIvrujmqOVwV6U1YR9YJnTAIg0GfFY8orSlhg2nRuA1sgJvRDeAzuzG/bdTsnJv
-         XiH8ZTRk1RSa6ONhH+Jwojq+MD76rj3uKR86uu5sbovvRDvTpaOEah35FqR3kgCTwEI7
-         KYuPqxqAJETM98lPhwotBQiJY3lJdLNJnV5qLePJOhNwhtUe2LzYjUsU+Of0Px/B7ieo
-         Jzog==
+        bh=0iGD8NL6kmMwxzaeqi64LDKuVZAOMW+RBizn+/JXQY4=;
+        b=ic7iNTZlRIWUQj7DT5lr/73OPfswNiw2hlScvnzEoGekUAZ9m2wM3hi2uIzeDA0krn
+         lNVT+INT65JfTm5PIoyTewlkclRO6HTB+O49LchJcA5nihEOXhgG2SqCSVlmrcB2sli+
+         B7bcpaup8pFbv4OFAaG7BIowYvuzxD1C6fA+mCWYYyeSEqWv5TfoFvaWXn5+N30cAug8
+         WBcZaIQ0qEpoxL56HVXwcMCtZruo44HLDhomCmVCRHGu1KMAs83lyNvToutpkC7Pn6nN
+         Xi/sbgVVNo0ebTY20WeN20LmlQbeqsQtmUyPqwNEZf9hw/gfyIWyef6GT9QwX+W2Z20m
+         mm9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739965011; x=1740569811;
+        d=1e100.net; s=20230601; t=1739965012; x=1740569812;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ueWur+NN/gkMnNOeqW0FEJmxaSPUKRn8QUh96pYaGz4=;
-        b=Y4u/d7M8CRBeIN03vLDV2SPMMje8NB0iL0O+yrUxa6V6UP1sc2kN3lZdCwiLHNNO0E
-         W8z51t7gWBWvuDs/LJTB4EPcUprXJDRBQpNBbInIdmq9Ut9NAmvjjh9/01VMkiBmwhni
-         t03jR5uCwtnT4X4L0EJOFNc2o2yijhKRtOy1YpgOYS83uzd6/kOXWVOsL+ufDEPz9/nK
-         F7rFXu6Zd+91UKLq9pN8oPb/EG1oVyBCIBO1TZIx4sapKxHhhpB854T4TiqZN6v3/9J8
-         uTwp2TvcRT8qcA6pTJKYEDEqKl6Fq5AaHXCiXmpXXQuL8rdmCu5zVYrQ0dzBIMoPXpfc
-         Yn7g==
-X-Forwarded-Encrypted: i=1; AJvYcCULG95KZzZvHwU5nBN7z0uOjx+NMpyJy02dTCnGVezTc3hTmzFD5kmeLAWGQggnq9jUQtbiX8eEBYa1S5pj@vger.kernel.org
-X-Gm-Message-State: AOJu0YzihrwgWVsg5RcBoaMziViWz6O7QTmWl+VYhFNTJlE57zdnsOkB
-	lx14WmsxqnnH1r/z8vdosqUkJ0dadxWg1K/2K3VLXirLUTKsokVn8BTMXEZwrJk=
-X-Gm-Gg: ASbGncss4Inl6kxWJd5lR8xvwexWnwgFj8tE+3lJXnUHGOngMYyWIIgiLh8GENbl3HE
-	KMjFewF+axZxv31V9r2LW1LGWC93FB/CcPum9kvc1HLEvWJjbipriCeSdsSu7oiVdhmp10ioQuF
-	Aag0u//y+KPgjQuIPBj1CgipM+WinU3IsUBvmyKX4/nUzzYduxpoPptf2NzicGiQCq/zaA2QjQP
-	n85kuwDAe6y+b8zQ/0uCGrQUnel+/cdQCul4dSVStgTZkhHhypTnbNX5/ioQNvjcZELnlmQG3Fk
-	7jZ5l3tB7CnZ+FBdW/lnGuHxj1/GmA==
-X-Google-Smtp-Source: AGHT+IHj7r3NGsZDWby/4EjvSUDybeVrnPg+FYZgiGNi+BxmxRTlu3icH2awOt0iOOQQCiKEmobYIw==
-X-Received: by 2002:a05:6000:188c:b0:38f:2ffc:1e99 with SMTP id ffacd0b85a97d-38f33f51346mr15874258f8f.49.1739965010576;
-        Wed, 19 Feb 2025 03:36:50 -0800 (PST)
+        bh=0iGD8NL6kmMwxzaeqi64LDKuVZAOMW+RBizn+/JXQY4=;
+        b=s3tcMyaZHWT7VVucsPFSD0RRJBZJV9eAMQPF+lW5nAGhWagPlX14YkOBto2GA/vbvY
+         vF3RLrJzvW6SgHNsWkv/NhoqfDSvts0D7cc/SE5XrJWKAKB9stlK7ZkhU7yiJORMo9EY
+         +lwtchsVV3zoHyFWnmbLydRC9PqLouHx6QaeHqpz7uOGe1CN2j3BkqervPNXsLRKp6Bm
+         YTbPWbQfOyJ1CAyUV7K9+AF0gNtPy0FNKTq9PxGvWt8unwyhOj5/8+GVbO0/83c7HmcE
+         D4ZYM7u4l5gEamgBwNHI07w9NBhjvKNcb34KuHH/UlVcyL7eXgNsir2l0KMGmeYs2cS2
+         mW6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUBlyZ2SZI/hDn4G4T5kWjk4ItJFbHLEwCDpB9TBVDGJrBevmTt1LH6Y1444Md6hmktlWztPewPIerMtKvR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1g8JbomFYFNjh68P5ANgUlPmFM4NpluKgqUfBh1ZKBlciHUDb
+	uSFpNlLcRGLa3M64aLi55AOyyUumuvu6PgA4PTv9HvAoqBfFRBk+FQuWZ5Nr02w=
+X-Gm-Gg: ASbGncuAj8mLk66XhtSOtUP4eP1YdFxoReMrxPMUGudQoNDdMAsjgA+Sumk37OPBJIc
+	olp3rzi6S0PwQaEU1tLeGjL3CiDAYox5+ote/XjUk2nYGtqtLnVkuCBx3MwYHDBcE8LtyFBNVRs
+	DIMyYu9cIZqUXELoDKMjxq492saNtSXNEN+5K1gNUamLkukh/w5+rla+JBz4/ftBN7CedReZJev
+	OugyCLJjmLVhLJpLWL9UTa8BDvikxjNCK1K3tP81m0whvWFbEA4dLbPY8c2bC1XANXJqz9bmHt0
+	G8ct6ZIq/HaLCV0xQMoaey7zljSNzw==
+X-Google-Smtp-Source: AGHT+IGNMSOqjWnlyZLFvK6YmONGNDZANemlT7uaXrS7eZVPt8fRzXq+1z+qd/VxYr7IARiwT5KheA==
+X-Received: by 2002:a5d:5888:0:b0:38d:e33d:d0eb with SMTP id ffacd0b85a97d-38f33f125f7mr17169149f8f.9.1739965011565;
+        Wed, 19 Feb 2025 03:36:51 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:8630:e1af:c2ac:8a22])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4399600257asm42437905e9.4.2025.02.19.03.36.49
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4399600257asm42437905e9.4.2025.02.19.03.36.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 03:36:50 -0800 (PST)
+        Wed, 19 Feb 2025 03:36:51 -0800 (PST)
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Wed, 19 Feb 2025 12:36:18 +0100
-Subject: [PATCH 1/4] arm64: dts: qcom: x1e80100: Fix video thermal zone
+Date: Wed, 19 Feb 2025 12:36:19 +0100
+Subject: [PATCH 2/4] arm64: dts: qcom: x1e80100: Apply consistent critical
+ thermal shutdown
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250219-x1e80100-thermal-fixes-v1-1-d110e44ac3f9@linaro.org>
+Message-Id: <20250219-x1e80100-thermal-fixes-v1-2-d110e44ac3f9@linaro.org>
 References: <20250219-x1e80100-thermal-fixes-v1-0-d110e44ac3f9@linaro.org>
 In-Reply-To: <20250219-x1e80100-thermal-fixes-v1-0-d110e44ac3f9@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -96,47 +97,505 @@ Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
 
-A passive trip point at 125°C is pretty high, this is usually the
-temperature for the critical shutdown trip point. Also, we don't have any
-passive cooling devices attached to the video thermal zone.
+The firmware configures the TSENS controller with a maximum temperature of
+120°C. When reaching that temperature, the hardware automatically triggers
+a reset of the entire platform. Some of the thermal zones in x1e80100.dtsi
+use a critical trip point of 125°C. It's impossible to reach those.
 
-Change this to be a critical trip point, and add a "hot" trip point at
-90°C for consistency with the other thermal zones.
+It's preferable to shut down the system cleanly before reaching the
+hardware trip point. Make the critical temperature trip points consistent
+by setting all of them to 115°C and apply a consistent hysteresis.
+The ACPI tables also specify 115°C as critical shutdown temperature.
 
 Cc: stable@vger.kernel.org
 Fixes: 4e915987ff5b ("arm64: dts: qcom: x1e80100: Enable tsens and thermal zone nodes")
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 128 ++++++++++++++++-----------------
+ 1 file changed, 64 insertions(+), 64 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 9d38436763432892ceef95daf0335d4cf446357c..e349cbf6a2665695b5cc961cf9d53e7182e68e7f 100644
+index e349cbf6a2665695b5cc961cf9d53e7182e68e7f..9893fa8353f144e0ee723ab5312cd95aadab041d 100644
 --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
 +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -8727,15 +8727,19 @@ mem-critical {
- 		};
+@@ -8457,8 +8457,8 @@ trip-point0 {
+ 				};
  
- 		video-thermal {
--			polling-delay-passive = <250>;
--
- 			thermal-sensors = <&tsens0 12>;
- 
- 			trips {
- 				trip-point0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+
-+				video-critical {
- 					temperature = <125000>;
- 					hysteresis = <1000>;
--					type = "passive";
-+					type = "critical";
+ 				aoss0-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
  				};
  			};
- 		};
+@@ -8483,7 +8483,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8509,7 +8509,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8535,7 +8535,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8561,7 +8561,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8587,7 +8587,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8613,7 +8613,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8639,7 +8639,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8665,7 +8665,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8683,8 +8683,8 @@ trip-point0 {
+ 				};
+ 
+ 				cpuss2-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -8701,8 +8701,8 @@ trip-point0 {
+ 				};
+ 
+ 				cpuss2-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -8719,7 +8719,7 @@ trip-point0 {
+ 				};
+ 
+ 				mem-critical {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <0>;
+ 					type = "critical";
+ 				};
+@@ -8737,7 +8737,7 @@ trip-point0 {
+ 				};
+ 
+ 				video-critical {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8755,8 +8755,8 @@ trip-point0 {
+ 				};
+ 
+ 				aoss0-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -8781,7 +8781,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8807,7 +8807,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8833,7 +8833,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8859,7 +8859,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8885,7 +8885,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8911,7 +8911,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8937,7 +8937,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8963,7 +8963,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -8981,8 +8981,8 @@ trip-point0 {
+ 				};
+ 
+ 				cpuss2-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -8999,8 +8999,8 @@ trip-point0 {
+ 				};
+ 
+ 				cpuss2-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9017,8 +9017,8 @@ trip-point0 {
+ 				};
+ 
+ 				aoss0-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9043,7 +9043,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9069,7 +9069,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9095,7 +9095,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9121,7 +9121,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9147,7 +9147,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9173,7 +9173,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9199,7 +9199,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9225,7 +9225,7 @@ trip-point1 {
+ 				};
+ 
+ 				cpu-critical {
+-					temperature = <110000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9243,8 +9243,8 @@ trip-point0 {
+ 				};
+ 
+ 				cpuss2-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9261,8 +9261,8 @@ trip-point0 {
+ 				};
+ 
+ 				cpuss2-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9279,8 +9279,8 @@ trip-point0 {
+ 				};
+ 
+ 				aoss0-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9297,8 +9297,8 @@ trip-point0 {
+ 				};
+ 
+ 				nsp0-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9315,8 +9315,8 @@ trip-point0 {
+ 				};
+ 
+ 				nsp1-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9333,8 +9333,8 @@ trip-point0 {
+ 				};
+ 
+ 				nsp2-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9351,8 +9351,8 @@ trip-point0 {
+ 				};
+ 
+ 				nsp3-critical {
+-					temperature = <125000>;
+-					hysteresis = <0>;
++					temperature = <115000>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9377,7 +9377,7 @@ trip-point1 {
+ 				};
+ 
+ 				trip-point2 {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9403,7 +9403,7 @@ trip-point1 {
+ 				};
+ 
+ 				trip-point2 {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9429,7 +9429,7 @@ trip-point1 {
+ 				};
+ 
+ 				trip-point2 {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9455,7 +9455,7 @@ trip-point1 {
+ 				};
+ 
+ 				trip-point2 {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9481,7 +9481,7 @@ trip-point1 {
+ 				};
+ 
+ 				trip-point2 {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9507,7 +9507,7 @@ trip-point1 {
+ 				};
+ 
+ 				trip-point2 {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9533,7 +9533,7 @@ trip-point1 {
+ 				};
+ 
+ 				trip-point2 {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9559,7 +9559,7 @@ trip-point1 {
+ 				};
+ 
+ 				trip-point2 {
+-					temperature = <125000>;
++					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+@@ -9578,7 +9578,7 @@ trip-point0 {
+ 
+ 				camera0-critical {
+ 					temperature = <115000>;
+-					hysteresis = <0>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
+@@ -9596,7 +9596,7 @@ trip-point0 {
+ 
+ 				camera0-critical {
+ 					temperature = <115000>;
+-					hysteresis = <0>;
++					hysteresis = <1000>;
+ 					type = "critical";
+ 				};
+ 			};
 
 -- 
 2.47.2
