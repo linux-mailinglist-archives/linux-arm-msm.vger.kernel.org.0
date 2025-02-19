@@ -1,155 +1,260 @@
-Return-Path: <linux-arm-msm+bounces-48582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98C92A3CD79
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 00:27:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3B2FA3CDB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 00:34:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 648943ADB52
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 23:27:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 015193B38C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 23:33:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B219225E442;
-	Wed, 19 Feb 2025 23:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B87B225EFA9;
+	Wed, 19 Feb 2025 23:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UcpBcpZp"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="m9ShCMhr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8485C1D7E30;
-	Wed, 19 Feb 2025 23:27:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B7025E464
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 23:33:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740007627; cv=none; b=dJ2QF+hmXGRsII+YROs80k++uRcNtMQ/0BIBy5mEDWfesJn0chyWxU0Gpt0Gf+JS2lH+sZESLxq3drCyGgFdxJTcbTfJ7MBB15vCyYrszs2dH33pyaXiR+Hn8vgm/lL18h80aX43UHq0Hy5qnk1jA4euHA2hgfpoQa5pbfoeuxY=
+	t=1740008011; cv=none; b=QQ3hh14mzORUucSt1gGpPCYDalIs0awkkP4bPUljbFf/UViHn5KnX7Gi5rCjlmG2keaX8OVhwPeyLgWx28iV5KvmemIBvct3swE3Fij9dvQwOHBbVedngQpgAtBYB8C0ZkmL3C9Nbax6S4+WwA9eoLl+fn0w299+1lfIGT1w9VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740007627; c=relaxed/simple;
-	bh=WX6lVmo/c25XHWA8ptWmTZ5D0wvhqhVJVdh7eGhlPHM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z+Q6gpcPM7FAneuh1IZ5a9KYMasIPpUqhgxsR5xHNubBT3srRTksdWdewx5QU3TvImi4NhII9/3ouAtiTpKHMz05M/3DBt5Vy8okNi7blwdsVh9+O9w0nRPZuPYoD/MpPmKRTxD6ME/PP6l9mDgDHfwW8FEnjxmBi0ybsaLBLyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UcpBcpZp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE72C4CED1;
-	Wed, 19 Feb 2025 23:27:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740007627;
-	bh=WX6lVmo/c25XHWA8ptWmTZ5D0wvhqhVJVdh7eGhlPHM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UcpBcpZpcjx53AjXDByVc1qriePQTt9PzfDcUl6el/oToFwGynzQcj26tNfwh0jFu
-	 jdDPRzx00n37KeNGxvhBjv00PW5UwN4cAkFpoMC6QMrTIhLArLkj5pfb33H389BN6S
-	 WfCRzQcTcByYd5g2voFukcfKrEcPbtuNco9AQAs/uuN8G2K2Ab6ZD3FGYa8f7/IH1I
-	 sWXgNGRRsKtutwIXQ4bKy2nnjGCvdHOeV27RIqbJjRlctjffOzOsFLhyNwITtTVvry
-	 aX5+xO3L1IPFYn3uzP5qfPJDMVmvZ9gIA6AeDgkjEeAAaW/eWU4khjoAwP82e8IO+v
-	 EbAqdSScg90Ag==
-Date: Wed, 19 Feb 2025 17:27:05 -0600
-From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krishna Manikandan <quic_mkrishn@quicinc.com>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v2 07/16] dt-bindings: display/msm: qcom,sm8750-mdss: Add
- SM8750
-Message-ID: <20250219232705.GA3166541-robh@kernel.org>
-References: <20250217-b4-sm8750-display-v2-0-d201dcdda6a4@linaro.org>
- <20250217-b4-sm8750-display-v2-7-d201dcdda6a4@linaro.org>
+	s=arc-20240116; t=1740008011; c=relaxed/simple;
+	bh=pxhWed/dJiJhA0/QCRcxM+HWEyI5huTedOpWQFzRbOQ=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=nRbg5jsDDO20ny71Di5BBNOFjoPHUHdKQ1JvxMNh+rkmIV4oPh7E4coC9bRqE/WLNUW22UlQOFnA2/vgNomKgVGQkxT5kLKCjlU69fEhbPAoNRA+VFELXVdKit2pJf7CSWDMMrJk3Qxx22qgIU3ZAMOwm6XEfU7Ffi1jHc9gIYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=m9ShCMhr; arc=none smtp.client-ip=209.85.216.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-2fc4dc34291so625409a91.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 15:33:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1740008009; x=1740612809; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2DJ4izjEgjCUkVhwsanRv74q/a9BPlRBLaxGR4w5Rtg=;
+        b=m9ShCMhrs0kTR33rmfuGuVPvV70SVrNNHpft8QRDIazdwIAfXr6a0PQNVmBDKgNWJ3
+         vQVAMX6SERqm1X+6DsTZXodrzRGmwtDYnJGbt//OmngFktLJJh7/T8ceYChmLVAy481b
+         ZHjHcry9VTYHtf679eeKZwzFOnfr9K5aJK+YIyEXQOZ171Rnk4CNslUz38vtMb//QOvT
+         mFPptAfMcwphHGM6xf1CRGJsenBVbzdg3wHlInC9nQMNXN7y3+DIU0/U2sO7sXvy+amP
+         pDG1SQ2WXbZkDJ0Ny3Fio1NMW7108EKZMpaLMOYia3fAKOoP7YCTluipFJu8Zd36w4lq
+         cGwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740008009; x=1740612809;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2DJ4izjEgjCUkVhwsanRv74q/a9BPlRBLaxGR4w5Rtg=;
+        b=lnHkTglHvDpCBr+odAgyH5B53JQwEwYnuZzxShxyaUqIt45L1TywyhGHHIEik/7y6K
+         QZN6A6fU1lL3h9y3/9YWLDN43rsfYQXcf8dQ/YtsXwBbRMvM8LraOTnPgEBGJS1hsOHH
+         +C2ZT3ppknztYdCLmzTbg4fm8oib0mFg0V7rKRsD/tXcowgq3XQciHKRCx1lPbQdNjHm
+         chIP+K+7KaEwXfqggKBJ7AhIhH2CsxIkRIjZ5Aual/aZjCEuVkd/YKgYNS5Ka9QtDcsr
+         InvNt4J+3O/O3QX+HT/oOlY2jTKN8rWHdqzGLPERLcgyh9BUccAVMhDNwFkRDojjI7hL
+         Xglg==
+X-Forwarded-Encrypted: i=1; AJvYcCU9216LFeM7VjhhLWW19BtqAKR5pOv3HZ0qE03ZRem84JUdeosAYXGHRRpX2W5J13hxEdg/GDiQAkS8GUI4@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmAG9VSZv2an77br6sT+YRuA391mfQz1EYRje8MkBpm0ulXHge
+	WicInxwKPbMr9KNaPTbsjlV64CGd7LSUO4W309A0nhDc858260MIMIeMe65mQqDg65Jo2dYRdUk
+	/aWmUM1IdPnlrW7CEHR1p7Q==
+X-Google-Smtp-Source: AGHT+IEA9plpwCt1DpgufppGTOelrxd9+ehj77DBbE2MXuFhuysJKOX+DxJ0fO6BC6dr9p7RYFtSnpVQNc/t6/sErQ==
+X-Received: from pjbee11.prod.google.com ([2002:a17:90a:fc4b:b0:2fb:fac8:f45b])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:5201:b0:2f6:dcc9:38e0 with SMTP id 98e67ed59e1d1-2fcd0b645bemr605803a91.0.1740008009352;
+ Wed, 19 Feb 2025 15:33:29 -0800 (PST)
+Date: Wed, 19 Feb 2025 23:33:28 +0000
+In-Reply-To: <20250117163001.2326672-6-tabba@google.com> (message from Fuad
+ Tabba on Fri, 17 Jan 2025 16:29:51 +0000)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250217-b4-sm8750-display-v2-7-d201dcdda6a4@linaro.org>
+Mime-Version: 1.0
+Message-ID: <diqzzfih8q7r.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [RFC PATCH v5 05/15] KVM: guest_memfd: Folio mappability states
+ and functions that manage their transition
+From: Ackerley Tng <ackerleytng@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Feb 17, 2025 at 05:41:28PM +0100, Krzysztof Kozlowski wrote:
-> Add MDSS/MDP display subsystem for Qualcomm SM8750 SoC, next generation
-> with two revisions up of the IP block comparing to SM8650.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/display/msm/qcom,sm8750-mdss.yaml     | 460 +++++++++++++++++++++
->  1 file changed, 460 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8750-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8750-mdss.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..cfa21b0d081338f1b94779594798f86284ba0677
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8750-mdss.yaml
-> @@ -0,0 +1,460 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/qcom,sm8750-mdss.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SM8750 Display MDSS
-> +
-> +maintainers:
-> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> +
-> +description:
-> +  SM8650 MSM Mobile Display Subsystem(MDSS), which encapsulates sub-blocks like
-> +  DPU display controller, DSI and DP interfaces etc.
-> +
-> +$ref: /schemas/display/msm/mdss-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm8750-mdss
-> +
-> +  clocks:
-> +    items:
-> +      - description: Display AHB
-> +      - description: Display hf AXI
-> +      - description: Display core
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  interconnects:
-> +    maxItems: 2
-> +
-> +  interconnect-names:
-> +    maxItems: 2
-> +
-> +patternProperties:
-> +  "^display-controller@[0-9a-f]+$":
-> +    type: object
-> +    additionalProperties: true
-> +    properties:
-> +      compatible:
-> +        const: qcom,sm8750-dpu
-> +
-> +  "^displayport-controller@[0-9a-f]+$":
-> +    type: object
-> +    additionalProperties: true
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: qcom,sm8750-dp
-> +          - const: qcom,sm8650-dp
+Fuad Tabba <tabba@google.com> writes:
 
-Just use 'contains' here with the 8750 compatible. We'll check the order 
-when the DP schema is applied.
+This question should not block merging of this series since performance
+can be improved in a separate series:
 
-Up to you what to do on the ones with a single compatible.
+> <snip>
+>
+> +
+> +/*
+> + * Marks the range [start, end) as mappable by both the host and the guest.
+> + * Usually called when guest shares memory with the host.
+> + */
+> +static int gmem_set_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
+> +{
+> +	struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+> +	void *xval = xa_mk_value(KVM_GMEM_ALL_MAPPABLE);
+> +	pgoff_t i;
+> +	int r = 0;
+> +
+> +	filemap_invalidate_lock(inode->i_mapping);
+> +	for (i = start; i < end; i++) {
 
-Rob
+Were any alternative data structures considered, or does anyone have
+suggestions for alternatives? Doing xa_store() in a loop here will take
+a long time for large ranges.
+
+I looked into the following:
+
+Option 1: (preferred) Maple trees
+
+Maple tree has a nice API, though it would be better if it can combine
+ranges that have the same value.
+
+I will have to dig into performance, but I'm assuming that even large
+ranges are stored in a few nodes so this would be faster than iterating
+over indices in an xarray.
+
+void explore_maple_tree(void)
+{
+	DEFINE_MTREE(mt);
+
+	mt_init_flags(&mt, MT_FLAGS_LOCK_EXTERN | MT_FLAGS_USE_RCU);
+
+	mtree_store_range(&mt, 0, 16, xa_mk_value(0x20), GFP_KERNEL);
+	mtree_store_range(&mt, 8, 24, xa_mk_value(0x32), GFP_KERNEL);
+	mtree_store_range(&mt, 5, 10, xa_mk_value(0x32), GFP_KERNEL);
+
+	{
+		void *entry;
+		MA_STATE(mas, &mt, 0, 0);
+
+		mas_for_each(&mas, entry, ULONG_MAX) {
+			pr_err("[%ld, %ld]: 0x%lx\n", mas.index, mas.last, xa_to_value(entry));
+		}
+	}
+
+	mtree_destroy(&mt);
+}
+
+stdout:
+
+[0, 4]: 0x20
+[5, 10]: 0x32
+[11, 24]: 0x32
+
+Option 2: Multi-index xarray
+
+The API is more complex than maple tree's, and IIUC multi-index xarrays
+are not generalizable to any range, so the range can't be 8 1G pages + 1
+4K page for example. The size of the range has to be a power of 2 that
+is greater than 4K.
+
+Using multi-index xarrays would mean computing order to store
+multi-index entries. This can be computed from the size of the range to
+be added, but is an additional source of errors.
+
+Option 3: Interval tree, which is built on top of red-black trees
+
+The API is set up at a lower level. A macro is used to define interval
+trees, the user has to deal with nodes in the tree directly and
+separately define functions to override sub-ranges in larger ranges.
+
+> +		r = xa_err(xa_store(mappable_offsets, i, xval, GFP_KERNEL));
+> +		if (r)
+> +			break;
+> +	}
+> +	filemap_invalidate_unlock(inode->i_mapping);
+> +
+> +	return r;
+> +}
+> +
+> +/*
+> + * Marks the range [start, end) as not mappable by the host. If the host doesn't
+> + * have any references to a particular folio, then that folio is marked as
+> + * mappable by the guest.
+> + *
+> + * However, if the host still has references to the folio, then the folio is
+> + * marked and not mappable by anyone. Marking it is not mappable allows it to
+> + * drain all references from the host, and to ensure that the hypervisor does
+> + * not transition the folio to private, since the host still might access it.
+> + *
+> + * Usually called when guest unshares memory with the host.
+> + */
+> +static int gmem_clear_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
+> +{
+> +	struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+> +	void *xval_guest = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
+> +	void *xval_none = xa_mk_value(KVM_GMEM_NONE_MAPPABLE);
+> +	pgoff_t i;
+> +	int r = 0;
+> +
+> +	filemap_invalidate_lock(inode->i_mapping);
+> +	for (i = start; i < end; i++) {
+> +		struct folio *folio;
+> +		int refcount = 0;
+> +
+> +		folio = filemap_lock_folio(inode->i_mapping, i);
+> +		if (!IS_ERR(folio)) {
+> +			refcount = folio_ref_count(folio);
+> +		} else {
+> +			r = PTR_ERR(folio);
+> +			if (WARN_ON_ONCE(r != -ENOENT))
+> +				break;
+> +
+> +			folio = NULL;
+> +		}
+> +
+> +		/* +1 references are expected because of filemap_lock_folio(). */
+> +		if (folio && refcount > folio_nr_pages(folio) + 1) {
+> +			/*
+> +			 * Outstanding references, the folio cannot be faulted
+> +			 * in by anyone until they're dropped.
+> +			 */
+> +			r = xa_err(xa_store(mappable_offsets, i, xval_none, GFP_KERNEL));
+> +		} else {
+> +			/*
+> +			 * No outstanding references. Transition the folio to
+> +			 * guest mappable immediately.
+> +			 */
+> +			r = xa_err(xa_store(mappable_offsets, i, xval_guest, GFP_KERNEL));
+> +		}
+> +
+> +		if (folio) {
+> +			folio_unlock(folio);
+> +			folio_put(folio);
+> +		}
+> +
+> +		if (WARN_ON_ONCE(r))
+> +			break;
+> +	}
+> +	filemap_invalidate_unlock(inode->i_mapping);
+> +
+> +	return r;
+> +}
+> +
+>
+> <snip>
 
