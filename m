@@ -1,80 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-48559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16B68A3CAB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 22:02:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC663A3CABB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 22:02:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 637253A4794
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 21:01:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B24516B45E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 21:02:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ACDA253F13;
-	Wed, 19 Feb 2025 21:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AE8922CBCB;
+	Wed, 19 Feb 2025 21:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L2Pu5f+2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HXsmPCFq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4217A253345;
-	Wed, 19 Feb 2025 21:01:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64D41AF4E9;
+	Wed, 19 Feb 2025 21:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739998872; cv=none; b=d+QiCIBdNAMS7tObSs/6ubVA58nU1CA32tHI7SwUngGDPWuebI88kVrJ+Nejpz8UyKARSB5H699JEbvMCLxLgkxfthPKyuRNHCIhWVjZZ6VOVfZsZywUj6skeAnihu+AOyozSmnJguD/a5kEcFfTETwUclF6Lz8cjOdDZQ+FDdk=
+	t=1739998947; cv=none; b=ezTh0nRA3BqMFmQ0i3TB+ywlTHrL9Yanmdssus2EysJ9xkpLwG0TOCA5c9GXq9HMdAW0NlC5ssODV8qDtaDzJkCJDs41cC2eB26vujcDqWJduRcVUZKYEOmg0rF1+OHtVF5XE+gD3TAFERVM3y0xzyfdCXlSAi6VVe/GtRgxcXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739998872; c=relaxed/simple;
-	bh=5tuFDmpLvrB9efTDBdJXXM3zDVl7im2uMUcvPPKT44s=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=JMJrUU2uxvbBCTvwOQpa5q8gkhd6BQ4ZABzyzvAM++RTi6L5x9/iNV9c/fKBbb/wF/obQTqv8ITNEThNxE0PX2Ez5vf+hTkj4isHMTmC4nyrAdeA915MBfzmk7roDwe5K0X7oOIp/2BxRrfhT/GPTIiyMWzVsw+56W5l5/4hneY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L2Pu5f+2; arc=none smtp.client-ip=209.85.208.41
+	s=arc-20240116; t=1739998947; c=relaxed/simple;
+	bh=ZVlES8cLg6Pp9Q3/+O4fAYIqBdAxJpXWqoQtKdKk+Ak=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=BVUXuP/PDmp5alnWSHkY4A3+t5LH3TwXNzSJd4QTCXCX9IhcbJAcZiR/pRAVq/wUTr3LXv2lHbCq8Sc1Hx6aECE5kJYaLUYf3i6CK1JrviPZVj5rl47L12s/q1d/vty8hSZx99EjdrlvAKeD+PsP02tuN8yMrCPOH739D6nc4ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HXsmPCFq; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5dccaaca646so507941a12.0;
-        Wed, 19 Feb 2025 13:01:09 -0800 (PST)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5e05717755bso255110a12.0;
+        Wed, 19 Feb 2025 13:02:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739998868; x=1740603668; darn=vger.kernel.org;
-        h=content-transfer-encoding:autocrypt:subject:from:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n/HcLc1vBRDNLkVs/ylW8/ztC8KcpMW5l5ZyrlNLue4=;
-        b=L2Pu5f+2HPQFbeMv84IVVuO8r5s7eVv9NQ/pbtg6ixLpWFSWCQ95JwAmLiRHEtVOez
-         B4HXLOvVzHNsWYAgsobteGgJxqrvzY5j8sC6QyyAcfrkXgpOoeX9YP09ooNg0XtKgDBM
-         rITpzTAgOLhvLNfTFlW5Db2XG2itdrfip9otMXs5OTGI363JdLzvUHeQVrwGyi+gj6Nl
-         wGmmw3aOR5Dokc/4fip5esT3PohsD8f9XMTk/6ylLPI8pyD1IE8H7HsiHULk1eyr8Ra5
-         eIoRezPkbC8o2t+iGBSOBfkstOKEmvDkvUz40W2HxZD7KCUDhiPJ0w52V2EobHW0ROqV
-         6Byg==
+        d=gmail.com; s=20230601; t=1739998941; x=1740603741; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LTazg9BGcpTNM1FEEAymLCtsaeHNiUCA6IgZYSoJOOQ=;
+        b=HXsmPCFq81CUGPkJjJWxrnRfP9jdbxmOdxslw+lZq0QJtDlZZXy9BGkTXBcmJyb9QJ
+         7ecMStUM9vmYJZrV3czyK8UsNFQ23SaibVqIswVvpg+lErlE2cjOdTdVOH5lYwl3dVVa
+         mPg0NylmEoi24E4zrL/tiRbG3/CCt+Vh1g8CSm7OMbjyw48WC6HP94NK+m+9GWvVkULm
+         678+vb3+ORC60vIiJTnoVEuyTpX46sFBbFigkjt5A4ju3V/AG3DK4e9e6z0gr1KKZe8b
+         pBowbfu0+bQDwNQ4SMqIzAvLekKv0uRbJ3F+jVhVXKKRqdF+Fjlbe3LNDzXwWEJchR+A
+         4JrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739998868; x=1740603668;
-        h=content-transfer-encoding:autocrypt:subject:from:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n/HcLc1vBRDNLkVs/ylW8/ztC8KcpMW5l5ZyrlNLue4=;
-        b=FKJ7BCcDWqQo5MgSbExMdtpUJqohW4+6rHKrroON2mn5Y+eyGd6tCNpmwAofib6siX
-         I86+95g/HP6+qpASjw3P76TqiAoofL5kmI6hzoh+42niOyZK56zJBJLoXpdpwjuSoE8l
-         B8QC40XszZ4Tv2wATclporSjraUijP1ptXfD8uyRRBL3cuUC7WXGPwyVXzr8U3ou99aq
-         oRyp9rW1U7dzl4SzWKaOsqtFGTdNR+BminBkOvUhMRnVJPEeTN/KotoOVW8OS3FykP4L
-         uMzr/O3KcnTPA/zmZ5/UegKDzbr4L0dt+RXvqnmdi/iZlbmWK5U0DqCGaYjtwISrGnVF
-         Ro6w==
-X-Forwarded-Encrypted: i=1; AJvYcCW1S5R+vjmu8KDvWKgrljQSz5nbAu0YKoPrMPg2Jfipzoif6PFE2Tvnp9Y00atTo4AqA3vCYQQFTR9JBa8c@vger.kernel.org
-X-Gm-Message-State: AOJu0YwAO3in4Mv6KW63P1U0sWaiu5C1hBaevTcfKiHQKZg6rKLTqASc
-	/ifqLZ0cJUDhSYnHpITIc+xHAOx85nWknlSgxY/IeHJP0JTQsCEi
-X-Gm-Gg: ASbGncvgI1JzZjBTB7gY0CB5AebVrpdQf5xw3wK0Hn1tfoYfGCymqjnJwpUR351F+9z
-	ueRq4dkjZijClk8I246RrZLPfRufKl9ierBkELJfmB5BSa/WL4ITY/k/5BwQ1vjHDgwnJlGcK1t
-	lDtSzGvbNwSnKHwLMJM/kbBnIX5i7oFaYnxwG2v8Cxbu2cqls96HzXbb3mH7DxuCZj5MadvKB/I
-	RuH3rsapDWCmPzHKMQ5WVl6xglfUxc3YIGFtm0XmG0pfyA74AxUO8oEbZlJRcb6qK0KNte5+/dn
-	vknYEmUrGBlqZ0dNkkVuOeVdA5DDcL3lJKTf1rH2EBlbUnjhoMvOqNPB2byfxcUTpCNw7mFj9XI
-	ztz+XpQ0VbZe/kBYQ+00YMTaU+Nc8JTenj57XmXUI57h+K3ZYosXk46i2Ony+ZEYfzF8C4HfVQE
-	B+58XF5v0=
-X-Google-Smtp-Source: AGHT+IH9ZMq8ky2erXIOhsHzCfqhRS36ZUg26/HaCIV4syGcJuFX40SQztd94cUQWV3y4A8uHd5E5g==
-X-Received: by 2002:a05:6402:1d4f:b0:5de:d932:a54c with SMTP id 4fb4d7f45d1cf-5e0a1200077mr873058a12.2.1739998868275;
-        Wed, 19 Feb 2025 13:01:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739998941; x=1740603741;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LTazg9BGcpTNM1FEEAymLCtsaeHNiUCA6IgZYSoJOOQ=;
+        b=E8ZBkoLqNEaErXnjoKkiiSbkRMNi4z1QvdeSxpDreW4TPpohm8k1HQHkTVlBj7GoQY
+         Rw4TNBwVpRKa7MaCiKeYROTcedJ6XCwmbYXzJgk03SbI/6VhMjgA3Z4t7FIMi+qOzVQY
+         EdI3lsAbr7eq2T1URlUs2vXiM0Z9M0ug0Zsnv4XXZLGuSObFnGKQs5sMgG8f0eURq2o2
+         j0glwPM+yMt4ERh+cL393JRF8tIRhn6Bz4W1red9nGBmOl/N0rupXsBplAcTPXUx+6zW
+         S4FvYXE+z48BjY/hR0gkAF0kIVMUOrVujuLh0GX2OLjFGQU1L4iTEvbweBLER4MldPdC
+         4Bag==
+X-Forwarded-Encrypted: i=1; AJvYcCWJ3PcJoi3FFS7pTQLTePjXPYkYs46D9XOxYH0Q8ygy3CPOEOTi/xgOwCtMwYW54NKPLBtvk5GbtaS/3DyI@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNMw6+8E/5+YsKY00sdWPezw1ZBHOUF193EHg2p2LssC3BSuN4
+	FO4OmjR5BndXg/9YhD5YXZBlLXB2S71IZE0ZxaTB8BiVUIUTG7+h
+X-Gm-Gg: ASbGncuWLk8+CBTgLf0vHUqmLxi9lpuylE8I5w5OKYg8/aZML0FCmda+WZaaZLtERbq
+	dcpN4WwGR72VQKFLDlYOL1GMtxu8zz9iDCWFcvShffMxaE22mIkG11aXEC+FAE3Zv1yw7+4LhOz
+	SpZYNEyOF4s/8bbLDh3Xkg/xOXOP4JMVgoeMJYlkO+Cj5ALcfP3IJA9cRCzEaT7KHhqedbqHklu
+	tL5yOqt+ZCL7ZViNKtIJKLETN3fJQ5njdtNnY+9TR0U19bDIs3vAyMex4jma6IyZXu2P5EoUzCe
+	5VaN42witkrTlOxCilDweqpn6boiyRIO9L14Wnnnhdb56fkEoZsrE8jbnBwhi4mZv07WtgDPKeG
+	KvkvCXxgGXMHWJ8Inqyoqzigh1EvC3dXD9YA+qWDkn3df0gOJDlqC1SggK6Y1Rt86kATJGCECR6
+	7+cf47f3M=
+X-Google-Smtp-Source: AGHT+IHprOe4MPJUbVlEKnY0AKzMXHUw/DFl+y2L8TtOSH3EBqkUTzpq3+94PV00Bo0nCCp1cgrbsg==
+X-Received: by 2002:a05:6402:2707:b0:5de:dff7:7d8f with SMTP id 4fb4d7f45d1cf-5e0360e0582mr23625431a12.18.1739998940701;
+        Wed, 19 Feb 2025 13:02:20 -0800 (PST)
 Received: from ?IPV6:2a02:3100:a982:e400:6dd0:628c:981b:2783? (dynamic-2a02-3100-a982-e400-6dd0-628c-981b-2783.310.pool.telefonica.de. [2a02:3100:a982:e400:6dd0:628c:981b:2783])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5dece28808fsm10877033a12.75.2025.02.19.13.01.05
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5dece1c43a0sm11052090a12.28.2025.02.19.13.02.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Feb 2025 13:01:07 -0800 (PST)
-Message-ID: <c02c50ab-da01-4cfa-af72-4bed109fa8e2@gmail.com>
-Date: Wed, 19 Feb 2025 22:01:51 +0100
+        Wed, 19 Feb 2025 13:02:19 -0800 (PST)
+Message-ID: <1beee958-1b12-4d09-a464-67125e27f55d@gmail.com>
+Date: Wed, 19 Feb 2025 22:03:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +84,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Subject: [PATCH net-next 1/8] net: phy: move PHY package code from
+ phy_device.c to own source file
+From: Heiner Kallweit <hkallweit1@gmail.com>
 To: Andrew Lunn <andrew@lunn.ch>,
  Russell King - ARM Linux <linux@armlinux.org.uk>,
  Paolo Abeni <pabeni@redhat.com>, Jakub Kicinski <kuba@kernel.org>,
@@ -96,9 +100,8 @@ Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
  "linux-arm-kernel@lists.infradead.org"
  <linux-arm-kernel@lists.infradead.org>, linux-mediatek@lists.infradead.org,
  linux-arm-msm@vger.kernel.org
-From: Heiner Kallweit <hkallweit1@gmail.com>
-Subject: [PATCH net-next 0/8] net: phy: move PHY package code to its own
- source file
+References: <c02c50ab-da01-4cfa-af72-4bed109fa8e2@gmail.com>
+Content-Language: en-US
 Autocrypt: addr=hkallweit1@gmail.com; keydata=
  xsFNBF/0ZFUBEAC0eZyktSE7ZNO1SFXL6cQ4i4g6Ah3mOUIXSB4pCY5kQ6OLKHh0FlOD5/5/
  sY7IoIouzOjyFdFPnz4Bl3927ClT567hUJJ+SNaFEiJ9vadI6vZm2gcY4ExdIevYHWe1msJF
@@ -142,34 +145,535 @@ Autocrypt: addr=hkallweit1@gmail.com; keydata=
  H/0Z53okMykVs3a8tECPHIxnre2UxKdTbCEkjkR4V6JyplTS47oWMw3zyI7zkaadfzVFBxk2
  lo/Tny+FX1Azea3Ce7oOnRUEZtWSsUidtIjmL8YUQFZYm+JUIgfRmSpMFq8JP4VH43GXpB/S
  OCrl+/xujzvoUBFV/cHKjEQYBxo+MaiQa1U54ykM2W4DnHb1UiEf5xDkFd4=
+In-Reply-To: <c02c50ab-da01-4cfa-af72-4bed109fa8e2@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-This series contributes to cleaning up phylib by moving PHY package
-related code to its own source file.
+This patch is the first step in moving the PHY package related code
+to its own source file. No functional change intended.
 
-Heiner Kallweit (8):
-  net: phy: move PHY package code from phy_device.c to own source file
-  net: phy: move PHY package related code from phy.h to phy_package.c
-  net: phy: add getters for public members in struct phy_package_shared
-  net: phy: qca807x: use new phy_package_shared getters
-  net: phy: micrel: use new phy_package_shared getters
-  net: phy: mtk-ge-soc: use new phy_package_shared getters
-  net: phy: mscc: use new phy_package_shared getters
-  net: phy: make struct phy_package_shared private to phylib
-
- drivers/net/phy/Makefile              |   3 +-
- drivers/net/phy/mediatek/mtk-ge-soc.c |  10 +-
- drivers/net/phy/micrel.c              |  12 +-
- drivers/net/phy/mscc/mscc_ptp.c       |  15 +-
- drivers/net/phy/phy_device.c          | 237 ------------------
- drivers/net/phy/phy_package.c         | 348 ++++++++++++++++++++++++++
- drivers/net/phy/qcom/qca807x.c        |  20 +-
- include/linux/phy.h                   | 125 +--------
- 8 files changed, 396 insertions(+), 374 deletions(-)
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+---
+ drivers/net/phy/Makefile      |   3 +-
+ drivers/net/phy/phy_device.c  | 237 ---------------------------------
+ drivers/net/phy/phy_package.c | 244 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 246 insertions(+), 238 deletions(-)
  create mode 100644 drivers/net/phy/phy_package.c
 
+diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
+index c8dac6e92..8f9ba5e82 100644
+--- a/drivers/net/phy/Makefile
++++ b/drivers/net/phy/Makefile
+@@ -2,7 +2,8 @@
+ # Makefile for Linux PHY drivers
+ 
+ libphy-y			:= phy.o phy-c45.o phy-core.o phy_device.o \
+-				   linkmode.o phy_link_topology.o
++				   linkmode.o phy_link_topology.o \
++				   phy_package.o
+ mdio-bus-y			+= mdio_bus.o mdio_device.o
+ 
+ ifdef CONFIG_MDIO_DEVICE
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 7d21379fa..22588dce1 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -1686,243 +1686,6 @@ bool phy_driver_is_genphy_10g(struct phy_device *phydev)
+ }
+ EXPORT_SYMBOL_GPL(phy_driver_is_genphy_10g);
+ 
+-/**
+- * phy_package_join - join a common PHY group
+- * @phydev: target phy_device struct
+- * @base_addr: cookie and base PHY address of PHY package for offset
+- *   calculation of global register access
+- * @priv_size: if non-zero allocate this amount of bytes for private data
+- *
+- * This joins a PHY group and provides a shared storage for all phydevs in
+- * this group. This is intended to be used for packages which contain
+- * more than one PHY, for example a quad PHY transceiver.
+- *
+- * The base_addr parameter serves as cookie which has to have the same values
+- * for all members of one group and as the base PHY address of the PHY package
+- * for offset calculation to access generic registers of a PHY package.
+- * Usually, one of the PHY addresses of the different PHYs in the package
+- * provides access to these global registers.
+- * The address which is given here, will be used in the phy_package_read()
+- * and phy_package_write() convenience functions as base and added to the
+- * passed offset in those functions.
+- *
+- * This will set the shared pointer of the phydev to the shared storage.
+- * If this is the first call for a this cookie the shared storage will be
+- * allocated. If priv_size is non-zero, the given amount of bytes are
+- * allocated for the priv member.
+- *
+- * Returns < 1 on error, 0 on success. Esp. calling phy_package_join()
+- * with the same cookie but a different priv_size is an error.
+- */
+-int phy_package_join(struct phy_device *phydev, int base_addr, size_t priv_size)
+-{
+-	struct mii_bus *bus = phydev->mdio.bus;
+-	struct phy_package_shared *shared;
+-	int ret;
+-
+-	if (base_addr < 0 || base_addr >= PHY_MAX_ADDR)
+-		return -EINVAL;
+-
+-	mutex_lock(&bus->shared_lock);
+-	shared = bus->shared[base_addr];
+-	if (!shared) {
+-		ret = -ENOMEM;
+-		shared = kzalloc(sizeof(*shared), GFP_KERNEL);
+-		if (!shared)
+-			goto err_unlock;
+-		if (priv_size) {
+-			shared->priv = kzalloc(priv_size, GFP_KERNEL);
+-			if (!shared->priv)
+-				goto err_free;
+-			shared->priv_size = priv_size;
+-		}
+-		shared->base_addr = base_addr;
+-		shared->np = NULL;
+-		refcount_set(&shared->refcnt, 1);
+-		bus->shared[base_addr] = shared;
+-	} else {
+-		ret = -EINVAL;
+-		if (priv_size && priv_size != shared->priv_size)
+-			goto err_unlock;
+-		refcount_inc(&shared->refcnt);
+-	}
+-	mutex_unlock(&bus->shared_lock);
+-
+-	phydev->shared = shared;
+-
+-	return 0;
+-
+-err_free:
+-	kfree(shared);
+-err_unlock:
+-	mutex_unlock(&bus->shared_lock);
+-	return ret;
+-}
+-EXPORT_SYMBOL_GPL(phy_package_join);
+-
+-/**
+- * of_phy_package_join - join a common PHY group in PHY package
+- * @phydev: target phy_device struct
+- * @priv_size: if non-zero allocate this amount of bytes for private data
+- *
+- * This is a variant of phy_package_join for PHY package defined in DT.
+- *
+- * The parent node of the @phydev is checked as a valid PHY package node
+- * structure (by matching the node name "ethernet-phy-package") and the
+- * base_addr for the PHY package is passed to phy_package_join.
+- *
+- * With this configuration the shared struct will also have the np value
+- * filled to use additional DT defined properties in PHY specific
+- * probe_once and config_init_once PHY package OPs.
+- *
+- * Returns < 0 on error, 0 on success. Esp. calling phy_package_join()
+- * with the same cookie but a different priv_size is an error. Or a parent
+- * node is not detected or is not valid or doesn't match the expected node
+- * name for PHY package.
+- */
+-int of_phy_package_join(struct phy_device *phydev, size_t priv_size)
+-{
+-	struct device_node *node = phydev->mdio.dev.of_node;
+-	struct device_node *package_node;
+-	u32 base_addr;
+-	int ret;
+-
+-	if (!node)
+-		return -EINVAL;
+-
+-	package_node = of_get_parent(node);
+-	if (!package_node)
+-		return -EINVAL;
+-
+-	if (!of_node_name_eq(package_node, "ethernet-phy-package")) {
+-		ret = -EINVAL;
+-		goto exit;
+-	}
+-
+-	if (of_property_read_u32(package_node, "reg", &base_addr)) {
+-		ret = -EINVAL;
+-		goto exit;
+-	}
+-
+-	ret = phy_package_join(phydev, base_addr, priv_size);
+-	if (ret)
+-		goto exit;
+-
+-	phydev->shared->np = package_node;
+-
+-	return 0;
+-exit:
+-	of_node_put(package_node);
+-	return ret;
+-}
+-EXPORT_SYMBOL_GPL(of_phy_package_join);
+-
+-/**
+- * phy_package_leave - leave a common PHY group
+- * @phydev: target phy_device struct
+- *
+- * This leaves a PHY group created by phy_package_join(). If this phydev
+- * was the last user of the shared data between the group, this data is
+- * freed. Resets the phydev->shared pointer to NULL.
+- */
+-void phy_package_leave(struct phy_device *phydev)
+-{
+-	struct phy_package_shared *shared = phydev->shared;
+-	struct mii_bus *bus = phydev->mdio.bus;
+-
+-	if (!shared)
+-		return;
+-
+-	/* Decrease the node refcount on leave if present */
+-	if (shared->np)
+-		of_node_put(shared->np);
+-
+-	if (refcount_dec_and_mutex_lock(&shared->refcnt, &bus->shared_lock)) {
+-		bus->shared[shared->base_addr] = NULL;
+-		mutex_unlock(&bus->shared_lock);
+-		kfree(shared->priv);
+-		kfree(shared);
+-	}
+-
+-	phydev->shared = NULL;
+-}
+-EXPORT_SYMBOL_GPL(phy_package_leave);
+-
+-static void devm_phy_package_leave(struct device *dev, void *res)
+-{
+-	phy_package_leave(*(struct phy_device **)res);
+-}
+-
+-/**
+- * devm_phy_package_join - resource managed phy_package_join()
+- * @dev: device that is registering this PHY package
+- * @phydev: target phy_device struct
+- * @base_addr: cookie and base PHY address of PHY package for offset
+- *   calculation of global register access
+- * @priv_size: if non-zero allocate this amount of bytes for private data
+- *
+- * Managed phy_package_join(). Shared storage fetched by this function,
+- * phy_package_leave() is automatically called on driver detach. See
+- * phy_package_join() for more information.
+- */
+-int devm_phy_package_join(struct device *dev, struct phy_device *phydev,
+-			  int base_addr, size_t priv_size)
+-{
+-	struct phy_device **ptr;
+-	int ret;
+-
+-	ptr = devres_alloc(devm_phy_package_leave, sizeof(*ptr),
+-			   GFP_KERNEL);
+-	if (!ptr)
+-		return -ENOMEM;
+-
+-	ret = phy_package_join(phydev, base_addr, priv_size);
+-
+-	if (!ret) {
+-		*ptr = phydev;
+-		devres_add(dev, ptr);
+-	} else {
+-		devres_free(ptr);
+-	}
+-
+-	return ret;
+-}
+-EXPORT_SYMBOL_GPL(devm_phy_package_join);
+-
+-/**
+- * devm_of_phy_package_join - resource managed of_phy_package_join()
+- * @dev: device that is registering this PHY package
+- * @phydev: target phy_device struct
+- * @priv_size: if non-zero allocate this amount of bytes for private data
+- *
+- * Managed of_phy_package_join(). Shared storage fetched by this function,
+- * phy_package_leave() is automatically called on driver detach. See
+- * of_phy_package_join() for more information.
+- */
+-int devm_of_phy_package_join(struct device *dev, struct phy_device *phydev,
+-			     size_t priv_size)
+-{
+-	struct phy_device **ptr;
+-	int ret;
+-
+-	ptr = devres_alloc(devm_phy_package_leave, sizeof(*ptr),
+-			   GFP_KERNEL);
+-	if (!ptr)
+-		return -ENOMEM;
+-
+-	ret = of_phy_package_join(phydev, priv_size);
+-
+-	if (!ret) {
+-		*ptr = phydev;
+-		devres_add(dev, ptr);
+-	} else {
+-		devres_free(ptr);
+-	}
+-
+-	return ret;
+-}
+-EXPORT_SYMBOL_GPL(devm_of_phy_package_join);
+-
+ /**
+  * phy_detach - detach a PHY device from its network device
+  * @phydev: target phy_device struct
+diff --git a/drivers/net/phy/phy_package.c b/drivers/net/phy/phy_package.c
+new file mode 100644
+index 000000000..260469f02
+--- /dev/null
++++ b/drivers/net/phy/phy_package.c
+@@ -0,0 +1,244 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * PHY package support
++ */
++
++#include <linux/of.h>
++#include <linux/phy.h>
++
++/**
++ * phy_package_join - join a common PHY group
++ * @phydev: target phy_device struct
++ * @base_addr: cookie and base PHY address of PHY package for offset
++ *   calculation of global register access
++ * @priv_size: if non-zero allocate this amount of bytes for private data
++ *
++ * This joins a PHY group and provides a shared storage for all phydevs in
++ * this group. This is intended to be used for packages which contain
++ * more than one PHY, for example a quad PHY transceiver.
++ *
++ * The base_addr parameter serves as cookie which has to have the same values
++ * for all members of one group and as the base PHY address of the PHY package
++ * for offset calculation to access generic registers of a PHY package.
++ * Usually, one of the PHY addresses of the different PHYs in the package
++ * provides access to these global registers.
++ * The address which is given here, will be used in the phy_package_read()
++ * and phy_package_write() convenience functions as base and added to the
++ * passed offset in those functions.
++ *
++ * This will set the shared pointer of the phydev to the shared storage.
++ * If this is the first call for a this cookie the shared storage will be
++ * allocated. If priv_size is non-zero, the given amount of bytes are
++ * allocated for the priv member.
++ *
++ * Returns < 1 on error, 0 on success. Esp. calling phy_package_join()
++ * with the same cookie but a different priv_size is an error.
++ */
++int phy_package_join(struct phy_device *phydev, int base_addr, size_t priv_size)
++{
++	struct mii_bus *bus = phydev->mdio.bus;
++	struct phy_package_shared *shared;
++	int ret;
++
++	if (base_addr < 0 || base_addr >= PHY_MAX_ADDR)
++		return -EINVAL;
++
++	mutex_lock(&bus->shared_lock);
++	shared = bus->shared[base_addr];
++	if (!shared) {
++		ret = -ENOMEM;
++		shared = kzalloc(sizeof(*shared), GFP_KERNEL);
++		if (!shared)
++			goto err_unlock;
++		if (priv_size) {
++			shared->priv = kzalloc(priv_size, GFP_KERNEL);
++			if (!shared->priv)
++				goto err_free;
++			shared->priv_size = priv_size;
++		}
++		shared->base_addr = base_addr;
++		shared->np = NULL;
++		refcount_set(&shared->refcnt, 1);
++		bus->shared[base_addr] = shared;
++	} else {
++		ret = -EINVAL;
++		if (priv_size && priv_size != shared->priv_size)
++			goto err_unlock;
++		refcount_inc(&shared->refcnt);
++	}
++	mutex_unlock(&bus->shared_lock);
++
++	phydev->shared = shared;
++
++	return 0;
++
++err_free:
++	kfree(shared);
++err_unlock:
++	mutex_unlock(&bus->shared_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(phy_package_join);
++
++/**
++ * of_phy_package_join - join a common PHY group in PHY package
++ * @phydev: target phy_device struct
++ * @priv_size: if non-zero allocate this amount of bytes for private data
++ *
++ * This is a variant of phy_package_join for PHY package defined in DT.
++ *
++ * The parent node of the @phydev is checked as a valid PHY package node
++ * structure (by matching the node name "ethernet-phy-package") and the
++ * base_addr for the PHY package is passed to phy_package_join.
++ *
++ * With this configuration the shared struct will also have the np value
++ * filled to use additional DT defined properties in PHY specific
++ * probe_once and config_init_once PHY package OPs.
++ *
++ * Returns < 0 on error, 0 on success. Esp. calling phy_package_join()
++ * with the same cookie but a different priv_size is an error. Or a parent
++ * node is not detected or is not valid or doesn't match the expected node
++ * name for PHY package.
++ */
++int of_phy_package_join(struct phy_device *phydev, size_t priv_size)
++{
++	struct device_node *node = phydev->mdio.dev.of_node;
++	struct device_node *package_node;
++	u32 base_addr;
++	int ret;
++
++	if (!node)
++		return -EINVAL;
++
++	package_node = of_get_parent(node);
++	if (!package_node)
++		return -EINVAL;
++
++	if (!of_node_name_eq(package_node, "ethernet-phy-package")) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
++	if (of_property_read_u32(package_node, "reg", &base_addr)) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
++	ret = phy_package_join(phydev, base_addr, priv_size);
++	if (ret)
++		goto exit;
++
++	phydev->shared->np = package_node;
++
++	return 0;
++exit:
++	of_node_put(package_node);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(of_phy_package_join);
++
++/**
++ * phy_package_leave - leave a common PHY group
++ * @phydev: target phy_device struct
++ *
++ * This leaves a PHY group created by phy_package_join(). If this phydev
++ * was the last user of the shared data between the group, this data is
++ * freed. Resets the phydev->shared pointer to NULL.
++ */
++void phy_package_leave(struct phy_device *phydev)
++{
++	struct phy_package_shared *shared = phydev->shared;
++	struct mii_bus *bus = phydev->mdio.bus;
++
++	if (!shared)
++		return;
++
++	/* Decrease the node refcount on leave if present */
++	if (shared->np)
++		of_node_put(shared->np);
++
++	if (refcount_dec_and_mutex_lock(&shared->refcnt, &bus->shared_lock)) {
++		bus->shared[shared->base_addr] = NULL;
++		mutex_unlock(&bus->shared_lock);
++		kfree(shared->priv);
++		kfree(shared);
++	}
++
++	phydev->shared = NULL;
++}
++EXPORT_SYMBOL_GPL(phy_package_leave);
++
++static void devm_phy_package_leave(struct device *dev, void *res)
++{
++	phy_package_leave(*(struct phy_device **)res);
++}
++
++/**
++ * devm_phy_package_join - resource managed phy_package_join()
++ * @dev: device that is registering this PHY package
++ * @phydev: target phy_device struct
++ * @base_addr: cookie and base PHY address of PHY package for offset
++ *   calculation of global register access
++ * @priv_size: if non-zero allocate this amount of bytes for private data
++ *
++ * Managed phy_package_join(). Shared storage fetched by this function,
++ * phy_package_leave() is automatically called on driver detach. See
++ * phy_package_join() for more information.
++ */
++int devm_phy_package_join(struct device *dev, struct phy_device *phydev,
++			  int base_addr, size_t priv_size)
++{
++	struct phy_device **ptr;
++	int ret;
++
++	ptr = devres_alloc(devm_phy_package_leave, sizeof(*ptr),
++			   GFP_KERNEL);
++	if (!ptr)
++		return -ENOMEM;
++
++	ret = phy_package_join(phydev, base_addr, priv_size);
++
++	if (!ret) {
++		*ptr = phydev;
++		devres_add(dev, ptr);
++	} else {
++		devres_free(ptr);
++	}
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(devm_phy_package_join);
++
++/**
++ * devm_of_phy_package_join - resource managed of_phy_package_join()
++ * @dev: device that is registering this PHY package
++ * @phydev: target phy_device struct
++ * @priv_size: if non-zero allocate this amount of bytes for private data
++ *
++ * Managed of_phy_package_join(). Shared storage fetched by this function,
++ * phy_package_leave() is automatically called on driver detach. See
++ * of_phy_package_join() for more information.
++ */
++int devm_of_phy_package_join(struct device *dev, struct phy_device *phydev,
++			     size_t priv_size)
++{
++	struct phy_device **ptr;
++	int ret;
++
++	ptr = devres_alloc(devm_phy_package_leave, sizeof(*ptr),
++			   GFP_KERNEL);
++	if (!ptr)
++		return -ENOMEM;
++
++	ret = of_phy_package_join(phydev, priv_size);
++
++	if (!ret) {
++		*ptr = phydev;
++		devres_add(dev, ptr);
++	} else {
++		devres_free(ptr);
++	}
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(devm_of_phy_package_join);
 -- 
 2.48.1
+
 
 
