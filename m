@@ -1,53 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-48528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 735D2A3C411
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 16:48:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55A32A3C4E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 17:23:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CF8A16646C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 15:47:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E83BB189BF95
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 16:23:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D0C61F9421;
-	Wed, 19 Feb 2025 15:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E5EA1FDA9D;
+	Wed, 19 Feb 2025 16:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F5SZ/Q8T"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bHwMpgY8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6E21B983E;
-	Wed, 19 Feb 2025 15:47:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0AC1FE460
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 16:22:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739980061; cv=none; b=sNEB44uSt6V50r8curJhJP01xs+ZikhGyWVNkbV/1kj99P0DaZwK/iUATqHU7jKS8vmXHM7tv3175so7XGZWKdMegEppZxRtJdyr8cgaRlb+SXvpZQur8YrGWmuuLSUuIkw7Ze2EkJfLi54eBs5B2xsgDw+A/x0nL6+3fmavXWU=
+	t=1739982173; cv=none; b=RkegoNBiztk/vfRLjUruuVFwRlD4Eof+qGZlofoEjwtATPB20c+Z4iTNMrXCwH4Bkwm4CCe/sghIvVZ6GyOzYOUkNybTIh4xpZC0v8JDeRKjCp/EiFiN4WXN7tyLh4OPhTNSk6jOy5qn98d09ogoLVEPrZXFoUe1+VnrIbjddGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739980061; c=relaxed/simple;
-	bh=Mv6lw/jGIKU2yqM0WT6dMZP0js12PkMDpy+2BlT3EXI=;
+	s=arc-20240116; t=1739982173; c=relaxed/simple;
+	bh=BfUU3tj0y61ulsrpxN8DkNxpVjymHHmrTW8yGNh/Ipo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WBjWlFzVVER6/CWJj2whrbhA7h8HGhWVHjJi0iUABKPIjMQPxddkLyGyN6u+S3YWyZWFySdIYyYMM2714IPoq6PCok2uX+AFdSdBIcQ6gxfrpUuZa5Sfpa8jUdwWXYIQM4Eo05l1qs2CZ7/Mv8ZmNX3FOiWRH+PxF0PP9Ps0Uis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F5SZ/Q8T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8154C4CED6;
-	Wed, 19 Feb 2025 15:47:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739980059;
-	bh=Mv6lw/jGIKU2yqM0WT6dMZP0js12PkMDpy+2BlT3EXI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=F5SZ/Q8TlTSym5axjkf4B0lABrOiAJSE+3+el4CHQbtqYyN/b/ilxkiY48sXr+Xsj
-	 cYpLq/2PqYLL2qdn6UrWRW1VzY5OugiKJ3bn5bZwzRda1j2DoZaW3T2iO8uztbXlGT
-	 VkMjEJrOcuWe6COfPz1qOXp8Qx7sZpSaI4bF7znbicNKtvrPXnohDtAwCUjDHSIbvu
-	 VA6NOM4aNe0Fyze72UVZ2FvouWj+R04uzRCNLZBg3Yngoqm/4Tm3tp4+sPzdvYXYTw
-	 x8MMPXpLulksa8cufMmh0mzaP112b4Nw7hYo4amSRjD7k2Bh+sHMG0Pho2dqs/3jih
-	 +/2vzZPWx3+qg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tkmIe-000000003ew-3yZ9;
-	Wed, 19 Feb 2025 16:47:49 +0100
-Date: Wed, 19 Feb 2025 16:47:48 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=l4GJXPi8/32jeluzm9xyv0X3BiDZP3JkUXNCCzmVoZW1p8g155D9gtXCuO+yVYsOFOsTB7GeDBd7CkiuCUGVpUDceudZfb2ZKOJlMwHz49I27X3L4i5Uk5Biq1djUVyGi0b+Fa/u6c3P9iTHsNT1oc2iQuphhQk8jZ2nCaakQSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bHwMpgY8; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4396424d173so71485875e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 08:22:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739982169; x=1740586969; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=xZxkylCpxcKqeTMhEvFKzvh12lirSDj2kbldlCMXfnk=;
+        b=bHwMpgY8CYkFr/NxvgVROGYx68K5HXtW/2KMZxqpIYrFdvvAKjkOg3z1Qlk2MvRvBQ
+         S7bgRAZhmPXvR6gmU/0WoeHnFEb/MAdUnkEIjOenpsMHKz6TtkvTBk/9Ar8TzNz9BKHr
+         iIa9FIo+8xNMC5ur0Jdn9Uv2pFqRc9Dj9QH35F7K4cy8NKKsIWvt/hu9Q1ScZus2pEvx
+         CGm5m4zJTPOq0ppUdaobZ1402Q/VmJkfF/e1FMc6oNQvI1N7UhtIJes6CtWWEpkaybMp
+         kmocCzr+aQneHOhcsclbahfYzv6hT/K9TCrE6EeO7KQNg1UXLF7hp4pT/YN4gc5t72lI
+         lMMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739982169; x=1740586969;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xZxkylCpxcKqeTMhEvFKzvh12lirSDj2kbldlCMXfnk=;
+        b=oO2J1fFURWPrDEhSEVkAvJl02/llsESv2G9FGtT0uDDhzSWu59LZ6tE0kXHSbmbmBA
+         D8kbnYUwToHUB0UO6UWhHLIW5QJZ4B7pGScF+xCqq0EwtRmFsFmh6mxV6FKSQbb+BUqr
+         2gGnZbFBghWvPS0Gow4vENxYrXppzFuicav9YuA3WtPqRM/N7ivhyViVS9wCgU8uW5vT
+         odhYb9m8BwbU0+RqARJqimegsNU7Gkfn9k0KMjjsrYiIC7toHkiLud4fga2GHx9GAvLS
+         kfByfYoEwH/4qfDFBBxYFdz5ab1bldys3RGkHTxWnVIKuE5VmYnydxEcVNE88y1FDw3K
+         GrAA==
+X-Forwarded-Encrypted: i=1; AJvYcCWjPvTR9Co1mG9OesRD5i9hoiXKVNyek04XWkdG5/1Lg54ioQ0lES+7Jq/u568YLECtFBgJsK/NFgSj8o0E@vger.kernel.org
+X-Gm-Message-State: AOJu0YxERL+09Q0P90S3tw7AXaiQgM7Ya0TN3VI3BfJDIiv49BZYdiYK
+	1jM4jb8jb7EunYVLlr9Zm3PigNAn1ijdeukdEJCvGEjGvOskzPeAi4XelTz4RGQ=
+X-Gm-Gg: ASbGnctDc8LqI6s9ZJEM45LGqWfY/v+fPt0AU8g85Tl/Xl7FdG0/oxHmki5RL/hGY/+
+	lj2hMx6Q3dbxBQTTBjGX15BVXcvOj51Nwzbo275tDHbYCkQ676wV5gfBwswxrtzfxDQTyPjgFZv
+	rX4mP40rn4Sd6o7Ez6eW+HS4Zu2ypk75YRv6fd551e516P5VOo3VaM2pul7e4NwnV/Fw23GC0+O
+	LQIu8wXlmMRQkdZi6IpU+YP8iXE21MptqtHoA9EpL/c73vZMXkwfi3H4UXtjd4HtpzUu0jhUHlV
+	0riGd5nch33vLrDNkqSFrAoeCtA=
+X-Google-Smtp-Source: AGHT+IFrg3yf4JcqaRp6NZLS1mkHW305I0jkYCCmmdyg3hiS2qC7EOcbCl06hDkIssNpoO94V+nypg==
+X-Received: by 2002:a05:600c:4e87:b0:439:9274:81cd with SMTP id 5b1f17b1804b1-439927484b2mr86162505e9.4.1739982169458;
+        Wed, 19 Feb 2025 08:22:49 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef30:c59a:9aec:ce42:c01f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259d8dd6sm18476087f8f.62.2025.02.19.08.22.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 08:22:49 -0800 (PST)
+Date: Wed, 19 Feb 2025 17:22:45 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Johan Hovold <johan@kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
@@ -59,39 +86,47 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: x1e80100: Drop unused passive
- thermal trip points for CPU
-Message-ID: <Z7X9JIDVMorYGuS1@hovoldconsulting.com>
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: x1e80100: Fix video thermal zone
+Message-ID: <Z7YFVZ5usWjrjabg@linaro.org>
 References: <20250219-x1e80100-thermal-fixes-v1-0-d110e44ac3f9@linaro.org>
- <20250219-x1e80100-thermal-fixes-v1-4-d110e44ac3f9@linaro.org>
+ <20250219-x1e80100-thermal-fixes-v1-1-d110e44ac3f9@linaro.org>
+ <Z7X4niv6g89LyBP1@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250219-x1e80100-thermal-fixes-v1-4-d110e44ac3f9@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z7X4niv6g89LyBP1@hovoldconsulting.com>
 
-On Wed, Feb 19, 2025 at 12:36:21PM +0100, Stephan Gerhold wrote:
-> There are currently two passive trip points defined for the CPU, but no
-> cooling devices are attached to the thermal zones. We don't have support
-> for cpufreq upstream yet, but actually this is redundant anyway because the
-> CPU is throttled automatically when reaching high temperatures.
+On Wed, Feb 19, 2025 at 04:28:30PM +0100, Johan Hovold wrote:
+> On Wed, Feb 19, 2025 at 12:36:18PM +0100, Stephan Gerhold wrote:
+> > A passive trip point at 125°C is pretty high, this is usually the
+> > temperature for the critical shutdown trip point. Also, we don't have any
+> > passive cooling devices attached to the video thermal zone.
+> > 
+> > Change this to be a critical trip point, and add a "hot" trip point at
+> > 90°C for consistency with the other thermal zones.
+> > 
+> > Cc: stable@vger.kernel.org
 > 
-> Drop the passive trip points and keep just the critical shutdown as safety
-> measure in case the throttling fails.
+> Perhaps not needed since we don't have a video driver enabled yet.
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-Looks good. Perhaps we should backport this one as well in case the
-current passive trip points cause unnecessary work to done for no
-reason.
+It will be needed to backport the next patch (and reordering the patches
+wouldn't have made sense).
 
-Either way:
+> > Fixes: 4e915987ff5b ("arm64: dts: qcom: x1e80100: Enable tsens and thermal zone nodes")
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> 
+> Looks to good to me either way:
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> 
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
+Thanks!
+Stephan
 
