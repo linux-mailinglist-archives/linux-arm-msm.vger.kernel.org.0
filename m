@@ -1,94 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-48574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54CD2A3CBF6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 23:02:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3154A3CC4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 23:27:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DBBA5177529
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 22:02:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 955983A7350
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 22:27:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B36F81DC98A;
-	Wed, 19 Feb 2025 22:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A08152586F2;
+	Wed, 19 Feb 2025 22:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fbm4edc/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QYgVFYnc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB807253351
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 22:02:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F72F255E33;
+	Wed, 19 Feb 2025 22:27:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740002545; cv=none; b=jksjYcYwYb3RdA5T34y43Nk/fYREh2V9jm5s1OUnTr6avJ/glVTCRMHaIiY1oK90sGowe7Uh0cy6Q0Ap4MlTofveykTqKydCJaiURWuUYIxzKvTtswZ/ew8McrGpFBVrMk4NEZr/prQrSZwZp/CK2sgDQv+/boRYomh687Ld2OM=
+	t=1740004061; cv=none; b=QvcJdoABiCFUmIaaS4UCW3xCmYmGFnKpzS5lJJD0mi0MxOpNfCs08zOR/2XA0fN0UoCsl5f3IZ0OvMdVgl/6pQzqqItcqtTJ9IVwWDrQ/vsTXaqdeIk4Jh0quqIQ2een/7+oKXP3XRixFW4Z4wDwDipEoVofsKWxdxMJb2RsQAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740002545; c=relaxed/simple;
-	bh=g3mRNuX2xpJTljzE4dMGM4jTNrlqKgJ1nYwtEHsNtYk=;
+	s=arc-20240116; t=1740004061; c=relaxed/simple;
+	bh=oNSknPE2NI2RnvMQgqpZdnjt+G1s3GYul1BLdUi6ryg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e8HceSHqAC7avTGOYL2wPOahPObZ2YxiTT4TODUtsAERblrAmvgP4pn3Y7vBAyKRXF+Qmkkh8OU+03f61NzMhzmKrMzPbWCDPL6wfiwElsoy7cEEeu/B18Fzf1ZGQOaYYv+fHa3Xhemb0se+nl9TsTZbV5zo53DnpWnSA3f3GqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fbm4edc/; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30613802a6bso2623461fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 14:02:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740002542; x=1740607342; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oXHpN0DWqjhN0hLE65VSAtbnzicm1GUQhBz/HJwZ43M=;
-        b=Fbm4edc/8iSQEmOEeBQippKsbgpcgZjsiJq/pur4Hfp82w4LaZeXOS/87Y5qrCRM1E
-         6mXmHRTfpwd5y9UIlb+0sx2yA/qE5fUIjKnCQNOHfNnf5KXhDJrX/SWVFWnHzqdGoWeY
-         sSvHd0Mqi0o0fStv3ZwEssjNzEvZfvD4VFw/72vjrDNcU4uExeevKLeEApZL9JdHb9Wo
-         pfFwY7y1C1AUUejcl56FsPUbfOS117yqBaJsVk7k1swu/RF59rAqCuRaZzWz8BVDcTII
-         YrA7kH03pTFd4CKd0i11+yQsN7CFqtYXg8QY4HyiEcFCT+csJTHeu2m9CjrJZHZguVCh
-         tAaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740002542; x=1740607342;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oXHpN0DWqjhN0hLE65VSAtbnzicm1GUQhBz/HJwZ43M=;
-        b=Y5qouj+Ly3fF0XxEtlNVSgdNnmlWrP+wvwtuaKehaWaw77BCaEHQNmyQCLEu9dTrpd
-         TB41Q2spZD4wzWCYOYBvvbb6fAKqGY+6i5V18YvOyQ1B+PW8KdUH9wXOuaqmXuate7dw
-         3PQGcVu5GDSgmwPyzspffGP4lHZVygKUg4MLaHvP1BUWFcpaEX4Jz8W2loZRRDuCk/pv
-         dOAz5XG+ziwQxuQZ1I7qGJZfeebGNm20MG34p8iCd8S4sx0sJU2TXsPXO6ujzkxCFHAq
-         XwKLAIN2BgyZ5VjCAZcg129v6NOZyxF78OOB+ZVPwxzyMdbTmivUCTXh2gOVKPCfqejz
-         Lwew==
-X-Gm-Message-State: AOJu0YzYwWS6pgI/+14pViSANKDmijn4eT1x36rany4MQjPw4yb2Xqtr
-	Qwa1KmF9w9hRSPYYNEAHF1FZ5xVUPVDrL1vKxXhSSPUGslga0M9vKULtCNSLw2P17/zjsGzLLiL
-	k
-X-Gm-Gg: ASbGncsuU00ZpHZwazkgQMQYFFkHCOhXKOpBKJCZWoh4nUq0D1sEQofVcu3AeN6Ejhd
-	Uf7S5sw0YEryWvhyFyhIF6RLnZRiA5neuba794xMzqPpL04ldUwR1PsiX7W+1b5j3PoHnw9/kWd
-	g6+b5wHlgpPC76mjjUX2chLVIviWOI8sHA25lkDbmZYWV7U8C5HbB8MYLH9j6xtEDq4mIaUUNmL
-	iRtNpP8alf/pLHq72uAyhPu7eLx8KmDSL+Mi4g5BQ0OFQpk7905Z2RneLt+rTFApgNv7hsJJxG3
-	CLx49e1zbwGljN/n2VxE7PUSrTvRcNpLs8J8ExnmtZX55TtQ4XPqvAl5TXRK3+ZWK+H99jg=
-X-Google-Smtp-Source: AGHT+IH3qwpCZJIIRtXoLdJAC5M4Yj195wVlXHneaiHgEATwNAfneT8LPoyDLjdolhf1GGkQ1/U9CQ==
-X-Received: by 2002:a2e:a302:0:b0:304:d8e7:7ea1 with SMTP id 38308e7fff4ca-30927ad5151mr58261401fa.23.1740002541724;
-        Wed, 19 Feb 2025 14:02:21 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30a2b50c78esm13466611fa.74.2025.02.19.14.02.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 14:02:20 -0800 (PST)
-Date: Thu, 20 Feb 2025 00:02:17 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Rob Herring <robh@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Simona Vetter <simona@ffwll.ch>, 
-	David Airlie <airlied@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	dri-devel@lists.freedesktop.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	freedreno@lists.freedesktop.org, Jonathan Marek <jonathan@marek.ca>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Subject: Re: [PATCH v2 00/16] drm/msm: Add support for SM8750
-Message-ID: <h6rm4zlj2xoqp6ze34cwu6y5xxx423l7lrdrbkezp7ct5pwms2@jmrlxr6hyhb7>
-References: <20250217-b4-sm8750-display-v2-0-d201dcdda6a4@linaro.org>
- <eedf08c5-d781-45c8-a5f7-b0369e3efac9@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Feuv/DMKb6MKWEY1wvbnlNcPm7ff5GF8BYotDaRfuG5XGHPPhNtgke51iKKtkXv7p8/erY6XL3Yp3SuOg7qije3vwOGYAd27ykqWOo5XaBmlG4MH3CAKIU4REayR3gC11+XgyVrFkE4imr9olvczAfklUG8ZKtuILf/N3Oc6oKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QYgVFYnc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A012FC4CED1;
+	Wed, 19 Feb 2025 22:27:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740004060;
+	bh=oNSknPE2NI2RnvMQgqpZdnjt+G1s3GYul1BLdUi6ryg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QYgVFYncWMZron/LK2kkTgBsnEaG/nJw516UKoh0/uyh4ODVkCDRKngg0xOp9LqPl
+	 ykdhiz0qPZcYsaLAke6ct7k3QKD5fC/t6efA5RPm8J1+H3zelKaKAbYRMyAkiViWag
+	 ziohIv8EIcVUlV3JVdEbV/S4gY11MZCDt+W2LJiE4v1Z2C572DQR8YuZBcEGWMADFD
+	 LWb7klY6ximxjK7nrS03IPdzwXU0aTLAGF3Gg5A/9JPS2+tg3thlcVJnX5lGbjqUpA
+	 QZrQbfRhBxuLw2NJSSQ/vaPEOjWmEVBTs/IymrwyCHsFiZXPtjf5xmJPvb9Bm14V64
+	 fVZ+lL3dyozUQ==
+Date: Wed, 19 Feb 2025 16:27:39 -0600
+From: Rob Herring <robh@kernel.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
+	Anusha Rao <quic_anusha@quicinc.com>,
+	Md Sadre Alam <quic_mdalam@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: Re: [PATCH 7/8] dt-bindings: dma: qcom: bam-dma: Add missing
+ required properties
+Message-ID: <20250219222739.GA3078392-robh@kernel.org>
+References: <20250212-bam-dma-fixes-v1-0-f560889e65d8@linaro.org>
+ <20250212-bam-dma-fixes-v1-7-f560889e65d8@linaro.org>
+ <22ce4c8d-1f3b-42c9-b588-b7d74812f7b0@oss.qualcomm.com>
+ <Z6231bBqNhA2M4Ap@linaro.org>
+ <d674d626-e6a3-4683-8f45-81b09200849f@oss.qualcomm.com>
+ <Z64OKcj9Ns1NkUea@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,50 +75,121 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <eedf08c5-d781-45c8-a5f7-b0369e3efac9@quicinc.com>
+In-Reply-To: <Z64OKcj9Ns1NkUea@linaro.org>
 
-On Wed, Feb 19, 2025 at 01:17:35PM -0800, Jessica Zhang wrote:
-> 
-> 
-> On 2/17/2025 8:41 AM, Krzysztof Kozlowski wrote:
-> > Hi,
+On Thu, Feb 13, 2025 at 04:22:17PM +0100, Stephan Gerhold wrote:
+> On Thu, Feb 13, 2025 at 03:00:00PM +0100, Konrad Dybcio wrote:
+> > On 13.02.2025 10:13 AM, Stephan Gerhold wrote:
+> > > On Wed, Feb 12, 2025 at 10:01:59PM +0100, Konrad Dybcio wrote:
+> > >> On 12.02.2025 6:03 PM, Stephan Gerhold wrote:
+> > >>> num-channels and qcom,num-ees are required when there are no clocks
+> > >>> specified in the device tree, because we have no reliable way to read them
+> > >>> from the hardware registers if we cannot ensure the BAM hardware is up when
+> > >>> the device is being probed.
+> > >>>
+> > >>> This has often been forgotten when adding new SoC device trees, so make
+> > >>> this clear by describing this requirement in the schema.
+> > >>>
+> > >>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> > >>> ---
+> > >>>  Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 4 ++++
+> > >>>  1 file changed, 4 insertions(+)
+> > >>>
+> > >>> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> > >>> index 3ad0d9b1fbc5e4f83dd316d1ad79773c288748ba..5f7e7763615578717651014cfd52745ea2132115 100644
+> > >>> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> > >>> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> > >>> @@ -90,8 +90,12 @@ required:
+> > >>>  anyOf:
+> > >>>    - required:
+> > >>>        - qcom,powered-remotely
+> > >>> +      - num-channels
+> > >>> +      - qcom,num-ees
+> > >>>    - required:
+> > >>>        - qcom,controlled-remotely
+> > >>> +      - num-channels
+> > >>> +      - qcom,num-ees
+> > >>
+> > >> I think I'd rather see these deprecated and add the clock everywhere..
+> > >> Do we know which one we need to add on newer platforms? Or maybe it's
+> > >> been transformed into an icc path?
+> > > 
+> > > This isn't feasible, there are too many different setups. Also often the
+> > > BAM power management is tightly integrated into the consumer interface.
+> > > To give a short excerpt (I'm sure there are even more obscure uses):
+> > > 
+> > >  - BLSP BAM (UART, I2C, SPI on older SoCs):
+> > >     1. Enable GCC_BLSP_AHB_CLK
+> > >     -> This is what the bam_dma driver supports currently.
+> > > 
+> > >  - Crypto BAM: Either
+> > >     OR 1. Vote for single RPM clock
+> > >     OR 1. Enable 3 separate clocks (CE, CE_AHB, CE_AXI)
+> > >     OR 1. Vote dummy bandwidth for interconnect
+> > > 
+> > >  - BAM DMUX (WWAN on older SoCs):
+> > >     1. Start modem firmware
+> > >     2. Wait for BAM DMUX service to be up
+> > >     3. Vote for power up via the BAM-DMUX-specific SMEM state
+> > >     4. Hope the firmware agrees and brings up the BAM
+> > > 
+> > >  - SLIMbus BAM (audio on some SoCs):
+> > >     1. Start ADSP firmware
+> > >     2. Wait for QMI SLIMBUS service to be up via QRTR
+> > >     3. Vote for power up via SLIMbus-specific QMI messages
+> > >     4. Hope the firmware agrees and brings up the BAM
+> > > 
+> > > Especially for the last two, we can't implement support for those
+> > > consumer-specific interfaces in the BAM driver. Implementing support for
+> > > the 3 variants of the Crypto BAM would be possible, but it's honestly
+> > > the least interesting use case of all these. It's not really clear why
+> > > we are bothing with the crypto engine on newer SoCs at all, see e.g. [1].
+> > > 
+> > > [1]: https://lore.kernel.org/linux-arm-msm/20250118080604.GA721573@sol.localdomain/
+> > > 
+> > >> Reading back things from this piece of HW only to add it to DT to avoid
+> > >> reading it later is a really messy solution.
+> > > 
+> > > In retrospect, it could have been cleaner to avoid describing the BAM as
+> > > device node independent of the consumer. We wouldn't have this problem
+> > > if the BAM driver would only probe when the consumer is already ready.
+> > > 
+> > > But I think specifying num-channels in the device tree is the cleanest
+> > > way out of this mess. I have a second patch series ready that drops
+> > > qcom,num-ees and validates the num-channels once it's safe reading from
+> > > the BAM registers. That way, you just need one boot test to ensure the
+> > > device tree description is really correct.
 > > 
-> > Dependency / Rabased on top of:
-> > https://lore.kernel.org/all/20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org/
+> > Thanks for the detailed explanation!
 > > 
-> > Changes in v2:
-> > - Implement LM crossbar, 10-bit alpha and active layer changes:
-> >    New patch: drm/msm/dpu: Implement new v12.0 DPU differences
-> > - New patch: drm/msm/dpu: Add missing "fetch" name to set_active_pipes()
-> > - Add CDM
-> > - Split some DPU patch pieces into separate patches:
-> >    drm/msm/dpu: Drop useless comments
-> >    drm/msm/dpu: Add LM_7, DSC_[67], PP_[67] and MERGE_3D_5
-> >    drm/msm/dpu: Add handling of LM_6 and LM_7 bits in pending flush mask
-> > - Split DSI and DSI PHY patches
-> > - Mention CLK_OPS_PARENT_ENABLE in DSI commit
-> > - Mention DSI PHY PLL work:
-> >    https://patchwork.freedesktop.org/patch/542000/?series=119177&rev=1
-> > - DPU: Drop SSPP_VIG4 comments
-> > - DPU: Add CDM
-> > - Link to v1: https://lore.kernel.org/r/20250109-b4-sm8750-display-v1-0-b3f15faf4c97@linaro.org
+> > Do you think it could maybe make sense to expose a clock/power-domain
+> > from the modem/adsp rproc and feed it to the DMUX / SLIM instances when
+> > an appropriate ping arrives? This way we'd also defer probing the drivers
+> > until the device is actually accessible.
 > > 
-> > Description:
-> > =============
-> > I got modetest writeback working, but DSI panel on MTP8750 still shows
-> > darkness.
 > 
-> Hey Dmitry,
+> Maybe, but that would result in a cyclic dependency between the DMA
+> provider and consumer. E.g.
 > 
-> Just wanted to emphasize this note on Krzysztof's cover letter.
+> 	bam_dmux_dma: dma-controller@ {
+> 		#dma-cells = <1>;
+> 		power-domains = <&bam_dmux>;
+> 	};
 > 
-> Can we hold off on picking up the DSI parts of this series until the DSI
-> panel comes up for MTP8750?
+> 	remoteproc@ {
+> 		/* ... */
 > 
+> 		bam_dmux: bam-dmux {
+> 			dmas = <&bam_dmux_dma 4>, <&bam_dmux_dma 5>;
+> 			dma-names = "tx", "rx";
+> 		};
+> 	};
+> 
+> fw_devlink will likely get confused by that.
 
-Ack, I will try to remember it.
+Why? We have a property to break cycles: post-init-providers
 
--- 
-With best wishes
-Dmitry
+That doesn't work here?
+
+Rob
 
