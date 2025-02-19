@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-48561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6995A3CAC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 22:04:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D378A3CAF2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 22:09:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E84C03B07FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 21:03:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 027DE3B1AC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 21:08:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B53CB253348;
-	Wed, 19 Feb 2025 21:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2830125291D;
+	Wed, 19 Feb 2025 21:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cqYtjdIp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L7kINgYL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F9F25290D;
-	Wed, 19 Feb 2025 21:03:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2B1214A66;
+	Wed, 19 Feb 2025 21:04:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739998990; cv=none; b=ABt4szstPxqZzIBD9ID6bdFZgxOBYmBufGanm8bo4jou6y1TyqB73uUHxPWvVReePliP8pfgiH1nbm27Gd/TvUPixF3LNIhQWEP8O3stnoDM9XfrEHQ2qK+LxOiDRstn3Oo6eq3TTRl5uINqCNbMErQy7jdGSqfjfpCs4bQFff0=
+	t=1739999048; cv=none; b=rAVPac/lT7689ag/4LQIOJe8WABvE+K2REbFJP+ss5+aQomIerF/L6PZ3FbfShHPbosU+czdXKOeEX+njIYZbiECeletMiFKe3ckQ3IB56K67DyQfYtR0bHS5OEW9BA3oh0cxr4WMd0pSSlxUPCiu9eiKIYqo5q7zsoBh5xcMzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739998990; c=relaxed/simple;
-	bh=X/ig99PU9xnwy/HuotsMqyEgR5xZioir7RAJwkYXFMM=;
+	s=arc-20240116; t=1739999048; c=relaxed/simple;
+	bh=MK8cFc4KyeQ37poNNoZlsldVQfON8CeoIaEvnbGtRcg=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=XzvOGMg6oMdUX+dejZA8awEtD/6ScC46WsIDAA8YSACwAnFLhKh6twQgk9haGXm7pZTMK5SnDvZY9e2RZOvcZhREnmeKhDt/GfUOkOVNpDuixmNfVyXOuMTeAnXbBkNYtY7Tibs8bHDy9yvTNyus7a/96XW8lW6h5Pjc3Z1q8Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cqYtjdIp; arc=none smtp.client-ip=209.85.218.45
+	 In-Reply-To:Content-Type; b=ER0w9jVivFA6R9Jop2yUHOzH3O6wF/5V8ogMTv2oEbl4glF7BV6kv4cuqxf5DeVS85avOjPUPDxa66VxGLr6JrRj/IonzenypVFp5roNgBa0K8lZYJ5tyY/qtW9mwRHhaiJ7+pFOBB+17iiqj2PqVvEMM4iNP6Yk9TyrlKBvscA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L7kINgYL; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-abbc38adeb1so49011266b.1;
-        Wed, 19 Feb 2025 13:03:08 -0800 (PST)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5dee1626093so2542707a12.1;
+        Wed, 19 Feb 2025 13:04:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739998987; x=1740603787; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739999045; x=1740603845; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4ba7sBd79KvT0DgpIWK/dwQDT1LJYkzaju3LI4FWecw=;
-        b=cqYtjdIp6XdR/vcTblPxR5RAyFDaNDsAEw25QEaI4Ss0dEva4IBXQMTrmN+33Ptsis
-         xOfDOjmFjAXbXwFUHZKdBmr2/vbxghH9LWu/qsgGCRyQhQPbOpkWa6eADq/Z3DZel/Eo
-         cNNkEpPJrHykblvdc40C+Z9kufvTpzwdKdk0XVvZHBlOOqgDYTGeKHKyehC60tX0tqgG
-         M5wEZ6dQSfMyw4tEbKPG4PJ88vwTer5agQe/nXDOSqj27wR4fxu403Die3ghZCEITnMz
-         cMzMTOndMPwnoLiYwwpGbeBn5tqp54O6T5OonZZzbNIcjSn0lCodcgg8/l7lILn5hSlb
-         QFSg==
+        bh=iqVQmif5rWfQY9xKS/pYfnIOIMVEEPODJnDQ9GyjQd8=;
+        b=L7kINgYLwPuN8UfoJyJrXpa9JSSNTnH1awNBMA6valD2X2pXiF3RBC31ZjUuEGKVTj
+         wZninovJTJge6OlvMQ+Zn6HJ6YUhPzLM2WMW0Ed9Qdw4oRLwyK+gB4pT59J87aIciFqr
+         MLQyT82Q4Csn41IpzxEhXNU2hKTIgc/VArWO1nD88VzhzvEMuOB9x4DHmQf2zCOmIfte
+         t6CRsixNN4YE8FpvTFVqTjVE3Qxnz1oC3VnKZx01RlZ6H7ZTUeo0Y7Sk9b1WIdgPuvvI
+         NMTULJGgQNOE1Rqp9jQxAiVR8f2uQtYabPqEaKdNi/vxw2Rqh4XVrEnMrjNS0gMisUmN
+         LhFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739998987; x=1740603787;
+        d=1e100.net; s=20230601; t=1739999045; x=1740603845;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4ba7sBd79KvT0DgpIWK/dwQDT1LJYkzaju3LI4FWecw=;
-        b=Nlh9KLawfFRWEt+BZsz7k7QSPjxptXG7G1qBLqxEltilL6boHNpgdw5OBw6M6RFcej
-         FhYOZvH8rFn2NERCbw1OUZSe6KWgb/pPhbY+gyn/NX6qSyCIi8slw+Q1WxxBGpuE9b9s
-         px8Xno3jxwjwf0W2i3fpxiB66ECDUnxValZdIsIl6VH4apinUgOtiiMlTdEhaGCIMRPV
-         ObrlqKqiW6m7lcUB7HpaZkXmw7zTvz26LdntjB+l0rfZ7NwGZ8Ff8k1eu+O9DaC6GXkz
-         vEHRgkCB3MxtLmGxy9hi5P7VY9rrlDVXZNUdswpVxPocGNS6x7PZthXB0l7BXJv4U/HX
-         fODg==
-X-Forwarded-Encrypted: i=1; AJvYcCU4ffkRwklhJzSAiPmpa1W4tnKuB9udOgpfpQUrOFM1KWmaAn/5y1YrM8wQ4e2yRZM5OvqAlbJe3Ew5/b1u@vger.kernel.org
-X-Gm-Message-State: AOJu0YzM/pKdCJeB/f63AKk6XPQtS6KwA2ZjC+XTXvl5c0v+xa6tLHPt
-	avwoQH1TcHm3gfudiY0TLr7Z1hyhC76/Yb4Ul7bmNXL0Tma9NwxJ
-X-Gm-Gg: ASbGnctnXeeMelRMAthoBoUyeIm+sHDU0+owKh8sBIYHnOlXbncCaMJ0B1Eo+l41K+K
-	VYRPhQMP4MbWR4K5kEjganyxWAwm04aP2nq+xl/P0gjOwlADS4Py+cw7zjMJjHxt+dVPrHcRoiK
-	FlpVwtvuj383UY6xoqxYZb2xpKiKESDTJe9coQl9J1gQTNTlWh1Haq+L8Wj8rjWbaQ64Py/V2ZS
-	KQdbfdSv+NKICf/o4eKFqSX8LlOJdjZeAq9fLBcMrzy2QBDvHr8lmYQ/4eDCDT0zT1bwPCE5iyc
-	GPr/I7HpPPVvdAFAx6o3IDXqvC/kj1hP+I0y0C/unP2XmkG6k17+zuYi7m4o2QNXNAI8LlWq7+J
-	nwwRTBKznoJoQvfrk4SadOgKU9Fwxyzgn9Fmm21Y1fybnO4U5A7o3don7uHFZoMT73S/nmQWSMi
-	noOrRapSI=
-X-Google-Smtp-Source: AGHT+IFq4cWZ/GF6xGipbxkKRa+D7h6dWZTRsoGzCPuvbMMN2SzodAHuSFimNssepCWeypERBTC2Pw==
-X-Received: by 2002:a17:906:f5a3:b0:ab7:eead:57f2 with SMTP id a640c23a62f3a-abbcd0bafefmr542280366b.48.1739998986742;
-        Wed, 19 Feb 2025 13:03:06 -0800 (PST)
+        bh=iqVQmif5rWfQY9xKS/pYfnIOIMVEEPODJnDQ9GyjQd8=;
+        b=FAcSpKhs2WJ0N0LD01tBlrYiC++wmYP7ith5AC1dkgzF52fcYoreYKK35mcvQkeTc3
+         48dPrRxBP1tHRILzTM18rx4ohqzXBux0csePW49boZdBfmq3XzvkwUXKa9yYV5LA2QQP
+         DYsJYTG2gRGghDm8HTQ3ej2m2ON9jhUz4togVTPaXLMFtmMo+5wHa9jf5U8mI4+wV7n3
+         vj0W/109UxzZuy5xJHxmyclT6GT6paEQPw6shX9+IfA0wjz8qPURgT2xRsreY4zPOJBo
+         tHfTaHgGFKdJezJKezEkDgwTgSpBHbyTsvX9KKYtEKuJRUxQzSAmx0gsS2e4IrpOyFtK
+         16EA==
+X-Forwarded-Encrypted: i=1; AJvYcCXaY19Vl6Bg8GXi97q0Ucl6Liuv1qCLk2oPvdYSqmjYAZ55kdHHvRX3+fwG6U8ZBXPVVOq50TgPaVH9n81t@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdxowyTSzludAkoJ8Lr8WBhIE2nMBgqk+2291fnD+pyq+RWkxa
+	3HvBSemJd0fa8w8Pj1zD0M8QaXs6g9pRoeLFeH95Lxxc1aiRkgz2
+X-Gm-Gg: ASbGnct1XLwhbuKo2bXmVPxZ4NalD2ys6RAaxtdR42ObeeXq1wC2szKKI6drvRraMtO
+	ctwKEYaTjuVFigo7V27/5vCO52gbOb24B5cmxCbg/UzYPfz2DVBJit4yHuYW0PuzX2hZl3GK7fL
+	CTad9EBLvsJttyDjC/Pig9owWCbCzG15+aBxTNvd3+A8IDthzBi8sU5cK8QWEGxqYrmKW8bVq1F
+	FWIcTkccz+mHZzKysrN2Yh+M0pP79gnGJi9eEQrkC5BpGDx0O1LME87vxcZ6oJJsYOfDcvTP74x
+	JbYLo6X2F0Tod85PkFO9Wg6eNuP8qqzm4e327/7w6toyqDZ8ZvNe8vgw5L00L8tK3FA6HFRqhcF
+	IsdeGcNeolVgbqh3TXiR4+agkT0kQDtcGkpsKDkEjgAk3iZNacAcVjc7ZNJQ2rFoLjNRdbLOpcG
+	b/IA9k/Ns=
+X-Google-Smtp-Source: AGHT+IGHn8JMWM2nJoXI50VLUVNtZBVQFbuznMWtLN7o6/jBqEWvvL+cqAhZ2DA0oLYdK/lp9E0AUA==
+X-Received: by 2002:a17:907:cf8d:b0:abb:e7ed:1324 with SMTP id a640c23a62f3a-abbedeea645mr55214466b.17.1739999044595;
+        Wed, 19 Feb 2025 13:04:04 -0800 (PST)
 Received: from ?IPV6:2a02:3100:a982:e400:6dd0:628c:981b:2783? (dynamic-2a02-3100-a982-e400-6dd0-628c-981b-2783.310.pool.telefonica.de. [2a02:3100:a982:e400:6dd0:628c:981b:2783])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abb86c9320csm836912266b.55.2025.02.19.13.03.05
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abb9de73d1csm635483266b.140.2025.02.19.13.04.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Feb 2025 13:03:06 -0800 (PST)
-Message-ID: <ea0f203b-ee9a-4769-a27a-8dfa6a11ff01@gmail.com>
-Date: Wed, 19 Feb 2025 22:03:50 +0100
+        Wed, 19 Feb 2025 13:04:03 -0800 (PST)
+Message-ID: <b505ed6a-533d-42ad-82d0-93315ce27e7f@gmail.com>
+Date: Wed, 19 Feb 2025 22:04:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,8 +84,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH net-next 2/8] net: phy: move PHY package related code from
- phy.h to phy_package.c
+Subject: [PATCH net-next 3/8] net: phy: add getters for public members of
+ struct phy_package_shared
 From: Heiner Kallweit <hkallweit1@gmail.com>
 To: Andrew Lunn <andrew@lunn.ch>,
  Russell King - ARM Linux <linux@armlinux.org.uk>,
@@ -149,204 +149,52 @@ In-Reply-To: <c02c50ab-da01-4cfa-af72-4bed109fa8e2@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Move PHY package related inline functions from phy.h to phy_package.c.
-While doing so remove locked versions phy_package_read() and
-phy_package_write() which have no user.
+Add getters for public members, this prepares for making struct
+phy_package_shared private to phylib.
 
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 ---
- drivers/net/phy/phy_package.c | 61 +++++++++++++++++++++++
- include/linux/phy.h           | 91 +++--------------------------------
- 2 files changed, 68 insertions(+), 84 deletions(-)
+ drivers/net/phy/phy_package.c | 12 ++++++++++++
+ include/linux/phy.h           |  3 +++
+ 2 files changed, 15 insertions(+)
 
 diff --git a/drivers/net/phy/phy_package.c b/drivers/net/phy/phy_package.c
-index 260469f02..9b9c200ae 100644
+index 9b9c200ae..6955b4132 100644
 --- a/drivers/net/phy/phy_package.c
 +++ b/drivers/net/phy/phy_package.c
-@@ -6,6 +6,67 @@
+@@ -6,6 +6,18 @@
  #include <linux/of.h>
  #include <linux/phy.h>
  
-+int phy_package_address(struct phy_device *phydev, unsigned int addr_offset)
++struct device_node *phy_package_shared_get_node(struct phy_device *phydev)
 +{
-+	struct phy_package_shared *shared = phydev->shared;
-+	u8 base_addr = shared->base_addr;
-+
-+	if (addr_offset >= PHY_MAX_ADDR - base_addr)
-+		return -EIO;
-+
-+	/* we know that addr will be in the range 0..31 and thus the
-+	 * implicit cast to a signed int is not a problem.
-+	 */
-+	return base_addr + addr_offset;
++	return phydev->shared->np;
 +}
-+EXPORT_SYMBOL_GPL(phy_package_address);
++EXPORT_SYMBOL_GPL(phy_package_shared_get_node);
 +
-+int __phy_package_read(struct phy_device *phydev, unsigned int addr_offset,
-+		       u32 regnum)
++void *phy_package_shared_get_priv(struct phy_device *phydev)
 +{
-+	int addr = phy_package_address(phydev, addr_offset);
-+
-+	if (addr < 0)
-+		return addr;
-+
-+	return __mdiobus_read(phydev->mdio.bus, addr, regnum);
++	return phydev->shared->priv;
 +}
-+EXPORT_SYMBOL_GPL(__phy_package_read);
++EXPORT_SYMBOL_GPL(phy_package_shared_get_priv);
 +
-+int __phy_package_write(struct phy_device *phydev, unsigned int addr_offset,
-+			u32 regnum, u16 val)
-+{
-+	int addr = phy_package_address(phydev, addr_offset);
-+
-+	if (addr < 0)
-+		return addr;
-+
-+	return __mdiobus_write(phydev->mdio.bus, addr, regnum, val);
-+}
-+EXPORT_SYMBOL_GPL(__phy_package_write);
-+
-+static bool __phy_package_set_once(struct phy_device *phydev, unsigned int b)
-+{
-+	struct phy_package_shared *shared = phydev->shared;
-+
-+	if (!shared)
-+		return false;
-+
-+	return !test_and_set_bit(b, &shared->flags);
-+}
-+
-+bool phy_package_init_once(struct phy_device *phydev)
-+{
-+	return __phy_package_set_once(phydev, 0);
-+}
-+EXPORT_SYMBOL_GPL(phy_package_init_once);
-+
-+bool phy_package_probe_once(struct phy_device *phydev)
-+{
-+	return __phy_package_set_once(phydev, 1);
-+}
-+EXPORT_SYMBOL_GPL(phy_package_probe_once);
-+
- /**
-  * phy_package_join - join a common PHY group
-  * @phydev: target phy_device struct
+ int phy_package_address(struct phy_device *phydev, unsigned int addr_offset)
+ {
+ 	struct phy_package_shared *shared = phydev->shared;
 diff --git a/include/linux/phy.h b/include/linux/phy.h
-index e36eb247c..a8f39e817 100644
+index a8f39e817..ce591307a 100644
 --- a/include/linux/phy.h
 +++ b/include/linux/phy.h
-@@ -353,10 +353,6 @@ struct phy_package_shared {
- 	void *priv;
- };
- 
--/* used as bit number in atomic bitops */
--#define PHY_SHARED_F_INIT_DONE  0
--#define PHY_SHARED_F_PROBE_DONE 1
--
- /**
-  * struct mii_bus - Represents an MDIO bus
-  *
-@@ -2135,66 +2131,11 @@ int __phy_hwtstamp_set(struct phy_device *phydev,
- 		       struct kernel_hwtstamp_config *config,
- 		       struct netlink_ext_ack *extack);
- 
--static inline int phy_package_address(struct phy_device *phydev,
--				      unsigned int addr_offset)
--{
--	struct phy_package_shared *shared = phydev->shared;
--	u8 base_addr = shared->base_addr;
--
--	if (addr_offset >= PHY_MAX_ADDR - base_addr)
--		return -EIO;
--
--	/* we know that addr will be in the range 0..31 and thus the
--	 * implicit cast to a signed int is not a problem.
--	 */
--	return base_addr + addr_offset;
--}
--
--static inline int phy_package_read(struct phy_device *phydev,
--				   unsigned int addr_offset, u32 regnum)
--{
--	int addr = phy_package_address(phydev, addr_offset);
--
--	if (addr < 0)
--		return addr;
--
--	return mdiobus_read(phydev->mdio.bus, addr, regnum);
--}
--
--static inline int __phy_package_read(struct phy_device *phydev,
--				     unsigned int addr_offset, u32 regnum)
--{
--	int addr = phy_package_address(phydev, addr_offset);
--
--	if (addr < 0)
--		return addr;
--
--	return __mdiobus_read(phydev->mdio.bus, addr, regnum);
--}
--
--static inline int phy_package_write(struct phy_device *phydev,
--				    unsigned int addr_offset, u32 regnum,
--				    u16 val)
--{
--	int addr = phy_package_address(phydev, addr_offset);
--
--	if (addr < 0)
--		return addr;
--
--	return mdiobus_write(phydev->mdio.bus, addr, regnum, val);
--}
--
--static inline int __phy_package_write(struct phy_device *phydev,
--				      unsigned int addr_offset, u32 regnum,
--				      u16 val)
--{
--	int addr = phy_package_address(phydev, addr_offset);
--
--	if (addr < 0)
--		return addr;
--
--	return __mdiobus_write(phydev->mdio.bus, addr, regnum, val);
--}
-+int phy_package_address(struct phy_device *phydev, unsigned int addr_offset);
-+int __phy_package_read(struct phy_device *phydev, unsigned int addr_offset,
-+		       u32 regnum);
-+int __phy_package_write(struct phy_device *phydev, unsigned int addr_offset,
-+			u32 regnum, u16 val);
- 
- int __phy_package_read_mmd(struct phy_device *phydev,
- 			   unsigned int addr_offset, int devad,
-@@ -2212,26 +2153,8 @@ int phy_package_write_mmd(struct phy_device *phydev,
- 			  unsigned int addr_offset, int devad,
- 			  u32 regnum, u16 val);
- 
--static inline bool __phy_package_set_once(struct phy_device *phydev,
--					  unsigned int b)
--{
--	struct phy_package_shared *shared = phydev->shared;
--
--	if (!shared)
--		return false;
--
--	return !test_and_set_bit(b, &shared->flags);
--}
--
--static inline bool phy_package_init_once(struct phy_device *phydev)
--{
--	return __phy_package_set_once(phydev, PHY_SHARED_F_INIT_DONE);
--}
--
--static inline bool phy_package_probe_once(struct phy_device *phydev)
--{
--	return __phy_package_set_once(phydev, PHY_SHARED_F_PROBE_DONE);
--}
-+bool phy_package_init_once(struct phy_device *phydev);
-+bool phy_package_probe_once(struct phy_device *phydev);
- 
- extern const struct bus_type mdio_bus_type;
- 
+@@ -2095,6 +2095,9 @@ int phy_ethtool_get_link_ksettings(struct net_device *ndev,
+ int phy_ethtool_set_link_ksettings(struct net_device *ndev,
+ 				   const struct ethtool_link_ksettings *cmd);
+ int phy_ethtool_nway_reset(struct net_device *ndev);
++
++struct device_node *phy_package_shared_get_node(struct phy_device *phydev);
++void *phy_package_shared_get_priv(struct phy_device *phydev);
+ int phy_package_join(struct phy_device *phydev, int base_addr, size_t priv_size);
+ int of_phy_package_join(struct phy_device *phydev, size_t priv_size);
+ void phy_package_leave(struct phy_device *phydev);
 -- 
 2.48.1
 
