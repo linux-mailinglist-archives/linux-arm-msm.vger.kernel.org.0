@@ -1,186 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-48532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5606A3C4F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 17:27:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF440A3C506
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 17:30:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6674416FDE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 16:24:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E869171BC4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 16:28:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 303C81FECD8;
-	Wed, 19 Feb 2025 16:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B8A51FECCE;
+	Wed, 19 Feb 2025 16:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QSCGc83e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mEfAWXqE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478551FE45B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 16:23:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9D91FE44E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 16:28:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739982229; cv=none; b=IyiiPuiUi6dOQa+tEqPfU2uK2uNaTqV9n0WJe+FDy4F8HGiRilNtnjLNm6/CQNmhfaVPKvL31oi4yomkq//M1cWcR7sP68YJhWkXYVtbZRUmnxWdf+m7PXXNkJt3wgA4hQaSIfxeKU9IU/0nd7yJeeldOL9FV4MVygr/GAZbzjA=
+	t=1739982499; cv=none; b=bRD+lABNmRf8zdnbMJVNSrXyOMiypB8aJWGaBX839tz2+kQxS3lETp4woUUiZSPwtXHX89EL4YGJdFgug4KeeX8s2toPkL0/O9KtQJyjgpRbXHfTx2C2mwNIEpY6agtrIydwXBJkWAia7xwzB5En7sGl3VXSdCOzcpG3sk15ML8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739982229; c=relaxed/simple;
-	bh=e7uWihHaRuX3l60xcjRDNo7zV9F+Ds60faI4+TOm1Tw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jtgIgszNG1FsExUX17/TtUooujEJftFEYE7VFzNI3mARVg0gX7GrAyVaaqTbbD9VoAwVN5SWcIGDs/KUQcY+I1DkSF+Ud5De+nqxwHCsxpkQgiz/4bNG48GmecLGOm8ICEXurc39UqMjEr8QYfBsh0a0aSMkxw4R2eqyKPz8MZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QSCGc83e; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1739982499; c=relaxed/simple;
+	bh=gIEAaQuMpvcrLQDh3vZAHZqWFqhXyhJidbzOzOnz2ls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I6Zh6SJZbwgqNg9VvMYdT9obL33Za5TF7dPFtcMR+8EQuaAtUlkH8r2wuPLq+qNjt5HbfjcYDzIwMjEbEenHzvvtElFZymgE07qvV6f3SnsmVObhbk96WlzviqrZ4G6fIRo6fakP8FQnr/FHQQay9LyDLmsfjhyLzzvuLweJiX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mEfAWXqE; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-439a1e8ba90so99115e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 08:23:47 -0800 (PST)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-38f26a82d1dso3500877f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 08:28:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739982226; x=1740587026; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=STDYxeOydJEmeZwWEUJZhgJUaxAx3cfQSyjYXjHJqhE=;
-        b=QSCGc83eVgV9H49UYQE3nB15kElFnPfz8oT5zDy5Ho375u49jODjqCCJae5PJs+mf5
-         wh5CxuVvMtTAz5t/AYFk1S7sO8ryn7+zxMat3rVNPvDlg+H/OwCwPoNUQHFAbR++g+2J
-         LR1vDL2309owPum5sajjpQy5wX3GD/abaRad+SIjr1AF1EQ2LrR2kKVDiZC7zlyfwLOK
-         tmXMQplPFRSOQQIIn8Rdg+xhaGKY7HUDjEefvbyfe/wyGQRt0YlXVaAVpYfrkhia31+f
-         Fk3i5Pxfspb2tVtb5hM5DyQhzojXi6dkMSjIywVPHwGcwKOxkJWi5kmWCSc9u161jX2L
-         r5oQ==
+        d=linaro.org; s=google; t=1739982494; x=1740587294; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MRwCTxrrfvwtx9nFWmK+OK00bxF7qgqDJMInBEnLV1g=;
+        b=mEfAWXqEV3E+1cLWPKyAUOvWBVSOB2FLarif4Js/WWZdVmjgkjT0Ug9JEUQEJx1o37
+         mrwvMfZd9M0aR8qhgmDQK/BRN5hpgaEO3NNadpuLCpWhfXVw6mgNspdKJACjpVkByu3h
+         76/ZifkX/qMa8RWErEyjBMaLlMvUqHDxix5ChdsHcwciqZKaGez5QIQG9vqPcmB06z4O
+         dsm7sLFZD0XuPCd9LjvhxPr39oYiUf2vj/ULif+B01RWgLt1dzj02x4OOq8U0IbF6Mib
+         N6pw+22tEfSSFKISprcvfiYpKIGwso4GXN02Uett2yUdX39j4EINhRTwGjtVDueYqTJt
+         3O9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739982226; x=1740587026;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=STDYxeOydJEmeZwWEUJZhgJUaxAx3cfQSyjYXjHJqhE=;
-        b=mLegfMU+/2/sbcyOiO4Yq+EPN4Bks8tWFAemmH741gFkvSqv9MpLmPoIa9p9Vh1KNn
-         6pVw0cewQ2KWu0wQNy2Q1eMuqtsibViG578LlTPuNo2/zGOfz9+uTj3cYd6DEDtO7KAe
-         w+bcy5Hh1oMjNo+9IkTkJLjWjvmWJra2jYFILlkd/PGvwZOapN+Yx5wv8OwKfdfeDV1o
-         K8LTWi7oF/PNbLdEjDtQTU8vAyYJTY/pPVG2dDslsXqICXQw7VNdHpL+On3HLAWWx9v4
-         xsjPpWSzjx3Pgh/mxAF50OryyIUH4Bj+xShN+2kXw5b+Pj9g957ZuGK/1BElx4Quzhdn
-         Bsmw==
-X-Gm-Message-State: AOJu0Yw9j+tfm1TutgCT0iyqFJmrGTAJs1+uG7vAAYrmRjRghsyz1inJ
-	EZ8nhdVMa+oIWkmVz6ioD0mpPl92J/SQ5p075hg6ikw0ZMZy99SDhPiPAsM9AM8=
-X-Gm-Gg: ASbGncskjx2PmrrCBh+nGtn98HLoOi3Qo1UjwcOwH69aODJPRKFUUdxHclN7NGMi9na
-	HWfGJogFzVqRIVvDWPl8QpPb27p4QH+3q5NqGzORKNC0ufBhvHTrkboqMUTx+pPEIj+4eL2WjxK
-	4An9iyvQD7JAQeWxRndcVXDrhZclQjz7+kx3xLiWz00HdxzvGTWX+Me1VOuTk8IHJ337kdePXRs
-	l4/1PXwwKhlmjIBF1+wUaf+c/UMXkiLGu/b1KrQuGSoxKIPSG+KAZExVwADb+R59UgUpPjU3qH0
-	/+zOmr62AE1bHRj8hkUxg03sJJLhkIQ=
-X-Google-Smtp-Source: AGHT+IFCXH6juWXCxM4namsDbJk7fdm7tD4GiYlIZEnzx6Vaog88SCNo/gNggeL5ghgnRcT3Fr5pqw==
-X-Received: by 2002:a05:600c:1512:b0:439:8b19:fa9a with SMTP id 5b1f17b1804b1-4398b19fc41mr36232625e9.2.1739982225613;
-        Wed, 19 Feb 2025 08:23:45 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.206.225])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f25a0fe5esm18442417f8f.99.2025.02.19.08.23.44
+        d=1e100.net; s=20230601; t=1739982494; x=1740587294;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MRwCTxrrfvwtx9nFWmK+OK00bxF7qgqDJMInBEnLV1g=;
+        b=XTncPP5hZlUulZWoXGVHr0Xw+lwvtQDu392q9Gh1d/Dn1VGK6cpp7FGkWdsTA8UlEm
+         3C/kNc36Zb/3jhyL6SX9Fd4iRXgYVkif8qL72RjF6D3sbNs+wZqrTG1aK+zfYjhjKxiu
+         Evh0obaPZVShQ60/VwVulCpYgkHNadIvRPxvZQ2L40PoeNRNZhIkhZUXEvdJuUIK/lTT
+         pTM+H33PwAblbgkUaAtE6V4DcTH6cni4byNKTkNa/09LiMQCMbtrQ7uNOA0k+FOqoxGL
+         00lFrwuMrTo6kUpu/84Iv5/tsXG76CC9mKAFAFk9KC3Vlg5vcbz4g2ZvVql6uggJcEvG
+         PK5w==
+X-Forwarded-Encrypted: i=1; AJvYcCVyjyDMx6t/uoXGuiIFkfrzVb8prro4dxEYswPjE5EZFZOuBv+Lc0CNjEOlsu+29rZ4A4y4IbbdXbKf11iZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDIJc21aS9srLe+FtY0J3THvVQ1r25dtmM2Vc1ht9NsuzinnJ9
+	FiNCfMXGAwNegGBSF9X8z2NOysPqJD93gP/CBthJ4Itf1o9tJ7DO8Dwt5zz6usI=
+X-Gm-Gg: ASbGncuYfqg424n5YuGJ2zOt//G8kkpQ1mvdqs8EJc3YkQuSfnzgmm8potZAkiEJDSs
+	lKTsuMda30GcCH8NF8D54upTkhOAsISsdCa7YhaDkTieIND4IDABMy4NGRmxmn7gXGdy2EHhL8g
+	deEUYRVcBVKzlcceWrW5aDaFRfnpWkyWTc49U9PNJHIpClHt1ed1lPsnxyyPedNvQPKpNXnPc8+
+	zdJbzdQ99ruvck8H5Riwi1M48XPWOy7vJ9MCbznSS7EY0Y7Yx1K9m8TR10fOculb7kIfl+Ojvf8
+	7O7VjIWtejDJfJ+ZMNuMeYGSM2o=
+X-Google-Smtp-Source: AGHT+IH8qkvsyXpimgmtGKizvI1hdDhttqIBX8KjR41D6xYWe3cw/2Xh8D6uRRAu4ip26Fbz7QtqJw==
+X-Received: by 2002:adf:f60f:0:b0:38d:dc4d:3476 with SMTP id ffacd0b85a97d-38f33f58da4mr15133466f8f.52.1739982494207;
+        Wed, 19 Feb 2025 08:28:14 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef30:c59a:9aec:ce42:c01f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4395a1b824dsm215833715e9.34.2025.02.19.08.28.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 08:23:45 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 19 Feb 2025 17:23:33 +0100
-Subject: [PATCH v5 2/2] drm/msm/dsi/phy: Define PHY_CMN_CLK_CFG[01]
- bitfields and simplify saving
+        Wed, 19 Feb 2025 08:28:13 -0800 (PST)
+Date: Wed, 19 Feb 2025 17:28:12 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: x1e80100: Apply consistent
+ critical thermal shutdown
+Message-ID: <Z7YGnN9XwDqOpwc4@linaro.org>
+References: <20250219-x1e80100-thermal-fixes-v1-0-d110e44ac3f9@linaro.org>
+ <20250219-x1e80100-thermal-fixes-v1-2-d110e44ac3f9@linaro.org>
+ <Z7X6jZev8fpoq0Ih@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250219-drm-msm-phy-pll-cfg-reg-v5-2-d28973fa513a@linaro.org>
-References: <20250219-drm-msm-phy-pll-cfg-reg-v5-0-d28973fa513a@linaro.org>
-In-Reply-To: <20250219-drm-msm-phy-pll-cfg-reg-v5-0-d28973fa513a@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Jonathan Marek <jonathan@marek.ca>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Rob Clark <robdclark@chromium.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2560;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=e7uWihHaRuX3l60xcjRDNo7zV9F+Ds60faI4+TOm1Tw=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBntgWLptxlLsDSPuC13zxCb4GjCqFlevEaleizP
- 796ZuFHIgGJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ7YFiwAKCRDBN2bmhouD
- 1/uWD/9Tvjr1rRMWsPNMmAYYIaKkacdXn8m5XOmuCW4DbdnsCKrLkiQMbMlWLiy1dY6qPP7IJxt
- SwAnt2GRPWIxdM8N504hqqx+PG7vc85jOsIh55NAUUFMrHiJbTZ8pTrKat8MOCwb56TVtOLnuKa
- vHomGZwcGqRCZN2TfJ2YdtZWYVQGG01ylF9AEm3LSZHKYB2ykLLgD8locKlvyGymRkOPnSsIWy+
- bXwDv1PkzYSFrSo8CnA5asBzdJHJWEHzGkNbQJCqWuubTtqL1ribeOaYa++cyN/TSWXZMfHBmc0
- z5DZAVQn295rzoroUmrFVSoTEegzudPiICE2Y1NhdLMSZpn/8Oqu52C0/nbSbzMqpDjLb4JHtC4
- WQJtKv1zSumQI1p1xe+StDtLPCm6upiOEfIm0DA3EJaFcTrZWsxY4AnOiZ/V7+hv7QjmRsOBquM
- 28PZtgQBdeiW2Uy+2r3y0K7hHb6dJHWEWAdS1DvZDZ15soRKXKJjdZJtaZ21R0z28CeJIBrh2z1
- QgOWGlBbqsWdlFyuwc0Naioi03zY4xCOrJP5Yn7SJEOTBDJj5fckmQOzZkUAAPVDPxNmKjHaCLO
- 7psBxs/jikM6sJz/qX+6QfaItHvskVAmhULu23h45HYbbtZnQHf5mqac+g0KlRwMINhciDKtLyh
- VHtIGFCovaGZjJg==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z7X6jZev8fpoq0Ih@hovoldconsulting.com>
 
-Add bitfields for PHY_CMN_CLK_CFG0 and PHY_CMN_CLK_CFG1 registers to
-avoid hard-coding bit masks and shifts and make the code a bit more
-readable.
+On Wed, Feb 19, 2025 at 04:36:45PM +0100, Johan Hovold wrote:
+> On Wed, Feb 19, 2025 at 12:36:19PM +0100, Stephan Gerhold wrote:
+> > The firmware configures the TSENS controller with a maximum temperature of
+> > 120°C. When reaching that temperature, the hardware automatically triggers
+> > a reset of the entire platform. Some of the thermal zones in x1e80100.dtsi
+> > use a critical trip point of 125°C. It's impossible to reach those.
+> > 
+> > It's preferable to shut down the system cleanly before reaching the
+> > hardware trip point. Make the critical temperature trip points consistent
+> > by setting all of them to 115°C and apply a consistent hysteresis.
+> > The ACPI tables also specify 115°C as critical shutdown temperature.
+> > 
+> > Cc: stable@vger.kernel.org
+> > Fixes: 4e915987ff5b ("arm64: dts: qcom: x1e80100: Enable tsens and thermal zone nodes")
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> 
+> > @@ -8483,7 +8483,7 @@ trip-point1 {
+> >  				};
+> >  
+> >  				cpu-critical {
+> > -					temperature = <110000>;
+> > +					temperature = <115000>;
+> 
+> Have you asked the authors where this lower limit came from (or
+> determined it was just copy pasta some other way)?
+> 
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I haven't asked before sending the patch, but it looks like copy-paste
+from sm8550.dtsi. That one also has these weird double passive trip
+points for the CPU, which are dropped for x1e80100.dtsi in the last
+patch of this series. Rajendra and Abel are in the Cc though in case
+they would like to comment. :-)
 
----
+> >  					hysteresis = <1000>;
+> >  					type = "critical";
+> >  				};
+> 
+> > @@ -8737,7 +8737,7 @@ trip-point0 {
+> >  				};
+> >  
+> >  				video-critical {
+> > -					temperature = <125000>;
+> > +					temperature = <115000>;
+> >  					hysteresis = <1000>;
+> >  					type = "critical";
+> >  				};
+> 
+> Ok, make sense to backport the first patch as well then.
+> 
 
-Changes in v5:
-1. Split part touching pll_7nm_register() to new patch.
-2. Update commit msg.
+Exactly. :D
 
-Changes in v4:
-1. Add mising bitfield.h include
-2. One more FIELD_GET and DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL (Dmitry)
+> Looks good to me:
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
-Changes in v3:
-1. Use FIELD_GET
-2. Keep separate bit_clk_div and pix_clk_div
-3. Rebase (some things moved to previous patches)
-
-Changes in v2:
-1. New patch
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 2fca469b10b33ac2350de5ab8a606704e84800ea..5ef5bc252019486c6f24f256d88d69ad3f6c838b 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2018, The Linux Foundation
-  */
- 
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/iopoll.h>
-@@ -572,11 +573,11 @@ static void dsi_7nm_pll_save_state(struct msm_dsi_phy *phy)
- 	cached->pll_out_div &= 0x3;
- 
- 	cmn_clk_cfg0 = readl(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG0);
--	cached->bit_clk_div = cmn_clk_cfg0 & 0xf;
--	cached->pix_clk_div = (cmn_clk_cfg0 & 0xf0) >> 4;
-+	cached->bit_clk_div = FIELD_GET(DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_3_0__MASK, cmn_clk_cfg0);
-+	cached->pix_clk_div = FIELD_GET(DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_7_4__MASK, cmn_clk_cfg0);
- 
- 	cmn_clk_cfg1 = readl(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
--	cached->pll_mux = cmn_clk_cfg1 & 0x3;
-+	cached->pll_mux = FIELD_GET(DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL__MASK, cmn_clk_cfg1);
- 
- 	DBG("DSI PLL%d outdiv %x bit_clk_div %x pix_clk_div %x pll_mux %x",
- 	    pll_7nm->phy->id, cached->pll_out_div, cached->bit_clk_div,
-@@ -598,7 +599,8 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
- 	dsi_pll_cmn_clk_cfg0_write(pll_7nm,
- 				   DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_3_0(cached->bit_clk_div) |
- 				   DSI_7nm_PHY_CMN_CLK_CFG0_DIV_CTRL_7_4(cached->pix_clk_div));
--	dsi_pll_cmn_clk_cfg1_update(pll_7nm, 0x3, cached->pll_mux);
-+	dsi_pll_cmn_clk_cfg1_update(pll_7nm, DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL__MASK,
-+				    cached->pll_mux);
- 
- 	ret = dsi_pll_7nm_vco_set_rate(phy->vco_hw,
- 			pll_7nm->vco_current_rate,
-
--- 
-2.43.0
-
+Thanks!
+Stephan
 
