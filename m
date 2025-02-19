@@ -1,243 +1,303 @@
-Return-Path: <linux-arm-msm+bounces-48465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17E9EA3AEBA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 02:13:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4A3AA3AECE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 02:22:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96F21188640E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 01:13:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 881503AAC97
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 01:21:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23E7E20330;
-	Wed, 19 Feb 2025 01:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 479C675809;
+	Wed, 19 Feb 2025 01:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=toshiba.co.jp header.i=nobuhiro1.iwamatsu@toshiba.co.jp header.b="k+mFfKID"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YGvoaW+5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mo-csw.securemx.jp (mo-csw1120.securemx.jp [210.130.202.131])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9508F83CC7;
-	Wed, 19 Feb 2025 01:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=210.130.202.131
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739927601; cv=fail; b=GFka1UwBVI+O2DqESvCvpC4ouUJTrNGyHbdda7IkmD8LNba9EAyo3caUaua4VF3Ozgnx+E/5jgBoGIsSxbI0nDM74gFPcfd3nwCZ0aeT1x4D14s7MJ5j79PFraUmYVMzohfV0zEiTEZr33OEsd2q62erth7eQk1Ov/asAzbzQ4A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739927601; c=relaxed/simple;
-	bh=3FSpP6JfOuayIdZsdYiJxpZhfoYELmplVeETlOVt8i8=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=PyWoMfRQP+CWpjF+qjrdp/PW3BuJ0F6lnYZMmxgs3WJeDaieXw1KI/6oSeusrdB05M2j25w0TOmPSSS/72AtjJwUcKiixGqkD7NeQi0Hqra74MF4cIAC0mq8OX/IN1Cym2Ykrey3Z4bGMRZw9gU9oDNOb1JrEbicuqHegnOSdVg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=toshiba.co.jp; spf=pass smtp.mailfrom=toshiba.co.jp; dkim=pass (2048-bit key) header.d=toshiba.co.jp header.i=nobuhiro1.iwamatsu@toshiba.co.jp header.b=k+mFfKID; arc=fail smtp.client-ip=210.130.202.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=toshiba.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=toshiba.co.jp
-DKIM-Signature: v=1;a=rsa-sha256;c=relaxed/simple;d=toshiba.co.jp;h=From:To:CC
-	:Subject:Date:Message-ID:References:In-Reply-To:Content-Type:
-	Content-Transfer-Encoding:MIME-Version;i=nobuhiro1.iwamatsu@toshiba.co.jp;s=
-	key2.smx;t=1739927500;x=1741137100;bh=3FSpP6JfOuayIdZsdYiJxpZhfoYELmplVeETlOV
-	t8i8=;b=k+mFfKID7tJzlqtxDNzskfaKvxzqmHKjRc5s6PSSkvMXaFMXk01W9us0zHWY+JHOldAZG
-	cThpNl2vBC4N7wKTMFPL1NnISM2TUcGCmg/7NMYIkIyDKzyMQv5Ww5lYZBPR9n4m0xBchXokvvwMX
-	rUG1yr93MbxMZoTBCdR05QlTpdy7DCb/c6F/P1XDV6ARoNWCsrVf2i3aqjsVTA4bA6CJin3ccwJU0
-	h+FtzrE7pmW6Nr3ywsW/DwPQXZ6VKeqDcKD3/VWsTsPzvi/8Phs8sYHDA1JQn2GLY6pndkoJOZobn
-	W9OPoDC1CKpInPzrT999DUWuUWoiMhCzIENMZFPrEA==;
-Received: by mo-csw.securemx.jp (mx-mo-csw1120) id 51J1Bbxt1643757; Wed, 19 Feb 2025 10:11:37 +0900
-X-Iguazu-Qid: 2rWh5b6vEriU9O3E8H
-X-Iguazu-QSIG: v=2; s=0; t=1739927497; q=2rWh5b6vEriU9O3E8H; m=rd1DG7Yxy0+XA59rMoOyplbxeQIS9QaKivZOVQpC2JQ=
-Received: from imx12-a.toshiba.co.jp ([38.106.60.135])
-	by relay.securemx.jp (mx-mr1122) id 51J1BUI23181301
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 19 Feb 2025 10:11:31 +0900
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bCArfQxY1/wzN+kel0LSdtt0f6aNCDt0QWexEQJxcGy1RRdp/b09T0lzb64MVc0VvForuemaE/pIm7/AAnFRRcjvnVaubi9aw4umTjPq9V12rGF2dAOFu5LSkcgLuBAzGO30TXG3C1Sx/9yA/v7R6U2dMnahT3Rg7WIK3uo0Qasx/BFak9/u4Ze33glEbqbV1fzIWqNWQe8EHUt6B7rpntnxOYaFqQcBz5nfsjZGe1jpdfKkxrwWRASuvcAMmxAJFiCvvkuv+x2XUxxjeZOK2Ti890zBm1ZKhNOG5YJWAJJ/Vuy2Ud5inVYswFG8CSGCK0V4j9FOZZZ0kylDdG4hbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3FSpP6JfOuayIdZsdYiJxpZhfoYELmplVeETlOVt8i8=;
- b=daaCZqCdMLPwUBHuRb081MY9k4dmeGxrMX5mgZwF77b87lm0boF/4sxWOv3s6+diMVlLz/4JW2wpRMI+GMyZnHdCmk0Etd+pdco3aXvRZ4sLMUfZgoa6/RORvUBaIca9GtQefXBh7s1mh/YXC0F7/5Hx3tAObkmgEh5O7AQSWTQsIRxXwywPauslh5A+iy0hRJCVPnOd8myM3MXv0K9TbZo+H3AYHc8dOVIatVIplHdtIb0wJpL46ta88Cf7nH2WTUe7EG1E2CcbSfR1FzYaltM/dsTJdU+pUBDUSY6gcdPGITgCK1UDF20P+Na9fYzfQrk8aXlefYu8kSVPIvK1EA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=toshiba.co.jp; dmarc=pass action=none
- header.from=toshiba.co.jp; dkim=pass header.d=toshiba.co.jp; arc=none
-From: <nobuhiro1.iwamatsu@toshiba.co.jp>
-To: <rmk+kernel@armlinux.org.uk>, <netdev@vger.kernel.org>
-CC: <alexandre.torgue@foss.st.com>, <andrew+netdev@lunn.ch>, <wens@csie.org>,
-        <davem@davemloft.net>, <drew@pdp7.com>, <kernel@esmil.dk>,
-        <edumazet@google.com>, <festevam@gmail.com>, <wefu@redhat.com>,
-        <guoren@kernel.org>, <imx@lists.linux.dev>, <kuba@kernel.org>,
-        <jan.petrous@oss.nxp.com>, <jernej.skrabec@gmail.com>,
-        <jbrunet@baylibre.com>, <khilman@baylibre.com>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-sunxi@lists.linux.dev>, <martin.blumenstingl@googlemail.com>,
-        <mcoquelin.stm32@gmail.com>, <minda.chen@starfivetech.com>,
-        <neil.armstrong@linaro.org>, <s32@nxp.com>, <pabeni@redhat.com>,
-        <kernel@pengutronix.de>, <samuel@sholland.org>,
-        <s.hauer@pengutronix.de>, <shawnguo@kernel.org>, <vkoul@kernel.org>
-Subject: RE: [PATCH net-next 2/3] net: stmmac: remove useless priv->flow_ctrl
-Thread-Topic: [PATCH net-next 2/3] net: stmmac: remove useless priv->flow_ctrl
-Thread-Index: AQHbge98a5qcr5qm3kiYD9a+dQCXCLNN0cdw
-Date: Wed, 19 Feb 2025 01:11:26 +0000
-X-TSB-HOP2: ON
-Message-ID: 
- <OS7PR01MB148089F4C1A42FDCD46D5E3D192C52@OS7PR01MB14808.jpnprd01.prod.outlook.com>
-References: <Z7Rf2daOaf778TOg@shell.armlinux.org.uk>
- <E1tkKmI-004ObG-DL@rmk-PC.armlinux.org.uk>
-In-Reply-To: <E1tkKmI-004ObG-DL@rmk-PC.armlinux.org.uk>
-Accept-Language: ja-JP, en-US
-Content-Language: ja-JP
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=toshiba.co.jp;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OS7PR01MB14808:EE_|TYCPR01MB11899:EE_
-x-ms-office365-filtering-correlation-id: 9b3100f0-b610-4c84-8c72-08dd5082557c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: 
- BCL:0;ARA:13230040|366016|1800799024|376014|7416014|38070700018;
-x-microsoft-antispam-message-info: 
- =?utf-8?B?MGJTYlZFc3I5aDg2R2d2dTRHMkV0V1pqTi9OZ2EvS05kVHoyMFlLODBHbFJv?=
- =?utf-8?B?L2dHYmszdzQ1NTFxaDcra09FVTNsbjJBTUxiNjA3WWdRTEx5UGRiZk80NUJr?=
- =?utf-8?B?SklJYkx3YVhmTUFocjgzeHc4YVIweExPVmVTK3NNZEMxYVdXd1BJdXZHaHdF?=
- =?utf-8?B?T0tEUEIxQ3M3Tm5qUUJqUnlRc05hUVA1enNMVlBmZkkwcDQzam5oUVEzY0xG?=
- =?utf-8?B?RzZDM3g4ZTUvRzNQazlFVWdXQnVCYWpEcktEOWNob2FoSFl6QzJJSFUyN0tr?=
- =?utf-8?B?a2VGWnAwa1NMa0M4Y1FCNDJXRXp5U0o4cmVkRU1IZXUydlNWSHdhZEJUMlRo?=
- =?utf-8?B?U0pnalBZWkczTFRlOG5ya2NObDFrOXVsc2tVcFcvc0JlY1BRWDMvMDR2YklS?=
- =?utf-8?B?YW1yMXc0bWF5ZHl4eDk4SnhRcC82QzFYOFJDNVBlMFlSbURCcjV0L3lya1ND?=
- =?utf-8?B?WjUrdHhFdlEwVEJWYm1ueEttcGxlZmRSMnhCdytvdUxKZjMvOXVkUEYvMUZm?=
- =?utf-8?B?bjkzenhvT0pnT243NVhnSkpGU2V2VGw1RmZ0cG9yVk5kWjJXSkR2Y2ZGZnNh?=
- =?utf-8?B?TUVaRzZPRmpyZlRBd2F3TVo4NFpTT3pUbkZuWE43NWJPT3lDRVZEQ2pXUnRZ?=
- =?utf-8?B?bVFRM0ZlTlc1NXZlcHBiaXJPZjJ0WmhNTnN3Z0ZNVHVPbjN6L3h5ZUVZRm5C?=
- =?utf-8?B?VHM0TUFIU2dVVXluemwvSHRmaW8wbzEzVll5Vkp0RmRxdXVkUlZiSlI4UHNy?=
- =?utf-8?B?RnR2RFU5dmdiNWMvY3VINEFkcGZiQjREVG5KWVZLN0ticXFtbTJiSHhNOEw0?=
- =?utf-8?B?QzhZaW55WVUzMmV4bmtXS2RMK0JnNmJiRURaMTJ5dm1sbStvQi9PQ1FxY1Zp?=
- =?utf-8?B?dTZENXk1VnRqVEx0OXJoS3JrUXJSLzZ4WmNmTEVYSWNvajY0VmFab2NqUzd4?=
- =?utf-8?B?WHJaVVJmWCtXSmpwSmwxUjZBNVhyT2k2aS8xZ0NOSHV4VCtYc0FkZXVxRU5n?=
- =?utf-8?B?TDc0dTBTeTZZUFhKMTlxV3gzTmJDSjdJaUJrM0Q0Q1VJcUdya0tHcm16OTZy?=
- =?utf-8?B?eWp1SEJDK3FTR1RHV1Z5WFhGc2Z0L0pCTENBbEc2d1E4Z0lTdGIyOG45bk5V?=
- =?utf-8?B?Zk1WS3E3VnA0WW96OWxhTDFmWVhzUnVTZU1jMmxKWC8wdEtVcG1RQXVXSFV0?=
- =?utf-8?B?eVQ3NjhtT0FldFE1azNnbU9GSFRpRG5rMElKMlhCdUkwTEl2ajZMQWEybHZL?=
- =?utf-8?B?eEs5cUg0bzZLK1hCWU1iZVJZRDAzRXNmUEYxZGdtbEc5TDZZRFBjZ0dtV2t1?=
- =?utf-8?B?Q3ZGUHdmakhpT05lVThRc0dQVmVvR3QxMlJHemwwdHpoRDdVQ2Z2d0Y4c0Jk?=
- =?utf-8?B?UHBoYyszSXZNL1IwK3ZzdzVnU2Rsc0k0WllqYkYxZnBVYTFlalUxNGpaL3pE?=
- =?utf-8?B?c0NDTmRqRW5YakVEWVFGcmJoSkJvSENHR2U4Mmp0dFkwSDZFU1dMNTNwcjg4?=
- =?utf-8?B?alQ4STFWN05QWHkvK3N1b3JhZ21MelBjdEFYUnBlWVFOaGR6N01ZMTlzcGI1?=
- =?utf-8?B?WHhWaFRYcXF1UDFyYUtpd0ZsT1NmRnNlbTd0RG16cHlDbjlvbzRSZTU2Q05j?=
- =?utf-8?B?RmZCMmpZTTlSd0Q4cVpwaUpaL0dQOFROYzhxM3NRU2tMcTJlSGIwU1hxVWlL?=
- =?utf-8?B?V3JPQ0trYTVDa2NBeTl3dTB0Umt6U0NzczF4Tkd4OXRjeElSZVJVbTdUMlhy?=
- =?utf-8?B?TktDYVNxY1ZSSVcvRHZZN2IwV01wMmJNWEFHaTlqdU1nRW1pT0l5N0N3Kzk4?=
- =?utf-8?B?YjNBZXd3TXdhMThrck1SaGpSbXV6cXdFSzlDeEIweWZvc3g4dHZRSjFzUjUz?=
- =?utf-8?B?OEhWSzhYRVZCRmI2d3VDYStlL0lTMEp5RldZZGJ2ZUFlWmdXT0VraXJ4VCtT?=
- =?utf-8?Q?Ba52/rq+1YYV0FWzYO9DmQ/bRjCtkS6g?=
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:ja;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OS7PR01MB14808.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?utf-8?B?cDArM1RCSFluS1B4Qm9XcWoySy9jRmpJcy9xR2crZ1FtU1ZIM3pUb2gvcEZ2?=
- =?utf-8?B?b2VZbDQ1OXptR0tVM0NSdGo4RitQTjdQQlVZbGxjYUJ3WThWNTY4QTc1ZkNw?=
- =?utf-8?B?U2hIS2l0bWxiSzFvVC8wSjRxaHgzWHFzVFI2TEFLdEJ4bUhqTDBQYVhKM0JJ?=
- =?utf-8?B?SHNvdzZENEVkR3VIWThVaVArcVJDeUFzTVkzeUdRelJoMWY2SmV4SWx1OU4w?=
- =?utf-8?B?SlRhdW5sUHhXdEU0RVNLTG9yTE9samxVdXpNczRCbWRVVmFQdk15MFZFa0Z2?=
- =?utf-8?B?bHlqaWU3NFRqdDhROG9jQ0dzZm1FZjdpYUxvcFFic1JIb3lFZFEvTkhheVFh?=
- =?utf-8?B?ZmxXNHpQa1BFTjE3STlreDBMajNtQld5RUhXWXBSeVR6c1U4SktCdW1IUUh4?=
- =?utf-8?B?WjkvaXZDN1pQNWI0cGNpTFgvcHZLTUhId2xLOWxGZ3krRFM2Mi8zbHlIMTli?=
- =?utf-8?B?MDVtRWNlUit3VG5hM0xsQTIxcHBhOUUybzltVHBQV1FjVk9jS0o4Z09XOXBG?=
- =?utf-8?B?a2pQZHZDNG9Cc1ZKcllERTNSNlRub05NeGh2R055SDZ1NkxvU0d6ZTNLRjdT?=
- =?utf-8?B?WTV3aTdvTlFQV0F0aEJtSVdhSUo0ejRUWGVxNVFvd3ZxczdwQ1d3UWxYZkM3?=
- =?utf-8?B?QisrT0xkVWVkZnAyUEhIWWlDbGd4N0xucU41V3hUNFk0c2c2djh2TmZQVUdq?=
- =?utf-8?B?dDV3SHlRVVdpRVhaM1plOVhueUZYLzcwY3BDcnZPZHJoQnNjbEFJR1FhaVYz?=
- =?utf-8?B?OGdNY3hwY044OHlIWVprbUh2VzZqRUJrTnRsM3h0ZENHVWlydjJSRDRTbFVU?=
- =?utf-8?B?UWJ0cUJJN2hpcjAxeGJIb3JXanltazhsRlpJM1c0anRNaDltN1o5QnpzZFY2?=
- =?utf-8?B?OU5OTWFpbVNRMGZpYzlvR2t1NThQOFliaWk2Z1FONEdNM0hxQkRNWU1GWXNi?=
- =?utf-8?B?M0tmWC8ySU50QkRRR2pJazlLOGtyQzUxNWh1dzhFb1F3Si9GQmNvVW9vTXdI?=
- =?utf-8?B?ZVhxUWVXYU1JQXNjTnNKTExaMGN3V3F0YUdSY2tIbVEySmR3c3NKNGx1cDMr?=
- =?utf-8?B?bE9IMjVvZVNwRW1CN2RNc056dVhsL01kaWVNMzV3ZnJOeGVKYVpBaTdwMmlR?=
- =?utf-8?B?M2pTeDhkWllEUVhJWHhubzFacitsc1p6V0RKSEQrZ0s2UDJsKytqeFhCWnFM?=
- =?utf-8?B?dlVERnJUNTI2UkwrNnluU3JLR21JSmVEaTBWNU1MUkVHZzlqOFNCVnFwdlQ2?=
- =?utf-8?B?RmV0ait3aTdEUU02RllreW9kRFBzODUveDRndmlFL2paRzU4UFJ3anFRNXFG?=
- =?utf-8?B?OGdCcklnekxIdUUvdnBjbmFHdXBUYkFnOHRPeVY4ZFo2elFzdU91WFB2ODNL?=
- =?utf-8?B?WktHY2VndHZlWU5iMjhIUjZaTTdQZFJuSUFucFQzNmRwM1BqUlVXR0p6ak9R?=
- =?utf-8?B?OHhOWkJQRTFxaFdtT0hySHFOVGhTeUx3cDFRcm0raitJVldHbWRIN3U3V2kz?=
- =?utf-8?B?a2ZSUGQrUjFaeDBJVk1yK2NXbEQwNEVpbmZkQ3ROckw2Z0VQRDJMa1BPWjJE?=
- =?utf-8?B?TjB6MGE5TndXanlHNGNOQUFaaTRESzh2b3lCWVM4R0dXVGdJVXZ5WldOTDRS?=
- =?utf-8?B?YkRPQ2Z3NW1iMVZtdVR4bDA5L2JRUFJqb1ZPamNUZ3hHZ2dZU21PZTJCTC8x?=
- =?utf-8?B?c3hzQTJJK0JnSm85R2wydFY4Q200OVlxWUo5WFprbVF1Yitka2VMMlBoek9R?=
- =?utf-8?B?aHlLSVBQRlQ0aVVWUGQrQjc0OTQzQ0VIWUNwRVh1Ti9CU2kyUGtaMGFRVWFN?=
- =?utf-8?B?NnhRY1piZDFFTjR1NnF0VyttZnZkUzhlMkE0RGZJTndZS0oyRTRla2svNzdj?=
- =?utf-8?B?ZFNYR0lIT2NMaHBZTVlLUkV0aEdTSGZVaUlsRFFsTmJzMFVKMFRLVGt3bGR4?=
- =?utf-8?B?b3JRUXFTRVFMcWxQV3paUytTazZ2MysxdmdLRGpRU25iaUplTlpoZkpQdm5K?=
- =?utf-8?B?VS9WWUJZbEIwTk8wZC91MkNaWDdOdUJleVRlMnFFdXB0Q2NyeEJmaUpteHZx?=
- =?utf-8?B?TCt2eU5sTFdwT1lKejVxY3loWWVNVEZsOWMwZGVkL1htbko1QnZkMWpCT2o0?=
- =?utf-8?B?d3MrNHNXdHRPalFEYTBkdGxhRm1KblQrNWFXWkJWemdaa2pRanlZTzNvYm90?=
- =?utf-8?B?ZEE9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F101313D891
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 01:21:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1739928120; cv=none; b=PGpQrG3xe0fgNnX1c3/2BJ+mdaABBtJ+S2X43yxfTmHTe1Hh8wHzmRBqJShO8KZ6T5/P82m3kjuSEpy+In4JL3wyevXpn9hAvsxij0Xwt62USYHepSs+Li47XqGv9vrY7C7/skE8DgqK3TvHSLcUZQdytZFaOYGGQU6aRB7jcYM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1739928120; c=relaxed/simple;
+	bh=NUt+WhfYOlp4kXMW9MxPdyJMSiWLp/jAUdJTomvveTY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VGwE8ZlylixTrr1fKg0gb0HZ339TbaPfWDjp3NA1Y2U1NHrFoCeHGe8Gl6Jcjv1CHAyNqQDosDCUouCC+eUJAgw1CDYxKLXC4Hkw/r72luS5FWfRiaBou+sxR5d9mlF1aHu53onwSjCDGGGLjcx04AK7UIAVqBjJmwCf1eQD2no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YGvoaW+5; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-38f3ee8a119so1732620f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2025 17:21:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739928115; x=1740532915; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AXv+OqhH2y0iO9EGU1OunJFaKUzVPNS3CZeDRTVc1uU=;
+        b=YGvoaW+5rChOpqDI+5lnBJRCR256D6A9zqeb2aVv29OQAM4LyH11cGpVUIEBnGoyIv
+         GAifX078dGv+XeMwCzR20fu4V7TSQSiDQkxMK81DqOnME+bFUPJwljocvumwXPSKspG/
+         oJ02xeqmKIo+dCu7u+SUudC8ba8AjspA1St1pgkv+/45mioxTp1dlam81yUngHULeOHS
+         2HPU/Jc1HmFFgFsn4NYWwni/XN9j1p2ubUWW0eXQqggG4NYt5K4BuGzkWuiUPqZPZXtV
+         KIr+iEYxzV30AZfZ274oNxfTu8j0s0c3QwpnEs8MZdtFM3+SSd1RGY7vdT5TmS0dgpsb
+         0s7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739928115; x=1740532915;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AXv+OqhH2y0iO9EGU1OunJFaKUzVPNS3CZeDRTVc1uU=;
+        b=Zhgl9NcIhy8kxQvlkZxmgZQmF4+fyiXqzDWWNle/Bz8l31HMAmYeBZe9Hy9e/47TgD
+         P/bkzbiuJyK1NhRzFY+hu0bejZMuI3l9XDqPdgQhQiaAZ/FUS4eqyK2DFQvI9PHTquvz
+         /kCsWMBsPcOuuNF78Q6h/N2pQ2zLMT4hZrMak4WWeubBhAvxBkbrlbpyeBSofhP+Gn1G
+         D/DKin/4xnZhe8o6CRPsQyjDrK11BcK5T1kbhCZ0NY1IkMljLIAknHLoULPIJPqxMAgC
+         NgGyfwGz29hvFzy9cjynJCDc9F1wxAR7OLRgitIUD4p9lTWUW0ZQ4dGC/Du/AfpOYq0k
+         yuYw==
+X-Forwarded-Encrypted: i=1; AJvYcCVHcQG6hQYdSnvBV/ydVTzL9txEhTPbPg51d7cnFap6rkjZsP8As2DxDIcqZU1UeaHxF0L2L5wuQrlAXRsy@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz18kL3BwCz3xM1NDfNxxVGgXyz9vvSeSPq5F0XZ94wOWGNzWAW
+	OJjGCONOwZpWjgQ03J9NuZNqGOPtsYmukwY+AVV+SJ34b/HbC1L8jo9zDjOPctg=
+X-Gm-Gg: ASbGncsjDHLLjX8X2VWkKAcbQUf0Ag1lhpkZLik6kTc9pf6PtgV4oPbayEExlMQXN7H
+	8IqVsoAcemouEd0kUC614d7BgSDtc7hVix+A2j/V+YOVJHvHyG+X09rK9LuyepZ6EobEDlYXuso
+	/Xpmsmesjx8h7v8klJP5NQ6YHuZmuNr//Ad/5o9gV+L0s3eBrvlaXa548bwByNtC2ddcvbk31ne
+	V43ZQVZuy7qP3pvJjLUr7w0mMOXYPbyOADtrqhnLJDpwSOaLS4xSGGFopCwFahlWsHGzS8aFDgO
+	u0eLkz1l3l340TaxXH0Eoh1U3w8ygRePAco6OdAq+GewChsd/p0lqfMX
+X-Google-Smtp-Source: AGHT+IEKrVqXypAbKMrnTv54YSf/dcmvvAPJzuYbJwPUXuclFLGqTqLof2muT/Jy+9xFYqZ8jwa6Ww==
+X-Received: by 2002:a05:6000:1fa5:b0:38f:4fa5:58ce with SMTP id ffacd0b85a97d-38f4fa55a25mr5789399f8f.6.1739928115216;
+        Tue, 18 Feb 2025 17:21:55 -0800 (PST)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f561bee3esm1834665f8f.21.2025.02.18.17.21.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Feb 2025 17:21:54 -0800 (PST)
+Message-ID: <d4c4ecf0-9094-4341-8711-78a48e5d1344@linaro.org>
+Date: Wed, 19 Feb 2025 01:21:53 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: toshiba.co.jp
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OS7PR01MB14808.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9b3100f0-b610-4c84-8c72-08dd5082557c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Feb 2025 01:11:26.6368
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f109924e-fb71-4ba0-b2cc-65dcdf6fbe4f
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: H2rlT1pQ/85V46jqKmumwP2SHeg8WHvk8REwTWWaovQKbjxRp+/SBpHWicLgPHqfTxvMpQ8Rlf9Lfw2Z1EJeUvDZoXP/6XkM7CEZO9wwkabgFzQeWC7uAxD7xhYd1Kzd
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB11899
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] clk: qcom: videocc: Add support to attach multiple
+ power domains
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
+ <20250218-videocc-pll-multi-pd-voting-v1-4-cfe6289ea29b@quicinc.com>
+ <eec2869a-fa8f-4aaf-9fc5-e7a8baf0f864@linaro.org>
+ <huluiiaqmunvmffoqadrhssd3kl2toutqtcw7rzamv3sqdglsf@7lz66x4sj3gv>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <huluiiaqmunvmffoqadrhssd3kl2toutqtcw7rzamv3sqdglsf@7lz66x4sj3gv>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-SGkgUnVzc2VsbCwNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBSdXNz
-ZWxsIEtpbmcgPHJta0Bhcm1saW51eC5vcmcudWs+IE9uIEJlaGFsZiBPZiBSdXNzZWxsIEtpbmcg
-KE9yYWNsZSkNCj4gU2VudDogVHVlc2RheSwgRmVicnVhcnkgMTgsIDIwMjUgNzoyNSBQTQ0KPiBU
-bzogbmV0ZGV2QHZnZXIua2VybmVsLm9yZw0KPiBDYzogQWxleGFuZHJlIFRvcmd1ZSA8YWxleGFu
-ZHJlLnRvcmd1ZUBmb3NzLnN0LmNvbT47IEFuZHJldyBMdW5uDQo+IDxhbmRyZXcrbmV0ZGV2QGx1
-bm4uY2g+OyBDaGVuLVl1IFRzYWkgPHdlbnNAY3NpZS5vcmc+OyBEYXZpZCBTLiBNaWxsZXINCj4g
-PGRhdmVtQGRhdmVtbG9mdC5uZXQ+OyBEcmV3IEZ1c3RpbmkgPGRyZXdAcGRwNy5jb20+OyBFbWls
-IFJlbm5lcg0KPiBCZXJ0aGluZyA8a2VybmVsQGVzbWlsLmRrPjsgRXJpYyBEdW1hemV0IDxlZHVt
-YXpldEBnb29nbGUuY29tPjsgRmFiaW8NCj4gRXN0ZXZhbSA8ZmVzdGV2YW1AZ21haWwuY29tPjsg
-RnUgV2VpIDx3ZWZ1QHJlZGhhdC5jb20+OyBHdW8gUmVuDQo+IDxndW9yZW5Aa2VybmVsLm9yZz47
-IGlteEBsaXN0cy5saW51eC5kZXY7IEpha3ViIEtpY2luc2tpDQo+IDxrdWJhQGtlcm5lbC5vcmc+
-OyBKYW4gUGV0cm91cyA8amFuLnBldHJvdXNAb3NzLm54cC5jb20+OyBKZXJuZWogU2tyYWJlYw0K
-PiA8amVybmVqLnNrcmFiZWNAZ21haWwuY29tPjsgSmVyb21lIEJydW5ldCA8amJydW5ldEBiYXls
-aWJyZS5jb20+OyBLZXZpbg0KPiBIaWxtYW4gPGtoaWxtYW5AYmF5bGlicmUuY29tPjsgbGludXgt
-YW1sb2dpY0BsaXN0cy5pbmZyYWRlYWQub3JnOw0KPiBsaW51eC1hcm0ta2VybmVsQGxpc3RzLmlu
-ZnJhZGVhZC5vcmc7IGxpbnV4LWFybS1tc21Admdlci5rZXJuZWwub3JnOw0KPiBsaW51eC1yaXNj
-dkBsaXN0cy5pbmZyYWRlYWQub3JnOyBsaW51eC1zdG0zMkBzdC1tZC1tYWlsbWFuLnN0b3JtcmVw
-bHkuY29tOw0KPiBsaW51eC1zdW54aUBsaXN0cy5saW51eC5kZXY7IE1hcnRpbiBCbHVtZW5zdGlu
-Z2wNCj4gPG1hcnRpbi5ibHVtZW5zdGluZ2xAZ29vZ2xlbWFpbC5jb20+OyBNYXhpbWUgQ29xdWVs
-aW4NCj4gPG1jb3F1ZWxpbi5zdG0zMkBnbWFpbC5jb20+OyBNaW5kYSBDaGVuDQo+IDxtaW5kYS5j
-aGVuQHN0YXJmaXZldGVjaC5jb20+OyBOZWlsIEFybXN0cm9uZw0KPiA8bmVpbC5hcm1zdHJvbmdA
-bGluYXJvLm9yZz47IGl3YW1hdHN1IG5vYnVoaXJvKOWyqeadviDkv6HmtIsg4peL77yk77yp77y0
-77yj4pah77ykDQo+IO+8qe+8tOKXi++8r++8s++8tCkgPG5vYnVoaXJvMS5pd2FtYXRzdUB0b3No
-aWJhLmNvLmpwPjsgTlhQIFMzMiBMaW51eCBUZWFtDQo+IDxzMzJAbnhwLmNvbT47IFBhb2xvIEFi
-ZW5pIDxwYWJlbmlAcmVkaGF0LmNvbT47IFBlbmd1dHJvbml4IEtlcm5lbA0KPiBUZWFtIDxrZXJu
-ZWxAcGVuZ3V0cm9uaXguZGU+OyBTYW11ZWwgSG9sbGFuZCA8c2FtdWVsQHNob2xsYW5kLm9yZz47
-DQo+IFNhc2NoYSBIYXVlciA8cy5oYXVlckBwZW5ndXRyb25peC5kZT47IFNoYXduIEd1bw0KPiA8
-c2hhd25ndW9Aa2VybmVsLm9yZz47IFZpbm9kIEtvdWwgPHZrb3VsQGtlcm5lbC5vcmc+DQo+IFN1
-YmplY3Q6IFtQQVRDSCBuZXQtbmV4dCAyLzNdIG5ldDogc3RtbWFjOiByZW1vdmUgdXNlbGVzcyBw
-cml2LT5mbG93X2N0cmwNCj4gDQo+IHByaXYtPmZsb3dfY3RybCBpcyBvbmx5IGFjY2Vzc2VkIGJ5
-IHN0bW1hY19tYWluLmMsIGFuZCB0aGUgb25seSBwbGFjZQ0KPiB0aGF0IGl0IGlzIHJlYWQgaXMg
-aW4gc3RtbWFjX21hY19mbG93X2N0cmwoKS4gVGhpcyBmdW5jdGlvbiBpcyBvbmx5IGNhbGxlZCBm
-cm9tDQo+IHN0bW1hY19tYWNfbGlua191cCgpIHdoaWNoIGFsd2F5cyBzZXRzIHByaXYtPmZsb3df
-Y3RybCBpbW1lZGlhdGVseSBiZWZvcmUNCj4gY2FsbGluZyB0aGlzIGZ1bmN0aW9uLg0KPiANCj4g
-VGhlcmVmb3JlLCBpbml0aWFsaXNpbmcgdGhpcyBhdCBwcm9iZSB0aW1lIGlzIGluZWZmZWN0dWFs
-IGJlY2F1c2UgaXQgd2lsbCBhbHdheXMgYmUNCj4gb3ZlcndyaXR0ZW4gYmVmb3JlIGl0J3MgcmVh
-ZC4gQXMgc3VjaCwgdGhlICJmbG93X2N0cmwiDQo+IG1vZHVsZSBwYXJhbWV0ZXIgaGFzIGJlZW4g
-dXNlbGVzcyBmb3Igc29tZSB0aW1lLiBSYXRoZXIgdGhhbiByZW1vdmUgdGhlDQo+IG1vZHVsZSBw
-YXJhbWV0ZXIsIHdoaWNoIHdvdWxkIHJpc2sgbW9kdWxlIGxvYWQgZmFpbHVyZSwgY2hhbmdlIHRo
-ZQ0KPiBkZXNjcmlwdGlvbiB0byBpbmRpY2F0ZSB0aGF0IGl0IGlzIG9ic29sZXRlLCBhbmQgd2Fy
-biBpZiBpdCBpcyBzZXQgYnkgdXNlcnNwYWNlLg0KPiANCj4gTW9yZW92ZXIsIHN0b3JpbmcgdGhl
-IHZhbHVlIGluIHRoZSBzdG1tYWNfcHJpdiBoYXMgbm8gYmVuZWZpdCBhcyBpdCdzIHNldCBhbmQN
-Cj4gdGhlbiBpbW1lZGlhdGVseSByZWFkIHN0bW1hY19tYWNfZmxvd19jdHJsKCkuIEluc3RlYWQs
-IHBhc3MgaXQgYXMgYQ0KPiBwYXJhbWV0ZXIgdG8gdGhpcyBmdW5jdGlvbi4uDQo+IA0KPiBTaWdu
-ZWQtb2ZmLWJ5OiBSdXNzZWxsIEtpbmcgKE9yYWNsZSkgPHJtaytrZXJuZWxAYXJtbGludXgub3Jn
-LnVrPg0KDQpSZXZpZXdlZC1ieTogTm9idWhpcm8gSXdhbWF0c3UgPG5vYnVoaXJvMS5pd2FtYXRz
-dUB0b3NoaWJhLmNvLmpwPg0KDQpCZXN0IHJlZ2FyZHMsDQogIE5vYnVoaXJvDQo=
+On 18/02/2025 17:19, Dmitry Baryshkov wrote:
+> On Tue, Feb 18, 2025 at 03:46:15PM +0000, Bryan O'Donoghue wrote:
+>> On 18/02/2025 14:26, Jagadeesh Kona wrote:
+>>> During boot-up, the PLL configuration might be missed even after
+>>> calling pll_configure() from the clock controller probe. This can
+>>> happen because the PLL is connected to one or more rails that are
+>>> turned off, and the current clock controller code cannot enable
+>>> multiple rails during probe. Consequently, the PLL may be activated
+>>> with suboptimal settings, causing functional issues.
+>>>
+>>> To properly configure the video PLLs in the probe on SM8450, SM8475,
+>>> SM8550, and SM8650 platforms, the MXC rail must be ON along with MMCX.
+>>> Therefore, add support to attach multiple power domains to videocc on
+>>> these platforms.
+>>>
+>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>> ---
+>>>    drivers/clk/qcom/videocc-sm8450.c | 4 ++++
+>>>    drivers/clk/qcom/videocc-sm8550.c | 4 ++++
+>>>    2 files changed, 8 insertions(+)
+>>>
+>>> diff --git a/drivers/clk/qcom/videocc-sm8450.c b/drivers/clk/qcom/videocc-sm8450.c
+>>> index f26c7eccb62e7eb8dbd022e2f01fa496eb570b3f..b50a14547336580de88a741f1d33b126e9daa848 100644
+>>> --- a/drivers/clk/qcom/videocc-sm8450.c
+>>> +++ b/drivers/clk/qcom/videocc-sm8450.c
+>>> @@ -437,6 +437,10 @@ static int video_cc_sm8450_probe(struct platform_device *pdev)
+>>>    	struct regmap *regmap;
+>>>    	int ret;
+>>> +	ret = qcom_cc_attach_pds(&pdev->dev, &video_cc_sm8450_desc);
+>>> +	if (ret)
+>>> +		return ret;
+>>> +
+>>>    	ret = devm_pm_runtime_enable(&pdev->dev);
+>>>    	if (ret)
+>>>    		return ret;
+>>> diff --git a/drivers/clk/qcom/videocc-sm8550.c b/drivers/clk/qcom/videocc-sm8550.c
+>>> index 7c25a50cfa970dff55d701cb24bc3aa5924ca12d..d4b223d1392f0721afd1b582ed35d5061294079e 100644
+>>> --- a/drivers/clk/qcom/videocc-sm8550.c
+>>> +++ b/drivers/clk/qcom/videocc-sm8550.c
+>>> @@ -542,6 +542,10 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
+>>>    	int ret;
+>>>    	u32 sleep_clk_offset = 0x8140;
+>>> +	ret = qcom_cc_attach_pds(&pdev->dev, &video_cc_sm8550_desc);
+>>> +	if (ret)
+>>> +		return ret;
+>>> +
+>>>    	ret = devm_pm_runtime_enable(&pdev->dev);
+>>>    	if (ret)
+>>>    		return ret;
+>>>
+>>
+>> What's the difference between doing the attach here or doing it in
+>> really_probe() ?
+> 
+> I'd second this. If the domains are to be attached before calling any
+> other functions, move the call to the qcom_cc_map(), so that all drivers
+> get all domains attached before configuring PLLs instead of manually
+> calling the function.
+> 
+>> There doesn't seem to be any difference except that we will have an
+>> additional delay introduced.
+>>
+>> Are you describing a race condition ?
+>>
+>> I don't see _logic_ here to moving the call into the controller's higher
+>> level probe.
+>>
+>> Can you describe some more ?
+>>
+>> ---
+>> bod
+> 
 
+Here's one way this could work
+
+Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Date:   Tue Feb 18 19:46:55 2025 +0000
+
+     clk: qcom: common: Add configure_plls callback prototype
+
+     Add a configure_plls() callback so that we can stage 
+qcom_cc_attach_pds()
+     before configuring PLLs and ensure that the power-domain rail list is
+     switched on prior to configuring PLLs.
+
+     Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+index 9e3380fd71819..1924130814600 100644
+--- a/drivers/clk/qcom/common.c
++++ b/drivers/clk/qcom/common.c
+@@ -304,6 +304,9 @@ int qcom_cc_really_probe(struct device *dev,
+         if (ret < 0 && ret != -EEXIST)
+                 return ret;
+
++       if (desc->configure_plls)
++               desc->configure_plls(regmap);
++
+         reset = &cc->reset;
+         reset->rcdev.of_node = dev->of_node;
+         reset->rcdev.ops = &qcom_reset_ops;
+diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
+index 7ace5d7f5836a..4955085ff8669 100644
+--- a/drivers/clk/qcom/common.h
++++ b/drivers/clk/qcom/common.h
+@@ -38,6 +38,7 @@ struct qcom_cc_desc {
+         const struct qcom_icc_hws_data *icc_hws;
+         size_t num_icc_hws;
+         unsigned int icc_first_node_id;
++       void (*configure_plls)(struct regmap *regmap);
+  };
+
+and
+
+% git diff drivers/clk/qcom/camcc-x1e80100.c
+diff --git a/drivers/clk/qcom/camcc-x1e80100.c 
+b/drivers/clk/qcom/camcc-x1e80100.c
+index b73524ae64b1b..c9748d1f8a15b 100644
+--- a/drivers/clk/qcom/camcc-x1e80100.c
++++ b/drivers/clk/qcom/camcc-x1e80100.c
+@@ -2426,6 +2426,21 @@ static const struct regmap_config 
+cam_cc_x1e80100_regmap_config = {
+         .fast_io = true,
+  };
+
++static void cam_cc_x1e80100_configure_plls(struct regmap *regmap)
++{
++       clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, 
+&cam_cc_pll0_config);
++       clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, 
+&cam_cc_pll1_config);
++       clk_rivian_evo_pll_configure(&cam_cc_pll2, regmap, 
+&cam_cc_pll2_config);
++       clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, 
+&cam_cc_pll3_config);
++       clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, 
+&cam_cc_pll4_config);
++       clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, 
+&cam_cc_pll6_config);
++       clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, 
+&cam_cc_pll8_config);
++
++       /* Keep clocks always enabled */
++       qcom_branch_set_clk_en(regmap, 0x13a9c); /* CAM_CC_GDSC_CLK */
++       qcom_branch_set_clk_en(regmap, 0x13ab8); /* CAM_CC_SLEEP_CLK */
++}
++
+  static const struct qcom_cc_desc cam_cc_x1e80100_desc = {
+         .config = &cam_cc_x1e80100_regmap_config,
+         .clks = cam_cc_x1e80100_clocks,
+@@ -2434,6 +2449,7 @@ static const struct qcom_cc_desc 
+cam_cc_x1e80100_desc = {
+         .num_resets = ARRAY_SIZE(cam_cc_x1e80100_resets),
+         .gdscs = cam_cc_x1e80100_gdscs,
+         .num_gdscs = ARRAY_SIZE(cam_cc_x1e80100_gdscs),
++       .configure_plls = cam_cc_x1e80100_configure_plls,
+  };
+
+  static const struct of_device_id cam_cc_x1e80100_match_table[] = {
+@@ -2461,18 +2477,6 @@ static int cam_cc_x1e80100_probe(struct 
+platform_device *pdev)
+                 return PTR_ERR(regmap);
+         }
+
+-       clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, 
+&cam_cc_pll0_config);
+-       clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, 
+&cam_cc_pll1_config);
+-       clk_rivian_evo_pll_configure(&cam_cc_pll2, regmap, 
+&cam_cc_pll2_config);
+-       clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, 
+&cam_cc_pll3_config);
+-       clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, 
+&cam_cc_pll4_config);
+-       clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, 
+&cam_cc_pll6_config);
+-       clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, 
+&cam_cc_pll8_config);
+-
+-       /* Keep clocks always enabled */
+-       qcom_branch_set_clk_en(regmap, 0x13a9c); /* CAM_CC_GDSC_CLK */
+-       qcom_branch_set_clk_en(regmap, 0x13ab8); /* CAM_CC_SLEEP_CLK */
+-
+         ret = qcom_cc_really_probe(&pdev->dev, &cam_cc_x1e80100_desc, 
+regmap);
+
+         pm_runtime_put(&pdev->dev);
+
+Or a least it works for me.
+
+New clock controllers would then use this callback mechanism and 
+potentially all of the controllers to have uniformity.
+
+---
+bod
 
