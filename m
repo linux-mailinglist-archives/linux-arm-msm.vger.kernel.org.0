@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-48429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94CCBA3AD31
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 01:42:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE9F5A3AD4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 01:44:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98E0C1896E96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 00:42:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B956C18848BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 00:44:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A9F31CF9B;
-	Wed, 19 Feb 2025 00:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F0BD18E361;
+	Wed, 19 Feb 2025 00:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RfUZS6xx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ggVmzORq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64AE1C2BD;
-	Wed, 19 Feb 2025 00:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFE718C02E;
+	Wed, 19 Feb 2025 00:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739925735; cv=none; b=j0P9cBiWiEJwGNf1O1V9kXGCnNysmh+nJBp9V+u9s1A3vdiNP1ArncWRpEiMC7nn6rmjkpx6P5Lt9QHBH3o0oxTEB/ZdKwhp/uaYc4Tlu/GlipTIQ55DfMlPxT1AIFq+CcnN/MS+LO/Rzsi24GO44c6XlD5SE1UVd44j379n0uI=
+	t=1739925745; cv=none; b=eqfsGr0ZqV23w2IEHk8XcKvOi5f8FKwQij5/J6R/0j7JDPb6N3wBZ9LKCUmGp4jH0yTd8HXJ2Y+k3dcylzBXg832/LsCcPaqcLYET/6Le+I3Hh+o/P/Y09HNIPt5SdnOngE0qusqAYDQmRtoLQV5NO2raIhkDHLHH6t6HBDu5i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739925735; c=relaxed/simple;
-	bh=ryEi3Gdxg4pkyjUwXvJjllTE/ArxaV03uCok4oi9M2I=;
+	s=arc-20240116; t=1739925745; c=relaxed/simple;
+	bh=f0k4KSUTAqbejValPrNrPgcn/wUgra4IHgX5PdWRz4o=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=psRBH5RmqgfAXAo/LavrO4VBP1PkJsXuzXlEhEk+xhzqAS0HQE0XT5/4Ez5SDk2RLiRrtPYrcCGWmVQxS23PWtYo2jg+EP3YEaEO3x64FLgp/D1WYuaAKi8KXfjQ+2eR+kCbThnyr1M/uEJbiIdaHqhArFMiC4Y1dqoudvfecHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RfUZS6xx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F519C4CEE2;
-	Wed, 19 Feb 2025 00:42:14 +0000 (UTC)
+	 Message-Id:Subject; b=GWugs5f8GpL7PWAUWaIPwTyLkS6IJFPYL8A26MwL8oe4uUhtZd2eBX2VPf86/QJqueXN9Wr2GuNtIFwYJj2CGPT/coNV7I6TBpg/0iwQsCXoI8D0Y910pv4QtCR3j+LPwod0qBIpTuatN6RJJmoEcjc9Bd0LMMIgwdNPctOwjk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ggVmzORq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC334C4CEE2;
+	Wed, 19 Feb 2025 00:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739925735;
-	bh=ryEi3Gdxg4pkyjUwXvJjllTE/ArxaV03uCok4oi9M2I=;
+	s=k20201202; t=1739925745;
+	bh=f0k4KSUTAqbejValPrNrPgcn/wUgra4IHgX5PdWRz4o=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=RfUZS6xxt/XFwBFB0CzcvRedosRVvnPpr4gf0mAfSOTfWO0fKt17P1iH2BYpZKOls
-	 6btRTVU6tJr3oufC1KauYg+ulZHe0JoZyAHJ5b0TW7oFF2WXillJoHz3R58+1A3qyx
-	 VJD7TEtgjtJ1WNaC03EAKLkk6MvVe5bSRK/7SyXVHZrks3kZBSmO+jAGFqBSPq7NFs
-	 NQ61sFztsHUeI3U52duGcJQ19KsNVrS55fd7v60Wq+8DiFyTSFFvfalol48xJ1qS13
-	 XUStdKV5SHxmgeU4MPBsojOkAZ8/MHtbum419TqBATmyKUiV98LLx3/gFgxvEERO2w
-	 6ygshi8BPjt+g==
-Date: Tue, 18 Feb 2025 18:42:14 -0600
+	b=ggVmzORqn8DcfOc5m6mxjEKACv1LM9Q6VlIpKXlIf1uCUyvcSRLtyfhk2wnFMUyqT
+	 pcohOJmye8l2DtXnp6cxFXhK5HXr3mri0Jo9LmpW+9wjO/GggWyKTQi5WzvCLfKPVR
+	 4wtaCGlwiNhi3g/LugbTHCd6O6lExAhcJHxiT+LvhjgoNPwAaUa1UdBoaURiHBVTmo
+	 iKEvxIQwAUPHxdaZGwuMl8auwNT8X7ls3rD/hkgZgnDcV/tkpCZ1r3ZiUcHnvLIBeg
+	 IKdUkDI7p+BD2bhkrNtLOrtxV1VNQt4oNNe40MzkZh4QMI0XZsUj7DUma1yQkTqad6
+	 gL95zLarAQFTg==
+Date: Tue, 18 Feb 2025 18:42:23 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,63 +51,29 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Jie Zhang <quic_jiezh@quicinc.com>, Simona Vetter <simona@ffwll.ch>, 
- devicetree@vger.kernel.org, Sean Paul <sean@poorly.run>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Thomas Zimmermann <tzimmermann@suse.de>, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, dri-devel@lists.freedesktop.org, 
- Rob Clark <robdclark@gmail.com>, freedreno@lists.freedesktop.org, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Maxime Ripard <mripard@kernel.org>
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <20250213-a623-gpu-support-v1-0-993c65c39fd2@quicinc.com>
-References: <20250213-a623-gpu-support-v1-0-993c65c39fd2@quicinc.com>
-Message-Id: <173992515318.2064841.13048632010447768805.robh@kernel.org>
-Subject: Re: [PATCH 0/5] EDITME: Support for Adreno 623 GPU
+Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>
+To: Lad Prabhakar <prabhakar.csengg@gmail.com>
+In-Reply-To: <20250218125157.412701-1-prabhakar.csengg@gmail.com>
+References: <20250218125157.412701-1-prabhakar.csengg@gmail.com>
+Message-Id: <173992516574.2065471.6769423656886654409.robh@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: Drop `tx-sched-sp` property
 
 
-On Thu, 13 Feb 2025 21:40:05 +0530, Akhil P Oommen wrote:
-> This series adds support for A623 GPU found in QCS8300 chipsets. This
-> GPU IP is very similar to A621 GPU, except for the UBWC configuration
-> and the GMU firmware.
+On Tue, 18 Feb 2025 12:51:57 +0000, Lad Prabhakar wrote:
+> The `tx-sched-sp` property was removed in commit aed6864035b1 ("net:
+> stmmac: platform: Delete a redundant condition branch").
 > 
-> Both DT patches are for Bjorn and rest of the patches for Rob Clark to
-> pick up.
+> Therefore, it can be safely removed from the device tree.
 > 
+> Signed-off-by: Lad Prabhakar <prabhakar.csengg@gmail.com>
 > ---
-> Jie Zhang (5):
->       drm/msm/a6xx: Fix gpucc register block for A621
->       drm/msm/a6xx: Add support for Adreno 623
->       dt-bindings: display/msm/gmu: Add Adreno 623 GMU
->       arm64: dts: qcom: qcs8300: Add gpu and gmu nodes
->       arm64: dts: qcom: qcs8300-ride: Enable Adreno 623 GPU
-> 
->  .../devicetree/bindings/display/msm/gmu.yaml       |  1 +
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts          |  8 ++
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi              | 93 ++++++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/a6xx_catalog.c          | 29 +++++++
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  8 ++
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        | 13 ++-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        | 17 ++++
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  5 ++
->  8 files changed, 171 insertions(+), 3 deletions(-)
-> ---
-> base-commit: 6a25088d268ce4c2163142ead7fe1975bb687cb7
-> change-id: 20250213-a623-gpu-support-f6698603fb85
-> prerequisite-change-id: 20250131-b4-branch-gfx-smmu-b03261963064:v5
-> prerequisite-patch-id: f8fd1a2020c940e595e58a8bd3c55d00d3d87271
-> prerequisite-patch-id: 08a0540f75b0f95fd2018b38c9ed5c6f96433b4d
-> 
-> Best regards,
-> --
-> Akhil P Oommen <quic_akhilpo@quicinc.com>
-> 
-> 
+>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts  | 1 -
+>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts  | 2 --
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 2 --
+>  3 files changed, 5 deletions(-)
 > 
 
 
@@ -125,20 +91,24 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250213-a623-gpu-support-v1-0-993c65c39fd2@quicinc.com:
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250218125157.412701-1-prabhakar.csengg@gmail.com:
 
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:0: 'gcc_gpu_memnoc_gfx_clk' was expected
-	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:1: 'gcc_gpu_snoc_dvm_gfx_clk' was expected
-	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:2: 'gpu_cc_ahb_clk' was expected
-	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:3: 'gpu_cc_hlos1_vote_gpu_smmu_clk' was expected
-	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:4: 'gpu_cc_cx_gmu_clk' was expected
-	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:5: 'gpu_cc_hub_cx_int_clk' was expected
-	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: ethernet@23000000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: ethernet@23000000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: ethernet@23040000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: ethernet@23040000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: ethernet@23000000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: ethernet@23040000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23000000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23040000: Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
 
 
 
