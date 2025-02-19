@@ -1,237 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-48510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13DBEA3BFA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 14:15:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A77D3A3C013
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 14:37:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 31B831899951
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 13:13:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA006188BA03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2025 13:37:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDEBC1E102A;
-	Wed, 19 Feb 2025 13:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 526201E377F;
+	Wed, 19 Feb 2025 13:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iiT9M1QW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BFWk/jig"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0777F1DE3A5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 13:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233BA1E0DFE;
+	Wed, 19 Feb 2025 13:37:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739970811; cv=none; b=G3fBZGT1L1V5ObMAZXDWLsOJhAKWUVBgqS75EEeJpTVxV/YXkwgg3Wssf6AZE13WMByKsbeu3RX4Hj6keVb9j+39FpxX2jrr5vlLa1T2u8Tu0YVJVxPCtxDOk9tgwB0PycTdcQCzoY1wZyUeFvCuINnxF+2OzFNT7LQ7pyRR3EY=
+	t=1739972227; cv=none; b=YMsNGNFC13Kl5UcXYnUuYiEO59ctVw8yyv5l7tub22vIUfC7com6907qWSHmlA/3IKAzCBKuPrZePr49ALjl59lZxG6VPgNQSGgyL+nyT347XF5lNzIw5ua+WYE0xQgdcO1GV73LC+ukDhiO1Gjh7P9RAY3kG7fXwbHG3k2UVhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739970811; c=relaxed/simple;
-	bh=N1DHUdSnvmt36V2m5nNLQz+GAkBLimsA64IQtEB74XI=;
+	s=arc-20240116; t=1739972227; c=relaxed/simple;
+	bh=b17Q3TzJrxxMz54pH+z89L0mjFrLAuOg+g6ZufoF97s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WRfGM/gCNI/eD7QLMl6bH1IZKG2G9wfLpANOJe5zNmD61cmVYgPl/W0NTmSN39mKxsc624UhvUJsyZh0602M0MM2E1ANGL1AZ+T+jKWpmQOdVyJ3/3FpTlsNJDrhTe6j0zZ4xb8ssST1iQAfUisos7f/VHD51QuG5ZbhsTOGDcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iiT9M1QW; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2211cd4463cso68894175ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 05:13:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739970808; x=1740575608; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8+URBwMiBnKyGY5kPdMN3kkeBQNC7Y+f9MSb7kdc35Q=;
-        b=iiT9M1QWVkFukFNm1xyjzR9+TX9qJMrwEOOnKzUo09FwBOYBWSzySYhKxWFRIzt/gZ
-         IJkY4I51ys4OnKVJ22z8o1fu7f8daMVqITwZAkcO3wG8IlRlXaGTbnFAN9HjMLNqT8L1
-         lm20WLjV9f3TuX7sidxL8DVYQDgyWaF3DxJwhJVXsq8TmlscjGPiuPRwM6sUe54O96kw
-         kqOOTpe+UAnSs/BzqtWwmeRfk9QKVmfzSOw88tKr7eVWoWsnS51faHrAPeWOexIPmCxH
-         6k6a2kT02PfJTIx1dvBdUGV/0lVLmmJ2xwnUe1DfKwOLjwu2UOscxabIlepYpA8b+Em8
-         dfIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739970808; x=1740575608;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8+URBwMiBnKyGY5kPdMN3kkeBQNC7Y+f9MSb7kdc35Q=;
-        b=CO5jblvu0+prYcozwtKSb+MCGaaTQH1OsazYkmmNIvicu1jnf9uBJXss6LypscTS+k
-         nwuDISI3CRLt4kvm1U5OysK05R1WPDs0VOv2nqhL6gBZY/gikbuyue3+1lz9yfY/WLZh
-         QSBECq/9DzLiHnNJiiV8Dj/KH5dbQhLbLK8j2PWyBK9xuyKWILuXO6MwZY7tosc6rAz2
-         PtbgkcrEGh/7golw2j0nSzK4r0oY8w97KpVl6ZZwmx9Z/DSyZdYqDMUU/bqLiAB5XyHd
-         qU7WG+11yFAb4Q/H2vls9Dli84wYd63tHu5QXDtjLKekk1N5WNnp1/2WCls6RNyHF2+i
-         A8ow==
-X-Forwarded-Encrypted: i=1; AJvYcCWlS8YTC0b3tzUmYIeFpd5XNiRthAUIGjq9nwtu72qBEnQsZvYk81d+LsqEzcN6ksuCKMNZy+Srax2S5ORV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxT+nAYV9JSXbeeGuph9amFv9wfSHGEFJQUKS1cdFkYP5SmTLme
-	5RX48oDAq57/MyxKv+y/DiZOW/DgUlNYfJ6CPe6SoYfHqv9ad8dulhiq5pMoBw==
-X-Gm-Gg: ASbGnctmM7yqz7DjXL9Vn9y4nsIBGCxDqgXAtwaHFeJIunOpAx/q1YydUKR4DShHI7T
-	BmbfJrbUyx368yXQtrNSrivm/my767WT9PjNxfPwRhitC60U9R5q01bRVtFsoxvW0+DbSi/hsI2
-	nN9NcZylKhFP0S33Yt6vtchlSbjGEcx5FnZ0YwS3rOrWwxh81qT7+zrzoEeKlYn4vTEtbabyooW
-	fKLVWS5Dgv71OzKKODdufUNuvQdw7ImRfjOdYNCL8Az4BxQtAHmhbiWR1pmKZmcGJQJDmTeaZfj
-	kF5p2Dx/hV14Db7wnBXe9rbiqX0=
-X-Google-Smtp-Source: AGHT+IHkVE5PfzgLunRYfW7LOverW0PdjTWo0Wwm0ksUnlxjHfmqNgrs9+yjaxVIVMFyRcmK9zw8KQ==
-X-Received: by 2002:a17:902:ef49:b0:216:6769:9ed7 with SMTP id d9443c01a7336-221040b131dmr298362555ad.40.1739970808214;
-        Wed, 19 Feb 2025 05:13:28 -0800 (PST)
-Received: from thinkpad ([120.56.197.245])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d537c921sm104190715ad.104.2025.02.19.05.13.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 05:13:27 -0800 (PST)
-Date: Wed, 19 Feb 2025 18:43:24 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: mhi@lists.linux.dev, Loic Poulain <loic.poulain@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 1/2] bus: mhi: host: pci_generic: Use
- pci_try_reset_function() to avoid deadlock
-Message-ID: <20250219131324.ohfrkuj32fifkmkt@thinkpad>
-References: <20250108-mhi_recovery_fix-v1-0-a0a00a17da46@linaro.org>
- <20250108-mhi_recovery_fix-v1-1-a0a00a17da46@linaro.org>
- <Z5EKrbXMTK9WBsbq@hovoldconsulting.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=kAOB5Seutnp3fUK7zybMfxXHiRFIb7I7rAvOCxvuNBLA06SJn1jY9dPE3Y6Zaaz0/F+iOGD21BcjzMNgM8elkI3VQxsJnsM5TUo+zTWfuQvGu4UakRB1ivnVTURvv3o5vruhKkeiQXcG08zOSaFXxMHQDSrc0/Y5Gffv2i/3/0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BFWk/jig; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95174C4CED1;
+	Wed, 19 Feb 2025 13:37:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739972225;
+	bh=b17Q3TzJrxxMz54pH+z89L0mjFrLAuOg+g6ZufoF97s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BFWk/jigD0B6pdk/g694GJQE+a3tmWLH0SoUAQHDwCziKd5q8xxoXBELWEZtO/T8A
+	 ZV8XhVOFg98l9eb2uK+IhaRvdkTru5HbRWXF4gXLqdOGSF7EGYJWKCP/LkxGF+U/Lb
+	 3kl8NTwlajJ2t73By5PY8eFW2B8PS4AwkfY3vXRH8wfaHkOzGNCoTcy/5ifmDQseod
+	 O+LPHPsTvGqq2rUOZ75BsdWG3JEuwAR1InZocPsEHvRCTfbSihcvnt9dS9Os7MRjeo
+	 kf3IsULrYTmiayEK1z8wWIuHu/ag91OtIE2KQX+Pi9hP5mE9VMfEuEn+GmJKnLQ8QM
+	 L6TuLZXjBN29A==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tkkGI-00000000802-30yU;
+	Wed, 19 Feb 2025 14:37:14 +0100
+Date: Wed, 19 Feb 2025 14:37:14 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
+Message-ID: <Z7XeioAlf69sp0aj@hovoldconsulting.com>
+References: <20250120144152.11949-1-johan+linaro@kernel.org>
+ <20250127002026.GA2534668-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z5EKrbXMTK9WBsbq@hovoldconsulting.com>
+In-Reply-To: <20250127002026.GA2534668-robh@kernel.org>
 
-On Wed, Jan 22, 2025 at 04:11:41PM +0100, Johan Hovold wrote:
-> On Wed, Jan 08, 2025 at 07:09:27PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+[ +CC: Ard and Maximilian ]
+
+Hi Rob,
+
+and sorry about the late follow up on this. I had to find some time to
+think more about this so it ended up on the back burner.
+
+On Sun, Jan 26, 2025 at 06:20:26PM -0600, Rob Herring wrote:
+> On Mon, Jan 20, 2025 at 03:41:45PM +0100, Johan Hovold wrote:
+> > This series adds support for utilising the UEFI firmware RTC offset to
+> > the Qualcomm PMIC RTC driver and uses that to enable the RTC on all X
+> > Elite machines.
 > > 
-> > There are multiple places from where the recovery work gets scheduled
-> > asynchronously. Also, there are multiple places where the caller waits
-> > synchronously for the recovery to be completed. One such place is during
-> > the PM shutdown() callback.
+> > Included is also a patch to switch the Lenovo ThinkPad X13s over to
+> > using the UEFI offset.
 > > 
-> > If the device is not alive during recovery_work, it will try to reset the
-> > device using pci_reset_function(). This function internally will take the
-> > device_lock() first before resetting the device. By this time, if the lock
-> > has already been acquired, then recovery_work will get stalled while
-> > waiting for the lock. And if the lock was already acquired by the caller
-> > which waits for the recovery_work to be completed, it will lead to
-> > deadlock.
+> > The RTCs in many Qualcomm devices are effectively broken due to the time
+> > registers being read-only. Instead some other non-volatile memory can be
+> > used to store an offset which a driver can take into account. On Windows
+> > on Arm laptops, the UEFI firmware (and Windows) use a UEFI variable for
+> > storing such an offset.
 > > 
-> > This is what happened on the X1E80100 CRD device when the device died
-> > before shutdown() callback. Driver core calls the driver's shutdown()
-> > callback while holding the device_lock() leading to deadlock.
+> > When RTC support for the X13s was added two years ago we did not yet
+> > have UEFI variable support for these machines in mainline and there were
+> > also some concerns regarding flash wear. [1] As not all Qualcomm
+> > platforms have UEFI firmware anyway, we instead opted to use a PMIC
+> > scratch register for storing the offset. [2]
 > > 
-> > And this deadlock scenario can occur on other paths as well, like during
-> > the PM suspend() callback, where the driver core would hold the
-> > device_lock() before calling driver's suspend() callback. And if the
-> > recovery_work was already started, it could lead to deadlock. This is also
-> > observed on the X1E80100 CRD.
+> > On the UEFI machines in question this is however arguable not correct
+> > as it means that the RTC time can differ between the UEFI firmware (and
+> > Windows) and Linux.
 > > 
-> > So to fix both issues, use pci_try_reset_function() in recovery_work. This
-> > function first checks for the availability of the device_lock() before
-> > trying to reset the device. If the lock is available, it will acquire it
-> > and reset the device. Otherwise, it will return -EAGAIN. If that happens,
-> > recovery_work will fail with the error message "Recovery failed" as not
-> > much could be done.
-> 
-> I can confirm that this patch (alone) fixes the deadlock on shutdown
-> and suspend as expected, but it does leave the system state that blocks
-> further suspend (this is with patches that tear down the PCI link).
-
-Yeah, we wouldn't know when not to return an error to unblock the suspend. So
-this is acceptable.
-
-> Looks like the modem is also hosed.
-> 
-> [  267.454616] mhi-pci-generic 0005:01:00.0: mhi_pci_runtime_resume
-> [  267.461165] mhi mhi0: Resuming from non M3 state (SYS ERROR)
-> [  267.467102] mhi-pci-generic 0005:01:00.0: failed to resume device: -22
-> [  267.473968] mhi-pci-generic 0005:01:00.0: device recovery started
-> [  267.477460] mhi-pci-generic 0005:01:00.0: mhi_pci_suspend
-> [  267.480331] mhi-pci-generic 0005:01:00.0: __mhi_power_down
-> [  267.485917] mhi-pci-generic 0005:01:00.0: mhi_pci_runtime_suspend
-> [  267.498339] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm mutex taken
-> [  267.505618] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm lock taken
-> [  267.513372] wwan wwan0: port wwan0qcdm0 disconnected
-> [  267.519556] wwan wwan0: port wwan0mbim0 disconnected
-> [  267.525544] wwan wwan0: port wwan0qmi0 disconnected
-> [  267.573773] mhi-pci-generic 0005:01:00.0: __mhi_power_down - returns
-> [  267.591199] mhi mhi0: Requested to power ON
-> [  267.914688] mhi mhi0: Power on setup success
-> [  267.914875] mhi mhi0: Wait for device to enter SBL or Mission mode
-> [  267.919179] mhi-pci-generic 0005:01:00.0: mhi_sync_power_up - wait event timeout_ms = 8000
-> [  276.189399] mhi-pci-generic 0005:01:00.0: mhi_sync_power_up - wait event returns, ret = -110
-> [  276.198240] mhi-pci-generic 0005:01:00.0: __mhi_power_down
-> [  276.203990] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm mutex taken
-> [  276.211269] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm lock taken
-> [  276.220024] mhi-pci-generic 0005:01:00.0: __mhi_power_down - returns
-> [  276.226680] mhi-pci-generic 0005:01:00.0: mhi_sync_power_up - returns
-> [  276.233417] mhi-pci-generic 0005:01:00.0: mhi_pci_recovery_work - mhi unprepare after power down
-> [  276.242604] mhi-pci-generic 0005:01:00.0: mhi_pci_recovery_work - pci reset
-> [  276.249881] mhi-pci-generic 0005:01:00.0: Recovery failed
-> [  276.255536] mhi-pci-generic 0005:01:00.0: mhi_pci_recovery_work - returns
-> [  276.328878] qcom-pcie 1bf8000.pci: qcom_pcie_suspend_noirq
-> [  276.368851] qcom-pcie 1c00000.pci: qcom_pcie_suspend_noirq
-> [  276.477900] qcom-pcie 1c00000.pci: Failed to enter L2/L3
-> [  276.483535] qcom-pcie 1c00000.pci: PM: dpm_run_callback(): genpd_suspend_noirq returns -110
-> [  276.492292] qcom-pcie 1c00000.pci: PM: failed to suspend noirq: error -110
-> [  276.500218] qcom-pcie 1bf8000.pci: qcom_pcie_resume_noirq
-> [  276.721401] qcom-pcie 1bf8000.pci: PCIe Gen.4 x4 link up
-> [  276.730639] PM: noirq suspend of devices failed
-> [  276.818943] mhi-pci-generic 0005:01:00.0: mhi_pci_resume
-> [  276.824582] mhi-pci-generic 0005:01:00.0: mhi_pci_runtime_resume
-> 
-> Still better than hanging the machine, but perhaps not much point in
-> having recovery code that can't recover the device.
-> 
-
-Unfortunately, we cannot know if we could not recover the device.
-
-> We obviously need to track down what is causing the modem to fail to
-> resume since 6.13-rc1 too.
-> 
-
-Yeah, this is worth tracing down.
-
-> > Cc: stable@vger.kernel.org # 5.12
-> > Reported-by: Johan Hovold <johan@kernel.org>
-> > Closes: https://lore.kernel.org/mhi/Z1me8iaK7cwgjL92@hovoldconsulting.com
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> 
-> And since I've spent way to much time debugging this and provided the
-> analysis of the deadlock:
-> 
-> Analyzed-by: Johan Hovold <johan@kernel.org>
-> Link: https://lore.kernel.org/mhi/Z2KKjWY2mPen6GPL@hovoldconsulting.com/
-> 
-
-Sure.
-
-> > Fixes: 7389337f0a78 ("mhi: pci_generic: Add suspend/resume/recovery procedure")
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/bus/mhi/host/pci_generic.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > Now that the (reverse engineered) UEFI variable implementation has been
+> > merged and thoroughly tested, let's switch to using that to store the
+> > RTC offset also on Linux. The flash wear concerns can be mitigated by
+> > deferring writes due to clock drift until shutdown.
 > > 
-> > diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> > index 07645ce2119a..e92df380c785 100644
-> > --- a/drivers/bus/mhi/host/pci_generic.c
-> > +++ b/drivers/bus/mhi/host/pci_generic.c
-> > @@ -1040,7 +1040,7 @@ static void mhi_pci_recovery_work(struct work_struct *work)
-> >  err_unprepare:
-> >  	mhi_unprepare_after_power_down(mhi_cntrl);
-> >  err_try_reset:
-> > -	if (pci_reset_function(pdev))
-> > +	if (pci_try_reset_function(pdev))
-> >  		dev_err(&pdev->dev, "Recovery failed\n");
+> > Note that this also avoids having to wait for months for Qualcomm to
+> > provide a free PMIC SDAM scratch register for X1E and future platforms,
+> > and specifically allows us to enable the RTC on X1E laptops today.
+> > 
+> > Rob had some concerns about adding a DT property for indicating that a
+> > machine uses UEFI for storing the offset and suggested that the driver
+> > should probe for this instead. Unfortunately, this is easier said than
+> > done given that UEFI variable support itself is probed for and may not
+> > be available until after the RTC driver probes.
 > 
-> Perhaps you should log the returned error here as a part of this patch
-> so we can tell when the recovery code failed due to the device lock
-> being held.
-> 
+> This information would be useful in the binding commit...
+>
+> Seems like something I would say, but this is v1 and I have no memory of 
+> discussing this. 
 
-Makes sense. Added the errno to the log and applied to patch to mhi/next with
-your tags. Thanks a lot!
+You're right, I should have mentioned this in the commit message and
+linked to the RFC discussion directly:
 
-- Mani
+	https://lore.kernel.org/lkml/Y9qO0yQ7oLux2L9n@hovoldconsulting.com/
 
--- 
-மணிவண்ணன் சதாசிவம்
+> I would also say probe ordering is not a DT problem, 
+> but sounds like an OS problem. Aren't there other things needing EFI 
+> variables earlyish too? Do you really want to have to update the DT to 
+> enable this?
+
+Yeah, there are more things that expect EFI variables during early boot,
+including systemd. In fact, that is the reason why the Qualcomm efivars
+implementation can currently only be built in:
+
+	https://lore.kernel.org/lkml/ZJ11H8btBhvCx9gD@hovoldconsulting.com/
+
+The variable service is supposed to be a runtime service that is
+available when drivers probe (module init), so I think it's reasonably
+to simple refuse further modular efivars implementation (we already have
+another from Google).
+
+Since allowing the Qualcomm implementation to be modular now would
+regress user space it seems at least that one will need to stay built-in
+indefinitely.
+
+And again, hopefully all of this goes away (for future platforms) once
+Qualcomm fix their UEFI implementation so that the UEFI time and
+variable services can be used directly.
+
+I've dropped the DT property for v2. 
+
+Johan
 
