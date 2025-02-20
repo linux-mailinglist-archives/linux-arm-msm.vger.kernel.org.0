@@ -1,108 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-48759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB649A3E4D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 20:13:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE474A3E4EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 20:19:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1DE103BA1A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 19:12:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1309A19C0E9E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 19:19:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2499D2641C3;
-	Thu, 20 Feb 2025 19:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ACA21DF987;
+	Thu, 20 Feb 2025 19:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lWQfxdYU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Li1wYMRm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A23263F34;
-	Thu, 20 Feb 2025 19:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F381B15A858;
+	Thu, 20 Feb 2025 19:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740078777; cv=none; b=Y26nrNsXgjm7FCbmSlpX0FXvLxuB02Avrjw9Ue6tPNOcQcByScZIsKaCLAVFr6AXS+6mrT6V22Gtc2Xzcf+XaSoMOmk6poGP+DIWiwHm3ebxAFo5alSypjLxjgfe6D/dF1OGOtAlNoZiqieA0SSpUSitaU6J9Yx+i5nZ2TWao4I=
+	t=1740079182; cv=none; b=abmYATMLJR0ejm1y/Ti7VQ7sDgtB6EoxwnECX4nF+fExxImOgRQD2pCLI4rd9rzCUvG31o5W06IOWURJJByKr71FwH1OifNTWuCgfYnGso27XVLgN/bAip8HVXWWooyu2pBUwQq1t6Y3xnYdxHMzbgEiVpbzT35yrPFLKwk4pO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740078777; c=relaxed/simple;
-	bh=BuMTyTLXR4MRZyUMFcKuSToR5dt/ByaCDZyeKkp3kHw=;
+	s=arc-20240116; t=1740079182; c=relaxed/simple;
+	bh=+0OClTSDtciyZQXNExzuhepJzGzEk7ZP1QX/R7XxbUs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D3jeeHPc+OkHYoy5EiB2zqwMdA98TvsKmzs8zkIMmN6iGrriiZhYtsSkZWn08R8i+5WwSi93drjVQ5eP+iwj2hDihoHX/FNsxNTIs5w4+BGwtTQKf+lqcfOCQswp3fUppPzjD7XbNvtaZBDuoCIkKtHluezXFhS4nWpa2P33qb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lWQfxdYU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3785C4CEE8;
-	Thu, 20 Feb 2025 19:12:55 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=MA02/4dV5lEHSyWn2tWq+neJddk6CiJTKLNQBXC4LVodM2RLVGWEJ7winc8W6kcfoNjQo6ONzXGO1khGS2vnSe1M0uzQlaRqBc5MD/I7HiNpJq+g1UPlU073cLKO24KqnhTlLkjFERo3TIxFkVmismkZjlSBKHVXyD8TGB1/rSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Li1wYMRm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5697CC4CED1;
+	Thu, 20 Feb 2025 19:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740078776;
-	bh=BuMTyTLXR4MRZyUMFcKuSToR5dt/ByaCDZyeKkp3kHw=;
+	s=k20201202; t=1740079181;
+	bh=+0OClTSDtciyZQXNExzuhepJzGzEk7ZP1QX/R7XxbUs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lWQfxdYUfxrYr+FUhQRt6IHJN20e1FxG3UzmNzerYbQuDHjEPhmMyLjcBRV6mEGcM
-	 BlKxDrv0vl2jW3z8WHYAYXfI5gLoLKm6O27+TrvSlRCEch+5Qey4dfd44KNJEolSEC
-	 QFgcslODdq0YlDfEmWihdHaXuUteFnKbiJTi/iKHcnrgw3kBwCicVdjZMtWifVByx7
-	 uK1Cz1ySHMsVYa/KO7r64uvFgHkkcEO4vTGSHaTiiwP0DbjLbX/lu22lWMJc8OcIF+
-	 pHFbk9kwE0kWgRPCVq/UGnxlDP3Chvfo4hCqnQXTIwjoJ30K/pSa2C2P48I0ziQb1X
-	 6tgTClLj3sWnA==
-Date: Thu, 20 Feb 2025 19:12:52 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/5] nvmem: core: verify cell's raw_len
-Message-ID: <Z7d-tCcq9G52oJrJ@finisterre.sirena.org.uk>
-References: <20250109-sar2130p-nvmem-v4-0-633739fe5f11@linaro.org>
- <20250109-sar2130p-nvmem-v4-2-633739fe5f11@linaro.org>
- <Z7Xv9lNc6ckJVtKc@finisterre.sirena.org.uk>
- <CAA8EJpp-mE2w_c3K08+8AR3Mn1r8X58FRXvAUFALQ-u2ppoKgw@mail.gmail.com>
- <Z7c5niuwR3TVTQrj@finisterre.sirena.org.uk>
- <scmsm6wsgspieamsjqftjfdswfmfh5cemiebb6k66qzetdovy5@oa677gskzst4>
+	b=Li1wYMRmL9KK6l4WaYL0PcSVJKqrcCa10Y6PHxcMEmTa6dtMdvVsK9SC3SnMWeIT7
+	 9PC+m6PbqUF0f2cSKFxu2XNJ9j4JN/0wfhzFnlSYwM2hMJTnzd4tfnI3u8ZuexbzLr
+	 h/5+jea8bk80FA7Sif/DJo+n5mb4iQFTc33VmwYqD4vk7Ex1KxBXvj5jvpXoUT6HZr
+	 ds3TV1OFRECgpfpbFNhSbCL7JcxmHFv8GZTq/NeiSyR4YHxXJWDb4lV3LO3LkqjTuZ
+	 lRVDG+fDGn4xH4rpa0fSsjMSlxhn4olEvUQX2gU5Vi76hsjkLwgmkP7O5x0y6sCEFz
+	 GLVhh/JbmCuIA==
+Date: Thu, 20 Feb 2025 19:19:39 +0000
+From: Eric Biggers <ebiggers@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: neil.armstrong@linaro.org, linux-crypto@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Stanimir Varbanov <svarbanov@mm-sol.com>
+Subject: Re: [PATCH 9/9] crypto: qce - switch to using a mutex
+Message-ID: <20250220191939.GA2098877@google.com>
+References: <20241203-crypto-qce-refactor-v1-0-c5901d2dd45c@linaro.org>
+ <20241203-crypto-qce-refactor-v1-9-c5901d2dd45c@linaro.org>
+ <d6220576-eaf5-4415-b25f-b5984255ab78@linaro.org>
+ <CAMRc=MevaM4tUNQUs_LjFYaUtDH=YqE-t2gBponGqtK5xE9Gpw@mail.gmail.com>
+ <20250118080604.GA721573@sol.localdomain>
+ <CAMRc=MeFMYzMY4pU9D6fEpg9bQuuzqg4rQhBU8=z_2eMU+Py-g@mail.gmail.com>
+ <20250118175502.GA66612@sol.localdomain>
+ <CAMRc=MdR-8AnwAsMzHn8zj2awZUumO32C_S1-CkjBEqbuKPdeg@mail.gmail.com>
+ <CAMRc=MetohPUcxRLO0qS-LYyzZhiAMAHzLm0xqX8_TXdTgBnVA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="GhFvxpkpNQfKlLuF"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <scmsm6wsgspieamsjqftjfdswfmfh5cemiebb6k66qzetdovy5@oa677gskzst4>
-X-Cookie: Editing is a rewording activity.
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=MetohPUcxRLO0qS-LYyzZhiAMAHzLm0xqX8_TXdTgBnVA@mail.gmail.com>
 
+On Thu, Feb 20, 2025 at 10:14:20AM +0100, Bartosz Golaszewski wrote:
+> On Mon, Jan 20, 2025 at 2:46 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> >
+> > On Sat, Jan 18, 2025 at 6:55 PM Eric Biggers <ebiggers@kernel.org> wrote:
+> > >
+> > > On Sat, Jan 18, 2025 at 10:28:26AM +0100, Bartosz Golaszewski wrote:
+> > > > I was testing with kcapi-speed and cryptsetup benchmark. I've never
+> > > > seen any errors.
+> > > >
+> > > > Is this after my changes only or did it exist before? You're testing
+> > > > with the tcrypt module? How are you inserting it exactly? What params?
+> > >
+> > > Those are all benchmarks, not tests.  The tests run at registration time if you
+> > > just enable the kconfig options for them:
+> > >
+> > >     # CONFIG_CRYPTO_MANAGER_DISABLE_TESTS is not set
+> > >     CONFIG_CRYPTO_MANAGER_EXTRA_TESTS=y
+> > >
+> > > The test failures and KASAN error occur on mainline too, so yes they occur
+> > > before your patchset too.
+> > >
+> > > > >
+> > > > > I personally still struggle to understand how this driver could plausibly be
+> > > > > useful when the software crypto has no issues, is much faster, and is much
+> > > > > better tested.  What is motivating having this driver in the kernel?
+> > > >
+> > > > We want to use it in conjunction with the upcoming scminvoke (for
+> > > > loading TAs and invoking objects - used to program the keys into the
+> > > > QCE) to support the DRM use-case for decrypting streaming data inside
+> > > > secure buffers upstream.
+> > >
+> > > Notably lacking is any claim that any of the current features of the driver are
+> > > actually useful.
+> > >
+> >
+> > Noted. I'm still quite early into working on the upstream-bound code
+> > supporting the streaming use-case but I will consider a proposal to
+> > remove existing features that are better provided by ARM CE.
+> >
+> > Thanks,
+> > Bartosz
+> 
+> Just an FYI, I was informed by Qualcomm that upcoming platforms will
+> contain an upgrade to this IP and it will be up to 3x faster than ARM
+> CE.
 
---GhFvxpkpNQfKlLuF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I suspect that is measured under some ideal condition that won't be reached in
+the real world, but we'll see.
 
-On Thu, Feb 20, 2025 at 05:50:39PM +0200, Dmitry Baryshkov wrote:
-
-> A quick grep shows that there are enough drivers using word size greater
-> than 1. Would you mind checking if the following patch fixes an issue
-> for you? (Note, compile-tested only.)
-
-That fixes at least some of the platforms (my lab's quite busy right
-now) and looks like it should fix all of them:
-
-Tested-by: Mark Brown <broonie@kernel.org>
-
-Thanks!
-
---GhFvxpkpNQfKlLuF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAme3frEACgkQJNaLcl1U
-h9BziAf/TgoYYsnbQig+DLS0/6m6fQnifzK3xHsJiE4VSdJuJYavkxt/6oZYqa60
-m0UN78kDO4n44RJib3aktIBmF5jSTSjBACoWSWHa2MIgQqcZx8kUm40wDVjL42E/
-mNLeu1WXmebtvk6ya1g3bchdSE2Aj4sjgWwOZKicX0z2Zk1nmQI1jDnRpPASaG8Y
-6MK4tM7/QvCNizAFHKrLyE2BfWKsjHZcUIaYJGIKO9yBXAD2jK6LDkqAXUTi2mbz
-Bxa8FNjgU53PauIWHowDIRX+kKK9dhcb+VW+23RmWaijS6bJ2zJN0ub7uxAguYdE
-zoVxmw5lLapOPkbSvAPhV3BdPB5/WA==
-=JRss
------END PGP SIGNATURE-----
-
---GhFvxpkpNQfKlLuF--
+- Eric
 
