@@ -1,110 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-48585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A6D8A3CFEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 04:11:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8927BA3D02D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 04:59:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8E433BB5DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 03:10:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 88644188B605
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 03:59:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEC431E2823;
-	Thu, 20 Feb 2025 03:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C2D91DC184;
+	Thu, 20 Feb 2025 03:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G2oaMXVK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vGyW/K4f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16A21E25F9;
-	Thu, 20 Feb 2025 03:10:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924B41C5F26
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 03:59:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740021014; cv=none; b=reurNzH2/URYJJBzRnXmAAKHYejY8Gw79iLRVsM4u10GpaCHunSeJ2kmsVGSjrCrbdffx2qZ0OrgrU5wZ8e0jGlfyyYNwnq+zZYjVQ8rC4Wm6Y39aLjyJ08IzOJThAGcts7xdbhTwh3m1Z/AIecQONpTXEtYLPVg8SUOUkAq3CI=
+	t=1740023972; cv=none; b=BKnOoIfGjotq0IBQWAlx0pb8Hs0E9wf8Z+10UNUIVgdUKxMDpIa7jrOxKPPtDzfQlJEgDVuH3LZHMliVyAZMUumjf+uAnbChG4cbbsth4W94ffKp1eTlnygj9NNUn8noskixbWIUhksN1twDbr3iId6dkxL/y0XWCBTcT44+usA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740021014; c=relaxed/simple;
-	bh=pD8ROzU5v7v1zdafWRXLtlZbryQ4ts3yYyJZ3srYQyg=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=e0CAMw+8zD2hTus6Uh9AWXNDssvt+jUJAtku3DGaC7QTZYqg4i5Gtea+f1sliWwXKRZ/cWVFju/4/gHbVU/+zPaITtCIQYRT52xJjssoXo1nX7INFyciwkMKFjl2RQS/63K+H0LGQltgfJPKxHKIyQ1OnRWN+WJrGusjrIKuSvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G2oaMXVK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298CEC4CED1;
-	Thu, 20 Feb 2025 03:10:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740021014;
-	bh=pD8ROzU5v7v1zdafWRXLtlZbryQ4ts3yYyJZ3srYQyg=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=G2oaMXVKsFb+JmWdJyesdE7HFJck9SKKH6+yl1iffdn7Jn4KoKlMyY5tsuvzOoKfl
-	 OsGvNE+vA6UPc8O9po9+irs/OY7dLy3a2YC1sEwltFWfEwFy9IylUSo+hsyDTe6Bmi
-	 HLsOqePxhNr53LF6jAyzP6+YTdameuuAUsJkDqKhWjSuJmtZvtsSdnp5NVZo7BiCzy
-	 bpPtC4jh3fChd4AXeeA2BTYgwMFz0iyO/oxtKLkEux9FsKW5pJCA9McLZ9gELXtsTD
-	 RWeVMDNzJmuWDYCyhdWyVIUUPKPDe28OJVUyO2WsK3cFb4y2B9QZ/cxj7s8EPlHxS+
-	 ozc6TvNglFVaw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EAFAA380AAEC;
-	Thu, 20 Feb 2025 03:10:45 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1740023972; c=relaxed/simple;
+	bh=CR+cW2pe/0YDUERdzuk05bH+pxYUGyqM9a7zB7Nk7So=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ulmU8vNtH/rlJlKwu/mxTjV0qFOKt2qNM5NIU6gopk1dZzd2X2CXE+pRxATBZEuFo64cAVTnf0dKy2oYKRjZdqYQKSO2Cb68gZY0Q4x2pAN+vE1o0W5X8eUXCUWo4BkvMN42+7nRl3I4nvJhXDMb7quK/J9swDoaf6d79W8n/8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vGyW/K4f; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5439a6179a7so582782e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 19:59:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740023968; x=1740628768; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l+8oUVrZ0gAKzCyuhlLRqWxp+1Id8wqmg/252Do9Ydw=;
+        b=vGyW/K4fUdmkMwyKK4wrCYDj7oL8rQU2t6VueXllgRe7lmte6i6rEeMoZ5A19+VUkj
+         Yphgh4cKToLyc2mKE1UFp8v9VCfMVgE3Py/zq0x4G9Ty4Kin+iuM5p/tt08/YXznUMFy
+         G1uPrmTQB51sZSFNegS4CIr4hbJIw0ZnMGLrorQ7TKdOiqzgvx9BUR3ridb93oyxYwJC
+         g2SdvGpUIF8FF2ysK+ASTqW7z0Il5m7Qtp1cvPnpMShcgBJ7worlAoxRamrKOkHyzHnm
+         pBO6hFCQN/QXzYchuQWv3/HkceDSWDi94DwBQkdAU9toZtgaaQ9pB4V+x5ohn9nOMDiC
+         +olg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740023968; x=1740628768;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l+8oUVrZ0gAKzCyuhlLRqWxp+1Id8wqmg/252Do9Ydw=;
+        b=Jng1457Fxppjw8FxM9Nv4OYBWqUmoaGL4o5J0SeLV8AjyQzQ2Cv5su96Tbxt4my2Kd
+         KDEhZ4EuMAPY8qW06knQVZJOdBaVsEdt2j3jBWVBKJai2ksCB6ceDUcpIzwoy0wpfHPW
+         Hpmba9iji+mmuarr4AETfTuYd39roDBQUNxQh1CelsG42aGUjpAyOCw8jhz3L4iz4AGe
+         OPnm6/Q6K7FqXoecPNNbc/jzImZfeWte290byQZnVMWOoIdNJfTnKtoDjnXcLDURHBEd
+         Y5doHDMY7A4HvMP/zi21VNbGTjGlJsO+0O4VXIdFPnOEztVgMjCi4rjYmmi7ghTz9nqr
+         hyMg==
+X-Gm-Message-State: AOJu0YzSrmWDiUOkthgdeCii82izzVNPqj1c3DEv9zuoniqQOGhxct/z
+	cnBIGteGXHPdGpPJIjnNQqDqibJLF7YOC0mvzhIMlYBosr6wymDnJHRiQizA3Sk=
+X-Gm-Gg: ASbGnctScyCkA2rBjnwVy7hBGfB8fjGPkdF6iR1z6+fnUVaKWzhf2LtWGeplv9XFIbv
+	ELFdtQRXZTE9o5xaoNAZl4Esre1FTF8Le6CQ9jGFiWa4pLRR5QZPNRtOUbSEz0syT0cUvl9Vpk0
+	6ZNucvvIDo/lnyeFVyMTUx4QuJnxzIO94y3sfuKm7rzGgIHYvLelX+O5sNBmH6USewH2s++AJVh
+	2isRUGnv3fcJXfHFgWnktkzDWR3NE6D8FL26X91E5TFACzlpod7T/hwFb5wUsah82p4KhzZ9/S9
+	IoN+1d0wIo31FE0/+ACQL5I=
+X-Google-Smtp-Source: AGHT+IFR1Xxw2/2J7IszS20njZUSb8dM0NewRClc21MyDyNGIYBFhanjrEfVphFRJXFqUOvj8IX8Jw==
+X-Received: by 2002:a19:5e56:0:b0:545:81b:1516 with SMTP id 2adb3069b0e04-546e4b2c993mr487354e87.15.1740023968414;
+        Wed, 19 Feb 2025 19:59:28 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-545225f22ebsm2143909e87.16.2025.02.19.19.59.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 19:59:27 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 0/5] drm/msm/dpu: enable CDM for all supported platforms
+Date: Thu, 20 Feb 2025 05:59:21 +0200
+Message-Id: <20250220-dpu-add-cdm-v2-0-77f5f0df3d9a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 0/3] net: stmmac: further cleanups
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <174002104449.825980.800457478148266618.git-patchwork-notify@kernel.org>
-Date: Thu, 20 Feb 2025 03:10:44 +0000
-References: <Z7Rf2daOaf778TOg@shell.armlinux.org.uk>
-In-Reply-To: <Z7Rf2daOaf778TOg@shell.armlinux.org.uk>
-To: Russell King (Oracle) <linux@armlinux.org.uk>
-Cc: netdev@vger.kernel.org, alexandre.torgue@foss.st.com,
- andrew+netdev@lunn.ch, wens@csie.org, davem@davemloft.net, drew@pdp7.com,
- kernel@esmil.dk, edumazet@google.com, festevam@gmail.com, wefu@redhat.com,
- guoren@kernel.org, imx@lists.linux.dev, kuba@kernel.org,
- jan.petrous@oss.nxp.com, jernej.skrabec@gmail.com, jbrunet@baylibre.com,
- khilman@baylibre.com, linux-amlogic@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-riscv@lists.infradead.org, linux-stm32@st-md-mailman.stormreply.com,
- linux-sunxi@lists.linux.dev, martin.blumenstingl@googlemail.com,
- mcoquelin.stm32@gmail.com, minda.chen@starfivetech.com,
- neil.armstrong@linaro.org, nobuhiro1.iwamatsu@toshiba.co.jp, s32@nxp.com,
- pabeni@redhat.com, kernel@pengutronix.de, samuel@sholland.org,
- s.hauer@pengutronix.de, shawnguo@kernel.org, vkoul@kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJmotmcC/1XMyw6CMBCF4Vchs3YMHakiK9/DsOgVJlFKWiUa0
+ ne3Ejcu/5Ocb4XkIrsEXbVCdAsnDlMJ2lVgRjUNDtmWBqqpESQk2vmJylo09o61lvpM7cF71UJ
+ 5zNF5fm3atS89cnqE+N7wRXzXn0PNn7MIrPGklPZGy5aa4+XGk4phH+IAfc75AzU+aNinAAAA
+X-Change-ID: 20241215-dpu-add-cdm-0b5b9283ffa8
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2724;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=CR+cW2pe/0YDUERdzuk05bH+pxYUGyqM9a7zB7Nk7So=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBntqicJhCSgswxcqrbREVcRq9vfVTW6veEIobsT
+ SxuNriiWGOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ7aonAAKCRCLPIo+Aiko
+ 1RDTB/9js86og50XT9YheQJ8Sj3BKuy1rIPhU8Ix3yDbtYoXtnA4IdjPPKm6PPE5aZLpJa76N7p
+ N46YW699wYfCK+uAO+df0Nf3Nosn9ZCvwT6XV2tnS2O+8vV11katQ7QlR+malmFoJDpqVTS4D4T
+ w+JZFNzvdwqdfTPfq9CR5vXvRNQEuDVvUSvRrJs0O9zarj0wDtJ1thHTGYD55eIr30RyIdnjChD
+ H4dPNCRvDrYPvNNo8W5T5n8U7Jx6VEPTncn4dMPmqoqLXJmrme8mquXO6wlD8V0JtDl0VO4SfFN
+ /ldaS1YHqJZOisvP5J/UOX9HcKG+g7jJus4mzLqiZ6njzbme
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Hello:
+Enable CDM block on all the platforms where it is supposed to be
+present. Notably, from the platforms being supported by the DPU driver
+it is not enabled for SM6115 (DPU 6.3), QCM2290 (DPU 6.5) and SM6375
+(DPU 6.9)
 
-This series was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v2:
+- Split CDM addition to two patches: DPU 1.x - 4.x and 5.x+
+- Corrected CDM size on DPU 1.x - 4.x (Abhinav)
+- Link to v1: https://lore.kernel.org/r/20241224-dpu-add-cdm-v1-0-7aabfcb58246@linaro.org
 
-On Tue, 18 Feb 2025 10:24:25 +0000 you wrote:
-> Hi,
-> 
-> This small series does further cleanups to the stmmac driver:
-> 
-> 1. Name priv->pause to indicate that it's a timeout and clarify the
-> units of the "pause" module parameter
-> 2. Remove useless priv->flow_ctrl member and deprecate the useless
-> "flow_ctrl" module parameter
-> 3. Fix long-standing signed-ness issue with "speed" passed around the
-> driver from the mac_link_up method.
-> 
-> [...]
+---
+Dmitry Baryshkov (5):
+      drm/msm/dpu: rename CDM block definition
+      drm/msm/dpu: enable CDM_0 for DPUs 5.x+
+      drm/msm/dpu: enable CDM_0 for DPUs 1.x - 4.x
+      drm/msm/dpu: enable CDM_0 for SC8280XP platform
+      drm/msm/dpu: enable CDM_0 for X Elite platform
 
-Here is the summary with links:
-  - [net-next,1/3] net: stmmac: clarify priv->pause and pause module parameter
-    https://git.kernel.org/netdev/net-next/c/ff1a9b2e311f
-  - [net-next,2/3] net: stmmac: remove useless priv->flow_ctrl
-    https://git.kernel.org/netdev/net-next/c/bc9d75b0aaed
-  - [net-next,3/3] net: stmmac: "speed" passed to fix_mac_speed is an int
-    https://git.kernel.org/netdev/net-next/c/ac9a8587edc7
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h  | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h  | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h  | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h  | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h  | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h | 1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c           | 9 ++++++++-
+ 26 files changed, 33 insertions(+), 4 deletions(-)
+---
+base-commit: 8936cec5cb6e27649b86fabf383d7ce4113bba49
+change-id: 20241215-dpu-add-cdm-0b5b9283ffa8
 
-You are awesome, thank you!
+Best regards,
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
