@@ -1,159 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-48748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CA1EA3E24B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 18:24:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52C5DA3E295
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 18:34:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCBE1161265
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 17:21:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 469C21894086
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 17:34:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BF432144D1;
-	Thu, 20 Feb 2025 17:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A7D1D63D9;
+	Thu, 20 Feb 2025 17:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pHqq7xYs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lsoLtQCM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AAE214232;
-	Thu, 20 Feb 2025 17:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EEE1CEEB2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 17:33:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740072062; cv=none; b=cvqoF4lTeuf5RiLpVFWHLEFEHEROlFhndPAT8GIDwd5FwMhqgsg4uepBc7tVEoij42TY6O+MnSqgdOMFaHFgPVsO3DAwYjjzVm4KGfcuQrHG6lJr/Ol7Uym2q7DsDwg894M5F2TNlg/7joH35Ov1ZMItNFohggEmweik8dLyc/A=
+	t=1740072837; cv=none; b=rz4eJ0YAg1fJU9eo0hpqiBy2pzlEdMfQNVlX65lj+CXrjujVTYpAoK7Ok4PE7EWUgQZPNsgBRz4ymwj4de6EXnJP7cHiK6qbhBjeF7yVPKIUR7PC88t7bJfF6hnN6uH8p+yRkHXRhT3zRzUFUREyfrKTC8Gmf4fy3cHTCqiQ380=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740072062; c=relaxed/simple;
-	bh=LkZ8pI84U/9kAaduOXRZY8k8VUWS/C02iCLVHt+jVkI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=qqvblH6dhF36h/u26Hv7ITZ1HaniYZzJK8DnigpGTEySHbFHrC6XMwWLGUIbkgtPky95kMBw93zxRklSbjbmRbYmRAqhn/SR50oBo5vgUXvYqdGgCNlk+BVQgsWUwW/8xYXIdBiAir1bn9Z1hUgJbpKnLBpJMIWeqc1cMqSoWO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pHqq7xYs; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51KFX7Dt011183;
-	Thu, 20 Feb 2025 17:20:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jRPDAc8074s/X+XmlhCqpA0yiW+yZCJFuWdqVnM+YhI=; b=pHqq7xYsigJioX6G
-	s9Ao/dDsHoWG4a4QU52EOb+AskvICmtQPXnD4r2YSyoESeDI6dH+poebmtSBcm3z
-	//WsesgBk4y2E1LXqSIaqi+Sust9QP+nlTHKdjvZlJu55HFm/cB9wpYHFg2pFSwf
-	dllGSYbgaCFt+p4UaDADGsk/FMMH+KsINkCSN+5SOOrAZw/AnWxNeXIUh9XcCtT7
-	Vu9GhgB0mVzDGELuR436ZNCA8EUThNxaT7S7eilhxv/40sSOegu7PyApXrrKhzS5
-	vcG0LFqT7cjtvyt/qoO00ZmDWnGKxu0UqAR8uqY+BrD6jiYBDiPbCEgav1FSPPrR
-	2+6sSg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy1xxmy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Feb 2025 17:20:55 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51KHKsKc029300
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Feb 2025 17:20:54 GMT
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 20 Feb 2025 09:20:50 -0800
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-Date: Thu, 20 Feb 2025 22:50:11 +0530
-Subject: [PATCH v5 4/4] media: venus: hfi: add a check to handle OOB in sfr
- region
+	s=arc-20240116; t=1740072837; c=relaxed/simple;
+	bh=EqCgfe86+0DURy8tXlhpA8RIsHVe/3u2+QzXmIRdn0I=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=eJinrE3HdTVBpx1MlXntBYoZaNrSeNiBux++3rS6YccOuEL5oQ8Buo2B/J1QpfDh/nBgle+/bM0ppC5zSXpkfBWHnWddwjqwDwFY461d39ard1ldqJ4Bdnp8HScnzAC6kakeGCIfLagxan04rKZ+htAUdEpR2tSf6pWoYX/MXW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lsoLtQCM; arc=none smtp.client-ip=209.85.166.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-3d2a869d016so3130245ab.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 09:33:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740072835; x=1740677635; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gxER21wbdJEn1/DEOATqVDO/xV7ARnH3zJrJ/dHAsbw=;
+        b=lsoLtQCM+AWZKV5wpQXFZvZVsBCeH0c2gOMQ9O+a2xLwODFOLzIsL6RVknahZwx6Jh
+         DqLcb5o2qw70qrac7AmEW7/SeH/1hG+NoTf5jJ97zq0Zl5HEezZal8SePfB0DyY8Kc8Q
+         uIM4Ein/mkHY4lK/li/YqgGNV6wtnjxDzDGe7bZcuXqM/k3KR/LqGoWDBtH86MeMD5uM
+         LwZpSAbWAjFG+K5N5PYOsOQtFOEr03Bh5jkPXJjwDRQSzmQuthyCnwzEmRSGXjUY/F1Q
+         mp2GaQHV3HC7xpCLNexmB7dadVqnO7v4++vAatdulEiWwbTqgQ/oviuYc0/lx5CI/wyV
+         EFLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740072835; x=1740677635;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gxER21wbdJEn1/DEOATqVDO/xV7ARnH3zJrJ/dHAsbw=;
+        b=Uq2cGJhDCccBom9xMPyMbL9a4UpydxiRcIsboCPy2SlEGTlXi3XFBGaCqQ6DM6w/3J
+         E4ftlTmkzBsDjgtDh/CMz1S6CcCEqX2xNu27+O6ZdK0D966YTWCYWmQ4tFMRsxA+Y1xL
+         /rJX0noPzG+RXSVTPGER6Cvrh+Jy+uCz//mCS5oH6t/EIHJiyYHQhuZwzqUd+YI2n66H
+         fukyMLnwDiPU1qQ2S5LeJojELX7k66BYUs6/fg7qWQXua3En354QavrNKgB717TAeJSp
+         MtNd8j8oqHUqhFiMjT22vdY/5JVfNCcCwQHAU4Dpv70AU1L2uPmprxbawR3Ipr/PxWqz
+         L2qw==
+X-Forwarded-Encrypted: i=1; AJvYcCVI713HDaq5qEdgCfZ1EZegGioro0RLAUb1cWXPxrQDCgV/tJtX+3HrVzlcSqG0dkkaeU1/Q+cEpioOy6G7@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzR1OvjUNcGdCDb+Xiqt/ofM5+9Bvm1deOStg2XrmQpLhOtLCH
+	x2Oxlf5tzRAtmmAj+hB4eS6IiHHqcPJlZKiwLYXgRXdkCIkcysZjIi6NI1eEWWe5JViF/YuuxvZ
+	5/eO91sV74epj7iiyEZ+nOi5ztZE=
+X-Gm-Gg: ASbGncuiaoVOz1yO5k/sLp5uC5NAPANO2wMkWqV5Irng/LpXRaarA3WoYbD3PFbWWpV
+	LxAwoRLk5VcxYB7fLu96gcLiFcp3T0oINKLDBc3+bW7m48zcKfEpdT6m0Su0NwAW+xpwE8SjE2S
+	+mp38N19WONu7/WwiL0xIqBBzuxod4cQs=
+X-Google-Smtp-Source: AGHT+IFGwYcN/vp7Fh4H9BvR8I/GiwEabeRWmMmgC/fwrMKjTrncLEvk4UQ9VaGd8Qep4/NNGtnRjtWCpYVEKHWNCPo=
+X-Received: by 2002:a05:6e02:3882:b0:3d0:4a82:3f42 with SMTP id
+ e9e14a558f8ab-3d2b536ef0amr84272825ab.16.1740072835191; Thu, 20 Feb 2025
+ 09:33:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250220-venus_oob_2-v5-4-4d29347c669a@quicinc.com>
-References: <20250220-venus_oob_2-v5-0-4d29347c669a@quicinc.com>
-In-Reply-To: <20250220-venus_oob_2-v5-0-4d29347c669a@quicinc.com>
-To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>
-CC: Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+samsung@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>, <stable@vger.kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1740072035; l=1598;
- i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
- bh=LkZ8pI84U/9kAaduOXRZY8k8VUWS/C02iCLVHt+jVkI=;
- b=KiKQgNmHnhZw9YsqpqeFyuUc4Pdd2AjiHAO4JIFFMdFnwbN2uEbL6icD+k2oCAwTi3uFpMnhT
- FMEFOz6ehteAHohRqidNGQrFaTeudHlBrkhXU9LJlWMwujgGnoEaW1Y
-X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
- pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DGoiH8-xPF9g9PXLBshLLknGRdRr6j2s
-X-Proofpoint-ORIG-GUID: DGoiH8-xPF9g9PXLBshLLknGRdRr6j2s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-20_07,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0 spamscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 mlxscore=0
- mlxlogscore=979 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502200121
+From: Rob Clark <robdclark@gmail.com>
+Date: Thu, 20 Feb 2025 09:33:43 -0800
+X-Gm-Features: AWEUYZlqKD1Gyp1C5EfK3AsCtFxqBumbtjfPAP1oJTHymGw-8iTynKVDWs30wtk
+Message-ID: <CAF6AEGtt2AODBXdod8ULXcAygf_qYvwRDVeUVtODx=2jErp6cA@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2025-02-20 for v6.14-rc4
+To: Dave Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: dri-devel <dri-devel@lists.freedesktop.org>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, freedreno <freedreno@lists.freedesktop.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-sfr->buf_size is in shared memory and can be modified by malicious user.
-OOB write is possible when the size is made higher than actual sfr data
-buffer. Cap the size to allocated size for such cases.
+Hi Dave, Simona,
 
-Cc: stable@vger.kernel.org
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
----
- drivers/media/platform/qcom/venus/hfi_venus.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+A few fixes for v6.14, as described below.
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 6b615270c5dae470c6fad408c9b5bc037883e56e..ab93757fff4b31910f05831170ca1a54f4925b2b 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1041,18 +1041,26 @@ static void venus_sfr_print(struct venus_hfi_device *hdev)
- {
- 	struct device *dev = hdev->core->dev;
- 	struct hfi_sfr *sfr = hdev->sfr.kva;
-+	u32 size;
- 	void *p;
- 
- 	if (!sfr)
- 		return;
- 
--	p = memchr(sfr->data, '\0', sfr->buf_size);
-+	size = sfr->buf_size;
-+	if (!size)
-+		return;
-+
-+	if (size > ALIGNED_SFR_SIZE)
-+		size = ALIGNED_SFR_SIZE;
-+
-+	p = memchr(sfr->data, '\0', size);
- 	/*
- 	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
- 	 * that Venus is in the process of crashing.
- 	 */
- 	if (!p)
--		sfr->data[sfr->buf_size - 1] = '\0';
-+		sfr->data[size - 1] = '\0';
- 
- 	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
- }
+The following changes since commit 866e43b945bf98f8e807dfa45eca92f931f3a032:
 
--- 
-2.34.1
+  drm/msm: UAPI error reporting (2025-01-03 07:20:28 -0800)
 
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2025-02-20
+
+for you to fetch changes up to 73f69c6be2a9f22c31c775ec03c6c286bfe12cfa:
+
+  drm/msm/dsi/phy: Do not overwite PHY_CMN_CLK_CFG1 when choosing
+bitclk source (2025-02-15 11:46:42 -0800)
+
+----------------------------------------------------------------
+Fixes for v6.14-rc4
+
+Display:
+* More catalog fixes:
+ - to skip watchdog programming through top block if its not present
+ - fix the setting of WB mask to ensure the WB input control is programmed
+   correctly through ping-pong
+ - drop lm_pair for sm6150 as that chipset does not have any 3dmerge block
+* Fix the mode validation logic for DP/eDP to account for widebus (2ppc)
+  to allow high clock resolutions
+* Fix to disable dither during encoder disable as otherwise this was
+  causing kms_writeback failure due to resource sharing between
+* WB and DSI paths as DSI uses dither but WB does not
+* Fixes for virtual planes, namely to drop extraneous return and fix
+  uninitialized variables
+* Fix to avoid spill-over of DSC encoder block bits when programming
+  the bits-per-component
+* Fixes in the DSI PHY to protect against concurrent access of
+  PHY_CMN_CLK_CFG regs between clock and display drivers
+
+Core/GPU:
+* Fix non-blocking fence wait incorrectly rounding up to 1 jiffy timeout
+* Only print GMU fw version once, instead of each time the GPU resumes
+
+----------------------------------------------------------------
+Abhinav Kumar (1):
+      drm/msm/dp: account for widebus and yuv420 during mode validation
+
+Dmitry Baryshkov (3):
+      drm/msm/dpu: skip watchdog timer programming through TOP on >= SM8450
+      drm/msm/dpu: enable DPU_WB_INPUT_CTRL for DPU 5.x
+      drm/msm/dpu: correct LM pairing for SM6150
+
+Ethan Carter Edwards (1):
+      drm/msm/dpu: Fix uninitialized variable
+
+Jessica Zhang (2):
+      drm/msm/dpu: Disable dither in phys encoder cleanup
+      drm/msm/dpu: Drop extraneous return in dpu_crtc_reassign_planes()
+
+Konrad Dybcio (1):
+      drm/msm/a6xx: Only print the GMU firmware version once
+
+Krzysztof Kozlowski (3):
+      drm/msm/dsi/phy: Protect PHY_CMN_CLK_CFG0 updated from driver side
+      drm/msm/dsi/phy: Protect PHY_CMN_CLK_CFG1 against clock driver
+      drm/msm/dsi/phy: Do not overwite PHY_CMN_CLK_CFG1 when choosing
+bitclk source
+
+Marijn Suijten (1):
+      drm/msm/dpu: Don't leak bits_per_component into random DSC_ENC fields
+
+Rob Clark (1):
+      drm/msm: Avoid rounding up to one jiffy
+
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |  8 ++--
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  2 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  2 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h |  2 -
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  2 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  3 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |  7 ++-
+ drivers/gpu/drm/msm/dp/dp_display.c                | 11 +++--
+ drivers/gpu/drm/msm/dp/dp_drm.c                    |  5 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          | 53 +++++++++++++++-------
+ drivers/gpu/drm/msm/msm_drv.h                      | 11 ++---
+ .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  | 11 ++++-
+ 15 files changed, 75 insertions(+), 49 deletions(-)
 
