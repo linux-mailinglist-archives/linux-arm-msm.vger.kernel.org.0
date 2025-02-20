@@ -1,244 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-48630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1831FA3D5EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 11:06:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26E18A3D601
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 11:08:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A9F2E1624FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 10:05:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 553433AECF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 10:08:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CD271EE7D3;
-	Thu, 20 Feb 2025 10:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4007A1F0E24;
+	Thu, 20 Feb 2025 10:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="e5eq5uP0";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ajjYyaE/";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="U56jNFDp";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Y6Z3Xnwq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KelmmAXL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329AB1E5B6F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 10:05:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2E11EC00F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 10:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740045912; cv=none; b=LWAmndeFqIF1F2lQjmiIN9+lroCsSKibuez7gSjsYNf77TCMJre/dIPvPWTtG1L87GxVzUNZxn/rPWIUtp6f+iRhJtAQPKhKAoVTs8YIDsBvjQW8rRHmFu2t9AYfcS4eYdvnBMBFI6mTboGhhO7p4CDJ0j+KXp0tH8d0nspajWw=
+	t=1740046089; cv=none; b=M7Zg7FL+/XyzS3WKTpd0ELWeeth7MFV7u0RaMYZm/5XSxyyKb8DcADxnPPDdT5jXW55lVduW03kXbQWmNg3VPCB5Ml25O7qqXRMnuN7X2H2aMRux+fJD4A2AxUsZTXh5EFxK8d3YuJoGScZ25J3sy5qZvaCV9pyupO2L2mMBdac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740045912; c=relaxed/simple;
-	bh=RYikLyRQEOYYe1C6kD84yowJfTxQZxtiO0IurvQr8ow=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Mn1HLv+uuFPH2p3505DKNfiyofv3PzlDvzTHwFC37Qm3sV7sJM9EN3RhFJhHUkUQTp4bsSDqXDpEq0AWMWBVnX4Bjs0Qw0mYlN6Tr1GhzzbjTBQgDd+6FLx6hh0vZcQ+pi+Lk7XSUfFVr7VhF1U+QM0jV/Q0aD+Sk6h08COhV9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=e5eq5uP0; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ajjYyaE/; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=U56jNFDp; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Y6Z3Xnwq; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 6C61F1F387;
-	Thu, 20 Feb 2025 10:05:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1740045909; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=65zE77FFO0s0D2ildlq3h1u4o6X5a++vxcNcTRVNHEs=;
-	b=e5eq5uP0lSiK917nOXNtjo5B2Il1opJ5S/TBMSPN4GHpYevG6+GNEH5dc8U5aFcpfpK5Cw
-	9dyUqjpExeG/vOFUhwpAb2s+6fZYEFh8FlGNz8QvfTSNrsWn8qj0c2mzG9WiFdt5gULRCW
-	TGicx3LEipQvDm3ioB7HkQ9PlaM5NCU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1740045909;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=65zE77FFO0s0D2ildlq3h1u4o6X5a++vxcNcTRVNHEs=;
-	b=ajjYyaE/xQ9d1+3WLRm22ouGPNw8XS1zONxWMbXADKRkZi7IsWu7kBhUGdbRBvbDAACQLH
-	ia8HYBlw60OiJ8Cg==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=U56jNFDp;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Y6Z3Xnwq
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1740045908; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=65zE77FFO0s0D2ildlq3h1u4o6X5a++vxcNcTRVNHEs=;
-	b=U56jNFDpLXJPaOrLQJfvYY3y3udSaNl+sAmV78MflSnzJ2pXFkRW0fkt6nNPommYWeJs5b
-	EObtbJwATSyG1yNBNUY8Q7ziNK7zMoXp/lIACti91Fo4GF8dJ6/bW/cfl+z2xiSc6Q8kLz
-	E3iDjmZLFv7MoYUNUKKnoGOm4d4Ko3Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1740045908;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=65zE77FFO0s0D2ildlq3h1u4o6X5a++vxcNcTRVNHEs=;
-	b=Y6Z3XnwqK8EgqLKD0rh0pt2PA9+fiVOipGfoO3odSV+zAHeoAfRNIAoiwb4DyQ4mJsF/Cn
-	VtFt6JqsYZumY3Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E2B7A13301;
-	Thu, 20 Feb 2025 10:05:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id jF2hNVP+tmf1AQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 20 Feb 2025 10:05:07 +0000
-Message-ID: <355ed315-61fa-4a9d-b72b-8d5bc7b5a16c@suse.de>
-Date: Thu, 20 Feb 2025 11:05:07 +0100
+	s=arc-20240116; t=1740046089; c=relaxed/simple;
+	bh=lZ+poUcsGaFUUbHXQn1jSPCAMiMLRg/1oYtrAb7t0FE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=mHsM1gWGkIZPq0VrSVVcQIZXoQDtiwQln2QDzinW4DvNIC7ssfpY6qXtb4c6z/9FKjhivkcdUNJbFa8TJlApWH3iLxRhLUWjskh+Pcn9PZHykRKSjMU0cKByPzyIwyPdTs7V+c//8uHrnX+ixWCWuNPrweuoX/rQv/H8RQEpN3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KelmmAXL; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2fc0d44a876so1133780a91.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 02:08:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740046087; x=1740650887; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=O/4TEs4cPoG1AcM4+yxLSv0REuXRrTGKT4YLCRC3ZSk=;
+        b=KelmmAXLnqYHu+PHOSx5y/pQ+r/zFeNhNVJKL23N7nxsK580Uu09xXH1cxN7k/JNsP
+         6gzd3AamwQARqywzFQGFNmaIKU1wGLs2sA0v1u0oGABNnzLaB48bZ0110mZbb11JOdOg
+         ASCJGLmRmHRd1Vy4mNiTBpfBSQxKT5HTSWFs/nchrXijQiRiIbmSJrl4aAmQ4KyWq+/L
+         XhR6OivDAwBSgKocke7v4pCuPp15zOdHopVFg56I9MzV6UWVbh0k6lcQmaIUuPpy3rqX
+         +LD5FzyIE+xf/jAirUPWK8EZYOcjPWFxnJtU4WtwlrmAf6S+I3nfOm19jDK1GarEMEN7
+         MtLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740046087; x=1740650887;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O/4TEs4cPoG1AcM4+yxLSv0REuXRrTGKT4YLCRC3ZSk=;
+        b=H63HWRx+rovo5natrQC2Jw8/TohkMS7AmZL6dYoDDj6cMFd9Zzd/iDz0CcM2Zu7Gjx
+         gJ5GnwZTbvBmUjcEm8yWnR4C7FZ5GskImjbzWvYmafLJlhqGxvNPJqU9+KHIz8I0Newv
+         WRClY+XU9I+C1UL2hDumDgvkwwt9tH47eJHDmoNEe0iNHo6dhaW64AWxE1dx045SCfqd
+         8djkGkTY5To6W6RG9s1v70koiyqDz25Fdc812WU2Xa84hyH1ncH8sv6vGeVWxsMULNiQ
+         1nBCowEFoOkYmkZK1xn4KDiyL2sFWbSI1ITLokhBkbo/7qPCvMeiCIbsfmt5pD9XCj/4
+         p6jA==
+X-Gm-Message-State: AOJu0YzsJMv70D/epL9CRVzKTaeFDuHOZdLXN3yftSPuDy3gp/tUykc/
+	oBSJ1Zi5XnKH6fA3mzc37/JOKobTJJi1AQWIjhuCR6a/TD8iGKG1Odev9VUJv6o=
+X-Gm-Gg: ASbGnct7z8yC6TFjSRepOcaIvo8DQycvaxI1TI3tU/Zh8Q4YzeBloHHKcp6KkFT4xFN
+	zORvoIxn+iDzuIJ6hqdSXbqMftPPKd0pJ8sjT1tCYINSR+6x5rwTAL2DKJYsIXvvJC/7q+yMlKS
+	ODQQa6zqcM1MrMHz3ibhaOms5pn7DyTJqUROXDzqXDHykHoB3ESaP9eWUI1eUGPpAVl8oKfIX7k
+	rXkDkF54Rj0Q2KKXbG5BLKHLMN09eTFV3fTecupwGVryPDaMgzbfFs663SUv5Cuz5wT5L7dqyeo
+	aghenR237Z8X
+X-Google-Smtp-Source: AGHT+IE4Hnx3iwIdTTQMv1etNjaKK2fbBl3p4LS+dGKDHiLfiUb9a4DuJMquOBV5Z9uPvqneJ57u1A==
+X-Received: by 2002:a17:90b:3b92:b0:2fa:15ab:4de7 with SMTP id 98e67ed59e1d1-2fc40f10763mr39959135a91.12.1740046086882;
+        Thu, 20 Feb 2025 02:08:06 -0800 (PST)
+Received: from [127.0.1.1] ([112.65.12.217])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fbf98b3305sm15304645a91.6.2025.02.20.02.07.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2025 02:08:06 -0800 (PST)
+From: Jun Nie <jun.nie@linaro.org>
+Subject: [PATCH v2 0/5] drm/msm/dsi: Add DSC support to 2 panels in dual
+ DSI mode
+Date: Thu, 20 Feb 2025 18:07:51 +0800
+Message-Id: <20250220-dual-dsi-v2-0-6c0038d5a2ef@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/25] drm/dumb-buffers: Provide helper to set pitch
- and size
-To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
- nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
- spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
- intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-References: <20250218142542.438557-1-tzimmermann@suse.de>
- <20250218142542.438557-3-tzimmermann@suse.de>
- <dcd59a75-7945-4a2e-99f9-3abbb3e9de14@ideasonboard.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <dcd59a75-7945-4a2e-99f9-3abbb3e9de14@ideasonboard.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 6C61F1F387
-X-Spam-Score: -3.01
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	ARC_NA(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	FREEMAIL_TO(0.00)[ideasonboard.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	MIME_TRACE(0.00)[0:+];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Flag: NO
-X-Spam-Level: 
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPf+tmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDI1MDIyMD3ZTSxBzdlOJM3WRTMzODZCOjRDMzQyWg8oKi1LTMCrBR0bG1tQA
+ 5/tdMWgAAAA==
+X-Change-ID: 20250220-dual-dsi-c5660c22a661
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, Jun Nie <jun.nie@linaro.org>, 
+ Jonathan Marek <jonathan@marek.ca>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1740046076; l=1838;
+ i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
+ bh=lZ+poUcsGaFUUbHXQn1jSPCAMiMLRg/1oYtrAb7t0FE=;
+ b=gVYCs4tCVL63DS0T89O4NzqVIwKEcs/N4UZrpeCdVcmN6sQ+aapzx/p58uvsnYolbAvacke1A
+ irHVh7r6j7bAoG48rVQuFuCWdkYRRk/RpT90O2QhyOagQh8LypEsFdG
+X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
+ pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
 
-Hi
+The 2 DSI interfaces may be connected to 2 independent panels in dual-DSI
+mode. Device tree binging is added and frame width for DSC is changed to
+support the usage case. Support to multiple slice per packet is added for
+the device setup to test the usage case.
 
-Am 20.02.25 um 10:18 schrieb Tomi Valkeinen:
-[...]
->> + * Color modes of 10, 12, 15, 30 and 64 are only supported for use by
->> + * legacy user space. Please don't use them in new code. Other modes
->> + * are not support.
->> + *
->> + * Do not attempt to allocate anything but linear framebuffer memory
->> + * with single-plane RGB data. Allocation of other framebuffer
->> + * layouts requires dedicated ioctls in the respective DRM driver.
->
-> According to this, every driver that supports, say, NV12, should 
-> implement their own custom ioctl to do the exact same thing? And, of 
-> course, every userspace app that uses, say, NV12, should then add code 
-> for all these platforms to call the custom ioctls?
+This patch set is split from the quad-pipe patch set v1. It is also dependent
+on Marijn's patch: 
+	https://lore.kernel.org/all/20250209-drm-msm-initial-dualpipe-dsc-fixes-v2-1-9a60184fdc36@somainline.org/
 
-Yes, that's exactly the current status.
+The change vs v1:
+    - Add device tree binding for dual panel case in handling frame width for
+      DSC to avoid breaking existing dual-DSI case.
+    - Leverage Marijn's patch to configure proper slice per interface in
+      dsi_update_dsc_timing().
+    - Polish commit comments.
+    - Link to v1: https://lore.kernel.org/all/20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org/
 
-There has been discussion about a new dumb-create ioctl that takes a DRM 
-format as parameter. I'm all for it, but it's out of the scope for this 
-series.
+Signed-off-by: Jun Nie <jun.nie@linaro.org>
+---
+Jun Nie (5):
+      drm/msm/dsi: add support VBIF_CTRL_PRIORITY to v2.8.0 controller
+      drm/msm/dsi: check DSC width for the bonded DSI case
+      drm/msm/dsi: support DSC configurations with slice_per_pkt > 1
+      dt-bindings: display/msm: dsi-controller-main: Document dual panel property
+      drm/msm/dsi: Support DSC for dual panel case
 
->
-> As libdrm's modetest currently supports YUV formats with dumb buffers, 
-> should we remove that code, as it's not correct and I'm sure people 
-> use libdrm code as a reference?
+ .../bindings/display/msm/dsi-controller-main.yaml  |  8 +++-
+ drivers/gpu/drm/msm/dsi/dsi.h                      |  6 ++-
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 | 54 ++++++++++++++--------
+ drivers/gpu/drm/msm/dsi/dsi_manager.c              | 12 +++--
+ include/drm/drm_mipi_dsi.h                         |  2 +
+ 5 files changed, 56 insertions(+), 26 deletions(-)
+---
+base-commit: 53d2d43787aa9a7daf91d2421033528c2e186be8
+change-id: 20250220-dual-dsi-c5660c22a661
 
-Of course not.
-
->
-> Well, I'm not serious above, but I think all my points from the 
-> earlier version are still valid. I don't like this. It changes the 
-> parameters of the ioctl (bpp used to be bits-per-pixel, not it's 
-> "color mode"), and the behavior of the ioctl, behavior that we've had 
-> for a very long time, and we have no idea how many users there are 
-> that will break (could be none, of course). And the documentation 
-> changes make the current behavior and uses wrong or legacy.
-
-Before I go into details about this statement, what use case exactly are 
-you referring to when you say that behavior changes?
-
-Best regards
-Thomas
-
->
-> Clearly we need something new and better for the buffer allocation, 
-> but for the time being, I'd be more comfortable just keep the current 
-> behavior, at least for all the drivers I use or maintain: omapdrm, 
-> tidss, renesas, xlnx, tilcdc.
->
->  Tomi
->
-
+Best regards,
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-HRB 36809 (AG Nuernberg)
+Jun Nie <jun.nie@linaro.org>
 
 
