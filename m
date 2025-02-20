@@ -1,186 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-48657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74B66A3D764
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 11:53:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5EEBA3D7F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 12:15:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 415B11890B4B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 10:53:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4DF7B7A6827
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 11:14:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AEC61F150B;
-	Thu, 20 Feb 2025 10:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D22251F1534;
+	Thu, 20 Feb 2025 11:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="wF6C4CGD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eUrrpDX6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7229B1EFF9B;
-	Thu, 20 Feb 2025 10:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B421F152C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 11:14:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740048791; cv=none; b=iQodQLFujMWUyJwjmXUL3Yud6wk/6bwiOU689CnivogAgEY29RoMyn0jLveS8NL10azUNWHh6PbHIIM452PHXqal1gSlYNaYyKG4cxKMaw7I/pdtKGsdUx0TVK2qJhPN72Yof17jqPq6FkoE08Dm4fkmSXWB/Vphb8Rs2F6B+ZE=
+	t=1740050098; cv=none; b=YLw806F4JU7g+Y5I9q1VHyjx1IXA2tiXQa2L2iCfHGZyoV3wsIIo5tp/YaIoTIi4nwWgynnSSmnBpFbNbkHBpn61htVs+hf5CwTDMpXEdV2fzsugfTlzXGw0taPuFbIfUe9WDejPYS/7aOVyfYqgkPMKxhV0oV2CH5u6m/IRuaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740048791; c=relaxed/simple;
-	bh=cGmqrMQrzQNKvOYoVbXWr6Lo7FskS49XuKpEvHODBjA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oHiiC9zSxCy8c/R73xPoIBegmHPk8y+CEpOMvzT9/vJlAbOYc5hgKUUni+9wxCSrKRS/X9R1QWc6KUiyrSCSSN7MFsCFty4Hl0sifOIK3Zl+sxM8QLhvNt2jyqAh1HEtU9erKy/UtMI765o1klOs96aWvLQpXVTsG+o/0Yldsa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=wF6C4CGD; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id C69249FC;
-	Thu, 20 Feb 2025 11:51:42 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1740048703;
-	bh=cGmqrMQrzQNKvOYoVbXWr6Lo7FskS49XuKpEvHODBjA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=wF6C4CGDoP+/HkpCLJaEAJQ5SUDGi9n0fFlEojmHm56G4KxPszUsR/q+aXtSRtihR
-	 AQoXwkJ+zXwR8f+vg71cO6pL6HL787yGlQcQZD3c6z5sRdwltXCONK8mS2/SPW2eEM
-	 lzKYZgKG0aXbNUjO1esnvXLsAJsX44MVKluFgT40=
-Message-ID: <596b960e-71f8-4c2c-9abe-058206df1dfb@ideasonboard.com>
-Date: Thu, 20 Feb 2025 12:53:03 +0200
+	s=arc-20240116; t=1740050098; c=relaxed/simple;
+	bh=fJB6L5AnL5J+S+1HzyLzt2yON/RIJwdvkGfbsOOWwmk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Y2ls2mA1j10esYTRoGOxRbO6fu/V2lJ1dOc/zmOjxjH9FQeOBahnebyhQlCCsZ9xeU7sIEfU0Bhy8OgMWxgYiQK/JZpemLwImqnrtsoNwmq4FWtI93M4aXaOkX0tJDXzb366bfr4ulp5o9fE7ChiaRPzvvwdqI7IaVqxJMMRzC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eUrrpDX6; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30930b0b420so6770681fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 03:14:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740050095; x=1740654895; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8LyXwrLGK4GdaCCWLeIZs0AErC/jYbMsOGckx5Nm6AE=;
+        b=eUrrpDX6Qymv7/B5T21ptKcpDCHGNpyAh3+84KBoE4lCUkXvNEI+MWimjXQgepbyE2
+         +TEKp5Zn04cvyAPGLThymL9FlbX0oAo6OgTSLFbN6o6uPCdbufnagfg4i+NNuoj9J00E
+         Qd0OCUeb2vPePPKt40uTVNY7F4Slo+WGzCR+7vH8H9yvVfTbXQpVtkK9bDg9Bc00H2L1
+         30PmlLTYnw3Zmj+USB1rBvsdxZ26xOqhNYrHLn/KRckOVvx+hVj6ztORy/ToAfi7nmS5
+         q1K9bPvlV7Eojh05lOA9CnyxtIpp4/PK2wosS4SdLwvliDB3fFY/rWG70fss7B8NfUD7
+         GOOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740050095; x=1740654895;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8LyXwrLGK4GdaCCWLeIZs0AErC/jYbMsOGckx5Nm6AE=;
+        b=NgDLlEN8xjahCFjXwgapr4DMwoEz3Spj3YURxrCsNg0s+L2lDkN2fD7w6955Di84Fa
+         uzSd3nv6M1yNxE4fKrcxfDh8RfGS7mH5HexRfK0cs3SzYmrhEvoXu4X2dtrP2nBmM4DZ
+         ig/kjw9ctMIxq4Fb9kdm1XdT5jw5DFQOsT8RIwbaKpmYcsM3lBfZIVUOwkAAXh7SIQR2
+         zDjP4DCtMuadYuZPLrm205cp8+HuObB0nx34W9BV+tlv6jgp9kx/H4fPds8yfFmuxmcW
+         RuT6jQos9RKQJT4SuIr0FnTCmmB+lzcj/ecAc+nRSiON2GQ0STZzeuJuDUQDWXlNN7FM
+         zorA==
+X-Gm-Message-State: AOJu0YyHkfYaRZqdFiAbO9HaUlt0JBj6tQDFKBtIMaxzLx+Ke4rlKZxT
+	zgznvZKq+4RRgu5Zp75NnqUSQAD2pRErRoZKIQC/v59MvIWM5voMg2K7GP8CG2c=
+X-Gm-Gg: ASbGncvlUlxcJCYvu1NGKCQ981abVKZHm+wS3bg4+oXSPQMJsw+HX3VoqMuYyo7oh6e
+	e3iDKzOOoaeI7TQkznSOa4Frt9hptMMm9bcZBK4UYWNWitXkhfhMd/YnOqBiJw8efDDbiJqJmD1
+	Q9auAGlF6ReHG3yZ/23ugymTEajbu+akdLpHEiSW8eaEsJteFw6ceO07m7/VLpNIWqu2TPD9J0I
+	pH7QWmJPTrg+4LwXrKg7M9OzMoLERrLErHOTkZqwej3Vou9TvXKEMDFsc/z1VFT/hZ1qRnsTZEF
+	Bh1WI0RSQzRDyFlBImbNVCs=
+X-Google-Smtp-Source: AGHT+IGG9LP6CikwQQLLPJWH6HucdxpA0EQEAovfivAAnbKN4plM1f13MThC8AcAbBz05v8+AbVAlQ==
+X-Received: by 2002:a05:6512:b1f:b0:542:2e09:639a with SMTP id 2adb3069b0e04-5462eeda30fmr2764753e87.10.1740050094711;
+        Thu, 20 Feb 2025 03:14:54 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-545297856c6sm2056164e87.142.2025.02.20.03.14.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2025 03:14:53 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 0/7] drm/msm/mdp4: rework LVDS/LCDC panel support
+Date: Thu, 20 Feb 2025 13:14:42 +0200
+Message-Id: <20250220-fd-mdp4-lvds-v2-0-15afe5578a31@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/25] drm/dumb-buffers: Provide helper to set pitch
- and size
-To: Thomas Zimmermann <tzimmermann@suse.de>,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
- nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
- spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
- intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-References: <20250218142542.438557-1-tzimmermann@suse.de>
- <20250218142542.438557-3-tzimmermann@suse.de>
- <dcd59a75-7945-4a2e-99f9-3abbb3e9de14@ideasonboard.com>
- <355ed315-61fa-4a9d-b72b-8d5bc7b5a16c@suse.de>
-Content-Language: en-US
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Autocrypt: addr=tomi.valkeinen@ideasonboard.com; keydata=
- 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
-In-Reply-To: <355ed315-61fa-4a9d-b72b-8d5bc7b5a16c@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKIOt2cC/53OTQqDMBCG4atI1o3kD9t01XsUF6lJzFA1MpFQE
+ e/eKPQCXb4fzMNsJDkEl8i92gi6DAniVEJcKtIFM/WOgi1NBBOKSX6l3tLRzooO2SbqyuJvjbd
+ ad6SczOg8fE7u2Zb2GEe6BHTmhwjW8IZpJgWvlZRCacqpHWHBtX4ZXFN4x/wYYDIY64j9oQZIS
+ 8T1/DGLw/5Lavd9/wJwxaVe8AAAAA==
+X-Change-ID: 20240317-fd-mdp4-lvds-e317f86fd99c
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1917;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=fJB6L5AnL5J+S+1HzyLzt2yON/RIJwdvkGfbsOOWwmk=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBntw6qU4dq9Ooc3myWYJP8jGjhialgsGg3QNcOT
+ GjxIqpl/luJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ7cOqgAKCRCLPIo+Aiko
+ 1WvCB/9A/koJ46Wd+4RE/e5z//3JgIwbLhFGDMEWzicgUR4oY1y7WUCLZE+7BLtC/LZR6A+7CSj
+ +jdz+l/5AQMthKplWcUa8iLlh8ului3i6ynQi7D59MvEBhM5m4fWYIdATHMY7QDldKsjRyb5swD
+ Uoa4bz98CR6wxmVNHhV9mbviGyZUw4KYTiaNJuP4hKLnGb7LMCSQSz0UkzkeTHN/uCMgMY5I68P
+ regBLW0wZrjTNFDVWZmyTc+EIud38qQidP+Lh4eb3tFRTNdatHDq0LF3g5LnLWdSZ05n3NVrDF8
+ 3WuUEZJUz9xe/Ng30GqmRPVcXRYnIqkz3OGSwYRNttTG9f1x
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Hi,
+The LCDC controller uses pixel clock provided by the multimedia clock
+controller (mmcc) instead of using LVDS PHY clock directly. Link LVDS
+clocks properly, taking MMCC into account.
 
-On 20/02/2025 12:05, Thomas Zimmermann wrote:
-> Hi
-> 
-> Am 20.02.25 um 10:18 schrieb Tomi Valkeinen:
-> [...]
->>> + * Color modes of 10, 12, 15, 30 and 64 are only supported for use by
->>> + * legacy user space. Please don't use them in new code. Other modes
->>> + * are not support.
->>> + *
->>> + * Do not attempt to allocate anything but linear framebuffer memory
->>> + * with single-plane RGB data. Allocation of other framebuffer
->>> + * layouts requires dedicated ioctls in the respective DRM driver.
->>
->> According to this, every driver that supports, say, NV12, should 
->> implement their own custom ioctl to do the exact same thing? And, of 
->> course, every userspace app that uses, say, NV12, should then add code 
->> for all these platforms to call the custom ioctls?
-> 
-> Yes, that's exactly the current status.
-> 
-> There has been discussion about a new dumb-create ioctl that takes a DRM 
-> format as parameter. I'm all for it, but it's out of the scope for this 
-> series.
-> 
->>
->> As libdrm's modetest currently supports YUV formats with dumb buffers, 
->> should we remove that code, as it's not correct and I'm sure people 
->> use libdrm code as a reference?
-> 
-> Of course not.
-> 
->>
->> Well, I'm not serious above, but I think all my points from the 
->> earlier version are still valid. I don't like this. It changes the 
->> parameters of the ioctl (bpp used to be bits-per-pixel, not it's 
->> "color mode"), and the behavior of the ioctl, behavior that we've had 
->> for a very long time, and we have no idea how many users there are 
->> that will break (could be none, of course). And the documentation 
->> changes make the current behavior and uses wrong or legacy.
-> 
-> Before I go into details about this statement, what use case exactly are 
-> you referring to when you say that behavior changes?
+MDP4 uses custom code to handle LVDS panel. It predates handling
+EPROBE_DEFER, it tries to work when the panel device is not available,
+etc. Switch MDP4 LCDC code to use drm_panel_bridge/drm_bridge_connector
+to follow contemporary DRM practices.
 
-For every dumb_buffer allocation with bpp that is not divisible by 8, 
-the result is different, i.e. instead of DIV_ROUND_UP(width * bpp, 8), 
-we now have width * DIV_ROUND_UP(bpp, 8). This, of course, depends on 
-the driver implementation. Some already do the latter.
+---
+Changes in v2:
+- Rebase on top of msm-next.
+- Upgrade LVDS clock code to use clock providers and parent_data
+- Use LVDS clock from the MMCC instead of using LVDS PHY directly
+- Link to v1: https://lore.kernel.org/r/20220616090321.433249-1-dmitry.baryshkov@linaro.org
 
-This change also first calls the drm_driver_color_mode_format(), which 
-could change the behavior even more, but afaics at the moment does not. 
-Although, maybe some platform does width * DIV_ROUND_UP(bpp, 8) even for 
-bpp < 8, and then this series changes it for 1, 2 and 4 bpps (but not 
-for 3, 5, 6, 7, if I'm not mistaken).
+---
+Dmitry Baryshkov (7):
+      dt-bindings: display: msm: mdp4: add LCDC clock and PLL source
+      drm/msm/mdp4: drop mpd4_lvds_pll_init stub
+      drm/msm/mdp4: register the LVDS PLL as a clock provider
+      drm/msm/mdp4: use parent_data for LVDS PLL
+      drm/msm/mdp4: move move_valid callback to lcdc_encoder
+      drm/msm/mdp4: switch LVDS to use drm_bridge/_connector
+      arm: dts: qcom: apq8064: link LVDS clocks
 
-However, as the bpp is getting rounded up, this probably won't break any 
-user. But it _is_ a change in the behavior of a uapi, and every time we 
-change a uapi that's been out there for a long time, I'm getting 
-slightly uncomfortable.
+ .../devicetree/bindings/display/msm/mdp4.yaml      |   9 +-
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi           |  16 ++-
+ drivers/gpu/drm/msm/Makefile                       |   1 -
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c           |  34 ++++--
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h           |  16 +--
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c  |  55 +++++-----
+ .../gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c    | 121 ---------------------
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_pll.c      |  28 ++---
+ 8 files changed, 86 insertions(+), 194 deletions(-)
+---
+base-commit: 402fdf7dbdc47d0186c4ad4fb1467a05f017bc0f
+change-id: 20240317-fd-mdp4-lvds-e317f86fd99c
 
-So, as a summary, I have a feeling that nothing will break, but I can't 
-say for sure. And as I'm having trouble seeing the benefit of this 
-change for the user, I get even more uncomfortable.
-
-  Tomi
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
