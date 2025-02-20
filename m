@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-48681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B8DEA3D93A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 12:54:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A879A3D93E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 12:54:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6FE6516EBEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 11:53:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D08133AE902
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 11:54:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B61341DDC3A;
-	Thu, 20 Feb 2025 11:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 151721F3BBE;
+	Thu, 20 Feb 2025 11:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GGcv66Ft"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="C1jF5Dft"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2721B1EE01B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 11:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583BC1EE01B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 11:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740052425; cv=none; b=ff0J7jc1cOT8zbI3tZh+cAy/m4QJW6CjNIus2l1Z2H69F2FRUdXpafJXLuO1Bjz5/Bqh9M6v+0bVlX6N3tfdG9jRGOveCsLG4ZTIFfvfAUDss0KPfN6KJcPYor8WpKx1OoWNfM2hr09NH+zrky+hbCGn8Qe7OmccwQ6zQcmcf/I=
+	t=1740052496; cv=none; b=DYvmASKB9LDJMFu/ON2OpqShp3an9wQ4dXdf1jf/0x5W6sox/OWFdDxFuapzFmkqEmUP64ucBSlvXOZiWwCrO/Isn9VmO06Nhx+IAvrk6ASO8JprTaiTh4cDNCiJ23FQEHPDoLA1kgaalCpW2lxPWjnDx3X5cQsnd8Kz1Y7PnaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740052425; c=relaxed/simple;
-	bh=T/nJzAoZT0qXmit7eeQgjWNUUo/e3yTXI+VrwSLYLp8=;
+	s=arc-20240116; t=1740052496; c=relaxed/simple;
+	bh=Og7aiuOG1s+o/Uvh4iZjbth8kgsAOixeD9L87RKMr6Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LViKDSrfLPLeHUaohwEVCcz00SBrm1nUq77t2+8JJbmmKA+k13/BpGhCe59KmAV9OdMbe1hnT33ceX9ncxrrezVp7ovAjFpTlKblw9GdQlYetsh3cdAMhiJgCsvgMyT+/AmNE3mIrvIdKAmuG8FSE2PJCGoU89jkBT1tPHDkSoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=GGcv66Ft; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type; b=M5v96fiCq7gpJXHXlfpV0q6eXFzU1g8JcexUYo+DmcLfjzaIvYS6ZJd8NGocZZQcdGZvwmBV0UcuyRF9VDZ1xjGesWWVffOWuN66HRRAxCV3ZVE0AspRWCvtVbU7oT44oF+r6nuAVT0CuhuiQbCHgEYvFrf2P2UWeeYwzAj0gfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=C1jF5Dft; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1740052423;
+	s=mimecast20190719; t=1740052493;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=BwzyEs2rzgDi7fdcymDVrEG1CbdT8oDRc6SiCztrJyQ=;
-	b=GGcv66FtQu2WyPjwAziJH/hJ9OgnsxKu7WlAtRx91bLgmBB5Jev78k/sbX7eJdMXkg1aKS
-	lZc+yA+DOtAkt0ugiSJQMFioehDXHL6lzKyePF40s/djAvNh54FNeWewuAjk9wcNcTAcr4
-	snW3XX25jgy8DQDXVZTyjEaaIKe+pM4=
+	bh=oKInmGQnLelUUkVqTefRb4CgBMV+ZEVQ+24VU4sm54o=;
+	b=C1jF5Dftt93tv/ylRi8x9UHIKIC8eJsmKHQq2vsa/H4vUpWFUaiUvR4odZtCFODPxvCC3L
+	wrAQuHZubTMAmnOARqeJoebedDwBJ3UJYmqyQKEIQudpBhTlFahBJBe7Ud/qC+F7zZl05A
+	QmpeaVH7k19smSjynYhuWuJdkC0e4AQ=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-59-4KBAu38POc6jwHZg5KrqQw-1; Thu, 20 Feb 2025 06:53:42 -0500
-X-MC-Unique: 4KBAu38POc6jwHZg5KrqQw-1
-X-Mimecast-MFC-AGG-ID: 4KBAu38POc6jwHZg5KrqQw_1740052421
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-38f31e96292so524359f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 03:53:41 -0800 (PST)
+ us-mta-25-G7q5rIDGOYmECufPeqILSQ-1; Thu, 20 Feb 2025 06:54:52 -0500
+X-MC-Unique: G7q5rIDGOYmECufPeqILSQ-1
+X-Mimecast-MFC-AGG-ID: G7q5rIDGOYmECufPeqILSQ_1740052491
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-38f34b3f9f1so614142f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 03:54:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740052421; x=1740657221;
+        d=1e100.net; s=20230601; t=1740052491; x=1740657291;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=BwzyEs2rzgDi7fdcymDVrEG1CbdT8oDRc6SiCztrJyQ=;
-        b=UuMCNgylsvjUSxOMDLOv4uYGbwDH32XIPK/oG95SD4NywLorDaYizQqm6eZm1Uz/HU
-         B2sZDUnreYAIeGBq9EJnxRSoi1CwigcGOkr2I/UxSaDSzEY2dRwdFfBGyOnWSjelQgAw
-         1QbBltlk/w6Y6W+dGzwMMzu4IhTiufj0q96dVUhjHNBZ3hiHsb8DeJ+5rSXtEiKbJRuq
-         R6p5/LF6njIJDtwpuzjoOwD813f6HoNx+Mvn+WBn2jtu385QujhxTU9tjwcE49nLmQ38
-         FHAoDHGfC1FRVVmFRv6zZGN1BA6Z0glVXdnXtLeh2DWy8p6fIEw5yn1Ulp7MV0+YhY/g
-         ndtg==
-X-Forwarded-Encrypted: i=1; AJvYcCUWK9/fRzTz6V4yBfx2xTHmlqTAMV8dVle/+DFVhSIGU6itkJ1fLKflA0CriJisTi0lesYQBYHetE01Jh9/@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBY8+5+/8tXmu9n3n8J1x1tQ98vhg5XwImzs4XiOId8hiUCmsA
-	2YPaak4X8hSBxRYAmB7BPCOqqK0WBj3LFwAgqtJ9ScTT6AZIgB7EsKsFiWU+r7R6y+4RnZN+AOc
-	Jn1ZXXC6XnxgrdD/blv72qIQaQ4yP0aKMb0az5rwb6svDr3qZGKhPKtPKtbh22eg=
-X-Gm-Gg: ASbGncs0xLy0lDV5Q42TCjeEfl3Fs6lGw06pFOqsTTDArA6P0BdjLUE3eQFxTMZ8RXq
-	dflgjYftbbsBzPOdaT1CW3xWso7o3hgFLFuIM5sEBqlw91KzQxfyehVi/zKwlymExbZ8wwWRGbu
-	QzlNyPFIorru81NEZGCggjPJ2top1q1B1ni+u8q8OxQZGxCgzuM5kYCVwKEfVJUwBOnAT/BRiXH
-	em5zzD61eMAoip4sCcSmyjw70eqApyazP/4PmkmVaLFSeJoTpPCEJQcMDkhX+BcY50wJV1ePZJu
-	JNETQp4gp/GZDzSig6sw+K2cqZnqMTJ+8NzesSAI5rQu4Rmkk8FiqidhCRBqpvHzq834ef8fqdw
-	XvbjIvMvwNnWRuQ98EX1/mLeJbeh0Fg==
-X-Received: by 2002:a5d:456e:0:b0:38d:e584:81ea with SMTP id ffacd0b85a97d-38f587f0e3fmr4970511f8f.45.1740052420909;
-        Thu, 20 Feb 2025 03:53:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFaBtupGbCZbgjuPj84yBkZYpDUpm1uFNV/jSZeDN14SzauU8LXvG28vA3YrBu5FgenmkNPfw==
-X-Received: by 2002:a5d:456e:0:b0:38d:e584:81ea with SMTP id ffacd0b85a97d-38f587f0e3fmr4970484f8f.45.1740052420492;
-        Thu, 20 Feb 2025 03:53:40 -0800 (PST)
+        bh=oKInmGQnLelUUkVqTefRb4CgBMV+ZEVQ+24VU4sm54o=;
+        b=XsQzeTHNgwX+u05H+sxbG/pi1O5j2l2sXO+sP4cRQQ9OIw6UAXV69Gzp2sOY6flYDa
+         8Ynuv9C2cn8924c4R+M9O1NgFf7JywvhMIU2LlkWBigIVDA7ULll/Sf4Ko5CaRHC4Fvn
+         hThyvgclGhdFZanrsSdNJpirvMrmVqHTULHxEAUTgkIC3xb4KrJoMN/YrQ4IHpTJJKt6
+         F9CaRhkAJtPNLGl3donVHj/hnfj28haLJhDdYJVQ4GqFfA7zBNGJoOgSf99PUGL+eAKY
+         qnAG1cJoH/z9qDdr4p9LrOSjB0tXd2bf13VZcQO5puN7j8/p6TBeQLJvb0wZVVYcc6fa
+         8Ekg==
+X-Forwarded-Encrypted: i=1; AJvYcCXCUCV8T2Vw6ZPQminkxF9Qg6qmnq2YbD7njMabEu3JpOWk+RNduWyIhkMTGz4qbuHUKIkN8ZzBY18U51zD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5u4zfMJEqFN+iXXcsT7Gt+9VRQMfgewx7u96tgUQBsyQTOFyn
+	ooPTHR4jkYMdxmQCNpPx8x1uMu4LxbpjmUnV/r0VyrdrS2ipILPPbV5fnVwIOoPaMQV3HiAs+KU
+	QZqKK97MLj0PAbp+eigKVRhxdu73CoU81BkAcHESeDoeb9HYgB3Ti4j+RMrmkOuk=
+X-Gm-Gg: ASbGncs34b9w0ioY/+GuzjBioC3iG++pY1oKC8Y1wvniG34AzN9niwj2Ii7jkdZGE6C
+	Q0afXG7/et4/MGtNhbuW7akpGkrRdkVBQSy6MfKy07Hf/4QRuJxL5nXHUT04HVwKmk5J4nsEvc3
+	ZBuezOP7pbm+Uynarmltug02SnvtdI1Z9RI5d6qRuBI2AlrtgXxZkvHnxWm2DA6kEd8GxFCY9rN
+	QjCo9MsgNDhj3v1znpUnfp8lLTSeUMOCYYZR8uhqTEdg/DFKVZVmHeXt3xd5sK/idd9EgCHKm0z
+	curazQCO9rnm7nEtArEGWrtTTA1hz5YM0QIVwTInmsLD537kRk4NpvLVBeMZOF6xULjh770Kn3m
+	RnLzO62nxH0wogYOq5UzbxU5vrcZDRw==
+X-Received: by 2002:a05:6000:b46:b0:38f:2556:905 with SMTP id ffacd0b85a97d-38f58796072mr5126075f8f.30.1740052490898;
+        Thu, 20 Feb 2025 03:54:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFWfXwPH7KEAaiDv1qxaaZlddp3c9Iv6rAzFwPQzOy0OsZ9gW7yrvDZd2bgrSBHbBYAVER0zw==
+X-Received: by 2002:a05:6000:b46:b0:38f:2556:905 with SMTP id ffacd0b85a97d-38f58796072mr5126038f8f.30.1740052490502;
+        Thu, 20 Feb 2025 03:54:50 -0800 (PST)
 Received: from ?IPV6:2003:cb:c706:2000:e44c:bc46:d8d3:be5? (p200300cbc7062000e44cbc46d8d30be5.dip0.t-ipconnect.de. [2003:cb:c706:2000:e44c:bc46:d8d3:be5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259d5e92sm20722336f8f.66.2025.02.20.03.53.36
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f25a0fe5esm20657531f8f.99.2025.02.20.03.54.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Feb 2025 03:53:39 -0800 (PST)
-Message-ID: <22df4791-ea50-400c-b7e4-d7284d195e02@redhat.com>
-Date: Thu, 20 Feb 2025 12:53:36 +0100
+        Thu, 20 Feb 2025 03:54:49 -0800 (PST)
+Message-ID: <ada9516e-0129-46e0-a914-d5999dd27c2a@redhat.com>
+Date: Thu, 20 Feb 2025 12:54:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,8 +90,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/10] mm: Consolidate freeing of typed folios on final
- folio_put()
+Subject: Re: [PATCH v4 02/10] KVM: guest_memfd: Handle final folio_put() of
+ guest_memfd pages
 To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
 Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
@@ -114,7 +114,7 @@ Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
  rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
  jthoughton@google.com
 References: <20250218172500.807733-1-tabba@google.com>
- <20250218172500.807733-2-tabba@google.com>
+ <20250218172500.807733-3-tabba@google.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -162,28 +162,75 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250218172500.807733-2-tabba@google.com>
+In-Reply-To: <20250218172500.807733-3-tabba@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 18.02.25 18:24, Fuad Tabba wrote:
-> Some folio types, such as hugetlb, handle freeing their own
-> folios. Moreover, guest_memfd will require being notified once a
-> folio's reference count reaches 0 to facilitate shared to private
-> folio conversion, without the folio actually being freed at that
-> point.
+> Before transitioning a guest_memfd folio to unshared, thereby
+> disallowing access by the host and allowing the hypervisor to
+> transition its view of the guest page as private, we need to be
+> sure that the host doesn't have any references to the folio.
 > 
-> As a first step towards that, this patch consolidates freeing
-> folios that have a type. The first user is hugetlb folios. Later
-> in this patch series, guest_memfd will become the second user of
-> this.
+> This patch introduces a new type for guest_memfd folios, which
+> isn't activated in this series but is here as a placeholder and
+> to facilitate the code in the subsequent patch series. This will
+> be used in the future to register a callback that informs the
+> guest_memfd subsystem when the last reference is dropped,
+> therefore knowing that the host doesn't have any remaining
+> references.
 > 
-> Suggested-by: David Hildenbrand <david@redhat.com>
-> Acked-by: Vlastimil Babka <vbabka@suse.cz>
+> This patch also introduces the configuration option,
+> KVM_GMEM_SHARED_MEM, which toggles support for mapping
+> guest_memfd shared memory at the host.
+> 
 > Signed-off-by: Fuad Tabba <tabba@google.com>
+> Acked-by: Vlastimil Babka <vbabka@suse.cz>
 > ---
+>   include/linux/kvm_host.h   |  4 ++++
+>   include/linux/page-flags.h | 17 +++++++++++++++++
+>   mm/debug.c                 |  1 +
+>   mm/swap.c                  |  9 +++++++++
+>   virt/kvm/Kconfig           |  5 +++++
+>   virt/kvm/guest_memfd.c     |  7 +++++++
+>   6 files changed, 43 insertions(+)
+> 
+> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> index f34f4cfaa513..3ad0719bfc4f 100644
+> --- a/include/linux/kvm_host.h
+> +++ b/include/linux/kvm_host.h
+> @@ -2571,4 +2571,8 @@ long kvm_arch_vcpu_pre_fault_memory(struct kvm_vcpu *vcpu,
+>   				    struct kvm_pre_fault_memory *range);
+>   #endif
+>   
+> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> +void kvm_gmem_handle_folio_put(struct folio *folio);
+> +#endif
+> +
+>   #endif
+> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+> index 6dc2494bd002..734afda268ab 100644
+> --- a/include/linux/page-flags.h
+> +++ b/include/linux/page-flags.h
+> @@ -933,6 +933,17 @@ enum pagetype {
+>   	PGTY_slab	= 0xf5,
+>   	PGTY_zsmalloc	= 0xf6,
+>   	PGTY_unaccepted	= 0xf7,
+> +	/*
+> +	 * guestmem folios are used to back VM memory as managed by guest_memfd.
+> +	 * Once the last reference is put, instead of freeing these folios back
+> +	 * to the page allocator, they are returned to guest_memfd.
+> +	 *
+> +	 * For now, guestmem will only be set on these folios as long as they
+> +	 * cannot be mapped to user space ("private state"), with the plan of
+> +	 * always setting that type once typed folios can be mapped to user
+> +	 * space cleanly.
+> +	 */
 
-(again on current patch series)
+Same comment as to v3 regarding moving the comment.
+
+kvm_gmem_handle_folio_put() might be fixed with having it as an inline 
+function for the time being as discussed.
 
 Acked-by: David Hildenbrand <david@redhat.com>
 
