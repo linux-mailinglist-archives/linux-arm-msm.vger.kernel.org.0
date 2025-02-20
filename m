@@ -1,218 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-48628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64C75A3D52B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 10:47:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AB0FA3D564
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 10:52:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 19D1917DB0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 09:46:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1641D3BB6BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 09:48:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 587F31F426F;
-	Thu, 20 Feb 2025 09:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45C951F0E50;
+	Thu, 20 Feb 2025 09:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DnCi+daG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T3FUE++P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A161F0E45;
-	Thu, 20 Feb 2025 09:44:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DEE1F03D9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 09:47:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740044645; cv=none; b=knEqu0QdhERKhEwXykwj3leA8yF8wlinc+F4ryQplw+nVAwoRKssZEWd5K9oCHgcg39lInqDwkusKmwyASoYMxrHH5LvsvXjILtNrfqtOUh62iTb1E1sYANhOy1LzgfpUevNoMypmqVZL2Jvfo1zOw6/zAbiFKqrkx8a3vVjzMY=
+	t=1740044879; cv=none; b=CSUH7Zd4iiSt+kmmwRRvW3JckytdlETcwHhANTCa1ouaEGA6TaJUR94Gn+eyh/PJOPX0KrsYgpE8Lik7qXpYaG6tmu1xhphEacwOtuh2j7c9gqVDVUMMLUlcgDzbTWGRu9yvDPgZxVe2aPJQ8VMKk8aJqFkNdaf0l7IEG2PH3IY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740044645; c=relaxed/simple;
-	bh=tJP6NMYctKgC3ddpakg/9R47yMpuQiVH2lGK/g/X9/E=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uto97slsy8zGeQBuTGFnf5sWPN9BU58MVPqxSaM3kN/2AHfhulsnsPZiTb9s6zCXCKGWpmwh0M8oHUy/KHcevsAnQG2fzk139T7ohnYByNgZfKjC2SuClzrJJokyTbK9joLqjYCeMF6kniot1BcKwPJ48jEq1cI5By9YTwLLyuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DnCi+daG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51K6lOsd008449;
-	Thu, 20 Feb 2025 09:43:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DfqyjJkWm9NdxxgHyXjpin5tiSE7emGeMgefZAt6UQg=; b=DnCi+daGTCteP9lF
-	QHXzEU+JScH5Lqv0ne6A7pw73DzUxHxG21a8eLP4+245sRnp7VMKSZCgWVUSO7vz
-	XcZy0EgLn3RDblFeyqbdf459WqcZzsnnVwyaRVXxeCfjMzJ+jtwfP2mYv7sxBp+m
-	BIq6fQUQef8t8yxP1TrrBJfWDABicNr8eCtPBC6b5+g7/V15Xj4isRSqvO49MIhX
-	AESQMjHcp7hoR0UHcKp5wOnaMkHuPViYmo0pvZ85JVsCRXtgAMVvNOPvEgH8gsJx
-	TJn/E3DjpLkFsNY2dJVPK/nnPxZDuKipa7X3Di0PWGidvIEurQ5UtFYVV/+rTshh
-	G+4D0w==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy3dpyu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Feb 2025 09:43:53 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51K9hq5d028818
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Feb 2025 09:43:52 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 20 Feb 2025 01:43:45 -0800
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <p.zabel@pengutronix.de>, <quic_varada@quicinc.com>,
-        <quic_nsekar@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>
-CC: Praveenkumar I <quic_ipkumar@quicinc.com>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v11 7/7] arm64: dts: qcom: ipq5332-rdp441: Enable PCIe phys and controllers
-Date: Thu, 20 Feb 2025 15:12:51 +0530
-Message-ID: <20250220094251.230936-8-quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250220094251.230936-1-quic_varada@quicinc.com>
-References: <20250220094251.230936-1-quic_varada@quicinc.com>
+	s=arc-20240116; t=1740044879; c=relaxed/simple;
+	bh=IWsg9d6lbEashhnUPHSkRjmEXhpeKPSMS9vOhHCIlfY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mb4YFA6kx0CYshfc0qddU4qW+5SBSKniGuruVWzphkJqVDxwLBnOF2pdi911SKTOHiALLt9hYAD/lq2GgMX6LsRkik2FrLA+Ti2qHnHA0eODu1LE6JcIoT88dyyQGZawch31JJgCLrMI0OmDkBiVc9e7j3Ch5/0mn4yZJRE7dyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T3FUE++P; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4394a0c65fcso6521215e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 01:47:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740044875; x=1740649675; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3C+kognpjmHLZgIVXwXKpXpKvfpiYLWcBqUjAjWp7Tc=;
+        b=T3FUE++PN0U3+a3SEBSaJHD8QqhO+UgkgQYM8dZRMXZTGqpAYZyJgQT0Q1+6jGr07H
+         H/iUU00igxlY5xiwrjsc19xEVFpDgGInfAqueY4x3/u4hGxRg3JATpGpYuMbtOAnuilk
+         MXfFw17oXJIEnn2s+1bTZOg920iciE+LRztDeurB7uIsV1j3UQQFZ3O4+0jWkcyvf1ca
+         82mvTdeOWU62CIiq8nCmKCtRc/Hsg/Q+wuS7wV2OIJiyuee0tC0WsLCdj1zUQgiTbC4u
+         qHmGahno5mqJsr+fY/iMRbFD/Vl1pJ8HWZfCVueAYZw1spkCPghqbvnjm3snlyEnP747
+         b1kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740044875; x=1740649675;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3C+kognpjmHLZgIVXwXKpXpKvfpiYLWcBqUjAjWp7Tc=;
+        b=gbNuPKzI3qVe0OfoLcpfiqCFGXy8hcSWszDQkk3wLsjpnHQJoT/48k+i8rr9Kn+kte
+         kAiuKz0NEnEMKT0LwAWRfVlkfE1ZACIz72RjHb85wqjEmVG+J/gcqewRRLnDQ3/CIezc
+         1BZxo0Ol+7VfYAbY3new9nPvS2tpJajlLTw8VZGnVILuPiPGOb23xNfQLpMy4B0NrUHR
+         Ve24U6jdomhmRRrxPiQFgctAJ9FNzjbhst4brr0qM73P4PXCbmJclgV3xzX+pqszOM3r
+         vQRP/hhNJX8dPxMc5Nkg6FpH/lpPW86R4bqxB7ca4Azg18Dld5PZio1pGGD14FnSPu2z
+         uK4g==
+X-Forwarded-Encrypted: i=1; AJvYcCXyd3WCQ8nd4qcjlWqkKAGzI79kLYpg5T+WlqiB50x090qcdzrWCCqXjtnCySAseo966A3JwjfPS3iQgozX@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqxkqH+ZMh4VQikPEbwdr0zXtq2z0qYxJben7AY1u8rftKk+V5
+	4dW2ao2ipgre6bhpcZ8D0y+6sQwIrBsuy+gk3IlnP8CLs0JIZfb2hXmWhlvqcwBr0eQP5mmZq75
+	C
+X-Gm-Gg: ASbGnct947s6rC8UycmpLuKVv0AoENHdE+VdqJESSu+1OObIRcs7gxZi+6dXfK3DABb
+	jQHojYGyvd592adIc5P5Bz0PMpWYIWPjf5zxFrW+BuomH94tatpMcy2DjauKDyocX09I0CcnKqd
+	jKur8e+5JhA8UzPyUR/uFyl/oiaHgxw/lWiL2+B/cDOd7LNXVwLipUwtdfsjhk2p/kPrmH2NhKl
+	d6JKmKGDU/lvrSp2PzXnUSazewxNDU4OIVlx6hv+pzAyHkaar+DLgsaadmZBDZXnB/ap8U9PqNm
+	Rc1HrDeJp/GqvD94JzSeqKmaIRo=
+X-Google-Smtp-Source: AGHT+IEsCez3GPLSZunwwFDyUVqq7Wkm5lBgpW3JvRE36iu83J5JlqvN9UXFhpA6HMjqTat9XWSXuQ==
+X-Received: by 2002:adf:f08c:0:b0:38f:30c7:eae4 with SMTP id ffacd0b85a97d-38f33f56507mr18120522f8f.52.1740044875163;
+        Thu, 20 Feb 2025 01:47:55 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef30:b30c:3d94:4d4a:a6eb])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f561bee3esm5514525f8f.21.2025.02.20.01.47.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2025 01:47:54 -0800 (PST)
+Date: Thu, 20 Feb 2025 10:47:49 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Andi Shyti <andi.shyti@kernel.org>
+Cc: Wolfram Sang <wsa@kernel.org>, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH 3/3] i2c: qup: Vote for interconnect bandwidth to DRAM
+Message-ID: <Z7b6ReQdDtAUn5GP@linaro.org>
+References: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
+ <20231128-i2c-qup-dvfs-v1-3-59a0e3039111@kernkonzept.com>
+ <5dr5ps4vb57xj2mfelgsxgoyrr3gg4ggwqggqchff6pda3ffsn@thxpg4h6kgel>
+ <Z7W1EJ7uGsaTZMRh@linaro.org>
+ <sc54ro4pwg5j2lqelsryx7cdw6ipcdp4gfk3ce5sxsvk3s7wzp@wup2pgdzmxtl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: EsU4BINdEqT_cj4iCpijtLRzbperz4Yo
-X-Proofpoint-GUID: EsU4BINdEqT_cj4iCpijtLRzbperz4Yo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-20_04,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 mlxlogscore=999 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2502200071
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sc54ro4pwg5j2lqelsryx7cdw6ipcdp4gfk3ce5sxsvk3s7wzp@wup2pgdzmxtl>
 
-From: Praveenkumar I <quic_ipkumar@quicinc.com>
+On Wed, Feb 19, 2025 at 08:30:35PM +0100, Andi Shyti wrote:
+> On Wed, Feb 19, 2025 at 11:40:16AM +0100, Stephan Gerhold wrote:
+> > On Wed, Feb 19, 2025 at 12:02:06AM +0100, Andi Shyti wrote:
+> > > 
+> > > sorry for the very late reply here. Just one question.
+> > > 
+> > 
+> > Thanks for bringing the patch back up after such a long time. I've been
+> > meaning to resend it, but never found the time to do so... :-)
+> 
+> We have a long list of forgotten patches that belong to the far
+> past. I'm trying to revive them.
+> 
 
-Enable the PCIe controller and PHY nodes for RDP 441.
+Thanks, this is much appreciated!
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
-v5: Add 'Reviewed-by: Konrad Dybcio'
+> [...]
+> > > > @@ -1745,6 +1775,11 @@ static int qup_i2c_probe(struct platform_device *pdev)
+> > > >  			goto fail_dma;
+> > > >  		}
+> > > >  		qup->is_dma = true;
+> > > > +
+> > > > +		qup->icc_path = devm_of_icc_get(&pdev->dev, NULL);
+> > > > +		if (IS_ERR(qup->icc_path))
+> > > > +			return dev_err_probe(&pdev->dev, PTR_ERR(qup->icc_path),
+> > > > +					     "failed to get interconnect path\n");
+> > > 
+> > > Can we live without it if it fails?
+> > > 
+> > 
+> > of_icc_get() returns NULL if the interconnect API is disabled, or if
+> > "interconnects" is not defined in the device tree, so this is already
+> > handled. If "interconnects" is enabled and defined, I think we shouldn't
+> > ignore errors. Therefore, this should work as intended.
+> 
+> yes, because qup_i2c_vote_bw() checks inside for NULL values.
+> 
+> My idea was that:
+> 
+> 	if (IS_ERR(...)) {
+> 		dev_warn(...)
+> 		qup->icc_path = NULL;
+> 	}
+> 
+> and let things work. Anyway, if you want to keep it this way,
+> fine with me, I don't have a strong opinion, rather than a
+> preference to keep going.
 
-v4: Fix nodes sort order
-    Use property-n followed by property-names
+I would prefer to keep it the way it is. It's okay to omit the
+"interconnects" in the DT (either for old device trees, or because you
+don't define the "dmas" either). But if they are defined, we should not
+be ignoring errors. -EPROBE_DEFER definitely needs to be handled, but
+even for -EINVAL or similar it would be better to make it obvious in my
+opinion.
 
-v3: Reorder nodes alphabetically
-    Fix commit subject
----
- arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts | 76 +++++++++++++++++++++
- 1 file changed, 76 insertions(+)
+None of the existing users should be affected, since no one defines
+"interconnects" at the moment.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-index 846413817e9a..79ec77cfe552 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-@@ -32,6 +32,34 @@ &sdhc {
- 	status = "okay";
- };
- 
-+&pcie0 {
-+	pinctrl-0 = <&pcie0_default>;
-+	pinctrl-names = "default";
-+
-+	perst-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
-+&pcie0_phy {
-+	status = "okay";
-+};
-+
-+&pcie1 {
-+	pinctrl-0 = <&pcie1_default>;
-+	pinctrl-names = "default";
-+
-+	perst-gpios = <&tlmm 47 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	status = "okay";
-+};
-+
- &tlmm {
- 	i2c_1_pins: i2c-1-state {
- 		pins = "gpio29", "gpio30";
-@@ -40,6 +68,54 @@ i2c_1_pins: i2c-1-state {
- 		bias-pull-up;
- 	};
- 
-+	pcie0_default: pcie0-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio37";
-+			function = "pcie0_clk";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio38";
-+			function = "gpio";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+			output-low;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio39";
-+			function = "pcie0_wake";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	pcie1_default: pcie1-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio46";
-+			function = "pcie1_clk";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio47";
-+			function = "gpio";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+			output-low;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio48";
-+			function = "pcie1_wake";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+	};
-+
- 	sdc_default_state: sdc-default-state {
- 		clk-pins {
- 			pins = "gpio13";
--- 
-2.34.1
-
+Thanks,
+Stephan
 
