@@ -1,138 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-48612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14999A3D34F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 09:36:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AEE1EA3D39B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 09:49:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DC35817B29E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 08:36:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F39A175B15
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 08:49:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A89BF1E9B05;
-	Thu, 20 Feb 2025 08:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C9F51E9B1B;
+	Thu, 20 Feb 2025 08:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="c0zN2rqC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LQeZ4ApO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768575223;
-	Thu, 20 Feb 2025 08:35:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1CD1DF962
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 08:49:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740040559; cv=none; b=C0HXnDoqY7wrVjRYzleVUPXnFhWnyB2fYHV6fIxPOgGjvV/hhlqLqSUVWsduh0p2vF9jopdhSSZO//3uRfuUfriiHRR0My6edlz3mWoJg0OWS6nCYoOSUyNhcbLXW3VSaLFBhm7RRDRy6Okk3cyJQ2vrlda+umFzHPtnNEDDAUA=
+	t=1740041387; cv=none; b=rY5mkOUKmZr9/WwM6VDKulXSVZ0Js4rqgx8eBtD5M0h9gYZuNK11YHwNOyjSwODYSJ8pZFrWDNFuUtVG36XtkGdW7LdMdmF46TMM6TvBSDUCySV1cFH59GKKgUkvTGRqCsT5ZQKHb2iUqGcm8wrF6QRmyZxdVbYB7ijczvwTrzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740040559; c=relaxed/simple;
-	bh=mTBcKvTKQUEaT4bFGfjSxr4o2+FAH06wQDjUkf7uPsM=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XvM2sGsfpVX0O5yF46aBjWLOYQ3IPuzEC5VocWq0X5WJel1E81dZrbXJYV5fl2keSwGjwEYV7jWBPQ4HOvlV0fkOfCmdz+PjZCbU/k9A4rEUFoz7fSgeX51oSN6c878DDMrg7Y8iVCk6K4WB/9DvBHsK2SYNzq1nQtdetH7SJG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=c0zN2rqC; arc=none smtp.client-ip=217.70.183.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 9827F44466;
-	Thu, 20 Feb 2025 08:35:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1740040554;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wyzKqon1JbAJ6mkMIiukBpMAf6qqIZUI0/iiyhHUGis=;
-	b=c0zN2rqCeC+rI0FLMsinjEvErTzYmL96OZEJGEI4zeni0feD5W9esdgFjE7dVGu8/B0o6k
-	zv1/mw9SK3w19NgU48bsSqY7ribJi6SCo31NIwJeATEkZ0qM2WpW+zlkF+6HYij/QOQWlH
-	laYEq2Ux/PzKvEmmeG5YUZ29pTy0lPDNqWRC666P27XkjEnxMSw0xyOSA12j6LIyN1pHiY
-	R6TkRZGSxzhKiTNNJBWoINAoToOsDVQ0JpF5PN1GqFeIczpZheiihi9zY/iUzzneIW7+uU
-	CFgQHjBACUqX0XwEmY7MfbXdaXOsRLBOmMurm0HQ1YwvuiVT+2tW/ygNHhjusg==
-Date: Thu, 20 Feb 2025 09:35:50 +0100
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: Rob Herring <robh@kernel.org>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
- <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Romain Gantois
- <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>, Dimitri
- Fedrau <dimitri.fedrau@liebherr.com>, Sean Anderson <seanga2@gmail.com>
-Subject: Re: [PATCH net-next v4 15/15] dt-bindings: net: Introduce the
- phy-port description
-Message-ID: <20250220093550.55844ab9@device-126.home>
-In-Reply-To: <20250219223530.GA3083990-robh@kernel.org>
-References: <20250213101606.1154014-1-maxime.chevallier@bootlin.com>
-	<20250213101606.1154014-16-maxime.chevallier@bootlin.com>
-	<20250219223530.GA3083990-robh@kernel.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1740041387; c=relaxed/simple;
+	bh=9GRQle34YcjfgiWZwko3yDvtJTlH367rXx3Cbqx4DF8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UOJvz5N2s453MR8CKeicTqDR40vcwpQUzybp6j45kaZNRkfSqM8FqEJ0cchqKrbmtt0KMvC01sYJ+7tdvHAJve31NuRorMqqcqEIgSjIEX6tCOXbxzl6zGwlLx+xM9gO4MiYG8U8ZhmSm7asb/7OLq+1qu4XRlVdKR2LjdAmT5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LQeZ4ApO; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-38c62ef85daso51819f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 00:49:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740041384; x=1740646184; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LJjAYRgPzkjQ/gM/tfY/GlddEkfV8+B5j+nIT1URPMg=;
+        b=LQeZ4ApOCQ3619Zpt4UAlO5BsMvylwfiFvzUv3u07AsALu9iH7RjjYGgtCAGRbBENl
+         0qtlqC+Fi7C6TnwtJA8dct4+rUmE/4Y/ZXsRoJjGeXlvuIHAZ4xSC/eXipuh4DK+Z6qJ
+         SbloEXesOznX7JijPtAtVN7H+gjamE2sLNPCRDFOb6LsaglwsB/5lwZiYic/fa4p/y1d
+         NsdQKTeEwxM5UAFlVL6y1YqvOT8Htf6CfX3JerUE1ib++EZaaaGhv3sJJw5sSpOwxMd+
+         5LthOLjj1rnwAogLeJuRl0lmGJSAsVB/h/tGrlvK+tTDPtBYLNoLgBbCTIZki4kqn6jE
+         sEIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740041384; x=1740646184;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LJjAYRgPzkjQ/gM/tfY/GlddEkfV8+B5j+nIT1URPMg=;
+        b=eLPXDB2ziowhJWMQQGO7OCcV0XmDn28Uv89qW60AsqEuf7wfnIt2Z868UsWUBrmXs2
+         X2rKzO27aEDoqA7mVHSD3sMDzGakdCRPB/g27rr7kmnoFWhLHStJ1tuO69yOkm6K7ZCK
+         87SEQM/QqOonQmF7wDdQVcK/Tmu2uGBJQyLPoeCHkCNXI6K0WR+WihM+wMzgJSXT/wiQ
+         mtpMe3Vi+d+zK602uFwjT6hmc7zUjgqd1Fz2wgozXCnsZrl3J6ZPrK+GAW1CJzIVeTTq
+         nUszR+r0xSRipSGOPI+DPC6tQtk6R/BVdH+WZHF8xVfu6kvUaGvIK2pSUwKFylZ/erDs
+         Kv/g==
+X-Gm-Message-State: AOJu0Yzh6YZrIHoHHzfGHgHlLUjLfU86uKdmIdHGNoCCdIjNF5A7H9Cx
+	T4zODKEYhzNqWhM7ZJEOJOxdXP9AopfBeq5B4R9tnP3zJCClMTv19qH/9708Jdw=
+X-Gm-Gg: ASbGnctxL1glvznTjL4LMAyRKFkgYWvAka5+G0E1hu7macXuOykhr91kseRRaCrS6jI
+	ORZ7p8OCS7RkGZQPxxpPtU8kD4PO0/fcTRg4rNzeD0gWjwwEEGdEqgyceDHCxc2jRUfoxKiQWTA
+	mQfr8Bo7rZ/4jbH2xxxPtVFa4J0TWIsrjlJlWcDCldSj+W817BIv1F0230dL2A2em3jG/8OtoQY
+	6UdofLCqTx1+PgUApYSBVSdXoRwxiyCEkDbHh/fo2JHuWV0HAhb29O7ORj5YW54TSToWtwSicqa
+	2TeWmYiSEHVYI9fRxUWqxZgAkv7JcNZOJldNrqWLuhJW4LtkZV479pqnJMH8Y+q2
+X-Google-Smtp-Source: AGHT+IGlrjw3yzFug/Hb4OGULJMWTF1gWp98xewA6c7xrzvNNBzktDK7efl8Wrgxer7Jqlz1DFDcAQ==
+X-Received: by 2002:a05:600c:4f02:b0:439:930a:589b with SMTP id 5b1f17b1804b1-439930a5a88mr33223935e9.3.1740041383895;
+        Thu, 20 Feb 2025 00:49:43 -0800 (PST)
+Received: from [127.0.1.1] (46-253-189-43.dynamic.monzoon.net. [46.253.189.43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4395a1b8397sm234417565e9.36.2025.02.20.00.49.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2025 00:49:42 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 0/4] arm64: dts: qcom: sm8750: Initial audio support
+ (not yet complete)
+Date: Thu, 20 Feb 2025 09:49:39 +0100
+Message-Id: <20250220-sm8750-audio-v2-0-fbe243c4afc3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiieejtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthejredtredtvdenucfhrhhomhepofgrgihimhgvucevhhgvvhgrlhhlihgvrhcuoehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeegveeltddvveeuhefhvefhlefhkeevfedtgfeiudefffeiledttdfgfeeuhfeukeenucfkphepvdgrtddumegtsgduleemkegugegtmeelfhdttdemsggtvddumeekkeelleemheegtdgtmegvheelvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudelmeekugegtgemlehftddtmegstgdvudemkeekleelmeehgedttgemvgehlegvpdhhvghlohepuggvvhhitggvqdduvdeirdhhohhmvgdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefuddprhgtphhtthhopehrohgshheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrg
- hdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
-X-GND-Sasl: maxime.chevallier@bootlin.com
+X-B4-Tracking: v=1; b=H4sIAKPstmcC/1XMQQ7CIBCF4as0sxbD0BbUlfcwXWA7bSdRaECJp
+ uHuYl25/F/yvhUiBaYIp2qFQIkje1dC7SroZ+smEjyUBiVVg1IpEe8H00phnwN7MdRkxqs22qC
+ GclkCjfzauEtXeub48OG96Qm/6w9Cif9QQiGFqaWlHo1u2uP5xs4Gv/dhgi7n/AGVowxNqQAAA
+ A==
+X-Change-ID: 20241022-sm8750-audio-d3e7fb676716
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Melody Olvera <quic_molvera@quicinc.com>, 
+ Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
 
-Hi Rob,
+Hi,
 
-On Wed, 19 Feb 2025 16:35:30 -0600
-Rob Herring <robh@kernel.org> wrote:
+Changes in v2:
+- Use 0x0 to match rest of sm8750
+- Re-order some nodes to keep preferred order by unit address
+- Add Rb tags
+- Link to v1: https://lore.kernel.org/r/20241101-sm8750-audio-v1-0-730aec176459@linaro.org
 
-> On Thu, Feb 13, 2025 at 11:16:03AM +0100, Maxime Chevallier wrote:
-> > The ability to describe the physical ports of Ethernet devices is useful
-> > to describe multi-port devices, as well as to remove any ambiguity with
-> > regard to the nature of the port.
-> > 
-> > Moreover, describing ports allows for a better description of features
-> > that are tied to connectors, such as PoE through the PSE-PD devices.
-> > 
-> > Introduce a binding to allow describing the ports, for now with 2
-> > attributes :
-> > 
-> >  - The number of lanes, which is a quite generic property that allows
-> >    differentating between multiple similar technologies such as BaseT1
-> >    and "regular" BaseT (which usually means BaseT4).
-> > 
-> >  - The media that can be used on that port, such as BaseT for Twisted
-> >    Copper, BaseC for coax copper, BaseS/L for Fiber, BaseK for backplane
-> >    ethernet, etc. This allows defining the nature of the port, and
-> >    therefore avoids the need for vendor-specific properties such as
-> >    "micrel,fiber-mode" or "ti,fiber-mode".
-> > 
-> > The port description lives in its own file, as it is intended in the
-> > future to allow describing the ports for phy-less devices.
-> > 
-> > Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-> > ---
-> > V4: no changes
-> > 
-> >  .../devicetree/bindings/net/ethernet-phy.yaml | 18 +++++++
-> >  .../bindings/net/ethernet-port.yaml           | 47 +++++++++++++++++++
-> >  MAINTAINERS                                   |  1 +
-> >  3 files changed, 66 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/net/ethernet-port.yaml  
-> 
-> Seems my comments on v2 were ignored. Those issues remain.
+Dependencies
+============
+Depends on: https://lore.kernel.org/r/20241112004936.2810509-4-quic_molvera@quicinc.com
 
-My bad, I apparently completely missed it :/ Let me get back to that :)
+Bindings for these
+==================
+All DTS added here have corresponding bindings, on the list:
+https://lore.kernel.org/all/20241022064238.22941-1-krzysztof.kozlowski@linaro.org/
+https://lore.kernel.org/all/20241101170309.382782-1-krzysztof.kozlowski@linaro.org/
 
-Thanks,
+Other bindings were already applied.
 
-Maxime
+Description
+===========
+Add necessary SoC components for sound on SM8750: ADSP and relates
+blocks, LPASS pin controller and macro codecs.
+
+This is an early release, as I don't have sound yet fully ready, but
+speakers and DMICs work with these patches on my WIP branch.
+
+Best regards,
+Krzysztof
+
+---
+Krzysztof Kozlowski (4):
+      arm64: dts: qcom: sm8750: Add IPCC, SMP2P, AOSS and ADSP
+      arm64: dts: qcom: sm8750: Add LPASS macro codecs and pinctrl
+      arm64: dts: qcom: sm8750-mtp: Enable ADSP
+      arm64: dts: qcom: sm8750-qrd: Enable ADSP
+
+ arch/arm64/boot/dts/qcom/sm8750-mtp.dts |   7 +
+ arch/arm64/boot/dts/qcom/sm8750-qrd.dts |   7 +
+ arch/arm64/boot/dts/qcom/sm8750.dtsi    | 342 ++++++++++++++++++++++++++++++++
+ 3 files changed, 356 insertions(+)
+---
+base-commit: 9be34b68f9b3a5990fddf4ee5c1437be454d7fcb
+change-id: 20241022-sm8750-audio-d3e7fb676716
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
