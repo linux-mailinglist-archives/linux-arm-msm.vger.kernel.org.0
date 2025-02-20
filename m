@@ -1,156 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-48720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F540A3DF20
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 16:47:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DDA63A3DF2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 16:47:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F065D420A1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:45:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 321064200BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:46:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 877C620C024;
-	Thu, 20 Feb 2025 15:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 470F62010E6;
+	Thu, 20 Feb 2025 15:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QKnQhDYW"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="36DLe0h3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F27D2040B5
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 15:44:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551BD14A82
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 15:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740066270; cv=none; b=IWGXlWEAHsy8YXSHVIOL/pSTH1H+T0frPK/SYh4B7ybcf9lKzV1UUdbVAhD2zXkshoihFk83zhztXES+99iP2acrhyQBqI/vVr4WDuDoTSQyTNhZjK7UdLAbV1ljRZ9vwcCthT9R0Nes40s8Vdqsv0Ad3PGoSOP1IDk88tk2ZCU=
+	t=1740066352; cv=none; b=oU4AIbtAyd9E4wxMRXgukYjyHylwkJ1Aa8nSS3ZJehqHUqb15YDHbz3afJs+WZFfJSQBjYOUcDHWEZGPEwMA3tY9p4wIGJhp7zsXQytFf7VL0yAc1qd0rJ2E8BPBV82sKZX0DUBeaQtrOqqr49zaxVJ1tibTRHKBpV2hr8pmG2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740066270; c=relaxed/simple;
-	bh=QaT8J47seIEi5/AqERBFPC5Z6bI3D140tXarK9vkgJ4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=swmqi9MayrfSJiWGeEeubs7Vag+Ek87/IJa1mseAN0PUaCIKutI4070I38aNkMgaZ64XBksvLl8tMOAmt/bRWZXeTEp5VDhioAAbExC3TFAen8a19a4pX3vOQLGY+jBoAytiE3jYDArVjSt4prjZFYN+EJzLeBhTe8bOrH3RHKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QKnQhDYW; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5ded7cb613eso177446a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 07:44:28 -0800 (PST)
+	s=arc-20240116; t=1740066352; c=relaxed/simple;
+	bh=8nqfJX3w087BB3lO1ulZy2OeY/jcdix2rHxd1pMHagA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hv+dgrOOOz3q94RKSCIzRxWOS3C51dctLCYvT8peyxhepsrE45Qvv93muykuGHENpubZchvajN5/ireaSsxn1l7jWmvqFBMAmlON+5+hy97KOolEeTiEczNXiIuDZpCGhNbR8QrO6RRG/SZeYchSCEURyjTeh4+5uJJO4csdT1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=36DLe0h3; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-471fa3b19bcso302361cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 07:45:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740066267; x=1740671067; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5GY/lZUViwVvA9Lc814pusY/ZYVJenJoYIgN/xOpSxU=;
-        b=QKnQhDYWXi2sAe3KnMtIzwRq5760NsDiY9O26Hk1wx6uT/ZmgM0wMKdbL2AFa2zI7T
-         hVuiCBp/PHD3tYOzwmm2bDfm3T7engUNuON5gHShRF1u3fFsujYkeqNf6ciQ9oCW5HUs
-         htX7WaSYLfeh526f1PK9jNDZ5DvvQF8iz/sMl3qVWRtxqT3NFejDPAdoaWt89kEM8bDZ
-         bwTueBdqXQDs0mCeibwFFm4d79LajNLIeP6Env42uAmiNtZ7gSW5MRbHs5wK4X6AHBrm
-         HDwgqA/WkpLZiftcTzYU3Y9yPWEIGbKj7w//Cs6P4JfiopEnxqtS/Z2gn/TH0nL61TUb
-         BfgA==
+        d=google.com; s=20230601; t=1740066349; x=1740671149; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PRunbvLT85DBg6khdWG9PaOkKVGHgD5M/ABMScKZk1Q=;
+        b=36DLe0h3tF5IFvTQ/VNEptPqOupC+laILvBEkC9IjgoJQ6F5klEXO66PEnYHtJAVjV
+         g6iJj5T8ur4jeIAkRoJWEqtVJMeKU/u68kjOh72kMgTx56qT90vUqKiTFUOgks1vD/WS
+         HWEFC4WSWQsBnlhriEB02O3NBrruRJpzfZMDvBgw5b8CVZBNr/VNTQ8nGaAj8kmFhl2b
+         wf4kBpjn6a3gtb1HN8p64+btmvLEz82JNVYe5RJFi9ZMY4410U5x2CuLXf0lGvaAqAhB
+         lcyJgFEHa+3BceqNa6eBYXnkhmuZtXCvdY3/3bkdm2UiEivUw4yBXeXOvzTOleYxmZYL
+         OPdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740066267; x=1740671067;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5GY/lZUViwVvA9Lc814pusY/ZYVJenJoYIgN/xOpSxU=;
-        b=NObEFfZ4mwFHc3rQSbP7Y6wclsa606LVWKGr2l6YF7JTofdxH4nVaxErt6WH3N90Zv
-         +A8CmovDFLSWMmTeSNUviGXBqAgcCa1fXnSvBCWTpKyLcP73s4OtRELhxVsag/3dfRru
-         0iWyWtl7kqKs5BdNNoesZ4Iwpm+juOw+xEkfwHOk0G95+2PfWitrnGdOtZ7HInuSvMwF
-         KXvQk6ZDd8WGC0aWPiYf9ZfFcpI6HbcfRuMI6axnb2MbrWdqUOnZwGbp7nSBRM2XifoR
-         EqRYn4PCEA2UUXrURhfL8/MZLqD84w7jJwu1KrdzPKYEWAz50/O5b7XegAdKFUnz/2F6
-         8x3g==
-X-Gm-Message-State: AOJu0YzZrDVr1KHvGmut5eix/Q5gJt93ikt+rzSAC1gPw4WGAswGdNFY
-	KoJT09s6ovUqVFS+EP4gi8J+nDZGD9+yJX1UDc+p+fDXXydYtRibiJmSB6c0DgE=
-X-Gm-Gg: ASbGncs4TkheblqTlaUsBCBaXtky5OFLq5pVcyZRSRxQ2zOZJgPVE9s0TTcD39rSFLm
-	8+6dKk8OScgkcQPDesTZlOTIqBfci2rOqDjvf+XVd3LJnlBXLBuuh8bO6xbllKTMnu0TFCSZ2KR
-	FGt3tfw/9UsVV4rGenWsTPMAMoUxCNAwx/OuqRVOW0uIt5iRQdev/7/eHNxFxFZ6vBjEDVKDYUl
-	uXZ1QWhZMB+1CubHmW/l9nhdW0/VtTu8pneEGHs4+2VrIIJ6hoskIYz87r4Y/v+gzDF3Lip7Cyw
-	UV0G5huG1z4rg70BRJrDZ1fOF/20B37DC+H4OKXgI+Ox+0GqqodrYXH4wFxpr4LIyA==
-X-Google-Smtp-Source: AGHT+IHLTciDFqhxiwXeG0PLjQsh/Odlyfht1PecSHhE2+xPvT+0dQpZWOBYf/R0I1dg5b0HlvFtsA==
-X-Received: by 2002:a05:6402:348d:b0:5e0:8275:e9dc with SMTP id 4fb4d7f45d1cf-5e08275ee92mr3309701a12.1.1740066266928;
-        Thu, 20 Feb 2025 07:44:26 -0800 (PST)
-Received: from [127.0.1.1] (78-11-220-99.static.ip.netia.com.pl. [78.11.220.99])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece2881b3sm12418151a12.77.2025.02.20.07.44.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2025 07:44:26 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 20 Feb 2025 16:44:14 +0100
-Subject: [PATCH v2 4/4] arm64: dts: qcom: sm8750-qrd: Enable CDSP and
- mention MPSS
+        d=1e100.net; s=20230601; t=1740066349; x=1740671149;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PRunbvLT85DBg6khdWG9PaOkKVGHgD5M/ABMScKZk1Q=;
+        b=Jy1FE6+kbdykLA5k7jcOQoU09uNhLmklPD9ToSmAVnvfK9kWJm2LEMR1nNpDKTcWX+
+         w1wRjijE85RB47yvdtBZ4Rr9bIrE/H2j4bf/+pSLefzL8TtG0hzw82m3OkDqAA1gegIV
+         R/6TE0a4dKG87qP6jl9pahaLV8CGXX3hoFY0uHjADxH25dtZ2s+XAa9TSvaOILj+zXml
+         li/pAVD4Qgd6j9vXyUPdIcURKIUDX9kpOn5/34Ka0kyfzx2uu7lNdreHZUBmA+f2CGgP
+         xo6fsNaPTJxZt/GT+e4nf9ymhCsuRScR6MjxWkqfM6I76UtB5UpI8NYhYBTybPOik90V
+         aNew==
+X-Forwarded-Encrypted: i=1; AJvYcCWqRjvJf98+kI6K65a8Iu30fn1/tvjtIoCa7IM3GHmTLlzHdFVUUPJsoCGn+5hYGUyx1kIGxplOBMZM9u7L@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyv4zh15Ye6XkxNUdMe/O5PXd1Uu0Cw+GYOg6jLuRpu0EOFcSi8
+	W/V/aJ44xyhlr6e17GepPEn6sM3gcRRxinDjh8HESqJ2B3+Y1u+WprVBlNEqbfJvPXG4/kl+c8l
+	lJlLJD7PJMyEWtd11jE0BZRymEk2yo8LYFdK3jfZFZXzrTB6Eltx4Wos=
+X-Gm-Gg: ASbGncvadOcxJw9YCVDIGeo+yv6qVJm40ZzmeCuPEDj2uF15yal0mUv8vRaoOziTIRb
+	nlMbhy161nAMInXP2oN5Y4c+mT+Pr9A3X8320v8bgysruvKNpz5t0DNwaz7qdNuzz7RnnKOg=
+X-Google-Smtp-Source: AGHT+IGPGeDCdhjKTGDGs8WXhPPJsKZbeZ4WlRZitPNggTb1vz2vjOkgr/eV7Mlg/mIFGnlXtY7abY8uAD3xhfxUMns=
+X-Received: by 2002:ac8:5893:0:b0:465:c590:ed18 with SMTP id
+ d75a77b69052e-47217110c99mr3749061cf.9.1740066348801; Thu, 20 Feb 2025
+ 07:45:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250220-b4-sm8750-cdsp-v2-4-a70dd2d04419@linaro.org>
-References: <20250220-b4-sm8750-cdsp-v2-0-a70dd2d04419@linaro.org>
-In-Reply-To: <20250220-b4-sm8750-cdsp-v2-0-a70dd2d04419@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1040;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=QaT8J47seIEi5/AqERBFPC5Z6bI3D140tXarK9vkgJ4=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnt03TRHmqfeq47U+kN6c7Hq+JWe0KuzC6smSPf
- FdLWNCLnYqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ7dN0wAKCRDBN2bmhouD
- 13NlD/9bAvhaQTy+BSphMYPGYWakfVJyYjbg/Hw8BOfOe8OT3CsAWQAVC84oPlkygrSY4PvvPtT
- 9mLxmiEcAIp/4jYKMIbyY33vNCDGa6yTXDbsh7xytKjjLCj32fRpQlISuFuUKZg4w/myzfk6VWb
- ALXDIEUJ0yYSXlQELjUbg4v5IHyBu5zd7gGHuE1gYssyQdBz+bbva/3BoyPemKSDMQH3IKfKCB+
- fAGh6PrRBcputu10lo6/2K7Hz0/32y2LxuUyf/Qrj/AU6lGOBiucW8QxpbXEgDmBr2bEX/01dJD
- mdokMVpecAMxYxJOh+N0XGFQiEmfzzMXwdMMJ1RDZUChy+wgHDd8AjljO8dS462u6vp+NR1kXVO
- vu+Zftvun/v/6XCBVlSDrWQsLI+AtPQGaUUMAmfLCpLWZnNYO9S/SdBOpnpbJCdK8liOL5kjatr
- Cn1M9d0Zw+5/2HNbQQLhQ2R++mWQAL5hsfkFYNHjOle3AIc9JtyXkrOu7AADzZsGyFxyFEOCkUT
- SKeA/jKD4UnMbD5SIy8+I/F2HO9jmk7q9yAuISW5iEtLilJm49OM0JZ9wmJU0N/jO7xYplDaZV4
- SUEc2efv2o2dm76nRPuDqsBC9TMMlLB/N0l7/PPf2H8vtmGaJYEwkP+I0O2bldM18C7YkByCEo9
- aTlOk21NF5JqTjg==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+References: <20250218172500.807733-1-tabba@google.com> <20250218172500.807733-4-tabba@google.com>
+ <2cdc5414-a280-4c47-86d5-4261a12deab6@redhat.com> <CA+EHjTxh9GB93BHr7ymJ5j8c27Lka2cBjEgfNRXY9pYL25utfg@mail.gmail.com>
+In-Reply-To: <CA+EHjTxh9GB93BHr7ymJ5j8c27Lka2cBjEgfNRXY9pYL25utfg@mail.gmail.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 20 Feb 2025 15:45:11 +0000
+X-Gm-Features: AWEUYZkaReiezGeqdLtbjD5EPo_UXo1HYmVg_Diqu1lPPjK9JJzKuwaLxA5T9bo
+Message-ID: <CA+EHjTyyXEMuQrg8yFo=+SVuM+ZfvZJksS9Z4DAOr2KsuO5M-Q@mail.gmail.com>
+Subject: Re: [PATCH v4 03/10] KVM: guest_memfd: Allow host to map
+ guest_memfd() pages
+To: David Hildenbrand <david@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-Enable the CDSP and MPSS (modem) on QRD8750 board.
+Hi David,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
+On Thu, 20 Feb 2025 at 12:04, Fuad Tabba <tabba@google.com> wrote:
+>
+> On Thu, 20 Feb 2025 at 11:58, David Hildenbrand <david@redhat.com> wrote:
+> >
+> > On 18.02.25 18:24, Fuad Tabba wrote:
+> > > Add support for mmap() and fault() for guest_memfd backed memory
+> > > in the host for VMs that support in-place conversion between
+> > > shared and private. To that end, this patch adds the ability to
+> > > check whether the VM type supports in-place conversion, and only
+> > > allows mapping its memory if that's the case.
+> > >
+> > > This behavior is also gated by the configuration option
+> > > KVM_GMEM_SHARED_MEM.
+> > >
+> > > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > > ---
+> > >   include/linux/kvm_host.h |  11 +++++
+> > >   virt/kvm/guest_memfd.c   | 103 +++++++++++++++++++++++++++++++++++++++
+> > >   2 files changed, 114 insertions(+)
+> > >
+> > > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> > > index 3ad0719bfc4f..f9e8b10a4b09 100644
+> > > --- a/include/linux/kvm_host.h
+> > > +++ b/include/linux/kvm_host.h
+> > > @@ -728,6 +728,17 @@ static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
+> > >   }
+> > >   #endif
+> > >
+> > > +/*
+> > > + * Arch code must define kvm_arch_gmem_supports_shared_mem if support for
+> > > + * private memory is enabled and it supports in-place shared/private conversion.
+> > > + */
+> > > +#if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_KVM_PRIVATE_MEM)
+> > > +static inline bool kvm_arch_gmem_supports_shared_mem(struct kvm *kvm)
+> > > +{
+> > > +     return false;
+> > > +}
+> > > +#endif
+> > > +
+> > >   #ifndef kvm_arch_has_readonly_mem
+> > >   static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
+> > >   {
+> > > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > > index c6f6792bec2a..30b47ff0e6d2 100644
+> > > --- a/virt/kvm/guest_memfd.c
+> > > +++ b/virt/kvm/guest_memfd.c
+> > > @@ -317,9 +317,112 @@ void kvm_gmem_handle_folio_put(struct folio *folio)
+> > >   {
+> > >       WARN_ONCE(1, "A placeholder that shouldn't trigger. Work in progress.");
+> > >   }
+> > > +
+> > > +static bool kvm_gmem_offset_is_shared(struct file *file, pgoff_t index)
+> > > +{
+> > > +     struct kvm_gmem *gmem = file->private_data;
+> > > +
+> > > +     /* For now, VMs that support shared memory share all their memory. */
+> > > +     return kvm_arch_gmem_supports_shared_mem(gmem->kvm);
+> > > +}
+> > > +
+> > > +static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
+> > > +{
+> > > +     struct inode *inode = file_inode(vmf->vma->vm_file);
+> > > +     struct folio *folio;
+> > > +     vm_fault_t ret = VM_FAULT_LOCKED;
+> > > +
+> > > +     filemap_invalidate_lock_shared(inode->i_mapping);
+> > > +
+> > > +     folio = kvm_gmem_get_folio(inode, vmf->pgoff);
+> > > +     if (IS_ERR(folio)) {
+> > > +             switch (PTR_ERR(folio)) {
+> > > +             case -EAGAIN:
+> > > +                     ret = VM_FAULT_RETRY;
+> > > +                     break;
+> > > +             case -ENOMEM:
+> > > +                     ret = VM_FAULT_OOM;
+> > > +                     break;
+> > > +             default:
+> > > +                     ret = VM_FAULT_SIGBUS;
+> > > +                     break;
+> > > +             }
+> > > +             goto out_filemap;
+> > > +     }
+> > > +
+> > > +     if (folio_test_hwpoison(folio)) {
+> > > +             ret = VM_FAULT_HWPOISON;
+> > > +             goto out_folio;
+> > > +     }
+> > > +
+> > > +     /* Must be called with folio lock held, i.e., after kvm_gmem_get_folio() */
+> > > +     if (!kvm_gmem_offset_is_shared(vmf->vma->vm_file, vmf->pgoff)) {
+> > > +             ret = VM_FAULT_SIGBUS;
+> > > +             goto out_folio;
+> > > +     }
+> > > +
+> > > +     /*
+> > > +      * Only private folios are marked as "guestmem" so far, and we never
+> > > +      * expect private folios at this point.
+> > > +      */
+> > > +     if (WARN_ON_ONCE(folio_test_guestmem(folio)))  {
+> > > +             ret = VM_FAULT_SIGBUS;
+> > > +             goto out_folio;
+> > > +     }
+> > > +
+> > > +     /* No support for huge pages. */
+> > > +     if (WARN_ON_ONCE(folio_test_large(folio))) {
+> > > +             ret = VM_FAULT_SIGBUS;
+> > > +             goto out_folio;
+> > > +     }
+> > > +
+> > > +     if (!folio_test_uptodate(folio)) {
+> > > +             clear_highpage(folio_page(folio, 0));
+> > > +             kvm_gmem_mark_prepared(folio);
+> > > +     }
+> >
+> > kvm_gmem_get_pfn()->__kvm_gmem_get_pfn() seems to call
+> > kvm_gmem_prepare_folio() instead.
+> >
+> > Could we do the same here?
+>
+> Will do.
 
-Not tested on QRD hardware.
----
- arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+I realized it's not that straightforward. __kvm_gmem_prepare_folio()
+requires the kvm_memory_slot, which is used to calculate the gfn. At
+that point we have neither, and it's not just an issue of access, but
+there might not be a slot associated with that yet.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-index 341774bb042ff88af8acf49c2f0ef14f9994dfc9..840a6d8f8a24670a01376f8fce511da222159016 100644
---- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-@@ -789,6 +789,20 @@ &remoteproc_adsp {
- 	status = "okay";
- };
- 
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/sm8750/cdsp.mbn",
-+			"qcom/sm8750/cdsp_dtb.mbn";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_mpss {
-+	firmware-name = "qcom/sm8750/modem.mbn",
-+			"qcom/sm8750/modem_dtb.mbn";
-+
-+	status = "okay";
-+};
-+
- &tlmm {
- 	/* reserved for secure world */
- 	gpio-reserved-ranges = <36 4>, <74 1>;
-
--- 
-2.43.0
-
+Cheers,
+/fuad
+>
+> Thanks,
+> /fuad
+>
+> > --
+> > Cheers,
+> >
+> > David / dhildenb
+> >
 
