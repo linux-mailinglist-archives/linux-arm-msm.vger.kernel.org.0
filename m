@@ -1,79 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-48766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14825A3E792
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 23:34:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 38E99A3E7CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 23:53:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 81597189F80E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 22:35:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 713C319C4BAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 22:53:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5FD126460D;
-	Thu, 20 Feb 2025 22:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BD002641F8;
+	Thu, 20 Feb 2025 22:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kPHlDZmU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VxQgHgsb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F931EE02A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 22:34:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9F41C5D67;
+	Thu, 20 Feb 2025 22:53:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740090888; cv=none; b=uvtftmr9YMBGwYhzdea29RCW42qIjB8UjBoMb6i4CJOBsREKeEwYXsIltFlrJ/Hrvn0CliAmhO8MBXRiMXi5G4ckDfj86X/kePXGoOlepFm6upSab/2O14YDUhk0LlPmJf9N5f73R1HF+eJCv9ooszAelFz3P+VRVRhEPaLKTNQ=
+	t=1740091989; cv=none; b=rxHqRHLoP+sn5y/IjVuszoolOYIjnMFITHdQeZ6FWxVKmwTKdjaA9VhMZfHuTzb5hbG+C3NTtQoFuv1lsSeclsxL7ZiQQkYrUbm90597DbJrGN4TyufBkoUY6uJ4ClGkGIVbs4+EZWuGo5PFRPzn+c+OWWnGNHQS3i1Y/aQhnkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740090888; c=relaxed/simple;
-	bh=mR0mUeFeZCaF51isva3tjv2Z2QlQmyqjWpLJF1WjFwY=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=IhJHqkC92Pgrr/NY5JjSqJ1tEHiNFr/HqAZocxmo4yRjkBAK91rSjxbrixLwj1mf6Pz5oAXYGooA2dBbclwbl1Mv47qFGSptwQdWwW5ZgJ7Jx4sV1QNpwsx9TCbYseofFPjNMk7UJfrYfFXM9y6p0nCwvwmYpDhdxAwyCGFLkYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kPHlDZmU; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-439950a45daso9468265e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 14:34:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740090885; x=1740695685; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=phlci97ebZekU4b5KeuZl5+WtfcQbkZeGNBOFT410xE=;
-        b=kPHlDZmUuUs7QGBqV6KjCYFqfNpz2qJ77uoakCxwFgeFB5X81nLcy7/LmS+m9EB80U
-         pbVjyztOZPp4wILnTpTMZMqnHRPSoMyV6+R8shCqu7+W2J1u/Q3TjS95J1no6IS+Rk6e
-         9cdr10K7z+V/CW1O+YeSuogcXuYjEtgTaH7gbmWH11VS/IawaPck2aNfPol8LEbGhIiW
-         Kcu77cwbADo60cOZ+mLDVLimaV6M3Yri41eeq3Rkn7AA+JIdi5lhDXECJExNtfHyXqPn
-         DduxwBZyG23oiLr4FjclUgriyomgaGo8j3k9SOoTZTAEGe9SgDyEL0+6pJI3J7qnAXyd
-         K7Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740090885; x=1740695685;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=phlci97ebZekU4b5KeuZl5+WtfcQbkZeGNBOFT410xE=;
-        b=KBVwmhfEq20EEuWufZeFnFXIOmGBD3NbjoveRMPyRHKyBn2aGM66JQOTEznoGeync7
-         39bEpHPsjTVpY8RXzjJHIN78lO2PIC74grsqEeu6blWH64MfwjVhdaDP0bsSOcvsWRQR
-         uYKTSFaV00nuqrGR3sB8wbPgWoJ8t32wcFvx592jUZiNszIy2m6ZsdJbClOtv9J8ywIy
-         IyUvCYvL48C49oM+qVGXCd4S06rnJZgbK+nEtVsSSw10F5Pj8qYAS7emL6scGmGk/1qz
-         PsjHERynrQD2+wyy9B5bZVqJtgwqdwlF9XP3Rwo904kqBXIcAWzd/Z32Lka/pWDjoGoW
-         b9fg==
-X-Forwarded-Encrypted: i=1; AJvYcCU3hqqN/owQcC4V5MXf70t1WioIZXIYvgwkUZvpQFyladx62HA7b1AgaHQ5fkhHmWf7ZZ3c4eZCaIam+U7v@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzcv6H5E1hY9Tv499CeJF0okMoCA5QQwl2Ghxlo5HkaOj2bHbaL
-	vnQNpIgDLCeCjoiL2xDV/Itv8CjPdDM1DoOHby2RJXPfrjnqPCmC0ETt3zQzQnM=
-X-Gm-Gg: ASbGncvm7iClyoyRz6glbuoYshSfjaVmge2n2QHN/bvViPNpcMzbe/sy0aFV3zlAs2i
-	wXNoB6r4LdQjLjKJXRC3UnNEyUp7PsBkaVq5+UEheHflc7mXNf6iA0niuDkostTItqm18zRyaNs
-	8SyoXRw155k2hvowg+wKywG8vOjlWOv1LFWr6CL4OesV4QOo0mQwUtdkkE5KGka1aQUWQjoTGLU
-	JDhrTMglZYc5Bvi+qzaTkaew2GEjLxZxtwIm3MSs/+9moKr/N5OvPB0zS6HHRG7lodlUN1/5fOC
-	+YKQ0Zl3/f99QkP0Z5in60eJ8eZE6zsNyfihIJ4ZbSEAqoKmyPZoYdet
-X-Google-Smtp-Source: AGHT+IEiEoJK5yBKqQlvbOAtC7qPbenK5M2XniNaSRU80N9OG0U+b3MWoNR0jG3TB6eA2sEmMFi/zg==
-X-Received: by 2002:a5d:6d8c:0:b0:38f:4531:397a with SMTP id ffacd0b85a97d-38f6e757a02mr842468f8f.3.1740090885393;
-        Thu, 20 Feb 2025 14:34:45 -0800 (PST)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259d65dfsm22129677f8f.64.2025.02.20.14.34.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Feb 2025 14:34:44 -0800 (PST)
-Message-ID: <4c89d0a0-c0f3-494f-b85d-6c1d5041bba8@linaro.org>
-Date: Thu, 20 Feb 2025 22:34:42 +0000
+	s=arc-20240116; t=1740091989; c=relaxed/simple;
+	bh=ghJE7I/qntVNlueEdQaHszb2vjdnYucsL+pK8Eztovg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=h5rvE434WjXnbRX/Loi7S/4N000lW0gIdVdFq7BIYrOiUo4vQWTtqSK8Ya70JZ2FuSeYa9LiN17HLukXyDoIs8KexWYJ/6ApYfiBVgRa3FR33wQNLWZezOTBVObmWn7BVYPkzALW5juiIalPDqzO95xZ5+AYT9WoynFVKYcRI3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VxQgHgsb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51KGDvlq002872;
+	Thu, 20 Feb 2025 22:52:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+LhQJ2cNrP1sZLJLlXAaWHjyrUnROMmZ4qkqaQHwakk=; b=VxQgHgsbWKpz6md2
+	3NgyegGgh8YQn7ZaGfdTI07PHI1hthK8BypmOOnPfgHT3g4y9GIMVpaKGOUp/osY
+	2nd4m0KoNtzjyYbKXeff4AJy9Q2DpDVHzE4Zzfve7dM/ahGHnqqxtCvWK+FIFnQM
+	zz83xUuDlz2oVuhe/pFIQ3kT1iSce2UZuSdLgS3JesuzsUoBxuYgRZwsAoMaLw0V
+	yJVVdABE04GrmBuZoUpl0MJZrfa/FGCh8ONzGj3ydjh+5mc8cM0z9SBPRDs73b9e
+	4cVoStbfT5hgLRiwxNxYN4as7CcUK/4gMJoXaBIIfKBgaJk5+2DPf+5xfa3NZJSl
+	kpProA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy2fp9q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Feb 2025 22:52:52 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51KMqpET009129
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Feb 2025 22:52:51 GMT
+Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 20 Feb
+ 2025 14:52:50 -0800
+Message-ID: <4841020a-5320-4ce2-88b9-34f008febf62@quicinc.com>
+Date: Thu, 20 Feb 2025 14:52:50 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,48 +65,164 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] clk: qcom: videocc: Add support to attach multiple
- power domains
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
- <20250218-videocc-pll-multi-pd-voting-v1-4-cfe6289ea29b@quicinc.com>
- <eec2869a-fa8f-4aaf-9fc5-e7a8baf0f864@linaro.org>
- <huluiiaqmunvmffoqadrhssd3kl2toutqtcw7rzamv3sqdglsf@7lz66x4sj3gv>
- <d4c4ecf0-9094-4341-8711-78a48e5d1344@linaro.org>
- <d444f1fb-42a0-48ef-83bc-d5aab9282b22@quicinc.com>
- <gzjyyl2kzv52zsewn5zf6ei65fymyi4pspvsmsjaqj5sklfxvc@bkg46saulni5>
- <fcc31cc7-67bd-4102-a53f-ebe66b4fd1a7@linaro.org>
- <3da96df2-1127-49bf-8114-282cc488c194@quicinc.com>
- <6b0684a0-a519-463f-b7be-176a4752a786@linaro.org>
+Subject: Re: [PATCH v2 14/16] drm/msm/dpu: Add missing "fetch" name to
+ set_active_pipes()
 Content-Language: en-US
-In-Reply-To: <6b0684a0-a519-463f-b7be-176a4752a786@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        "Marijn Suijten" <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Jonathan Marek
+	<jonathan@marek.ca>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Srini Kandagatla
+	<srinivas.kandagatla@linaro.org>
+References: <20250217-b4-sm8750-display-v2-0-d201dcdda6a4@linaro.org>
+ <20250217-b4-sm8750-display-v2-14-d201dcdda6a4@linaro.org>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20250217-b4-sm8750-display-v2-14-d201dcdda6a4@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gnqIgwloMtZpENg2vID9N5dlsa59Em0X
+X-Proofpoint-GUID: gnqIgwloMtZpENg2vID9N5dlsa59Em0X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-20_09,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 mlxlogscore=999
+ bulkscore=0 malwarescore=0 impostorscore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502200152
 
-On 20/02/2025 22:31, Bryan O'Donoghue wrote:
-> It seems to me anyway we should try to push as much of this into core 
-> logic to be reused as possible.
 
-But there's no valid use-case for doing
 
-ret = devm_pm_domain_attach_list(dev, NULL, &cc->pd_list);
+On 2/17/2025 8:41 AM, Krzysztof Kozlowski wrote:
+> The set_active_pipes() callback configures CTL_FETCH_PIPE_ACTIVE and
+> newer DPU v12.0 comes with CTL_PIPE_ACTIVE, thus rename it to
+> set_active_fetch_pipes() to better match the purpose.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-in the driver and then conditionally doing it again in really_probe().
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-Its an either/or.
+> 
+> ---
+> 
+> Changes in v2:
+> 1. New patch
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c   | 12 ++++++------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c |  6 +++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h |  2 +-
+>   3 files changed, 10 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 7191b1a6d41b3a96f956d199398f12b2923e8c82..7de79696a21e58a4c640f00265610ccce8b5d253 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -445,9 +445,9 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   
+>   	uint32_t lm_idx;
+>   	bool bg_alpha_enable = false;
+> -	DECLARE_BITMAP(fetch_active, SSPP_MAX);
+> +	DECLARE_BITMAP(active_fetch, SSPP_MAX);
+>   
+> -	memset(fetch_active, 0, sizeof(fetch_active));
+> +	memset(active_fetch, 0, sizeof(active_fetch));
+>   	drm_atomic_crtc_for_each_plane(plane, crtc) {
+>   		state = plane->state;
+>   		if (!state)
+> @@ -464,7 +464,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
+>   			bg_alpha_enable = true;
+>   
+> -		set_bit(pstate->pipe.sspp->idx, fetch_active);
+> +		set_bit(pstate->pipe.sspp->idx, active_fetch);
+>   		_dpu_crtc_blend_setup_pipe(crtc, plane,
+>   					   mixer, cstate->num_mixers,
+>   					   pstate->stage,
+> @@ -472,7 +472,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   					   &pstate->pipe, 0, stage_cfg);
+>   
+>   		if (pstate->r_pipe.sspp) {
+> -			set_bit(pstate->r_pipe.sspp->idx, fetch_active);
+> +			set_bit(pstate->r_pipe.sspp->idx, active_fetch);
+>   			_dpu_crtc_blend_setup_pipe(crtc, plane,
+>   						   mixer, cstate->num_mixers,
+>   						   pstate->stage,
+> @@ -492,8 +492,8 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   		}
+>   	}
+>   
+> -	if (ctl->ops.set_active_pipes)
+> -		ctl->ops.set_active_pipes(ctl, fetch_active);
+> +	if (ctl->ops.set_active_fetch_pipes)
+> +		ctl->ops.set_active_fetch_pipes(ctl, active_fetch);
+>   
+>   	_dpu_crtc_program_lm_output_roi(crtc);
+>   }
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> index 9d4866509e97c262006e15cf3e02a2f1ca851784..2e1e22589f730d1a60c3cbf6ad6b6aeaea38c6fb 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> @@ -675,8 +675,8 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+>   	}
+>   }
+>   
+> -static void dpu_hw_ctl_set_fetch_pipe_active(struct dpu_hw_ctl *ctx,
+> -	unsigned long *fetch_active)
+> +static void dpu_hw_ctl_set_active_fetch_pipes(struct dpu_hw_ctl *ctx,
+> +					      unsigned long *fetch_active)
+>   {
+>   	int i;
+>   	u32 val = 0;
+> @@ -764,7 +764,7 @@ struct dpu_hw_ctl *dpu_hw_ctl_init(struct drm_device *dev,
+>   		c->ops.update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
+>   
+>   	if (mdss_ver->core_major_ver >= 7)
+> -		c->ops.set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
+> +		c->ops.set_active_fetch_pipes = dpu_hw_ctl_set_active_fetch_pipes;
+>   
+>   	c->idx = cfg->id;
+>   	c->mixer_count = mixer_count;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> index f04ae0b1d986fa8f73e5bf96babfca3b4f3a0bf5..b8bd5b22c5f8dadd01c16c352efef4063f2614a6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> @@ -243,7 +243,7 @@ struct dpu_hw_ctl_ops {
+>   	void (*setup_blendstage)(struct dpu_hw_ctl *ctx,
+>   		enum dpu_lm lm, struct dpu_hw_stage_cfg *cfg);
+>   
+> -	void (*set_active_pipes)(struct dpu_hw_ctl *ctx,
+> +	void (*set_active_fetch_pipes)(struct dpu_hw_ctl *ctx,
+>   		unsigned long *fetch_active);
+>   };
+>   
+> 
+> -- 
+> 2.43.0
+> 
 
----
-bod
 
