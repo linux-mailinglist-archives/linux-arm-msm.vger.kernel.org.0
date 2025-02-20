@@ -1,167 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-48762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0A45A3E6AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 22:33:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CE01A3E717
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 22:57:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BE76517CC9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 21:32:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B69043B89EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 21:57:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A506C264FB4;
-	Thu, 20 Feb 2025 21:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="M7fJ8uQ/"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF825213E80;
+	Thu, 20 Feb 2025 21:57:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008CB2641D2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 21:30:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCEF1F03D8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 21:57:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740087060; cv=none; b=oUwMAmVy1XhruPxiNyMVfKJmQaVcHJDWDKXyYntjsfIlxGxoKL0aTlmcA9svI7Q5C1sm9Ava7S6tFlpn9UJxFhVJc+BGPuvQEsQpIyiaZR6MoiKa6FY+QqJqOBUaKiYsCPSsyKHeofHnbkRlxD7fdb73ufg8BEmA5owUUy4XrLw=
+	t=1740088675; cv=none; b=DInDdVlVovags9LvYflDswmqST0R1pz4Wxtyde4GupAr9WBCUQTOPXUrD1hlcEd7NUmbEq072PVLGwYc1rmeHvAS+vU+5wwxbNguc/umOmpfzyEoBOLnF6ziosH3jAQ4MWJJR5tAwFy9rpTPi/is89aYe9gShNdJvDxB1xO9eB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740087060; c=relaxed/simple;
-	bh=Jcm7PvHpMe7tKGTpIyGRdzGtn040bJAdsFeXtJ5E8RA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NNSiEPUSx8a3RjprS61fcrlsr7qHPM8r60VpVJYPQMdU9R6lAr6gIzBZKGxm6W72bdjsiWbcjZhnRIrHRniG2FIlvC3PHSMS1a4FsPS/Em/4UVDqSk8/GkItxzRocpfmvlFjw7r+n5/eN/mlp84cZ+HNRGvXcMx6d82WgMP6pgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=M7fJ8uQ/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51KFkLni015174
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 21:30:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4b/yWlz2b5oRI/+oWIeuPJO4gw6pMqA+jcdXud5kRy8=; b=M7fJ8uQ/YQo+U5c1
-	AI+PflHA7lAcH+DS21iEGwiibUMtciUIcKz3/V2ET6UD0hQcsJbfLVBht1sSBkDP
-	MuSPUB4eM9endoIm754gqnrbvAXD1oMQqePAQ1McSuYXQ1Q/IcjaP5IQawfcgYzg
-	SrJ6aebRLmxbr3uxqont8+AqcSirCol8DRtPa50Ofion/M8SvF2QpzcI4omYgnOI
-	DbGmJfm3BR/4fTr51Za7mhC27tnfcbgPcy36zGym0Mb2W7Nz96oBIy6LA95wBR+J
-	oLRKdz8T2UYLs0w8pFqxNMNMaO2VF95bopoFJvA0evNecWoDCF7QnYVkyt3x15Dc
-	XdvnQQ==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy4fgjc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 21:30:57 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-220d9d98ea6so44011745ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 13:30:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740087056; x=1740691856;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4b/yWlz2b5oRI/+oWIeuPJO4gw6pMqA+jcdXud5kRy8=;
-        b=PK44rOUafqUmxupyeGSsBGptJnkQC495KMtM2u4Sd270VO/gcKLZmNbv3tBImvgFLB
-         IrM358vlK/PM+ih1pNockDtP+gKRqLlvZLxL5Vz/EikNQiPMUFAddI5nn71ZXQka3UXy
-         nwn8JGsQQxR4kOzBlSY+5SmxOdCjmnd8uOP13fOZkbPD5792ChIQrtJZLgYwIwfWlJsG
-         Kr6ApZcrb4EvWEyx19tgSeoQVgBkhSN3t399MF0hrapPSTQldYoQfK+jLb2utQD55pzK
-         FwDCg1rBGlmV/6am4uV5KlcN/7rGCI/ikQZQg7Vp1rjf1fzzte7h2hnMB0Netx7nRjl4
-         LkCw==
-X-Forwarded-Encrypted: i=1; AJvYcCW82/XZraMuQiuGdlU8kHf1prEQIpbXMOEss0og+11bbVnZLMcjFG4Ow00oqwcy2UuvyQ2FPyPLe/A5BIyx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5fLTkkktYozqkyn9cVjRxh1EPC7Fjz9D4a0LZyzzmL73x+Krf
-	QXXUjZJqLz3ptKqs+1C+f2Apv5EjUEMHa3f+WbLjLbRFznRIaoJHI0jD8MrErxqsqrAs/DHdU+9
-	HwvmcdZz44iPYrfHVEMMfjIDso10TuPgvJe4THCEubWp2lrPcjKCLYbVpd2H+o/lv
-X-Gm-Gg: ASbGncvWqR13bDcDtUwxY9c6SvWklGHfKUHAlJ1EPOyfPLMC17OOuXdFTTPB0bi2QZP
-	SkCEbrxywuL0PsQEQvHdoM9fAvo8FPpBD/Gw4fbBI1oFs4Bo1ybtgFOx+clSCdfbqRamJ8HcR4q
-	97PPKPPUGrEdmx4SX6zsiUHQxFLfc1vE26/559++Pf1mGPZ0ttp1nPkxAzB05DkfaYpmJ2Cba8F
-	5ykIOQNyhgs71u2UMBtKBoVQrGOc5aCz9i1YdjtWvOUonKR9pi11b3CWb/7OXdj4FPrBXC6wZ1d
-	wUFodBtFuuSugRVRbjTk5+KMV+DbJguYKzdVfrTh8UmlENjrV0M/HmHiSrgIAq/Soi/wYw==
-X-Received: by 2002:a17:902:da91:b0:220:c143:90a0 with SMTP id d9443c01a7336-2219ff600b7mr11659005ad.24.1740087056263;
-        Thu, 20 Feb 2025 13:30:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNaLSENnRatqWhogdEYw5CUZWUoO3mcRQXara8Vz/XKsvoelzsFfaRcRLsxSscNETH5JB+8w==
-X-Received: by 2002:a17:902:da91:b0:220:c143:90a0 with SMTP id d9443c01a7336-2219ff600b7mr11658495ad.24.1740087055823;
-        Thu, 20 Feb 2025 13:30:55 -0800 (PST)
-Received: from [10.71.108.77] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d559089asm125179175ad.241.2025.02.20.13.30.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Feb 2025 13:30:55 -0800 (PST)
-Message-ID: <e97d17ca-be8c-42a2-9767-77d73eaa916c@oss.qualcomm.com>
-Date: Thu, 20 Feb 2025 13:30:53 -0800
+	s=arc-20240116; t=1740088675; c=relaxed/simple;
+	bh=tBiT1zKiECuw9YCaCSN9G/JLtivloNtC5SEjSI7ILFA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iR/ckl7jbDzvfD1NfZ4kisFxyxPoLHPkDalHhIXkWZxydIFIu6tqL3fcx/BhG45gUAiI1UaVjLEuHw4bkR4JlkB63DIPbb9RSCNXSCxq0hZJjKjuwvfVkqH31OlCFOPJm7UDIOyU3HlJm4Yu+Zf5G7CCIIdsOrvZDtTMHGP69qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 89B6A3ED61;
+	Thu, 20 Feb 2025 22:50:59 +0100 (CET)
+Date: Thu, 20 Feb 2025 22:50:57 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] drm/msm/dsi: Support DSC for dual panel case
+Message-ID: <cokgqc6qd26caz63lwoyjcfbewbh3zxagjedzy6o6tfkt7wgmp@fz2gquyxcxbu>
+References: <20250220-dual-dsi-v2-0-6c0038d5a2ef@linaro.org>
+ <20250220-dual-dsi-v2-5-6c0038d5a2ef@linaro.org>
+ <iibq3orsb7uf44luz2he2auox43ki42m2z4nnderyqlhypvfgo@pwqpvua6vuyo>
+ <CABymUCNajuc8WnWgf2JehFYUY-MqxCYmD=By8nY-JppxYHsyNw@mail.gmail.com>
+ <m7brftsrxdikfeumbjkubeeleezka7mwjbchxefqgs4ybtca5n@ge3ay2olagq2>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] leds: rgb: leds-qcom-lpg: Add support for 6-bit PWM
- resolution
-To: Lee Jones <lee@kernel.org>
-Cc: pavel@kernel.org, andersson@kernel.org, krzysztof.kozlowski@linaro.org,
-        morf3089@gmail.com, u.kleine-koenig@pengutronix.de,
-        marijn.suijten@somainline.org, linux-leds@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Zejiong Huang <zejiongh@qti.qualcomm.com>
-References: <20250213003533.1684131-1-anjelique.melendez@oss.qualcomm.com>
- <20250220145522.GA778229@google.com>
-Content-Language: en-US
-From: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-In-Reply-To: <20250220145522.GA778229@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: gSXqF4XTi_dZUQBHZoqVZ9cbOdc-fhVD
-X-Proofpoint-ORIG-GUID: gSXqF4XTi_dZUQBHZoqVZ9cbOdc-fhVD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-20_09,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 suspectscore=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 adultscore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502200143
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <m7brftsrxdikfeumbjkubeeleezka7mwjbchxefqgs4ybtca5n@ge3ay2olagq2>
 
+On 2025-02-20 18:06:01, Dmitry Baryshkov wrote:
+> On Thu, Feb 20, 2025 at 11:42:28PM +0800, Jun Nie wrote:
+> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 于2025年2月20日周四 18:39写道：
+> > >
+> > > On Thu, Feb 20, 2025 at 06:07:56PM +0800, Jun Nie wrote:
+> > > > There is dual DSI case that every DSI link is connected to an independent
 
+There is a dual-DSI case where every DSI link ...
 
-On 2/20/2025 6:55 AM, Lee Jones wrote:
-> On Wed, 12 Feb 2025, Anjelique Melendez wrote:
+> > > > panel. In this dual panel case, the frame width for DSC on each link should
+> > > > be halved to support the usage case.
+
+use* case.  Also, it shouldn't be "halved" just... because?  It should be
+"halved" because apparently hdisplay here is the width of the two panels
+together, while the width coded in pic_width should contain that of a single
+panel (since they're independent), which is equal to the width of a single
+interface.
+
+Tl;dr for below: this needs a *lot* more text to explain the setup and
+possibilities.  How is a DSI panel driver supposed to configure this on their
+end?  Hint: look at my previous drm/msm patches that explain how we expect to
+interface with the parameters set by the panel driver.
+
+> > >
+> > > Isn't it the case for the DSI panel utilizing two DSI links?
+> > 
+> > The added case here is 2 DSI panel utilizing two DSI links, 1 DSI link
+> > in each panel.
+> > I assume default case is 1 panel with 2 DSI link, such as Marijn's case.
 > 
->> Currently, driver only allows for PWM modules to use 9-bit resolution.
->> However, PWM modules can support 6-bit and 9-bit resolution. Add support
->> for 6-bit resolution.
->>
->> Suggested-by: Zejiong Huang <zejiongh@qti.qualcomm.com>
->> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
->> ---
->>   drivers/leds/rgb/leds-qcom-lpg.c | 13 +++++++------
->>   1 file changed, 7 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
->> index f3c9ef2bfa57..4e5c56ded1f0 100644
->> --- a/drivers/leds/rgb/leds-qcom-lpg.c
->> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
->> @@ -24,6 +24,7 @@
->>   #define LPG_PATTERN_CONFIG_REG	0x40
->>   #define LPG_SIZE_CLK_REG	0x41
->>   #define  PWM_CLK_SELECT_MASK	GENMASK(1, 0)
->> +#define  PWM_SIZE_SELECT_MASK	BIT(2)
+> So it should be halved in your case, but not in Marijn's case? I can
+> suspect that if you are describing two DSI panels as a single instance,
+> you should also adjust drm_dsc_config accordingly (on the panel's side?)
 > 
-> Are you sure you want to shove this between 2 seemingly related defines?
-> 
-We placed the PWM_SIZE_SELECT_MASK here so we could group all the masks 
-used for PWM together then the masks used for Hi resolution PWM together
-i.e
-   1. pwm clk mask
-   2. pwm size mask
-   3. hi resolution pwm clk mask
-   4. hi resolution pwm size mask
+> Maybe drm_dsc_config.pic_width and drm_dsc_config.pic_height should be
+> set on the panel's side? But then, how will that function for the DSI
+> panels or bridges which can change the mode?
 
-Would you rather have definitions grouped based on mask type?
-i.e
-   1. pwm clk mask
-   2. hi resolution pwm clk mask
-   3. pwm size mask
-   4. hi resolution pwm size mask
+It appears that these patches are missing a proper description of the setup
+or use-case.  I previously NAK'd those "dual DSI" patches because of this, but
+reading between the lines I think I came to understand the reason without anyone
+else explaining it, unfortunately.  Needless to say that this needs very careful
+documentation and wording in both code (DT and/or header structs) and commit
+messages.
 
+In my case I have a single high-resolution high-refresh-rate panel that can
+simply not be driven over a single DSI link.  A dual-DSI link is used in bonded
+mode, most likely to keep the clocks and other things in sync, and to make it
+easier to be represented by one virtual encoder in DPU?  All control commands
+only need the sent over one DSI link, not over both.
 
->>   #define  PWM_CLK_SELECT_HI_RES_MASK	GENMASK(2, 0)
->>   #define  PWM_SIZE_HI_RES_MASK	GENMASK(6, 4)
->>   #define LPG_PREDIV_CLK_REG	0x42
+In this case pic_width is equal to the entire width of the panel, hence it is
+double the width of a single interface.
 
-Thanks,
-Anjelique
+Jun seems to have a strangely different use-case for bonded-DSI / dual-DSI that
+isn't explained: two "independent" panels.  It is clear to me that pic_width
+here has to contain the width of the entire panel, and is hence equal to the
+entire width of a single interface.
+(And in the future, it seems the quad setup can drive two "bonded" panels with
+ two DSI-merge's each)
+
+But what we're missing here is what the **advantages and limitations** are
+of this setup: why would one run two DSI links for "independent" panels in
+bonded-DSI mode?  Is it more power-optimal?  Will userspace see this as one
+panel that's simply twice as wide?  Do these panels have to be "identical"
+so that they behave and are clocked the same?  How is the driver expected to
+prepare the mode and DSC configuration parameters to make this work?
+
+Perhaps it's possible to scrape this info from [1] and prior commits but I
+rather have a more digestible description in the commit message, thanks.
+
+- Marijn
+
+[1]: https://gitlab.com/jun.nie/linux/-/commit/98c0f411a85d68a76be500f8421df467d6cc53f3
 
