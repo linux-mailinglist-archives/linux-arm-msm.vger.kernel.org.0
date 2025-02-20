@@ -1,357 +1,272 @@
-Return-Path: <linux-arm-msm+bounces-48714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58CF2A3DEFF
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB60DA3DF00
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 16:43:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EAA8E17D198
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:42:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6DD73189D1E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:43:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 257A21FE46D;
-	Thu, 20 Feb 2025 15:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4EA01FBC9E;
+	Thu, 20 Feb 2025 15:42:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yzfyUaei"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CDB1FDE26;
-	Thu, 20 Feb 2025 15:42:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094BC1F8916
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 15:42:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740066137; cv=none; b=F0UM9fbOXUE7CAB3R4+JBAc+e19L/5xqZDh5+rHs3bAUNVLlcUj1TnL779pWIlNh1hqo8fnQImTAUy3Uh6PofJne+rAlTYeaFNmm/x76LRzqd2uhqTL7n8+C6KbJcPLjZnQFz8NbzCa3/DZxyjuafarkuqibH0gFW62SWwNWG3c=
+	t=1740066161; cv=none; b=lxQnlWAaA0g0RZcpojg8QYsTJC8afmeGTHKT6+GXWS8T5v4tu6Oxm8lrPSWZDPixrYOJrV/XCP+7HvL51faBhQcWfV+aP5HoAxI1+pcOuhOLHdcZflkfjSn+caxlvEQKIp3DPmCfLoZ7d7vbYdGXhTWB8RPPBn+WkpqEJwntSs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740066137; c=relaxed/simple;
-	bh=c/7R0BYGbaMGBi+HLJTMDqWjWTV9zes7cKicXvRQ2DI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kkP8+c2PmfhbV8L+kS7zH5cPyGve2j/E/PR+7mIIRUhbV4bc5wUVlroycQ/MTvsLtSH54iH3RHayaf254Uvao9fsug2HMlCFhJ8V5iRVpobRKdV3ydXmxkuoK+1x2SVV6sip0IinctvEtknucSNFWwWOlAOiWkGuAU3hKWQ/gT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0547C4CED1;
-	Thu, 20 Feb 2025 15:42:13 +0000 (UTC)
-Message-ID: <37934625-661f-4347-a1cf-b77d0a8702ca@xs4all.nl>
-Date: Thu, 20 Feb 2025 16:42:12 +0100
+	s=arc-20240116; t=1740066161; c=relaxed/simple;
+	bh=ujRn8n7GidyCxxK9ZmLQoL5PmhUD3AHxBU7IMcuJFVU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bD+X+dYB1l8ewpmbOC/hgXFbgnID+2c/c9vei23nT+1Uvdn1LXjta0i7lqINaN16DhCZzJweb91PuS+vLVb50WVFC3UzZvL+79kqfxsBdw7pTbeJQDrBWeYhWVvzU0PJpg2Un0a32HjO4o3pWCk10V2B1+f3UZbwIydebjSVFsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yzfyUaei; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e5dc37f1991so1017062276.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 07:42:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740066159; x=1740670959; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5FyY/uqpI1+/qb2X9DvR/LN4Auweuub6T5/j2p07sJM=;
+        b=yzfyUaeibNCo2pRy4jNKBJdOR/kKRbjKmdncbqjruS2ZqUAJMGh/T2+CfL4keyWP2h
+         um21foVJDz4TlMcyvN3RFvMrAdgPFUXy+BN/ikBWRoubxr0SpZ4Oii4SsKuGG3mJ59nY
+         429xD0ShzN2gqtdubxuab8864arn66MjNqi1h6tPPpRqHWTBzAbbfW9MItE8Tb+aSgL8
+         9J60QsyM7OaKJ3flolOI9O5/xmO1TdEdOCETiiZwCxF0HfAfS//IwWO9AVHKs0knwsmB
+         XirpDgsA8m1g7fbpcI95pWisjyzCneJgO19S7OIBTDRh4QEXVdApshJYimJKlPbyQ95b
+         CDyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740066159; x=1740670959;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5FyY/uqpI1+/qb2X9DvR/LN4Auweuub6T5/j2p07sJM=;
+        b=DxaLLeL7wwiGVRuFbyc/ujnv/ycTidEPMgltirig4AVUD51O0X9y551gmvs2EuAdEF
+         unHo722yRWPO59zmIQOATz9UiB+sslgnJme31MSiScb8goUfXMMr/g87zlfqYYz6Mkop
+         +0GsFSnUQQuq2V82VJmsrgR+yRTmq8wEEqbS4FgLAYI54Xk7nSIdqjpTPGW2HipFwq17
+         lQkjCONhTg2BQLdy02KbYwq5/DgpnFbPyz3jUCyTGoo5aLAmAh6qe+2ss+mBw+BQ7Hxr
+         RQTNRDB36+PtO0zmnoTo/cpzYuRUla7eXIQpMWgQl+7P5mRYJnia21zzMYQsNhsIXWVB
+         v5Ag==
+X-Forwarded-Encrypted: i=1; AJvYcCWB5w5eVyEx60KzVP3OPgmuQIcl/XqbihYm5K9FJfYYLLFLXx7m+Iy4YNFmw1ATqdG1UA8iWv9IXe/OyxJR@vger.kernel.org
+X-Gm-Message-State: AOJu0YzR6fuB5ryeFbaHCEfHamvs4k+a4kIttBsE64ypuxDBkt1ut55W
+	rgDgac+U0tsmokHybQmsoOyzfHGoXK3PRCO0Bo1TQB2tWPDWtDZngS1WNteHgAFj/KTNyEjUVQ6
+	i1BD6O0scLFprR2lCKLOhjN8mmXSZaSxPihvwvw==
+X-Gm-Gg: ASbGncuzPnR4Rwz2oNa+GUbtGx0DW+c4ky/LRcUvHVQRMoi19iNBBDVIcZm01vGL5xt
+	C9SkB7LG2q38GsZ9hEas6v/DHBtnqh+0IXEIqh3hZOlFlfuEAOPQMcp/aZOie1L99M7utiJu4fx
+	YY
+X-Google-Smtp-Source: AGHT+IEz/BdkBxzruDv1BnRXbsP+TA9e8Vw4LtNbmAaEcBP0MwtZCiysLe/spHraIOiIlseufiQMsXOwHbIUKyc7fcQ=
+X-Received: by 2002:a05:690c:498c:b0:6ee:8363:96d3 with SMTP id
+ 00721157ae682-6fb5831dcddmr207514557b3.27.1740066158995; Thu, 20 Feb 2025
+ 07:42:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] media: venus: hfi_parser: refactor hfi packet
- parsing logic
-Content-Language: en-US
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Tomasz Figa
- <tfiga@chromium.org>, Hans Verkuil <hans.verkuil@cisco.com>
-Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20250207-venus_oob_2-v4-0-522da0b68b22@quicinc.com>
- <20250207-venus_oob_2-v4-2-522da0b68b22@quicinc.com>
- <18a005e1-e235-4c2b-8d1a-b593868843a5@xs4all.nl>
- <ef4a4b2e-e17a-5432-49d5-4e211fa826ce@quicinc.com>
-From: Hans Verkuil <hverkuil@xs4all.nl>
-In-Reply-To: <ef4a4b2e-e17a-5432-49d5-4e211fa826ce@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250220-dual-dsi-v2-0-6c0038d5a2ef@linaro.org>
+ <20250220-dual-dsi-v2-5-6c0038d5a2ef@linaro.org> <iibq3orsb7uf44luz2he2auox43ki42m2z4nnderyqlhypvfgo@pwqpvua6vuyo>
+In-Reply-To: <iibq3orsb7uf44luz2he2auox43ki42m2z4nnderyqlhypvfgo@pwqpvua6vuyo>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Thu, 20 Feb 2025 23:42:28 +0800
+X-Gm-Features: AWEUYZkhT707fwgCYjUo1mZOa8BNPphgYLuTOs0pu7OSbwGyUxHGJN7uYb0yFbQ
+Message-ID: <CABymUCNajuc8WnWgf2JehFYUY-MqxCYmD=By8nY-JppxYHsyNw@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] drm/msm/dsi: Support DSC for dual panel case
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Krishna Manikandan <quic_mkrishn@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2/20/25 16:38, Vikash Garodia wrote:
-> 
-> On 2/20/2025 8:50 PM, Hans Verkuil wrote:
->> On 2/7/25 09:24, Vikash Garodia wrote:
->>> words_count denotes the number of words in total payload, while data
->>> points to payload of various property within it. When words_count
->>> reaches last word, data can access memory beyond the total payload. This
->>> can lead to OOB access. With this patch, the utility api for handling
->>> individual properties now returns the size of data consumed. Accordingly
->>> remaining bytes are calculated before parsing the payload, thereby
->>> eliminates the OOB access possibilities.
->>>
->>> Cc: stable@vger.kernel.org
->>> Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
->>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>> ---
->>>  drivers/media/platform/qcom/venus/hfi_parser.c | 95 +++++++++++++++++++-------
->>>  1 file changed, 69 insertions(+), 26 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
->>> index 1cc17f3dc8948160ea6c3015d2c03e475b8aa29e..404c527329c5fa89ee885a6ad15620c9c90a99e4 100644
->>> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
->>> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
->>> @@ -63,7 +63,7 @@ fill_buf_mode(struct hfi_plat_caps *cap, const void *data, unsigned int num)
->>>  		cap->cap_bufs_mode_dynamic = true;
->>>  }
->>>  
->>> -static void
->>> +static int
->>>  parse_alloc_mode(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  {
->>>  	struct hfi_buffer_alloc_mode_supported *mode = data;
->>> @@ -71,7 +71,7 @@ parse_alloc_mode(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  	u32 *type;
->>>  
->>>  	if (num_entries > MAX_ALLOC_MODE_ENTRIES)
->>> -		return;
->>> +		return -EINVAL;
->>>  
->>>  	type = mode->data;
->>>  
->>> @@ -83,6 +83,8 @@ parse_alloc_mode(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  
->>>  		type++;
->>>  	}
->>> +
->>> +	return sizeof(*mode);
->>>  }
->>>  
->>>  static void fill_profile_level(struct hfi_plat_caps *cap, const void *data,
->>> @@ -97,7 +99,7 @@ static void fill_profile_level(struct hfi_plat_caps *cap, const void *data,
->>>  	cap->num_pl += num;
->>>  }
->>>  
->>> -static void
->>> +static int
->>>  parse_profile_level(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  {
->>>  	struct hfi_profile_level_supported *pl = data;
->>> @@ -105,12 +107,14 @@ parse_profile_level(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  	struct hfi_profile_level pl_arr[HFI_MAX_PROFILE_COUNT] = {};
->>>  
->>>  	if (pl->profile_count > HFI_MAX_PROFILE_COUNT)
->>> -		return;
->>> +		return -EINVAL;
->>>  
->>>  	memcpy(pl_arr, proflevel, pl->profile_count * sizeof(*proflevel));
->>>  
->>>  	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
->>>  		       fill_profile_level, pl_arr, pl->profile_count);
->>> +
->>> +	return pl->profile_count * sizeof(*proflevel) + sizeof(u32);
->>>  }
->>>  
->>>  static void
->>> @@ -125,7 +129,7 @@ fill_caps(struct hfi_plat_caps *cap, const void *data, unsigned int num)
->>>  	cap->num_caps += num;
->>>  }
->>>  
->>> -static void
->>> +static int
->>>  parse_caps(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  {
->>>  	struct hfi_capabilities *caps = data;
->>> @@ -134,12 +138,14 @@ parse_caps(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  	struct hfi_capability caps_arr[MAX_CAP_ENTRIES] = {};
->>>  
->>>  	if (num_caps > MAX_CAP_ENTRIES)
->>> -		return;
->>> +		return -EINVAL;
->>>  
->>>  	memcpy(caps_arr, cap, num_caps * sizeof(*cap));
->>>  
->>>  	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
->>>  		       fill_caps, caps_arr, num_caps);
->>> +
->>> +	return sizeof(*caps);
->>>  }
->>>  
->>>  static void fill_raw_fmts(struct hfi_plat_caps *cap, const void *fmts,
->>> @@ -154,7 +160,7 @@ static void fill_raw_fmts(struct hfi_plat_caps *cap, const void *fmts,
->>>  	cap->num_fmts += num_fmts;
->>>  }
->>>  
->>> -static void
->>> +static int
->>>  parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  {
->>>  	struct hfi_uncompressed_format_supported *fmt = data;
->>> @@ -163,7 +169,8 @@ parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  	struct raw_formats rawfmts[MAX_FMT_ENTRIES] = {};
->>>  	u32 entries = fmt->format_entries;
->>>  	unsigned int i = 0;
->>> -	u32 num_planes;
->>> +	u32 num_planes = 0;
->>> +	u32 size;
->>>  
->>>  	while (entries) {
->>>  		num_planes = pinfo->num_planes;
->>> @@ -173,7 +180,7 @@ parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  		i++;
->>>  
->>>  		if (i >= MAX_FMT_ENTRIES)
->>> -			return;
->>> +			return -EINVAL;
->>>  
->>>  		if (pinfo->num_planes > MAX_PLANES)
->>>  			break;
->>> @@ -185,9 +192,13 @@ parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
->>>  
->>>  	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
->>>  		       fill_raw_fmts, rawfmts, i);
->>> +	size = fmt->format_entries * (sizeof(*constr) * num_planes + 2 * sizeof(u32))
->>> +		+ 2 * sizeof(u32);
->>> +
->>> +	return size;
->>>  }
->>>  
->>> -static void parse_codecs(struct venus_core *core, void *data)
->>> +static int parse_codecs(struct venus_core *core, void *data)
->>>  {
->>>  	struct hfi_codec_supported *codecs = data;
->>>  
->>> @@ -199,21 +210,27 @@ static void parse_codecs(struct venus_core *core, void *data)
->>>  		core->dec_codecs &= ~HFI_VIDEO_CODEC_SPARK;
->>>  		core->enc_codecs &= ~HFI_VIDEO_CODEC_HEVC;
->>>  	}
->>> +
->>> +	return sizeof(*codecs);
->>>  }
->>>  
->>> -static void parse_max_sessions(struct venus_core *core, const void *data)
->>> +static int parse_max_sessions(struct venus_core *core, const void *data)
->>>  {
->>>  	const struct hfi_max_sessions_supported *sessions = data;
->>>  
->>>  	core->max_sessions_supported = sessions->max_sessions;
->>> +
->>> +	return sizeof(*sessions);
->>>  }
->>>  
->>> -static void parse_codecs_mask(u32 *codecs, u32 *domain, void *data)
->>> +static int parse_codecs_mask(u32 *codecs, u32 *domain, void *data)
->>>  {
->>>  	struct hfi_codec_mask_supported *mask = data;
->>>  
->>>  	*codecs = mask->codecs;
->>>  	*domain = mask->video_domains;
->>> +
->>> +	return sizeof(*mask);
->>>  }
->>>  
->>>  static void parser_init(struct venus_inst *inst, u32 *codecs, u32 *domain)
->>> @@ -282,8 +299,9 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
->>>  u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
->>>  	       u32 size)
->>>  {
->>> -	unsigned int words_count = size >> 2;
->>> -	u32 *word = buf, *data, codecs = 0, domain = 0;
->>> +	u32 *words = buf, *payload, codecs = 0, domain = 0;
->>> +	u32 *frame_size = buf + size;
->>> +	u32 rem_bytes = size;
->>>  	int ret;
->>>  
->>>  	ret = hfi_platform_parser(core, inst);
->>> @@ -300,38 +318,63 @@ u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
->>>  		memset(core->caps, 0, sizeof(core->caps));
->>>  	}
->>>  
->>> -	while (words_count) {
->>> -		data = word + 1;
->>> +	while (words < frame_size) {
->>> +		payload = words + 1;
->>>  
->>> -		switch (*word) {
->>> +		switch (*words) {
->>>  		case HFI_PROPERTY_PARAM_CODEC_SUPPORTED:
->>> -			parse_codecs(core, data);
->>> +			if (rem_bytes <= sizeof(struct hfi_codec_supported))
->>> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->>> +
->>> +			ret = parse_codecs(core, payload);
->>>  			init_codecs(core);
->>
->> Does it make sense to call init_codecs if parse_codecs returned an error?
->> It certainly looks weird, so even if it is OK, perhaps a comment might be
->> useful.
-> parse_codecs() returns the sizeof(struct hfi_codec_supported), so it would
-> always be a valid value. I can put up a comment though.
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2025=E5=B9=B42=E6=
+=9C=8820=E6=97=A5=E5=91=A8=E5=9B=9B 18:39=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, Feb 20, 2025 at 06:07:56PM +0800, Jun Nie wrote:
+> > There is dual DSI case that every DSI link is connected to an independe=
+nt
+> > panel. In this dual panel case, the frame width for DSC on each link sh=
+ould
+> > be halved to support the usage case.
+>
+> Isn't it the case for the DSI panel utilizing two DSI links?
 
-Ah, so parse_codecs can never return an error. But what if someone in the future
-does exactly that? I think it is still better to check for an error here. It just
-feels like a bug waiting to happen in the future.
-
-Regards,
-
-	Hans
-
->>
->>>  			break;
->>>  		case HFI_PROPERTY_PARAM_MAX_SESSIONS_SUPPORTED:
->>> -			parse_max_sessions(core, data);
->>> +			if (rem_bytes <= sizeof(struct hfi_max_sessions_supported))
->>> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->>> +
->>> +			ret = parse_max_sessions(core, payload);
->>>  			break;
->>>  		case HFI_PROPERTY_PARAM_CODEC_MASK_SUPPORTED:
->>> -			parse_codecs_mask(&codecs, &domain, data);
->>> +			if (rem_bytes <= sizeof(struct hfi_codec_mask_supported))
->>> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->>> +
->>> +			ret = parse_codecs_mask(&codecs, &domain, payload);
->>>  			break;
->>>  		case HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SUPPORTED:
->>> -			parse_raw_formats(core, codecs, domain, data);
->>> +			if (rem_bytes <= sizeof(struct hfi_uncompressed_format_supported))
->>> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->>> +
->>> +			ret = parse_raw_formats(core, codecs, domain, payload);
->>>  			break;
->>>  		case HFI_PROPERTY_PARAM_CAPABILITY_SUPPORTED:
->>> -			parse_caps(core, codecs, domain, data);
->>> +			if (rem_bytes <= sizeof(struct hfi_capabilities))
->>> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->>> +
->>> +			ret = parse_caps(core, codecs, domain, payload);
->>>  			break;
->>>  		case HFI_PROPERTY_PARAM_PROFILE_LEVEL_SUPPORTED:
->>> -			parse_profile_level(core, codecs, domain, data);
->>> +			if (rem_bytes <= sizeof(struct hfi_profile_level_supported))
->>> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->>> +
->>> +			ret = parse_profile_level(core, codecs, domain, payload);
->>>  			break;
->>>  		case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE_SUPPORTED:
->>> -			parse_alloc_mode(core, codecs, domain, data);
->>> +			if (rem_bytes <= sizeof(struct hfi_buffer_alloc_mode_supported))
->>> +				return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->>> +
->>> +			ret = parse_alloc_mode(core, codecs, domain, payload);
->>>  			break;
->>>  		default:
->>> +			ret = sizeof(u32);
->>>  			break;
->>>  		}
->>>  
->>> -		word++;
->>> -		words_count--;
->>> +		if (ret < 0)
->>> +			return HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
->>> +
->>> +		words += ret / sizeof(u32);
->>
->> Would it make sense to check and warn if ret is not a multiple of sizeof(u32)?
->> Up to you, just an idea.
-> almost all the individual parsing api in the various cases returns size of
-> predefined structures (or in their multiples), which would make them return in
-> multiple of sizeof(u32). Let say, if it encounters a non multiple of
-> sizeof(u32), the while loop would iterate couple of more iterations to hit the
-> next case in the payload.
->>
->>> +		rem_bytes -= ret;
->>>  	}
->>>  
->>>  	if (!core->max_sessions_supported)
->>>
->>
->> Regards,
->>
->> 	Hans
-> Regards,
-> Vikash
-
+The added case here is 2 DSI panel utilizing two DSI links, 1 DSI link
+in each panel.
+I assume default case is 1 panel with 2 DSI link, such as Marijn's case.
+>
+> >
+> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/dsi/dsi.h         |  3 ++-
+> >  drivers/gpu/drm/msm/dsi/dsi_host.c    | 13 +++++++++----
+> >  drivers/gpu/drm/msm/dsi/dsi_manager.c | 10 ++++++++--
+> >  3 files changed, 19 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/ds=
+i.h
+> > index 35b90c462f637111159b204269ce908614a21586..5a8978bed9f4ca897b418ce=
+d60194042d9dd8d05 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> > @@ -74,7 +74,8 @@ void msm_dsi_host_enable_irq(struct mipi_dsi_host *ho=
+st);
+> >  void msm_dsi_host_disable_irq(struct mipi_dsi_host *host);
+> >  int msm_dsi_host_power_on(struct mipi_dsi_host *host,
+> >                       struct msm_dsi_phy_shared_timings *phy_shared_tim=
+ings,
+> > -                     bool is_bonded_dsi, struct msm_dsi_phy *phy);
+> > +                     bool is_bonded_dsi, bool is_dual_panel,
+> > +                     struct msm_dsi_phy *phy);
+> >  int msm_dsi_host_power_off(struct mipi_dsi_host *host);
+> >  int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
+> >                                 const struct drm_display_mode *mode);
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/d=
+si/dsi_host.c
+> > index 976c5d82a2efa0fc51657b8534675890be7c33a6..752a97f7181c30dade0a774=
+5492bf16649b3197b 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > @@ -902,7 +902,8 @@ static void dsi_update_dsc_timing(struct msm_dsi_ho=
+st *msm_host, bool is_cmd_mod
+> >       }
+> >  }
+> >
+> > -static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bo=
+nded_dsi)
+> > +static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bo=
+nded_dsi,
+> > +                          bool is_dual_panel)
+> >  {
+> >       struct drm_display_mode *mode =3D msm_host->mode;
+> >       u32 hs_start =3D 0, vs_start =3D 0; /* take sync start as 0 */
+> > @@ -947,7 +948,10 @@ static void dsi_timing_setup(struct msm_dsi_host *=
+msm_host, bool is_bonded_dsi)
+> >                       return;
+> >               }
+> >
+> > -             dsc->pic_width =3D mode->hdisplay;
+> > +             if (is_dual_panel)
+> > +                     dsc->pic_width =3D hdisplay;
+> > +             else
+> > +                     dsc->pic_width =3D mode->hdisplay;
+> >               dsc->pic_height =3D mode->vdisplay;
+> >               DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
+> >
+> > @@ -2369,7 +2373,8 @@ static void msm_dsi_sfpb_config(struct msm_dsi_ho=
+st *msm_host, bool enable)
+> >
+> >  int msm_dsi_host_power_on(struct mipi_dsi_host *host,
+> >                       struct msm_dsi_phy_shared_timings *phy_shared_tim=
+ings,
+> > -                     bool is_bonded_dsi, struct msm_dsi_phy *phy)
+> > +                     bool is_bonded_dsi, bool is_dual_panel,
+> > +                     struct msm_dsi_phy *phy)
+> >  {
+> >       struct msm_dsi_host *msm_host =3D to_msm_dsi_host(host);
+> >       const struct msm_dsi_cfg_handler *cfg_hnd =3D msm_host->cfg_hnd;
+> > @@ -2412,7 +2417,7 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *h=
+ost,
+> >               goto fail_disable_clk;
+> >       }
+> >
+> > -     dsi_timing_setup(msm_host, is_bonded_dsi);
+> > +     dsi_timing_setup(msm_host, is_bonded_dsi, is_dual_panel);
+> >       dsi_sw_reset(msm_host);
+> >       dsi_ctrl_enable(msm_host, phy_shared_timings, phy);
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/ms=
+m/dsi/dsi_manager.c
+> > index be13bf682a9601484c9c14e8419563f37c2281ee..158b6cc907cb39cc3b182d3=
+088b793d322a3527c 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > @@ -24,6 +24,7 @@ struct msm_dsi_manager {
+> >       struct msm_dsi *dsi[DSI_MAX];
+> >
+> >       bool is_bonded_dsi;
+> > +     bool is_dual_panel;
+> >       bool is_sync_needed;
+> >       int master_dsi_link_id;
+> >  };
+> > @@ -31,6 +32,7 @@ struct msm_dsi_manager {
+> >  static struct msm_dsi_manager msm_dsim_glb;
+> >
+> >  #define IS_BONDED_DSI()              (msm_dsim_glb.is_bonded_dsi)
+> > +#define IS_DUAL_PANEL()              (msm_dsim_glb.is_dual_panel)
+> >  #define IS_SYNC_NEEDED()     (msm_dsim_glb.is_sync_needed)
+> >  #define IS_MASTER_DSI_LINK(id)       (msm_dsim_glb.master_dsi_link_id =
+=3D=3D id)
+> >
+> > @@ -55,6 +57,7 @@ static int dsi_mgr_parse_of(struct device_node *np, i=
+nt id)
+> >               msm_dsim->is_bonded_dsi =3D of_property_read_bool(np, "qc=
+om,dual-dsi-mode");
+> >
+> >       if (msm_dsim->is_bonded_dsi) {
+> > +             msm_dsim->is_dual_panel =3D of_property_read_bool(np, "qc=
+om,dual-panel");
+> >               if (of_property_read_bool(np, "qcom,master-dsi"))
+> >                       msm_dsim->master_dsi_link_id =3D id;
+> >               if (!msm_dsim->is_sync_needed)
+> > @@ -214,6 +217,7 @@ static int dsi_mgr_bridge_power_on(struct drm_bridg=
+e *bridge)
+> >       struct mipi_dsi_host *host =3D msm_dsi->host;
+> >       struct msm_dsi_phy_shared_timings phy_shared_timings[DSI_MAX];
+> >       bool is_bonded_dsi =3D IS_BONDED_DSI();
+> > +     bool is_dual_panel =3D IS_DUAL_PANEL();
+> >       int ret;
+> >
+> >       DBG("id=3D%d", id);
+> > @@ -222,7 +226,8 @@ static int dsi_mgr_bridge_power_on(struct drm_bridg=
+e *bridge)
+> >       if (ret)
+> >               goto phy_en_fail;
+> >
+> > -     ret =3D msm_dsi_host_power_on(host, &phy_shared_timings[id], is_b=
+onded_dsi, msm_dsi->phy);
+> > +     ret =3D msm_dsi_host_power_on(host, &phy_shared_timings[id],
+> > +                                 is_bonded_dsi, is_dual_panel, msm_dsi=
+->phy);
+> >       if (ret) {
+> >               pr_err("%s: power on host %d failed, %d\n", __func__, id,=
+ ret);
+> >               goto host_on_fail;
+> > @@ -230,7 +235,8 @@ static int dsi_mgr_bridge_power_on(struct drm_bridg=
+e *bridge)
+> >
+> >       if (is_bonded_dsi && msm_dsi1) {
+> >               ret =3D msm_dsi_host_power_on(msm_dsi1->host,
+> > -                             &phy_shared_timings[DSI_1], is_bonded_dsi=
+, msm_dsi1->phy);
+> > +                             &phy_shared_timings[DSI_1], is_bonded_dsi=
+,
+> > +                             is_dual_panel, msm_dsi1->phy);
+> >               if (ret) {
+> >                       pr_err("%s: power on host1 failed, %d\n",
+> >                                                       __func__, ret);
+> >
+> > --
+> > 2.34.1
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
