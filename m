@@ -1,272 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-48715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB60DA3DF00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 16:43:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F947A3DF14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 16:45:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6DD73189D1E0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:43:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5DA2717F461
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:44:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4EA01FBC9E;
-	Thu, 20 Feb 2025 15:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F09851FECA7;
+	Thu, 20 Feb 2025 15:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yzfyUaei"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FZZmvzQj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094BC1F8916
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 15:42:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1901DA62E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 15:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740066161; cv=none; b=lxQnlWAaA0g0RZcpojg8QYsTJC8afmeGTHKT6+GXWS8T5v4tu6Oxm8lrPSWZDPixrYOJrV/XCP+7HvL51faBhQcWfV+aP5HoAxI1+pcOuhOLHdcZflkfjSn+caxlvEQKIp3DPmCfLoZ7d7vbYdGXhTWB8RPPBn+WkpqEJwntSs8=
+	t=1740066264; cv=none; b=uw1GAvNXsstN4E9dRV8tGXT6Y394SFAwImWYZw8WZorjCO8RXhlc3CpJh/DQpkuTZwnYMbuQxv49tYoijIn7hIOSF8nuMg2SipB1ogp/CTx2XQ2l+240J8d1dqeDIdGk+u1+sycP5QEa5lw/pyHTsk0nZiYSGI/SVSW9l3KwBBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740066161; c=relaxed/simple;
-	bh=ujRn8n7GidyCxxK9ZmLQoL5PmhUD3AHxBU7IMcuJFVU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bD+X+dYB1l8ewpmbOC/hgXFbgnID+2c/c9vei23nT+1Uvdn1LXjta0i7lqINaN16DhCZzJweb91PuS+vLVb50WVFC3UzZvL+79kqfxsBdw7pTbeJQDrBWeYhWVvzU0PJpg2Un0a32HjO4o3pWCk10V2B1+f3UZbwIydebjSVFsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yzfyUaei; arc=none smtp.client-ip=209.85.219.174
+	s=arc-20240116; t=1740066264; c=relaxed/simple;
+	bh=WlcTt8f+um8w59cyR81BSacmkIXQZh0cNp8/QyNUV7k=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=lUQ6TVdr2n+j9iaYX/z9zGvDasEjYAnxDbqbWGTZYlKIHD+/JXjQQiuiVOo5pVWcRd/yN15gmMw5nCsd94hmBDjwwCaMUU7jKtU8ZV1DfHwifTZsbG1vL6yApHo9lersydfg0VQ441Kwv541eLi0d6ycvB/KET1ALEkM6X2rgpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FZZmvzQj; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e5dc37f1991so1017062276.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 07:42:39 -0800 (PST)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-abb9e81c408so18617966b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 07:44:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740066159; x=1740670959; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5FyY/uqpI1+/qb2X9DvR/LN4Auweuub6T5/j2p07sJM=;
-        b=yzfyUaeibNCo2pRy4jNKBJdOR/kKRbjKmdncbqjruS2ZqUAJMGh/T2+CfL4keyWP2h
-         um21foVJDz4TlMcyvN3RFvMrAdgPFUXy+BN/ikBWRoubxr0SpZ4Oii4SsKuGG3mJ59nY
-         429xD0ShzN2gqtdubxuab8864arn66MjNqi1h6tPPpRqHWTBzAbbfW9MItE8Tb+aSgL8
-         9J60QsyM7OaKJ3flolOI9O5/xmO1TdEdOCETiiZwCxF0HfAfS//IwWO9AVHKs0knwsmB
-         XirpDgsA8m1g7fbpcI95pWisjyzCneJgO19S7OIBTDRh4QEXVdApshJYimJKlPbyQ95b
-         CDyQ==
+        d=linaro.org; s=google; t=1740066261; x=1740671061; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=T2wNYP3RncDUanAjxqu5pR1RjMEF7sw25ts4ovII3hM=;
+        b=FZZmvzQjZJjmxwRrZoIvUcyW5Pk2JxfujTI/f//09XXQwWfWZqKjzWRl3xuEtSyGd9
+         WC81kh+uUFk5/VPwWJ2iQoc9GyyrJG4hYLA3FBWqZltnkAlD/ZQLRpFC2uPhi5Tm2z00
+         fQ+a/hh3xjLjZJdotUZHw8j9JF04Dq0M82OSmzycZqupGAc3u8CnxBitHbJEWqJABqn6
+         56opvskUewURZaPc7mHHZ71ylwy0WuVcDGHo1br9xfu7hy9g6nR3O0FeO8atn7rSCQKP
+         YO0DHgYKRflEO5tOKnxYSIyKjNk/4qpjyI8lDXAw5dmzSQoTV7giab/L7AGFKkxkNwsa
+         jv0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740066159; x=1740670959;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5FyY/uqpI1+/qb2X9DvR/LN4Auweuub6T5/j2p07sJM=;
-        b=DxaLLeL7wwiGVRuFbyc/ujnv/ycTidEPMgltirig4AVUD51O0X9y551gmvs2EuAdEF
-         unHo722yRWPO59zmIQOATz9UiB+sslgnJme31MSiScb8goUfXMMr/g87zlfqYYz6Mkop
-         +0GsFSnUQQuq2V82VJmsrgR+yRTmq8wEEqbS4FgLAYI54Xk7nSIdqjpTPGW2HipFwq17
-         lQkjCONhTg2BQLdy02KbYwq5/DgpnFbPyz3jUCyTGoo5aLAmAh6qe+2ss+mBw+BQ7Hxr
-         RQTNRDB36+PtO0zmnoTo/cpzYuRUla7eXIQpMWgQl+7P5mRYJnia21zzMYQsNhsIXWVB
-         v5Ag==
-X-Forwarded-Encrypted: i=1; AJvYcCWB5w5eVyEx60KzVP3OPgmuQIcl/XqbihYm5K9FJfYYLLFLXx7m+Iy4YNFmw1ATqdG1UA8iWv9IXe/OyxJR@vger.kernel.org
-X-Gm-Message-State: AOJu0YzR6fuB5ryeFbaHCEfHamvs4k+a4kIttBsE64ypuxDBkt1ut55W
-	rgDgac+U0tsmokHybQmsoOyzfHGoXK3PRCO0Bo1TQB2tWPDWtDZngS1WNteHgAFj/KTNyEjUVQ6
-	i1BD6O0scLFprR2lCKLOhjN8mmXSZaSxPihvwvw==
-X-Gm-Gg: ASbGncuzPnR4Rwz2oNa+GUbtGx0DW+c4ky/LRcUvHVQRMoi19iNBBDVIcZm01vGL5xt
-	C9SkB7LG2q38GsZ9hEas6v/DHBtnqh+0IXEIqh3hZOlFlfuEAOPQMcp/aZOie1L99M7utiJu4fx
-	YY
-X-Google-Smtp-Source: AGHT+IEz/BdkBxzruDv1BnRXbsP+TA9e8Vw4LtNbmAaEcBP0MwtZCiysLe/spHraIOiIlseufiQMsXOwHbIUKyc7fcQ=
-X-Received: by 2002:a05:690c:498c:b0:6ee:8363:96d3 with SMTP id
- 00721157ae682-6fb5831dcddmr207514557b3.27.1740066158995; Thu, 20 Feb 2025
- 07:42:38 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740066261; x=1740671061;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T2wNYP3RncDUanAjxqu5pR1RjMEF7sw25ts4ovII3hM=;
+        b=d9aFKBBiV6pTYM+/nwMMBwWDb2nwjP1Pd0YYj/0JJ0XlRtUw1bgCgszZCSvXIXWimy
+         mu+UqOscn04dCAeELZrgU0euCYUDY21hDP5W4EQxeQ1onv6tkCslofTxOKJ021pqQGFW
+         3SRnhQkpec2FtHYDh6ZZTgMSO3Gx7iMn1jBYxyDt5fnURT1egZ9uUSaJi36YFjPa/4kK
+         /bAsay3522JXoMpqLucYFupCMWjxVJ63hxIF34l/JDL0hxys7kxOr7OGa5BlEhV5btPc
+         7SUexybzZzCSHd+jfFdws155PaH8VFMzFW4bwOndvgdTYiNAsuRSDajC3CRsIsIXR+EW
+         sEiQ==
+X-Gm-Message-State: AOJu0YwQ1hkbwiiQ41fIfvCALCYo/pg+PFQ6oEXtDWy0OjL/m5CvF1kW
+	Id69V372+hzY+7+V+OPGY2NcR7Cx95zkbX6IfZ4m9COP48sBIzlpTEDaPfhDReE=
+X-Gm-Gg: ASbGncsQLC6J9eZ5KbNK57b1RWd2+XkxeI57QZ2yksyTx+OIiL4B0qrQQNQbgfIZEut
+	1ECVmUqk8oggy9VUf/n4lGkkwrK/PMj52ATckfjUa/Ebar5gkWgcA5eSQQL/ng8HFmf9+3a4jou
+	XV4TsNW9K9Ka8tmxZvCrDagpa1kpojSR5IxZx9RYcbcjL1wIpz/lzD+1UaWzq8DghhlKeSGk/Hb
+	MDShnl77wNW2hCObUYBDlu8Co5BVbgJfCxiZFop+1UIkX5ETnpwqrnLxyxvUGqG29uMQ78/36d7
+	jNJ7arYOaiX5g7HOOWtGHGcHoCgq/FP2CaOdTzEz9U7lKLoS3idRU+ueNrHH93aVmQ==
+X-Google-Smtp-Source: AGHT+IE5lQpNvuTmyo8S8MAplsCi4FPsthReA8C7NbF6zOboaxnLtOHLs682fSoHujGnupi3y9HwZg==
+X-Received: by 2002:a17:907:72c8:b0:ab7:63fa:e48a with SMTP id a640c23a62f3a-abb7093459dmr793446666b.2.1740066261241;
+        Thu, 20 Feb 2025 07:44:21 -0800 (PST)
+Received: from [127.0.1.1] (78-11-220-99.static.ip.netia.com.pl. [78.11.220.99])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece2881b3sm12418151a12.77.2025.02.20.07.44.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2025 07:44:20 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 0/4] arm64: dts: qcom: sm8750: CDSP and modem
+Date: Thu, 20 Feb 2025 16:44:10 +0100
+Message-Id: <20250220-b4-sm8750-cdsp-v2-0-a70dd2d04419@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250220-dual-dsi-v2-0-6c0038d5a2ef@linaro.org>
- <20250220-dual-dsi-v2-5-6c0038d5a2ef@linaro.org> <iibq3orsb7uf44luz2he2auox43ki42m2z4nnderyqlhypvfgo@pwqpvua6vuyo>
-In-Reply-To: <iibq3orsb7uf44luz2he2auox43ki42m2z4nnderyqlhypvfgo@pwqpvua6vuyo>
-From: Jun Nie <jun.nie@linaro.org>
-Date: Thu, 20 Feb 2025 23:42:28 +0800
-X-Gm-Features: AWEUYZkhT707fwgCYjUo1mZOa8BNPphgYLuTOs0pu7OSbwGyUxHGJN7uYb0yFbQ
-Message-ID: <CABymUCNajuc8WnWgf2JehFYUY-MqxCYmD=By8nY-JppxYHsyNw@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] drm/msm/dsi: Support DSC for dual panel case
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Krishna Manikandan <quic_mkrishn@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMpNt2cC/3XMQQ7CIBCF4as0s3YM0EqhK+9huqCA7SRaGjBE0
+ 3B3sXuX/0vet0PykXyCodkh+kyJwlpDnBqwi1lnj+Rqg2Ci41wInDpMT9VfGFqXNmyVkVbIrjW
+ tg3raor/T+wBvY+2F0ivEz+Fn/lv/UpkjQ22kNkppx6f++qDVxHAOcYaxlPIFwbx0jK0AAAA=
+X-Change-ID: 20241122-b4-sm8750-cdsp-38a6c2643a3d
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1161;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=WlcTt8f+um8w59cyR81BSacmkIXQZh0cNp8/QyNUV7k=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnt03M2UfuoTgU5SLw0Jq5lxYi9Vm49odfCb9a1
+ QJS0OjEqpmJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ7dNzAAKCRDBN2bmhouD
+ 1wGSD/9ZmGBr9lS0p/gU8+NXTQTlgZjDJ99Kfx0gyt7RDNjP9FnrFMN8ybRKgpgQOk6faaStxG1
+ wtiTpDKhbcmG1i9CUL1/furAvhrD+KHa4NfjaA2qBEkC++beKL/c4R+aeLqFDuoIA4Kys8Renfl
+ ckx0mM6p0qex/QUX+aG328sHLZBt2/MKO/gBhyoZElelIKKzfrxdTZreBCZ2mnHYceUHVwLpDXV
+ ASoGAwIGSSJATzK1c9dKN0TAOSOGmYFQhWe97IjCz8oHHhuAj+j3EO3Neo1KWrYunlvkxnkjlTX
+ NzWJKZIksLVQ7rIusoXdD2LLxcEwI6CTBXD2zi6DCrAlYq2T87ngAgZZJbU616520qrk+AvjZy5
+ Tz+7Jr9MnhJykYgA+NFnIPLHqHwtSpKOw1DW1nYbUWb7aQ9kwedsF2blPQxBa9NYKO39oy4zJjN
+ lUKN/nmt183CVtBfA/jZa+eWxqvUu/A0ESwpUALw5x/cx5w8KSE3bxVolSepGwlm8AY6t1y1xb7
+ fPakAo1hP2tWhTkpP55ExRg/ottmG3/OBds3NAOXM4ZQa8H94aKAkAdrk7MtBVBxUPvpnaEuq3i
+ p+wW6juUuDDYPaS8glxVMYbz+fxiX+Sa1XoB4Tv2WlcKZ3yIw8ZfIxdn7vuDSVzjhlaop3fLiZI
+ 31+EQ3USfkLICpg==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2025=E5=B9=B42=E6=
-=9C=8820=E6=97=A5=E5=91=A8=E5=9B=9B 18:39=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Thu, Feb 20, 2025 at 06:07:56PM +0800, Jun Nie wrote:
-> > There is dual DSI case that every DSI link is connected to an independe=
-nt
-> > panel. In this dual panel case, the frame width for DSC on each link sh=
-ould
-> > be halved to support the usage case.
->
-> Isn't it the case for the DSI panel utilizing two DSI links?
+Hi,
 
-The added case here is 2 DSI panel utilizing two DSI links, 1 DSI link
-in each panel.
-I assume default case is 1 panel with 2 DSI link, such as Marijn's case.
->
-> >
-> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > ---
-> >  drivers/gpu/drm/msm/dsi/dsi.h         |  3 ++-
-> >  drivers/gpu/drm/msm/dsi/dsi_host.c    | 13 +++++++++----
-> >  drivers/gpu/drm/msm/dsi/dsi_manager.c | 10 ++++++++--
-> >  3 files changed, 19 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/ds=
-i.h
-> > index 35b90c462f637111159b204269ce908614a21586..5a8978bed9f4ca897b418ce=
-d60194042d9dd8d05 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> > @@ -74,7 +74,8 @@ void msm_dsi_host_enable_irq(struct mipi_dsi_host *ho=
-st);
-> >  void msm_dsi_host_disable_irq(struct mipi_dsi_host *host);
-> >  int msm_dsi_host_power_on(struct mipi_dsi_host *host,
-> >                       struct msm_dsi_phy_shared_timings *phy_shared_tim=
-ings,
-> > -                     bool is_bonded_dsi, struct msm_dsi_phy *phy);
-> > +                     bool is_bonded_dsi, bool is_dual_panel,
-> > +                     struct msm_dsi_phy *phy);
-> >  int msm_dsi_host_power_off(struct mipi_dsi_host *host);
-> >  int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
-> >                                 const struct drm_display_mode *mode);
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/d=
-si/dsi_host.c
-> > index 976c5d82a2efa0fc51657b8534675890be7c33a6..752a97f7181c30dade0a774=
-5492bf16649b3197b 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > @@ -902,7 +902,8 @@ static void dsi_update_dsc_timing(struct msm_dsi_ho=
-st *msm_host, bool is_cmd_mod
-> >       }
-> >  }
-> >
-> > -static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bo=
-nded_dsi)
-> > +static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bo=
-nded_dsi,
-> > +                          bool is_dual_panel)
-> >  {
-> >       struct drm_display_mode *mode =3D msm_host->mode;
-> >       u32 hs_start =3D 0, vs_start =3D 0; /* take sync start as 0 */
-> > @@ -947,7 +948,10 @@ static void dsi_timing_setup(struct msm_dsi_host *=
-msm_host, bool is_bonded_dsi)
-> >                       return;
-> >               }
-> >
-> > -             dsc->pic_width =3D mode->hdisplay;
-> > +             if (is_dual_panel)
-> > +                     dsc->pic_width =3D hdisplay;
-> > +             else
-> > +                     dsc->pic_width =3D mode->hdisplay;
-> >               dsc->pic_height =3D mode->vdisplay;
-> >               DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
-> >
-> > @@ -2369,7 +2373,8 @@ static void msm_dsi_sfpb_config(struct msm_dsi_ho=
-st *msm_host, bool enable)
-> >
-> >  int msm_dsi_host_power_on(struct mipi_dsi_host *host,
-> >                       struct msm_dsi_phy_shared_timings *phy_shared_tim=
-ings,
-> > -                     bool is_bonded_dsi, struct msm_dsi_phy *phy)
-> > +                     bool is_bonded_dsi, bool is_dual_panel,
-> > +                     struct msm_dsi_phy *phy)
-> >  {
-> >       struct msm_dsi_host *msm_host =3D to_msm_dsi_host(host);
-> >       const struct msm_dsi_cfg_handler *cfg_hnd =3D msm_host->cfg_hnd;
-> > @@ -2412,7 +2417,7 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *h=
-ost,
-> >               goto fail_disable_clk;
-> >       }
-> >
-> > -     dsi_timing_setup(msm_host, is_bonded_dsi);
-> > +     dsi_timing_setup(msm_host, is_bonded_dsi, is_dual_panel);
-> >       dsi_sw_reset(msm_host);
-> >       dsi_ctrl_enable(msm_host, phy_shared_timings, phy);
-> >
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/ms=
-m/dsi/dsi_manager.c
-> > index be13bf682a9601484c9c14e8419563f37c2281ee..158b6cc907cb39cc3b182d3=
-088b793d322a3527c 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> > @@ -24,6 +24,7 @@ struct msm_dsi_manager {
-> >       struct msm_dsi *dsi[DSI_MAX];
-> >
-> >       bool is_bonded_dsi;
-> > +     bool is_dual_panel;
-> >       bool is_sync_needed;
-> >       int master_dsi_link_id;
-> >  };
-> > @@ -31,6 +32,7 @@ struct msm_dsi_manager {
-> >  static struct msm_dsi_manager msm_dsim_glb;
-> >
-> >  #define IS_BONDED_DSI()              (msm_dsim_glb.is_bonded_dsi)
-> > +#define IS_DUAL_PANEL()              (msm_dsim_glb.is_dual_panel)
-> >  #define IS_SYNC_NEEDED()     (msm_dsim_glb.is_sync_needed)
-> >  #define IS_MASTER_DSI_LINK(id)       (msm_dsim_glb.master_dsi_link_id =
-=3D=3D id)
-> >
-> > @@ -55,6 +57,7 @@ static int dsi_mgr_parse_of(struct device_node *np, i=
-nt id)
-> >               msm_dsim->is_bonded_dsi =3D of_property_read_bool(np, "qc=
-om,dual-dsi-mode");
-> >
-> >       if (msm_dsim->is_bonded_dsi) {
-> > +             msm_dsim->is_dual_panel =3D of_property_read_bool(np, "qc=
-om,dual-panel");
-> >               if (of_property_read_bool(np, "qcom,master-dsi"))
-> >                       msm_dsim->master_dsi_link_id =3D id;
-> >               if (!msm_dsim->is_sync_needed)
-> > @@ -214,6 +217,7 @@ static int dsi_mgr_bridge_power_on(struct drm_bridg=
-e *bridge)
-> >       struct mipi_dsi_host *host =3D msm_dsi->host;
-> >       struct msm_dsi_phy_shared_timings phy_shared_timings[DSI_MAX];
-> >       bool is_bonded_dsi =3D IS_BONDED_DSI();
-> > +     bool is_dual_panel =3D IS_DUAL_PANEL();
-> >       int ret;
-> >
-> >       DBG("id=3D%d", id);
-> > @@ -222,7 +226,8 @@ static int dsi_mgr_bridge_power_on(struct drm_bridg=
-e *bridge)
-> >       if (ret)
-> >               goto phy_en_fail;
-> >
-> > -     ret =3D msm_dsi_host_power_on(host, &phy_shared_timings[id], is_b=
-onded_dsi, msm_dsi->phy);
-> > +     ret =3D msm_dsi_host_power_on(host, &phy_shared_timings[id],
-> > +                                 is_bonded_dsi, is_dual_panel, msm_dsi=
-->phy);
-> >       if (ret) {
-> >               pr_err("%s: power on host %d failed, %d\n", __func__, id,=
- ret);
-> >               goto host_on_fail;
-> > @@ -230,7 +235,8 @@ static int dsi_mgr_bridge_power_on(struct drm_bridg=
-e *bridge)
-> >
-> >       if (is_bonded_dsi && msm_dsi1) {
-> >               ret =3D msm_dsi_host_power_on(msm_dsi1->host,
-> > -                             &phy_shared_timings[DSI_1], is_bonded_dsi=
-, msm_dsi1->phy);
-> > +                             &phy_shared_timings[DSI_1], is_bonded_dsi=
-,
-> > +                             is_dual_panel, msm_dsi1->phy);
-> >               if (ret) {
-> >                       pr_err("%s: power on host1 failed, %d\n",
-> >                                                       __func__, ret);
-> >
-> > --
-> > 2.34.1
-> >
->
-> --
-> With best wishes
-> Dmitry
+Changes in v2:
+- Fix CDSP and MPSS PAS address space range.
+- Re-order nodes for correct placement.
+- Rb tags.
+- Link to v1: https://lore.kernel.org/r/20241122-b4-sm8750-cdsp-v1-0-9a69a889d1b7@linaro.org
+
+Context of this depends on my audio patches:
+https://lore.kernel.org/r/20250220-sm8750-audio-v2-0-fbe243c4afc3@linaro.org
+
+Bindings for remoteproc:
+https://lore.kernel.org/linux-arm-msm/20250220154132.199358-1-krzysztof.kozlowski@linaro.org/T/#t
+
+Best regards,
+Krzysztof
+
+---
+Krzysztof Kozlowski (4):
+      arm64: dts: qcom: sm8750: Add CDSP
+      arm64: dts: qcom: sm8750: Add Modem / MPSS
+      arm64: dts: qcom: sm8750-mtp: Enable CDSP and mention MPSS
+      arm64: dts: qcom: sm8750-qrd: Enable CDSP and mention MPSS
+
+ arch/arm64/boot/dts/qcom/sm8750-mtp.dts |  15 ++
+ arch/arm64/boot/dts/qcom/sm8750-qrd.dts |  14 ++
+ arch/arm64/boot/dts/qcom/sm8750.dtsi    | 286 ++++++++++++++++++++++++++++++++
+ 3 files changed, 315 insertions(+)
+---
+base-commit: 51ad5d52335d6aa0bda1d8305d44679dddbbfec5
+change-id: 20241122-b4-sm8750-cdsp-38a6c2643a3d
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
