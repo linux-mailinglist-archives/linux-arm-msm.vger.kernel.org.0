@@ -1,262 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-48670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78D47A3D8AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 12:31:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED861A3D8B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 12:32:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C8277A80E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 11:28:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 91D973B6E7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 11:30:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B88F31F153E;
-	Thu, 20 Feb 2025 11:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD1BD1F2C56;
+	Thu, 20 Feb 2025 11:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="FKaCqLpu";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="rlFD5gzh";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="APqZHmmf";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="CiwI10S6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y7yslzBK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27901BD9CE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 11:28:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8901EF0A9;
+	Thu, 20 Feb 2025 11:30:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740050926; cv=none; b=Ud454QPKapwVnAo0TrgFbtQly9hS2yCYeA/hvMXFTHiV32e0+XiCywhPS/vLwT3eshiCtQuWgt3YjLP+qWg/xa2IA18wLmdr+QeBfkw7589Ne7A8B3zGV+HzSi94jLDGsNtBtrigaoGdEHCMK0cQROcwgayb7yfJj3s4BK1I+hc=
+	t=1740051015; cv=none; b=kJz4Q0hQw5ACvtspKN3+lbB3fU+j9HftTHn7qAHW+QreONAk3WP/9Pps7cnoJEm2T1ULKrwFoKtzHjyWpVFq6omLQD5CH/Bm4MOTgP0Ve4hKhEd4PFKzlGFDEyx/CoBTdMg4YtKwSumTHtFijLDvBLUrxieUNTnwq/RFnagNzOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740050926; c=relaxed/simple;
-	bh=qihenk4qWKP7Cq+VhiW80eiRrmGZPftz6N5Y2L8QVbY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g0bCTk9483m2OQz+/NY317Nqn+eVSEVnZSsg/gZ8x6XZVl8GsQSD0wiPS9NM7AqQBNYIDRYvkqZJU1ziJbVWQEABm2qxDuUQ6imgpZYgJcBZ881dWJCYlNK581x4qzapFLHHtCcV5143IUiI5/rMzqwRpR5hdAoWD4/m9LD6cTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=FKaCqLpu; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=rlFD5gzh; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=APqZHmmf; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=CiwI10S6; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id D954C1F38F;
-	Thu, 20 Feb 2025 11:28:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1740050923; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=piqxfvLXdbGusjFDiJqlKR9OqlTBD0wfyNhdz+Y8Rdo=;
-	b=FKaCqLpupK+EyUHi0f5GBjf/hHx6IevA2tQAnj9epH03L4XgghXSqARmt2pRcN6MdFUepq
-	eHoZ7/GqmGDWWcEgeXSjTON2/vZ4yBYdmcR58pRV/61cc3Pyn/TAHu8q6VxTrqlD3ck/53
-	6FieLDeWaRrFFlqO7zMGUONAIFKW254=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1740050923;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=piqxfvLXdbGusjFDiJqlKR9OqlTBD0wfyNhdz+Y8Rdo=;
-	b=rlFD5gzhMdEsIryvM5UjJumhGYqjRqi/q+pBy7fszYOU0vXWNJKu6Xo3ICiqyrFKD7IEX5
-	JBBQMXJTJPBdQVDA==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=APqZHmmf;
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=CiwI10S6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1740050922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=piqxfvLXdbGusjFDiJqlKR9OqlTBD0wfyNhdz+Y8Rdo=;
-	b=APqZHmmf3yd7nneZMwYZZPy8tKLoW6KyOuei3flSDhzzrcaFGr8Zk/dVEwiLuXBCQwX+Yi
-	7L5j3necD2oexkK6n7KK8UqJ/JLPI5iRMdwCo1OG0+5LDoq4jSFRTCqxFqnqdhW5cadvt9
-	eFm3b1SoH70/NubZvEi51XF/Q758vr8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1740050922;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=piqxfvLXdbGusjFDiJqlKR9OqlTBD0wfyNhdz+Y8Rdo=;
-	b=CiwI10S6vS7UlpiQa6s/xEdu6SWaatdK6ULi6/FNojnSrLByr9xGKnQvsiW0PlQI9//8N0
-	gn6DpRvV1wLDvQCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CB16D13A42;
-	Thu, 20 Feb 2025 11:28:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id TXtIK+kRt2d4HQAAD6G6ig
-	(envelope-from <vbabka@suse.cz>); Thu, 20 Feb 2025 11:28:41 +0000
-Message-ID: <5746ef9f-92da-4f83-bdf8-96169b090cff@suse.cz>
-Date: Thu, 20 Feb 2025 12:28:39 +0100
+	s=arc-20240116; t=1740051015; c=relaxed/simple;
+	bh=GlABbLQNdlEWm8DmN6/oAlkh9Ch4kaIssmUYP35PdPI=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Uc3p/PwUrWxOwT3VL4Ab2EVEFwOVjRblrEmyrYW1JRMSr5GwCNX6nzRfEqATpWIJE5MaxB+/IF4d1I2XPLaLIXyGwbhPie264AHcfOPKXeG3tapxdrm7rFc/vTPs8cIFLrzCcFEzhCHL1i0DCIQYu9WduaeAUJI9O3zcXHcoXJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y7yslzBK; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51KAk96o011748;
+	Thu, 20 Feb 2025 11:30:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=599FXlmZ3EgyEUHHKK5D1A
+	8GuodYRYwTvseL6b1+1ag=; b=Y7yslzBKI41AMRSGMg1JJ4vo95EIQYjZUnAGua
+	OBJONLwb6E/PPbZv4L/vq8Qs7/L+JMjgcV2QZ430abL5JBEHixGkJ3/a0U1vVan3
+	djLxVWbEFXBe2DKVjSrxDRhIhzgKptRkG2537EcoVgI6VInZqfsiomFeF1TCRXV9
+	qznGFSGvFtL5R5shSguEuFvwrYmoa3Xr9RnJYaGJFISZutNu0SSIAeMFD6V1H97H
+	AuMl3AoIta7uYpORvIlNAavLpWGpT8ngoZHzIqBLm1V7O135EBSbeXav/jNEQwib
+	h0Bbh+zMLm7N7CQ/NQYZtO16Iicvmr7sTw8+8htNDycGOhXQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44x2xb8427-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Feb 2025 11:30:05 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51KBU4Gu001359
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Feb 2025 11:30:04 GMT
+Received: from hu-janathot-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 20 Feb 2025 03:30:00 -0800
+From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marcel Holtmann
+	<marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+CC: <quic_mohamull@quicinc.com>, <quic_hbandi@quicinc.com>,
+        <quic_anubhavg@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-bluetooth@vger.kernel.org>
+Subject: [RESEND PATCH v9 0/2] Enable Bluetooth on qcs6490-rb3gen2 board
+Date: Thu, 20 Feb 2025 16:59:43 +0530
+Message-ID: <20250220112945.3106086-1-quic_janathot@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/11] KVM: guest_memfd: Handle final folio_put() of
- guest_memfd pages
-Content-Language: en-US
-To: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>,
- kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com
-References: <20250211121128.703390-1-tabba@google.com>
- <20250211121128.703390-3-tabba@google.com>
- <8ddab670-8416-47f2-a5a6-94fb3444f328@redhat.com>
-From: Vlastimil Babka <vbabka@suse.cz>
-Autocrypt: addr=vbabka@suse.cz; keydata=
- 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
- EP+ylKVEKb0Q2A==
-In-Reply-To: <8ddab670-8416-47f2-a5a6-94fb3444f328@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: D954C1F38F
-X-Spam-Score: -3.01
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	ARC_NA(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[redhat.com,kernel.org,ellerman.id.au,brainfault.org,sifive.com,dabbelt.com,eecs.berkeley.edu,google.com,zeniv.linux.org.uk,infradead.org,linux-foundation.org,intel.com,linux.intel.com,digikod.net,maciej.szmigiero.name,amd.com,oracle.com,gmail.com,arm.com,quicinc.com,huawei.com,linux.dev,amazon.co.uk,nvidia.com];
-	DKIM_TRACE(0.00)[suse.cz:+];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_MATCH_ENVRCPT_SOME(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[60];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:mid,suse.cz:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Flag: NO
-X-Spam-Level: 
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 95jiziUNA9WzUJAIcqrf2DyEP7uvh95A
+X-Proofpoint-ORIG-GUID: 95jiziUNA9WzUJAIcqrf2DyEP7uvh95A
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-20_04,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 impostorscore=0 spamscore=0
+ mlxlogscore=751 clxscore=1015 priorityscore=1501 adultscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2502200086
 
-On 2/20/25 12:25, David Hildenbrand wrote:
-> On 11.02.25 13:11, Fuad Tabba wrote:
->> Before transitioning a guest_memfd folio to unshared, thereby
->> disallowing access by the host and allowing the hypervisor to
->> transition its view of the guest page as private, we need to be
->> sure that the host doesn't have any references to the folio.
->> 
->> This patch introduces a new type for guest_memfd folios, which
->> isn't activated in this series but is here as a placeholder and
->> to facilitate the code in the next patch. This will be used in
->> the future to register a callback that informs the guest_memfd
->> subsystem when the last reference is dropped, therefore knowing
->> that the host doesn't have any remaining references.
->> 
->> Signed-off-by: Fuad Tabba <tabba@google.com>
->> ---
-> 
-> [...]
-> 
->>   static const char *page_type_name(unsigned int page_type)
->> diff --git a/mm/swap.c b/mm/swap.c
->> index 47bc1bb919cc..241880a46358 100644
->> --- a/mm/swap.c
->> +++ b/mm/swap.c
->> @@ -38,6 +38,10 @@
->>   #include <linux/local_lock.h>
->>   #include <linux/buffer_head.h>
->>   
->> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
->> +#include <linux/kvm_host.h>
->> +#endif
->> +
->>   #include "internal.h"
->>   
->>   #define CREATE_TRACE_POINTS
->> @@ -101,6 +105,11 @@ static void free_typed_folio(struct folio *folio)
->>   	case PGTY_hugetlb:
->>   		free_huge_folio(folio);
->>   		return;
->> +#endif
->> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
->> +	case PGTY_guestmem:
->> +		kvm_gmem_handle_folio_put(folio);
->> +		return;
-> 
-> Hm, if KVM is built as a module, will that work? Or would we need the 
+Patch 1/2
+  The new state node qup_uart7_sleep is causing a dt-check warning because the 
+  base DTSI (sc7280.dtsi) is defined with individual pin configurations
 
-Good catch, I guess not?
+----
+Changes from v8:
+* Fixed the dtb-check warning  in P1 and removed tag: Reviewed-by
+* Link to v8: https://lore.kernel.org/linux-arm-msm/20250127064940.1360404-1-quic_janathot@quicinc.com/
 
-> core-mm guest_memfd shim that would always be compiled into the core and 
-> decouple KVM from guest_memfd ("library")?
+Changes from v7:
+* updated P1 & P2 with tag: Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 
+* Link to v7: https://lore.kernel.org/lkml/20250107134157.211702-1-quic_janathot@quicinc.com/#t
 
-That could also help avoid exporting the mpol symbols in the NUMA mempolicy
-series?
+Changes from v6:
+* Elaborated the commit message with more information.
+* Link to v6: https://lore.kernel.org/lkml/20241223135700.22660-1-quic_janathot@quicinc.com/
+
+Changes from v5:
+* Update the wcn6750 required properties in bindings.
+* Link to v5: https://lore.kernel.org/linux-arm-msm/20241209103455.9675-1-quic_janathot@quicinc.com/
+
+Changes from v4:
+* Added reviewed tag by Krzysztof in p1
+* Updated the p2 commit message with sw_ctrl and wifi-enable are
+  handled in wifi FW.
+* Added blank line between the nodes in p2
+* Placed the structures in proper order in p4
+* Link to v4: https://lore.kernel.org/all/20241204131706.20791-1-quic_janathot@quicinc.com/
+
+Changes from v3:
+* Defined the PMU node and used the its output to power up BT
+* Used power sequencer for wcn wcn6750 module
+* Split the patch to multiple as per subtree
+* Add description of the PMU of the WCN6750 module
+* Include separate UART state node for sleep pin configuarion
+* Link to v3: https://lore.kernel.org/linux-arm-msm/20241022104600.3228-1-quic_janathot@quicinc.com/
+
+Changes from v2:
+* Sorted nodes alphabetically
+* Link to v2: https://lore.kernel.org/linux-arm-msm/20241010105107.30118-1-quic_janathot@quicinc.com/
+
+Changes from v1:
+* Corrected the board name in subject
+* Link to v1: https://lore.kernel.org/linux-arm-msm/20241009111436.23473-1-quic_janathot@quicinc.com/
+Janaki Ramaiah Thota (2):
+  arm64: dts: qcom: qcs6490-rb3gen: add and enable BT node
+  Bluetooth: hci_qca: use the power sequencer for wcn6750
+
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 167 ++++++++++++++++++-
+ drivers/bluetooth/hci_qca.c                  |   2 +-
+ 2 files changed, 167 insertions(+), 2 deletions(-)
+
+-- 
+
 
 
