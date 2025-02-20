@@ -1,202 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-48694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 529BDA3DCF0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:35:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A14D8A3DD28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:45:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D8317000E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 14:28:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B813700A93
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 14:38:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFD431FCF6D;
-	Thu, 20 Feb 2025 14:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5DA11FDE24;
+	Thu, 20 Feb 2025 14:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="1m3xmRyk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F9bNGvmq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42A91FCCEB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 14:27:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8411FDA89;
+	Thu, 20 Feb 2025 14:38:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740061636; cv=none; b=slCDWR3Puza8v2xBh43xFc1hmZXyvgnqGKzHCKPLQ2nLzh/SJ9s73yGKldndZ8uL38kO0cadR7g7Xt4ivFSlendbZj/oqtNFKP50YgKvMnt7R5+/iSdJ5HI2UZjrirZjYPMm+nGerhbixBiZRybsWb6qZyXBxr7PBQQ3YzLTkyU=
+	t=1740062313; cv=none; b=s2BCb+hR5gv1azX5bC6rYtXMek4XKROSkXJoJQx4+pYp21gzvpcrTs2xVuxkLPx7f123xCbUoejnflkGkUFOXU8EU06nFbntLf01ZM0+BCmi2zvZFfKFdEOhRkCG6OApODupPzSl8zcYvMsQGd6x0J1wmjRg2EP2SjTDJKKfoyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740061636; c=relaxed/simple;
-	bh=D6cKUGAMjY2KP9aAcuVHBx8VTJJeLQ/lOCGq6SoaKoY=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WUBAwsrbqdtuDwVkMEdQjrGSXhE57lXQCoDA2hClvc+HntASMFUyhJwJPU8gZvqLyAZXMeHOR+ikU0k2dmoBIFg8uEMkHkDEfIq3+jnfX8XBPjCb+I+owQoeOqk6qsrAblCBAygwZnN9PD8HvQ+yLZ2Ea8EE5Lj51L2dLTQ8XKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=1m3xmRyk; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-30613802a59so10133681fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 06:27:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1740061633; x=1740666433; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=f4w4pCG0U42bM1eFKeaBN0EiFoNbUjvKtinnx1nWT1E=;
-        b=1m3xmRykIuZhKeySuszDijNS5tRgWKAj3JorvIq88ISoinxUpTQqYJ8kElekvXgTnL
-         hx3K9+bo+Sv40qqPlCkdYWDol0/+UivyxvriNVn3fhfifaYGofdvXCWqpMZd7I9VosKS
-         3/u1NCKXNvaXf7MT8iouYxLoK4kQQ11B14CzKaXb/Y5Pj6eNyuI8tE5aJHefEvMwU1Cq
-         ey4tnWvMGRUdaG92IR9swdufHVZ9gCXUeSJP5ShNYvni6jM6afPTA+MPNoXBdrB4O5Z4
-         KPuwd2G3w2NCe5Cn60iA9aUQSqueXs3suE+J1Pvu23Mt+BBU90emWuV49welFUqCXnuv
-         ZOUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740061633; x=1740666433;
-        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f4w4pCG0U42bM1eFKeaBN0EiFoNbUjvKtinnx1nWT1E=;
-        b=jUIbjW/QrtaRMN338GkFP+vd7nWGZ7kVw/b/DP8QIuc3lKChOAgUr4Sz58T0B2MJpI
-         2JqsFkYhpFBHaWd7ZGAivsMK2SBCjOQ34ST3gYgZ4eppMP4rG3KlCd1Vhs8u9AE3nGUI
-         Eg1WtYJ8qa6lJCliJb2LTAQALvpyHaI/hfxMZiajIX0pfawxQYYXN6HQRH0DjOy8fuXY
-         bCj16ee7l9kFzAWgVxjSaWPftpQHnlsU0eVk8jK8XobrduqY5PIMB8yT+ZCn5lPaQTez
-         L+gVukxyIRp85QgAm6m7owuLQiDe0mHDrUuHERMbMsk2T32o13k2DWoP02twVZl7dGQE
-         gA4g==
-X-Forwarded-Encrypted: i=1; AJvYcCXjQIb7rdhNT+bw+Asr4E+hp/jzpQ6SNkj2l5YeFqb+AXbtfn+IApFaTGOWuJxi13cfzcnZFYBjCuaosavz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzd8061S9vV5f2SFsyZmIy3fSjAuMoD/YVZggRlONF2GZwov8C4
-	pm7/QAmLXZ97IXRFzesfSW1+hdZcJeWmrVyGhBjQqnICMTOuiN+O9rohziWGbLg1Res4a/BwZJC
-	l92toTPDHCTT6vzrRAK2k9y7JCUWvF1vLADlwKA==
-X-Gm-Gg: ASbGncsFa2c+oJM7ZWzlFIZBJ9vmvaxGGEEvfpdi4vjl+x3ZmIpE3wyCHcWDpSxB3Ki
-	wtf25coDM1AmiC2TWHMlLeXubK1f2gjljIrG1zjxxbXcW9/9PGdYdUpv4gc0Htm9s1/GQg8jQRG
-	6Q8BODj73ifAlH55DpPALxtSVJskk=
-X-Google-Smtp-Source: AGHT+IFS//uyEFsNocKn2QLBwjZb9V54vS30Ztrpi06h9vM6OhVZ6S9T58uetg7ksyx1gj4KaWKe+Evafv0S+hCPfHg=
-X-Received: by 2002:a2e:900f:0:b0:309:26cd:9304 with SMTP id
- 38308e7fff4ca-30a45043f96mr31527421fa.26.1740061632696; Thu, 20 Feb 2025
- 06:27:12 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Feb 2025 15:27:11 +0100
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Feb 2025 15:27:11 +0100
-From: brgl@bgdev.pl
-In-Reply-To: <20250115103004.3350561-1-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1740062313; c=relaxed/simple;
+	bh=mOxseKTpZNgDLNSeo4kqfO+xUKZPU7nr0V66dGz3Hus=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=sKjbSQtIMIHTW8gUs17iybPKNLPSAZD4gLIltxswOJzWdXo68faeMLPP24Ikpm/YOPrir0FsydQ3UqamquFJUfla0KDcUlnfuAwvyFmwKRn+oSG2AxMPUxzOY1T8RxjeFB0cZBt8Liw2YbA/dvsZwhD/OFsX6meg95B5TjEo3Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=F9bNGvmq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51KAk9f3011747;
+	Thu, 20 Feb 2025 14:38:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uqgp4ZF/glsbBvLDvzSpKr94BotpGNSm9OPTQtrkRvY=; b=F9bNGvmqLetiKWSk
+	qDf7chw9u5ZHwXhVGDoZ7VHdQCsfN00nYDqFvRnLfd7hA1NeDudpe6feLKWqGvFE
+	ZrFD45Ak+HNU7qpGWK/Bgj7+2jj+MXGtIWEcJonDBfo0yshPOcINLmzsP+qbQTIi
+	YmVDg4enKxADd94XGt8aw2PzXvU5BpGUqqaSUnWOWft0lPK9+XAL7L+n5z2RT8v7
+	zQeLZIEdh7DVBcmHMOGvpThQI0agtdDkRhP/F0Rbd+WFH5lLoKGRq+yWb+Py/bTn
+	rU35v35S3XnZGoJDU3Bq7XFhK/9bR+1V1lSwX14wArqZL7gvJ1oy2oAy+rJm4YSw
+	DhswAQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44x2xb8kud-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Feb 2025 14:38:14 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51KEcDc7002660
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Feb 2025 14:38:13 GMT
+Received: from [10.253.79.77] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 20 Feb
+ 2025 06:38:06 -0800
+Message-ID: <c592c262-5928-476f-ac2a-615c44d67277@quicinc.com>
+Date: Thu, 20 Feb 2025 22:38:03 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250115103004.3350561-1-quic_mdalam@quicinc.com>
-Date: Thu, 20 Feb 2025 15:27:11 +0100
-X-Gm-Features: AWEUYZnDIRu5h76xjpO3J8aX5TCNfdHy8wWm6gSkGIVob_i8mUp6Yw4WICtLlfY
-Message-ID: <CAMRc=MeW7D+6rUNWBQ61kP-zx9paiLKFF-Y7SbFq+_fRKiq8=w@mail.gmail.com>
-Subject: Re: [PATCH v6 00/12] dmaengine: qcom: bam_dma: add cmd descriptor support
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: quic_utiwari@quicinc.com, quic_srichara@quicinc.com, 
-	quic_varada@quicinc.com, vkoul@kernel.org, corbet@lwn.net, 
-	thara.gopinath@gmail.com, herbert@gondor.apana.org.au, davem@davemloft.net, 
-	martin.petersen@oracle.com, enghua.yu@intel.com, u.kleine-koenig@baylibre.com, 
-	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Jie Luo <quic_luoj@quicinc.com>
+Subject: Re: [PATCH net-next v3 04/14] net: ethernet: qualcomm: Initialize PPE
+ buffer management for IPQ9574
+To: Andrew Lunn <andrew@lunn.ch>
+CC: Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
+	<kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Lei Wei <quic_leiwei@quicinc.com>,
+        Suruchi Agarwal
+	<quic_suruchia@quicinc.com>,
+        Pavithra R <quic_pavir@quicinc.com>,
+        "Simon
+ Horman" <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Kees Cook
+	<kees@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        "Philipp
+ Zabel" <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
+        <john@phrozen.org>
+References: <20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com>
+ <20250209-qcom_ipq_ppe-v3-4-453ea18d3271@quicinc.com>
+ <a79027ed-012c-4771-982c-b80b55ab0c8a@lunn.ch>
+Content-Language: en-US
+In-Reply-To: <a79027ed-012c-4771-982c-b80b55ab0c8a@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: tJv55sSpdC_lXmerUQf9-QwnyZ0Cyls-
+X-Proofpoint-ORIG-GUID: tJv55sSpdC_lXmerUQf9-QwnyZ0Cyls-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-20_06,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 impostorscore=0 spamscore=0
+ mlxlogscore=606 clxscore=1015 priorityscore=1501 adultscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2502200105
 
-On Wed, 15 Jan 2025 11:29:52 +0100, Md Sadre Alam
-<quic_mdalam@quicinc.com> said:
-> Requirements:
->   In QCE crypto driver we are accessing the crypto engine registers
->   directly via CPU read/write. Trust Zone could possibly to perform some
->   crypto operations simultaneously, a race condition will be created and
->   this could result in undefined behavior.
->
->   To avoid this behavior we need to use BAM HW LOCK/UNLOCK feature on BAM
->   pipes, and this LOCK/UNLOCK will be set via sending a command descriptor,
->   where the HLOS/TZ QCE crypto driver prepares a command descriptor with a
->   dummy write operation on one of the QCE crypto engine register and pass
->   the LOCK/UNLOCK flag along with it.
->
 
-On rb3gen2 I'm seeing the following when running cryptsetup benchmark:
 
-# cryptsetup benchmark
-# Tests are approximate using memory only (no storage IO).
-PBKDF2-sha1      1452321 iterations per second for 256-bit key
-PBKDF2-sha256    2641249 iterations per second for 256-bit key
-PBKDF2-sha512    1278751 iterations per second for 256-bit key
-PBKDF2-ripemd160  760940 iterations per second for 256-bit key
-PBKDF2-whirlpool     N/A
-argon2i       4 iterations, 1008918 memory, 4 parallel threads (CPUs)
-for 256-bit key (requested 2000 ms time)
-argon2id      4 iterations, 1048576 memory, 4 parallel threads (CPUs)
-for 256-bit key (requested 2000 ms time)
-[   43.558496] NET: Registered PF_ALG protocol family
-[   43.570034] arm-smmu 15000000.iommu: Unhandled context fault:
-fsr=0x402, iova=0xfffdf000, fsynr=0x7b0003, cbfrsynra=0x4e4, cb=0
-[   43.582069] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2
-TF], SID=0x4e4
-[   43.592758] arm-smmu 15000000.iommu: FSYNR0 = 007b0003 [S1CBNDX=123 PLVL=3]
-[   43.608107] Internal error: synchronous external abort:
-0000000096000010 [#1] PREEMPT SMP
-[   43.616509] Modules linked in: algif_skcipher af_alg bluetooth
-ecdh_generic ecc ipv6 snd_soc_hdmi_codec phy_qcom_edp venus_dec
-venus_enc videobuf2_dma_contig videobuf2_memops nb7vpq904m
-lontium_lt9611uxc msm leds_qcom_lpg qcom_battmgr pmic_glink_altmode
-aux_hpd_bridge ocmem qcom_pbs venus_core ucsi_glink drm_exec
-typec_ucsi qcom_pon qcom_spmi_adc5 led_class_multicolor
-qcom_spmi_temp_alarm rtc_pm8xxx gpu_sched v4l2_mem2mem ath11k_ahb
-qcom_vadc_common nvmem_qcom_spmi_sdam drm_dp_aux_bus videobuf2_v4l2
-qcom_stats dispcc_sc7280 drm_display_helper videodev ath11k
-videobuf2_common coresight_stm drm_client_lib camcc_sc7280
-videocc_sc7280 mac80211 mc i2c_qcom_geni phy_qcom_qmp_combo stm_core
-coresight_replicator aux_bridge coresight_tmc coresight_funnel
-llcc_qcom libarc4 gpi icc_bwmon typec phy_qcom_snps_femto_v2 coresight
-qcrypto qcom_q6v5_pas authenc qcom_pil_info qcom_q6v5 gpucc_sc7280
-ufs_qcom libdes qcom_sysmon qcom_common pinctrl_sc7280_lpass_lpi
-qcom_glink_smem mdt_loader phy_qcom_qmp_ufs lpassaudiocc_sc7280
-[   43.616763]  pinctrl_lpass_lpi cfg80211 phy_qcom_qmp_pcie
-icc_osm_l3 rfkill qcom_rng qrtr nvmem_reboot_mode display_connector
-socinfo drm_kms_helper pmic_glink pdr_interface qcom_pdr_msg
-qmi_helpers drm backlight
-[   43.727571] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted
-6.14.0-rc3-next-20250220-00012-g2a8d60663e03-dirty #53
-[   43.738291] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-[   43.745535] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   43.752685] pc : bam_dma_irq+0x374/0x3b0
-[   43.756736] lr : bam_dma_irq+0x2c8/0x3b0
-[   43.760781] sp : ffff800080003e90
-[   43.764200] x29: ffff800080003e90 x28: ffffd03eaae84880 x27: 000000009edf8000
-[   43.771543] x26: ffff45a746642c80 x25: 0000000a24f8499b x24: ffff45a742dca080
-[   43.778886] x23: ffff45a742df7600 x22: 000000000000006e x21: ffff8000811c3000
-[   43.786228] x20: ffff45a742df7630 x19: ffff45a742eaab80 x18: 0000000000000001
-[   43.793568] x17: ffff75698e7b4000 x16: ffff800080000000 x15: 0000000000000034
-[   43.800902] x14: 0000000000000038 x13: 0000000000010008 x12: 071c71c71c71c71c
-[   43.808244] x11: 0000000000000040 x10: ffff45a74000a230 x9 : ffff45a74000a228
-[   43.815587] x8 : ffff45a7407a1dd0 x7 : 0000000000000000 x6 : 0000000000000000
-[   43.822920] x5 : ffff45a7407a1da8 x4 : 0000000000000000 x3 : 0000000000000018
-[   43.830253] x2 : ffff8000811c0000 x1 : ffff8000811c0018 x0 : 0000000000000002
-[   43.837594] Call trace:
-[   43.840115]  bam_dma_irq+0x374/0x3b0 (P)
-[   43.844163]  __handle_irq_event_percpu+0x48/0x140
-[   43.849006]  handle_irq_event+0x4c/0xb0
-[   43.852961]  handle_fasteoi_irq+0xa0/0x1bc
-[   43.857186]  handle_irq_desc+0x34/0x58
-[   43.861054]  generic_handle_domain_irq+0x1c/0x28
-[   43.865812]  gic_handle_irq+0x4c/0x120
-[   43.869680]  call_on_irq_stack+0x24/0x64
-[   43.873728]  do_interrupt_handler+0x80/0x84
-[   43.878039]  el1_interrupt+0x34/0x68
-[   43.881732]  el1h_64_irq_handler+0x18/0x24
-[   43.885955]  el1h_64_irq+0x6c/0x70
-[   43.889465]  cpuidle_enter_state+0xac/0x320 (P)
-[   43.894133]  cpuidle_enter+0x38/0x50
-[   43.897826]  do_idle+0x1e4/0x260
-[   43.901151]  cpu_startup_entry+0x38/0x3c
-[   43.905195]  rest_init+0xdc/0xe0
-[   43.908531]  console_on_rootfs+0x0/0x6c
-[   43.912490]  __primary_switched+0x88/0x90
-[   43.916621] Code: b9409063 1b047c21 8b030021 8b010041 (b9000020)
-[   43.922881] ---[ end trace 0000000000000000 ]---
-[   43.927633] Kernel panic - not syncing: synchronous external abort:
-Fatal exception in interrupt
-[   43.936653] SMP: stopping secondary CPUs
-[   43.941042] Kernel Offset: 0x503e28e00000 from 0xffff800080000000
-[   43.947306] PHYS_OFFSET: 0xfff0ba59c0000000
-[   43.951615] CPU features: 0x300,00000170,00801250,8200720b
-[   43.957257] Memory Limit: none
-[   43.960405] ---[ end Kernel panic - not syncing: synchronous
-external abort: Fatal exception in interrupt ]---
+On 2/11/2025 9:22 PM, Andrew Lunn wrote:
+>> +	/* Configure BM flow control related threshold. */
+>> +	PPE_BM_PORT_FC_SET_WEIGHT(bm_fc_val, port_cfg.weight);
+>> +	PPE_BM_PORT_FC_SET_RESUME_OFFSET(bm_fc_val, port_cfg.resume_offset);
+>> +	PPE_BM_PORT_FC_SET_RESUME_THRESHOLD(bm_fc_val, port_cfg.resume_ceil);
+>> +	PPE_BM_PORT_FC_SET_DYNAMIC(bm_fc_val, port_cfg.dynamic);
+>> +	PPE_BM_PORT_FC_SET_REACT_LIMIT(bm_fc_val, port_cfg.in_fly_buf);
+>> +	PPE_BM_PORT_FC_SET_PRE_ALLOC(bm_fc_val, port_cfg.pre_alloc);
+> 
+> ...
+> 
+>> +#define PPE_BM_PORT_FC_CFG_TBL_ADDR		0x601000
+>> +#define PPE_BM_PORT_FC_CFG_TBL_ENTRIES		15
+>> +#define PPE_BM_PORT_FC_CFG_TBL_INC		0x10
+>> +#define PPE_BM_PORT_FC_W0_REACT_LIMIT		GENMASK(8, 0)
+>> +#define PPE_BM_PORT_FC_W0_RESUME_THRESHOLD	GENMASK(17, 9)
+>> +#define PPE_BM_PORT_FC_W0_RESUME_OFFSET		GENMASK(28, 18)
+>> +#define PPE_BM_PORT_FC_W0_CEILING_LOW		GENMASK(31, 29)
+>> +#define PPE_BM_PORT_FC_W1_CEILING_HIGH		GENMASK(7, 0)
+>> +#define PPE_BM_PORT_FC_W1_WEIGHT		GENMASK(10, 8)
+>> +#define PPE_BM_PORT_FC_W1_DYNAMIC		BIT(11)
+>> +#define PPE_BM_PORT_FC_W1_PRE_ALLOC		GENMASK(22, 12)
+>> +
+>> +#define PPE_BM_PORT_FC_SET_REACT_LIMIT(tbl_cfg, value)	\
+>> +	u32p_replace_bits((u32 *)tbl_cfg, value, PPE_BM_PORT_FC_W0_REACT_LIMIT)
+>> +#define PPE_BM_PORT_FC_SET_RESUME_THRESHOLD(tbl_cfg, value)	\
+>> +	u32p_replace_bits((u32 *)tbl_cfg, value, PPE_BM_PORT_FC_W0_RESUME_THRESHOLD)
+> 
+> Where is u32p_replace_bits()?
 
-Bartosz
+u32p_replace_bits is defined by the macro __MAKE_OP(32) in the header
+file "include/linux/bitfield.h".
+
+> 
+> This cast does not look good. 
+
+Yes, we can remove the cast.
+
+> And this does not look like anything any
+> other driver does. I suspect you are not using FIELD_PREP() etc when
+> you should.
+> 
+> https://elixir.bootlin.com/linux/v6.14-rc2/source/include/linux/bitfield.h
+> 
+> 	Andrew
+
+The PPE_BM_XXX macros defined here write to either of two different
+32bit words in the register table, and the actual word used (0 or 1)
+is hidden within the macro. For example, the below macro.
+
+#define PPE_BM_PORT_FC_SET_CEILING_HIGH(tbl_cfg, value)	\
+	u32p_replace_bits((u32 *)(tbl_cfg) + 0x1, value,
+	PPE_BM_PORT_FC_W1_CEILING_HIGH)
+
+We could have used FIELD_PREP as well for this purpose. However using
+u32p_replace_bits() seemed more convenient and cleaner in this case,
+since with FIELD_PREP, we would have needed an assignment statement to
+be defined in the macro implementation. We also noticed many other
+drivers using u32_replace_bits(). Hope this is ok.
+
+
 
