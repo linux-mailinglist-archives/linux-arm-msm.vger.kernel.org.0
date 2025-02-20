@@ -1,84 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-48702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DDFFA3DE17
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 16:17:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0785FA3DE26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 16:19:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83215175469
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:15:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98A481894A25
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 15:17:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA6391FC7F5;
-	Thu, 20 Feb 2025 15:15:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sy78YhVu"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B44191F9F62;
+	Thu, 20 Feb 2025 15:16:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB7C1CCEF0;
-	Thu, 20 Feb 2025 15:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913F11CCEF0;
+	Thu, 20 Feb 2025 15:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740064527; cv=none; b=E7DC9Ya/F7JY5YFwS6VNw1+ALJudBNEDie9hw4eOouR7iEdhM/+u8UlcwkPJlCyyrkrmvNk5JxRmwEMKTLOHAdN+SrlIZVSsprVORgof0kuDIBmeeLO0viKNHKB89xN2Dtil1JrkqdoyGOkrVGfFjEd3m3oc/jLC3vTvBQv1VIs=
+	t=1740064602; cv=none; b=DByZkoPVy5H1XFxpjsMZQGEjUBqRkeBja03TvVk8MaijzVDxtmZ+gqEpea/CupaYibV0PheLi+AAOMtdZE//7QdbC3zj9CXkB1rd9rRLN07MRHBz3AMGBdiprBo9i6fZ2cYyfuGBmwJFDkCWNSuioHU0bXlwYZ5dUMrFw/QKY8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740064527; c=relaxed/simple;
-	bh=qWM1GGPtEOiW6So4uPR6It2p1CxUdVQ0hGwq4FBajeU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=W9+hiH8cwTT7QSH/2p7VvpL43zNvM60s8XxphpNI4b4jAoKatphpDnW32R8lq1N0ZN4/FGvJ5z35JLyNBBCTiHyJ1IB7macTwADlxz8yQnzPk22dzYjvO6YG0lpVlXCIvaB3ooQFJnGvd7J0FBBBqV0gHqjWNu9GYuZ64XvMJP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sy78YhVu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBA1C4CEE2;
-	Thu, 20 Feb 2025 15:15:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740064526;
-	bh=qWM1GGPtEOiW6So4uPR6It2p1CxUdVQ0hGwq4FBajeU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Sy78YhVuxmbD6t4LQvXXQidoScykJlIiv4DiN7IWhsqWxYdqpzNvrwQIwnDl7Y+PN
-	 EZ7zWgas+FRS1M0GhPA1zaSlsu52EXmokSVrLR7rod/btjMy2NZ+8HHwM9RHt7tbpb
-	 XkDUpZSUWd/MY/DEH8zenZDLkwyRpeqcehQ/c3X0qJUX/S+3B32WHBi9Mo1leUhina
-	 AOXGw4Rn2XNCS/fVfjR1lMnRQ48pp3X93+wJuxSFlgadcOh/gdoFx6t2jNwgkAHUf3
-	 vgROhCkLTTxiaGswrURWfUEV+9Nft9NeZlPDJzmAZvw/Yke+RdKQaHsWp9mXC8f1bY
-	 irdvFcaYMcw1A==
-From: Lee Jones <lee@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
- Pavel Machek <pavel@kernel.org>, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-leds@vger.kernel.org
-In-Reply-To: <20250213-pm8937-pwm-v2-1-49ea59801a33@mainlining.org>
-References: <20250213-pm8937-pwm-v2-0-49ea59801a33@mainlining.org>
- <20250213-pm8937-pwm-v2-1-49ea59801a33@mainlining.org>
-Subject: Re: (subset) [PATCH v2 1/3] dt-bindings: leds: qcom-lpg: Document
- PM8937 PWM compatible
-Message-Id: <174006452450.805794.4915046882246129904.b4-ty@kernel.org>
-Date: Thu, 20 Feb 2025 15:15:24 +0000
+	s=arc-20240116; t=1740064602; c=relaxed/simple;
+	bh=TIg8CqN5hO+RqL67o6DLnyrSFUhVBiw7Xn0qzxP77JU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=atom41IGghwiQ2AzLO8DqSRphQO2K0HZbBu1lo0mKpWyAduRjg4NfuRfAYobFRDxzKkfmD6wwfypI5Ij264utb18rGnSXbG68oqt07RqZxLZ9g/iTDC2ruvVIR/eaAn9cAwhToWyahO6TJkQDbChFENqLJw1BazU4jkls4CxBUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9198C4CED1;
+	Thu, 20 Feb 2025 15:16:39 +0000 (UTC)
+Message-ID: <41e9f6a8-1f72-465e-b6c4-0bebdc462d31@xs4all.nl>
+Date: Thu, 20 Feb 2025 16:16:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.15-dev-510f9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] media: venus: hfi_parser: add check to avoid out
+ of bound access
+Content-Language: en-US
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Tomasz Figa
+ <tfiga@chromium.org>, Hans Verkuil <hans.verkuil@cisco.com>
+Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20250207-venus_oob_2-v4-0-522da0b68b22@quicinc.com>
+ <20250207-venus_oob_2-v4-1-522da0b68b22@quicinc.com>
+From: Hans Verkuil <hverkuil@xs4all.nl>
+In-Reply-To: <20250207-venus_oob_2-v4-1-522da0b68b22@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, 13 Feb 2025 20:54:47 +0100, Barnabás Czémán wrote:
-> The PM8937 PWM modules are compatible with the PM8916 PWM modules,
-> document the PM8937 PWM compatible as fallback for the PM8916 PWM.
+On 2/7/25 09:24, Vikash Garodia wrote:
+> There is a possibility that init_codecs is invoked multiple times during
+> manipulated payload from video firmware. In such case, if codecs_count
+> can get incremented to value more than MAX_CODEC_NUM, there can be OOB
+> access. Reset the count so that it always starts from beginning.
 > 
+> Cc: stable@vger.kernel.org
+> Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>  drivers/media/platform/qcom/venus/hfi_parser.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+> index 3df241dc3a118bcdeb2c28a6ffdb907b644d5653..1cc17f3dc8948160ea6c3015d2c03e475b8aa29e 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+> @@ -17,6 +17,7 @@ typedef void (*func)(struct hfi_plat_caps *cap, const void *data,
+>  static void init_codecs(struct venus_core *core)
+>  {
+>  	struct hfi_plat_caps *caps = core->caps, *cap;
+> +	core->codecs_count = 0;
+
+This really should be moved down to before the 'if'. There is no reason to mix the assignment
+with variable declarations.
+
+>  	unsigned long bit;
+>  
+>  	if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) > MAX_CODEC_NUM)
 > 
 
-Applied, thanks!
+Regards,
 
-[1/3] dt-bindings: leds: qcom-lpg: Document PM8937 PWM compatible
-      commit: 9ec336ba05f6786814696deef637ab2b9f6d0f10
-
---
-Lee Jones [李琼斯]
-
+	Hans
 
