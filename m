@@ -1,116 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-48599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B98ADA3D08E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 05:45:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A7CAA3D22C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 08:26:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3854516D0B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 04:45:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 596D93BA0CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 07:23:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD6291E2613;
-	Thu, 20 Feb 2025 04:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D42B61E8837;
+	Thu, 20 Feb 2025 07:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yeoH+eTf"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="f2P2McsZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D7A1DF985
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 04:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8041E9B39
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 07:22:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740026714; cv=none; b=eRI++a0NinIl3YAI2Vt9uVvO1kFRgMHlQOEpYCNVZyhvztg1EgVRwtbBOVS4XimfL+NHUBlMidmF+PX3qw/gLwAl+g6o5jwQXTfWD8VfFtkzG++dGT7DRBdNLqtED4JWEEu/x/pF+XiNdBggUj8Lq5qgQ+v0iT+pump2yDOLgOQ=
+	t=1740036156; cv=none; b=D5JNTlzulpcVtrnr6CHUxEzl/PMLIfdbDLOLYBMK/5TVIvdLceY3m/rGUF3nbh32m06BFoTbhkGDQIyzkYa5Crc+Q/hUque8hkzItMuS8/7vP9cIFr2Z/BeHYkDUvmXhCymMHcd32ae37CnSBJGwcQ76toVRDoQYAOxmcQr2P38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740026714; c=relaxed/simple;
-	bh=KCZWGTmNI8QIdlHQfPCl4TcaF/VtA6DkYi9Xq78zeIc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fuQzyX5VRddP25NduR2p3NGPjd6Gqd1QQxYFzBo3X7Cph+ObZfJj+f4dcDrkOqITssNt99bha0OLWBxorOGFfBI6/TNmchZUNJ5yFHQnu+vsE6ZYiwNbGHq9eUVzluB391eDP1yYtCDkUCqGbZhO0Eh4mKRcQVHVZvRLeV9b0ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yeoH+eTf; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-30613802a04so5125911fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2025 20:45:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740026710; x=1740631510; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=65LK1GfoPK6Ow7cclrATVzkjUCOxCmHzKKc+sYiStOk=;
-        b=yeoH+eTfJc7gEd/B3Yio3eNAjxd+5GwwO7ZJzbOejBdGVCu7DUrEwYdShdKZkvUkOM
-         w7j4tfMFiL01PwnfUfSvFex0AaRfyZei9M9Sw3DvFVp0Egz8IpRnY8MXThSD3ETOinYV
-         s6WNdYZVwLjRM2wogGN/RTVP4DPLpjfWTGHz6EudNad6dubrEa2PU1x+ZaWi3X+pj3kh
-         1Qidy3HgZIrO9DBNqxdvZkBwsEDvleg5n6GEbgm02wfkI3P3BuXkaGZdFzNL7y+KAWwP
-         tmskH+9gb3TDdans1PFpdLuJWZSJyOPwm9Fqp21MY3SCw0uQBayGve3fcxSeFHVLXzSX
-         VRXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740026710; x=1740631510;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=65LK1GfoPK6Ow7cclrATVzkjUCOxCmHzKKc+sYiStOk=;
-        b=gJBOdECvqGBqc7/JFD0QlpmsvkEXvIIG2y3k7NbEBQ1F/vifxBOnHm7aIWWUfl8+sm
-         r3PE3BJxp/2eTjB00mDM2FHEm7STB+WkIt++nhWWcSiASHzFPmppDaXMTfcJ8jazk+dD
-         rhGVxQoEvd8F5yzlteRFXOloSlJH8a2+hVJRwKn9DddjJoupR4VDii2nYnNmj1tjjHV9
-         ikhRfTVDH8EsgWbX5UDPHC7vFBUIpkBpfQTnuvt1fPzu6FAR+l8tzvMq6JsWTkOA1jkg
-         gGMthzxs21PODpr77oyCEh40t+ew/4LbCYufRXKACj5giTGPYekg5H0POQp/bAQQF1tC
-         tuUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWF7dG8QUkuJbSGTIghq7ujmYoGCnQnV8zamwH99yCXrxIS2Mj4nDSjxht8iWsDTYhXhJ1pBaEeLSH/Rs2u@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNr+qX7y56MPwa0pvmXZlOTKFYnfqjhLCo/3b4zqUVvCtN8Ohq
-	9IRzfUsf0s1iqG2kVX74GwRAnXpNqSfUhpc72DMArviBmmGPvogLAShsBxe3HRg=
-X-Gm-Gg: ASbGncsaMo0MRckuC3WvGld7/WYaErynhTsnucurIWOO0+ZyTPNRy2GtDHeNr6PsNlP
-	nqLwZBJ5KPex9Hokmkd4pASnoP1KmVzXE4pambQbckYtRXSHYag72dg2i3TabcQ7hdYzJIg5Ach
-	i0opxjqL7Ywxs67vt1lQkT1V74MpmzxWvZQNYOB+lE5ye2ciedvblokFdPT7yhHakQxEcBtSXda
-	q7nc3836Ea1MqML8BVdhJF/0YsSY+u0T7tcAT38DRucu3lTFmf4jeKtiWdp1Sj0oDS96J3+T5Zv
-	2dQ6m23WOgTmPUODFdskdKb2E/PLoGWzd3SUtyTaBNM63DklbHxFfPfbeujy6j6s9RvuvBY=
-X-Google-Smtp-Source: AGHT+IF67NcEhyD52/u3RW2Suj2R6HsnYhFEljP4J+B/BN8q4hAx8dayZAKsUhRTCIOJraE7WVC62A==
-X-Received: by 2002:a05:6512:158f:b0:545:aa5:d455 with SMTP id 2adb3069b0e04-5452fe3aa72mr8207164e87.15.1740026709630;
-        Wed, 19 Feb 2025 20:45:09 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5461e731f02sm1305340e87.192.2025.02.19.20.45.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 20:45:08 -0800 (PST)
-Date: Thu, 20 Feb 2025 06:45:05 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Taniya Das <quic_tdas@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: qcs6490-rb3gen2: Update the
- LPASS audio node
-Message-ID: <ykysfqf6vcg7tbma7cxhbdvmi6zkwpmub75yazylqng3767yqx@u7qklqyrfjsr>
-References: <20250220-lpass_qcm6490_resets-v4-0-68dbed85c485@quicinc.com>
- <20250220-lpass_qcm6490_resets-v4-4-68dbed85c485@quicinc.com>
+	s=arc-20240116; t=1740036156; c=relaxed/simple;
+	bh=RdupzPmikV/P65nVhhGwKWRWthUC+iidk838vqEzQ84=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=J6Lf0cq53UKwC4m5gpzdsaAkVoKWrNxeAjBynUANAdcJpX4ZVjmP+tB/xZ83bCM9scwzI/qTlNsNFXuSFoDMS2CgxonI+v9o9YdqBP00035+jlRGL8qbMO41BSrdurUcOGriAohG+V+pYqWAa5K8Flr6U+bcEXs7dbf/F8jMPhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=f2P2McsZ; arc=none smtp.client-ip=203.254.224.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250220072231epoutp042c7602651b4b3088b61f686225fc2788~l2ak0Bgoh0349103491epoutp04k
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 07:22:31 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250220072231epoutp042c7602651b4b3088b61f686225fc2788~l2ak0Bgoh0349103491epoutp04k
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1740036151;
+	bh=RdupzPmikV/P65nVhhGwKWRWthUC+iidk838vqEzQ84=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=f2P2McsZ+A9f+D/jhcNNnz8Xtj3NgVgB8/tqX5s84qEfpREN/XAkcAGxbKATZmpkd
+	 KrPrakSh4bffOfBKwl/ZcksLMbW9cbG2nHmb/xgeQYRUWKaMq+1zfKy1Ol5PVOftBo
+	 ZelX9jVNpAQnnBWwH7FJQN30m3EHlY5qbj0uZBmo=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTP id
+	20250220072231epcas5p392bca22d09fed6b3b4da7a65131ba69b~l2akbD6MB1872018720epcas5p3P;
+	Thu, 20 Feb 2025 07:22:31 +0000 (GMT)
+Received: from epsmgec5p1new.samsung.com (unknown [182.195.38.174]) by
+	epsnrtp4.localdomain (Postfix) with ESMTP id 4Yz4Td3GmHz4x9QQ; Thu, 20 Feb
+	2025 07:22:29 +0000 (GMT)
+Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
+	epsmgec5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	61.08.19710.538D6B76; Thu, 20 Feb 2025 16:22:29 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+	20250220060153epcas5p4f401dbb501378149ed3ef8f162c228a9~l1UKvso6a1980019800epcas5p4M;
+	Thu, 20 Feb 2025 06:01:53 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+	epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+	20250220060153epsmtrp1167c9903277def94d25e9725d9b4615d~l1UKu7kPm3242832428epsmtrp16;
+	Thu, 20 Feb 2025 06:01:53 +0000 (GMT)
+X-AuditID: b6c32a44-36bdd70000004cfe-f3-67b6d835ab96
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+	epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	4D.C7.18949.155C6B76; Thu, 20 Feb 2025 15:01:53 +0900 (KST)
+Received: from FDSFTE462 (unknown [107.122.81.248]) by epsmtip2.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250220060151epsmtip2bf3316cff94a9f18d49ac2d7e01b95ef~l1UIrTjn80534005340epsmtip2S;
+	Thu, 20 Feb 2025 06:01:51 +0000 (GMT)
+From: "Shradha Todi" <shradha.t@samsung.com>
+To: <manivannan.sadhasivam@linaro.org>, "'Shuai Xue'"
+	<xueshuai@linux.alibaba.com>, "'Jing Zhang'" <renyu.zj@linux.alibaba.com>,
+	"'Will Deacon'" <will@kernel.org>, "'Mark Rutland'" <mark.rutland@arm.com>,
+	"'Jingoo Han'" <jingoohan1@gmail.com>, "'Bjorn Helgaas'"
+	<bhelgaas@google.com>, "'Lorenzo Pieralisi'" <lpieralisi@kernel.org>,
+	=?UTF-8?Q?'Krzysztof_Wilczy=C5=84ski'?= <kw@linux.com>, "'Rob Herring'"
+	<robh@kernel.org>
+Cc: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-perf-users@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>
+In-Reply-To: <20250218-pcie-qcom-ptm-v1-1-16d7e480d73e@linaro.org>
+Subject: RE: [PATCH 1/4] perf/dwc_pcie: Move common DWC struct definitions
+ to 'pcie-dwc.h'
+Date: Thu, 20 Feb 2025 11:31:49 +0530
+Message-ID: <02d901db835c$f0710450$d1530cf0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250220-lpass_qcm6490_resets-v4-4-68dbed85c485@quicinc.com>
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQI3arGx4qNz+c5jkBcOUS0/Rx6ChQIRRsQWAieNK+yydh1aoA==
+Content-Language: en-in
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCJsWRmVeSWpSXmKPExsWy7bCmhq7pjW3pBn3/xS2WNGVYrPgyk92i
+	oec3q8Wmx9dYLSbuP8tucXnXHDaLs/OOs1lc2bqOxaLlTwuLxd2WTlaLpdcvMlksbH7JaPF/
+	zw52i5Y7phbvf25mc+D3WDNvDaPHzll32T0WbCr12LSqk83jzrU9bB47H1p6PLkynclj85J6
+	j8+b5AI4o7JtMlITU1KLFFLzkvNTMvPSbZW8g+Od403NDAx1DS0tzJUU8hJzU22VXHwCdN0y
+	c4CuV1IoS8wpBQoFJBYXK+nb2RTll5akKmTkF5fYKqUWpOQUmBToFSfmFpfmpevlpZZYGRoY
+	GJkCFSZkZ/x+uZ2l4LRJxeUt29kbGD8adTFyckgImEi8ad7B1MXIxSEksJtR4vnuU1DOJ0aJ
+	llm3WSCcb4wSZw6cZIdp2XnvGFTVXkaJv9OuMIMkhAReMEpcea0CYrMJ6Eg8ufKHGaRIRGAj
+	s8T5Y8fZQBxmgQ2MEp8/nmUFqeIUcJKY2v2ODcQWFoiROD3jE9gkFgFViRNvLoGt4xWwlLjy
+	dTMjhC0ocXLmExYQm1lAW2LZwtfMECcpSPx8ugxspgjQzBdrdkDViEsc/dkDdoWEwBMOibbW
+	bSwQDS4SOzfPYoOwhSVeHd8C9ZuUxMv+Nig7XWLl5hlQC3Ikvm1ewgRh20scuDIHaA4H0AJN
+	ifW79CHCshJTT61jgtjLJ9H7+wlUOa/EjnkwtrLEl797oE6QlJh37DLrBEalWUhem4XktVlI
+	XpiFsG0BI8sqRsnUguLc9NRk0wLDvNRyeJQn5+duYgQnby2XHYw35v/TO8TIxMF4iFGCg1lJ
+	hLetfku6EG9KYmVValF+fFFpTmrxIUZTYHhPZJYSTc4H5o+8knhDE0sDEzMzMxNLYzNDJXHe
+	5p0t6UIC6YklqdmpqQWpRTB9TBycUg1Mx6U0v10zYRH/toDHUum1jU9/+dzgnSr7I8oaOv9o
+	+WQuWrh7u+WEV8duyy3bdmxC5s2WW0XqDN5zlM6td5Wae906bcW71tzg7oPb3ojncl5uUpa/
+	cy2B/Z+hjmZ6lAbDHM4jsUmGHy+IygSVH1LZqL8760rBvFDDjIOtk21+hcwQi0q7vGxL4bPX
+	x/bwLlf+pfL5yMp9Zmwr/DgYA6Qyb52rCzjxPft9yrOIjRtkDa3CF7uuO7qdQ9xLI7/kY/Q1
+	Bo/FMrf3F32uqO+1+3RWSe1z2+xeod1bOX5km0tJXHz4wHnG7rwZS3Z8XH9m2dWO3zNTFkc/
+	nuHJ/uVNIcuKfS6LjW/W7Xe/aFuRLHn6pRJLcUaioRZzUXEiACK7ckdnBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFIsWRmVeSWpSXmKPExsWy7bCSvG7g0W3pBhM2iVgsacqwWPFlJrtF
+	Q89vVotNj6+xWkzcf5bd4vKuOWwWZ+cdZ7O4snUdi0XLnxYWi7stnawWS69fZLJY2PyS0eL/
+	nh3sFi13TC3e/9zM5sDvsWbeGkaPnbPusnss2FTqsWlVJ5vHnWt72Dx2PrT0eHJlOpPH5iX1
+	Hp83yQVwRnHZpKTmZJalFunbJXBl7N/wnLlgvWpF/7N/rA2MF+S6GDk5JARMJHbeO8YEYgsJ
+	7GaUWN2sARGXlPh8cR0ThC0ssfLfc/YuRi6gmmeMEptapjCDJNgEdCSeXPkDZosIbGeWOPnN
+	B6SIWWALo8S2OZeZITpOMkr8evmADaSKU8BJYmr3OyCbg0NYIEpi6g5vkDCLgKrEiTeX2EFs
+	XgFLiStfNzNC2IISJ2c+YQGxmQW0JXoftjLC2MsWvmaGuE5B4ufTZawQRzhJvFizA6peXOLo
+	zx7mCYzCs5CMmoVk1Cwko2YhaVnAyLKKUTK1oDg3PbfYsMAoL7Vcrzgxt7g0L10vOT93EyM4
+	erW0djDuWfVB7xAjEwfjIUYJDmYlEd62+i3pQrwpiZVVqUX58UWlOanFhxilOViUxHm/ve5N
+	ERJITyxJzU5NLUgtgskycXBKNTCZKhzaqRm/q0YyxmODf+627kuOohNWL3b1vVPhcv2QSMGu
+	R0pOEwqmXiqQ/zXvimznG+WgwGffXJM81qzxnLjnZ5sWo/Ky0g1GWltud/8oUGcLer0gUfH2
+	Y/Vkj/g5c3cWS0qu5q8I25HB8/zExYje49e31HUUp+UtWJZuGJu8InyhNcdEoS2h0k8lejas
+	X9GXYOMoNt38AsPa3/2nmpRnpHkc3sQs3z7j4Lkg2Qb2Kbl2T/7sW+3BsWmxOvfUG8cWSm5U
+	5I7Y8DKuRHluhaWQRzFD9s+rCTpMZo2xzHwl6mVvj/u0/6+aKdHb4xJywT8sosHKPtJ1hv4C
+	PwXWTDEOjajn01123jBep/nvmBJLcUaioRZzUXEiAHQICo9NAwAA
+X-CMS-MailID: 20250220060153epcas5p4f401dbb501378149ed3ef8f162c228a9
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250218143703epcas5p2c0b9a60d17e030f7d3ce37c00c9b56ca
+References: <20250218-pcie-qcom-ptm-v1-0-16d7e480d73e@linaro.org>
+	<CGME20250218143703epcas5p2c0b9a60d17e030f7d3ce37c00c9b56ca@epcas5p2.samsung.com>
+	<20250218-pcie-qcom-ptm-v1-1-16d7e480d73e@linaro.org>
 
-On Thu, Feb 20, 2025 at 09:52:53AM +0530, Taniya Das wrote:
-> Update the lpassaudio node to support the new compatible as the
-> lpassaudio needs to support the reset functionality on the
-> QCS6490 RB3Gen2 board and the rest of the Audio functionality would be
-> provided from the LPASS firmware.
-> 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
--- 
-With best wishes
-Dmitry
+> -----Original Message-----
+> From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.l=
+inaro.org=40kernel.org>
+> Sent: 18 February 2025 20:07
+> To: Shuai Xue <xueshuai=40linux.alibaba.com>; Jing Zhang <renyu.zj=40linu=
+x.alibaba.com>; Will Deacon <will=40kernel.org>; Mark Rutland
+> <mark.rutland=40arm.com>; Jingoo Han <jingoohan1=40gmail.com>; Bjorn Helg=
+aas <bhelgaas=40google.com>; Lorenzo Pieralisi
+> <lpieralisi=40kernel.org>; Krzysztof Wilczy=C5=84ski=20<kw=40linux.com>;=
+=20Rob=20Herring=20<robh=40kernel.org>=0D=0A>=20Cc:=20Shradha=20Todi=20<shr=
+adha.t=40samsung.com>;=20linux-kernel=40vger.kernel.org;=20linux-arm-kernel=
+=40lists.infradead.org;=20linux-perf-=0D=0A>=20users=40vger.kernel.org;=20l=
+inux-pci=40vger.kernel.org;=20linux-arm-msm=40vger.kernel.org;=20Manivannan=
+=20Sadhasivam=0D=0A>=20<manivannan.sadhasivam=40linaro.org>=0D=0A>=20Subjec=
+t:=20=5BPATCH=201/4=5D=20perf/dwc_pcie:=20Move=20common=20DWC=20struct=20de=
+finitions=20to=20'pcie-dwc.h'=0D=0A>=20=0D=0A>=20From:=20Manivannan=20Sadha=
+sivam=20<manivannan.sadhasivam=40linaro.org>=0D=0A>=20=0D=0A>=20Since=20the=
+se=20are=20common=20to=20all=20Desginware=20PCIe=20IPs,=20move=20them=20to=
+=20a=20new=20header,=20'pcie-dwc.h'=20so=20that=20other=20drivers=20could=
+=20make=20use=20of=0D=0A>=20them.=0D=0A>=20=0D=0A>=20Signed-off-by:=20Maniv=
+annan=20Sadhasivam=20<manivannan.sadhasivam=40linaro.org>=0D=0A>=20---=0D=
+=0A>=20=20MAINTAINERS=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=
+=20=201=20+=0D=0A>=20=20drivers/perf/dwc_pcie_pmu.c=20=7C=2023=20++--------=
+-------------=0D=0A>=20=20include/linux/pcie-dwc.h=20=20=20=20=7C=2034=20++=
+++++++++++++++++++++++++++++++++=0D=0A>=20=203=20files=20changed,=2037=20in=
+sertions(+),=2021=20deletions(-)=0D=0A>=20=0D=0A>=20diff=20--git=20a/MAINTA=
+INERS=20b/MAINTAINERS=0D=0A>=20index=20896a307fa065..b4d09d52a750=20100644=
+=0D=0A>=20---=20a/MAINTAINERS=0D=0A>=20+++=20b/MAINTAINERS=0D=0A>=20=40=40=
+=20-18123,6=20+18123,7=20=40=40=20S:=09Maintained=0D=0A>=20=20F:=09Document=
+ation/devicetree/bindings/pci/snps,dw-pcie-ep.yaml=0D=0A>=20=20F:=09Documen=
+tation/devicetree/bindings/pci/snps,dw-pcie.yaml=0D=0A>=20=20F:=09drivers/p=
+ci/controller/dwc/*designware*=0D=0A>=20+F:=09include/linux/pcie-dwc.h=0D=
+=0A>=20=0D=0A>=20=20PCI=20DRIVER=20FOR=20TI=20DRA7XX/J721E=0D=0A>=20=20M:=
+=09Vignesh=20Raghavendra=20<vigneshr=40ti.com>=0D=0A>=20diff=20--git=20a/dr=
+ivers/perf/dwc_pcie_pmu.c=20b/drivers/perf/dwc_pcie_pmu.c=20index=20cccecae=
+9823f..05b37ea7cf16=20100644=0D=0A>=20---=20a/drivers/perf/dwc_pcie_pmu.c=
+=0D=0A>=20+++=20b/drivers/perf/dwc_pcie_pmu.c=0D=0A>=20=40=40=20-13,6=20+13=
+,7=20=40=40=0D=0A>=20=20=23include=20<linux/errno.h>=0D=0A>=20=20=23include=
+=20<linux/kernel.h>=0D=0A>=20=20=23include=20<linux/list.h>=0D=0A>=20+=23in=
+clude=20<linux/pcie-dwc.h>=0D=0A>=20=20=23include=20<linux/perf_event.h>=0D=
+=0A>=20=20=23include=20<linux/pci.h>=0D=0A>=20=20=23include=20<linux/platfo=
+rm_device.h>=0D=0A>=20=40=40=20-99,26=20+100,6=20=40=40=20struct=20dwc_pcie=
+_dev_info=20=7B=0D=0A>=20=20=09struct=20list_head=20dev_node;=0D=0A>=20=20=
+=7D;=0D=0A>=20=0D=0A>=20-struct=20dwc_pcie_pmu_vsec_id=20=7B=0D=0A>=20-=09u=
+16=20vendor_id;=0D=0A>=20-=09u16=20vsec_id;=0D=0A>=20-=09u8=20vsec_rev;=0D=
+=0A>=20-=7D;=0D=0A>=20-=0D=0A>=20-/*=0D=0A>=20-=20*=20VSEC=20IDs=20are=20al=
+located=20by=20the=20vendor,=20so=20a=20given=20ID=20may=20mean=20different=
+=0D=0A>=20-=20*=20things=20to=20different=20vendors.=20=20See=20PCIe=20r6.0=
+,=20sec=207.9.5.2.=0D=0A>=20-=20*/=0D=0A>=20-static=20const=20struct=20dwc_=
+pcie_pmu_vsec_id=20dwc_pcie_pmu_vsec_ids=5B=5D=20=3D=20=7B=0D=0A>=20-=09=7B=
+=20.vendor_id=20=3D=20PCI_VENDOR_ID_ALIBABA,=0D=0A>=20-=09=20=20.vsec_id=20=
+=3D=200x02,=20.vsec_rev=20=3D=200x4=20=7D,=0D=0A>=20-=09=7B=20.vendor_id=20=
+=3D=20PCI_VENDOR_ID_AMPERE,=0D=0A>=20-=09=20=20.vsec_id=20=3D=200x02,=20.vs=
+ec_rev=20=3D=200x4=20=7D,=0D=0A>=20-=09=7B=20.vendor_id=20=3D=20PCI_VENDOR_=
+ID_QCOM,=0D=0A>=20-=09=20=20.vsec_id=20=3D=200x02,=20.vsec_rev=20=3D=200x4=
+=20=7D,=0D=0A>=20-=09=7B=7D=20/*=20terminator=20*/=0D=0A>=20-=7D;=0D=0A>=20=
+-=0D=0A>=20=20static=20ssize_t=20cpumask_show(struct=20device=20*dev,=0D=0A=
+>=20=20=09=09=09=09=09=20struct=20device_attribute=20*attr,=0D=0A>=20=20=09=
+=09=09=09=09=20char=20*buf)=0D=0A>=20=40=40=20-529,7=20+510,7=20=40=40=20st=
+atic=20void=20dwc_pcie_unregister_pmu(void=20*data)=0D=0A>=20=0D=0A>=20=20s=
+tatic=20u16=20dwc_pcie_des_cap(struct=20pci_dev=20*pdev)=20=20=7B=0D=0A>=20=
+-=09const=20struct=20dwc_pcie_pmu_vsec_id=20*vid;=0D=0A>=20+=09const=20stru=
+ct=20dwc_pcie_vsec_id=20*vid;=0D=0A>=20=20=09u16=20vsec;=0D=0A>=20=20=09u32=
+=20val;=0D=0A>=20=0D=0A>=20diff=20--git=20a/include/linux/pcie-dwc.h=20b/in=
+clude/linux/pcie-dwc.h=20new=20file=20mode=20100644=20index=20000000000000.=
+.261ae11d75a4=0D=0A>=20---=20/dev/null=0D=0A>=20+++=20b/include/linux/pcie-=
+dwc.h=0D=0A>=20=40=40=20-0,0=20+1,34=20=40=40=0D=0A>=20+/*=20SPDX-License-I=
+dentifier:=20GPL-2.0=20*/=0D=0A>=20+/*=0D=0A>=20+=20*=20Copyright=20(C)=202=
+021-2023=20Alibaba=20Inc.=0D=0A>=20+=20*=0D=0A>=20+=20*=20Copyright=202025=
+=20Linaro=20Ltd.=0D=0A>=20+=20*=20Author:=20Manivannan=20Sadhasivam=20<mani=
+vannan.sadhasivam=40linaro.org>=0D=0A>=20+=20*/=0D=0A>=20+=0D=0A>=20+=23ifn=
+def=20LINUX_PCIE_DWC_H=0D=0A>=20+=23define=20LINUX_PCIE_DWC_H=0D=0A>=20+=0D=
+=0A>=20+=23include=20<linux/pci_ids.h>=0D=0A>=20+=0D=0A>=20+struct=20dwc_pc=
+ie_vsec_id=20=7B=0D=0A>=20+=09u16=20vendor_id;=0D=0A>=20+=09u16=20vsec_id;=
+=0D=0A>=20+=09u8=20vsec_rev;=0D=0A>=20+=7D;=0D=0A>=20+=0D=0A>=20+/*=0D=0A>=
+=20+=20*=20VSEC=20IDs=20are=20allocated=20by=20the=20vendor,=20so=20a=20giv=
+en=20ID=20may=20mean=0D=0A>=20+different=0D=0A>=20+=20*=20things=20to=20dif=
+ferent=20vendors.=20=20See=20PCIe=20r6.0,=20sec=207.9.5.2.=0D=0A>=20+=20*/=
+=0D=0A>=20+static=20const=20struct=20dwc_pcie_vsec_id=20dwc_pcie_pmu_vsec_i=
+ds=5B=5D=20=3D=20=7B=0D=0A=0D=0ARename=20this=20to=20dwc_pcie_rasdes_vsec_i=
+ds?=20pmu=20was=20perf=20file=20specific=20but=20technically=20the=20vsec=
+=20is=20rasdes.=0D=0A=0D=0A>=20+=09=7B=20.vendor_id=20=3D=20PCI_VENDOR_ID_A=
+LIBABA,=0D=0A>=20+=09=20=20.vsec_id=20=3D=200x02,=20.vsec_rev=20=3D=200x4=
+=20=7D,=0D=0A>=20+=09=7B=20.vendor_id=20=3D=20PCI_VENDOR_ID_AMPERE,=0D=0A>=
+=20+=09=20=20.vsec_id=20=3D=200x02,=20.vsec_rev=20=3D=200x4=20=7D,=0D=0A>=
+=20+=09=7B=20.vendor_id=20=3D=20PCI_VENDOR_ID_QCOM,=0D=0A>=20+=09=20=20.vse=
+c_id=20=3D=200x02,=20.vsec_rev=20=3D=200x4=20=7D,=0D=0A>=20+=09=7B=7D=20/*=
+=20terminator=20*/=0D=0A>=20+=7D;=0D=0A>=20+=0D=0A>=20+=23endif=20/*=20LINU=
+X_PCIE_DWC_H=20*/=0D=0A>=20=0D=0A>=20--=0D=0A>=202.25.1=0D=0A>=20=0D=0A=0D=
+=0A=0D=0A
 
