@@ -1,200 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-48732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B11BFA3E056
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 17:21:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A481A3E05C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 17:21:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F57F3A4DEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 16:17:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B92A1885974
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2025 16:19:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3920B200B9C;
-	Thu, 20 Feb 2025 16:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A697D208989;
+	Thu, 20 Feb 2025 16:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TPLjjBcN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AM+bYgeN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7AB1FF1B3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 16:17:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC95200B9F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 16:19:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740068247; cv=none; b=fBbLD8zn1qoypQhuJLOkI4qA8xHZUPYT3ndT/UnH42KJU7J+4lN66zuBntYDwHfG9/zNwCiY7lNskf9e0/MIckvTJ7QbQ9ndOTWhCMgtsXNgsI66FkeiRRh15xWElmvG+niNcI2SkvJhA4xlTSKf/ZW4ZL0f2Cig2Uw+OzhViEM=
+	t=1740068358; cv=none; b=irY7lPhrEg3yPoxNAlf5ThjbDdjHwGhesalMHvOXEAv60McMe/gRLMvtSVnodsxURj1qdiG/qo9/tFcltlt7WONQ894cwenSw/rqx+qVBPQR/iICogsWvG10FAP7Sr5ZR/E0YfkOAIOBxyuZwiKJH5uyAP4r3a3z9T3SFvaD8rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740068247; c=relaxed/simple;
-	bh=a3bWlj9KxQ4SeDO5nlRz4K2d9Se5cXopGD3sUzlhvN8=;
+	s=arc-20240116; t=1740068358; c=relaxed/simple;
+	bh=/B922pkbs/U6oOvx+Im8KE0wQFfockKMJbcW42nwAlc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kAk3SOwTAg1gfXrk1BPowjA7jSwRGYqtORigM/U5ri+jimUZKtZ6k03IrVtHNziCEXnDIcJLwkliUSWo4JKe0L3mumR4OTCje28ao3auY3GEQ3ANHQzbWuNIq26JwpWqflj43ReaDSc/7mXZ+H/md7fbjm/UhutLm7OvSLGYRiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TPLjjBcN; arc=none smtp.client-ip=209.85.208.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=a18A03IXcj/rth//7jHFIB+Fv/MOu8ujbzdeJgxX+PNweqFsyZxlzBUDInANLkNBdjR4RNSCXScCYK6sFmFUb/93q4b20hXzFzyOTT7rZNfvbd0DwaH4DbQ7c0qSODtcmP5VqEnJ0bHnMMp2vMZdOWhTFsreu4zN+1rxyxbfwvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AM+bYgeN; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30227c56b11so10565671fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 08:17:24 -0800 (PST)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5461dab4bfdso1368072e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 08:19:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740068243; x=1740673043; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YxCgzyXpY/JXfZWrj67IExkL8lKhk1y+mpy4/JkmQsc=;
-        b=TPLjjBcN19jUeK2pWoKITuuFIla0FjxT544CTgk3xLzfcaKUEf79VpjQFTPZNbGm6k
-         3qKy7AK9qVAR6yezJwSQWbRD290mptp8XpFcurL8H6cKPmDWSwsNJjRDT3vJuBTm7x/r
-         6izA/GZwSdRmkG8jtVDzgbDO8Zy1Ppn3X8x9K+aR4760EfRd7QJ4ENXHXTaOeniT0coS
-         h5IjDeEt95egp18+hGUB8kx6oRHfZOVDsIW0vKhgX1RK8bTY9DRjcM1AQKNC5yLevqYg
-         GMeL1Hz1kFqxQNuyGVk6a5e5wCowGz4fjALr4prpCd0FaxDR4HQRwnH6IR6/0KJOoj3K
-         9S7w==
+        d=linaro.org; s=google; t=1740068355; x=1740673155; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FbLGtpaYb7GP8BUC9A3SVhEyUFy/pRikzTZLrMMHtrI=;
+        b=AM+bYgeN4SwhHPFPi0pcnUOuqkooYXpe4KyS4TKkc2Y9wtMNfQsmedAey1C9a1rkPv
+         5Aq+D7N8zYCLLUMIl53fuzp44OYcZ05TrkIVBGqt+DdaSW9UiwmiOlbOiiMfMn1PfQ1P
+         yiG3X6vumX52Oqvzcx3TlCYnCLL7rRokCRMU77NrgKRvHtWoNyja6AA9TBgdZsDmRABD
+         nw2K+v/jq+ygCkvd9FlcvbxQ97S4JCy0nGUNL2THdm22syx3IcdX1aG2+9uWKOZbyHOi
+         +Bs9+Ygt3oHe4xuu+3tF3+Owq9j4S7RpC2yfV2nh/dYlmBlLAqNqSu6R7Js1/EFeqTMh
+         VAdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740068243; x=1740673043;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YxCgzyXpY/JXfZWrj67IExkL8lKhk1y+mpy4/JkmQsc=;
-        b=KrWe5v9Hd1d5IxibblgesMHK2QFL7x+aRmFGlBsfg0OYC1ht6azYyYtrRwFaxmzLke
-         YPUsbE4qd0mJD4yR5js/CQZuWTGBPAIcoFYyHYlstoPeXhF2YawcjwwB3LeoVcaCnFz1
-         1BVjDvgII6u7TdlT55CTv49Pqy9oFXKC3XWV8UHkc/jwuTTjpPMDbI4FeJwVhrLiKwRh
-         4Q/oJgk6tgrK/CKdUUvOZR/s35VZDn9vcusbKm6rizCWPhJFJxjmavuonTaN7orF5oYS
-         1spi2UyuGtcGVnisdrjpXvIOzkbMtGozjSZmtvb/Jf4GZ4Z4dYZwWbEttskwV4G9zGoj
-         kScw==
-X-Forwarded-Encrypted: i=1; AJvYcCVpgDMS3BqkmaH3hmfVTkak3tdsvWMN+oCfYzEuFIlePdngRy9r4a7mdahrKAD30mfVFAOzmlZgXexewuP3@vger.kernel.org
-X-Gm-Message-State: AOJu0YweajryrtkQKZ6VYe6x3Mp2KO30dEA/ujbYE61pd4+w1vTOj9Td
-	WrgOcQdtfS7IcSdlyqPyOAsBZq4ZBnYGK26WmUC98JZGRRfz6kMPZlpAva9UAvY=
-X-Gm-Gg: ASbGncv0GWdqXWXCEA5E+g8NAyadyrFGeO2kzFcpEMH6zdnuPTdz52mvt7wHxz8Eomp
-	9jo5VQwkh56MYXwcAV7C1h6ccv71typIZhhqzzsLC6yrnJIQHgMNJKaBwjPgcpbICNwGfgH1Iqj
-	WnVf3CLew9aU3DskZaK+4nOE3P+KHIELyDVzVOTsfnOEvUwP8sniw2+kFc651Ow8mQo5WZ/DRAg
-	Bx12FuAto0FYid3r7PCz0Wp8V7zGiymJ+d/dt5sa86X8ovFOu/jy+BcHpPVDuZ8Z/8btmDzUfyD
-	6sdWd4R3kyi4BBYH0+j81CLwzcdTid3qpEDWCxAaCOD7COgM9WXQ7J0ntJ4ewJIwltoP1wM=
-X-Google-Smtp-Source: AGHT+IFeOg7tp5OAbgC93OlXoFFngw3d0ZH7XDdUb+7qRylGEOLb57jjSdQNnl0wj9HshJooaXws4w==
-X-Received: by 2002:a05:6512:1306:b0:545:ed8:abef with SMTP id 2adb3069b0e04-547243c34a0mr1385075e87.20.1740068243179;
-        Thu, 20 Feb 2025 08:17:23 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740068355; x=1740673155;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FbLGtpaYb7GP8BUC9A3SVhEyUFy/pRikzTZLrMMHtrI=;
+        b=qhB/j3pPDcs0eKacU8h0Dh4InxuDDMsINOuYyiuOIIfOnELsAjbGI1DUEJnFbV2bLW
+         8b9yhS6GKRO9KrR+rYs8obkguOSMLvJOyLX1pzh5hPdXdsgDuFKP0loEHxjpbIOrW2va
+         LS2toREKhHnjZcTyRtV+HLABxua3oPbVnaK4e26d1SYg6NI14bYu0ulaYj+jVd9eGyTu
+         fpOVWFQhHyJQBDvIiJAWSMwIsBse2Je6B/ANVAezyl5ErBnwPE4jJufyrmNwJj00twkB
+         S9tTYWLq3fa9WCUW1c67lPkwNG9ICgAZMf+GEubg+IC/2ZCHFdIFTn50yKSSR3dMPTht
+         yXNg==
+X-Forwarded-Encrypted: i=1; AJvYcCVEmRdNP0wRO4OYfWpbW1ELXvh4ZUNvsiX8+So3H4JvG4hQyONXDVcaOTYC+Fu9YFHWXXsIcUx2f7wHqHWL@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRf4LkmR+LnVQwwRqevkFfChZ9HOmoKDHVvxEnTMBG6idP+VWx
+	Dp6DYdnylyv5zeQEv9trW5ya0qSi0xRSpWqUMFQZLQwkeR0yV0h1Gd2JmZMIUi0=
+X-Gm-Gg: ASbGncsazkJo0eO55SBOghHJo7webbeWXfth2IKrj7D4QBiq+gY/Gtv9E2jik5DtTkD
+	UFMByiT19nI3uN7xjWw66XVfAcTMGj/m3s/n9yk21FokH4Np7Yl1qBEAZY2xEZAp7Y1jVQvmKKl
+	cMm3ub1+5+jaTS8eR8qxJKjvUYm5TagbTWOwgwTySH7+19epnsUEaxTCxi4EDtHjKMgeIJ0E3Sa
+	MbTqe3wzDFgpX1qb0/bshZUFs7trFBbDIlP+4KAOyAs1a3YFtjouFVbq8kFUG3E+ggfP3YRd5XW
+	6zLioENaiuT653vs5DruU1g5eaeS4/TecqyKR5Yrdlcs2WVfAmd50tiwWmGJZ7StRXFgVWg=
+X-Google-Smtp-Source: AGHT+IGXy8UPjP+6V4rWOhniIYo8XO01HbjN5gyUL77WHLsu40hdggfhlw5BeDY+CUVIKw0g6aq+Vw==
+X-Received: by 2002:a05:6512:128b:b0:545:60b:f38b with SMTP id 2adb3069b0e04-54723e04635mr1484163e87.8.1740068354786;
+        Thu, 20 Feb 2025 08:19:14 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-545f60c18bcsm1624130e87.2.2025.02.20.08.17.21
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5461d1d8fcbsm1473583e87.83.2025.02.20.08.19.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2025 08:17:21 -0800 (PST)
-Date: Thu, 20 Feb 2025 18:17:20 +0200
+        Thu, 20 Feb 2025 08:19:13 -0800 (PST)
+Date: Thu, 20 Feb 2025 18:19:12 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 12/15] drm/msm/dpu: blend pipes per mixer pairs config
-Message-ID: <ee7xdxyxjs46zfbotsa6hdmwpsvrkaere2hend4iavcvk6duqn@ogvght5qcx7b>
-References: <20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-0-c11402574367@linaro.org>
- <20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-12-c11402574367@linaro.org>
- <qrwo5jtdj64vu27jn3v2wwyuxu25bjqrybj5jjfc5ifiotgzit@6vx2km46j7b3>
- <CABymUCPEYJTK=gBHcL291qn2zbotC7_8jA4z18sbSZSjRafSsg@mail.gmail.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sm8750-mtp: Enable CDSP and
+ mention MPSS
+Message-ID: <dihnqsdjqxq7uhomceeiejey7dezfyvhpnyc3zyzhyuyfdjtec@d4ruo5xbxid3>
+References: <20250220-b4-sm8750-cdsp-v2-0-a70dd2d04419@linaro.org>
+ <20250220-b4-sm8750-cdsp-v2-3-a70dd2d04419@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABymUCPEYJTK=gBHcL291qn2zbotC7_8jA4z18sbSZSjRafSsg@mail.gmail.com>
+In-Reply-To: <20250220-b4-sm8750-cdsp-v2-3-a70dd2d04419@linaro.org>
 
-On Thu, Feb 20, 2025 at 11:48:45PM +0800, Jun Nie wrote:
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 于2025年2月18日周二 03:57写道：
-> >
-> > On Mon, Feb 17, 2025 at 10:16:01PM +0800, Jun Nie wrote:
-> > > Currently, only 2 pipes are used at most for a plane. A stage structure
-> > > describes the configuration for a mixer pair. So only one stage is needed
-> > > for current usage cases. The quad-pipe case will be added in future and 2
-> > > stages are used in the case. So extend the stage to an array with array size
-> > > STAGES_PER_PLANE and blend pipes per mixer pair with configuration in the
-> > > stage structure.
-> > >
-> > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 45 +++++++++++++++++++----------
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
-> > >  2 files changed, 30 insertions(+), 16 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > index 81474823e6799132db71c9712046d359e3535d90..50acaf25a3ffcc94354faaa816fe74566784844c 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > @@ -401,7 +401,7 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
-> > >                                      struct dpu_hw_stage_cfg *stage_cfg
-> > >                                     )
-> > >  {
-> > > -     uint32_t lm_idx;
-> > > +     uint32_t lm_idx, lm_in_pair;
-> > >       enum dpu_sspp sspp_idx;
-> > >       struct drm_plane_state *state;
-> > >
-> > > @@ -426,7 +426,8 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
-> > >       stage_cfg->multirect_index[stage][stage_idx] = pipe->multirect_index;
-> > >
-> > >       /* blend config update */
-> > > -     for (lm_idx = 0; lm_idx < num_mixers; lm_idx++)
-> > > +     lm_in_pair = num_mixers > 1 ? 2 : 1;
-> > > +     for (lm_idx = 0; lm_idx < lm_in_pair; lm_idx++)
-> > >               mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
-> >
-> > I almost missed this. Why is this necessary?
+On Thu, Feb 20, 2025 at 04:44:13PM +0100, Krzysztof Kozlowski wrote:
+> Enable the CDSP on MPT8750 board and add firmware for the modem, however
+> keep it as failed because modem crashes after booting for unknown
+> reasons.
+
+So the modem crashes on MTP, but does not on QRD?
+
 > 
-> It is protective code. In case there is only 1 LM, we should not
-> iterate 2 LM in a stage.
-
-That's not what the code does.
-
-> >
-> > >  }
-> > >
-> >
-> > [...]
-> >
-> > > @@ -535,8 +543,13 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
-> > >                       mixer[i].mixer_op_mode,
-> > >                       ctl->idx - CTL_0);
-> > >
-> > > +             /*
-> > > +              * call dpu_hw_ctl_setup_blendstage() to blend layers per stage cfg.
-> > > +              * There are 4 mixers at most. The first 2 are for the left half, and
-> > > +              * the later 2 are for the right half.
-> > > +              */
-> >
-> > The comment is invalid until you introduce quad pipe, currently there
-> > are 2 mixers at most. However you can just say something like 'stage
-> > data is shared between PIPES_PER_STAGE pipes'.
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 > 
-> Accepted.
-> >
-> > >               ctl->ops.setup_blendstage(ctl, mixer[i].hw_lm->idx,
-> > > -                     &stage_cfg);
-> > > +                     &stage_cfg[i / PIPES_PER_STAGE]);
-> > >       }
-> > >  }
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> > > index 5f010d36672cc6440c69779908b315aab285eaf0..64e220987be5682f26d02074505c5474a547a814 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> > > @@ -34,6 +34,7 @@
-> > >  #define DPU_MAX_PLANES                       4
-> > >  #endif
-> > >
-> > > +#define STAGES_PER_PLANE             2
-
-BTW, This should be 1 for now.
-
-> > >  #define PIPES_PER_PLANE                      2
-> > >  #define PIPES_PER_STAGE                      2
-> > >  #ifndef DPU_MAX_DE_CURVES
-> > >
-> > > --
-> > > 2.34.1
-> > >
-> >
-> > --
-> > With best wishes
-> > Dmitry
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+> index 8eeed7f2f7766326cfc7830002768087e9783b9b..72f081a890dfe49bfbee5e91b9e51da53b9d8baf 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+> @@ -791,6 +791,21 @@ &remoteproc_adsp {
+>  	status = "okay";
+>  };
+>  
+> +&remoteproc_cdsp {
+> +	firmware-name = "qcom/sm8750/cdsp.mbn",
+> +			"qcom/sm8750/cdsp_dtb.mbn";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_mpss {
+> +	firmware-name = "qcom/sm8750/modem.mbn",
+> +			"qcom/sm8750/modem_dtb.mbn";
+> +
+> +	/* Modem crashes after some time with "DOG detects stalled initialization" */
+> +	status = "fail";
+> +};
+> +
+>  &tlmm {
+>  	/* reserved for secure world */
+>  	gpio-reserved-ranges = <36 4>, <74 1>;
+> 
+> -- 
+> 2.43.0
+> 
 
 -- 
 With best wishes
