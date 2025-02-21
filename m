@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-48785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B724FA3EB03
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 04:06:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E70D4A3EB0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 04:08:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C46942324C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 03:06:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1E42D7A47A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 03:06:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79B751E47CC;
-	Fri, 21 Feb 2025 03:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 192DC1E9B31;
+	Fri, 21 Feb 2025 03:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GZETe3E3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Thj7SIuk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807071DC9B5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 03:06:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5F41E7C19
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 03:06:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740107176; cv=none; b=Cq8tjuVTNvIKlAQV9loiHF7isE2EcZvZntmcCh75k7vGk4DiMmTihwIcTwi9zVJ52S4gp551GiR0P5+N6r2F/3Wz7nEVOl0klGyaJ2TYJvGGPh1bIiGjpDwJ6yhvNkwD/pRJLvYQrUC9c/vBcbHOcMy3OT0A5tWzQ1scA4irjgs=
+	t=1740107179; cv=none; b=Xbc3q2/hyNXhEZG8Srg10g5K9tqDaA6tKNsWgpRyb+SHoF1ByXK4+vk7P4grvzQd0WacKKnw1+R0elQr03+lLVlRSDwPKV+CQ9Q1w+MtYSbLwXoCeSM/xRlyOXUYcq51COMaP5Nj81OrTcfeqNwcQ3n2rlOONLYFnpruhrqKVLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740107176; c=relaxed/simple;
-	bh=SXeEbK5yXT+z0ytiJDbxKyhHdrBTsXe3P9N1F7xf4BM=;
+	s=arc-20240116; t=1740107179; c=relaxed/simple;
+	bh=r63bMyziS5VAUoRIbBTBNVf6CyjstQjiNuFZTwV1jAY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BeMDVEtta7vXPYsePEUYNbvgc65bcMEsuhWgiONmTl0k+fJQj6io7Lb93IkHD9xdDf2yvjDM3J0CHLHE6KQLE6WGgQL1nOHF1/dv++bljWSmOtYUwcHA62lDDvxm20JlHTavm1AAsNGkTJYn3+YdwkhMEhFuWXfg76kRclW65C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GZETe3E3; arc=none smtp.client-ip=209.85.208.176
+	 In-Reply-To:To:Cc; b=EB619FKLR7qqgjTmbpraJmSgOo66OByAd62YcBvLq8wCbDus/70EPdtnlIWO9iNXNEEeU+GdY/kLVF2pPhWfhFpTEkJCNz/dBqpevT0mWXjL+z6F9ZVjuV5G/ALHUMlft/IUkhDFbOrhGh8XlVz/5ImcutdYQXH7+PP5i1R3CVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Thj7SIuk; arc=none smtp.client-ip=209.85.208.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-307c13298eeso19114371fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 19:06:14 -0800 (PST)
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-30613802a59so16693941fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 19:06:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740107173; x=1740711973; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740107175; x=1740711975; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uqou0Qn+n6DhJbeToUoLTuxjvWC6XoVp/9xaUlMMFxk=;
-        b=GZETe3E3DEtWK9XyJLhH9onZICabwrWY2jdjXambr+USqG1SSbxDCA9IDOqPV7Zt2W
-         RrwKKH+/vASe2rRwS83JGMxoo0tX5RWz1Dz1+CUUjhV6ibZ3jYZ3kA/bfDaSSgUGdJWR
-         n5zEfAJ/AgK5rig3turKuZFOE0VfEQaQ3SSUFqIpDmy2fO/QkNhF+0SYhW+Ceyco/UR1
-         uRm1DYjdSPGdvHQeS3oAIw6g7iQ0mBuXCWuKKrVBoPNF2TUFv3HdK+cLwVctUEYzbrqG
-         0vwwK6hvJa9X2kKMSUG3scPi0AKDA3GYZySwBdeCIhy6x26YCFOATGloQvFrZGzEI4Hp
-         Wzaw==
+        bh=md2U+XG4zVBPU+kJo14bBfe09ZT4A11xAQxscpC41RA=;
+        b=Thj7SIukDN7+EJpsNFLHpo0DrlnZ2pll5VT5txODaHgJKiJePmuPW/sJNkFG0VTki/
+         FLFfySz9lLxKPk2CpX3ycOxUQPqRv8MIu3nVGdkjqU4gs6+MGgNSmcRfzHhUbHCZRpdZ
+         sRGxJRSR3TptDQVFVV+f3A3tJU5FL8C+lOV/tua8IPwa+rb+ibNRgunfsYZCsgMMd2Ng
+         AIrk2QQO2/LowCGNJNTYKyMsWtFCKKBnNX3ekrC0mszk1lcZ0mMpp561fosFhk7Xu7XO
+         1MfaYGf8TS0dVxrDmrcWo0Akp721m/0ZbLMy9NiX+4nhHNtdlXsTZA5GO44mP5AW7X3S
+         1tQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740107173; x=1740711973;
+        d=1e100.net; s=20230601; t=1740107175; x=1740711975;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uqou0Qn+n6DhJbeToUoLTuxjvWC6XoVp/9xaUlMMFxk=;
-        b=CKkhaV8b0MzONnYUtx7+xIGA0aRYcJKCFw4YfCZFnmO+dOc6jj3GIGkvVpP122WJQ7
-         HPU9lLFYa3d/t6EsW9qDmWIeXsnRS3vK6tGVAXOWc8fPHWjlz+cxY4yFj4P4gkjXFqVo
-         GT+aWh6nSrD97rVHDNU7KPnMjvCR/htUm3e01XNYroQHFjA0FNwqB0w457jFcdwG7F0b
-         ORR73evD0GQDlmlheEu5319Ox2i5+tjYnDSmMHxAoszAau7BRIADSWzB09gOsh/peVYw
-         uR3iKrsGLddx9Tg4b+Pvl/UhDndBZXEk41nF0tJJ5f1aJYobLtJwJS+BSsfyqj68rxLo
-         UV9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX2AYfeICsDtodolUw9hgs+dlFp8bFC+UTFPluxYprUDkyDqSGfB4SJe0nStiiOetiR8AktEGjLr+rAKIwr@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6+AIuNZDJY5te43GbwT7j4Ss9KTOJkXCZkrCiahiep7BxLzAV
-	72AP/OMgqXmrQjk9Q0+NGq4YVUaMoi6HRrf39c6xW5a3wayUBW83RY/mWDtbp9k=
-X-Gm-Gg: ASbGncvap+w2NBySC9kWUMZ9ZFAVIL6KO8q/6uWfue6uRIQmuUYq0VDAtFXfVdhLhEl
-	DKbs4n6ep1ekrCSjnC8TV7BJI7s8LRFsNRTl7ds0CFodR6PUrdTq0uidQJqDyDJ71Vs6Ft5orlI
-	ZsPlrFPPUFNj5TbYChXAGKZHJbOZdJIPTgbCAjUh4DAJn8eaVQXUz3qWFbMaHaxsDCFtk6hg54Q
-	WAtV1H2j+OWYRkXvdSz2wfOWC9N2W8Qbp8bBLT9zBigVQcFyTh1WJHT7RqXgA9qhedWX6oWl9lA
-	Mjcxoj9mvUxvBF9Ck41fIW1ZPmqO/KphYLSQUS1YrjmvIR5yvaTaM+aIkJnQKILcv5HjYQ==
-X-Google-Smtp-Source: AGHT+IFNru2jT4B2My+mH7sKtutPQgoPZkx0IzzhFlfGrAnesGV7j1blCjHj0MpSkXQfHvKpvVi2Aw==
-X-Received: by 2002:a2e:86cf:0:b0:309:1b13:f72 with SMTP id 38308e7fff4ca-30a505bbb6bmr22845051fa.3.1740107172854;
-        Thu, 20 Feb 2025 19:06:12 -0800 (PST)
+        bh=md2U+XG4zVBPU+kJo14bBfe09ZT4A11xAQxscpC41RA=;
+        b=Oqrf5Ar8epnEUXAKXKqkittJwh/eByQYBdekzEErZYUeFFEyl2PG6E8C5jI0/GFzGo
+         zqEq0N990Bcxn4kRc0bqOvKSr830EdI9CqihER3qgzLvzROnaaVqldi/h+QTOObuvJpo
+         09l3iU1JPfKToe3p9B6HcLfrwZLZe9y4LyKgc/A9cjZraBs0jqLQYL1wGq9Kq8AAW3WC
+         TqqnnF08npAnCr7uT1G7RSPGkzB5mjCLKshpNSDOtUYf+MIX3PyBmXOgD8WfAOuEOQ0d
+         BYzvncA0aXjUmxThn2E+lYvodVIYNFY3yfbjvuM0yGNaFrmhtOtau9D721B+xSRRsaCi
+         K6+A==
+X-Forwarded-Encrypted: i=1; AJvYcCXqeZTyYi7cyTxqBaOobhlArj+CaVpf9FhwIP9XggpWA+PTAp8JLhxhzM3o1eWCkqhczGrp6wB3NJiAKuY0@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4+Pks65rlRFUfrzJYrON51/sJdLnhpErJIXFM6tL1vnPc9Bsc
+	FUyH2LFscf6YGdB8STSCqeK5dCgsYiIZfOC2AZ+V9CtLqhJjGiet066wdEyWwxs=
+X-Gm-Gg: ASbGncv9OrAFAD46L8/zAGYuWCGJgyDZrWuFFjUsk3U2KMQjlHcb6xI7h853JVRLIKz
+	fsFUZYNONOZqxyLm1LGpIlMVxft18PFund1MZRgKamtQfSPdfkTI7pnGZu2fVP7rVl9JUwcZJ70
+	mw9CmN1RZjSX6e6YDYmptZCqhl83TO6oAw/lZrMr5nDUNF53TBIsIcjtrhNB0LWYFnSzUiXk98n
+	eAhXCdZiA0enpFz56Z47EaT09wjEc6GP61o8Qnzr8od5juxZYZIWbTpyg0q+QfhWnQHz0a7RpJE
+	22wvf0zQDbj/HD2/K2MvTwZpIo0OkLydpalwV+fqvZxuUmM0bvI+ba2/FOx82MnQ6ecnKg==
+X-Google-Smtp-Source: AGHT+IEkCKO1qHn/CLGLJrlkaW0VmyfjmyJLlNnnkj2GKxT28k4CdaGsFTxMvNT8RgAQ7Nxch7LsGg==
+X-Received: by 2002:a2e:9e13:0:b0:30a:4484:3ee4 with SMTP id 38308e7fff4ca-30a59960525mr4536621fa.23.1740107175293;
+        Thu, 20 Feb 2025 19:06:15 -0800 (PST)
 Received: from [127.0.1.1] (2001-14ba-a0c3-3a00--782.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::782])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30a2be45876sm16021071fa.68.2025.02.20.19.06.10
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30a2be45876sm16021071fa.68.2025.02.20.19.06.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2025 19:06:11 -0800 (PST)
+        Thu, 20 Feb 2025 19:06:14 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 21 Feb 2025 05:06:02 +0200
-Subject: [PATCH v2 3/6] dt-bindings: PCI: qcom-ep: add SAR2130P compatible
+Date: Fri, 21 Feb 2025 05:06:03 +0200
+Subject: [PATCH v2 4/6] PCI: dwc: pcie-qcom-ep: enable EP support for
+ SAR2130P
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250221-sar2130p-pci-v2-3-cc87590ffbeb@linaro.org>
+Message-Id: <20250221-sar2130p-pci-v2-4-cc87590ffbeb@linaro.org>
 References: <20250221-sar2130p-pci-v2-0-cc87590ffbeb@linaro.org>
 In-Reply-To: <20250221-sar2130p-pci-v2-0-cc87590ffbeb@linaro.org>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
@@ -100,106 +101,45 @@ Cc: =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
  linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2656;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=992;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=SXeEbK5yXT+z0ytiJDbxKyhHdrBTsXe3P9N1F7xf4BM=;
- b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnt+2aKQj+ktotPagVyE9Cku3l77SmU3n1J0Dsr
- gQdkbOorDWJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZ7ftmgAKCRAU23LtvoBl
- uGoJD/0QrpPH8bgdU/0dHSGPRlgoYLL10yIe+EF6bUr0qbjM4y7LT/C1/iJJUlfs35OaSWGBeOJ
- yLA7R/MapdHxYWmlatzGOAlg9uJ9BiHSzG1c10jdouehNEYUbYrqtgzcrQO/dhqljduWLezZt2d
- 3Airv+GZKxJcnp0IN91+40lSu6GBpRQOhrrzYva6Xmd/x+pV68ZTPoPY2hkKy1ZmCTPn7WDj59T
- 1Km1X4GLrSA6acN49h4wl3CFut/dydhv3C2+jL/FJQ9GPzOR5cJiYTjl10/NwnLtlEKiaXYNxRJ
- 6hdaSCqmVsPp5Zv3AJvp2i32PwKOUgfqpYFmKg8tw7mSfFKDkvmnvqZrS/WXmYb9b6T0VStJPfm
- JacKyi3wa8UbLcQ9YOLCZnFyV8L1bRdlS9S8SPqch8on4LZJaJQgpdV8+PEhZRweOm151SRSJWc
- SJMz57IhtU+PJg7wNRuiaMx0CRHmtyJ7StRA+OUE3R8OJpNQz9/Elx4NU7mjplz7cNdQ6mFmr+7
- DzYx4GWT4yn4kZjzRs/rscKZW+eRh0/cL2Sjz5SI4C+D0cGxS2D+dr6muoED6gzeIc/ikKbMOOT
- ns3BRhGtIQaeO/eA0ebvacuUNl0+fXHfBkkvHPesCG1HkMNBOQbPS1eNllyYJazPKoX7HnXASei
- NJsknxv+P6W2ARQ==
+ bh=r63bMyziS5VAUoRIbBTBNVf6CyjstQjiNuFZTwV1jAY=;
+ b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnt+2aLBoqC7gDH2lR6m3K+MOfN99dXco+FQOjY
+ Z7D5QrZfN6JAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZ7ftmgAKCRAU23LtvoBl
+ uNpAD/4kNOZSOtJdaVWeVbYNca7r58HQ6qqCh6bHGhy2ow0CqxOf3rrkU++ZvfSR+uU+7nMIOhB
+ dPIj/V1OG694l1g6LN0r2mYQGAwzhkGID6G1A30OQJg6Jeb4qCGOIBrv0GLKdeppxVk4O9k5Euk
+ X85HA795bwkpC95P9r4jYNMFr1oNagHER9g1KKlUOJH6fYOB+llzsCYVNaCmad5of9zuMOkK6Qw
+ 8PnYX3uP+YKUog7y52RIca5OC/v4WRzzp8U8fNcxsjuEtngK2igQuvsMaZLM46jL9rP4wbr6Gtt
+ OZ5WK78E+a0lqaUM22kkOCFkmkZ4gMM1q08hQFZOi0snXM5WCRJvIJOv1dbTBrtJ6x0xaAV1HKp
+ yahVAV+hB/DiUlYvB6KoxAJjuixvSz1v8ZmZcCKnK7awHOYjVKgFTpb0BNab4VfHol1xUdc+fUx
+ DWQOfBb4uzMPQFr8LRgMpVrumqf0gNrm+Nf8SJCHYAq1LPGqVfomkKWGtq05gsJ6OFQlHTeQLA6
+ g1mq7f4ZRp4m6jAX6d0yLeJDdLFZdftnlAhJYrF+k61kqr7fIHUIWKi7PS62nfWGoGQKEvfbWZn
+ k5SCY/74hHLh5Ii8iFRYLoSuCtsrPw8dNTBirjYm3XL1ysv0OIkoQnzcGk9z937Vc+SrZjecIY7
+ SmyMA1H7CsmeeGA==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Add support for using the PCI controller in the endpoint mode on the
-SAR2130P platform. It is impossible to use fallback compatible to any
-other platform since SAR2130P uses slightly different set of clocks.
+Enable PCIe endpoint support for the Qualcomm SAR2130P platform. It is
+impossible to use fallback compatible to any other platform since
+SAR2130P uses slightly different set of clocks.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 44 +++++++++++++++++++++-
- 1 file changed, 42 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-index 460191fc4ff1b64206bce89e15ce38e59c112ba6..6e516589f0edb4dfec78f9ff5493c06ee25418f0 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-@@ -14,6 +14,7 @@ properties:
-     oneOf:
-       - enum:
-           - qcom,sa8775p-pcie-ep
-+          - qcom,sar2130p-pcie-ep
-           - qcom,sdx55-pcie-ep
-           - qcom,sm8450-pcie-ep
-       - items:
-@@ -44,11 +45,11 @@ properties:
- 
-   clocks:
-     minItems: 5
--    maxItems: 8
-+    maxItems: 9
- 
-   clock-names:
-     minItems: 5
--    maxItems: 8
-+    maxItems: 9
- 
-   qcom,perst-regs:
-     description: Reference to a syscon representing TCSR followed by the two
-@@ -129,6 +130,45 @@ required:
- 
- allOf:
-   - $ref: pci-ep.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sar2130p-pcie-ep
-+    then:
-+      properties:
-+        reg:
-+          maxItems: 7
-+        reg-names:
-+          maxItems: 7
-+        clocks:
-+          items:
-+            - description: PCIe Auxiliary clock
-+            - description: PCIe CFG AHB clock
-+            - description: PCIe Master AXI clock
-+            - description: PCIe Slave AXI clock
-+            - description: PCIe Slave Q2A AXI clock
-+            - description: PCIe DDRSS SF TBU clock
-+            - description: PCIe AGGRE NOC AXI clock
-+            - description: PCIe CFG NOC AXI clock
-+            - description: PCIe QMIP AHB clock
-+        clock-names:
-+          items:
-+            - const: aux
-+            - const: cfg
-+            - const: bus_master
-+            - const: bus_slave
-+            - const: slave_q2a
-+            - const: ddrss_sf_tbu
-+            - const: aggre_noc_axi
-+            - const: cnoc_sf_axi
-+            - const: qmip_pcie_ahb
-+        interrupts:
-+          maxItems: 3
-+        interrupt-names:
-+          maxItems: 3
-+
-   - if:
-       properties:
-         compatible:
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index c08f64d7a825fa5da22976c8020f96ee5faa5462..dec5675c7c9d52b77f084ae139845b488fa02d2c 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -933,6 +933,7 @@ static const struct of_device_id qcom_pcie_ep_match[] = {
+ 	{ .compatible = "qcom,sa8775p-pcie-ep", .data = &cfg_1_34_0},
+ 	{ .compatible = "qcom,sdx55-pcie-ep", },
+ 	{ .compatible = "qcom,sm8450-pcie-ep", },
++	{ .compatible = "qcom,sar2130p-pcie-ep", },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, qcom_pcie_ep_match);
 
 -- 
 2.39.5
