@@ -1,293 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-48971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07AFAA3FD57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 18:24:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D9B4A3FD64
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 18:26:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4E4B17A981E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 17:23:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 26880425DF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 17:26:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC3152500AA;
-	Fri, 21 Feb 2025 17:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36DB424E4B9;
+	Fri, 21 Feb 2025 17:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ewkQ1nnX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lPVUzs/n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD12D2505D3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 17:23:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85ECF2500BF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 17:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740158609; cv=none; b=toii+9pD7qpCxjVqwHPXAc1b79Ic9rUJM92TkXCE2PhCwga6OTLsTggLtbkp9A9sAWdEDOu4+pAKLsl5pZo5YRuUQNqVj9vB4qTvJc9BCXNSydik80VT/IDQcV5SsdeId6SLwyvAUC5dHGb7BYyuKUkfBI6n28xvjyR6NMJMaDw=
+	t=1740158802; cv=none; b=cN8Xl6DYuSWLkOP9tSMP6o121YAVc8AGdbUptHdTSEBu00DTcAncOT4N/lOFsdW3UJ3lD3aElQWixVRcygnQVs0AdB6ccbVY04ceN8Wof/URBZWPyZ36paY39m+lvSwU8c0b5Yx8Nj2JEOrku0+O0kqsw5ufderX2QPQ8dtdYb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740158609; c=relaxed/simple;
-	bh=432o3LdSfGr+97dz21dol2E2CpCbQLWX6ldZdo4avtw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=sPV+Wh5Y/EJCNqPTv1yijzuTtbHClQcsuoHsQ423pIuP9M2vIk+EfMmPueylZ/vCEEnqDgS334fJY/i5s3cyKcaQM8fl5NM7TVk4K5Uo7CFOwymNbmpYnkIm8s6ROMFYSXE8JPTereZK7BrC1ImuHpBtyMAlSz0brPs6FP4DIk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ewkQ1nnX; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-220ca204d04so37267855ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 09:23:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740158607; x=1740763407; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=H4hJLC9ezjmzckiqXS2j2AvB+5mvndIMa9rBZc/aOjo=;
-        b=ewkQ1nnXlyFvB5zHIFJ3t2AhzjOOJD7JfijAw1ZaYFA9RbjwVBT/Bq5dX6GfP+oZ17
-         KmHWDOXfxzY3RZbpyvC6948sd54K9LPznvGYUazLVujEtSWiZX4i3pnwGw+TdsqzCgI3
-         yoOirIIsWGUUGm3X4s+qL7VA9DITv4ArA6DKuUkjdH18nObD7ZErc18Pm6EWVAIWpMS9
-         zsrKOqxJQvqKXSS/n/uEPsGtHPrrBnjJ8hsMy7DV9VJPI/X6OoOyeVM1no2kIidX55nV
-         EeQEyFPrPL4gDqlT+Tz/ncXO6+hMp7uEiyQ+BPar4jTZw2D+/8rBTJvCXhz/Nwy98De5
-         ZOzA==
+	s=arc-20240116; t=1740158802; c=relaxed/simple;
+	bh=Ph7USw0ImrV5OFwHbz8K6e0gEHJSchG1R44WBELJdPM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Vyfh812AcQcVl+P/U1BORiB+cQ8406NsTXLbT8OEAaSiIvwC1RJ8wmPXZj/JXzFbSRkor5onO8obaJEGWQCTFkbBXcRqeozCUcT0zxPJHW8q2j3drGNdiCvxWH9I7ebCiJVlgjr32kmqqZGt5TsH1RbACJ4Z9IHGQNoB+S4yA20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lPVUzs/n; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51LEwDam001838
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 17:26:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	T5ynMRmaq5n9zwwwNcuq3LdcHoh2ot5zXwn+qCbZa9s=; b=lPVUzs/ntpAjnoAO
+	gJ/UzNsf3qRMWaFpWZaYkdiRL4ZFuscGlLi5GkxQPvRhUyLYqw2P+x1LVLBuwqZG
+	DN6kxBOr1qXgdrd+DY/lbolsajdvajjrhamBAzlAE9ONhiXcfgJ6Ikpomau+sbdM
+	R4cChQP74q99o7nxJaYzuPOWBpuLKvhrL1V8fzPZk8UF3v7IgHeS3XZSe3hweux/
+	pwcvDVX9jFQF2DVS9bEpDo42QOk2w7RV6N6XmkHLPWOR5Rp4EJmIS1DjzLUXcipx
+	vv4kNjmKzpGyAqDbZ3+HyTIom2bRZemRsXYD3NexqgPhe5RQhLCLvdj/VL7vjwaT
+	CWlhrA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy2jr84-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 17:26:39 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-22126a488d7so55042525ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 09:26:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740158607; x=1740763407;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=H4hJLC9ezjmzckiqXS2j2AvB+5mvndIMa9rBZc/aOjo=;
-        b=urMaW8GOird3KVhNbgIXPN1Da2Fj8ml4EIFbQvsS4pFv7hW2OIKyuQp/bCMx9bVC2h
-         o5k7rDzWVYq5AOjnM6cMsrce7khHkBQHN1/wwZuYUwfTIpDYDeERHWCRg3cSgTKcH7W+
-         LJiVM7a0rhCrjJeLTf6f4dTQRNsTUTzqWV+aQYwLHZ6EDQ+G/CfWmQA3i/Kx7u3MXCfi
-         AHv1cFztGUwQMuVpsFxaH3oAQRroCImi5DtHuopEZDqWmwvs10AoLiL9bN3kKBxcOEAE
-         L+CuNV8F9uvs8mVGsuQxXyhJ+cjtw491n2oyd+Iv0BftBp7IYk091KbnTmvro5VdTPKy
-         PFog==
-X-Forwarded-Encrypted: i=1; AJvYcCXugyILK3GBHgidEo+CKb+03LFxY28MWW6itekeZB/7DWnjNdY04Y1RDg/bRV5HUVhnVnchfVnqMW7aQSzp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxy5JyyxwxYDhXXHrnjJBAICmPl7P/CXkptBx+zfGQYSPUynmB7
-	Oh2yDZ+bFTCn29JTa0W2ta+ZaLLjZJP2Ve2DZ71nx2wbdlCLZega3Bsalsa8Eg==
-X-Gm-Gg: ASbGncsFFT35WxoV7CucBP/Fip+IhIkSOk6Q34AQhOLNggb+CTEk6WSB7FxuoY6rEMo
-	pI94tUfs8wdUBBPIG0R3DNqjaK0lRIUXUPAydWZP9+OqiJu3tDVT0hWCtKOLiD4GFimQm3005BY
-	DTA5mYjBE96Ati6fn8wUsiDXxhJL0AZJLbAQy3enJi3athpGcxJWF8i3Plz6lv5SUuP8ItOVtuD
-	Wt2ijCBTxYouUREa/OS7YjrDRodRovk84bJHmzhO/BqOEfnTIBRXCgg230JnSAaQ1eGCODE/dfm
-	27+Dzgw3Vlchv/PeTfn4G6q+aHBMgnet+SuzEahydrhH8oQ68F55
-X-Google-Smtp-Source: AGHT+IFFxw0nkRkM5smllKdWbGW6yYHFF8V3927Y2RR95VX56SRlzaDxW8xBfx5wbngEvMWxjPsqAA==
-X-Received: by 2002:a17:903:2349:b0:220:ec62:7dc8 with SMTP id d9443c01a7336-2219ff28ef8mr66227175ad.2.1740158605605;
-        Fri, 21 Feb 2025 09:23:25 -0800 (PST)
-Received: from localhost.localdomain ([120.60.73.12])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d545c814sm141243405ad.148.2025.02.21.09.23.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Feb 2025 09:23:25 -0800 (PST)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: lpieralisi@kernel.org,
-	kw@linux.com,
-	bhelgaas@google.com
-Cc: linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	dingwei@marvell.com,
-	cassel@kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 2/2] PCI: qcom: Add support for retraining the link due to link down event
-Date: Fri, 21 Feb 2025 22:53:09 +0530
-Message-Id: <20250221172309.120009-3-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20250221172309.120009-1-manivannan.sadhasivam@linaro.org>
-References: <20250221172309.120009-1-manivannan.sadhasivam@linaro.org>
+        d=1e100.net; s=20230601; t=1740158799; x=1740763599;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T5ynMRmaq5n9zwwwNcuq3LdcHoh2ot5zXwn+qCbZa9s=;
+        b=Gfa9NBLZTFkIpUpxLG32g7a/LUZRjkTD9BOYLmSIbQ37UTPFSUcKGwbCR+a4J/0L7f
+         K2ho1cuwA0ko2yTkdeh7xPXneBQ4LOA471Wz4eqADqTo79LmtqAChK9o5z3ZpEO0PNa5
+         iVc6i6OFsT9O8e7ROMld5Jury/Aic/TIczBomLtnsCR2VqPy4wkAFshDrpekivPBFOci
+         XT8RFrF3rFlvmWmu8aRGl/qISi+1bkqlFqTrCXdxl9NzKhIrDubVTh9xzoMN7iT0T6sZ
+         SnGN14B0fCWaAs+wKOspXLlhGZ25AqCiRoNsDPkKugQws0uJowypsPAxOYTIySYMtUeL
+         9YfQ==
+X-Gm-Message-State: AOJu0YyEy21aqyWlBuOa0u5J5Zs0vvAq7+dpVSQke33qbKnrK2R/JDKF
+	79yyILO1CMXG9uV91pRkCmMPSv3zZLzYEoEsznywEE7e+VaKJSczX8R7Gri5Wiau/5sekJo+a5k
+	7d89At1ETE6IV21cBYEVMtVbzp8Wkm0izMaQ/nVmlk+V5vCn/ghnJaSPOmhgaCpUTWjIYlIx4
+X-Gm-Gg: ASbGnctkwTjufoMpOi+va3JoPBCnw4Kka37W1O9UkCmGQGMP6rB3SFYF5cPTtEOkmjs
+	qnP7Z4lz430VisEz5gGAzzsvSji+3SWRJeT8Y0uDCnj/Q2Y073hQfMloxdqLFNE26qiStpFCek4
+	jk6Qw/i585Z2V96sfgfRiB3Tv9ltht9pw/0i7JdTUkgyEfkohW4JwfV8mpYGzI5Ry5MyelrWtzO
+	2EmqT5M5iXLv+LUlphxbks1vBy0NAjt3NKEs17TP0/P7qf/rtJTIRvMavID0mhUNrgN9T/1+jYi
+	n4ivgUk5nuyYFQ7GmixFoEegnHdLRK86XTS4C5tc3O4VwynQ672E7scEFsUGAtQOZw==
+X-Received: by 2002:a05:6a20:3d89:b0:1ee:e785:a074 with SMTP id adf61e73a8af0-1eef3b1fc42mr7610289637.0.1740158798720;
+        Fri, 21 Feb 2025 09:26:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFAvLjLEOT3k5eU+kwjUYn9QMNPwU+VKGSKihPzvcJYaCuOS/5cB5+9Dgq+to9a/pw7RBaEZg==
+X-Received: by 2002:a05:6a20:3d89:b0:1ee:e785:a074 with SMTP id adf61e73a8af0-1eef3b1fc42mr7610242637.0.1740158798226;
+        Fri, 21 Feb 2025 09:26:38 -0800 (PST)
+Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-adc7e4aa183sm13131316a12.4.2025.02.21.09.26.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Feb 2025 09:26:37 -0800 (PST)
+Message-ID: <21fa7a70-8c35-4e28-8d09-e7dc71350b4d@oss.qualcomm.com>
+Date: Fri, 21 Feb 2025 10:26:35 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Update my email address
+To: quic_carlv@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20250219214112.2168604-1-jeff.hugo@oss.qualcomm.com>
+Content-Language: en-US
+From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+In-Reply-To: <20250219214112.2168604-1-jeff.hugo@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: -OqwhI6sP34XUHEwHXQWPxgfhw1dk1C9
+X-Proofpoint-GUID: -OqwhI6sP34XUHEwHXQWPxgfhw1dk1C9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-21_05,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 mlxlogscore=834
+ bulkscore=0 malwarescore=0 impostorscore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502210122
 
-The PCIe link can go down under circumstances such as the device removed
-from the bus, reset condition, etc... When that happens, the link needs to
-be retrained back to make it operational again. Currently, the driver is
-not handling the link down event, due to which the users have to restart
-the machine to make PCIe link operational again. So fix it by detecting the
-link down event and adding support to retraining the link.
+On 2/19/2025 2:41 PM, Jeff Hugo wrote:
+> Qualcomm is migrating away from quicinc.com email addresses towards ones
+> with *.qualcomm.com.
+> 
+> Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
 
-Since the Qcom PCIe controllers report the link down event through the
-'global' IRQ, enable the link down event by setting PARF_INT_ALL_LINK_DOWN
-bit in PARF_INT_ALL_MASK register.
+Pushed to drm-misc-next
 
-Then in the case of the event, call pci_host_bridge_handle_link_down() API
-in the handler to let the PCI core handle the link down condition.
-
-The API will internally call, 'pci_ops::retrain_link()' callback to retrain
-the link in a platform specific way. So implement the callback to retrain
-the link by first resetting the PCIe core, followed by reinitializing the
-resources and then finally starting the link again. The PCI core will
-finally rescan the bus to enumerate the devices.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 90 +++++++++++++++++++++++++-
- 1 file changed, 88 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index e4d3366ead1f..ebc58e88161e 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -55,6 +55,7 @@
- #define PARF_INT_ALL_STATUS			0x224
- #define PARF_INT_ALL_CLEAR			0x228
- #define PARF_INT_ALL_MASK			0x22c
-+#define PARF_STATUS				0x230
- #define PARF_SID_OFFSET				0x234
- #define PARF_BDF_TRANSLATE_CFG			0x24c
- #define PARF_DBI_BASE_ADDR_V2			0x350
-@@ -130,8 +131,11 @@
- 
- /* PARF_LTSSM register fields */
- #define LTSSM_EN				BIT(8)
-+#define SW_CLEAR_FLUSH_MODE			BIT(10)
-+#define FLUSH_MODE				BIT(11)
- 
- /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
-+#define PARF_INT_ALL_LINK_DOWN			BIT(1)
- #define PARF_INT_ALL_LINK_UP			BIT(13)
- #define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
- 
-@@ -145,6 +149,9 @@
- /* PARF_BDF_TO_SID_CFG fields */
- #define BDF_TO_SID_BYPASS			BIT(0)
- 
-+/* PARF_STATUS fields */
-+#define FLUSH_COMPLETED				BIT(8)
-+
- /* ELBI_SYS_CTRL register fields */
- #define ELBI_SYS_CTRL_LT_ENABLE			BIT(0)
- 
-@@ -169,6 +176,7 @@
- 						PCIE_CAP_SLOT_POWER_LIMIT_SCALE)
- 
- #define PERST_DELAY_US				1000
-+#define FLUSH_TIMEOUT_US			100
- 
- #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
- 
-@@ -239,6 +247,7 @@ union qcom_pcie_resources {
- };
- 
- struct qcom_pcie;
-+static struct pci_ops qcom_pcie_bridge_ops;
- 
- struct qcom_pcie_ops {
- 	int (*get_resources)(struct qcom_pcie *pcie);
-@@ -274,6 +283,7 @@ struct qcom_pcie {
- 	struct icc_path *icc_cpu;
- 	const struct qcom_pcie_cfg *cfg;
- 	struct dentry *debugfs;
-+	int global_irq;
- 	bool suspended;
- 	bool use_pm_opp;
- };
-@@ -1263,6 +1273,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 			goto err_assert_reset;
- 	}
- 
-+	pp->bridge->ops = &qcom_pcie_bridge_ops;
-+
- 	return 0;
- 
- err_assert_reset:
-@@ -1300,6 +1312,75 @@ static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
- 	.post_init	= qcom_pcie_host_post_init,
- };
- 
-+static int qcom_pcie_retrain_link(struct pci_bus *bus)
-+{
-+	struct dw_pcie_rp *pp = bus->sysdata;
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-+	struct device *dev = pcie->pci->dev;
-+	u32 val;
-+	int ret;
-+
-+	/* Wait for the pending transactions to be completed */
-+	ret = readl_relaxed_poll_timeout(pcie->parf + PARF_STATUS, val,
-+					 val & FLUSH_COMPLETED, 10,
-+					 FLUSH_TIMEOUT_US);
-+	if (ret) {
-+		dev_err(dev, "Flush completion failed: %d\n", ret);
-+		goto err_host_deinit;
-+	}
-+
-+	/* Clear the FLUSH_MODE to allow the core to be reset */
-+	val = readl(pcie->parf + PARF_LTSSM);
-+	val |= SW_CLEAR_FLUSH_MODE;
-+	writel(val, pcie->parf + PARF_LTSSM);
-+
-+	/* Wait for the FLUSH_MODE to clear */
-+	ret = readl_relaxed_poll_timeout(pcie->parf + PARF_LTSSM, val,
-+					 !(val & FLUSH_MODE), 10,
-+					 FLUSH_TIMEOUT_US);
-+	if (ret) {
-+		dev_err(dev, "Flush mode clear failed: %d\n", ret);
-+		goto err_host_deinit;
-+	}
-+
-+	qcom_pcie_host_deinit(pp);
-+
-+	ret = qcom_pcie_host_init(pp);
-+	if (ret) {
-+		dev_err(dev, "Host init failed\n");
-+		return ret;
-+	}
-+
-+	ret = dw_pcie_setup_rc(pp);
-+	if (ret)
-+		goto err_host_deinit;
-+
-+	/*
-+	 * Re-enable global IRQ events as the PARF_INT_ALL_MASK register is
-+	 * non-sticky.
-+	 */
-+	if (pcie->global_irq)
-+		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_ALL_LINK_DOWN |
-+			       PARF_INT_MSI_DEV_0_7, pcie->parf + PARF_INT_ALL_MASK);
-+
-+	qcom_pcie_start_link(pci);
-+
-+	return 0;
-+
-+err_host_deinit:
-+	qcom_pcie_host_deinit(pp);
-+
-+	return ret;
-+}
-+
-+static struct pci_ops qcom_pcie_bridge_ops = {
-+	.map_bus = dw_pcie_own_conf_map_bus,
-+	.read = pci_generic_config_read,
-+	.write = pci_generic_config_write,
-+	.retrain_link = qcom_pcie_retrain_link,
-+};
-+
- /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
- static const struct qcom_pcie_ops ops_2_1_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_1_0,
-@@ -1571,6 +1652,9 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- 		pci_unlock_rescan_remove();
- 
- 		qcom_pcie_icc_opp_update(pcie);
-+	} else if (FIELD_GET(PARF_INT_ALL_LINK_DOWN, status)) {
-+		dev_dbg(dev, "Received Link down event\n");
-+		pci_host_bridge_handle_link_down(pp->bridge);
- 	} else {
- 		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
- 			      status);
-@@ -1732,8 +1816,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 			goto err_host_deinit;
- 		}
- 
--		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
--			       pcie->parf + PARF_INT_ALL_MASK);
-+		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_ALL_LINK_DOWN |
-+			       PARF_INT_MSI_DEV_0_7, pcie->parf + PARF_INT_ALL_MASK);
-+
-+		pcie->global_irq = irq;
- 	}
- 
- 	qcom_pcie_icc_opp_update(pcie);
--- 
-2.25.1
-
+-Jeff
 
