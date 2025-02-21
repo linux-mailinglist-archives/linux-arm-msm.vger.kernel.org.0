@@ -1,175 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-48777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5564A3E93B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 01:42:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 42A4DA3E953
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 01:47:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B303319C27C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 00:42:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E33E19C509E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 00:47:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53F2A79F2;
-	Fri, 21 Feb 2025 00:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF7D8AD27;
+	Fri, 21 Feb 2025 00:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TGLmW5i9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SPbadOSg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542A318641
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 00:41:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBB11DA53
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 00:47:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740098520; cv=none; b=nLMsHFLdW9t4HERj9RWcjN4c419ucITzvdcN6JNBw46d7DviMMxUPFyjPCW/3/AfqgW2hyYYKcJUgjUp54Xxj3FyTr0zMg60FpUIVhpWjia46m60LaNbvzQaeWy9LEhLqBUqLWMKD2cWCEsNIzeJ3y8F8TXQenjSDiXh+9rvYjE=
+	t=1740098847; cv=none; b=Y/PLn9seCHh9e5k8YuMiNHXql7o6KBep06rFNLKhLbdmLgXvmDkEFX5qrbhAEpHVks+NMlDiVIqTgnMhQ6FtLc7AOmqpg8rd0w2xVCQnL8Z7AdzPqZiFkDjBV8pdKJpRejwDVMOd+byOLjrVEljoHvbULrgoqjTEacIRz313ALU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740098520; c=relaxed/simple;
-	bh=ETp8jkID19Q6clNd9atoSB8ooztT2iJp2Tlq3F9YBFk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uDU9CLJ+qL4sAKXRh4qFDctlQfvbQEgmqYRXx6dRbCRe5ENCrtaW3oDBr+OI7m132QBaVUwyuKFtnTaUChYfjECHIO5tgrc9IUmGnLYj/8Rjbf8cdMTClVEdrsrFajXEF20etQgYjBgNXbEwYu/VshRAZxGjp+gPEmUDqVNH6VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TGLmW5i9; arc=none smtp.client-ip=209.85.167.54
+	s=arc-20240116; t=1740098847; c=relaxed/simple;
+	bh=AFMZD8xA79SrcF7qdF9M6LpkATxyi3gQbmTSSDjdeMU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=nIR+0ecviwkWRT/8EunpsRR/9SeqPg81UCrwuB7Or2ZHYv2XgU0XKWvoBRdYNSKJydZL15ppxQ78PiS9l46+pXaaZEC5/MrgFzuW8jMTJzXthORDmTV89oBaWNm997rEXnCAyoMmHYXovWlLWCcWx6NztIT8T8Rirvwo5lttepc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SPbadOSg; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-54524740032so1686909e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 16:41:57 -0800 (PST)
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4397dff185fso13387855e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 16:47:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740098516; x=1740703316; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/pKysWYhWubY7fPYY3ZkE7Dmtc31H4VKjfkNJgksHZ8=;
-        b=TGLmW5i9icSDBDUYCrackD4ihVxJDjJ0+igF1oeSBr0EZTZTUtgkxkAs8jU4lJOm0o
-         Pc5hu67NlZsA4JQ05emfI3kLqoNhGCBKriXDi/DOc9ZGUbNa4QOyIvlYzUu6JQs49dGC
-         NdulSh7XLVcGhXfY64Ky2ck641U0gHfgo9UEKC6Ajv95T2wuNftoO1ct4yIwP7Qhtw0M
-         pAh11MNnS1nvXtBs2kkaUNS0M21fsGKyRfsX16ORLGdQkv1P0ytRxPXhkK+pHRbmghYX
-         EOg5nFhDZebsqr+mE0yiJd93SivKN7BIor1TqYamWq0DuNchUxgGHV9h38XfIzbyP3Pw
-         U4cA==
+        d=linaro.org; s=google; t=1740098843; x=1740703643; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1uwzXKEnNeEIPu52I2DCxojSGUOWNSCkUNKbC+s6sxg=;
+        b=SPbadOSgWdR2bVUHmyVLYXoeXl5elxDHAqEFCVi8kUac67RWfOTSOTVAjcAXIvg1bj
+         RUjJhIhMSgC1GCisOCUZ30bu/h9ylImmJ5y/R4Yv6TNX4WVzBTrgiDW0DH+n3HbzzH0B
+         OjERvsJxu3TgXmgijW5o2RqaHPqEQgLbXYnETfqQJk8xILLLwa10032crjdT0hYeGlDi
+         rMdakWDjCpL6Bt34zMn7L59lKTER5FTJG1p2baViBqWszVeLTObf1pPdYoNkP4EbDwq+
+         7rsMGz1hdw7RgPMaIvBoROQ+XphYhwgXF8HTIgey+STtdeZYz58xltzxrharMTVrAzDO
+         o0Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740098516; x=1740703316;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/pKysWYhWubY7fPYY3ZkE7Dmtc31H4VKjfkNJgksHZ8=;
-        b=gG6SdM7mW/TbUpkPWwsCsOvJt6GNVC/jbWQ7f39qklZzFly6kE/0TxJbo/lN6j+Jzx
-         Ow/3XWYMBcALraWI1Ph9SQAy0iInWXHPzR0H9GAVMYOe6wFx/1ODTMEy7nrCM9B6QClD
-         UAEczGJXroe3UcrqpSEK9YH3fSorAwah0M0mgchmYw2jHMTk2/JJHNEMrC8S4OLoNWc7
-         CmdwaPEhFUtHfrqUZF+bkasp8T4/etgXoLDUc+WxU6q2chRFn5hLdX/C4wq0de1yWLwz
-         yRToaZRcPtGnyHCHck8JcFlXCO66heXjbtfchsZd8S5nW/9Ad1OZgUGVKNUPT7mX+Oxx
-         Hljw==
-X-Forwarded-Encrypted: i=1; AJvYcCVMvKyDWpb3et39J12l6Zr3zzasgsItyb7bn4QLK2eiLNDnn8n+rIx3duy34A4Cy93KDlC2U+puoXZP3dSh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeacS4brfnayHIvh9Csq1XLNbNbE4fbkB/QckcCRxicGLLvkiL
-	byy6Z8yuBHszcRJO8wpHnKZQbpIPP87qxG5QlQ9QS2y1wDi1+UcedFDB/Rvzh0o=
-X-Gm-Gg: ASbGncvpGmDwEt2pFfUj6eWhdTlYJHEK/qeXwDh236lwXDq3hKCC6H1dbAa6JqSuOYr
-	SCRfqEACgEhAgsaKApe/htEegIs2SDA/YT18gdhnATUekoxniwmU7kyb8FuUfTLYjrHMpM90gry
-	NQpFqqziewJU3ljELK7gp9WKVBCHbyGmwvfHW8egpBKqz1/FvXMmBwtjb5EebLCKsC3W1cuW3bO
-	Az5LfrN+RSRacnusV9F2do4iuxbSMiDh2nCOVPRlrbvgB0yWFN4gyNRVi7MhLJkccjf7Vv15TR+
-	KNaSU1qNzQDnYTYArHvJ0YfF2mt6WbT+FwAF4kgHA+1MlCzBLNY6EdfMNRhjOC4ezAaMDDA=
-X-Google-Smtp-Source: AGHT+IE6YC3qJWgj+pA7QsnD+7VLqLnqN2QSjIeiyvjgAXpfDQedbS+a7gzdDe5aFOVCj1yTz7b6Nw==
-X-Received: by 2002:a05:6512:3054:b0:545:2fa9:8cf5 with SMTP id 2adb3069b0e04-54838f79d55mr366460e87.49.1740098516390;
-        Thu, 20 Feb 2025 16:41:56 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54530530d93sm1920688e87.199.2025.02.20.16.41.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2025 16:41:55 -0800 (PST)
-Date: Fri, 21 Feb 2025 02:41:52 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Mrinmay Sarkar <quic_msarkar@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/6] dt-bindings: PCI: qcom-ep: describe optional IOMMU
-Message-ID: <plurppltr3ttmmptnrounyjw3l7justgsl3dlpjqtkzsvkctsc@3cz52qtnyd3q>
-References: <20250217-sar2130p-pci-v1-0-94b20ec70a14@linaro.org>
- <20250217-sar2130p-pci-v1-1-94b20ec70a14@linaro.org>
- <20250220071943.edn6q65ijmeldnag@thinkpad>
+        d=1e100.net; s=20230601; t=1740098843; x=1740703643;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=1uwzXKEnNeEIPu52I2DCxojSGUOWNSCkUNKbC+s6sxg=;
+        b=R6cjhNYq+07Yd0UAxtLY5v2FNqQ9UUHE+GJxFmsyvHccCW76Y/q8Uqzeie8R4n3cVa
+         CstzD+pYHjEmTBEhkoQDYkm91HGJ3RIbXeM2xAuzI993J1eb3VeDp4BKH0QhcyuGMhjA
+         iUAxXlb/z5qND5CdL0lbwjlHuWaijSDoD0/qPMAR8fPw/ItO3tDA6YrQ4m34LvWEAheh
+         I/hKg1I5Ak0hq6W+2KX9QaqqhLCz+5Q3gS1m4wi3nA0dUISu1nu/qzLyE1RbyFB4DIDl
+         Yj1mruYO5J6SggsvfuPwbYvgkUmxodJ8Ivh8aKIexeLvvMELKmjmYJwyIuC4KSvByORq
+         g9Cg==
+X-Forwarded-Encrypted: i=1; AJvYcCVcjPWwyWyYPtObwBIb99MqczWBEaik+Nu1JugYpMcUlMye/CSgBIiIC8L5iiZSdmCB67elS/6od+sZAXlQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw16Rswa6rnZ9i/YRqqYwIz9yw3AlHkYSyGozlHyCdSF4OIB/sX
+	Ytl8HcP+G98Scopp5MADpYX+0e/sNEWZnxIYHTd8mP7NwnjGgqXkAyahWK7cSXQ=
+X-Gm-Gg: ASbGncvgnVCimYtWIW5QVMNrZZylo9VirDei8RzUzFB2plRbdPYC5qcaic0vAl3BjwH
+	QiypAuX4Iphl4O9YA37UT1Z00g24+pqfozqFtVgbwvXYqR7e78bBIEtV70B5S2cl8kkjN35tv1w
+	8et/0koiuY3jr4fxOx0dkVGaqrMONogGapXz7bJ+XV4vRNMRxtdclW6pAIQ1V1OPOnNW6VD0eLT
+	C6qr9RUIGPAVyQVsqWNUJGk1CyCy8tSE7/6CzBYnpnkFleofLUKdQ3XNLdbLcAhTzblcj6vpmws
+	rwsyUn7WtewtsdDENw==
+X-Google-Smtp-Source: AGHT+IGP2COMTFmCb6NZD7IEUpBby+MJg1OI/LvEAFrSspNS5gqFhyuY2jzlf6BtHJjV5QSFOV34JQ==
+X-Received: by 2002:a05:600c:1390:b0:439:8bc3:a697 with SMTP id 5b1f17b1804b1-439ae1d7e97mr9688025e9.4.1740098843201;
+        Thu, 20 Feb 2025 16:47:23 -0800 (PST)
+Received: from localhost ([2.124.154.225])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-439b0371c51sm877805e9.35.2025.02.20.16.47.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Feb 2025 16:47:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250220071943.edn6q65ijmeldnag@thinkpad>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 21 Feb 2025 00:47:22 +0000
+Message-Id: <D7XPK4C7YYVN.2H85SNZIOOPAB@linaro.org>
+Cc: <srinivas.kandagatla@linaro.org>, <broonie@kernel.org>,
+ <lgirdwood@gmail.com>, <krzysztof.kozlowski@linaro.org>, <perex@perex.cz>,
+ <tiwai@suse.com>, <jdelvare@suse.com>, <linux@roeck-us.net>,
+ <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-hwmon@vger.kernel.org>
+Subject: Re: [PATCH] ASoC: codecs: wsa883x: Implement temperature reading
+ and hwmon
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Steev Klimaszewski" <steev@kali.org>
+X-Mailer: aerc 0.20.0
+References: <20250107114506.554589-1-alexey.klimov@linaro.org>
+ <CAKXuJqihpwnOTepgTkH3FaGB5=kXVCDOckPGpacJ7JWZXxsKWw@mail.gmail.com>
+In-Reply-To: <CAKXuJqihpwnOTepgTkH3FaGB5=kXVCDOckPGpacJ7JWZXxsKWw@mail.gmail.com>
 
-On Thu, Feb 20, 2025 at 12:49:43PM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Feb 17, 2025 at 08:56:13PM +0200, Dmitry Baryshkov wrote:
-> > Platforms which use eDMA for PCIe EP transfers (like SA8775P) also use
-> > IOMMU in order to setup transfer windows.
-> 
-> eDMA has nothing to do with IOMMU. In fact, it is not clear on what IOMMU does
-> on the endpoint side since we do not assign SID based on the RID from RC.
+On Tue Jan 7, 2025 at 10:25 PM GMT, Steev Klimaszewski wrote:
+> Hi Alexey,
+> Thank you for this!
 
-Well... If my memory serves me right, I had to enable IOMMU after
-switching from iATU to eDMA. But I might be mistaken here. I will update
-this commit message not to mention eDMA.
+Hi Steev,
 
-> 
-> But the binding should describe it anyway since IOMMU does sit between DDR and
-> PCIe IP.
-> 
-> - Mani
-> 
-> > Fix the schema in order to
-> > allow specifying the IOMMU.
-> > 
-> > Fixes: 9d3d5e75f31c ("dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC")
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 17 +++++++++++++++++
-> >  1 file changed, 17 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> > index 1226ee5d08d1ae909b07b0d78014618c4c74e9a8..800accdf5947e7178ad80f0759cf53111be1a814 100644
-> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> > @@ -75,6 +75,9 @@ properties:
-> >        - const: doorbell
-> >        - const: dma
-> >  
-> > +  iommus:
-> > +    maxItems: 1
-> > +
-> >    reset-gpios:
-> >      description: GPIO used as PERST# input signal
-> >      maxItems: 1
-> > @@ -233,6 +236,20 @@ allOf:
-> >            minItems: 3
-> >            maxItems: 3
-> >  
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          contains:
-> > +            const: qcom,sdx55-pcie-ep
-> > +    then:
-> > +      properties:
-> > +        iommus:
-> > +          false
-> > +
-> > +    else:
-> > +      required:
-> > +        - iommus
-> > +
-> >  unevaluatedProperties: false
-> >  
-> >  examples:
-> > 
-> > -- 
-> > 2.39.5
-> > 
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+Thank you for testing. This really helps.
+And sorry for slowly getting back to you.
 
--- 
-With best wishes
-Dmitry
+> I've tested this on my Thinkpad X13s which has the wsa883x, and here,
+> when idle, I see an entry, sdw:1:0:0217:0202:00:1 which shows ~26-28C
+> when idle, as well as sdw:1:0:0217:0202:00:2 which has ~22-24C when
+> idle, however if I play audio, both of them drop to 1C and do not move
+> from that while audio is playing.  Is this expected behaviour
+> currently?
+>
+> (out of laziness to repeat what I am doing here - I have bottom
+> (https://github.com/clementtsang/bottom) running in 1 terminal, and
+> then in a second terminal I either play an audio file with
+> canbetrra-gtk-play or mpv a video with audio and for the entire time
+> that there is audio playback, the temperature sits at 1C.
+
+As far as I am aware there is some hw limitation resulting in that
+temperature is not updating during playback/when amplifier is active or
+that it is not allowed to read temp registers when the amplifier is active.
+
+However, we should return the last good value here and not drop temp to 1C.
+I think I found what the problem was and I will resend the new version soon=
+.
+
+Also, on sm8750 I see the 4-5 degree Celcius temperature diff between two
+amplifiers (30C and 35C for instance).
+
+Thanks,
+Alexey
+
 
