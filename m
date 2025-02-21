@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-48876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82DB8A3F33B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 12:44:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1858BA3F349
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 12:49:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C46A1603C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 11:44:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 49DF83BB37F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 11:49:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76514208993;
-	Fri, 21 Feb 2025 11:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E3FB209F24;
+	Fri, 21 Feb 2025 11:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VxgCEX2u"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aq2liSbp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414D81FFC44;
-	Fri, 21 Feb 2025 11:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC5B209663
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 11:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740138241; cv=none; b=IJQklDbToZr8Agw0NZb5m93gnQ9S3zGCPXi2LpWsAouWrXbu4dR39WrBnS3ZDPmyFgmSAL/PUSN8ef80bCSAmn3SQ+K+aYkeX+XSD2/8wWEUXYUMGynyO536K5FP54jN/MlVRkx5p20nEZkQhiRJsfO7HbMlCtpr0BQuDpVP0vQ=
+	t=1740138570; cv=none; b=Z0Pts+H+W+pCpbyue+FEjFTNej7XcUSGcUeh5mpiIo247z71Y4jFIrUusqzB2BY1+gQf+xl4yTLuh36xLUL2fQZ3bzI7yK/zj/IyoxHsQ0YGSUtcDzb5O32ITSczlKRLuYtAYUWmQgfc8AqtB9941ckPO2Z8kjAviAfzrqH99TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740138241; c=relaxed/simple;
-	bh=7ErCTACjD0PUriiof/KNEAumMkOxkaayoCgTjlGea2Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZpUnxdR+P/Wf15rt7RnCZBDzNf8rXIsfCTsrwz6yMRVUvM4NUbxapmsxn++/n6Tg/kQefsXYVBevF+9ihA3AIhR2g+AzVB7VTroWkTsWL0ZPUhuHaDyDj1Uj+ueD+N7ingMuPGMvdZgUAUefhyJk/xljEJvMcneIk0A4obrOWDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VxgCEX2u; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51L8k8gU026052;
-	Fri, 21 Feb 2025 11:43:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1740138570; c=relaxed/simple;
+	bh=8arGMFLajZI+sPOPm09SQrk2nlxgudO09El3V4TGWVE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VXuchCFw0FNeit1Z6tcJpM8SNDaD5iby0F65ekca+jkw8gLadRUEcQOefunY3sjspHlG+3TZCH1jBaV3egC3rGmVILxSd8tykhhH7jc9FOJ+7+9UP7Rymw1GlO3YQ+7L5V/dpZeyGRjD+a1cpkwoF6W0/ZTg2QevFS2w8SweWPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aq2liSbp; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51L56G5i011711
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 11:49:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IAon32p1XtyVcdbzl6+oC2CT3MMtsdaMb+IjhafYcEY=; b=VxgCEX2u/chsEhDC
-	Hm+FHwMRT6goaiH6Yy7zuKOLo088RPAxRH9NHcl61K2nXSdnlpUYqFwuOKtQKJSb
-	O10GL3TG9ZBw7GgTjncxBogYD7XxrfV0XDotLbWw01MQzGLCEX2oFDeOblAZgVYf
-	iit1UNmklG6KJEW4SVFbEZU7cRdDKybRIENaYOl1MaTIupnt6R1h77PLsCAHJc6+
-	jlpwQ7yrDNf+pKr53hdkrKN3z/KslexreX8xVH7UZjTu19THrroin8SMZfc/jANC
-	tOrXCBqBtPcQ2qI01rJpw7dY3gF+71wKEddHQcOPWdUXod5bom25uffmTAFr1wpV
-	jVIt9A==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44x2r3v1cq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 11:43:54 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51LBhrk7023436
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 11:43:53 GMT
-Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 21 Feb
- 2025 03:43:48 -0800
-Message-ID: <e9bbf39c-dde7-4ace-b134-da15ca092c6a@quicinc.com>
-Date: Fri, 21 Feb 2025 17:13:45 +0530
+	/6HBhwxgkCn5p5i8qcqY122PrKqu6SuX7ZN6cuXdGk0=; b=aq2liSbpPTLsAqeg
+	rZDRWRrZG8IdHD67DphPHXh3iPe8o7A7m3P6Kcr+kHhT4CkQWuiOGDvLNdzSRrZa
+	NZkGaaBJBLyY2JjryDkW3xxYj+XQ8+u7/zk+SccLDnexDVWtABcZa9UFDMlX5o7g
+	8LdUwvE0PLm3Vzw+NUwhafbn51cSebRhTUx6Ig4cksrxjrw27KsSV/LvmXmsIbCo
+	E7/8Afx7QEGpoxhq95M8aK7Kwmy/iDryF6o27u9TqjvAYee8BAfxYEwO/VruidQw
+	2clsI99RzCGxZjZS1vjew1+KIyuFvEBY9IQx/x3ZgZRJimWUuqsHKvb9jmUYucd8
+	WOkSsw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy1sw9r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 11:49:28 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-472075a2b47so4674741cf.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 03:49:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740138566; x=1740743366;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/6HBhwxgkCn5p5i8qcqY122PrKqu6SuX7ZN6cuXdGk0=;
+        b=i4mWVUY8NyB2hEHMMk0XqavAqNbdtqpvbZ+Fe+OBtvUn9X0kP0np5oucclhCt9TZWE
+         CtoRMF8pq8puhhii4gG7Gmhrck9acekXIFPS4HQxtvAbXBsnLzb/QjAWL8iQsi3udNW+
+         PGk8kekznW+UThsJ9io3etJAsQBvR535w6QENXU8euAP2sn+5SUFkgt7GcW0ZzAtHQu7
+         GvU81Tt5FOxvL7vL6w56wiYHdWT3lh1pTsrU1FH/7WMm64ENo9fDhgvT6OG8YNAuYOUx
+         skg0IDyFRDKFYaI69FIPrF33g2Vzd68ocFXcz4ZEOZ5pmJMw1x3VDOEeqiULF5CtAlST
+         zmkA==
+X-Forwarded-Encrypted: i=1; AJvYcCWdyy0Tg66G12ATGK7eFriWRRj4mySoiuP/wOiOeBmxAejzMCpCRKHO93EhJnt33ry5JCHZ7liddGkeZQ+w@vger.kernel.org
+X-Gm-Message-State: AOJu0YwaujpE623K0lagz/zLKJih7vxE7u79RBNbvkvCdqdOqeJ9UVvE
+	e+RYTZZA2WkwHX2N3v0+5JQdgOXqWGUlTQJRvRAwf7Ms5n8QuOmUMwBX2EkokMBBvn/hzU7Ms0t
+	ppBtFpcmq65JrhZDyhdhEJsDH1+wK2tt0GTgy2i0GTgR1nmuOON/oNu91BVROE+v0jjI7zNpQ
+X-Gm-Gg: ASbGncuoKCiOK1hpOv0uIiSvGoH75iVdn9WVIN01Bj/WQVsunrzp+863lxWM1UvDuNI
+	RqLVS0zqBk5BK0Kx1mB1Moo3epZEAk7RrYHOjwxxCHKw/gKcylLvo4ncyp/i+KjkakoXfWWnFJ/
+	9/bSoImbN/pyrISVtqQyKk3tbREMjrQ+mg2NMxoZ9u93TCkkdzb6PI6E2VYjhmQwa5x29SzJcMs
+	XZMKHgZnVQSnMw6SsZKjAuBedfhRrWP9lscJvjBAxHBBYrEZXlbbmG10sNL69t6zeQKpY0vxBHL
+	zQf6SnCekkPv0bl0HBOXSw9SJ76ZoT8fJqazEbfDLhZWIJLT9Q512iHxtIN/EjFj2nfRXA==
+X-Received: by 2002:a05:6214:40a:b0:6e6:9bd4:82a2 with SMTP id 6a1803df08f44-6e6ae7d99f2mr14708356d6.1.1740138566381;
+        Fri, 21 Feb 2025 03:49:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG7jnkWAirRkaZU6bLGlSoCQGj/vZMj9fV2Uwdu/vuSXjXCkYcGk7wUqFHMBlf4yfMNs1gWRQ==
+X-Received: by 2002:a05:6214:40a:b0:6e6:9bd4:82a2 with SMTP id 6a1803df08f44-6e6ae7d99f2mr14708026d6.1.1740138566027;
+        Fri, 21 Feb 2025 03:49:26 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abbac781b78sm823562366b.60.2025.02.21.03.49.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Feb 2025 03:49:25 -0800 (PST)
+Message-ID: <8936f8a7-5bc0-417b-a719-806f1ce0904b@oss.qualcomm.com>
+Date: Fri, 21 Feb 2025 12:49:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,395 +89,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] clk: qcom: videocc: Add support to attach multiple
- power domains
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Ajit Pandey
-	<quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        "Taniya
- Das" <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
- <20250218-videocc-pll-multi-pd-voting-v1-4-cfe6289ea29b@quicinc.com>
- <eec2869a-fa8f-4aaf-9fc5-e7a8baf0f864@linaro.org>
- <huluiiaqmunvmffoqadrhssd3kl2toutqtcw7rzamv3sqdglsf@7lz66x4sj3gv>
- <d4c4ecf0-9094-4341-8711-78a48e5d1344@linaro.org>
- <d444f1fb-42a0-48ef-83bc-d5aab9282b22@quicinc.com>
- <gzjyyl2kzv52zsewn5zf6ei65fymyi4pspvsmsjaqj5sklfxvc@bkg46saulni5>
- <fcc31cc7-67bd-4102-a53f-ebe66b4fd1a7@linaro.org>
- <3da96df2-1127-49bf-8114-282cc488c194@quicinc.com>
- <6b0684a0-a519-463f-b7be-176a4752a786@linaro.org>
+Subject: Re: [PATCH v10 3/6] dt-bindings: clock: Add ipq9574 NSSCC clock and
+ reset definitions
+To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, andersson@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        richardcochran@gmail.com, geert+renesas@glider.be,
+        dmitry.baryshkov@linaro.org, arnd@arndb.de, nfraprado@collabora.com,
+        quic_tdas@quicinc.com, biju.das.jz@bp.renesas.com,
+        elinor.montmasson@savoirfairelinux.com, ross.burton@arm.com,
+        javier.carrasco@wolfvision.net, quic_anusha@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org
+Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com
+References: <20250221101426.776377-1-quic_mmanikan@quicinc.com>
+ <20250221101426.776377-4-quic_mmanikan@quicinc.com>
 Content-Language: en-US
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <6b0684a0-a519-463f-b7be-176a4752a786@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Y_DpSInxmak75e9bt_22rRDvumCrl8Uw
-X-Proofpoint-GUID: Y_DpSInxmak75e9bt_22rRDvumCrl8Uw
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250221101426.776377-4-quic_mmanikan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: UR4w0Q8hy-lKkNuy7TrkljxYcqOId8ki
+X-Proofpoint-ORIG-GUID: UR4w0Q8hy-lKkNuy7TrkljxYcqOId8ki
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-21_03,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- bulkscore=0 phishscore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
- mlxscore=0 spamscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2502210086
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ adultscore=0 malwarescore=0 mlxscore=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=835 suspectscore=0 phishscore=0 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502210087
 
-
-
-On 2/21/2025 4:01 AM, Bryan O'Donoghue wrote:
-> On 20/02/2025 07:15, Jagadeesh Kona wrote:
->>
->>
->> On 2/19/2025 5:37 PM, Bryan O'Donoghue wrote:
->>> On 19/02/2025 11:59, Dmitry Baryshkov wrote:
->>>> On Wed, Feb 19, 2025 at 05:11:03PM +0530, Jagadeesh Kona wrote:
->>>>>
->>>>>
->>>>> On 2/19/2025 6:51 AM, Bryan O'Donoghue wrote:
->>>>>> On 18/02/2025 17:19, Dmitry Baryshkov wrote:
->>>>>>> On Tue, Feb 18, 2025 at 03:46:15PM +0000, Bryan O'Donoghue wrote:
->>>>>>>> On 18/02/2025 14:26, Jagadeesh Kona wrote:
->>>>>>>>> During boot-up, the PLL configuration might be missed even after
->>>>>>>>> calling pll_configure() from the clock controller probe. This can
->>>>>>>>> happen because the PLL is connected to one or more rails that are
->>>>>>>>> turned off, and the current clock controller code cannot enable
->>>>>>>>> multiple rails during probe. Consequently, the PLL may be activated
->>>>>>>>> with suboptimal settings, causing functional issues.
->>>>>>>>>
->>>>>>>>> To properly configure the video PLLs in the probe on SM8450, SM8475,
->>>>>>>>> SM8550, and SM8650 platforms, the MXC rail must be ON along with MMCX.
->>>>>>>>> Therefore, add support to attach multiple power domains to videocc on
->>>>>>>>> these platforms.
->>>>>>>>>
->>>>>>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>>>>> ---
->>>>>>>>>      drivers/clk/qcom/videocc-sm8450.c | 4 ++++
->>>>>>>>>      drivers/clk/qcom/videocc-sm8550.c | 4 ++++
->>>>>>>>>      2 files changed, 8 insertions(+)
->>>>>>>>>
->>>>>>>>> diff --git a/drivers/clk/qcom/videocc-sm8450.c b/drivers/clk/qcom/videocc-sm8450.c
->>>>>>>>> index f26c7eccb62e7eb8dbd022e2f01fa496eb570b3f..b50a14547336580de88a741f1d33b126e9daa848 100644
->>>>>>>>> --- a/drivers/clk/qcom/videocc-sm8450.c
->>>>>>>>> +++ b/drivers/clk/qcom/videocc-sm8450.c
->>>>>>>>> @@ -437,6 +437,10 @@ static int video_cc_sm8450_probe(struct platform_device *pdev)
->>>>>>>>>          struct regmap *regmap;
->>>>>>>>>          int ret;
->>>>>>>>> +    ret = qcom_cc_attach_pds(&pdev->dev, &video_cc_sm8450_desc);
->>>>>>>>> +    if (ret)
->>>>>>>>> +        return ret;
->>>>>>>>> +
->>>>>>>>>          ret = devm_pm_runtime_enable(&pdev->dev);
->>>>>>>>>          if (ret)
->>>>>>>>>              return ret;
->>>>>>>>> diff --git a/drivers/clk/qcom/videocc-sm8550.c b/drivers/clk/qcom/videocc-sm8550.c
->>>>>>>>> index 7c25a50cfa970dff55d701cb24bc3aa5924ca12d..d4b223d1392f0721afd1b582ed35d5061294079e 100644
->>>>>>>>> --- a/drivers/clk/qcom/videocc-sm8550.c
->>>>>>>>> +++ b/drivers/clk/qcom/videocc-sm8550.c
->>>>>>>>> @@ -542,6 +542,10 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
->>>>>>>>>          int ret;
->>>>>>>>>          u32 sleep_clk_offset = 0x8140;
->>>>>>>>> +    ret = qcom_cc_attach_pds(&pdev->dev, &video_cc_sm8550_desc);
->>>>>>>>> +    if (ret)
->>>>>>>>> +        return ret;
->>>>>>>>> +
->>>>>>>>>          ret = devm_pm_runtime_enable(&pdev->dev);
->>>>>>>>>          if (ret)
->>>>>>>>>              return ret;
->>>>>>>>>
->>>>>>>>
->>>>>>>> What's the difference between doing the attach here or doing it in
->>>>>>>> really_probe() ?
->>>>>>>
->>>>>>> I'd second this. If the domains are to be attached before calling any
->>>>>>> other functions, move the call to the qcom_cc_map(), so that all drivers
->>>>>>> get all domains attached before configuring PLLs instead of manually
->>>>>>> calling the function.
->>>>>>>
->>>>>>>> There doesn't seem to be any difference except that we will have an
->>>>>>>> additional delay introduced.
->>>>>>>>
->>>>>>>> Are you describing a race condition ?
->>>>>>>>
->>>>>>>> I don't see _logic_ here to moving the call into the controller's higher
->>>>>>>> level probe.
->>>>>>>>
->>>>>>>> Can you describe some more ?
->>>>>>>>
->>>>>>>> ---
->>>>>>>> bod
->>>>>>>
->>>>>>
->>>>>> Here's one way this could work
->>>>>>
->>>>>> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>>>> Date:   Tue Feb 18 19:46:55 2025 +0000
->>>>>>
->>>>>>       clk: qcom: common: Add configure_plls callback prototype
->>>>>>
->>>>>>       Add a configure_plls() callback so that we can stage qcom_cc_attach_pds()
->>>>>>       before configuring PLLs and ensure that the power-domain rail list is
->>>>>>       switched on prior to configuring PLLs.
->>>>>>
->>>>>>       Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>>>>
->>>>>> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
->>>>>> index 9e3380fd71819..1924130814600 100644
->>>>>> --- a/drivers/clk/qcom/common.c
->>>>>> +++ b/drivers/clk/qcom/common.c
->>>>>> @@ -304,6 +304,9 @@ int qcom_cc_really_probe(struct device *dev,
->>>>>>           if (ret < 0 && ret != -EEXIST)
->>>>>>                   return ret;
->>>>>>
->>>>>> +       if (desc->configure_plls)
->>>>>> +               desc->configure_plls(regmap);
->>>>>> +
->>>>>>           reset = &cc->reset;
->>>>>>           reset->rcdev.of_node = dev->of_node;
->>>>>>           reset->rcdev.ops = &qcom_reset_ops;
->>>>>> diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
->>>>>> index 7ace5d7f5836a..4955085ff8669 100644
->>>>>> --- a/drivers/clk/qcom/common.h
->>>>>> +++ b/drivers/clk/qcom/common.h
->>>>>> @@ -38,6 +38,7 @@ struct qcom_cc_desc {
->>>>>>           const struct qcom_icc_hws_data *icc_hws;
->>>>>>           size_t num_icc_hws;
->>>>>>           unsigned int icc_first_node_id;
->>>>>> +       void (*configure_plls)(struct regmap *regmap);
->>>>>>    };
->>>>>>
->>>>>> and
->>>>>>
->>>>>> % git diff drivers/clk/qcom/camcc-x1e80100.c
->>>>>> diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
->>>>>> index b73524ae64b1b..c9748d1f8a15b 100644
->>>>>> --- a/drivers/clk/qcom/camcc-x1e80100.c
->>>>>> +++ b/drivers/clk/qcom/camcc-x1e80100.c
->>>>>> @@ -2426,6 +2426,21 @@ static const struct regmap_config cam_cc_x1e80100_regmap_config = {
->>>>>>           .fast_io = true,
->>>>>>    };
->>>>>>
->>>>>> +static void cam_cc_x1e80100_configure_plls(struct regmap *regmap)
->>>>>> +{
->>>>>> +       clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
->>>>>> +       clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
->>>>>> +       clk_rivian_evo_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config);
->>>>>> +       clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
->>>>>> +       clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
->>>>>> +       clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, &cam_cc_pll6_config);
->>>>>> +       clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, &cam_cc_pll8_config);
->>>>>> +
->>>>>> +       /* Keep clocks always enabled */
->>>>>> +       qcom_branch_set_clk_en(regmap, 0x13a9c); /* CAM_CC_GDSC_CLK */
->>>>>> +       qcom_branch_set_clk_en(regmap, 0x13ab8); /* CAM_CC_SLEEP_CLK */
->>>>>> +}
->>>>>> +
->>>>>>    static const struct qcom_cc_desc cam_cc_x1e80100_desc = {
->>>>>>           .config = &cam_cc_x1e80100_regmap_config,
->>>>>>           .clks = cam_cc_x1e80100_clocks,
->>>>>> @@ -2434,6 +2449,7 @@ static const struct qcom_cc_desc cam_cc_x1e80100_desc = {
->>>>>>           .num_resets = ARRAY_SIZE(cam_cc_x1e80100_resets),
->>>>>>           .gdscs = cam_cc_x1e80100_gdscs,
->>>>>>           .num_gdscs = ARRAY_SIZE(cam_cc_x1e80100_gdscs),
->>>>>> +       .configure_plls = cam_cc_x1e80100_configure_plls,
->>>>>>    };
->>>>>>
->>>>>>    static const struct of_device_id cam_cc_x1e80100_match_table[] = {
->>>>>> @@ -2461,18 +2477,6 @@ static int cam_cc_x1e80100_probe(struct platform_device *pdev)
->>>>>>                   return PTR_ERR(regmap);
->>>>>>           }
->>>>>>
->>>>>> -       clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
->>>>>> -       clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
->>>>>> -       clk_rivian_evo_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config);
->>>>>> -       clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
->>>>>> -       clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
->>>>>> -       clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, &cam_cc_pll6_config);
->>>>>> -       clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, &cam_cc_pll8_config);
->>>>>> -
->>>>>> -       /* Keep clocks always enabled */
->>>>>> -       qcom_branch_set_clk_en(regmap, 0x13a9c); /* CAM_CC_GDSC_CLK */
->>>>>> -       qcom_branch_set_clk_en(regmap, 0x13ab8); /* CAM_CC_SLEEP_CLK */
->>>>>> -
->>>>>>           ret = qcom_cc_really_probe(&pdev->dev, &cam_cc_x1e80100_desc, regmap);
->>>>>>
->>>>>>           pm_runtime_put(&pdev->dev);
->>>>>>
->>>>>> Or a least it works for me.
->>>>>>
->>>>>
->>>>> This patch will not work in all cases, maybe in your case required power domains might be ON
->>>>> from bootloaders so it might be working.
->>>>
->>>> But with his patch domains are attached before configuring the PLLs, are
->>>> they not?
->>>
->>> Yes, its logically the same just done in core code.
->>>
->>
->> Yes, this code attaches domains before configuring the PLLs, but it attaches PDs after get_sync()
->> is called on device. As I mentioned in other patch earlier, if we attach PDS after get_sync() is
->> already called on device, then power domains are not getting enabled during the probe, leading to
->> the same improper PLL configuration issue. But the current patch series posted will fix this issue
->>
->>>>>
->>>>>> New clock controllers would then use this callback mechanism and potentially all of the controllers to have uniformity.
->>>>>>
->>>>>
->>>>> No, above approach also requires changes in each individual clock driver to define the callback. So I don't see any advantage
->>>>> with this than the current approach.
->>>>
->>>> Bryan's proposal moves us towards having a common code, so it's better.
->>>>
->>>
->>> I can take the time to do the whole sweep and publish a RFC.
->>>
->>
->> Yes, but moving the PLL configuration to callback will not solve the actual PLL configuration
->> issue being discussed here.
->>
->> Thanks,
->> Jagadeesh
->>
+On 21.02.2025 11:14 AM, Manikanta Mylavarapu wrote:
+> From: Devi Priya <quic_devipriy@quicinc.com>
 > 
-> Right what you are really saying is that the power-rails for the clock controller need to remain always on at the moment.
+> Add NSSCC clock and reset definitions for ipq9574.
 > 
-> Where we can zap the GDSCs the power-rails for the block should be always on because the initial PLL configuration we typically do in probe() would be negated as soon as the power rail for the block is switched off.
-> 
-> True.
-> 
-> In my opinion:
-> 
-> - We should only do the pd list addition in one place
->   Either that or push it into each driver.
-> 
->   I don't favour doing it in each driver since it is boilerplate
->   code that we basically just end up copy/pasting again and again.
-> 
-> - We can start off by only including a configure_pll callback
->   for the 2-3 blocks where we know we have multiple rails
-> 
-> This here works well for me on x1e:
-> 
-> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Date:   Tue Feb 18 19:46:55 2025 +0000
-> 
->     clk: qcom: common: Add configure_plls callback prototype
-> 
->     Add a configure_plls() callback so that we can stage qcom_cc_attach_pds()
->     before configuring PLLs and ensure that the power-domain rail list is
->     switched on prior to configuring PLLs.
-> 
->     Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> 
-> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-> index 9e3380fd71819..4aa00ad51c2f6 100644
-> --- a/drivers/clk/qcom/common.c
-> +++ b/drivers/clk/qcom/common.c
-> @@ -304,6 +304,12 @@ int qcom_cc_really_probe(struct device *dev,
->         if (ret < 0 && ret != -EEXIST)
->                 return ret;
-> 
-> +       if (desc->configure_plls) {
-> +               ret = desc->configure_plls(dev, desc, regmap);
-> +               if (ret)
-> +                       return ret;
-> +       }
-> +
->         reset = &cc->reset;
->         reset->rcdev.of_node = dev->of_node;
->         reset->rcdev.ops = &qcom_reset_ops;
-> diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
-> index 7ace5d7f5836a..77002e39337d7 100644
-> --- a/drivers/clk/qcom/common.h
-> +++ b/drivers/clk/qcom/common.h
-> @@ -38,6 +38,9 @@ struct qcom_cc_desc {
->         const struct qcom_icc_hws_data *icc_hws;
->         size_t num_icc_hws;
->         unsigned int icc_first_node_id;
-> +       int (*configure_plls)(struct device *dev,
-> +                             const struct qcom_cc_desc *desc,
-> +                             struct regmap *regmap);
->  };
-> 
-> +static int cam_cc_x1e80100_configure_plls(struct device *dev,
-> +                                         const struct qcom_cc_desc *desc,
-> +                                         struct regmap *regmap)
-> +{
-> +       int ret;
-> +
-> +       ret = devm_pm_runtime_enable(dev);
-> +       if (ret)
-> +               return ret;
-> +
-> +       ret = pm_runtime_resume_and_get(dev);
-> +       if (ret)
-> +               return ret;
-> +
-> +       clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
-> +       clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
-> +       clk_rivian_evo_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config);
-> +       clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
-> +       clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
-> +       clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, &cam_cc_pll6_config);
-> +       clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, &cam_cc_pll8_config);
-> +
-> +       /* Keep clocks always enabled */
-> +       qcom_branch_set_clk_en(regmap, 0x13a9c); /* CAM_CC_GDSC_CLK */
-> +       qcom_branch_set_clk_en(regmap, 0x13ab8); /* CAM_CC_SLEEP_CLK */
-> +
-> +       pm_runtime_put(dev);
-> +
-> +       return 0;
-> +}
-> +
->  static const struct qcom_cc_desc cam_cc_x1e80100_desc = {
->         .config = &cam_cc_x1e80100_regmap_config,
->         .clks = cam_cc_x1e80100_clocks,
-> @@ -2434,6 +2465,7 @@ static const struct qcom_cc_desc cam_cc_x1e80100_desc = {
->         .num_resets = ARRAY_SIZE(cam_cc_x1e80100_resets),
->         .gdscs = cam_cc_x1e80100_gdscs,
->         .num_gdscs = ARRAY_SIZE(cam_cc_x1e80100_gdscs),
-> +       .configure_plls = cam_cc_x1e80100_configure_plls,
->  };
-> 
-> This has the same effect as you were alluding to and in fact we could probably even move the pm_runtime_enable/resume_and_get and pm_runtime_put into really_probe().
-> 
-> It seems to me anyway we should try to push as much of this into core logic to be reused as possible.
-> 
-
-As per the issue I pointer earlier, I see now you moved the get_sync() call to after the attach_pds().
-But this PLL callback approach also requires changes in each individual clock driver, and adding a callback
-in each clock controller driver to configure the PLLs doesn't reduce any boiler plate code in my opinion.
-Infact I feel this is harder to maintain as the code in callback is not constant and vary from one
-driver to another. Instead the current approach to explicitly attach pds if we have multiple power
-domains is much easier to maintain since it is the same function call in every driver.
-
-Kindly review the discussion in another thread[PATCH 3/5] as that will avoid these extra callbacks in
-each driver and the code will be uniform across all the clock drivers
-
-Thanks,
-Jagadeesh
-
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 > ---
-> bod
+
+[...]
+
+> +  - |
+> +    #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
+> +    #include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
+> +    clock-controller@39b00000 {
+> +      compatible = "qcom,ipq9574-nsscc";
+> +      reg = <0x39b00000 0x80000>;
+> +      clocks = <&xo_board_clk>,
+> +               <&cmn_pll NSS_1200MHZ_CLK>,
+> +               <&cmn_pll PPE_353MHZ_CLK>,
+> +               <&gcc GPLL0_OUT_AUX>,
+> +               <&uniphy 0>,
+> +               <&uniphy 1>,
+> +               <&uniphy 2>,
+> +               <&uniphy 3>,
+> +               <&uniphy 4>,
+> +               <&uniphy 5>,
+> +               <&gcc GCC_NSSCC_CLK>;
+> +      clock-names = "xo",
+> +                    "nss_1200",
+> +                    "ppe_353",
+> +                    "gpll0_out",
+> +                    "uniphy0_rx",
+> +                    "uniphy0_tx",
+> +                    "uniphy1_rx",
+> +                    "uniphy1_tx",
+> +                    "uniphy2_rx",
+> +                    "uniphy2_tx",
+> +                    "nsscc";
+
+I see that the input clock is named rather non-descriptively, but maybe
+we should call it something like "bus" so that it has more meaning to
+the reader
+
+Konrad
 
