@@ -1,130 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-48872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FD86A3F306
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 12:36:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBA1EA3F316
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 12:39:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0735542340C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 11:36:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB5AB16DECF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 11:39:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93527208970;
-	Fri, 21 Feb 2025 11:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 951B12080D5;
+	Fri, 21 Feb 2025 11:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sQ4aJdO5"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="slJ1doNL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E60208964;
-	Fri, 21 Feb 2025 11:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB861FBE8E;
+	Fri, 21 Feb 2025 11:38:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740137765; cv=none; b=HjFGK7HYrdJah0kCZTddkJ48ZAQEpo2nigkZBmvGQwwDHiebeMy4fCWIDBhAeOv0HqOO/oa2V0De5/xnZYsodczao3ZsoRyNWBjvCzFGsGeg1U6mFxYqMYWLsWBht9ryeP7nOCiygJoBuSr10YMmS/btg4RzuHZ/ifXTvT9ix/A=
+	t=1740137938; cv=none; b=JDC0u48hIh02X6+yswktaGEnrf+sfqoE3zYpgNvQHgRCIohJf/DBzbojkKTkfk8OkCK5U3j4fXLNg5++eZHMi7d/2L38UrT5m9/UHTbiioQIpig4nCdqqCTGTNDVdeN9DA4A5wOscG23jLeHl11BND/MQz5KSpksg7+2NvkEmUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740137765; c=relaxed/simple;
-	bh=aJUU/Ch/5rt8k78KhI2xe/fFlCOWQfdrKSPoiASGCq8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b4jRq91FNq4r5Sg4UfZyZdpXuc18VVaKbnol9oGWoYyf23LBci8fBoNMWnwHRubihkNnzCAE2jOxzlC8a+VweAaTAYOyZ4wxkLSoJVTI6WaINOa+Kqy/tEiaB4qj/g+jG0JOpyLEQIxKv7WWjChMQccp/i168kZJ4Vsdshvq2lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sQ4aJdO5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6714DC4CEDD;
-	Fri, 21 Feb 2025 11:36:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740137764;
-	bh=aJUU/Ch/5rt8k78KhI2xe/fFlCOWQfdrKSPoiASGCq8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sQ4aJdO56Exqw96nSs4329rEj3bkqa1aAKMToUlv6xepWu10B0nQ030yn2hF2pt9k
-	 K89+gYxH+od5BJZD6QsBProKEDxhshNGGPfpFiI8YQIM4bQbwS2cGsLs0vnpl8XYKB
-	 V3nWZVjthwQlvypCV7OT1tvLcBwvPMoT2Ctz6hRT32HIYYNXlQpCnUXC/1gGwF3JAZ
-	 qk+Ar84uzIlQ9RFpWxvl/A+7UcFqt7tqA77uZdcXNSQ3Ilbk+AJo4HuV9NBgEjxTLf
-	 ZZrYrlh13S99dovTHIOuQQy+2w0yvbyQCgapHqjai+KWI9LCewEQauRH252LMeCMbL
-	 nd1QysXpptaxQ==
-Message-ID: <49fc59ed-9d09-46bd-9ca6-99d3445221f7@kernel.org>
-Date: Fri, 21 Feb 2025 12:35:59 +0100
+	s=arc-20240116; t=1740137938; c=relaxed/simple;
+	bh=G6Tv4gdMgqK8URWlKGYUnz4nHwoiGKzXfTwUwauU//I=;
+	h=From:To:Cc:Subject:MIME-Version:Content-Disposition:Content-Type:
+	 Message-Id:Date; b=Jjg4xjPCR9dMPdUV7FbaN7KWzsXmXd3jj9zoFkGIbpkuxUqVsG0NhjJPvJCdkvy/tf36uWfNtlUQ9f9NNDOUlXm5gyQN9YLZV93M5QGfqbLMdVtTITiCaNlpXDRiji8NGXq3K5A7arMEv3oZCmvtF9cI9qxIg9E3JrsFjNOROjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=slJ1doNL; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
+	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:Reply-To:Content-ID
+	:Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:
+	Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=qugMnCcisAWRd3N7XpZaDvLqsnQ13hI4MnOJQYSPqR8=; b=slJ1doNLYx0gJdh83NuzDDMBis
+	jySo+YRg1x1stRmo8dE1FiD+VXvxu7aowfRHxBaPU7hK8tUgXJj1zSJ72tURzCOajhPknQZO6Oo5i
+	4Flh54HosFPQIk6SMglRaU3RZTS7zFUcnxRKtY9B4dGPEk/nIrbFwCLHEyKPb62IqAZ6ciZdlIRWn
+	rk8Z780gW8LFPfTA/N9TBNe9yL/axY6Sw4vaOd69xuVZoO0WWmXfsExMEg71FvxHfl0QBOnjoLKBU
+	qOlUnA3q7QPnDjirYRuAIALkZzQYksAEN1hV8qWKWqZh0pBREK04e7HhYUXGAcMaRXqobo7rgC03m
+	lXtD3lPg==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:36572 helo=rmk-PC.armlinux.org.uk)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <rmk@armlinux.org.uk>)
+	id 1tlRMe-0004Pp-28;
+	Fri, 21 Feb 2025 11:38:40 +0000
+Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
+	id 1tlRMK-004Vsx-Ss; Fri, 21 Feb 2025 11:38:20 +0000
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH net-next] net: stmmac: qcom-ethqos: use rgmii_clock() to set
+ the link clock
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] dt-bindings: qcom: geni-se: Rename qcom,geni-se.yaml
- to qcom,geni-se-qup.yaml
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
-References: <20250221085439.235821-1-quic_vdadhani@quicinc.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250221085439.235821-1-quic_vdadhani@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Message-Id: <E1tlRMK-004Vsx-Ss@rmk-PC.armlinux.org.uk>
+Sender: Russell King <rmk@armlinux.org.uk>
+Date: Fri, 21 Feb 2025 11:38:20 +0000
 
-On 21/02/2025 09:54, Viken Dadhaniya wrote:
-> The qcom,geni-se.yaml file describes the Qualcomm Universal Peripheral
-> (QUP) wrapper and the common entities required by QUP to run any Serial
-> Engine (SE) as I2C, SPI, UART, or I3C protocol.
-> 
-> Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml to better reflect its
-> association with QUP (Qualcomm Universal Peripheral) and the compatible
-> string.
-> 
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> ---
->  .../soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml}       | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->  rename Documentation/devicetree/bindings/soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml} (98%)
-> 
+The link clock operates at twice the RGMII clock rate. Therefore, we
+can use the rgmii_clock() helper to set this clock rate.
 
-That's just churn for no real gain. Not even tested churn.
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+---
+ .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 23 ++++---------------
+ 1 file changed, 5 insertions(+), 18 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 192f270197c8..eafe637540b6 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -169,30 +169,17 @@ static void rgmii_dump(void *priv)
+ 		rgmii_readl(ethqos, EMAC_SYSTEM_LOW_POWER_DEBUG));
+ }
+ 
+-/* Clock rates */
+-#define RGMII_1000_NOM_CLK_FREQ			(250 * 1000 * 1000UL)
+-#define RGMII_ID_MODE_100_LOW_SVS_CLK_FREQ	 (50 * 1000 * 1000UL)
+-#define RGMII_ID_MODE_10_LOW_SVS_CLK_FREQ	  (5 * 1000 * 1000UL)
+-
+ static void
+ ethqos_update_link_clk(struct qcom_ethqos *ethqos, int speed)
+ {
++	long rate;
++
+ 	if (!phy_interface_mode_is_rgmii(ethqos->phy_mode))
+ 		return;
+ 
+-	switch (speed) {
+-	case SPEED_1000:
+-		ethqos->link_clk_rate =  RGMII_1000_NOM_CLK_FREQ;
+-		break;
+-
+-	case SPEED_100:
+-		ethqos->link_clk_rate =  RGMII_ID_MODE_100_LOW_SVS_CLK_FREQ;
+-		break;
+-
+-	case SPEED_10:
+-		ethqos->link_clk_rate =  RGMII_ID_MODE_10_LOW_SVS_CLK_FREQ;
+-		break;
+-	}
++	rate = rgmii_clock(speed);
++	if (rate > 0)
++		ethqos->link_clk_rate = rate * 2;
+ 
+ 	clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
+ }
+-- 
+2.30.2
+
 
