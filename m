@@ -1,162 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-48937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5C2FA3FAB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 17:19:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C271A3FB2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 17:27:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F79C8819A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 16:09:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 718B18674E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 16:16:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B25C218AA3;
-	Fri, 21 Feb 2025 16:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 029D91F3B82;
+	Fri, 21 Feb 2025 16:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DtksPI8d"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="lxyWEOSO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11olkn2059.outbound.protection.outlook.com [40.92.18.59])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC0C1FFC4D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 16:03:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740153792; cv=none; b=A3nVWp1hNpD9nDOBOlli2x84GgqiueTXkxW0D6tpWbWYZpsRlFLwikO2oycDlylqU9ee3Lc/a9MFO/sF2FQ2u57wy0KdFo3iv5kqWc3E3XKO96rnAmH4HOW+Y3SScGgXSSEQFBcbleI+ERhYWyNY0dOMq6azoUKZ5myyI2KFzok=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740153792; c=relaxed/simple;
-	bh=jNpVKLpJOZImpyW3PpLBE59YQPImFyESp7Aep3FgeYc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TXAIC9A4Vnvj6pZ1PrA3fhOwGZcJsrtWBpnYyDk3SKDqJmqqkFOlB4lIzwqSJalU8NxinuXUfrIR0znNT0emMDuPlPtBe01CjFbHKDmxotcrpy+oQkYNT1pOL5XwlLTT/NP/077HyK5FU+SXscmalpBxEAdW/HKkSJTf53bsq7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DtksPI8d; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5dc5a32c313so418230a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 08:03:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740153787; x=1740758587; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4OXcF/TG2PCFERI1SWimzKBOweiSs1ZB9MJg92lP4jc=;
-        b=DtksPI8dHyXYI3s8/lSvEydMFfe1Ml0RKpZXT9qDgs/XJbs+PrPqJzY5eEQljcQ1yq
-         jkIpdnxGsPPsDxaLEK8t3ylKrCX2nJuuhcuPj8YYyFaTYR/+vU5ylpUaVN76ck+KBx+A
-         fAzUfz7YESVaN7xCiDUNZ2pCB8Epg7QelzWians6hJUKJN0ezGNcA2eE/cOKctmmd7te
-         0o0Cz/vNUoBdmG/LXzcjtJuYZcCzh7MAcWajWtjkD6rbTBT9M6HqUlsb53eAdkI8jFoN
-         WojTZ7JCLrLBDTkoih+dOtJmhOZ2U4G7JlNpm48UCtY3nTlbDZtXGg/hLwLQGWDgVHIk
-         z3ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740153787; x=1740758587;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4OXcF/TG2PCFERI1SWimzKBOweiSs1ZB9MJg92lP4jc=;
-        b=Z3mpPJq4XJHrIb4JL32rgzBcaZYzkhhEhPRAoHQ9Vl6yyho1ahNqK7yJG4pN8/FX4j
-         ew967QYsKOc1D3ljJ68GtfdN/ESENar1XiNuwJ7dYbvURN3TiG7dA/vinxRBFu2K2rH6
-         8pPao7SPKlphZzuzhlVfVFGKdzxgdu4HJKFYbf9En8oN8MaYrpfGgTVQv6wucv9Bw50/
-         xsjtqT04sUoN4fh7zOK94gL/zQrBo8N4qbY51GZpwpDUlQRXnHlWACwNYl0d/7w32O9H
-         fhyTh7sr0KDJyi0NIXHsSad8zQXmcoi1CGTx4EhMCesZxqIN7QIIAneVrd88ryos8wi+
-         cWVg==
-X-Forwarded-Encrypted: i=1; AJvYcCVHSx3dRGsmGgdeKHcLr9Kg3IMZQ/LdYcYubI+8WrDaVQzEFG/f3mtoetW9VchMi4JPRAlDvCazW8gXBE3F@vger.kernel.org
-X-Gm-Message-State: AOJu0YzK/bpAWQugGP8JoiWOMB6r0xSxzYuTLOuuNnjBjDFn8I+OIGhp
-	ec2KrlsabjZX6J5LpmPtNRhSTPwUTRuoW66WVMN1/2bcBHZmZoekn6pRc7qINkqnDuPSCliFwyv
-	pArA=
-X-Gm-Gg: ASbGnctci1I7BJvbLICwvN/X/+Vaxkhj4MXYnrPAleXv3uAxLcC2+vS+GYC6/10AyV2
-	aSryZqOanfvvLSPTWxCxlWw//90rCYU8lT04xPCvgIz1laqQvPZIYBI0LPEzUkiBUAGDvFFzHSF
-	PUS9u2fRJJrVdr8UdtkY1xGFomr8u4M0eichuu6V/PYxG2DA9ccf7iKz6p40bB7WoirfG2eliS4
-	kGD6E0MmU6z+SbLb2tjVNF+kgQRfuW1UY/jRzk7AzQLcVME2X0SMc9848HfKE/kOJKB7MNv7WmH
-	zLTflGoOBwfDziXb5Z8mjXIN8/+13S28DJeXuBGpFmBjfMsUDZ9ua0E/74Jwewc7DbhItc/BiYg
-	=
-X-Google-Smtp-Source: AGHT+IEkEFcjqxp6Jb7RRhAg97Jh8Ki4FzCRDMhO8xX32MsiOvuIBNnukhiVmbZ0l7ZZyA6t7WA3Rw==
-X-Received: by 2002:a05:6402:4406:b0:5e0:803c:2440 with SMTP id 4fb4d7f45d1cf-5e0b72311b3mr1279503a12.8.1740153786941;
-        Fri, 21 Feb 2025 08:03:06 -0800 (PST)
-Received: from krzk-bin.. (78-11-220-99.static.ip.netia.com.pl. [78.11.220.99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb98640619sm1040782766b.54.2025.02.21.08.03.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Feb 2025 08:03:06 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305581EC016;
+	Fri, 21 Feb 2025 16:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.18.59
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740154278; cv=fail; b=aFq6p2TCiKG2yILoRqlP58FqijW9xT+C2XWSjm7Zt0EXA3P9iDwG/ilTdtKybWBv6W55RuDuVYgdzy7EDbKnZpohqej8cLuXaOnif2ThKOp1YSsI9u+bhQObmr1jdVQccYHjl80AUJfer9tf4kKOJ/9JZS7EkdXQRspbXEkoLk0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740154278; c=relaxed/simple;
+	bh=XmywJEHqsrVx4/SUVuGG0Sna1QRlSN3O053LtdIAhzk=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=tFGPVXtZgXx7IlZZfBXc/m90xD2lymNkdIr4A8LlKsSEko5l07OeyrbavuNwbb8QqY5+Z0F5Bhxj1gYxK2rhdSrPhrdkmSrWQzuG+QQ3C5PFB7Xa9NIyM/W29nnQKlK9Cn5f68j9yK+2O8c/W3K2yGtgGF645+Mw6Nj95vzFn+Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=lxyWEOSO; arc=fail smtp.client-ip=40.92.18.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=w2IrrvhXLuBGozXLdCh4QxXaxM66pCnA8FeWSzpLbvw5QyObf6/CvVnskWyb6ETlah8hq/efM6gfyAnuyWMIkN+G6OmKu2hJ75w1SxTkz9socRa0nmUOWzA4k10A5qPgwVx4yqWd6mKLh/6f6eDug7cUJqpZu39mzWl4rAIQow29F1t+hLgJrnGjJsgdl0aiGSQQ/49EuCflgiUpUbUgJWPSOezd1ujWEx/HJJMsyzAWpc++xfLw5t9fraxUtK6tv0ll+VuUYOJ37pZ+g4dRE0Z/1psOB8ADoKWllrWalBWvcsZSDg50y/6ooogBOAmBN1RCSd76ZTOTd1UdFyte8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=j+RyT6tH57KfZUeT8M77dFcoFBL27LWxIVYzrlEAYA8=;
+ b=AFsD0VZLizsar9Fyhw8FS1y5eP5Sb4U8OX+ckVAfnNG6R9vzMHBUqU9KGIpWE7EU8Q2kXd44OV7LlAMeA1GRaBnVcVb/ysx0XA3WfuMu5KrSvoEmqZNT+n86mFt6XCsiDt5nn3EPhc0k0UovU/i4tI8bHuFITwmaUeh2IGVT0iYRE85zmp5Rt17u+Nmt5X55NEqtTxNYGzRkGUE8PRQj94KWOkTB3wFUHyyBI8/XCxko8kek9+uQ/uJm5AX4L8ww3zcehgipdihV7kw8DNRBHkv4GmXf/M1U6cDhux+yuGg9ZQllGCX8etYzxFRNPS7DTxmj0w420ZgjRJMbegJuBw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=j+RyT6tH57KfZUeT8M77dFcoFBL27LWxIVYzrlEAYA8=;
+ b=lxyWEOSOXTMDiy0vi0YUx+lQp7z5OChnct7FoT927PVIlelL5eZ+Ma8yJoC6G4JL2JRV+XbiFLJoaz9nF3T6PxR9s9LW0JTrxoaFdmvR8K2zrvanhirgzRSaRcaJ6601oPZ+Zcn+6lmc7yKfJ3jpHSjs8VXuN5i4a+3oIsz0E9t0AUZLo97iStVKX9SrKDpCyAwYsxIt3YewhZdAkTXVVBZoV60kyzbiaTRTFF8iwX7qjEjuZj8+e+9BEFJmoVl/5i2wVuLaJopo3xUMOPbRINHcqCWjRtj/cuSxX4GNM5/i0cnISjUdd1uEtltecIgcg/HmtnJsEph9oewejMoAgg==
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
+ by IA3PR19MB8736.namprd19.prod.outlook.com (2603:10b6:208:51b::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Fri, 21 Feb
+ 2025 16:11:10 +0000
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305%6]) with mapi id 15.20.8466.015; Fri, 21 Feb 2025
+ 16:11:10 +0000
+From: George Moussalem <george.moussalem@outlook.com>
+To: linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH RFC v2 2/2] remoteproc: qcom: pas: Add SM8750 MPSS
-Date: Fri, 21 Feb 2025 17:03:00 +0100
-Message-ID: <20250221160300.160404-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250221160300.160404-1-krzysztof.kozlowski@linaro.org>
-References: <20250221160300.160404-1-krzysztof.kozlowski@linaro.org>
+	amitk@kernel.org,
+	thara.gopinath@gmail.com,
+	dmitry.baryshkov@linaro.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	quic_srichara@quicinc.com
+Cc: George Moussalem <george.moussalem@outlook.com>
+Subject: [PATCH v5 0/5] Add support for IPQ5018 tsens
+Date: Fri, 21 Feb 2025 20:10:56 +0400
+Message-ID:
+ <DS7PR19MB88832FDED68D3EBB0EE7E99F9DC72@DS7PR19MB8883.namprd19.prod.outlook.com>
+X-Mailer: git-send-email 2.39.5
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: DX0P273CA0051.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:300:5a::11) To DS7PR19MB8883.namprd19.prod.outlook.com
+ (2603:10b6:8:253::16)
+X-Microsoft-Original-Message-ID:
+ <20250221161101.17204-1-george.moussalem@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|IA3PR19MB8736:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5f197b71-7bf2-4f32-5f81-08dd52925ada
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|5062599005|8060799006|5072599009|19110799003|7092599003|15080799006|461199028|4302099013|10035399004|3412199025|440099028|41001999003|1602099012|1710799026;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?o3q0fkybuacqy/dTU57Mkoc8PziE1sfpbLFmRwSuJxnRZEpPE1QTuFumyiGq?=
+ =?us-ascii?Q?ICnwmouhHYsrYAYggyAiN1Ls6bYu3cLvVWQOInDf7J57oSGigI5qgKCV+8H7?=
+ =?us-ascii?Q?MunWWoXOs03BXypWHTtkePSFN7Cp/QglOndv0T8XlBFs4oecQexeMMI19Hlh?=
+ =?us-ascii?Q?rzC3i5g8XQtqc0DmbPecMdLSAusGtCNbicZ78xSeE/vy0NnE0Jzwy3rG6k0P?=
+ =?us-ascii?Q?dkIDQ6WLYN3oNnRmaLehpanHGGSy3iV5foswIKJM2zEfz4IdWdXF66I0NXUF?=
+ =?us-ascii?Q?Rk+aJt+Wurq2SbCFwiOY0s1hYSLdy6PMnjG6dmCO1P0GkW/dEUa9ZK/vTW+E?=
+ =?us-ascii?Q?48vl3FZRzdCyWIwBJUko+QKcGhv0SW3G5xdVRR4PDbvCSuldiP9C7MT17yOw?=
+ =?us-ascii?Q?zQikUdiqzRLB4AA7YVQ3W8iSDGWXd1OhrkfGIJx3hSsgBlWneubc8LY4MbPF?=
+ =?us-ascii?Q?uon+fWtK/t4djQlIMH4oeYRzqDP9Ljvy4tiZXNEWddFpXwr9Ovi1HpO7NRLA?=
+ =?us-ascii?Q?Stgww3QfV2HuaOKNhh/68uxBaPoE3I07odaMC2dFoo16YqGe/ROKyFc/PW/r?=
+ =?us-ascii?Q?fMAb/4Wy69ijzk61UwLZrsg5u1fyDGLtrJoK+mWnAw3gTa80zzMluw9asyMs?=
+ =?us-ascii?Q?+j8e5xT7gzNQrphEFiUFr0WWBeurKgSjVDSkP5hqaa+jV6C9xWMJHT1oupOQ?=
+ =?us-ascii?Q?zil99qdtCuPkcv9IhVSJFPqt7AJUips9ckLyJkhwmMqEsWcXvO+S8SlMv8M8?=
+ =?us-ascii?Q?DE+ETScrq50euAYp3t5+4n+airuqDkMLDdwwjhXFfSbh+HE64RM6lpA3svt8?=
+ =?us-ascii?Q?B6bB5Cx5z/utwvg2e5A1S0rltkZImqFTHcX2TVIELzbF76bKNcbZ2mRuEbm9?=
+ =?us-ascii?Q?wklUyLLKQ3Su31eFexQy1sS5Cs6LPlVqh9MHZ+zog8ysQVZ8Z7eXk2L6/6Pn?=
+ =?us-ascii?Q?gm+IkNRZSZBZ0f5UB7IDX8I48SDpSJWc9+qp8jMYZZbndrDPIIs6o91y8lLY?=
+ =?us-ascii?Q?3lXeGmvp/0j2sYZ4gOdkl4/BIoTqL6oJiTt5UcwMXN+F25xBAy6YloNJJI1r?=
+ =?us-ascii?Q?Fn8nHztFKBnDWLD1PFqePNpaIbqJeSoSOHu/d3OMJnPCDnpqj0qm6ROfbEwb?=
+ =?us-ascii?Q?bQtmszDDaGHJww8fBBQ8x49p2ym3OVLF4r1gv2+s/fpdiN/YCv41qVHMhfwG?=
+ =?us-ascii?Q?Rn6Z8uy9/1jIDVNQKGi8gznJpJsYKeGxyDiLOszsEmz3P3FEMH3+qXhXMA45?=
+ =?us-ascii?Q?fCGvmKTwP8oTS2DSv0Tg8/MRqfPBtFgcylFxFGV+mc5QAT7EZiMI2Th4BTqV?=
+ =?us-ascii?Q?lGoQKCl/hNp/pztc+tzjvGK5No5KenvLB/NFbI/+nl903A=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?6nqk3lT68rj8wUQxG1Q7lVk6580MBCMpuJAluehwKmr8q+R158UO5o4I+Now?=
+ =?us-ascii?Q?zy7LrjIISxr5r5hWWr5tEru41s/Kss11fR20faw7uMhpuILXicH4R1qt7N4A?=
+ =?us-ascii?Q?tdE9n+H8c1+wZaDRcbTKCk8z1apJhFs8HYjMuyosh+vmrA+eZvtUGZB71u7L?=
+ =?us-ascii?Q?UWR6OmMaGw5GhOGgoy49z8BmzT/D9jgLzXSQLrZERa1GNj0iDIqI2Vqsep0d?=
+ =?us-ascii?Q?Hjik+uyHcagiUZe++wJdIfThDDVaTemHamV3nqlVgb35BDf8Xa/mw6D2NR//?=
+ =?us-ascii?Q?8TnhKxKN2TlBI3iFsZY1EpIO+q89UkUoAx8GQBuIY8kBer6Wya8ufpYXvMY9?=
+ =?us-ascii?Q?atROjaMneoBOsNgiD27jC/ZCNU4CskJ2Hf3x5GWEVtRy9/nxiw9YIIw/cnYU?=
+ =?us-ascii?Q?xHD/WcHHHG3btXumBZdyl7zlDMckNLZaM45DsEXTpgKc7YpPWA85OxcerhmQ?=
+ =?us-ascii?Q?s/aD1JEEOJLCzDYsNzDh0XtE+Uf+qwBscCRYLEWJtbk4kjHfhMVUKIKTJZx7?=
+ =?us-ascii?Q?SIX0pGjptwiqN+QuYUNoSa/wSicuv8VV4vOnnzizrFLHlxN4E+sho8KLHzXX?=
+ =?us-ascii?Q?jsdl685X+hKrjJSwrDERRtLaprs5zA1bWwBV1tjOC0XYZSiDDSv3jhvPQw/R?=
+ =?us-ascii?Q?lBh8Tnh5T3cw44nPViRDm6IP0glZgMPr4kduFVKLVfTn995r9eoltv87KZpo?=
+ =?us-ascii?Q?XwuiQTBE5zMJNsiOP03DzWmy7edRrbamFK+Cup5fsvcRuJhOy3fDxgx+lx2U?=
+ =?us-ascii?Q?67omZNGefu9cgOTLt8irHukxQlfmpBNGMybWdB/iMVGI8OM3t5r2dlqgteYG?=
+ =?us-ascii?Q?AdOM0t3PzM1ZGurC2EEPMCSpAkughQPzwTy/eBQX+6lv7qD2Ef/xZP+R7PaZ?=
+ =?us-ascii?Q?/qA7ETod7h1qkqbzDiQExnYAFrwns83N/6OaaWKH334QZQXw/3L7UCdP+0bF?=
+ =?us-ascii?Q?VuEL7E+2rBPrp/lz9h/Kk5iVR7TlRaOkQs1+AWV8rH+Dt8KAGsvrEZNlih0E?=
+ =?us-ascii?Q?nXJWE++4sdTawjE+Nk+EbLsDj541mjO3h/6V7ch52BZ7yd+DlFKMOm+u2dlT?=
+ =?us-ascii?Q?EvxGOWbMoE1DxhxduUy8hEGpKkpJd2nkyMRvvSaVkdIuicFZsRppf1zQsCM/?=
+ =?us-ascii?Q?4M8hRPvnnasxhDbpiXZpl5Q0kM4Xae41xThefjBJNsQLhMdj/RRA+sqz8Dxq?=
+ =?us-ascii?Q?NCvb5QfQPT1KxUd/GrxW71VJXFVBIKxaPNWsJROk6SH1p4wgQrX0OLOKzoxU?=
+ =?us-ascii?Q?xqw0ktP/mLYPRtgOTID5?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f197b71-7bf2-4f32-5f81-08dd52925ada
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Feb 2025 16:11:10.5393
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR19MB8736
 
-Add remote processor PAS loaders for SM8750 MPSS (modem), which differs
-from SM8650 by lack of fifth memory region for Qlink Logging.
+IPQ5018 has tsens V1.0 IP with 4 sensors and 1 interrupt.
+There is no RPM present in the soc to do tsens early enable.
+Adding support for the same here.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+[v5]
+ 	*) Adjusted commit messages to indicate IPQ5018 has 5 sensors of
+	   which 4 are described and in use as per downstream driver and
+           dts.
+	*) Padded addresses of tsens and qfprom nodes with leading zeros.
 
----
+[v4]
+	*) Documented ipq5018 in qcom,qfprom bindings
+	*) Constrained ipq5018-tsens to one interrupt with description
+	*) Added Rob's Acked-by tag
+	*) Added Dmitry's Reviewed-by tag
+	*) Fixed modpost warning: added __init to init_common
+	*) Sorted tsens nodes by address
+	*) Sorted thermal-zones nodes by name
+	*) Link to v3: https://lore.kernel.org/all/20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com/
 
-Changes in v2:
-None
----
- drivers/remoteproc/qcom_q6v5_pas.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+[v3]
+	*) Added the tsens-ipq5018 as  new binding without rpm
+        *) Added Dmitry's Reviewed tag
+        *) Fixed Dmitry's comments for error checks in init_ipq5018
+        *) Ordered the qfprom device node properties
+	*) Link to v2: https://lore.kernel.org/all/20230915121504.806672-1-quic_srichara@quicinc.com/
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 97c4bdd9222a..c34b7780f786 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1409,6 +1409,30 @@ static const struct adsp_data sm8650_mpss_resource = {
- 	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
- };
- 
-+static const struct adsp_data sm8750_mpss_resource = {
-+	.crash_reason_smem = 421,
-+	.firmware_name = "modem.mdt",
-+	.dtb_firmware_name = "modem_dtb.mdt",
-+	.pas_id = 4,
-+	.dtb_pas_id = 0x26,
-+	.minidump_id = 3,
-+	.auto_boot = false,
-+	.decrypt_shutdown = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mss",
-+		NULL
-+	},
-+	.load_state = "modem",
-+	.ssr_name = "mpss",
-+	.sysmon_name = "modem",
-+	.ssctl_id = 0x12,
-+	.smem_host_id = 1,
-+	.region_assign_idx = 2,
-+	.region_assign_count = 2,
-+	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
-+};
-+
- static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
- 	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
-@@ -1474,6 +1498,7 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sm8650-adsp-pas", .data = &sm8550_adsp_resource},
- 	{ .compatible = "qcom,sm8650-cdsp-pas", .data = &sm8650_cdsp_resource},
- 	{ .compatible = "qcom,sm8650-mpss-pas", .data = &sm8650_mpss_resource},
-+	{ .compatible = "qcom,sm8750-mpss-pas", .data = &sm8750_mpss_resource},
- 	{ .compatible = "qcom,x1e80100-adsp-pas", .data = &x1e80100_adsp_resource},
- 	{ .compatible = "qcom,x1e80100-cdsp-pas", .data = &x1e80100_cdsp_resource},
- 	{ },
+[v2]
+	*) Sorted the compatible and removed example
+	*) Fixed the name for new tsens_feature
+	*) Used tsend_calibrate_common instead of legacy
+	   and addressed comments from Dmitry.
+	*) Squashed patch 3 & 4
+	*) Fixed node names, order and added qfprom cells
+            for points seprately
+	*) Squashed patch 6 & 7
+	*) Link to v1: https://lore.kernel.org/all/1693250307-8910-1-git-send-email-quic_srichara@quicinc.com/
+
+Sricharan Ramabadhran (5):
+  dt-bindings: nvmem: Add compatible for IPQ5018
+  dt-bindings: thermal: qcom-tsens: Add ipq5018 compatible
+  thermal: drivers: qcom: Add new feat for soc without rpm
+  thermal: qcom: tsens: Add support for IPQ5018 tsens
+  arm64: dts: qcom: ipq5018: Add tsens node
+
+ .../bindings/nvmem/qcom,qfprom.yaml           |   1 +
+ .../bindings/thermal/qcom-tsens.yaml          |   2 +
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 169 ++++++++++++++++++
+ drivers/thermal/qcom/tsens-v1.c               |  60 +++++++
+ drivers/thermal/qcom/tsens.c                  |   5 +-
+ drivers/thermal/qcom/tsens.h                  |   5 +-
+ 6 files changed, 240 insertions(+), 2 deletions(-)
+
 -- 
-2.43.0
+2.39.5
 
 
