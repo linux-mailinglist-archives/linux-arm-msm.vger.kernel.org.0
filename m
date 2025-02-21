@@ -1,188 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-48883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6124FA3F4B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 13:48:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C79DAA3F583
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 14:16:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04711702122
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 12:47:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC552189E12B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 13:13:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA1202080FE;
-	Fri, 21 Feb 2025 12:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0AD620E33B;
+	Fri, 21 Feb 2025 13:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EttI1ex3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DxGCo9oh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6FE1E489
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 12:47:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10D420D51D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 13:07:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740142061; cv=none; b=rfvhCUi0LE76otB5dtH4nE7Ge+4ctZzVUCI9pgrtdhGb052PlVGOvaM9cubGg2EpyHppiJFBk8j+sLAaa+IxMDR8gE9h1Sh1ihuXlmQv36GUd3SZMZNKZFOG+u5k49VnBABNvkfgU+dg63XEt8D40Pi7x1//urI/1p3uD5e6aCo=
+	t=1740143234; cv=none; b=dGWo5hi7O1+OAKmj3ZFikeIenPZzDcvclxy00fRFSP0rQUFF3bX2/syh7/Eb8AeCNLyzVaEqTleCHx1cVnPD8fL1KpXxKrKkQewA5UkaRbzFnDII2rOiqO6omxCYUQBAu4TA8Hw+JTEClG33c/ttOkYMrnTVhZ/TVrU28hBSuOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740142061; c=relaxed/simple;
-	bh=YaGDtt7cEBjQEPuK2P+NBfMCulX2bFrlHYN1kHN/snM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dc+QcWRowju5TSWfmYg97PNJo17v6sNzvtJj1khyQOWrLXqcnt6/phq1OSp79+TMuSOX/yjKjqhMWMDuvZoP3GPq4ABojZ+e9VMeKk3mgsN/FhX/va/TnajBx988L1+j2LFQXz1KwLYMsUI5jlwc+WyE16X1qUn3AIsjoceY/bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EttI1ex3; arc=none smtp.client-ip=209.85.218.42
+	s=arc-20240116; t=1740143234; c=relaxed/simple;
+	bh=Wuq8PZZqTZmX+Wwqcw5TIBdEiOB/HRphCwfmFoMd2sA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=uQvR5vKyc9qk/EGbFUrAxvU5rGnFSUHPYU1eMJajHlTUx+GevDxcEygMo6JI9SYZ1zqKJcib2qf1uI8y9NL9aQzzZ3fqoPgT+Mf+lI/fohpKSYSzbKpfH0KGhj5+hvjd+Am6mfkXNVM70Io30+sndzPjCgo3ylijTjSqDF82osk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DxGCo9oh; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-abb8045c3f3so256648066b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 04:47:38 -0800 (PST)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-abb90f68f8cso395101866b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 05:07:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740142057; x=1740746857; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+8sq8P1/rLnQs2ac3SqMeH/6Kwi56/5UD1RraEg8IJY=;
-        b=EttI1ex3QwFZcq64tpbZuN4nEh5eduKWKwiUbaYkBjNi/5shgSnPiNMf7R05v1od7+
-         maX+k8m/JiKzqBHQpzJq9XJ5peLt393vmm0OfYma2ESdNnkWM4HQiDsf8QHa3o43LKXU
-         gclxdtxgb50MFq5zWLN/W24nsNXxpkoc91oALTofbbrOq2Roq4rEaNg0WPpv7kaSlWgv
-         vifs7QGxrO+gQ228H7MHcckgKRYg9jrnhzl9mQZgWuUTlS43po1FxOoziqlLYRI1TtV2
-         i/ev5sBqYQi1fXVBW19EaR2AJxibVCXidn9vbfC6X8wpjNr89Y53BizrIj7kjEKHM0zL
-         4RkQ==
+        d=linaro.org; s=google; t=1740143231; x=1740748031; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=J2YtPHkWiqQRxoGi/rdnAG9zWLBdEYwphfKc3zJwkgc=;
+        b=DxGCo9oh1mPhg3jD1Co0IFQ+sQtK1LqGv5AhkON1RP9il2E3VCQbCPp1hsyvHqtpGn
+         8O5YykFcq5VbeHVUQsXJ5pkHNqxLKpzmeCfu/DtmqOoNS0blB9MyOMdQoGDh1kQ+BDxl
+         yP4P4N3PZTQ6/LlORZjqZHFhMidaG7GZctDih7HrcckKgVLfbQxQaGO41EZKAltKmxDX
+         Siz0h17xi7yRr5ULUOn/fMXXyCydbEZRZ/WwZmn5LsJzVSDJdpspYUf8icHJ3jkSJW6M
+         VvhiP07Jvadn2W/X0wsIc0h+gwTPS8wY7rsa5yYwDGPHDwIvjydHmqpRiZ/L2h+d3CUH
+         W4/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740142057; x=1740746857;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+8sq8P1/rLnQs2ac3SqMeH/6Kwi56/5UD1RraEg8IJY=;
-        b=cK9C7h2bWn4EgGZ9JFi9TvKrbZMTFWSCjEOHZF8+eCr3ec829/kllYhkOUsxPfbyYQ
-         52V/wh2Hs5otaaWMA4VawX/hfUlw4/7aFpRQC4rswNrf2pCIRvLXXghsZseukl4ygi/I
-         jZMcjss0sWKwaZo6RTWnwcaxD1LNIjVr1LmIdWeSD5xQcGHcOi16MwzCl2FF00ukdCBb
-         OVWcAiCiLsaP23P1j9CSsDKCP6dYsxIWd7kQ/7NWzz/qzEl/YjEjyN1JKUPwnRRivXd8
-         eYHUqXRLN76eGnTdZrLTPwlnEs7ghgTFXyms6yK8aSbbM9etBYCnugEfQwR6Iwa+TsS4
-         nZHg==
-X-Forwarded-Encrypted: i=1; AJvYcCUQGArqGx6Jl5y789wvdeyQbTnjvGmL8uiEDIIvF+5fYo0ipWZrAkjHh0GzC8VB5w7qRDDMLUFxNR9k0NUW@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhrqNJCYzhJVKfMeuD/glzpzfkD+/v9eenVd/EgRm+CCOrH11d
-	iCcGvbDz4tC8wfXUOXwOswQkhYRqD8UfL0B372pwjg4T+isU/82V0WE/5vnzbsM=
-X-Gm-Gg: ASbGncssRGF1SbnZBrIgYcK2LMxk1omSWn5Z0EJs03K/pZ0gAIofUitLfn6sExwr+GK
-	VtM8LlY+sQSHOQhCIoovsCnTR8Wq2bSwT9gx7wvzeQX/6C91a4ow1bCO5ng8dNgLxLaMG7xAMtn
-	CdBR4XipdfRaLJR7+496ezq4CzKnTTbenrFuzsQAM/18preABXdppk+CoULkaacw/y9EpMkWVP7
-	ViaLh/FEC/wSmD+dZeWmjK2foKH9ghICUSrn1Ldyt52/MWTBq8Ccu5xZGVp7GPKs0GVKL5a6PZ9
-	4hNZTNl7aFuy2I5oUBUeTHI=
-X-Google-Smtp-Source: AGHT+IH3aBzzFWyzyN1k83NMWlVN/InEeUhlRu8jOe9fZXx46+LcdtbGo1F3wi+BlPMYt7I1iE4rwg==
-X-Received: by 2002:a17:906:31d7:b0:abb:cbba:c346 with SMTP id a640c23a62f3a-abc099b8029mr280917466b.2.1740142056993;
-        Fri, 21 Feb 2025 04:47:36 -0800 (PST)
-Received: from linaro.org ([62.231.96.41])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb916db37bsm1046317766b.165.2025.02.21.04.47.35
+        d=1e100.net; s=20230601; t=1740143231; x=1740748031;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=J2YtPHkWiqQRxoGi/rdnAG9zWLBdEYwphfKc3zJwkgc=;
+        b=i2hzuJ0H8dp92yDTyH5vDaUaKzx4xaHr+XFKxQ1S6bPEKBo+3VxbsEnqPk66jbZA9C
+         b+2JEwure7zk1Yrv5pcJp+giSw6B4ndMt7QMmkclswRc0duoBYK3+1cgqGeKQ3EvvQtv
+         sYy1Gb9o/Ba1F9pFhr84ChBdIBMX9ko7/aNEgzp04/GGXd+RJ8AtCybbk+k1jXKPN/G6
+         1TvYJ8SG0Dydz+9mTYI0c96UJMtZxCDNg4gvmTlI+Jd0oxcwv9QZn3ruoSCHTY2fXcCa
+         MlPR3UAbDwBCeVH8qYOJ+QjVP/EBeJQ6IyQmot6LkJyZQ2D2yvyH/gwJv48hDW6rFgWH
+         98tg==
+X-Forwarded-Encrypted: i=1; AJvYcCWxSaHYVSqGl4DkB58QcUUny/FmWWE+mZHDpOCcH2nD7Gw3q9Rk1xIK48FsbAUixJYF+XdIDf0ewbsokZZ4@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWOEjrMZsrPUthi4pVgMhnjtmp1apUU9oHeXwWuXTXCeY6lRhS
+	KbSUt//V1mFBra5FJPg2Bt78z5VhIgkR9eZbYbt9lipj4EFxHyH03T1OoiEcfAs=
+X-Gm-Gg: ASbGncvuTMW2An/+ZOlYTbzmZVgUfilgJTWSq44fPwL+3MqxpyUNCfd/CR8UghEph2r
+	sv8GXjFShIr5cYEB+m6zhYzm4y31w4Y7sG98K5g8uTE0/zK8WqiAgmPJfmhfrYHv77aPyprQuIn
+	x/44ym6ulAgRuOCK60LyWZo0NZwcOlNMg++9txI1o/uqaTIwWxrCfsiiCUxTAz2+oypmvNwuEpx
+	ywS6HiRVQMx8qxTLRWrXye4XD5vamG+dsc/lIxZz9J50hSq7zO2V2QeaAX6nVmapCriGF2m1JIU
+	elyL8AUizg/nqCgTY2kUUzz2
+X-Google-Smtp-Source: AGHT+IHdJRh7VHfi6YJp00w6m/VTpkjx4C8wPXol1hyTtGE08K0yf46cIn67ahIdjvnZFNPq3S7ylg==
+X-Received: by 2002:a17:907:c2a:b0:aa6:5eae:7ece with SMTP id a640c23a62f3a-abc09c0a5bdmr293895566b.43.1740143231091;
+        Fri, 21 Feb 2025 05:07:11 -0800 (PST)
+Received: from [127.0.1.1] ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb7a04f8e6sm1236944366b.177.2025.02.21.05.07.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Feb 2025 04:47:36 -0800 (PST)
-Date: Fri, 21 Feb 2025 14:47:35 +0200
+        Fri, 21 Feb 2025 05:07:10 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Add crypto engine
-Message-ID: <Z7h152O5EV74WSEZ@linaro.org>
-References: <20250213-x1e80100-crypto-v1-1-f93afdd4025a@linaro.org>
- <Z63xEdcvCRHchHWu@linaro.org>
+Date: Fri, 21 Feb 2025 15:07:03 +0200
+Subject: [PATCH v2] arm64: dts: qcom: x1e80100: Add crypto engine
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z63xEdcvCRHchHWu@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250221-x1e80100-crypto-v2-1-413ecf68dcd7@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAHZ6uGcC/3WNzQqDMBCEX0X23JRsVKo99T2Kh5AfXSiJbCQok
+ ndv6r3Hb5j55oTkmFyCZ3MCu0yJYqigbg2YRYfZCbKVQUnVS4Wt2NENEqUUho91iwIH87DYGdv
+ 1I9TVys7TfhnfU+WF0hb5uA4y/tL/rowChR9b7a3takm/PhQ0x3vkGaZSyhcHU+fNrwAAAA==
+X-Change-ID: 20250213-x1e80100-crypto-18c7d14cd459
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2208; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=Wuq8PZZqTZmX+Wwqcw5TIBdEiOB/HRphCwfmFoMd2sA=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnuHp84Tk7fzBMY5S0/WNJQgiwVjS7hHLmH8N30
+ aH09c9PJGaJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ7h6fAAKCRAbX0TJAJUV
+ Vij/D/97LKM8GJDdE6GdaC7MoWCBjHqr8im4hqWkGlBzMgpdIl+izdMUvR7u7UfYFff3//AxD90
+ eNrJLcA0L8AZ6jzuFEDThwIT8JRp8smjpJoj5BVMjLbCzFEfI8aQ3iVUpQXm4ur7liFBNQLfXtz
+ bCvKih/9O104PsgdIqHlQkSE13FPUuZ/R617HeH1Q+X8RYUrxEmk4amrZGEFxeJhF/cYGZ1E/8H
+ vStRU8Y4D8n8Y2CnPEOMBxM733UbH3TcT4gYjKfYZGKYTdYf+IdVszCyyL+gxd8KfSQPkHTn28M
+ KZrS8PGWdZEU1h1IDjFP//q4EiYHMbHEXCf1/9IY9QZhICXLDzPqRIeth+QkS3X+Cr/6yfIYnZ+
+ 5uxenP4Ko0vG+0LDoSQqSN81BymdIvylxbmjgupnCcqCkLzLPfF8DE9fmjqgmAgG/RMoX3cWwGs
+ Cv+bpUFwOr3zoypfBxCtrtlFKx9lUlgCCQhgZvxS6BszEJqt1SspgjvLfIS7KxQXhquTxzHRKI6
+ ik2sWRuNDB2QWvxvu0/Kkwe698jR0kXlUFskoP3wUkr9d0+WjNT05FD7zYSlxoLHe3jwBWmz/ax
+ n5y2MRXhQ4BlSnabw/qxVAhf3UxlecOsJ8Qfc/Bq9NuQQBMaUaxH+I8AKMM2Zw+DF5YFXlnEyAy
+ RMSYpfS+F9PoABQ==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 25-02-13 14:18:09, Stephan Gerhold wrote:
-> On Thu, Feb 13, 2025 at 02:44:02PM +0200, Abel Vesa wrote:
-> > On X Elite, there is a crypto engine IP block similar to ones found on
-> > SM8x50 platforms.
-> > 
-> > Describe the crypto engine and its BAM.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> > https://lore.kernel.org/all/20250213-dt-bindings-qcom-qce-x1e80100-v1-1-d17ef73a1c12@linaro.org/
-> > ---
-> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 30 ++++++++++++++++++++++++++++++
-> >  1 file changed, 30 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > index 9d38436763432892ceef95daf0335d4cf446357c..5a2c5dd1dc2950b918af23c0939a112cbe47398b 100644
-> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > @@ -3708,6 +3708,36 @@ pcie4_phy: phy@1c0e000 {
-> >  			status = "disabled";
-> >  		};
-> >  
-> > +		cryptobam: dma-controller@1dc4000 {
-> > +			compatible = "qcom,bam-v1.7.0";
-> 
-> Hm, I would expect this is at least "qcom,bam-v1.7.4", "qcom,bam-v1.7.0"
-> given that this is a pretty recent SoC. I don't think this makes any
-> functional difference though, and we don't seem to have it on other
-> recent SoCs...
+On X Elite, there is a crypto engine IP block similar to ones found on
+SM8x50 platforms.
 
-Yep, will add both compatibles as suggested.
+Describe the crypto engine and its BAM.
 
-> 
-> > +			reg = <0 0x01dc4000 0 0x28000>;
-> > +
-> > +			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-> > +
-> > +			#dma-cells = <1>;
-> > +
-> > +			iommus = <&apps_smmu 0x480 0>,
-> > +				 <&apps_smmu 0x481 0>;
-> 
-> Should be same as <&apps_smmu 0x480 0x1> (0x1 is applied as mask to the
-> SID, and 0x481 & ~0x1 = 0x480).
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+The dt-binding schema update for the x1e80100 compatible is here
+(already picked up):
 
-Nope, the mask is on bit 16 through 31. That will result in different
-sid.
+https://lore.kernel.org/all/20250213-dt-bindings-qcom-qce-x1e80100-v1-1-d17ef73a1c12@linaro.org/
+---
+Changes in v2:
+- Added EE and channels numbers in BAM node, like Stephan suggested.
+- Added v1.7.4 compatible as well.
+- Link to v1: https://lore.kernel.org/r/20250213-x1e80100-crypto-v1-1-f93afdd4025a@linaro.org
+---
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-> 
-> > +
-> > +			qcom,ee = <0>;
-> > +			qcom,controlled-remotely;
-> 
-> Please add "num-channels" and "qcom,num-ees". Otherwise you risk causing
-> crashes if the interconnect listed below isn't up (anymore) when the
-> driver probes the device. See:
-> https://lore.kernel.org/linux-arm-msm/20250213-x1e80100-crypto-v1-1-f93afdd4025a@linaro.org/T/
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 9d38436763432892ceef95daf0335d4cf446357c..71d5f5eed4511030a51fb12e453f603d294080cc 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -3708,6 +3708,38 @@ pcie4_phy: phy@1c0e000 {
+ 			status = "disabled";
+ 		};
+ 
++		cryptobam: dma-controller@1dc4000 {
++			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
++			reg = <0 0x01dc4000 0 0x28000>;
++
++			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
++
++			#dma-cells = <1>;
++
++			iommus = <&apps_smmu 0x480 0>,
++				 <&apps_smmu 0x481 0>;
++
++			qcom,ee = <0>;
++			qcom,num-ees = <7>;
++			num-channels = <30>;
++			qcom,controlled-remotely;
++		};
++
++		crypto: crypto@1dfa000 {
++			compatible = "qcom,x1e80100-qce", "qcom,sm8150-qce", "qcom,qce";
++			reg = <0 0x01dfa000 0 0x6000>;
++
++			interconnects = <&aggre2_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "memory";
++
++			dmas = <&cryptobam 4>, <&cryptobam 5>;
++			dma-names = "rx", "tx";
++
++			iommus = <&apps_smmu 0x480 0>,
++				 <&apps_smmu 0x481 0>;
++		};
++
+ 		tcsr_mutex: hwlock@1f40000 {
+ 			compatible = "qcom,tcsr-mutex";
+ 			reg = <0 0x01f40000 0 0x20000>;
 
-Sure. Will do. This platform has 7 EEs and 30 channels according to
-documentation.
+---
+base-commit: d4b0fd87ff0d4338b259dc79b2b3c6f7e70e8afa
+change-id: 20250213-x1e80100-crypto-18c7d14cd459
 
-> 
-> > +		};
-> > +
-> > +		crypto: crypto@1dfa000 {
-> > +			compatible = "qcom,x1e80100-qce", "qcom,sm8150-qce", "qcom,qce";
-> > +			reg = <0 0x01dfa000 0 0x6000>;
-> > +
-> > +			interconnects = <&aggre2_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
-> > +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-> > +			interconnect-names = "memory";
-> > +
-> > +			dmas = <&cryptobam 4>, <&cryptobam 5>;
-> > +			dma-names = "rx", "tx";
-> > +
-> > +			iommus = <&apps_smmu 0x480 0>,
-> > +				 <&apps_smmu 0x481 0>;
-> 
-> <&apps_smmu 0x480 0x1>;
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
-See above.
-
-> 
-> Thanks,
-> Stephan
-
-
-Thanks for reviewing.
-
-Abel
 
