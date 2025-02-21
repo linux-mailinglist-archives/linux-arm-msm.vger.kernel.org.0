@@ -1,78 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-48968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28F0AA3FD37
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 18:18:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0E9BA3FD51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 18:23:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B1CA705B5F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 17:10:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B98AF424F77
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 17:23:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 280AB24CEC7;
-	Fri, 21 Feb 2025 17:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D987C2500B6;
+	Fri, 21 Feb 2025 17:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="atN8Cqzf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sD8XtQWR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B98624C696;
-	Fri, 21 Feb 2025 17:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355D32500AA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 17:23:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740157847; cv=none; b=MNUjer/+mlGaTGT2gMKGT4T0/HG1IBr7MhaTJEMvu77K2M55uwXc3uKbyLO1txeJ3W7t2tiSNqIixnSVnORSuqh/tt2UvUKtlVN3XLFFhhpy3HEJHoI8m5w4EEww84pSCHDiYSLfLxq+Ag9Er0HBQdXijiqBEBOR6JYSuyIPKHI=
+	t=1740158601; cv=none; b=sRt/IIuNhia5xHedAoZBLisr+RKqUz7CtccNavJP29MsqRTGK8cXBnu5aLL/mUyvZo/L2rSjFNXncWvEXeDtERB/6NuT/Zm5jFSy7yOkRhShIMA3XSe8w85o0tl1Mqo+XEqtnFinNFdH2HPLfuUbwLPFwtbSy22o01uNj90ErAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740157847; c=relaxed/simple;
-	bh=rM3jrhSo+GMoOBA94yDrK21p75S9evPMIW4c8CD3loM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZyjqFqF8hSSjZ+BTouCFbMysKluTb7bJleVrO/omXsEumyF7SBGyVLnOpSeGXpyd+v5cJUsAOtMR/1zri6+Tmdb8JZYocpB9uoIXg0O/pzh2FzHNoKiHJpelhws9rL2gY8EotzA/gKPBtrFM08zLAQQUaGVagZZv8IKFl7L9dZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=atN8Cqzf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51LFFWV5009360;
-	Fri, 21 Feb 2025 17:10:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7HCZI+K4nbxC5bBlauRGk9fXA5vsC7qtqpk2d5TRt0I=; b=atN8Cqzf4zkIBvFA
-	5B9qYPgIFVKzFs40RFPTNINvyWZ5mUJVvcUsLjw8NXjd3RPZo5dudDHz5PJz1CaC
-	nd2wEYS7uLD9W51dJC5OueQfoCbN6fzp8u+ovggDXNRqz4cGfFQmPsD3V59qExCJ
-	HjW/oXi71/iYBsAPfJ8jqbPseFoDW1wTARBRquMpePYd99C5wALMp8xA2N0gYF7V
-	w/qk8Pw8xHRMteMPoWaW0uSz/CTtM2k4VX14w2/2/y7+my8PpHUnaezyGzdcvgTc
-	gZ65KMOgaMX6U6FEUcuSWf3dAYZVwgwBHBrXKPAGnWXID/xtLX+1TTdCfKHIjyzZ
-	pkMdyw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy3jru3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 17:10:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51LHAeKW032572
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 17:10:40 GMT
-Received: from hu-janathot-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 21 Feb 2025 09:10:36 -0800
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <quic_mohamull@quicinc.com>, <quic_janathot@quicinc.com>,
-        <quic_hbandi@quicinc.com>, <quic_anubhavg@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v10 1/1] arm64: dts: qcom: qcs6490-rb3gen: add and enable BT node
-Date: Fri, 21 Feb 2025 22:40:14 +0530
-Message-ID: <20250221171014.120946-2-quic_janathot@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250221171014.120946-1-quic_janathot@quicinc.com>
-References: <20250221171014.120946-1-quic_janathot@quicinc.com>
+	s=arc-20240116; t=1740158601; c=relaxed/simple;
+	bh=v4umuejnk/D3zo0ZfQeNhQtPg7rv/6gl7bzNW+Mvmew=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VOyRJ5f0g9NBc+pCMXvKxwI1XLTWH8NGKTXYEIguT/u0jEDF8pJFMRugF5LSpt+gR+UuBSrQMUw9s3yLc76cTyOM67xRrry9KD7jl/9AqQ3lRu4EuSRPI7vI99Cpzu30G3eaZ8EW6h4pWTpcizCNahcjqVskBoPph7VLNoBdXk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sD8XtQWR; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-221050f3f00so54126575ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 09:23:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740158599; x=1740763399; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tAC237/i2ojW1+/RqYj3Hliw8hADl+1Y8oHlt264UNY=;
+        b=sD8XtQWRDfOG7PdnJ8+GIluw7fyUI/fO7V6CXLU24CAYbsOCRVfHQ4m8iIrwm7zQs5
+         jbz+6bzfFi2WwT5vuO3ATpJiiEd0/lsUCR2hfpsPK5y+EBO7qe4HAxuNwALl8Lui4j9N
+         pselkXbJC8utrEZWA4aKAGbvTwmyZcDDfo7OIkBlmROyEWTrISKWsFCsPa7e6+tc7DEl
+         KXc8HzrhsPx7Y/DNQ/TBrPC55KDNoLYrUdyn5FfDi2v3jzZTuBQU/zwaC/rFUfoSxkvm
+         rGIsdprXC4KHZXGL4ci/gy+s2MKGRn9iwmyuBXYKK24ZikY8IBfbsWah/pwquETiM/IC
+         vV7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740158599; x=1740763399;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tAC237/i2ojW1+/RqYj3Hliw8hADl+1Y8oHlt264UNY=;
+        b=RxBWy2XrqLtOvrGVO7Jj1P+Jun+26+MLMdx0iB7vkFNmd8np9rlqEsCBUgClFDmerW
+         fa3TMm+F+hv6INluBS7LA8IR/hPExHGGPZxPdSLn3AZE3+zlnnXLuCcinVsGcs0bOn9y
+         ROgPq2x0MjQOwYOFLHvVwQR4ZTdFFxJsKFHTeztYFUXvfv4BJDrqyASFia8uSSrw7Mw8
+         Sev2zETvgUCI/DM9+kvEVJR8AaTwfur9tqKHeJqpTxNNydw6nUKZpN2C7aCHHYPmd56Z
+         7hYZmBR3FYQKwslWAWW5wZJlkEhRJCv5o4aMBs9KMj4IGG91kWFWm5f1woGOQzhghykX
+         s+3A==
+X-Forwarded-Encrypted: i=1; AJvYcCUUeDn6ZLSXcu0dkhaoGQ4/hiUcU42hsYdvv1X/eWg0EaZrdQ0T0B1M7hHSqmRZ9Sjro5+VsuH8Ua7qsitC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw90OX2EWtBe85kaWgqVyHYzDMaBHd2Bla58BFo1k3sioxTP9Es
+	3JbGeVlLHf+GqTVU5IBcg5HLva7I3PZtdVsu6k7tQLtFDtyuVlTxQBzvREMgGQ==
+X-Gm-Gg: ASbGncuFfP1jiD8PVRX9bDKLoDzTj899yJ140Zm0sZBjQcQ3Kn0w1ZxU8oexgMctXIb
+	Vb9+w4eoO2krx1c04grxCE3XfiZcCVRiXnfWdbwACoupV6SwIlqF32ZA+wxSj8FRXi8CBk2QFAN
+	PTusdzZ+JYK0VqYLC/64ByuhKEgH41WfchoWa/OCENfEOTLThAYTT8o80lxC0KjEnK3EjqXyL4x
+	t/IxJCItFt8ESa01u6FZ1FfkT4temORQKYNyvHv4w1vhmu1Cpd5pfAS9Qic1WblpC3IWqfEqNuz
+	XhYjSvBquzu9dpkQFYgpMK3cGcIIEjVh/Qf39RvHep0urgwFa3Bo
+X-Google-Smtp-Source: AGHT+IHRjJdp1yc9JTT15Y3zMSAcEmsTgJkEW6HFHwdSfI5yIExfixz8/4XmLd1XnVTnm6VlmGZZ7Q==
+X-Received: by 2002:a17:902:e88f:b0:21c:17b2:d345 with SMTP id d9443c01a7336-2219ff30cb1mr55376785ad.3.1740158598987;
+        Fri, 21 Feb 2025 09:23:18 -0800 (PST)
+Received: from localhost.localdomain ([120.60.73.12])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d545c814sm141243405ad.148.2025.02.21.09.23.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Feb 2025 09:23:18 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: lpieralisi@kernel.org,
+	kw@linux.com,
+	bhelgaas@google.com
+Cc: linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	dingwei@marvell.com,
+	cassel@kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/2] PCI: Add support for handling link down event from host bridge drivers
+Date: Fri, 21 Feb 2025 22:53:07 +0530
+Message-Id: <20250221172309.120009-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,251 +91,38 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fAPYH3vQyTUTffHNMaaAnvlz102uYq8M
-X-Proofpoint-GUID: fAPYH3vQyTUTffHNMaaAnvlz102uYq8M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-21_05,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 mlxlogscore=999 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2502210120
 
-Add the PMU node for WCN6750 present on the qcs6490-rb3gen
-board and assign its power outputs to the Bluetooth module.
+Hi,
 
-In WCN6750 module sw_ctrl and wifi-enable pins are handled
-in the wifi controller firmware. Therefore, it is not required
-to have those pins' entries in the PMU node.
+This series adds support for handling the PCIe link down event from the host
+bridge drivers. This series moves the link down event handling to the PCI core
+(atleast the generic bits) to prevent the host bridge drivers from retraining
+the link on the back of the PCI core as done in [1].
 
-Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 171 ++++++++++++++++++-
- 1 file changed, 170 insertions(+), 1 deletion(-)
+Also, the newly introduced callback 'pci_ops::retrain_link()' could be extended
+to recover the bus in the case of errors in the future.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index 7a36c90ad4ec..de03770e0b90 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: BSD-3-Clause
- /*
-- * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- /dts-v1/;
-@@ -34,6 +34,7 @@ / {
- 
- 	aliases {
- 		serial0 = &uart5;
-+		serial1 = &uart7;
- 	};
- 
- 	chosen {
-@@ -218,6 +219,63 @@ vph_pwr: vph-pwr-regulator {
- 		regulator-min-microvolt = <3700000>;
- 		regulator-max-microvolt = <3700000>;
- 	};
-+
-+	wcn6750-pmu {
-+		compatible = "qcom,wcn6750-pmu";
-+		pinctrl-0 = <&bt_en>;
-+		pinctrl-names = "default";
-+		vddaon-supply = <&vreg_s7b_0p972>;
-+		vddasd-supply = <&vreg_l11c_2p8>;
-+		vddpmu-supply = <&vreg_s7b_0p972>;
-+		vddrfa0p8-supply = <&vreg_s7b_0p972>;
-+		vddrfa1p2-supply = <&vreg_s8b_1p272>;
-+		vddrfa1p7-supply = <&vreg_s1b_1p872>;
-+		vddrfa2p2-supply = <&vreg_s1c_2p19>;
-+
-+		bt-enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -799,6 +857,39 @@ &pon_resin {
- 	status = "okay";
- };
- 
-+&qup_uart7_cts {
-+	/*
-+	 * Configure a bias-bus-hold on CTS to lower power
-+	 * usage when Bluetooth is turned off. Bus hold will
-+	 * maintain a low power state regardless of whether
-+	 * the Bluetooth module drives the pin in either
-+	 * direction or leaves the pin fully unpowered.
-+	 */
-+	bias-bus-hold;
-+};
-+
-+&qup_uart7_rts {
-+	/* We'll drive RTS, so no pull */
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
-+&qup_uart7_rx {
-+	/*
-+	 * Configure a pull-up on RX. This is needed to avoid
-+	 * garbage data when the TX pin of the Bluetooth module is
-+	 * in tri-state (module powered off or not driving the
-+	 * signal yet).
-+	 */
-+	bias-pull-up;
-+};
-+
-+&qup_uart7_tx {
-+	/* We'll drive TX, so no pull */
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -842,12 +933,90 @@ &sdhc_2 {
- &tlmm {
- 	gpio-reserved-ranges = <32 2>, /* ADSP */
- 			       <48 4>; /* NFC */
-+
-+	bt_en: bt-en-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		output-low;
-+		bias-disable;
-+	};
-+
-+	qup_uart7_sleep_cts: qup-uart7-sleep-cts-state {
-+		pins = "gpio28";
-+		function = "gpio";
-+		/*
-+		 * Configure a bias-bus-hold on CTS to lower power
-+		 * usage when Bluetooth is turned off. Bus hold will
-+		 * maintain a low power state regardless of whether
-+		 * the Bluetooth module drives the pin in either
-+		 * direction or leaves the pin fully unpowered.
-+		 */
-+		bias-bus-hold;
-+	};
-+
-+	qup_uart7_sleep_rts: qup-uart7-sleep-rts-state {
-+		pins = "gpio29";
-+		function = "gpio";
-+		/*
-+		 * Configure pull-down on RTS. As RTS is active low
-+		 * signal, pull it low to indicate the BT SoC that it
-+		 * can wakeup the system anytime from suspend state by
-+		 * pulling RX low (by sending wakeup bytes).
-+		 */
-+		bias-pull-down;
-+	};
-+
-+	qup_uart7_sleep_rx: qup-uart7-sleep-rx-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		/*
-+		 * Configure a pull-up on RX. This is needed to avoid
-+		 * garbage data when the TX pin of the Bluetooth module
-+		 * is floating which may cause spurious wakeups.
-+		 */
-+		bias-pull-up;
-+	};
-+
-+	qup_uart7_sleep_tx: qup-uart7-sleep-tx-state {
-+		pins = "gpio30";
-+		function = "gpio";
-+		/*
-+		 * Configure pull-up on TX when it isn't actively driven
-+		 * to prevent BT SoC from receiving garbage during sleep.
-+		 */
-+		bias-pull-up;
-+	};
- };
- 
- &uart5 {
- 	status = "okay";
- };
- 
-+&uart7 {
-+	/delete-property/ interrupts;
-+	interrupts-extended = <&intc GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>,
-+			      <&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
-+	pinctrl-1 = <&qup_uart7_sleep_cts>,
-+		    <&qup_uart7_sleep_rts>,
-+		    <&qup_uart7_sleep_tx>,
-+		    <&qup_uart7_sleep_rx>;
-+	pinctrl-names = "default",
-+			"sleep";
-+
-+	status = "okay";
-+
-+	bluetooth: bluetooth {
-+		compatible = "qcom,wcn6750-bt";
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		max-speed = <3200000>;
-+	};
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
+I've implemented the 'pci_ops::retrain_link()' callback in pcie-qcom driver as a
+reference.
+
+Testing
+=======
+
+This series is tested on Qcom RB5 and SA8775p Ride boards.
+
+[1] https://lore.kernel.org/linux-pci/20241112064813.751736-1-jpatel2@marvell.com
+
+Manivannan Sadhasivam (2):
+  PCI: Add pci_host_bridge_handle_link_down() API to handle the PCI link
+    down event
+  PCI: qcom: Add support for retraining the link due to link down event
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 90 +++++++++++++++++++++++++-
+ drivers/pci/probe.c                    | 34 ++++++++++
+ include/linux/pci.h                    |  2 +
+ 3 files changed, 124 insertions(+), 2 deletions(-)
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.25.1
 
 
