@@ -1,130 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-48824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1255CA3EF39
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 09:55:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C27CA3EF4E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 10:00:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8891A1883074
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 08:55:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 586FB7ABE95
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 08:58:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCC6E20124E;
-	Fri, 21 Feb 2025 08:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F8E5201270;
+	Fri, 21 Feb 2025 08:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="psktk0M5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jj++nu2J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C97F200B99;
-	Fri, 21 Feb 2025 08:54:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729DB33EA;
+	Fri, 21 Feb 2025 08:59:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740128091; cv=none; b=KTAKwLPm/7YJS3OKy3VigJj6ypHhqfsGGri6n4exAXZGPYEHf+TTLXM1RkwbIhgRDdws8Zx2EhDx4ZORh7d16r/pciwxopfjYznqZzOt2ADD9cZ+q9mLPnSW0FaGUcunIftRsQ98/GXhazFo6w4KARO9M9fhm+55GO55uZprOPY=
+	t=1740128370; cv=none; b=NuHZw3g+EaMflxLMYL7ZK9aEKaIs5KtWRbaWkxvScBrv+cGmkS4PZU3B/A0GZgw49vrqNuHaLrNI8xwUSn3ZQQYhU8qWod0PXssfp3etHqGjOipDffpIBYulqZm17nIqMKrqZpUSG2A/Qq2lBAKhRBc3MGoxhIidsI2avdvj5hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740128091; c=relaxed/simple;
-	bh=KtMiSHce4lRjUTepH2etKp94BCq34faigpGqneDuHcQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=shTKRSZZs36FLIO5ywhIgKIrPg1i5lavZ7ffIPHdqtE7GR3zOw7Y3Nb/GpbkcuvLxbfxgaie/rcRN2DWUhDKKPW9P5OVrXQiNyjcY4wUJ52cdf6yBXwumtJ/5s7i/CN+BaqR6Y1pnu4vccws6IBhgGV+czrMcxerU/oiCpnkuqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=psktk0M5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51L56ClB012255;
-	Fri, 21 Feb 2025 08:54:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=snK73cHucFzq9FphM3O4awcD8yaZJ6wAMZ6
-	VahdBckE=; b=psktk0M5cDq92WxkFH/tAXFaEV4PTjcpZSbOMpOYAqr72UlPYIx
-	5Yigzd8hHnlu+bQPoazEVnqr+U0On9XDNEDv95LecNKogtrT9BBL9ytp2qItT0KN
-	HPwCXkVTTNh5k84jfqfsydSnYxsLvgJL4YTpJpyVIEGmeqQocZFsuBmR9Z/bSzYt
-	IgwjsJIwTHer0GPgBc3sbO9xTKQdXAsXH7ETYmkPzySjJHPSvqpe2uwTTmTVmr70
-	JV00hAv7GIm1d6jpDQ/5DCo6SQp95LOJZTUe4zkXLlGB/f0Hlf0d3sKYSxmsy9aM
-	FURVg7lyMbj0J9WsPxbTD8cLkAW6MkoqcZw==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy1s9xa-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 08:54:46 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 51L8sggq002983;
-	Fri, 21 Feb 2025 08:54:42 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 44tm0mfmar-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 08:54:42 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51L8sgYO002977;
-	Fri, 21 Feb 2025 08:54:42 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com ([10.213.97.252])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 51L8sgX5002975
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 08:54:42 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4047106)
-	id 77D7E4D4; Fri, 21 Feb 2025 14:24:41 +0530 (+0530)
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Subject: [PATCH v1] dt-bindings: qcom: geni-se: Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml
-Date: Fri, 21 Feb 2025 14:24:39 +0530
-Message-Id: <20250221085439.235821-1-quic_vdadhani@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1740128370; c=relaxed/simple;
+	bh=vF9wawzvcizoo6jSYAx1QotnSijKYox7CG3RzFsjghM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sncplpdWTgtCwT4IPorUcbbkTU5Hwf6+EK0T0S9OogF5lJltRLi5EU5G0Pa4Xml9Ac2nf3R84nRErakXMMsHcG3Weji6KtC5dfp3TjeeOdclc43RIMGC/Y/iC6n0MBPN6zqNpdfLAHTEm4WoNgVnPvaTEib23Z5z5wQ1IHqScik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jj++nu2J; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FE4C4CED6;
+	Fri, 21 Feb 2025 08:59:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740128369;
+	bh=vF9wawzvcizoo6jSYAx1QotnSijKYox7CG3RzFsjghM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Jj++nu2JRWU+mpnJyThMIp/baCyMMBclJ1fPSRowj67WpZUeNQRSiapJWFtZoOz9M
+	 8YR5NBqebC9xd466eZM3YDbRP+vnz4BKVsnSJfT49Q2sbvajTxnnBRzygp9X0otzn3
+	 vAep/+DdRRg9456PdROhN7mbYERQujC1WvU2iZzKsLwZ0Rj1RZARSynFGjJ+A5cYRN
+	 RLPYlY+ZV6M8YVwwZqtDHrGMH9BodqS/Y8wtaQ5DhMhg6nCCA+foJhrgKZw5XrFqqI
+	 RX2OyI4TDMv54itd51l4NHN45Yb8NxgkGaaE738o3/ErMfad3+vqe6oX3923VXhqMF
+	 +19pQ8cTCAJkQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tlOsm-000000002td-26Nv;
+	Fri, 21 Feb 2025 09:59:40 +0100
+Date: Fri, 21 Feb 2025 09:59:40 +0100
+From: Johan Hovold <johan@kernel.org>
+To: srinivas.kandagatla@linaro.org
+Cc: broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+	krzysztof.kozlowski@linaro.org, linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	dmitry.baryshkov@linaro.org, johan+linaro@kernel.org
+Subject: Re: [PATCH v2 0/5] ASoC: q6apm: fix under runs and fragment sizes
+Message-ID: <Z7hAfGHvdeWpZ4Y3@hovoldconsulting.com>
+References: <20250220162847.11994-1-srinivas.kandagatla@linaro.org>
+ <Z7dog3cWe4BroZdT@hovoldconsulting.com>
+ <Z7g5c0_vJNpN9fI4@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6tjWtUfD2351y2LNYwKQmNu76TTt4OXD
-X-Proofpoint-ORIG-GUID: 6tjWtUfD2351y2LNYwKQmNu76TTt4OXD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-21_01,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1011
- adultscore=0 malwarescore=0 mlxscore=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=866 suspectscore=0 phishscore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502210067
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z7g5c0_vJNpN9fI4@hovoldconsulting.com>
 
-The qcom,geni-se.yaml file describes the Qualcomm Universal Peripheral
-(QUP) wrapper and the common entities required by QUP to run any Serial
-Engine (SE) as I2C, SPI, UART, or I3C protocol.
+On Fri, Feb 21, 2025 at 09:29:39AM +0100, Johan Hovold wrote:
+> On Thu, Feb 20, 2025 at 06:38:11PM +0100, Johan Hovold wrote:
+> > On Thu, Feb 20, 2025 at 04:28:42PM +0000, Srinivas Kandagatla wrote:
+> 
+> > > On Qualcomm Audioreach setup, some of the audio artifacts are seen in
+> > > both recording and playback. These patches fix issues by
+> > > 1. Adjusting the fragment size that dsp can service.
+> > > 2. schedule available playback buffers in time for dsp to not hit under runs 
+> > > 3. remove some of the manual calculations done to get hardware pointer.
+> > > 
+> > > With these patches, am able to see Audio quality improvements.
+> > > 
+> > > Any testing would be appreciated.
+> > 
+> > With this series, the choppy (robotic) capture when using pipewire
+> > appears to be fixed (pulseaudio worked before).
+> > 
+> > Playback is still choppy (heavily distorted), though, and now it also
+> > appears to be too slow.
+> > 
+> > I tested using pw-record and pw-play (and mpv) on the T14s (6.14-rc3).
+> 
+> Retested this morning and realised that playback is only choppy (and too
+> slow) while I have pavucontrol open. That would be nice to fix if
+> possible, but this is still a great improvement since pipewire was not
+> usable at all before these changes.
+> 
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
-Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml to better reflect its
-association with QUP (Qualcomm Universal Peripheral) and the compatible
-string.
+Hmm... Scratch that.
 
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
----
- .../soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml}       | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
- rename Documentation/devicetree/bindings/soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml} (98%)
+This series apparently breaks pulseaudio instead.
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se-qup.yaml
-similarity index 98%
-rename from Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-rename to Documentation/devicetree/bindings/soc/qcom/qcom,geni-se-qup.yaml
-index 7b031ef09669..26f806fd627a 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se-qup.yaml
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml#
-+$id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se-qup.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
- title: GENI Serial Engine QUP Wrapper Controller
--- 
-2.34.1
+Too fast playback on the T14s with mpv, and after I stopped it I wasn't
+able too play any audio anymore. And systemd complains about a stop job
+running for long when rebooting. Similar issues on the X13s.
 
+Johan
 
