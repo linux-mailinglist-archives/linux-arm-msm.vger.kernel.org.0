@@ -1,171 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-48900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28DD9A3F822
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 16:12:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2158A3F829
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 16:13:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 47ABD188F508
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 15:12:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3163A1890302
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 15:13:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92D2D20FABA;
-	Fri, 21 Feb 2025 15:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E6BD20E31D;
+	Fri, 21 Feb 2025 15:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dJ9OUPmw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SR9ofafM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0A620E337
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 15:12:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA8B20A5C3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 15:13:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740150747; cv=none; b=awaFVExHTAWBEuvp3Wl6B7KgF5VKavv3F5rYvCT1hx/OCe2KYcEgD+BVGunTHp16LfQv2+Ct4DfmLcjhGOfqiNU0udCxGwKt7rFej7IvZA6ypPdpxm13wIT7GYZ9C4w1upRUJd/bsNFbSEy4kbRB+3L90zUh4XlgcvTbvN/2nYU=
+	t=1740150802; cv=none; b=hliBnPfolgTFBX/fwuPQ2M+4n4iu19NydYJlePoMl0T+uZ8PtdQv8tEHk/NM8ebLz572+tNeNZKyuePNxOtitGav54hv/DYKA5M3HZqmEVigFWtyYCNdR4clAqZqUCRSTCeMFqJ1snE7G0nuODKCAjGN211f6FmDvWP2TuLO2Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740150747; c=relaxed/simple;
-	bh=TqVTg2fH4nD9jhCMXM4i1HWkjsyKhoocodxqzx8OtWI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d3Sw/3yyjuwSknpBqF9sB3H6qvDFzvSfLep9GkhB0lzmZLOGC9sm5K2KdaFdG/8USbL/9VSxQAjbS2bJYoZFg6YYSlM6H345x4umkUhZUjMnW/7CS0tB7yEg2mTLmEujaG1yKEasoTLUYjoKTtCLgKP+u1y+X7M+PGH2pQXimTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dJ9OUPmw; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1740150802; c=relaxed/simple;
+	bh=Fa1BddI3XJm8BQciNHEuwUqNi53s9MtiqS6q/dOK9Yo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CUNlKKzGW3EeYbygnqSNxcVNnbQqfR3C2sgscnkYhaAQDBv7DrMMWdNpgpUBJQQ4RRFJ5PX+hzJZ3sope7TIv0+aNYEFt8rHxv2pw/jkI1xFbyBBcXkGFyqa2XFIC53T+dbjFc/BYJ6TiLkD9iPTTRJl6ryIFmhpVBjdLXQQ6do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SR9ofafM; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5dc191ca8baso444908a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 07:12:25 -0800 (PST)
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-abb7d5a6577so26685066b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 07:13:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740150744; x=1740755544; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zzvaA4W/Mwyu/5eJMfvW4z8km7jxnh77A2iodnVpKVM=;
-        b=dJ9OUPmwnmGxAdjX6aq/nrfBxs3SEHOZmfUVhlk48icf65BXpx9WI2W2M76PH66JF6
-         NadGYohn1WvXNV96f3Lh07UHG5Lw0SduPCUTqrkFth14RWQXlpx8lpmlUqaJ2oB6dyV7
-         GXxl2bIn5eEve6zFw8RezsT+igJOjUviLs6gh9uN1yGuPbYOdqKWrteTlBcydUBL5lm9
-         X0pqF87k6Wm+DYzRH/UW8zj8qaQR/S9h8P5xldxlLh1OPq8i1j/bipkmFQKGCL+EMEL3
-         nFT7k95sY6ragRLT4+LiKiSaQt0o8HniTq11Fb6Y5C5PGE2Ex/roiaHJfUMdK1Yjf0pC
-         3vjw==
+        d=linaro.org; s=google; t=1740150799; x=1740755599; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kffi9mM57RBxjp4z5FLBrRuQy7GA5fKXeHplvEZGGf4=;
+        b=SR9ofafMegilwl9LWHIOnO6ymnxn9Ndukl8qs1irlSjqzhDbrg3Plxu1E376q5lutJ
+         g4AR7Xu1SEgchInZBMOKo8MY4MHdSfenMA8jAfw9JvoFRHhgwUnlWP5cMF5hwiYSzeEB
+         n46/HwCSTQ1RT1vRpVigFYIf3CNWwXWWFBaXT5NM79nacKvU8DjcKdDPnkNAt/es8Vmr
+         JQUFluZhwzbbFfqGkZHguTcL6G6XLgo9jzSywLPYmejHBzdGKvNCQjW0ny83enLPWd4V
+         w5ekHp84g9scuGERSXxEd0uWvarwVaT1MPYhDvtV+IBYmyWDzpUyozOLfkv0Z218qwkC
+         fJlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740150744; x=1740755544;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1740150799; x=1740755599;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=zzvaA4W/Mwyu/5eJMfvW4z8km7jxnh77A2iodnVpKVM=;
-        b=kOB65s6QMiA9J+/5NFwglPekJXgibmwEt8LM0qAOCfaLLQx8U+F5HtL6MwegMVC1nc
-         m9WWm3VCYSjjnR4i4hiD4Frb7ZVDufxkWt/Cs2j85zmHlwybsp3txoT6tD4G1daqdllG
-         7qiwzbBXeMFKYfdZVXRWUWoseh/Ij06UFy+VbGFKYjhLrtZIR0ypBuSXcV+sKsiFhUJ9
-         d5EF+cTqsNT85u7R/qv5nqKPJNhZig6Wr0AZt7W64IBqEsrgFL39waDbIFTzIqJPEest
-         k54RLcFsxTatx83ba/zNpIMOzP5L/rM5xS007zvDDsNhBt1pUCHWjyIFQLI9pEi36MVS
-         B3Yg==
-X-Forwarded-Encrypted: i=1; AJvYcCW33c6r2kTY07I8Dkr4uzNOJ8Y7A7W4ehRw7pQtem6OW+zxCftew9RdrYksYblYVM32kR4Di1/IrOdxJ6w+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzk6//crO9ZggS3si31CM6ylRZCD2EugBwAYmn3Tn5MBOfCtmj/
-	o7Lg+nb7zygP0fE9LU4ZFZfeZk9iImKgGwb5fRUl7DvvgDq+/i0jJAErWWaPCO0=
-X-Gm-Gg: ASbGnctLaf81/+WoFYkW21vC+Sffgxa+G8LQW4eGekDaXb2zwKchbMC513bZxqEteDX
-	Vyu/wuqYjt296/X4Sk181yyMFwvvRLmxUTmoJrI3AOrc9yO4J9VfoCxzrIfMdnxbxKnmbKL/yO3
-	aFFn7nNQfHtExgfLdiUJg5r9Pu0jDs+EQ8NgmalI/fJ1rEfrsE0r5ZMwjli7Ue1Tm4+lUs4Zks6
-	ZB/UMj79xJ9aD4OMCoWVaVGCCr7npEMTtAHZeW9rUN/WnHi9M8HhnHZPUKq+14rM5RrHyKpAltm
-	55scONosSg8VNKIy4ImTx6loyWgiLA8lntEGwCP3/7gfqopk+PhCVTKfZvjoREUXt6+kgTWK/ba
-	4LB/Y
-X-Google-Smtp-Source: AGHT+IG4pbshgiS6Tvd6ebMPhYFkwTHXXamzaX+sw8dumFdG0LOul4EfU4+b4CW3SFd0NX2pTqja1w==
-X-Received: by 2002:a17:906:6a0f:b0:aac:619:6411 with SMTP id a640c23a62f3a-abc09c24753mr150710966b.11.1740150743999;
-        Fri, 21 Feb 2025 07:12:23 -0800 (PST)
-Received: from [192.168.0.18] (78-11-220-99.static.ip.netia.com.pl. [78.11.220.99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abba278e1b1sm935037666b.99.2025.02.21.07.12.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Feb 2025 07:12:23 -0800 (PST)
-Message-ID: <fe337f0d-55b7-477b-8025-0a5aeda78fe7@linaro.org>
-Date: Fri, 21 Feb 2025 16:12:22 +0100
+        bh=Kffi9mM57RBxjp4z5FLBrRuQy7GA5fKXeHplvEZGGf4=;
+        b=tAklsnbVqQImxZpd8Xry7CAHvF5Ai+jX9rLOALliX8hSj6thI6XKXfzsC/BeVTBti3
+         7uTO+AK8ki/t181WwNpDUh3OdlotkI3UnomM4gjdOoZzNQiVDLxnEXd9YwKm0JRrmhIb
+         fEfk28gs77TzkBh7dR290ozfdgB7UxpFe/a8w2rRUaQwgVRYG4d6gSVfu/KgK/0MSeHc
+         gXVehA+X848tElP6O71vg99nxlSLy+GcHu8R9rnoIPyeoEj5pAG6gg7wcuwFGgzMHScw
+         qxSqF5uuC2e68KPO71X73vE6kKu0ndNSO/o9Y8R0loC2unpZRMeVYNkVKqpL2AmWcEVG
+         5Zng==
+X-Forwarded-Encrypted: i=1; AJvYcCVTabXdyLMJ1L6zearZRIwmT71sB3jMcDtCJHiSuJ9M4+qVUWw0uldjYDbAvK2QAILX+WRaIxCJV8r18H3U@vger.kernel.org
+X-Gm-Message-State: AOJu0YwD/8VZo71qVRrz/ELqJLYyJsGQ7WogYPri37HPW8i9YhJPz8vN
+	OKeTqEt4DR1+4COD5c2drhCm0G4J/aoz7kaKwY86GmSloxTz0jiA9tsecOVb7PA=
+X-Gm-Gg: ASbGncsdmiYHbQqJCoT9hx4+9P1Z8HRdFuQ5rW8oGPwBHI9a4rcUsCQ31hQUOPpyyvK
+	Bho+vxYs5qnkUdzIQ3iMLIrfFYJKfBvaVJd+g30lHRJKXrGNIhuet9s7KpAEWdxoTKxo5tItk4o
+	GLXYDwFRqyYkbAMwMC1vUevqdKR4gWwvJCFukwRohgQPixHqqu+3v6A/Wk3NbCw4+h2+bA0TUS1
+	6JsuUngKH2+68RDFxNCtarD6BzEXadCfKTI3uabV2gQW1Q5Dx5Xq1GOoZWqoofSg4bP+WpfPbLZ
+	qBrDPyTgHlo9e/Ot42+ZgyH6CHDBbC6IoijDoUdntWCCmG8tmpekJI2kvWLQkvELNCow2RTLGww
+	=
+X-Google-Smtp-Source: AGHT+IE2efORy+XnFq6iGRbNUJ79O3DLiV+WA47UQiAkKow39HzZeGH66x8Isz/Apww6BksdMEVRpw==
+X-Received: by 2002:a17:907:a089:b0:aa6:9574:1728 with SMTP id a640c23a62f3a-abc09a0bf96mr141099466b.6.1740150798792;
+        Fri, 21 Feb 2025 07:13:18 -0800 (PST)
+Received: from krzk-bin.. (78-11-220-99.static.ip.netia.com.pl. [78.11.220.99])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb8ab30726sm1110640166b.153.2025.02.21.07.13.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Feb 2025 07:13:18 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Mahadevan <quic_mahap@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2] dt-bindings: display/msm: qcom,sa8775p-mdss: Add missing eDP phy
+Date: Fri, 21 Feb 2025 16:13:11 +0100
+Message-ID: <20250221151311.138755-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sm8750-mtp: Enable CDSP and
- mention MPSS
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250220-b4-sm8750-cdsp-v2-0-a70dd2d04419@linaro.org>
- <20250220-b4-sm8750-cdsp-v2-3-a70dd2d04419@linaro.org>
- <dihnqsdjqxq7uhomceeiejey7dezfyvhpnyc3zyzhyuyfdjtec@d4ruo5xbxid3>
- <e4630796-49b9-4a09-b511-fffff1352350@linaro.org>
- <7ge5bnzqggaeoyme57sjbchehdla5icblyjc6jiop6f64bfk5y@gobmmlvp3cie>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <7ge5bnzqggaeoyme57sjbchehdla5icblyjc6jiop6f64bfk5y@gobmmlvp3cie>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 21/02/2025 15:15, Dmitry Baryshkov wrote:
-> On Fri, Feb 21, 2025 at 09:38:09AM +0100, Krzysztof Kozlowski wrote:
->> On 20/02/2025 17:19, Dmitry Baryshkov wrote:
->>> On Thu, Feb 20, 2025 at 04:44:13PM +0100, Krzysztof Kozlowski wrote:
->>>> Enable the CDSP on MPT8750 board and add firmware for the modem, however
->>>> keep it as failed because modem crashes after booting for unknown
->>>> reasons.
->>>
->>> So the modem crashes on MTP, but does not on QRD?
->> QRD was not tested - which mentioned in that patch - and I hope someone
->> will test it and tell me :)
-> 
-> Then it might also be broken. I have the same situation on SAR2130P,
-> ADSP works, but CDSP crashes. Please separate modem to a separate series
-> and clearly mark that it is not supposed to work. Until it works on any
-> of the boards I don't think we should be merging corresponding driver
-> bits, which are known-broken.
-> 
-OK
+The Qualcomm SA8775p MDSS display block comes with eDP phy, already used
+in DTS and already documented in phy/qcom,edp-phy.yaml binding.  Add the
+missing device node in the binding and extend example to silence
+dtbs_check warnings like:
 
-Best regards,
-Krzysztof
+  sa8775p-ride.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('phy@aec2a00', 'phy@aec5a00' were unexpected)
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+---
+
+Changes in v2:
+1. Fix reg size (address/size cells =1) in the example (Rob)
+---
+ .../display/msm/qcom,sa8775p-mdss.yaml        | 32 +++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+index a90a8b3f1a9e..5fac3e266703 100644
+--- a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
++++ b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+@@ -52,6 +52,13 @@ patternProperties:
+         items:
+           - const: qcom,sa8775p-dp
+ 
++  "^phy@[0-9a-f]+$":
++    type: object
++    additionalProperties: true
++    properties:
++      compatible:
++        const: qcom,sa8775p-edp-phy
++
+ required:
+   - compatible
+ 
+@@ -61,6 +68,7 @@ examples:
+   - |
+     #include <dt-bindings/interconnect/qcom,icc.h>
+     #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
+     #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
+     #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
+     #include <dt-bindings/power/qcom,rpmhpd.h>
+@@ -158,6 +166,26 @@ examples:
+             };
+         };
+ 
++        mdss0_dp0_phy: phy@aec2a00 {
++            compatible = "qcom,sa8775p-edp-phy";
++
++            reg = <0x0aec2a00 0x200>,
++                  <0x0aec2200 0xd0>,
++                  <0x0aec2600 0xd0>,
++                  <0x0aec2000 0x1c8>;
++
++            clocks = <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_AUX_CLK>,
++                     <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>;
++            clock-names = "aux",
++                          "cfg_ahb";
++
++            #clock-cells = <1>;
++            #phy-cells = <0>;
++
++            vdda-phy-supply = <&vreg_l1c>;
++            vdda-pll-supply = <&vreg_l4a>;
++        };
++
+         displayport-controller@af54000 {
+             compatible = "qcom,sa8775p-dp";
+ 
+@@ -186,9 +214,9 @@ examples:
+ 
+             assigned-clocks = <&dispcc_mdss_dptx0_link_clk_src>,
+                               <&dispcc_mdss_dptx0_pixel0_clk_src>;
+-            assigned-clock-parents = <&mdss0_edp_phy 0>, <&mdss0_edp_phy 1>;
++            assigned-clock-parents = <&mdss0_dp0_phy 0>, <&mdss0_dp0_phy 1>;
+ 
+-            phys = <&mdss0_edp_phy>;
++            phys = <&mdss0_dp0_phy>;
+             phy-names = "dp";
+ 
+             operating-points-v2 = <&dp_opp_table>;
+-- 
+2.43.0
+
 
