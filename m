@@ -1,146 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-48847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12B7CA3F0C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 10:46:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E5B1A3F0D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 10:48:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A09AF16D284
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 09:46:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9FF119C73BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 09:46:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06EB52054F3;
-	Fri, 21 Feb 2025 09:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A16C52080EA;
+	Fri, 21 Feb 2025 09:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XHUjeeBY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nmiXNYn2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED551FECA5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 09:41:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73E7204C23
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 09:42:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740130914; cv=none; b=ei6Di3M4VPwQypPLevmeNJyzpVQSz7R2tx4WRTmCcubUxXI+5OcIRNUGhhsu2QnBlORZMT6hUur5RGP6Y7yb7GyLuCNjkaavqW6ALLZ1SG20FgSkUPY7PIyJsvamDz1fgrwvH7z4SC8RPv2eNteEXu5ff7MPGhOIQLXQnC05ZtQ=
+	t=1740130935; cv=none; b=HK2CeYCSfRzBvfMeZPwrfhCHMipQupbZIu7fHpsGlFSn7VwCHczOp3eTdMUMYlVFHKOKGbIwpOLvu1SS22qmt5HoITMQpztG0iudkk94TmQArUu0NmR3/h7RBsd+JQ/b74VDGb+7jBmyWcTvFuxBLgs7ZBr52575Lvpg7SH1Uvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740130914; c=relaxed/simple;
-	bh=Ekj3mlDaIzCTqaCGVbDb2HM9pKkxti3ayHLfFEuWNB4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b4j1bvp3N8boSjlh4kA1bwyLplz3juhbNd9hE6ZZvx3u+06esFphEsvXdzcJ1rO9XzJD/HGDCTIlvCCM+AeqDZsPgE5xHV/ljX/vWA0KFD0CEgrPSU/FPWMJqPOCXCrRqmV4IF/0E+LKU+PP2kBkJU7lYrvw3gbRB8pqeWJRiKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XHUjeeBY; arc=none smtp.client-ip=209.85.218.54
+	s=arc-20240116; t=1740130935; c=relaxed/simple;
+	bh=3d2Q2o3fJiHi3cJPY5LQ4dMhZv4asm/ZCUv1sU8Cby0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a9D736ncGvps1G7zXt/UQtGujW9F9fXoZYTZBCDiKM1jMxEiXTv793l8Jk40KM1kmb0MEKHibU+Tg2PHqjISE6yH9GQjGeOCpqWjZEc1YWnKsjwwSXFDixph+mO797TxVkBCxDEqBzQSS2PdOmuYFtZy5tVqO5lzJAqGfuW704Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nmiXNYn2; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ab7483b9bf7so299935666b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 01:41:52 -0800 (PST)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43989226283so12785205e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 01:42:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740130911; x=1740735711; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hf5UFYhuzwCYSZfhV/w3wT5Q92fYNVjy6s3M1z5Zdlw=;
-        b=XHUjeeBYb8sZNEgp9l7fGPOIxO33Tu5eOAnP/sbzrQzHe3EqSxunMmaP2qbb7TiiHr
-         bDkzuFxen1SmQ2DqbDEBNJJzoynktqTeg4SJ3olHREsZv+sxVqNWiq9AZlg5fyiN33bq
-         NuqntajhvBkRCEd0QH7wlRzXEVvbDeJv4F6xNJzwKeDOyZTDgdviBtHHoSin9PMLfFHe
-         6/neaiaqHgNG5TENClCIZ1PKThJKn/WL54vxJQxfKifs7kv84s9i22Q3quB3ryr8Rh2x
-         B9pJPhtNumPMOPj+cUzzHpI1kqIT6T2qo5jTk3KuNe79eb8blL9Et1y9bZLHZOLKmF8K
-         5sgw==
+        d=linaro.org; s=google; t=1740130932; x=1740735732; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=B0J1Zwx7ue86k31iPRIPZZnmcI3lqDR1yT4y7QR55Zw=;
+        b=nmiXNYn2abBlSDT+VzOFkFi7ImXLd9LMVco/Bw+50r7zsoF2yHY8TqX+FoFGBdPhQd
+         Yo2YO96ALOdf1bWyc4B1LumgZ/nWv0s6Bi03BOCBsnalh9GQzncqYFFak9BCNLR6zuKK
+         Gc/ItE9O4O6hX/UCwF9WD9SlzeCHZ0JGLSQEeXx+jJqbTwKSDnxnswtxBT5C/eY3BkEf
+         f6ckh4SGW+Lh7mp3T1duZi6AYQFP7dYMnDj5NQ2Ed7cc+WGwOmqyGcFeO5jPkhE7Ca+O
+         zMBeIWVdVuO7+bKo9yEEr8pcj580qhLknL6x2w9/WuZVEx/sHj9YxlV0FT4j5eMOBlE5
+         K65w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740130911; x=1740735711;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Hf5UFYhuzwCYSZfhV/w3wT5Q92fYNVjy6s3M1z5Zdlw=;
-        b=iVmDbcrtovK9GmHQ4cJJ/0yFqwxEw4ODXnfZbAuA3ZHpj8GsxjfLRNOOSAjsp2qym6
-         YjVugmVfbHsYdzpbtaIK8nCzJRWV1+rrp7A2KlBV6zBXwOCBlQyJdMBd3NkWESVNO5tu
-         B2t6NOF+er8fY9SDU8/s/8n7XA+xnE3lxZv8OBvcNWRNsIRcxUNrIJ+pZ+mmLl5gCfhU
-         UdPvBz+6//rHu+BnmRijHF4t9849qz2yMudKucqdVL2uTDV0DyRbCSjpCyHJsr+sNqOT
-         3eLFF7ny49B3tRPJVQpFYwx9msnarfcgRtIx5v0gfd1XwqnTyDX3PrAqlqklZctpE0P2
-         Ug8g==
-X-Forwarded-Encrypted: i=1; AJvYcCXz9yzrDKuuQ5vlICwvV3fQLVf60IawWJsDu23bzlDDDtJhWPJobh2lQEAniL2LjguNDPS+ZokS+zpzhQi3@vger.kernel.org
-X-Gm-Message-State: AOJu0YweizStjsw1ATi06oelF6aU7MZm08ptwJv9qoPAU/G0f5rOFrYN
-	eyizTOrELc/uBXhh+2+aoIR5OebfZcmODE1rbzHC5xbP2MuEBvGbyd5TMJwfJLc=
-X-Gm-Gg: ASbGnctbKhGVZxZFoiKWVE78xoWUSK4MDECNlxhilupkMGeWVVZGx2J5sMDCykLLmTk
-	Sa8rUHZXEwVzgLzSP5jRG18X2r2ohSlrSWZVWqO7se8QoLpuRa/wfNh/l2rg+Zg3FgrLOqPw6yb
-	kH+YzvaKL1vm4BP2eZuii2KHAB0pEwoZ7uXrM1gOrRNBUD1hDt1SZwJQwbSG5Il64CVvcoHq9ia
-	ELzKxKLoEdrUi/H5DB1+8hOTPKzRuU1UgcEpn47jmozSW5dT/Jqdulcol0jTSmQOkirD0dt8x8p
-	jKJVKGGBlz8zA/b3V0ZqmJU=
-X-Google-Smtp-Source: AGHT+IGbaRycsJ0mOBkrChn5+O4lWjguYUx2LL4IDLzJpPhuq5e6fQovvvo7BGaxVVcet2Lgi3vlnA==
-X-Received: by 2002:a17:907:7ea0:b0:ab7:e8d6:3b12 with SMTP id a640c23a62f3a-abc099b83e0mr313942266b.1.1740130910690;
-        Fri, 21 Feb 2025 01:41:50 -0800 (PST)
-Received: from linaro.org ([62.231.96.41])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abbaa56026fsm814380366b.113.2025.02.21.01.41.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Feb 2025 01:41:50 -0800 (PST)
-Date: Fri, 21 Feb 2025 11:41:48 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND v5 0/4] arm64: dts: qcom: x1e80100: crd/t14s:
- Enable Parade Type-C retimers
-Message-ID: <Z7hKXNOwHlLLNtNx@linaro.org>
-References: <20250220-x1e80100-dts-crd-t14s-enable-typec-retimers-v5-0-380a3e0e7edc@linaro.org>
- <Z7hGbEUsQU_MUL5t@hovoldconsulting.com>
+        d=1e100.net; s=20230601; t=1740130932; x=1740735732;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B0J1Zwx7ue86k31iPRIPZZnmcI3lqDR1yT4y7QR55Zw=;
+        b=jd6HaQckPpZCKoEjRe7viw1U1ZSQr5LiNjtNm64QPNoBA9TRRzfDASYe0EnPrehWDk
+         1lyHevAikAskTE1My8moJJvTCVaLlfp0heudPPiJOeSqONa8k8I7drX+amHW19+wZglB
+         9mnlzJOexZbBWO4RExVC8S/9Tb9geoOiN0hZbUdM0kqLLnm1DtIlqI+nZ8zcz/VxK//T
+         Lr6C4A8zdRrvhi5ZcD/a3VkEMmSRFMBMNlcmLmWXxSlI/YgOIYuVMwA23Q9LDvpxUPjR
+         Ij4kyX9eOaZdIOf8t7lqgXuAjfAgL6SF+4rCLQR2Up4LcyxsK/GbIIxahykiJZXgRCjF
+         RHOg==
+X-Forwarded-Encrypted: i=1; AJvYcCVQO1UDoyPXp/aNvNeDuQT5ofIsclp5CPgS20UoqpYRr+alTXPNfJKdWM44oEmcmZ6Zbse/Vj0bqPc2bFFp@vger.kernel.org
+X-Gm-Message-State: AOJu0YwF+CLsU5N2vLSHbJwVvHQhd6cUVeSYPdQNV9fZwY/M8XRk02kQ
+	eRjdd+hiudO27ER+u0J79PIZ0SlA2yXaQ1EYzt5CKrxkxtNx26IgC0gTodjuEkE=
+X-Gm-Gg: ASbGnctJ/3Kbw+GbdTm0UEERa0QsX+/qq/MJwnXzcb2oUNidjR0WNxzv8h92hkLdk+Q
+	oNubJYMhdYsnN5VLVFCvNEfIMYZK1YMBNpmI+ix0pgnZuoKgL1rMtkJSUaJIv8m21RT63on7KCZ
+	6+S4WZR8F9vV597falCu+ZUbmgbU7y60hPf2DXQjYM+XyN1ZC1JwiDMUP2VEWy7h2eozLGHsm0X
+	onsmYj9FLdHJYwqZyHrjJeync7DDWWXUYSYqFGOuREIlTFZ0RxPkOVOujbHyqwk/mtVURbs1aLU
+	hjLR3tWXK+VB3a89CLx2ekJSr8Tnct2pzsupEf2H7u+QkoZbji4VUWNUV2h9zNeGwCM=
+X-Google-Smtp-Source: AGHT+IFroyABBpOsabWsgrl7KBQzfGBjKB3F9B9Cviyl/eoKnSnufExjTKsMZhY9Cx/IPYZ4EIrCAQ==
+X-Received: by 2002:a05:600c:3151:b0:439:a1ef:c242 with SMTP id 5b1f17b1804b1-439ae18fdc1mr24592065e9.0.1740130932194;
+        Fri, 21 Feb 2025 01:42:12 -0800 (PST)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4399be79d92sm53108625e9.0.2025.02.21.01.42.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Feb 2025 01:42:11 -0800 (PST)
+Message-ID: <85a51258-7cee-45b3-8760-bfbf943500c7@linaro.org>
+Date: Fri, 21 Feb 2025 09:42:10 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z7hGbEUsQU_MUL5t@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] clk: qcom: videocc: Add support to attach multiple
+ power domains
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com>
+ <20250218-videocc-pll-multi-pd-voting-v1-4-cfe6289ea29b@quicinc.com>
+ <eec2869a-fa8f-4aaf-9fc5-e7a8baf0f864@linaro.org>
+ <huluiiaqmunvmffoqadrhssd3kl2toutqtcw7rzamv3sqdglsf@7lz66x4sj3gv>
+ <d4c4ecf0-9094-4341-8711-78a48e5d1344@linaro.org>
+ <d444f1fb-42a0-48ef-83bc-d5aab9282b22@quicinc.com>
+ <gzjyyl2kzv52zsewn5zf6ei65fymyi4pspvsmsjaqj5sklfxvc@bkg46saulni5>
+ <fcc31cc7-67bd-4102-a53f-ebe66b4fd1a7@linaro.org>
+ <3da96df2-1127-49bf-8114-282cc488c194@quicinc.com>
+ <6b0684a0-a519-463f-b7be-176a4752a786@linaro.org>
+ <r73hnpusatba3hvyckv7jw3dcvffgvoxwawlcvvxhuol5rrrk7@ngo3fiv7va6e>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <r73hnpusatba3hvyckv7jw3dcvffgvoxwawlcvvxhuol5rrrk7@ngo3fiv7va6e>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 25-02-21 10:25:00, Johan Hovold wrote:
-> On Thu, Feb 20, 2025 at 07:42:29PM +0200, Abel Vesa wrote:
-> > Since the driver and dt-bindings have been alread merged, it has been
-> > agreed offline that there is no point of holding on to these DT patches
-> > even though there are some issues with plug/unplug during suspend in
-> > both pmic-glink-altmode and ucsi-glink. These issues are being worked on
-> > meanwhile. Merging these means that even though this will provide external DP
-> > and USB orientation, plug/unplug during suspend will give some splats
-> > and render both the USB orientation and DP broken. But then, other
-> > X Elite boards already have these nodes described, so lets bring the crd
-> > and t14s to the same level.
-> > 
-> > These patches are just a resend of the ones found in v5 and dropped in the v6
-> > patchset of the driver and dt-bindings.
-> > 
-> > Link to v5: https://lore.kernel.org/all/20241112-x1e80100-ps8830-v5-0-4ad83af4d162@linaro.org/
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> > Abel Vesa (4):
-> >       arm64: dts: qcom: x1e80100-crd: Describe the Parade PS8830 retimers
-> >       arm64: dts: qcom: x1e80100-crd: Enable external DisplayPort support
-> >       arm64: dts: qcom: x1e80100-t14s: Describe the Parade PS8830 retimers
-> >       arm64: dts: qcom: x1e80100-t14s: Enable external DisplayPort support
+On 21/02/2025 00:10, Dmitry Baryshkov wrote:
+>> +static int cam_cc_x1e80100_configure_plls(struct device *dev,
+>> +                                         const struct qcom_cc_desc *desc,
+>> +                                         struct regmap *regmap)
+>> +{
+>> +       int ret;
+>> +
+>> +       ret = devm_pm_runtime_enable(dev);
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       ret = pm_runtime_resume_and_get(dev);
+>> +       if (ret)
+>> +               return ret;
+> I think, it's better to add desc->use_rpm. Then these two calls and
+> pm_runtime_put() can go to a generic code.
 > 
-> It looks like you've addressed all the comments I had on v1 (except for
+> Or maybe we can enable RPM for all clock controllers?
 
-Oh, sorry, missed that one.
+That second point is pretty interesting - I think at this stage ~ all of 
+them do this boilerplate stuff over and over again ..
 
-Let me respin.
-
-> a stray newline after a t14s port@2 node) and I've been running with
-> these patches for a long time now without any issues (other than the
-> glink hotplug issues mentioned above):
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> 
-> Johan
-
-Thanks for reviewing and testing!
-
-Abel
+---
+bod
 
