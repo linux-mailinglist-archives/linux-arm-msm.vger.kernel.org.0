@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-48851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DEFAA3F132
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 10:59:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F0BCA3F140
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 11:01:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A1AC3B7050
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 09:58:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B9971890FEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 10:00:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1EEF204C25;
-	Fri, 21 Feb 2025 09:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4CC3204C0F;
+	Fri, 21 Feb 2025 10:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uWWD6gwR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wifdL6lk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C34B20469D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 09:58:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15082204C0A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 10:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740131939; cv=none; b=FpNxt8RJpHw/bQVWJty5B9F/YLGIAOqp/H/ro7AuvWvnu9uiLh6A6BdtaQT5/fXql2Q3WYy+sI9k4TOqR0wt1nbK5Oz1sUn3gQ9DWQBQrpJX6OvMkkwLTRuskVIJ5M5Xg3B8JaQ8JaCRxYLZ08CFeoxAKiJHlD1fejl/TgvcYrw=
+	t=1740132006; cv=none; b=OxTGbnxrypMa0gjpB12Uai/DHcBsq5I9VP0rdp3SaosCkuqWf22eY7uZZNA7c9tK5LDngqq5oHac6sFyoXptyPn7UCid8TUzwGyEwW6E9XWYiq43BDuA0mXUu+sF+m1ZuNxJw1zy4xJLP3Sk4MpZCVJ9aJ7N/77kSWgJs4ZSEGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740131939; c=relaxed/simple;
-	bh=YuIlQ4FSUsykqva7/KDtYayb9cKWI6zL2uqU0oUIP/8=;
+	s=arc-20240116; t=1740132006; c=relaxed/simple;
+	bh=+bqvsqplc0ix2nD9cIkceoFFGaEb8J9OFFWRXYVz0Z4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ht/QDqg/8JgzOOIXkGSYHP9F2cBLtdDiU1ppWHfzPmH18tjHhRYNfvy2jf6oi014zb+xbbjT08+2h/uXrNEYOl8JiO8LHd6MkOz5xyRgfvnh0YLTtyataEOoczU+IvK109lrt5CSjHLXBfDeYhAF71Zias2/1Wzi1fqY7kz9214=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uWWD6gwR; arc=none smtp.client-ip=209.85.208.54
+	 In-Reply-To:Content-Type; b=ZZ1E7DCQ2mvyJygK+JIVJLmI+w7R2PPvC8VUUHnRDPAsOVEq+VbL6oWCKydvFVqwsrQZREO00AmBM7Pawxn63KUU0BxlVMWmK0vM9sDFjZF0NHO4IOp0jvHP7VrxP++KFHysU6vX7ehDVjFd/qrTf9YCYuVDDOMBqCu4O9yndl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wifdL6lk; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5dbf5fb2c39so261704a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 01:58:56 -0800 (PST)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e02e77ea3cso294513a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 02:00:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740131935; x=1740736735; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740132003; x=1740736803; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=X5NaHo5EGXrMjeHk5dfs1UJQGgTL4oMCcK6u4bUWk1o=;
-        b=uWWD6gwRQo8D8KQtAx0IZJQv3vXfElgAZV9cDzxqk6a1FSniCJnxUGbxcNGThy0e/O
-         PovGzTsmtUO60WzP2QkzpBU8jiZMnpJlkZwcQxO65EoQpRFLuIHWTLYeOW/zbKn5/R0J
-         VmIOrJvGSJ3aM743ldD8OHkoXyHn/98B6hwV1ESCJ4nwIRi3OukUHaf/t7aETk3rhIZD
-         7qyy55N8EcJPIdBwrTZpHf/0kzaJrF7O1P+O8feQP9nW85YXpJ0ygM+RdZtADDfFsLq4
-         APZTnBm277Nvh2qWdfKrdAVn8ao/qSeq44qPgwdex21nBf7ha1U71tIbBBDABjN4ALZQ
-         PmdQ==
+        bh=xJWFyO2a6/QdicebMQYJMnjza8WWQ4TTI6mk3gJi0oU=;
+        b=wifdL6lkRK/LeJodFdSkKFeuDB0brsATVxeMKwM4Un6H8k68oRGoizt1gYEh+Bjqm2
+         DvOxVNU0a2liSFEwlvkNp1PWLICLNGHEkJupED8tzfk7SJAl8+IpYuWL50evOMNsAaZn
+         WlbcxKPeSpCUWsYPjAt/CLTTsKm/P1nZGY4RnmDfpOgeN3hEbUnARAR3nlJYgycYUGi0
+         AvPqoJxovMHysyd5oHbP3N26EeOP0BXKYFFWIJwHwcUxyA9dHIxNH/g6O76EnCmuibfM
+         SeQVXFHjWFDOLl2Qc5mSZNjyBVTkKf7z+06M1yMigzlZ7wI5F8YBHnFLLcT1yePlmkp2
+         XYYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740131935; x=1740736735;
+        d=1e100.net; s=20230601; t=1740132003; x=1740736803;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=X5NaHo5EGXrMjeHk5dfs1UJQGgTL4oMCcK6u4bUWk1o=;
-        b=Bj+jqBUQsxNgru21uYLQdXSJSB6k5XJpZgKbGNY3jEbU0smon77Kg4z/Tio6SBvAkh
-         jw/QJsPlEbCBzhQOU/TukZCfa9xqgZa8tiXIhN+IhIfM2rygUlC6IUwIoFF9wSSwaTmE
-         LV6JN7/SrWPPTfrUXIkBvCsp9sAwFvUsJHC9LsLqQM9Ua7rIKicsGGojQon5QadonKYd
-         ZmzIZ+a/3zz4X8EvhCcVIpbkg11AbkmNigjRQUiH2Q4q4FNuZ7qBHeaXvxh/nCp8YA1C
-         XFDckCIHV/5YV8EEQSPXUc/WfUFMIbZ2rnTW4Y5rftcsvvnPorzEDLruTkPDiTLk3r37
-         Juug==
-X-Forwarded-Encrypted: i=1; AJvYcCVLj5gnuPczUjR9ZiwcMN8JEOatl68wGTcDnyqm1B5/WgFXKKGYwpuJ6YLZahscRRNXr9kb2mcUzRV5CHUp@vger.kernel.org
-X-Gm-Message-State: AOJu0YwLxc8nZH5O2BAkpPzP1sx+1lJUpxGzhAXx4gFnrIsFJwjs0gWA
-	XbGILPhh1tbnfarPqveola5+hsN/BcPSf8Qaq0GiD/LwnCg7/60QLmnXMem1uJE=
-X-Gm-Gg: ASbGncsvO5ytD0recu6nI5uwz2SLbVG6BGqn1F8QMr4XPr3WyuWxip+rXW3hZOjrEg5
-	Mpa6iSP7mH4TLjSOm7jCDjfu3FMm4E/w8Tt79Bg7zliLFVVh32jY3HYGKp/IDDrL2wZZDSIblVz
-	YwVTexSL1jWwCkNoxdK0kK93nh6LIepjtQgGKmMpp5fL3DW7KRMtG1vsMILnusg6e7JD9FNQe5X
-	Gxhs87SgYjnd6VxyKUbmrgXS9f9WxBrwbblLLUJDMKv3dTmbgHtr5BSq+Kh5rNAbh5VXkjPlBLr
-	M5OQmilyeP/nok4G0fkroqO+8CYCnBFwciDQTuOYAHMuQa74/ncOC/X/04ak9gWegA/sF/fakai
-	uPy2d
-X-Google-Smtp-Source: AGHT+IH/jPcEXsTcUEO3S5ZRJCoxgr23gJr0jVwm7pPoLBr4B+Q02zJNZ+yi3eFr45tSAzoMtmobCQ==
-X-Received: by 2002:a05:6402:5215:b0:5dc:7fbe:72f1 with SMTP id 4fb4d7f45d1cf-5e0b70c37b1mr796416a12.2.1740131935317;
-        Fri, 21 Feb 2025 01:58:55 -0800 (PST)
+        bh=xJWFyO2a6/QdicebMQYJMnjza8WWQ4TTI6mk3gJi0oU=;
+        b=aE3NJQi6oPM6Iic4Ej3sxAeEWoktRPnIpSHwxfKX/+iWvDyw/8IXRi9GoK+GqNaMEV
+         7zIeVzEHyExluAhq0glYVosE+CpU/xf1cfdi3e0UPmzFEQEgHYaF7PUH0kBEOw9TkhPO
+         rfb4EzdLwv4CjW98TVBtXIuerz/r5gl0Xf+44uyew1io1H5zFtJoMezyJcFFwwckqxvI
+         5nXFzdOho7EIDzzftERKwqfokiNf8wqZ2lITtiSxgJddUsBBGUGi5x+SOEHPY7kyqKCT
+         HA9Ky5wYfGvXmHn19ExSSDxyt/RwcaGJLWE5MvNOWvvK2BlUmNMQRiG9fNT3+/ddFtKw
+         ZT1g==
+X-Forwarded-Encrypted: i=1; AJvYcCUHRF6Zssy6CeL3eVW1MHlOK84rf3id2fcQW2fRX2yxSC9mYkBMQAGVDFNilGamdBctLAa+lmu0qAADQRDe@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPr/4whwxiPMmtJpSLjI3h28IGEsFaMPtpMYKIKAHs5wJFP0VN
+	WtSY2BwKTLo7TPc/N509jpeLVeEH0i99BonvYNfgVWx/K5yzRs0TT8UgFIhamNM=
+X-Gm-Gg: ASbGncvLVjl3rNxNw8YXe3mPgFiId+fU+a7e2mTKdtId+Al7ob68D+FcfsYUAYsw11q
+	SYEmmsXLwi6NoPEG3WbNC7iCSpaQ5K2NIvmviCdWJieKsBmfx8Xz12zk4aXzcUeSLj3aRXLHj+O
+	PG9HWyqyiR0MZNQQ9n1ER7y5lA8B5pDjaJseBtqvp/Va7h+dA2QPZy9G3z2Wl/mdmOYDXl5Z7l5
+	J7G7IWga3R2dVmZYA2DeACx2acyRL38A7/OnnekQMQ29OzhVAi8jNgxfyzHDzBq8b1dce1zhiOP
+	sHy2fWC1XMOdQQqfIvivnrnv1iq5eqBYP6tWnfIyI5SsqdSWL/z++hcb3mhrVodEJ03sROSHjB9
+	J+o+M
+X-Google-Smtp-Source: AGHT+IH7qiTw3apgnrhqU/bLzLhb/NQ5sAnmLAR2GEvnO67FFYvNkxIa/eQDBY1qL2i6u2CP7HcXwg==
+X-Received: by 2002:a05:6402:27cf:b0:5e0:8275:e9dd with SMTP id 4fb4d7f45d1cf-5e0b7252e4fmr745151a12.10.1740132003314;
+        Fri, 21 Feb 2025 02:00:03 -0800 (PST)
 Received: from [192.168.0.18] (78-11-220-99.static.ip.netia.com.pl. [78.11.220.99])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece286861sm13221502a12.67.2025.02.21.01.58.53
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece1c4687sm13513289a12.22.2025.02.21.01.59.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Feb 2025 01:58:54 -0800 (PST)
-Message-ID: <54d61a13-3198-4bcf-a771-523c905d0740@linaro.org>
-Date: Fri, 21 Feb 2025 10:58:53 +0100
+        Fri, 21 Feb 2025 02:00:01 -0800 (PST)
+Message-ID: <4f95cce5-53b2-4eb9-be28-6136eb89dcaa@linaro.org>
+Date: Fri, 21 Feb 2025 10:59:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] dt-bindings: PCI: qcom-ep: enable DMA for SM8450
+Subject: Re: [PATCH v2 3/6] dt-bindings: PCI: qcom-ep: add SAR2130P compatible
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
  Lorenzo Pieralisi <lpieralisi@kernel.org>,
@@ -97,7 +97,7 @@ Cc: =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
  linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250221-sar2130p-pci-v2-0-cc87590ffbeb@linaro.org>
- <20250221-sar2130p-pci-v2-2-cc87590ffbeb@linaro.org>
+ <20250221-sar2130p-pci-v2-3-cc87590ffbeb@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -144,36 +144,77 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20250221-sar2130p-pci-v2-2-cc87590ffbeb@linaro.org>
+In-Reply-To: <20250221-sar2130p-pci-v2-3-cc87590ffbeb@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21/02/2025 04:06, Dmitry Baryshkov wrote:
-> Qualcomm SM8450 platform can (and should) be using DMA for the PCIe EP
-> transfers. Extend the MMIO regions and interrupts in order to acommodate
-> for the DMA resources. Upstream DT doesn't provide support for the EP
-> mode of the PCIe controller, so while this is an ABI break, it doesn't
-> break any of the supported platforms.
-> 
-> Fixes: 63e445b746aa ("dt-bindings: PCI: qcom-ep: Add support for SM8450 SoC")
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> index 800accdf5947e7178ad80f0759cf53111be1a814..460191fc4ff1b64206bce89e15ce38e59c112ba6 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> @@ -173,9 +173,9 @@ allOf:
->      then:
+>    qcom,perst-regs:
+>      description: Reference to a syscon representing TCSR followed by the two
+> @@ -129,6 +130,45 @@ required:
+>  
+>  allOf:
+>    - $ref: pci-ep.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sar2130p-pcie-ep
+> +    then:
+> +      properties:
+> +        reg:
+
+
+minItems: 7
+
+> +          maxItems: 7
+> +        reg-names:
+
+
+minItems: 7
+
+
+> +          maxItems: 7
+> +        clocks:
+> +          items:
+> +            - description: PCIe Auxiliary clock
+> +            - description: PCIe CFG AHB clock
+> +            - description: PCIe Master AXI clock
+> +            - description: PCIe Slave AXI clock
+> +            - description: PCIe Slave Q2A AXI clock
+> +            - description: PCIe DDRSS SF TBU clock
+> +            - description: PCIe AGGRE NOC AXI clock
+> +            - description: PCIe CFG NOC AXI clock
+> +            - description: PCIe QMIP AHB clock
+> +        clock-names:
+> +          items:
+> +            - const: aux
+> +            - const: cfg
+> +            - const: bus_master
+> +            - const: bus_slave
+> +            - const: slave_q2a
+> +            - const: ddrss_sf_tbu
+> +            - const: aggre_noc_axi
+> +            - const: cnoc_sf_axi
+> +            - const: qmip_pcie_ahb
+> +        interrupts:
+
+
+minItems: 3
+
+> +          maxItems: 3
+> +        interrupt-names:
+
+
+minItems: 3
+
+> +          maxItems: 3
+> +
+>    - if:
 >        properties:
->          reg:
-> -          maxItems: 6
-
-You need minItems here and in all other places (also interrupts).
-
+>          compatible:
+> 
 
 
 Best regards,
