@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-48978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38781A3FF0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 19:49:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81DDAA3FF26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 19:58:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A1F43A3101
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 18:46:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7A79705A18
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 18:58:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A10C1F37C5;
-	Fri, 21 Feb 2025 18:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF4C32512FE;
+	Fri, 21 Feb 2025 18:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ig/u5IIP"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="REPiqKEh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AA71D7E50;
-	Fri, 21 Feb 2025 18:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5122512FA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 18:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740163608; cv=none; b=FtN3755AWkDwG85wH2XWrKkwJmDuD80YG+l7RIdbRX38zdkEevqgV9rzn8TyDcjidtvJpEh693JkFii8GEymt8kg1yejDw02i1uGrTPbi6snkGF++z4qOjOE7L5uyUCYZ/hqAmvd+b8FUoF0CqLaX1fnED80TqfF7JP+r1jtvo4=
+	t=1740164333; cv=none; b=CtUuAts/ihke3Q4z6vXQxOUYv0KJD0sweu9PDGebMHPWKqJ+WWHzEBRQ1MPZ2YhpVEmYkGPkexAPzLGTcytReGbc2qEoQ3Hu8jncYsrdaq2DEI5w6teHjY8USy04mYYt731g/wK59B+dnMqpq0DfIRoSpvTzNYpve3Q4fDGknaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740163608; c=relaxed/simple;
-	bh=BpkZGQd7vCN4FATcjtLxwnt+wPpZHIIXvEiSaLa9lxg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Hvwk9prH4e7udFXugvyaSfRRuDN6zy0XQk9906FJlL7CiDMq9Dhz8RfSG52vPlCWPrn3IUrWsqpfK3F2aXzGicyb2Zvh3R1JJLTiIluSvVtlMzc2mU66Oc7cgqefy3pIRXBE4ur72Jl6tJ1xV6JrOrc/nP9B++zCNK27c8xjtYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ig/u5IIP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+	s=arc-20240116; t=1740164333; c=relaxed/simple;
+	bh=cAHIOldwwFNo/wAZhPUz57LxWBpil7EujySEEBgkP2U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=vAQYcEB+lemYQgG61BGGA+EZ95/bt6Zyw67Uqi9gAVwQZ7J0Dk8ipMD9B52CwisbSknqHGrWFZM+RNGQsBWsbDk2AhzFXjE8eL7y4ih1nKFWn6SWs7xqHvqmEDsjrFwiHOoX8Lsk/xYjhOqbmSi2E8lzOwlXShlbNgp6GNmST14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=REPiqKEh; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51LApag5002691;
-	Fri, 21 Feb 2025 18:46:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51LEjIvK002702
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 18:58:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SaI15yMrcwWdfdssLAcI1d++ZX2eyBAo0yxcU7T9bfQ=; b=Ig/u5IIPGzBSGJm1
-	NZRYANpHuhwZq5by8pK0kX2HpZpuWhXeBoCUVS8aZLbvkR2LUxruLuCDXBcvOY9t
-	ORWmsffTd8SQe1k22yyhv7P9TCIdNYnG6IQFOOvK5PIEElC//cnpbshbjBeY/vcu
-	o4Z69+UW4bEdf4AqabyIlccEzoKZa2L9lXNuYhsWBGPl9Z8HvmjbX+2nghuHV+tL
-	jV7l9uTYkYECUSJvxhgNYGrqCZdg+dBwoqtp4T5D1yw3VS0wom7AKZHIPKsqWsG9
-	5T/8I+KWokavm/EyiEFiBjsjpRgYyPDsTQ7Frfvcoh+Bfrj4iwy9VktDskxTprUQ
-	qTm58A==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy2jx2q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 18:46:41 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51LIkeKt028113
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 18:46:40 GMT
-Received: from [10.47.206.1] (10.49.16.6) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 21 Feb
- 2025 10:46:40 -0800
-Message-ID: <96ee882b-ecfc-4845-ad82-dde82d3d51e6@quicinc.com>
-Date: Fri, 21 Feb 2025 10:46:39 -0800
+	EzV2o4eyTRfwYhyLT+w9P16JkkzT3HqrChTdrDEUE9U=; b=REPiqKEhhs+LdFQY
+	hSz3lOjsRSwlCbqBi9sF1End6d7GNX9uK3QSB0bTU5HtJgJp6HU69u9f6Ty47snI
+	Na2NsjWKUnRUof6L3c+4AK6ue+gRevvzw+i7FkXVKJzGgwx4Mpl0fSeYHj2swm1a
+	3NHAMWO39LSI7n3tSmzZv42NURMVNV91VCNolbTjRX2BnybiIi7t1ZcyaGugHl8g
+	lAYLrMySLtcrM7mjayAgpWaQcOKB0uV+SNGfbVIG1QPUqv8Rlc+qWSEV69QCs0e+
+	SoLEvfVxXfZp4t0Dxhigql8jsZRcD1/Oxs4g9zXQ0xz79MDspbrgiG3ECMCph80H
+	rJUMVA==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy2jxte-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 18:58:51 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6e4546f8c47so3585316d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 10:58:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740164330; x=1740769130;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EzV2o4eyTRfwYhyLT+w9P16JkkzT3HqrChTdrDEUE9U=;
+        b=dBClikqenv/lffp6UArkibcEVxMaINpNShbOhvG1vL2HnsXFRajuq864GQCDqIpl7+
+         JdUtTT+zSt0GxTgJ9F3wugFGTGzTdve6qsQRR951+FSVDHbWP4Pdgcqf72w3XOlIQUDn
+         sLbMqZb6T5Vkl+tRz6lDiUDCNiip8q+0AgjI1DqhkqMxWnZk8nzJiC1eHwgZr67yDP4i
+         1EgfwkaXvRA3wupZabvakhhv4abRmDcHP6WUV2LiRvVpag8vgYvGP7NK1wmmOWu7B7/0
+         HgyA7z///px/GNCHZx1jWLDbC1EOsM/CMsomGXk9t57btsARaYyXO9sHz2LYu+AAMVhB
+         Mssw==
+X-Forwarded-Encrypted: i=1; AJvYcCWM2T450uW8E8ximY5JQjDXsmIjmHkNwgltkI/Yl5g2HmurjepxZEkxJu3ZfQlzNr8gx4RU9JIEktBb1dRg@vger.kernel.org
+X-Gm-Message-State: AOJu0YzEp4+k960NFRBYFE393v8LHFdMAeg6NqlIlIz3K9+wQ2hQW5Va
+	ZfPGcehWpQEIVXBjYa3SASbQIXXxayex6jvPw1pc8YQYXCKx9PyOxOmvfWLTf4gELTBDoocjSYs
+	73Llh5JU93kG546nmnFlzw+Xn4IKb1z2YyFjoO9paszjpLockx9xYpNUBo5KV//vK
+X-Gm-Gg: ASbGncsWMBIw/tJAcrWk29XY54NYN9uSze8tKXOBsSpFxfJpnzdMPLA4BgEv/f+QEpQ
+	mh327p+dx34a+YWvXLm4QiwcWHLeVnWx3DpefY7QeIMRG3t3LzJOHLucnZ8TEln4R/aqZqMHsNO
+	GYe+tlw0SbLDXC3YJ6fJ+inAfnA1hHPZ8vFQuqMmLoeL8KsxsaVlE/51bjqPlc1c4Oea3yYYxEX
+	7rWyGosoQ40l/BToFzZPnmvUn+9j2O1lCSKRD51wysO5noLdZBXty3qDJYLM1mo0EbQHGO5w4dB
+	7Oyq2B3K4+5SnscZFxiRVYeJcBllpUCmr3o7ENMtGacH2MOrMjDq/eckXhOxIdOYAB8ZFQ==
+X-Received: by 2002:a05:6214:e64:b0:6d8:b169:dcd1 with SMTP id 6a1803df08f44-6e6ae9ffd9bmr19075656d6.11.1740164330002;
+        Fri, 21 Feb 2025 10:58:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHDMKRFaHc4D4Ja2PLy4N1h1xcVjFyYawh08UFrwgsskejYut5579S4YNCx1aQqtDmho2zVhw==
+X-Received: by 2002:a05:6214:e64:b0:6d8:b169:dcd1 with SMTP id 6a1803df08f44-6e6ae9ffd9bmr19075416d6.11.1740164329513;
+        Fri, 21 Feb 2025 10:58:49 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece271223sm14404266a12.59.2025.02.21.10.58.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Feb 2025 10:58:49 -0800 (PST)
+Message-ID: <103f33ed-595a-422b-ad13-13d9c1f0ee78@oss.qualcomm.com>
+Date: Fri, 21 Feb 2025 19:58:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,68 +89,46 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] input: pm8941-pwrkey: fix dev_dbg() output in
- pm8941_pwrkey_irq()
-To: Dmitry Antipov <dmantipov@yandex.ru>,
-        Dmitry Torokhov
-	<dmitry.torokhov@gmail.com>
-CC: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-        Anjelique Melendez <quic_amelende@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-input@vger.kernel.org>
-References: <20250216170336.861025-1-dmantipov@yandex.ru>
+Subject: Re: [PATCH v10 1/1] arm64: dts: qcom: qcs6490-rb3gen: add and enable
+ BT node
+To: Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: quic_mohamull@quicinc.com, quic_hbandi@quicinc.com,
+        quic_anubhavg@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250221171014.120946-1-quic_janathot@quicinc.com>
+ <20250221171014.120946-2-quic_janathot@quicinc.com>
 Content-Language: en-US
-From: David Collins <quic_collinsd@quicinc.com>
-In-Reply-To: <20250216170336.861025-1-dmantipov@yandex.ru>
-Content-Type: text/plain; charset="UTF-8"
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250221171014.120946-2-quic_janathot@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VTYgEALzrfXIeUEtwTiOMr8Ce29_0r1K
-X-Proofpoint-GUID: VTYgEALzrfXIeUEtwTiOMr8Ce29_0r1K
+X-Proofpoint-ORIG-GUID: hKpkhGBYEsBlqaUh1eDobDn6RvezOkfP
+X-Proofpoint-GUID: hKpkhGBYEsBlqaUh1eDobDn6RvezOkfP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-21_05,2025-02-20_02,2024-11-22_01
+ definitions=2025-02-21_07,2025-02-20_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 clxscore=1011 adultscore=0 phishscore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 mlxlogscore=890
  bulkscore=0 malwarescore=0 impostorscore=0 priorityscore=1501 mlxscore=0
  spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502210129
+ engine=8.19.0-2502100000 definitions=main-2502210131
 
-On 2/16/25 09:03, Dmitry Antipov wrote:
-> Since 'sw_debounce_end_time' of 'struct pm8941_pwrkey' is of type
-> 'ktime_t', use 'ktime_to_us()' to print the value in microseconds
-> as it is announced in a call to 'dev_dbg()'. Compile tested only.
+On 21.02.2025 6:10 PM, Janaki Ramaiah Thota wrote:
+> Add the PMU node for WCN6750 present on the qcs6490-rb3gen
+> board and assign its power outputs to the Bluetooth module.
 > 
-> Fixes: 0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press debouncing support")
-> Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-
-Reviewed-by: David Collins <quic_collinsd@quicinc.com>
-
-Thanks for making this fix.
-
-Take care,
-David Collins
-
+> In WCN6750 module sw_ctrl and wifi-enable pins are handled
+> in the wifi controller firmware. Therefore, it is not required
+> to have those pins' entries in the PMU node.
+> 
+> Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
 > ---
->  drivers/input/misc/pm8941-pwrkey.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-> index d0c46665e527..d952c16f2458 100644
-> --- a/drivers/input/misc/pm8941-pwrkey.c
-> +++ b/drivers/input/misc/pm8941-pwrkey.c
-> @@ -154,8 +154,8 @@ static irqreturn_t pm8941_pwrkey_irq(int irq, void *_data)
->  	if (pwrkey->sw_debounce_time_us) {
->  		if (ktime_before(ktime_get(), pwrkey->sw_debounce_end_time)) {
->  			dev_dbg(pwrkey->dev,
-> -				"ignoring key event received before debounce end %llu us\n",
-> -				pwrkey->sw_debounce_end_time);
-> +				"ignoring key event received before debounce end %lld us\n",
-> +				ktime_to_us(pwrkey->sw_debounce_end_time));
->  			return IRQ_HANDLED;
->  		}
->  	}
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
+Konrad
 
