@@ -1,196 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-48805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E66CA3ECC3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 07:19:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B720A3ED05
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 07:52:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D7C4F3B466E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 06:18:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2FC819C36B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 06:53:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CF011FCD03;
-	Fri, 21 Feb 2025 06:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EEBF1FC7EC;
+	Fri, 21 Feb 2025 06:52:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VNtxgC0X"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="PUiYFcRO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10olkn2109.outbound.protection.outlook.com [40.92.40.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22311E5B78;
-	Fri, 21 Feb 2025 06:18:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740118737; cv=none; b=uSkn+fUxtqTeDxb4+kTjBg3XiaRLbsaS7znPKTNNmpAG060Oz4VN59YSCqYTbZvL1J9dCvN3zPrl1iF1FCprNYz2/gED8YIZgQo1GbCliSVdUf1MAD6LpK5uPcOEBzT9LI1I/jWlmdcJ/HEaSWASqeFDh3okAuk0bAnBFh/hMyU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740118737; c=relaxed/simple;
-	bh=8Tx8j0lvA4+fEQUw3oEHp9MRGre6e3kM75ckUoHtBvM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Mn5P8KODLvCsmyXUdcxqBqaO9WtgXHUy3iuQPVvTpsEDHqYLqnA+wcBFlM8zxSBS6TwSP8p0XuDfrTSEHJHUPYnYXKEmZT6GkdrMvO0izg2ffgDfuRHq2eqsAf0isZ8WdwicqexFzAVW/xhnO0dp0Ozsf3xJVazYng5VZoP7npg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VNtxgC0X; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51L5xxQM015703;
-	Fri, 21 Feb 2025 06:18:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8I4xAWQpxfpMRrlRqjIPNzPFALUHLmb31EkOijYpW6M=; b=VNtxgC0Xcwat/Hel
-	II6pZygsOYs+4dL+Gw5OUM+0wJMQF25vPL7o8cxYnJWke32T6oQUL/Nzvp2HlWFU
-	I0s3Pdhlb8UhvDM2YIlsQ7l+vEKC+AK4WghYBxKwtzsicPMCmOgVuGmXlmywhYz8
-	lPrwh1qi0USSZ2+ekpYsVdVvdFfP5geo3DNZTEjIDOJajbjWB500rgWJywoBTC80
-	jCIykSaJdI8Rq/ABSru4o56m1y7ew0t6p6AFl7Ab3mdUGaqxDNNf0MdAPPGmd6Ot
-	0hr8TByMMgvZ2nbSXdFkbeDz5H29Ut1qWFh9meCuJqMOBvWVexKlrisufhd4vg4e
-	ifntgA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44xku6r1pc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 06:18:50 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51L6InsI031251
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 06:18:49 GMT
-Received: from [10.216.53.96] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 20 Feb
- 2025 22:18:43 -0800
-Message-ID: <17561e13-822b-440a-b62d-3d0eac1861d9@quicinc.com>
-Date: Fri, 21 Feb 2025 11:48:40 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B5745948;
+	Fri, 21 Feb 2025 06:52:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.40.109
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740120767; cv=fail; b=o7c+JqYOkxcKmi5jmeF8VFE1sYNGarEWrJIsOGVl8IByZU9hjC7sS8HI4KvGtpWYulfTl7HRlFtcG98i4JY/Ud8BJ4Xipdb7qEYgNZLMGAkdHSkZGTGShLDxUQWf0MHEoEhGCrh/YDWwGZKm3KZ0rgPDexa2qs6tdjVdLvzTJ1U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740120767; c=relaxed/simple;
+	bh=/U+7i3asY3aDIHWXUL0s1unhZtW2Dg9W3kpHTzs0Kzk=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=CGPWjuCZaWY8SlT8cLXuwHwLICCI323V1gsHsoumz3KolmoxgrPrsn3/ouHmS5wuOrfeJAhxzCpDLsYamrpquRyrI0gGhH+swvDV5SnJdyQDmPOVorO7CKr0QFqgEBQOicj9VQIOHVA1CXSpeIxi0ie1t8ZwXrRERZTWo82JOic=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=PUiYFcRO; arc=fail smtp.client-ip=40.92.40.109
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XzkBhifcRxkI/gUa5wqCnNtfX0kYK43VYz337F0d6FVh4ZCTGOLdcdpL5DmgvpDKB1As0RPhD1cs6yyy+taiw7AuVMRScAPGYyt+hTFEEeTeHP08gaM1ie9Mpj2Tu6Zq4C9CBbrsmKOnuJWITDTzuef4JUeMwRfZko4piyV35AFedCGqnG08a1EsLhrkC8NdJu/PpVkdp5qxHKPadmlsVhBNNAv6l3BmcAmBdw2oyuNMg27Z0OuM/9fj6zmTMcsDrUCxrTWuB0wBLx1cCMrCtTbruAiLwvQPv/023HP1fNao1ui2x5hlPqPa4nidD3cg3HX6Nh+KUTe12lAox4cfkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lc6XTgKBwNkUWQVAlWGrx9SijqBqICIqSm22LSb2d2A=;
+ b=H24pbzg/1d8NmVSRlvbB0a44NjzwrMqXNUcKNivs59XEBQUrWRpWPEI2YOPxAGyM7gQNE7ZUz5Rq7FQhy//NTAT6aLx/LYJPRn9VuYPzh63b/oQ08GBW1Io5giznJbZNhq3xZ2ScIY+Cwyy5SvA1wzSJXJzsvjq62fFVoZHiMV1zKRet0OgMb49Y1amC4o3JtLCFKifhH7ro3RE/8h+PNcv/xfTQShRPlPLL+pquAF9P4QYl37AukvP7hCWqIqJ3onfVfbtmHnehKFNTqJNl51eYpqTbVI33WggNsJcAmtpuq0gThdGoYai0emKUONc0eBvpp5BN8N7FO4Owqq6O0g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lc6XTgKBwNkUWQVAlWGrx9SijqBqICIqSm22LSb2d2A=;
+ b=PUiYFcROOzVVlvPQUJvzQ7xYyA1fG4QHw2MUPpqnNvIVdNJRSMWqoXi2w3l9oZPt7tL/TRDzgcq3IMQUj2Z1wZ33b0gYrA8xXS7gfJLCnWmqFI9DPrwY5O/CvS/8pvaCv/luX0jk1olBPTMKwSbakHSvKFJX/DhY2OVrkMEhn/P3rCM8UfGAkq62PfAa7ShcrFA1bdVIHtjpb7sUZ0ZASB3vKAT8IUUTXIMW5gyAucXuE7npxHBjm/Tw5n20NycTicduhwUgDHGHIniMTPp4sUlMAvIy82tiwMM+biKenr4uvFEGaZybFwW1rGcEhqq/w0HMZvKBWimk2xy5zlWzSQ==
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
+ by LV8PR19MB8323.namprd19.prod.outlook.com (2603:10b6:408:1ff::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.14; Fri, 21 Feb
+ 2025 06:52:42 +0000
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305%6]) with mapi id 15.20.8466.015; Fri, 21 Feb 2025
+ 06:52:42 +0000
+From: George Moussalem <george.moussalem@outlook.com>
+To: linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	amitk@kernel.org,
+	thara.gopinath@gmail.com,
+	dmitry.baryshkov@linaro.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	quic_srichara@quicinc.com
+Cc: George Moussalem <george.moussalem@outlook.com>
+Subject: [PATCH v4 0/5] Add support for IPQ5018 tsens
+Date: Fri, 21 Feb 2025 10:52:14 +0400
+Message-ID:
+ <DS7PR19MB8883BE38C2B500D03213747A9DC72@DS7PR19MB8883.namprd19.prod.outlook.com>
+X-Mailer: git-send-email 2.39.5
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: DX1P273CA0007.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:300:21::12) To DS7PR19MB8883.namprd19.prod.outlook.com
+ (2603:10b6:8:253::16)
+X-Microsoft-Original-Message-ID:
+ <20250221065219.17036-1-george.moussalem@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V8 2/7] interconnect: core: Add dynamic id allocation
- support
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Odelu Kukatla <quic_okukatla@quicinc.com>,
-        "Mike
- Tipton" <quic_mdtipton@quicinc.com>,
-        Jeff Johnson
-	<quic_jjohnson@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Sibi
- Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250205182743.915-1-quic_rlaggysh@quicinc.com>
- <20250205182743.915-3-quic_rlaggysh@quicinc.com>
- <bwiuhfgv4jw7tlwjqffgrxvskxbpf4forz46nn5g3vihz3z5od@w25y7hdprykf>
- <f40f6b9d-8f31-4ce6-a912-1aa484863d5e@quicinc.com>
- <6j576swreyqcyu7ryxtyojjmo7clfwb7fibw2aeuvif5vzexpq@du2farsldpti>
-Content-Language: en-US
-From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-In-Reply-To: <6j576swreyqcyu7ryxtyojjmo7clfwb7fibw2aeuvif5vzexpq@du2farsldpti>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: pg88hATFIV5t7CKqbUc97r4tMNKK-jOM
-X-Proofpoint-GUID: pg88hATFIV5t7CKqbUc97r4tMNKK-jOM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-21_01,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 spamscore=0 impostorscore=0 suspectscore=0 clxscore=1015
- mlxscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502210046
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|LV8PR19MB8323:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0a87f197-ba05-4da0-17a2-08dd52445635
+X-MS-Exchange-SLBlob-MailProps:
+	YfhX3sd/0TWYnBBcTvvGLlHdY79wcCjUDD5TixbazfAFrec+7bgk9+MYg25tPk9e7+5Zm6ynr8g3fYE/N8Zpe77W6qVlJA7jEgxif0H2pgbgwRc0K/TFzrEyNa0EvlJxK20nH62VbDWhzViW4fPoqkT2TKa5Cr2/xL2p7SYLvokebQcxb3zPpOt5QrybUKaQ55cEAJ7DY2YeY98Xch516VERE52XNVw1+WM8vc75Yalzbi00dB3lOR8M7+c/qi3fH9qpTbYp7LZKxgmA/yLWs7FKRHdf381epxamesVZXXELKMsDsdSxymB13X72w6yDB6GEmRsJpaB/Uf0FEHk9XYeM3W1FWnFseKFjs2bU98WoIcAMoc6bISbZrzldd1HS9Qqg5BuzrATPXirWiZD+2GCqh5yZ4zYRpUsBfOeIouT6vtivotyiuNmI544Gc0zxH/oyOoo3G3nFfCvPG2oRkbEDxaMMtPxORXqn6w99+U/Zk0d8rlwZoGT2UvIpJAha3In85uUQ1ePL47RMvdJywOmDwPtHhQwtf82HngAmesIkMnDHHwvRwORlDQgHTrdfjd8MEI23lag+EGPR21YghF2qhNTYUpVWuo5dTWSNUfaesLMWxZTBnTka6E7EFgxV+/DSs4KyCBZKmK3srW4zVnmhVUTDPrpeLdAnofoFrAnFaGJxgzhBOHZWtsPtWC60o9JrTqbUGV1DcQxuMGIsdHfNSIlwGRtzaIs7lcuqvD3rl4eTAG1mW/ef9DpJqrx6CKAWAxBLxOSGtO4LK3XalcY494qBlwq05K10dDwn6IQ=
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199028|15080799006|7092599003|8060799006|19110799003|5062599005|5072599009|1602099012|3412199025|4302099013|10035399004|440099028|41001999003|1710799026;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?F8U6XDVFeyYcwkmloR9f1z5tDMsOqk6fRpHvFWQialkREc6U75N6zXIiXEKj?=
+ =?us-ascii?Q?KA/7nL4JjhG6fsjihc6n13mfDah1bYoW+KWZLmjoOs55xF3FOAsJT1uLU6lo?=
+ =?us-ascii?Q?LZ2O/CBa8J0YsovqQfxr+21hG8r4+FJTn2uFtlkMd7OG9kWs5U6uGNCt9b5l?=
+ =?us-ascii?Q?z3lweDE0/PCcifod6odgvQRht5GlVqe8dfSV3gyJHxb0+PzoSpEYqbFheS/r?=
+ =?us-ascii?Q?yKJSsht2bxHMRtdh3ekh84GaMlz9Xkg5o6eJT8c9IKKhmZbkuMwXSTR5EKn9?=
+ =?us-ascii?Q?/AYWZeFwFmG9CNjgao+ORrFnRx+IagTPRqI/0388CySUzFTzgkNjG8cG47hQ?=
+ =?us-ascii?Q?YvvixQJzPHWrqZNFmnrnkizWgzGqAkx1V8qxWaHCkHcF/3MtyqQcXnjeC49Z?=
+ =?us-ascii?Q?wLkr+9L4kJ3CpW/EJR7G0/S83NxGCbwPeR4Fav+nEBWyLq6ZS4OjxZBOqxCM?=
+ =?us-ascii?Q?AAJgLOvZGiEq8hfrYMHz47NpUms92DEJtvTY9EBtBSati9Cr5U2GzPQqLZMn?=
+ =?us-ascii?Q?aDRcPL/drzC4/FNBatthmv7dlXSvQlbqhwp53YCblSCs5v4nKf9XJbzZ2yah?=
+ =?us-ascii?Q?nz88G6AKFT5C47t2Dkz09Yr8vW2H7VjtiVxjPyrkxJx0E9HubpsB0VoJWbz8?=
+ =?us-ascii?Q?QO+5Ff1+SA8bn/M7v3ykgBNEUXBIFRA0ZtU16R5jFBVU22q6st8rJrWoHTPh?=
+ =?us-ascii?Q?dWKOsMOs+yWi2G9zNc5Kt6C55/ZA5EaCptz04cw+RDZkditEUYQp8hM6f7T6?=
+ =?us-ascii?Q?YDvRKTCngJFdZotJF/g/CohnDkRibI/mgnc1kM7mvKTv+77Z5tNtG01A24wT?=
+ =?us-ascii?Q?NJR8tqteW0OUaJ3GyZlM4kaIpZSoXHRkIzds33/Gb8V6EoyiGkfTHgro/eYX?=
+ =?us-ascii?Q?NqscIJdcesXYhOcAEyKXkK7hhNhfabMneEGqzRvPZOIpRrAaLG22bviKhaet?=
+ =?us-ascii?Q?kZB0l3XmYYKDjkYcyOE7T9NEGhDTMxrOehEBYASpNeSsCSBmDZ1JiBc7a0Ws?=
+ =?us-ascii?Q?7j5nfXLKyyDqEYQ7PhxtgO0eIN+dpU0Np2Mf6i/yoYr54w8OsFCbH+VW8W+u?=
+ =?us-ascii?Q?xSyo19RowRLFgg6pooc+zKKMTTqn1lwDD4Xb/+4CjYGlKa2SwuCvWdMg9FzZ?=
+ =?us-ascii?Q?Z8MpVvKKFT+9MmjSheeXy711MwRTeFSAa/QJBki1Ch2P+4zoJfmwcBKFyHuH?=
+ =?us-ascii?Q?Kg0pgwueAk7Bym+A6iZTrQBieROZXBZdr7Kt780jIopnwPyM0UBYI1JBQ4Gs?=
+ =?us-ascii?Q?igfZJREmxWe/3tJP/38fMUU0Ydc33emtbYEryJSPKGdm8kzAg/2zc4z+dTq3?=
+ =?us-ascii?Q?RB29X6br/sBjfugYgiQctuxkukN3mEzjgd7p2KCTM4uW9A=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?7rCAHcJz6SojFXZRWGDsDYTqg/g4A6nUjs06NAcgcAwfMwyabJCO7I063HX4?=
+ =?us-ascii?Q?CIxY71fKc2Y7LaJzXML0hILDdQdTGDt1ccpy14Ml18tMnuDWyZ7Opeb8gA/i?=
+ =?us-ascii?Q?lP4oc0DQzyyot+Zw0CZBfIAuUdHMObD/tFXJqk7YVJV5p7zJU9ieUZ670BVL?=
+ =?us-ascii?Q?fqYHvDK6nL/dGCO2CVaNuhQwMNqgOEka9olgbEr6TQ+Te72MWM4dFvCDzZvi?=
+ =?us-ascii?Q?H37UTHG4F3sfE4jtD1MyV8UUht729wqCdDubNKFF0cAOwQBYXmpx5VUB5Iwp?=
+ =?us-ascii?Q?LnAaVuvGw7M3JhMiHhLGQciXELXZFhvt3YTZ4vuc35nsBqerWRop6LORB9Xc?=
+ =?us-ascii?Q?jkQROJY9VUKcmmwo3cbbGNEQAv/EdpCo1xavqCm/cT8iCCy7OecPEIJpyzeS?=
+ =?us-ascii?Q?hvnDhzcfKY+A4J5vzjs9oegCQWx+aCNiM/tZiZKrFrvCUJEq3KOPkdUbPuy0?=
+ =?us-ascii?Q?q5zz29BeuGQw1uQSJBjr96mDJVdhn6Yrm9PPuZVpHZrG+dLAJ3i2iANxvDvj?=
+ =?us-ascii?Q?HQ9GAOy6PuBJ6W75fmJqd33YNWS3rAmXiuBUdOFENI5Oqb9Rv32MC0k68deh?=
+ =?us-ascii?Q?M7FH8cv32ZBJhy2CABALx7X2R6HrpR2UXxPwpMy1JRHK8tC7MmL04sTDWjVJ?=
+ =?us-ascii?Q?HPlmtkcH21JUouM+sJoZthVFPhCwful7tkMQSyRlVCugR3a2lw0bhqPxgtGc?=
+ =?us-ascii?Q?Q5Hfuo5Fo3nRdm/6yLKA5B+mDmpqKRTyp10kAD2nZAzksrHBX66dnzgC3QuI?=
+ =?us-ascii?Q?Vggbhk4BHwYQ28gsiqZ6z0vtUSFHQ1Cf8A77J0+1Eto2UIbFzPF7TBq7zTwq?=
+ =?us-ascii?Q?WHvgwTCpm/czdiR01AdJjeEfM9Bsk+mlG9N/Dkcv+B08cEBDwL/VlRCO9fGv?=
+ =?us-ascii?Q?bzrwvM2oXdTr3PBajfIuIvqMPY4eOJSxAImY0gotnIKaSa6aupjtiIOoSUCp?=
+ =?us-ascii?Q?+Zzy/m1Ac30ntnVIMx6qOMMkRQrX9aidQl2GjVwB3pJsxeIMCEL3vkXToohP?=
+ =?us-ascii?Q?jVPO99VVyci2hamNapKudSZPdOeHR9ps2TQMHErPFhwJZ//gpA8TCsBseauB?=
+ =?us-ascii?Q?CMTxo+SxSLv3gNtqfYhZLtx/YiznF4/LFcgWLXHjVZmVyDnZOF87K3D3dpHv?=
+ =?us-ascii?Q?debJLnUCc++pmdLSy4oz7r8oLBFF0uoH+9TT3OTyov5TzjfBl4akyaacsBUi?=
+ =?us-ascii?Q?qsO7+Q9c5SP3mNvXBx+yp6+eXOo/QhfwWQ3awJiP2STQ5KVxtO5SYuXXRnhT?=
+ =?us-ascii?Q?fcTPs0OVe97MEDOv4j0a?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0a87f197-ba05-4da0-17a2-08dd52445635
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Feb 2025 06:52:41.9623
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR19MB8323
 
+IPQ5018 has tsens V1.0 IP with 4 sensors and 1 interrupt.
+There is no RPM present in the soc to do tsens early enable.
+Adding support for the same here.
 
+[v4]
+	*) Documented ipq5018 in qcom,qfprom bindings
+	*) Constrained ipq5018-tsens to one interrupt with description
+	*) Added Rob's Acked-by tag
+	*) Added Dmitry's Reviewed-by tag
+	*) Fixed modpost warning: added __init to init_common
+	*) Sorted tsens nodes by address
+	*) Sorted thermal-zones nodes by name
+	*) Link to v3: https://lore.kernel.org/all/20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com/
 
-On 2/17/2025 6:32 AM, Dmitry Baryshkov wrote:
-> On Sun, Feb 16, 2025 at 10:08:51PM +0530, Raviteja Laggyshetty wrote:
->>
->>
->> On 2/10/2025 4:20 PM, Dmitry Baryshkov wrote:
->>> On Wed, Feb 05, 2025 at 06:27:38PM +0000, Raviteja Laggyshetty wrote:
->>>> The current interconnect framework relies on static IDs for node
->>>> creation and registration, which limits topologies with multiple
->>>> instances of the same interconnect provider. To address this, update
->>>> the interconnect framework APIs icc_node_create() and icc_link_create()
->>>> APIs to dynamically allocate IDs for interconnect nodes during creation.
->>>> This change removes the dependency on static IDs, allowing multiple
->>>> instances of the same hardware, such as EPSS L3.
->>>>
->>>> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
->>>> ---
->>>>  drivers/interconnect/core.c | 13 ++++++++++++-
->>>>  1 file changed, 12 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
->>>> index 9d5404a07e8a..40700246f1b6 100644
->>>> --- a/drivers/interconnect/core.c
->>>> +++ b/drivers/interconnect/core.c
->>>> @@ -20,6 +20,8 @@
->>>>  
->>>>  #include "internal.h"
->>>>  
->>>> +#define ICC_DYN_ID_START 10000
->>>> +
->>>>  #define CREATE_TRACE_POINTS
->>>>  #include "trace.h"
->>>>  
->>>> @@ -826,7 +828,12 @@ static struct icc_node *icc_node_create_nolock(int id)
->>>>  	if (!node)
->>>>  		return ERR_PTR(-ENOMEM);
->>>>  
->>>> -	id = idr_alloc(&icc_idr, node, id, id + 1, GFP_KERNEL);
->>>> +	/* negative id indicates dynamic id allocation */
->>>> +	if (id < 0)
->>>
->>> Nit: I think it might be better to add an explicit define for that and
->>> to decline all other negatdive values. Please leave us some room for
->>> future expansion.
->>>
->> Do you mean to replace the value of ALLOC_DYN_ID from -1 to some
->> positive value like 100000 and to use it as initial ID for the nodes
->> requiring the dynamic allocation ? This explicit define can be used as
->> check for dynamic allocation and also as argument to idr_alloc min value
->> argument. Is my interpretation of the comment correct ?
-> 
-> No, it is not. I asked to add an explicit define for -1 in the ICC
-> framework and make icc_node_create_nolock() reject all other negative
-> values.
+[v3]
+	*) Added the tsens-ipq5018 as  new binding without rpm
+        *) Added Dmitry's Reviewed tag
+        *) Fixed Dmitry's comments for error checks in init_ipq5018
+        *) Ordered the qfprom device node properties
+	*) Link to v2: https://lore.kernel.org/all/20230915121504.806672-1-quic_srichara@quicinc.com/
 
-Understood, will make the change as suggested.
-> 
->>
->>>> +		id = idr_alloc(&icc_idr, node, ICC_DYN_ID_START, 0, GFP_KERNEL);
->>>> +	else
->>>> +		id = idr_alloc(&icc_idr, node, id, id + 1, GFP_KERNEL);
->>>> +
->>>>  	if (id < 0) {
->>>>  		WARN(1, "%s: couldn't get idr\n", __func__);
->>>>  		kfree(node);
->>>> @@ -962,6 +969,10 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
->>>>  	node->avg_bw = node->init_avg;
->>>>  	node->peak_bw = node->init_peak;
->>>>  
->>>> +	if (node->id >= ICC_DYN_ID_START)
->>>> +		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
->>>> +					    node->name, dev_name(provider->dev));
->>>> +
->>>>  	if (node->avg_bw || node->peak_bw) {
->>>>  		if (provider->pre_aggregate)
->>>>  			provider->pre_aggregate(node);
->>>> -- 
->>>> 2.39.2
->>>>
->>>
->>
-> 
+[v2]
+	*) Sorted the compatible and removed example
+	*) Fixed the name for new tsens_feature
+	*) Used tsend_calibrate_common instead of legacy
+	   and addressed comments from Dmitry.
+	*) Squashed patch 3 & 4
+	*) Fixed node names, order and added qfprom cells
+            for points seprately
+	*) Squashed patch 6 & 7
+	*) Link to v1: https://lore.kernel.org/all/1693250307-8910-1-git-send-email-quic_srichara@quicinc.com/
+
+Sricharan Ramabadhran (5):
+  dt-bindings: nvmem: Add compatible for IPQ5018
+  dt-bindings: thermal: qcom-tsens: Add ipq5018 compatible
+  thermal: drivers: qcom: Add new feat for soc without rpm
+  thermal: qcom: tsens: Add support for IPQ5018 tsens
+  arm64: dts: qcom: ipq5018: Add tsens node
+
+ .../bindings/nvmem/qcom,qfprom.yaml           |   1 +
+ .../bindings/thermal/qcom-tsens.yaml          |   2 +
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 169 ++++++++++++++++++
+ drivers/thermal/qcom/tsens-v1.c               |  60 +++++++
+ drivers/thermal/qcom/tsens.c                  |   5 +-
+ drivers/thermal/qcom/tsens.h                  |   5 +-
+ 6 files changed, 240 insertions(+), 2 deletions(-)
+
+-- 
+2.39.5
 
 
