@@ -1,190 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-48956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2AD6A3FB5B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 17:33:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB36BA3FB51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 17:32:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 39DEF162BC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 16:25:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A21DF88336A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 16:25:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8FD11F03CC;
-	Fri, 21 Feb 2025 16:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9E5E286298;
+	Fri, 21 Feb 2025 16:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d0lk2H2a"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uONGNCj4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F4C1EF0B4;
-	Fri, 21 Feb 2025 16:25:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA3C1D5173
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 16:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740155144; cv=none; b=tJL/JM1vJYo7tvkZ06aFJo2xWRRn40PrCpJfD5SfOrEMqpOGRhkyFwpWAvqq1AmsxkRAEZiUA3y2/7Ve3gnHYl8gYtijHZC3fExy9j1iFJNfwSRett6rRT8sL2cutxniHleVYsOadx+oIojM9K7WETM9QVssYi9jorVdxkuKdtc=
+	t=1740155138; cv=none; b=B5nt6fenGrNfhn4OpmK/Vp1miwNsm/yiEplm80PnEoAMMv+C9bVYUF+QpjDoLDrfVtmmRRhrH7zFFzkwSV+Lur7+KJKEJZ1H10r0g3H0NTXzXB7r+ZhwajXxDwULYXZZSAru7iN2C/EDUlAm1oEvaBVfe5tA9nNITDC1SWYXdqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740155144; c=relaxed/simple;
-	bh=a0ahG7GNpc2Bh1FMZWerWXsz4xsO5Rzcg+40RjlizxY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=CCGKWrHYLvpcJGgPyeWiLo9IhRlACyAlGjqev1gFecz4UyJDqoK8m303/f3v6WgXm009woXDbv6gMzBrdwd2r/HhSZcIjUcjUEDlXp8lDbkj6kgXmbqwxFOGO0o8Xr9BruZZrH5pPBhDApBGyRK7uQHPsOUvje4OdOsppi+vPD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d0lk2H2a; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51LD11uc015152;
-	Fri, 21 Feb 2025 16:25:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yWWunlq9ptFdkWsR7BCovQgXo10nVfMQQtLgQu+W30I=; b=d0lk2H2aKd/Y0eSs
-	xUvZXzShHlFW/4B2WGV/4cSHSTIIF8RlLDWERYs5kfnjm6vVqLkN4WF28Och6IDm
-	arY8WISol9djwUjhtRe9NrgmMF9jyvProXpUW4yEFKZ6h2aTQ5H7Vk70XJm86GhR
-	TyEJwObm4amEBE/bAsbT28TtUiOJFWrlbwg9f5bCAqdNjPqwzrAPkx27l6VuPISu
-	8pR4H6C4cDESccLXP/7MXWhB8ULEgawnsandK18TUe8KVN4BqV9mhxOvtPocxfW9
-	NhGWIGU4CO/pWzk2uo14lV+8bbA0OpHHGG1d5U6eSUi/8L+YqO/Ik726fqBXgqq8
-	or/hig==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy4jmt4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 16:25:35 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51LGPY8w018373
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 16:25:34 GMT
-Received: from [10.216.10.103] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 21 Feb
- 2025 08:25:30 -0800
-Message-ID: <47eb0aff-a486-10a5-0bbf-c18db03c81e1@quicinc.com>
-Date: Fri, 21 Feb 2025 21:55:18 +0530
+	s=arc-20240116; t=1740155138; c=relaxed/simple;
+	bh=aEE25AXlSTLbdefl+4KfStMhcPWUHROG4MtJ6YdtyXY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=atkKSw0mL/z7/30GhjnpGxIGHi7fFm6rmagXVLs7J0AkGC8gCseID7Ppq9W5UO1t3pjYmx6yV+WXtqVkz/ddTbUr/EzlSvUofywbs8PxFEgmNhES88vmxE+CkVQPO7sKEsreD/wUzA3FPIOM0+fU4ONycGf393LTBQz2/e5f7X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uONGNCj4; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-30930b0b420so20277441fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 08:25:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740155135; x=1740759935; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zVZWunDIG7iJIj75JUGRirS9XvGJ484MyBZ0PrGNwBE=;
+        b=uONGNCj41ac2B8P2mvmzdd/ARnUsLyuqie839y0HjM89WmcNlBr16G2aZA/btRb7tw
+         h0SfzYAAeMvjPt955MDOG+fmtYepuTJ4xDgQO92LLZTe7IqVQVGmQy0fZHZ38Ij71CD/
+         xrTNV1xAAHXo6wpQWZ7ZeSgenWUA2a5x/HEESjaAkUhed2f2QuvvUOVIf3YajAOHFsjw
+         JO9Cpd024V4kHLIEHI2f6Y9ualY9+NfwnMDbFmgsEoMoOcs5a1l9HyVqRl8236QQI43I
+         A5B5Bh2T/uB1g8HFmkX6EWg8SsCkfOBd2dWVsLc3VaCMFAUURGgJp7HYEnWOYztM4od8
+         81QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740155135; x=1740759935;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zVZWunDIG7iJIj75JUGRirS9XvGJ484MyBZ0PrGNwBE=;
+        b=mY97ScLLcnEmt9OrXO1es99+TEbXMkp5NWKbjwsVb1r3JQTfCrOzniVT94mfuVpQJg
+         Tvy9Di56HifVsuVG5nIiOeh++NLj6nVXH8qXGhsikYFlqqazTFN7+unwdA/NoyP2whSe
+         k6vJFCgWcjd5LMtD8smIblU0G4fJ11bSw/CWuevsJ8m43TTRe8cAj2K6AgPlAwJL1abJ
+         h2mXHbxYUPW8q5c8uq6hgXWdWUe/TRKODoOony7w77aadA+cXv0jFNQkJrPtO89eN9ql
+         rKIsew3usGi9+lxriYND6T9ClTUMcfgikP/5nKCzV+82fIZezyU1J2mUVY7xT6B/9W7L
+         UfyA==
+X-Forwarded-Encrypted: i=1; AJvYcCV10vHcMqSsBgLvTFcsyotpLmQk4XNByDabOJKrTbPZe+Gecli+Wjzq0xRV4sWgvSnwulIwVpYuRiGwO85P@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyy6qdffJduxfJSIQIH2Eo/bJ5ucl2OQXs/szAsXxfOk0iI0Aj+
+	Uj2OIrbU/ix6kvWIdmyc9oI/CyOC7iDa/U43DGRyuKKP1XZp7nCOHLWEvJwNlXs=
+X-Gm-Gg: ASbGnctMJxZmPTZEIAMNkiiI6iPZB5BwvDyzh10ObSTc16PnwEkZiMNGGKU4isccCLB
+	Q1aw06wPWRHX4mhhM+rRvhthE42LObZAGuof8DV4Beg6VbE2mN/yyLooxB/4Ek/cO6cqIU1xJB/
+	rDUA7tyJs3dn4oFY/lSkeOsiv2BLyCTlR8A4HISYkk0EAHRP73G8Z7DiaCno8nrWGfGK9nSbrMh
+	EhvEdEj/cKLvvFygcs7FMtQaDHbGjMg3VxIhlap4suVJSvjiz963Ux9uhgfL7XgpXSXX+Ez+WHp
+	JXdOAXJYpCpOLDzFc3dGgtVwS3esiW1nuYMQa2ciLDdGK/H4KpwMXtP94EAR60PIFGYCWaWoGe2
+	FSAN4gw==
+X-Google-Smtp-Source: AGHT+IGwPCQwlJ8n3fHSVoLxs5y3AVSJq/S4VL0YsBEmcH8zygS1KlxAOHXc2+k8N/cIbIZteGkAQQ==
+X-Received: by 2002:a2e:300e:0:b0:309:214a:6b16 with SMTP id 38308e7fff4ca-30a598f6c81mr12214571fa.22.1740155134665;
+        Fri, 21 Feb 2025 08:25:34 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3091011ed8bsm29249061fa.56.2025.02.21.08.25.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Feb 2025 08:25:33 -0800 (PST)
+Date: Fri, 21 Feb 2025 18:25:31 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
+	Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH v3 18/21] drm/msm/dpu: Implement 10-bit color alpha for
+ v12.0 DPU
+Message-ID: <4y2nj6qxbbp7etuweoyarcg7vpbyemparzclj7ulb46rxk7k3s@s6wjrjebuc3g>
+References: <20250221-b4-sm8750-display-v3-0-3ea95b1630ea@linaro.org>
+ <20250221-b4-sm8750-display-v3-18-3ea95b1630ea@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v4 4/4] media: venus: hfi: add a check to handle OOB in
- sfr region
-To: Tomasz Figa <tfiga@chromium.org>
-CC: Hans Verkuil <hverkuil@xs4all.nl>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        Stanimir Varbanov
-	<stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+samsung@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-References: <20250207-venus_oob_2-v4-0-522da0b68b22@quicinc.com>
- <20250207-venus_oob_2-v4-4-522da0b68b22@quicinc.com>
- <e794c047-ab0e-4589-a1d2-0f73b813eacc@xs4all.nl>
- <b1721d46-ffbf-e21c-ce18-e96e3e8ee35f@quicinc.com>
- <CAAFQd5ABR8BwG_9JVPzzp+HZv6O=B9r-ipjKQHku7DdTGASetQ@mail.gmail.com>
-Content-Language: en-US
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <CAAFQd5ABR8BwG_9JVPzzp+HZv6O=B9r-ipjKQHku7DdTGASetQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: z6XY414_3z239VBn3rot62zVG9y2qoJL
-X-Proofpoint-ORIG-GUID: z6XY414_3z239VBn3rot62zVG9y2qoJL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-21_05,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 suspectscore=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 adultscore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502210116
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250221-b4-sm8750-display-v3-18-3ea95b1630ea@linaro.org>
 
-
-On 2/21/2025 9:25 AM, Tomasz Figa wrote:
-> On Fri, Feb 21, 2025 at 12:56 AM Vikash Garodia
-> <quic_vgarodia@quicinc.com> wrote:
->>
->>
->> On 2/20/2025 8:53 PM, Hans Verkuil wrote:
->>> On 2/7/25 09:24, Vikash Garodia wrote:
->>>> sfr->buf_size is in shared memory and can be modified by malicious user.
->>>> OOB write is possible when the size is made higher than actual sfr data
->>>> buffer. Cap the size to allocated size for such cases.
->>>>
->>>> Cc: stable@vger.kernel.org
->>>> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
->>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>>> ---
->>>>  drivers/media/platform/qcom/venus/hfi_venus.c | 9 +++++++--
->>>>  1 file changed, 7 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
->>>> index 6b615270c5dae470c6fad408c9b5bc037883e56e..c3113420d266e61fcab44688580288d7408b50f4 100644
->>>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
->>>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
->>>> @@ -1041,18 +1041,23 @@ static void venus_sfr_print(struct venus_hfi_device *hdev)
->>>>  {
->>>>      struct device *dev = hdev->core->dev;
->>>>      struct hfi_sfr *sfr = hdev->sfr.kva;
->>>> +    u32 size;
->>>>      void *p;
->>>>
->>>>      if (!sfr)
->>>>              return;
->>>>
->>>> -    p = memchr(sfr->data, '\0', sfr->buf_size);
->>>> +    size = sfr->buf_size;
->>>
->>> If this is ever 0...
->>>
->>>> +    if (size > ALIGNED_SFR_SIZE)
->>>> +            size = ALIGNED_SFR_SIZE;
->>>> +
->>>> +    p = memchr(sfr->data, '\0', size);
->>>>      /*
->>>>       * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
->>>>       * that Venus is in the process of crashing.
->>>>       */
->>>>      if (!p)
->>>> -            sfr->data[sfr->buf_size - 1] = '\0';
->>>> +            sfr->data[size - 1] = '\0';
->>>
->>> ...then this will overwrite memory. It probably can't be 0, but a check or perhaps
->>> just a comment might be good. It looks a bit scary.
->> Thats correct, it would not be 0 as its a prefixed one [1]. I can put up a
->> comment here.
+On Fri, Feb 21, 2025 at 04:24:28PM +0100, Krzysztof Kozlowski wrote:
+> v12.0 DPU on SM8750 comes with 10-bit color alpha.  Add register
+> differences and new implementations of setup_alpha_out,
+> setup_border_color and so one for this.
 > 
-> Couldn't a bug (or vulnerability) in the firmware actually still cause
-> it to write 0 there?
-Possible. Though the size is initialized in driver with "ALIGNED_SFR_SIZE",
-there is a possibility that the same could get overwritten by a rogue firmware.
-Kept a check in v5, which cache the value locally and then does the check before
-using that value.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Changes in v3:
+> 1. New patch, split from previous big DPU v12.0.
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 20 +++++---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c | 84 +++++++++++++++++++++++++++++--
+>  2 files changed, 94 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index b9fe3a7343d54f6f8b5aad7982928d5fc728bd61..7a35939ece180c15898b2eaa2f1f451767c741ae 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -319,15 +319,21 @@ static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+>  	return true;
+>  }
+>  
+> -static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
+> -		struct dpu_plane_state *pstate, const struct msm_format *format)
+> +static void _dpu_crtc_setup_blend_cfg(const struct dpu_hw_ctl *ctl,
+> +				      struct dpu_crtc_mixer *mixer,
+> +				      struct dpu_plane_state *pstate,
+> +				      const struct msm_format *format)
+>  {
+>  	struct dpu_hw_mixer *lm = mixer->hw_lm;
+>  	uint32_t blend_op;
+> -	uint32_t fg_alpha, bg_alpha;
+> +	uint32_t fg_alpha, bg_alpha, max_alpha;
+>  
+>  	fg_alpha = pstate->base.alpha >> 8;
+> -	bg_alpha = 0xff - fg_alpha;
+> +	if (ctl->mdss_ver->core_major_ver < 12)
+> +		max_alpha = 0xff;
+> +	else
+> +		max_alpha = 0x3ff;
 
-Regards
-Vikash
->>
->> [1]
->> https://elixir.bootlin.com/linux/v6.14-rc3/source/drivers/media/platform/qcom/venus/hfi_venus.c#L836
->>>
->>> Regards,
->>>
->>>       Hans
->>>
->>>>
->>>>      dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
->>>>  }
->>>>
->> Regards,
->> Vikash
+So, CTL is passed only to get struct dpu_mdss_version? It can either be
+passed directly or fetched via dpu_kms->catalog->mdss_ver
+
+> +	bg_alpha = max_alpha - fg_alpha;
+>  
+>  	/* default to opaque blending */
+>  	if (pstate->base.pixel_blend_mode == DRM_MODE_BLEND_PIXEL_NONE ||
+> @@ -337,7 +343,7 @@ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
+>  	} else if (pstate->base.pixel_blend_mode == DRM_MODE_BLEND_PREMULTI) {
+>  		blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
+>  			DPU_BLEND_BG_ALPHA_FG_PIXEL;
+> -		if (fg_alpha != 0xff) {
+> +		if (fg_alpha != max_alpha) {
+>  			bg_alpha = fg_alpha;
+>  			blend_op |= DPU_BLEND_BG_MOD_ALPHA |
+>  				    DPU_BLEND_BG_INV_MOD_ALPHA;
+> @@ -348,7 +354,7 @@ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
+>  		/* coverage blending */
+>  		blend_op = DPU_BLEND_FG_ALPHA_FG_PIXEL |
+>  			DPU_BLEND_BG_ALPHA_FG_PIXEL;
+> -		if (fg_alpha != 0xff) {
+> +		if (fg_alpha != max_alpha) {
+>  			bg_alpha = fg_alpha;
+>  			blend_op |= DPU_BLEND_FG_MOD_ALPHA |
+>  				    DPU_BLEND_FG_INV_MOD_ALPHA |
+> @@ -482,7 +488,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>  
+>  		/* blend config update */
+>  		for (lm_idx = 0; lm_idx < cstate->num_mixers; lm_idx++) {
+> -			_dpu_crtc_setup_blend_cfg(mixer + lm_idx, pstate, format);
+> +			_dpu_crtc_setup_blend_cfg(ctl, mixer + lm_idx, pstate, format);
+>  
+>  			if (bg_alpha_enable && !format->alpha_enable)
+>  				mixer[lm_idx].mixer_op_mode = 0;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> index 3bfb61cb83672dca4236bdbbbfb1e442223576d2..75bf3521b03c8e243ccfe1fc226aa71f23b296df 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> @@ -19,12 +19,20 @@
+>  
+>  /* These register are offset to mixer base + stage base */
+>  #define LM_BLEND0_OP                     0x00
+> +
+> +/* <v12 DPU with offset to mixer base + stage base */
+>  #define LM_BLEND0_CONST_ALPHA            0x04
+>  #define LM_FG_COLOR_FILL_COLOR_0         0x08
+>  #define LM_FG_COLOR_FILL_COLOR_1         0x0C
+
+lowercase hex
+
+>  #define LM_FG_COLOR_FILL_SIZE            0x10
+>  #define LM_FG_COLOR_FILL_XY              0x14
+>  
+> +/* >= v12 DPU */
+> +#define LM_BORDER_COLOR_0_V12		0x1C
+
+lowercase hex
+
+> +#define LM_BORDER_COLOR_1_V12		0x20
+> +
+> +/* >= v12 DPU with offset to mixer base + stage base */
+> +#define LM_BLEND0_CONST_ALPHA_V12	0x08
+
+This doesn't seem to be aligned properly
+
+>  #define LM_BLEND0_FG_ALPHA               0x04
+>  #define LM_BLEND0_BG_ALPHA               0x08
+>  
+
+-- 
+With best wishes
+Dmitry
 
