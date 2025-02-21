@@ -1,176 +1,386 @@
-Return-Path: <linux-arm-msm+bounces-48791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-48792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D6D8A3EB35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 04:18:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA3B7A3EB39
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 04:21:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F5803A438A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 03:17:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D122B19C4B59
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 03:21:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E19591F428D;
-	Fri, 21 Feb 2025 03:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF5281F427D;
+	Fri, 21 Feb 2025 03:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mAQx6Drp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="maf9e9SY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1885F1F4299;
-	Fri, 21 Feb 2025 03:17:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AB51D5CD4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 03:21:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740107836; cv=none; b=oQz8nERYbZ+T59Czt7HTK9Foov9RANA6aU+ipLbbIScCOGEuvIAhX5340FFXsqDtkWC97+NC+wUCWcPEYtEF0haI9/oCqe3xqZxC+fOIxjAbKiS8YnUjJIZVi0nSPHGlASkJubn+VsmdeCZpXad0uWEE1ews5Jzg2y4GBn3Grho=
+	t=1740108106; cv=none; b=Z62s/yF6/okuCQoqDc/7SLcz1gM8jcSZ7hCiTyvXn5dAXZm/yY2x8MXSwaQ2G8a2zu2VV39EaxDJuTOytf+SXTE+M+cJDv/jU6Lrapx0WKDnss409TfCQTYPVxe3G1WhLNJJYcXmEqADr30Te5KF5HzTDyyoKZqUMsEgXWv+yUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740107836; c=relaxed/simple;
-	bh=iJDJch0SjMttKNbIuMAxM/QgbpgpGiUS5wxPD2nMqZ0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=MHf+/2kl7cB4eQ8Cn16+QhYJffrleH0zvfa51f3YDNs409fefBqK8m4DrgUuQa72+egQSFnpQo5dsWGscUDw5jfMFwboC6Nka/6h74YkJsuK3Zzz41yit9Sw1FPNVb6X9YBP8PDwdFE/T76M5vGWcd0pgTNv+Cbsj3fdmV4C2uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mAQx6Drp; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51KH74XP015230;
-	Fri, 21 Feb 2025 03:16:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	My5FZ8xkI5XrMJWsuxlfbUTUEoR46wnWNGCkHUDfsUA=; b=mAQx6DrpA66dAeYG
-	JYVe8FbP9moH6UXrEQBvh+GTUhdre1NqYetxcWnt0NQehP10n9jkGdt+EukvQKC2
-	W0jg0h5FRn6vVyjBztnWu1RNkH6qV0R9lbLKepw4P+FN4/1Osi+ItCcoNCM+e6dB
-	z5QJVFU+tei+DRdEQPdg+2A3+8Xy9O9B4ziyFIaupi2T6/E4Q2+bvTBwgv8ChS30
-	OR6fWV4eseC45O1Qx2iQ93KOSex0NoVKmBTDvgoAUTl4ok1RPAyJbpZWLAt9yHJa
-	G+10jczMFxhynnITGYpNvCmWQaM4ZNNrVxC5ml6nSK3KAEn3hXz0q4hY9NzUS6nM
-	aryysg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy4g9g9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 03:16:54 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51L3GrO7018531
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Feb 2025 03:16:53 GMT
-Received: from [10.71.115.190] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 20 Feb
- 2025 19:16:52 -0800
-Message-ID: <a1dbb65a-d437-46e1-80ac-8dff3c97b81c@quicinc.com>
-Date: Thu, 20 Feb 2025 19:16:44 -0800
+	s=arc-20240116; t=1740108106; c=relaxed/simple;
+	bh=9lQloC8xrSrvv0NL4PTcGbjNs7+WeOoNHlIVlv8UiaI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BhBmjrtKpU9TvkTZ0J3mgdMVoz14PMPNZr4P/PpDF39K7B+EtFkjDrsdpRYJpaN2+xOpKub5Aq802hMhEk7FVjZ04phUq2+Mr7gM+gBVDQ4kILdyiM6Z3lLf4YC3KfcKFe9ZzEZfKglwkSas5AapaovrTTFJ88vWyvIEMFrl7s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=maf9e9SY; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4398c8c8b2cso16161355e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2025 19:21:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740108103; x=1740712903; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tav3PNxevwKiDqCQMCZ2Ad3WIauSHdQjU2aO6+32oKU=;
+        b=maf9e9SYbNU4tmmkNDY0pNzgffVJvRG5p/GgN4wAj3GNzjwZBUEPoMtwmKVF8zNO2r
+         aVvMBPLoPnV2uPpQJSpCySUUoGI+l6Ai5y1WyXKdtihKYHEC+jKRD5BQ6DxKNKSpWUuh
+         ASlZ13R/KiKJmxHi3zqdlW3YKYaZ4oGnfWliHRsR/4ujbY59yCdgkFsfnUmh1/2avOKJ
+         dSVfxEuJyUelIW3DcLixIH46xZqdK+dp0wWt0o1ByBpd3puX4AabrVWRTXv7P0z8RPPl
+         2Ia1elAyMU2+p6A6GNJNUCiiBwD/G7sST3haX9yBkVhzjUkcYsGLD4Yr0KetgwmQa4qO
+         Dxzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740108103; x=1740712903;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tav3PNxevwKiDqCQMCZ2Ad3WIauSHdQjU2aO6+32oKU=;
+        b=MNeGyyOjMmXm7f06r0xFh4r2dlfXRutXNYoXINr7y/v3CNTJU0PLJNqxPH6bbw7KLX
+         8lzFqlUePwQrzpHyMOpT1qb5xyJkmOkB5amadLgQ2AfykO9Rjq5ETTcwhFL1WYqsipy3
+         0WHCCi+SphD3H/JRHysU6iDoMIUV6dH1GjbjBYojRsGRPtvJVUv6xDbBzyeP8uX1Z+ji
+         pdR+aW0Bmnp4gCpWgZrq112TNOoU/JgFzYU5m9QIki77tqlSvH9IkhMArFA7aoQIzf+9
+         5qAe3D7l79do2FeHu0dRCghxrbg7ScZFPg85Jgb39rpeujIxWwiUAHxKO+/jaNfboCHn
+         kdhg==
+X-Forwarded-Encrypted: i=1; AJvYcCVRficrFKpzsWqa7wFHPAE+kB+ZMG2rvZDlTTcpuDwtmJZHjB03Hx30uBz5++uCz4j5ohMDr9fh2a0oyN1K@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4dI3699L0BGw6Q4iGkzl/HNq7WiDvxi6CgRn03x/0YB4fCL6G
+	5DsicHsmpum7GS2CD9FrkT8gyFECSEoc4V34BzVMuuNa80ReykSky94jskNePQI=
+X-Gm-Gg: ASbGncsougQp81W98UhhNGN3QkFsmVn2t9ycXncc9JmMVth2HLTxzJwRc/UfvjHOTO8
+	kHDbG/Peku22lXQWuDhkDmh2IRapb2SzUCI3OVvCSGva4L8t2OAy10NpXFSLmoFQwkLAOchra33
+	KiJdR4oI/+Wdo/z/B/FEfE8pygs5TSAnnFRgpr399N+/XC4TmxWnIqM5Kz2c4coLhVQJfdfOpKA
+	5hid0nvJTmvyiQMYwknYgWn15odNs0Z+R9BA1JZorLMo3CtD8GAAqDL5aZzTyMGbVHG9j9g3et6
+	7XZLFVaXRRqF/c9HvMymuFqy4agKqqeggEIut776xTHn
+X-Google-Smtp-Source: AGHT+IFHRKBF41ynLQkyGP19rFquObp3TYcaLCdzafxkPCgt8hie9i36wOi7U4rAgvAVyC9I9BlmXw==
+X-Received: by 2002:a05:600c:524a:b0:439:86c4:a8ec with SMTP id 5b1f17b1804b1-439ae1f1147mr12496995e9.15.1740108102943;
+        Thu, 20 Feb 2025 19:21:42 -0800 (PST)
+Received: from localhost.localdomain ([2.124.154.225])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-439b02f5b38sm3725615e9.24.2025.02.20.19.21.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2025 19:21:41 -0800 (PST)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+To: srinivas.kandagatla@linaro.org,
+	broonie@kernel.org,
+	lgirdwood@gmail.com
+Cc: krzysztof.kozlowski@linaro.org,
+	steev@kali.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	jdelvare@suse.com,
+	linux@roeck-us.net,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-hwmon@vger.kernel.org
+Subject: [PATCH v2] ASoC: codecs: wsa883x: Implement temperature reading and hwmon
+Date: Fri, 21 Feb 2025 03:21:41 +0000
+Message-ID: <20250221032141.1206902-1-alexey.klimov@linaro.org>
+X-Mailer: git-send-email 2.47.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: Re: [PATCH 2/7] dt-bindings: phy: Add the M31 based eUSB2 PHY
- bindings
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Melody Olvera
-	<quic_molvera@quicinc.com>
-CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Catalin Marinas" <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20250113-sm8750_usb_master-v1-0-09afe1dc2524@quicinc.com>
- <20250113-sm8750_usb_master-v1-2-09afe1dc2524@quicinc.com>
- <a42wtus7y72mt5adklbwg2hjbuayxkeucs7t4xuzmxyag2mx7b@6wlsomzj4gha>
-Content-Language: en-US
-In-Reply-To: <a42wtus7y72mt5adklbwg2hjbuayxkeucs7t4xuzmxyag2mx7b@6wlsomzj4gha>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZVVB3qF4A6r8HrSQR6WqZF-X_Cie_t9E
-X-Proofpoint-ORIG-GUID: ZVVB3qF4A6r8HrSQR6WqZF-X_Cie_t9E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-20_09,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 suspectscore=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 adultscore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502210021
+Content-Transfer-Encoding: 8bit
 
-Hi Dmitry,
+Read temperature of the amplifier and expose it via hwmon interface, which
+will be later used during calibration of speaker protection algorithms.
+The method is the same as for wsa884x and therefore this is based on
+Krzysztof Kozlowski's approach implemented in commit 6b99dc62d940 ("ASoC:
+codecs: wsa884x: Implement temperature reading and hwmon").
 
-On 1/14/2025 2:12 AM, Dmitry Baryshkov wrote:
-> On Mon, Jan 13, 2025 at 01:52:08PM -0800, Melody Olvera wrote:
->> From: Wesley Cheng <quic_wcheng@quicinc.com>
->>
->> On SM8750, the M31 eUSB2 PHY is being used to support USB2. Add the
->> binding definition for the PHY driver.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->> ---
->>  .../bindings/phy/qcom,m31-eusb2-phy.yaml           | 84 ++++++++++++++++++++++
->>  1 file changed, 84 insertions(+)
->>
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,sm8750-gcc.h>
->> +    #include <dt-bindings/clock/qcom,rpmh.h>
->> +    #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
-> 
-> This a typical comment, please actually update your internal
-> documentation: don't use GCC's and other clock controller's bindings in
-> examples for other blocks.
-> 
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Steev Klimaszewski <steev@kali.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+---
 
-I can see that other examples also reference bindings from external
-drivers, otherwise I think it would throw an error for not being able to
-find the parents in properties such as, resets and clocks.  I tried to
-update my dtschema to ensure that this failure was not missed.
+Changes in v2:
+- add temperature conversion to millidegrees of Celcius
+  when amplifier is on to report correct data to hwmon;
+- minor coding style fixes to make checkpatch --strict happy;
+- correct typo (reference to wsa884x in the comment), small rewording.
 
-I checked and made sure that no errors were not seen, so I started to
-wonder if maybe when this series was submitted the qcom,sm8750-gcc.h wasn't
-yet present on the kernel tree.  To confirm this, I removed the
-aforementioned header file, and got the same error/issue.  Now that the
-sm8750 gcc header has landed upstream, I believe that this error should be
-resolved.
+ sound/soc/codecs/wsa883x.c | 194 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 194 insertions(+)
 
-Thanks
-Wesley Cheng
+diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+index 47da5674d7c9..a5a6cb90bb43 100644
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -6,6 +6,7 @@
+ #include <linux/bitops.h>
+ #include <linux/device.h>
+ #include <linux/gpio/consumer.h>
++#include <linux/hwmon.h>
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+@@ -156,8 +157,28 @@
+ #define WSA883X_PA_FSM_ERR_COND         (WSA883X_DIG_CTRL_BASE + 0x0014)
+ #define WSA883X_PA_FSM_MSK              (WSA883X_DIG_CTRL_BASE + 0x0015)
+ #define WSA883X_PA_FSM_BYP              (WSA883X_DIG_CTRL_BASE + 0x0016)
++#define WSA883X_PA_FSM_BYP_DC_CAL_EN_MASK		0x01
++#define WSA883X_PA_FSM_BYP_DC_CAL_EN_SHIFT		0
++#define WSA883X_PA_FSM_BYP_CLK_WD_EN_MASK		0x02
++#define WSA883X_PA_FSM_BYP_CLK_WD_EN_SHIFT		1
++#define WSA883X_PA_FSM_BYP_BG_EN_MASK			0x04
++#define WSA883X_PA_FSM_BYP_BG_EN_SHIFT			2
++#define WSA883X_PA_FSM_BYP_BOOST_EN_MASK		0x08
++#define WSA883X_PA_FSM_BYP_BOOST_EN_SHIFT		3
++#define WSA883X_PA_FSM_BYP_PA_EN_MASK			0x10
++#define WSA883X_PA_FSM_BYP_PA_EN_SHIFT			4
++#define WSA883X_PA_FSM_BYP_D_UNMUTE_MASK		0x20
++#define WSA883X_PA_FSM_BYP_D_UNMUTE_SHIFT		5
++#define WSA883X_PA_FSM_BYP_SPKR_PROT_EN_MASK		0x40
++#define WSA883X_PA_FSM_BYP_SPKR_PROT_EN_SHIFT		6
++#define WSA883X_PA_FSM_BYP_TSADC_EN_MASK		0x80
++#define WSA883X_PA_FSM_BYP_TSADC_EN_SHIFT		7
+ #define WSA883X_PA_FSM_DBG              (WSA883X_DIG_CTRL_BASE + 0x0017)
+ #define WSA883X_TADC_VALUE_CTL          (WSA883X_DIG_CTRL_BASE + 0x0020)
++#define WSA883X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK	0x01
++#define WSA883X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_SHIFT	0
++#define WSA883X_TADC_VALUE_CTL_VBAT_VALUE_RD_EN_MASK	0x02
++#define WSA883X_TADC_VALUE_CTL_VBAT_VALUE_RD_EN_SHIFT	1
+ #define WSA883X_TEMP_DETECT_CTL         (WSA883X_DIG_CTRL_BASE + 0x0021)
+ #define WSA883X_TEMP_MSB                (WSA883X_DIG_CTRL_BASE + 0x0022)
+ #define WSA883X_TEMP_LSB                (WSA883X_DIG_CTRL_BASE + 0x0023)
+@@ -427,6 +448,17 @@
+ 		SNDRV_PCM_FMTBIT_S24_LE |\
+ 		SNDRV_PCM_FMTBIT_S24_3LE | SNDRV_PCM_FMTBIT_S32_LE)
+ 
++/* Two-point trimming for temperature calibration */
++#define WSA883X_T1_TEMP			-10L
++#define WSA883X_T2_TEMP			150L
++
++/*
++ * Device will report senseless data in many cases, so discard any measurements
++ * outside of valid range.
++ */
++#define WSA883X_LOW_TEMP_THRESHOLD	5
++#define WSA883X_HIGH_TEMP_THRESHOLD	45
++
+ struct wsa883x_priv {
+ 	struct regmap *regmap;
+ 	struct device *dev;
+@@ -441,6 +473,13 @@ struct wsa883x_priv {
+ 	int active_ports;
+ 	int dev_mode;
+ 	int comp_offset;
++	/*
++	 * Protects temperature reading code (related to speaker protection) and
++	 * fields: temperature and pa_on.
++	 */
++	struct mutex sp_lock;
++	unsigned int temperature;
++	bool pa_on;
+ };
+ 
+ enum {
+@@ -1186,6 +1225,10 @@ static int wsa883x_spkr_event(struct snd_soc_dapm_widget *w,
+ 
+ 	switch (event) {
+ 	case SND_SOC_DAPM_POST_PMU:
++		mutex_lock(&wsa883x->sp_lock);
++		wsa883x->pa_on = true;
++		mutex_unlock(&wsa883x->sp_lock);
++
+ 		switch (wsa883x->dev_mode) {
+ 		case RECEIVER:
+ 			snd_soc_component_write_field(component, WSA883X_CDC_PATH_MODE,
+@@ -1235,6 +1278,9 @@ static int wsa883x_spkr_event(struct snd_soc_dapm_widget *w,
+ 					      WSA883X_GLOBAL_PA_EN_MASK, 0);
+ 		snd_soc_component_write_field(component, WSA883X_PDM_WD_CTL,
+ 					      WSA883X_PDM_EN_MASK, 0);
++		mutex_lock(&wsa883x->sp_lock);
++		wsa883x->pa_on = false;
++		mutex_unlock(&wsa883x->sp_lock);
+ 		break;
+ 	}
+ 	return 0;
+@@ -1367,6 +1413,140 @@ static struct snd_soc_dai_driver wsa883x_dais[] = {
+ 	},
+ };
+ 
++static int wsa883x_get_temp(struct wsa883x_priv *wsa883x, long *temp)
++{
++	unsigned int d1_msb = 0, d1_lsb = 0, d2_msb = 0, d2_lsb = 0;
++	unsigned int dmeas_msb = 0, dmeas_lsb = 0;
++	int d1, d2, dmeas;
++	unsigned int mask;
++	int ret, range;
++	long val;
++
++	guard(mutex)(&wsa883x->sp_lock);
++
++	if (wsa883x->pa_on) {
++		/*
++		 * Reading temperature is possible only when Power Amplifier is
++		 * off. Report last cached data.
++		 */
++		*temp = wsa883x->temperature * 1000;
++		return 0;
++	}
++
++	ret = pm_runtime_resume_and_get(wsa883x->dev);
++	if (ret < 0)
++		return ret;
++
++	mask = WSA883X_PA_FSM_BYP_DC_CAL_EN_MASK |
++	       WSA883X_PA_FSM_BYP_CLK_WD_EN_MASK |
++	       WSA883X_PA_FSM_BYP_BG_EN_MASK |
++	       WSA883X_PA_FSM_BYP_D_UNMUTE_MASK |
++	       WSA883X_PA_FSM_BYP_SPKR_PROT_EN_MASK |
++	       WSA883X_PA_FSM_BYP_TSADC_EN_MASK;
++
++	/*
++	 * Here and further do not care about read or update failures.
++	 * For example, before turning the amplifier on for the first
++	 * time, reading WSA883X_TEMP_DIN_MSB will always return 0.
++	 * Instead, check if returned value is within reasonable
++	 * thresholds.
++	 */
++	regmap_update_bits(wsa883x->regmap, WSA883X_PA_FSM_BYP, mask, mask);
++
++	regmap_update_bits(wsa883x->regmap, WSA883X_TADC_VALUE_CTL,
++			   WSA883X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK,
++			   FIELD_PREP(WSA883X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK, 0x0));
++
++	regmap_read(wsa883x->regmap, WSA883X_TEMP_MSB, &dmeas_msb);
++	regmap_read(wsa883x->regmap, WSA883X_TEMP_LSB, &dmeas_lsb);
++
++	regmap_update_bits(wsa883x->regmap, WSA883X_TADC_VALUE_CTL,
++			   WSA883X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK,
++			   FIELD_PREP(WSA883X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK, 0x1));
++
++	regmap_read(wsa883x->regmap, WSA883X_OTP_REG_1, &d1_msb);
++	regmap_read(wsa883x->regmap, WSA883X_OTP_REG_2, &d1_lsb);
++	regmap_read(wsa883x->regmap, WSA883X_OTP_REG_3, &d2_msb);
++	regmap_read(wsa883x->regmap, WSA883X_OTP_REG_4, &d2_lsb);
++
++	regmap_update_bits(wsa883x->regmap, WSA883X_PA_FSM_BYP, mask, 0x0);
++
++	dmeas = (((dmeas_msb & 0xff) << 0x8) | (dmeas_lsb & 0xff)) >> 0x6;
++	d1 = (((d1_msb & 0xff) << 0x8) | (d1_lsb & 0xff)) >> 0x6;
++	d2 = (((d2_msb & 0xff) << 0x8) | (d2_lsb & 0xff)) >> 0x6;
++
++	if (d1 == d2) {
++		/* Incorrect data in OTP? */
++		ret = -EINVAL;
++		goto out;
++	}
++
++	val = WSA883X_T1_TEMP + (((dmeas - d1) * (WSA883X_T2_TEMP - WSA883X_T1_TEMP)) / (d2 - d1));
++	range = WSA883X_HIGH_TEMP_THRESHOLD - WSA883X_LOW_TEMP_THRESHOLD;
++	if (in_range(val, WSA883X_LOW_TEMP_THRESHOLD, range)) {
++		wsa883x->temperature = val;
++		*temp = val * 1000;
++		ret = 0;
++	} else {
++		ret = -EAGAIN;
++	}
++out:
++	pm_runtime_mark_last_busy(wsa883x->dev);
++	pm_runtime_put_autosuspend(wsa883x->dev);
++
++	return ret;
++}
++
++static umode_t wsa883x_hwmon_is_visible(const void *data,
++					enum hwmon_sensor_types type, u32 attr,
++					int channel)
++{
++	if (type != hwmon_temp)
++		return 0;
++
++	switch (attr) {
++	case hwmon_temp_input:
++		return 0444;
++	default:
++		break;
++	}
++
++	return 0;
++}
++
++static int wsa883x_hwmon_read(struct device *dev,
++			      enum hwmon_sensor_types type,
++			      u32 attr, int channel, long *temp)
++{
++	int ret;
++
++	switch (attr) {
++	case hwmon_temp_input:
++		ret = wsa883x_get_temp(dev_get_drvdata(dev), temp);
++		break;
++	default:
++		ret = -EOPNOTSUPP;
++		break;
++	}
++
++	return ret;
++}
++
++static const struct hwmon_channel_info *const wsa883x_hwmon_info[] = {
++	HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT),
++	NULL
++};
++
++static const struct hwmon_ops wsa883x_hwmon_ops = {
++	.is_visible	= wsa883x_hwmon_is_visible,
++	.read		= wsa883x_hwmon_read,
++};
++
++static const struct hwmon_chip_info wsa883x_hwmon_chip_info = {
++	.ops	= &wsa883x_hwmon_ops,
++	.info	= wsa883x_hwmon_info,
++};
++
+ static int wsa883x_probe(struct sdw_slave *pdev,
+ 			 const struct sdw_device_id *id)
+ {
+@@ -1402,6 +1582,7 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	wsa883x->sconfig.bps = 1;
+ 	wsa883x->sconfig.direction = SDW_DATA_DIR_RX;
+ 	wsa883x->sconfig.type = SDW_STREAM_PDM;
++	mutex_init(&wsa883x->sp_lock);
+ 
+ 	/**
+ 	 * Port map index starts with 0, however the data port for this codec
+@@ -1424,6 +1605,19 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 				    "regmap_init failed\n");
+ 		goto err;
+ 	}
++
++	if (IS_REACHABLE(CONFIG_HWMON)) {
++		struct device *hwmon;
++
++		hwmon = devm_hwmon_device_register_with_info(dev, "wsa883x",
++							     wsa883x,
++							     &wsa883x_hwmon_chip_info,
++							     NULL);
++		if (IS_ERR(hwmon))
++			return dev_err_probe(dev, PTR_ERR(hwmon),
++					     "Failed to register hwmon sensor\n");
++	}
++
+ 	pm_runtime_set_autosuspend_delay(dev, 3000);
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_mark_last_busy(dev);
+-- 
+2.47.2
 
->> +
->> +    usb_1_hsphy: phy@88e3000 {
->> +        compatible = "qcom,sm8750-m31-eusb2-phy";
->> +        reg = <0x88e3000 0x29c>;
->> +
->> +        clocks = <&tcsrcc TCSR_USB2_CLKREF_EN>;
->> +        clock-names = "ref";
->> +
->> +        resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
->> +
->> +        #phy-cells = <0>;
->> +
->> +        vdd-supply = <&vreg_l2d_0p88>;
->> +        vdda12-supply = <&vreg_l3g_1p2>;
->> +
->> +    };
->>
->> -- 
->> 2.46.1
->>
-> 
 
