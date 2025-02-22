@@ -1,217 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-49004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8B21A403CA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 00:53:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 095C5A40454
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 01:43:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 459B03B78EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2025 23:53:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48E0D189FFF9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 00:43:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A99EC254B09;
-	Fri, 21 Feb 2025 23:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 803014D8CB;
+	Sat, 22 Feb 2025 00:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WGB2ubSj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KzP33SR+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF87254AE0;
-	Fri, 21 Feb 2025 23:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38CA4120B
+	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Feb 2025 00:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740181991; cv=none; b=LQAoIZFRdhMhQR+zPwFzJfGjbd4OEfuUeC30WI1h1N61aOiRNq70li7oVSmGRQ1awcBw931YU3beVzcZAORAgKr8rBRYbS9SJv3kKWitVIgrm5NWtudY2OudhAMnEFQFkM2ULfb7Yoxz/mlYBjMImvV8uVk3/Ay+Q9vEplCwKTc=
+	t=1740184993; cv=none; b=P1BULnbeuYq1G3PpG0B9PdLw2UNMmu96DvU6idAHIotXBbK/Onj7prjV4K5miUJKvEcR7thFqg+HtAZcyKVGz5IrBpSzcajyLQrA3Ytfjul0gzzhG3472cAsDPewP2PiRWVC4LajQ1HL+Fy7jgOJ4gQiR+rM1Xy81fkmNctX0Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740181991; c=relaxed/simple;
-	bh=/YFrwlZgyvLoJMUeq+tvf10yh7R4xJNFEg5KwtEoi2M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Em+tkEU0mxqfQRC/UJxuZvhoHaLMR4I6I1GVQTG5ZlqSNkEnKtlYozFcgRscWtns41GNwkm67UmT1ZhJM7wzyPHzDaJ6dSyE7gCfsLHu+ewknYImfHqAtv6ub7HdkwhCnJXHnmsBAWKRyPVVp9NpTJ0PasegTiykZnTeFanMyPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WGB2ubSj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F5EC4CED6;
-	Fri, 21 Feb 2025 23:53:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740181989;
-	bh=/YFrwlZgyvLoJMUeq+tvf10yh7R4xJNFEg5KwtEoi2M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WGB2ubSjMbE6ueP9Gqq/84p4aoMNKf5redslySU1HfRmrAGAB+WTs0uN0rlcHj2/S
-	 /C33QhzEcp347yjR7IjJfmzQAZaMwDFv97KvhwwXzN01mYS1puRP4RAkqhJZTRy516
-	 t8BxpUPsAU+QgITpLUJxHCTWHRphP4ebBQFsZGs1KF+YJi0OW56vzjt8XTXijJFVPJ
-	 CHDLgVM/4xGktwYIkgHFEvlkqtLJ4JeH+gZR/UY+q4I6zYEEPEmMbI0Yf/bCogRcOl
-	 6xTfn4UyKw/F3TtA32gdHnr3JAmIcz8q7+Qwjcd7ZX5bLRYKUxJ9vjnJ078aFlOMvm
-	 bmlu6PSROh/rQ==
-Date: Fri, 21 Feb 2025 17:53:07 -0600
-From: Rob Herring <robh@kernel.org>
-To: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, kernel@quicinc.com,
-	linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org, kernel@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: arm: Add Coresight device Trace NOC
- definition
-Message-ID: <20250221235307.GA401276-robh@kernel.org>
-References: <20250221-trace-noc-driver-v1-0-0a23fc643217@quicinc.com>
- <20250221-trace-noc-driver-v1-1-0a23fc643217@quicinc.com>
+	s=arc-20240116; t=1740184993; c=relaxed/simple;
+	bh=6r9NvDVZOxd1+FXBugV/iaH5ExhH58VY6S09wppsyK4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=PEkC6fIIriMl5Xu56yMygdLVqiz6U/JykffIWiS8KmeKefJziHd6go+8JH4ZsELJ3xogH4iNAcGFMze3EMCtoBDONzB9/9SkzEtzzgGlPtCOZp2lYwlNtS23UWRYA15+DBlg5NdVNht6mmXXosNrh5rSkX4OORs0REXkNxadjuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KzP33SR+; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-548409cd2a8so370559e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2025 16:43:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740184990; x=1740789790; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Va34volQUwpd0lqEoh8I/BGYl1sF6wHNMFNfDzJaKck=;
+        b=KzP33SR+9vPkTDvL/Ot2mMAXiVS3INFesdVJEYQgGwDw07ZPauLJ7pukw+pGL3bOCJ
+         tFVQZa1oPIcpKYDu6FEuID/WhbBPaoBY0S1GshmltwjO91jrgcL//V/bzCoB1GH4Ni0f
+         RNeXg9v4/IsZerScOyNkStLi8TP4p2STmdBu5YGUKe2efLMAm1NEcCTxkunxsmTddBp3
+         QNQyVdBBqCeA+yIEpP/EqXgDFnqP7Al8vo8ofeQwx5d2+GClH53wyqrb2b2KqPB6yqbA
+         j2TapxAONSKwZeErIJSRRD44nBlkGev7LlP5XAzvmo96iO//qK+7IR1LPG+Rvk/2sWek
+         aiNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740184990; x=1740789790;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Va34volQUwpd0lqEoh8I/BGYl1sF6wHNMFNfDzJaKck=;
+        b=h+rYrD833Vzpzvi5wnA3Hu2YK0JDe/9nHimQ9DK1MsmnfpS3G78pRRP3fqh9a35Mbq
+         sMwUeq8pFxnN+36sacFXBtCnnIt3uFxt7c5aHDzeLq/FF8yEK2eMrh6y4L6SmKy0QPHE
+         qsjphgPxVKgwLFF27x7HcoAE88psELTEkte+KCG4sqDxezQIHHUAfjOHjLHeqZ5BGymp
+         76w1xjln1iqxvecNvD7rRvIzei0nO+0K9i9DOxSWwxLUmdy2wQ0xfuiTjvFFULtLOI68
+         etrpX4mAaWdc1tWaWVzDnrRdPuUvfBbd4gqPJArUGWRmuuPkgTLgIU6CRogXE9+XtXu2
+         qWuw==
+X-Gm-Message-State: AOJu0YyaN/nfYVxYrMdgX69LqAOVokwwaafz8wHr+2F1gmFSHI/nTs3n
+	4yOk+sTA9QwWk87eNv1c/kKlEq4CoX5+zipdZhmJeZ+YZBACDo/r+JAmwg4e+KDulP0J4HOl5Lf
+	D
+X-Gm-Gg: ASbGnct+d2f0StDdnjWQacK6Tlv7DoPh10ZbOAVGnikJSml/t7QRcr/TIuBdzES73O+
+	DUiDjw3Vo4jea5fnaBXIlOCI1mB3exc1nvW+FeYElXkzm4iu+OqiIT8dUxHWRXvI2FOksUJkcGr
+	EZT/CKdIEzs7AvzfnohwVap5sWFZz2MmHvzptMvsnJvYaKaeeVtTwCNxFmJGZAhWL8honsryhN1
+	szi9Wi0oRLXFsbhmT7IZ3mnbkLEC/BI1FBA0XZ5lBas6oBmky94CFv7LUvSE0srOMhIlN5AL1jd
+	zvS4JXWs09DqW3oDJj/ZPGRyQiHpqHxclg==
+X-Google-Smtp-Source: AGHT+IHW6AzEqg41ONAvf2JAYQ914QZwrhsnEGMBF8vrkjYSrGQkOEJPeA4nAoCS9xF4eeyaR1elDg==
+X-Received: by 2002:a05:6512:3b87:b0:545:5a5:b69d with SMTP id 2adb3069b0e04-54838efb008mr2523396e87.31.1740184989632;
+        Fri, 21 Feb 2025 16:43:09 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5452c301175sm2412090e87.139.2025.02.21.16.43.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Feb 2025 16:43:08 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: enable SLPI on RB3 and RB5 platforms
+Date: Sat, 22 Feb 2025 02:43:03 +0200
+Message-Id: <20250222-rb3-rb5-slpi-v1-0-6739be1684b6@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250221-trace-noc-driver-v1-1-0a23fc643217@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJcduWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDIyMj3aIkYyA21S3OKcjUtUxJSjYzMTVOTUuxUAJqKShKTcusABsXHVt
+ bCwAt/j4oXgAAAA==
+X-Change-ID: 20250222-rb3-rb5-slpi-9dbc6453efd8
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=610;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=6r9NvDVZOxd1+FXBugV/iaH5ExhH58VY6S09wppsyK4=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnuR2aI9lNBVN6mX7+J5+IcaAxZo2jmrP1ziHR0
+ KEHWDHhztaJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ7kdmgAKCRCLPIo+Aiko
+ 1XEOB/4+IuC2xlZycdEfwculJpkZukbx7ZknQoJVhM6gX3aZnH2INvIfL2XYwjn28vi1fd3G4/k
+ mCarpchiRcGdX1Cf//pr8osqKAIcK3LLXQdbmzcZWNrhHuOTH51CXcluNbFBP5oUShokxSXiAf4
+ j367MNOPXwilnH8mK1QnpFapdNw3EoruibsIX04Kif43UM4pTX47R49x0EESKY28TzJkuvc9Jjw
+ cYielC+5wpkZhFOJuX+/oeS0PWm6fmkHVAuLJJnu14OVlGPvxqSDuyM6oDx4IQ4qP+cBFj3svMo
+ 3vrR8gpWdPt2MUeNRp0BP2fRIeao1hAwCbyYovOzH1fi4KCM
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Fri, Feb 21, 2025 at 03:40:28PM +0800, Yuanfang Zhang wrote:
-> Adds new coresight-tnoc.yaml file describing the bindings required
-> to define Trace NOC in the device trees.
-> 
-> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> ---
->  .../bindings/arm/qcom,coresight-tnoc.yaml          | 107 +++++++++++++++++++++
->  1 file changed, 107 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..b8c1aaf014fb483fd960ec55d1193fb3f66136d2
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml
-> @@ -0,0 +1,107 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/qcom,coresight-tnoc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Ttrace NOC(Network On Chip)
-> +
-> +maintainers:
-> +  - yuanfang Zhang <quic_yuanfang@quicinc.com>
-> +
-> +description:
-> +  The Trace NoC is an integration hierarchy which is a replacement of Dragonlink tile configuration.
-> +  It brings together debug component like TPDA, funnel and interconnect Trace Noc which collects trace
-> +  from subsystems and transfers to QDSS sink.
-> +
-> +  It sits in the different subsystem of SOC and aggregates the trace and transports it to Aggregation TNoC
-> +  or to QDSS trace sink eventually. Trace NoC embeds bridges for all the interfaces(APB, ATB, QPMDA & NTS).
-> +
-> +  Trace NoC can take inputs from different trace sources i.e. ATB, QPMDA.
+Enable Sensors DSP aka SLPI On Qualcomm RB3 (aka db845c) and RB5 boards.
 
-Wrap lines at 80 char. And you need '>' to preserve paragraphs.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (2):
+      arm64: dts: qcom: sdm845-db845c: enable sensors DSP
+      arm64: dts: qcom: qrb5165-rb5: enable sensors DSP
 
-> +
-> +# Need a custom select here or 'arm,primecell' will match on lots of nodes
-> +select:
-> +  properties:
-> +    compatible:
-> +      contains:
-> +        enum:
-> +          - qcom,coresight-tnoc
-> +  required:
-> +    - compatible
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^tn(@[0-9a-f]+)$"
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts   | 6 ++++++
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 6 ++++++
+ 2 files changed, 12 insertions(+)
+---
+base-commit: 0b77125c44649e993485ce9751de9b57a21ef4a6
+change-id: 20250222-rb3-rb5-slpi-9dbc6453efd8
 
-blank line
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-tnoc
-> +      - const: arm,primecell
-> +
-> +  reg:
-> +    minItems: 1
-> +    maxItems: 2
-
-Need to describe what each entry is.
-
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    items:
-> +      - const: apb_pclk
-> +
-> +  in-ports:
-> +    description: |
-
-Don't need '|'
-
-> +      Input connections from subsystem to TNoC
-> +    $ref: /schemas/graph.yaml#/properties/ports
-
-You have to define the 'port' nodes.
-
-> +
-> +  out-ports:
-> +    description: |
-> +      Output connections from the TNoC to Aggreg TNoC or to legacy CoreSight trace bus.
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    properties:
-> +      port:
-> +        description: |
-> +          Output connections from the TNoC to Aggreg TNoC or to legacy CoreSight trace bus.
-
-'connections' sounds like more than 1, but you only have 1 port. 
-
-Wrap at 80 char.
-
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - in-ports
-> +  - out-ports
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    tn@109ab000  {
-> +      compatible = "qcom,coresight-tnoc", "arm,primecell";
-> +      reg = <0x0 0x109ab000  0x0 0x4200>;
-> +
-> +      clocks = <&aoss_qmp>;
-> +      clock-names = "apb_pclk";
-> +
-> +      in-ports {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        port@0 {
-> +          reg = <0>;
-> +
-> +          tn_ag_in_tpdm_gcc: endpoint {
-> +            remote-endpoint = <&tpdm_gcc_out_tn_ag>;
-> +          };
-> +        };
-> +      };
-> +
-> +      out-ports {
-> +        port {
-> +          tn_ag_out_funnel_in1: endpoint {
-> +            remote-endpoint = <&funnel_in1_in_tn_ag>;
-> +          };
-> +        };
-> +      };
-> +    };
-> +...
-> 
-> -- 
-> 2.34.1
-> 
 
