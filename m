@@ -1,79 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-49015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91B5DA40739
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 11:00:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55A7FA40760
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 11:31:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 23DF33BCBE5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 10:00:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F48142350E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 10:31:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69CFD1FE46B;
-	Sat, 22 Feb 2025 10:00:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oc2fscaE"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C638B207643;
+	Sat, 22 Feb 2025 10:31:35 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4042D1DE4C4;
-	Sat, 22 Feb 2025 10:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFA41FCF53;
+	Sat, 22 Feb 2025 10:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740218427; cv=none; b=HqJrpIa+m2y9Nvm1QrsaJBGzM6ABhydRwm0UE7W7WYO+LkKoLqXz60ExwK9DFiCkJn69HnkkBlPqXN2HLZKPHsV/lZvbrytj6PSjKUsJOzWh6fcUzspgFLR6rBODJephkM3FF9hSPRHSHM0yRIEVB0/otzcgkEQHwMNK3PIgEac=
+	t=1740220295; cv=none; b=ug/c3Wbsrn6Sh24hYQBCSY2l2v4fA9IeoXv42mEPrH/wHKwvnjmgIm2/YG5VFM/Jz3wTsSFUkfkjPtTOfC25ikQ1XW2HJn9RhB6AvQHWOKA5w2YP2HS9iMtMgopKhWCPHAVmNn79VfVPN/PH8mFq04l1ADyvGSneZUHaFgSgDTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740218427; c=relaxed/simple;
-	bh=O0GBKjyjvst1Ef+k3JkpAQlW8scAA9rB7DUZrqOeRDo=;
+	s=arc-20240116; t=1740220295; c=relaxed/simple;
+	bh=ORDyt1jb5yDi5v+AM5GRVZ+4ZTDKVdYPatrUDYzKHLA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AAlK0bopKsxoIOZ2YIaBbTmQnSHG4+bCU9nCNm08K1bRIb3cGDHvdUw36dkJQ8VJ5Ucfx8RdZYYN7+75mNHWSQkOCWDaGznJZCq/4Ag9q7ekMwjZLABZh+7f66gLHYSZpvjeMU3f8YJbmIDdvJSQnakLGEQRB9dI5D7CO+JJJt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oc2fscaE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FDCC4CED1;
-	Sat, 22 Feb 2025 10:00:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740218426;
-	bh=O0GBKjyjvst1Ef+k3JkpAQlW8scAA9rB7DUZrqOeRDo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oc2fscaEwhy/TUTIxe3wf9j8WIRhkk1A87kqKUKxmzwZ2RSIbP5HuqEiQGHMS41sJ
-	 IuMORh5KiiBrcUB1G/rfWq9LwRjHBeKZy4pihkOC++Fsyo/TM7rJ3pxYLcLNvbf5uP
-	 mzZAIwcGrLLv9EZbGix723ngzBn374tQ+t5/XgIxoA4NrfHDjTun3v6qzdU/AZ2ZIb
-	 DgoswH6eLC3JeavzhgcuZBD+6E2O0trw9wh4ERrhuVK6aP3aN0D8S+9Zf3uUaPSgqN
-	 tim1TXV3XWb8KC0v4O9A6IucpXEraDL6o9zdZtGTKlsbg4BOGAY1iI3gvTlFkgwxXU
-	 0dj7HLInl2eOA==
-Date: Sat, 22 Feb 2025 15:30:22 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: Re: [PATCH net-next] net: stmmac: qcom-ethqos: use rgmii_clock() to
- set the link clock
-Message-ID: <Z7mgNoJTIE8bbxte@vaman>
-References: <E1tlRMK-004Vsx-Ss@rmk-PC.armlinux.org.uk>
+	 Content-Type:Content-Disposition:In-Reply-To; b=P799GGaQKYhUvZ4+6IVWWWWgDyayCKRnmtYtQTMtCrUvlMHPgGu53r7b6wLJa+O/zaLHj0MZM21hLXvRCrjGauNxEaVugaSKRLS45mML5meXnrCszmFjfZph+XuvZX/P07tLFD+/0JHFgUN3PGUqEz8k5cTjBAGOj+2Pnp1+mF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7504BC4CED1;
+	Sat, 22 Feb 2025 10:31:34 +0000 (UTC)
+Date: Sat, 22 Feb 2025 11:31:31 +0100
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Mrinmay Sarkar <quic_msarkar@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/8] dt-bindings: PCI: qcom-ep: describe optional
+ dma-coherent property
+Message-ID: <20250222-hasty-chachalaca-of-greatness-a9cc1c@krzk-bin>
+References: <20250221-sar2130p-pci-v3-0-61a0fdfb75b4@linaro.org>
+ <20250221-sar2130p-pci-v3-1-61a0fdfb75b4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <E1tlRMK-004Vsx-Ss@rmk-PC.armlinux.org.uk>
+In-Reply-To: <20250221-sar2130p-pci-v3-1-61a0fdfb75b4@linaro.org>
 
-On 21-02-25, 11:38, Russell King (Oracle) wrote:
-> The link clock operates at twice the RGMII clock rate. Therefore, we
-> can use the rgmii_clock() helper to set this clock rate.
+On Fri, Feb 21, 2025 at 05:51:59PM +0200, Dmitry Baryshkov wrote:
+> Qualcomm SA8775P supports cache coherency on the PCIe EP controller.
+> Allow 'dma-coherent' property to be used for this device. This fixes
+> a part of the following error (the second part is fixed in the next
+> commit):
+> 
+> pcie-ep@1c10000: Unevaluated properties are not allowed ('dma-coherent', 'iommus' were unexpected)
+> 
+> Fixes: 4b220c6fa9f3 ("arm64: dts: qcom: sa8775p: Mark PCIe EP controller as cache coherent")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
--- 
-~Vinod
+Best regards,
+Krzysztof
+
 
