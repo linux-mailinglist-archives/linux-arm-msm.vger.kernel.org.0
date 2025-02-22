@@ -1,97 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-49029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8DCEA40923
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 15:37:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E206A40941
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 15:59:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42478188E93C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 14:37:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44AB4169DBF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 14:59:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E47B153598;
-	Sat, 22 Feb 2025 14:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75998199934;
+	Sat, 22 Feb 2025 14:59:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="f2YpgTBS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BA7179BD;
-	Sat, 22 Feb 2025 14:37:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1CF18991E;
+	Sat, 22 Feb 2025 14:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740235023; cv=none; b=nmMVqxIAPLSnSbkRQBGe9UFcOggl/njX+dW9v7HGB8IYCzn61/6E3B+gPmRIRPhd2n+jVT4SeXXA91U9ECpgYSvur46HYWuR9w0FKv6tFGpGPuUfjFIvdlnXS+wo4ayS7m7Z1kYbx5QnxkSCOXBII3PL92hYJncFUHuPKNwuigk=
+	t=1740236394; cv=none; b=A3v/acvRcFJH6FbY1Bc/AMHNM365gGA0wb+8OI38EsDcqSSz+tzof35qigRBU+GbAZ+rKJ8T3tSaHlolvYqlLX4t1Kxq65QeJ3jUj6/RA9HLbHnAR/FXMjR6Lm2AZ2ULcnBcrc67xfx36N7aucDGaHzbgTAIPT8AWplAzU84UKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740235023; c=relaxed/simple;
-	bh=nqmYL/X24CPIawYLWCaxMSv3NF5Wq/BThEPt/cHQrIo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FCcK7tqLO04MQFdo+gRYfF3qHlPbUO2eP400btynaJVa41CU7GQCmPk6/JIQFh9tCVKuchVt7j3lbFm/xaXZN5RZaPKAn0XfTo6dEZ0haXoRgkC3g5gCJoKH5dBD0PhHlP+Rv7icQL4XdkEnFyC1NAp+4+P/O2O7ynhki+c7dzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-220ec47991aso41823225ad.1;
-        Sat, 22 Feb 2025 06:37:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740235021; x=1740839821;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7ha9BMrvAHN6SwbJadC6b0CtKwQ5jXGdHANNksS1/Vw=;
-        b=KXnDiB5mTJfcq0h511Fc8SHFPEOmFWdfaQCCBikP7Ql6Oi6DsVkJJiHW6lZLjGMj6m
-         7BRTBTDR3dNadTFZAFvrdbcaD5MD2KERi3aDEXqAY2bFj3qpDjtz/4opS9zLoWFx8zzb
-         9n4XtcfQ3IkWO/LH/EZ/t+KsIMcFSgIBxFaxpQLjHt607TcrsOwF3SwbShcJLPsW/UVV
-         7XIKYw6MnmlsMmSsw1pCyIRQzLzzIjcwMoDEDVP8a/bkcSId+3yx+S6QA/po4Krtgome
-         YSUKMBEekhOP1yXl/OXX/3e/gvaKJW/oyUKSBZHjOfRKboEOn/ww99o/qIsNOWaMoB6h
-         QMvw==
-X-Forwarded-Encrypted: i=1; AJvYcCUWNxYmBA//EcM7Dli76OCTtv35MOcaiAKvzEjtt5SKxwDu5ODquZ3UGwZxoLmuvOAHKCgqxZd8L8TSOm4X@vger.kernel.org, AJvYcCVkf9JuIhiaqVEquEEKb0epuhaTaeW4m+MpH3khkFXdbrE66ctlSO0kQ37jn6x3umn/p2xxa4dLe6JN@vger.kernel.org, AJvYcCXCKu1i8O3XAXeKltlIbr4QjO2PMoRb+X/krDMgH2FtBzFkz9PHoQIFNycOkCKYyoCwKmEzNlhSUWH9@vger.kernel.org, AJvYcCXHlu+sLras/nWQ4u3UCS0s+D9avsNk6HZkYWUIFk85LR6rWu1+6+dt/udfoCAA1roVJp1XJoWiPFHsoSOc2w==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXDFot+hxB/BeKz2IxADubHjX+jcmaHTzjqDyAHxb0PsHIv7ye
-	ojWlqMeDyjbwzfEhaG363qQJlK+GgLcSS/yrqNd/dZC7EHbMhstX
-X-Gm-Gg: ASbGncuUzU2eXSTr/mwn3psPcvXkcoUDq4FBd/umBN1h1S24WlNYjdKmKDkSxvvIW/u
-	lRyrUwzi+q4zyTUtm5DqjBtTEW89lshPuughZ7iqM1FKeEx+cK/zB93CKZUeyySQdhVnO4BWfVu
-	c/Q2PLKZu9Jy4811Pmn7DePHCiPbqvkI6sOBYesAZN1+MMMkO4dhwoUxXkJ65JS0cwBvfu9WYzW
-	FRJwYK2I9r83Gxx+wxZZPKR3R50peNmzp65BS2wIZsmmBGXCGKItLI1MG5NzPNtzdAoAaWFyBdu
-	myds+PMuvojBChckWq8PvqWZFpLAPo7nOMBoWi747LD/Ex9oXeyPo/fSv/XY
-X-Google-Smtp-Source: AGHT+IHgKc/pGbPqNt3bHHVA5eMyaWuH1nFpTLjpun4lMNQr14INrEnAaEobHgO9YFDinBAfQYGiQg==
-X-Received: by 2002:a05:6a21:102:b0:1ee:d2d9:3515 with SMTP id adf61e73a8af0-1eef3dcc4ecmr12552295637.42.1740235020887;
-        Sat, 22 Feb 2025 06:37:00 -0800 (PST)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7328619e138sm10884166b3a.66.2025.02.22.06.36.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Feb 2025 06:37:00 -0800 (PST)
-Date: Sat, 22 Feb 2025 23:36:57 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/8] PCI: qcom-ep: add support for using the EP on
- SAR2130P and SM8450
-Message-ID: <20250222143657.GA3735810@rocinante>
-References: <20250221-sar2130p-pci-v3-0-61a0fdfb75b4@linaro.org>
+	s=arc-20240116; t=1740236394; c=relaxed/simple;
+	bh=UPMwM1dsF+ZN10RivYNc8HxJ+n1RcGzxlyTNhVOm/BY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fip8Qv7zdiQyiX3fbHdTEuFvVORvOl1A5fUJzNCQRLA8BlCm+wMl03HgKnCDjl4a6gQUz97MpP0+3EgG3+iMnB2Jq4/2MCBZp8C9meVi14BjMLsGxJGTig4QunhWV1b0yLl7AvFIe8k1GOCpsX5kxiCq45GeGkrWqgY8ZMjvrFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=f2YpgTBS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51MAUvc1017475;
+	Sat, 22 Feb 2025 14:59:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	rrzRTLmT2VU2o90xomI7sHc+CSfYWZkgtgDzBjsTkAc=; b=f2YpgTBSMi97jhPB
+	K5NIcxHOex9LiPEj1FdaU+/wHQukOwrobsU0ZUfxoel8krjk2uuPocwp/AFy6u9Y
+	GTUzrfE+izQOM7LoYKZDUkLTechxZkZoRU/ECnRrsMOrkKfY7ZOChgW9shiOGEgI
+	YXQuHWZYu4RRH/yYJ7iAMI5fCfbWjP8IA+ivOxXqMs5n5RhpTTt6j3Pgxfisc+FC
+	j8ZIRHjNVSL7nQBwx7zf3Cim7YIiLgXG4KgtbYxeiIcTROz2QwSEGY59dsAyV3gL
+	AwgkpdY3cNlt3awSL8I8JLPj9KOkLEf1QcIv1j9aa/bl56aQuUtB7B3fra4JG4s1
+	DRAcHg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y6ntrttj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 22 Feb 2025 14:59:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51MExgEK006316
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 22 Feb 2025 14:59:42 GMT
+Received: from [10.216.45.162] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 22 Feb
+ 2025 06:59:37 -0800
+Message-ID: <dbfdd0e6-4d56-4c0b-9b41-55816506a66d@quicinc.com>
+Date: Sat, 22 Feb 2025 20:29:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250221-sar2130p-pci-v3-0-61a0fdfb75b4@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 1/1] arm64: dts: qcom: qcs6490-rb3gen: add and enable
+ BT node
+To: Alexey Klimov <alexey.klimov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <quic_mohamull@quicinc.com>, <quic_hbandi@quicinc.com>,
+        <quic_anubhavg@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250221171014.120946-1-quic_janathot@quicinc.com>
+ <20250221171014.120946-2-quic_janathot@quicinc.com>
+ <D7YD5C0HCSZ1.2DOE3TAA7024Y@linaro.org>
+Content-Language: en-US
+From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+In-Reply-To: <D7YD5C0HCSZ1.2DOE3TAA7024Y@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Y-n72SMkFiGNQFY8ipxQ_BQ1Rcm20PA3
+X-Proofpoint-GUID: Y-n72SMkFiGNQFY8ipxQ_BQ1Rcm20PA3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-22_06,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=918 malwarescore=0 impostorscore=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 mlxscore=0
+ priorityscore=1501 clxscore=1011 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2502100000 definitions=main-2502220120
 
-Hello,
 
-> Update the incomplete SM8450 support and bring in SAR2130P support for
-> the PCIe1 controller to be used in EP mode.
 
-Applied to controller/qcom, thank you!
+On 2/22/2025 12:46 AM, Alexey Klimov wrote:
+> On Fri Feb 21, 2025 at 5:10 PM GMT, Janaki Ramaiah Thota wrote:
+>> Add the PMU node for WCN6750 present on the qcs6490-rb3gen
+> 
+> Is it rb3gen or rb3gen2? Also in the subject.
+> 
+> The file that you patch seems to be "rb3gen2".
+> 
 
-	Krzysztof
+Thanks for pointing out the typo, Alexey. Yes it is rb3gen2.
+
+>> board and assign its power outputs to the Bluetooth module.
+>>
+>> In WCN6750 module sw_ctrl and wifi-enable pins are handled
+>> in the wifi controller firmware. Therefore, it is not required
+>> to have those pins' entries in the PMU node.
+>>
+>> Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 171 ++++++++++++++++++-
+>>   1 file changed, 170 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> index 7a36c90ad4ec..de03770e0b90 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> 
+> [..]
+> 
+> Best regards,
+> Alexey
+
+Thanks,
+Janakiram
+
 
