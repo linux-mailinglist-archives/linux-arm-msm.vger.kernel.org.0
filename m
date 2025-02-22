@@ -1,136 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-49023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E6F0A407A9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 11:55:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A246A4088B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 14:01:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77DB719C6C2F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 10:55:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A647188FAF6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 13:01:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C3332080E8;
-	Sat, 22 Feb 2025 10:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 652DC20B1E5;
+	Sat, 22 Feb 2025 13:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WO8IAsj8"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="tC1U3K+L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E335A205E04;
-	Sat, 22 Feb 2025 10:55:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F1E53365;
+	Sat, 22 Feb 2025 13:01:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740221739; cv=none; b=P+wXBXTnh6muspZ29HWuSxRb0URWhh59JF5wMFHRxUaCZcTSK6K13eSWS2dTHC4S+zQi7XbvcP+owpYGcvGJuU3t7aHYJWLfQAt2dOwXpfwWFaHWvOgJeDfmJLGveUKdP1JMnTDLttZMli8vPS700FDDe5BR6nS5XzibHmqFw9g=
+	t=1740229275; cv=none; b=uyMEyHJsdXX9MLlAh2lrJg5qE8s6Edl4ZtjChP1EA364l+EGDYDCyaLSi/TQ4aTJMkllE33VErxObh5PFtW4z0s6D8p/99K+aA1QOSW+0lqVy/+wEnq4Kpu3QllC4lP4iyY/+SFa2TLF9BhcpIxQQmG77wXEFZfCxUjqoLR9Rsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740221739; c=relaxed/simple;
-	bh=HXs9JbXk1u5xijbf9v5HKzJe7RtgOvczylsEDgmhHzw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TIX+LNqABYjYE7QWFqTNRzp1JBuHYEFYdo/g5auFCyEK3aEjzSyLXxPEoNFTc/nDmWvGD2Khtf539JTxkZmKz7WVibTjGk2wVWdqU3ZcT/BtQ1nP/BHZvd0nQ8K2+9qIFyb/5s7CTyUR+dIgsYW7jidsdjsogL/cR35hPZemNGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WO8IAsj8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC28C4CED1;
-	Sat, 22 Feb 2025 10:55:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740221738;
-	bh=HXs9JbXk1u5xijbf9v5HKzJe7RtgOvczylsEDgmhHzw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WO8IAsj8tlqCB+WCZPxFHHRNrxvMQfFVk9ZLHmvMRHg+ZjitGg2/ZZcAxOAgqzFSR
-	 ymAha4h4Nn5whSay4KFm47HxE5FdFaWWeWyeSNU1D6XzKYnTJocQNRqoASHF6FhzVf
-	 C0WFtidl2FTxSmCd+N+7C9Y0YrX+hEtmsjcVBBzRzVb9oWs8WMkIbzt6qO1QM9rpZp
-	 bzQffuae9Uh/Klvx2ASL3hS5SLwMD/hPXlIIfqBpNiWe6+AlwA6ImH5f0KEQC12DLG
-	 9krKGqE6W9cpk5PJ/iVSPgjJSD17+zSaEhydeMVNUYBkLQqDzEgLIBmziD+uOkpbhH
-	 0GsvjqMsRp/Tw==
-Message-ID: <d9eff439-27ae-4555-a0c5-21acdf60d321@kernel.org>
-Date: Sat, 22 Feb 2025 11:55:29 +0100
+	s=arc-20240116; t=1740229275; c=relaxed/simple;
+	bh=+SHI4/xYTay3osIZoggq3aQNWY2pBZiUAPIcUURKDqU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=d4eFhn81ISui7HHfXjRqfazizFXN3hC4993N2i8bdm/F5lSmQAb5t+ZiJi9fk0n5OumhT0B+t2tA9SfQ5FAw6gRdnKGw8ecjStE+uYGy/mQkBuh00pIsUZIoFtgraSeWPY8HAk6XHuyjYt8mz4vvfLzzyY8A2AfHw6TAM5YU6RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=tC1U3K+L; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1740229264; bh=+SHI4/xYTay3osIZoggq3aQNWY2pBZiUAPIcUURKDqU=;
+	h=From:Subject:Date:To:Cc;
+	b=tC1U3K+Li8BYXErIug63yBkmJ7kM8vgSbH2qSgIE6IbPYJImsfzybY6srhFS3hN3V
+	 I/JKV5r+JdGkmzxVegIhvZRpk9BBwGnbKjrICxGzh9iLME5rpdV7usS9a/yT1HvIYL
+	 CkiMsAZz5KmaWqlVuuoSbsocpeYpa4TbQUcBCnZw=
+From: Luca Weiss <luca@lucaweiss.eu>
+Subject: [PATCH 0/4] Some cleanups for Fairphone 3, set firmware-name,
+ enable modem
+Date: Sat, 22 Feb 2025 14:00:46 +0100
+Message-Id: <20250222-fp3-remoteprocs-firmware-v1-0-237ed21c334a@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] coresight-tnoc: add node to configure flag type
-To: Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: kernel@quicinc.com, linux-kernel@vger.kernel.org,
- coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- kernel@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250221-trace-noc-driver-v1-0-0a23fc643217@quicinc.com>
- <20250221-trace-noc-driver-v1-4-0a23fc643217@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250221-trace-noc-driver-v1-4-0a23fc643217@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH7KuWcC/x3MMQqAMAxA0atIZgMaLYhXEYdWU82gLamoIN7d4
+ viG/x9IrMIJ+uIB5VOShD2jLguYVrsvjDJnA1VkKiJCHxtU3sLBUcOU0Itul1VGZxvTmXbuyHn
+ IeVT2cv/rYXzfD+lF1NJqAAAA
+X-Change-ID: 20250222-fp3-remoteprocs-firmware-ba35854d82bf
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca@lucaweiss.eu>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=866; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=+SHI4/xYTay3osIZoggq3aQNWY2pBZiUAPIcUURKDqU=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnucqIeAM2FXX4AVuW2XPPLZA1g2n903RUgZoc5
+ HxAn+rOFDaJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ7nKiAAKCRBy2EO4nU3X
+ VlaMEACjkyh3miHOvr7h6Zf6iWGd6P9EXL3bvvxGL+dAaKz9Cj+vCmu/f1GzmWf/yr++xXMYKiV
+ d1Wms122LbAxv+TamoDBkZhIttUADazB11bRZkjvimN5iD6dE3r/6UxcBV3YAH9D5hmzfv/10kl
+ yvx09sSKghfaPZ67QSKAdCPvzBO1hko5xsiG8aRVFiOSsLNyWamAucg/sO2E88py7WlkdennVjW
+ VlgY5zTWIxqwHrBtmV1BArMA0bVj2lUzX5o5YjNuZoRoQrutdii5GyYD4OdlfQUyG/P0CBgjjLf
+ PIqrSKpMf+M/U+ZDm29/ANzV59Bf+HDQUJH2L8JWOY667PlWFL6PLD/9YwDatLn6v1oRT5r39ok
+ JAQefC09106C+q+RCXy80Kh2waAL6SAL9dH39QvnrTdnwx0KSWNf9EQusO6dHZlOVPgMbWrVTjZ
+ /3ykLPAOTVHZxsuQoxsyCpL7/+uqeE0hO1EPax1k/mHbBgQbsl5tEt0EzUUMViqH0hMrOG1ymYL
+ 3vGzD8rq+vUvBkcppkwE4uhwq//60ic7QL1hrLfdAAxusrYqrzbjOygTzrP+2drntqQBt5mtQXd
+ MhRoZc4/j163GyjJ3bukjZ9shDbWcCJZyBehIY+T9h3KIa8v0Q5VfbSKwh2hV97NXPqztIVdWEG
+ PQ5+25DD4FgzHpQ==
+X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On 21/02/2025 08:40, Yuanfang Zhang wrote:
-> +
-> +static ssize_t flag_type_show(struct device *dev,
-> +			      struct device_attribute *attr,
-> +			      char *buf)
-> +{
-> +	struct trace_noc_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	return sysfs_emit(buf, "%u\n", drvdata->flag_type);
-> +}
-> +static DEVICE_ATTR_RW(flag_type);
-> +
->  static struct attribute *trace_noc_attrs[] = {
->  	&dev_attr_flush_req.attr,
->  	&dev_attr_flush_status.attr,
-> +	&dev_attr_flag_type.attr,
+The main objective is setting firmware-name for the remoteprocs and
+enabling the modem.
 
-Where is the ABI documentation?
+The first two patches are just some cleanups to align the dts style with
+contemporary style.
+
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+---
+Luca Weiss (4):
+      arm64: dts: qcom: sdm632-fairphone-fp3: Move status properties last
+      arm64: dts: qcom: sdm632-fairphone-fp3: Add newlines between regulator nodes
+      arm64: dts: qcom: sdm632-fairphone-fp3: Add firmware-name for adsp & wcnss
+      arm64: dts: qcom: sdm632-fairphone-fp3: Enable modem
+
+ arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 48 ++++++++++++++++++++---
+ 1 file changed, 42 insertions(+), 6 deletions(-)
+---
+base-commit: 245879bbd9af3559c3b0351ca0d93f324214c9d6
+change-id: 20250222-fp3-remoteprocs-firmware-ba35854d82bf
 
 Best regards,
-Krzysztof
+-- 
+Luca Weiss <luca@lucaweiss.eu>
+
 
