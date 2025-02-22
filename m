@@ -1,141 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-49030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E206A40941
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 15:59:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58699A40A2E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 17:45:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44AB4169DBF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 14:59:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B344188429B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 16:45:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75998199934;
-	Sat, 22 Feb 2025 14:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADA43200B98;
+	Sat, 22 Feb 2025 16:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="f2YpgTBS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="osH0V538"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1CF18991E;
-	Sat, 22 Feb 2025 14:59:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC9E1EA7EA
+	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Feb 2025 16:44:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740236394; cv=none; b=A3v/acvRcFJH6FbY1Bc/AMHNM365gGA0wb+8OI38EsDcqSSz+tzof35qigRBU+GbAZ+rKJ8T3tSaHlolvYqlLX4t1Kxq65QeJ3jUj6/RA9HLbHnAR/FXMjR6Lm2AZ2ULcnBcrc67xfx36N7aucDGaHzbgTAIPT8AWplAzU84UKY=
+	t=1740242675; cv=none; b=kXbhoWGZgjgsQhCC7U9djNQSj2O/nbx6l6qOGnieO850/i1krE5DH3ltQbM81WOUlX02nWyiiFDxjH8ooxRqaCGoewtcgcOdbOjKdDoRiIRfiONIwbLIPyH9ymX+SA0/9vnCo2rbpZJN9HLUGwDpugyAWzUWOTftYIcuAeLwfWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740236394; c=relaxed/simple;
-	bh=UPMwM1dsF+ZN10RivYNc8HxJ+n1RcGzxlyTNhVOm/BY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fip8Qv7zdiQyiX3fbHdTEuFvVORvOl1A5fUJzNCQRLA8BlCm+wMl03HgKnCDjl4a6gQUz97MpP0+3EgG3+iMnB2Jq4/2MCBZp8C9meVi14BjMLsGxJGTig4QunhWV1b0yLl7AvFIe8k1GOCpsX5kxiCq45GeGkrWqgY8ZMjvrFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=f2YpgTBS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51MAUvc1017475;
-	Sat, 22 Feb 2025 14:59:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rrzRTLmT2VU2o90xomI7sHc+CSfYWZkgtgDzBjsTkAc=; b=f2YpgTBSMi97jhPB
-	K5NIcxHOex9LiPEj1FdaU+/wHQukOwrobsU0ZUfxoel8krjk2uuPocwp/AFy6u9Y
-	GTUzrfE+izQOM7LoYKZDUkLTechxZkZoRU/ECnRrsMOrkKfY7ZOChgW9shiOGEgI
-	YXQuHWZYu4RRH/yYJ7iAMI5fCfbWjP8IA+ivOxXqMs5n5RhpTTt6j3Pgxfisc+FC
-	j8ZIRHjNVSL7nQBwx7zf3Cim7YIiLgXG4KgtbYxeiIcTROz2QwSEGY59dsAyV3gL
-	AwgkpdY3cNlt3awSL8I8JLPj9KOkLEf1QcIv1j9aa/bl56aQuUtB7B3fra4JG4s1
-	DRAcHg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y6ntrttj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 22 Feb 2025 14:59:43 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51MExgEK006316
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 22 Feb 2025 14:59:42 GMT
-Received: from [10.216.45.162] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 22 Feb
- 2025 06:59:37 -0800
-Message-ID: <dbfdd0e6-4d56-4c0b-9b41-55816506a66d@quicinc.com>
-Date: Sat, 22 Feb 2025 20:29:32 +0530
+	s=arc-20240116; t=1740242675; c=relaxed/simple;
+	bh=L8IhYJZqTL+VAFgPJyw5O+dgm0yXbcW4d8tIgufYAhE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hdUcZ5Ci4IpEAmVxFSbxAhd3GYiXhBbAP7J2RmHlYYVKqxzBNN0A+SJYRIJEpDv9iM7o3WoQIwI1lINFs9PbxsTNtVtz5x0yNBhpcw5bGNnVBIf67GtTrU9XAm/RKK/lHSZ1j0O8rUSuIN5niux2zpgALw2Ba2Q9CZRFm0MAGBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=osH0V538; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-219f8263ae0so65788415ad.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Feb 2025 08:44:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740242673; x=1740847473; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9f7uZjtHK+lQIbRAC4oC1UZT/44Vy8koxrXiqt6OwY8=;
+        b=osH0V538Hbt0Odk6RyZpKHYTCYA//YA6ShdFoi+2mJp8K68rD4a6NwRguVKkXk7RKy
+         rAUVXUfKc4L89vhaF9/k1QFn29ozzY9RFFEw91Che0LoKRi/VMH4bxh2mgYcK57slQ9y
+         pPoowdUo4un3Mjd/e117cfoqstT3OVGIiT0ME/OwJgKiY/1WWR2J0/Q7AmxvikwzCFbr
+         dFacsh2046igUU8iKyC124DKQ1irIzPU2WLgtf0ARWllwZuNvKpP0UMiNGfogmwjcGUn
+         Pv7p5sxP1yTITO162cL4PItZSA+RuJo7lBC+f2gbDKeo1r6hbZX/SB2J+BY0w2KTjZ3L
+         /BFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740242673; x=1740847473;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9f7uZjtHK+lQIbRAC4oC1UZT/44Vy8koxrXiqt6OwY8=;
+        b=SvA/1GO8bcv9vvJeJLNN9bBJcSNhdf9k19p3MxkNr5i0CcfSRV5Nusprwz+Q7tcvqk
+         5hCGA3cHlRJV+iP2LaHuG3teiCOXyNv99hK+2VkSxjI//4K+gYd43XLH+7JxkCPeDc3O
+         XaP9S6D3lBHSVqkH3Y0ilp9fxk168mBk+03gbtOIXfzgOpSpM2lghchSKH+ssWyYfISp
+         TsKPPq4OcLLIy0OYu/aWgyGc0J/+G0SofoogQu+4ITwzaOiL5dXvhXOE7mUBbS2NLNt2
+         u+ZlBuNaodFT6zFpjibmpRXpqVEbEkTry4GpDhVdVjfweJtkb+j8oh2jsCHCKFnoiHOC
+         yzKg==
+X-Forwarded-Encrypted: i=1; AJvYcCXWFpj3EoxRIyN8JP9Kn33PHWiyeItK+J4KXRHQ/DqzJW0+m+gyrRb/TkTcF/20IX/FfC/y4tuThtOYcj07@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxO2TrOUcCspmBB3P26NXfaif1f5WFI4e7z2IENkLKs12dlUl/
+	9zUyV4ZmhT8JqxRcVl9fyGfOpz2ikN4ehqqGoG16mzay9NWHLDjgcGY4G8zGjw==
+X-Gm-Gg: ASbGncuxBQs+OxDraqsTgK3RrUaFv8V2crvWKmh2N7JyrpQn220aB8AR85d7dd2uwnx
+	5YifgClreOt7Lgi/V0ZrGkDByo0ydcuMiazFZhSNOD5CWFCiTQaMjuj5VzlWO8VHDfBdl+vPg5a
+	Wk/5AhU8nsCWvsIk+g/9KQqPMgspmxFH3XVPe4brcnSTe7PUlkBCSVRMxB/RmizkMJV9m21ba8N
+	dyTMZsjzo0lJxQBENMKw38vkW7BBh4w01pDRsCjKc2N8O6T0qGRkV7LYzEONNFvKp8SCaXEGZTv
+	HNlgo6uNXSW1W5rmIl2wcr9ZeUB/5Gxx20VrIg==
+X-Google-Smtp-Source: AGHT+IGZNd7JbH7rVNtNivVdsM8aE1a1IdZv+AIk3ODGAEKzzGY0D6UbBx86tKJ6P8fBBfE/PVEofw==
+X-Received: by 2002:a17:903:2f8f:b0:220:d7f9:9ea8 with SMTP id d9443c01a7336-221a10ee47amr93976375ad.26.1740242673342;
+        Sat, 22 Feb 2025 08:44:33 -0800 (PST)
+Received: from thinkpad ([120.60.135.149])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d537c921sm153046605ad.104.2025.02.22.08.44.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 22 Feb 2025 08:44:32 -0800 (PST)
+Date: Sat, 22 Feb 2025 22:14:26 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+Cc: Bjorn Helgaas <helgaas@kernel.org>,
+	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+	quic_shazhuss@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nayiluri@quicinc.com, quic_krichai@quicinc.com,
+	quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Slark Xiao <slark_xiao@163.com>, Qiang Yu <quic_qianyu@quicinc.com>,
+	Mank Wang <mank.wang@netprisma.us>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Fabio Porcedda <fabio.porcedda@gmail.com>, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v1 0/2] pci_generic: Add supoprt for SA8775P target
+Message-ID: <20250222164426.5esw7aygsz6eouvz@thinkpad>
+References: <20250221060522.GB1376787@rocinante>
+ <20250221215445.GA363532@bhelgaas>
+ <20250222075347.GC1158377@rocinante>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 1/1] arm64: dts: qcom: qcs6490-rb3gen: add and enable
- BT node
-To: Alexey Klimov <alexey.klimov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <quic_mohamull@quicinc.com>, <quic_hbandi@quicinc.com>,
-        <quic_anubhavg@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250221171014.120946-1-quic_janathot@quicinc.com>
- <20250221171014.120946-2-quic_janathot@quicinc.com>
- <D7YD5C0HCSZ1.2DOE3TAA7024Y@linaro.org>
-Content-Language: en-US
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-In-Reply-To: <D7YD5C0HCSZ1.2DOE3TAA7024Y@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Y-n72SMkFiGNQFY8ipxQ_BQ1Rcm20PA3
-X-Proofpoint-GUID: Y-n72SMkFiGNQFY8ipxQ_BQ1Rcm20PA3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-22_06,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=918 malwarescore=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 mlxscore=0
- priorityscore=1501 clxscore=1011 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2502100000 definitions=main-2502220120
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250222075347.GC1158377@rocinante>
 
-
-
-On 2/22/2025 12:46 AM, Alexey Klimov wrote:
-> On Fri Feb 21, 2025 at 5:10 PM GMT, Janaki Ramaiah Thota wrote:
->> Add the PMU node for WCN6750 present on the qcs6490-rb3gen
+On Sat, Feb 22, 2025 at 04:53:47PM +0900, Krzysztof Wilczyński wrote:
+> Hello,
 > 
-> Is it rb3gen or rb3gen2? Also in the subject.
+> > > > This patch series add separate MHI host configuration to enable
+> > > > only IP_SW channel for SA8775P target.
+> > > > 
+> > > > And also update the proper device id for SA8775P endpoint.
+> > > 
+> > > Applied to epf-mhi, thank you!
+> > 
+> > I see "[2/2] PCI: epf-mhi: Update device id for SA8775P" on
+> > pci/epf-mhi, but I don't see patch [1/2].  Where did that go?
+> > They seem related, so I would think we'd want to merge them together.
 > 
-> The file that you patch seems to be "rb3gen2".
+> I asked Mani whether he would prefer for me to take the entire series via
+> the PCI tree, but he said that the first patch should go via the MHI tree.
+> 
+> So, I assume Mani will take it, then.  Mani, thoughts?
 > 
 
-Thanks for pointing out the typo, Alexey. Yes it is rb3gen2.
+Yeah. Patch 1/2 should go via MHI tree as it is purely an MHI controller patch
+(a.k.a host side patch). Whereas patch 2/2 is an endpoint side patch.
 
->> board and assign its power outputs to the Bluetooth module.
->>
->> In WCN6750 module sw_ctrl and wifi-enable pins are handled
->> in the wifi controller firmware. Therefore, it is not required
->> to have those pins' entries in the PMU node.
->>
->> Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 171 ++++++++++++++++++-
->>   1 file changed, 170 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> index 7a36c90ad4ec..de03770e0b90 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > Also, in [2/2], I guess the .deviceid change is known not to break
+> > anything that's already in the field?
 > 
-> [..]
+> Mrinmay, are you expecting any issues with this change?
 > 
-> Best regards,
-> Alexey
+> Per the c670e29f5bfe ("PCI: epf-mhi: Add support for SA8775P SoC"):
+> 
+>   Add support for Qualcomm Snapdragon SA8775P SoC to the EPF driver.
+>   SA8775P is currently reusing the PID 0x0306 (the default one hardcoded
+>   in the config space header) as the unique PID is not yet allocated.
+> 
+> I think, we should be fine.  But would be best to confirm that.
+> 
 
-Thanks,
-Janakiram
+SA8775P with upstream endpoint is not used by anyone outside Qcom till now. So
+changing the PID is safe.
 
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
