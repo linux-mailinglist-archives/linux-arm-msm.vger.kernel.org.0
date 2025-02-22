@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-49021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29226A40798
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 11:47:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B939A407A7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 11:55:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D7C103BE366
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 10:47:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14307424835
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2025 10:55:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E153206F2D;
-	Sat, 22 Feb 2025 10:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E45812080DB;
+	Sat, 22 Feb 2025 10:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="emQpMqyL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gat/Sz7B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E72116F0FE;
-	Sat, 22 Feb 2025 10:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B368C205E04;
+	Sat, 22 Feb 2025 10:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740221240; cv=none; b=Dafa04yTYXMFJmNipzwc7dRILXpEveg/hb+YVGPblVN3MRgwuF92fq2mkOLId6BE82ZgWEnKEzQFPZR4rn5tHp9ZKUCqmfOaCDsAPZJIoSiem7Lu3TnvSLsH0LVhrVBwaFgp4wcNhclM+Kj+DUJDdjHFoyMsbfrsXB6Er9q9j0Q=
+	t=1740221700; cv=none; b=hUgYh/J+xvvic4sM1UHseB0HASNWM9r8AX4WrUrl1rEVQ3YRmHsJXwQYz+kvB5zgIHyVi5B3dybcBrVEQBw0KP4/sygUMN99pXCJn/0+sWziz/6/X+55HWBux4LBDBtr5rF8Ew15UNFFgfWRhF+V1V0d8GMo8CivRvvB+5Zc7Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740221240; c=relaxed/simple;
-	bh=QlElhRp7inJwSMCoWnZpUXeyTNp1pyfSzMIIxPZm/ak=;
+	s=arc-20240116; t=1740221700; c=relaxed/simple;
+	bh=tpiNARPMRnaxyVWSNLnBj09zFwu06CDN3perlT5OQ0A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WSfYmFHKkD1rd0/fkUEr1+TN7rCJ6DjUpqoyw2KXWD3t8fKpXIzxLRoGAqeL2XeoG020V2qaXVq7Z1rZJ/Z5iMtxCZ6x6sacenb9qo8lX7XbydrFC426kl+P8hVNUhn1w6B3tNzzU+KRu+tApfBIT6V5t+moTzn3QKyQlx99at8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=emQpMqyL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280C2C4CED1;
-	Sat, 22 Feb 2025 10:47:15 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=F8sbG57ohil5qmewSEOiA4KNt+ZUYHzwKt6bF5v9vYcoQRK9+NIX7swuynu5vHL6bz5g9O0EtXD3mz4m0zyovnqlI/QKVdqqeXsTSb47BWLJ666Btmlc9P9quMXiV1NbBHmW02+avSZpwBntZnvLhc0d6N7y4bPuP0nBIrfq6j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gat/Sz7B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CD7C4CED1;
+	Sat, 22 Feb 2025 10:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740221239;
-	bh=QlElhRp7inJwSMCoWnZpUXeyTNp1pyfSzMIIxPZm/ak=;
+	s=k20201202; t=1740221700;
+	bh=tpiNARPMRnaxyVWSNLnBj09zFwu06CDN3perlT5OQ0A=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=emQpMqyLg/rlJVPM2/elUSGhN57X2fRIkQjf2gQP2jfbodSfbxePlHMvmZNWzY8/M
-	 Et9uN7bwQALqjdN9i0HG9MOo8pLYQoJ3yj895lYjicfcEidAwEQl+4ZsqDnDeAgnhQ
-	 0zpWm1fLHu8E/qn+rcxjaS9zjoGiI5Qi4JtNts8kkyLJmtLzaBjYcFs98wlgpns3u7
-	 0aWp1dkJS25qqvguNRQ0Qu9MDUiMvLmt25g1bQqKuqf+yOTg8WQM0N+l3HNxOQ9A6r
-	 oqarRDNwAuegL6PJUeyRrTP7Qhq7/IC8kEcGoXX/s3+hsMP/CNyJuMZup/tucCtWlr
-	 +WuP18/IeCE4Q==
-Message-ID: <edfd6c6a-65d2-42f1-8225-0808359dd375@kernel.org>
-Date: Sat, 22 Feb 2025 11:47:13 +0100
+	b=Gat/Sz7B2sFGh26oZsm2+ZS8AKtlpYORAeSwUNvgOZIeYQJMq2LQMhwbxx6idb3du
+	 2T63yG1nXuw2jORzPJwRN3OThVFc1c3Ue1xW7OZkDul+yGMsCJkw+y6CMgc/JagcHj
+	 pl94i52RbogEYkxwC5bmUDy1Wvk5owmVymHsdyqVY39wiAgsb55NSn1gJA+TW+47Tz
+	 xf6lIiWdIqXeNDGl1btNkLvY1AxYyv8noRjYmwtL3mVQbCPLIv/qJVDOXllJ25W4Lj
+	 r7rTsZANCCodyV4c0gKiCxPeXAQvNKICGnpvk2kIMudCyOLBtW3mgpWtQ1Jva7d6Uj
+	 9xokZk00pYvaA==
+Message-ID: <38996ae8-321b-4239-8fe9-b769fdff296c@kernel.org>
+Date: Sat, 22 Feb 2025 11:54:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: arm: Add Coresight device Trace NOC
- definition
+Subject: Re: [PATCH 2/5] coresight: add coresight Trace NOC driver
 To: Yuanfang Zhang <quic_yuanfang@quicinc.com>,
  Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
  <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
@@ -63,7 +62,7 @@ Cc: kernel@quicinc.com, linux-kernel@vger.kernel.org,
  kernel@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20250221-trace-noc-driver-v1-0-0a23fc643217@quicinc.com>
- <20250221-trace-noc-driver-v1-1-0a23fc643217@quicinc.com>
+ <20250221-trace-noc-driver-v1-2-0a23fc643217@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,33 +108,123 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250221-trace-noc-driver-v1-1-0a23fc643217@quicinc.com>
+In-Reply-To: <20250221-trace-noc-driver-v1-2-0a23fc643217@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21/02/2025 08:40, Yuanfang Zhang wrote:
-> Adds new coresight-tnoc.yaml file describing the bindings required
-> to define Trace NOC in the device trees.
+> Add driver to support Coresight device Trace NOC(Network On Chip).
+> Trace NOC is an integration hierarchy which is a replacement of
+> Dragonlink configuration. It brings together debug components like
+> TPDA, funnel and interconnect Trace Noc.
+> 
+> It sits in the different subsystem of SOC and aggregates the trace
+> and transports to QDSS trace bus.
 > 
 > Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> ---
+>  drivers/hwtracing/coresight/Kconfig          |  10 ++
+>  drivers/hwtracing/coresight/Makefile         |   1 +
+>  drivers/hwtracing/coresight/coresight-tnoc.c | 191 +++++++++++++++++++++++++++
+>  drivers/hwtracing/coresight/coresight-tnoc.h |  53 ++++++++
+>  4 files changed, 255 insertions(+)
+> 
+> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
+> index 06f0a7594169c5f03ca5f893b7debd294587de78..712b2469e37610e6fc5f15cedb2535bf570f99aa 100644
+> --- a/drivers/hwtracing/coresight/Kconfig
+> +++ b/drivers/hwtracing/coresight/Kconfig
+> @@ -247,4 +247,14 @@ config CORESIGHT_DUMMY
+>  
+>  	  To compile this driver as a module, choose M here: the module will be
+>  	  called coresight-dummy.
+> +
+> +config CORESIGHT_TNOC
+> +	tristate "Coresight Trace Noc driver"
+> +	help
+> +	  This driver provides support for Trace NoC component.
+> +	  Trace NoC is a interconnect that is used to collect trace from
+> +	  various subsystems and transport it QDSS trace sink.It sits in
+> +	  the different tiles of SOC and aggregates the trace local to the
+> +	  tile and transports it another tile or to QDSS trace sink eventually.
+> +
+>  endif
+> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
+> index 4ba478211b318ea5305f9f98dda40a041759f09f..ab1cff8f027495fabe3872d52f8c0877e39f0ea8 100644
+> --- a/drivers/hwtracing/coresight/Makefile
+> +++ b/drivers/hwtracing/coresight/Makefile
+> @@ -51,3 +51,4 @@ coresight-cti-y := coresight-cti-core.o	coresight-cti-platform.o \
+>  		   coresight-cti-sysfs.o
+>  obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
+>  obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
+> +obj-$(CONFIG_CORESIGHT_TNOC) += coresight-tnoc.o
+
+Why do you keep adding entries to the end instead to some logically
+ordered place?
+
+Dummy driver, before tpda (obviously tpda should go after tpdm) and now
+this... This is just unnecessarily making simultaneous edits difficult.
+
+> diff --git a/drivers/hwtracing/coresight/coresight-tnoc.c b/drivers/hwtracing/coresight/coresight-tnoc.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..11b9a7fd1efdc9fff7c1e9666bda14acb41786cb
+> --- /dev/null
+> +++ b/drivers/hwtracing/coresight/coresight-tnoc.c
+> @@ -0,0 +1,191 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/device.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/amba/bus.h>
+> +#include <linux/io.h>
+> +#include <linux/coresight.h>
+> +#include <linux/of.h>
+> +
+> +#include "coresight-priv.h"
+> +#include "coresight-tnoc.h"
+> +#include "coresight-trace-id.h"
+> +
 
 
-So you just sent the same v1, ignoring previous review. That's not how
-it works.
+> +
+> +	drvdata->base = devm_ioremap_resource(dev, &adev->res);
+> +	if (!drvdata->base)
+> +		return -ENOMEM;
+> +
+> +	spin_lock_init(&drvdata->spinlock);
+> +
+> +	ret = trace_noc_init_default_data(drvdata);
+> +	if (ret)
+> +		return ret;
+> +
+> +	desc.ops = &trace_noc_cs_ops;
+> +	desc.type = CORESIGHT_DEV_TYPE_LINK;
+> +	desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_MERG;
+> +	desc.pdata = adev->dev.platform_data;
+> +	desc.dev = &adev->dev;
+> +	desc.access = CSDEV_ACCESS_IOMEM(drvdata->base);
+> +	drvdata->csdev = coresight_register(&desc);
+> +	if (IS_ERR(drvdata->csdev))
+> +		return PTR_ERR(drvdata->csdev);
+> +
+> +	pm_runtime_put(&adev->dev);
+> +
+> +	dev_dbg(drvdata->dev, "Trace Noc initialized\n");
 
-Provide proper changelog, implement ENTIRE feedback and do no ask
-maintainers do point the same issues TWICE.
 
-NAK
+Drop. There is really no need to tell that function finished.
 
-<form letter>
-It seems my or other reviewer's previous comments were not fully
-addressed. Maybe the feedback got lost between the quotes, maybe you
-just forgot to apply it. Please go back to the previous discussion and
-either implement all requested changes or keep discussing them.
+Please run standard kernel tools for static analysis, like coccinelle,
+smatch and sparse, and fix reported warnings. Also please check for
+warnings when building with W=1. Most of these commands (checks or W=1
+build) can build specific targets, like some directory, to narrow the
+scope to only your code. The code here looks like it needs a fix. Feel
+free to get in touch if the warning is not clear.
 
-Thank you.
-</form letter>
 
 Best regards,
 Krzysztof
