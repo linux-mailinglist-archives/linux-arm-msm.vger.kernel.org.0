@@ -1,131 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-49146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B40BA41A6B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:12:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B544A41A7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:14:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F20AD3A5C46
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:11:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BE921889070
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:14:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CACA624A060;
-	Mon, 24 Feb 2025 10:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F0C324A051;
+	Mon, 24 Feb 2025 10:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c30knrbo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fQJNwoaF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD72424A047
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 10:11:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B912A24A072
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 10:14:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740391921; cv=none; b=Gv7DGN4r9WJokhsCA2rrkZ53/CGOurmo8l3chabf5HS/HOq4u8bv7W330kSQJNG+CVQy/BYop+6Ry2Fc0pdqHQjZIq/ugtIbj3xHko5BrxB0/vH97aUxDMELluG8S+1zSBurqjST0YO0DvdWUELB7UCp3nr/O9u0OOsJJIadE1Y=
+	t=1740392076; cv=none; b=fZ7jkxXlxaCgVfRStbxvkXsVBPG36e2jQ3J+C81Ty3rA+e4aW8DcHD1nMJxUcFTlohwZlHLRJqNw6pVuIcleHKvS6ylsncBiwP7tmo2IbWkDlO/ZCyF0FGap+ZICtOblDKlvGwJXf7sHtMSdrs+wc+xyjJRVZrn8Purc8AotNT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740391921; c=relaxed/simple;
-	bh=fKXxxp8mVUx99PTCuJ9lTvEvjgM846KcN6TPo4R/fBQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nGBunRQKse85XNq2Z7Awx81c1D869XXL51ZZQEGle2JliOcqfoMtonEwyWcUq7W7k1lHauDLdQ8b/4DQ7Ak3mC/e9qdEcJlPXgCkal3G0gU+blSziVLhtvcKrjSpUyPoaMi4DoWxh7zpKen8jCxh5BkqbraFhU5XVgoi/AlcS8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c30knrbo; arc=none smtp.client-ip=209.85.208.48
+	s=arc-20240116; t=1740392076; c=relaxed/simple;
+	bh=vbjKASiWXzboA2sZA1rLnu3UzF7hoa5908pNhKGfpXw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=C3vV58zmOZpR5R5XOp4ZQnx2gRj6ukgxCX7c7lVbxz28FTcbusSY7kYkovr7DNiBXUgK+8/BG6NeFj/IX7QGsxqpq+Hel216lfDPV0bjw0jHd2iqfUbPNoDEhvsW1JuVW672KkLgU3ZL51zfD60feloBFvad0So8gtKBdVxzIiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fQJNwoaF; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5dee1626093so9537782a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 02:11:59 -0800 (PST)
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6fcdf0980a6so13203817b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 02:14:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740391918; x=1740996718; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CU8WACFROSgTLo9Ox03v99I3iVcvKceQqegZUMUwxvk=;
-        b=c30knrbovl3LBy7d2vKl26KV58/0RgFZW4EkY+B1DWzfBl7ME2Edr/dHTXtYikfdxK
-         yzWpg/oBlkywJGY5kaSLpi05rGfM5Q7zFslmflLb14NcoYDkYyno72qm2qZc5OPnhS8P
-         qgNXKXwC5Yny/w8CYqdx+zWzUh92DPQHJOhktShNgeaqj+CtYc7okbURNPR9kWy6YEVa
-         Qr5qUyZkN1X24XCGhvhSo6gcGk5kqawU+3TI2iVs0FXtrAEY6t1/fPugH0DQtLW3xIYd
-         /3kdrWCifI12DGZpTuRYZJuNavfygRQlCuJazK4L4gh7GIT20Hz83tJQRmSUbLsJ0m9d
-         j5rQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740391918; x=1740996718;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1740392074; x=1740996874; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CU8WACFROSgTLo9Ox03v99I3iVcvKceQqegZUMUwxvk=;
-        b=M9CNAlgg4us4KLC7nMGiU9YN2Y/rzvVebOE79AjfJWtMeNeRysvU9yaK4eYSb5dJZw
-         h8WeWCsgj3iW2ImihpYN6VL0ei0jJizFidmqdzrP+l7pY1CLp259dn1BivnM/LNSbc1N
-         bEtkA/S/pztGL/0wsEuQmh3Cj6yay6xV2klsbp0FJTSIOVCp1rL2UlPVmhWPUpKZzD9d
-         rt3BJX6guDvveE/xxwTN/bif6t9ijT47S6fuQ6AjO/ZLxE5qdoT+qDizL5qAJzjDsWvk
-         2Tc6T5OtM7n9ObgFOqCIhaMBHK1OPiwIf81ZXaeX0NjY0KKvQJo5kUXXf01fY5J2i6+s
-         8Jrg==
-X-Forwarded-Encrypted: i=1; AJvYcCXlKKbpwO9mtocynlLAWNjntDfsk9nJpxmF4FS0SmR/X/2xZnRW4PJq8ERPYRC98yAP40IyfGo+iIr00TeJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywrs8YIgBTJvXu3oY3yr/3eZe/NNdDTGVffbVnYsLd/7iXxu+1U
-	hH8FX1c9miFWS/BGyPGkUNi4xUs6uJDV3fOA3+mgtVDpb9QGXqzcMM5+GuLI/b8=
-X-Gm-Gg: ASbGncsu41x/YH0SZJ2TmTutKGPgvhPGAzPdveAD1v+LA/U8YylfwtqPPNSlFgN25Oe
-	luEJJAOw/p8rdFkgGNs/1RXehgyZx2oJPlm6VfwfiG3iP2WyCt+1/oGobaCUbK6DoebsLrmFRzB
-	N3SxQjfnI+1MFk8qt4+Vwc5TCowWZHzWp0S9/N3MQ1eUT60VQu7xrzEva2YvxTWuwM2xiHWqDrI
-	yhsIB5Ztmw+UwPFSo2G+s2FVyLIXEjjulmQbQFq6TfTsFG3JhvQQf3/6sUjiQOd8GCXcVyj9eVZ
-	fFCQyccdG+f00/O7JOF/IzI=
-X-Google-Smtp-Source: AGHT+IFBYGv39ku/WXgGCB6eZU2Nhkmme9NrVcRsypJZXftUwbVR6qfXWzvvkzePYp6cqUbaZIeE6g==
-X-Received: by 2002:a05:6402:524b:b0:5de:50b4:b71f with SMTP id 4fb4d7f45d1cf-5e0a12baa86mr13103989a12.12.1740391918073;
-        Mon, 24 Feb 2025 02:11:58 -0800 (PST)
-Received: from linaro.org ([62.231.96.41])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece2709b4sm17963793a12.57.2025.02.24.02.11.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 02:11:56 -0800 (PST)
-Date: Mon, 24 Feb 2025 12:11:55 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/8] phy: phy-snps-eusb2: make repeater optional
-Message-ID: <Z7xF66TctF2wuoGj@linaro.org>
-References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
- <20250223122227.725233-6-ivo.ivanov.ivanov1@gmail.com>
+        bh=7BT21T9ZsOx2rQl7hC4pSS3NJ3nW+q3IUFkB1OpRZPQ=;
+        b=fQJNwoaF2n7ZkLJm4NiIAQcXapgeTSRhho3norCqkAUZSZekUqRfdWNVRiipkshIIm
+         Nsi6evZXtCm1wjx93kyjMdsN2CxxJmY41/4FndnzGP4Krn2MkxTsL5FM6UE/yuU8OSl7
+         Pv14k9nN2fsmnzjbQMhiCFwR4B2QTaJTBcISqrYov9WP0Pz2VjiuG4UZJLR54vB/KjTK
+         s8i5ob9A2+9MQSHLa9ghsrrW9JyzNkCyZs4LhsQMBOnRLLNU/SFfV3KVDImNmUyBpOzV
+         TnVs1ENLImOJaNNljMp4zbCcVmG48ZCE/xD+sI8+u2bIFyWS9r5/I234bdovIE0I2ILr
+         u04g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740392074; x=1740996874;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7BT21T9ZsOx2rQl7hC4pSS3NJ3nW+q3IUFkB1OpRZPQ=;
+        b=sfIsdRST1t7eW9Fy2DhebiovaYMXcGmFtbRj+fJ/gtGkwrj6axojZy1cNO9ykvTCWa
+         5ZZSHYEzKBbywKd7KAWGQDO7EPIdmp3Wh1gUZ2ww+W2KUVO9zpYQWNkDpvWBfqOmi89l
+         EXp358UTiaPMM9nq2FuWQsb2wd76NsMxKY/CRNW8n/XsCnmUW6p7E/BAEOu8I2hqB7ex
+         lrscHLYvfSyAl3IyEO9D2DvbGybfK52fzpP5ih76DRj4cZ1sT19PnFjBPdOQm45XKwDc
+         3KSe5tNI+uMkD6QL8hOpJ4wrIuYfo5Hl4/FG1KLCF0ePl3/7IoTQXcraG1Unu8b+lkDi
+         hUfA==
+X-Forwarded-Encrypted: i=1; AJvYcCVWSffkpHGQkvs0/h5T+FQldKuWzCWZIW/PkRcV/d7OeRlmVwb9k9jnjYFmS3Oz4AWqUCn1ZLWsPXOQhjDG@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvRBOJ0YMIz6c/uje5g94QIGeLL3bWZ3VUogvoel4IBB0qkuee
+	RinKS/RVfuzcp8jLa1MAJtqAKfyAgSdm8MSKiwWWmINOkpwD0/q84gKYV2Ns5Z6hPRVb9+eEAr2
+	p4sA9NhjRvB7Tenhm+4utK1Qz1zeDXxD+DJLOWg==
+X-Gm-Gg: ASbGncv5JkhJPZSc1Go8mq0WB+XrnQLmsTqBALDtl6iJp2K5FCnu+BnnaZWGjitgIpq
+	qZiaiED5ZF+5cEN45oTQ+zZhhvAuYZL+SdZvgOmxEN1+Npk2zbLk0TZt2A4rL6jUna1FTu1QGEC
+	L59fXgZ/DLjClO
+X-Google-Smtp-Source: AGHT+IHHGiZHgy3s+8XmerKKacF1ioGYVr8/i83Pon+/HFCKY/mSb0SsQmhW+azRKtQiXlPjwnGd0WwE37FqCzJtHXw=
+X-Received: by 2002:a05:690c:9c05:b0:6f7:5605:c62b with SMTP id
+ 00721157ae682-6fbcc3673cfmr103922197b3.27.1740392073624; Mon, 24 Feb 2025
+ 02:14:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250223122227.725233-6-ivo.ivanov.ivanov1@gmail.com>
+References: <20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-0-c11402574367@linaro.org>
+ <20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-13-c11402574367@linaro.org>
+ <khmeegjx5jmu4c32un3gqu7sumkbtdkg6cawwwmwtmkp5gkrag@sklf5tr7qbwv>
+In-Reply-To: <khmeegjx5jmu4c32un3gqu7sumkbtdkg6cawwwmwtmkp5gkrag@sklf5tr7qbwv>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Mon, 24 Feb 2025 18:14:22 +0800
+X-Gm-Features: AWEUYZm42Zh3tL3vnQp2tEApXMrcBNfOORo391vJrlHk1uL8HJBN-be9zH45G4k
+Message-ID: <CABymUCOnnWQZpOhgDfENmWrTUuwb76zSN7nSeO+eyNp4k+PKRw@mail.gmail.com>
+Subject: Re: [PATCH v6 13/15] drm/msm/dpu: support SSPP assignment for
+ quad-pipe case
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25-02-23 14:22:24, Ivaylo Ivanov wrote:
-> Some platforms initialize their eUSB2 to USB repeater in the previous
-> stage bootloader and leave it in a working state for linux. Make the
-> repeater optional in order to allow for reusing that state until
-> proper repeater drivers are introduced.
-> 
-> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> ---
->  drivers/phy/phy-snps-eusb2.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/phy/phy-snps-eusb2.c b/drivers/phy/phy-snps-eusb2.c
-> index 4e5914a76..dcc69c00a 100644
-> --- a/drivers/phy/phy-snps-eusb2.c
-> +++ b/drivers/phy/phy-snps-eusb2.c
-> @@ -461,7 +461,7 @@ static int snps_eusb2_hsphy_probe(struct platform_device *pdev)
->  		return dev_err_probe(dev, ret,
->  				     "failed to get regulator supplies\n");
->  
-> -	phy->repeater = devm_of_phy_get_by_index(dev, np, 0);
-> +	phy->repeater = devm_of_phy_optional_get(dev, np, 0);
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2025=E5=B9=B42=E6=
+=9C=8822=E6=97=A5=E5=91=A8=E5=85=AD 00:36=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Mon, Feb 17, 2025 at 10:16:02PM +0800, Jun Nie wrote:
+> > Currently, SSPPs are assigned to a maximum of two pipes. However,
+> > quad-pipe usage scenarios require four pipes and involve configuring
+> > two stages. In quad-pipe case, the first two pipes share a set of
+> > mixer configurations and enable multi-rect mode when certain
+> > conditions are met. The same applies to the subsequent two pipes.
+> >
+> > Assign SSPPs to the pipes in each stage using a unified method and
+> > to loop the stages accordingly.
+> >
+> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 63 +++++++++++++++++++----=
+--------
+> >  1 file changed, 39 insertions(+), 24 deletions(-)
+> >
+> > +     for (stage_id =3D 0; stage_id < num_stages; stage_id++) {
+> > +             for (i =3D stage_id * PIPES_PER_STAGE; i < (stage_id + 1)=
+ * PIPES_PER_STAGE; i++) {
 
-Maybe make it optional based on compatible or something?
+Do you mean define and assign r_pipe / r_pipe_cfg here?
 
->  	if (IS_ERR(phy->repeater))
->  		return dev_err_probe(dev, PTR_ERR(phy->repeater),
->  				     "failed to get repeater\n");
-> -- 
-> 2.43.0
-> 
+> > +                     pipe =3D &pstate->pipe[i];
+> > +                     pipe_cfg =3D &pstate->pipe_cfg[i];
+> > +
+> > +                     if (drm_rect_width(&pipe_cfg->src_rect) =3D=3D 0)
+> > +                             break;
+> > +
+> > +                     pipe->sspp =3D dpu_rm_reserve_sspp(&dpu_kms->rm, =
+global_state, crtc, &reqs);
+> > +                     if (!pipe->sspp)
+> > +                             return -ENODEV;
+> > +
+> > +                     r_pipe =3D &pstate->pipe[i + 1];
+> > +                     r_pipe_cfg =3D &pstate->pipe_cfg[i + 1];
+> > +
+> > +                     /*
+> > +                      * If current pipe is the first pipe in pipe pair=
+, check
+> > +                      * multi-rect opportunity for the 2nd pipe in the=
+ pair.
+> > +                      * SSPP multi-rect mode cross mixer pairs is not =
+supported.
+> > +                      */
+> > +                     if ((i % PIPES_PER_STAGE =3D=3D 0) &&
+>
+> Please move r_pipe / r_pipe_cfg definition and assignment here.
+
+r_pipe / r_pipe_cfg is used in this if(). Please see above question.
+>
+>
+> > +                         drm_rect_width(&r_pipe_cfg->src_rect) !=3D 0 =
+&&
+> > +                         dpu_plane_try_multirect_parallel(pipe, pipe_c=
+fg, r_pipe, r_pipe_cfg,
+> > +                                                           pipe->sspp,
+> > +                                                           msm_framebu=
+ffer_format(plane_state->fb),
+> > +                                                           dpu_kms->ca=
+talog->caps->max_linewidth)) {
+> > +                             i++;
+> > +                     } else {
+> > +                             /* multirect is not possible, use two SSP=
+P blocks */
+> > +                             pipe->multirect_index =3D DPU_SSPP_RECT_S=
+OLO;
+> > +                             pipe->multirect_mode =3D DPU_SSPP_MULTIRE=
+CT_NONE;
+> > +                             DPU_DEBUG_PLANE(pdpu, "allocating sspp_%d=
+ for pipe %d.\n",
+> > +                                             pipe->sspp->idx - SSPP_NO=
+NE, i);
+> > +                     }
+> > +             }
+> >       }
+> >
+> >       return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
+> >
+> > --
+> > 2.34.1
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
