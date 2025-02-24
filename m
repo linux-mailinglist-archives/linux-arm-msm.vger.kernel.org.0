@@ -1,117 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-49132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AB13A417EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 09:56:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E0FCA4182F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:08:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 887C716D7F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 08:56:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A9314188A9B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 09:08:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC772241CA2;
-	Mon, 24 Feb 2025 08:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 142CA242927;
+	Mon, 24 Feb 2025 09:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D0KVRt9H"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QL13uMM4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A62241695;
-	Mon, 24 Feb 2025 08:56:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647A819DF48;
+	Mon, 24 Feb 2025 09:08:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740387367; cv=none; b=Nj51zRijiwLymkWocZGIZ67zvKOLpmYvy4TrrxugPa+nQD4tPSojxam5x96apFaqE2ZDx6j6RPEESBZKbVcEy/AfsCKBRkt/rc5FzkrSeP9HDrYWSpzc/ewY8ZKkOX+9DT5VxnaqsfX5bZ4eElzZ0LCfa3hYw8bZfNMT3Oo41HI=
+	t=1740388119; cv=none; b=GzY/ezsfP4jCc9LiDR0Hh3Z/wTw+/RI7nguIIuiLFwX8RdsP4hUyYaPCTGxY56iigy8MZ8BwcE7eSvEpnBHAuRoqxE4B9xy27GcV73Q9XY0RBx8mT86YabtmpGo/kz5VAk2pv7ZxQ3XMx9Td2XKCvJtMglzDwJlTotRtX8P9C5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740387367; c=relaxed/simple;
-	bh=xynIidDgpFBJhwX+rR7LTSuhkkTdXt9jQlEjIf656u4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g+gTEapFROb2+iHKnaa6b/ktgnsIykQ83cTSx4raw7dVd0Gul5IwR57MzHmw8sDmjznAMWf4Yjwfi0PulrlqbtE8c9GyV9gdCm+SuAcKSDBoJLXKMSrqrrGkmGGCl77S+VHKXzHRuLDzL2EcIOmh0t1guTQjrRmzjgXhr6NjlAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D0KVRt9H; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11564C4CEE6;
-	Mon, 24 Feb 2025 08:56:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740387367;
-	bh=xynIidDgpFBJhwX+rR7LTSuhkkTdXt9jQlEjIf656u4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=D0KVRt9H3ECd8N6iv+XzErxMGS+7KbCRuMJUu+bQMYbTnnPHwLcuWiUTIUxllT1QE
-	 RNtw+Szf2Z0laWEeTI3RBd+YjTiMgOJpEkNatKEWUAsX8gPTlbVs+PJO+i2LHoKqgW
-	 xRVb97fzyaAnQ3W7spRTcxyEEzpiTHGpCvQHcBkkJxhu4J7Z3GDJ5MWimoLpdibh+L
-	 JeZd+LI4viRzL2Zc7a4wG9YVhyXHPpm/XJcfL14/Y117GDC+ExglNclxm12adh3E0x
-	 VWtE/qavf6qxZzv+Afn4YFlss1vzH7k0IpmU5kX0X7J/QqALHccZ/eohy9ECzjfXAw
-	 FQJrOswTPLMJQ==
-Date: Mon, 24 Feb 2025 09:56:04 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/8] dt-bindings: phy: add
- samsung,exynos2200-usbcon-phy schema file
-Message-ID: <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
-References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
- <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
+	s=arc-20240116; t=1740388119; c=relaxed/simple;
+	bh=/KwrmDzVn/IbSMKODHXtZm6DBbwAHY94SXEGnAlkDTM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=kLGpTKfmtofkFq8TfseiooHxQ962se3d7Oxk1v+rRYPIMAm0UhDvWU+qjHhLQuLmvu0UgqRuhpCWDmCUoD9NBPPn6q0gnAD4KOb1gHKED+RGNNaOGjny4YHvJ3zR/JkfNdETDWFdjZ7OYJLMF631jdvZwPqhsfbfiXnwSOwa0ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QL13uMM4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51O93QFu010484;
+	Mon, 24 Feb 2025 09:08:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	A1jC96k6LPaXJrk8LYQZMxGVSvFRjbSnsjHPT0VVuVw=; b=QL13uMM4HV40WKVp
+	gS2y+V59bfdBM2R4dPPkEN00vMTQc0lO7cM6YaX5/GWfOt2P6kIOLml4ir6YZL05
+	ZjEvElnKb7TPoL9WKOsa6UYcTkeMhKwnTzSRqcXkbvR9LzGv1nqy1RIGHGeb0jKu
+	B6u4dN22mcYxekQQjloX2gkpLCOkYuNEGJZlCN46GCOAUwEUa577DUlLTQWemfqn
+	K6nZDD+i8ohDq8igtuuJk8Qmbpv6E8a+GOfEPc1xfByo2f/HoKLWj6QyHpn5JYXO
+	ZBfUPJR9GoCNEGQiayM70nJHN2vI03PYO+HQGD08lHzjR1mrZBD/SimwhKRlODJh
+	3F14Aw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y49ecgph-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Feb 2025 09:08:31 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51O98Vcf018631
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Feb 2025 09:08:31 GMT
+Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Feb
+ 2025 01:08:27 -0800
+Message-ID: <be872be1-dd0a-481b-abe0-57ed2bf50c22@quicinc.com>
+Date: Mon, 24 Feb 2025 14:38:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/5] thermal: drivers: qcom: Add new feat for soc
+ without rpm
+To: George Moussalem <george.moussalem@outlook.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <dmitry.baryshkov@linaro.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <quic_srichara@quicinc.com>
+References: <20250224061224.3342-1-george.moussalem@outlook.com>
+ <DS7PR19MB88837D7AE30CE306B8F71F3E9DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+Content-Language: en-US
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <DS7PR19MB88837D7AE30CE306B8F71F3E9DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 39CT8ZCXUhHY2WMtpu3GLoDtd7HggTcU
+X-Proofpoint-GUID: 39CT8ZCXUhHY2WMtpu3GLoDtd7HggTcU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-24_03,2025-02-24_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 mlxlogscore=999 lowpriorityscore=0 mlxscore=0
+ adultscore=0 malwarescore=0 clxscore=1015 phishscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2502240066
 
-On Sun, Feb 23, 2025 at 02:22:22PM +0200, Ivaylo Ivanov wrote:
-> The Exynos2200 SoC has a USB controller PHY, which acts as an
-> intermediary between a USB controller (typically DWC3) and other PHYs
-> (UTMI, PIPE3). Add a dt-binding schema for it.
+
+
+On 2/24/2025 11:42 AM, George Moussalem wrote:
+> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > 
-> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> In IPQ5018, Tsens IP doesn't have RPM. Hence the early init to
+> enable tsens would not be done. So add a flag for that in feat
+> and skip enable checks. Without this, tsens probe fails.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 > ---
->  .../phy/samsung,exynos2200-usbcon-phy.yaml    | 76 +++++++++++++++++++
->  1 file changed, 76 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
-
-You have undocumented dependencies which prevent merging this file.
-First, dependencies have to be clearly expressed. Second, you should
-rather decouple the code from header dependencies, otherwise this cannot
-be merged for current release (just use clocks with long names, without IDs).
-
+>  drivers/thermal/qcom/tsens.c | 2 +-
+>  drivers/thermal/qcom/tsens.h | 3 +++
+>  2 files changed, 4 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
-> new file mode 100644
-> index 000000000..7d879ec8b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
-> @@ -0,0 +1,76 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/phy/samsung,exynos2200-usbcon-phy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Exynos2200 USB controller PHY
-> +
-> +maintainers:
-> +  - Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> +
-> +description:
-> +  Exynos2200 USB controller PHY is an intermediary between a USB controller
-> +  (typically DWC3) and other PHYs (UTMI, PIPE3).
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 3aa3736181aa..a25ca17adf1a 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -975,7 +975,7 @@ int __init init_common(struct tsens_priv *priv)
+>  	ret = regmap_field_read(priv->rf[TSENS_EN], &enabled);
+>  	if (ret)
+>  		goto err_put_device;
+> -	if (!enabled) {
+> +	if (!enabled && !(priv->feat->ignore_enable)) {
 
-Isn't this the same as usbdrd phy? see: samsung,usb3-drd-phy.yaml
+Please drop 'ignore_enable' and use 'VER_2_X_NO_RPM' instead.
 
-I think there is no PHY between DWC3 and UTMI/PIPE. There is a PHY
-controller (so the samsung,usb3-drd-phy.yaml) which we call here the
-phy.
+>  		dev_err(dev, "%s: device not enabled\n", __func__);
+>  		ret = -ENODEV;
+>  		goto err_put_device;
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 7b36a0318fa6..90bf11fba563 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -505,6 +505,8 @@ enum regfield_ids {
+>   * @srot_split: does the IP neatly splits the register space into SROT and TM,
+>   *              with SROT only being available to secure boot firmware?
+>   * @has_watchdog: does this IP support watchdog functionality?
+> + * @ignore_enable: does this IP reside in a soc that does not have rpm to
+> + *                 do pre-init.
 
+Drop 'ignore_enable'.
 
-Best regards,
-Krzysztof
+>   * @max_sensors: maximum sensors supported by this version of the IP
+>   * @trip_min_temp: minimum trip temperature supported by this version of the IP
+>   * @trip_max_temp: maximum trip temperature supported by this version of the IP
+> @@ -516,6 +518,7 @@ struct tsens_features {
+>  	unsigned int adc:1;
+>  	unsigned int srot_split:1;
+>  	unsigned int has_watchdog:1;
+> +	unsigned int ignore_enable:1;
 
+Drop 'ignore_enable'.
+
+Thanks & Regards,
+Manikanta.
 
