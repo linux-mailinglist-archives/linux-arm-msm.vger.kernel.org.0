@@ -1,63 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-49154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 188CDA41B31
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:34:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 91DA3A41B9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:50:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 47DAE3ABFC4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:34:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B9693A4B31
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:48:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEB6D2505C8;
-	Mon, 24 Feb 2025 10:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA3872566F2;
+	Mon, 24 Feb 2025 10:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C1+kKCtw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XORNgn+I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14586200BB3;
-	Mon, 24 Feb 2025 10:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037BB33993;
+	Mon, 24 Feb 2025 10:48:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740393260; cv=none; b=VWHVw4t2PwDmwVX07zpTVw5lYizqyeYPDvxP5bh2GfJOBVkatJZspLRHO+RM3c86iWyKbZieg9zbSc5E9h1GX+QjNsXBI9VET4TzuQwyzwYe6NUnEcWVvy76Vwe1bOLRQh1oYQfsuHsIqSWD3gZ+BYtVmu7IlirEm4PH2n2Lj2g=
+	t=1740394132; cv=none; b=n4q/iRmgj98A9sVs+3QHbiNaKNjYgGJZ6zWGuGsTnwKVEXXYWuQoM6Jp0N/fKizIDzUEUpe0lJWKWk/kOvrPguRjVIYlVuBevY1rvLiyzdYEaE4vb90KdnaTZI6LkyWYMfZ9CPSQMo7v91+7+Fm6ynDPvliGh2Ch2u+rP2e23go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740393260; c=relaxed/simple;
-	bh=bDumf9YGotuIKsBd7RSPAQki40YRIhPESOlRGHAgfNw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=ixJL2aEp/KTMfCrRKgJxxIkD5h4kQzNYMbIotWSp+mNGqSzA2zqxhAf11DaCzkYwsE83+mos3PTVxaT/ZS8HbvD18bHOkQmHCcWz7Mk200lja4k8QuszO35MLkrAGssJeOWfNeMtLtKyzoE+xIVxgB6rxX9tIuRTORKe/K77Qg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C1+kKCtw; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51O9C0d0020840;
-	Mon, 24 Feb 2025 10:34:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	F8zPDqkV/POv5dJgtiuW574ziA/qlzT5EpkIKdvC30g=; b=C1+kKCtwGXnoYBKO
-	YiJvDwp2k+OaReleTzxDplh1VqAz4lAOe0mPYLzlMrU4+1t7N8rr6K96lERkgWwx
-	IhCPuURsgCe+CeAOVpwK5d8u9UUU1/51vrt2/vSeQ9IxF7cLQdRvAph1ES1He5vg
-	hIJAYw0GGpOvHwpI7zosoqFoHDfWnWj0xu35OliR/3pkU9LdSyjhW+yLK8C6SQWn
-	T43tI+B3s0FBa0m97VqIsrnCK26k1aZgEPiYghRIaa6EGfr1U/68C9SPCbz4EtAJ
-	lhWETrxd1GnbpNnZlJZ4lh5QimjXCck4pTTlLtAnVIxN4Pnn4e0pAkU4t7ww2cpC
-	hZPYew==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y6t2mp0h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Feb 2025 10:34:02 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51OAY1rF032240
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Feb 2025 10:34:01 GMT
-Received: from [10.133.33.32] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Feb
- 2025 02:33:55 -0800
-Message-ID: <2c5c1c8e-a10b-48fb-a0ec-c8164b4f3908@quicinc.com>
-Date: Mon, 24 Feb 2025 18:33:53 +0800
+	s=arc-20240116; t=1740394132; c=relaxed/simple;
+	bh=s6OsMqvoKL7x+5KoMhDVeKNmQJE3PLkhy3vAbympfbA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U6d0tjv6HQmibja3C/pnQaKMf/Mlq6HdlCyp99aZ2/h128bIZPbNsSjhKjh6ak7Vmyp8zSV0KnAeVxRoTvzHJTpgrKPS6b1OfQPtRNLRIt6OxYuyS7y9jkCs5Ez0mYxno6cWI5cFxqhMQqW+KgwEbVAPd7tT4mKj3/bhyQri7RE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XORNgn+I; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4399d14334aso36851865e9.0;
+        Mon, 24 Feb 2025 02:48:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740394129; x=1740998929; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sSmks02sU0pz6NtlK+7aTkPg3Il2n2N4xYhuuXfu8rM=;
+        b=XORNgn+I4WUe8CznlLm3orcQIebxyrwpOK2SsuMdyrU/BnPkeU17ZlhW5ik61iYYY8
+         uYWrPb4qk3iqZ6p2vOHl0sA312mM0vpxXTz9owBTXVOEd6zwBmRhM/Bo6STzFdwXkwNz
+         PXzsCGdTONIt4KrOE73bgPB8iRS5Z9BE1Bpk+3gy1Zc3Ie8ugLyWmzo4QxwK207gsRsu
+         FMHtOzwDhNQcdfZaCQr9OoM2SlbbpOnhZRCHZSPPtltchoMikm0q4xm4NPFBz/MsCO5w
+         lV9ByGen/IsT0gcG4uaqR9THIe8gk5/1l+rkR3IP3khxEOLPlCfr+SJaSu+4TYhJp6KD
+         ntSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740394129; x=1740998929;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sSmks02sU0pz6NtlK+7aTkPg3Il2n2N4xYhuuXfu8rM=;
+        b=BdAWmp1Sp2px7bWfzJmvY2ZK+9eTOPiKC5CcnsMk3UucYEc9GpzYJ4a1tcNTomdQz/
+         9xFS7Q5W9N9OepSD7ulb/DiD+cAsa4lujBuLnZH4E6bL9YsvW0FmVOlfT8E8/l9ufhkO
+         A1nwiwg6y/FFMD1zoKJkfTnBjPcYEFFHYI8wlMEHVX3CGpZPWR657FdcUiMwtSjFEuy3
+         ov1ci0B/r5GwDbX2yZ07nspnrv54v6jw4vxTNUKLgivXExLbLQJIjDBhsTbd3Cv0MXHi
+         vILDjhINbnszkZQhxbnNIG9Osy79vxmKPlHNWxK17RGxLmf3bXFQ/pFXPz4uCTgCdjx3
+         Kosw==
+X-Forwarded-Encrypted: i=1; AJvYcCU7bDypMsSram8WMgdyZRcTla4av49Up73+nUSiCUOP3PKZloBrWHD+XQ7ebDuSfEe18eJ9dQK0txUqa+HPSw==@vger.kernel.org, AJvYcCVAatnpi1yz3lwKUgEm467CxL94Gu6Bjyj0LpkOt3OZBCUkwmhPkL5ZHUoNjaiBPmv4eMvkqVw7zou+@vger.kernel.org, AJvYcCVTi3fUGtkJmVv1slaG08/6+2aOhlvrPM7FiG1jmG7WKGFgwdEKs7h/zbuPDeiTSWSO9Ts61jEVSayD4gJRdp6pmgM=@vger.kernel.org, AJvYcCXBEm3smhru4uYwBDW6tGfDMNGed0cttECaiUMnb5tb/Dx7FmK7np19aQDkpnpkK6fB8oZD5Kh8SVCoqR+c@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7XYyy97LdoUX+uzQm1fBDyQqZEUFjjTKURQr8L0s3V/3J3miv
+	wFb/KC2mE3LPEjVpIEdKCF0FmG63VA7f2Q5w8ZTHDxrBChroO2YX
+X-Gm-Gg: ASbGncvpwXB09akTP/x10tSFFBQlw3Hs9Sp7O7dyqyutrqIvcqXkC4pdR/FtTpvP76U
+	3RG5/n2nyLt4utFdJXBOSUxtPcziOxj9HAG+DF7I0o5LRhTBp96kGr48j5ACxTRHsadmqtBiI0l
+	vRuOo0vT3MIsDrFh65RdjxYslTRw3+jg0+mS0OcX7k3liVbsInsLzsacPvBPDLNSB4rC3/lk6P1
+	k8U8lVRHPibSA040FfqFQrIUHCGsdo1fkQbjfPLmgvjdgkhs1iuevQKx3UbEll8cFllK1DuMMlB
+	Vn1Xb5FYQ0bSN0SQiDHm0aahdLaqoSmCvy1r6Xx6KZ+LuXoYaSHFGKiPKzZP6D0A1wc=
+X-Google-Smtp-Source: AGHT+IH22dUu6cq5GnZj2ahBsH99nikrHZTprN2kXwautV7u6WDRYUVZbgvuJyXenM0CCPaMHdFeZg==
+X-Received: by 2002:a05:600c:154a:b0:439:44eb:2d81 with SMTP id 5b1f17b1804b1-439ae1f34f8mr103722245e9.15.1740394128909;
+        Mon, 24 Feb 2025 02:48:48 -0800 (PST)
+Received: from [172.16.20.186] (62-73-104-42.ip.btc-net.bg. [62.73.104.42])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-439b02d53e8sm101787135e9.12.2025.02.24.02.48.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Feb 2025 02:48:48 -0800 (PST)
+Message-ID: <a4f63721-d094-4eda-b68a-6ef62ff54680@gmail.com>
+Date: Mon, 24 Feb 2025 12:48:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,389 +81,100 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 6/7] Coresight: Add Coresight TMC Control Unit driver
-From: Jie Gan <quic_jiegan@quicinc.com>
-To: James Clark <james.clark@linaro.org>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>
-CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao
-	<quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-References: <20250217093024.1133096-1-quic_jiegan@quicinc.com>
- <20250217093024.1133096-7-quic_jiegan@quicinc.com>
- <35d1a923-4e8e-4fe2-bf4a-0b78b1d511e3@arm.com>
- <a594bdee-7d9e-4d79-a5ee-a34dafa2869f@quicinc.com>
- <37cb0da5-fcca-41e0-95d8-280fd95541c9@linaro.org>
- <a7b301b5-bd9b-4b50-9299-e44a78fcf5a8@quicinc.com>
+Subject: Re: [PATCH v2 3/8] dt-bindings: phy: add
+ samsung,exynos2200-usbcon-phy schema file
 Content-Language: en-US
-In-Reply-To: <a7b301b5-bd9b-4b50-9299-e44a78fcf5a8@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BDzBlCEfOtFqD7M4_WpIg0aHrEU5wOke
-X-Proofpoint-GUID: BDzBlCEfOtFqD7M4_WpIg0aHrEU5wOke
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-24_04,2025-02-24_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- spamscore=0 priorityscore=1501 mlxscore=0 phishscore=0 malwarescore=0
- adultscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502240077
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Abel Vesa <abel.vesa@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
+ <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
+ <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
+From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+In-Reply-To: <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 2/24/25 10:56, Krzysztof Kozlowski wrote:
+> On Sun, Feb 23, 2025 at 02:22:22PM +0200, Ivaylo Ivanov wrote:
+>> The Exynos2200 SoC has a USB controller PHY, which acts as an
+>> intermediary between a USB controller (typically DWC3) and other PHYs
+>> (UTMI, PIPE3). Add a dt-binding schema for it.
+>>
+>> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+>> ---
+>>  .../phy/samsung,exynos2200-usbcon-phy.yaml    | 76 +++++++++++++++++++
+>>  1 file changed, 76 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
+> You have undocumented dependencies which prevent merging this file.
+> First, dependencies have to be clearly expressed.
 
+They are, in the cover letter.
 
-On 2/24/2025 6:04 PM, Jie Gan wrote:
-> 
-> 
-> On 2/24/2025 5:53 PM, James Clark wrote:
->>
->>
->> On 24/02/2025 3:32 am, Jie Gan wrote:
->>>
->>>
->>> On 2/21/2025 7:39 PM, Suzuki K Poulose wrote:
->>>> On 17/02/2025 09:30, Jie Gan wrote:
->>>>> The Coresight TMC Control Unit hosts miscellaneous configuration 
->>>>> registers
->>>>> which control various features related to TMC ETR sink.
->>>>>
->>>>> Based on the trace ID, which is programmed in the related CTCU ATID
->>>>> register of a specific ETR, trace data with that trace ID gets into
->>>>> the ETR buffer, while other trace data gets dropped.
->>>>>
->>>>> Enabling source device sets one bit of the ATID register based on
->>>>> source device's trace ID.
->>>>> Disabling source device resets the bit according to the source
->>>>> device's trace ID.
->>>>>
->>>>> Reviewed-by: James Clark <james.clark@linaro.org>
->>>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->>>>> ---
->>>>>   drivers/hwtracing/coresight/Kconfig          |  12 +
->>>>>   drivers/hwtracing/coresight/Makefile         |   1 +
->>>>>   drivers/hwtracing/coresight/coresight-ctcu.c | 268 ++++++++++++++ 
->>>>> + ++++
->>>>>   drivers/hwtracing/coresight/coresight-ctcu.h |  24 ++
->>>>>   include/linux/coresight.h                    |   3 +-
->>>>>   5 files changed, 307 insertions(+), 1 deletion(-)
->>>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
->>>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
->>>>>
->>>>> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/ 
->>>>> hwtracing/ coresight/Kconfig
->>>>> index 06f0a7594169..ecd7086a5b83 100644
->>>>> --- a/drivers/hwtracing/coresight/Kconfig
->>>>> +++ b/drivers/hwtracing/coresight/Kconfig
->>>>> @@ -133,6 +133,18 @@ config CORESIGHT_STM
->>>>>         To compile this driver as a module, choose M here: the
->>>>>         module will be called coresight-stm.
->>>>> +config CORESIGHT_CTCU
->>>>> +    tristate "CoreSight TMC Control Unit driver"
->>>>> +    depends on CORESIGHT_LINK_AND_SINK_TMC
->>>>> +    help
->>>>> +      This driver provides support for CoreSight TMC Control Unit
->>>>> +      that hosts miscellaneous configuration registers. This is
->>>>> +      primarily used for controlling the behaviors of the TMC
->>>>> +      ETR device.
->>>>> +
->>>>> +      To compile this driver as a module, choose M here: the
->>>>> +      module will be called coresight-ctcu.
->>>>> +
->>>>>   config CORESIGHT_CPU_DEBUG
->>>>>       tristate "CoreSight CPU Debug driver"
->>>>>       depends on ARM || ARM64
->>>>> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/ 
->>>>> hwtracing/ coresight/Makefile
->>>>> index 4ba478211b31..1b7869910a12 100644
->>>>> --- a/drivers/hwtracing/coresight/Makefile
->>>>> +++ b/drivers/hwtracing/coresight/Makefile
->>>>> @@ -51,3 +51,4 @@ coresight-cti-y := coresight-cti-core.o 
->>>>> coresight- cti-platform.o \
->>>>>              coresight-cti-sysfs.o
->>>>>   obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
->>>>>   obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
->>>>> +obj-$(CONFIG_CORESIGHT_CTCU) += coresight-ctcu.o
->>>>> diff --git a/drivers/hwtracing/coresight/coresight-ctcu.c b/ 
->>>>> drivers/ hwtracing/coresight/coresight-ctcu.c
->>>>> new file mode 100644
->>>>> index 000000000000..e1460a627c4d
->>>>> --- /dev/null
->>>>> +++ b/drivers/hwtracing/coresight/coresight-ctcu.c
->>>>> @@ -0,0 +1,268 @@
->>>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>>> +/*
->>>>> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All 
->>>>> rights reserved.
->>>>> + */
->>>>> +
->>>>> +#include <linux/clk.h>
->>>>> +#include <linux/coresight.h>
->>>>> +#include <linux/device.h>
->>>>> +#include <linux/err.h>
->>>>> +#include <linux/kernel.h>
->>>>> +#include <linux/init.h>
->>>>> +#include <linux/io.h>
->>>>> +#include <linux/module.h>
->>>>> +#include <linux/mutex.h>
->>>>> +#include <linux/of.h>
->>>>> +#include <linux/platform_device.h>
->>>>> +#include <linux/slab.h>
->>>>> +
->>>>> +#include "coresight-ctcu.h"
->>>>> +#include "coresight-priv.h"
->>>>> +
->>>>> +DEFINE_CORESIGHT_DEVLIST(ctcu_devs, "ctcu");
->>>>> +
->>>>> +#define ctcu_writel(drvdata, val, offset)    __raw_writel((val), 
->>>>> drvdata->base + offset)
->>>>> +#define ctcu_readl(drvdata, offset)        __raw_readl(drvdata- 
->>>>> >base + offset)
->>>>> +
->>>>> +/*
->>>>> + * The TMC Coresight Control Unit uses four ATID registers to 
->>>>> control the data
->>>>> + * filter function based on the trace ID for each TMC ETR sink. 
->>>>> The length of
->>>>> + * each ATID register is 32 bits. Therefore, the ETR has a related 
->>>>> field in
->>>>> + * CTCU that is 128 bits long. Each trace ID is represented by one 
->>>>> bit in that
->>>>> + * filed.
->>>>> + * e.g. ETR0ATID0 layout, set bit 5 for traceid 5
->>>>> + *                                           bit5
->>>>> + * ------------------------------------------------------
->>>>> + * |   |28|   |24|   |20|   |16|   |12|   |8|  1|4|   |0|
->>>>> + * ------------------------------------------------------
->>>>> + *
->>>>> + * e.g. ETR0:
->>>>> + * 127                     0 from ATID_offset for ETR0ATID0
->>>>> + * -------------------------
->>>>> + * |ATID3|ATID2|ATID1|ATID0|
->>>>> + */
->>>>> +#define CTCU_ATID_REG_OFFSET(traceid, atid_offset) \
->>>>> +        ((traceid / 32) * 4 + atid_offset)
->>>>> +
->>>>> +#define CTCU_ATID_REG_BIT(traceid)    (traceid % 32)
->>>>> +#define CTCU_ATID_REG_SIZE        0x10
->>>>> +
->>>>> +struct ctcu_atid_config {
->>>>> +    const u32 atid_offset;
->>>>> +    const u32 port_num;
->>>>> +};
->>>>> +
->>>>> +struct ctcu_config {
->>>>> +    const struct ctcu_atid_config *atid_config;
->>>>> +    int num_atid_config;
->>>>> +};
->>>>> +
->>>>> +static const struct ctcu_atid_config sa8775p_atid_cfgs[] = {
->>>>> +    {0xf8,  0},
->>>>> +    {0x108, 1},
->>>>> +};
->>>>> +
->>>>> +static const struct ctcu_config sa8775p_cfgs = {
->>>>> +    .atid_config        = sa8775p_atid_cfgs,
->>>>> +    .num_atid_config    = ARRAY_SIZE(sa8775p_atid_cfgs),
->>>>> +};
->>>>> +
->>>>> +static void ctcu_program_atid_register(struct ctcu_drvdata 
->>>>> *drvdata, u32 reg_offset,
->>>>> +                       u8 bit, bool enable)
->>>>> +{
->>>>> +    u32 val;
->>>>> +
->>>>> +    CS_UNLOCK(drvdata->base);
->>>>> +    val = ctcu_readl(drvdata, reg_offset);
->>>>> +    val = enable? (val | BIT(bit)) : (val & ~BIT(bit));
->>>>
->>>> minor nit: If possible do not use the ternary operator like this. It 
->>>> is much better readable as:
->>>>
->>>>      if (enable)
->>>>          val |= BIT(bit);
->>>>      else
->>>>          val &= ~BIT(bit);
->>>>
->>>
->>> Will do this way.
->>>
->>>>> +    ctcu_writel(drvdata, val, reg_offset);
->>>>> +    CS_LOCK(drvdata->base);
->>>>> +}
->>>>> +
->>>>> +/*
->>>>> + * __ctcu_set_etr_traceid: Set bit in the ATID register based on 
->>>>> trace ID when enable is true.
->>>>> + * Reset the bit of the ATID register based on trace ID when 
->>>>> enable is false.
->>>>> + *
->>>>> + * @csdev:    coresight_device struct related to the device
->>>>> + * @traceid:    trace ID of the source tracer.
->>>>> + * @port_num:    port number from TMC ETR sink.
->>>>> + * @enable:    True for set bit and false for reset bit.
->>>>> + *
->>>>> + * Returns 0 indicates success. Non-zero result means failure.
->>>>> + */
->>>>> +static int __ctcu_set_etr_traceid(struct coresight_device *csdev, 
->>>>> u8 traceid, int port_num,
->>>>> +                  bool enable)
->>>>> +{
->>>>> +    struct ctcu_drvdata *drvdata = dev_get_drvdata(csdev- 
->>>>> >dev.parent);
->>>>> +    u32 atid_offset, reg_offset;
->>>>> +    u8 refcnt, bit;
->>>>> +
->>>>> +    atid_offset = drvdata->atid_offset[port_num];
->>>>> +    if (atid_offset == 0)
->>>>> +        return -EINVAL;
->>>>> +
->>>>> +    bit = CTCU_ATID_REG_BIT(traceid);
->>>>> +    reg_offset = CTCU_ATID_REG_OFFSET(traceid, atid_offset);
->>>>> +    if (reg_offset - atid_offset > CTCU_ATID_REG_SIZE)
->>>>> +        return -EINVAL;
->>>>> +
->>>>> +    guard(raw_spinlock_irqsave)(&drvdata->spin_lock);
->>>>> +    refcnt = drvdata->traceid_refcnt[port_num][traceid];
->>>>> +    /* Only program the atid register when the refcnt value is 0 
->>>>> or 1 */
->>>>
->>>> A normal trace source won't be enabled more than once (e.g., ETM). 
->>>> The only odd one out is the STM, which may be driven by multiple 
->>>> agents.
->>>> So this refcounting looks necessary.
->>>>
->>>
->>> Besides, for the TPDMs which shared the trace_id of the TPDA also 
->>> need the refcnt. Consider we have TPDM1 and TPDM2 connected to the 
->>> same TPDA device. Once we disable one of the TPDM without checking 
->>> the refcnt, the filter function will be disabled for another TPDM.
->>>
->>>>> +    if (enable && (++refcnt == 1))
->>>>> +        ctcu_program_atid_register(drvdata, reg_offset, bit, enable);
->>>>> +    else if (!enable && (--refcnt == 0))
->>>>> +        ctcu_program_atid_register(drvdata, reg_offset, bit, enable);
->>>>
->>>> minor nit:
->>>>
->>>>      if ((enable && !refcount++) ||
->>>>          (!enable && --refcount))
->>>>          ctcu_program_atid_register(drvdata, reg_offset, bit, enable);
->>>>
->>>>
->>>
->>> I did (enable && (++refcnt == 1)) just because I think we only need 
->>> program the register when refcnt is equal to 1. We dont need 
->>> reprogram the register with same value when refcnt greater than 1. So 
->>> I think it's better for the performance?
->>>
->>>> Also, see my comment the bottom for "refcount" being u8 .
->>>
->>> Sure, will check.
->>>
->>>>
->>>>
->>>>> +
->>>>> +    drvdata->traceid_refcnt[port_num][traceid] = refcnt;
->>>>> +
->>>>> +    return 0;
->>>>> +}
->>>>> +
->>>>> +static int ctcu_get_active_port(struct coresight_device *sink, 
->>>>> struct coresight_device *helper)
->>>>> +{
->>>>> +    int i;
->>>>> +
->>>>> +    for (i = 0; i < sink->pdata->nr_outconns; ++i) {
->>>>> +        if (sink->pdata->out_conns[i]->dest_dev)
->>>>> +            return sink->pdata->out_conns[i]->dest_port;
->>>>
->>>> Don't we need to make sure it matches the helper ? What if there are 
->>>> multiple helpers ? e.g, a CATU connected to the ETR and CTCU ?
->>>> Or even try the opposite ? i.e. search the helper and find the port
->>>> matching the sink ?
->>
->> Good catch, looks like this should be done the opposite way around.
->>
->>>>
->>>>      struct coresight_platform_data *pdata = helper->pdata;
->>>>
->>>>      for (i = 0; i < pdata->nr_inconns; ++i)
->>>>          if (pdata->in_conns[i]->dest_dev == sink)
->>>>              return pdata->in_conns[i]->src_port;
->>>>
->>>> Not sure if that works with the helper device connection, James ?
->>
->> Yeah connections are always made in both directions.
->>
->>> Can we check the subtype of the helper device? We should only have 
->>> one CTCU helper device for each ETR.
->>>
->>> enum coresight_dev_subtype_helper subtype;
->>>
->>> for (i = 0; i < sink->pdata->nr_outconns; ++i) {
->>>      subtype = sink->pdata->out_conns[i]->dest_dev- 
->>> >subtype.helper_subtype;
->>>      if (subtype == CORESIGHT_DEV_SUBTYPE_HELPER_CTCU)
->>>         return sink->pdata->out_conns[i]->dest_port;
->>>
->>
->> I don't think we need to check the type, just search all the CTCU's 
->> in_conns until you find the sink.
->>
->> As Suzuki says, by looking at the out_conns of the sink you might find 
->> a different helper device. Checking that it really is connected to the 
->> sink is probably more robust that relying on the type anyway.
->>
-> 
-> Hi James,
-> 
-> Thanks for explaination, will update per Suzuki's suggestion.
-> 
-> Jie
-> 
+> Second, you should
+> rather decouple the code from header dependencies, otherwise this cannot
+> be merged for current release (just use clocks with long names, without IDs).
 
-Hi Suzuki James,
+Sure
 
-Just for confirm, the updated codes from opposite way should be:
+>
+>> diff --git a/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
+>> new file mode 100644
+>> index 000000000..7d879ec8b
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
+>> @@ -0,0 +1,76 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/phy/samsung,exynos2200-usbcon-phy.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Exynos2200 USB controller PHY
+>> +
+>> +maintainers:
+>> +  - Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+>> +
+>> +description:
+>> +  Exynos2200 USB controller PHY is an intermediary between a USB controller
+>> +  (typically DWC3) and other PHYs (UTMI, PIPE3).
+> Isn't this the same as usbdrd phy? see: samsung,usb3-drd-phy.yaml
 
-struct coresight_platform_data *pdata = helper->pdata;
+It's not (I think). There's a few reasons I've decided to make this separate
+from the usb3-drd-phy bindings and exynos5-usbdrd driver:
 
-for (i = 0; i < pdata->nr_inconns; ++i)
-     if (pdata->in_conns[i]->src_dev == sink)
-     	return pdata->in_conns[i]->dest_port;
+1. This PHY does not provide UTMI and PIPE3 on its own. There's no tuning
+for them, and all that is needed from it is to disable HWACG, assert/
+deassert reset and force bvalid/vbusvalid. After that SNPS eUSB2
+initialization can be done and USB2 works. If the USBCON phy is not set
+up before the eUSB2 one, the device hangs, so there is definitely a
+dependancy between them. For PIPE3 we'd need to control the pipe3
+attaching/deattaching and then initialize the synopsys USBDP combophy.
 
-Just because the direction when create connection is sink->helper, am right?
+2. With the way it's modelled, we need to parse phandles from eUSB2 and
+USBDP to the controller. Adding that to the usbdrd driver would be...
+weird. It makes more sense to model it as a separate driver, because
+it functions in a different way.
 
---------------------------     ---------------------------
-    src_dev(sink) src_port| --> |dest_port dest_dev(helper)
---------------------------     ---------------------------
-Thanks,
-Jie
+I've described this in the cover letter as well.
 
->>
-> 
-> 
-> 
-> 
-> 
+Best regards,
+Ivaylo
+
+>
+> I think there is no PHY between DWC3 and UTMI/PIPE. There is a PHY
+> controller (so the samsung,usb3-drd-phy.yaml) which we call here the
+> phy.
+>
+>
+> Best regards,
+> Krzysztof
+>
 
 
