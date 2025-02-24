@@ -1,87 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-49083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72E45A41265
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 00:57:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C2F7A41270
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 01:18:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFE8B18943F7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Feb 2025 23:57:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D55253AF0B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 00:18:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD46A204C31;
-	Sun, 23 Feb 2025 23:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A28ADDC3;
+	Mon, 24 Feb 2025 00:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GvRt9oGk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Th+kA8L6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42571C84C8
-	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Feb 2025 23:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C56A8F54
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 00:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740355014; cv=none; b=QpwcZtg7xAzCy6G4PYnmOLgL5rAdUKPvjwTtMVZxCKEWSe27c1nCkG/+Z/t9V9zCRsUzrud9DnuNQ1soZFX8jEaQ7otU5PIJzWV9N5l39g1hWlMr4GAtKoLgFTYnaiTc/RRS1ssNAqiYvlNnJvy6EG+flz2avn2nWBlpVKh3+5U=
+	t=1740356286; cv=none; b=theX22IVLKN83vlXKe9m66R2iA5E3KCYvNFoCtES3D33Avr3F9mmE0OIcg7R/TCrn03QLVqj2l4CHS7JkvocgkFye5nKVbCwMUi8RrYE86e9jWntOr73xmvqZnMB5ezYp4UM6NY15orBPyXAw152K6cuYrhpnxOACi+ATZEy5Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740355014; c=relaxed/simple;
-	bh=M+zusfD2VKVuEAnmyGa3eOk8yYx5cS2qKUUBEMHbkHs=;
+	s=arc-20240116; t=1740356286; c=relaxed/simple;
+	bh=JdCnAXnxYid1mxV4nHuT8i/PGJKEdfOulCrTZSYikBs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FZjb/WOwX67j0dety92lbH7JpSwReVWZTDp2RFKT8l7gFarD7nA1hVI8LvaTCXCuzub0x1B3h8TJsyt4dpOT8xVtrRcToMJcGwueoRewupEjzajQ3NLsC5no/qm61BjJY2c/8GqoNHWOidYnoIbIAPdILipsLL+4fLc4qqckwHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GvRt9oGk; arc=none smtp.client-ip=209.85.167.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=HRTQnZpFw4eP6NkcpYKS2bOjatpMS3aNZQQfq2hJaUltB0pTxSxqO2JBQPb/QrI/LaiUKU7/5nliQqQJhe5quaMqY6U32W+E/PO4j/kiIREOPZDysRGoDsyDsP3TVr1aw/2w6nae1itAYmCKVsv1XZe5l731ERcZwXYBq47ZgPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Th+kA8L6; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-54626a71b40so3715350e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Feb 2025 15:56:52 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5461cb12e39so3661842e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Feb 2025 16:18:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740355011; x=1740959811; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740356282; x=1740961082; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=r2DHKJmVwTszsc5jF4SMA+P5E4zML2jBXCCxXSpwdHM=;
-        b=GvRt9oGktC89aPlk7HINfbpk4kpXShDLxajMqZ68AcKCHwzDSiicxPFR8UdNg12jqd
-         DuxqzZOMnGXlk2ZT9N48BYvQmQeZ8gKIe/uEJXxQQIP6N3/2mJdflEWxsIStO5f4z0Ig
-         GtiuzOVZkuj3ZyJAiEENfLN/U0oVwaYjHtkx+wtauXMu6l7QxMPJ97tn+LmDioJHeNYQ
-         i3S0TRFdsbzlECL8KBL/+XxoeK13gXbOmtHnL63dc86+wEph4yQku1qvaJRQq6spupBj
-         6EoGxqILslDJ74tP3ARi3pa+mmB/U2UvLBjmT7wYzR2dI0/wyynjX6LjU9lTdT9HRmju
-         ztqA==
+        bh=nD6DNE71VFEfXcLuCIsfR3SfpPP50CHXY1aUthPY5zE=;
+        b=Th+kA8L6xflxjS/Qe3ZZdHKPEM6EHCG7QUQYkp1vQey/QbWg6bk146ScDbXjT+S6xw
+         1SENtouugSpKlUPUI8oZB+HuiD6FvCy1cUB19xYm36kA59JItFEkb6q9hw5Vi3AiFpDS
+         tFdwRaMBxbj/gyrl5J0qmp3UxacBTeQP44Dp6F/VQcbrk5wcAHGt8cFcxuon/s0qw2e6
+         vZMZ7P2fcS1ebMHgEhD1IqqHLauD848n97g0smmRbENghk3GZnZRYplO1lQr/+bIb4x2
+         cUgzph3t239+/ZJAr3XnN2j5cZ22s2g0N6OV8A6NsgXJfVREo/1QxdAmC5Ydacpm0uvq
+         JjJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740355011; x=1740959811;
+        d=1e100.net; s=20230601; t=1740356282; x=1740961082;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=r2DHKJmVwTszsc5jF4SMA+P5E4zML2jBXCCxXSpwdHM=;
-        b=Y11Trc1LD0QLFKg0QaR0G6vaSorl40imnbLX3SpAWZhnB4LxR+WB+RUSNADQGoECB4
-         qPs6N7OSGFf0m/Ez/0EHg98KuTHTzFeFKM/3R8PEy0J9FZqT88PaLhLvLBzCSLggyfkH
-         NTR0S7qJ+BQ9iYd2SbyeHnFuW1P9dAlF8wqCrxxwuH9k5Eh8r6j/NeSMTS+gK74GBSKr
-         /RrpN8lUqUAjQadE6mhYdiV/IytJbwPQhz0ifxk4r+fwy/D4tl8gR4+1/SDTQDrAXfVl
-         /w8Pr5OoByGXc84i9Hj5ZGL+7WTmFC35U3xYiAuLAr0JvGhL8juC/ljiYRAJd/0URzYZ
-         2Hlg==
-X-Forwarded-Encrypted: i=1; AJvYcCUbWBbw9BZE6Y4hmR7xp/iBgShrwbDoZ5FDgL+1EisAHxbmM/ic3mfq8Y0FVmOWtBmeO4g8O1WzB1UDoqKs@vger.kernel.org
-X-Gm-Message-State: AOJu0YzubW3tg8Bi0laxCbWxi+/HDHdQPp+LObRgLMVCV6QaCNiC2ZFy
-	fHZ+VZr+DxfOQNaMA44msh92Hnpv5b2HXDwPkOKRSKPBssiGqlmuJUvHhhujL8E=
-X-Gm-Gg: ASbGnctTA7p8MHlvsOzEy2Moemu19YZReY9qSVYh9WZT59SoTJmnXUQe1t8oikDgJFV
-	yu9HPOEMH6Kko6dudh4IibO4h1Ia9EuiQDezF0EWQTd8pRRvKoUdJM9s6BVIf1ZtaqzpO/AQ7pm
-	Wui+0wr+zJGxf5bk5dlh3VFDwIH0nX6z1omhUVoTteRRNOuHzxLCRhAsbgEcwv+tgvJTSIaf2Es
-	P+p96RbL/FcNNUTsrQKfp6TD1YCXHOjYCsadg+ZFlrak4dI1evropgyeEHNBGPBI0XflCL4HKuj
-	5RUByP5AhLPdPenC5fZjMCM3WcMVHtbwoF1hHfY6KHKpQFU+M7nBN9nAztf9fT0ry+JZF22m3yl
-	hE+uTyQ==
-X-Google-Smtp-Source: AGHT+IF6OJYcSWoSlziCksaDaytWusPnVDJAPswi6mIFSpxY5wclK5bI3z0d9DXLCUpBnh5gcaD5sQ==
-X-Received: by 2002:a05:6512:3a89:b0:545:2a96:34fc with SMTP id 2adb3069b0e04-5483914820dmr4522273e87.31.1740355010753;
-        Sun, 23 Feb 2025 15:56:50 -0800 (PST)
+        bh=nD6DNE71VFEfXcLuCIsfR3SfpPP50CHXY1aUthPY5zE=;
+        b=mdNT+X31XNUImeZH2L+7EE0Z1qiXrK6r1b12PiofzCHrjPtT0fB/UbD8yayIczS+mY
+         ajNKZ39zSK1Pa8dcRsS4+V2yF8Ju1unklbjaw84ucrMhPj8Ml5gRcbJRCDjhFjBiCpBc
+         dpKxtENRj2VZidjL1vGj/O2tKiidI2CDLImqAD50ydLZ9/9Sj/APBXP6nCeIzGcrznbt
+         8qWHP4LrhV5cgfAlZhhdrj1GNoW8fxkEFd+VixXj8nS04B4jzYD871BrFGphKdKBf3YF
+         6t3lWbBRWqcCdPSAXp1WCxrkNRZ6r7g8/5qLSBtH+ESdxfpHPgj/10raRPINIj6etv/L
+         8U6w==
+X-Forwarded-Encrypted: i=1; AJvYcCX01NDJN5sDbxCgY2FLGSZP1MKE+zjHKRL/8kANe+Hil7G4YFos6g4qOBIiIXPa0A189WWgSETXQoiN0Db8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzgh+6dkOQoyIHJuE5jDQ+KGIipuoDQWcF1jfSgC3H2CMsGnv3r
+	Ymvt7k8XbMfsUQWtytHEcAKHRZLrekKABaXwc6hqe5lnND0rGJfkKvUYY4BdCGw=
+X-Gm-Gg: ASbGncuHJcVO55/zIcIFtwQt4A9kRH28iNMQP1q38sSHMq9MLPN8mQk5KGfltSWd6l1
+	jCKVm9V9TMQqwzHZv5iIKX7vKvO3vUVC2jPBeYFt1R7e00YV3ttWRZdVgmDleb9eqtn+gfisnMV
+	WErB1CjYCpBU/bd7tGsMlZ3sEXndCsXPfIOxlGW90vxa4IZ1JMrCXaLRlfYJ4DiAPOnYsSjqQen
+	8Jcjp91ZTrRc01j1UDCB+dCPpa3ZXHqW68wOerEscJv847YA+NRieV0HrphRRcJAFapl5ODZVu0
+	TIdONaLAWt+RVuXei2fhj4stHTjN/9OsHbwb6cwYgf/6eXdbdnllJ8CS3cNAKaUgdEBkQiCwp89
+	IXKRXNQ==
+X-Google-Smtp-Source: AGHT+IEfy+mm+LIBEpBFk9ATKeXnV1ESjvN4vtfFY3zzlgmNDuwjPP+io43Va+DxHetU2qnplQe2kg==
+X-Received: by 2002:a05:6512:e96:b0:545:d08:86 with SMTP id 2adb3069b0e04-54838edda43mr4361626e87.5.1740356280998;
+        Sun, 23 Feb 2025 16:18:00 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5452eee91ebsm2863951e87.129.2025.02.23.15.56.49
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-545318f4027sm2635082e87.141.2025.02.23.16.17.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Feb 2025 15:56:49 -0800 (PST)
-Date: Mon, 24 Feb 2025 01:56:47 +0200
+        Sun, 23 Feb 2025 16:18:00 -0800 (PST)
+Date: Mon, 24 Feb 2025 02:17:58 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Fix clock for spi0 to spi7
-Message-ID: <53bunpmzcdlmjg25k3g2a7aiif4jemzrfs5uerefjeefjbenal@5vkfrlnqr4ar>
-References: <20250223110152.47192-1-mitltlatltl@gmail.com>
+To: Luca Weiss <luca@lucaweiss.eu>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sdm632-fairphone-fp3: Add
+ firmware-name for adsp & wcnss
+Message-ID: <w4l5drhu6exq4jb7x2pisqtkz5ylare7ashsmjjqomv3yetjwj@z3wapq4rkk3u>
+References: <20250222-fp3-remoteprocs-firmware-v1-0-237ed21c334a@lucaweiss.eu>
+ <20250222-fp3-remoteprocs-firmware-v1-3-237ed21c334a@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,40 +93,62 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250223110152.47192-1-mitltlatltl@gmail.com>
+In-Reply-To: <20250222-fp3-remoteprocs-firmware-v1-3-237ed21c334a@lucaweiss.eu>
 
-On Sun, Feb 23, 2025 at 07:01:51PM +0800, Pengyu Luo wrote:
-> Enabling spi6 caused boot loop on my device(Huawei Matebook E Go),
+On Sat, Feb 22, 2025 at 02:00:49PM +0100, Luca Weiss wrote:
+> Set the paths where the device-specific firmware can be found for this
+> device.
 > 
-> 	&spi6 {
-> 		pinctrl-0 = <&spi6_default>;
-> 		pinctrl-names = "default";
+> Fairphone 3 was shipped with secure-boot off so any testkey-signed
+> firmware is accepted.
 > 
-> 		status = "okay";
-> 	};
-> 
-> After looking into this, I found the clocks for spi0 to spi7 are
-> wrong, we can derive the correct clocks from the regular pattern
-> between spi8 to spi15, spi16 to spi23. Or we can verify it according
-> to the hex file of BSRC_QSPI.bin(From windows driver qcspi8280.cab)
-> 
-> 000035d0: 0700 4445 5649 4345 0001 000a 005c 5f53  ..DEVICE.....\_S
-> 000035e0: 422e 5350 4937 0003 0076 0001 000a 0043  B.SPI7...v.....C
-> 000035f0: 4f4d 504f 4e45 4e54 0000 0008 0000 0000  OMPONENT........
-> 00003600: 0000 0000 0003 0017 0001 0007 0046 5354  .............FST
-> 00003610: 4154 4500 0000 0800 0000 0000 0000 0000  ATE.............
-> 00003620: 0300 3d00 0100 1400 4449 5343 4f56 4552  ..=.....DISCOVER
-> 00003630: 4142 4c45 5f50 5354 4154 4500 0100 0600  ABLE_PSTATE.....
-> 00003640: 434c 4f43 4b00 0100 1700 6763 635f 7175  CLOCK.....gcc_qu
-> 00003650: 7076 335f 7772 6170 305f 7336 5f63 6c6b  pv3_wrap0_s6_clk
-> 
-> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
+>  arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+> index 08ffe77d762c3a97f470efbfb5064282fe2090da..5611209dbfa41d7834af7903535ed3e05604ba63 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+> @@ -82,6 +82,8 @@ nfc@28 {
+>  };
+>  
+>  &lpass {
+> +	firmware-name = "qcom/msm8953/fairphone/fp3/adsp.mbn";
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+If any firmware is okay, wouldn't it be better to use
+"qcom/msm8953/foo.mbn" ? This way if we get any of the firmware (yeah,
+I'm a dreamer), then FB3 can pick it up.
+
+> +
+>  	status = "okay";
+>  };
+>  
+> @@ -297,11 +299,16 @@ &usb_dwc3_hs {
+>  };
+>  
+>  &wcnss {
+> +	firmware-name = "qcom/msm8953/fairphone/fp3/wcnss.mbn";
+>  	vddpx-supply = <&pm8953_l5>;
+>  
+>  	status = "okay";
+>  };
+>  
+> +&wcnss_ctrl {
+> +	firmware-name = "qcom/msm8953/fairphone/fp3/WCNSS_qcom_wlan_nv.bin";
+
+then this can become "qcom/msm8953/WCNSS_qcom_wlan_nv_fp3.bin"
+
+> +};
+> +
+>  &wcnss_iris {
+>  	compatible = "qcom,wcn3680";
+>  
+> 
+> -- 
+> 2.48.1
+> 
 
 -- 
 With best wishes
