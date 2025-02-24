@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-49149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 812D1A41A97
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:18:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12426A41AA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:19:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 31493188FB51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:18:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8261B3ACA30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:18:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FD882505A1;
-	Mon, 24 Feb 2025 10:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55D3F2505B8;
+	Mon, 24 Feb 2025 10:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gMUAfhyD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JQ7qbVcc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8AD2500B6;
-	Mon, 24 Feb 2025 10:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2081B2505AE;
+	Mon, 24 Feb 2025 10:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740392173; cv=none; b=fgkXCkcziorGqOYczK77UJ2CrG0AItFTUTukYqbB6bjzjUpgLUliRLrnREaXLPKoDTcdUOWoTUR4z2K72s2yIPYt6rvCejzeClEq2/0u/89Im5mbc14jKFWi63JPCnIqhh+aO9/s3qACkE8GjCkeKT8lMzz6NXlQ7k0zz0gFtVM=
+	t=1740392301; cv=none; b=SOxUI1ZfEbIiAAxeh4ZyIV7Vlqu9YNPrJuYiJpFZtDeyRZFGOr/7K2tegDMMWcg1b2RE0fpR3c4FcGn06nSrZ8Cb/RquZJrPVQWmxHiodqc6N3KkQruRIjsSd4kmp0cWyCUqP8sn4ezK5v39QQlVMWrTTtr9Dm+BqOCuoUEXflI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740392173; c=relaxed/simple;
-	bh=BsGtWz0IG5nQlG6RO+zR/OcwC6SnVn6enaFktkoWFI8=;
+	s=arc-20240116; t=1740392301; c=relaxed/simple;
+	bh=abYpGJceAD3EWQoYhHyvYfDR0LC7tOZMSQeXe5yUffk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TYHK+kFEADrBwnJUe/CwGwys0lOocJCTHnpQJjpNj9R3ZT313+nmjhOmLsJ4yEGyDmWuJs3XRVmkp7zxk7CNlHdVr1mCGyw1ZmiNKvLi9pDlg2dFlcQX+emqEwMCveU59/YE6XDO65iDs+LblxlPDxCSQS0S99bkTxOelteAY00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gMUAfhyD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D61DC4CED6;
-	Mon, 24 Feb 2025 10:16:09 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=KuDIj/VgoaDmbeHX81y9llGh6VPJgw1jKMvZukmVvF7q1p+Fjyr0hqdk4qBP0Bq8A8ljPWBBIEO7BMjq09hdqRayUGc/oXURROJNHmJOLvbAN0t/ae+jPoMBwjfUc1wx1chmcI6u+ywZaKNRduJpjqjPPt2TJ7LofOEwxNY+esE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JQ7qbVcc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A301DC4CED6;
+	Mon, 24 Feb 2025 10:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740392172;
-	bh=BsGtWz0IG5nQlG6RO+zR/OcwC6SnVn6enaFktkoWFI8=;
+	s=k20201202; t=1740392300;
+	bh=abYpGJceAD3EWQoYhHyvYfDR0LC7tOZMSQeXe5yUffk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gMUAfhyDybkQnrjttfvCIZ1Si3fy0SDiyeld1Qs96thBLxPTY84SaW2dgFCnT2lnc
-	 OMRSZNT+DvJ5d6L9XRx1YxKZu1jF1rI2qQtvdwCXqWf8UPwiEdLGVjQVWAlN3yWHAY
-	 W1Oj0eu5XDwJuQWmZ9FElm2/DgxIdoKFWsaB7prNZE8/WRp4Ax5IrB9lAip7Jho5O1
-	 6T8S34n3FbT1CmGrb0mpM7jfigNTLYSUdz/jy3ZDvVe4HYRcfXVVOId3HD+9OI2vBt
-	 gGYK7o5eWUmc4Xn8zSLGHXAOpdSLwfZHTuzfa/TjA4D5mlP5FeEzI+HdZDxg8JHwSK
-	 WiZ143hzoPTqw==
-Message-ID: <1cd7221e-661d-44be-8392-c8e89756359c@kernel.org>
-Date: Mon, 24 Feb 2025 11:16:07 +0100
+	b=JQ7qbVccMQiOhl2+V1MSPxzMkd0JfYgWnav1xNtM+KAsnL7IO7muDWhK78b4Prhzi
+	 vwYgZK60fZTnmZBlbofYA57a0yNAygO64VHCPimtYekTcetoSbEwhfF7P0vid1b7du
+	 GKNQgpxqTrFaRPhyg11Q2jKSIf/HwPFWSI2a0Og+aZ6YogxCWsgvYXLzM17uy/n2+q
+	 Yk1dVlr5HbOOxvkGV7dTDG2SpkqlntKxILYvP+/X6LGVua06LA73xNJbPAmN4ajaz+
+	 DCLcMSR3ZEE7Kqb477K42cCucm23yRljE8XsyXSA8namU48+7fBEB4UVNxKySTeF3u
+	 6W0iAHLZX6fpA==
+Message-ID: <ed8f7aee-e5be-453c-b324-e59e90ecee77@kernel.org>
+Date: Mon, 24 Feb 2025 11:18:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/5] Add support for IPQ5018 tsens
-To: George Moussalem <george.moussalem@outlook.com>
-Cc: amitk@kernel.org, devicetree@vger.kernel.org,
- dmitry.baryshkov@linaro.org, krzk+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- quic_srichara@quicinc.com, robh@kernel.org, thara.gopinath@gmail.com
-References: <ca812748-8ec2-41f3-8272-5e774f764493@kernel.org>
- <DS7PR19MB88832437987FE85662A878149DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+Subject: Re: [PATCH v1] dt-bindings: qcom: geni-se: Rename qcom,geni-se.yaml
+ to qcom,geni-se-qup.yaml
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
+References: <20250221085439.235821-1-quic_vdadhani@quicinc.com>
+ <49fc59ed-9d09-46bd-9ca6-99d3445221f7@kernel.org>
+ <f3349d2a-7eba-4865-9b58-0b2e7e57cc92@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,14 +105,48 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <DS7PR19MB88832437987FE85662A878149DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+In-Reply-To: <f3349d2a-7eba-4865-9b58-0b2e7e57cc92@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/02/2025 11:14, George Moussalem wrote:
-> Thanks Krzysztof, circling back to acknowledge the feedback.
-> Missed it, but will add the reasoning in the next version.
-Respond inline, I have no clue what is this about.
+On 24/02/2025 09:47, Viken Dadhaniya wrote:
+> 
+> 
+> On 2/21/2025 5:05 PM, Krzysztof Kozlowski wrote:
+>> On 21/02/2025 09:54, Viken Dadhaniya wrote:
+>>> The qcom,geni-se.yaml file describes the Qualcomm Universal Peripheral
+>>> (QUP) wrapper and the common entities required by QUP to run any Serial
+>>> Engine (SE) as I2C, SPI, UART, or I3C protocol.
+>>>
+>>> Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml to better reflect its
+>>> association with QUP (Qualcomm Universal Peripheral) and the compatible
+>>> string.
+>>>
+>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>>> ---
+>>>   .../soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml}       | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>   rename Documentation/devicetree/bindings/soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml} (98%)
+>>>
+>>
+>> That's just churn for no real gain. Not even tested churn.
+> 
+> That's just churn for no real gain.
+> 
+> We made this change based on below plan, we think this will be helpful.
+> 
+> 1. Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml. Reason at 2 below.
+
+There is no reason 2 at this point. You split your patchsets
+incorrectly. At this point this is churn, without gain. No users of this
+rename, no benefits.
+
+> 2. Create qcom,geni-se.yaml with shared properties for SE-protocol (spi, 
+> i2c, uart) nodes. This will be helpful for the shared schema in the 
+> ongoing changes 
+
+Then post it, instead of sending something which makes no sense on its own.
+
 
 Best regards,
 Krzysztof
