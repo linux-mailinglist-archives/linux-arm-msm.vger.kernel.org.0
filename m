@@ -1,145 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-49184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19864A426E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 16:52:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69E37A42830
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 17:46:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 714683B12D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 15:45:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1E291898EF0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 16:44:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C442625EFA5;
-	Mon, 24 Feb 2025 15:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5296D263F42;
+	Mon, 24 Feb 2025 16:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wA3C80XP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xhhrvAK0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0C225EF8F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 15:45:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929E5263F2F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 16:44:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740411932; cv=none; b=tTkZLunki8Q2X7+S4H63DnC3wN6PiTKhW7ujnZDAgLYirhcbdLq2C+nvp1stjN1MMzJfcDrcWfos42SzybMn+huZ9AXuCsnNiY9G31wKdrMCBsc8p1YFJB2YbSC5Stqyg0Y1MgTFAW9KC2UivoNZsihDqWVrN+qDHfF7vpvz+mg=
+	t=1740415450; cv=none; b=FoKMftFOHpYY3H8/SdHoHGaFQxzBuNxQJ3fVgPabQhryDx3u9uMLgI3u+GOzOapLoj9T6eQV1mQv5icy77RFAZYZeolPI0+Do7yRcYpOSiUZMeQ5igk48oDHBLjJhI2ChlFvDHL17Rs1zeYBmG3rZE29y1mWa8LKjY+PktV6Qzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740411932; c=relaxed/simple;
-	bh=2mTtDZAkc00WaJmrF+GsEd2qg3IRRa89CS9NdfbbNJY=;
+	s=arc-20240116; t=1740415450; c=relaxed/simple;
+	bh=lsBzBusKOpwT3CwNGtzOUDsl4urSNfOiHa9mnOLQcac=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YleGa0F+ntaEiHp7GwHmsknglKjdcu1GdX+1VmfyHf9gUOE0LO1XuHMVAm2XUYmszeAI3MTa1qjSUv4Jcga3u4PupJV9ktkPvKwZtiYczIVn7yFCV5vXjwrjnDCIcw2EXEVA8JPycBFeCwc/WaU+63EbBXL3FtqWnLCEDVEwAgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wA3C80XP; arc=none smtp.client-ip=209.85.167.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=QYmS6LTYnSzSPpPT/rOmX3EFPuLm/A0ak7VjaGY8np2IFF1iOCoYfrPlprFyr8euhFjNAFxKRlY0O4/xqR4zUyS+DCNUCHB79j9T5Tsp8GPZ7Nb/x4dU2gTEH3EwaRvVvM+1M5QeUK9PNZ21lMGK4tjuY40qT6yhpyUkzTo8GHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xhhrvAK0; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-54838cd334cso3482452e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 07:45:30 -0800 (PST)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-220d39a5627so70778515ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 08:44:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740411929; x=1741016729; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wOiNvYc++Zm34fMpFoIDUhcKtWpkYIPTfUzhG4djg7M=;
-        b=wA3C80XP1CIPLPSCpBl7N8OLpilRCL/nkj1Vdh0WGEc2v3TV0Znna/nAgENu2S9Zo2
-         DXNC3gFUT0rf4Eh/YMykLd4+OyBEFqCSfVISvUEPXWGMr0PIF+N9GSFNz90FOz/NJL1s
-         yIKpatb/+AVaxBq+GYZkdM7lP52lnYbY2asbNfoC+GIouqQ67g+AL8i95jGvdIJlWmCE
-         S6ammNNwAaaiG3p/0I1Maq0M0ARS4V/DR7ETMNnuMYno+UqR6WZSZ4InnYy6k4HHux/W
-         NSl7rUW23cl0C7Wn6gjHGlY+C+jlqlzS9/n0getk0zz8l066YR2FtBEwPye8XlE9rlwV
-         3sDA==
+        d=linaro.org; s=google; t=1740415448; x=1741020248; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6d5XSfEwRqWaYFLWfE4Y4ohPqjDkgrU++dRrHmEqq/c=;
+        b=xhhrvAK0xI/C9ggeY8sKeSx84Y0sS8vr/V6dGz07SdbxzEGzaGS7UhdXuTbZlYASMz
+         mDckt7RRcASI8BXv9CvoX0Zs5vfN+siVwaFGhUYr4WGI6wVoqUv66gZlEeMe37FIyOCE
+         jm7kAhnZ13IGpTRBC1XwuoKMqHGn7a3tE4KRInOHla9kmldQXWth23ZNGBkAvT7YM3Ph
+         OW02flrlI2W6cxyV9+POXNt132oVc059ng7hXco4rOHxSsDm5aXht5Uiy51/ALYf0bCX
+         GV2znOpT13aUrhqrWX1Fkyys7eonHcLJIx2hXiIwlKjMXxTCxvbcNaDME0HtKlu3aVBv
+         puDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740411929; x=1741016729;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wOiNvYc++Zm34fMpFoIDUhcKtWpkYIPTfUzhG4djg7M=;
-        b=uN1KT3B1Duunrzib6W61omOycTQco2e+A8DBZ7pWwtPYKRyh8N66RE9uvuc78S4xUe
-         mUXddK0ocRdWCV734AVAsJuBMuXU0O691hx5pcf49AB1qxkIwOxaCK+s4/JtuJfK6C2Y
-         8+jcszR1MWrDdmM3HoGSGvTGt3eL6ArtsQNdHde04NCM8f4KC8s63Cuun/e/M3RmnyqV
-         LstSWxWS8KPsLW2OpjFAndoYexIwvPTfXzPC6arW0fNdjG+T4WunZeYpDUcJn1xGW0B+
-         nVVqrchZVX8qFNOiaApwiHP5OCIgPyMyAfVbssRIXcDQI6MBJFamILI/vcHGB0Y9SYhR
-         cWuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU+A2nIuA/JrnPnD2xWFxotqcyCqR3W64HhkVugf7PmxxkyazrpNE9lcm7sB6g0pTCB6YVhebHrhMgE/hwb@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4sZ8V+2J0wbaVMhmyxB4B10dOVXVvN8kNgwWOtrDAZXtqAUti
-	sJ1yGVRFvz/w4b4w4/Vg2GmnMYZbGZwek2avXrRPQxRM3HUgfoNRzIqvNBEDn30=
-X-Gm-Gg: ASbGncsSozDUartLvii2wmnE0ZY8deNSOgl+nDrShMsz2DmvEz1ZKX9lwyODHDyqRI8
-	mgWiz9cSZoFO0NgXnVpO/cSsEK9DSE7uzjOXoG7aN+Tjq9GDNAk8y3H2+WjGj7El41yLVeFWAIf
-	osK9TPWeg+xF/dljl2cVwe8ImpKGvRcZMgeM2xS6wMGQYxuyfoTR9HLd0iuYZIQclal7pDq78IG
-	F4Hr1zjQFChPC7r1sByNQUm1Qs782+tm+rxDesBS2X2VPnKH662WJprLA+ZSU7m8rODxyYZABPz
-	Y09aTQP30RDlDpK1OKlGN+0Uwhivc0kJgexZIIi+vC1aLyaHBEODtI8EeyGdR9RnCE96AzNEF/6
-	rElmgOg==
-X-Google-Smtp-Source: AGHT+IGwY3q58ljOK6c0ToO8Ip0U2GajA279X5o7qJCOYPYRMwKT1ywz49vgLpLFCtOjKmpLe+ox1g==
-X-Received: by 2002:a05:6512:308b:b0:540:1b07:e033 with SMTP id 2adb3069b0e04-54838f79748mr5921069e87.45.1740411928851;
-        Mon, 24 Feb 2025 07:45:28 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54619e7bc2esm2609050e87.244.2025.02.24.07.45.27
+        d=1e100.net; s=20230601; t=1740415448; x=1741020248;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6d5XSfEwRqWaYFLWfE4Y4ohPqjDkgrU++dRrHmEqq/c=;
+        b=lQnpH/H1k8LI/o6hwmd8jVfo1KCsX8ZxY5jiusSwvoPD3zocu1pmwhvjZrjm6cgABA
+         AsRW3pXebYO1jRMG2yJjANE3mbMlekJbwCMbdD/OYIS4Ral/cHKQkYZ0Iph7HJMFL2z/
+         QY4kpT/Z27PgQsLMKJIJom3RP7BB0ApCklNxtqU1Td2kps1kUWXOKHg+qTH2+4cFXBlF
+         Zv4+lmP/0drM5cGNud4f6blGJCuU2QMbrTRKgpxWvYI2ZWoYqGyz14gizvzwsKxyXUza
+         q46GYZHVwveG9/Na3cK87so9Ll1W/4vne4ldeBI8WNEovDYsE2aUZIRPBq74IUVGyK48
+         PDTw==
+X-Forwarded-Encrypted: i=1; AJvYcCW5UJkTxOv7lYnMDiccWO/lytdHuAXp6c0IRrsHC6/NSlWCBX7++ldZgohIbA+txhoB0tqq4VPP82WB7Dou@vger.kernel.org
+X-Gm-Message-State: AOJu0YwyhfWQ9S7KwUZgo9D1AOrK7mXA63/K8QdOBeaEIIl8g3R1Kb5g
+	DRHVCQIEK9J6qUmw8vi0htxvdm7LsWI6XQes5tMz4Aapa/L0p+6LEHhbYIItXw==
+X-Gm-Gg: ASbGnct7ES9V0+LvGY5tnDSV3YWOs+w15sbvBzgjWtmJzEgwANO1PubWkJ+JzkHZZZp
+	tNO9vYHKy9xeiAHteROF5Gs0uuyFLUr1C+zZok52hbpHbR1SMupKaNHc3wHI69rqfnV0+8uQc5r
+	s55ipio5zt007NEy+ux691qM6hIu/kY6V9ydmMQBTSDfzbkiKv3Gq3UWPUab4WP1VO4ut5ThSki
+	aUclWtecyJ8bVCFFxnPRHIUjqkCfLK8eqwVBH3BJ7WRIMC/IHlfbX9J+m/QIkO6GNHaA9ScP/ij
+	RTHUC2Z5YZTheMhzbe9dEh6AIjUdXSINYUeY
+X-Google-Smtp-Source: AGHT+IFG1lGtUN3MM7H9ZJAba5MymArVGS0ryXDNHwp0DEkpN0qPAZv5NG2dk7v/JN0eP4aRNmsZlw==
+X-Received: by 2002:a17:903:2f43:b0:215:89a0:416f with SMTP id d9443c01a7336-2219ffc2dcbmr207030045ad.30.1740415447841;
+        Mon, 24 Feb 2025 08:44:07 -0800 (PST)
+Received: from thinkpad ([36.255.17.202])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d545c9casm183409845ad.130.2025.02.24.08.44.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 07:45:27 -0800 (PST)
-Date: Mon, 24 Feb 2025 17:45:25 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: George Moussalem <george.moussalem@outlook.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, amitk@kernel.org, 
-	thara.gopinath@gmail.com, robh@kernel.org, krzk+dt@kernel.org, quic_srichara@quicinc.com, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v6 1/5] dt-bindings: nvmem: Add compatible for IPQ5018
-Message-ID: <3lmf24l3retmjcbmzkn7ezqxd7no2dbuwm2apy5vlwgaq7ipnh@ggscdxkgirke>
-References: <20250224061224.3342-1-george.moussalem@outlook.com>
- <DS7PR19MB8883591F0D2E21E62025D2D69DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
- <2fcb52a3-7ef2-465f-b460-2f7b565a188e@kernel.org>
- <zygiknq3pldkcdonekzamn2uprnjyc5dip57i75p7uahftekxr@2lqgo3wa6zhf>
- <739acd33-9ce8-40db-a219-26b8ca241d73@kernel.org>
- <DS7PR19MB88839DD16140E0C883257D679DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+        Mon, 24 Feb 2025 08:44:07 -0800 (PST)
+Date: Mon, 24 Feb 2025 22:14:00 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
+Cc: "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Johan Hovold <johan@kernel.org>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+	kernel@collabora.com, ath11k@lists.infradead.org,
+	jjohnson@kernel.org
+Subject: Re: [BUG REPORT] MHI's resume from hibernate is broken
+Message-ID: <20250224164400.w3lpzxxwfbrj5lb6@thinkpad>
+References: <59c036b6-a3d6-403b-8bb0-566a17f72abc@collabora.com>
+ <20250214070447.scs6lpytjtecz3ko@thinkpad>
+ <1cd4a1ed-f4e7-4c7b-a19f-f79afddbe310@collabora.com>
+ <20250220075034.unsd5cq7xkip2by6@thinkpad>
+ <ec8a01a3-5eaf-4fba-bb85-e7a677877e5f@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <DS7PR19MB88839DD16140E0C883257D679DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ec8a01a3-5eaf-4fba-bb85-e7a677877e5f@collabora.com>
 
-On Mon, Feb 24, 2025 at 05:58:39PM +0400, George Moussalem wrote:
-> On 2/24/25 17:49, Krzysztof Kozlowski wrote:
-> 
-> > On 24/02/2025 14:42, Dmitry Baryshkov wrote:
-> >> On Mon, Feb 24, 2025 at 10:19:35AM +0100, Krzysztof Kozlowski wrote:
-> >>> On 24/02/2025 07:12, George Moussalem wrote:
-> >>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+On Thu, Feb 20, 2025 at 05:34:06PM +0500, Muhammad Usama Anjum wrote:
+> On 2/20/25 12:50 PM, Manivannan Sadhasivam wrote:
+> > On Mon, Feb 17, 2025 at 07:35:50PM +0500, Muhammad Usama Anjum wrote:
+> >> On 2/14/25 12:04 PM, Manivannan Sadhasivam wrote:
+> >>> Hi,
+> >> Thank you so much for replying.
+> >>
+> >>>
+> >>> + ath11k list and Jeff
+> >>>
+> >>> On Tue, Feb 11, 2025 at 01:15:55PM +0500, Muhammad Usama Anjum wrote:
+> >>>> Hi,
 > >>>>
-> >>>> Document the QFPROM block found on IPQ5018
+> >>>> I've been digging in the MHI code to find the reason behind broken
+> >>>> resume from hibernation for MHI. The same resume function is used
+> >>>> for both resume from suspend and resume from hibernation. The resume
+> >>>> from suspend works fine because at resume time the state of MHI is 
+> >>>> MHI_STATE_M3. On the other hand, the state is MHI_STATE_RESET when
+> >>>> we resume from hibernation.
 > >>>>
-> >>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> >>>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-> >>> You can send the patches to yourself and see whether they are properly
-> >>> threaded.
-> >> I don't think outlook world understands the concept of threading.
+> >>>> It seems resume from MHI_STATE_RESET state isn't correctly supported.
+> >>>> The channel state is MHI_CH_STATE_ENABLED at this point. We get error
+> >>>> while switching channel state from MHI_CH_STATE_ENABLE to
+> >>>> MHI_CH_STATE_RUNNING. Hence, channel state change fails and later mhi
+> >>>> resume fails as well. 
+> >>>>
+> >>>> I've put some debug prints to understand the issue. These may be
+> >>>> helpful:
+> >>>>
+> >>>> [  669.032683] mhi_update_channel_state: switch to MHI_CH_STATE_TYPE_START[2] channel state not possible cuzof channel current state[1]. mhi state: [0] Return -EINVAL
+> >>>> [  669.032685] mhi_prepare_channel: mhi_update_channel_state to MHI_CH_STATE_TYPE_START[2] returned -22
+> >>>> [  669.032693] qcom_mhi_qrtr mhi0_IPCR: failed to prepare for autoqueue transfer -22
+> >>>>
+> >>>
+> >>> Thanks for the report!
+> >>>
+> >>> Could you please enable the MHI and ath11k debug logs and share the full dmesg
+> >>> to help us understand the issue better?
+> >> The ath11k debug was already enabled. CONFIG_MHI_BUS_DEBUG wasn't enabled. 
+> > 
+> > Sorry for not being clear. I asked you to enable the dev_dbg() logs in the MHI
+> > driver. But it is not required. See below.
+> I've disabled the MHI_BUG_DEBUG. It only enables some files. Ideally if those files
+> being used, there shouldn't be any difference. But they are definitely changing the
+> timings.
 > 
-> using git send-email from an @outlook.com address. But I've figured out the issue:
-> git send-email --thread
-> this sets In-reply-to and References tags
+> > 
+> >> I've
+> >> enabled it and now the hibernate is working without any issue. It is very strange
+> >> how can CONFIG_MHI_BUS_DEBUG make any difference. I don't have much background on
+> >> how it is helping.
+> >>
+> > 
+> > Probably some timing issue. But enabling the MHI debug logs could also hide the
+> > issue. So you should disable the CONFIG_MHI_BUS_DEBUG option and collect the MHI
+> > trace logs that we recently added.
+> Disabled the MHI_BUS_DEBUG and collected logs by Dynamic debug:
+> [  584.040189] mhi mhi0: Allowing M3 transition
+> [  584.040202] mhi mhi0: Waiting for M3 completion
+> [  584.040480] mhi mhi0: State change event to state: M3
+> ..
+> [  584.535478] qcom_mhi_qrtr mhi0_IPCR: failed to prepare for autoqueue transfer -22
+> [  584.535482] qcom_mhi_qrtr mhi0_IPCR: PM: dpm_run_callback(): qcom_mhi_qrtr_pm_resume_early [qrtr_mhi] returns -22
+> [  584.535490] qcom_mhi_qrtr mhi0_IPCR: PM: failed to restore early: error -22
+> [  584.831583] mhi mhi0: Entered with PM state: M3, MHI state: M3
+> 
+> It seems like the state save was success at hibernate time. The error is originating
+> at resume from hibernation.
+> 
 
-It does that by default. The usual way is to have your cover letter as
-0000-foo-bar.patch and then use git send-email 00*. This way it picks up
-the cover letter as the first patch and everything else goes as reponses
-to it.
+I just tried hibernation on my RB5 board featuring QCA6390 WLAN chip which makes
+use of ath11k driver. I did encounter the resume failure, but the error log was
+slightly different. Then looking at the ath11k driver made me realize that they
+reverted the hibernation support due to suspend issue reported on some Lenovo
+platforms: 2f833e8948d6 ("Revert "wifi: ath11k: support hibernation"").
 
-OR you can use a tool which does that for you. We usually recommend b4
-tool, it wraps ardoung git-send-email and it can help a lot.
+So that explained the resume failure. I reverted the revert and that allowed me
+to resume properly from hibernation. So please try to do the same and see if it
+helps you.
 
-> 
-> > True, but note that outlook.com is just provider and you can use
-> > whatever email client with it. mutt/neomutt, Thunderbird, claws, Kmail etc.
-> 
-> correct, not sending from outlook, but git send-email. Was missing the --thread option
-> 
-> > Best regards,
-> > Krzysztof
-> 
-> Best regards,
-> George
-> 
+- Mani
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
