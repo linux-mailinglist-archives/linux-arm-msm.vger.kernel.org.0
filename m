@@ -1,48 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-49150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12426A41AA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:19:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7357A41AC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:22:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8261B3ACA30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:18:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0CF287A22A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:21:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55D3F2505B8;
-	Mon, 24 Feb 2025 10:18:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JQ7qbVcc"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5F432441A3;
+	Mon, 24 Feb 2025 10:22:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2081B2505AE;
-	Mon, 24 Feb 2025 10:18:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F4AB24BBF8;
+	Mon, 24 Feb 2025 10:22:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740392301; cv=none; b=SOxUI1ZfEbIiAAxeh4ZyIV7Vlqu9YNPrJuYiJpFZtDeyRZFGOr/7K2tegDMMWcg1b2RE0fpR3c4FcGn06nSrZ8Cb/RquZJrPVQWmxHiodqc6N3KkQruRIjsSd4kmp0cWyCUqP8sn4ezK5v39QQlVMWrTTtr9Dm+BqOCuoUEXflI=
+	t=1740392556; cv=none; b=VxDmUPXgO4iHjfmwQNuJmVpdPxtLuHiXv+WF7ljXUQzorXGOoqSaUqOlcz2VbSgMfg+8TIwYpH4NBDJjBm2IUSwau5WlUuvIrBQncRsJwtfnY2jPWClN6Ac37BFsxXlPApdWtBIe9mN6k3FdLQnB0BvmMp2/dLPhLIYj6b5XOwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740392301; c=relaxed/simple;
-	bh=abYpGJceAD3EWQoYhHyvYfDR0LC7tOZMSQeXe5yUffk=;
+	s=arc-20240116; t=1740392556; c=relaxed/simple;
+	bh=b1nkShEdJHWgRZo3HKZY/hm1IBId73Fq9MJCqFbRPJk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KuDIj/VgoaDmbeHX81y9llGh6VPJgw1jKMvZukmVvF7q1p+Fjyr0hqdk4qBP0Bq8A8ljPWBBIEO7BMjq09hdqRayUGc/oXURROJNHmJOLvbAN0t/ae+jPoMBwjfUc1wx1chmcI6u+ywZaKNRduJpjqjPPt2TJ7LofOEwxNY+esE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JQ7qbVcc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A301DC4CED6;
-	Mon, 24 Feb 2025 10:18:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740392300;
-	bh=abYpGJceAD3EWQoYhHyvYfDR0LC7tOZMSQeXe5yUffk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JQ7qbVccMQiOhl2+V1MSPxzMkd0JfYgWnav1xNtM+KAsnL7IO7muDWhK78b4Prhzi
-	 vwYgZK60fZTnmZBlbofYA57a0yNAygO64VHCPimtYekTcetoSbEwhfF7P0vid1b7du
-	 GKNQgpxqTrFaRPhyg11Q2jKSIf/HwPFWSI2a0Og+aZ6YogxCWsgvYXLzM17uy/n2+q
-	 Yk1dVlr5HbOOxvkGV7dTDG2SpkqlntKxILYvP+/X6LGVua06LA73xNJbPAmN4ajaz+
-	 DCLcMSR3ZEE7Kqb477K42cCucm23yRljE8XsyXSA8namU48+7fBEB4UVNxKySTeF3u
-	 6W0iAHLZX6fpA==
-Message-ID: <ed8f7aee-e5be-453c-b324-e59e90ecee77@kernel.org>
-Date: Mon, 24 Feb 2025 11:18:15 +0100
+	 In-Reply-To:Content-Type; b=rgL/D+72MyM64KKPuyT63R33g/Xou12MQ6XNxS2mSDvo44Zh2Tlcuzo6morgqlaZ7TQuvYtw+1EP8gCHhYURqVXRWUxyOfSGNLVO2VWcRqyTDJZ3AGjLZwAOs59e7v73JojzOWqex2n6PMhEfk/rljFTQXQXFPPPoDWnAWSCkPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8D82A1E7D;
+	Mon, 24 Feb 2025 02:22:50 -0800 (PST)
+Received: from [10.57.36.38] (unknown [10.57.36.38])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 111C63F673;
+	Mon, 24 Feb 2025 02:22:30 -0800 (PST)
+Message-ID: <c274175a-ed6d-4ce9-be86-d48f56cafe9d@arm.com>
+Date: Mon, 24 Feb 2025 10:22:30 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,104 +42,269 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] dt-bindings: qcom: geni-se: Rename qcom,geni-se.yaml
- to qcom,geni-se-qup.yaml
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
-References: <20250221085439.235821-1-quic_vdadhani@quicinc.com>
- <49fc59ed-9d09-46bd-9ca6-99d3445221f7@kernel.org>
- <f3349d2a-7eba-4865-9b58-0b2e7e57cc92@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <f3349d2a-7eba-4865-9b58-0b2e7e57cc92@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v12 6/7] Coresight: Add Coresight TMC Control Unit driver
+Content-Language: en-GB
+To: Jie Gan <quic_jiegan@quicinc.com>, Mike Leach <mike.leach@linaro.org>,
+ James Clark <james.clark@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Jinlong Mao <quic_jinlmao@quicinc.com>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com
+References: <20250217093024.1133096-1-quic_jiegan@quicinc.com>
+ <20250217093024.1133096-7-quic_jiegan@quicinc.com>
+ <35d1a923-4e8e-4fe2-bf4a-0b78b1d511e3@arm.com>
+ <a594bdee-7d9e-4d79-a5ee-a34dafa2869f@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <a594bdee-7d9e-4d79-a5ee-a34dafa2869f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 24/02/2025 09:47, Viken Dadhaniya wrote:
+On 24/02/2025 03:32, Jie Gan wrote:
 > 
 > 
-> On 2/21/2025 5:05 PM, Krzysztof Kozlowski wrote:
->> On 21/02/2025 09:54, Viken Dadhaniya wrote:
->>> The qcom,geni-se.yaml file describes the Qualcomm Universal Peripheral
->>> (QUP) wrapper and the common entities required by QUP to run any Serial
->>> Engine (SE) as I2C, SPI, UART, or I3C protocol.
+> On 2/21/2025 7:39 PM, Suzuki K Poulose wrote:
+>> On 17/02/2025 09:30, Jie Gan wrote:
+>>> The Coresight TMC Control Unit hosts miscellaneous configuration 
+>>> registers
+>>> which control various features related to TMC ETR sink.
 >>>
->>> Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml to better reflect its
->>> association with QUP (Qualcomm Universal Peripheral) and the compatible
->>> string.
+>>> Based on the trace ID, which is programmed in the related CTCU ATID
+>>> register of a specific ETR, trace data with that trace ID gets into
+>>> the ETR buffer, while other trace data gets dropped.
 >>>
->>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>>> Enabling source device sets one bit of the ATID register based on
+>>> source device's trace ID.
+>>> Disabling source device resets the bit according to the source
+>>> device's trace ID.
+>>>
+>>> Reviewed-by: James Clark <james.clark@linaro.org>
+>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
 >>> ---
->>>   .../soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml}       | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>   rename Documentation/devicetree/bindings/soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml} (98%)
+>>>   drivers/hwtracing/coresight/Kconfig          |  12 +
+>>>   drivers/hwtracing/coresight/Makefile         |   1 +
+>>>   drivers/hwtracing/coresight/coresight-ctcu.c | 268 +++++++++++++++++++
+>>>   drivers/hwtracing/coresight/coresight-ctcu.h |  24 ++
+>>>   include/linux/coresight.h                    |   3 +-
+>>>   5 files changed, 307 insertions(+), 1 deletion(-)
+>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
+>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
 >>>
+>>> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/ 
+>>> coresight/Kconfig
+>>> index 06f0a7594169..ecd7086a5b83 100644
+>>> --- a/drivers/hwtracing/coresight/Kconfig
+>>> +++ b/drivers/hwtracing/coresight/Kconfig
+>>> @@ -133,6 +133,18 @@ config CORESIGHT_STM
+>>>         To compile this driver as a module, choose M here: the
+>>>         module will be called coresight-stm.
+>>> +config CORESIGHT_CTCU
+>>> +    tristate "CoreSight TMC Control Unit driver"
+>>> +    depends on CORESIGHT_LINK_AND_SINK_TMC
+>>> +    help
+>>> +      This driver provides support for CoreSight TMC Control Unit
+>>> +      that hosts miscellaneous configuration registers. This is
+>>> +      primarily used for controlling the behaviors of the TMC
+>>> +      ETR device.
+>>> +
+>>> +      To compile this driver as a module, choose M here: the
+>>> +      module will be called coresight-ctcu.
+>>> +
+>>>   config CORESIGHT_CPU_DEBUG
+>>>       tristate "CoreSight CPU Debug driver"
+>>>       depends on ARM || ARM64
+>>> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/ 
+>>> hwtracing/ coresight/Makefile
+>>> index 4ba478211b31..1b7869910a12 100644
+>>> --- a/drivers/hwtracing/coresight/Makefile
+>>> +++ b/drivers/hwtracing/coresight/Makefile
+>>> @@ -51,3 +51,4 @@ coresight-cti-y := coresight-cti-core.o coresight- 
+>>> cti-platform.o \
+>>>              coresight-cti-sysfs.o
+>>>   obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
+>>>   obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
+>>> +obj-$(CONFIG_CORESIGHT_CTCU) += coresight-ctcu.o
+>>> diff --git a/drivers/hwtracing/coresight/coresight-ctcu.c b/drivers/ 
+>>> hwtracing/coresight/coresight-ctcu.c
+>>> new file mode 100644
+>>> index 000000000000..e1460a627c4d
+>>> --- /dev/null
+>>> +++ b/drivers/hwtracing/coresight/coresight-ctcu.c
+>>> @@ -0,0 +1,268 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +/*
+>>> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All 
+>>> rights reserved.
+>>> + */
+>>> +
+>>> +#include <linux/clk.h>
+>>> +#include <linux/coresight.h>
+>>> +#include <linux/device.h>
+>>> +#include <linux/err.h>
+>>> +#include <linux/kernel.h>
+>>> +#include <linux/init.h>
+>>> +#include <linux/io.h>
+>>> +#include <linux/module.h>
+>>> +#include <linux/mutex.h>
+>>> +#include <linux/of.h>
+>>> +#include <linux/platform_device.h>
+>>> +#include <linux/slab.h>
+>>> +
+>>> +#include "coresight-ctcu.h"
+>>> +#include "coresight-priv.h"
+>>> +
+>>> +DEFINE_CORESIGHT_DEVLIST(ctcu_devs, "ctcu");
+>>> +
+>>> +#define ctcu_writel(drvdata, val, offset)    __raw_writel((val), 
+>>> drvdata->base + offset)
+>>> +#define ctcu_readl(drvdata, offset)        __raw_readl(drvdata->base 
+>>> + offset)
+>>> +
+>>> +/*
+>>> + * The TMC Coresight Control Unit uses four ATID registers to 
+>>> control the data
+>>> + * filter function based on the trace ID for each TMC ETR sink. The 
+>>> length of
+>>> + * each ATID register is 32 bits. Therefore, the ETR has a related 
+>>> field in
+>>> + * CTCU that is 128 bits long. Each trace ID is represented by one 
+>>> bit in that
+>>> + * filed.
+>>> + * e.g. ETR0ATID0 layout, set bit 5 for traceid 5
+>>> + *                                           bit5
+>>> + * ------------------------------------------------------
+>>> + * |   |28|   |24|   |20|   |16|   |12|   |8|  1|4|   |0|
+>>> + * ------------------------------------------------------
+>>> + *
+>>> + * e.g. ETR0:
+>>> + * 127                     0 from ATID_offset for ETR0ATID0
+>>> + * -------------------------
+>>> + * |ATID3|ATID2|ATID1|ATID0|
+>>> + */
+>>> +#define CTCU_ATID_REG_OFFSET(traceid, atid_offset) \
+>>> +        ((traceid / 32) * 4 + atid_offset)
+>>> +
+>>> +#define CTCU_ATID_REG_BIT(traceid)    (traceid % 32)
+>>> +#define CTCU_ATID_REG_SIZE        0x10
+>>> +
+>>> +struct ctcu_atid_config {
+>>> +    const u32 atid_offset;
+>>> +    const u32 port_num;
+>>> +};
+>>> +
+>>> +struct ctcu_config {
+>>> +    const struct ctcu_atid_config *atid_config;
+>>> +    int num_atid_config;
+>>> +};
+>>> +
+>>> +static const struct ctcu_atid_config sa8775p_atid_cfgs[] = {
+>>> +    {0xf8,  0},
+>>> +    {0x108, 1},
+>>> +};
+>>> +
+>>> +static const struct ctcu_config sa8775p_cfgs = {
+>>> +    .atid_config        = sa8775p_atid_cfgs,
+>>> +    .num_atid_config    = ARRAY_SIZE(sa8775p_atid_cfgs),
+>>> +};
+>>> +
+>>> +static void ctcu_program_atid_register(struct ctcu_drvdata *drvdata, 
+>>> u32 reg_offset,
+>>> +                       u8 bit, bool enable)
+>>> +{
+>>> +    u32 val;
+>>> +
+>>> +    CS_UNLOCK(drvdata->base);
+>>> +    val = ctcu_readl(drvdata, reg_offset);
+>>> +    val = enable? (val | BIT(bit)) : (val & ~BIT(bit));
 >>
->> That's just churn for no real gain. Not even tested churn.
+>> minor nit: If possible do not use the ternary operator like this. It 
+>> is much better readable as:
+>>
+>>      if (enable)
+>>          val |= BIT(bit);
+>>      else
+>>          val &= ~BIT(bit);
+>>
 > 
-> That's just churn for no real gain.
+> Will do this way.
 > 
-> We made this change based on below plan, we think this will be helpful.
+>>> +    ctcu_writel(drvdata, val, reg_offset);
+>>> +    CS_LOCK(drvdata->base);
+>>> +}
+>>> +
+>>> +/*
+>>> + * __ctcu_set_etr_traceid: Set bit in the ATID register based on 
+>>> trace ID when enable is true.
+>>> + * Reset the bit of the ATID register based on trace ID when enable 
+>>> is false.
+>>> + *
+>>> + * @csdev:    coresight_device struct related to the device
+>>> + * @traceid:    trace ID of the source tracer.
+>>> + * @port_num:    port number from TMC ETR sink.
+>>> + * @enable:    True for set bit and false for reset bit.
+>>> + *
+>>> + * Returns 0 indicates success. Non-zero result means failure.
+>>> + */
+>>> +static int __ctcu_set_etr_traceid(struct coresight_device *csdev, u8 
+>>> traceid, int port_num,
+>>> +                  bool enable)
+>>> +{
+>>> +    struct ctcu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+>>> +    u32 atid_offset, reg_offset;
+>>> +    u8 refcnt, bit;
+>>> +
+>>> +    atid_offset = drvdata->atid_offset[port_num];
+>>> +    if (atid_offset == 0)
+>>> +        return -EINVAL;
+>>> +
+>>> +    bit = CTCU_ATID_REG_BIT(traceid);
+>>> +    reg_offset = CTCU_ATID_REG_OFFSET(traceid, atid_offset);
+>>> +    if (reg_offset - atid_offset > CTCU_ATID_REG_SIZE)
+>>> +        return -EINVAL;
+>>> +
+>>> +    guard(raw_spinlock_irqsave)(&drvdata->spin_lock);
+>>> +    refcnt = drvdata->traceid_refcnt[port_num][traceid];
+>>> +    /* Only program the atid register when the refcnt value is 0 or 
+>>> 1 */
+>>
+>> A normal trace source won't be enabled more than once (e.g., ETM). The 
+>> only odd one out is the STM, which may be driven by multiple agents.
+>> So this refcounting looks necessary.
+>>
 > 
-> 1. Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml. Reason at 2 below.
+> Besides, for the TPDMs which shared the trace_id of the TPDA also need 
+> the refcnt. Consider we have TPDM1 and TPDM2 connected to the same TPDA 
+> device. Once we disable one of the TPDM without checking the refcnt, the 
+> filter function will be disabled for another TPDM.
+> 
+>>> +    if (enable && (++refcnt == 1))
+>>> +        ctcu_program_atid_register(drvdata, reg_offset, bit, enable);
+>>> +    else if (!enable && (--refcnt == 0))
+>>> +        ctcu_program_atid_register(drvdata, reg_offset, bit, enable);
+>>
+>> minor nit:
+>>
+>>      if ((enable && !refcount++) ||
+>>          (!enable && --refcount))
+>>          ctcu_program_atid_register(drvdata, reg_offset, bit, enable);
+>>
+>>
+> 
+> I did (enable && (++refcnt == 1)) just because I think we only need 
+> program the register when refcnt is equal to 1. We dont need reprogram 
+> the register with same value when refcnt greater than 1. So I think it's 
+> better for the performance?
 
-There is no reason 2 at this point. You split your patchsets
-incorrectly. At this point this is churn, without gain. No users of this
-rename, no benefits.
+The code above is similar to yours. It would "set" only for the first
+time, when
 
-> 2. Create qcom,geni-se.yaml with shared properties for SE-protocol (spi, 
-> i2c, uart) nodes. This will be helpful for the shared schema in the 
-> ongoing changes 
+enable == 0, refcount == 0 now, but will be incremented to 1.
 
-Then post it, instead of sending something which makes no sense on its own.
-
-
-Best regards,
-Krzysztof
+Suzuki
 
