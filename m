@@ -1,140 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-49131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39244A417BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 09:48:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AB13A417EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 09:56:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F32F189152D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 08:48:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 887C716D7F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 08:56:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88C7E191F6D;
-	Mon, 24 Feb 2025 08:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC772241CA2;
+	Mon, 24 Feb 2025 08:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kKW0J4Cu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D0KVRt9H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6FF23C393;
-	Mon, 24 Feb 2025 08:48:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A62241695;
+	Mon, 24 Feb 2025 08:56:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740386882; cv=none; b=kcihlGtYl/qdfRl0OkCM4xnGV8F96TcXJpS1aS36oe4o9D/AheuuxQM24bQQf7SRY5WeGHbyW6qvAbk5uWsr6BIgqP6Eqr50NnKNUJjX00RNrBtFoyfvvV2/4VTbF188Y11FCoiupS350neBN4ODB1knk1sHcafgJVY2TQCpAAc=
+	t=1740387367; cv=none; b=Nj51zRijiwLymkWocZGIZ67zvKOLpmYvy4TrrxugPa+nQD4tPSojxam5x96apFaqE2ZDx6j6RPEESBZKbVcEy/AfsCKBRkt/rc5FzkrSeP9HDrYWSpzc/ewY8ZKkOX+9DT5VxnaqsfX5bZ4eElzZ0LCfa3hYw8bZfNMT3Oo41HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740386882; c=relaxed/simple;
-	bh=pDTOGwORtLPgQhFUOH/4VYNkvXuKFRWo1tnwWehTIwc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=d4F5ZqIsU+P/ZtW8LXe90GfXGUYQ/5sf00ZQ8tIuLi/BHv6ipzp07yR66BEIA0a5DZEzWZlggpgqeFRSpzo0lG4LrKH/AVb8tIuP1/QcOP3u1wLQg36p8FB7/nQmwhc0EOM9VGmad6NB5mTO10HYjtYN3GpM1PBD/oLmS72mBXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kKW0J4Cu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51NNIEDD012818;
-	Mon, 24 Feb 2025 08:47:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	w0b1xqWe4sX2E8x1lbqQchpiv1HmY+V+Mse1J6myL14=; b=kKW0J4Cu/+Ynzbvk
-	aHj5utqKjJb8dODTZoI/2uqnWHh9Zjc3FDHmDcnOPmMoaaAY97cyuxjWM3Cbppps
-	NUiKliLQ76dfjX54jZ4k3XLtVKlH5TAEcyGh7kTmE4dRQrwNlSqKU1ZxgYAzQOg7
-	M1MjZNs+yzpSX/+L9rRipiuK6UycmXsr7BndFQuHUZqG9QtXZKgCw2e9jenPNrEv
-	0XiyMB0io9Q6UDDFnL1dIJzUoXLe6nyDLk2Yj5VrO1Q3tgEpqITy7SaJn9CspDQC
-	BgJOX/eaR2lW3tUbsackkMcrJ2FkChukj6qtDaywVKl01XaEXWOx4ftfuct7hUSY
-	i1xMcA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y7v9c2nn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Feb 2025 08:47:56 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51O8luL7014916
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Feb 2025 08:47:56 GMT
-Received: from [10.216.5.175] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Feb
- 2025 00:47:52 -0800
-Message-ID: <f3349d2a-7eba-4865-9b58-0b2e7e57cc92@quicinc.com>
-Date: Mon, 24 Feb 2025 14:17:31 +0530
+	s=arc-20240116; t=1740387367; c=relaxed/simple;
+	bh=xynIidDgpFBJhwX+rR7LTSuhkkTdXt9jQlEjIf656u4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g+gTEapFROb2+iHKnaa6b/ktgnsIykQ83cTSx4raw7dVd0Gul5IwR57MzHmw8sDmjznAMWf4Yjwfi0PulrlqbtE8c9GyV9gdCm+SuAcKSDBoJLXKMSrqrrGkmGGCl77S+VHKXzHRuLDzL2EcIOmh0t1guTQjrRmzjgXhr6NjlAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D0KVRt9H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11564C4CEE6;
+	Mon, 24 Feb 2025 08:56:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740387367;
+	bh=xynIidDgpFBJhwX+rR7LTSuhkkTdXt9jQlEjIf656u4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=D0KVRt9H3ECd8N6iv+XzErxMGS+7KbCRuMJUu+bQMYbTnnPHwLcuWiUTIUxllT1QE
+	 RNtw+Szf2Z0laWEeTI3RBd+YjTiMgOJpEkNatKEWUAsX8gPTlbVs+PJO+i2LHoKqgW
+	 xRVb97fzyaAnQ3W7spRTcxyEEzpiTHGpCvQHcBkkJxhu4J7Z3GDJ5MWimoLpdibh+L
+	 JeZd+LI4viRzL2Zc7a4wG9YVhyXHPpm/XJcfL14/Y117GDC+ExglNclxm12adh3E0x
+	 VWtE/qavf6qxZzv+Afn4YFlss1vzH7k0IpmU5kX0X7J/QqALHccZ/eohy9ECzjfXAw
+	 FQJrOswTPLMJQ==
+Date: Mon, 24 Feb 2025 09:56:04 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/8] dt-bindings: phy: add
+ samsung,exynos2200-usbcon-phy schema file
+Message-ID: <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
+References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
+ <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] dt-bindings: qcom: geni-se: Rename qcom,geni-se.yaml
- to qcom,geni-se-qup.yaml
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
-References: <20250221085439.235821-1-quic_vdadhani@quicinc.com>
- <49fc59ed-9d09-46bd-9ca6-99d3445221f7@kernel.org>
-Content-Language: en-US
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-In-Reply-To: <49fc59ed-9d09-46bd-9ca6-99d3445221f7@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: exGbrHwgtzBIhAIOgGKdavBjV23LUldw
-X-Proofpoint-ORIG-GUID: exGbrHwgtzBIhAIOgGKdavBjV23LUldw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-24_03,2025-02-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 impostorscore=0 bulkscore=0 malwarescore=0 phishscore=0
- spamscore=0 suspectscore=0 mlxscore=0 mlxlogscore=878 lowpriorityscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502240064
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
 
-
-
-On 2/21/2025 5:05 PM, Krzysztof Kozlowski wrote:
-> On 21/02/2025 09:54, Viken Dadhaniya wrote:
->> The qcom,geni-se.yaml file describes the Qualcomm Universal Peripheral
->> (QUP) wrapper and the common entities required by QUP to run any Serial
->> Engine (SE) as I2C, SPI, UART, or I3C protocol.
->>
->> Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml to better reflect its
->> association with QUP (Qualcomm Universal Peripheral) and the compatible
->> string.
->>
->> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> ---
->>   .../soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml}       | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>   rename Documentation/devicetree/bindings/soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml} (98%)
->>
+On Sun, Feb 23, 2025 at 02:22:22PM +0200, Ivaylo Ivanov wrote:
+> The Exynos2200 SoC has a USB controller PHY, which acts as an
+> intermediary between a USB controller (typically DWC3) and other PHYs
+> (UTMI, PIPE3). Add a dt-binding schema for it.
 > 
-> That's just churn for no real gain. Not even tested churn.
+> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> ---
+>  .../phy/samsung,exynos2200-usbcon-phy.yaml    | 76 +++++++++++++++++++
+>  1 file changed, 76 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
 
-That's just churn for no real gain.
-
-We made this change based on below plan, we think this will be helpful.
-
-1. Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml. Reason at 2 below.
-2. Create qcom,geni-se.yaml with shared properties for SE-protocol (spi, 
-i2c, uart) nodes. This will be helpful for the shared schema in the 
-ongoing changes 
-https://lore.kernel.org/linux-arm-msm/f090d637-1ef1-4967-b5bc-6bfce3d7130e@kernel.org/T/.
-
-Not even tested churn.
-
-Sorry, we realized other SPI drivers also needs to be adjusted too. We 
-have validated dt_binding_check for i2c, spi, uart, and geni-se YAML 
-files but missed checking make refcheckdocs.
-
-Please let us know if any command/step is missing in further validation, 
-that will help us.
+You have undocumented dependencies which prevent merging this file.
+First, dependencies have to be clearly expressed. Second, you should
+rather decouple the code from header dependencies, otherwise this cannot
+be merged for current release (just use clocks with long names, without IDs).
 
 > 
-> Best regards,
-> Krzysztof
+> diff --git a/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
+> new file mode 100644
+> index 000000000..7d879ec8b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
+> @@ -0,0 +1,76 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/samsung,exynos2200-usbcon-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Exynos2200 USB controller PHY
+> +
+> +maintainers:
+> +  - Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> +
+> +description:
+> +  Exynos2200 USB controller PHY is an intermediary between a USB controller
+> +  (typically DWC3) and other PHYs (UTMI, PIPE3).
+
+Isn't this the same as usbdrd phy? see: samsung,usb3-drd-phy.yaml
+
+I think there is no PHY between DWC3 and UTMI/PIPE. There is a PHY
+controller (so the samsung,usb3-drd-phy.yaml) which we call here the
+phy.
+
+
+Best regards,
+Krzysztof
+
 
