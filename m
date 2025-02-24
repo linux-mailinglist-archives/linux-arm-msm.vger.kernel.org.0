@@ -1,89 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-49183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A855A425CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 16:13:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 19864A426E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 16:52:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF3983B1DAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 15:01:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 714683B12D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 15:45:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EC2F194A75;
-	Mon, 24 Feb 2025 15:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C442625EFA5;
+	Mon, 24 Feb 2025 15:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VJfNoUym"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wA3C80XP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DBC7189BBB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 15:01:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0C225EF8F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 15:45:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409284; cv=none; b=iH75sgM04OrAjYKhGPob1umHZSkTDyiXwW6RU4HrrURWsyo9Xgl9i3Be5NNumbCx+DzROoRF4u6G7JmaH8nP7IaGIEbHdnRotNoTaE3FezSyqs2zYjKX5sI1JluBqHPpktYvs/Y5+JF87SeZzbiSxzXxX3yITHBHW2hYHJvcN5Y=
+	t=1740411932; cv=none; b=tTkZLunki8Q2X7+S4H63DnC3wN6PiTKhW7ujnZDAgLYirhcbdLq2C+nvp1stjN1MMzJfcDrcWfos42SzybMn+huZ9AXuCsnNiY9G31wKdrMCBsc8p1YFJB2YbSC5Stqyg0Y1MgTFAW9KC2UivoNZsihDqWVrN+qDHfF7vpvz+mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409284; c=relaxed/simple;
-	bh=e+fGuFYihqFYKDT1VXWhmaDTiPW7MSXQnExkELgZB6M=;
+	s=arc-20240116; t=1740411932; c=relaxed/simple;
+	bh=2mTtDZAkc00WaJmrF+GsEd2qg3IRRa89CS9NdfbbNJY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T6b5mzdHAMxKPHHBQayESEwHrHeivL5/Z++Fs6gyR/AP+TILvq71ZGG+RYBsTtRfnt73x9orPCkMaDN6X89dHEebLOuJZuCQtT94xgK6gxoeMosh3eAmioOuDtKnQ3j4/vbiYhTIopm8qADBhXPXJ+z3Fx9mXYqBwiqPHp/+mNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VJfNoUym; arc=none smtp.client-ip=209.85.128.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=YleGa0F+ntaEiHp7GwHmsknglKjdcu1GdX+1VmfyHf9gUOE0LO1XuHMVAm2XUYmszeAI3MTa1qjSUv4Jcga3u4PupJV9ktkPvKwZtiYczIVn7yFCV5vXjwrjnDCIcw2EXEVA8JPycBFeCwc/WaU+63EbBXL3FtqWnLCEDVEwAgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wA3C80XP; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43948021a45so39521635e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 07:01:20 -0800 (PST)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-54838cd334cso3482452e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 07:45:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740409279; x=1741014079; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740411929; x=1741016729; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zO1QOaq79Jegtn1MMv2Nhkvx1JoPb9ukrAV5cHqtoJE=;
-        b=VJfNoUym/jxU9++z6JczaRxwt/hiuS8RTWEHMH6PcA9W+j9/usBHvEftu8zlGV03+C
-         P/Gd9taEiBjMGRkGxueuyJ9oM8njL9NsqnZxZS4j1UbRZuBzZZIbSid5oZ+suBjp8reu
-         E1mWhDoOzbQnf/jzfejHhh3RXk0piUzR64JCrg4SD8e6wZ4Js5h7LqRN8lHc4g+kleUh
-         xhi4FJ6xKv7ZkyDn7BCSBNphFzVT6WehM9v9K8j3+A3VZCz2gZPiNKXwuf785kCPS48i
-         6zkzyD7RIsFpAyaSr9T5yBiX4Ly9E0yFmQnjxrh/Wl5jZXrECrg1qHo2Lzh/nrsybCph
-         Uq9g==
+        bh=wOiNvYc++Zm34fMpFoIDUhcKtWpkYIPTfUzhG4djg7M=;
+        b=wA3C80XP1CIPLPSCpBl7N8OLpilRCL/nkj1Vdh0WGEc2v3TV0Znna/nAgENu2S9Zo2
+         DXNC3gFUT0rf4Eh/YMykLd4+OyBEFqCSfVISvUEPXWGMr0PIF+N9GSFNz90FOz/NJL1s
+         yIKpatb/+AVaxBq+GYZkdM7lP52lnYbY2asbNfoC+GIouqQ67g+AL8i95jGvdIJlWmCE
+         S6ammNNwAaaiG3p/0I1Maq0M0ARS4V/DR7ETMNnuMYno+UqR6WZSZ4InnYy6k4HHux/W
+         NSl7rUW23cl0C7Wn6gjHGlY+C+jlqlzS9/n0getk0zz8l066YR2FtBEwPye8XlE9rlwV
+         3sDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740409279; x=1741014079;
+        d=1e100.net; s=20230601; t=1740411929; x=1741016729;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zO1QOaq79Jegtn1MMv2Nhkvx1JoPb9ukrAV5cHqtoJE=;
-        b=MPKYGbo3S5E2JtoP3BKRG4iceKthI6yUXVI720+zmahw4VE3+PKN35exyFkfza+Kxp
-         4k1A2LgEC0rzJEu0bye/sI5JKAOF7TOGR1rVqajuPeWqx5z/we30mHWFEGTL/M8t39sr
-         B4LQIHgXUTZLj4Kv3Lpuzc5VBNmjNZEc4YgZmoJjZD/TWQd+lRNB9DGnkt1EdrlzSOCt
-         LozHj5B950vhAZavZrOPRCh6QnQoMtsxr4MNKOThV9Ub8xsJYL8amZH6RQe+ylRZFMZ9
-         KghlC5QDfPPhC6i+dI+mz+1sL9t738DUmpAQbu5tKAKBDu1hFlb285IEl3/LIqiv9mWp
-         bcvg==
-X-Forwarded-Encrypted: i=1; AJvYcCXsXQS262Kb60XZa3u7L7b7pShr/8K+f4W4DCVbDHqEKpHDKYS5H+Yz765+JBgYwHP3yEFymse2p5t3Di4r@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbNviF8ck6RwIGe110O86gaX9RsEeTzZnIqkEe/JtIMFx/M4hg
-	kltbnsOTTSagYla0hfRcqNd19qr+PYrj7bNUaRvsEO6DAogviHpS9EESPfmaQUo=
-X-Gm-Gg: ASbGncu3E3HD8IhfhHpHBW05DToXiAhgDXHncaFy4iJk2J8tm/D85c6tTUrmdIm1l0v
-	OXnc7htGoVofdHmnTiUfNQdssqCfM69VizJtnEOMjzMpo4jwFjhkcUCbI66NkzN+DelXKvjzsgZ
-	Ex9HgOs1MzPhfeOgSu/EaLhoHw0H34XppSkONhpnJG8JZWbwxx59+ELKoi4pAO3cnCXk4GclTl6
-	QAv1cqkRnuSZje3HWZ6QHg+sDfonTDZyqVO+AdNTbfHSxxSZoDQ7/eKu4Fs+tXo0OC2VFiCm09K
-	tCh+iZc7aC7pmSoeOaHJgA6CzidqwphNRvWYXQ==
-X-Google-Smtp-Source: AGHT+IHy32IsayllVzcL5y6Hco/yU7QMFhwvQV+h4VDJSb2zJULlU9qCiE/moLz0IrzCr+zonZR92A==
-X-Received: by 2002:a05:6000:144f:b0:38d:bec9:c8d with SMTP id ffacd0b85a97d-38f6f0c6be9mr13502818f8f.53.1740409279076;
-        Mon, 24 Feb 2025 07:01:19 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef30:dba4:b92e:251f:5bd3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258b434fsm32352273f8f.16.2025.02.24.07.01.18
+        bh=wOiNvYc++Zm34fMpFoIDUhcKtWpkYIPTfUzhG4djg7M=;
+        b=uN1KT3B1Duunrzib6W61omOycTQco2e+A8DBZ7pWwtPYKRyh8N66RE9uvuc78S4xUe
+         mUXddK0ocRdWCV734AVAsJuBMuXU0O691hx5pcf49AB1qxkIwOxaCK+s4/JtuJfK6C2Y
+         8+jcszR1MWrDdmM3HoGSGvTGt3eL6ArtsQNdHde04NCM8f4KC8s63Cuun/e/M3RmnyqV
+         LstSWxWS8KPsLW2OpjFAndoYexIwvPTfXzPC6arW0fNdjG+T4WunZeYpDUcJn1xGW0B+
+         nVVqrchZVX8qFNOiaApwiHP5OCIgPyMyAfVbssRIXcDQI6MBJFamILI/vcHGB0Y9SYhR
+         cWuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU+A2nIuA/JrnPnD2xWFxotqcyCqR3W64HhkVugf7PmxxkyazrpNE9lcm7sB6g0pTCB6YVhebHrhMgE/hwb@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw4sZ8V+2J0wbaVMhmyxB4B10dOVXVvN8kNgwWOtrDAZXtqAUti
+	sJ1yGVRFvz/w4b4w4/Vg2GmnMYZbGZwek2avXrRPQxRM3HUgfoNRzIqvNBEDn30=
+X-Gm-Gg: ASbGncsSozDUartLvii2wmnE0ZY8deNSOgl+nDrShMsz2DmvEz1ZKX9lwyODHDyqRI8
+	mgWiz9cSZoFO0NgXnVpO/cSsEK9DSE7uzjOXoG7aN+Tjq9GDNAk8y3H2+WjGj7El41yLVeFWAIf
+	osK9TPWeg+xF/dljl2cVwe8ImpKGvRcZMgeM2xS6wMGQYxuyfoTR9HLd0iuYZIQclal7pDq78IG
+	F4Hr1zjQFChPC7r1sByNQUm1Qs782+tm+rxDesBS2X2VPnKH662WJprLA+ZSU7m8rODxyYZABPz
+	Y09aTQP30RDlDpK1OKlGN+0Uwhivc0kJgexZIIi+vC1aLyaHBEODtI8EeyGdR9RnCE96AzNEF/6
+	rElmgOg==
+X-Google-Smtp-Source: AGHT+IGwY3q58ljOK6c0ToO8Ip0U2GajA279X5o7qJCOYPYRMwKT1ywz49vgLpLFCtOjKmpLe+ox1g==
+X-Received: by 2002:a05:6512:308b:b0:540:1b07:e033 with SMTP id 2adb3069b0e04-54838f79748mr5921069e87.45.1740411928851;
+        Mon, 24 Feb 2025 07:45:28 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54619e7bc2esm2609050e87.244.2025.02.24.07.45.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 07:01:18 -0800 (PST)
-Date: Mon, 24 Feb 2025 16:01:11 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100: Add crypto engine
-Message-ID: <Z7yJt4ARAM39F9b6@linaro.org>
-References: <20250221-x1e80100-crypto-v2-1-413ecf68dcd7@linaro.org>
+        Mon, 24 Feb 2025 07:45:27 -0800 (PST)
+Date: Mon, 24 Feb 2025 17:45:25 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: George Moussalem <george.moussalem@outlook.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, amitk@kernel.org, 
+	thara.gopinath@gmail.com, robh@kernel.org, krzk+dt@kernel.org, quic_srichara@quicinc.com, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v6 1/5] dt-bindings: nvmem: Add compatible for IPQ5018
+Message-ID: <3lmf24l3retmjcbmzkn7ezqxd7no2dbuwm2apy5vlwgaq7ipnh@ggscdxkgirke>
+References: <20250224061224.3342-1-george.moussalem@outlook.com>
+ <DS7PR19MB8883591F0D2E21E62025D2D69DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+ <2fcb52a3-7ef2-465f-b460-2f7b565a188e@kernel.org>
+ <zygiknq3pldkcdonekzamn2uprnjyc5dip57i75p7uahftekxr@2lqgo3wa6zhf>
+ <739acd33-9ce8-40db-a219-26b8ca241d73@kernel.org>
+ <DS7PR19MB88839DD16140E0C883257D679DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,117 +95,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250221-x1e80100-crypto-v2-1-413ecf68dcd7@linaro.org>
+In-Reply-To: <DS7PR19MB88839DD16140E0C883257D679DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
 
-On Fri, Feb 21, 2025 at 03:07:03PM +0200, Abel Vesa wrote:
-> On X Elite, there is a crypto engine IP block similar to ones found on
-> SM8x50 platforms.
+On Mon, Feb 24, 2025 at 05:58:39PM +0400, George Moussalem wrote:
+> On 2/24/25 17:49, Krzysztof Kozlowski wrote:
 > 
-> Describe the crypto engine and its BAM.
+> > On 24/02/2025 14:42, Dmitry Baryshkov wrote:
+> >> On Mon, Feb 24, 2025 at 10:19:35AM +0100, Krzysztof Kozlowski wrote:
+> >>> On 24/02/2025 07:12, George Moussalem wrote:
+> >>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> >>>>
+> >>>> Document the QFPROM block found on IPQ5018
+> >>>>
+> >>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> >>>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+> >>> You can send the patches to yourself and see whether they are properly
+> >>> threaded.
+> >> I don't think outlook world understands the concept of threading.
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-> The dt-binding schema update for the x1e80100 compatible is here
-> (already picked up):
+> using git send-email from an @outlook.com address. But I've figured out the issue:
+> git send-email --thread
+> this sets In-reply-to and References tags
+
+It does that by default. The usual way is to have your cover letter as
+0000-foo-bar.patch and then use git send-email 00*. This way it picks up
+the cover letter as the first patch and everything else goes as reponses
+to it.
+
+OR you can use a tool which does that for you. We usually recommend b4
+tool, it wraps ardoung git-send-email and it can help a lot.
+
 > 
-> https://lore.kernel.org/all/20250213-dt-bindings-qcom-qce-x1e80100-v1-1-d17ef73a1c12@linaro.org/
-> ---
-> Changes in v2:
-> - Added EE and channels numbers in BAM node, like Stephan suggested.
-> - Added v1.7.4 compatible as well.
-> - Link to v1: https://lore.kernel.org/r/20250213-x1e80100-crypto-v1-1-f93afdd4025a@linaro.org
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 32 ++++++++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
+> > True, but note that outlook.com is just provider and you can use
+> > whatever email client with it. mutt/neomutt, Thunderbird, claws, Kmail etc.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index 9d38436763432892ceef95daf0335d4cf446357c..71d5f5eed4511030a51fb12e453f603d294080cc 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -3708,6 +3708,38 @@ pcie4_phy: phy@1c0e000 {
->  			status = "disabled";
->  		};
->  
-> +		cryptobam: dma-controller@1dc4000 {
-> +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-> +			reg = <0 0x01dc4000 0 0x28000>;
-> +
-> +			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			#dma-cells = <1>;
-> +
-> +			iommus = <&apps_smmu 0x480 0>,
-> +				 <&apps_smmu 0x481 0>;
-> +
-> +			qcom,ee = <0>;
-> +			qcom,num-ees = <7>;
-> +			num-channels = <30>;
+> correct, not sending from outlook, but git send-email. Was missing the --thread option
+> 
+> > Best regards,
+> > Krzysztof
+> 
+> Best regards,
+> George
+> 
 
-Hm, the hardware registers report the same as SM8550 on my X1E CRD:
-
-			qcom,num-ees = <4>;
-			num-channels = <20>;
-
-[   17.679161] bam-dma-engine 1dc4000.dma-controller: bam_init() ees 4
-[   17.679163] bam-dma-engine 1dc4000.dma-controller: bam_init() num-channels 20
-[   17.679164] ------------[ cut here ]------------
-[   17.679165] bam-dma-engine 1dc4000.dma-controller: DT specifies num-channels = <30>, but hardware reports 20. Please fix the device tree!
-[   17.679175] WARNING: CPU: 5 PID: 121 at drivers/dma/qcom/bam_dma.c:498 bam_init+0x10c/0x150 [bam_dma]
-
-(You don't have this warning yet, it's part of an upcoming bam_dma patch
- series from me that will start validating the num-channels given in the
- device tree.)
-
-> +			qcom,controlled-remotely;
-> +		};
-> +
-> +		crypto: crypto@1dfa000 {
-> +			compatible = "qcom,x1e80100-qce", "qcom,sm8150-qce", "qcom,qce";
-> +			reg = <0 0x01dfa000 0 0x6000>;
-> +
-> +			interconnects = <&aggre2_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-> +			interconnect-names = "memory";
-> +
-> +			dmas = <&cryptobam 4>, <&cryptobam 5>;
-> +			dma-names = "rx", "tx";
-> +
-> +			iommus = <&apps_smmu 0x480 0>,
-> +				 <&apps_smmu 0x481 0>;
-
-iommus = <&apps_smmu 0x480 0x1> seems to work fine for me, can you try
-again? Not sure if this is related, but make sure to apply
-
-https://lore.kernel.org/linux-arm-msm/20250208223112.142567-1-caleb.connolly@linaro.org/
-
-since that can easily cause crashes for bam_dma. I added this diff for
-testing and it's working fine so far:
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index afb8bd3b6a94..bac3d6a38055 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -3732,8 +3732,7 @@ cryptobam: dma-controller@1dc4000 {
- 
- 			#dma-cells = <1>;
- 
--			iommus = <&apps_smmu 0x480 0>,
--				 <&apps_smmu 0x481 0>;
-+			iommus = <&apps_smmu 0x480 0x1>;
- 
- 			qcom,ee = <0>;
- 			qcom,num-ees = <4>;
-@@ -3752,8 +3751,7 @@ crypto: crypto@1dfa000 {
- 			dmas = <&cryptobam 4>, <&cryptobam 5>;
- 			dma-names = "rx", "tx";
- 
--			iommus = <&apps_smmu 0x480 0>,
--				 <&apps_smmu 0x481 0>;
-+			iommus = <&apps_smmu 0x480 0x1>;
- 		};
- 
- 		tcsr_mutex: hwlock@1f40000 {
-
-Thanks,
-Stephan
+-- 
+With best wishes
+Dmitry
 
