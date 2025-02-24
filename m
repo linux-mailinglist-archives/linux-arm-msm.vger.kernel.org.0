@@ -1,264 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-49163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F564A41D08
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 12:37:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E85FA41E01
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 12:59:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BC641890986
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:34:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 86DE93B31B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:53:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B3F026F455;
-	Mon, 24 Feb 2025 11:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 788F0260A4C;
+	Mon, 24 Feb 2025 11:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cF6uzdQf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EdPuFMOq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226DF26F44A;
-	Mon, 24 Feb 2025 11:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C721853;
+	Mon, 24 Feb 2025 11:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740396000; cv=none; b=FO0Bxbu4pgoVgxsoojzbsaV0ZVASOW/xm/qYNqyWdTkq7ni8LohTVDw6q97EpTsIqOyHeWp6KU8Dvm6bBBldsLWYrizBwhU2UHC/ZQ4rl340SzsYVI1XJX4FmG2zXvBvSDymqEf05eRz1WYziVNQR8jPgZQoeXBY3GcXt2X05DQ=
+	t=1740397089; cv=none; b=UPuqzo7SHSKZVeI2yZtKQ3N95EhIynYD3puj6GwsnYOKegWig9M+S3LFWKWKM+Ja2p9fHktcCENY7GwKjp8gNa52VkxwbBA8KV7io251KqKKXJWBV3v+1yDeqdpRdJhaVkj/l7fhsBPM/sXlDs72us7TZ7MvcHZVbvIBtCnn9Jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740396000; c=relaxed/simple;
-	bh=Yim0/UFxWsVs7ZjFolL1jtb/Fogcz7Qgthqq78PKsxo=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VlISK9UcOJYA/3p5DDUuY+3zW+lYnFHfdSMm6q5SFc86gKFZgfkMkGETbLEwIgQoVHDoy6Jy5VLVh05iS2jQSco1PQaeTJi7wwqbMJZipcT0eARE/1xt1SWA2ySDqfDG0pQTppJYfevPNYOaz7uwDOHTUR4RlzRk05TMx4b8H4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cF6uzdQf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3380DC4CEE8;
-	Mon, 24 Feb 2025 11:19:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740396000;
-	bh=Yim0/UFxWsVs7ZjFolL1jtb/Fogcz7Qgthqq78PKsxo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cF6uzdQfnjprnThbTv/fRs+E+0JL64wD2SxAJ40T1+yU9sLNr+apZpj8gXFab59qN
-	 7Tj+W6q1OTiJ11jVoaroualrFt/S2H+AtnuA6pPwDb5ugi7zis4gO5/L0rPOnLYx4r
-	 m2ugKzbTHpxLQJBUKD4n8US5TXjE5bKUkakWVBOCStrmly7a+irR5NcnX9HkZhkhic
-	 JMwp/AYnelSta1+9Ojl5pf58ZFQGGrUw4aQlRrux/lEvS+R8J3KcWicWOzN3/5zxjR
-	 QjH8W/dgecKOy+Ds450VxwJzJLpSGJOhD4SuY6lK4IuSCxQjVPm1w7CKotzthvy+XR
-	 DN/qt5inPC/Yw==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 20/20] irqchip/qcom-pdc: Workaround hardware register bug on X1E80100
-Date: Mon, 24 Feb 2025 06:19:13 -0500
-Message-Id: <20250224111914.2214326-20-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250224111914.2214326-1-sashal@kernel.org>
-References: <20250224111914.2214326-1-sashal@kernel.org>
+	s=arc-20240116; t=1740397089; c=relaxed/simple;
+	bh=wuSxXss6RzVtlocbNY5JSCCyDZrY88CylnzIBph0nzk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=elNn5+HT4jatj8/f3rmPDfAk1/+AjDi1am38USWjFEJRvhAVScj0S7LEDgCx51jGwK0lNQr6bhsS6j663ViiycPKmzh4xo4E7JoZe598IHxdqxJRn/SgycPh5DVEI8hViAmyzrnNZ+9/vF382eaf36sQf4+VD4z3+/W0CVAdUFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EdPuFMOq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51O9uAr4026596;
+	Mon, 24 Feb 2025 11:38:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=LHIb8FddLo7UDs1+HrmkOE
+	/59uJ/xNxlwNySJoYSKwg=; b=EdPuFMOqq6yIna11ZwdzIA3416w/i0r+9NKq+s
+	23BtQD+uM/3LWkwHrrXvgvxhMXQ+cO/Qe02dxq2uBuFqrJ5t3D3pyQwoX8f9wdFi
+	oOLersXfX5j3qSKAaSESx4RDNbZnlMSe2MmcT4XR8WXfJAL9rsOMsigSF3P7y5LK
+	sMmztVbNbeuuffm2Bsa2guybXtftHPbo65mRxWneo+RqnzDo/2OWgnnKKJPGLAUs
+	a4X0dBFmR6Xonru97DUcuQxXumgRfgz3BJqYPo1kCics5SnPRLrKKRQ9OankLKyu
+	r5Swe/ZCPZVmgBFFDbuu/5NQVF+uHwYCk7jbSLphAFKBgrKg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y6ntvxkd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Feb 2025 11:38:03 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51OBc2IQ017464
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Feb 2025 11:38:02 GMT
+Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 24 Feb 2025 03:38:00 -0800
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v1 0/3] Add SPI nand support in IPQ9574
+Date: Mon, 24 Feb 2025 17:07:39 +0530
+Message-ID: <20250224113742.2829545-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.79
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GuQjiFWROyIpJSHVCTRB5Qv22Bk_BjvD
+X-Proofpoint-GUID: GuQjiFWROyIpJSHVCTRB5Qv22Bk_BjvD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-24_05,2025-02-24_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=595 malwarescore=0 impostorscore=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 mlxscore=0
+ priorityscore=1501 clxscore=1011 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2502100000 definitions=main-2502240085
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+* This was a part of 'Add QPIC SPI NAND driver' - [1]. Have split it out
+  into a separate series based on the community feedback [2].
+* Additionally, address comments. Please see individual patches for
+  details
+* The 'dt' and 'dtsi' portions of 'arm64: dts: qcom: ipq9574: Add SPI
+  nand support' are split and posted as separate patches in this series. 
 
-[ Upstream commit e9a48ea4d90be251e0d057d41665745caccb0351 ]
+1 - https://lore.kernel.org/linux-arm-msm/20241120091507.1404368-1-quic_mdalam@quicinc.com/
+2 - https://lore.kernel.org/linux-arm-msm/4c1fe789-5190-465d-bb41-3fe1534d2523@oss.qualcomm.com/
 
-On X1E80100, there is a hardware bug in the register logic of the
-IRQ_ENABLE_BANK register: While read accesses work on the normal address,
-all write accesses must be made to a shifted address. Without a workaround
-for this, the wrong interrupt gets enabled in the PDC and it is impossible
-to wakeup from deep suspend (CX collapse). This has not caused problems so
-far, because the deep suspend state was not enabled. A workaround is
-required now since work is ongoing to fix this.
+Md Sadre Alam (3):
+  arm64: dts: qcom: ipq9574: Add SPI nand support
+  arm64: dts: qcom: ipq9574: Enable SPI NAND for ipq9574
+  arm64: dts: qcom: ipq9574: Remove eMMC node
 
-The PDC has multiple "DRV" regions, each one has a size of 0x10000 and
-provides the same set of registers for a particular client in the system.
-Linux is one the clients and uses DRV region 2 on X1E. Each "bank" inside
-the DRV region consists of 32 interrupt pins that can be enabled using the
-IRQ_ENABLE_BANK register:
+ .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 43 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts   | 12 ------
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 28 ++++++++++++
+ 3 files changed, 71 insertions(+), 12 deletions(-)
 
-  IRQ_ENABLE_BANK[bank] = base + IRQ_ENABLE_BANK + bank * sizeof(u32)
 
-On X1E, this works as intended for read access. However, write access to
-most banks is shifted by 2:
-
-  IRQ_ENABLE_BANK_X1E[0] = IRQ_ENABLE_BANK[-2]
-  IRQ_ENABLE_BANK_X1E[1] = IRQ_ENABLE_BANK[-1]
-  IRQ_ENABLE_BANK_X1E[2] = IRQ_ENABLE_BANK[0] = IRQ_ENABLE_BANK[2 - 2]
-  IRQ_ENABLE_BANK_X1E[3] = IRQ_ENABLE_BANK[1] = IRQ_ENABLE_BANK[3 - 2]
-  IRQ_ENABLE_BANK_X1E[4] = IRQ_ENABLE_BANK[2] = IRQ_ENABLE_BANK[4 - 2]
-  IRQ_ENABLE_BANK_X1E[5] = IRQ_ENABLE_BANK[5] (this one works as intended)
-
-The negative indexes underflow to banks of the previous DRV/client region:
-
-  IRQ_ENABLE_BANK_X1E[drv 2][bank 0] = IRQ_ENABLE_BANK[drv 2][bank -2]
-                                     = IRQ_ENABLE_BANK[drv 1][bank 5-2]
-                                     = IRQ_ENABLE_BANK[drv 1][bank 3]
-                                     = IRQ_ENABLE_BANK[drv 1][bank 0 + 3]
-  IRQ_ENABLE_BANK_X1E[drv 2][bank 1] = IRQ_ENABLE_BANK[drv 2][bank -1]
-                                     = IRQ_ENABLE_BANK[drv 1][bank 5-1]
-                                     = IRQ_ENABLE_BANK[drv 1][bank 4]
-                                     = IRQ_ENABLE_BANK[drv 1][bank 1 + 3]
-
-Introduce a workaround for the bug by matching the qcom,x1e80100-pdc
-compatible and apply the offsets as shown above:
-
- - Bank 0...1: previous DRV region, bank += 3
- - Bank 1...4: our DRV region, bank -= 2
- - Bank 5: our DRV region, no fixup required
-
-The PDC node in the device tree only describes the DRV region for the Linux
-client, but the workaround also requires to map parts of the previous DRV
-region to issue writes there. To maintain compatibility with old device
-trees, obtain the base address of the preceeding region by applying the
--0x10000 offset. Note that this is also more correct from a conceptual
-point of view:
-
-It does not really make use of the other region; it just issues shifted
-writes that end up in the registers of the Linux associated DRV region 2.
-
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/all/20250218-x1e80100-pdc-hw-wa-v2-1-29be4c98e355@linaro.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/irqchip/qcom-pdc.c | 67 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 64 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 74b2f124116e3..52d77546aacb9 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -21,9 +21,11 @@
- #include <linux/types.h>
- 
- #define PDC_MAX_GPIO_IRQS	256
-+#define PDC_DRV_OFFSET		0x10000
- 
- /* Valid only on HW version < 3.2 */
- #define IRQ_ENABLE_BANK		0x10
-+#define IRQ_ENABLE_BANK_MAX	(IRQ_ENABLE_BANK + BITS_TO_BYTES(PDC_MAX_GPIO_IRQS))
- #define IRQ_i_CFG		0x110
- 
- /* Valid only on HW version >= 3.2 */
-@@ -46,13 +48,20 @@ struct pdc_pin_region {
- 
- static DEFINE_RAW_SPINLOCK(pdc_lock);
- static void __iomem *pdc_base;
-+static void __iomem *pdc_prev_base;
- static struct pdc_pin_region *pdc_region;
- static int pdc_region_cnt;
- static unsigned int pdc_version;
-+static bool pdc_x1e_quirk;
-+
-+static void pdc_base_reg_write(void __iomem *base, int reg, u32 i, u32 val)
-+{
-+	writel_relaxed(val, base + reg + i * sizeof(u32));
-+}
- 
- static void pdc_reg_write(int reg, u32 i, u32 val)
- {
--	writel_relaxed(val, pdc_base + reg + i * sizeof(u32));
-+	pdc_base_reg_write(pdc_base, reg, i, val);
- }
- 
- static u32 pdc_reg_read(int reg, u32 i)
-@@ -60,6 +69,34 @@ static u32 pdc_reg_read(int reg, u32 i)
- 	return readl_relaxed(pdc_base + reg + i * sizeof(u32));
- }
- 
-+static void pdc_x1e_irq_enable_write(u32 bank, u32 enable)
-+{
-+	void __iomem *base;
-+
-+	/* Remap the write access to work around a hardware bug on X1E */
-+	switch (bank) {
-+	case 0 ... 1:
-+		/* Use previous DRV (client) region and shift to bank 3-4 */
-+		base = pdc_prev_base;
-+		bank += 3;
-+		break;
-+	case 2 ... 4:
-+		/* Use our own region and shift to bank 0-2 */
-+		base = pdc_base;
-+		bank -= 2;
-+		break;
-+	case 5:
-+		/* No fixup required for bank 5 */
-+		base = pdc_base;
-+		break;
-+	default:
-+		WARN_ON(1);
-+		return;
-+	}
-+
-+	pdc_base_reg_write(base, IRQ_ENABLE_BANK, bank, enable);
-+}
-+
- static void __pdc_enable_intr(int pin_out, bool on)
- {
- 	unsigned long enable;
-@@ -72,7 +109,11 @@ static void __pdc_enable_intr(int pin_out, bool on)
- 
- 		enable = pdc_reg_read(IRQ_ENABLE_BANK, index);
- 		__assign_bit(mask, &enable, on);
--		pdc_reg_write(IRQ_ENABLE_BANK, index, enable);
-+
-+		if (pdc_x1e_quirk)
-+			pdc_x1e_irq_enable_write(index, enable);
-+		else
-+			pdc_reg_write(IRQ_ENABLE_BANK, index, enable);
- 	} else {
- 		enable = pdc_reg_read(IRQ_i_CFG, pin_out);
- 		__assign_bit(IRQ_i_CFG_IRQ_ENABLE, &enable, on);
-@@ -324,10 +365,29 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
- 	if (res_size > resource_size(&res))
- 		pr_warn("%pOF: invalid reg size, please fix DT\n", node);
- 
-+	/*
-+	 * PDC has multiple DRV regions, each one provides the same set of
-+	 * registers for a particular client in the system. Due to a hardware
-+	 * bug on X1E, some writes to the IRQ_ENABLE_BANK register must be
-+	 * issued inside the previous region. This region belongs to
-+	 * a different client and is not described in the device tree. Map the
-+	 * region with the expected offset to preserve support for old DTs.
-+	 */
-+	if (of_device_is_compatible(node, "qcom,x1e80100-pdc")) {
-+		pdc_prev_base = ioremap(res.start - PDC_DRV_OFFSET, IRQ_ENABLE_BANK_MAX);
-+		if (!pdc_prev_base) {
-+			pr_err("%pOF: unable to map previous PDC DRV region\n", node);
-+			return -ENXIO;
-+		}
-+
-+		pdc_x1e_quirk = true;
-+	}
-+
- 	pdc_base = ioremap(res.start, res_size);
- 	if (!pdc_base) {
- 		pr_err("%pOF: unable to map PDC registers\n", node);
--		return -ENXIO;
-+		ret = -ENXIO;
-+		goto fail;
- 	}
- 
- 	pdc_version = pdc_reg_read(PDC_VERSION_REG, 0);
-@@ -363,6 +423,7 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
- fail:
- 	kfree(pdc_region);
- 	iounmap(pdc_base);
-+	iounmap(pdc_prev_base);
- 	return ret;
- }
- 
+base-commit: d4b0fd87ff0d4338b259dc79b2b3c6f7e70e8afa
+prerequisite-patch-id: 4acad06926841baacc627f32d457f3a6c9e9de1d
+prerequisite-patch-id: bc3b78dc0486b0effcc2e595dd55c316700095b7
 -- 
-2.39.5
+2.34.1
 
 
