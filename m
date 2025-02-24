@@ -1,140 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-49178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8443A421FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 14:53:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DF81A421F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 14:52:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61C563A0F73
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 13:45:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C500C16A00A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 13:49:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CAFB221F3C;
-	Mon, 24 Feb 2025 13:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9659B221F20;
+	Mon, 24 Feb 2025 13:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GymbdWTY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pVtvZrp3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82182F4E2
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 13:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672553F9D2;
+	Mon, 24 Feb 2025 13:49:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740404737; cv=none; b=TIpmzgdm/cwbmerR+yIvKqTsxKA46yUC0bRqggbrOO2wIYWcaHG8z+4fWnJCofZyWrEfGDLkzdZNuVJ3R0FHnsQ3tWAxVU2c0XRw2irqgH76bq79G4pFYMm1zNZ7Skb/KP2R5C1E+lxjOnZLT/pL60HSxevPsvbu68KTJmRvrtY=
+	t=1740404975; cv=none; b=K2JsoWWog+1k/zx5RsmquYMjcNBVvvZ+93o/SMSguZEoaL7OGsv6BfEyh7gWj9/Y7rVnkdQLCIAi2WEr1wLoIFU5SLyYhvlcBtinCo3YIjeOk5F4h8SU+NW125JAlclEEellGyAcbpMeqoG1ccLOnobOqHsxNPc0eQaoLYV8zfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740404737; c=relaxed/simple;
-	bh=YxFGfTzbpsU2Ndkj72fW5M98h/iyMTLKmwsYCZh39AE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kAimaYYJSq4UTNx1YzeZae+UccpqNU5XxaSwFSGvAP7v1IR//ILKtGCeQX47NK+712GNWDuvOdwxCOfIVd//Rs1p/ob/1dHUp0g8XuhF9prdB0wKR1GHuywWlPohy58G2zKkuNOYtJe3am5TIGydDwINt67R8KmvYifHeTGdnlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GymbdWTY; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-54622940ef7so5051427e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 05:45:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740404734; x=1741009534; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rQtxIikjRYVU2YE1FfJsa2nPhFSgRqTZXI/yYof9sW8=;
-        b=GymbdWTYsed/RydxRDc9aOdFhthWOBvWn+l0gJyIVc1Q45R3CyPuxj1Ir130IysQcN
-         PwgLsuya/GkJfUu0PMIczUqPmVgR8N+Jk5UE1SbcaYXKxMtUCNVlToRKV0Yw0ZKr1g9G
-         A7YhtjcjARi76uP9QYmZxe3akXY3bGjD2ZJkTt1x24b8Ld0xW49NPevgNnJpF4qnGR65
-         pcFgTFAqz9KaIl/xwf32OJkhGQ00Uoi86alN3kddllPC4YUXygyOMJInNyfu3Qg8qhqJ
-         8jPpc9dnB43AD5zZzP7edF7yEqCW2p3b6ACuVRtXVP3b01pMboaARIilGo+L/qTuB7EH
-         vdfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740404734; x=1741009534;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rQtxIikjRYVU2YE1FfJsa2nPhFSgRqTZXI/yYof9sW8=;
-        b=tFMkqiN0HIEQPCUFmxB3pHl1G6no9rU9lLRQLnpMcM34aE24ADl92h1DSNm5R+GnrV
-         MPEW6WfjcFleq/S2+xJySsql/tL9xHSfUWagXhxjoQy3/Yvqjz1m0SaXaeTxia9MYPa4
-         jzwnWT9y5VMHPTB+gFLKQsvURdQJLVnN3VJtOuN6VKEjxIcS3MOqdjKKfNbEPKlnZRWJ
-         sI1p+GIaXleBupbq3id1uVlC5yK4lSYkzKDnIX80+CGGQrNVMeY08271FuDV/su+9meN
-         PzC/rS2p2Dzg3rzVXoP79uEGHTJmoUWrz+ptfxdwomC4nmLZx5DmGW2AV+UZo5WGek0v
-         e3Ug==
-X-Forwarded-Encrypted: i=1; AJvYcCUrEmh9J7EStNb5sBZfjCjdggwKmmrlYtdPjfzfSXLRL7OtSOAccoLEn5/V5RMyjCHqgpKe7xz4C1INvaaF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy0pt1WNOGW2biGW4ADPSdcTYbdkwaK72HwgWncgRVD0Fy58dYK
-	Wx6J8DWXYRCuWo7Ph2DJWqRltIV3MJSSIWPt+GAsUPVSXSUAjPGkl126ayvY/NE=
-X-Gm-Gg: ASbGnctE1LmuKqiCSkoVpGjGULH3f1wxyVnSq9csclmGBVG8Sh904/uIwQn2EiOQTql
-	SVvLYNSHoMlDkDAGH+B+Mg8GsMtB82f45cV7qTcuZhq3xwBQdmg32aJOFkG5PAGWfi+MshFPsJV
-	4Qtf4Q3cQJ+ZiQZkQ2dZ2wclnADmopzaqm8FE4GqfPTVcpkYtZBFHa1cwXh2IE2rPAIRVmHn3yg
-	+IWZktSlpnuhTwS2j5HOKminh+9crIwDqfNR2VK2WDPqwll8W9WVthRABR48XR2NVL965I8WKqw
-	bA5wiVuk2m8VfUDxRf1AlnVnCv+AYxvvMaL1QeNloFriDOntfv10U9uIpFnKIXC2QhFOem0x5/C
-	+KBxpBQ==
-X-Google-Smtp-Source: AGHT+IEOHs/ggD9ekbq8Mt/oGjuToBiu/aq901Ne4MqUwh5GjjUsqmuKg0uvV17mLepWLhRrNwcWHw==
-X-Received: by 2002:a05:6512:3ca5:b0:545:381:70a with SMTP id 2adb3069b0e04-54838ee8ae6mr5302777e87.15.1740404733603;
-        Mon, 24 Feb 2025 05:45:33 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5452eda31acsm2966821e87.119.2025.02.24.05.45.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 05:45:32 -0800 (PST)
-Date: Mon, 24 Feb 2025 15:45:30 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-Cc: George Moussalem <george.moussalem@outlook.com>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	amitk@kernel.org, thara.gopinath@gmail.com, robh@kernel.org, krzk+dt@kernel.org, 
-	quic_srichara@quicinc.com
-Subject: Re: [PATCH v6 3/5] thermal: drivers: qcom: Add new feat for soc
- without rpm
-Message-ID: <n7twid3k2ykwjviidngxnl3tdy27uxx6uhfh6hj2tpztufagwn@6zd7vre6dnqt>
-References: <20250224061224.3342-1-george.moussalem@outlook.com>
- <DS7PR19MB88837D7AE30CE306B8F71F3E9DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
- <be872be1-dd0a-481b-abe0-57ed2bf50c22@quicinc.com>
+	s=arc-20240116; t=1740404975; c=relaxed/simple;
+	bh=YpnBMOoWoChqx2PeLSvTxv+L253h3Y8r8gf/KSySZEc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JP/wMJlrvSGA/gf9IoS0wa4qxTU0ocVJKHd24u+XGGTJa30zmt/smDt0CgrwMWW1/gCsmYr9Edpvf2jqfadZZdWalJBgyq5UQgCH6k0Nk7rmSTs8X9C6xasUHauzcKEI9C+rILYWtFH3r1POHHHp7mWFMg5U7LCvAzkz4sRriSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pVtvZrp3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDE7C4CED6;
+	Mon, 24 Feb 2025 13:49:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740404974;
+	bh=YpnBMOoWoChqx2PeLSvTxv+L253h3Y8r8gf/KSySZEc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=pVtvZrp3RzcotiEZDerWZGub/IoAVcOeqEG34szOPb/kQ9BoGXuSprsaZ0q0Nflpe
+	 rvW5ereixPWgW4OwqQkm48iK4HAXvSOfn8+B94Z3GcnJoShj0SC45yDNt6pm1BPrZ1
+	 KTUn2YTp0n6vrfCgmGsYg/1GK3xL4PnhMTel24nLsepmLZtifKipIIU6z2sAn6ZNJT
+	 3ZmUOcGOA2yJo64bC3LGG9Pn61uIrdwF574q+ShCqzMLA67QH0VymzdYj6WZHGPD0/
+	 kKsaq17B570Jcc2q4yC2jd1MicNn+D5aejxfvxlF3x+TqhaA6HTlGcWzrC7HMucUn6
+	 eu2G/Qj4FtBQQ==
+Message-ID: <739acd33-9ce8-40db-a219-26b8ca241d73@kernel.org>
+Date: Mon, 24 Feb 2025 14:49:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <be872be1-dd0a-481b-abe0-57ed2bf50c22@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/5] dt-bindings: nvmem: Add compatible for IPQ5018
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: George Moussalem <george.moussalem@outlook.com>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, amitk@kernel.org, thara.gopinath@gmail.com,
+ robh@kernel.org, krzk+dt@kernel.org, quic_srichara@quicinc.com,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250224061224.3342-1-george.moussalem@outlook.com>
+ <DS7PR19MB8883591F0D2E21E62025D2D69DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+ <2fcb52a3-7ef2-465f-b460-2f7b565a188e@kernel.org>
+ <zygiknq3pldkcdonekzamn2uprnjyc5dip57i75p7uahftekxr@2lqgo3wa6zhf>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <zygiknq3pldkcdonekzamn2uprnjyc5dip57i75p7uahftekxr@2lqgo3wa6zhf>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Feb 24, 2025 at 02:38:24PM +0530, Manikanta Mylavarapu wrote:
+On 24/02/2025 14:42, Dmitry Baryshkov wrote:
+> On Mon, Feb 24, 2025 at 10:19:35AM +0100, Krzysztof Kozlowski wrote:
+>> On 24/02/2025 07:12, George Moussalem wrote:
+>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>>
+>>> Document the QFPROM block found on IPQ5018
+>>>
+>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+>>
+>> You can send the patches to yourself and see whether they are properly
+>> threaded.
 > 
-> 
-> On 2/24/2025 11:42 AM, George Moussalem wrote:
-> > From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> > 
-> > In IPQ5018, Tsens IP doesn't have RPM. Hence the early init to
-> > enable tsens would not be done. So add a flag for that in feat
-> > and skip enable checks. Without this, tsens probe fails.
-> > 
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> > Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-> > ---
-> >  drivers/thermal/qcom/tsens.c | 2 +-
-> >  drivers/thermal/qcom/tsens.h | 3 +++
-> >  2 files changed, 4 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> > index 3aa3736181aa..a25ca17adf1a 100644
-> > --- a/drivers/thermal/qcom/tsens.c
-> > +++ b/drivers/thermal/qcom/tsens.c
-> > @@ -975,7 +975,7 @@ int __init init_common(struct tsens_priv *priv)
-> >  	ret = regmap_field_read(priv->rf[TSENS_EN], &enabled);
-> >  	if (ret)
-> >  		goto err_put_device;
-> > -	if (!enabled) {
-> > +	if (!enabled && !(priv->feat->ignore_enable)) {
-> 
-> Please drop 'ignore_enable' and use 'VER_2_X_NO_RPM' instead.
+> I don't think outlook world understands the concept of threading.
 
-It is not possible, since IPQ5018 is 1.x. But I agree, a similar concept
-should be used.
 
-> 
-> >  		dev_err(dev, "%s: device not enabled\n", __func__);
-> >  		ret = -ENODEV;
-> >  		goto err_put_device;
+True, but note that outlook.com is just provider and you can use
+whatever email client with it. mutt/neomutt, Thunderbird, claws, Kmail etc.
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
