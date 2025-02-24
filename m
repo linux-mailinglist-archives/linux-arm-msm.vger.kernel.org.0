@@ -1,188 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-49187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF3D6A4290C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 18:12:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC5C3A42958
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 18:20:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55662189295D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 17:08:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE2021887CD2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 17:19:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DF0D2641C5;
-	Mon, 24 Feb 2025 17:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C79D12641F0;
+	Mon, 24 Feb 2025 17:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RqIpo5l0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Phx9zaQQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AC925485D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 17:08:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C6CEEA9;
+	Mon, 24 Feb 2025 17:19:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740416893; cv=none; b=D9r5vgspYEtP/D8pGz/Wh39w1XHj6sX/I4A6Bhj2Y86nHv4x0wIQ3JUVXuaEoWhZCEupkjXuIxMQqRFsbzlY6lZ6hD8wnZHI3ZKRJLE8sMZWo6enkt3ogU2Rj7h4HZuGijLp0a6qyADjsHRMDpH/tY6VS+pPc1w6U+WXECHExc8=
+	t=1740417563; cv=none; b=Od2v+aX/bQSl3QaRsEdEQa7tUqUm7wj/mblKa/kwlmEs9GZ3EWu3uHqy3JNHtbYGqdpKmlkq8XlY0Xw34w//kqoXG9s496m5KyO3htIZQY6VJvJ8Qkz+7iyQYn2/1q/7NBJUIQhqj3DqGdhyMWHCXjKd6YBDSEZq0mXYVbZhbYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740416893; c=relaxed/simple;
-	bh=2hplAwJzDJ/YDi7bjamHHdDkwbYLwpQhdJLck9HAtcc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SytpCpReKi9J9dSNnLUp5LMaO0YYo1CF9AdgKDdDVZo6RPretRCTdDvMR2sT9HXTZROxSTMHwF2a16eADPR1/sYR18yVzmkt/EHONY91to7xZdSTIzUQ9YhajmtbSTLYvxauyiMRXhwlYLVO5Y42R580HxI6zOfAh8vm1AA6RNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RqIpo5l0; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-548409cd2a8so2857198e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 09:08:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740416889; x=1741021689; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SDD7C/XbQ4WEaFEyI9RS4ouDEECOxDAKosUSoNyCeps=;
-        b=RqIpo5l0ogxQqq4lijtmFIGbMjPvikLMvEI9KJtixFCMC604+nS/XegK1Qo7SlGIzB
-         bPikd7L+9098kcOC+sJ2YfzsVfwowo8+k93p3XlpLlAiRJ8xU4BoIbaPHCU0ljKYFU0z
-         DQUXs3dSyrsyMs2ptcsVyHu8mJqEeE1LyC0cmeNo5Lpk1KQSLybKEdi04Y0AOhSAEFBj
-         /l3RByaBLvYbMnNKPV5qQfwDmqNitUnc47Glznp6Q4vIrZzoxkQDiDNTG1CxvjEspgGz
-         ZjAjmTJ1eK0HZcXVFbYFWv3/8TdvtNvnGApMxLKt6aUHIL7HX+PQavnuzn+lD2EwGrhl
-         jMzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740416889; x=1741021689;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SDD7C/XbQ4WEaFEyI9RS4ouDEECOxDAKosUSoNyCeps=;
-        b=ObY7u0i/0N8neQWZuoFod6tcS+yav0A8YE71E9PK/iuO+vQzMqjIPCYbE3SmmwhXR5
-         O9KWQSoqpfW6mMxGG/Ky2wyl34wk8MBWUA4j3NSJHHY1m1jZ+Y5v8UKXCju+zf+hKfQ7
-         hPVdzHO90o3TOrw3LGfb/NGyeeKX9Z4llziwtWrH5EpBkNt6Q5wqzzoeZs2akDrKkgMB
-         UiEnVwaxGdEYkNCIBG29wtNDydxq5GwPD/Cc+3fAy8ttTVpkIbXY4t8Gv63n+jE9fgtU
-         a3Z8eLC14qh5+Ki2nbZa3V5RnFlaHY5px1xbq+BEYkrL9xte/ukeUELKzb8UmrJbZeEL
-         93pw==
-X-Forwarded-Encrypted: i=1; AJvYcCVmOQsTFb6xGbBthQB/+aQnGwPT8eC+rNrqvgFH+TigJfnA8hdLnjgNXCDNs0pf+Dfg41b5JNaiiMsFYeak@vger.kernel.org
-X-Gm-Message-State: AOJu0YweoNcyYkg94Jy0lubp3t+jtp9H+nKgu9Wc8/QoPHk129mMk3Tb
-	toWqSdELgN62EardcY3I4aRPpQOvoBTO56lgfChCg3UkpnuB1pWHoeC2QHmK9ws=
-X-Gm-Gg: ASbGncsW1pTxqKpSUW9uLqsZOXoB0P0auP6teJTsmW8jpI4KFYA7dRviYspiX0DBNP0
-	ryIS+Q2nfLNjw0WnTL6J5rr+a0cFHgoi70OP0xe7FHSipRglsXxnYAidwOkd/Opk5aIW5Pq/YLj
-	HaU0Wr9EAvrLLg3/X0qbHSVWu+Wdp91DtOXa6TgBn8bfdno5BhG/XnoD2kKM3Utk8GeDu0Ze/5Q
-	B5teoRPUODQC9pEndKenX7OCzZBlfh5h6bTei8AK2GIxUUU1CLmuB5hqiIzFCMLNLpFYWlmiMFb
-	AaXxi/X0OkEpjtqI8w+18A4gQ3NdFepup+UBZJiVJLDnh/+v3k0RhKOEezv8UJjQzSCloFxv+cp
-	rdY8RWA==
-X-Google-Smtp-Source: AGHT+IHB1gFnnaGSzBphtTkMlhlOX/xtMLMcfN5SzTa6WkSqGOzrAt8tTjA8bVyEGzKZWV+BQiheoQ==
-X-Received: by 2002:a05:6512:691:b0:545:e7f:cf33 with SMTP id 2adb3069b0e04-54838efaefcmr5529016e87.28.1740416889466;
-        Mon, 24 Feb 2025 09:08:09 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-545243fdfb6sm3283441e87.218.2025.02.24.09.08.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 09:08:08 -0800 (PST)
-Date: Mon, 24 Feb 2025 19:08:06 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 13/15] drm/msm/dpu: support SSPP assignment for
- quad-pipe case
-Message-ID: <n22g66ruabunma4w4p44zjtsnb5t4vdpjuaocasbup3alb4fxp@74tu3wnqbwfg>
-References: <20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-0-c11402574367@linaro.org>
- <20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-13-c11402574367@linaro.org>
- <khmeegjx5jmu4c32un3gqu7sumkbtdkg6cawwwmwtmkp5gkrag@sklf5tr7qbwv>
- <CABymUCOnnWQZpOhgDfENmWrTUuwb76zSN7nSeO+eyNp4k+PKRw@mail.gmail.com>
+	s=arc-20240116; t=1740417563; c=relaxed/simple;
+	bh=fJ/7Re6VBFfqNrTTS9K/pZ1p4608NdWXTxvvNMZjgGU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DDs7h+Vs+aiFRW3HF9ll7l6t72dcSvku6iahuvxl5YogvVwAcIXuL/xa12gkPKKve8FgaVAIlDU4QEPhDWt5On1dV9yInRKzhOfw6ZcerT9nY0DrG13+CpRklPuSnIyzKA5oQs3/CSOM86keLSJGeg98chTv46Dph6kwe43or3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Phx9zaQQ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51O9vPX2014963;
+	Mon, 24 Feb 2025 17:18:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=xqAsvqjN62Ln2LiWNfDrXD
+	GSUuHK4ZtQvRZjTqMuIn4=; b=Phx9zaQQkHwNiJaymDFIWn+ieZB+7v1vaSxoga
+	bt2nk0h94legByo1YmEHr4+ucGPmxkpeoFdSHVRpG/J/yOfrObzZRUZRHUuOoACe
+	BOAxrAZFz9cdMidTnYgMqaI9x+S8yYiVWcuaytSXD9tT2qJvrvxrqKxRX9cxUy1k
+	0P6gj/wbd1brXw0023SgjDt3NF4+KO/3MGfHjxmIIS3HUn6Ltdm8unLKQAqQK+Yl
+	61Ow0Wk+WDkoqbTgDypYuJpYgmhQmFKuXxBrIKXp22yv99/itwI3XCXj1ZjCVc5w
+	5Lll/z1huWeB7bXXURegKWKS7CSMu0z7adF35cvvcznscsIQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y6t2nvkb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Feb 2025 17:18:42 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51OHIfU7026508
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Feb 2025 17:18:41 GMT
+Received: from hu-janathot-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 24 Feb 2025 09:18:37 -0800
+From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <quic_mohamull@quicinc.com>, <quic_janathot@quicinc.com>,
+        <quic_hbandi@quicinc.com>, <quic_anubhavg@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v11 0/1] Enable Bluetooth on qcs6490-rb3gen2 board
+Date: Mon, 24 Feb 2025 22:47:36 +0530
+Message-ID: <20250224171737.2522834-1-quic_janathot@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABymUCOnnWQZpOhgDfENmWrTUuwb76zSN7nSeO+eyNp4k+PKRw@mail.gmail.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 49oMY0G3FlDIX35a4aw9slr3j23fHNma
+X-Proofpoint-GUID: 49oMY0G3FlDIX35a4aw9slr3j23fHNma
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-24_08,2025-02-24_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ spamscore=0 priorityscore=1501 mlxscore=0 phishscore=0 malwarescore=0
+ adultscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0
+ mlxlogscore=636 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502240116
 
-On Mon, Feb 24, 2025 at 06:14:22PM +0800, Jun Nie wrote:
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 于2025年2月22日周六 00:36写道：
-> >
-> > On Mon, Feb 17, 2025 at 10:16:02PM +0800, Jun Nie wrote:
-> > > Currently, SSPPs are assigned to a maximum of two pipes. However,
-> > > quad-pipe usage scenarios require four pipes and involve configuring
-> > > two stages. In quad-pipe case, the first two pipes share a set of
-> > > mixer configurations and enable multi-rect mode when certain
-> > > conditions are met. The same applies to the subsequent two pipes.
-> > >
-> > > Assign SSPPs to the pipes in each stage using a unified method and
-> > > to loop the stages accordingly.
-> > >
-> > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 63 +++++++++++++++++++------------
-> > >  1 file changed, 39 insertions(+), 24 deletions(-)
-> > >
-> > > +     for (stage_id = 0; stage_id < num_stages; stage_id++) {
-> > > +             for (i = stage_id * PIPES_PER_STAGE; i < (stage_id + 1) * PIPES_PER_STAGE; i++) {
-> 
-> Do you mean define and assign r_pipe / r_pipe_cfg here?
+Patch 1/1
+  Corrected the typo in patch 1 commit message.
 
-No, because for i = num_stages-1, the r_pipe would point to invalid
-memory.
+----
+Changes from v10:
+* Corrected the typo in commit message 
+* Added reviewed tag by Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> 
+* Link to v10: https://lore.kernel.org/linux-arm-msm/20250221171014.120946-1-quic_janathot@quicinc.com/#t
 
-> 
-> > > +                     pipe = &pstate->pipe[i];
-> > > +                     pipe_cfg = &pstate->pipe_cfg[i];
-> > > +
-> > > +                     if (drm_rect_width(&pipe_cfg->src_rect) == 0)
-> > > +                             break;
-> > > +
-> > > +                     pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> > > +                     if (!pipe->sspp)
-> > > +                             return -ENODEV;
-> > > +
-> > > +                     r_pipe = &pstate->pipe[i + 1];
-> > > +                     r_pipe_cfg = &pstate->pipe_cfg[i + 1];
-> > > +
-> > > +                     /*
-> > > +                      * If current pipe is the first pipe in pipe pair, check
-> > > +                      * multi-rect opportunity for the 2nd pipe in the pair.
-> > > +                      * SSPP multi-rect mode cross mixer pairs is not supported.
-> > > +                      */
-> > > +                     if ((i % PIPES_PER_STAGE == 0) &&
-> >
-> > Please move r_pipe / r_pipe_cfg definition and assignment here.
-> 
-> r_pipe / r_pipe_cfg is used in this if(). Please see above question.
+Changes from v9:
+* Addressed review comments provided Dmitry 
+* Link to v9: https://lore.kernel.org/linux-arm-msm/20250220112945.3106086-1-quic_janathot@quicinc.com/
 
-Maybe we can rework it somehow. I really don't fancy the after-the-array
-pointer.
+Changes from v8:
+* Fixed the dtb-check warning  in P1 and removed tag: Reviewed-by
+* Link to v8: https://lore.kernel.org/linux-arm-msm/20250127064940.1360404-1-quic_janathot@quicinc.com/
 
-> >
-> >
-> > > +                         drm_rect_width(&r_pipe_cfg->src_rect) != 0 &&
-> > > +                         dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
-> > > +                                                           pipe->sspp,
-> > > +                                                           msm_framebuffer_format(plane_state->fb),
-> > > +                                                           dpu_kms->catalog->caps->max_linewidth)) {
-> > > +                             i++;
-> > > +                     } else {
-> > > +                             /* multirect is not possible, use two SSPP blocks */
-> > > +                             pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> > > +                             pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> > > +                             DPU_DEBUG_PLANE(pdpu, "allocating sspp_%d for pipe %d.\n",
-> > > +                                             pipe->sspp->idx - SSPP_NONE, i);
-> > > +                     }
-> > > +             }
-> > >       }
-> > >
-> > >       return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
-> > >
-> > > --
-> > > 2.34.1
-> > >
-> >
-> > --
-> > With best wishes
-> > Dmitry
+Changes from v7:
+* updated P1 & P2 with tag: Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 
+* Link to v7: https://lore.kernel.org/lkml/20250107134157.211702-1-quic_janathot@quicinc.com/#t
+
+Changes from v6:
+* Elaborated the commit message with more information.
+* Link to v6: https://lore.kernel.org/lkml/20241223135700.22660-1-quic_janathot@quicinc.com/
+
+Changes from v5:
+* Update the wcn6750 required properties in bindings.
+* Link to v5: https://lore.kernel.org/linux-arm-msm/20241209103455.9675-1-quic_janathot@quicinc.com/
+
+Changes from v4:
+* Added reviewed tag by Krzysztof in p1
+* Updated the p2 commit message with sw_ctrl and wifi-enable are
+  handled in wifi FW.
+* Added blank line between the nodes in p2
+* Placed the structures in proper order in p4
+* Link to v4: https://lore.kernel.org/all/20241204131706.20791-1-quic_janathot@quicinc.com/
+
+Changes from v3:
+* Defined the PMU node and used the its output to power up BT
+* Used power sequencer for wcn wcn6750 module
+* Split the patch to multiple as per subtree
+* Add description of the PMU of the WCN6750 module
+* Include separate UART state node for sleep pin configuarion
+* Link to v3: https://lore.kernel.org/linux-arm-msm/20241022104600.3228-1-quic_janathot@quicinc.com/
+
+Changes from v2:
+* Sorted nodes alphabetically
+* Link to v2: https://lore.kernel.org/linux-arm-msm/20241010105107.30118-1-quic_janathot@quicinc.com/
+
+Changes from v1:
+* Corrected the board name in subject
+* Link to v1: https://lore.kernel.org/linux-arm-msm/20241009111436.23473-1-quic_janathot@quicinc.com/
+Janaki Ramaiah Thota (1):
+  arm64: dts: qcom: qcs6490-rb3gen2: add and enable BT node
+
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 171 ++++++++++++++++++-
+ 1 file changed, 170 insertions(+), 1 deletion(-)
 
 -- 
-With best wishes
-Dmitry
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
 
