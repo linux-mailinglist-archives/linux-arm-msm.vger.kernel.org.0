@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-49134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F070A418DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:24:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30444A418F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:27:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E0B8C7A4B0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 09:22:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17A66188A1CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 09:24:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6814E2528E6;
-	Mon, 24 Feb 2025 09:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53BBF24A05C;
+	Mon, 24 Feb 2025 09:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="umInr7DJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GHWXVSWX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3802D250BF7;
-	Mon, 24 Feb 2025 09:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275A2245014;
+	Mon, 24 Feb 2025 09:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740388781; cv=none; b=C81u9JsKWFGgbnJsOIYptVa0PZm/9eo8jupt0khdL+p1RI93z/NK0vzCPTpXNKX8+Tf7bfBpTWqhtaQRu73TIiaAYm5KiuW3eiVBZdarjVvZ1pviQwTcc/tfl3KllSNyzX5AyLuBy6hklPYIPlfNTGmPWWWdglUk2xtvtF82krg=
+	t=1740388948; cv=none; b=nA0LrMb1XVCI6REPtlY1fuF4x1YxYV+yj8Bd/cNwF9hr2u15qjv5w6XZBHSUuNU1JoKZVysc58nJFRyF/qDw5FtwQgCvu7AabiKWoPYwjXhoNbcgUO4AX+IurSgs6KkcQRIPDU2Zn2inpBSQe8uwq+E4WcVaNmJDJH9+MK4YJM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740388781; c=relaxed/simple;
-	bh=55eYEPqytba+RyY9ZEFVqqm6l3M1qhR+KWbj0wvd8pc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XWWIi4bOrOQnxGs4Y/nYlIdzwHjIuCxbWUFx3hE7N6l/NFlUNhKaGWEF7depaVr8AigkqR9Ee+lSc1dhZYw/vmiG/kwBVnxle4/Pml5zLTILwF6l5mlS4z8iAvE7afbzvJ3kN/kLCXj5SWx+Ay8yXXAcfGPrvrBTfiH+nj++t4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=umInr7DJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A716C4CEDD;
-	Mon, 24 Feb 2025 09:19:36 +0000 (UTC)
+	s=arc-20240116; t=1740388948; c=relaxed/simple;
+	bh=ulwDYYRfoj7yvjfOO2/D4RPbVgMoNwL8+KZ2L2YbSfQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=rTpzsUM6Elb7Qrpud+IxOCHZOOXO1VB1eaEhVaRRsdpztFld8rkoJPZ8Y/OPAlxIyLZ9dlZtKQ+vaJGN04ofplvJMdxBbZsMXOnex+CQVEQj0E1wPtA8clvYuyPZfkroT4J+N2MX6PpVX7vcDXD0fnVt5KzZ5LgRj2e0ok/3768=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GHWXVSWX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA9DC4CED6;
+	Mon, 24 Feb 2025 09:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740388780;
-	bh=55eYEPqytba+RyY9ZEFVqqm6l3M1qhR+KWbj0wvd8pc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=umInr7DJRXsRCcG3Tak12W0xrHLnsgOl74WpO7XZG6dk6RdmZwh1FCPdT0CJWo4V+
-	 tCYWtkQ7zF+Z9eKtc6yJnHWlPD7KGfA6rd6Gtyu8kyRDuLLj1pHcKKzDSSvo1hOMfR
-	 4101OqSGdtpfvZhchY8DArvUORaKx5fE7HKgKIo5i5yQvgXhA66KNYVDCxTDXuOAKO
-	 wXLcIozuoLz5VOz7H+xl20iXQ+DsuWXe6g/jk95171qZaUDspIK6+6IYVs+YV0i8aU
-	 Mf5CcXVvXuH0bf/z3y0t7Rx+ShfAZOelOMfiT4rWJMFfYUcwg3caNV4TPXHY/1URHJ
-	 4rrnp5Lg8w6Hg==
-Message-ID: <2fcb52a3-7ef2-465f-b460-2f7b565a188e@kernel.org>
-Date: Mon, 24 Feb 2025 10:19:35 +0100
+	s=k20201202; t=1740388947;
+	bh=ulwDYYRfoj7yvjfOO2/D4RPbVgMoNwL8+KZ2L2YbSfQ=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=GHWXVSWXBBE3hUVXq1RP6MZbtxL4d0QOdy7OonlGYibOMUYh+Ejw3tM0VH/S7C2h+
+	 pEF3F2nwVpt4U21eAMH/WsW3Xy91Z9jKjovsKLKTgrew4uozf4q6cCHPhOxOS0AvI1
+	 1IiWe9WOIWT/8/JEeoo1wd5JUgwSCNSsY/1N1ck3DgDoxxLJ7jZCcvgcpZsmQlpbzO
+	 a85NjGwws6mxCPMtLuUT6ogSTRao+p2dfz4Z99OlwziDmhPnls1Poeg4ERfgQilZGl
+	 dKUvg/ICju6vZGZ3iznlYrtDMulWksz3ztj6UuEikzbgIFbDwlLyjtL2p9orpw83KM
+	 /WGFIDkPu8BOg==
+Message-ID: <ca812748-8ec2-41f3-8272-5e774f764493@kernel.org>
+Date: Mon, 24 Feb 2025 10:22:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/5] dt-bindings: nvmem: Add compatible for IPQ5018
+Subject: Re: [PATCH v6 0/5] Add support for IPQ5018 tsens
 To: George Moussalem <george.moussalem@outlook.com>,
  linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
  devicetree@vger.kernel.org, amitk@kernel.org, thara.gopinath@gmail.com,
  dmitry.baryshkov@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
  quic_srichara@quicinc.com
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20250224061224.3342-1-george.moussalem@outlook.com>
- <DS7PR19MB8883591F0D2E21E62025D2D69DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+References: <DS7PR19MB88838833C0A3BFC3C7FC481F9DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
 Content-Language: en-US
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,21 +102,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <DS7PR19MB8883591F0D2E21E62025D2D69DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+In-Reply-To: <DS7PR19MB88838833C0A3BFC3C7FC481F9DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 24/02/2025 07:12, George Moussalem wrote:
-> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> IPQ5018 has tsens V1.0 IP with 4 sensors and 1 interrupt.
+> There is no RPM present in the soc to do tsens early enable.
+> Adding support for the same here.
 > 
-> Document the QFPROM block found on IPQ5018
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+v4 received this comment:
 
-You can send the patches to yourself and see whether they are properly
-threaded.
+"That's fine, but should be mentioned in cover letter. Anytime you take
+someone else's patchset, please say shortly why, so maintainers won't
+deal with duplicated submissions for example."
+
+You never responded to it and I do not see how this was implemented.
 
 Best regards,
 Krzysztof
