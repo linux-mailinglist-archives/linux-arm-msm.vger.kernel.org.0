@@ -1,369 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-49152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CA4EA41AE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:27:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32ECDA41B32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:35:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED4231892284
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:27:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B0BDC17035D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:34:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D1F224BC0D;
-	Mon, 24 Feb 2025 10:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 425882505B8;
+	Mon, 24 Feb 2025 10:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aIzETiqv"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="rV1wHWkB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02olkn2082.outbound.protection.outlook.com [40.92.15.82])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27658241669;
-	Mon, 24 Feb 2025 10:27:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740392834; cv=none; b=SAzyrCjYVcyYQNYiDQSzqgsuvzIig1blUDmYuA5x/8q7tdikfMFOSzx+tdBs5IBAJeQVmUMtxZrIBMXvGKv3y/zB8RjWQxdTyfYwyDuCo/W6P5Ql7JJ67fcPKny6skiYNXhF4W1F7w/21c6abFKSBFkiTZrj9SZalDJqNRlUp/M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740392834; c=relaxed/simple;
-	bh=glD08YGIfzNVTikFxTMG2myORyCKDGmjPI2OYnD2McM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ds/o8RRln6Tva9VV3V8IRx+2dEgBYTDTquTn/JaedTszbF2YnsRJmf35X/HacPZTNxthjpFWeEw+X0AwwGAGYNlD6cR98zBhqv/yLUCerJp9JaAohskMd1Ano4nr84bO+nCevpVxKKh30e73Z33ilQ4zI0/iIGYquP8tj0SlqJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aIzETiqv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51O76h1M024439;
-	Mon, 24 Feb 2025 10:26:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	T/nXp9TCiT3dsQI9a5TjGzmHwmEXUSf/75kIMW7Csbg=; b=aIzETiqvPBSSYuRy
-	zzmV/4k4GuPpu/K8AiV4htA+3d58UXQBA3U89HztAmR4RAsNSoCvYTodoCt2hVSq
-	riSG8ocgj1t2tFeL3IXsorx8ljZmSLKva0PlJKJPxyiFqkfdIrZ9591AGa3B2AF5
-	EOo7oY5BEDepruyMhphkrzNCz5jLM5dmCGUmvEWg1NNORFBMObNtfj89lSBaI+72
-	2ZZRSmnwlQ1pUg16laoBj+YopsfEPx6P/pA5bNxlP6xXCPjSgLEuHxBuYI0fQRAI
-	oq7GjYdnk/UAaMhuK2ESgaSnWL2J1+a+0sxqae8/oNR+WXhpp3m4HnS5PytzWnGb
-	lgQ3Dg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 450m3d8stc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Feb 2025 10:26:55 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51OAQtw9029670
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Feb 2025 10:26:55 GMT
-Received: from [10.133.33.32] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Feb
- 2025 02:26:49 -0800
-Message-ID: <debf4d65-0e47-4f13-ac7d-ee43ded55286@quicinc.com>
-Date: Mon, 24 Feb 2025 18:26:46 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E102441AF;
+	Mon, 24 Feb 2025 10:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.15.82
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740393241; cv=fail; b=C62s7J/0TEzUiTYJijFZ9yQ94TSFCby5eXCYLvZNaoS/TmfZJemF5f+Q1dAOstVVK5UOWoQ/cFzQNM2+Cv3ekFXXkzUN48UuluBf/xMUDRYyFA9yM4q/RZbKDxVrRUOM4aNl0fA8Pclu2Wwb3Zjz88e+UI+eBux5Y2pOqV5Drdo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740393241; c=relaxed/simple;
+	bh=3C5ghcTeDdLuJAd47C1KWq8ulX9qMemS9DoIZ3uIrm0=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=eARUC4cgC2CI2EIEYqF6Yxhyb4N1OMukiDLqYD8n5X6/4h+pWlqfyrJN4eEidKgK6TCRrjhzp1u7S6HY+gpTfOEq69cfoz4Ua0CxKrvMLAB4Oufe0kyj/A0Bx7qn5PUuBvQ+OyNdLq+8BnYJm+c7jZbu78xTOr7xqZc1yfJPdbA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=rV1wHWkB; arc=fail smtp.client-ip=40.92.15.82
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AywFIjNPl2XiDlSqtFeHuWv8RXTH+KAOWj6mO5/DYiPqIgeGchCEXv57w8tijeHUmhSU8RGkIyAYlOCLWXRm77GyhmunN3AZtuBOjkPNT67IkA0vc9RM2KxIn/Jj1FW6rTOU8UaYR6kmkn6akPoV2GeaU6+QSRvxOpkLKpIM2EPoEISjzEHL0NVPzIMmVkRmDiOtvMnEzSg/Uq56HIBSDK1NPI+Dbp4fc+7hS52mfyb0TOA82HexN15eW/Rn2JESThQLcB2BCHEVPvNQ4VJ6bwmHh5cIfZDyqKjT+vCbt6pt8HV8gyamXu8P5bCbYlpj4en7MsScjCiLQkxyVMqxww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8jirVRKLZMQsKWyByofybYhzuHNFS2jsNmbydXBC7U4=;
+ b=mRjvxk9xmCKNbi6pKZqL5RfdYSbRe9sBiKiG9VQw81oIYDuSCKC0nQI097zyk8o3jqSTMv9GzjqsIb9t2M24Jbs1n26f/ZjPIE04wlhoUNAgdmU0oRwcvPTSRTKFVrxhPUPgsRWtD7EwfaFkjN8MMB/VelF57S9e6k0631efSD35sqDARemx04SrwRGAvtn4QoG71R2DYCmlOAASWMrqBoqjBaPT4wruCp8evfVOqXSJ5i+oz9vlhWfQ+0yQib7qVjVJM1Odrcnhh7i5FFC3jmGnclwolSmyKu9pd1o9keVryDXyXrUAsUpw7AjUwhYTHar8aCyB42BVWUQFmuI1yA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8jirVRKLZMQsKWyByofybYhzuHNFS2jsNmbydXBC7U4=;
+ b=rV1wHWkBhKera7Sv34JDAx3l1zEuiQ982ZLbhX3LZsS3iKsFr99sgh2DPv9jV5j1/8g2F9R7w5ycbsrT7A77ZnPxyzEpXrUQf3ICAIfAHfUCpm2RK2AZQfAFogYkgtmM046i5PdFagrSAEtT+9nhpmbpC2hEim15oPGgCVKDou4e6rbWluTmg0qBcpSoyplueY/EB6F1EAd9kSQu86nutTIqh5T38lyf+xkZ2JyfH4TQBDaKsQCZibfn7e5pJvKH4mihImpiZm/gY5sRTCthJArjgEo9ATrYOEw19OtlqyA/LMZAuIthjvD6DQD0jpMvQeI86+Mhgw+SdsrJKXuhnw==
+Received: from BL4PR19MB8902.namprd19.prod.outlook.com (2603:10b6:208:5aa::11)
+ by SA0PR19MB4507.namprd19.prod.outlook.com (2603:10b6:806:c0::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.20; Mon, 24 Feb
+ 2025 10:33:56 +0000
+Received: from BL4PR19MB8902.namprd19.prod.outlook.com
+ ([fe80::b62f:534e:cf19:51f4]) by BL4PR19MB8902.namprd19.prod.outlook.com
+ ([fe80::b62f:534e:cf19:51f4%7]) with mapi id 15.20.8466.016; Mon, 24 Feb 2025
+ 10:33:56 +0000
+Message-ID:
+ <BL4PR19MB890266B101FF78BFE7D065B89DC02@BL4PR19MB8902.namprd19.prod.outlook.com>
+Date: Mon, 24 Feb 2025 14:33:48 +0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/5] thermal: drivers: qcom: Add new feat for soc
+ without rpm
+To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, amitk@kernel.org, thara.gopinath@gmail.com,
+ dmitry.baryshkov@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ quic_srichara@quicinc.com
+References: <20250224061224.3342-1-george.moussalem@outlook.com>
+ <DS7PR19MB88837D7AE30CE306B8F71F3E9DC02@DS7PR19MB8883.namprd19.prod.outlook.com>
+ <be872be1-dd0a-481b-abe0-57ed2bf50c22@quicinc.com>
+Content-Language: en-US
+From: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <be872be1-dd0a-481b-abe0-57ed2bf50c22@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DX1P273CA0036.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:300:20::23) To BL4PR19MB8902.namprd19.prod.outlook.com
+ (2603:10b6:208:5aa::11)
+X-Microsoft-Original-Message-ID:
+ <0c3922b8-f2d2-4b40-a2ed-497d93f5860b@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 6/7] Coresight: Add Coresight TMC Control Unit driver
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao
-	<quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-References: <20250217093024.1133096-1-quic_jiegan@quicinc.com>
- <20250217093024.1133096-7-quic_jiegan@quicinc.com>
- <35d1a923-4e8e-4fe2-bf4a-0b78b1d511e3@arm.com>
- <a594bdee-7d9e-4d79-a5ee-a34dafa2869f@quicinc.com>
- <c274175a-ed6d-4ce9-be86-d48f56cafe9d@arm.com>
-Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <c274175a-ed6d-4ce9-be86-d48f56cafe9d@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zv_QRQBYUctsoyQeL-rYTV-Bka0uiWwz
-X-Proofpoint-ORIG-GUID: zv_QRQBYUctsoyQeL-rYTV-Bka0uiWwz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-24_04,2025-02-24_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- bulkscore=0 impostorscore=0 phishscore=0 mlxscore=0 mlxlogscore=999
- clxscore=1015 malwarescore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502240076
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL4PR19MB8902:EE_|SA0PR19MB4507:EE_
+X-MS-Office365-Filtering-Correlation-Id: d36f6735-1f35-4294-8ecc-08dd54bebd82
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|19110799003|8060799006|5072599009|6090799003|7092599003|461199028|15080799006|440099028|4302099013|3412199025|10035399004|1602099012;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?MldnbUN5Q1ZZZmNlM09aR29zalpIem5nM3doSmVoSDV4N3VRb1NPL0lpNnhx?=
+ =?utf-8?B?TENhUGEyL1ZobnIvdjk0TWRPWVRYWmlrOUZGWHNrUCtORnZqTVNoTUNmZ2c3?=
+ =?utf-8?B?QjRUcmVUNWFZaVUvVlVFeTBwMXY5TXFtVHlPbVpVd29zaDV3S2RPa1VNRnJD?=
+ =?utf-8?B?TVMySnNERVp3NlBoQzZhWVdTaXRDajdIZnlxbFkyK1RWa0lualNaWkg2VnRQ?=
+ =?utf-8?B?LzQyR0IybEIxem1HdTNGbklDcXNJWStHVVUvenpCQm10VEI2TlExL0c2TTZL?=
+ =?utf-8?B?dHZERGoyVWV6VHV4bXFuWlBWNVBsa1hJT0RZeW4yUEdNdXkrQStoaWlmM1dv?=
+ =?utf-8?B?Um90RzNrbWlEV3FOV3pWNzNyN2l2Qm42OHVNY1ZPaGJ6bklrek5mWFlrY29a?=
+ =?utf-8?B?T1BXbzBaa0w3L3YreDJHckRiYjNYdGJPYk10bExyajRPcGtzWDRDSngxdVdT?=
+ =?utf-8?B?eVgvdmc2ZTgwUTZ5Z0k2a205ejBTS1hXR3UzcnJqTThER3FHcW5yanhqd1dI?=
+ =?utf-8?B?VGpLb2Y5Y3U4cmN1TmpGVHo2L0g1OVpnNXVYbzl6UVFjZHNMN2pseWZVcVhC?=
+ =?utf-8?B?Y29XWXNjTlNUN2VpQkt5T1ZxK3FtanR0eGNDNFk1VWhtTW00ejBUV1BuZGRO?=
+ =?utf-8?B?YWdlSkZJWWhRNGxHOC8xRmwxc3F1b3RZY3UwVmx3eDRaM3p3Z2xWZkNUUXhS?=
+ =?utf-8?B?NWt0QkhKcU5wTElvTG0zaEsyaU1XUVl5RDNpWnpkT3g0TTk3cTlYYlloNVlS?=
+ =?utf-8?B?eDhPdGxpWkxLL2dYZEhhWU5MbldMTUlwTUV0VlMyc09yYUE4VGcxR1IzK1Zu?=
+ =?utf-8?B?UVoxRFpBRko2ejdLYjVKMUpKSVVMZ0dCWjkyZFBMSCs4c3RBWHRTYndNaFlS?=
+ =?utf-8?B?dmNabnM2WXlFQWVHK0FaZm5UVXY3bllwUmNGSmpTVnFaTFJ0aWZLa0owWXlu?=
+ =?utf-8?B?dXJzdGRSVkw1SC9tTkhWSjV1WXYxemZ3QzBuZnkzRXZoSEtvdGhsN3JBUmFP?=
+ =?utf-8?B?a3BCVDh6cEI3RExhZmk1OUlhMjh6aTl6K0FCTkhmS3VSVnJLOEZsQ3lRTWM2?=
+ =?utf-8?B?Y0dWZkRXKzdJRlBKOGVNR3oxRjQ5TFRXU21sM0dncDJ2WHpPL2dYMUpCUDN3?=
+ =?utf-8?B?VGhGenJpV0djaDRhQWlUajhVbitwVytoemduSVk1VjczSm51b1VyM1ZaTFhk?=
+ =?utf-8?B?Y3hLSFlMQkUrWHp2TlpabGFMTnlUeldSRmFBZnFBUjhVZGVtMFYwVnRBZTU1?=
+ =?utf-8?B?eXJCMldDZEFIRUN2WmJiQm5nVGdtU01JR2gwdnVVRjcwUGc1azNWMzlLZmpM?=
+ =?utf-8?B?ZlZxTkRROWhzeGZiRXBub0ZOa3EzKzBtSDZ0emRxdThERFc4eXhNeUNuUThD?=
+ =?utf-8?B?TnlRTUxmQTIrMWVJWmt6WjRRd0kyZ3gySEViVmF0b0FQVmc3VnRuZFpFL0NZ?=
+ =?utf-8?B?bS9lMFhiR1hPTDVRS25IelVmTU1wa2pRYlo0NmZjK084alIrcXAzdmMxZXNJ?=
+ =?utf-8?B?S1pVNmh1UlpXS0lLaWdwVjdjNnJZRzN4YWhjajFQSDhWT3RoNFpGYVpVTUcw?=
+ =?utf-8?B?bzlvdnc2ZlhLKzlvSzlrazZENVVJWHh2di8yclNlQnhYSENGcGxMTXAxb2Q3?=
+ =?utf-8?B?TGdJNzEvRFRrRWpkNDc4Q0RmQkhxU0pFbW5SSC9BdEZ5cWYyd0lGMnVJaFN1?=
+ =?utf-8?B?ME9QSVAwVHNDZHJmYXpzN3hMYTFyUkpWRE1zbFJrK091YjFFU040am1BPT0=?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?R3J6UTlxYWJRcDU5MUx0RFJEU3ExdWo5bVRGZWoxSUhkbHlMM2tTcjZsRFBa?=
+ =?utf-8?B?aDhSdm5QQzlSTGNPVFFLUVZvdEdCUHMwL3JLUEJ1eE9xZm1EcEkzaWM5clJj?=
+ =?utf-8?B?ZDU1SkZ4WlNYMGhkeHladnpybWRxa3Z1RC90aFNsZFV5K2lRVlNDZC9icHlD?=
+ =?utf-8?B?VUVnenJ4QWpPT1BWVmxGR0RKK0p4eGJ0a3BCcTJSNUVidHpXNWJROUp3WUtT?=
+ =?utf-8?B?NW5Ybm9WdytOcUlWNXBTdExCYVpaVmVNNWV0S3ROUndVQkJaTW01TU90dmtQ?=
+ =?utf-8?B?S1IzbkhocHZRaC9QelIrblVZdXZlK1FUWU0rdzY0OWk3L1UvUVJLVVhyWGhQ?=
+ =?utf-8?B?eVFQdll5bVg3b3FOcDFLMnh2dTdzT2RUaDBreUJJdGVvOXYwdVc5MFhLaXpk?=
+ =?utf-8?B?OGVJbFY4UkNZSHRmSWtIMjZGcC9Uemo0VlhENEVKMi83RnZlWnZyclAybW1r?=
+ =?utf-8?B?NzJ6RkxiQWRYMzRyT0NiRHV3bGpueXlwM0JnUGgzVytYV1FQQ0pCUm1zUWJz?=
+ =?utf-8?B?YnVHZmp6ZFA4WVV6RGFsTm80QWQ3WkV5NnJnM2loRjNPWElKeHI5SUlDb2Nh?=
+ =?utf-8?B?RXdaY3hTZGNIZ2RBSkJQdHBOQlRkaThQVURzNnVSZVQ0U0tUZG1Ja3NTSUNO?=
+ =?utf-8?B?U0E4N2JzaUk3T3duS3ZpTGw0R0RTUFlBOVI5cE1qaUdVYk9jSEtLaml5a3N2?=
+ =?utf-8?B?T014TWwvWkVlWlVMTkV3Y1BsNkplNzZQUkVFdVBnV2d1SXlUeFJ5ZlNrQjVI?=
+ =?utf-8?B?VjR1N0FLQnIyR0wraHpudlYySkI2a0g5NlBMN210ZVFhWmVjNEF4RnhJcGlS?=
+ =?utf-8?B?WFJDbXlJNkZyYjBxeU40Z1hqQWloRE0rV29tc0hDV0RXMzEzekZka05hdXlU?=
+ =?utf-8?B?WENrbnIvWTFvRFBTWGRBN2pEZGsydytCU0hmZG9hZWcvdTJMU2hmSlZ1N2U3?=
+ =?utf-8?B?enQ1N3hDMGpYcXluVFlQRVdzWW1lN2VRMUhTYjZTdnZ5a0gvUy83TUpqQ1lu?=
+ =?utf-8?B?VGhEeFpSMU5hd1hiY0lMV2w2Q1NnWm8zcDdSTmQvSit6QzNjM0I2YkFBRnFL?=
+ =?utf-8?B?a3RlUytvK1kzRk5hT2tGQndNU2dvZmdKSmNQYnBYa0d1UGVNL3ZFaWhWaGFL?=
+ =?utf-8?B?RU9wMVovZVJ2ZzJaQnBIa01mbG5VeUVhTFpUODRxWUVjclpqVUV3N3ZBQWxE?=
+ =?utf-8?B?alg5QXhXamVMVi9SRjg1UFp5b2gzREs0VWhqVUgrcWhXbHV4QjBGYVBLRlc2?=
+ =?utf-8?B?R3RvMi9zSW5LRjJMaHpzdkx2VnY4azBZb2Q3aGNabnpGQUowOHg1NEo3VUkz?=
+ =?utf-8?B?ZmR2UnJrM1hEdlpiaVNLY3hqMENDYUZCV0lTWC9Yd0o0bW9Edkt3anVkRFNx?=
+ =?utf-8?B?bitsSzcrcElCNG14cVRmc0JqQTBLNkxRdXp1aUk5RzVkaHc2TnVHK0FldmMv?=
+ =?utf-8?B?bTdLbXhOWWUra3NoeVJJUGpMMWl1M1F6bzNkRzB0eWw0amhCY0JCbGJJa0FB?=
+ =?utf-8?B?Wm5VNTVkdVhISW5pbGE5Um9ISm5VR3VpdEZpUXRTL3BGTUVTVlJwWCt0WkN2?=
+ =?utf-8?B?Z0pOeFVUTWJuZ2xvTlJDaWZwcVE1Yis1OEdyNlZxYWVHMFVwazJvU0NrdTdh?=
+ =?utf-8?B?YUYxK0Z6Ump3d3haUHJiRTd3QmpzMnl5d20wWG5rNE0zaHl4YTJQSUVvM0dt?=
+ =?utf-8?Q?IP8Ybn/JVw9KLVBmxB9w?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d36f6735-1f35-4294-8ecc-08dd54bebd82
+X-MS-Exchange-CrossTenant-AuthSource: BL4PR19MB8902.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Feb 2025 10:33:56.4076
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR19MB4507
 
 
-
-On 2/24/2025 6:22 PM, Suzuki K Poulose wrote:
-> On 24/02/2025 03:32, Jie Gan wrote:
+On 2/24/25 13:08, Manikanta Mylavarapu wrote:
+>
+> On 2/24/2025 11:42 AM, George Moussalem wrote:
+>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 >>
+>> In IPQ5018, Tsens IP doesn't have RPM. Hence the early init to
+>> enable tsens would not be done. So add a flag for that in feat
+>> and skip enable checks. Without this, tsens probe fails.
 >>
->> On 2/21/2025 7:39 PM, Suzuki K Poulose wrote:
->>> On 17/02/2025 09:30, Jie Gan wrote:
->>>> The Coresight TMC Control Unit hosts miscellaneous configuration 
->>>> registers
->>>> which control various features related to TMC ETR sink.
->>>>
->>>> Based on the trace ID, which is programmed in the related CTCU ATID
->>>> register of a specific ETR, trace data with that trace ID gets into
->>>> the ETR buffer, while other trace data gets dropped.
->>>>
->>>> Enabling source device sets one bit of the ATID register based on
->>>> source device's trace ID.
->>>> Disabling source device resets the bit according to the source
->>>> device's trace ID.
->>>>
->>>> Reviewed-by: James Clark <james.clark@linaro.org>
->>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->>>> ---
->>>>   drivers/hwtracing/coresight/Kconfig          |  12 +
->>>>   drivers/hwtracing/coresight/Makefile         |   1 +
->>>>   drivers/hwtracing/coresight/coresight-ctcu.c | 268 +++++++++++++++ 
->>>> ++++
->>>>   drivers/hwtracing/coresight/coresight-ctcu.h |  24 ++
->>>>   include/linux/coresight.h                    |   3 +-
->>>>   5 files changed, 307 insertions(+), 1 deletion(-)
->>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
->>>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
->>>>
->>>> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/ 
->>>> hwtracing/ coresight/Kconfig
->>>> index 06f0a7594169..ecd7086a5b83 100644
->>>> --- a/drivers/hwtracing/coresight/Kconfig
->>>> +++ b/drivers/hwtracing/coresight/Kconfig
->>>> @@ -133,6 +133,18 @@ config CORESIGHT_STM
->>>>         To compile this driver as a module, choose M here: the
->>>>         module will be called coresight-stm.
->>>> +config CORESIGHT_CTCU
->>>> +    tristate "CoreSight TMC Control Unit driver"
->>>> +    depends on CORESIGHT_LINK_AND_SINK_TMC
->>>> +    help
->>>> +      This driver provides support for CoreSight TMC Control Unit
->>>> +      that hosts miscellaneous configuration registers. This is
->>>> +      primarily used for controlling the behaviors of the TMC
->>>> +      ETR device.
->>>> +
->>>> +      To compile this driver as a module, choose M here: the
->>>> +      module will be called coresight-ctcu.
->>>> +
->>>>   config CORESIGHT_CPU_DEBUG
->>>>       tristate "CoreSight CPU Debug driver"
->>>>       depends on ARM || ARM64
->>>> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/ 
->>>> hwtracing/ coresight/Makefile
->>>> index 4ba478211b31..1b7869910a12 100644
->>>> --- a/drivers/hwtracing/coresight/Makefile
->>>> +++ b/drivers/hwtracing/coresight/Makefile
->>>> @@ -51,3 +51,4 @@ coresight-cti-y := coresight-cti-core.o coresight- 
->>>> cti-platform.o \
->>>>              coresight-cti-sysfs.o
->>>>   obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
->>>>   obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
->>>> +obj-$(CONFIG_CORESIGHT_CTCU) += coresight-ctcu.o
->>>> diff --git a/drivers/hwtracing/coresight/coresight-ctcu.c b/drivers/ 
->>>> hwtracing/coresight/coresight-ctcu.c
->>>> new file mode 100644
->>>> index 000000000000..e1460a627c4d
->>>> --- /dev/null
->>>> +++ b/drivers/hwtracing/coresight/coresight-ctcu.c
->>>> @@ -0,0 +1,268 @@
->>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>> +/*
->>>> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All 
->>>> rights reserved.
->>>> + */
->>>> +
->>>> +#include <linux/clk.h>
->>>> +#include <linux/coresight.h>
->>>> +#include <linux/device.h>
->>>> +#include <linux/err.h>
->>>> +#include <linux/kernel.h>
->>>> +#include <linux/init.h>
->>>> +#include <linux/io.h>
->>>> +#include <linux/module.h>
->>>> +#include <linux/mutex.h>
->>>> +#include <linux/of.h>
->>>> +#include <linux/platform_device.h>
->>>> +#include <linux/slab.h>
->>>> +
->>>> +#include "coresight-ctcu.h"
->>>> +#include "coresight-priv.h"
->>>> +
->>>> +DEFINE_CORESIGHT_DEVLIST(ctcu_devs, "ctcu");
->>>> +
->>>> +#define ctcu_writel(drvdata, val, offset)    __raw_writel((val), 
->>>> drvdata->base + offset)
->>>> +#define ctcu_readl(drvdata, offset)        __raw_readl(drvdata- 
->>>> >base + offset)
->>>> +
->>>> +/*
->>>> + * The TMC Coresight Control Unit uses four ATID registers to 
->>>> control the data
->>>> + * filter function based on the trace ID for each TMC ETR sink. The 
->>>> length of
->>>> + * each ATID register is 32 bits. Therefore, the ETR has a related 
->>>> field in
->>>> + * CTCU that is 128 bits long. Each trace ID is represented by one 
->>>> bit in that
->>>> + * filed.
->>>> + * e.g. ETR0ATID0 layout, set bit 5 for traceid 5
->>>> + *                                           bit5
->>>> + * ------------------------------------------------------
->>>> + * |   |28|   |24|   |20|   |16|   |12|   |8|  1|4|   |0|
->>>> + * ------------------------------------------------------
->>>> + *
->>>> + * e.g. ETR0:
->>>> + * 127                     0 from ATID_offset for ETR0ATID0
->>>> + * -------------------------
->>>> + * |ATID3|ATID2|ATID1|ATID0|
->>>> + */
->>>> +#define CTCU_ATID_REG_OFFSET(traceid, atid_offset) \
->>>> +        ((traceid / 32) * 4 + atid_offset)
->>>> +
->>>> +#define CTCU_ATID_REG_BIT(traceid)    (traceid % 32)
->>>> +#define CTCU_ATID_REG_SIZE        0x10
->>>> +
->>>> +struct ctcu_atid_config {
->>>> +    const u32 atid_offset;
->>>> +    const u32 port_num;
->>>> +};
->>>> +
->>>> +struct ctcu_config {
->>>> +    const struct ctcu_atid_config *atid_config;
->>>> +    int num_atid_config;
->>>> +};
->>>> +
->>>> +static const struct ctcu_atid_config sa8775p_atid_cfgs[] = {
->>>> +    {0xf8,  0},
->>>> +    {0x108, 1},
->>>> +};
->>>> +
->>>> +static const struct ctcu_config sa8775p_cfgs = {
->>>> +    .atid_config        = sa8775p_atid_cfgs,
->>>> +    .num_atid_config    = ARRAY_SIZE(sa8775p_atid_cfgs),
->>>> +};
->>>> +
->>>> +static void ctcu_program_atid_register(struct ctcu_drvdata 
->>>> *drvdata, u32 reg_offset,
->>>> +                       u8 bit, bool enable)
->>>> +{
->>>> +    u32 val;
->>>> +
->>>> +    CS_UNLOCK(drvdata->base);
->>>> +    val = ctcu_readl(drvdata, reg_offset);
->>>> +    val = enable? (val | BIT(bit)) : (val & ~BIT(bit));
->>>
->>> minor nit: If possible do not use the ternary operator like this. It 
->>> is much better readable as:
->>>
->>>      if (enable)
->>>          val |= BIT(bit);
->>>      else
->>>          val &= ~BIT(bit);
->>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+>> ---
+>>  drivers/thermal/qcom/tsens.c | 2 +-
+>>  drivers/thermal/qcom/tsens.h | 3 +++
+>>  2 files changed, 4 insertions(+), 1 deletion(-)
 >>
->> Will do this way.
->>
->>>> +    ctcu_writel(drvdata, val, reg_offset);
->>>> +    CS_LOCK(drvdata->base);
->>>> +}
->>>> +
->>>> +/*
->>>> + * __ctcu_set_etr_traceid: Set bit in the ATID register based on 
->>>> trace ID when enable is true.
->>>> + * Reset the bit of the ATID register based on trace ID when enable 
->>>> is false.
->>>> + *
->>>> + * @csdev:    coresight_device struct related to the device
->>>> + * @traceid:    trace ID of the source tracer.
->>>> + * @port_num:    port number from TMC ETR sink.
->>>> + * @enable:    True for set bit and false for reset bit.
->>>> + *
->>>> + * Returns 0 indicates success. Non-zero result means failure.
->>>> + */
->>>> +static int __ctcu_set_etr_traceid(struct coresight_device *csdev, 
->>>> u8 traceid, int port_num,
->>>> +                  bool enable)
->>>> +{
->>>> +    struct ctcu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->>>> +    u32 atid_offset, reg_offset;
->>>> +    u8 refcnt, bit;
->>>> +
->>>> +    atid_offset = drvdata->atid_offset[port_num];
->>>> +    if (atid_offset == 0)
->>>> +        return -EINVAL;
->>>> +
->>>> +    bit = CTCU_ATID_REG_BIT(traceid);
->>>> +    reg_offset = CTCU_ATID_REG_OFFSET(traceid, atid_offset);
->>>> +    if (reg_offset - atid_offset > CTCU_ATID_REG_SIZE)
->>>> +        return -EINVAL;
->>>> +
->>>> +    guard(raw_spinlock_irqsave)(&drvdata->spin_lock);
->>>> +    refcnt = drvdata->traceid_refcnt[port_num][traceid];
->>>> +    /* Only program the atid register when the refcnt value is 0 or 
->>>> 1 */
->>>
->>> A normal trace source won't be enabled more than once (e.g., ETM). 
->>> The only odd one out is the STM, which may be driven by multiple agents.
->>> So this refcounting looks necessary.
->>>
->>
->> Besides, for the TPDMs which shared the trace_id of the TPDA also need 
->> the refcnt. Consider we have TPDM1 and TPDM2 connected to the same 
->> TPDA device. Once we disable one of the TPDM without checking the 
->> refcnt, the filter function will be disabled for another TPDM.
->>
->>>> +    if (enable && (++refcnt == 1))
->>>> +        ctcu_program_atid_register(drvdata, reg_offset, bit, enable);
->>>> +    else if (!enable && (--refcnt == 0))
->>>> +        ctcu_program_atid_register(drvdata, reg_offset, bit, enable);
->>>
->>> minor nit:
->>>
->>>      if ((enable && !refcount++) ||
->>>          (!enable && --refcount))
->>>          ctcu_program_atid_register(drvdata, reg_offset, bit, enable);
->>>
->>>
->>
->> I did (enable && (++refcnt == 1)) just because I think we only need 
->> program the register when refcnt is equal to 1. We dont need reprogram 
->> the register with same value when refcnt greater than 1. So I think 
->> it's better for the performance?
-> 
-> The code above is similar to yours. It would "set" only for the first
-> time, when
-> 
-> enable == 0, refcount == 0 now, but will be incremented to 1.
-> 
+>> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+>> index 3aa3736181aa..a25ca17adf1a 100644
+>> --- a/drivers/thermal/qcom/tsens.c
+>> +++ b/drivers/thermal/qcom/tsens.c
+>> @@ -975,7 +975,7 @@ int __init init_common(struct tsens_priv *priv)
+>>  	ret = regmap_field_read(priv->rf[TSENS_EN], &enabled);
+>>  	if (ret)
+>>  		goto err_put_device;
+>> -	if (!enabled) {
+>> +	if (!enabled && !(priv->feat->ignore_enable)) {
+> Please drop 'ignore_enable' and use 'VER_2_X_NO_RPM' instead.
 
-Hi Suzuki,
+couldn't find it, but found it was recently added in:
+https://lore.kernel.org/all/5dc4bbb7-71b5-4389-9e99-099e1c93d1c9@linaro.org/
+Will change to 'VER_2_NO_RPM'
 
-Thanks for expalaination, got your point, just missed !refcnt++, plus 1 
-after !refcnt.
+>
+>>  		dev_err(dev, "%s: device not enabled\n", __func__);
+>>  		ret = -ENODEV;
+>>  		goto err_put_device;
+>> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+>> index 7b36a0318fa6..90bf11fba563 100644
+>> --- a/drivers/thermal/qcom/tsens.h
+>> +++ b/drivers/thermal/qcom/tsens.h
+>> @@ -505,6 +505,8 @@ enum regfield_ids {
+>>   * @srot_split: does the IP neatly splits the register space into SROT and TM,
+>>   *              with SROT only being available to secure boot firmware?
+>>   * @has_watchdog: does this IP support watchdog functionality?
+>> + * @ignore_enable: does this IP reside in a soc that does not have rpm to
+>> + *                 do pre-init.
+> Drop 'ignore_enable'.
 
-Jie
+will do
 
+>
+>>   * @max_sensors: maximum sensors supported by this version of the IP
+>>   * @trip_min_temp: minimum trip temperature supported by this version of the IP
+>>   * @trip_max_temp: maximum trip temperature supported by this version of the IP
+>> @@ -516,6 +518,7 @@ struct tsens_features {
+>>  	unsigned int adc:1;
+>>  	unsigned int srot_split:1;
+>>  	unsigned int has_watchdog:1;
+>> +	unsigned int ignore_enable:1;
+> Drop 'ignore_enable'.
 
+will do
 
-
+>
+> Thanks & Regards,
+> Manikanta.
 
