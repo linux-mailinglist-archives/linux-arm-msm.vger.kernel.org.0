@@ -1,109 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-49204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DB45A42E33
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 21:44:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B685A42E5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 21:55:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BAE70189B1EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 20:44:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B143B3B5EC0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 20:53:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 499A224500F;
-	Mon, 24 Feb 2025 20:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07B8525C6EA;
+	Mon, 24 Feb 2025 20:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="YYI93cJ3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="foY8LVKe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3A91FDE0B;
-	Mon, 24 Feb 2025 20:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF1A25C6E1;
+	Mon, 24 Feb 2025 20:53:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740429832; cv=none; b=bz/00qfqrYcJKcaqMgJHfxdQyct5ETMvlyhMaBjKHZfoTlYzBK0cTuw0B5VN7RGIFZOLafibhb5WcMVooMknJ869If/VrisIDkYTUj4nO7Rq+vcD6HrxtswnDR4M6q7pTul5y2u4VfczLW4Hthhn7inRqZ4c5FQVWQso1hbJH9o=
+	t=1740430415; cv=none; b=g+B3nPDA32uCcCcw8hWy2bthYsAncDmqiZJDWNEhcDXxaTeeX55KjH8pvAX106ckvBLu80CXkt1rvriWZ7TA5Wv+11XTtyn3oGxoeArsyjGtfxWUuT3y/YLFwAeCGPxmfnmyWIMsE2DavzpXERegRuT3Ayd6sU2SSOKKMsbKl3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740429832; c=relaxed/simple;
-	bh=rvbdOy4fuBrSGEQQD49/68Vtl1Atgp4vEU7Tw+AbOCI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wzt3uFx2eOlUQwnMNMzXG/vjpjyHDLUcvhoPe4eUYJzbuEnzO66shLGzOFUmUXxHcfz0QwlVpdXjqTGgcyTEBe+zwbC6xSNRg7OwRIFOgFnw20YfOxFoDCi0L9G/DdKB1ZWy7UKXHGf2IfkSiaB8lB6CpBc5OkFZ+hHwHD+ongs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=YYI93cJ3; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1740429829; bh=rvbdOy4fuBrSGEQQD49/68Vtl1Atgp4vEU7Tw+AbOCI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=YYI93cJ3ML0XkkKoLoj3AWEbpPS699twI8GgjcLm0DYhFueIEuLdXkYna2TiWCva0
-	 ta2n/67t+jgVoJ5PG1FveqmZljuqL8zaJckecN5RXKbqdZF2/UEEJbyfKTNAlwKuFB
-	 OV9ljQUkGin3f9XLWsJ9hOx81lYm896wCruEUbIg=
-Message-ID: <82a9d623-2033-4d7f-93b8-67007b46be79@lucaweiss.eu>
-Date: Mon, 24 Feb 2025 21:43:48 +0100
+	s=arc-20240116; t=1740430415; c=relaxed/simple;
+	bh=uZyQHPDnonWQZDQ1SEf6e6QMou1qYC6LzN4cHLq76kA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bNjYDKTFOPs2wIBtlhvjKFEL31KNYxbFWy6o07LzNne6mdQxxdAT0rUdrMbsaP7WOu4KSKV3SDofdXQV9zvpEKygnA3JKO5RRsTj7FcvLIZdDfjBB/jv6j8GQp+5cPN9TTIvvX1br9k/3Z3ndr3F2Nufc+yaDZKBeg3X+Wf9My8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=foY8LVKe; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-30795988ebeso50361501fa.3;
+        Mon, 24 Feb 2025 12:53:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740430412; x=1741035212; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VLKxgOzGNXH6/e7tjAoJ0ON1VeUWEbBjNUFSuEbog74=;
+        b=foY8LVKeKm6sAwESvbKBeCJpwDArGlrdZPP5ta4qhFAG/PHchA92t6gUHbkOtb6Hk1
+         NluZ65e0/STPGQ1WI0F5FHrCmIQHORPtE3/jf/Y77v4hLRQahhK1ATvJACJ4mmu53AU+
+         IucWpiOzWZn/NS0Whbr8W2FXUuwUlok6ZBueWCAk2twuMgHDtkoaeQEpTEfg04NTI1hM
+         uN4jLlH6xiRrDyK8LR/js0miP1VZjDjHcTlacAfP6ItqZS4hmkZDR8F/NKLXHnQciLcE
+         OboV88pGYQ7OdljSvDGcwQJ5YQasTewNOEyOGcb7eZfHPU8WvqzDM+IAold9fuFHOHJU
+         9IjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740430412; x=1741035212;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VLKxgOzGNXH6/e7tjAoJ0ON1VeUWEbBjNUFSuEbog74=;
+        b=ohAcL2I3iblM/ppLSGKqCOjZ7vRODaG8i8Q2HQOwew8zrgPxTaGlLNQZM82JqOFAjT
+         EcmYVOT6JtOyR+hykNT5FGf6ND2cnkW9hxNU9CXTyA+dtP8jGSeTR7ZLgjn3Gx2gA8Mu
+         2j2a4nZV93oMNK4FNAoaRK2MBIXXuQKnb6pzPu/RlX2CLjjQJlMGtphlo6o4R81x9qXg
+         EQvHuuANuMCLCTpj8dOORKnt31muFbg53f6RV9pf3LI5Rj2J/b7jGDzifZpWilzA4QCp
+         y3NQrOYcue5wpFs5OwvEYh+V+YnaB279XL9wFZ3wZXHVNm4DIIP4ooDs/LGUW98+PJRx
+         Ed/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUdMbOyQ+cj7lTM5ZqSXedjE6Q6aI5qOuVZqmvzS6omJOpTVd70BYjja1gt+zaf39Lj2IQIBDVvJ/rt@vger.kernel.org, AJvYcCVxRNzu2znJhny/OoYKB+ouIUOmFup7BwkbTzLR4GjetGrCL+I9pVsuvAdMtWigI91PDrdXFuH0if16Jww9@vger.kernel.org, AJvYcCXeh2OPRLIkdfW2JW4SIyWosAs2rABSuFEL5VAU32zC98Ia4UvjALsiSuU0Ej7IVhmJ7lB/1T9KmHmU7sQTxg==@vger.kernel.org, AJvYcCXkVduzsFcu+eSrmPX5DfxMt8fJCzKPU426FnsHHDIi9vJ7MGs8+5no8btSgFnqv0OQ/QvTYXLJPWXQC4TZXvsP@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8Ws+uH8BqreDBl4oTeh71Umo9IojLTvQlJ5KhbXJqIQDbOt41
+	AmZpEYpDeC3sPwmw8+08dhFiB/0yJsMVvNURkAOVejNaMhgI3toN2LaQ8fmpeEkOPp7Ds9tcMVg
+	RFoKMXXSj1PLv5USunPgC+1uCEAGbMmw8EoYRvQ==
+X-Gm-Gg: ASbGncvZXtDNWrLgpU05AWGGrwUrq2ijTWcigGElZm/HoGs7xezYbxQo11V77+fr0Om
+	1fFnJDkKhSrgtGV8bPhujD4rnpVCZgLWee3q8IyaOeTuu5uq2j1qAQyyKl3KoSundBMWO8wQ7bs
+	h2nxeHFQ==
+X-Google-Smtp-Source: AGHT+IEf3bVx23OWBARjkI8H1RLewElDpkAnGSVB0hLm64N4Ek8MKkyGLm7MI0cb0+QKlYgijWwscg5NcyVoDVHNSxA=
+X-Received: by 2002:a2e:a413:0:b0:308:f39c:96b3 with SMTP id
+ 38308e7fff4ca-30a80c9944dmr2379071fa.30.1740430411781; Mon, 24 Feb 2025
+ 12:53:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sdm632-fairphone-fp3: Add
- firmware-name for adsp & wcnss
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250222-fp3-remoteprocs-firmware-v1-0-237ed21c334a@lucaweiss.eu>
- <20250222-fp3-remoteprocs-firmware-v1-3-237ed21c334a@lucaweiss.eu>
- <w4l5drhu6exq4jb7x2pisqtkz5ylare7ashsmjjqomv3yetjwj@z3wapq4rkk3u>
- <6d1a95a1-0b84-4bc5-9cb0-3cc514d292a6@oss.qualcomm.com>
-Content-Language: en-US
-From: Luca Weiss <luca@lucaweiss.eu>
-In-Reply-To: <6d1a95a1-0b84-4bc5-9cb0-3cc514d292a6@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250207-rb1-bt-v4-0-d810fc8c94a9@linaro.org> <3s36j75eoqszm5hiftia543h2a6nxaa74wubrr6nq4akzq4hta@wyuwa5onjauz>
+In-Reply-To: <3s36j75eoqszm5hiftia543h2a6nxaa74wubrr6nq4akzq4hta@wyuwa5onjauz>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Mon, 24 Feb 2025 15:53:18 -0500
+X-Gm-Features: AWEUYZkha0uiyECkrWx3ELuzdjA3i59S1y_7pjEW1mQg4U_t9hN_M4Z6JYV6X_E
+Message-ID: <CABBYNZ+mKZV6qwCcECueBfRy4_XBw5LD0TnKs4Dzdpr7eYjL_A@mail.gmail.com>
+Subject: Re: [PATCH v4 0/6] Bluetooth: qca: add Qualcomm WCN3950 BT/WiFi chip support
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 24-02-2025 9:27 p.m., Konrad Dybcio wrote:
-> On 24.02.2025 1:17 AM, Dmitry Baryshkov wrote:
->> On Sat, Feb 22, 2025 at 02:00:49PM +0100, Luca Weiss wrote:
->>> Set the paths where the device-specific firmware can be found for this
->>> device.
->>>
->>> Fairphone 3 was shipped with secure-boot off so any testkey-signed
->>> firmware is accepted.
->>>
->>> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 7 +++++++
->>>   1 file changed, 7 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
->>> index 08ffe77d762c3a97f470efbfb5064282fe2090da..5611209dbfa41d7834af7903535ed3e05604ba63 100644
->>> --- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
->>> +++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
->>> @@ -82,6 +82,8 @@ nfc@28 {
->>>   };
->>>   
->>>   &lpass {
->>> +	firmware-name = "qcom/msm8953/fairphone/fp3/adsp.mbn";
->>
->> If any firmware is okay, wouldn't it be better to use
->> "qcom/msm8953/foo.mbn" ? This way if we get any of the firmware (yeah,
->> I'm a dreamer), then FB3 can pick it up.
-> 
-> No, the fw may have board/wiring differences encoded inside it
+Hi Dmitry,
 
-Second that, while I don't have access to the AMSS sources for this 
-device, I'm sure there's at least some board-specific config in these 
-images, and I'd rather not boot up some ADSP or modem firmware compiled 
-for some Dragonboard or equivalent.
+On Fri, Feb 21, 2025 at 8:06=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Fri, Feb 07, 2025 at 10:41:14PM +0200, Dmitry Baryshkov wrote:
+> > Qualcomm Robotics RB1 platform uses a new member of the WCN39xx family
+> > of BT/WiFi chips. Add support for this member of the family and enable
+> > it to be used on the RB1 board.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> > Changes in v4:
+> > - Added empty line before status property (Konrad)
+> > - Reword Bluetooth commit message to follow linux-firmware changes
+> >   (cmnv13t.bin and cmnv13s.bin were merged).
+> > - Link to v3: https://lore.kernel.org/r/20250202-rb1-bt-v3-0-6797a4467c=
+ed@linaro.org
+> >
+> > Changes in v3:
+> > - Mention new firmware files.
+> > - Link to v2: https://lore.kernel.org/r/20250201-rb1-bt-v2-0-fd44011749=
+bb@linaro.org
+> >
+> > Changes in v2:
+> > - Corrected QUP interconnects (Konrad)
+> > - Added /delete-property/ interrupts and an empty line before status
+> >   (Konrad)
+> > - Enabled downloading of different NVMs as required for v1.3 of the chi=
+p.
+> > - Link to v1: https://lore.kernel.org/r/20250201-rb1-bt-v1-0-ae896c4923=
+d8@linaro.org
+> >
+> > ---
+> > Dmitry Baryshkov (6):
+> >       dt-bindings: net: bluetooth: qualcomm: document WCN3950
+> >       Bluetooth: qca: simplify WCN399x NVM loading
+> >       Bluetooth: qca: add WCN3950 support
+>
+> Gracious ping, these patches have been sent two weeks ago.
 
-Regards
-Luca
+Looks like it doesn't apply cleanly to bluetooth-next anymore, please
+rebase/resend.
 
-> 
-> Konrad
+> >       arm64: dts: qcom: qcm2290: fix (some) of QUP interconnects
+> >       arm64: dts: qcom: qcm2290: add UART3 device
+> >       arm64: dts: qcom: qrb2210-rb1: add Bluetooth support
+> >
+> >  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml |  2 +
+> >  arch/arm64/boot/dts/qcom/qcm2290.dtsi              | 31 +++++---
+> >  arch/arm64/boot/dts/qcom/qrb2210-rb1.dts           | 83 ++++++++++++++=
+++++++++
+> >  drivers/bluetooth/btqca.c                          | 27 +++++--
+> >  drivers/bluetooth/btqca.h                          |  4 ++
+> >  drivers/bluetooth/hci_qca.c                        | 25 +++++++
+> >  6 files changed, 157 insertions(+), 15 deletions(-)
+> > ---
+> > base-commit: a1d1e1f2fae5fcb5f2e43b81afa9596c606e683d
+> > change-id: 20250201-rb1-bt-cec7a314991d
+> >
+> > Best regards,
+> > --
+> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
+
+
+--=20
+Luiz Augusto von Dentz
 
