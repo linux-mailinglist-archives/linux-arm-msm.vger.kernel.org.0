@@ -1,228 +1,282 @@
-Return-Path: <linux-arm-msm+bounces-49127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2FBAA41644
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 08:31:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C91E3A4165E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 08:34:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 158753A7ACE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 07:30:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 76FCF3AFB97
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 07:33:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 920D835949;
-	Mon, 24 Feb 2025 07:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D53D143736;
+	Mon, 24 Feb 2025 07:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NB2H6Skj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zoZ+xxdW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC9A6FC3;
-	Mon, 24 Feb 2025 07:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2A61BC3C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 07:33:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740382262; cv=none; b=a+9lre6OwjpE1kl8x67W1aD0VRGh3lyBHvnsVZnptcOU6AfdbzBlcJzsc/6G7CU39NaBUPFLdznrutzMHt7j8bY8hMEbg4NfUbdbw3LHhkDsLC7yez6nz79OyD0djQvm1Be/wZjNycHfy8bjBc/0OsLasgH3yBkaAjQoFqClgIE=
+	t=1740382389; cv=none; b=hDPh8QiWjGK3++TKfoshOVTCpFF1Opoa29z7vJKOVIHRjq1RqTH2471WnKHR/62Ygj+9Dp3wIECksj+BuiHDQ+qL7pIdPFO7TQRZtGchc5aqU6OjbY00WZMD5tIa+4ZqWiIs5ItlzDnBHh9N7YBD6H3Wu7E0DCvP9waFnqtkSq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740382262; c=relaxed/simple;
-	bh=6Z6dnjGVgdpViKxmv3ZMODE/l0flzQ0TomzD7aIpjeQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hhh6CjdXMgrtsmhW0BjdpxTTmZEt68iy0jNpKMWjGGgrUlFYGB2Vdi9WT1WhtsNIp8kyXVOp2WK/w9Bnh6snSpSN9XfVfxx6HvhwQEBo0Ub9q04b1ZYsrvjB1akCmyw9a9TRgX+fINPMpLl2HjoT/63+cj0ojHRrrRMyVuxsj8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NB2H6Skj; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38f29a1a93bso3215428f8f.1;
-        Sun, 23 Feb 2025 23:31:00 -0800 (PST)
+	s=arc-20240116; t=1740382389; c=relaxed/simple;
+	bh=WS2Xig2WyhAhzj5+lQ8xUA+19w/CUm1yNOEBd4bt/8Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IpJeITSLcaJEXs1DuPfSqreKf0tGy1v/10j7CoaFxy4Hwyd/uBwO30IE01A30c7xmVplLRRtH//5JTb6oDNgKzzoblATFUOGM0VMFjT/ai3nNHvpnHNL+lK8rxqlwhInq/NO1VRhNvWZuFnPRr8GwQK8eYrjUR6U19pvp0YFYZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zoZ+xxdW; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2211acda7f6so87227475ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Feb 2025 23:33:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740382259; x=1740987059; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b0duzw3Ywocqb3zPYovQHOlpL11++t/qRORIguG/x8M=;
-        b=NB2H6SkjtKlJ/djFqjHu8QshpxWRo6qha4AFj9YUkgMypUSoBLDZ9SBwtSJqzbvR0l
-         sIf5UX19566DLSNvute9ENXcdoucYI+sIIo/k1qM+/fi5EgNAm7zyXByi66rSROHdNK4
-         JqS0u3uUyksOmtL8ZhamR8SGwC2ukqSOipyJmuH4Uf5XWlQ+Yej59ByhndkNVDWK2wMV
-         xn5mBTRL1s/q9LNZHXJ6Wj4Em3peW4N9vKn4LxYGQ2VSYPQnOZohRFyVl7so1LkVx6TL
-         1d+jMhIXYn9oxQr2aZrM/LgxEFS91rdrp9yDaNGY2Dsb9UfFmJCjUt/cTyWIiPlRkrV0
-         lPtA==
+        d=linaro.org; s=google; t=1740382387; x=1740987187; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Qr+tjt+UIrk1yts5VK/tepdgWKh8IRps5QWJXwgEbZ0=;
+        b=zoZ+xxdW/Irv7TMZVNsT/2hQWToUyKTynwkxMuzXt30YKJzJq2/xSCec2bDnxLio41
+         KHwzF+uobAIPwH0f+3X9bL7ahMPZU2KYR62nWEKQq3iAi567eaz8CM8VmJWSTP8Yh0Uu
+         kcGxseENcrI/lZlqmR27lPatGgDqaC1cFoQEpKxzJasaOoIpF0mFRnfn/TS3tbO2cX8D
+         6FgyJQvPoRs9O1eDVJkIoEcgyTRsjPPTednzNqBEWrFslCfnsJmk6cjtyocz6crWKc0e
+         7VaP1msWTyfnQzDa8/DiCfY6LB0jWR1qqqacrN0So/SSeGDNoYxSPa4JVaPWefHIZi20
+         r2Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740382259; x=1740987059;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1740382387; x=1740987187;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b0duzw3Ywocqb3zPYovQHOlpL11++t/qRORIguG/x8M=;
-        b=NZHRUzlaEZB8HV6iVrGIRopgdkSdXZV/gRF4ml20tX54+Tjf+FYRUNKJRff+Gncipr
-         /ZSPIkWAMPEzJwDkBpV12+LAARTJZFgdabycGpNCCOfypILbUW2y/NtAggFNsxXhOmz9
-         Bg/EeCkJC7TK4PtcAfJ6tlYgzgcq3yPoH1pvPHs+ECoyatXCbz9GmT3frvUJy/hu6fSU
-         IgwdbEKbESkC3MP14PPQp95zf+AGkM5GQt5OxJ/G5Go+vM5aipkvLBuLdyOUoRq2KK0A
-         kbu1by83ynDSXtd/xBi/guAcVPl7p6CoYEGkOI3k1uiXuh4E3BD2z9I+Zyel40OorhUu
-         3d+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCU1CEPES0LBUvO3KxD+V8MXyKTKGNNlDbTVI0rjC/ROppP4SwfnJLrQS1e+DjEKhK/orPrUvkvQynnrryNPVISEvzY=@vger.kernel.org, AJvYcCVqz4ypyOXGRex5vlVFp2mXge8Jhl57JpP4HOVhGyT8s0SlI9+p9Tce5rpoO1MZmpI4Om3w3SmDpuLPZj747Q==@vger.kernel.org, AJvYcCXs/znA2q+HragQn51XloaM1H58nJ1ES6W6R9loRodC8SXGGMQCRT9924fbjPPx8QXgCXpW3wh/gfqUVPuq@vger.kernel.org, AJvYcCXy6YRk7LCQKDhdxg02bDU0yMKSdsVout/njM1bPWFDMwoCq3pWng153mObJUr0V5GQ2AwG8xREyO4H@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzoq2l/0EzqbyaKZO0xk7iENW7y9HfR5Z4OGv3Jb/ytkgxhth7+
-	BIrmPEVrkPSF4umsdk35SvFCiOZZ2Mias8SDgo3Un81UHU9bIQHP
-X-Gm-Gg: ASbGncvxdT9dKl6+mNmopUamGZLjdHpo1GJ0uWu+OYNQVf+Q9xesnYI4jMuTnYImpWQ
-	qKHpMlTWFA/XrKCXx+tsVYwUyC37UAjQ7JWtJkk+3q13JOKhSOit/tH517WVHrbT+Pe6vNaf+z/
-	SSiy6JSLVS04059j+mXwNJ0CcDxhvKt5nk/N4xuhR/JyKEtm/+EwkQR9q2ItDUC2EG30Ts7NbdX
-	CSe23NXk29eZ1IPr1bP8O/nWdPElKslV/CmS5plVsFN+fauvnOfm+lxBo2brLbdpPlWaqnVcp8H
-	4U/bdJFhGnkJum5BUBjea0pkKgxbuTPMljyC/XBk
-X-Google-Smtp-Source: AGHT+IFR8qOglMl8SOkJiw+ah079XOs4fUxWnUURIZha7TGgX1naigEEn4nk1GDXeUIJqH7dqWjSFw==
-X-Received: by 2002:a5d:5f92:0:b0:38d:e02d:5f4c with SMTP id ffacd0b85a97d-38f6e7578d8mr10115232f8f.10.1740382258857;
-        Sun, 23 Feb 2025 23:30:58 -0800 (PST)
-Received: from [192.168.43.21] ([77.85.230.22])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f69b3ca41sm11133698f8f.27.2025.02.23.23.30.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Feb 2025 23:30:58 -0800 (PST)
-Message-ID: <7426ef0e-c0ae-4a4a-8678-c1a3a4ead250@gmail.com>
-Date: Mon, 24 Feb 2025 09:30:57 +0200
+        bh=Qr+tjt+UIrk1yts5VK/tepdgWKh8IRps5QWJXwgEbZ0=;
+        b=tOw3H38XyqEcOeXtJdiHSghIDrWLvGlo/VPt986htDiznc9R70He28rlbLYRo+QY1y
+         l/ZvgKQfyWvE4IOEnybhyVHdWkMl1FXoLBigL0Gkh6BVrD8LwUQuL9ZCbSS6xHqIcv0O
+         cUkZHR6Pjd6YWM6AHOGB3wK+YzEMuA7P99EZTr27f9TlzfnpJcOWlMtUW1BeF6UuKCrU
+         3ybgLJUyOrHaNRXr+QRGLtyaIfjiQOUL0jIC9QioZDh13NrV3xuD4857lPbhmUjdoLHp
+         2CSMuu5W32HHAzhp+YZSr62KxtKjQKCvVFbQmG7fPJ26YfZt3DrSxMu3jceJDVUPw7AG
+         M8Xw==
+X-Forwarded-Encrypted: i=1; AJvYcCVPUub5IcZ16OwzCLLrZvARgGMOCJRA8Qn8HNzDnCxUIeLi3ISXKgqG33fZQ+aWy+vGfqEVldk51nxZ71tf@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsIn9o08n7s5CXaYzdpQa6amBXx7aAPMuVkwoNECtkBJUwDyEw
+	OouAggT2Snau8C0ovunEdpXq5EUROqz3qEkqRtkBpbTSUWZRjyU26erAisfjHQ==
+X-Gm-Gg: ASbGncsEMASGgBmEh1gW6B0JXnv0x6Jqu0VjM1xWor27rITyD7ytxqkhHmnfl354HQr
+	ognbCsY3eW2SyHtv4cxaeCH6c+pGu0uT3xCujDL1Qt3HUceiOG2C500dJbm9SW9dNbUuXASRS/a
+	FbwXvEsWdemPUyRjwh4cVVXb5ru5OQl31/Dn5L/1sf84cj6GevAAWxrOmL894lCKl3KTgxHclKK
+	l8ROXMtOJ9dqTwcOAVH+rZkNIXRL/CoKSg2n23+wZyrOewR1Zh7zIQ5KQrfelrs+jpNauz736Xe
+	FoNuhFLTqm4l0Kl09thEX3j7eAF+5UvmGm+m
+X-Google-Smtp-Source: AGHT+IFbLd8cCuwa1xEr6it4PU+oeXmq35IvmwDlwqXzqneh56tsExMzzaPxVidrxDy/REEG2ZPIpw==
+X-Received: by 2002:a17:902:da8c:b0:220:c813:dfda with SMTP id d9443c01a7336-2219ffa7636mr203604335ad.41.1740382386884;
+        Sun, 23 Feb 2025 23:33:06 -0800 (PST)
+Received: from thinkpad ([36.255.17.162])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73265f98e18sm17046763b3a.106.2025.02.23.23.33.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Feb 2025 23:33:06 -0800 (PST)
+Date: Mon, 24 Feb 2025 13:03:01 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Wenbin Yao <quic_wenbyao@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, p.zabel@pengutronix.de,
+	dmitry.baryshkov@linaro.org, abel.vesa@linaro.org,
+	quic_qianyu@quicinc.com, neil.armstrong@linaro.org,
+	quic_devipriy@quicinc.com, konrad.dybcio@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] phy: qcom: qmp-pcie: Add PHY register retention
+ support
+Message-ID: <20250224073301.aqbw3gxjnupbejfy@thinkpad>
+References: <20250220102253.755116-1-quic_wenbyao@quicinc.com>
+ <20250220102253.755116-3-quic_wenbyao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] phy: phy-snps-eusb2: add support for exynos2200
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Abel Vesa <abel.vesa@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
- <20250223122227.725233-8-ivo.ivanov.ivanov1@gmail.com>
- <ac7bq3toicuoppmspqvohiss5wkhgw4v6aozzstd5pr66bfcse@k7tqijab4csq>
-From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-In-Reply-To: <ac7bq3toicuoppmspqvohiss5wkhgw4v6aozzstd5pr66bfcse@k7tqijab4csq>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250220102253.755116-3-quic_wenbyao@quicinc.com>
 
-On 2/24/25 01:51, Dmitry Baryshkov wrote:
-> On Sun, Feb 23, 2025 at 02:22:26PM +0200, Ivaylo Ivanov wrote:
->> The Exynos2200 SoC reuses the Synopsis eUSB2 PHY IP, alongside an
->> external repeater, for USB 2.0. Add support for it to the existing
->> driver.
->>
->> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->> ---
->>  drivers/phy/Kconfig          |   2 +-
->>  drivers/phy/phy-snps-eusb2.c | 172 +++++++++++++++++++++++++++++++++++
->>  2 files changed, 173 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
->> index 11c166204..58c911e1b 100644
->> --- a/drivers/phy/Kconfig
->> +++ b/drivers/phy/Kconfig
->> @@ -45,7 +45,7 @@ config PHY_PISTACHIO_USB
->>  
->>  config PHY_SNPS_EUSB2
->>  	tristate "SNPS eUSB2 PHY Driver"
->> -	depends on OF && (ARCH_QCOM || COMPILE_TEST)
->> +	depends on OF && (ARCH_EXYNOS || ARCH_QCOM || COMPILE_TEST)
->>  	select GENERIC_PHY
->>  	help
->>  	  Enable support for the USB high-speed SNPS eUSB2 phy on select
->> diff --git a/drivers/phy/phy-snps-eusb2.c b/drivers/phy/phy-snps-eusb2.c
->> index 7a242fe32..67a19d671 100644
->> --- a/drivers/phy/phy-snps-eusb2.c
->> +++ b/drivers/phy/phy-snps-eusb2.c
->> @@ -13,6 +13,39 @@
->>  #include <linux/regulator/consumer.h>
->>  #include <linux/reset.h>
->>  
->> +#define EXYNOS_USB_PHY_HS_PHY_CTRL_RST	(0x0)
->> +#define USB_PHY_RST_MASK		GENMASK(1, 0)
->> +#define UTMI_PORT_RST_MASK		GENMASK(5, 4)
->> +
->> +#define EXYNOS_USB_PHY_HS_PHY_CTRL_COMMON	(0x4)
->> +#define RPTR_MODE			BIT(10)
->> +#define FSEL_20_MHZ_VAL			(0x1)
->> +#define FSEL_24_MHZ_VAL			(0x2)
->> +#define FSEL_26_MHZ_VAL			(0x3)
->> +#define FSEL_48_MHZ_VAL			(0x2)
->> +
->> +#define EXYNOS_USB_PHY_CFG_PLLCFG0	(0x8)
->> +#define PHY_CFG_PLL_FB_DIV_19_8_MASK	GENMASK(19, 8)
->> +#define DIV_19_8_19_2_MHZ_VAL		(0x170)
->> +#define DIV_19_8_20_MHZ_VAL		(0x160)
->> +#define DIV_19_8_24_MHZ_VAL		(0x120)
->> +#define DIV_19_8_26_MHZ_VAL		(0x107)
->> +#define DIV_19_8_48_MHZ_VAL		(0x120)
->> +
->> +#define EXYNOS_USB_PHY_CFG_PLLCFG1	(0xc)
->> +#define EXYNOS_PHY_CFG_PLL_FB_DIV_11_8_MASK	GENMASK(11, 8)
->> +#define EXYNOS_DIV_11_8_19_2_MHZ_VAL	(0x0)
->> +#define EXYNOS_DIV_11_8_20_MHZ_VAL	(0x0)
->> +#define EXYNOS_DIV_11_8_24_MHZ_VAL	(0x0)
->> +#define EXYNOS_DIV_11_8_26_MHZ_VAL	(0x0)
->> +#define EXYNOS_DIV_11_8_48_MHZ_VAL	(0x1)
->> +
->> +#define EXYNOS_PHY_CFG_TX		(0x14)
->> +#define EXYNOS_PHY_CFG_TX_FSLS_VREF_TUNE_MASK	GENMASK(2, 1)
->> +
->> +#define EXYNOS_USB_PHY_UTMI_TESTSE	(0x20)
->> +#define TEST_IDDQ			BIT(6)
->> +
->>  #define QCOM_USB_PHY_UTMI_CTRL0		(0x3c)
->>  #define SLEEPM				BIT(0)
->>  #define OPMODE_MASK			GENMASK(4, 3)
->> @@ -196,6 +229,93 @@ static void qcom_eusb2_default_parameters(struct snps_eusb2_hsphy *phy)
->>  				    FIELD_PREP(PHY_CFG_TX_HS_XV_TUNE_MASK, 0x0));
->>  }
->>  
->> +static int exynos_eusb2_ref_clk_init(struct snps_eusb2_hsphy *phy)
->> +{
->> +	unsigned long ref_clk_freq = clk_get_rate(phy->ref_clk);
->> +
->> +	switch (ref_clk_freq) {
->> +	case 19200000:
->> +		snps_eusb2_hsphy_write_mask(phy->base, EXYNOS_USB_PHY_HS_PHY_CTRL_COMMON,
->> +					    FSEL_MASK,
->> +					    FIELD_PREP(FSEL_MASK, FSEL_19_2_MHZ_VAL));
->> +
-> Could you please unify the switchcase? assign the values to temp
-> variables, then program them from a single code stream. Or maybe even
-> replace switch-case with a table-based lookup.
->
-> (we probably should implement the similar change for qcom part. Maybe
-> you can refactor it too?)
+On Thu, Feb 20, 2025 at 06:22:53PM +0800, Wenbin Yao wrote:
+> From: Qiang Yu <quic_qianyu@quicinc.com>
+> 
+> Some QCOM PCIe PHYs support no_csr reset. Unlike BCR reset which resets the
+> whole PHY (hardware and register), no_csr reset only resets PHY hardware
+> but retains register values, which means PHY setting can be skipped during
+> PHY init if PCIe link is enabled in booltloader and only no_csr is toggled
+> after that.
+> 
+> Hence, determine whether the PHY has been enabled in bootloader by
+> verifying QPHY_START_CTRL register. If it's programmed and no_csr reset is
+> available, skip BCR reset and PHY register setting to establish the PCIe
+> link with bootloader - programmed PHY settings.
+> 
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
 
-Alright. I'll do it for the Qualcomm part too in a separate commit.
+Some nitpicks below.
 
-Thanks for the feedback!
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 60 +++++++++++++++++++-----
+>  1 file changed, 49 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index 219266125cf2..6938b72df7fa 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -2805,6 +2805,7 @@ struct qmp_pcie {
+>  
+>  	const struct qmp_phy_cfg *cfg;
+>  	bool tcsr_4ln_config;
+> +	bool skip_init;
+>  
+>  	void __iomem *serdes;
+>  	void __iomem *pcs;
+> @@ -3976,7 +3977,9 @@ static int qmp_pcie_init(struct phy *phy)
+>  {
+>  	struct qmp_pcie *qmp = phy_get_drvdata(phy);
+>  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> +	void __iomem *pcs = qmp->pcs;
+>  	int ret;
+> +	bool phy_initialized;
+>  
+>  	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
+>  	if (ret) {
+> @@ -3984,10 +3987,18 @@ static int qmp_pcie_init(struct phy *phy)
+>  		return ret;
+>  	}
+>  
+> -	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+> -	if (ret) {
+> -		dev_err(qmp->dev, "reset assert failed\n");
+> -		goto err_disable_regulators;
+> +	phy_initialized = !!(readl(pcs + cfg->regs[QPHY_START_CTRL]));
+> +	qmp->skip_init = qmp->nocsr_reset && phy_initialized;
+> +	/*
+> +	 * Toggle BCR reset for PHY that doesn't support no_csr
+> +	 * reset or has not been initialized
 
-Best regards,
-Ivaylo
+Please make use of 80 column width.
 
-> Other than that LGTM.
->
->> +		snps_eusb2_hsphy_write_mask(phy->base, EXYNOS_USB_PHY_CFG_PLLCFG0,
->> +					    PHY_CFG_PLL_FB_DIV_19_8_MASK,
->> +					    FIELD_PREP(PHY_CFG_PLL_FB_DIV_19_8_MASK,
->> +						       DIV_19_8_19_2_MHZ_VAL));
->> +
->> +		snps_eusb2_hsphy_write_mask(phy->base, EXYNOS_USB_PHY_CFG_PLLCFG1,
->> +					    EXYNOS_PHY_CFG_PLL_FB_DIV_11_8_MASK,
->> +					    EXYNOS_DIV_11_8_19_2_MHZ_VAL);
->> +		break;
->> +
->> +	case 20000000:
->> +		snps_eusb2_hsphy_write_mask(phy->base, EXYNOS_USB_PHY_HS_PHY_CTRL_COMMON,
->> +					    FSEL_MASK,
->> +					    FIELD_PREP(FSEL_MASK, FSEL_20_MHZ_VAL));
->> +
->> +		snps_eusb2_hsphy_write_mask(phy->base, EXYNOS_USB_PHY_CFG_PLLCFG0,
->> +					    PHY_CFG_PLL_FB_DIV_19_8_MASK,
->> +					    FIELD_PREP(PHY_CFG_PLL_FB_DIV_19_8_MASK,
->> +						       DIV_19_8_20_MHZ_VAL));
->> +
->> +		snps_eusb2_hsphy_write_mask(phy->base, EXYNOS_USB_PHY_CFG_PLLCFG1,
->> +					    EXYNOS_PHY_CFG_PLL_FB_DIV_11_8_MASK,
->> +					    EXYNOS_DIV_11_8_20_MHZ_VAL);
->> +		break;
->> +
+> +	 */
+> +	if (!qmp->skip_init) {
+> +		ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+> +		if (ret) {
+> +			dev_err(qmp->dev, "reset assert failed\n");
+> +			goto err_disable_regulators;
+> +		}
+>  	}
+>  
+>  	ret = reset_control_assert(qmp->nocsr_reset);
+> @@ -3998,10 +4009,12 @@ static int qmp_pcie_init(struct phy *phy)
+>  
+>  	usleep_range(200, 300);
+>  
+> -	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
+> -	if (ret) {
+> -		dev_err(qmp->dev, "reset deassert failed\n");
+> -		goto err_assert_reset;
+> +	if (!qmp->skip_init) {
+> +		ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
+> +		if (ret) {
+> +			dev_err(qmp->dev, "reset deassert failed\n");
+> +			goto err_assert_reset;
+> +		}
+>  	}
+>  
+>  	ret = clk_bulk_prepare_enable(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
+> @@ -4011,7 +4024,8 @@ static int qmp_pcie_init(struct phy *phy)
+>  	return 0;
+>  
+>  err_assert_reset:
+> -	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+> +	if (!qmp->skip_init)
+> +		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+>  err_disable_regulators:
+>  	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+>  
+> @@ -4023,7 +4037,10 @@ static int qmp_pcie_exit(struct phy *phy)
+>  	struct qmp_pcie *qmp = phy_get_drvdata(phy);
+>  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>  
+> -	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+> +	if (qmp->nocsr_reset)
+> +		reset_control_assert(qmp->nocsr_reset);
+> +	else
+> +		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+>  
+>  	clk_bulk_disable_unprepare(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
+>  
+> @@ -4042,6 +4059,13 @@ static int qmp_pcie_power_on(struct phy *phy)
+>  	unsigned int mask, val;
+>  	int ret;
+>  
+> +	/*
+> +	 * Write CSR register for PHY that doesn't support no_csr
+> +	 * reset or has not been initialized
 
+Same here.
+
+> +	 */
+> +	if (qmp->skip_init)
+> +		goto skip_tbls_init;
+> +
+>  	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+>  			cfg->pwrdn_ctrl);
+>  
+> @@ -4053,6 +4077,7 @@ static int qmp_pcie_power_on(struct phy *phy)
+>  	qmp_pcie_init_registers(qmp, &cfg->tbls);
+>  	qmp_pcie_init_registers(qmp, mode_tbls);
+>  
+> +skip_tbls_init:
+>  	ret = clk_bulk_prepare_enable(qmp->num_pipe_clks, qmp->pipe_clks);
+>  	if (ret)
+>  		return ret;
+> @@ -4063,6 +4088,9 @@ static int qmp_pcie_power_on(struct phy *phy)
+>  		goto err_disable_pipe_clk;
+>  	}
+>  
+> +	if (qmp->skip_init)
+> +		goto skip_serdes_start;
+> +
+>  	/* Pull PHY out of reset state */
+>  	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+>  
+> @@ -4072,6 +4100,7 @@ static int qmp_pcie_power_on(struct phy *phy)
+>  	if (!cfg->skip_start_delay)
+>  		usleep_range(1000, 1200);
+>  
+> +skip_serdes_start:
+>  	status = pcs + cfg->regs[QPHY_PCS_STATUS];
+>  	mask = cfg->phy_status;
+>  	ret = readl_poll_timeout(status, val, !(val & mask), 200,
+> @@ -4096,7 +4125,15 @@ static int qmp_pcie_power_off(struct phy *phy)
+>  
+>  	clk_bulk_disable_unprepare(qmp->num_pipe_clks, qmp->pipe_clks);
+>  
+> -	/* PHY reset */
+> +	/* When PHY is powered off, only qmp->nocsr_reset needs to be checked.
+
+s/'When PHY is powered off,'/'While powering off the PHY,'
+
+> +	 * In this way, no matter whether the PHY settings were initially
+> +	 * programmed by bootloader or PHY driver itself, we can reuse them
+
+It is really possible to have bootloader not programming the init sequence for
+no_csr reset platforms? The comment sounds like it is possible. But I heard the
+opposite.
+
+> +	 * when PHY is powered on next time.
+> +	 */
+> +	if (qmp->nocsr_reset)
+> +		goto skip_phy_deinit;
+> +
+> +		/* PHY reset */
+
+Spurious tab before the start of the comment.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
