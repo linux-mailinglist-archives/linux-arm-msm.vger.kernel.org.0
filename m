@@ -1,79 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-49155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91DA3A41B9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:50:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49A1AA41BC6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 11:56:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B9693A4B31
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:48:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 338F2189416A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 10:55:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA3872566F2;
-	Mon, 24 Feb 2025 10:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89393257454;
+	Mon, 24 Feb 2025 10:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XORNgn+I"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lFgN5zLL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037BB33993;
-	Mon, 24 Feb 2025 10:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD381AD3E0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 10:55:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740394132; cv=none; b=n4q/iRmgj98A9sVs+3QHbiNaKNjYgGJZ6zWGuGsTnwKVEXXYWuQoM6Jp0N/fKizIDzUEUpe0lJWKWk/kOvrPguRjVIYlVuBevY1rvLiyzdYEaE4vb90KdnaTZI6LkyWYMfZ9CPSQMo7v91+7+Fm6ynDPvliGh2Ch2u+rP2e23go=
+	t=1740394510; cv=none; b=qyVVU5GmQi0skeqK6FBH6DtVMZU+lEcF6pZgiapoqocqyamL7N0tJy2sxEzP7tOSySg/P9jII26sRw2NxAQBDqXvJ/CpzvqeNmZoxBF8KH8+b7z6Z/k4CBI1nbMATYYjx7neZUL7QRJFk5xrjVkpyMGEFZBjlQct0C9MAWnN4p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740394132; c=relaxed/simple;
-	bh=s6OsMqvoKL7x+5KoMhDVeKNmQJE3PLkhy3vAbympfbA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U6d0tjv6HQmibja3C/pnQaKMf/Mlq6HdlCyp99aZ2/h128bIZPbNsSjhKjh6ak7Vmyp8zSV0KnAeVxRoTvzHJTpgrKPS6b1OfQPtRNLRIt6OxYuyS7y9jkCs5Ez0mYxno6cWI5cFxqhMQqW+KgwEbVAPd7tT4mKj3/bhyQri7RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XORNgn+I; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4399d14334aso36851865e9.0;
-        Mon, 24 Feb 2025 02:48:50 -0800 (PST)
+	s=arc-20240116; t=1740394510; c=relaxed/simple;
+	bh=l0bNRcWw2GffP61aokgJT5WZ+wFeJ02jEdzQTThNDHY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=KW7f9yssBQmCT+bqCTW6s6otxdxpdubiUAArFhEMLGLSU1CbGxDJUZUOxQEKCA5J5edaT0GlxQf38TThyV7y43dxCo7EUc6Am03Y16yYR9pZi68Jb+rtmVmOAT9gujM6SEHsSs9US9VDLV1mXVr9Uigd6Y6JAXkTA4LZusp7dw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lFgN5zLL; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-38f3ee8a119so2036714f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 02:55:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740394129; x=1740998929; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sSmks02sU0pz6NtlK+7aTkPg3Il2n2N4xYhuuXfu8rM=;
-        b=XORNgn+I4WUe8CznlLm3orcQIebxyrwpOK2SsuMdyrU/BnPkeU17ZlhW5ik61iYYY8
-         uYWrPb4qk3iqZ6p2vOHl0sA312mM0vpxXTz9owBTXVOEd6zwBmRhM/Bo6STzFdwXkwNz
-         PXzsCGdTONIt4KrOE73bgPB8iRS5Z9BE1Bpk+3gy1Zc3Ie8ugLyWmzo4QxwK207gsRsu
-         FMHtOzwDhNQcdfZaCQr9OoM2SlbbpOnhZRCHZSPPtltchoMikm0q4xm4NPFBz/MsCO5w
-         lV9ByGen/IsT0gcG4uaqR9THIe8gk5/1l+rkR3IP3khxEOLPlCfr+SJaSu+4TYhJp6KD
-         ntSg==
+        d=linaro.org; s=google; t=1740394506; x=1740999306; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4Iot9I4h4jJMqZbR9/3Iio7a6IBbtlOgx6s1kh41LTE=;
+        b=lFgN5zLLAaYUHc71SlmY2dJV91kfZxzOyLQDFd2AOaxZMHkBmlQx1pZN5V90bL44i7
+         +b2sENSUIejUuW53MpR5UjSbHlmb6pc9DOeuYt22+fVmHV0YdFhQ8hgAVBJTDKlVA0y3
+         PCb8QTBPOk9pO8wkfTgwONLXJtDts7OHUQG7hZdxTjTME15Hmst6vj1AYTR1zd5RwFvs
+         qttIu90THniQLLTuiezTOtzd+iDvSM0jRuKWH+DlSYHaabB+X5tj73vQMT/ByX4tsvTM
+         dQ/GYwAVAHQnhXoWiIKZDyJ/95MlLV6cTBiRZ8trHHOdLW2aw0DO/rDj2fxYF4RRtfGH
+         r/Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740394129; x=1740998929;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sSmks02sU0pz6NtlK+7aTkPg3Il2n2N4xYhuuXfu8rM=;
-        b=BdAWmp1Sp2px7bWfzJmvY2ZK+9eTOPiKC5CcnsMk3UucYEc9GpzYJ4a1tcNTomdQz/
-         9xFS7Q5W9N9OepSD7ulb/DiD+cAsa4lujBuLnZH4E6bL9YsvW0FmVOlfT8E8/l9ufhkO
-         A1nwiwg6y/FFMD1zoKJkfTnBjPcYEFFHYI8wlMEHVX3CGpZPWR657FdcUiMwtSjFEuy3
-         ov1ci0B/r5GwDbX2yZ07nspnrv54v6jw4vxTNUKLgivXExLbLQJIjDBhsTbd3Cv0MXHi
-         vILDjhINbnszkZQhxbnNIG9Osy79vxmKPlHNWxK17RGxLmf3bXFQ/pFXPz4uCTgCdjx3
-         Kosw==
-X-Forwarded-Encrypted: i=1; AJvYcCU7bDypMsSram8WMgdyZRcTla4av49Up73+nUSiCUOP3PKZloBrWHD+XQ7ebDuSfEe18eJ9dQK0txUqa+HPSw==@vger.kernel.org, AJvYcCVAatnpi1yz3lwKUgEm467CxL94Gu6Bjyj0LpkOt3OZBCUkwmhPkL5ZHUoNjaiBPmv4eMvkqVw7zou+@vger.kernel.org, AJvYcCVTi3fUGtkJmVv1slaG08/6+2aOhlvrPM7FiG1jmG7WKGFgwdEKs7h/zbuPDeiTSWSO9Ts61jEVSayD4gJRdp6pmgM=@vger.kernel.org, AJvYcCXBEm3smhru4uYwBDW6tGfDMNGed0cttECaiUMnb5tb/Dx7FmK7np19aQDkpnpkK6fB8oZD5Kh8SVCoqR+c@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7XYyy97LdoUX+uzQm1fBDyQqZEUFjjTKURQr8L0s3V/3J3miv
-	wFb/KC2mE3LPEjVpIEdKCF0FmG63VA7f2Q5w8ZTHDxrBChroO2YX
-X-Gm-Gg: ASbGncvpwXB09akTP/x10tSFFBQlw3Hs9Sp7O7dyqyutrqIvcqXkC4pdR/FtTpvP76U
-	3RG5/n2nyLt4utFdJXBOSUxtPcziOxj9HAG+DF7I0o5LRhTBp96kGr48j5ACxTRHsadmqtBiI0l
-	vRuOo0vT3MIsDrFh65RdjxYslTRw3+jg0+mS0OcX7k3liVbsInsLzsacPvBPDLNSB4rC3/lk6P1
-	k8U8lVRHPibSA040FfqFQrIUHCGsdo1fkQbjfPLmgvjdgkhs1iuevQKx3UbEll8cFllK1DuMMlB
-	Vn1Xb5FYQ0bSN0SQiDHm0aahdLaqoSmCvy1r6Xx6KZ+LuXoYaSHFGKiPKzZP6D0A1wc=
-X-Google-Smtp-Source: AGHT+IH22dUu6cq5GnZj2ahBsH99nikrHZTprN2kXwautV7u6WDRYUVZbgvuJyXenM0CCPaMHdFeZg==
-X-Received: by 2002:a05:600c:154a:b0:439:44eb:2d81 with SMTP id 5b1f17b1804b1-439ae1f34f8mr103722245e9.15.1740394128909;
-        Mon, 24 Feb 2025 02:48:48 -0800 (PST)
-Received: from [172.16.20.186] (62-73-104-42.ip.btc-net.bg. [62.73.104.42])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-439b02d53e8sm101787135e9.12.2025.02.24.02.48.47
+        d=1e100.net; s=20230601; t=1740394506; x=1740999306;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4Iot9I4h4jJMqZbR9/3Iio7a6IBbtlOgx6s1kh41LTE=;
+        b=sLCWlLSnvDEYaGQcFJzL+ZWMwLAkkElbVvy0xkOpMPskfbinVUz7LBAo+5qjedC8G1
+         o/1xGA5UBb4Tqelnjl6muBKXRfC9f5dyEbblhqR7WJ5eIUY1zJo+7oeswOQzi5+27i4c
+         OlQzrFtb2GBxCo/EbMEYft75oTjs81+1FNzHR0Q5bis23a0n6FHBWb9OTU7FqiKPNBrO
+         UB01Qk6tkM33TVkvVTmOQBgb1yS0cu4OK1zoM0QOpAz20cg7wIT98fxr6L2e86aMw1xx
+         awdbUDsXJaX0jslbetr6Z+FU4nCMb99etLJBF09gHguOysLBGaLhHKx88jdyY5MLMqmi
+         S26Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXCsHtbXlP+DdNRJVhGRdyMTQJNKzDyeWbHfEeVD5nfxRElmIHnpzJ8HElXbFtP1QY1aJRtf2jKoWvE0jwd@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywt3D/WfYl3Y5GQrwnTP2D3/xgdN+p+pPR5hpcLQ09PDFc17RPI
+	63ksXXMKzRXo6yce12iQkGqmKdhqND+2+hWjDIVUEp9+HzzK6pyg8SVgGeApTCI=
+X-Gm-Gg: ASbGnctaeqmULxfj664a24P45mUQ0iF8vP1FHw1WqPN9s8NaEV/Cd7qF2Nz7RlZPMpG
+	Yhdid+AYZCsungUMT2Y41lWUV+3JWzp1c8uNHdrSIbpS0q04XJz3UkqiSfZWl1HVV5p3Fr1VEzP
+	+J0lpjEx0Fw0kPYf+BM3RFRd0N2Us3cnEz/U7oONd5EBbN50uPOofCwKIAGIuvQCJmbqQnjE69F
+	Y1eL3sE/4vhZF3p0wJLXqkKeZbia/4xl9TUK1LpA/g2bZi5ZiA+lLxpSzWg027GyGWwuy6lFcdW
+	ODwmW7m6qy5zim6oxkUzs3BP7EnrqKdE3uwCApYHS0kseTCDjzX+wH3pFzG8A7OEgSj8k0AJsVr
+	Qxc8=
+X-Google-Smtp-Source: AGHT+IE4j4S+EDiD5wh2IMuUEhCY86d7JCH8Dc3GdjFV6vdXtjgVdXLV1ClcAd5tybFFKQM3S7o/Bw==
+X-Received: by 2002:a5d:5985:0:b0:38f:4808:b9f with SMTP id ffacd0b85a97d-38f7085c617mr10519652f8f.47.1740394505896;
+        Mon, 24 Feb 2025 02:55:05 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:825b:5392:ef70:cc0b? ([2a01:e0a:982:cbb0:825b:5392:ef70:cc0b])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259f7979sm30904426f8f.83.2025.02.24.02.55.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Feb 2025 02:48:48 -0800 (PST)
-Message-ID: <a4f63721-d094-4eda-b68a-6ef62ff54680@gmail.com>
-Date: Mon, 24 Feb 2025 12:48:46 +0200
+        Mon, 24 Feb 2025 02:55:05 -0800 (PST)
+Message-ID: <d3067b8e-38fe-48b0-b031-8aacd1aedca4@linaro.org>
+Date: Mon, 24 Feb 2025 11:55:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,100 +84,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] dt-bindings: phy: add
- samsung,exynos2200-usbcon-phy schema file
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 5/8] phy: phy-snps-eusb2: make repeater optional
+To: Abel Vesa <abel.vesa@linaro.org>,
+ Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
 Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
  <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Abel Vesa <abel.vesa@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+ Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
- <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
- <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
-From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-In-Reply-To: <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
-Content-Type: text/plain; charset=UTF-8
+ <20250223122227.725233-6-ivo.ivanov.ivanov1@gmail.com>
+ <Z7xF66TctF2wuoGj@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <Z7xF66TctF2wuoGj@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2/24/25 10:56, Krzysztof Kozlowski wrote:
-> On Sun, Feb 23, 2025 at 02:22:22PM +0200, Ivaylo Ivanov wrote:
->> The Exynos2200 SoC has a USB controller PHY, which acts as an
->> intermediary between a USB controller (typically DWC3) and other PHYs
->> (UTMI, PIPE3). Add a dt-binding schema for it.
+On 24/02/2025 11:11, Abel Vesa wrote:
+> On 25-02-23 14:22:24, Ivaylo Ivanov wrote:
+>> Some platforms initialize their eUSB2 to USB repeater in the previous
+>> stage bootloader and leave it in a working state for linux. Make the
+>> repeater optional in order to allow for reusing that state until
+>> proper repeater drivers are introduced.
 >>
 >> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
 >> ---
->>  .../phy/samsung,exynos2200-usbcon-phy.yaml    | 76 +++++++++++++++++++
->>  1 file changed, 76 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
-> You have undocumented dependencies which prevent merging this file.
-> First, dependencies have to be clearly expressed.
+>>   drivers/phy/phy-snps-eusb2.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/phy/phy-snps-eusb2.c b/drivers/phy/phy-snps-eusb2.c
+>> index 4e5914a76..dcc69c00a 100644
+>> --- a/drivers/phy/phy-snps-eusb2.c
+>> +++ b/drivers/phy/phy-snps-eusb2.c
+>> @@ -461,7 +461,7 @@ static int snps_eusb2_hsphy_probe(struct platform_device *pdev)
+>>   		return dev_err_probe(dev, ret,
+>>   				     "failed to get regulator supplies\n");
+>>   
+>> -	phy->repeater = devm_of_phy_get_by_index(dev, np, 0);
+>> +	phy->repeater = devm_of_phy_optional_get(dev, np, 0);
+> 
+> Maybe make it optional based on compatible or something?
 
-They are, in the cover letter.
+It's already optional in the bindings:
+Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
 
-> Second, you should
-> rather decouple the code from header dependencies, otherwise this cannot
-> be merged for current release (just use clocks with long names, without IDs).
+So it's:
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Sure
-
->
->> diff --git a/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->> new file mode 100644
->> index 000000000..7d879ec8b
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->> @@ -0,0 +1,76 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/phy/samsung,exynos2200-usbcon-phy.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Exynos2200 USB controller PHY
->> +
->> +maintainers:
->> +  - Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->> +
->> +description:
->> +  Exynos2200 USB controller PHY is an intermediary between a USB controller
->> +  (typically DWC3) and other PHYs (UTMI, PIPE3).
-> Isn't this the same as usbdrd phy? see: samsung,usb3-drd-phy.yaml
-
-It's not (I think). There's a few reasons I've decided to make this separate
-from the usb3-drd-phy bindings and exynos5-usbdrd driver:
-
-1. This PHY does not provide UTMI and PIPE3 on its own. There's no tuning
-for them, and all that is needed from it is to disable HWACG, assert/
-deassert reset and force bvalid/vbusvalid. After that SNPS eUSB2
-initialization can be done and USB2 works. If the USBCON phy is not set
-up before the eUSB2 one, the device hangs, so there is definitely a
-dependancy between them. For PIPE3 we'd need to control the pipe3
-attaching/deattaching and then initialize the synopsys USBDP combophy.
-
-2. With the way it's modelled, we need to parse phandles from eUSB2 and
-USBDP to the controller. Adding that to the usbdrd driver would be...
-weird. It makes more sense to model it as a separate driver, because
-it functions in a different way.
-
-I've described this in the cover letter as well.
-
-Best regards,
-Ivaylo
-
->
-> I think there is no PHY between DWC3 and UTMI/PIPE. There is a PHY
-> controller (so the samsung,usb3-drd-phy.yaml) which we call here the
-> phy.
->
->
-> Best regards,
-> Krzysztof
->
+> 
+>>   	if (IS_ERR(phy->repeater))
+>>   		return dev_err_probe(dev, PTR_ERR(phy->repeater),
+>>   				     "failed to get repeater\n");
+>> -- 
+>> 2.43.0
+>>
+> 
 
 
