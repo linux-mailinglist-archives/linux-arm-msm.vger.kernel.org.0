@@ -1,121 +1,371 @@
-Return-Path: <linux-arm-msm+bounces-49107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67073A4144C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 04:46:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1A32A41456
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 04:53:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D726E1893C8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 03:46:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF20816B0AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2025 03:53:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC5EC1DF73D;
-	Mon, 24 Feb 2025 03:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CBE215696E;
+	Mon, 24 Feb 2025 03:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RkR+ERFx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CeUtgmJ4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892271DE4D3;
-	Mon, 24 Feb 2025 03:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5C52F37;
+	Mon, 24 Feb 2025 03:53:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740368747; cv=none; b=lYbIURcFIdXDWiTEKMEIJcVruvTEIyxXLjPnKyQYmqaQn54jmyYMV35keusWchjGMTyhPsKZQZVzHRPlxOWIzzAUvZtn3aBXmfaotr7J0WPLBdhJwbIMyzvR8UD0v9ptO50WwS+svDJpeq9S5QUiJr8Piefw8Zf+QbQdn2tPb20=
+	t=1740369218; cv=none; b=e6NjqHk1KNLgg40LyjCLsHFsVFPdkhszQkOnjoWanx45lf+ygNtVjih520cETDMfMtF92CFdOZ8E/tHUjwjmVcXptMhrNmUNe84HuLYMkCxLTGIM/aLMP9J2XY0XZcPAl6gawipHkZuhPR+z/Zws5vY0Ggy0MNq2MKlMuRV6sIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740368747; c=relaxed/simple;
-	bh=6a0qjdqlzvGzQVstllexhGYhGqe+l900EvniR1D7J4g=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=MZlduORlIkAWXAsNBymZ6D2T3jU5lglU/az/H05lgGt1MdTR9Bb08E8fT9FfgSV8fCS/I8B0fz8WtaaHdarD8l1e7+/vTnJ9Wwx5/fcSLV111NU0u/LyvFOm0AQ7ZDXn8shaYrYxPxmeLTQ/5qrU4CNCFr+asZFMXYjtgqLxQ7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RkR+ERFx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D322C4CEE8;
-	Mon, 24 Feb 2025 03:45:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740368747;
-	bh=6a0qjdqlzvGzQVstllexhGYhGqe+l900EvniR1D7J4g=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=RkR+ERFxNZmnBs2BeeB0SYJ1Z1A24/AlraglZB+UaMuqntfYU2Uar+pP3y+iob1ik
-	 TNPWnR06qmZut+a++1LJvHnNlxVYnMpOVMW9GcXLteZjsedOkqhVuGF8kwBC7iaY/c
-	 as3BPFNKnYsVyVKU8N6W1NyTISlx4tVvaSjiOSlE+enNGXks/RxQAEyel1MzddQVt3
-	 2XeYg4SuIp6ZseOLWkUXVfjtdQfuJ4f36xltML4JACN2cWtMDp8VlxjSlGJHrAWObq
-	 aoCp8FztTrFLZzeKus2vDfG1t0hC/UY5IfvD+T08OTK0m44Sajjf+y6CkJtwxBpVAd
-	 l12y9aAZjgAbQ==
-Date: Sun, 23 Feb 2025 21:45:46 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1740369218; c=relaxed/simple;
+	bh=BgGAI3pxXU1Uoocpx4XfCjTkfUCi0/ElCAZHaydlay8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NGCbCygRng3UeGuLN5xbx8QgEmNFrQni2yKsuJ5RVFr6a/4ZW4qSWvGLNg6cnbVvEbDYWfo1YIlYka9x/uZa0NSl5jGDRihx8FPRaKBrrAGHAm0Cr4dzMqeKuohP00aRtwnHTm4KRKPIdOwIQu8+torRwYqvbQDEcli2eJwmMy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CeUtgmJ4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51NM4Hin001740;
+	Mon, 24 Feb 2025 03:53:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ALU04tsqdZsRPiZwa5Y6ZXqz2LMFNuvmWWw14DcDdbI=; b=CeUtgmJ48KQhhit0
+	84ugcNOGp9lmAOhyD1xbKk9M3uGwFjHtGnIKI05EblYKrpy/G34i+A1GYHv5J4xf
+	nlfi3dxyKp3qdmn4n0E+KguyGcbNjhuSJJvvl4mDSvrsiyTUUu+EKqbASV2uITvW
+	lg9zTGIlYkE7A494ycr9U9E9JKmNwiaxuLuf9hpEa0XUKmfP8EAzHbiYfaO1dAxg
+	csMeNSaW7jvmhLyDNhRF2W4QC83c3p5mVASpuES1eilWi7kJ4NF44+604WrbgCLM
+	i253xFM8polYGnml+/uObqMtj1+iQmEoCaWd4rqYhYAsIa8M/e/7EqJsIm5BrNYl
+	UsvECg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y3xnbq2w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Feb 2025 03:53:27 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51O3rQNW005913
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Feb 2025 03:53:26 GMT
+Received: from [10.110.85.197] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 23 Feb
+ 2025 19:53:26 -0800
+Message-ID: <a49164d9-50ec-4362-954d-5667725d1a94@quicinc.com>
+Date: Sun, 23 Feb 2025 19:53:25 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Lee Jones <lee@kernel.org>, 
- linux-gpio@vger.kernel.org, Joerg Roedel <joro@8bytes.org>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- dri-devel@lists.freedesktop.org, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
- Maxime Ripard <mripard@kernel.org>, linux-clk@vger.kernel.org, 
- freedreno@lists.freedesktop.org, Stephan Gerhold <stephan@gerhold.net>, 
- Thomas Zimmermann <tzimmermann@suse.de>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, 
- =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
- Stephen Boyd <sboyd@kernel.org>, Simona Vetter <simona@ffwll.ch>, 
- Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org, 
- David Airlie <airlied@gmail.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Rob Clark <robdclark@gmail.com>, iommu@lists.linux.dev, 
- devicetree@vger.kernel.org
-To: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-In-Reply-To: <20250224-msm8937-v3-7-dad7c182cccb@mainlining.org>
-References: <20250224-msm8937-v3-0-dad7c182cccb@mainlining.org>
- <20250224-msm8937-v3-7-dad7c182cccb@mainlining.org>
-Message-Id: <174036874208.769324.12190196634420728570.robh@kernel.org>
-Subject: Re: [PATCH v3 7/8] dt-bindings: arm: qcom: Add Xiaomi Redmi 3S
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] drm/msm/dpu: allow sharing SSPP between planes
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20241215-dpu-share-sspp-v5-1-665d266183f9@linaro.org>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20241215-dpu-share-sspp-v5-1-665d266183f9@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: J4cGPwJ5op0wOEYXkWlTFI3bXNF8R20e
+X-Proofpoint-GUID: J4cGPwJ5op0wOEYXkWlTFI3bXNF8R20e
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-24_01,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
+ suspectscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 malwarescore=0 phishscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2502240026
 
 
-On Mon, 24 Feb 2025 02:56:22 +0100, Barnabás Czémán wrote:
-> Document Xiaomi Redmi 3S (land).
-> Add qcom,msm8937 for msm-id, board-id allow-list.
+
+On 12/15/2024 5:10 AM, Dmitry Baryshkov wrote:
+> Since SmartDMA planes provide two rectangles, it is possible to use them
+> to drive two different DRM planes, first plane getting the rect_0,
+> another one using rect_1 of the same SSPP. The sharing algorithm is
+> pretty simple, it requires that each of the planes can be driven by the
+> single rectangle and only consequetive planes are considered.
 > 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+
+consequetive - > consecutive (this was highlighted in v4 too)
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
+> This patch has been deferred from v5 of virtual wide patchset to
+> simplify the merging path. Now as the wide planes have been merged, pick
+> up the patch that allows sharing of the SSPPs between two planes.
+> ---
+> Changes since v4:
+> - Rebased on top of the current msm-next-lumag
+> - Renamed dpu_plane_try_multirect() to dpu_plane_try_multirect_shared()
+>    (Abhinav)
+> - Link to v4: https://lore.kernel.org/dri-devel/20240314000216.392549-11-dmitry.baryshkov@linaro.org/
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 153 +++++++++++++++++++++++++-----
+>   1 file changed, 128 insertions(+), 25 deletions(-)
 > 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 098abc2c0003cde90ce6219c97ee18fa055a92a5..2fd21d27df4741a8d942f9c9bae989f319cfb8d8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -887,10 +887,9 @@ static int dpu_plane_atomic_check_nosspp(struct drm_plane *plane,
+>   	return 0;
+>   }
+>   
+> -static int dpu_plane_is_multirect_parallel_capable(struct dpu_hw_sspp *sspp,
+> -						   struct dpu_sw_pipe_cfg *pipe_cfg,
+> -						   const struct msm_format *fmt,
+> -						   uint32_t max_linewidth)
+> +static int dpu_plane_is_multirect_capable(struct dpu_hw_sspp *sspp,
+> +					  struct dpu_sw_pipe_cfg *pipe_cfg,
+> +					  const struct msm_format *fmt)
+>   {
+>   	if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
+>   	    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect))
+> @@ -902,10 +901,6 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_hw_sspp *sspp,
+>   	if (MSM_FORMAT_IS_YUV(fmt))
+>   		return false;
+>   
+> -	if (MSM_FORMAT_IS_UBWC(fmt) &&
+> -	    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth / 2)
+> -		return false;
+> -
+>   	if (!test_bit(DPU_SSPP_SMART_DMA_V1, &sspp->cap->features) &&
+>   	    !test_bit(DPU_SSPP_SMART_DMA_V2, &sspp->cap->features))
+>   		return false;
+> @@ -913,6 +908,27 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_hw_sspp *sspp,
+>   	return true;
+>   }
+>   
+> +static int dpu_plane_is_parallel_capable(struct dpu_sw_pipe_cfg *pipe_cfg,
+> +					 const struct msm_format *fmt,
+> +					 uint32_t max_linewidth)
+> +{
+> +	if (MSM_FORMAT_IS_UBWC(fmt) &&
+> +	    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth / 2)
+> +		return false;
+> +
+> +	return true;
+> +}
+> +
+> +static int dpu_plane_is_multirect_parallel_capable(struct dpu_hw_sspp *sspp,
+> +						   struct dpu_sw_pipe_cfg *pipe_cfg,
+> +						   const struct msm_format *fmt,
+> +						   uint32_t max_linewidth)
+> +{
+> +	return dpu_plane_is_multirect_capable(sspp, pipe_cfg, fmt) &&
+> +		dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth);
+> +}
+> +
+> +
+>   static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
+>   				       struct drm_atomic_state *state,
+>   				       const struct drm_crtc_state *crtc_state)
+> @@ -1001,6 +1017,69 @@ static bool dpu_plane_try_multirect_parallel(struct dpu_sw_pipe *pipe, struct dp
+>   	return true;
+>   }
+>   
+> +static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
+> +					  struct dpu_plane_state *prev_pstate,
+> +					  const struct msm_format *fmt,
+> +					  uint32_t max_linewidth)
+> +{
+> +	struct dpu_sw_pipe *pipe = &pstate->pipe;
+> +	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> +	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+> +	struct dpu_sw_pipe *prev_pipe = &prev_pstate->pipe;
+> +	struct dpu_sw_pipe_cfg *prev_pipe_cfg = &prev_pstate->pipe_cfg;
+> +	const struct msm_format *prev_fmt = msm_framebuffer_format(prev_pstate->base.fb);
+> +	u16 max_tile_height = 1;
+> +
+> +	if (prev_pstate->r_pipe.sspp != NULL ||
+> +	    prev_pipe->multirect_mode != DPU_SSPP_MULTIRECT_NONE)
+> +		return false;
+> +
+> +	if (!dpu_plane_is_multirect_capable(pipe->sspp, pipe_cfg, fmt) ||
+> +	    !dpu_plane_is_multirect_capable(prev_pipe->sspp, prev_pipe_cfg, prev_fmt))
+> +		return false;
+> +
+> +	if (MSM_FORMAT_IS_UBWC(fmt))
+> +		max_tile_height = max(max_tile_height, fmt->tile_height);
+> +
+> +	if (MSM_FORMAT_IS_UBWC(prev_fmt))
+> +		max_tile_height = max(max_tile_height, prev_fmt->tile_height);
+> +
+> +	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +	r_pipe->sspp = NULL;
+> +
+> +	if (dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth) &&
+> +	    dpu_plane_is_parallel_capable(prev_pipe_cfg, prev_fmt, max_linewidth) &&
+> +	    (pipe_cfg->dst_rect.x1 >= prev_pipe_cfg->dst_rect.x2 ||
+> +	     prev_pipe_cfg->dst_rect.x1 >= pipe_cfg->dst_rect.x2)) {
+> +		pipe->sspp = prev_pipe->sspp;
+> +
+> +		pipe->multirect_index = DPU_SSPP_RECT_1;
+> +		pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> +
+> +		prev_pipe->multirect_index = DPU_SSPP_RECT_0;
+> +		prev_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> +
+> +		return true;
+> +	}
+> +
+> +	if (pipe_cfg->dst_rect.y1 >= prev_pipe_cfg->dst_rect.y2 + 2 * max_tile_height ||
+> +	    prev_pipe_cfg->dst_rect.y1 >= pipe_cfg->dst_rect.y2 + 2 * max_tile_height) {
+> +		pipe->sspp = prev_pipe->sspp;
+> +
+> +		pipe->multirect_index = DPU_SSPP_RECT_1;
+> +		pipe->multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
+> +
+> +		prev_pipe->multirect_index = DPU_SSPP_RECT_0;
+> +		prev_pipe->multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
+> +
+> +		return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+>   static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   				  struct drm_atomic_state *state)
+>   {
+> @@ -1098,13 +1177,14 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
+>   static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   					      struct dpu_global_state *global_state,
+>   					      struct drm_atomic_state *state,
+> -					      struct drm_plane_state *plane_state)
+> +					      struct drm_plane_state *plane_state,
+> +					      struct drm_plane_state *prev_plane_state)
+>   {
+>   	const struct drm_crtc_state *crtc_state = NULL;
+>   	struct drm_plane *plane = plane_state->plane;
+>   	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+>   	struct dpu_rm_sspp_requirements reqs;
+> -	struct dpu_plane_state *pstate;
+> +	struct dpu_plane_state *pstate, *prev_pstate;
+>   	struct dpu_sw_pipe *pipe;
+>   	struct dpu_sw_pipe *r_pipe;
+>   	struct dpu_sw_pipe_cfg *pipe_cfg;
+> @@ -1116,6 +1196,7 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   							   plane_state->crtc);
+>   
+>   	pstate = to_dpu_plane_state(plane_state);
+> +	prev_pstate = prev_plane_state ? to_dpu_plane_state(prev_plane_state) : NULL;
+>   	pipe = &pstate->pipe;
+>   	r_pipe = &pstate->r_pipe;
+>   	pipe_cfg = &pstate->pipe_cfg;
+> @@ -1134,24 +1215,42 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   
+>   	reqs.rot90 = drm_rotation_90_or_270(plane_state->rotation);
+>   
+> -	pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> -	if (!pipe->sspp)
+> -		return -ENODEV;
+> +	if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
+> +		if (!prev_pstate ||
+> +		    !dpu_plane_try_multirect_shared(pstate, prev_pstate, fmt,
+> +						    dpu_kms->catalog->caps->max_linewidth)) {
+> +			pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> +			if (!pipe->sspp)
+> +				return -ENODEV;
+>   
+> -	if (!dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
+> -					      pipe->sspp,
+> -					      msm_framebuffer_format(plane_state->fb),
+> -					      dpu_kms->catalog->caps->max_linewidth)) {
+> -		/* multirect is not possible, use two SSPP blocks */
+> -		r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> -		if (!r_pipe->sspp)
+> +			r_pipe->sspp = NULL;
+> +
+> +			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +			r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +		}
+> +	} else {
+> +		pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> +		if (!pipe->sspp)
+>   			return -ENODEV;
+>   
+> -		pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -		pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +		if (!dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
+> +						      pipe->sspp,
+> +						      msm_framebuffer_format(plane_state->fb),
+> +						      dpu_kms->catalog->caps->max_linewidth)) {
+> +			/* multirect is not possible, use two SSPP blocks */
+> +			r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> +			if (!r_pipe->sspp)
+> +				return -ENODEV;
+>   
+> -		r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +			r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +		}
+>   	}
+>   
+>   	return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
+> @@ -1165,6 +1264,7 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+>   {
+>   	unsigned int i;
+>   	int ret;
+> +	struct drm_plane_state *prev_plane_state = NULL;
+>   
+>   	for (i = 0; i < num_planes; i++) {
+>   		struct drm_plane_state *plane_state = states[i];
+> @@ -1174,9 +1274,12 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+>   			continue;
+>   
+>   		ret = dpu_plane_virtual_assign_resources(crtc, global_state,
+> -							 state, plane_state);
+> +							 state, plane_state,
+> +							 prev_plane_state);
+>   		if (ret)
+>   			break;
+> +
+> +		prev_plane_state = plane_state;
+>   	}
 
-My bot found errors running 'make dt_binding_check' on your patch:
+We agreed to rename this to prev_adjacent_plane_state in v4. This has 
+not been addressed.
 
-yamllint warnings/errors:
+With these two changes done,
 
-dtschema/dtc warnings/errors:
-
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250224-msm8937-v3-7-dad7c182cccb@mainlining.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>   
+>   	return ret;
+> 
+> ---
+> base-commit: d82c9281189d2b27642ede2760db495379503b86
+> change-id: 20241215-dpu-share-sspp-75a566eec185
+> 
+> Best regards,
 
 
