@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-49330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 068EFA446B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:47:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA97FA44673
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:43:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55627881065
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 16:40:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 25A3919E0BB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 16:41:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A0A219E98B;
-	Tue, 25 Feb 2025 16:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1796119F471;
+	Tue, 25 Feb 2025 16:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PWLlHJIr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aPEwMU5L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF3719D892;
-	Tue, 25 Feb 2025 16:39:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E72D195381;
+	Tue, 25 Feb 2025 16:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740501570; cv=none; b=U4XynhDD4+OETOj2/h+rZLry4Ez+7p073N7mWjfuHGoDry7SCfwbE2ODQRqPF91Um7frIsPl5O9tlObfNHd/3lJ1efobZ3xP9FRW256kkAsw6wu3TXo5tBW0wnjWVKpkk0mc43/uPm57lSz1mo+wRyfSryXcdf2d/YNh7B67jR8=
+	t=1740501572; cv=none; b=uLFDPjjpwGUyS6klet9LBBl6tWUwCNzNV6YpNf2fUutlLnmaqu9q5V9nUnkbmSV7nH+dTDHiEWLoqmNhYPPxrXpSIdu+9BIOTjlzqVvC8YSXxWCsm32LnYnd96Cvbw3vn+8FG+kM7leVwe4ze98+LkBrjMFNLRkPWWxuu/e9sRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740501570; c=relaxed/simple;
-	bh=dlgcmmRAJ3MoneeImOkiyCmgGQmRXGdsz+RvU9rtPRQ=;
+	s=arc-20240116; t=1740501572; c=relaxed/simple;
+	bh=McfRBWiHvrxlSbAXFIgd05w0mHfjnH6sOxPQdNpFtrU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=D2CrjW5C1/ea4Jb73axpMKeIGZBr5TSPb018hNCJSEEDmAniPVZPMqmiVKNepEhVFt7XQ2lLGziIr7HK/MykeT7Dmn/MHhfyr7DU+mGtFe6xLhc3wAzjWHxlMLqCphUaNIYxXiZgwRqBJVW0IZGcAg3v089LjauGna9/jzra7BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PWLlHJIr; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:To:Cc; b=FkX6CE1aSH5/IO3hzmHOIreOMg2yjcFJ7UpwBBVNGpODQ32Ayhl+8eFOddwN4TBuqg6oaFY5Xrem79QLzcaIVGzZqwrx/lWolDUoyPAyMFPb5MbMH6zm0+oi0nZHu4Yo/Ej5kO+fVm8OGT9RZLwn8Y1WWWbm9QfCGSkFNrd1kqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aPEwMU5L; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-abee50621ecso67646766b.0;
-        Tue, 25 Feb 2025 08:39:28 -0800 (PST)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-aaec61d0f65so1162164366b.1;
+        Tue, 25 Feb 2025 08:39:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740501567; x=1741106367; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740501568; x=1741106368; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2f7ELYVZ6i0Dpu4rh7kF+9M0py46gZ2QUyL5S6CNu4E=;
-        b=PWLlHJIrSYHenHBM8EyZzX7NxZ2sJ7w6cK5FTHUIACfk1H1h6t8lGRp9S6l/SCIWWS
-         FZvqaRdRzsZKIqV3LlD4/7hOw+cjbCSWzBDNpyB8Y42yxLh0Y6FtoEjHx9NfFOfI+wjM
-         f9MyDWUpgzhAuB8hXjzHzXYDdR/+QGTEJZ86kEnJLuDyZiCtSzwMlt2nBSb4YzpM0qvI
-         BmoeZFoVRE06sIOSok0bJrWrPmndE8tcnC57VvNAkGMu/+Og4NfRbHruK1IkUBaW7Sp5
-         1L5b3wrZl0Y5DRAx+5bUQ4dBVe9jJz5mpnRHXWOimFBOxhLj7hqvMnbRNLSEoxgzdG7/
-         yk2w==
+        bh=291Tm+SKOCmX4o1mPt1wPVPJDAmDACgIe4TmLpUCYW4=;
+        b=aPEwMU5LN4+zlL06Lr9Hku06ahg19YR5g9m8QvBJIAUxJOTVzSjQyB3z7OPYs9ds5k
+         YBfD3lpFHf+Sv6He+ssQE2RWcb2Uq3tCO0glysQa2g2rePePDTXCbDWTddtWetHgGZI+
+         pu3PXsJvuQYlRSvfyHagZQOB1pp4wvUH2yBP2d0C20Lq6G6GB/6yuqyqy9YtHWsLMwmQ
+         qmS8ikA3+zZxbQ0S2ilDNsOEm85yOA24PQ2rJGN3X6lx1EG/VmfYJuhAWzxj3+H6abRa
+         duZeeJGqV4cFvbX8RR2ZvWyu6k+25tMj342DcNRua0ZR/hdM6mWcb9oiz4VKZ8YJqAQH
+         h4UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740501567; x=1741106367;
+        d=1e100.net; s=20230601; t=1740501568; x=1741106368;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2f7ELYVZ6i0Dpu4rh7kF+9M0py46gZ2QUyL5S6CNu4E=;
-        b=DN/RkDwIcUmq6s0Ok17lo0W5kmAYNd+NGLdFgvcNqBpYV32fDwwnRzIt7fbJPvXYgv
-         Kc0LEY70gX1Y5o2vJliCrxqXvhMraDZEArhJ8O2GK0RIWz7e7lhwesmTNuXuW5SYU0bg
-         QU647oV1Ny54j+t/cbwXlJLrnAuZyJDk7agnQi+C3NUmsYYCpevscpGjdCC52q3Qx9jT
-         z06cqT8MHHVd0oFyoGjjxzs/k1bW5QrfRfVZOZwKw97m165VvIHSTJUz/fJLuRfClauW
-         fD5yWtiTDTiPf6wO1/x7fxmB4lc11PwC2svV6oFD5+lj5n76qM0vWZV535OWBMhBvBED
-         hsCg==
-X-Forwarded-Encrypted: i=1; AJvYcCVcLhnM+U9d8ZRQu+0I4X8WnZ1lD7WpDOCQRMYcJg0yhh9hbAYiCOYrmfa2GmRB7cItuVYGxKUdd4AN6/ir@vger.kernel.org, AJvYcCVfuH4UA0jhMAwy6IdODWxFX7kgxznOtIPpMJ5hp8/nWAW1c1342X838y8Fdo44OoteglhQ2ItSe1xp@vger.kernel.org, AJvYcCWogPteEjjYudPnjyUJYl3O8MZ9cDHOzrYA8E/Bf7276XSKmdJGljxwS5vA2MCkbtAVR8BZdoNl45LlkR4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwdAmn9uqUrMCr26oQPaoeO99wOQta5JWU/GhD0+IqwvN+MrmNn
-	69Mo9cZYcE1LJTv36XNbBerYUcxr+SoU8geYQ9ibpDPs2kkC6SZ2czSE1Prh
-X-Gm-Gg: ASbGncsmgVIRhonnotAx6UHkl5eQs4k5IBSDcMzy8qNH0LTR/LqZdQdWn95yFKTDX4V
-	+V9TeD9ejHRyJQHGQV/byTK8tpyTKpxbX8vFMqCo8gO/dYjRVqE4ENTbOVpW2G8iind/mhfuwB3
-	tEqWYwoxAbsISQ2rxcAhTKjWHdO9bd7a3TNdh5KVSvGL1cSGCAheRf5tYkDvqb86UCG7Tp204od
-	7xt/dA/pgLb30if8guWkf7lOraYowMMv1qQocdvyDTafZEdFRIhVKFB7xBDdFVzTNGz1XOIdMc7
-	6a5nREpXBpWpvynicBhfTT6+
-X-Google-Smtp-Source: AGHT+IGF4yyW4f5btd8dj8kwWjdtS2hNOnzo+chzCMPgRXxopPYKcipoyhA0cS1HVSZ8LAtXOm8mQw==
-X-Received: by 2002:a17:907:1c07:b0:ab7:f221:f7a0 with SMTP id a640c23a62f3a-abc09bf5687mr1684148066b.46.1740501566533;
-        Tue, 25 Feb 2025 08:39:26 -0800 (PST)
+        bh=291Tm+SKOCmX4o1mPt1wPVPJDAmDACgIe4TmLpUCYW4=;
+        b=Qz6YSaJU6kaEsnepCHTyR5RLuP+UC4QnjgIMWS5Du0iaplCMye1t9LNBnNhGLET1ns
+         h4uR/UBr6jrMv80RXu+fVAiJx9/FT8cjM3/72FxMDAqamXFn77/1c+2PLko0yosCsOZE
+         qYY/KXPdEMmqNxHsVZeikMuj5j1Joe0KDapoU50mwLlIlucrEnoxo/O4EQrZbG6SP4jy
+         yckhXHYz2wdL6OWdfma+pGojt68Rerp3bfWpkv+XvLJ65Fmoh/ZwmTQx7qzRsEof7itj
+         DLlsWh7s0dN6FtHjssRf+ZmiAHM0k5tsVulPddUiPwdeFvbAUz/BU6MkHLMTrxoGpWuN
+         b0Kw==
+X-Forwarded-Encrypted: i=1; AJvYcCW9Er96B+TKHhBWKdUGjt2AlwQ0gSq8pcDrN4qonSjFSyIfoeGRzfWh6oKEWgLffI624RDDxkBoOKSr8Es=@vger.kernel.org, AJvYcCX14srJVHgQ5na/S/H+xjafwiBbNKBu17fDovLhIPNKVeBbSSwV2b1fMJeRQbm5IHCQ4hjYnZ6v8t7U@vger.kernel.org, AJvYcCXlvbJqahKNKj4sl8mdstvdHtNvhIoHAOqf4tydI31njeU76EFDnwLxy1cB9Al4/Q1vi0cHmpywyGsa0xMR@vger.kernel.org
+X-Gm-Message-State: AOJu0YxP+HUIrInWjKlMpZWazyhENsxrBC6iGLP/579zLrxwwoxG/OKT
+	nFTlerPi7fmajfz4pmyTUkL2lhYhqTUHLIq6OfTF3SdImPELlKeStmypjIna
+X-Gm-Gg: ASbGncudqHTxj6PPjP5go9YF47XpXKzxx8Kbn2vMi9bHpL2Od15JYMKnKmDeIl14O5G
+	Ly/3IKso+FUbaVkbxmPgFVhRlOHcqcR00mBhwUNMMVL5s/2Vp1M+uAEOg+O1htPk7nLS8WJPyoY
+	+eb31svIIKZ2gxxUljdsVD1aWyJj+ku3vO3WGrajLdzoycB+ut+JXpYFIZkwk7mhAS7wNsF97lD
+	UjQF6GkNlHzvm7jivf1BzSM56lGU8aeFG+S60045YKZvxrevWhb26+gHdArAFTGA1wF9kvzwdJj
+	mYSU1rbrXz8dfvpduVlGNnkB
+X-Google-Smtp-Source: AGHT+IFQ5F03/cjZ2VOsQ7IVrdnanVkMqF0Q+LARlZyEgHWWXsPdAjpDSj43pe7EPK4Oz4yllf4B2g==
+X-Received: by 2002:a17:907:7815:b0:abc:a40:4194 with SMTP id a640c23a62f3a-abed0c67139mr371267766b.8.1740501568102;
+        Tue, 25 Feb 2025 08:39:28 -0800 (PST)
 Received: from [127.0.1.1] ([46.53.242.22])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abed2055011sm163999866b.156.2025.02.25.08.39.25
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abed2055011sm163999866b.156.2025.02.25.08.39.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 08:39:26 -0800 (PST)
+        Tue, 25 Feb 2025 08:39:27 -0800 (PST)
 From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Tue, 25 Feb 2025 19:38:57 +0300
-Subject: [PATCH v9 06/12] arm64: dts: qcom: sdm845-starqltechn: add gpio
- keys
+Date: Tue, 25 Feb 2025 19:38:58 +0300
+Subject: [PATCH v9 07/12] arm64: dts: qcom: sdm845-starqltechn: add
+ max77705 PMIC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250225-starqltechn_integration_upstream-v9-6-a5d80375cb66@gmail.com>
+Message-Id: <20250225-starqltechn_integration_upstream-v9-7-a5d80375cb66@gmail.com>
 References: <20250225-starqltechn_integration_upstream-v9-0-a5d80375cb66@gmail.com>
 In-Reply-To: <20250225-starqltechn_integration_upstream-v9-0-a5d80375cb66@gmail.com>
 To: cros-qcom-dts-watchers@chromium.org, 
@@ -100,87 +100,237 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Dzmitry Sankouski <dsankouski@gmail.com>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1740501555; l=1907;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1740501555; l=5814;
  i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=dlgcmmRAJ3MoneeImOkiyCmgGQmRXGdsz+RvU9rtPRQ=;
- b=UuMZC1opvRVv0HZTUYAXDjosMR4N9e5Jstq81s0aW/J0NHU4df/fYQg6xviaIBrlR0naK/R6+
- Nhqs8n6nL7RC/7jl4TvYq2HWWbVDa8fhY0sQCHAPPuT1HAsvOJZCj1e
+ bh=McfRBWiHvrxlSbAXFIgd05w0mHfjnH6sOxPQdNpFtrU=;
+ b=vVlet2C71d9RDUfhgQRPFY2DgR95cdzhsprkYIFEgKFiNdP9FA9yalsgjZFETGtUuzZ7vhMDx
+ 1P7Fh2yPFdPCqZRQJuxebUUq8le4I5O5mspsjgbK0BMpCA0h5lP9oAv
 X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
  pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
 
-Add support for phone buttons.
+Add support for max77705 MFD device. Supported sub-devices:
+ charger, fuelgauge, haptic, led
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 ---
-Changes in v8:
+Changes in v9:
 - add tag: Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+- adjust haptic pwm period to match 19200 HZ, as in vendor settings
+- move charger and fuel gauge node out of mfd node
+
+Changes in v8:
+- revert: add fuelgauge reg property
+- rename chg_int_default to pmic_int_default, because used not only for
+  charging
 
 Changes in v7:
-- s/_/-/ in node name
-- rename key labels
-- move pm8998_gpios with chg_int_default pin
+- adjust fuelgauge node for max17042 driver
+  (remove monitored-battery because not supprted, rename
+   shunt resistor property)
+- reorder 'haptic' fixed regulator node
+- move 'haptic' fixed regulator node to regulators
+- change leds compatible *-led *-rgb
+- wrap leds into multi-led node
+- add fuelgauge reg property
+- wrap led properties into multi-led
+- add chg_int_default pinctrl
 
 Changes in v6:
-- refactor: s/starqltechn/sdm845-starqltechn in subject.
+- refactor: s/starqltechn/sdm845-starqltechn in subject
+- refactor: 'm' < 's', so putting motor tlmm nodes first
+
+Changes in v5:
+- fix according to binding changes
+- reorder vib_pwm node
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 130 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 130 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 5948b401165c..38c09e50ccfb 100644
+index 38c09e50ccfb..bd5c8b319ddf 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -7,9 +7,11 @@
+@@ -9,6 +9,7 @@
  
- /dts-v1/;
- 
-+#include <dt-bindings/input/linux-event-codes.h>
+ #include <dt-bindings/input/linux-event-codes.h>
  #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/leds/common.h>
  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
  #include "sdm845.dtsi"
-+#include "pm8998.dtsi"
+ #include "pm8998.dtsi"
+@@ -18,6 +19,16 @@ / {
+ 	model = "Samsung Galaxy S9 SM-G9600";
+ 	compatible = "samsung,starqltechn", "qcom,sdm845";
  
- / {
- 	chassis-type = "handset";
-@@ -69,6 +71,25 @@ memory@a1300000 {
- 			pmsg-size = <0x40000>;
++	battery: battery {
++		compatible = "simple-battery";
++		constant-charge-current-max-microamp = <2150000>;
++		charge-full-design-microamp-hours = <3000000>;
++
++		over-voltage-threshold-microvolt = <4500000>;
++		voltage-min-design-microvolt = <3400000>;
++		voltage-max-design-microvolt = <4350000>;
++	};
++
+ 	chosen {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+@@ -32,6 +43,19 @@ framebuffer: framebuffer@9d400000 {
+ 		};
+ 	};
+ 
++	vib_regulator: gpio-regulator {
++		compatible = "regulator-fixed";
++
++		regulator-name = "haptic";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++
++		gpio = <&pm8998_gpios 18 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		regulator-boot-on;
++	};
++
+ 	vph_pwr: vph-pwr-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vph_pwr";
+@@ -90,6 +114,17 @@ key-wink {
+ 			debounce-interval = <15>;
  		};
  	};
 +
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		autorepeat;
-+
-+		key-vol-up {
-+			label = "Volume Up";
-+			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+
-+		key-wink {
-+			label = "Bixby";
-+			gpios = <&pm8998_gpios 19 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_ENTER>;
-+			debounce-interval = <15>;
-+		};
++	vib_pwm: pwm {
++		compatible = "clk-pwm";
++		#pwm-cells = <2>;
++		assigned-clock-parents = <&rpmhcc RPMH_CXO_CLK>;
++		assigned-clocks = <&gcc GCC_GP1_CLK_SRC>;
++		clocks = <&gcc GCC_GP1_CLK>;
++		pinctrl-0 = <&motor_pwm_default_state>;
++		pinctrl-1 = <&motor_pwm_suspend_state>;
++		pinctrl-names = "default", "suspend";
 +	};
  };
  
  
-@@ -417,6 +438,11 @@ &usb_1_qmpphy {
+@@ -385,10 +420,79 @@ &qupv3_id_1 {
  	status = "okay";
  };
  
-+&pm8998_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
++&gpi_dma1 {
 +	status = "okay";
++};
++
+ &uart9 {
+ 	status = "okay";
+ };
+ 
++&i2c14 {
++	status = "okay";
++
++	pmic@66 {
++		compatible = "maxim,max77705";
++		reg = <0x66>;
++		interrupt-parent = <&pm8998_gpios>;
++		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
++		pinctrl-0 = <&pmic_int_default>;
++		pinctrl-names = "default";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		leds {
++			compatible = "maxim,max77705-rgb";
++
++			multi-led {
++				color = <LED_COLOR_ID_RGB>;
++				function = LED_FUNCTION_STATUS;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				led@1 {
++					reg = <1>;
++					color = <LED_COLOR_ID_RED>;
++				};
++
++				led@2 {
++					reg = <2>;
++					color = <LED_COLOR_ID_GREEN>;
++				};
++
++				led@3 {
++					reg = <3>;
++					color = <LED_COLOR_ID_BLUE>;
++				};
++			};
++		};
++
++		haptic {
++			compatible = "maxim,max77705-haptic";
++			haptic-supply = <&vib_regulator>;
++			pwms = <&vib_pwm 0 52084>;
++		};
++	};
++
++	max77705_charger: charger@69 {
++		reg = <0x69>;
++		compatible = "maxim,max77705-charger";
++		monitored-battery = <&battery>;
++		interrupt-parent = <&pm8998_gpios>;
++		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
++
++	};
++
++	fuel-gauge@36 {
++		reg = <0x36>;
++		compatible = "maxim,max77705-battery";
++		power-supplies = <&max77705_charger>;
++		maxim,rsns-microohm = <5000>;
++		interrupt-parent = <&pm8998_gpios>;
++		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
++	};
++};
++
+ &ufs_mem_hc {
+ 	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
+ 	vcc-supply = <&vreg_l20a_2p95>;
+@@ -443,10 +547,36 @@ &pm8998_resin {
+ 	status = "okay";
+ };
+ 
++&pm8998_gpios {
++	pmic_int_default: pmic-int-default-state {
++		pins = "gpio11";
++		function = "normal";
++		input-enable;
++		bias-disable;
++		power-source = <0>;
++	};
 +};
 +
  &tlmm {
  	gpio-reserved-ranges = <27 4>, /* SPI (eSE - embedded Secure Element) */
  			       <85 4>; /* SPI (fingerprint reader) */
+ 
++	motor_pwm_default_state: motor-pwm-active-state {
++		pins = "gpio57";
++		function = "gcc_gp1";
++		drive-strength = <2>;
++		bias-disable;
++		output-high;
++	};
++
++	motor_pwm_suspend_state: motor-pwm-suspend-state {
++		pins = "gpio57";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++		output-low;
++	};
++
+ 	sdc2_clk_state: sdc2-clk-state {
+ 		pins = "sdc2_clk";
+ 		bias-disable;
 
 -- 
 2.39.5
