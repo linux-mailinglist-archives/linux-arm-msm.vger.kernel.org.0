@@ -1,130 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-49234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C9CFA43935
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 10:20:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51477A43961
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 10:26:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 43C2A44016A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 09:15:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5DC183BC35F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 09:20:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D366D262D03;
-	Tue, 25 Feb 2025 09:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EC2B260A3D;
+	Tue, 25 Feb 2025 09:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MbtKSI2x"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VytEYfiR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D9D267383
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 09:12:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1F6260A54;
+	Tue, 25 Feb 2025 09:19:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740474734; cv=none; b=NwVo17SJSB7Fo/zaPt9T/AdLeDTBfzdJKgLcz0xBm4XjRjmQ3dZR+gSU1OjrBilfWpuZPDM5ulhpWS3B/kzPmqQT2TnkacPQM9a0ngPaxhJbMuq5Qu6laykHP0NBhAE3eYxFR19E/DZELMtSioPeNhjaj2sUFe2roo9zXNUxZ7s=
+	t=1740475196; cv=none; b=KT60vLOHcnB0y+m5v3EH/EMzOLiamzGh1lTy4/QDo6NhsYlJQLiZg0GvAmLJY85U4DouTLRDMTtRq7kyJ5xKUyfP8cLxfM4HthWP7D+3E/o6qIlws7AUqbw4Nn+7boG3BBDRs4DTsmfvhYJDwijH2ZUg6vTd2MRxJr1wZvrZMl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740474734; c=relaxed/simple;
-	bh=I/ncJfEJtEiSeoSCR2blElAGuBHz/yWCQD1ugBNnzD8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PfIGbtxBVs9XrrajnbIrwAHevcDUvzcrhHYivyf1vHI1xg5JEY/CX23XtMjuI5rjdz0I8ny8hBq5Mz14xoJYTKFfa7lsdqqpqbDE8sZBmxaaJMd1MMv7SSIq/G+RgdzvJpmYUEWOL/e6VSDA5fmyQJ/OWLUdfpY1EoAwwHhaHiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MbtKSI2x; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1740474732;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dlIg0iX5rLeI1/17Pjh/O9LHmXIOARF0OAc7AU9Migc=;
-	b=MbtKSI2xQNk/V1HxCMrVWJ9W7oqf4wvFgsYbF8OazDcVU6pyNMi/2jqPPNz0/SsREasNM5
-	2CQzIeZeU4+JqekhMKe9HZY7fCY0H76HShxF6FEHyao3CktoE7HxmC1GE4twD0Dhmojre6
-	x3aQju7X6k6E0V1mI3l93z5gTLdyiL4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-7aMucJC8O2up0N6WPMXpZQ-1; Tue, 25 Feb 2025 04:12:10 -0500
-X-MC-Unique: 7aMucJC8O2up0N6WPMXpZQ-1
-X-Mimecast-MFC-AGG-ID: 7aMucJC8O2up0N6WPMXpZQ_1740474729
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-38f4e3e9c5bso2189177f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 01:12:10 -0800 (PST)
+	s=arc-20240116; t=1740475196; c=relaxed/simple;
+	bh=mxjeNY/gI1DEE5UWt79KGSeGfVjKaB/ATptNamQXRwU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=UXSPD37G6LIXmxZZLfqFl3+3IcTcxQjUyrN4bh/fY98Wu58IB3wVbSwn11oElHsR43F8Ybo/dKwem47g4Njxuu2wqMB+B3J0G0xYNShrP+oNYlIrcjsIZ7Y3DilpluEy/CfdoRrtimjmjk6zScs7eHaiHdAx2Hfju+u9Tip/NyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VytEYfiR; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-222e8d07dc6so33347435ad.1;
+        Tue, 25 Feb 2025 01:19:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740475194; x=1741079994; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Nj3QvJrkZQTbm/14d0IKWFHBOShY4xnuFmDq9qgKrl0=;
+        b=VytEYfiRHf6StH3SVyWkCqKqSuE9EuzJVKOn9+z+O2MJWo2CcXOBY+K1Emz5jQ8ND8
+         X7TwLCrZe88HhOcTdxnzGemQpUSQIlTzJ5lXpyJUmcjefq3iGw3S7cq+sNZvRVrIa/Xs
+         Zzttm43FZC2Dpt13UjV2TlGcQcOv5JRoJqU5rkqbewoejc61TkcSA5VTbDNUbYWVuUqF
+         4b2TFDKA+HjWYWqI0XIIfFJ5oOFPBnPZkVO1tzanhWXnTn7voXviJvcOlE4rIPcY2FGE
+         on8QWDPkTThmIndLdj70U9Jttt5AzxlVghWn1U240sWfWEfy6U4QGQXQAlw9RY+Wdrtb
+         /Wyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740474729; x=1741079529;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dlIg0iX5rLeI1/17Pjh/O9LHmXIOARF0OAc7AU9Migc=;
-        b=c0deQsad9CCjcwomJfwduQTXKcMbEeGyarzHvZZ8eT5fyb9bLi6dUoLajYV/OXyI7v
-         QzZUDLpCFIPdrAP0BG3Qhtznejruv/syxLk17VlRtvA/29qGfkL7URqtDKmAE0wCgqdj
-         aHfDgPlyOKjF44BeCXW4vVtfCjKvuPnrWNaHaM5PU6Zt0Vy6yhBwdpUbQIfR55ehEHiY
-         FJd3hG6+qMP9jkMqjdnWbUiCnPTcoDl2B/bsy5vgSU7fwvqN/GeYwc4y+9VAdhGh34OE
-         TSoGNPv8z2+lF5W0Kbh/zVbCJyJ25T8Vm3KfXH3mRrMsFpxQaOmm5zr+BLa1HvlfwgyW
-         jO3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWhn6mLXzPRIgiYiobb4BKhEodoDCs3xw7RNVfLdQLC+sC4Dn2I3GUG1UorQW41jmWCarppIbSpBN8oa6Wg@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBpJuFOtAmy1MydNf9DcQ2GUWuHt7jX8lEkJJXGPH/l3lZyf/w
-	oSUos+J2NuWML9cCrWlSskTiD1RB5ntYwvUKub4idMQNY8X4Mcl+CQwJvEyyxnIpky7JAlCFqm+
-	0wApdGejlHys0s+B91ohm1qdtGTHezUmM8h2IzJdW4qlLSjwuj31T2Kkc4dRJcc4=
-X-Gm-Gg: ASbGncvxmsC+3ru7pUG/pR8rOBuu5JutI9RbdOMyf5Y0Fj07uOiRmMYWT3lC0eszhzN
-	A9bKM85f3Pp9Fy+hHcq4XecTNYXdFgX+/nrAOur5HeAluxTZWv3n05F5ezL5MYQVBwProQCAwG4
-	BoyyGd6PVkdmnXDynOtXdEZmUFlg7cwNtnvTw9LhB3E/nimYEJs096ZXBRJyJdtjAV13YLf4BL7
-	RA0JWYFOlvfHC7aOy6nT+lFT6GrwrqR2YNuarcagPQ5l0NqkJJUo/0SrMdHTKr1hznJ2rKyfgMK
-	FMqtbYjkFL6frX2WE6gAoI1BX0mighFywr5lsjNN72E=
-X-Received: by 2002:a05:6000:1548:b0:38d:daf3:be60 with SMTP id ffacd0b85a97d-390cc63ccf0mr2071737f8f.48.1740474729251;
-        Tue, 25 Feb 2025 01:12:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEolJkbGKjJj6h9uEQW/S7a4oRbKctMUQh95C2XKh9ehqDL16AcT96CB9ug5umxMfHDYCtt4w==
-X-Received: by 2002:a05:6000:1548:b0:38d:daf3:be60 with SMTP id ffacd0b85a97d-390cc63ccf0mr2071706f8f.48.1740474728801;
-        Tue, 25 Feb 2025 01:12:08 -0800 (PST)
-Received: from [192.168.88.253] (146-241-59-53.dyn.eolo.it. [146.241.59.53])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390cd866dc4sm1624406f8f.11.2025.02.25.01.12.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Feb 2025 01:12:08 -0800 (PST)
-Message-ID: <910cae0c-3d45-4cd3-b38a-49ab805a231e@redhat.com>
-Date: Tue, 25 Feb 2025 10:12:07 +0100
+        d=1e100.net; s=20230601; t=1740475194; x=1741079994;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Nj3QvJrkZQTbm/14d0IKWFHBOShY4xnuFmDq9qgKrl0=;
+        b=xRxAanGUf5YZp6Qgs3nrY8WxVB6b76QICdjKrGo0v9G3qjzlvp+10W3PGL9PagiTaC
+         nAMp8IPJKDRDfpm8eNMg3WVJAl7oxWbUOlhKJxAGMpp1Otk9twzCgd6WYYGSZaLKQCm5
+         f6DSQNyCQ4PEi7KxnI6Syx+SuAsPYYQr6r8mZyFEtShO8SrHDAQJeEFjudjlv1qx7QTu
+         mfJmiTRGvUrZBMENSVY/i6jG9flbysI652tQwE1SZaiXDhoFSAKs0RefwHP/ETPb3/Nk
+         OeUGxwMvsWsOWS9TDmzwhcphOhyAdOq4RONr8GK1xGnXGUjsCj66Ga0K+lPGqH/JRkqs
+         D1iw==
+X-Forwarded-Encrypted: i=1; AJvYcCX8E3TaOPOvwxOiP1IB3QI5M7nl5OUUrRaUc4VQGSNilCAqGQLYxImwz0tIBgHaNbWsi6xmcuRN2eHP@vger.kernel.org, AJvYcCXNNrC72xRc8yUgLMSjd+pnv2+PMCFWygv83DOK9gmheb1pBXDrHhTJxjkvnFH7cG1W+R7a3Wkid9AN0kLU@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVKqncetKOADVITlDxhTZADtO2Niu5yNWDBYvZ/7xsxtuFQl2Z
+	NtiXYO46DfrbLyuOOXmV7RUvNQmSrjPu5tLgSnaKAyK56CjZcHSG2Usku0yX5Og=
+X-Gm-Gg: ASbGnct2KXp4N2b8djb7fTwBCbht5qAl1c0JgCkdrfz+bORM3EliI5SOGKE+B2pp3yv
+	O+MG4bztH2cc+nxrDw6igusejIYwMc7IO6540gr7di9b650JYd05PxJaY2z7wwvtD2PCTiOA/UE
+	o8B3hB36ey7d6hm+Uq2IAMs0XgtJUIFyGiMdV8tDfOgTSwzpYq1ZqZghMhTzGi+MbvZi1kCycEM
+	gfAk5TxkSYw6VlEug8Ji1kqoyuIuqGfVTUFNBU70pTgrjJy4UaonvUM1k9hQI9RXZ1t6ZOvqTLl
+	F73LmvSLhhCA+M0k7gQ6t2BDkwI=
+X-Google-Smtp-Source: AGHT+IE9YBdCkNq/S4TjozYMNc2eD/oYxsI6+U8AdO2NGvsUJBfklT61ZkIl1cuk5oEXWFTnMRX1eg==
+X-Received: by 2002:a17:903:2ec6:b0:21f:6ce8:29df with SMTP id d9443c01a7336-2218c3cfab6mr358683895ad.3.1740475193891;
+        Tue, 25 Feb 2025 01:19:53 -0800 (PST)
+Received: from [127.0.1.1] ([2601:644:8501:1640:4148:75aa:e7ad:9664])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2230a000542sm9679975ad.17.2025.02.25.01.19.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Feb 2025 01:19:53 -0800 (PST)
+From: Rudraksha Gupta <guptarud@gmail.com>
+Date: Tue, 25 Feb 2025 01:19:44 -0800
+Subject: [PATCH] ARM: dts: qcom: msm8960: add tsens
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 3/8] net: phy: add getters for public members of
- struct phy_package_shared
-To: Jakub Kicinski <kuba@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>,
- Andrew Lunn <andrew@lunn.ch>,
- Russell King - ARM Linux <linux@armlinux.org.uk>
-Cc: Eric Dumazet <edumazet@google.com>, David Miller <davem@davemloft.net>,
- Daniel Golle <daniel@makrotopia.org>, Qingfang Deng <dqfext@gmail.com>,
- SkyLake Huang <SkyLake.Huang@mediatek.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Richard Cochran <richardcochran@gmail.com>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org
-References: <c02c50ab-da01-4cfa-af72-4bed109fa8e2@gmail.com>
- <b505ed6a-533d-42ad-82d0-93315ce27e7f@gmail.com>
- <20250224180152.6e0d3a8b@kernel.org>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <20250224180152.6e0d3a8b@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250225-expressatt-tsens-v1-1-024bee5f2047@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAC+LvWcC/x2MQQqAIBAAvxJ7TjBRk74SHSS32ouFKyGIf086D
+ sNMBcZEyLAMFRK+xHTHDtM4wH75eKKg0BmUVEYqZQSWJyGzz1lkxshC2qCtcbM3TkPPuj6o/Mt
+ 1a+0DrixKuWIAAAA=
+X-Change-ID: 20250225-expressatt-tsens-06d46587a584
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, wctrl <wctrl@proton.me>, 
+ Rudraksha Gupta <guptarud@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1740475192; l=2826;
+ i=guptarud@gmail.com; s=20250208; h=from:subject:message-id;
+ bh=mxjeNY/gI1DEE5UWt79KGSeGfVjKaB/ATptNamQXRwU=;
+ b=G8RELbz18xURPb3s3D2SAYZXoJ8dZZ8e1UejFDFquMrE8XFzPZ9SvLdkdq48f4c5n5aDGhRsm
+ Vktv5b5qCWfCeCJ0pnaO8FNRqv8QJ7YFD8n4FvTsegWQll0pHzISbln
+X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
+ pk=5lJNaiR/Bu7edToWFLriO5zXOrVqSQWrBKbAKwuEw04=
 
-On 2/25/25 3:01 AM, Jakub Kicinski wrote:
-> On Wed, 19 Feb 2025 22:04:47 +0100 Heiner Kallweit wrote:
->> +struct device_node *phy_package_shared_get_node(struct phy_device *phydev);
->> +void *phy_package_shared_get_priv(struct phy_device *phydev);
-> 
-> A bit sad that none of the users can fit in a line with this naming.
-> Isn't "shared" implied by "package" here ?
-> How would you feel about phy_package_get_priv() ?
+Copy tsens node from ap8064 and adjust some values
 
-FWIW I personally agree the latter would be a better name.
+Co-developed-by: wctrl <wctrl@proton.me>
+Signed-off-by: wctrl <wctrl@proton.me>
+Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+---
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi | 62 +++++++++++++++++++++++++++++++-
+ 1 file changed, 61 insertions(+), 1 deletion(-)
 
-@Heiner: could you please give that naming schema a shot here?
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+index 865fe7cc39511d7cb9ec5c4b12100404f77e2989..167953605447bfaa0d33b0e41b581220f86c72e6 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+@@ -52,6 +52,40 @@ memory@80000000 {
+ 		reg = <0x80000000 0>;
+ 	};
+ 
++	thermal-zones {
++		cpu0-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens 0>;
++			coefficients = <1199 0>;
++
++			trips {
++				cpu_alert0: trip0 {
++					temperature = <60000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu1-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens 1>;
++			coefficients = <1132 0>;
++
++			trips {
++				cpu_alert1: trip0 {
++					temperature = <60000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++	};
++
+ 	cpu-pmu {
+ 		compatible = "qcom,krait-pmu";
+ 		interrupts = <GIC_PPI 10 0x304>;
+@@ -115,6 +149,20 @@ timer@200a000 {
+ 			cpu-offset = <0x80000>;
+ 		};
+ 
++		qfprom: efuse@700000 {
++			compatible = "qcom,qfprom";
++			reg = <0x00700000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			tsens_calib: calib@404 {
++				reg = <0x404 0x10>;
++			};
++			tsens_backup: backup-calib@414 {
++				reg = <0x414 0x10>;
++			};
++		};
++
+ 		msmgpio: pinctrl@800000 {
+ 			compatible = "qcom,msm8960-pinctrl";
+ 			gpio-controller;
+@@ -127,7 +175,7 @@ msmgpio: pinctrl@800000 {
+ 		};
+ 
+ 		gcc: clock-controller@900000 {
+-			compatible = "qcom,gcc-msm8960";
++			compatible = "qcom,gcc-msm8960", "syscon";
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			reg = <0x900000 0x4000>;
+@@ -135,6 +183,18 @@ gcc: clock-controller@900000 {
+ 				 <&pxo_board>,
+ 				 <&lcc PLL4>;
+ 			clock-names = "cxo", "pxo", "pll4";
++
++			tsens: thermal-sensor {
++				compatible = "qcom,msm8960-tsens";
++
++				nvmem-cells = <&tsens_calib>, <&tsens_backup>;
++				nvmem-cell-names = "calib", "calib_backup";
++				interrupts = <GIC_SPI 178 IRQ_TYPE_LEVEL_HIGH>;
++				interrupt-names = "uplow";
++
++				#qcom,sensors = <5>;
++				#thermal-sensor-cells = <1>;
++			};
+ 		};
+ 
+ 		lcc: clock-controller@28000000 {
 
-/P
+---
+base-commit: ffd294d346d185b70e28b1a28abe367bbfe53c04
+change-id: 20250225-expressatt-tsens-06d46587a584
+
+Best regards,
+-- 
+Rudraksha Gupta <guptarud@gmail.com>
 
 
