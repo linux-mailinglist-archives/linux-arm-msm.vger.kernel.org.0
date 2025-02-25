@@ -1,115 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-49268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B956A43AED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 11:12:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 074D5A43AE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 11:11:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A1DCD3AA68D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 10:08:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFDCD18899ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 10:08:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6643126561F;
-	Tue, 25 Feb 2025 10:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDFD826137B;
+	Tue, 25 Feb 2025 10:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GQegHoU7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mL7oyq2O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77594267AFD
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 10:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE941519A5;
+	Tue, 25 Feb 2025 10:06:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740477894; cv=none; b=g9hhTQ99VY9CPcFsj2bVMfSEY+m1LEZzQV9MLvU90X7ZmVMd1B+8Vs8jdWmzqrWbpdJxE9MvZAyT3/NTLJBTXGZVi0SkJutDz0vOdhZoOTCI3WL6NPISoxBVE3T39S9PiWP68OIdNKX0d4F8jlPGXuKPENXx0sVdz+6qZ5y9zu4=
+	t=1740478013; cv=none; b=e7nmUayazoYncU5vJ58hD4Ce3CwAZfKWSjRwdBn5A8eP75i4ETv2CCjkcPcwca1jFeqj6/4JOovz9qIf5+lgzODiRnYumhAnzXA/1TUGsw7ZAvSy0ticzUc8NlDHGmNNQ3KcWHIxSynLwVdeBMUnIhEe4ESWKBTj6PcP+JdAFXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740477894; c=relaxed/simple;
-	bh=DuA0E92AFzqVAQkY9I4a+gZlF79J+R3+j7twI3wDzXc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aGu5b3oWoYiGqiz5asu3LsCxuf/AuonluuC2P5/HzH7iKCv1tlakGt2peIPN8TJSpZlPQfSwldGZbQFSiVC25rGiyiBlBk42dECUeyxlcGJA4bDucTJ1KO0SL/pP7yIfFqQ1D2zE3xyhSA1YjXIJ5PBV6JulJpnxjUvPndsGrTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GQegHoU7; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-54622940ef7so6110615e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 02:04:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740477891; x=1741082691; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sUfGZOLBpPXz98roGZug6GzOuxZ57fwrWBTaMGnGD5k=;
-        b=GQegHoU7zMaoX0CCcDUstVZHEP9+1/KQNkt1EpS+vIIFy5FvWSl5vF7BK1Zg5h18dI
-         Yb0r+yajDFy4HpSc34S8mwSN+9kaZ4NfThLl935v9VAzzIk6huLOT9fNeurTlW5kKDvP
-         H8rw5tK5PV/sFqO3CFk0nYzXcFm/fVxEC4iib4gr5KfudokWG5A4RcN5dGEanCIuwsX5
-         SzXIqprGvO+Kz7u5GVRBE3VQhhyY7NCramgDStv1WpMyBgfFkVw4hZByP9DgslbmGNO0
-         oQ2jDwCTPs+to8k0Z/j7xOtKBaGZ36/R86qO6ae65QZIaLni6LFqdKJpWaBB6aQsQg0N
-         RPEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740477891; x=1741082691;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sUfGZOLBpPXz98roGZug6GzOuxZ57fwrWBTaMGnGD5k=;
-        b=de2Am9v9sVGAtjr15Bzb7oco/2FdbaqsIc+NuzF5rTC9wdzYSiLR0T708PUiWcY/Td
-         csBKEzp2t1iWW5phS5giq4Yd//q9GhC0pdvk2QbYWmsmOxB3v8WLdWyPngYsiNdlO3/x
-         e9jVg+wbly3GUS6BQ9pNAZlKs5Xuj5Z6NMYzP6IH77rcyPVqnqHHUg+olLKciPnBbspU
-         IUOztGrzspRnM4bKN4Vvpg+JCHXfUwbso/mAl0gvjmQdNjWjScoTdvJmm184ivNm8+k9
-         trCk1RebJ+1+qYxHe0hPAo41sFpQ7Pt+AfddFUl+qLrB/V/RU59Ibg39RHMs4Q6llcly
-         Z1Tw==
-X-Forwarded-Encrypted: i=1; AJvYcCVFTh+NZsR7b3jGW4JNDY+p3Q+ClDz5KDFiVnd09FXJFANjxLcPOdS27ptvXQnY34YrEaNsEeW+pwJRKZCn@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw910IjI9kTEwZef2qxqtq4ONP5yZZTnw5Ms78NWYeF7sx1CP6A
-	+p4zasqfMHOpAsbnq+y/EAGf9xodQ6eA0G6miQg3vPXeofGSdnJIomey4t5dHoQ=
-X-Gm-Gg: ASbGncvvtYshy82IB3nChQCoa53fXQebVqYyjr8DcwDgzBI9tN/hjVpDuy1ip+uq6CV
-	wK0o8YBbyR5fwBHu0ggwARG8FyabYjGNtWipDKOE4DmeW0D2vnL2GEoGvEpV1X/PS1MPkBKLGmv
-	TcO2SN23pIZkeaAiebJuhNi2+W4uI4HSiR8CBhnIqmmVylnt05CabVnoNKBVmoi6+5f9rXFyMLj
-	yjrxMfZ+yxciZWEKSl7G7CrfDwAXdmLzMyyKSSqF+vl3nDlKWZWVO5vXswGgFIwKmbRxxSfGxGc
-	oGYx7+lzYcxdj9C9fkgud23YR0NM8g5QRizf0t4sQSDObcSot9ZqOodUWCVjtcnD7p1ujbBpJNP
-	DYEIHbA==
-X-Google-Smtp-Source: AGHT+IFe8roSMzt3VVv7TZk036TpcSGcoxSHvfVATn8ZrfpARrpjkEuvUDMxx89xTrZ/KzUJppvbMQ==
-X-Received: by 2002:a05:6512:104e:b0:546:2ea9:6666 with SMTP id 2adb3069b0e04-54838f4e48emr8396425e87.34.1740477890594;
-        Tue, 25 Feb 2025 02:04:50 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-548514b9e11sm136744e87.92.2025.02.25.02.04.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 02:04:49 -0800 (PST)
-Date: Tue, 25 Feb 2025 12:04:46 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH next] drm/msm/dpu: fix error pointer dereference in
- msm_kms_init_aspace()
-Message-ID: <uzrw5szojucylvminnxghqld34jez7lfzljtdxtkmkxtm5xodt@ruihfzdhkx7p>
-References: <3221e88c-3351-42e6-aeb1-69f4f014b509@stanley.mountain>
+	s=arc-20240116; t=1740478013; c=relaxed/simple;
+	bh=BdXYIMubP68iO4yl2tcuwaKsQURZC7iC1Rei84h8/PY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=mmpVhgB5HkprHGIdkoUZQnoTbjOIHb86p6EgDiu9woaXkmb64VEWw/Y+onaL9u6En3IbFi1MdubYJFGBaDcD7ROVCxl2U/MvYnMmjccgxI3qBbwtaT5l/MdX6fToAJZAFhbfoGeACJoVrGNnW2h1UmxzQ22fzqPf+EJ6lb+vU98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mL7oyq2O; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51P8dnNP013317;
+	Tue, 25 Feb 2025 10:06:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3eaFx6OR3vSlzAH+D+Vm5WEpKwhhMdM90BqPI5fV0kY=; b=mL7oyq2Ox96LAXZg
+	b2hN0qzx5F4h+zJ7TvDePRD+z04H3vy1DStOWRGvnkzWKAK557wKZx4YwTnopbwB
+	9hzBIH/PfzEM/8FNmOjzBkMED1jeTSIKFDA7v8PSewG998K9ffzcvu1A9pRmta91
+	SbmmGfht5kncrON9l3tyAtgSzGe6OKepHynpSly4genojRbOUW8L1JZqVcvXHc8T
+	ek82DGi56j9cUwvugULdlGJVo1PFHJjGZLu91TOilfPfud583x7vp33UrP5Hj6YI
+	pxgxpxPmnmtPGDuk6agoB1mPs7PP2SiMlbhN7RE5MyT5sM16yfBBao7l6BSlwDHn
+	g/f8NA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y5wgrhus-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 25 Feb 2025 10:06:23 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51PA6LlS009496
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 25 Feb 2025 10:06:21 GMT
+Received: from [10.216.17.28] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 25 Feb
+ 2025 02:06:14 -0800
+Message-ID: <29809286-cc04-fbc4-60bd-460821c4bc72@quicinc.com>
+Date: Tue, 25 Feb 2025 15:36:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3221e88c-3351-42e6-aeb1-69f4f014b509@stanley.mountain>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v4 07/10] PCI: PCI: Add pcie_is_link_active() to determine
+ if the PCIe link is active
+Content-Language: en-US
+To: Lukas Wunner <lukas@wunner.de>,
+        Krishna Chaitanya Chundru
+	<krishna.chundru@oss.qualcomm.com>
+CC: Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>,
+        Krzysztof Wilczy??ski <kw@linux.com>,
+        "Manivannan
+ Sadhasivam" <manivannan.sadhasivam@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        Jingoo Han
+	<jingoohan1@gmail.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_vbadigan@quicnic.com>,
+        <amitk@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <jorge.ramirez@oss.qualcomm.com>
+References: <20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com>
+ <20250225-qps615_v4_1-v4-7-e08633a7bdf8@oss.qualcomm.com>
+ <Z72TRBvpzizcgm9S@wunner.de>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <Z72TRBvpzizcgm9S@wunner.de>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Y_GkRtIcYlsQfTa9XnF0htPFgpJHWRAM
+X-Proofpoint-ORIG-GUID: Y_GkRtIcYlsQfTa9XnF0htPFgpJHWRAM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-25_03,2025-02-24_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1011 adultscore=0 phishscore=0 mlxlogscore=999 spamscore=0
+ mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502250070
 
-On Tue, Feb 25, 2025 at 10:30:26AM +0300, Dan Carpenter wrote:
-> If msm_gem_address_space_create() fails, then return right away.
-> Otherwise it leads to a Oops when we dereference "aspace" on the next
-> line.
+
+
+On 2/25/2025 3:24 PM, Lukas Wunner wrote:
+> On Tue, Feb 25, 2025 at 03:04:04PM +0530, Krishna Chaitanya Chundru wrote:
+>> Introduce a common API to check if the PCIe link is active, replacing
+>> duplicate code in multiple locations.
+> [...]
+>> --- a/drivers/pci/hotplug/pciehp_hpc.c
+>> +++ b/drivers/pci/hotplug/pciehp_hpc.c
+>> @@ -234,18 +234,7 @@ static void pcie_write_cmd_nowait(struct controller *ctrl, u16 cmd, u16 mask)
+>>    */
+>>   int pciehp_check_link_active(struct controller *ctrl)
+>>   {
+>> -	struct pci_dev *pdev = ctrl_dev(ctrl);
+>> -	u16 lnk_status;
+>> -	int ret;
+>> -
+>> -	ret = pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnk_status);
+>> -	if (ret == PCIBIOS_DEVICE_NOT_FOUND || PCI_POSSIBLE_ERROR(lnk_status))
+>> -		return -ENODEV;
+>> -
+>> -	ret = !!(lnk_status & PCI_EXP_LNKSTA_DLLLA);
+>> -	ctrl_dbg(ctrl, "%s: lnk_status = %x\n", __func__, lnk_status);
+>> -
+>> -	return ret;
+>> +	return pcie_is_link_active(ctrl_dev(ctrl));
+>>   }
 > 
-> Fixes: 2d215d440faa ("drm/msm: register a fault handler for display mmu faults")
-> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-> ---
->  drivers/gpu/drm/msm/msm_kms.c | 1 +
->  1 file changed, 1 insertion(+)
+> Please replace all call sites of pciehp_check_link_active() with a call
+> to the new function.
 > 
+> 
+ack
+>> --- a/drivers/pci/pci.c
+>> +++ b/drivers/pci/pci.c
+>> @@ -4923,8 +4922,7 @@ int pci_bridge_wait_for_secondary_bus(struct pci_dev *dev, char *reset_type)
+>>   		if (!dev->link_active_reporting)
+>>   			return -ENOTTY;
+>>   
+>> -		pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &status);
+>> -		if (!(status & PCI_EXP_LNKSTA_DLLLA))
+>> +		if (pcie_is_link_active(dev))
+>>   			return -ENOTTY;
+> 
+> Missing negation.
+> 
+> 
+ack
+>> +/**
+>> + * pcie_is_link_active() - Checks if the link is active or not
+>> + * @pdev: PCI device to query
+>> + *
+>> + * Check whether the link is active or not.
+>> + *
+>> + * If the config read returns error then return -ENODEV.
+>> + */
+>> +int pcie_is_link_active(struct pci_dev *pdev)
+> 
+> Why not return bool?
+> 
+pciehp_check_link_active is expecting int to make sure this new function
+not disturbing the hotplug driver I added return type as int, I can 
+change it to bool if it fine with hotplug drivers.
+> I don't quite like the function name because in English the correct word
+> order is subject - predicate - object, i.e. pcie_link_is_active() or
+> even shorter, pcie_link_active().
+> 
+ack
+> 
+>> @@ -2094,6 +2095,10 @@ pci_alloc_irq_vectors(struct pci_dev *dev, unsigned int min_vecs,
+>>   {
+>>   	return -ENOSPC;
+>>   }
+>> +
+>> +static inline int pcie_is_link_active(struct pci_dev *dev)
+>> +{ return -ENODEV; }
+>> +
+>>   #endif /* CONFIG_PCI */
+> 
+> Is the empty inline really necessary?  What breaks if you leave it out?
+> 
+ack I will remove it.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
+- Krishna Chaitanya.
+> Thanks,
+> 
+> Lukas
 
