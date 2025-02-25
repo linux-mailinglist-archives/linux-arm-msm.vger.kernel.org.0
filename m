@@ -1,147 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-49349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D24CA4491B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:56:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3ACFA4495E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:02:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F6A91891470
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:56:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A51783BFE35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:57:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A9D719CC0C;
-	Tue, 25 Feb 2025 17:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2A0519AD86;
+	Tue, 25 Feb 2025 17:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LQ4YezyB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MQszEG6i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A927619ADA2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 17:56:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6DA18A93F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 17:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740506204; cv=none; b=syaSc05tkoeEArTIHiBtRcnVkWKXU438JyXbTKiGeO/o4dq83vejS0Ok+UhcmUJnQ2l7SjdlbkqaAzhLstq6K+J1GHjQrMfpjTp7z7bCgXNAjFtxsBwp2OO8lOmwsPzWrnAwoBMDN/s9qnfKzh/9ebyu2rBIGjpwk3qIrnri6ts=
+	t=1740506225; cv=none; b=KGScDg1utJXFqt99B+uHgwrIyGNsYZDzj/lIxZ0VxyHBappMBZat/HsGD0Fl9zOKcoJ1AbLU0mWthK9RWrEyKyhaHAwJG9e4sJ3ahHfK5nxGT01JdKuaxs+oiqkb+6BwTZWJIobZ6MQa89Wczi6AfHDDf2O/beYjHr9Gu4+VSa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740506204; c=relaxed/simple;
-	bh=qSjVnqw0ClAZgaxrRwxr4jTG+YrP6X57Cz8R8eCo864=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RRJuJYaqJWXlV5r5IqqQJcLIP5yVUR12UEWCTk7u8XIoOUNQ62NsFWZPuOaZ/WHsL3xQI0HFCAhqgcMfm/u+BpADOZCY8cZPmWRgTwsiFindd2TXdnyZdzqc2HgjzuBDuLUA5Kc5C4pFMMsvzKCZZcVB8p40oQhRJl9O6CGcoak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LQ4YezyB; arc=none smtp.client-ip=209.85.208.182
+	s=arc-20240116; t=1740506225; c=relaxed/simple;
+	bh=hfqAN0fagSCmL2HyOK5nwh1j0eHuaZ5mjszK1wKU/EI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=YN1lPsYcpDdfk5TAH30QOykkyyFlaKSTYZ0UA4t6H1RmTxA6dSx0YCkXcg3T9Ej5gGczt256/AWQAgnJdBWr/QJKs2eTcV8Dv0RWkLhrPFcWBpdynr6EnCZi0eS9EdpkaCxc9EJb+Pyy8ZneAkhWs/tI7CToWPkD8VIi7LRrkLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MQszEG6i; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-30795988ebeso61478601fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 09:56:42 -0800 (PST)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-38a8b17d7a7so3376625f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 09:57:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740506201; x=1741111001; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xVWp9Ja2Rjz3r7Z6XrBcybwSqNljM6TcrY1ydtVaEeA=;
-        b=LQ4YezyBLXTIrL3L6HcQSC4ckM8kpwaBCfMloWtSIlkwtnxGRkTXxt71N6waO8Ngtk
-         ZL0R27A3GcEDCI7tZgiMV5WJxnGTBIO+WAizj0y8NyoGaml0rP+TBLt/6kBnOfFnWUah
-         5qiqFF9SmE3mxCKVh0GQjf3xqkLcMuCLBRGpYKI4+06BmYGQJpsuMgCRh+c1QzPuuxQc
-         uQNXZiwQXjlN6Mcq+FnaWT5BElKb7m9HRWbbjeWLA3cqQhYawqS4B/himYpJZajlCerK
-         Hn/U+pBZdJvA0sI/3/5f3MNRhg8OgydKuQ5J8bGJhEC1f6JIIlwO55ERktqzziM/6pHI
-         IBtw==
+        d=linaro.org; s=google; t=1740506222; x=1741111022; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=e9USewdvJ7PYqMLaARTkWJYtBQaK26VR+XCGXeZgq7M=;
+        b=MQszEG6iu9Kgxy6NAOk2hcRc+Y0rU8qUKK1fwAOteZXggH2i9jpE+9ChBVglvuTids
+         qRsnZOpN+RcYVGFmn6Hu+uptscwubAHjkdV0aPmKc4t1o4BiSVxG3depkkMN3QhcHFcT
+         j75NvKfSaXRG/aPU2Ep7l9U2phh55dlexdu/F29ddw/7bqc5DYhZE72Dqo+NOtikbsHy
+         Xz7xQWmEIBFSYPjXjqa8ItOEZWEXATyP/0OEprKylLyAEPRcr6wLudNHeTwiEtcSUxgc
+         PK5EK0RrNhEIZvri2zvJrtiAMkMB85aj5U8YHNPJfvGenvUEoNCVkfGEw7yEpfnLfiXE
+         5G2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740506201; x=1741111001;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xVWp9Ja2Rjz3r7Z6XrBcybwSqNljM6TcrY1ydtVaEeA=;
-        b=cFasahtBJJJ3JUbEcXz2dmHbDvHcWWYwW3xToRVFEUVu++kjzvnPPK4s7xpoC7hNl7
-         aDoq7l1dyUGai17owun4IgOS4RrDF+v3f9aWOMrn8Jq2dtdljPNWaNQegTLBCh4Y7ebe
-         pQxUI/5bO6QOFm/txGd9qiGi9tVzQXcArG19nFD9VsDwdmqbO+WPLEqmmG2yRDHuhnYE
-         olevAIJIXUUA7g8IFFSlcjOUIqAfjpdCWk/M8I8eFlsB7Abmlo3pu5p9H/q5AbzVjRJr
-         /3c6VVjFS+DhM5AsrqtqsktUSVFBtn70kdAwm8lFEwbsrD4TcM17aUU9CRVEi4k2w0ZO
-         O9Dw==
-X-Gm-Message-State: AOJu0YywdNM3XSEMiAlTP/rcFaL5iALzOgVhALN1JhHeX0wv04+020Lf
-	j0g5ctJpvsuvX9rXVpWYPfwfDscSCsy37gN+Aw8bRk1OSkhgTmXvaZg7lxeD+x6gdDrkHXsq0aI
-	t
-X-Gm-Gg: ASbGnctlvW0fcmk2Vj1ZmOm2Rt7Ni0bwdiyjtYNcMjlh6G4JND1vJAU+vyFC2viUKxo
-	JMc2GhgnaOnodarAhtnesgaKZDWqUsArjmo4CQ5wdr6LeUx0OqvnuKFYSDjixKCoSauogxrkBAn
-	UzU1IbjMsxK80/+0ADoYM4+rncefER0P2Jffx5b1zvb6lhlX0ESSaPTCFQWd1rUwl4lIVg3+1oq
-	1RJOobkUDJlVzgYosbDpTkAKXazggwRGBmPKe2NpQTDJGtm/cviisrl6SsIWhJA2baP39b9met+
-	LEmGKdW295RCPj0+Gju/8lGY1fFUKcIAaj7bOMXcGfYLXmxq7uOJo7VPTcbeDxqYPrCO6hIAjSC
-	ZMgSNlg==
-X-Google-Smtp-Source: AGHT+IHXypG52wXkYLxSSmyf4bbr7jeX4L7AiMB7t5V529YkEH03E02hDurhAMGW0udAqKDM+HrsUg==
-X-Received: by 2002:a2e:321a:0:b0:309:bc3:36b4 with SMTP id 38308e7fff4ca-30a80c0f0c9mr19594681fa.6.1740506200764;
-        Tue, 25 Feb 2025 09:56:40 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30a819e0a5asm2883591fa.19.2025.02.25.09.56.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 09:56:39 -0800 (PST)
-Date: Tue, 25 Feb 2025 19:56:37 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ayushi Makhija <quic_amakhija@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	robdclark@gmail.com, sean@poorly.run, marijn.suijten@somainline.org, 
-	andersson@kernel.org, robh@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org, 
-	konradybcio@kernel.org, conor+dt@kernel.org, andrzej.hajda@intel.com, 
-	neil.armstrong@linaro.org, rfoss@kernel.org, Laurent.pinchart@ideasonboard.com, 
-	jonas@kwiboo.se, jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com, 
-	quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com, quic_jesszhan@quicinc.com
-Subject: Re: [PATCH 09/11] drm/bridge: anx7625: enable HPD interrupts
-Message-ID: <l34eya75nmzh5j6jyw6ne4unwnemw4lrjdf2q5hm3d6jji6pvr@rav2vgfwioeu>
-References: <20250225121824.3869719-1-quic_amakhija@quicinc.com>
- <20250225121824.3869719-10-quic_amakhija@quicinc.com>
+        d=1e100.net; s=20230601; t=1740506222; x=1741111022;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=e9USewdvJ7PYqMLaARTkWJYtBQaK26VR+XCGXeZgq7M=;
+        b=iyNtA36u2gWJet6XZ1A9GVvi/RgUflfT9Vj4JJwkZa/3byBCiSNpFJS3ALC6RblViD
+         QT2xcr8InTCaL4vw73/iIff6l2NVTxWj+gV/jFuskEsUjC7ao2jfyTyaBHTMPujj7ETv
+         +Bii5d+KwahbPdE26HqyvAZJteZiw/W0NgcBeWl8VzGn1NlKT/cmx7fTVzIx/l8xnxCN
+         QBpLZX1Gl27ZGgl3+atlkp/RDY0Y69W7iaOoNES1RRBNobRu2duhc1EuvTtSdH9x2Own
+         5EKdKxkvyTzFtdPhR3t2ni9WCrRD2T14qf+umjk586n0+1xSfUnjF4nOu5e3iGWn94Ny
+         VA8g==
+X-Forwarded-Encrypted: i=1; AJvYcCU8+c+fpiQ1Mcz6di7pk/V7GRldPuq66s0+whMzfpOQqDSxqFo6aYnzrSnh1aw7o2ImEhAbWRy2NBrd1o9t@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfA2CTaZI3aBwEA6Bx3udKcziIPQNlU2TOHylZsC0GVBIsayuD
+	YgAL+1Gow2OmH1sKBn8fJbB6IX7s4rEIoatBn1KPabnvH9tHhhG7kCdJ3fR7qqCLZCk6z+aPA9Q
+	N
+X-Gm-Gg: ASbGncuVduTyhfuEmGFWV7AtbCfYhmBuQ8dG1wB+iHi9hox12v4E+aNDN/xBmO9Bdq0
+	8In/8zrG5N8sJNsgtyXKtcQBzKDcAsF4j0aXQoHKs61KUPkQASCNyJ3MRWzcxuE8OiFV7TqiVM6
+	n2tqaoQns7kXgX39JL7oDBgZBFivKZN5qq9TFKcHzlLwwJquj7qlMQJT3+28fHiUO7T0hHHAujd
+	0LfsN94jDI3QQEn/12sXW7AQul4KNzh0y6a5Xj9EyP2MbhKzu2O7sloTdsvWvP05OnkyedUmdcu
+	8+v/RZkXRMTdSvSjRhlzcR7EJ6pnUhlqfdx2IwCcBo7ZuyXWJ0ykdCULdgE/TkOZrvMN+9n1m6x
+	L7Ic=
+X-Google-Smtp-Source: AGHT+IHUAgL2tByhpFFBEFGQOdfrkVcNwwIG2P9l39t0NBi1UKfkNO4hyH6LvwamNSW5TxfMBytNRw==
+X-Received: by 2002:a5d:5f8a:0:b0:38f:260f:b319 with SMTP id ffacd0b85a97d-390d4f84733mr232456f8f.44.1740506222366;
+        Tue, 25 Feb 2025 09:57:02 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:23a1:f1ec:7a08:3a2b? ([2a01:e0a:982:cbb0:23a1:f1ec:7a08:3a2b])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390cd8fc1f9sm3000134f8f.88.2025.02.25.09.57.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Feb 2025 09:57:02 -0800 (PST)
+Message-ID: <07d7f05b-ed3c-444d-8879-9df99174b7c9@linaro.org>
+Date: Tue, 25 Feb 2025 18:56:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250225121824.3869719-10-quic_amakhija@quicinc.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] arm64: defconfig: enable Qualcomm IRIS & VIDEOCC_8550 as
+ module
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250225-topic-sm8x50-upstream-iris-defconfig-v1-1-8a17e2e193d9@linaro.org>
+ <e959c772-9c10-4c87-a22b-e2f91ca05af8@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <e959c772-9c10-4c87-a22b-e2f91ca05af8@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 25, 2025 at 05:48:22PM +0530, Ayushi Makhija wrote:
-> When device enters the suspend state, it prevents
-> HPD interrupts from occurring. To address this,
-> add an additional PM runtime vote during bridge
-> attach for DisplayPort. This vote is removed on
-> bridge detach.
+On 25/02/2025 14:08, Krzysztof Kozlowski wrote:
+> On 25/02/2025 10:10, Neil Armstrong wrote:
+>> In order to support the Qualcomm IRIS driver on the Qualcomm SM8550
+>> platform, enable the IRIS and the VIDEOCC_8550 dependency as modules.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   arch/arm64/configs/defconfig | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+>> index a1cc3814b09b31ee659536a64b7db704153d6fe9..710452f75133896af2e3a19ae544f139e1c28a98 100644
+>> --- a/arch/arm64/configs/defconfig
+>> +++ b/arch/arm64/configs/defconfig
+>> @@ -847,6 +847,7 @@ CONFIG_VIDEO_IMX8_ISI_M2M=y
+>>   CONFIG_VIDEO_IMX8_JPEG=m
+>>   CONFIG_VIDEO_QCOM_CAMSS=m
+>>   CONFIG_VIDEO_QCOM_VENUS=m
+>> +CONFIG_VIDEO_QCOM_IRIS=m
+> 
+> 
+> Does not look really as Kconfig-ordered. iris is before venus in Kconfig
+> include.
+> 
+> 
 
-Well.. You can guess. The bridges have .hpd_enable() and .hpd_disable()
-callbacks. Please use those instead.
+Surem I'll re-order.
+
+Thanks,
+Neil
 
 > 
-> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-> ---
->  drivers/gpu/drm/bridge/analogix/anx7625.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> index 4be34d5c7a3b..d2655bf46842 100644
-> --- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-> +++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> @@ -2168,6 +2168,9 @@ static int anx7625_bridge_attach(struct drm_bridge *bridge,
->  
->  	ctx->bridge_attached = 1;
->  
-> +	if (ctx->pdata.panel_bridge->type == DRM_MODE_CONNECTOR_DisplayPort)
-> +		pm_runtime_get_sync(dev);
-> +
->  	return 0;
->  }
->  
-> @@ -2175,6 +2178,9 @@ static void anx7625_bridge_detach(struct drm_bridge *bridge)
->  {
->  	struct anx7625_data *ctx = bridge_to_anx7625(bridge);
->  
-> +	if (ctx->pdata.panel_bridge->type == DRM_MODE_CONNECTOR_DisplayPort)
-> +		pm_runtime_put_sync(ctx->dev);
-> +
->  	drm_dp_aux_unregister(&ctx->aux);
->  }
->  
-> -- 
-> 2.34.1
-> 
+> Best regards,
+> Krzysztof
 
--- 
-With best wishes
-Dmitry
 
