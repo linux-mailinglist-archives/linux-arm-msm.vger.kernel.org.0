@@ -1,95 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-49340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 158CDA44803
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:29:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44E34A447D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:21:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BABB9883426
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:14:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F0CE17A08E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:17:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 073FA18EFDE;
-	Tue, 25 Feb 2025 17:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE02719993B;
+	Tue, 25 Feb 2025 17:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AXhoR4mV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a5HEA/P3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02811A23BC
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 17:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35ED194147
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 17:14:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740503528; cv=none; b=lkfwhCMnccmIXdN1urAgwwbDtj8osY4qc+Ezzgqng/EMOa/so11GKJiUdnuxvlW+hRxbArj6zFPx2Jnw8yGcFQdV4AZRimGNu2Rm6yYU3qcDIFexAd4/J6HwN6SfOqAd+fL79qVj4L4uyI/WMS1GDepz+tLnHuOREoh5Kngf4Og=
+	t=1740503697; cv=none; b=QLscYW2h7MMjgGPKyzr+0HBomdzr07ihS8QYhAzj81Vlho5LfabxIAGf0rOZ3g1x2cnVnuaBEvzhD/4ssY9PPllE4ZTiLO8/vVeGQ/BSpAQKHgBaYOg+PxozMC+hteHzF60FQB8X0ebo5R3GfqO/Y7OLbDLFWbvPuwtlwqgX7hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740503528; c=relaxed/simple;
-	bh=2zg94zRdzEnHDUsDqBlnHbB5z/wxZTZgB3MXLtUgDE8=;
+	s=arc-20240116; t=1740503697; c=relaxed/simple;
+	bh=jIu3Rpw1Xfn7e1gbxAcLbkp/beSC/XjwOVnR7tMlyDY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cu92azY0KxO8IjF4k0Wm5IbpGllCmo7LDWIa15FCTFkYa6alx0rN0QXQLa2PjSqPguaHHLXSAKd5eBpqk8QIsdcK3tqRufy6XwXXaaw5O28gs+umqTvIuK/iOjhgq3qVD3dLIg0wdtibjuAXyDXPVk9m8fmsIo27XW7gnfgfzIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AXhoR4mV; arc=none smtp.client-ip=209.85.167.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=ApDBi+ZQMEHEpxBHfOanItY88FxNWRivlwLsHcP6Yw2N9AUfyIa7gKU2Fcw6rdXUzX5qA2zikR6dNe8OBjfOcrVemaHM5q8O/HYZzhVrbcFZ7jTMmbqZWsxnaxXv6RMpdNSaXXd8/t/I6DkGL4QI7IEfTe1AHK8Q/9b1FW7qn/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a5HEA/P3; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5461f2ca386so5026250e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 09:12:06 -0800 (PST)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-30918c29da2so62701711fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 09:14:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740503525; x=1741108325; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740503693; x=1741108493; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=W3VRt++PNXgAYze1wuBL06koGD/kVHXK+2ZFMicsw94=;
-        b=AXhoR4mV6ZoHDnjTxtV9x7kIR/keTuhGvOuiXAUdjZtWcWR8tIiF8iPmKeuzIcg15v
-         9zB25SWgA+AGuoiNlUxFXdfeGi189iu2VTnS6Jk4bf7SWeh7H0q+I8rA0wOAPLkFoEYN
-         woXIc1i20fxRDvPBVKI9gIErwqHeVvQxDzppsuj4p0UGA3LlRWH8U1xKuGrJDLXpKcWh
-         DTBokB2Uawvv7+BGQPqVTZXVoQIFSCEi6Tuh0nBQUiIde8Y/I+6sAYcFtuRThzZXQjYV
-         tB+nkl7DhbUYOBJ22xbQKdQad1Y3oK1Z2/qCroW8opC2bcRPXb+2itOIRaK/5bDLrF/7
-         Jo1Q==
+        bh=+dODZ+7MTPPBH6S67MBivWnFKuk0Orcv5ZDM65vBwrU=;
+        b=a5HEA/P3EGo8ijezskDUs0+Xo74Tl4X5pShqCfJtmnzL5UgFapbcbDt5Qb2x35cQBO
+         fzTvcKk+8SncWqko/oIHF5K/fqLcjxxX8KzHs8XH1LSibIHsSiGY98oBVthvED/QDzDd
+         00wdgLkYV1+0vl2qDGTQqQls37k+Nm3iSZfJK++xuW+AWv/BAdpXa1YKTfJayWxFUmMy
+         yPZL8De+zfgA+gGG17lWspfNcdWVGIfIKgJ4n1CgzmWgaXUkWmdb29HVr5sjNrHKKwdj
+         OV9VFrYrJa4AMj4uIyvd2TbtqLy6dp2d2uHe9i+RqhrmO3Zs7rffQk/MAy1BdyichASK
+         xTyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740503525; x=1741108325;
+        d=1e100.net; s=20230601; t=1740503693; x=1741108493;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=W3VRt++PNXgAYze1wuBL06koGD/kVHXK+2ZFMicsw94=;
-        b=nWS3Kr7M+5oHucMpjR1KRhNJn33i02mEFyLPEl+0cJe3n+ORPLSUdyR9ME4WmTwcBN
-         DJ6HC6w1hjxzlpXZgWC7wbmZ1lsc25LytJij7ufuIq+vWyGAA5xPdtfLBFxDwAcf97MH
-         fkQYkPVRdln/kgAyB4lNeb8seAM95GUvPWk30Vj33seoE+IUGUbkYYYn0KKwbCJA7Uyl
-         3JN6o0n/Up+6diCWf8u2cPN6jos9gzs94Xu7Hv5QTPt5Tt/qfLvaV3sagGKNAsYdG9pw
-         ZBfpdY3b5JgXUvR8uqjA2TRW6uW99k0/0DZJqRire+g3ihnvMz4IK+jd3bIYgYDDqnV+
-         FGZw==
-X-Forwarded-Encrypted: i=1; AJvYcCVNGY2yQCebpgaBt1U9MD+fpW8IQPiAx/V+xD6RJ0Bo0h4PLob3jYU7thmfxpThv99Vxwp7+EwuTr0qMJ7C@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy03N3EK1rH2fbhgsWsBHq4iBq6+kk80THvFBxO8ktkCrui9MQ+
-	+VXzPhTYVitFDqRM/blaSQqc12Ox7L4HzSd91fXZDyLuzhoQb9thS5Dl+ctTabU=
-X-Gm-Gg: ASbGnctRO4xqNKNKfLnQs4QyFl7/pRx93aS63cAk+sht5eG88Lq/GZyHHlKh60/zihL
-	QzZW+j8w6qoEPJuADqY++8GjWHK3iUIH9IziGMs7Ckav5260uvKk8jM/Po45FRC3u6CbGygcwaU
-	+V15F+St7kd1lWycfsOz5+S+iBVPJc+6rdkGQP8ozem2BnEjJqLVjOPZbHpLM0ooEAq1w2Dx1QX
-	GbbkLc1nKhBwCA50NohJmUOZKAJQEWT+2MB/5tUfCBZp03wnEGbXbXcjcOY9N3Ix4wRg1NssmvW
-	JrHqTp1FLuNK665gsaZlHmA37aUxi2PHZaqB1yEHeuV3LlGueQFia85XGSQrQ4iIY9XVmHfqIhB
-	3HgUg5w==
-X-Google-Smtp-Source: AGHT+IE6btY7yaSP+3y3DG+F1MNX01iR19BAywx69SlKvGbptKvY2IMq2suxBQapk7jTaUAQROgZ+Q==
-X-Received: by 2002:a05:6512:1309:b0:545:aa5:d455 with SMTP id 2adb3069b0e04-5483913f943mr8455012e87.15.1740503524979;
-        Tue, 25 Feb 2025 09:12:04 -0800 (PST)
+        bh=+dODZ+7MTPPBH6S67MBivWnFKuk0Orcv5ZDM65vBwrU=;
+        b=SM9lRhDldfYTnxBCf7TzBnVJ4KNaq65mdGnznRR3JbJ4ns2lL5rpoJHyUtS8dZHRqi
+         f3NKVTruCqzRFDlpxSb3MxKtCf8VQzTy9jJzNGRg1srQpp2em0f0WIt1huHvVa0lf2px
+         RoOVz980+fD7+oMUmjgzj44TykpC8o13Hr9olI3VW5PELBqL6NEXSlqDpUYboMqKfPmy
+         r/unWs0jzTrCiSqQOTnhAsu8wyjcK743NDGgFG+S+92P9HQc9f0T+onAivKK/YLvZhPA
+         AtyrNb96HmR9JGqdtgJ6Ba8OSK0As1Wbh7WZGI32djqryy99drPRE7EgIYxdgyiEgxBP
+         /HBQ==
+X-Gm-Message-State: AOJu0YwXUmVKB3LbVHoIUj/n8VuqcNvLLBL/dTlmVp+CpY9F0zQTEtPe
+	+rdsWPe4ip5yr6htc1dqfq62jm6i1pD9fRtNdaNt6I0xRruGIQnC2EmUBYYpocM=
+X-Gm-Gg: ASbGncvH+Ewpas7sU+Hgw7iLl9MbneuvSFzgNHiZzfbNnDi9a3288ljzh1Vsx4pglEl
+	B6SNteY1Hbv7ppAeYbx3/nwKVgC9RIa+K7nOwxC4Mu5kaAJnfbhy0mDpc3HsutojZ/cjVhBlsXO
+	2Kw3OynyTLQ16movjC9PsC49G4fgQTOz07FNwuNa9pTvreJwX2PXJsyd5SLhW5zi9Z3EGXdQolR
+	Icq7VpgGhZbw2gqYHwYpzpOL1nhT3q1/txIdwWpG8163CzHnaWxZzC074SXLESsLtDMJlZOG3ny
+	u1JC0W6Ubp7xzMXE70YC1+Ph+GeTIGfdwELYWh1SygJf3e0H/ej3fz5DoC5msp8ulP7WDwPCApT
+	UAq68HQ==
+X-Google-Smtp-Source: AGHT+IG2JNWtG5t9NbVNuoQ9NN6EnQTrfMLDjiH8gZ0sx1WPbonGS4f2ipr94i56nk1lp01l/rVSZw==
+X-Received: by 2002:a05:6512:3d16:b0:545:62c:4b29 with SMTP id 2adb3069b0e04-548510d2891mr1850229e87.22.1740503691782;
+        Tue, 25 Feb 2025 09:14:51 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-548514f4c98sm221415e87.185.2025.02.25.09.12.02
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-548514b237bsm233549e87.4.2025.02.25.09.14.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 09:12:03 -0800 (PST)
-Date: Tue, 25 Feb 2025 19:12:01 +0200
+        Tue, 25 Feb 2025 09:14:51 -0800 (PST)
+Date: Tue, 25 Feb 2025 19:14:48 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	ath12k@lists.infradead.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-slim7x: Drop incorrect
- qcom,ath12k-calibration-variant
-Message-ID: <ymjjzpzmlmpjv4biipfnpojybk7ifrbey26vutlnufixakcfh3@kyinst3ku5ap>
-References: <20250225093051.58406-1-krzysztof.kozlowski@linaro.org>
- <sfhcmlz3x254fdowufeeuh4uiwxfgkphm4ch4laceivbrs3zir@qvqk6jxi6zhf>
- <7b54e965-3395-4349-8ae7-51a28c759235@linaro.org>
- <kce6gzso22fp3ze2wp43fvy4tv6yqkaijm72kh5qk34jwijk2l@3ifaiz5tgjvl>
- <d93789c6-61d9-4761-98f5-aa3dbec14d82@linaro.org>
- <21ad3381-4d65-4c68-892d-9f485bf13735@oss.qualcomm.com>
+To: Ayushi Makhija <quic_amakhija@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	robdclark@gmail.com, sean@poorly.run, marijn.suijten@somainline.org, 
+	andersson@kernel.org, robh@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org, 
+	konradybcio@kernel.org, conor+dt@kernel.org, andrzej.hajda@intel.com, 
+	neil.armstrong@linaro.org, rfoss@kernel.org, Laurent.pinchart@ideasonboard.com, 
+	jonas@kwiboo.se, jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com, 
+	quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com, quic_jesszhan@quicinc.com
+Subject: Re: [PATCH 04/11] drm/msm/dsi: add DSI PHY configuration on SA8775P
+Message-ID: <jrlpgcg4f4p76muibh4hypdjag2fl7ex55bspxhkjya6dyqjin@gcsrrrtoggcg>
+References: <20250225121824.3869719-1-quic_amakhija@quicinc.com>
+ <20250225121824.3869719-5-quic_amakhija@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,49 +94,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <21ad3381-4d65-4c68-892d-9f485bf13735@oss.qualcomm.com>
+In-Reply-To: <20250225121824.3869719-5-quic_amakhija@quicinc.com>
 
-On Tue, Feb 25, 2025 at 08:44:57AM -0800, Jeff Johnson wrote:
-> On 2/25/2025 4:14 AM, Krzysztof Kozlowski wrote:
-> > On 25/02/2025 12:45, Dmitry Baryshkov wrote:
-> >> On Tue, Feb 25, 2025 at 11:22:25AM +0100, Krzysztof Kozlowski wrote:
-> >>> On 25/02/2025 10:50, Dmitry Baryshkov wrote:
-> >>>> On Tue, Feb 25, 2025 at 10:30:51AM +0100, Krzysztof Kozlowski wrote:
-> >>>>> There is no such property as qcom,ath12k-calibration-variant: neither in
-> >>>>> the bindings nor in the driver.  See dtbs_check:
-> >>>>>
-> >>>>>   x1e80100-lenovo-yoga-slim7x.dtb: wifi@0: 'qcom,ath12k-calibration-variant' does not match any of the regexes: 'pinctrl-[0-9]+'
-> >>>>>
-> >>>>
-> >>>> Adding Jeff and ath12k@ to the cc list. Is the driver able to find the
-> >>>> calibration variant in case it is not running on the ACPI system? I see
-> >>>> that it uses dmi_walk. Does it work in the non-ACPI case?
-> >>>
-> >>>
-> >>> But nothing parses such string as 'qcom,ath12k-calibration-variant' (see
-> >>> git grep), so how would driver use it?
-> >>
-> >> That's what I'm asking: is the property redundant or is it correct and
-> >> it is a driver that needs to be fixed?
-> > 
-> > I assume driver will need something like that property, but that's not a
-> > reason to accept incorrect one in DTS. One cannot add properties to DTS
-> > without bindings, so bypassing bindings review, and then claim "but my
-> > driver needs them". Send proper patches for driver first which will get
-> > a review.
+On Tue, Feb 25, 2025 at 05:48:17PM +0530, Ayushi Makhija wrote:
+> The SA8775P SoC uses the 5nm (v4.2) DSI PHY driver with
+> different enable regulator load.
 > 
-> We definitely need a calibration variant entry.
-> I've pinged the development team to get the driver patch.
+> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |  2 ++
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |  1 +
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 27 +++++++++++++++++++++++
+>  3 files changed, 30 insertions(+)
+> 
 
-I think we need a confirmation from sobody using Slim7x if the driver
-can read info from DMI or if it can not. In the end, DMI != ACPI.
-
-> 
-> I'm also verifying internally that there are no issues with your renaming
-> proposal: qcom,ath1*k-calibration-variant => qcom,calibration-variant
-> https://msgid.link/20250225-b-wifi-qcom-calibration-variant-v1-0-3b2aa3f89c53@linaro.org
-> 
-> /jeff
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
