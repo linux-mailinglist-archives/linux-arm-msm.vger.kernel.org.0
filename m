@@ -1,87 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-49307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37CFEA44059
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 14:15:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D670A4409E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 14:24:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2DC3166B36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 13:11:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0503817F2A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 13:19:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03B6B268685;
-	Tue, 25 Feb 2025 13:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1671C26981E;
+	Tue, 25 Feb 2025 13:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q7QgPDQg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p4PBw0d/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFAB1EBFE6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 13:11:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9120268FCD;
+	Tue, 25 Feb 2025 13:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740489082; cv=none; b=uIYB8DgR3IoZgEJRsCq98FZc1YJHDraAiBS26ClnjsN/bU3q1laTLA3nPtctLtllCS5WC6nUr9mYGjD0rlNE7nQVFu0I7IvrAvPLAGp1Gz0WaN9V8C6ZJVE43s3Dj9EjjB1X23LiG7tW5JU626G/Z5U/l4yMhsRW870gKrDENoo=
+	t=1740489586; cv=none; b=e2gYlmKMndJLLUCE7nvFWKsGM78h+rlwwxBenYU3UD/6j87I31jq68lBog32VpETOQrYX2xJ+3Ed03dBcD2N10z2uIk/AinoY0bFMA8eTMGO92/1sk/FfT8ToNhWqzFKTpuLE5VqPYai9xU1HOKJpzCNyBMm1Sz839bjAM7K80M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740489082; c=relaxed/simple;
-	bh=7FuRH89tDCOSNH1jKBMPZKH3DWaM3tBKPCcUh0VE6As=;
+	s=arc-20240116; t=1740489586; c=relaxed/simple;
+	bh=deSLD/gPt4DI1pHU47+GbidVI8FywOV4er0EB+pAQE0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YRV+qt1BctzdkouugyS4eJB4DNTk5LY/aYaXsfdmz19sD7e1Grk51fzjqLYAgPl5jrvdVY39H8TFPD/Y/4icvnIsJeJ467DCLWB3tRa7wcrV7HFWtHovdU9OBdFNh9KL5cMlSw15F9EB9mXx884SNdV9EJvt+ykBos5Am6xANtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q7QgPDQg; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51P8K7Xv009785
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 13:11:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uuwVfqXUmGXRoU+kSMckG71FjFzg8qfTg24k4ONKjKE=; b=Q7QgPDQgDt0t1CeK
-	ncM6P5dXSfVXjSbuTvW5j326SSv+P5RtKcgmfvrWC7mlW+rNYU8oiZMqIhyzCQ1b
-	S57rKzVVpRE9S6vUu/vufoSH9/1ar7WOjCP1r87uhhMFOAACB6vm51/Sxdxfzbgn
-	S6gE6GjCeacByhW8T85L1FsMHwBadCeruDJMirLF0IseQAzcXpAdqRMnZBXpaaKT
-	tSS612lp898nrWFnjLMlIpqKLWvnuJsvNgzait4f4KDVJr/6nbcAnl2rgtTENaJe
-	SfcME86DQwJ3qsND+ywAmeutEH8InBpkfZ2uhkNUbRR5kmXwsPONCfhDMq6IWAYQ
-	f51syg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y3xnh66g-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 13:11:20 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-471f4878e08so8289341cf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 05:11:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740489079; x=1741093879;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uuwVfqXUmGXRoU+kSMckG71FjFzg8qfTg24k4ONKjKE=;
-        b=oN7auhiUompNXmiMIoMpMy8GAgXFSsbls61Yy4cW3AIOsCAqg6DgNNOcG8b/izp2CK
-         yqFDeLxlZu8/7aHhwEgRRaFp0tcI+w5GdBVJla1nMgvDBbgHNuOFgxz/JF4QikNAJLRo
-         aBDxgFoRdscsgrvWsUhRJl6y7JEBqNCBs0O6pAYe0uOdbsr+kkaIw2yIf+k/UduDtdzZ
-         GTK5XCbrbIdnJJIcc94HPlcerVAxDfz4Orv1f6O+tnmDe8lT7lTnhdfku6ejcWMVCdEp
-         b+Kus/rejKGvOfJstSeIhf6S9r9yJnAaF/k2ufwgsoosg37XMe8f0zKvQR06DLW72OB1
-         xkMA==
-X-Forwarded-Encrypted: i=1; AJvYcCV0khdFol6JWDbt82rjzAJjQcInTRgHdlA4iqXbBe/aIJ8denwUYI+ba6UJeSTUshLbCH/F5NKh4sLljPz7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yykkhb6Ef71jRt2xN6xRC4WPKaU85NqKcUwzQj8POVdlp3093q9
-	te8XTFV3N/sHuebRv6mV6C0hpcQrvT2y+QvnhjBSJcYVcem1rIYsEnCfHjbOcFffvXmtps+Wr6z
-	G91uSeeRmKEEeqi7Xqr+1Az1ttP1pqjQnJL5gcVCLdVeeMZeny5qZP+meQBl5iDwH
-X-Gm-Gg: ASbGncun49/GGZkIwKrc5Da5HVKYdNl/HoQ9TvwYyfFM/bAIrnItQByClf57y6Qzyix
-	xgwA598eIzEKxhTfa+4r7hYCCPXVlzEknlVDUqAutkdt7bNrqG5qv1GWbtymjt2VhJMgxPRkyW0
-	0zrPBLzQ4lLm1LsMd6MRw3CA6g9girc149ACnixAYqr+ZltjW6SOKvPl6GxW/F8vUBo3RXkjKga
-	nm/Xn/jq71pbst8PCrJxCvxEHChnw/g8Gq7TaEc3dPlw7uzZ3paroqWH9gkdzLvcoErpl7sQu2J
-	npvzUwlb//d3Hxh9oVDlMABOwIp08Aa3iuDvNw1f7VXm8KrnMG5bKFypC3aspwOJ60rZOQ==
-X-Received: by 2002:ac8:5a43:0:b0:472:14b8:ee01 with SMTP id d75a77b69052e-472228d7e30mr71677791cf.6.1740489079608;
-        Tue, 25 Feb 2025 05:11:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IErDUxqjVZVeKivo2X+WzYQGTk3m9wBnXFgnKFF8mPGrQ+En9HUm/GLFcoa+lNQennqXJ70qw==
-X-Received: by 2002:ac8:5a43:0:b0:472:14b8:ee01 with SMTP id d75a77b69052e-472228d7e30mr71677541cf.6.1740489079098;
-        Tue, 25 Feb 2025 05:11:19 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abee36dddecsm37813166b.61.2025.02.25.05.11.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Feb 2025 05:11:18 -0800 (PST)
-Message-ID: <3b91b340-2d01-4685-bb73-818924c4ec29@oss.qualcomm.com>
-Date: Tue, 25 Feb 2025 14:11:15 +0100
+	 In-Reply-To:Content-Type; b=BO32E7zqT7N1NgFeVNx2g23oRsUv4GW6Xjf4CSbaySxCpATrmyOMoiQWEcbTOAVFrRyR5EdPLF3luh2oiJAsu0qLu6fMVReuvx0RuLybvCAzrmkPyHsbJzE6SeUopbIo4Icb0XPuiezmljQ8V9QwydHudAjHorjy4xRA97PhJ7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p4PBw0d/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73050C4CEDD;
+	Tue, 25 Feb 2025 13:19:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740489585;
+	bh=deSLD/gPt4DI1pHU47+GbidVI8FywOV4er0EB+pAQE0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=p4PBw0d/Tgy2PBgmBR09KPF8UAaXU6bdAIGsHPLeOx/NOlwoCNvqKUyAx1JbPR/bE
+	 H+YuSh6K2d+a8sahPDXh4TmbrP7L2VTwj6Aik2MBd8yPRMU2YpeE57BXvdjdomZFRI
+	 AsH3AyaArSSJIqtPL9Oz/5zqkS2S5Pv2iLCvimH+/ii4CvfvMnh2XWPuzDqxtdGOGj
+	 FJMmp1ToBMggUAdt7b1XOyyldHjd+aTJI6AbgBVSNqKEr0SlmkUjEHYbeWu/+Fkcj5
+	 tywz5nB8E4hqaujoEQcznIxnqMo36jayFnhaIpKGVs0hf6jqLXSEoDOlD3/1+tFvrm
+	 mnCM2cOoFOJnw==
+Message-ID: <e508f58f-70cc-4c6a-a6e1-2f046d54d1c3@kernel.org>
+Date: Tue, 25 Feb 2025 14:19:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,75 +50,148 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/11] arm64: dts: qcom: sa8775p-ride: enable Display
- serial interface
-To: Ayushi Makhija <quic_amakhija@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: robdclark@gmail.com, dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
-        conor+dt@kernel.org, andrzej.hajda@intel.com,
-        neil.armstrong@linaro.org, rfoss@kernel.org,
-        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
-        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
-        quic_jesszhan@quicinc.com
-References: <20250225121824.3869719-1-quic_amakhija@quicinc.com>
- <20250225121824.3869719-9-quic_amakhija@quicinc.com>
+Subject: Re: [PATCH v1] dt-bindings: qcom: geni-se: Rename qcom,geni-se.yaml
+ to qcom,geni-se-qup.yaml
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
+References: <20250221085439.235821-1-quic_vdadhani@quicinc.com>
+ <49fc59ed-9d09-46bd-9ca6-99d3445221f7@kernel.org>
+ <f3349d2a-7eba-4865-9b58-0b2e7e57cc92@quicinc.com>
+ <ed8f7aee-e5be-453c-b324-e59e90ecee77@kernel.org>
+ <428a1384-bc06-4952-a117-d57f5ab6446c@quicinc.com>
+ <03587630-9378-4b67-822a-563379c06655@kernel.org>
+ <a65344c8-9b1d-44b1-923a-3840298d19d1@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250225121824.3869719-9-quic_amakhija@quicinc.com>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <a65344c8-9b1d-44b1-923a-3840298d19d1@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 1swpbYkGza7NtsgniN9SDEzeD0ejvo-W
-X-Proofpoint-GUID: 1swpbYkGza7NtsgniN9SDEzeD0ejvo-W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-25_04,2025-02-25_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
- suspectscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
- priorityscore=1501 spamscore=0 malwarescore=0 phishscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2502250091
 
-On 25.02.2025 1:18 PM, Ayushi Makhija wrote:
-> Enable both DSI to DP bridge ports on SA8775P Ride plaftrom.
+On 25/02/2025 10:33, Viken Dadhaniya wrote:
 > 
-> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 66 +++++++++++++++++++++-
->  1 file changed, 64 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> index 151f66512303..02d8a9c2c909 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> @@ -128,6 +128,30 @@ dp1_connector_in: endpoint {
->  			};
->  		};
->  	};
-> +
-> +	dsi0-connector {
-> +		compatible = "dp-connector";
-> +		label = "DSI0";
+> On 2/24/2025 6:59 PM, Krzysztof Kozlowski wrote:
+>> On 24/02/2025 14:25, Viken Dadhaniya wrote:
+>>>
+>>>
+>>> On 2/24/2025 3:48 PM, Krzysztof Kozlowski wrote:
+>>>> On 24/02/2025 09:47, Viken Dadhaniya wrote:
+>>>>>
+>>>>>
+>>>>> On 2/21/2025 5:05 PM, Krzysztof Kozlowski wrote:
+>>>>>> On 21/02/2025 09:54, Viken Dadhaniya wrote:
+>>>>>>> The qcom,geni-se.yaml file describes the Qualcomm Universal Peripheral
+>>>>>>> (QUP) wrapper and the common entities required by QUP to run any Serial
+>>>>>>> Engine (SE) as I2C, SPI, UART, or I3C protocol.
+>>>>>>>
+>>>>>>> Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml to better reflect its
+>>>>>>> association with QUP (Qualcomm Universal Peripheral) and the compatible
+>>>>>>> string.
+>>>>>>>
+>>>>>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>>>>>>> ---
+>>>>>>>     .../soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml}       | 2 +-
+>>>>>>>     1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>>>     rename Documentation/devicetree/bindings/soc/qcom/{qcom,geni-se.yaml => qcom,geni-se-qup.yaml} (98%)
+>>>>>>>
+>>>>>>
+>>>>>> That's just churn for no real gain. Not even tested churn.
+>>>>>
+>>>>> That's just churn for no real gain.
+>>>>>
+>>>>> We made this change based on below plan, we think this will be helpful.
+>>>>>
+>>>>> 1. Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml. Reason at 2 below.
+>>>>
+>>>> There is no reason 2 at this point. You split your patchsets
+>>>> incorrectly. At this point this is churn, without gain. No users of this
+>>>> rename, no benefits.
+>>>>
+>>>>> 2. Create qcom,geni-se.yaml with shared properties for SE-protocol (spi,
+>>>>> i2c, uart) nodes. This will be helpful for the shared schema in the
+>>>>> ongoing changes
+>>>>
+>>>> Then post it, instead of sending something which makes no sense on its own.
+>>>
+>>> Should I include this change in v3 of the following serial patch?
+>>>
+>>> https://lore.kernel.org/linux-arm-msm/f090d637-1ef1-4967-b5bc-6bfce3d7130e@kernel.org/T/
+>>>
+>>> I hope the approach below is fine for you:
+>>>
+>>> 1. Rename qcom,geni-se.yaml to qcom,geni-se-qup.yaml.
+>>
+>> I still do not see any need nor justification for above.
+>>
+>>> 2. Create qcom,geni-se.yaml with shared properties for SE-protocol (i2c,
+>>> spi, uart) nodes.
+>>
+>> Look how other common qcom schemas are named :/
+>>
+> 
+> Yes, but we need to get agreement on whether we can create it or not. I 
 
-DP0
+That's not how upstream works.
+https://www.goodreads.com/quotes/437173-talk-is-cheap-show-me-the-code
 
-> +		type = "full-size";
-> +
-> +		port {
-> +			dsi0_connector_in: endpoint {
-> +				remote-endpoint = <&anx7625_1_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	dsi1-connector {
-> +		compatible = "dp-connector";
-> +		label = "DSI1";
+I don't have time to discuss imaginary future work which might happen or
+might not. Send complete work.
 
-DP1
 
-Konrad
+> found a few commonly used files:
+> 
+> - /pci/qcom,pcie-common.yaml
+> - /pinctrl/qcom,tlmm-common.yaml
+
+so common suffix - geni-se-common... or geni-se-qup-props to mimic
+peripheral properties.
+
+Best regards,
+Krzysztof
 
