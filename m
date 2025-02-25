@@ -1,132 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-49383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C8B1A44E62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 22:09:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A29BA44E99
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 22:17:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E08FE188624B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 21:09:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DEBF717DF92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 21:15:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F7541A0BCD;
-	Tue, 25 Feb 2025 21:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 952F6212D8D;
+	Tue, 25 Feb 2025 21:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BnJV8tek"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="HV00NfTQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7981D1A2567
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 21:09:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F574212B0D;
+	Tue, 25 Feb 2025 21:15:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740517759; cv=none; b=WO/llgcvn1MFn3RB4ic5Q6lj7ysttadlq5EN5f1zkVwIpyUQKd20ygjBQ7/mhDcHbyv5mZ51zvM42CjDfQ3+kOlRxpvXeQh0dn3k9XVYIqB8ypBfxAPVIK0DVpikPo4+I8kLTJk5f2HxX/X3kcjF4Q871NAg1bhd2Pr8KNIDr4E=
+	t=1740518102; cv=none; b=eVvz0T9Tb7TMA0YO9HX/O0mag51UrQFvggcMH/TzWblsa847gJQRNgxk7nVg0WuiiSrgJ7GcE5n1of1iCLqJdm7aBMSIaL/miN8t2WqIUmxfy1eJ5g+u2F0E2wBTkFeL3tzQwWrRkgRvZyqbfGJmvpg0ddWX7cAcDVAd7eVoCwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740517759; c=relaxed/simple;
-	bh=f9nu/gjYpScp2GZzc6dQlyISc0mFy1UpPKMQt+2+SPE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ov/KD+sJINj5z2grAkCXmFAceU/qn09qz8FD/PN/LxgOhBpsDzlEaO+6ObITiMAHYBgiZQLJ1yRuN5I7mG7+uxiHA4SzvHX8mV+TFfm/KeRG6hZRzmj1plBUazCubMUlOS5w83haqeWKkqqNb+jgZp08/qgmjkVQqUjb/e81Ylw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BnJV8tek; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-30761be8fa7so56851791fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 13:09:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740517755; x=1741122555; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=M4XoCEWv2ZTyY24QshaT4Wp49xDJ3qBHY1WAxKeHvOQ=;
-        b=BnJV8tek0H2lBSDSA1XJYLnSTGkX5dc7IAY3Bcy7+6xD5yTFyClsz7CB9j2aKrnjs2
-         Pwr2aY4vrxkpZQaMaz8clZQhNxTSNvZpvy4U5eWAd1F6TSgBF5ARLJ3vo2vgrIQA0nyc
-         37TMXeGfvF9gJuYAHcmcWQNCM6lYq4h3eIqFxxa6O4uHgaU4RfqqHQfK9mprkU3QnsVh
-         UoExr8p2tBvij30C89bFkKXq+E9ZyyD0YveWloESi7rb6LMJ7lnxd83iZpeUYTFKt5cA
-         hpdkr0aQvbL0gEKafcJgwd1u1ZksD8FwvOvU+mzSxaiSWuaFjSRgulHcJ8d1vSLC4tOA
-         s6AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740517755; x=1741122555;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M4XoCEWv2ZTyY24QshaT4Wp49xDJ3qBHY1WAxKeHvOQ=;
-        b=QTzUI0YlfiFeGlcAMDAPTe1LxDM/CcpoZ+o2rN7VG+hv/22yJ1Wo487r7TM2awnCc9
-         S1XDukO3j6bUeRelYQ9gG3NWugCd8nmh5nz7hVr9qbaI9JHvuwf5l4C7e4Og1QBqFQR5
-         7aGZWOUG0g3ciYoXuv9XK3Cm0mnSEFAnNzseXG0v7Ww9mb4JkgRxjWUNQLZYnM/bxwY3
-         13997xcfdJntbnsYX5C09WXlx1toMVGhi1Jvb9m8HTEXcQ3ZWRUVagJuu4wezyxYUYYL
-         T1bEsrWqheTg7hgATeikMIXynoZ1u3zFp4Tp6MwKrkk7c5x/c8SaY/UwYJb8wVBhQpw6
-         Mjrg==
-X-Forwarded-Encrypted: i=1; AJvYcCWn5FG/KaguPjX9cBiSGB42s9Z5D+hZPqbDBD+cZAG3OleB5are9IxDH/aYX4+KrAiND4+spWMMyWktJopK@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHyc1jFxvTd+c57sQCeKod54qU05a51C29IjU8f+2SgjmXzZIJ
-	pc4P3BeIw2OdqQAot2BCLjMrajaYnsDu/h0+rc8tBzVtVtdthjAEtB0+YmSjSYk=
-X-Gm-Gg: ASbGncvpCFsOgAN9lP6A1/OCVmfGz7PJ1eKZUWXtd9u51XIraFwTqssyqNFwt6wn4MI
-	EPoiAaGHRvYGAgA1C7O/r9seJDeIxeEu0WAfuYqgHTEeCQdZZnZAF2zezLTj6Hq0l/UK9LxKPcT
-	GIP2DfSNMosd+8jC1SiUWEYLKSRqaIFjgUU9GJcZDf2tXWx7tPZuygzdE55CdSqaU6d5mOV/lJT
-	OltlIydgpD2bU8zhtDmDL679LNb8vxLftx6DGLrHiXzcm0mTmwTro/lMffozHwlKUYpC5V3SxnM
-	/GBLTsXwuNk63G86TDswYQzAPyFHXsqwvC2Sd0QbhKHBgtus2op1ttjA+o4+IzRr43eehdqbv58
-	aM5HQIg==
-X-Google-Smtp-Source: AGHT+IHZW6d9rnGPSbTopC+zVuHs8+WHbIcOmyVc/br2TV9KZrFgTMvD/wPr004/MWm+y+QcUxD/DA==
-X-Received: by 2002:a2e:9c02:0:b0:308:e9ae:b5b3 with SMTP id 38308e7fff4ca-30b79132d13mr10353661fa.1.1740517755543;
-        Tue, 25 Feb 2025 13:09:15 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30a81ae82d6sm3139931fa.110.2025.02.25.13.09.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 13:09:14 -0800 (PST)
-Date: Tue, 25 Feb 2025 23:09:12 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-Cc: amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org, 
-	daniel.lezcano@linaro.org, rui.zhang@intel.com, lukasz.luba@arm.com, 
-	david.collins@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/5] thermal: qcom-spmi-temp-alarm: Add temp alarm
- data struct based on HW subtype
-Message-ID: <n57hjxg6v7z34qmlvygfwakol45dtj6jgma56w3xqxbj67op3x@5n7yoyydnxm4>
-References: <20250225192429.2328092-1-anjelique.melendez@oss.qualcomm.com>
- <20250225192429.2328092-3-anjelique.melendez@oss.qualcomm.com>
+	s=arc-20240116; t=1740518102; c=relaxed/simple;
+	bh=nR6hbYFkUCK7cDGEqRMA6HXEwebdg5p8Ni/y5RZ8urg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=O/jFqAfr5afpHSIO393yg6nqNmDSZvYXdsYpngllN1eEHwzlo20DHcEQO/khbu8FwjWE9vIlMOcOPhkIEuXcC3nmv0Y1+WC290+2XOtWgUOozL78SaqoP2SKS/HNHRTOmhgYjkDYypkQ2vbQaeW2YUpT8XERbO19pGBBiNBmA7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=HV00NfTQ; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1740518093; bh=nR6hbYFkUCK7cDGEqRMA6HXEwebdg5p8Ni/y5RZ8urg=;
+	h=From:Subject:Date:To:Cc;
+	b=HV00NfTQJrtce6Kh8S2yuDRUVwmPdjUf/2qTRg4Hanqg9nhVS47ezJ8D+wezJhAYV
+	 LuewNpMdPj2N5m5Ztm7YG7rNBqc8kNssJt8qC1YLREvX3vKdsGW+0fy5cAOtV1INsj
+	 lp7kN5EqayamNHxumnPWjqJKVpRBnKGfzWe9rUxc=
+From: Luca Weiss <luca@lucaweiss.eu>
+Subject: [PATCH v2 0/4] Add display support for Fairphone 3 smartphone
+Date: Tue, 25 Feb 2025 22:14:28 +0100
+Message-Id: <20250225-fp3-display-v2-0-0b1f05915fae@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250225192429.2328092-3-anjelique.melendez@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALQyvmcC/23MQQ6CMBCF4auQWVtDhxTFlfcwLGg7yCQESEeqh
+ PTuVtYu/5e8bwehwCRwK3YIFFl4nnLgqQA3dNOTFPvcgCWaEhFVv1TKsyxjtyl7aZytqoZqYyE
+ /lkA9fw7t0eYeWF5z2A486t/634lalco5f9VIum4M3sfVdW9ikTOt0KaUvuJrZIapAAAA
+X-Change-ID: 20250222-fp3-display-b79cb339e65b
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Luca Weiss <luca@lucaweiss.eu>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1333; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=nR6hbYFkUCK7cDGEqRMA6HXEwebdg5p8Ni/y5RZ8urg=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnvjLArkbrqXjAPVx7+znIk3YYPUv79ruiJ0V6b
+ TX4iCQIZPKJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ74ywAAKCRBy2EO4nU3X
+ VugzD/9O7r+tOdJPcuS2PL50nLO9kIANHsyzPjubgmIHTZYzi8WWmCeCutjLBicUZVBqoRBXw6m
+ lkJEUESiWUCGWRziJjn0HThCbh2RPESdAM6Yey5v9y+LZQMNrrs2RqqbCIwMEtFyTuDBwjZI4zi
+ Erj0ZTGOr8fynA5/Pno9zyo0r/VXjkEhkrUZfinI2Vya53ug3iww5vK/BntEC4YHTxboxUQLBGZ
+ k2tVybx1mNglwySxWWs+Sy4lKzMBuAqQdpM/wUgx11EW2CtbCCRe0xek/Dsuqn1caTDxc6NkSsF
+ qjdT7ZQjRXqAUgwjG4YQn8Cc69xaif8lz89MKSX66RB+yBaFVdrmBHj3qxDSNyFFfhEtLIf7FmE
+ nSdPEYuTI/iVajWjofAzJ5nLjNBEEPyYBHxWge5+KeWOfV7Lj2fxCdy6hDKrMbvHOHCBCkeXm72
+ F2VVFuXu6RGbOg7HkSjtX2bJ3DnYrRL6Eu6G1XscrWROhFk4+x1R5qPnu1YAdGrB4ESbK3CeQel
+ oSOKjqNnG6niahxbNzTIWv8kUj8Pd/Muy7v0J70TuoDiGqsYj8voy6QEKGhmEtkvpD3rvnigc33
+ p2VrUkyEUVaC/mUKeq26XKTU4aUe73NCebhaDKtc9yMnQIep5G+liKzkO7hUw3v1MlL/HFsOfJM
+ kK1vndaWpbQua7w==
+X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On Tue, Feb 25, 2025 at 11:24:26AM -0800, Anjelique Melendez wrote:
-> Currently multiple if/else statements are used in functions to decipher
-> between SPMI temp alarm Gen 1, Gen 2 and Gen 2 Rev 1 functionality. Instead
-> refactor the driver so that SPMI temp alarm chips will have reference to a
-> spmi_temp_alarm_data struct which defines data and function callbacks
-> based on the HW subtype.
-> 
-> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-> ---
->  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 103 +++++++++++++-------
->  1 file changed, 68 insertions(+), 35 deletions(-)
->  }
->  
->  /**
->   * qpnp_tm_get_temp_stage() - return over-temperature stage
->   * @chip:		Pointer to the qpnp_tm chip
->   *
-> - * Return: stage (GEN1) or state (GEN2) on success, or errno on failure.
-> + * Return: stage on success, or errno on failure.
->   */
->  static int qpnp_tm_get_temp_stage(struct qpnp_tm_chip *chip)
+Add a driver for the HX83112B-based panel, and enable it on Fairphone 3
+to enable display output, and enable GPU as well.
 
--> qpnp_tm_gen1_get_temp_stage()
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+---
+Changes in v2:
+- Change compatible to "djn,98-03057-6598b-i" based on other docs I
+  found
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20250222-fp3-display-v1-0-ccd812e16952@lucaweiss.eu
 
-With that fixed,
+---
+Luca Weiss (4):
+      dt-bindings: vendor-prefixes: document Shenzhen DJN Optronics Technology
+      dt-bindings: display: panel: Add Himax HX83112B
+      drm/panel: Add driver for DJN HX83112B LCD panel
+      arm64: dts: qcom: sdm632-fairphone-fp3: Enable display and GPU
 
+ .../bindings/display/panel/himax,hx83112b.yaml     |  75 ++++
+ .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
+ arch/arm64/boot/dts/qcom/msm8953.dtsi              |   2 +-
+ arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts  |  62 +++
+ drivers/gpu/drm/panel/Kconfig                      |  10 +
+ drivers/gpu/drm/panel/Makefile                     |   1 +
+ drivers/gpu/drm/panel/panel-himax-hx83112b.c       | 430 +++++++++++++++++++++
+ 7 files changed, 581 insertions(+), 1 deletion(-)
+---
+base-commit: 197aed880d4de2127c80c389ec62601b7d837351
+change-id: 20250222-fp3-display-b79cb339e65b
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
->  {
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Luca Weiss <luca@lucaweiss.eu>
+
 
