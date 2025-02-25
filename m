@@ -1,61 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-49359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37874A44A13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:20:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F2FAA44A4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:28:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E7D921756A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:18:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A592C3B1BEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:18:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19DB21A08A4;
-	Tue, 25 Feb 2025 18:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D62621A5B92;
+	Tue, 25 Feb 2025 18:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uloE19gB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LOM1xN8B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43701A01CC;
-	Tue, 25 Feb 2025 18:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE931A38E1;
+	Tue, 25 Feb 2025 18:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740507500; cv=none; b=NBheHIeOe4zr1jaSsK/K3bYkVE3/wcQ3rcuIsuMR7dr0HH9x7cqfPPnmTF/YZc0ruMFeEEw4YWcHSSthBxWVstSPClKOLjWNUcsP6KA4C782bmdeJvI3oRuRL5lndM4IoKhEhiLgv9YUEVlpfciZKD2AizW7pb+DJYFU23BrWoM=
+	t=1740507501; cv=none; b=HrM5uZXCENOzc1xvr+AfkLdIf1j1Oq+7QtXgSpEwFtqjE0mJIaVHJMotebwDZBW37oUXHz79LYpNhkzCHuTiq9pwmodABFVrSTL+6snEznoVvfh9viDQ2ZCEUpyM/xOTSCZkhJGcWc0dzFYBcmmHBwe+QGX8yt+YBa3a9Y+jxpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740507500; c=relaxed/simple;
-	bh=+7/cafxWJZy+AV4l9RXgjj6ivujysyr4e5o34yrxifg=;
+	s=arc-20240116; t=1740507501; c=relaxed/simple;
+	bh=+cbF6hLk451vsFlZ3xYrmTeAvkjPBrdgFib2HzXZiKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HZzDTr+M47uJy0YfKlKA6ppG+PdpZ02fcnh23GM4YqwCy55msfJv//oglRptLag86C/qoBC3Ty6dMi5IpUG1nVSt3aGTcGTtVaqnWDKPYYcPqjpPvsav6B7bz4iAsLg/6o1KZ81AUshfJ2TbdXBN+2MAPU/vuBggco/QpjW70t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uloE19gB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A50C4CEED;
-	Tue, 25 Feb 2025 18:18:18 +0000 (UTC)
+	 MIME-Version:Content-Type; b=L9clRFIyZgIi/OF9aP8y3Uri6FbivBo54gGjh1hxoz1RBuGOKWtFuoLR63r0KVSANQ02TkwGgjQddYWaQ9F23QrZS4egDXu3Usa97hN226Y6BWV7/mxICnJHxwDEhCSqm7l4XmHckcI8/3Kp1T0Y/+3VPZSoDxCuvpaEvYKUmxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LOM1xN8B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A426EC4CEE7;
+	Tue, 25 Feb 2025 18:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740507499;
-	bh=+7/cafxWJZy+AV4l9RXgjj6ivujysyr4e5o34yrxifg=;
+	s=k20201202; t=1740507501;
+	bh=+cbF6hLk451vsFlZ3xYrmTeAvkjPBrdgFib2HzXZiKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uloE19gBFxbB4KFJunoND2RwmR97FD/zUsQpMgrvasdzpmJsyelhdCeJ4ph5zZX0t
-	 SbRDGNHuWEeK+XBZTBd9iOhSeH5vAujzhlQ1c2a4WCLLe0dyCBkhv7Liquz4MPBt8U
-	 LfeznliMyq+hfv42TDbYmPXiEVVbFmSXw1VlGv0THy4V0Lu1ASmsneiPiBsgBKFh1p
-	 K7WyGtQiL5lFmGmad5ruhfkR2+dGajC4f2+uhSX4pcOxqK4J58ZBmuxE4oPbHEQ/38
-	 eo5liwd620hlQTczgCc8ZBxtaAzQLiMxYMJOgdYhD/6nF5PNb32n9a8tujDR58FJ37
-	 hBDj0q5o2WcMQ==
+	b=LOM1xN8BY4Tj0nUI9j0mmI2ilR4J6vGtGNTUXq1t02sBxC9QxJaMVka+Zx4dmfxy0
+	 /htswCANJi7mS0FgA3cuWE/3gY/1wCSILnJ/m45mdE9E+HTWOTbYG0t2I/ovNX+x3m
+	 6Lq30M6No6M80hPOnBdczCf5lCC1eyvxEqKnhCyq6i9MvTRoUSD/DLInCk+90xl4yo
+	 elcvB7hH+5meZZWlusjusMmdWZ4F9rKi9oZVt7yjZOcTeHbIAgIbo9AP2GWoGM6bUz
+	 upmX/zfOfccRlnwIH4inT3Cozrou3Z794CvuM8PF7/wzpKsjl4vZbOBG5phxv04iY7
+	 1TITxDaLxDKlg==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Mark Kettenis <kettenis@openbsd.org>
+Cc: johan+linaro@kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] arm64: dts: qcom: enable SLPI on RB3 and RB5 platforms
-Date: Tue, 25 Feb 2025 12:18:03 -0600
-Message-ID: <174050748691.199016.9851208961166712307.b4-ty@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Mark usb_2 as dma-coherent
+Date: Tue, 25 Feb 2025 12:18:04 -0600
+Message-ID: <174050748693.199016.16397243214645123275.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250222-rb3-rb5-slpi-v1-0-6739be1684b6@linaro.org>
-References: <20250222-rb3-rb5-slpi-v1-0-6739be1684b6@linaro.org>
+In-Reply-To: <20250109205232.92336-1-kettenis@openbsd.org>
+References: <20250109205232.92336-1-kettenis@openbsd.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,17 +70,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 22 Feb 2025 02:43:03 +0200, Dmitry Baryshkov wrote:
-> Enable Sensors DSP aka SLPI On Qualcomm RB3 (aka db845c) and RB5 boards.
+On Thu, 09 Jan 2025 21:52:31 +0100, Mark Kettenis wrote:
+> Make this USB controller consistent with the others on this platform.
 > 
 > 
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: sdm845-db845c: enable sensors DSP
-      commit: 7373610dde49566fe091545aa0b753cc5e34116d
-[2/2] arm64: dts: qcom: qrb5165-rb5: enable sensors DSP
-      commit: 341e66232128b674300d4474557c23bb32b7aeba
+[1/1] arm64: dts: qcom: x1e80100: Mark usb_2 as dma-coherent
+      commit: 45bd6ff900cfe5038e2718a900f153ded3fa5392
 
 Best regards,
 -- 
