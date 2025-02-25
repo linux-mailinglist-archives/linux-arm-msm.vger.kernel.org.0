@@ -1,135 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-49314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E742A44114
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 14:41:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC310A4413A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 14:46:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C9EC1887B02
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 13:40:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A46A3B4E82
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 13:45:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4C39269AEA;
-	Tue, 25 Feb 2025 13:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A084269AED;
+	Tue, 25 Feb 2025 13:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Xw0Hvceg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B7OsNhP+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C33426AAB6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 13:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478C4269837;
+	Tue, 25 Feb 2025 13:44:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740490740; cv=none; b=nZz2TKrp2R9wdQ0w9bhsEmg8JQYzxM/MGyrT3/7UUlv9GL/VHzsvY8oBibVu25h9vhYBWxSi56BsiK/suszoq6ODb9uwPvUcmCnQ1jaCVrN6dgKGrcK7L8jVPQqNQ25PT51WMv4j+GE7KxjorIB7GhyArX7DtLqFKqJh3nwBZFw=
+	t=1740491097; cv=none; b=keNZGQnRCfo+Nh3V3SsVlt/2y4gHBBRErvjEVtLNjLyZF2kkL/xkn5ZUCVigs13dugXCBuxCU/PLJiEX0dhkHXntaIVxA1WK2a1OIaHF4bdp0XxBOciQfMVjMF/MF6pv8mdYfvYBxDuhu4JQWwg9rIN/sj7AVGyQ5Crzl2mkbro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740490740; c=relaxed/simple;
-	bh=v0bj/zqw+24ErI/9iNiFwIBMrJ6F00qOqAwC3m6PJmE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HkkQE/Go2/QeADTkiJJoIhQemnhCGuw9Bqwy08E8OcWXIYlWgTzjypKDeNheeDk8AKmJRGepDlOtb8H0+v2BGCKgUDqWc1qiAXspHcaPB3n3p0h8pyGqYsJUITjlX0fbt/r7bjvMfAonECYiGtPQ9VZuVAGJSl0RShrK6OMrrlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Xw0Hvceg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51PCaxm1012384
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 13:38:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	woumc9GjD8qeeQzGa6RZ11jkdHts493OKWZQDEqYj3c=; b=Xw0Hvceg5hBS9mkI
-	eGRpBipCHpFRWz179D8DzpEGhAi6LUzQwsAxurvqMxR2r9Hv1lCpoe5uMY99Q5KM
-	nWp1FZdkjxGYQ70829sTBB3VXn2LNGzzbI84U21I9P0rOE32FCBWfmGRtezdmlTv
-	yixKlxybdY6emzQtjuiw8WwMbRT/G0nqQ0PWaBkTjGAGviROsK43N18QOFC15VOq
-	5NOIX1Q+TS+1oDi3CL6+uUKMiCet5bZHAN/ugn8TSiolUC+vOulrFooEOex9wiGO
-	8Iq2VKs8dDe6em1z8ynxN5GlNPPhl1E0tI6z3WRDMNfj2oCY8XYY4aTi9QxzVJPD
-	3S4nAw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451e1984s9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 13:38:57 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-471f842ebcaso13916291cf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 05:38:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740490736; x=1741095536;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=woumc9GjD8qeeQzGa6RZ11jkdHts493OKWZQDEqYj3c=;
-        b=Z3bYmkxn5RZIwCSVmDN/YgAajln7UG/f3lcleLubKhdervPTfFoMA063P6PkCYB8Bm
-         DFCEqEbguMUdILmSOeDjTMEhq1Rr163CE2U/yW/Eh+8yNbH4r2d67xsENxyRLUkUoIQ5
-         D7dQgIrth3udLf6UGDE23sWRw8SDrsSotjCeql7SZzK7cw4UvyM6nPVqpOLb4X0vrp1B
-         AlciuBe9tontQc4FofPzUG0Rccix5bpDavbWdZxuYl9O7UjRsFgAfOH+N6KtcSN63R7t
-         LQagFNw3/QYJ4QAtk3gnvBsZsvzpSrzAQv1FRkjRg3KUI1NgtNLiMgAGFmiKmCe+BPZ/
-         uZ1w==
-X-Forwarded-Encrypted: i=1; AJvYcCVuVhffr1Svyb0fLPayEOyR/xQWC05MpJfivEnJHeCwjRBOSpuqEjbnKHX7jMRoAMyPyJrrEokNMqustyw9@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUUhEZvIo1ZBKYHnp4aeGapQIiTd0y3ALCSW3qkxx3vmfwmEEl
-	Ppa/Wk2Olt1IsXTtPJaZ+2h93aFryvWlobXYbynPYUIupggOE57c1efqhgFv1ZwJ971D1vnfxhr
-	dmqFgalAr0eJsjK9Gmd9jsENk1zyOrnHr6fa7lhUOqMhOHkugkvklO/fpGXeAjIao
-X-Gm-Gg: ASbGncvgrXgmFh7Zd+0T/T0FLV2UR8G/9FzmbDJqBsveVOcnfnduw1qVBEm6KRuIKXZ
-	DQfRyCiQ+HUkXaNGFY67kTc2kpBD+HzKlgIUDqujcayyjruTCU7QqGQGinQKBWrVEpKeOQ0iXB/
-	tWt2kblftFL6x8otsVNKasIl9zLcJz4KwppHLbEzfG89zdL2opH+wJwQZNJmDjzW8E8jyD+rHeS
-	1OvczfTJAbZIp4sz/bOKG9ZMBOmTDJouFrFVGNgdtdBaTwlrItOJ8vJgoY6Q8nP7HjpRnxqHu6M
-	Ywill2hi+OTT4z3Oob0isX4vtr9Mh9ybIVSkaDJfGTFbiFw12QTRwxqxWRre9tAKRBluKg==
-X-Received: by 2002:a05:622a:5595:b0:472:1d00:1fce with SMTP id d75a77b69052e-472228abedamr101174411cf.3.1740490736231;
-        Tue, 25 Feb 2025 05:38:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjOXuBD+5u6McaA71MsHpTumzGjAxp/BpGHbEliPe5AFBeQouuQ+C3kOjYUnIrWHRb3ZXhjQ==
-X-Received: by 2002:a05:622a:5595:b0:472:1d00:1fce with SMTP id d75a77b69052e-472228abedamr101174241cf.3.1740490735850;
-        Tue, 25 Feb 2025 05:38:55 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abed1d6b153sm143635766b.73.2025.02.25.05.38.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Feb 2025 05:38:55 -0800 (PST)
-Message-ID: <3956606b-71de-4c71-afb0-c4918888db19@oss.qualcomm.com>
-Date: Tue, 25 Feb 2025 14:38:53 +0100
+	s=arc-20240116; t=1740491097; c=relaxed/simple;
+	bh=tQxxNhP0OfWotZT1IcwA3V9l4RF3ybbDn/u2XIekXIg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WmaDwTdyWvXJn50EGXjGTx7GcXeeoMUE+684VHgp43s+iANGNFdYWJSghIIgpZxeY8DtkWnesmqhPHU0J+i52Tpi5wtHdS7R16RsAmudI4Q334R4Np5cLx0Pp63/jGa9pGV3tULSS6saMJJselE/QJcydnqFYWPffZLNGfKwLuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B7OsNhP+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321FBC4CEDD;
+	Tue, 25 Feb 2025 13:44:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740491096;
+	bh=tQxxNhP0OfWotZT1IcwA3V9l4RF3ybbDn/u2XIekXIg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=B7OsNhP+NByPVR4NPYkgEHO9JwE1BnxOWHTHqtbxr8sqDQYZ0nQavQ4oJH+0j1fSR
+	 auXWAePYXLyV+hsC6jaWr8P1HhCdjhEhwlq5gdvGygCJDt/5JacVj3QrVNt9bZ2D0l
+	 wK+Y/usaQHV5Gp2FK8Spr8eXvdBf89uPeYB0J3CYj1wMWK+MIu7XNszgLxSAl/CZ5D
+	 jf5YN9AcyXH5eNGzrfEWQYKNbrKHvsm4xlv7ezfiZRzjJ0ToZdAEJW0rNRse+f/1vi
+	 5OVGnEHvJZVORxCop1PROSmvtvSSEPiLNuERZOAGDQX+GTnDOnSMNA6fSdnfiqHbXs
+	 2LXvN9fGk/SRQ==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Tue, 25 Feb 2025 14:44:40 +0100
+Subject: [PATCH] Revert "arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on
+ apps_smmu"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sdm850-lenovo-yoga-c630: make SMMU
- non-DMA-coherent
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: Konrad Dybcio <quic_kdybcio@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-References: <20250215-yoga-dma-coherent-v1-1-2419ee184a81@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250215-yoga-dma-coherent-v1-1-2419ee184a81@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: lQ8gFq4Vkdr_onJL_TahHfgcbI7Ny75x
-X-Proofpoint-ORIG-GUID: lQ8gFq4Vkdr_onJL_TahHfgcbI7Ny75x
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-25_04,2025-02-25_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- priorityscore=1501 mlxlogscore=762 bulkscore=0 impostorscore=0
- lowpriorityscore=0 phishscore=0 mlxscore=0 malwarescore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502250094
+Message-Id: <20250225-topic-845_smmu_not_coherent-v1-1-98ca9d17471c@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAEfJvWcC/x3MQQqDMBAF0KvIrBuIg6HGq5QS2virszCRJIog3
+ t3Q5du8kzKSINPQnJSwS5YYKtpHQ37+hAlKxmpizUYzG1XiKl71nXF5WTYXYnE+zkgIRXHX69Z
+ +rcUTVIc14SfHf3+9r+sG2pmZhm0AAAA=
+X-Change-ID: 20250225-topic-845_smmu_not_coherent-248019b99e7e
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ Konrad Dybcio <quic_kdybcio@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1740491092; l=1758;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=Q6ia7djtQcGwHainUEDpfNTadDgNTryVhujY1qBqmZ8=;
+ b=77IIjgl5vmI0C0HaWtWNgLd8nhyplbUvobG4g7/xRU0+FrkfNujHjFBa9EOls635ftfyN8O5X
+ /W92ZifcghfCET7M8cgFGTtA1YSMaGhN91F3sJLJnyuhUKvpI5P68rS
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 15.02.2025 3:43 AM, Dmitry Baryshkov wrote:
-> The commit 6b31a9744b87 ("arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on
-> apps_smmu") enabled dma-coherent property for the IOMMU device. This
-> works for some devices, like Qualcomm RB3 platform, but at the same time
-> it breaks booting on Lenovo Yoga C630 (most likely because of some TZ
-> differences). Disable DMA coherency for IOMMU on Lenove Yoga C630.
-> 
-> Fixes: 6b31a9744b87 ("arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Let's revert the offending commit instead, this must have been some
-sort of fw development fluke..
+There are reports that the pagetable walker cache coherency is not a
+given across the spectrum of SDM845/850 devices, leading to lock-ups
+and resets. It works fine on some devices (like the Dragonboard 845c,
+but not so much on the Lenovo Yoga C630).
 
-Konrad
+This unfortunately looks like a fluke in firmware development, where
+likely somewhere in the vast hypervisor stack, a change to accommodate
+for this was only introduced after the initial software release (which
+often serves as a baseline for products).
+
+Revert the change to avoid additional guesswork around crashes.
+
+This reverts commit 6b31a9744b8726c69bb0af290f8475a368a4b805.
+
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Closes: https://lore.kernel.org/linux-arm-msm/20250215-yoga-dma-coherent-v1-1-2419ee184a81@linaro.org/
+Fixes: 6b31a9744b87 ("arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index e0ce804bb1a35047b092d4745988170738a3cd03..d0314cdf0b92fd282915e7184f88b52bf309b2c2 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -5163,7 +5163,6 @@ apps_smmu: iommu@15000000 {
+ 				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>;
+-			dma-coherent;
+ 		};
+ 
+ 		anoc_1_tbu: tbu@150c5000 {
+
+---
+base-commit: 0226d0ce98a477937ed295fb7df4cc30b46fc304
+change-id: 20250225-topic-845_smmu_not_coherent-248019b99e7e
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
