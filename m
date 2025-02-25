@@ -1,65 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-49360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F2FAA44A4E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:28:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3C1EA44A0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:19:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A592C3B1BEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:18:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 06BE07AD049
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:18:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D62621A5B92;
-	Tue, 25 Feb 2025 18:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFB411A01CC;
+	Tue, 25 Feb 2025 18:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LOM1xN8B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jcA8lrP9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE931A38E1;
-	Tue, 25 Feb 2025 18:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07A31ACEAF;
+	Tue, 25 Feb 2025 18:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740507501; cv=none; b=HrM5uZXCENOzc1xvr+AfkLdIf1j1Oq+7QtXgSpEwFtqjE0mJIaVHJMotebwDZBW37oUXHz79LYpNhkzCHuTiq9pwmodABFVrSTL+6snEznoVvfh9viDQ2ZCEUpyM/xOTSCZkhJGcWc0dzFYBcmmHBwe+QGX8yt+YBa3a9Y+jxpw=
+	t=1740507502; cv=none; b=uAh5W4Rq3QVbOYKKvew3jMVTD9Cw4GwfmTFzFmX0A/oPty26VP8Dkxt4FIO4UoJDMbGp4ATvB+FYVCSJOM2lvevMuDQR33buNFJ/1LCQOnFGjMbvYFCQppR5MDLsbqyq9yWlc7iCOXYIbN4bgaHkdrqAw74eMDyWX7W3I0cwum0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740507501; c=relaxed/simple;
-	bh=+cbF6hLk451vsFlZ3xYrmTeAvkjPBrdgFib2HzXZiKY=;
+	s=arc-20240116; t=1740507502; c=relaxed/simple;
+	bh=Ljcntf5brccRTJ55MU9gPsKOqSDSzzamJnNTFtc5gG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L9clRFIyZgIi/OF9aP8y3Uri6FbivBo54gGjh1hxoz1RBuGOKWtFuoLR63r0KVSANQ02TkwGgjQddYWaQ9F23QrZS4egDXu3Usa97hN226Y6BWV7/mxICnJHxwDEhCSqm7l4XmHckcI8/3Kp1T0Y/+3VPZSoDxCuvpaEvYKUmxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LOM1xN8B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A426EC4CEE7;
-	Tue, 25 Feb 2025 18:18:19 +0000 (UTC)
+	 MIME-Version:Content-Type; b=so3ySfFCfFUoXEczNlM+FCauNBQunvc/EbhxTVnZAYVn2IPkHwy4+8NyoGg5RSoDG4ObjiXUPc/qdh1I0cSD1O+kvhL5DdLxZAjY3OeZD6A/zCoZIcImVswGiBDUjKsi8I+sQcVaCkdchM9/AEwnbY334z3zO91B20gv6mSZsEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jcA8lrP9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF06C4CEE8;
+	Tue, 25 Feb 2025 18:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740507501;
-	bh=+cbF6hLk451vsFlZ3xYrmTeAvkjPBrdgFib2HzXZiKY=;
+	s=k20201202; t=1740507502;
+	bh=Ljcntf5brccRTJ55MU9gPsKOqSDSzzamJnNTFtc5gG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LOM1xN8BY4Tj0nUI9j0mmI2ilR4J6vGtGNTUXq1t02sBxC9QxJaMVka+Zx4dmfxy0
-	 /htswCANJi7mS0FgA3cuWE/3gY/1wCSILnJ/m45mdE9E+HTWOTbYG0t2I/ovNX+x3m
-	 6Lq30M6No6M80hPOnBdczCf5lCC1eyvxEqKnhCyq6i9MvTRoUSD/DLInCk+90xl4yo
-	 elcvB7hH+5meZZWlusjusMmdWZ4F9rKi9oZVt7yjZOcTeHbIAgIbo9AP2GWoGM6bUz
-	 upmX/zfOfccRlnwIH4inT3Cozrou3Z794CvuM8PF7/wzpKsjl4vZbOBG5phxv04iY7
-	 1TITxDaLxDKlg==
+	b=jcA8lrP9GsyMOsTqkt/3hBHDbT0M/UEEX3NT7IeYbMy2kgf9/tHIGHz6chVwTIM/u
+	 WaUV2apdZqCBrYUcPZGFAsSsiA0VFYxLQcf8Z0I1XQw/75YwsUt+O9w+r64hoJ37ZF
+	 76rDYg/linUZW7hP4N04PFk1uv01KjPQ1jsmF0vkZgPN/SldVRrkHo1Gtoxu+BgC9u
+	 z9ehCYWe9xbENx5YP2tkhklVkDX9+vhOTCIkTEnycHugzplI73O7ckpC4gXzhdyCZj
+	 IL0ZwJSmO/UaVnrqZ/5eCsF171fTs6ddTMxwfobftj+Fc2PTiHkJywDVabpd2e1LMc
+	 3mspi6s4BsBBA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Mark Kettenis <kettenis@openbsd.org>
-Cc: johan+linaro@kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Mark usb_2 as dma-coherent
-Date: Tue, 25 Feb 2025 12:18:04 -0600
-Message-ID: <174050748693.199016.16397243214645123275.b4-ty@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Fix clock for spi0 to spi7
+Date: Tue, 25 Feb 2025 12:18:05 -0600
+Message-ID: <174050748697.199016.11411675655725111801.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250109205232.92336-1-kettenis@openbsd.org>
-References: <20250109205232.92336-1-kettenis@openbsd.org>
+In-Reply-To: <20250223110152.47192-1-mitltlatltl@gmail.com>
+References: <20250223110152.47192-1-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,15 +66,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 09 Jan 2025 21:52:31 +0100, Mark Kettenis wrote:
-> Make this USB controller consistent with the others on this platform.
+On Sun, 23 Feb 2025 19:01:51 +0800, Pengyu Luo wrote:
+> Enabling spi6 caused boot loop on my device(Huawei Matebook E Go),
 > 
+> 	&spi6 {
+> 		pinctrl-0 = <&spi6_default>;
+> 		pinctrl-names = "default";
 > 
+> 		status = "okay";
+> 	};
+> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: x1e80100: Mark usb_2 as dma-coherent
-      commit: 45bd6ff900cfe5038e2718a900f153ded3fa5392
+[1/1] arm64: dts: qcom: sc8280xp: Fix clock for spi0 to spi7
+      commit: 5429861bdc33bdc37697909b1f62b1214cd335a9
 
 Best regards,
 -- 
