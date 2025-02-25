@@ -1,133 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-49273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FC6AA43BD3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 11:36:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB719A43C0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 11:44:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9663D18870EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 10:31:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 91C721784A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 10:41:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52E8B1E1020;
-	Tue, 25 Feb 2025 10:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 524F1266191;
+	Tue, 25 Feb 2025 10:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cpfk4PGt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iRNiBYxq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05361C8634
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 10:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3FF23BD11
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 10:41:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740479459; cv=none; b=NyTMghI634ir58X/trVhj9NafYBFk87LDX0Skvd0rTNap4hIfg+D9LC7ETgao1K3pcLJBnv8SnAUcb0Wx+nKYU6IhzECDhyU8JVGv/tZobFtgN+Jd9A2TjAnTo3OHJxo0D/+ovPdUFG9lppITGPshwDOMC+O0HsHj5+b3flFLuQ=
+	t=1740480107; cv=none; b=JlxvwVkOuPduE7peq5ge56kmYRMwc5VHm9PeiAMBKbvZ7+0CtOodmgiGWbikTxhRfRPgb0fhJaZYHQnVxnxyzMOtYZ7fJjyB3R6jMsJ+xYXtyVhEZKOgxy9pMlknTFTd5mZt2+dxGHlq2hydCYKjWACYFIpT2jkjWUMjpqRuBbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740479459; c=relaxed/simple;
-	bh=twBjVGnJahxmvhFhjvSn5Su3hptRGwOQitAeV2FWUfU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QdrNk6v8vpENwyntdOqaiyXpca7dFNjrC2pZoaIlaOoIU11k+Y9QB0bp8+6dEYJMwXQrWQe1n7/vOmNUq9lCPakCAKyMYKbpIP/FDK758fBFhX4zj9uctL594min+Xnts/OlIqQ6MO9HA2I/ni/aRAoWSxBrRQhzkbaO6mKlcUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cpfk4PGt; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51P8T6LX014309
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 10:30:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WqnuvYu4WPEc+kz1zfJCPmfGzlIVxlgiv6jIgV5NH1A=; b=cpfk4PGtEspcdglF
-	vZ6iumE9YdGZOGpA3IenOsl1dcrN9EuKZhFGKmxaS2icOsxkcJ6RWQYz7Om+PONr
-	nr1DOVDk8gItqoi1f5XsuwJVGF3fKT7FPFtNEn83dxZ1Ho7tKhF2donc3zCXPqYF
-	ARivm/I9uXNim57p/XrHvwwKLuUpVKJIEmeUDEjDZwpJmA9q1JZWHWu7SrDOUWJ5
-	2BJeO3k57M6cePjK9qYSlXGjo+PgTerKI5naKtEgHmbcZHURS/61UWylR0bsdTPo
-	LsbKujed3a3/G0WG155HqoPtn1820MIncjwTWsbD7F5CFCtMe1o9Gsc3DGEjVZbq
-	Za+xmQ==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y5wgrkyj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 10:30:56 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6e67ac0f122so9476766d6.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 02:30:56 -0800 (PST)
+	s=arc-20240116; t=1740480107; c=relaxed/simple;
+	bh=LsxEE7M5vloDRELpk9HA5CECnOlNHUPp+HJ2/qo4MbE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BzQps7WwUpmcdtdNcNHg8aUoo0TpnAeqoqEaTCKkXFC1zZNydwSZUtPzSIHkbCQWkno37fDGIoyDylNyiMRwUc+AET1JTYVqho2FbK2oxOC7VpSMQ8mHFYcoq8bzjKK835QoympEVWV5ZUQ+q2/EHmxGb6IXFM5l71JNAW4YZ3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iRNiBYxq; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e5db2d767f2so4052999276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 02:41:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740480104; x=1741084904; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=q4y1Yfwgg1zBnhWKLOimUYxF7Yvd8NEBzFT9QXdfO8s=;
+        b=iRNiBYxqXfk6Q5vhTFznlwhy4OJy75kkEEeKJ1o91jbth60I0hY4KJ39b0bUB8b131
+         bjBtbjXwDFJMymtB13v0ET+15rCHltRGIBZjXLSXds1ov7EDRl1xUmMvyc3UgWxm6Ixo
+         wltIJJ55zceY881q65nE9HSILrIW0iVY1QxSJB/LQKntgmqvqtdYolRk42kykIAVQnjg
+         7dfv7MumQynlPzJOK1OhMbRGylkCmVuc/8NWO7WOeJ1Jc/2LRmzW4ZtJoH70ZuHuSpEC
+         wgjIQrHlVdlvwxwoE6P6eCzkTsrCCxCVan55QBJZsYgRKTCpDVZIsDTgziRNx6uMjkwt
+         8DzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740479456; x=1741084256;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WqnuvYu4WPEc+kz1zfJCPmfGzlIVxlgiv6jIgV5NH1A=;
-        b=QmZQFizMZ8nuYQxwJC0SgCfazKjm1wmhwsHfcVsze5wTCP2eLimE8ydQLawp/5mSTG
-         8lsJE1311KU4klVWRnGYf2w0Kd35p5/xSvQeycsMpX4BMKGceZrKW2lN1sMD/+PQv8Mx
-         wuf/2rSODR1NdnT555Gy8PPju4RVsaQSxMMQKOlQJV+5lFBc+2hAvV/VzPQZbNbwTyAL
-         TWnL7RhuSWSCDaJN4SG7jFK71ip/j7LMaBDSgxKHL45t7PArpLdjiS0qAFObWi9qG0QX
-         MdYAmuCrlD+Ecf4QtWzRenG+CEGX2UNYRZPfkQIM7N4T71uC5qoebk728G8I3AQSJhhj
-         mVvA==
-X-Gm-Message-State: AOJu0YxEU5IR2ZmbcN31qEFaJJBLlZPA/TH9qxryCCV9PjGlaKcaJQE9
-	PAPC2g5uknTXyFfIzOqOELGI2yiUAd4h3y2BFGPZv5RC9lYKM/G4feJNtVU2ewAcFIMjM6lhS/k
-	54nKtCc/++2tKOD8mZALpRG4+L6zA+4dJhQZRRGeJlYC06e1ii+2KLieQDOMOG4g6
-X-Gm-Gg: ASbGncv6os7zgC5XzfwcQ2xXs6IuTeO/u3s+aYDjn/VF/KtIfmDcayJc1K1SzS7sh+G
-	aHkuiE2/e0JWRYFahpNnAewFVHsnpcSOvo86r2PDh3lMesacmHtG4G/tlEMhIp6u+Kh8nNsvj0e
-	PjuWAb5SWBW4wiSLKWLktnKd6nMOsLkOBBdkb+RhF4i6iPyeBwPsNPvy+1uq/g8apc7o4DZ33y4
-	y5kRryu1qupNEOKY3jFKom5yrSixw33NMN+5nqwiXE0jsDRxVbeICy1ObcteCeIS43/W7TSIfDA
-	U02XMolpA8ICWgrVdwel1GA7tP9d5LVkoh7iu4IddPGOw5bLAICaRCVFCelyBtubRx4RuA==
-X-Received: by 2002:a05:6214:518a:b0:6e4:449c:ab1d with SMTP id 6a1803df08f44-6e6ae7d9245mr81553996d6.2.1740479455575;
-        Tue, 25 Feb 2025 02:30:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGmB4rwyEg0+JyqJXur2Jj93wuFcgD3awq8KLQERo2qnyPuDfhN13XtvsewtYpx1f1krix3DQ==
-X-Received: by 2002:a05:6214:518a:b0:6e4:449c:ab1d with SMTP id 6a1803df08f44-6e6ae7d9245mr81553766d6.2.1740479455155;
-        Tue, 25 Feb 2025 02:30:55 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abed1cd5fc8sm118472866b.5.2025.02.25.02.30.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Feb 2025 02:30:54 -0800 (PST)
-Message-ID: <94e3efff-44c5-4be2-9600-f05732e38637@oss.qualcomm.com>
-Date: Tue, 25 Feb 2025 11:30:52 +0100
+        d=1e100.net; s=20230601; t=1740480104; x=1741084904;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q4y1Yfwgg1zBnhWKLOimUYxF7Yvd8NEBzFT9QXdfO8s=;
+        b=g1buswb7Jdx11c3a0+B06Wg54r7xBFtGd9hSmONaG+t5dlph0eLmIhudjYR5OwEntX
+         jLloIwkimJPLc8Tm6XhSWVa7XJZHUf0xJTz4w9u/LLnUfL9LBARCX5DwGWmvrx3Dge8v
+         IPpYSGcjPSk6hLSRmzMNUT9Okc+pV9WhDDWx2+mlXhvjvZHfO5cAlfXZWknzShUdV9Cl
+         ChPrNPDeE+Wsk8q460lBtqqSLxr46Dl4zoS5CLMLUktzAbF+Dafxozm/Axe1sMXgLgK7
+         OhZRnGArJR+j9DEPc0wJdesSccCaOkHX7egXSypkQvd9Jn3mQ6QxOwpidC9VcUPBxdq4
+         tkYg==
+X-Forwarded-Encrypted: i=1; AJvYcCVD+D5XchLj53Id//+dsD2fwah1GWxCGiTH7wzMdLGPK2Weh8+c8tdKsnGQDe3S2oZbFGdxADWvgK9re9E1@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFR5oy7Vk7aSZYdB3ILq/d9YR0S9CYGeowd2il3tIITZUuQzly
+	20Fd0+3qsdSpYqigyVHYD2OvPJ8FXA6CcHtz3OCEO+BKzsIP7sh7ADC+hEAp6mXvRIIqMxl200I
+	dwfLtCfpNZpou3ubZ6GyR9ZKkC62z1QgB/8oIQg==
+X-Gm-Gg: ASbGncs8QbmL7NOfuJqYdsdo/gspSn/M1n5xsounZlYCHSAmRY3oWceN0LQW/q9rNdY
+	K4fCiam1ycTprEqmfYdRlJit48SAvTfxgdERaNnoK2TDX3unbiac1FRPBBtqfDw2sXdMkCe7VZE
+	Qf2T6T64feg4+okmK300QwnPM4YkTxHeGhJsiOaLc=
+X-Google-Smtp-Source: AGHT+IFbRxxziGj2BzihiiIefEKFP4pKXzoO+Cko44mojAOneSA8QBwjLVS1Ez08euV3nw7DvxPdvtN7Zs6HHuF3qYM=
+X-Received: by 2002:a05:6902:1b84:b0:e58:183e:90dc with SMTP id
+ 3f1490d57ef6-e5e245b50bemr12541057276.9.1740480104272; Tue, 25 Feb 2025
+ 02:41:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 00/13] arm: dts: qcom: Switch to undeprecated
- qcom,calibration-variant
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250225-dts-qcom-wifi-calibration-v1-0-347e9c72dcfc@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250225-dts-qcom-wifi-calibration-v1-0-347e9c72dcfc@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: V3RjYAOyVE0C2NulUS4Z-6t16AKALVA4
-X-Proofpoint-ORIG-GUID: V3RjYAOyVE0C2NulUS4Z-6t16AKALVA4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-25_03,2025-02-24_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- clxscore=1015 adultscore=0 phishscore=0 mlxlogscore=940 spamscore=0
- mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502250073
+References: <20250225-topic-sm8x50-iris-v10-v1-0-128ef05d9665@linaro.org>
+ <20250225-topic-sm8x50-iris-v10-v1-2-128ef05d9665@linaro.org>
+ <ityd34gfiyt6fvyuopnh3bi3edc5t2ubop4i72d54xyhhz3ixf@n6rnt5mwgw4b> <48f339f5-09f8-4498-83f2-4e2d773c3e23@linaro.org>
+In-Reply-To: <48f339f5-09f8-4498-83f2-4e2d773c3e23@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 25 Feb 2025 12:41:33 +0200
+X-Gm-Features: AQ5f1Jriekv6M1hA_Dp90ykj4fW8Drko1aw5vHpw5Zq0PDRQZa3NMmowkqpMd4U
+Message-ID: <CAA8EJppFCF9Mf_LXr4EMV94rVw9qHJQFKtfXwuqTmtHQA=2gnA@mail.gmail.com>
+Subject: Re: [PATCH 2/4] media: platform: qcom/iris: add reset_controller &
+ power_off_controller to vpu_ops
+To: neil.armstrong@linaro.org
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org, 
+	linux-media@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 25.02.2025 10:58 AM, Krzysztof Kozlowski wrote:
-> Dependency
-> ==========
-> RFC, because this should be merged release after driver support is
-> merged:
-> https://lore.kernel.org/linux-devicetree/20250225-b-wifi-qcom-calibration-variant-v1-0-3b2aa3f89c53@linaro.org/T/#t
-> 
-> Change will affect out of tree users, like other projects, of this DTS.
+On Tue, 25 Feb 2025 at 12:04, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> On 25/02/2025 11:02, Dmitry Baryshkov wrote:
+> > On Tue, Feb 25, 2025 at 10:05:10AM +0100, Neil Armstrong wrote:
+> >> In order to support the SM8650 iris33 hardware, we need to provide specific
+> >> reset and constoller power off sequences via the vpu_ops callbacks.
+> >>
+> >> Add those callbacks, and use the current helpers for currently supported
+> >> platforms.
+> >>
+> >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> >> ---
+> >>   drivers/media/platform/qcom/iris/iris_vpu2.c       |  2 ++
+> >>   drivers/media/platform/qcom/iris/iris_vpu3.c       |  2 ++
+> >>   drivers/media/platform/qcom/iris/iris_vpu_common.c | 14 ++++++++++----
+> >>   drivers/media/platform/qcom/iris/iris_vpu_common.h |  4 ++++
+> >>   4 files changed, 18 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/drivers/media/platform/qcom/iris/iris_vpu2.c b/drivers/media/platform/qcom/iris/iris_vpu2.c
+> >> index 8f502aed43ce2fa6a272a2ce14ff1ca54d3e63a2..093e2068ec35e902f6c7bb3a487a679f9eada39a 100644
+> >> --- a/drivers/media/platform/qcom/iris/iris_vpu2.c
+> >> +++ b/drivers/media/platform/qcom/iris/iris_vpu2.c
+> >> @@ -33,6 +33,8 @@ static u64 iris_vpu2_calc_freq(struct iris_inst *inst, size_t data_size)
+> >>   }
+> >>
+> >>   const struct vpu_ops iris_vpu2_ops = {
+> >> +    .reset_controller = iris_vpu_reset_controller,
+> >>      .power_off_hw = iris_vpu_power_off_hw,
+> >> +    .power_off_controller = iris_vpu_power_off_controller,
+> >>      .calc_freq = iris_vpu2_calc_freq,
+> >>   };
+> >> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3.c b/drivers/media/platform/qcom/iris/iris_vpu3.c
+> >> index b484638e6105a69319232f667ee7ae95e3853698..95f362633c95b101ecfda6480c4c0b73416bd00c 100644
+> >> --- a/drivers/media/platform/qcom/iris/iris_vpu3.c
+> >> +++ b/drivers/media/platform/qcom/iris/iris_vpu3.c
+> >> @@ -117,6 +117,8 @@ static u64 iris_vpu3_calculate_frequency(struct iris_inst *inst, size_t data_siz
+> >>   }
+> >>
+> >>   const struct vpu_ops iris_vpu3_ops = {
+> >> +    .reset_controller = iris_vpu_reset_controller,
+> >>      .power_off_hw = iris_vpu3_power_off_hardware,
+> >> +    .power_off_controller = iris_vpu_power_off_controller,
+> >>      .calc_freq = iris_vpu3_calculate_frequency,
+> >>   };
+> >> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> >> index fe9896d66848cdcd8c67bd45bbf3b6ce4a01ab10..ec8b10d836d0993bcd722a2bafbb577b85f41fc9 100644
+> >> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> >> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> >> @@ -211,7 +211,7 @@ int iris_vpu_prepare_pc(struct iris_core *core)
+> >>      return -EAGAIN;
+> >>   }
+> >>
+> >> -static int iris_vpu_power_off_controller(struct iris_core *core)
+> >> +int iris_vpu_power_off_controller(struct iris_core *core)
+> >>   {
+> >>      u32 val = 0;
+> >>      int ret;
+> >> @@ -264,23 +264,29 @@ void iris_vpu_power_off(struct iris_core *core)
+> >>   {
+> >>      dev_pm_opp_set_rate(core->dev, 0);
+> >>      core->iris_platform_data->vpu_ops->power_off_hw(core);
+> >> -    iris_vpu_power_off_controller(core);
+> >> +    core->iris_platform_data->vpu_ops->power_off_controller(core);
+> >>      iris_unset_icc_bw(core);
+> >>
+> >>      if (!iris_vpu_watchdog(core, core->intr_status))
+> >>              disable_irq_nosync(core->irq);
+> >>   }
+> >>
+> >> -static int iris_vpu_power_on_controller(struct iris_core *core)
+> >> +int iris_vpu_reset_controller(struct iris_core *core)
+> >
+> > If these functions are platform-specific, please rename them
+> > accordingly, like iris_vpu2_3_foo() or just iris_vpu2_foo().
+>
+> They are not, this is the whole point.
 
-That's a good cleanup, too bad nobody thought of that before
+I think they are, you are adding them to the platform-specific ops. In
+the end, they are not applicable to 3.3.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> Neil
+>
+> >
+> >>   {
+> >>      u32 rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
+> >> +
+> >> +    return reset_control_bulk_reset(rst_tbl_size, core->resets);
+> >> +}
+> >> +
+> >> +static int iris_vpu_power_on_controller(struct iris_core *core)
+> >> +{
+> >>      int ret;
+> >>
+> >>      ret = iris_enable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
+> >>      if (ret)
+> >>              return ret;
+> >>
+> >> -    ret = reset_control_bulk_reset(rst_tbl_size, core->resets);
+> >> +    ret = core->iris_platform_data->vpu_ops->reset_controller(core);
+> >>      if (ret)
+> >>              goto err_disable_power;
+> >>
+> >> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.h b/drivers/media/platform/qcom/iris/iris_vpu_common.h
+> >> index 63fa1fa5a4989e48aebdb6c7619c140000c0b44c..c948d8b5aee87ccf1fd53c5518a27294232d8fb8 100644
+> >> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.h
+> >> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.h
+> >> @@ -12,7 +12,9 @@ extern const struct vpu_ops iris_vpu2_ops;
+> >>   extern const struct vpu_ops iris_vpu3_ops;
+> >>
+> >>   struct vpu_ops {
+> >> +    int (*reset_controller)(struct iris_core *core);
+> >>      void (*power_off_hw)(struct iris_core *core);
+> >> +    int (*power_off_controller)(struct iris_core *core);
+> >>      u64 (*calc_freq)(struct iris_inst *inst, size_t data_size);
+> >>   };
+> >>
+> >> @@ -21,7 +23,9 @@ void iris_vpu_raise_interrupt(struct iris_core *core);
+> >>   void iris_vpu_clear_interrupt(struct iris_core *core);
+> >>   int iris_vpu_watchdog(struct iris_core *core, u32 intr_status);
+> >>   int iris_vpu_prepare_pc(struct iris_core *core);
+> >> +int iris_vpu_reset_controller(struct iris_core *core);
+> >>   int iris_vpu_power_on(struct iris_core *core);
+> >> +int iris_vpu_power_off_controller(struct iris_core *core);
+> >>   void iris_vpu_power_off_hw(struct iris_core *core);
+> >>   void iris_vpu_power_off(struct iris_core *core);
+> >>
+> >>
+> >> --
+> >> 2.34.1
+> >>
+> >
+>
 
-Konrad
+
+-- 
+With best wishes
+Dmitry
 
