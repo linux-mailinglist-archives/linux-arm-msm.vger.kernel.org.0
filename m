@@ -1,94 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-49212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 508A5A43379
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 04:17:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65B78A4337D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 04:17:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8131E3A7555
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 03:17:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6BD86178D7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 03:17:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABB12241C98;
-	Tue, 25 Feb 2025 03:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE51B244198;
+	Tue, 25 Feb 2025 03:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fOtDDi6y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sH69G2Vd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA3B24113C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 03:17:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407AA3B192
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 03:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740453452; cv=none; b=YcRptrgS19Hv6rsmZE1cAf+qI72iXGIBdp/kYCJAe2qI01Yy45INiHc44NRKG3SbbLSUVhFxyzL18qcu3+vPkxKTATDrSpCTxjRY/GyP9dCYojcbMQGOVLudkN7iLdd+5s6wbt5FuEV9enDdKmJ52p7xUi3WNiNelQ4KzqxJtAs=
+	t=1740453466; cv=none; b=jccAxPf8HkrHlSbnwYCwxNqk1I2k9mm4hNvDxaeoUz+XgQfKmZyNPZcJWsF/ReyjlGGs8aB9IRkIkevJRaFNY1VTxcBbunSNKI5wT6OKAQELd/rzWoDNZXbw2ahB4LqCScMBadgIxjciGJX6hldwK06dw3hNXXs6VCrd6H5fAUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740453452; c=relaxed/simple;
-	bh=xdMJFduuFVdDfRcYXmcf+iepoeRKpVZBuh6VAxiDRjE=;
+	s=arc-20240116; t=1740453466; c=relaxed/simple;
+	bh=tbCy+DgoiEqp7P0KYIuTrwCALW4WbEtXM2gHBfT/4WE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JmeaatQWzo9ALmgG62jtojFjmwH+MCQZmLxCMDCYeXCJjD43ZZ9tLFk8uJb9molkiUQzJj9x69WpkTI/nN69Q1o8qFXB4KZgqcs3Jh2RvDtJuo7Y/78bbm9htRn2AmbfCnnbUhG2kPV7lduvs459mTS50KvmQQLqh7fcItP+NJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fOtDDi6y; arc=none smtp.client-ip=209.85.167.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=l6CtLBYd/toMcncSDAGTZ5ZB+4npdlLT5hTzHxv7ccxfJ6Yls3v5Dk9gPaBg9Jzam8ss/nmFUnH3mDCT01ugr33pvj3F4N83FySPPUx6HBALVTdrMdl4ZyZgk4DUc/vxYvNIND8mAwVkPWNLYO8W2K7skHBN3SUMAbHHXPvfCZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sH69G2Vd; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-547bcef2f96so5243480e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 19:17:30 -0800 (PST)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-54622940ef7so5793170e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2025 19:17:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740453449; x=1741058249; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740453463; x=1741058263; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ErwZgVdj5p6xF2muLcoQXQqaXweqPuzZ5KXiqDnh9+o=;
-        b=fOtDDi6ymek7vh1moImKKs11EnM2p7whvl8I55xKpBuyyTCKOtx7c/XCa7b4vI8AGA
-         jMy4/Trhqi8vNbUcCIOgClzHFlCpEQshizFuAx5Vi5KKRgF60cO0h8VI68J8MkVFCqs1
-         Y5a4KPEoTAMjoMuQu1ZgsdvrZKFYAUWrQ6hPecP+KjVWyo7TsyZC8+ojtO6gi8v83wEl
-         /TFOa4CW00tzTQ7FhSu5eTUhqqHvxJVrGIuau8R3GR4FMjbTpovijbYOIigccgNAH7Ep
-         c/1BCqVOP2BTu9wKt3j/APpjzQAEJM5JFnVXX2msJkNA+9ECT/QdlCR70wK7/DROv1C6
-         lgXg==
+        bh=Q8Rx6B8ENt8mk1zd17zD1gzF1s2RlMqc2vCUueRva0w=;
+        b=sH69G2VdlqLiGIFCFR3nAQ+um7Pz52pf5q3zAYcHfmf8s4vu6+T0ATnUwLXIX7lsYd
+         jjl/itK4fIxqlfAaT7QeZSNpF7++5qGmFgLyVm16byAmmKvFJjJsfp9is3KkkUuBSY4b
+         awJyHpLXzDhDIXIfrtMnBRm2m/gWPeb4ssx80sX5RJfVCUJbNqjTYnLqo9IRJJxQjAuz
+         uLibC6AoDxu8XT9nlnqz5wCIWE3AZSPsGu6jsLI4NeHZzziEVvWiSc70HBucHh4af3Kg
+         jKE9N9qTkkjbFSRQ4LT9V3neQ9lh1bDpzRh9EygiSpwLIl6I0Ga0W9a2NvbqAPtWLS4o
+         deLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740453449; x=1741058249;
+        d=1e100.net; s=20230601; t=1740453463; x=1741058263;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ErwZgVdj5p6xF2muLcoQXQqaXweqPuzZ5KXiqDnh9+o=;
-        b=O6SKkmzswJ29gz+TOquvnzOeVD+RlRE/Mp8LYFJNHQrjmqRORaWUWp3KAenmrH8N2e
-         fnIJyaPFCWpWXfULOqWSqo6a9Jr+LmRYiMeT1OtRo7NyMoxCXaXXAe5HTpNrw8+lqOBZ
-         HdMPMeSuTH6xxAwFyqQzq1B3vz6FWlDhgsV+hy778ZqkSlNE7yAui9qOYpRBOhIrz85m
-         RUjKHzrdLFWX4EEYDD0iZVMam3Fc9H56u+DkAD3kqsXf53n+7LRvMTS79y+By87D6T6o
-         WBpM2GWhuS82BZquD/EXm/Rd3dzsClv9QMmi93N7fBcTQT8lRjiFpPcMhiwikhI9GLus
-         /+Qg==
-X-Forwarded-Encrypted: i=1; AJvYcCWtKuy3XWLrXVxxXSiqJTjcvFyRYICXq7T+VFSgctkOywNd/9HbFhDjEwFFM0xl/nm3sbDOXmgU5ogPEiZ8@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvsCic9XVQPunZAeRJ7DVKaSbk4ubUJlS8yfd/T11jFrwH3hYj
-	BZ7KNsSKVokUlgi09akOA2xcVl3MueGr8YFGymZt9l91WMXa6o74lbJx1uZBYdI=
-X-Gm-Gg: ASbGnct+Qfh0uoFHlm3zns9r1IfZrX19CbviKkjRF1qP9ocAvwMS0yi83dDRf2pOHhr
-	R+/7kuGhEi5BunP9h4Nevs+eJLbQ2QI+TZLMPTBJg/azCiTWkCjxQ3DEUpILWlnnWGHZUV4sA+j
-	HaqrPoBukRmHJMFruKj1WwwqESoLvGvzJJjjqMaUYuygCStn+qkh/AE5kVmq+PxC2c6Bk8afQgm
-	jpfBe5kqvCknmy8obdRxOlDOtfxB9eG0kc8bmnVkv+vEPoMchLaGocvaZGdpVVylMlVmq0hSClc
-	VmE/dH28oOQRnbDrTWRUzsTkhM+jTu/UR4BBa2uILtr7NyiJkjwsxUE3HZ9uYHjdoTNDQHq8FSp
-	XFrv9ug==
-X-Google-Smtp-Source: AGHT+IGNyDqvJxVxqP5uUjlG9LFxo0ubNdF4Qj+xzKe0poWIckWW0gNZNqJemNsdxd4SujSyFUqBGQ==
-X-Received: by 2002:a05:6512:3dab:b0:545:285e:7777 with SMTP id 2adb3069b0e04-54838f4cc88mr6329025e87.39.1740453448575;
-        Mon, 24 Feb 2025 19:17:28 -0800 (PST)
+        bh=Q8Rx6B8ENt8mk1zd17zD1gzF1s2RlMqc2vCUueRva0w=;
+        b=oKkTOYlSaaszkMsqwlubzl0rq3Tp9TBURdN3YmoOn1tLxsphxxzhpoQ1yZ2mV9hG94
+         kjiqpCsu96CitWdwQ05k4Xy1MKx6HYvyLA6sp1VXGp7YenqgmaAED0vbi+WYlCmcNLPq
+         VU4/xHHR38cR5yqIKb7qKZ0mxweJi0q5qFfLqUOUzMWf00u5oloylFWRV0OfSU39EdGM
+         teAjB+9HEvOTFWWqfuWynrQHD6i4OZvgipJXlOFtQuT8ZlH9t7+VhSs/BJNgHOeaykvF
+         7w2qauCC4ALWM00NiIn4L5vAjOlESk07vBa2CWCCd9LxnWlFRlPvXvWyPQrMtOADjFGe
+         FQmw==
+X-Forwarded-Encrypted: i=1; AJvYcCV0u5tvj3aQEwwxrJWWtGkbi4W9CByauzEhXIVYwu9RNN9BVJlgQ9lSB6Ax8PbdH9uNsOmb6Ud1Ilu2S5mH@vger.kernel.org
+X-Gm-Message-State: AOJu0YxDIstLfQxBfCFj54BP0hfO0uyfkNISJwuB3pcyfAO0wmHAqhiq
+	EIx2BnRu9BlLtVY5OGtB86UTPkox9qRsjcgFC+6f51dU4bn7MDRnAF5AY7F2UoU=
+X-Gm-Gg: ASbGncsDHdt14/IIpZ4nAVNtpfzJfreYdVXvrrV7mfIv1WAxY3q1qBMDQDS/3QD5k94
+	OPyTmxJR92SAT0mI/G5nCXIj7RY4BISic2M4g1aWtZvNM7tGURreOzZne+G4zQd21+8PilOzMju
+	Qe6/3BK9b+irzk4Vo0pzs96sVbBv+bnVxYI5rNzdfoUebrfn8KAKE6TlpeR1OF0ueifJsCKXmz2
+	zju/qidmx5NapC/29VMI4055wWQb1p0JLsA/AProOOY2FdsQubbMr/CAbiaGcevTtTNY+kOHitn
+	vTpTM1lnKtt11wIpSr19tMIMDMpIP+aGzp+75GCqv3Eto3DKQvyH/nnTshaoGmbrU6xqtG5A/Ep
+	TvUT76g==
+X-Google-Smtp-Source: AGHT+IFC1G+Qt1OfzDp64XzP6VaS1qBh0uBCplEpmO2VczKHd5eRQaq8KvOqpCDlmmDiv/XhQqWkzg==
+X-Received: by 2002:a05:6512:108f:b0:545:27af:f2e4 with SMTP id 2adb3069b0e04-54838ee8c9fmr6726358e87.18.1740453463391;
+        Mon, 24 Feb 2025 19:17:43 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-548514b78dfsm62244e87.54.2025.02.24.19.17.26
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-548514b25d0sm62961e87.32.2025.02.24.19.17.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 19:17:27 -0800 (PST)
-Date: Tue, 25 Feb 2025 05:17:24 +0200
+        Mon, 24 Feb 2025 19:17:41 -0800 (PST)
+Date: Tue, 25 Feb 2025 05:17:39 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Luca Weiss <luca@lucaweiss.eu>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
 	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
 	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sdm632-fairphone-fp3: Add
- firmware-name for adsp & wcnss
-Message-ID: <6pqjzeb6xxozxmfeowmxz7pa2hldiet4mibllpsvtqheijjxl3@j7xsmlbtjfxb>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sdm632-fairphone-fp3: Enable modem
+Message-ID: <osoaqtrqtm3s4lksqmlsimyjsbcgozfo7gzjfmxntdm5mvekch@5hhumagio6ks>
 References: <20250222-fp3-remoteprocs-firmware-v1-0-237ed21c334a@lucaweiss.eu>
- <20250222-fp3-remoteprocs-firmware-v1-3-237ed21c334a@lucaweiss.eu>
- <w4l5drhu6exq4jb7x2pisqtkz5ylare7ashsmjjqomv3yetjwj@z3wapq4rkk3u>
- <6d1a95a1-0b84-4bc5-9cb0-3cc514d292a6@oss.qualcomm.com>
- <82a9d623-2033-4d7f-93b8-67007b46be79@lucaweiss.eu>
+ <20250222-fp3-remoteprocs-firmware-v1-4-237ed21c334a@lucaweiss.eu>
+ <bz3mola5r7v4rs4esmhiticq2ahpkhtwxqnv6nweyfkebszvrp@ap6yn6pvrtww>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,42 +93,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <82a9d623-2033-4d7f-93b8-67007b46be79@lucaweiss.eu>
+In-Reply-To: <bz3mola5r7v4rs4esmhiticq2ahpkhtwxqnv6nweyfkebszvrp@ap6yn6pvrtww>
 
-On Mon, Feb 24, 2025 at 09:43:48PM +0100, Luca Weiss wrote:
-> On 24-02-2025 9:27 p.m., Konrad Dybcio wrote:
-> > On 24.02.2025 1:17 AM, Dmitry Baryshkov wrote:
-> > > On Sat, Feb 22, 2025 at 02:00:49PM +0100, Luca Weiss wrote:
-> > > > Set the paths where the device-specific firmware can be found for this
-> > > > device.
-> > > > 
-> > > > Fairphone 3 was shipped with secure-boot off so any testkey-signed
-> > > > firmware is accepted.
-> > > > 
-> > > > Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-> > > > ---
-> > > >   arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 7 +++++++
-> > > >   1 file changed, 7 insertions(+)
-> > > > 
-> > > > diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-> > > > index 08ffe77d762c3a97f470efbfb5064282fe2090da..5611209dbfa41d7834af7903535ed3e05604ba63 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-> > > > +++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-> > > > @@ -82,6 +82,8 @@ nfc@28 {
-> > > >   };
-> > > >   &lpass {
-> > > > +	firmware-name = "qcom/msm8953/fairphone/fp3/adsp.mbn";
-> > > 
-> > > If any firmware is okay, wouldn't it be better to use
-> > > "qcom/msm8953/foo.mbn" ? This way if we get any of the firmware (yeah,
-> > > I'm a dreamer), then FB3 can pick it up.
-> > 
-> > No, the fw may have board/wiring differences encoded inside it
+On Mon, Feb 24, 2025 at 02:18:55AM +0200, Dmitry Baryshkov wrote:
+> On Sat, Feb 22, 2025 at 02:00:50PM +0100, Luca Weiss wrote:
+> > Add the necessary supplies and set an appropriete firmware-name for the
 > 
-> Second that, while I don't have access to the AMSS sources for this device,
-> I'm sure there's at least some board-specific config in these images, and
-> I'd rather not boot up some ADSP or modem firmware compiled for some
-> Dragonboard or equivalent.
+> Nit: appropriate
+> 
+> > modem and enable it.
+> > 
+> > Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+> > index 5611209dbfa41d7834af7903535ed3e05604ba63..31ed26c31e6ea381a8942ccf569513df3300cdeb 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+> > @@ -87,6 +87,14 @@ &lpass {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&mpss {
+> > +	firmware-name = "qcom/msm8953/fairphone/fp3/mba.mbn",
+> > +			"qcom/msm8953/fairphone/fp3/modem.mbn";
+> 
+> THe comment from the previous patch applies.
+> 
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
