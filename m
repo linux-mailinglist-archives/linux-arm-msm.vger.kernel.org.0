@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-49335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A152A446C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:49:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB170A446E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:51:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 793DF865E07
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 16:41:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4C248660E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 16:42:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEF971FBEAE;
-	Tue, 25 Feb 2025 16:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B424207E1F;
+	Tue, 25 Feb 2025 16:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZXpL1ZdD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D3pmvKzw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A0E195B1A;
-	Tue, 25 Feb 2025 16:39:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F7F197A7F;
+	Tue, 25 Feb 2025 16:39:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740501578; cv=none; b=D40c2iSrf1xQACmnd6E2Q3Uq0nLVKxkZCY2jFfZQJdi88KPklciJf/atjMfvp8OIv9lQr1sned0FI7pGm7Lgn7t6AEZSmcj0pm6cmpl0a/HK/0GromYU3sh7I7+EXK7xdADN45ODE2euUElWz2MKBoC1SnFqbrJAmpUbbxe1q6Q=
+	t=1740501580; cv=none; b=T2JOjzQhtMdb2C1+/ICxFJQ9f+WUT1hmxlpw4ZTcJGVPX7OCWQcYYcnjV3GNIDPehTOCo6i09CmV68ghApgTU1+QURXlhZTbx+c4lZtbr7tOccP8JANGMtpnuDkt2+v7FveQTUGvAQ6LwEMxeFbbcrzjqdGe3kO/QE3XjNpwElg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740501578; c=relaxed/simple;
-	bh=4cyTlsaHco383EF4xVigt4ChuUakSnBPtAS8xw/f7iQ=;
+	s=arc-20240116; t=1740501580; c=relaxed/simple;
+	bh=xrAEb0z/qkdG9ztjXy+2zCpd7gB4vIYTjNV/wiNhyGU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=i10Y8ATDUYIc93mNy5I7cACTPWDo5sA4q511uX6HUwJtZ1FbakJpV2i5OPOJLFM1mdg+t2iE7WyRhLrJ2DiGBtxo5CxaTtEc6NPJFSsXDKtueJwpRGW47td9PJmAbiE2UzBqqjgot3v0fy6CMT2+DOirek5dITq/UkUQajKgzPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZXpL1ZdD; arc=none smtp.client-ip=209.85.208.49
+	 In-Reply-To:To:Cc; b=VPn2klMh8xcuCKKGKb04YERhRU8RiHh6Ioxq9/qwzaaWsahogjg99yP9r9t/L9/tbGDvX6Soe53f/OuKkUfaz9cDjcjmoK8bnJr7TMfm8eTx94YkLqha1QOpxOfuKWCk1WO05REfbXGuGhQDukQGwwAfdWqDt5w4LJYQ23Vl5Yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D3pmvKzw; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5e0505275b7so9306417a12.3;
-        Tue, 25 Feb 2025 08:39:36 -0800 (PST)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5ded51d31f1so10375755a12.3;
+        Tue, 25 Feb 2025 08:39:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740501575; x=1741106375; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740501576; x=1741106376; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Z4QTSsfoeVCDt3yXq9ebFWWKuixfe3D/L3+d/mpcj4E=;
-        b=ZXpL1ZdD8gd0JP6QzptLs/5ad+j1+jkHZOSSJVwKZrNRHLXxHufEek+g5aZlBUYrAf
-         16pvU+sdeJRGzUiAtSSU0cXQyeHTh7QC3kMk8/MxbPxCnz7cHHMdMnDugiWHWnGGN0uj
-         bZ8CXuEileAhgndFITV+P8oDYuoFpBRvBD9sZ1yPHhNhySwbw9RxOyTxdlJ+SmJxCNhy
-         9OIaSI+ivG8cFbMsmfyw+QiATQnBEZXMQHhtptoPa+FXvDb136KXFEQ7PSb2Blkg0f4+
-         nkdHTaLqbgREVKf/JmNqHPKRNCvEIbJDxNYqCKROsGHP2kMhneE9SJp2YkF81sLwtkX7
-         OMmQ==
+        bh=01JPrlnBcJ3WUwQ0/094vAUTVLT4EA/0K17pj4zgOio=;
+        b=D3pmvKzwbEM9Ij/Kmk0WQWMjo42PmMDa1qiEowww6tLIDrEUEuCnX8ImIZBwk5QXuE
+         1vGlj0YOSpxY7k86Hq9Jg1bOig3v5pCWtLrqOVVVeq5g1098ayA91R+wBSkggxTgdoBK
+         B0Vq+VYo2DhrKyhEGVxV57s8i5HAAtBS5UNHqVASjQizeneJ04hadBLqDszUiCy5+cOT
+         yi9GpgTjb3MRLbkfKqstn7S9Ge2onFdrxlocZ7mUWQcgDhOXc8ixTMAjVw5owQiXU+RZ
+         JztjLTUIvIjXUZWH2u/GR24YuTQWR72+g+Pa8mee2d9ix/+w75FtaF3ocmJ6gzTp63TW
+         b7aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740501575; x=1741106375;
+        d=1e100.net; s=20230601; t=1740501576; x=1741106376;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Z4QTSsfoeVCDt3yXq9ebFWWKuixfe3D/L3+d/mpcj4E=;
-        b=DlMxnIB8SmynOx9x6jzSkykIupO4eYA+DR8UVKnLMiVk9Isskcy2Ly0mldgeFL3VVW
-         +oB8itbs1Dg6LXTv3UthQ5ouRJylJi07g6uELX5Y/2tCPKrzCcytgrhXEZ77g7GHnv2x
-         Z6PmYkyYlAp6J3J4Kits2sD/1IFZl4yKm1q4NgEXgbY4idsP+vdSSfzhywRz9hBCd/eK
-         tTSERuJ6ONaTG+GuUnv3P/PoyjIplXTZ3yqS6W52UXq2MdsmNg8c6I6KIwk4e7AzlDqX
-         TTWDXbFm149q9cPd4JjAnQkkuLuvTO3SOjcYti1gx7c5phRA/vccrTCy1k0TGvOKesp4
-         JKbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU6j8Mqmw3BRd21W3xnTjs1jiix3fIa2SiBsV07XSvhg5CbX4fIy3bQVXAEG82BE3hGJy9fSE9txKce@vger.kernel.org, AJvYcCV4JkPYcu/FjtD6tvYwq1rspJ61o7aJ3cucFeU29vwZp5viQavvqbHGcmkV01WuOXLh3LaHbFy0+u+vjps=@vger.kernel.org, AJvYcCVSmX98baEBqL/k7eWRKUy7rtpcX2IMigkvgzqxjEsRc9nCULH0BbhmDLw1IhAB1h5Z6nzgO4sXc3sxgSSa@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRd2JrHuTIUPDLZ4xS3Ia7GPG2ZfchKoQcOOlj+4LOnvZURVef
-	5U2U4xYCsQyYA9AfExMG326dT/GdoSprz8OxavZi100jPRFv7FKO
-X-Gm-Gg: ASbGncs0dXAYvFnKdeBp1Y/3eZog9wy8Uog5IuXUwFw4lRaGwWVnZMVzRIY0mpJ4H+/
-	IaSHC43JcMIuJ1iys6DLhME/H4+zpv+pkcPAd+R1npuHboLbzkZlPtKAuFXE0rEKOx2ShclnDBh
-	wiw+5cPMwPKqdnMX8gbk0X4rynaGakeBE7Yxfv9CMy1ydA9juvzois5Ji2Z0W3cDhUn6eFH6wPK
-	Q8bpT4AU+6Kk0JcLeW0M5oBfl5150Y9ywNfLzQSVqUlcie8nm0GEMPjnn5clEwrHicisjYl272y
-	2FHIxoxuUTMpaqoPCIiomxnU
-X-Google-Smtp-Source: AGHT+IFGWGw8Y5Illp6NFpwdb0KEB1gJPdhSUdTTsfYRalDulweGquaZ+p/lNo5hXaDoSR9/hUW3FQ==
-X-Received: by 2002:a17:906:3181:b0:abe:e1b3:78d with SMTP id a640c23a62f3a-abee1b30b3bmr183901766b.8.1740501574881;
-        Tue, 25 Feb 2025 08:39:34 -0800 (PST)
+        bh=01JPrlnBcJ3WUwQ0/094vAUTVLT4EA/0K17pj4zgOio=;
+        b=ts7WyiTP43Eg6nCQXhGPW6PqrlkoBdAjf+18T0IPz8IXGEbFIoaF8cqqQapVFcp1RS
+         ykU2sD5Ie96WNEhJCktecJzJNPCpJ9M8npsSFSUjOmJ01pb99j6YIXAf4qlkb67tdzI+
+         n7FOcYAp2zQWT1DTslM4sr0GdvsN4LyI+PNml+hUo5m3uClJcyPGoo4sbhJQnzM96c2F
+         8pGKUSLyh9j1LaUUlr+p4+nyfctpo+GsN/kINYzm7XoSYLXcuqfXx7b3/7ODdDk7vHGF
+         9enlQGiaUrYLVGNzBs5i2uoie6wrb1nVEmXCa/MENgPXQUNwdl57vGDMW6wI02NyLl5e
+         QtKg==
+X-Forwarded-Encrypted: i=1; AJvYcCUrSZrjlpwzQtJOHtndCz9l9VIQqXtzwYiD6LbMW25lRaJD9QZSyKiOpt9MBjoUnymxDONBVSkeemIwYCqM@vger.kernel.org, AJvYcCVOexy2E4LORimdAibfpcyE83KNL4062PepQ0iLCf1wep1hLZ65Qk509TJ2PvDHZVQIQkhF9vxzwsb7@vger.kernel.org, AJvYcCXBJxyatPzol4wLgXJt1lO4EC7E5l0G0sAHFq2puyvnSOMKgseioWQIhj6bhdImqpZIxZWWMQDqAJs/tqk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxiOcZc8z4P3iFaoAtgdNBWrZQsiETxaCIgvpUy6wkRnBHyJTsm
+	Mv8lVNgmpkycOnUkOcWlrAks+UXPXFEVZBrkegaPgxkzeFW79zbS
+X-Gm-Gg: ASbGncvp15Pw1Diz/FafPLu9BEX6W1lJYVFHdR9GbM41LuttbUppBWugNsku3i1nFPj
+	OcfZqdpW/rh+d5Bb7T5sXnKcDr3DQ7o4h244fkCWdPYYGIsFU3B7mrJDo/81ANKm6kuFUoOtmUF
+	QtPvz821Zt59xTTgTosd1qLdzJX+YZBgHvIYXBq+DQtKeq/2H1+gd/kL/DLoJRHmjY/UqxqoL1g
+	hUvB3xa1Fiv83LdM5z2XK7PsXe7pMcwLo6G0kb8nCzsL3UbU3LsUWU/HXgDrp01AKKw1mNpsxPi
+	wp7Bj65EHvVWQq5XL+9JYy7w
+X-Google-Smtp-Source: AGHT+IEusbU057iuTbWxdivOFCMG6+GVgf1b7ZRR5oRsq2SXAPdgQohkbfS8uhzsTk+ne4Z5SeUClA==
+X-Received: by 2002:a17:907:72d2:b0:a9e:b2da:b4a3 with SMTP id a640c23a62f3a-abc09d36101mr1814672766b.42.1740501576404;
+        Tue, 25 Feb 2025 08:39:36 -0800 (PST)
 Received: from [127.0.1.1] ([46.53.242.22])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abed2055011sm163999866b.156.2025.02.25.08.39.33
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abed2055011sm163999866b.156.2025.02.25.08.39.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 08:39:34 -0800 (PST)
+        Tue, 25 Feb 2025 08:39:36 -0800 (PST)
 From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Tue, 25 Feb 2025 19:39:02 +0300
-Subject: [PATCH v9 11/12] arm64: dts: qcom: sdm845-starqltechn: add
- graphics support
+Date: Tue, 25 Feb 2025 19:39:03 +0300
+Subject: [PATCH v9 12/12] arm64: dts: qcom: sdm845-starqltechn: add modem
+ support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250225-starqltechn_integration_upstream-v9-11-a5d80375cb66@gmail.com>
+Message-Id: <20250225-starqltechn_integration_upstream-v9-12-a5d80375cb66@gmail.com>
 References: <20250225-starqltechn_integration_upstream-v9-0-a5d80375cb66@gmail.com>
 In-Reply-To: <20250225-starqltechn_integration_upstream-v9-0-a5d80375cb66@gmail.com>
 To: cros-qcom-dts-watchers@chromium.org, 
@@ -100,118 +100,99 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Dzmitry Sankouski <dsankouski@gmail.com>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1740501555; l=2596;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1740501555; l=2227;
  i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=4cyTlsaHco383EF4xVigt4ChuUakSnBPtAS8xw/f7iQ=;
- b=vubqioe9WfRlXPUrvKQhxVHECfESKl109t4IOAUjKlwY7B92bAGcKAPT02uEp/n68aROadaaH
- Qk/t20W+J2/D5nI5m8IWTb645w5SApOPjyAeSSmfTagzctQkWgNQ6vo
+ bh=xrAEb0z/qkdG9ztjXy+2zCpd7gB4vIYTjNV/wiNhyGU=;
+ b=qKlsxcJRnwbudjxUFoWxzgXqpaOWnDTnYAIrHEZ1lJJLtpStwIBuj6nZHhKWnMVPfmpBwpjjH
+ IEHW2bmC/JPB3qwgnXcCwAlSp0HnmCW9PSa9/ZvQBoqXQuT6DYQLZCy
 X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
  pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
 
-Add support for gpu and panel.
+Add support for modem and ipa(IP Accelerator).
+Add spss reserved memory node.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 ---
-Changes for v9:
-- add tag: Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
-Changes for v6:
-- refactor: s/starqltechn/sdm845-starqltechn in subject
-- refactor: remove 'sde' prefix in tlmm dsi nodes
-- refactor: place tlmm dsi nodes alphabetically
-
-Changes for v5:
-- fix label names
+Changes in v6:
+- refactor: s/starqltechn/sdm845-starqltechn in subject.
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 67 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 67 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 762182331dc5..1202d8fc6b9d 100644
+index 1202d8fc6b9d..d686531bf4ea 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -208,6 +208,52 @@ vib_pwm: pwm {
+@@ -19,6 +19,8 @@
+ #include "pm8998.dtsi"
+ #include "sdm845-wcd9340.dtsi"
+ 
++/delete-node/ &rmtfs_mem;
++/delete-node/ &spss_mem;
+ /delete-node/ &adsp_mem;
+ /delete-node/ &slpi_mem;
+ 
+@@ -106,15 +108,39 @@ memory@a1300000 {
+ 			pmsg-size = <0x40000>;
+ 		};
+ 
++		/*
++		 * It seems like reserving the old rmtfs_mem region is also needed to prevent
++		 * random crashes which are most likely modem related, more testing needed.
++		 */
++		removed_region: removed-region@88f00000 {
++			reg = <0 0x88f00000 0 0x1c00000>;
++			no-map;
++		};
++
+ 		slpi_mem: slpi@96700000 {
+ 			reg = <0 0x96700000 0 0xf00000>;
+ 			no-map;
+ 		};
+ 
++		spss_mem: spss@97700000 {
++			reg = <0 0x97700000 0 0x100000>;
++			no-map;
++		};
++
+ 		adsp_mem: memory@97800000 {
+ 			reg = <0 0x97800000 0 0x2000000>;
+ 			no-map;
+ 		};
++
++		rmtfs_mem: rmtfs-mem@fde00000 {
++			compatible = "qcom,rmtfs-mem";
++			reg = <0 0xfde00000 0 0x202000>;
++			qcom,use-guard-pages;
++			no-map;
++
++			qcom,client-id = <1>;
++			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
++		};
  	};
+ 
+ 	i2c21 {
+@@ -864,6 +890,19 @@ &wcd9340 {
+ 	qcom,micbias4-microvolt = <1800000>;
  };
  
-+&gpu {
-+	status = "okay";
-+
-+	zap-shader {
-+		memory-region = <&gpu_mem>;
-+		firmware-name = "qcom/sdm845/starqltechn/a630_zap.mbn";
-+	};
-+};
-+
-+&mdss {
++&mss_pil {
++	firmware-name = "qcom/sdm845/starqltechn/mba.mbn",
++			"qcom/sdm845/starqltechn/modem.mbn";
 +	status = "okay";
 +};
 +
-+&mdss_dsi0 {
-+	vdda-supply = <&vreg_l26a_1p2>;
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "samsung,s6e3ha8";
-+		reg = <0>;
-+		vci-supply = <&s2dos05_ldo4>;
-+		vddr-supply = <&s2dos05_buck>;
-+		vdd3-supply = <&s2dos05_ldo1>;
-+		te-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&dsi_default &dsi_te>;
-+		pinctrl-1 = <&dsi_suspend &dsi_te>;
-+		pinctrl-names = "default", "suspend";
-+
-+		port {
-+			panel_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&panel_in>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vdda_mipi_dsi0_pll>;
++&ipa {
++	qcom,gsi-loader = "self";
++	memory-region = <&ipa_fw_mem>;
++	firmware-name = "qcom/sdm845/starqltechn/ipa_fws.mbn";
 +	status = "okay";
 +};
- 
- &apps_rsc {
- 	regulators-0 {
-@@ -864,6 +910,27 @@ &tlmm {
- 	gpio-reserved-ranges = <27 4>, /* SPI (eSE - embedded Secure Element) */
- 			       <85 4>; /* SPI (fingerprint reader) */
- 
-+	dsi_default: dsi-default-state {
-+		pins = "gpio6";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
 +
-+	dsi_suspend: dsi-suspend-state {
-+		pins = "gpio6";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	dsi_te: dsi-te-state {
-+		pins = "gpio10";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
- 	i2c21_sda_state: i2c21-sda-state {
- 		pins = "gpio127";
- 		function = "gpio";
+ &usb_1 {
+ 	status = "okay";
+ };
 
 -- 
 2.39.5
