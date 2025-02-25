@@ -1,64 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-49362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAE78A44A54
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:29:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9E59A44A14
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:20:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 77FDA3A9160
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:19:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 19ECF189FCE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:19:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92A581DFD96;
-	Tue, 25 Feb 2025 18:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C645F207DE0;
+	Tue, 25 Feb 2025 18:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VN8U5z0b"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T91lnxtk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649021DD889;
-	Tue, 25 Feb 2025 18:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990F519CC08;
+	Tue, 25 Feb 2025 18:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740507504; cv=none; b=EHnkAi16kj1b43bFGrQYNyU76vEp9hRazHLDktUXyR+fPByYvWxeFjAeIIZHeA4WzHN31QbWADCparSomoRrex52UUy1gSXlYv9ZUsrIPEPloT7Ve3eo/11qTWDjCtrQOLwTtP+In18XY/HrbO67Fa1zxLSQKDUJE/hPRP6cLPI=
+	t=1740507506; cv=none; b=BK/YAN3cC56hXGLEBW8ity455kGDO/uCPYEvHQ4hxBL7pyd9bNFBIIoyR7/4wRNl7WzEKHhvrjuZRv6pxuhepGEyaBbvBLEFSmFGEprRHloVW5No3AqLyKRbBm+9xBro/3z2BxN/P6LEl1qqYecMu1WtICipJPZs0nWnNVsecB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740507504; c=relaxed/simple;
-	bh=ZjMQ+pssfFKTIr6yRoammUuYJ/1kG4vQQdLFHhGP5KE=;
+	s=arc-20240116; t=1740507506; c=relaxed/simple;
+	bh=MZ/f9oqCHqCtKtbILlhBYk9baVIEb1lnsnj87T1PmFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p4H/NZoyXABvNlHHscIMMrg4lm2hBaV4BvIfXpWTWtEws0tLFAXpcnmCGmgqLVB0Ltf/kAwRU1cJ+a3fHHX1K0G4QSa2vX6o53TK1iCP54JtpyGMahRBlSb2LBf9rdgagO0+5vnr2SlBmJkhUJcB2LahoNsq3CSN5+ZK/HiJj80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VN8U5z0b; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD97C4CEDD;
-	Tue, 25 Feb 2025 18:18:22 +0000 (UTC)
+	 MIME-Version:Content-Type; b=feeGZ1qyt1Jzh9sOmSqXgNQtCRdb0l79EBnf9RdeOeYUzdRhZNmx3X5Pe73Sgk7U2uQKmLWZ4kCOPY1ViqUcVYopwRZQ5uP/BW621Abs6BjcpaRe5TF4fr0CWi4PDpDuFv+XVUBzlR+jmTCDH084ej1o5utcX7PTQdP8embXCYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T91lnxtk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CA6C4CEE8;
+	Tue, 25 Feb 2025 18:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740507504;
-	bh=ZjMQ+pssfFKTIr6yRoammUuYJ/1kG4vQQdLFHhGP5KE=;
+	s=k20201202; t=1740507506;
+	bh=MZ/f9oqCHqCtKtbILlhBYk9baVIEb1lnsnj87T1PmFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VN8U5z0byiOZWqKBk0FoK/1J6XyUW4dWLvIeXcZR9nvA5Nx2pWKNmu2WzPgNCbUuE
-	 kyAJNE/bDYq2B/S1BkNvCWW3Fkx64Cr1+fLkc1S31kRP7RBa7KoRwLT6jTcyjy+VTl
-	 BhrocBFGwZms9yMXk3cIO/vcWUkIUl3RphQ656+lGd+A69aeNR3VlJlkD0JBQ3Mj7X
-	 CGycCkNjR1vSkygHFIFnvYRmxtRo+ipELvlw9GXOHpVIAxlN0nN2UD7ZSovfK4DP+I
-	 Gv4Lbx/JiD+Wje4WI+5yeQstbKtt/vXJhFd+cDOgKAOmvXog1Ezihf6kEoeHik1rcL
-	 j3QLd80c0cGIw==
+	b=T91lnxtk5AvJvOBpYytteS716TfVvSpZ49WVynKsZhZM1bWBuNdZeLvTngHulAuv0
+	 yZ7kkzaaIKiA4ZbkLPFkHydTWvd2JjMogRzbBbCNyeepN74QCwU5gMcVJ/M/WKjp+V
+	 vZxm1J8FbhOWt7hsfJo4fs4iVjURypqV+Utaj39/UeJFl7Z5K7WnpKebxop654Najt
+	 piI4CZk4KJAHSKStW46tCnhJi544DsBR9zmtw48qExzUPwAYyv3lJky3TdNhHLEYWm
+	 EyhV24pEHJqP2o8wYzyZrStJLgbW/Uqi2MXqTeYVHdEtbgv7eczZyyQ3oO7Ceoa6G0
+	 zuL8CQm+PTYJw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Georgi Djakov <djakov@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
+	Cheng Jiang <quic_chejiang@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] arm64: qcom: sm8650: add DDR, LLCC & L3 CPU bandwidth scaling
-Date: Tue, 25 Feb 2025 12:18:06 -0600
-Message-ID: <174050748689.199016.8043254114817192987.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	quic_jiaymao@quicinc.com,
+	quic_shuaz@quicinc.com,
+	quic_zijuhu@quicinc.com,
+	quic_mohamull@quicinc.com
+Subject: Re: (subset) [PATCH v1 0/1] Add firmware-name in BT node
+Date: Tue, 25 Feb 2025 12:18:07 -0600
+Message-ID: <174050748694.199016.11023927389773223641.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250211-topic-sm8650-ddr-bw-scaling-v2-0-a0c950540e68@linaro.org>
-References: <20250211-topic-sm8650-ddr-bw-scaling-v2-0-a0c950540e68@linaro.org>
+In-Reply-To: <20250110063914.28001-1-quic_chejiang@quicinc.com>
+References: <20250110063914.28001-1-quic_chejiang@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,22 +70,14 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 11 Feb 2025 13:56:36 +0100, Neil Armstrong wrote:
-> Add the OSM L3 controller node then add the necessary interconnect
-> properties with the appropriate OPP table for each CPU cluster to
-> allow the DDR, LLCC & L3 CPU bandwidth to scale along the CPU
-> cluster operating point.
-> 
+On Fri, 10 Jan 2025 14:39:13 +0800, Cheng Jiang wrote:
+> Add the firmware-name for sa9775p-ride platform.
 > 
 
 Applied, thanks!
 
-[1/3] arm64: dts: qcom: sm8650: add OSM L3 node
-      commit: 62a770da5327910233ff0b0e1989e14feb3d766e
-[2/3] arm64: dts: qcom: sm8650: add cpu interconnect nodes
-      commit: c9658c3963b8a5ebe488acfa2609fc641a126b60
-[3/3] arm64: dts: qcom: sm8650: add cpu OPP table with DDR, LLCC & L3 bandwidths
-      commit: c24db2c178578ab069dba8be81ef278854bad74f
+[1/1] arm64: dts: qcom: sa8775p-ride: Add firmware-name in BT node
+      commit: bd3801a8d44e0c538f3ffe011274a5c8a9a0a629
 
 Best regards,
 -- 
