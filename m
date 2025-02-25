@@ -1,64 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-49365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC5A8A44A5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:29:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 404C5A44A61
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:30:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F12423B64D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:20:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 508173B7BB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:20:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99FB920D4FC;
-	Tue, 25 Feb 2025 18:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A0FC20E028;
+	Tue, 25 Feb 2025 18:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f8XWFPib"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J2uFrPmU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFC820CCF1;
-	Tue, 25 Feb 2025 18:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB8E20CCF1;
+	Tue, 25 Feb 2025 18:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740507509; cv=none; b=YD13etFBy8SrqW4DvblsYvHk2hWc2VWQGavWl0EU90jrfbDiRjD+n5wiqmbQM8zDeL8Y0r2wOWFcvuryTy5sLtiZqKijCNLzCuz6DTvQF0QpQgmxbCVidtp5doCY8GZjvw04iBslZ7zFK2jDIGTXaxr+IhoYVNQ/KYxvnsn/+mw=
+	t=1740507513; cv=none; b=SId+a8CKSHToOjCXzq7YA5Jcw8EcjH7CoWvT0AJ6A78zgEdSe/puEzIUvKG2wYW0+z8HnA8MkyW4vjKOTryysnBluzQnpQ3ZLkqb373ZL7l6PwipLmUCMA2l5afsG8A+XwvkR1F2uG/xV1AW3lZ26ElIjgx7dDEQxVxbRYgvNdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740507509; c=relaxed/simple;
-	bh=R0JsbmlRl1mCZ4wHR54uRLWjDw2813YSJaxnEcvcPhM=;
+	s=arc-20240116; t=1740507513; c=relaxed/simple;
+	bh=mDv08GG5Y1yFdwnn7TPhlsCD/TXpna3VndLUAg0tHUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HAx7okk5vSa5tAsjJLD5XArxhgZk7b8YaViW05wR0dVCX5jGjdwCbk8IeNDopfmJptqMHcClyTnw7CPYk0yroIYEnoG5a5kBu1k6F9n2CKuBXNfEDb61m/1LQO1Gr+WT/OsSuXz82ONM+HW8Wis3YztFvw5hc3qjLIkwd+ykMuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f8XWFPib; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D320AC4CEEB;
-	Tue, 25 Feb 2025 18:18:27 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Qgw9wj2N2z58g/KKtraWJErLILX9Lyp95WM1fdPik+rL/H7tE2heaDFL3E5NuBob65AVHAQt1d6ISIiWPcSj6j+oIFM0P2q/MKZgVMQfWkYUVvqcQRFaG5gwXegIE0nDJFQCrbMds/JwgdyMg98K+vz5ckytrELrREknei/7iWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J2uFrPmU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CE6C4CEF1;
+	Tue, 25 Feb 2025 18:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740507509;
-	bh=R0JsbmlRl1mCZ4wHR54uRLWjDw2813YSJaxnEcvcPhM=;
+	s=k20201202; t=1740507512;
+	bh=mDv08GG5Y1yFdwnn7TPhlsCD/TXpna3VndLUAg0tHUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8XWFPibyKK3Qt6AoY6ErIKUHfQFlx4O1V4kt44d5gVvu8ENRhGb5B7qHmYhXzUw0
-	 lkFNp9F0OifLicfwlyvTFXQci8uS0TLA3H2rslOMjB2B0wtpO2oCgqMUmtZzTIa1gw
-	 caGOdruSaZAIJOJzhT7exgrnlNihxR8insCTie6xyoY8iFkfHootlH8ECLxojR/172
-	 vPfKx/yGlnvNhthQbHmcgtTvWbuo+moUY1LvyKvUmxI9cY6NA4GKKrJP6uQYjUbsa1
-	 L6mlidLfVDLEYEG9qYuq5LEGu+S8iLG7VlVHZYggwcEw46I0afdqhWTbSuZl7nue76
-	 S3bi1cp7Yl4jw==
+	b=J2uFrPmUINBMOyIMPM9AV3N7tjbXBmnu9OeToucXY3hidVuglkmmzxjqBz+BSHj4s
+	 tp9Ay9tN7xabzGoi3dNfgftO8WBZhF+8vWwWpPSYEy22PANVUvP7Agkphx68O5QNHa
+	 Bue7K2B+o+M/s7QEH1nWgGXvFprZlRuyGcjmWNxaoulMdZ9lyTq4EvLOjilt3Ea6NK
+	 A0pDoG79TLMswdHqsWZaAFZTal44qkddCJoc1Vj9bFqaB8PhrOKy4GaINi6bB7njyK
+	 ITMmHtIusNeYVffD+fO+FDX2PSzxNQo/yLiF6XQDp4hdrrGE1Xf96oNfWBezDictbs
+	 fvIO8RkoNxzvw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
+To: amitk@kernel.org,
+	thara.gopinath@gmail.com,
+	rafael@kernel.org,
+	daniel.lezcano@linaro.org,
+	rui.zhang@intel.com,
+	lukasz.luba@arm.com,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
+	konradybcio@kernel.org,
 	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	konrad.dybcio@oss.qualcomm.com,
-	Rakesh Kota <quic_kotarake@quicinc.com>
-Cc: quic_kamalw@quicinc.com,
-	quic_jprakash@quicinc.com
-Subject: Re: [PATCH V3] arm64: dts: qcs6490-rb3gen2: Add vadc and adc-tm channels
-Date: Tue, 25 Feb 2025 12:18:09 -0600
-Message-ID: <174050748687.199016.17625102573920194412.b4-ty@kernel.org>
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Cc: quic_srichara@quicinc.com,
+	quic_varada@quicinc.com
+Subject: Re: (subset) [PATCH v11 0/6] Add TSENS support for IPQ5332, IPQ5424
+Date: Tue, 25 Feb 2025 12:18:10 -0600
+Message-ID: <174050748697.199016.9382215187345410231.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250212113342.873086-1-quic_kotarake@quicinc.com>
-References: <20250212113342.873086-1-quic_kotarake@quicinc.com>
+In-Reply-To: <20250210120436.821684-1-quic_mmanikan@quicinc.com>
+References: <20250210120436.821684-1-quic_mmanikan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,26 +75,26 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 12 Feb 2025 17:03:42 +0530, Rakesh Kota wrote:
-> Add support for vadc and adc-tm channels which are used for
-> monitoring thermistors present on the platform.
+On Mon, 10 Feb 2025 17:34:30 +0530, Manikanta Mylavarapu wrote:
+> IPQ5332 uses tsens v2.3.3 IP with combined interrupt for
+> upper/lower and critical. IPQ5332 does not have RPM and
+> kernel has to take care of TSENS enablement and calibration.
 > 
-> - Add the necessary includes for qcom,spmi-adc7-pm7325 and
->   qcom,spmi-adc7-pmk8350.
-> - Add thermal zones for quiet-thermal, sdm-skin-thermal, and
->   xo-thermal, and define their polling delays and thermal sensors.
-> - Configure the pm7325_temp_alarm node to use the pmk8350_vadc
->   channel for thermal monitoring.
-> - Configure the pmk8350_adc_tm node to enable its thermal sensors
->   and define their registers and settings.
-> - Configure the pmk8350_vadc node to define its channels and settings
+> IPQ5424 also uses same tsens v2.3.3 IP and it's similar to IPQ5332
+> (no RPM) hence add IPQ5424 support in this series itself.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcs6490-rb3gen2: Add vadc and adc-tm channels
-      commit: a9ca8e5c6379f00efbfbccd873ff66b0f0c46873
+[3/6] arm64: dts: qcom: ipq5332: Add tsens node
+      commit: 3fe12c798f9abf26933b35b91d7aaaa77349c63c
+[4/6] arm64: dts: qcom: ipq5332: Add thermal zone nodes
+      commit: 9b341f34293f92096044431957a8dbd6793c8aa6
+[5/6] arm64: dts: qcom: ipq5424: Add tsens node
+      commit: a61adfe29624bd1a4530046e76808ed60927b9ad
+[6/6] arm64: dts: qcom: ipq5424: Add thermal zone nodes
+      commit: 017c28788a4caffb14f4895597bdf38ee9fc8f2b
 
 Best regards,
 -- 
