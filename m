@@ -1,147 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-49338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7792EA446F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:54:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7927FA447A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:16:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D4891895EEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 16:54:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EBEEC865DCD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:07:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B216017A597;
-	Tue, 25 Feb 2025 16:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F39E119258C;
+	Tue, 25 Feb 2025 17:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R8KRm3E8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C9nh4yut"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66F218EFDE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 16:49:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C14F18FDB9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 17:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740502181; cv=none; b=uHohsl8whY+9UABp96y2x5D8CYiOb0nuncGbOAyI1SKXNJ+wMYCcnL0doXwauf0IaPL1WM9hT5z87Vy4zH8JRoBObVRolhk5aNOm+LzwUkDUC7fyF4kF8OBZ836P1YB4mAafFGASzg95c024YaAoGoFa9gbuwszlsUzobqUgE38=
+	t=1740503280; cv=none; b=JEDB7397T2YCxh7FgNlJZojpTkY/mbM2iekf5nxWBt4ge7zBLLGiCwpuhtRh5pE9gZdL0DaUdVJMzjTnQ3D39Ofzo6ziqpEvyEFq90R+qzbRenJm+AXf3Od+u+Vv4gncWY2E+gMBXriliDUTAse+YUvPSY9tgxRXZ5rLPUMf1b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740502181; c=relaxed/simple;
-	bh=cSZ9ztT4mLDjdEXFNeLmYtzxxkPEck5tI6MIaJ3bziU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t7JKf1rQbPJOtrGRDzNU/on+n4V3caCLPp2ZiGpxgecS94uThSQ2/4AcU1dg2LfuuFmwqcRtMYCyBUFTDR1OMzo0CBvZPvI5qSnJn8xFfBt3PLSmNIXajCyFAxuO84X/WFWzmQfSLF7zB7a7Ngw3NfP6jjwoU1wdIXXq1Onbap8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R8KRm3E8; arc=none smtp.client-ip=209.85.167.47
+	s=arc-20240116; t=1740503280; c=relaxed/simple;
+	bh=JrDjoWv38lWuagASc6cN/GUIdTu7q0opFYTGtJoO3rA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BQfQXOYQ63LHEaJ+Kad8DewUf31EK5TM6mHdz+MbZuUg3CtFgaNm6cOdhNFocervzzTK2wY67yZn7z7ZofS/ep9xJg2Ux1/wUUlyzlN1uv6e3IPVtdyoORfadotN+efPaUOoHIHUz6CAPsdmbrRAPEQAxBuIBXf0ikOEfSBBN2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C9nh4yut; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-548878c6a5aso787135e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 08:49:39 -0800 (PST)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-abb9e81c408so100132866b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 09:07:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740502178; x=1741106978; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0mgWZibQMuHj44S/S8PoDTRgBr00ghmQvGRAk6+vKs4=;
-        b=R8KRm3E8/OF+6VPT+4EdtupMDi/G+HBtGPP5JXaRFd5AQCzNdzTG0L6GV75HAl3PLQ
-         b0SXmqtZNaNSFA+mfeuaAzFNK9qy8fpM0SSphKz9DyseCXpR96eGp63mG1qHMN64Am2b
-         L+ih8xwibZoxRYkwqx2UOHKez/BNFhmhoK3o3B+T9M3RkBfzQ4hRznTqNtOJ+lV7ECcZ
-         IX9SuB77oCqrP4B0t/8Ux4PBayUDOf5N8e5CPi68+vmrkGC/qg/7l7KFLmT6GfD1G9g/
-         nYpUeC5FvYN5MbhzNilw+524h6Ek/R9PdXOy4JiDumXAn6bSdgKUXODvVmq2nIhiaZwg
-         mQlw==
+        d=linaro.org; s=google; t=1740503277; x=1741108077; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2Yww8i5PD9sxDad7Sc6TNXIrj7gMeSMfS/yw5deiF8=;
+        b=C9nh4yutbO7qTnjLqIDfbIsstatShZ3PmtqmGDBEtuYohpflbTJDa1+lDlcicz9hCy
+         2/rPB9i/3AiD+5Omazk6gqCHKQeWb0AvtuG9iaYhBFJFHHDdVgZ9I4BeVqhxswviCSnF
+         ZFXLkA89/PNpEPR0hhuGRog82G/bKZ2VuI9bFgMW6aSD0YPWC30IlxiT759FEKxHPA7c
+         RaaMheUf7cK3zRNqyFcNllxGGypgJR9msUgaWTdregKK2/tnVxkylDTQ+bLKvHxuPENr
+         7YufIWWi/IU+nZFAGHr64CUOvW2nMfUOY4y/HBvdjo6NYMN3qQTXu92QJKqB08TBd8Wn
+         OZFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740502178; x=1741106978;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0mgWZibQMuHj44S/S8PoDTRgBr00ghmQvGRAk6+vKs4=;
-        b=VGpdTduenV5TkI/TTp4P0ZtEanSoj+wa9UBc8nd/YbwgiTmK3spPoSsz7lBziVVB1+
-         fIpZUaWfnhsN9yX9l4+uV/OCpkxAG0Q9Q9bxZ+rArObj3jGC+YF+2tWQWpTgrgusHn0N
-         FRZUA04iN4/0oZ/BGtj26K43RSfcuXtIm9TlrFqapKv6F/PUjala1oCTaliWDsgs2ftw
-         3/FqdUj91g1u3Tji6hmdYcogAsRW4FwPc4Rxliw0H+ZS2zAl4/GwYB72pt8uFbEZk025
-         kJLJDApviXQwkuwTZ6kD5+vWKPNkC2lJJtj82byYjQBqh3O+j68dr9I7MhpmWwgzF8v1
-         3THg==
-X-Forwarded-Encrypted: i=1; AJvYcCXNAS3KJD6RwqSJf3LcBw8nNQKld0jn0YIllET5EPjxgJJZU8m5qWS0ALR6BuWEviDlPAZ5+NqiBA/yJW8o@vger.kernel.org
-X-Gm-Message-State: AOJu0YwL2K0rmQwy/Rc3p8chYT6Pj6umtZd3agr+PKU1veLp5VbPgKMi
-	3BV/P1Vg6Xn8zWOS11ykx2PGMZJio6E29AcoKac2VFPCl8Vc/eYl3KZg34aZuSA=
-X-Gm-Gg: ASbGncvGkhdUDy+mFShLVJ7LzbKXmLf61DsBOJcGkZINJqGlsRge6TstVuns314QXLX
-	fHtOK8ZgkW8qrGP2/7pn0m/W2uDUpoIjIqlnAVOyaGtMhvIb8reyUfcxw3pc8Sjpa+h5D7zYjYZ
-	bxvIf3You5SGvZLgMowJRZUTPOlBNcLIH9Xqx4alBn/7g+STIU26Eo0FfK5YbaF0kborzO5WYNy
-	1MyujhCj/FyoQfnMnlUZ83Trc9H1hjoO6FcZO8k687pP/0WJO4PTv3gVNsNCbZAgFGkE5UnC/bU
-	y6KLM0ULJedy3mVPaJtxzn/r1GdHp5vSoJu9ga1aDPA7QV0wSvPv7rV9oKQFRTcQnbHSkQ==
-X-Google-Smtp-Source: AGHT+IFORbfzYSemq6WfOCUglMYdhzTg71XD6K2L6XeaH8kQIvUGNHFObPzSD2MUJfic2yxCajAruA==
-X-Received: by 2002:a05:6512:b0a:b0:545:1d96:d701 with SMTP id 2adb3069b0e04-548392598eamr7478215e87.36.1740502177754;
-        Tue, 25 Feb 2025 08:49:37 -0800 (PST)
-Received: from eriador.lan (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-548514b25e6sm220407e87.7.2025.02.25.08.49.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 08:49:37 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Karol Herbst <kherbst@redhat.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	nouveau@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Imre Deak <imre.deak@intel.com>
-Subject: Re: [PATCH v5 0/4] drm/dp: Rework LTTPR transparent mode handling and add support to msm driver
-Date: Tue, 25 Feb 2025 18:49:35 +0200
-Message-ID: <174050217098.2377948.2211237197268827323.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250203-drm-dp-msm-add-lttpr-transparent-mode-set-v5-0-c865d0e56d6e@linaro.org>
-References: <20250203-drm-dp-msm-add-lttpr-transparent-mode-set-v5-0-c865d0e56d6e@linaro.org>
+        d=1e100.net; s=20230601; t=1740503277; x=1741108077;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O2Yww8i5PD9sxDad7Sc6TNXIrj7gMeSMfS/yw5deiF8=;
+        b=uIeCltsRovzfa9wVCZXwFTSnbR41DtWoGqlSoduVHMsP0gO94yn9mDCabP6Z4kOwUN
+         FAyWI0PZWEUsK/Irc+tgrMKkJp0WssZoiv3TM/KqqrkZWcwUPb5mZ6+DlCnXpVVPqKHU
+         9iu86Vp63sLmfttKKeiSa5uP8dCW6Cj3ONrO+4zQ3bsFC4H6um4UiZgHIWEw17oO/oS2
+         AU3hzjdpw5QSaVjfosVCRxw3rlYNAlnpF4yTZUeCSN6JX+6lXiU3sZmBT5RAIGowd8Ss
+         4Fd8W/O/2EjoRIOq7C6mOC2OTdESMwSTUojEw8Gq18/8nYbXEcdtyrLxwJjQRfFMyiuw
+         /90A==
+X-Forwarded-Encrypted: i=1; AJvYcCW/cDKRU5A53nyx+QXPC1lC7AqSOTL0hth089l2GqF0F0WSvzAY/UJjFxvltrJ6/P7MSNw38c0BAt9JFRmG@vger.kernel.org
+X-Gm-Message-State: AOJu0Yygf4bvjHDLEJxiOd5Hk1o8D4nPLDRCm+O4h56mna9KhnTTNzvj
+	Tyf9+OSL9temk/wLL/fxVENWV2qR19JniPV3lGLQJzfd39AAgnJHPwIhjJwQLoQ=
+X-Gm-Gg: ASbGnct0or1QPcLcNDML7PtRZkemlKYLR/D10C/Xt1h92FIY5v/aubFXEgOlCMe/PLK
+	Udf2zHGaoSJ94Xw14auzF8FpQwPCwn1upwYnd697ymLOLFf3+GV39NkDu+yreg4kxbrPzN8MVDX
+	n1chpIkkh4IYCKrWklx+v9ca40G6ylxTo0eYclw+GoFUD4L27jOHFQRTTXEIhYoDF9/YDwqP4AU
+	nOfjdUP8Nrl6yg5f6HGPO8Gp1KUAPsi674X+ZbbhJswUj/t7FUHWvUoC0V5fnIlACK0s83oTS2q
+	Nasweqacin6R3R7DIZwlIOAl7Vu/wH0Wlvyv+r5tNCKKMZCaQ/cO7iU1Ng89TPwkWBdwu8klc8l
+	AvqI1
+X-Google-Smtp-Source: AGHT+IFolR1/SB/hCyUdTCpb3AKwskzaM+cnfMctfFebsUFypTxfpk+6oEj+nPeNvivB7JnjlaXP4w==
+X-Received: by 2002:a17:907:7284:b0:ab7:63fa:e48a with SMTP id a640c23a62f3a-abc099d4d36mr792150066b.2.1740503277338;
+        Tue, 25 Feb 2025 09:07:57 -0800 (PST)
+Received: from [192.168.0.18] (78-11-220-99.static.ip.netia.com.pl. [78.11.220.99])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abed1d55dcfsm171387966b.44.2025.02.25.09.07.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Feb 2025 09:07:56 -0800 (PST)
+Message-ID: <c55f615e-6831-4470-9ea2-73fe605b8a5f@linaro.org>
+Date: Tue, 25 Feb 2025 18:07:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-slim7x: Drop incorrect
+ qcom,ath12k-calibration-variant
+To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ ath12k@lists.infradead.org
+References: <20250225093051.58406-1-krzysztof.kozlowski@linaro.org>
+ <sfhcmlz3x254fdowufeeuh4uiwxfgkphm4ch4laceivbrs3zir@qvqk6jxi6zhf>
+ <7b54e965-3395-4349-8ae7-51a28c759235@linaro.org>
+ <kce6gzso22fp3ze2wp43fvy4tv6yqkaijm72kh5qk34jwijk2l@3ifaiz5tgjvl>
+ <d93789c6-61d9-4761-98f5-aa3dbec14d82@linaro.org>
+ <21ad3381-4d65-4c68-892d-9f485bf13735@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <21ad3381-4d65-4c68-892d-9f485bf13735@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 03 Feb 2025 12:57:55 +0200, Abel Vesa wrote:
-> Looking at both i915 and nouveau DP drivers, both are setting the first
-> LTTPR (if found) in transparent mode first and then in non-transparent
-> mode, just like the DP v2.0 specification mentions in section 3.6.6.1.
+On 25/02/2025 17:44, Jeff Johnson wrote:
+>>>>
+>>>> But nothing parses such string as 'qcom,ath12k-calibration-variant' (see
+>>>> git grep), so how would driver use it?
+>>>
+>>> That's what I'm asking: is the property redundant or is it correct and
+>>> it is a driver that needs to be fixed?
+>>
+>> I assume driver will need something like that property, but that's not a
+>> reason to accept incorrect one in DTS. One cannot add properties to DTS
+>> without bindings, so bypassing bindings review, and then claim "but my
+>> driver needs them". Send proper patches for driver first which will get
+>> a review.
 > 
-> Being part of the standard, setting the LTTPR in a specific operation mode
-> can be easily moved in the generic framework. So do that by adding a new
-> helper.
-> 
-> [...]
+> We definitely need a calibration variant entry.
+> I've pinged the development team to get the driver patch.
 
-Applied to drm-misc-next, thanks!
 
-[1/4] drm/dp: Add helper to set LTTPRs in transparent mode
-      commit: 5e7715478c273e5b17b08942182bc0350b7ef3a6
-[2/4] drm/nouveau/dp: Use the generic helper to control LTTPR transparent mode
-      commit: 226a0baf9098841ceb92ab7804a07426540663c7
-[3/4] drm/i915/dp: Use the generic helper to control LTTPR transparent mode
-      commit: 6dcc3c5121b72c3633592db761e76083cf7623a3
-[4/4] drm/msm/dp: Add support for LTTPR handling
-      commit: 72d0af4accd965dc32f504440d74d0a4d18bf781
+The patches were on the lists but were not accepted. Therefore DTS
+property cannot get into the kernel. I am sorry, but this is not somehow
+fluid or flexible that internal team can squeeze something into the kernel.
+
+Also post factum reasoning is not correct, because this would open the
+gate to bypass any sort of review. Just squeeze your stuff into the DTS
+and then you can bypass all DT maintainers :/
+
+All properties must be documented and bindings must be accepted *before*
+DTS patch is applied.
 
 Best regards,
--- 
-With best wishes
-Dmitry
-
+Krzysztof
 
