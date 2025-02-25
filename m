@@ -1,87 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-49290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EF1EA43EE8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 13:11:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C922AA43EFD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 13:14:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9534B3AA958
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 12:09:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E49293A571E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 12:14:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BDAE268681;
-	Tue, 25 Feb 2025 12:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2E3725A2DB;
+	Tue, 25 Feb 2025 12:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UmbTRmkY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ePRKtB9/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BB620C012
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 12:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1681E1FBEAE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 12:14:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740485352; cv=none; b=qJa7UvGt0DImgwM3WPF3QwREodzdC2kXEVPYrtMkWplA0SdklUHQcP9WcFTGgpe6QD/URzY+PqqEGLhy/3jCMcnhz5hdOmNzztnhQ909wHOynhicf3gguCTNTvwEFfgJUFWiLK7KCHg9glWVv/KOodvgUYte5GmF6Z3+y6SmRF0=
+	t=1740485657; cv=none; b=qaG4wpdOMh6ER9MRjXRCeYo89ZHapB+vseSKLnlkEWWW8zLpvJ6fJYGiV+eg1LRmmk75yCMUjx9wJ6oQX0YTEqCFUDdZ3AWSaQL7Dl2X1WYzR9sbu9PJjwjmtbBuGwt+RSjRgD08OtkIlXxa7xegNf6jR74kz1+f+BJfsiQboqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740485352; c=relaxed/simple;
-	bh=iCgS3i4jeT3RTXkayVl0IK8NtFDsUCkuiJsYeX22TDw=;
+	s=arc-20240116; t=1740485657; c=relaxed/simple;
+	bh=mJicKQ0PEycmnzOCJ3b1UyYkIpJ4OoEZluDFDNvy3MM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WUvTc3og7uMcrMFANA1/7NlVts1/nrOVRe4VfN9C8trHC/BnbnFdQfoSQr5TgS6PRkPgIrJkkRrz8pYldkZiWYCy+f0mJitWzvKIqWDgzyfbUDFkXheEP9tZZKMCl0UB1DO/9XK1da7q7/Hd+moYFHfn6Hc6DyT5vGOFHPjJG4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UmbTRmkY; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51P8faT1013801
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 12:09:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	liyKdemlEyYUI2F9xPgM63joz99qtCmXbXh4OS9ua+Y=; b=UmbTRmkYHXtlT9Zk
-	8xuUn1hdDUvJ4/AQg1trwY5wG6DAyasQsbxW0P4K21hzEM3MpDB6546tmo7VDyaR
-	0olCwdxgmn2nV8/Iu00fica/xmJ0LqKAGQ8u8tiNCbpZ3ub2ITgQYA2x3dHfvo5T
-	/dGo4reJmOzi8xXpOy2GocJsuB/lSYjqmqCyLoNOfTAfCyfhUw81HuJGm303Dq88
-	LIIZVLi4hZYUps1pzHjWQXTWLSKUkAzG5zPHdnmbJ2ehzTRELNWqqPsnQg4UMnr+
-	4kO7dUkenU0kg0pefiU3zcWGGxuJ8myikoV3L/IQ64Ae/iaWZ3TpWPT0VqFGoxv3
-	NOp5lQ==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y65y0s7p-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 12:09:08 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6e66c7e5348so6337896d6.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 04:09:08 -0800 (PST)
+	 In-Reply-To:Content-Type; b=p6qOWfPWVp1To0sGC6WI8WKPYXixxLv1ogNEdmUdDXJsTo7Kzik772u0GZxT+gHYsP2JvRLgy0jiZo2XvYJSBHGa2Jxgt1/ij+oyx2x9KL/dC57DzefC/XXTpdcgzI6LAryzqu4BGfU3ySd3XXqpcYwFVo64Blr5Hp4QMU0bsiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ePRKtB9/; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-ab7f9f57192so73476166b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 04:14:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740485654; x=1741090454; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=v5fnly06+CmqlWFeIJmPZceHNs21M7+gnE2t1oYGWus=;
+        b=ePRKtB9/YQpVZOeEUBYFyAwNwy6scOq1Q5+Sp4SgrXqhKlrcx4Rmxy7NdQ9+esARZg
+         3B91qr2byDwK4szZBT25XSDHlUQ2hHew0LFXsFy6QQ6+6m39sXZxYC3ANfJiojT1L+4Q
+         xsaRbwFRdIpXx8KpysZeT4oek6x9svM2uaEiNKFCRdB+O+bR/zwOyk91rasihLW3bpOz
+         H8ZMh6obN4LVRGtUYnqXGPsw05KhzJc+d7fM+TLJxjYo95dtSf1br0qppJ1A2xZn4vJD
+         NffbbQgOdVnLsCCpKeuYMpNvZ1rJ89JKy14CmruFyk3EfuSTp0l/8gyCWdBqZiskYhmO
+         AIjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740485348; x=1741090148;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=liyKdemlEyYUI2F9xPgM63joz99qtCmXbXh4OS9ua+Y=;
-        b=Kd7XczpisxcFugz+NOEuyJZReKNpUGlI9kTXrSDIX31eTrYESS2QRVansIBmtl+PGW
-         yf8A7R0IHFvC5VzpD0pp6pdzoeENWiNmfVWDfhj+Ipn609NeJ3fHQQH9xgR6kZdYAF6i
-         ZH1DSzvjEwh4h28MUL+sPWm+XXOfc18vTByIttLODpgjCFp6zekdb0ygzA6kpJWsIK3q
-         ill9U2fqSPcmDVm+RFRWuPi19rrWeIQ/yCbwsy8uVoySOKGpIhefRHb+2htaqBAKd45W
-         eDh9fRcfSXhd+IfZfuorr+/POpTnoTwv+lZKSHuYCG0Jlx2LjF0D+7vR70FTtZeIlpyF
-         V6AQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXfboMvA6JXH48Bg+vW4Z1YBWogHcSKqVm4I2ZE1RTG7Zp6kakxvfEeZk147buGa+RpdzES++IkQbz9OpvY@vger.kernel.org
-X-Gm-Message-State: AOJu0YySRKTEJwh6/ML2pUoh5hDpc9A8erEaJHxlXhIb4uE/sVCZiJsU
-	rA5VT8Z6lGt0gQzPDncSz3JkAiHSiCFyT0muvKTxuL5ahkZmK3rshRlhz6yMHZcAHkJs8Q3jgX8
-	ID/dcgRwLHRrZKGSCCw7UKMtPDjUEM/BWnRY4LxVh7zxm0fSo0952rOWUUA4TFJtU
-X-Gm-Gg: ASbGncsmqyLbxT9gxlLnFDlXOKfS9N9FCyxU4mCK4RO/PHT1kMu9hJbhEFmDevdGe3R
-	9ooDLEFO06cWVmgTyu7G3c2nTOqu+cGJ4kgLYMiwfsy8rlokf08pTcrQsHrYduxMzUHpSnFVaWY
-	iOfg6ZOL6KnDnvIkcOfgh1nitnqmVSBqmEnhXgD7tK9X5/P3856IpU7+lOT6V5t/grAe8spENXW
-	u2j16coGeEmLFV4f5ls0Nfkjc89G0NySMt7FzESo5SxjZk5PhhWVIQQKl5g+cWsc3IGjgZjZdtv
-	0FasfnSsWYo6sKZ8JAil/oG7I6eeZlK109NxMsQvq00WoDC6M30DKvY0zmR+gE4YQK93CQ==
-X-Received: by 2002:ad4:576a:0:b0:6d8:98a4:cc5c with SMTP id 6a1803df08f44-6e6ae5f3142mr86218726d6.0.1740485347822;
-        Tue, 25 Feb 2025 04:09:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEBcYh3OaD6A8QQEHJCnWXKawL33DJwmF++4szvw0YSegATx81D674T3VIyiwI6/jeN5Mgo4w==
-X-Received: by 2002:ad4:576a:0:b0:6d8:98a4:cc5c with SMTP id 6a1803df08f44-6e6ae5f3142mr86218666d6.0.1740485347469;
-        Tue, 25 Feb 2025 04:09:07 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abed2012175sm129900566b.118.2025.02.25.04.09.04
+        d=1e100.net; s=20230601; t=1740485654; x=1741090454;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=v5fnly06+CmqlWFeIJmPZceHNs21M7+gnE2t1oYGWus=;
+        b=WsYODCQfcbz8qZPsqMFkEFYhjQIBV7qtG1cXTU5OsrXzVNus9PdMA5I0lzX5YW24uW
+         rh4+EE72b12bgQYCcUBw/hEb1AuNaGo6Tx+OabJH4CBENTIe0gaJNVfW4udzlKQlsjVw
+         +xEnmbVX5ZSAc6ov1jI+uNvD7Nl/ZYElIVLIyMyb4OgU03nlNsH6ToVioeRY4iBmYduR
+         KSj5/L+L80zL0046+sr7CzJUkZyS6tfDcPJ5wtBjIDEu8knHJw4YSPWZVgxdEzKeXLEm
+         9N3bm59M1xBzObrs4rt2892YH+iHj5DgW1thABMBm0cLhhkPyd6ZF2jFahPkZngA6w19
+         i/FA==
+X-Forwarded-Encrypted: i=1; AJvYcCX7O0StMMY73acviCdsM7BfkeD2Z6CXh5LXQGZgqUUf9iyNrbRNCaujtUk7j4RikJ2XkhKFc7hg6cyBpZV8@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyCi/JmSdbvw2zFuaIAGn56e+APepg8KPmQ2rcSi/3HFyAF5jk
+	TJx70A3LmcyDEqrdvvc89Fu4JOwAeovNlvPQmXc39wGaSqmoOgVtRvLfHPEwDTE=
+X-Gm-Gg: ASbGncu980t4qr5AV1DY08fsFrBtzb7ksMi0spLslR5qpJ064bSLWIHpuG6UBHOi3WC
+	MVKNcU1lTZpgdScaB1x95svzDqH/U0b1ch1wc4mCsATNPIwotgpWXoHz6g4JYRBQP4hRwgrKjhk
+	nhJl5sKCaWvY37mlj0uYGBn/T3eKHlRfNFcDIWlG3ATvGfAKhNVGvBI/HKRFhqDRMzQXp8SCj0T
+	DD9mJt9qPSlQ0SbUqPa07ihgg4LpYFBFj5uM7SZdtkvgP9Sw5O0emxTrYCXilPqaYZVIZQ+KFSP
+	z9P+E7ftASgiHuzQiAf5EyVfCm6mSwnmaqQb1JxGyMKY++AGU73DEyW67d9gi7wsJoZ53AEXI+J
+	yDu3K
+X-Google-Smtp-Source: AGHT+IHNSecMVYPg7kUTSpgSppbUi0iIwY7XvdrS70D3afB469L/MoT97QXoyQkoyZnSBV6IPjpt+Q==
+X-Received: by 2002:a17:907:2d22:b0:ab3:8bcc:3d97 with SMTP id a640c23a62f3a-abc09a46c73mr650643266b.5.1740485654346;
+        Tue, 25 Feb 2025 04:14:14 -0800 (PST)
+Received: from [192.168.0.18] (78-11-220-99.static.ip.netia.com.pl. [78.11.220.99])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abed204fadbsm129189166b.153.2025.02.25.04.14.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Feb 2025 04:09:06 -0800 (PST)
-Message-ID: <d8ef7b67-a31f-4a49-8810-90dfebd2d8e1@oss.qualcomm.com>
-Date: Tue, 25 Feb 2025 13:09:03 +0100
+        Tue, 25 Feb 2025 04:14:13 -0800 (PST)
+Message-ID: <d93789c6-61d9-4761-98f5-aa3dbec14d82@linaro.org>
+Date: Tue, 25 Feb 2025 13:14:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,111 +83,101 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/10] PCI: pwrctrl: Add power control driver for
- tc956x
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        chaitanya chundru <quic_krichai@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Jingoo Han <jingoohan1@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: quic_vbadigan@quicnic.com, amitk@kernel.org, dmitry.baryshkov@linaro.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jorge.ramirez@oss.qualcomm.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com>
- <20250225-qps615_v4_1-v4-8-e08633a7bdf8@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-slim7x: Drop incorrect
+ qcom,ath12k-calibration-variant
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ ath12k@lists.infradead.org
+References: <20250225093051.58406-1-krzysztof.kozlowski@linaro.org>
+ <sfhcmlz3x254fdowufeeuh4uiwxfgkphm4ch4laceivbrs3zir@qvqk6jxi6zhf>
+ <7b54e965-3395-4349-8ae7-51a28c759235@linaro.org>
+ <kce6gzso22fp3ze2wp43fvy4tv6yqkaijm72kh5qk34jwijk2l@3ifaiz5tgjvl>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250225-qps615_v4_1-v4-8-e08633a7bdf8@oss.qualcomm.com>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <kce6gzso22fp3ze2wp43fvy4tv6yqkaijm72kh5qk34jwijk2l@3ifaiz5tgjvl>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: vNTACuf9-EvM_QhYVnDPa4hIAHqBwrD6
-X-Proofpoint-ORIG-GUID: vNTACuf9-EvM_QhYVnDPa4hIAHqBwrD6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-25_04,2025-02-25_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 mlxlogscore=999 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502250085
 
-On 25.02.2025 10:34 AM, Krishna Chaitanya Chundru wrote:
-> TC956x is a PCIe switch which has one upstream and three downstream
-> ports. To one of the downstream ports ethernet MAC is connected as endpoint
-> device. Other two downstream ports are supposed to connect to external
-> device. One Host can connect to TC956x by upstream port. TC956x switch
-> needs to be configured after powering on and before PCIe link was up.
+On 25/02/2025 12:45, Dmitry Baryshkov wrote:
+> On Tue, Feb 25, 2025 at 11:22:25AM +0100, Krzysztof Kozlowski wrote:
+>> On 25/02/2025 10:50, Dmitry Baryshkov wrote:
+>>> On Tue, Feb 25, 2025 at 10:30:51AM +0100, Krzysztof Kozlowski wrote:
+>>>> There is no such property as qcom,ath12k-calibration-variant: neither in
+>>>> the bindings nor in the driver.  See dtbs_check:
+>>>>
+>>>>   x1e80100-lenovo-yoga-slim7x.dtb: wifi@0: 'qcom,ath12k-calibration-variant' does not match any of the regexes: 'pinctrl-[0-9]+'
+>>>>
+>>>
+>>> Adding Jeff and ath12k@ to the cc list. Is the driver able to find the
+>>> calibration variant in case it is not running on the ACPI system? I see
+>>> that it uses dmi_walk. Does it work in the non-ACPI case?
+>>
+>>
+>> But nothing parses such string as 'qcom,ath12k-calibration-variant' (see
+>> git grep), so how would driver use it?
 > 
-> The PCIe controller driver already enables link training at the host side
-> even before this driver probe happens, due to this when driver enables
-> power to the switch it participates in the link training and PCIe link
-> may come up before configuring the switch through i2c. Once the link is
-> up the configuration done through i2c will not have any affect.To prevent
-> the host from participating in link training, disable link training on the
-> host side to ensure the link does not come up before the switch is
-> configured via I2C.
-> 
-> Based up on dt property and type of the port, tc956x is configured
-> through i2c.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
+> That's what I'm asking: is the property redundant or is it correct and
+> it is a driver that needs to be fixed?
 
+I assume driver will need something like that property, but that's not a
+reason to accept incorrect one in DTS. One cannot add properties to DTS
+without bindings, so bypassing bindings review, and then claim "but my
+driver needs them". Send proper patches for driver first which will get
+a review.
 
-> +struct tc956x_pwrctrl_cfg {
-> +	u32 l0s_delay;
-> +	u32 l1_delay;
-> +	u32 tx_amp;
-> +	u8 nfts[2]; /* GEN1 & GEN2*/
+This could be instead renamed to final correct property, but since there
+is no user, no indication it is needed or correct, I cannot prepare such
+patch. I would not know what to write (e.g. "rename to qcom,foo-bar,
+because I have no clue").
 
-GEN2 */
-
-[...]
-
-> +static int tc956x_pwrctrl_set_l0s_l1_entry_delay(struct tc956x_pwrctrl_ctx *ctx,
-> +						 enum tc956x_pwrctrl_ports port, bool is_l1, u32 ns)
-> +{
-> +	u32 rd_val, units;
-> +	int ret;
-> +
-> +	if (!ns)
-> +		return 0;
-> +
-> +	/* convert to units of 256ns */
-> +	units = ns / 256;
-
-Should we round up here, so that values in 1 <= x < 256 give a delay
-value of 1 unit? Or maybe such values are never expected?
-
-[...]
-
-> +static int tc956x_pwrctrl_set_tx_amplitude(struct tc956x_pwrctrl_ctx *ctx,
-> +					   enum tc956x_pwrctrl_ports port, u32 amp)
-> +{
-> +	int port_access;
-> +
-> +	if (amp < TC956X_TX_MARGIN_MIN_VAL)
-> +		return 0;
-> +
-> +	/*  txmargin = (Amp(uV) - 400000) / 3125 */
-
-double space
-
-> +	amp = (amp - TC956X_TX_MARGIN_MIN_VAL) / 3125;
-
-similarly here, is 0 an expected value for 1 <= x < 3125?
-
-Konrad
+Best regards,
+Krzysztof
 
