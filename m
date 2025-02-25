@@ -1,331 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-49217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B719A434AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 06:37:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 34EFAA434F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 07:10:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8411017600D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 05:37:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 693E03B8D67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 06:10:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39831190664;
-	Tue, 25 Feb 2025 05:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96A1A256C76;
+	Tue, 25 Feb 2025 06:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MuE6BoQj"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="XrVUEkmO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C25D2571A3;
-	Tue, 25 Feb 2025 05:37:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740461826; cv=none; b=bH8XRHSq8m5Nt+Np+8CpkiN6XHbVnRD74sAf5SQcnLi8jro+OWauBM3eYdNqqG7qYab1gDZFdReYBWxHceCuZFNRhdMhSEVHijCqU8Ufe2u0J6kYHSOikGbe0rd1bD+NTFN7Tv0u50MS52H4UHVdI5Aaywi//2FXOlAY/GoElX0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740461826; c=relaxed/simple;
-	bh=VFFMt29hulHub4ENcdwbIA7aDZyw10etZ8Pr9MXEtoI=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eS+g+6iJTPbVeRIcNOE7nngger55O2K2Iz8L6FPYiI8ZjVwDU9f8gss/Wpr1fex3rzs7zQ+KabcTx4QrTKtznxVF4l3UKyj3GfgE0kyWxeB36EfXUF0Rv62kvbn0soElOZAnIVWuLdeAL1M93kqSJx74rr7AC8YqYeOrQzkqe6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MuE6BoQj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51OKOXCl013490;
-	Tue, 25 Feb 2025 05:37:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LxJzv0ft+JOtGOh+atlA3iZtHQg6XvT9727TQZBAjNM=; b=MuE6BoQjYqV8BIUz
-	7FlbOvNmerUL2z/wJkSeSiDQy4rM23hZN5l4ZNwsfb3We74ua9gpK/GslsA8lPwc
-	a0Ixg8onqxPsF81RfW231KaqmZCzYYLtxeVidqEkoh0xItoD4qMmbD2WLHXO8OsZ
-	Coa/gxIHoCva7daGU/wO5JKTilG+ztbZQD5U+B9GD5caiPNnHGD1mGI5njnK46j+
-	bFCOQLKu2xsLTfr+Hh8X7cbD2BNEZa9OYuq/eHJjoKawXCSfLe3xrQD2kH03AdtT
-	fEEyASAW+I0aX9fvw7L9L2wAepGFZaIjCnunmdBQ8bG2VZLU/jxhsqOnJ4W+K60I
-	Us0ODw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y5wgqnwr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Feb 2025 05:37:00 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51P5axbY016013
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Feb 2025 05:36:59 GMT
-Received: from hu-janathot-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 24 Feb 2025 21:36:55 -0800
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <quic_mohamull@quicinc.com>, <quic_janathot@quicinc.com>,
-        <quic_hbandi@quicinc.com>, <quic_anubhavg@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v11 1/1] arm64: dts: qcom: qcs6490-rb3gen2: add and enable BT node
-Date: Tue, 25 Feb 2025 11:06:35 +0530
-Message-ID: <20250225053635.2856960-2-quic_janathot@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250225053635.2856960-1-quic_janathot@quicinc.com>
-References: <20250225053635.2856960-1-quic_janathot@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581D9256C6A;
+	Tue, 25 Feb 2025 06:10:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740463815; cv=pass; b=OkE4r8gOOvUs43aWzWmx6U2ifxyO1GPwrRw17A1u+XsUa49HJQhlqQGoXIfqpffZE9JarBrlnB5+fTZsBNHvjpPFqLX8eS4vPe28fcKB6kMx+zdfhB9Bou5h6BxRqF9KSqf5VjFIi3SjWG70b2o0Vx92dyp1xTAdCTyhkj4P27U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740463815; c=relaxed/simple;
+	bh=fxjYhhopdIJkGIyF0ESuXORJasUN6Sxa6lF8FBEgu/s=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=O1DeISGbBASObqR68U6v8uPL1XYVsiVaeNGVS+LkA7d7H4fpDv8CIJ2w6VFMlsBoOYJ4s4vrfCSqrknC1GPwXrad2QpmjNdy7Ub8UhW3QgRNDdUtKQNtXZcPiPz+gMQMQ9r6+rVGzOCd3gi35i14tm7mp66F4js9ncuGTe6OR8Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=XrVUEkmO; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1740463767; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=MoxhigzgjKJZtjuMmmxtmjfd2B95WHy56Is1CRIbfGaDh5fXMdDFuTpf1hlCX1QvilcJ9Nyk582gyDVWQc58QhMk/SpRxfOhEQye4UJVl+VfUpv4Nrj5tnYUrGuOGMaKtaMrOX3+eRIt14XzgyLFXXazgnkQR9KqKn7cYRWSZbw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1740463767; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=zlGJk/boTTi46WwLjRxSuU692UCYhuz4KWqBVlpFD2s=; 
+	b=E77T+47VTEpF9m5gWxnlb58MjXvuDgg52KvKgXSiFJxPvMKdCxqrD9zimoSZGjm+/cpZNcId17F8Z91szlW+0Ok7jZFYONkasLf2znA+KhMdf6AjF1s7iuQiDqjxbLnR0fpq7sCLkbL8VIzBL4CJwxKap3JjPf3fvAWFEfmj1GQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
+	dmarc=pass header.from=<Usama.Anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1740463767;
+	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=zlGJk/boTTi46WwLjRxSuU692UCYhuz4KWqBVlpFD2s=;
+	b=XrVUEkmOoIzAxB8edEvVsTnEK14wqXdy3pGXFAylllaIlyWVgeyugUziAX+W/F9J
+	0Gke1Fh1EnBhDUJyGynb1WLxCfy9lPUTnYD7K77Ya1b32qOxaVdCxt0ei7oJW9FNXW9
+	sYBv1atwcZ4x4ru0xyrftIZQIR+Ij3yNovzfvOOg=
+Received: by mx.zohomail.com with SMTPS id 1740463764036975.0626584461274;
+	Mon, 24 Feb 2025 22:09:24 -0800 (PST)
+Message-ID: <b3540615-0dc1-41f8-bb8f-99f01f909b36@collabora.com>
+Date: Tue, 25 Feb 2025 11:10:00 +0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: c1uytztPRre5zxg8hudcyUKg5jGR8sB5
-X-Proofpoint-ORIG-GUID: c1uytztPRre5zxg8hudcyUKg5jGR8sB5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-25_02,2025-02-24_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- clxscore=1015 adultscore=0 phishscore=0 mlxlogscore=999 spamscore=0
- mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502250034
+User-Agent: Mozilla Thunderbird
+Cc: Usama.Anjum@collabora.com, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Johan Hovold <johan@kernel.org>,
+ Loic Poulain <loic.poulain@linaro.org>, linux-arm-msm@vger.kernel.org,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+ kernel@collabora.com, ath11k@lists.infradead.org, jjohnson@kernel.org
+Subject: Re: [BUG REPORT] MHI's resume from hibernate is broken
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+References: <59c036b6-a3d6-403b-8bb0-566a17f72abc@collabora.com>
+ <20250214070447.scs6lpytjtecz3ko@thinkpad>
+ <1cd4a1ed-f4e7-4c7b-a19f-f79afddbe310@collabora.com>
+ <20250220075034.unsd5cq7xkip2by6@thinkpad>
+ <ec8a01a3-5eaf-4fba-bb85-e7a677877e5f@collabora.com>
+ <20250224164400.w3lpzxxwfbrj5lb6@thinkpad>
+Content-Language: en-US
+From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
+In-Reply-To: <20250224164400.w3lpzxxwfbrj5lb6@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-Add the PMU node for WCN6750 present on the qcs6490-rb3gen2
-board and assign its power outputs to the Bluetooth module.
+On 2/24/25 9:44 PM, Manivannan Sadhasivam wrote:
+> On Thu, Feb 20, 2025 at 05:34:06PM +0500, Muhammad Usama Anjum wrote:
+>> On 2/20/25 12:50 PM, Manivannan Sadhasivam wrote:
+>>> On Mon, Feb 17, 2025 at 07:35:50PM +0500, Muhammad Usama Anjum wrote:
+>>>> On 2/14/25 12:04 PM, Manivannan Sadhasivam wrote:
+>>>>> Hi,
+>>>> Thank you so much for replying.
+>>>>
+>>>>>
+>>>>> + ath11k list and Jeff
+>>>>>
+>>>>> On Tue, Feb 11, 2025 at 01:15:55PM +0500, Muhammad Usama Anjum wrote:
+>>>>>> Hi,
+>>>>>>
+>>>>>> I've been digging in the MHI code to find the reason behind broken
+>>>>>> resume from hibernation for MHI. The same resume function is used
+>>>>>> for both resume from suspend and resume from hibernation. The resume
+>>>>>> from suspend works fine because at resume time the state of MHI is 
+>>>>>> MHI_STATE_M3. On the other hand, the state is MHI_STATE_RESET when
+>>>>>> we resume from hibernation.
+>>>>>>
+>>>>>> It seems resume from MHI_STATE_RESET state isn't correctly supported.
+>>>>>> The channel state is MHI_CH_STATE_ENABLED at this point. We get error
+>>>>>> while switching channel state from MHI_CH_STATE_ENABLE to
+>>>>>> MHI_CH_STATE_RUNNING. Hence, channel state change fails and later mhi
+>>>>>> resume fails as well. 
+>>>>>>
+>>>>>> I've put some debug prints to understand the issue. These may be
+>>>>>> helpful:
+>>>>>>
+>>>>>> [  669.032683] mhi_update_channel_state: switch to MHI_CH_STATE_TYPE_START[2] channel state not possible cuzof channel current state[1]. mhi state: [0] Return -EINVAL
+>>>>>> [  669.032685] mhi_prepare_channel: mhi_update_channel_state to MHI_CH_STATE_TYPE_START[2] returned -22
+>>>>>> [  669.032693] qcom_mhi_qrtr mhi0_IPCR: failed to prepare for autoqueue transfer -22
+>>>>>>
+>>>>>
+>>>>> Thanks for the report!
+>>>>>
+>>>>> Could you please enable the MHI and ath11k debug logs and share the full dmesg
+>>>>> to help us understand the issue better?
+>>>> The ath11k debug was already enabled. CONFIG_MHI_BUS_DEBUG wasn't enabled. 
+>>>
+>>> Sorry for not being clear. I asked you to enable the dev_dbg() logs in the MHI
+>>> driver. But it is not required. See below.
+>> I've disabled the MHI_BUG_DEBUG. It only enables some files. Ideally if those files
+>> being used, there shouldn't be any difference. But they are definitely changing the
+>> timings.
+>>
+>>>
+>>>> I've
+>>>> enabled it and now the hibernate is working without any issue. It is very strange
+>>>> how can CONFIG_MHI_BUS_DEBUG make any difference. I don't have much background on
+>>>> how it is helping.
+>>>>
+>>>
+>>> Probably some timing issue. But enabling the MHI debug logs could also hide the
+>>> issue. So you should disable the CONFIG_MHI_BUS_DEBUG option and collect the MHI
+>>> trace logs that we recently added.
+>> Disabled the MHI_BUS_DEBUG and collected logs by Dynamic debug:
+>> [  584.040189] mhi mhi0: Allowing M3 transition
+>> [  584.040202] mhi mhi0: Waiting for M3 completion
+>> [  584.040480] mhi mhi0: State change event to state: M3
+>> ..
+>> [  584.535478] qcom_mhi_qrtr mhi0_IPCR: failed to prepare for autoqueue transfer -22
+>> [  584.535482] qcom_mhi_qrtr mhi0_IPCR: PM: dpm_run_callback(): qcom_mhi_qrtr_pm_resume_early [qrtr_mhi] returns -22
+>> [  584.535490] qcom_mhi_qrtr mhi0_IPCR: PM: failed to restore early: error -22
+>> [  584.831583] mhi mhi0: Entered with PM state: M3, MHI state: M3
+>>
+>> It seems like the state save was success at hibernate time. The error is originating
+>> at resume from hibernation.
+>>
+> 
+> I just tried hibernation on my RB5 board featuring QCA6390 WLAN chip which makes
+> use of ath11k driver. I did encounter the resume failure, but the error log was
+> slightly different. Then looking at the ath11k driver made me realize that they
+> reverted the hibernation support due to suspend issue reported on some Lenovo
+> platforms: 2f833e8948d6 ("Revert "wifi: ath11k: support hibernation"").
+> 
+> So that explained the resume failure. I reverted the revert and that allowed me
+> to resume properly from hibernation. So please try to do the same and see if it
+> helps you.
+On my side, I've reverted this. But it didn't create any difference. This commit is
+reverting hibernation for ath11k. It isn't changing anything in MHI. 
 
-In WCN6750 module sw_ctrl and wifi-enable pins are handled
-in the wifi controller firmware. Therefore, it is not required
-to have those pins' entries in the PMU node.
+On my side, it seems there is some timing issue on MHI side. I'll try to dig more in
+MHI.
+>> [  584.535478] qcom_mhi_qrtr mhi0_IPCR: failed to prepare for autoqueue transfer -22
+>> [  584.535482] qcom_mhi_qrtr mhi0_IPCR: PM: dpm_run_callback(): qcom_mhi_qrtr_pm_resume_early [qrtr_mhi] returns -22
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 171 ++++++++++++++++++-
- 1 file changed, 170 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index 7a36c90ad4ec..de03770e0b90 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: BSD-3-Clause
- /*
-- * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- /dts-v1/;
-@@ -34,6 +34,7 @@ / {
- 
- 	aliases {
- 		serial0 = &uart5;
-+		serial1 = &uart7;
- 	};
- 
- 	chosen {
-@@ -218,6 +219,63 @@ vph_pwr: vph-pwr-regulator {
- 		regulator-min-microvolt = <3700000>;
- 		regulator-max-microvolt = <3700000>;
- 	};
-+
-+	wcn6750-pmu {
-+		compatible = "qcom,wcn6750-pmu";
-+		pinctrl-0 = <&bt_en>;
-+		pinctrl-names = "default";
-+		vddaon-supply = <&vreg_s7b_0p972>;
-+		vddasd-supply = <&vreg_l11c_2p8>;
-+		vddpmu-supply = <&vreg_s7b_0p972>;
-+		vddrfa0p8-supply = <&vreg_s7b_0p972>;
-+		vddrfa1p2-supply = <&vreg_s8b_1p272>;
-+		vddrfa1p7-supply = <&vreg_s1b_1p872>;
-+		vddrfa2p2-supply = <&vreg_s1c_2p19>;
-+
-+		bt-enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -799,6 +857,39 @@ &pon_resin {
- 	status = "okay";
- };
- 
-+&qup_uart7_cts {
-+	/*
-+	 * Configure a bias-bus-hold on CTS to lower power
-+	 * usage when Bluetooth is turned off. Bus hold will
-+	 * maintain a low power state regardless of whether
-+	 * the Bluetooth module drives the pin in either
-+	 * direction or leaves the pin fully unpowered.
-+	 */
-+	bias-bus-hold;
-+};
-+
-+&qup_uart7_rts {
-+	/* We'll drive RTS, so no pull */
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
-+&qup_uart7_rx {
-+	/*
-+	 * Configure a pull-up on RX. This is needed to avoid
-+	 * garbage data when the TX pin of the Bluetooth module is
-+	 * in tri-state (module powered off or not driving the
-+	 * signal yet).
-+	 */
-+	bias-pull-up;
-+};
-+
-+&qup_uart7_tx {
-+	/* We'll drive TX, so no pull */
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -842,12 +933,90 @@ &sdhc_2 {
- &tlmm {
- 	gpio-reserved-ranges = <32 2>, /* ADSP */
- 			       <48 4>; /* NFC */
-+
-+	bt_en: bt-en-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		output-low;
-+		bias-disable;
-+	};
-+
-+	qup_uart7_sleep_cts: qup-uart7-sleep-cts-state {
-+		pins = "gpio28";
-+		function = "gpio";
-+		/*
-+		 * Configure a bias-bus-hold on CTS to lower power
-+		 * usage when Bluetooth is turned off. Bus hold will
-+		 * maintain a low power state regardless of whether
-+		 * the Bluetooth module drives the pin in either
-+		 * direction or leaves the pin fully unpowered.
-+		 */
-+		bias-bus-hold;
-+	};
-+
-+	qup_uart7_sleep_rts: qup-uart7-sleep-rts-state {
-+		pins = "gpio29";
-+		function = "gpio";
-+		/*
-+		 * Configure pull-down on RTS. As RTS is active low
-+		 * signal, pull it low to indicate the BT SoC that it
-+		 * can wakeup the system anytime from suspend state by
-+		 * pulling RX low (by sending wakeup bytes).
-+		 */
-+		bias-pull-down;
-+	};
-+
-+	qup_uart7_sleep_rx: qup-uart7-sleep-rx-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		/*
-+		 * Configure a pull-up on RX. This is needed to avoid
-+		 * garbage data when the TX pin of the Bluetooth module
-+		 * is floating which may cause spurious wakeups.
-+		 */
-+		bias-pull-up;
-+	};
-+
-+	qup_uart7_sleep_tx: qup-uart7-sleep-tx-state {
-+		pins = "gpio30";
-+		function = "gpio";
-+		/*
-+		 * Configure pull-up on TX when it isn't actively driven
-+		 * to prevent BT SoC from receiving garbage during sleep.
-+		 */
-+		bias-pull-up;
-+	};
- };
- 
- &uart5 {
- 	status = "okay";
- };
- 
-+&uart7 {
-+	/delete-property/ interrupts;
-+	interrupts-extended = <&intc GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>,
-+			      <&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
-+	pinctrl-1 = <&qup_uart7_sleep_cts>,
-+		    <&qup_uart7_sleep_rts>,
-+		    <&qup_uart7_sleep_tx>,
-+		    <&qup_uart7_sleep_rx>;
-+	pinctrl-names = "default",
-+			"sleep";
-+
-+	status = "okay";
-+
-+	bluetooth: bluetooth {
-+		compatible = "qcom,wcn6750-bt";
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		max-speed = <3200000>;
-+	};
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
 -- 
-
+BR,
+Muhammad Usama Anjum
 
