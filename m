@@ -1,160 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-49352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3392A44940
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:59:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1A45A44991
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:07:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8A71E17551C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 17:59:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C380319C57B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:06:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 080C319C554;
-	Tue, 25 Feb 2025 17:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45D1420E01C;
+	Tue, 25 Feb 2025 18:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aGqlF0l2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vkmQ7jAk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE051624FB;
-	Tue, 25 Feb 2025 17:59:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EED20CCCD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 18:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740506361; cv=none; b=VtrRHY0VHalnn4N6P6BAkn4x7QYUARE/pUhzr3O9FUfPuO4aHm+5ZexyJCLXQXIaDn9+plcfcMS3phZzeSZBQeBlMj/SPtFz+xq/Gu9qGyX+WD3T9tcsEobMc9HAHrJgOQe/0F5a/Ecxw/F088Io/dbByyNsKcv1SdTAi/icS5Y=
+	t=1740506614; cv=none; b=q5S9wYPUcsxrkYzUGrFHyuqyfK6GbSCBoWKR5fEu9TKHye3/K25o+tOOzic+PDyYVUAodxunMoIgt9L3sqy77u+EyNV3NNtxcph7XSxwoO53RpjIUtRekEa1gAS4vkVRif40V+LzHubCv5QPiKzOXGB9/1ObQHuI0OdarKPPKrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740506361; c=relaxed/simple;
-	bh=KV9aTcVPRj2TbE8QV+NhaTT5Bp0YGUgGMer8gWxFKU4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W6x3hHKjt5sHlP8qX6Ny83fSMT/aG9EQ4UzWx7JOxf9zUlh0qNdtPbcDaeZCLz05e64LqNqJJg5mvXMSLnU9xiEeA5782o70aE+R9wzOFyEhHKej1P3qP6hozLGH89Tq3O5eiFn0sgUXDPBefwmdufqlr6JSzUfSK/t+LzJFt3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aGqlF0l2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D60C4CEDD;
-	Tue, 25 Feb 2025 17:59:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740506361;
-	bh=KV9aTcVPRj2TbE8QV+NhaTT5Bp0YGUgGMer8gWxFKU4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=aGqlF0l2OhomfOdRjDYgvqLm2MHiKrZ7lRoAJxed513yIhAzoJePEGUUhs/VgKayq
-	 3G5pdgF84rWsHZti6KhmI3h8B8+3cdW2t5wBZd3EwJFiGC/r2l0l+iqBm73UjW0HmM
-	 mJ9yPTdDLc6PnOJ5p3yUTu473cAOT9w9nRzWnl0mRVNmLEE6OVuhXL6B1LNJ3eiO75
-	 UgHZGQgoBZGldNzZCYeiCy900HDEu/rg2d23wSzIr1e/QyPmyIEsH6vv2QyyKSspqU
-	 JzFa86zVd9ST7qhbB1Cv8JVyLqmELJ7FRG+HWUMRm1BGoIpFcnVxXX4fjQydLQEFEu
-	 mjbkytNpMI29A==
-Message-ID: <a9e0a8ff-e84e-4210-babd-0d0a1825e9ec@kernel.org>
-Date: Tue, 25 Feb 2025 18:59:15 +0100
+	s=arc-20240116; t=1740506614; c=relaxed/simple;
+	bh=S0vGc2fxgTl4TxHz9pfDkbgBvrLucJN6TxhxE7gqfBY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wo5hx3+hCDUfyN31LFS5INa/Yqqgh2jojTkLOX07Zai1DQF8HLSrP/I6ksc0Oi+V2td/zvlOqDrQQYg3grr2uXMhSLbQ0T5OeCFiO1UMY/MHjgdfZMfCG1iZn1Uy5cKZlrX1Uk6aZspiG24AVoazoWHub0as0B+XG+0+CDjQox0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vkmQ7jAk; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5452ca02bdbso5535454e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 10:03:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740506609; x=1741111409; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8O4HWot5EUMVzTxv5rN66ccO0MtiNkXIqoN+/YVntbU=;
+        b=vkmQ7jAkN/gYQOO/5PmGlbB38HvpHUF3j2ctzKvtglnij1M+kLRqO4oLONj46WY8sL
+         sClSzi7xzDdbeqiDx3V9DJMsgMxkiJ3wSunK8xSsjIHWeddQL6T1Je4bVG9SvDh2/vIC
+         azBqLO65ZNsfY6OkEChuajieEB99xb1Sjf0p0ABi7tznhF057mmCf8Cmpr+tUFwpF/MQ
+         tlSLnSilpjDIqsT9rxlErVlDtyQnuyTS53VYFTyQCA+OlC8ucnFPyi56h7vfi580DBlT
+         xCCOW6chyEwdeY5XHksc5ZoP2SF4BBV0C9wMSUvGpsLGpaXsVYB1L2TPQA6CGzInwHeH
+         02Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740506609; x=1741111409;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8O4HWot5EUMVzTxv5rN66ccO0MtiNkXIqoN+/YVntbU=;
+        b=PiFmZAk7lnY/Dm1xSbnljHXzYUGM/6dKFlzRuRwmTE037QHZ6pRr77DihAa/lQqEEg
+         5168S2FYrl+KDkZQMPHF7cNjBCbruhzehfgTk5ku3indzAvJO/juSJJM7S36ypQeKeHL
+         +jXOHoiI1n5eEwGdes3LvUR7EvtvsUZR5ssB1Bx5x/nTYS6/oWiMzG9uBG8oIqnIgKgM
+         6N9DjDY5e+wm7RGb7YZI3w4hrdftDWPSjv+okG5nTdbRwYaB641H1Pm5BsQYraAjzsCV
+         8R01CsLGMNx9JVh2RJzss/vNuBbEtTiZDJvmAgXt2vIgTrlzGcxPdu4a1psxzKvLE/MV
+         0gQQ==
+X-Gm-Message-State: AOJu0Yw207EkS+ty02K0zbHW5ycWGx26odhjZLLj3c/3udvV63gI9V15
+	dyW0xOT1jkA9eta7UiuKyT+4J61yKWcxpF4IdskFypDwLCjcLIbchUsDml1zi3k=
+X-Gm-Gg: ASbGncvFSssSlrHHNe4jQA6+zWuRheTS7nV9B+/T4NoX6qiLaV2XWmCmuWC166i/cze
+	okjTAq54lfz8Ydm7to1ITNz5MaOJ41gyADeKE/Q4W8+kpw6F+9/cQ6qR8SnW772EwKskkIpt4se
+	6AJV234lHax//Rj67YSiYon73W07hlqXjnx1xuvWRYO4ucHKurnhWLlqgz4QZTeiMcJ+EbEBEg1
+	0zasLA+7NbknJlhQrIRVMn1gvlzRMIFXWRXeWNR5l8+GpaB5tuVkBjyKxhmWvyBY+hkr0WmneV1
+	wsupctOgFHy0dGCOBOO4s5A01ABsrtbXpho16iIrb6OcNIrzML7pfAtN+Btm4ztttOfXdVtaUJu
+	hbDB8DA==
+X-Google-Smtp-Source: AGHT+IG0Zc7wZsxG0nheOFfzzmCVwdzpAM4bFH1CEvsvsI0SU1fbCv6O1tOWiwsm5/goJ00WgZzfcA==
+X-Received: by 2002:a05:6512:b05:b0:545:8c5:44cb with SMTP id 2adb3069b0e04-548510dc89emr2751908e87.31.1740506609286;
+        Tue, 25 Feb 2025 10:03:29 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-548514fb084sm234263e87.221.2025.02.25.10.03.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Feb 2025 10:03:28 -0800 (PST)
+Date: Tue, 25 Feb 2025 20:03:26 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ayushi Makhija <quic_amakhija@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	robdclark@gmail.com, sean@poorly.run, marijn.suijten@somainline.org, 
+	andersson@kernel.org, robh@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org, 
+	konradybcio@kernel.org, conor+dt@kernel.org, andrzej.hajda@intel.com, 
+	neil.armstrong@linaro.org, rfoss@kernel.org, Laurent.pinchart@ideasonboard.com, 
+	jonas@kwiboo.se, jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com, 
+	quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com, quic_jesszhan@quicinc.com
+Subject: Re: [PATCH 11/11] drm/bridge: anx7625: change the gpiod_set_value API
+Message-ID: <rgdujikhrizof6p67cztu3oh4svy7do4okvowlgxg6rddeoqkq@hjc7pni57ilb>
+References: <20250225121824.3869719-1-quic_amakhija@quicinc.com>
+ <20250225121824.3869719-12-quic_amakhija@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-slim7x: Drop incorrect
- qcom,ath12k-calibration-variant
-To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- ath12k@lists.infradead.org
-References: <20250225093051.58406-1-krzysztof.kozlowski@linaro.org>
- <sfhcmlz3x254fdowufeeuh4uiwxfgkphm4ch4laceivbrs3zir@qvqk6jxi6zhf>
- <7b54e965-3395-4349-8ae7-51a28c759235@linaro.org>
- <kce6gzso22fp3ze2wp43fvy4tv6yqkaijm72kh5qk34jwijk2l@3ifaiz5tgjvl>
- <d93789c6-61d9-4761-98f5-aa3dbec14d82@linaro.org>
- <21ad3381-4d65-4c68-892d-9f485bf13735@oss.qualcomm.com>
- <c55f615e-6831-4470-9ea2-73fe605b8a5f@linaro.org>
- <71019e23-f339-4485-8599-c4e40ad979a9@oss.qualcomm.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <71019e23-f339-4485-8599-c4e40ad979a9@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250225121824.3869719-12-quic_amakhija@quicinc.com>
 
-On 25/02/2025 18:36, Jeff Johnson wrote:
+On Tue, Feb 25, 2025 at 05:48:24PM +0530, Ayushi Makhija wrote:
+> Use gpiod_set_value_cansleep() instead of gpiod_set_value()
+> to fix the below call trace in the boot log:
 > 
->>
->> Also post factum reasoning is not correct, because this would open the
->> gate to bypass any sort of review. Just squeeze your stuff into the DTS
->> and then you can bypass all DT maintainers :/
->>
->> All properties must be documented and bindings must be accepted *before*
->> DTS patch is applied.
+> [    5.690534] Call trace:
+> [    5.690536]  gpiod_set_value+0x40/0xa4
+> [    5.690540]  anx7625_runtime_pm_resume+0xa0/0x324 [anx7625]
+> [    5.690545]  __rpm_callback+0x48/0x1d8
+> [    5.690549]  rpm_callback+0x6c/0x78
 > 
-> There is no intention to bypass DT maintainers. We are just trying to upstream
-> a large amount of downstream code, and in the process some pieces are coming
+> Certain GPIO controllers require access via message-based buses
+> such as I2C or SPI, which may cause the GPIOs to enter a sleep
+> state. Therefore, use the gpiod_set_value_cansleep().
+> 
+> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+> ---
+>  drivers/gpu/drm/bridge/analogix/anx7625.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
 
-I don't see how this is related here - patch was not sent by anyone from
-Qualcomm.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> out of order. And there is also confusion if binding, driver, and DTS changes
-> should be in one series or three separate series.
-
-How is it related to incorrect property here? It feels like this topic
-is being hijacked for some other point. I am not happy with this because
-then Bjorn will see that discussion is going so he will ignore the patch.
-
-BTW, I gave my statement multiple times, writing bindings also mention
-this, so is anything going to change if I say it 100th time here? In one
-month there will be the same question :/
-
-DTS must be applied via ARM SoC, thus you cannot combine DTS into
-patchsets being entirely applied by driver subsystem maintainers (Greg,
-netdev, sometimes maybe watchdog). For other maintainers, you can
-combine it, because they know to skip DTS.
-
-Bindings always go via subsystem, so they must be part of driver
-patchset, unless of course there is no driver (but then bindings are
-"the driver" patchset).
-
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
