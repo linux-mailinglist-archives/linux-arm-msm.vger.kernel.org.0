@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-49363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9E59A44A14
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:20:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05290A44A57
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 19:29:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 19ECF189FCE8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:19:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 673293B5890
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 18:19:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C645F207DE0;
-	Tue, 25 Feb 2025 18:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55E8020C033;
+	Tue, 25 Feb 2025 18:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T91lnxtk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kldOzG+a"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990F519CC08;
-	Tue, 25 Feb 2025 18:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD3C20C006;
+	Tue, 25 Feb 2025 18:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740507506; cv=none; b=BK/YAN3cC56hXGLEBW8ity455kGDO/uCPYEvHQ4hxBL7pyd9bNFBIIoyR7/4wRNl7WzEKHhvrjuZRv6pxuhepGEyaBbvBLEFSmFGEprRHloVW5No3AqLyKRbBm+9xBro/3z2BxN/P6LEl1qqYecMu1WtICipJPZs0nWnNVsecB0=
+	t=1740507508; cv=none; b=qiRwynU/50k+I99vpI8I2mLV1UoKUyi6kBic1H7qfzS5qMLLTXQvFL/mHQqw5rHj6K7sHxd+YNCJ9GCG2Gr4s/20hZEiCvgZn4F2QvuNcd7r6miqekJKkTgk950mHT1XobOmIEh7Hm+QFzi9UIpcqs7DEl5D5hNhpAVYOQ+XZmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740507506; c=relaxed/simple;
-	bh=MZ/f9oqCHqCtKtbILlhBYk9baVIEb1lnsnj87T1PmFw=;
+	s=arc-20240116; t=1740507508; c=relaxed/simple;
+	bh=Xft8rabj4Z6MJFzoPQ8QqkOY0yZRQgoBvhMCTp+o4nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=feeGZ1qyt1Jzh9sOmSqXgNQtCRdb0l79EBnf9RdeOeYUzdRhZNmx3X5Pe73Sgk7U2uQKmLWZ4kCOPY1ViqUcVYopwRZQ5uP/BW621Abs6BjcpaRe5TF4fr0CWi4PDpDuFv+XVUBzlR+jmTCDH084ej1o5utcX7PTQdP8embXCYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T91lnxtk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CA6C4CEE8;
-	Tue, 25 Feb 2025 18:18:24 +0000 (UTC)
+	 MIME-Version:Content-Type; b=qHM/tlt8JyY5yuM3UPTvC6eGYODttuFT20eTwRsJGdDFOKMPrlyExnJaNn5aJk1T0GiZEik7wnvlF0nH+2QHKYQH1fMeasPmgki3LMAnFpfHLeLRpa9MgnBkZ/l1CR50WI25rJDelTkuH8t6tbxB8m/rgLVRXJLZkrFWCcqyl6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kldOzG+a; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5130EC4CEE7;
+	Tue, 25 Feb 2025 18:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740507506;
-	bh=MZ/f9oqCHqCtKtbILlhBYk9baVIEb1lnsnj87T1PmFw=;
+	s=k20201202; t=1740507507;
+	bh=Xft8rabj4Z6MJFzoPQ8QqkOY0yZRQgoBvhMCTp+o4nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T91lnxtk5AvJvOBpYytteS716TfVvSpZ49WVynKsZhZM1bWBuNdZeLvTngHulAuv0
-	 yZ7kkzaaIKiA4ZbkLPFkHydTWvd2JjMogRzbBbCNyeepN74QCwU5gMcVJ/M/WKjp+V
-	 vZxm1J8FbhOWt7hsfJo4fs4iVjURypqV+Utaj39/UeJFl7Z5K7WnpKebxop654Najt
-	 piI4CZk4KJAHSKStW46tCnhJi544DsBR9zmtw48qExzUPwAYyv3lJky3TdNhHLEYWm
-	 EyhV24pEHJqP2o8wYzyZrStJLgbW/Uqi2MXqTeYVHdEtbgv7eczZyyQ3oO7Ceoa6G0
-	 zuL8CQm+PTYJw==
+	b=kldOzG+ac2+2+x6xVt4WSfgBEKiDeqwEUmX21Z/rvN0YgeDz2dLkfs8E7LQ+FFiNM
+	 CqNhbpV+TjYFjmTj5OQhYoNMZMYglFh6lX3v2whCV4k3VAZyfEkqD6Vnz6rKkt+88f
+	 rH2QUvC1Sry98ZfqWC3gVi3av3w7dTgRrXn9zuKTH9+8+TjpqXhJOav0lPP3bGXgC0
+	 w1gZE7whNA/ubRwJkJQhoZU6ORthUxldlzqYsEw9IsK0V79Hn91ZzRp2ewivXUQeOb
+	 aLEfKBos0JSxyia37F5WlcYd0UHm9CtI8W6Z3JRfJtK1YliW0JbV8OnU6IL5yipT1Q
+	 qBFMWvYyOgqPA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Cheng Jiang <quic_chejiang@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
+	Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+Cc: quic_mohamull@quicinc.com,
+	quic_hbandi@quicinc.com,
+	quic_anubhavg@quicinc.com,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	quic_jiaymao@quicinc.com,
-	quic_shuaz@quicinc.com,
-	quic_zijuhu@quicinc.com,
-	quic_mohamull@quicinc.com
-Subject: Re: (subset) [PATCH v1 0/1] Add firmware-name in BT node
-Date: Tue, 25 Feb 2025 12:18:07 -0600
-Message-ID: <174050748694.199016.11023927389773223641.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v10 0/1] Enable Bluetooth on qcs6490-rb3gen2 board
+Date: Tue, 25 Feb 2025 12:18:08 -0600
+Message-ID: <174050748690.199016.14847996516945478408.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250110063914.28001-1-quic_chejiang@quicinc.com>
-References: <20250110063914.28001-1-quic_chejiang@quicinc.com>
+In-Reply-To: <20250221171014.120946-1-quic_janathot@quicinc.com>
+References: <20250221171014.120946-1-quic_janathot@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,14 +69,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 10 Jan 2025 14:39:13 +0800, Cheng Jiang wrote:
-> Add the firmware-name for sa9775p-ride platform.
+On Fri, 21 Feb 2025 22:40:13 +0530, Janaki Ramaiah Thota wrote:
+> Patch 1/1
+>   Addressed review comments related to alignment in patch 1
 > 
+> ----
+> Changes from v9:
+> * Addressed review comments provided Dmitry
+> * Link to v9: https://lore.kernel.org/linux-arm-msm/20250220112945.3106086-1-quic_janathot@quicinc.com/
+> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sa8775p-ride: Add firmware-name in BT node
-      commit: bd3801a8d44e0c538f3ffe011274a5c8a9a0a629
+[1/1] arm64: dts: qcom: qcs6490-rb3gen: add and enable BT node
+      commit: 914d16b4a9c4569cc8091a1dfda432dab2fcb9d1
 
 Best regards,
 -- 
