@@ -1,58 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-49219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34EFAA434F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 07:10:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A999A4355C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 07:36:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 693E03B8D67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 06:10:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42D1E3ABD1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2025 06:35:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96A1A256C76;
-	Tue, 25 Feb 2025 06:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28BA72561B1;
+	Tue, 25 Feb 2025 06:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="XrVUEkmO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XNRh+F6H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581D9256C6A;
-	Tue, 25 Feb 2025 06:10:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740463815; cv=pass; b=OkE4r8gOOvUs43aWzWmx6U2ifxyO1GPwrRw17A1u+XsUa49HJQhlqQGoXIfqpffZE9JarBrlnB5+fTZsBNHvjpPFqLX8eS4vPe28fcKB6kMx+zdfhB9Bou5h6BxRqF9KSqf5VjFIi3SjWG70b2o0Vx92dyp1xTAdCTyhkj4P27U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740463815; c=relaxed/simple;
-	bh=fxjYhhopdIJkGIyF0ESuXORJasUN6Sxa6lF8FBEgu/s=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=O1DeISGbBASObqR68U6v8uPL1XYVsiVaeNGVS+LkA7d7H4fpDv8CIJ2w6VFMlsBoOYJ4s4vrfCSqrknC1GPwXrad2QpmjNdy7Ub8UhW3QgRNDdUtKQNtXZcPiPz+gMQMQ9r6+rVGzOCd3gi35i14tm7mp66F4js9ncuGTe6OR8Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=XrVUEkmO; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1740463767; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=MoxhigzgjKJZtjuMmmxtmjfd2B95WHy56Is1CRIbfGaDh5fXMdDFuTpf1hlCX1QvilcJ9Nyk582gyDVWQc58QhMk/SpRxfOhEQye4UJVl+VfUpv4Nrj5tnYUrGuOGMaKtaMrOX3+eRIt14XzgyLFXXazgnkQR9KqKn7cYRWSZbw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1740463767; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=zlGJk/boTTi46WwLjRxSuU692UCYhuz4KWqBVlpFD2s=; 
-	b=E77T+47VTEpF9m5gWxnlb58MjXvuDgg52KvKgXSiFJxPvMKdCxqrD9zimoSZGjm+/cpZNcId17F8Z91szlW+0Ok7jZFYONkasLf2znA+KhMdf6AjF1s7iuQiDqjxbLnR0fpq7sCLkbL8VIzBL4CJwxKap3JjPf3fvAWFEfmj1GQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
-	dmarc=pass header.from=<Usama.Anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1740463767;
-	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=zlGJk/boTTi46WwLjRxSuU692UCYhuz4KWqBVlpFD2s=;
-	b=XrVUEkmOoIzAxB8edEvVsTnEK14wqXdy3pGXFAylllaIlyWVgeyugUziAX+W/F9J
-	0Gke1Fh1EnBhDUJyGynb1WLxCfy9lPUTnYD7K77Ya1b32qOxaVdCxt0ei7oJW9FNXW9
-	sYBv1atwcZ4x4ru0xyrftIZQIR+Ij3yNovzfvOOg=
-Received: by mx.zohomail.com with SMTPS id 1740463764036975.0626584461274;
-	Mon, 24 Feb 2025 22:09:24 -0800 (PST)
-Message-ID: <b3540615-0dc1-41f8-bb8f-99f01f909b36@collabora.com>
-Date: Tue, 25 Feb 2025 11:10:00 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B139AD51;
+	Tue, 25 Feb 2025 06:35:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740465320; cv=none; b=fus8o/xik+lyDcET63+SVBbCdV+hM+LNHIzoF83VkuelBUsuN+XH87tjC8LJFQV6aOYiAy8UpvFplQsvMcjt67vON8Erk582//wnfeT86kke4nGMEKriOmTKUyUTQR2Gsal6dCpL/vvDEdQAGmciOe8da1rHDPPNPHYPms460YE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740465320; c=relaxed/simple;
+	bh=hwjuFEuMnfB4O8VUaO04m6uezZ4P55OMG/iVFvWgbNg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=PGSMbP0WthAoAHgUDo1jxCVcgOO043EcowacN5H7N/6BvvFzMQ0JHiSMWQJpLzXO4rnFgv310xHR5BjF1dglUNzNflW35WQ1H5aHFe6KOYn6ZuHfPZV7GYQGE/Np3dLY5WIn+OlyaVZ58iGhBXuVU0kj042F0S60QjkAKtwjfww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XNRh+F6H; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51OKOmDJ015364;
+	Tue, 25 Feb 2025 06:34:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	G5wLAQ2SISBLFUCx4diUD5E+j7DrZlbJZLbDRxONCcs=; b=XNRh+F6HPPj7WMD/
+	qm0tFXE+cj/vzmsJ1iBtIQWg7e/QfAil8yR7ZfSM4eFlfmxdtdHRPs6UB3VBR8k+
+	PU7gom9MjlSH12YvVpKFzJFjC8+PfDIGDYzfGSznNFcrkD9qK4SV8AsRLntX7mEe
+	g5mwrILTYGK047J/+iLz7kXAPwb7/6oe4jtoqUdRbowl21rDfI4e4peOA8DKjp5j
+	hMYzlxZ5XNu6Ih/x75dN+nqnHkxDevAQXKb3Duf7l4vQiMvw/QPR1XHh8tLzqtMZ
+	tSQcZgv+538ttx8iJX5Phu861vuZk9ofjTZ+g0f7yfywAaHACxwzJ/LfS+LOMvPl
+	d1btdQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 450kqg404y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 25 Feb 2025 06:34:51 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51P6YoRA020803
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 25 Feb 2025 06:34:50 GMT
+Received: from [10.216.12.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Feb
+ 2025 22:34:43 -0800
+Message-ID: <891c0e28-dda6-4025-8455-4033f9b3406a@quicinc.com>
+Date: Tue, 25 Feb 2025 12:04:41 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,116 +65,165 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: Usama.Anjum@collabora.com, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Johan Hovold <johan@kernel.org>,
- Loic Poulain <loic.poulain@linaro.org>, linux-arm-msm@vger.kernel.org,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
- kernel@collabora.com, ath11k@lists.infradead.org, jjohnson@kernel.org
-Subject: Re: [BUG REPORT] MHI's resume from hibernate is broken
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <59c036b6-a3d6-403b-8bb0-566a17f72abc@collabora.com>
- <20250214070447.scs6lpytjtecz3ko@thinkpad>
- <1cd4a1ed-f4e7-4c7b-a19f-f79afddbe310@collabora.com>
- <20250220075034.unsd5cq7xkip2by6@thinkpad>
- <ec8a01a3-5eaf-4fba-bb85-e7a677877e5f@collabora.com>
- <20250224164400.w3lpzxxwfbrj5lb6@thinkpad>
+Subject: Re: [PATCH 1/5] drm/msm/a6xx: Fix gpucc register block for A621
+To: Rob Clark <robdclark@gmail.com>
+CC: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Jie Zhang
+	<quic_jiezh@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>
+References: <20250213-a623-gpu-support-v1-0-993c65c39fd2@quicinc.com>
+ <20250213-a623-gpu-support-v1-1-993c65c39fd2@quicinc.com>
+ <CAF6AEGvDR1md6D2dnqJWOW5v3t2wnaC29VD1fyX5q48bzqEkHQ@mail.gmail.com>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 Content-Language: en-US
-From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
-In-Reply-To: <20250224164400.w3lpzxxwfbrj5lb6@thinkpad>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
+In-Reply-To: <CAF6AEGvDR1md6D2dnqJWOW5v3t2wnaC29VD1fyX5q48bzqEkHQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: t7CXTnGOgrqsMkH-nPVXS7XAht9tiN4n
+X-Proofpoint-ORIG-GUID: t7CXTnGOgrqsMkH-nPVXS7XAht9tiN4n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-25_02,2025-02-24_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
+ bulkscore=0 mlxscore=0 spamscore=0 clxscore=1015 mlxlogscore=999
+ adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502250041
 
-On 2/24/25 9:44 PM, Manivannan Sadhasivam wrote:
-> On Thu, Feb 20, 2025 at 05:34:06PM +0500, Muhammad Usama Anjum wrote:
->> On 2/20/25 12:50 PM, Manivannan Sadhasivam wrote:
->>> On Mon, Feb 17, 2025 at 07:35:50PM +0500, Muhammad Usama Anjum wrote:
->>>> On 2/14/25 12:04 PM, Manivannan Sadhasivam wrote:
->>>>> Hi,
->>>> Thank you so much for replying.
->>>>
->>>>>
->>>>> + ath11k list and Jeff
->>>>>
->>>>> On Tue, Feb 11, 2025 at 01:15:55PM +0500, Muhammad Usama Anjum wrote:
->>>>>> Hi,
->>>>>>
->>>>>> I've been digging in the MHI code to find the reason behind broken
->>>>>> resume from hibernation for MHI. The same resume function is used
->>>>>> for both resume from suspend and resume from hibernation. The resume
->>>>>> from suspend works fine because at resume time the state of MHI is 
->>>>>> MHI_STATE_M3. On the other hand, the state is MHI_STATE_RESET when
->>>>>> we resume from hibernation.
->>>>>>
->>>>>> It seems resume from MHI_STATE_RESET state isn't correctly supported.
->>>>>> The channel state is MHI_CH_STATE_ENABLED at this point. We get error
->>>>>> while switching channel state from MHI_CH_STATE_ENABLE to
->>>>>> MHI_CH_STATE_RUNNING. Hence, channel state change fails and later mhi
->>>>>> resume fails as well. 
->>>>>>
->>>>>> I've put some debug prints to understand the issue. These may be
->>>>>> helpful:
->>>>>>
->>>>>> [  669.032683] mhi_update_channel_state: switch to MHI_CH_STATE_TYPE_START[2] channel state not possible cuzof channel current state[1]. mhi state: [0] Return -EINVAL
->>>>>> [  669.032685] mhi_prepare_channel: mhi_update_channel_state to MHI_CH_STATE_TYPE_START[2] returned -22
->>>>>> [  669.032693] qcom_mhi_qrtr mhi0_IPCR: failed to prepare for autoqueue transfer -22
->>>>>>
->>>>>
->>>>> Thanks for the report!
->>>>>
->>>>> Could you please enable the MHI and ath11k debug logs and share the full dmesg
->>>>> to help us understand the issue better?
->>>> The ath11k debug was already enabled. CONFIG_MHI_BUS_DEBUG wasn't enabled. 
->>>
->>> Sorry for not being clear. I asked you to enable the dev_dbg() logs in the MHI
->>> driver. But it is not required. See below.
->> I've disabled the MHI_BUG_DEBUG. It only enables some files. Ideally if those files
->> being used, there shouldn't be any difference. But they are definitely changing the
->> timings.
+On 2/18/2025 11:52 PM, Rob Clark wrote:
+> On Thu, Feb 13, 2025 at 8:10 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
 >>
->>>
->>>> I've
->>>> enabled it and now the hibernate is working without any issue. It is very strange
->>>> how can CONFIG_MHI_BUS_DEBUG make any difference. I don't have much background on
->>>> how it is helping.
->>>>
->>>
->>> Probably some timing issue. But enabling the MHI debug logs could also hide the
->>> issue. So you should disable the CONFIG_MHI_BUS_DEBUG option and collect the MHI
->>> trace logs that we recently added.
->> Disabled the MHI_BUS_DEBUG and collected logs by Dynamic debug:
->> [  584.040189] mhi mhi0: Allowing M3 transition
->> [  584.040202] mhi mhi0: Waiting for M3 completion
->> [  584.040480] mhi mhi0: State change event to state: M3
->> ..
->> [  584.535478] qcom_mhi_qrtr mhi0_IPCR: failed to prepare for autoqueue transfer -22
->> [  584.535482] qcom_mhi_qrtr mhi0_IPCR: PM: dpm_run_callback(): qcom_mhi_qrtr_pm_resume_early [qrtr_mhi] returns -22
->> [  584.535490] qcom_mhi_qrtr mhi0_IPCR: PM: failed to restore early: error -22
->> [  584.831583] mhi mhi0: Entered with PM state: M3, MHI state: M3
+>> From: Jie Zhang <quic_jiezh@quicinc.com>
 >>
->> It seems like the state save was success at hibernate time. The error is originating
->> at resume from hibernation.
+>> Adreno 621 has a different memory map for GPUCC block. So update
+>> a6xx_gpu_state code to dump the correct set of gpucc registers.
 >>
+>> Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> ---
+>>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 13 ++++++++++---
+>>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 17 +++++++++++++++++
+>>  2 files changed, 27 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>> index 0fcae53c0b14..2c10474ccc95 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>> @@ -1214,12 +1214,12 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
+>>         struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+>>
+>>         a6xx_state->gmu_registers = state_kcalloc(a6xx_state,
+>> -               3, sizeof(*a6xx_state->gmu_registers));
+>> +               4, sizeof(*a6xx_state->gmu_registers));
+>>
+>>         if (!a6xx_state->gmu_registers)
+>>                 return;
+>>
+>> -       a6xx_state->nr_gmu_registers = 3;
+>> +       a6xx_state->nr_gmu_registers = 4;
 > 
-> I just tried hibernation on my RB5 board featuring QCA6390 WLAN chip which makes
-> use of ath11k driver. I did encounter the resume failure, but the error log was
-> slightly different. Then looking at the ath11k driver made me realize that they
-> reverted the hibernation support due to suspend issue reported on some Lenovo
-> platforms: 2f833e8948d6 ("Revert "wifi: ath11k: support hibernation"").
+> nit, this and splitting out a6xx_gpucc_reg from a6xx_gmu_cx_registers
+> could probably be it's own commit
+
+Ack. Will split this patch.
+
+-Akhil
+
 > 
-> So that explained the resume failure. I reverted the revert and that allowed me
-> to resume properly from hibernation. So please try to do the same and see if it
-> helps you.
-On my side, I've reverted this. But it didn't create any difference. This commit is
-reverting hibernation for ath11k. It isn't changing anything in MHI. 
+> BR,
+> -R
+> 
+>>
+>>         /* Get the CX GMU registers from AHB */
+>>         _a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[0],
+>> @@ -1227,6 +1227,13 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
+>>         _a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[1],
+>>                 &a6xx_state->gmu_registers[1], true);
+>>
+>> +       if (adreno_is_a621(adreno_gpu))
+>> +               _a6xx_get_gmu_registers(gpu, a6xx_state, &a621_gpucc_reg,
+>> +                       &a6xx_state->gmu_registers[2], false);
+>> +       else
+>> +               _a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gpucc_reg,
+>> +                       &a6xx_state->gmu_registers[2], false);
+>> +
+>>         if (!a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
+>>                 return;
+>>
+>> @@ -1234,7 +1241,7 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
+>>         gpu_write(gpu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
+>>
+>>         _a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[2],
+>> -               &a6xx_state->gmu_registers[2], false);
+>> +               &a6xx_state->gmu_registers[3], false);
+>>  }
+>>
+>>  static struct msm_gpu_state_bo *a6xx_snapshot_gmu_bo(
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+>> index dd4c28a8d923..e545106c70be 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+>> @@ -363,6 +363,9 @@ static const u32 a6xx_gmu_cx_registers[] = {
+>>         0x51e0, 0x51e2, 0x51f0, 0x51f0, 0x5200, 0x5201,
+>>         /* GMU AO */
+>>         0x9300, 0x9316, 0x9400, 0x9400,
+>> +};
+>> +
+>> +static const u32 a6xx_gmu_gpucc_registers[] = {
+>>         /* GPU CC */
+>>         0x9800, 0x9812, 0x9840, 0x9852, 0x9c00, 0x9c04, 0x9c07, 0x9c0b,
+>>         0x9c15, 0x9c1c, 0x9c1e, 0x9c2d, 0x9c3c, 0x9c3d, 0x9c3f, 0x9c40,
+>> @@ -373,6 +376,17 @@ static const u32 a6xx_gmu_cx_registers[] = {
+>>         0xbc00, 0xbc16, 0xbc20, 0xbc27,
+>>  };
+>>
+>> +static const u32 a621_gmu_gpucc_registers[] = {
+>> +       /* GPU CC */
+>> +       0x9800, 0x980e, 0x9c00, 0x9c0e, 0xb000, 0xb004, 0xb400, 0xb404,
+>> +       0xb800, 0xb804, 0xbc00, 0xbc05, 0xbc14, 0xbc1d, 0xbc2a, 0xbc30,
+>> +       0xbc32, 0xbc32, 0xbc41, 0xbc55, 0xbc66, 0xbc68, 0xbc78, 0xbc7a,
+>> +       0xbc89, 0xbc8a, 0xbc9c, 0xbc9e, 0xbca0, 0xbca3, 0xbcb3, 0xbcb5,
+>> +       0xbcc5, 0xbcc7, 0xbcd6, 0xbcd8, 0xbce8, 0xbce9, 0xbcf9, 0xbcfc,
+>> +       0xbd0b, 0xbd0c, 0xbd1c, 0xbd1e, 0xbd40, 0xbd70, 0xbe00, 0xbe16,
+>> +       0xbe20, 0xbe2d,
+>> +};
+>> +
+>>  static const u32 a6xx_gmu_cx_rscc_registers[] = {
+>>         /* GPU RSCC */
+>>         0x008c, 0x008c, 0x0101, 0x0102, 0x0340, 0x0342, 0x0344, 0x0347,
+>> @@ -386,6 +400,9 @@ static const struct a6xx_registers a6xx_gmu_reglist[] = {
+>>         REGS(a6xx_gmu_gx_registers, 0, 0),
+>>  };
+>>
+>> +static const struct a6xx_registers a6xx_gpucc_reg = REGS(a6xx_gmu_gpucc_registers, 0, 0);
+>> +static const struct a6xx_registers a621_gpucc_reg = REGS(a621_gmu_gpucc_registers, 0, 0);
+>> +
+>>  static u32 a6xx_get_cp_roq_size(struct msm_gpu *gpu);
+>>  static u32 a7xx_get_cp_roq_size(struct msm_gpu *gpu);
+>>
+>>
+>> --
+>> 2.45.2
+>>
 
-On my side, it seems there is some timing issue on MHI side. I'll try to dig more in
-MHI.
->> [  584.535478] qcom_mhi_qrtr mhi0_IPCR: failed to prepare for autoqueue transfer -22
->> [  584.535482] qcom_mhi_qrtr mhi0_IPCR: PM: dpm_run_callback(): qcom_mhi_qrtr_pm_resume_early [qrtr_mhi] returns -22
-
--- 
-BR,
-Muhammad Usama Anjum
 
