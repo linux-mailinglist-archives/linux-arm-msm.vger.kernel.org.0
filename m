@@ -1,132 +1,363 @@
-Return-Path: <linux-arm-msm+bounces-49467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C92E1A45AF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 10:59:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E18DA45B84
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:17:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA2A3166E2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 09:59:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5114F1746A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 10:16:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E1D82459FB;
-	Wed, 26 Feb 2025 09:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C41D24DFE8;
+	Wed, 26 Feb 2025 10:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Avlx0PYe"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="CYhMLnp7";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="py/wyHhe";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="CYhMLnp7";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="py/wyHhe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24404238165;
-	Wed, 26 Feb 2025 09:58:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9454119CC11
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 10:16:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740563915; cv=none; b=ngaqFQ47sIwY4liZHZvXxGeLW1hoZJ/1Uf0HGLgxXDsF8ewKXV06l2SGaHv+w2pS/pwlB4pOWczPl7Kp6t1vf+cuW/RielnWVHPHEMUKDMG/2pFelMXJah4DjEaKhXvchqu8n4mt79plYJwaT01h41r92nzSjXJlklNuxbGyLU0=
+	t=1740565001; cv=none; b=GF6nnsgX4vFPCjF1QZezTWi/1dQMcPFDsw4pNbEKSwJDQnsyyKd4svXwco/wy8Lfv98rTQIrEeElleS2FheboUWY3oIt/lvWrsnMLv+VgvxqgBUtdi+OPdLukar4B2TQbge2WzeLHBsdNaIhcEHDhdbZdUIejhEZRfuVpsOQ5VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740563915; c=relaxed/simple;
-	bh=EvazlJDvIpSU8xWaHY1rfrsB8hsCd5XKw0hdPe8UWiI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=am8K5zD5J/5KPBXk/dG7YzBZvRmoOGyVkJz6g1fPrXmcwkVxgwq/lPkbjATBgzlgI+kx0MCEsR1Sss+Y4FoxDjkznVUnGr9AZRwF0AfHz5YG7QLnON52IjX+kbvA+sfhS8pwfc9Oy2bIFv4yQg2yca5KZhXyF8uNLR15jIXGomo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Avlx0PYe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9321DC4CEE9;
-	Wed, 26 Feb 2025 09:58:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740563914;
-	bh=EvazlJDvIpSU8xWaHY1rfrsB8hsCd5XKw0hdPe8UWiI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Avlx0PYeAPsIbsX7doARLDiRl4MUL0bVhphVW7ezkhMZnD1TLd2dYM61UpYblKun/
-	 uinfftczSMAtwDsD9MDph6dKFfELQjF9NfBjEu6TqTENnjYTW8ceYq/kPLGe9XZJ50
-	 n5AVTYKQVwn9CdiCs8MbsvEr8/VbOsxdr9pgI39RMn4O6yebHjnq6OZQXP9EJnHjRG
-	 rHBqc+DbFfyeYhzF0nm353hO9GOrPDTPuAvW7/xvY/7o9z/TzB4tZfNsqgPmYntVda
-	 S7dYN3J9T/gDblDWf+RyX0r+ONVtOjJJlO7b4FZsHG30ES8SZrzb6KQ8sW2QpDuoaR
-	 6UvlYd9EVgpFA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tnEBg-000000000Qe-2U3f;
-	Wed, 26 Feb 2025 10:58:45 +0100
-Date: Wed, 26 Feb 2025 10:58:44 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
-	cristian.marussi@arm.com, dmitry.baryshkov@linaro.org,
-	maz@kernel.org, linux-kernel@vger.kernel.org,
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, konradybcio@kernel.org
-Subject: Re: [RFC V6 2/2] firmware: arm_scmi: Add quirk to bypass SCP fw bug
-Message-ID: <Z77l1NflYXTnRyg0@hovoldconsulting.com>
-References: <20250226024338.3994701-1-quic_sibis@quicinc.com>
- <20250226024338.3994701-3-quic_sibis@quicinc.com>
- <Z77M5iXHQsdMptWm@hovoldconsulting.com>
- <Z77W-fKBUqAALZKJ@hovoldconsulting.com>
- <759226e1-05aa-4ca2-b2f5-7f1a84dc427f@stanley.mountain>
+	s=arc-20240116; t=1740565001; c=relaxed/simple;
+	bh=dIedMb4lwQBVScSxDRpIfkc8+JevTX/YCTTblYgJwRc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oqVqrIHayyeqhttDCglo8N0f+txVazYyc0O8Pk9135yiuz1f1OdAYBq+P7A/Y7OaA9JcBFBSrPVLGvIMSVW4hSY3xg/VmagL/PCcgShJc3XPMuTXkzYNMfeRxS/Fwl1tgMlNqybw8Khmdo4V3Ik4/jRtRnu/meAZjGMpdX0Ki24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=CYhMLnp7; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=py/wyHhe; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=CYhMLnp7; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=py/wyHhe; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id B800B1F388;
+	Wed, 26 Feb 2025 10:16:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1740564996; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=W7huWkA+q4tRzFzbc4OooKbD6jGNlYW/aDI0Z6LcjV8=;
+	b=CYhMLnp7q0zfIxH8iu3DNheOYB4NL+Nf+4CwGTh2xeQ6XaiMe2y/w5C4nc6bW9xz7RbgAw
+	8ryL8T8ngv+vFjbcTTbAftFmRhYB2lclHddKns9vVCLWfBZDzJSvvQlUKLgV5Wmz5BH8cQ
+	v3TWwB2RQtT2+I3JBCLYix3NLqlliWA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1740564996;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=W7huWkA+q4tRzFzbc4OooKbD6jGNlYW/aDI0Z6LcjV8=;
+	b=py/wyHhesHkF3t5R/Yc8G+Nte20Q0gW31h5UiRetlboW695aUKEXNBzADKuVjVvPuLRL9V
+	oWrCKyFxSZ0u4RBQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1740564996; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=W7huWkA+q4tRzFzbc4OooKbD6jGNlYW/aDI0Z6LcjV8=;
+	b=CYhMLnp7q0zfIxH8iu3DNheOYB4NL+Nf+4CwGTh2xeQ6XaiMe2y/w5C4nc6bW9xz7RbgAw
+	8ryL8T8ngv+vFjbcTTbAftFmRhYB2lclHddKns9vVCLWfBZDzJSvvQlUKLgV5Wmz5BH8cQ
+	v3TWwB2RQtT2+I3JBCLYix3NLqlliWA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1740564996;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=W7huWkA+q4tRzFzbc4OooKbD6jGNlYW/aDI0Z6LcjV8=;
+	b=py/wyHhesHkF3t5R/Yc8G+Nte20Q0gW31h5UiRetlboW695aUKEXNBzADKuVjVvPuLRL9V
+	oWrCKyFxSZ0u4RBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3ED391377F;
+	Wed, 26 Feb 2025 10:16:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 8GvYDQTqvmfDagAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Wed, 26 Feb 2025 10:16:36 +0000
+Message-ID: <97832f2b-ea2f-4fec-990b-bbd5ccaa9a91@suse.de>
+Date: Wed, 26 Feb 2025 11:16:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <759226e1-05aa-4ca2-b2f5-7f1a84dc427f@stanley.mountain>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/25] drm/dumb-buffers: Provide helper to set pitch
+ and size
+To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
+ simona@ffwll.ch
+Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
+ freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+ nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
+ spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+ intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+References: <20250218142542.438557-1-tzimmermann@suse.de>
+ <20250218142542.438557-3-tzimmermann@suse.de>
+ <dcd59a75-7945-4a2e-99f9-3abbb3e9de14@ideasonboard.com>
+ <355ed315-61fa-4a9d-b72b-8d5bc7b5a16c@suse.de>
+ <596b960e-71f8-4c2c-9abe-058206df1dfb@ideasonboard.com>
+ <87ca2b81-a67a-468b-ae2b-30d02a3a64bc@suse.de>
+ <f74af5cc-bca8-45c1-9204-b362fcd6f998@ideasonboard.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <f74af5cc-bca8-45c1-9204-b362fcd6f998@ideasonboard.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Score: -2.80
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.990];
+	MIME_GOOD(-0.10)[text/plain];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FREEMAIL_TO(0.00)[ideasonboard.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	ARC_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	RCVD_TLS_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+X-Spam-Flag: NO
+X-Spam-Level: 
 
-On Wed, Feb 26, 2025 at 12:31:27PM +0300, Dan Carpenter wrote:
-> On Wed, Feb 26, 2025 at 09:55:21AM +0100, Johan Hovold wrote:
-> > On Wed, Feb 26, 2025 at 09:12:23AM +0100, Johan Hovold wrote:
-> > > On Wed, Feb 26, 2025 at 08:13:38AM +0530, Sibi Sankar wrote:
-> > 
-> > > >  scmi_common_fastchannel_init(const struct scmi_protocol_handle *ph,
-> > > >  			     u8 describe_id, u32 message_id, u32 valid_size,
-> > > >  			     u32 domain, void __iomem **p_addr,
-> > > > -			     struct scmi_fc_db_info **p_db, u32 *rate_limit)
-> > > > +			     struct scmi_fc_db_info **p_db, u32 *rate_limit,
-> > > > +			     bool skip_check)
-> > > 
-> > > This does not look like it will scale.
-> > 
-> > After taking a closer look, perhaps it needs to be done along these
-> > lines.
-> > 
-> > But calling the parameter 'force' or similar as Dan suggested should
-> > make it more readable.
-> > 
-> > > >  {
-> > > >  	int ret;
-> > > >  	u32 flags;
-> > > > @@ -1919,7 +1920,7 @@ scmi_common_fastchannel_init(const struct scmi_protocol_handle *ph,
-> > > >  
-> > > >  	/* Check if the MSG_ID supports fastchannel */
-> > > >  	ret = scmi_protocol_msg_check(ph, message_id, &attributes);
-> > > > -	if (!ret && !MSG_SUPPORTS_FASTCHANNEL(attributes))
-> > > > +	if (!ret && !MSG_SUPPORTS_FASTCHANNEL(attributes) && !skip_check)
-> > > 
-> > > Why can't you just make sure that the bit is set in attributes as I
-> > > suggested? That seems like it should allow for a minimal implementation
-> > > of this.
-> > 
-> > My idea here was that you could come up with some way of abstracting
-> > this so that you did not have to update every call site. Not sure how
-> > feasible that is.
-> 
-> I'm having a hard time finding your email.
+Hi
 
-	https://lore.kernel.org/lkml/Z4Dt8E7C6upVtEGV@hovoldconsulting.com/
- 
-> Why does the scmi_proto_helpers_ops struct even exist?  We could just
-> call all these functions directly.  Do we have plans to actually create
-> different implementations?
-> 
-> If we got rid of the scmi_proto_helpers_ops struct then we could just
-> rename scmi_common_fastchannel_init() to __scmi_common_fastchannel_init()
-> and create a default wrapper around it and a _forced() wrapper.
-> 
-> Some other potentially stupid ideas in the spirit of brainstorming are
-> that we could add a quirks parameter which takes a flag instead of a
-> bool.  Or we could add a quirks flag to the scmi_protocol_handle struct.
+Am 25.02.25 um 14:45 schrieb Tomi Valkeinen:
+> Hi,
+>
+> On 21/02/2025 11:19, Thomas Zimmermann wrote:
+>> Hi
+>>
+>> Am 20.02.25 um 11:53 schrieb Tomi Valkeinen:
+>>> Hi,
+>>>
+>>> On 20/02/2025 12:05, Thomas Zimmermann wrote:
+>>>> Hi
+>>>>
+>>>> Am 20.02.25 um 10:18 schrieb Tomi Valkeinen:
+>>>> [...]
+>>>>>> + * Color modes of 10, 12, 15, 30 and 64 are only supported for 
+>>>>>> use by
+>>>>>> + * legacy user space. Please don't use them in new code. Other 
+>>>>>> modes
+>>>>>> + * are not support.
+>>>>>> + *
+>>>>>> + * Do not attempt to allocate anything but linear framebuffer 
+>>>>>> memory
+>>>>>> + * with single-plane RGB data. Allocation of other framebuffer
+>>>>>> + * layouts requires dedicated ioctls in the respective DRM driver.
+>>>>>
+>>>>> According to this, every driver that supports, say, NV12, should 
+>>>>> implement their own custom ioctl to do the exact same thing? And, 
+>>>>> of course, every userspace app that uses, say, NV12, should then 
+>>>>> add code for all these platforms to call the custom ioctls?
+>>>>
+>>>> Yes, that's exactly the current status.
+>>>>
+>>>> There has been discussion about a new dumb-create ioctl that takes 
+>>>> a DRM format as parameter. I'm all for it, but it's out of the 
+>>>> scope for this series.
+>>>>
+>>>>>
+>>>>> As libdrm's modetest currently supports YUV formats with dumb 
+>>>>> buffers, should we remove that code, as it's not correct and I'm 
+>>>>> sure people use libdrm code as a reference?
+>>>>
+>>>> Of course not.
+>>>>
+>>>>>
+>>>>> Well, I'm not serious above, but I think all my points from the 
+>>>>> earlier version are still valid. I don't like this. It changes the 
+>>>>> parameters of the ioctl (bpp used to be bits-per-pixel, not it's 
+>>>>> "color mode"), and the behavior of the ioctl, behavior that we've 
+>>>>> had for a very long time, and we have no idea how many users there 
+>>>>> are that will break (could be none, of course). And the 
+>>>>> documentation changes make the current behavior and uses wrong or 
+>>>>> legacy.
+>>>>
+>>>> Before I go into details about this statement, what use case 
+>>>> exactly are you referring to when you say that behavior changes?
+>>>
+>>> For every dumb_buffer allocation with bpp that is not divisible by 
+>>> 8, the result is different, i.e. instead of DIV_ROUND_UP(width * 
+>>> bpp, 8), we now have width * DIV_ROUND_UP(bpp, 8). This, of course, 
+>>> depends on the driver implementation. Some already do the latter.
+>>
+>> The current dumb-buffer code does a stride computation at [1], which 
+>> is correct for all cases; although over-allocates sometimes. It's the 
+>> one you describe as "width * DIV_ROUND_UP(bpp, 8)". It's in the ioctl 
+>> entry point, so it's somewhat authoritative for all driver's 
+>> implementations. It's also used by several drivers.
+>>
+>> The other variant, "DIV_ROUND_UP(width * bpp, 8)", is used by 
+>> gem-dma, gem-shmem and others. It can give incorrect results and 
+>> possibly OOBs. To give a simple example, let's allocate 15-bit 
+>> XRGB1555. Bpp is 15. With a width of 1024, that would result in 1920 
+>> bytes per scanline. But because XRGB1555 has a filler bit, so the 
+>> pixel is actually 16 bit and a scanline needs to be 2048 bytes. The 
+>> new code fixes that. This is not just a hypothetical scenario: we do 
+>> have drivers that support XRGB1555 and some of them also export a 
+>> preferred_depth of 15 to userspace. [2] In the nearby comment, you'll 
+>> see that this value is meant for dumb buffers.
+>>
+>> Rounding up the depth value in user space is possible for RGB, but 
+>> not for YUV. Here different pixel planes have a different number of 
+>> bits. Sometimes pixels are sharing bits. The value of bits-per-pixel 
+>> becomes meaningless. That's why it's also deprecated in struct 
+>> drm_format_info. The struct instead uses a more complicated per-plane 
+>> calculation to compute the number of bits per plane. [3] The 
+>> user-space code currently doing YUV on dumb buffers simply got lucky.
+>>
+>> [1] https://elixir.bootlin.com/linux/v6.13.3/source/drivers/gpu/drm/ 
+>> drm_dumb_buffers.c#L77
+>> [2] https://elixir.bootlin.com/linux/v6.13.3/source/include/drm/ 
+>> drm_mode_config.h#L885
+>> [3] https://elixir.bootlin.com/linux/v6.13.3/source/include/drm/ 
+>> drm_fourcc.h#L83
+>>
+>>>
+>>> This change also first calls the drm_driver_color_mode_format(), 
+>>> which could change the behavior even more, but afaics at the moment 
+>>> does not. 
+>>
+>> Because currently each driver does its own thing, it can be hard to 
+>> write user space that reliably allocates on all drivers. That's why 
+>> it's important that parameters are not just raw numbers, but have 
+>> well- defined semantics. The raw bpp is meaningless; it's also 
+>> important to know which formats are associated with each value. 
+>> Otherwise, you might get a dumb buffer with a bpp of 15, but it will 
+>> be displayed incorrectly. This patch series finally implements this 
+>> and clearly documents the assumptions behind the interfaces. The 
+>> assumptions themselves have always existed.
+>
+> This is perhaps where the biggest gap in understanding/view is: I have 
+> always thought dumb-buffer's "bpp" to mean bits-per-pixel, where, for 
+> more complex formats, "pixel" is not necessarily a visible pixel but a 
+> container unit of some kind. So bpp * width = stride.
+>
+> It would not occur to me to allocate XRGB1555 dumb-buffer with 15 bpp, 
+> but 16 bpp, as that's what a pixel takes. I have never seen the 
+> dumb-buffer bpp connected directly to the pixel format (that's what 
+> the ADDFB brings in).
+>
+> I may be alone with that thinking, but afaics the documentation leans 
+> a bit on my interpretation (instead of considering bpp as a "color 
+> mode"), although admittedly the docs also don't really say much so 
+> this may be fully just my interpretation:
+>
+> https://man.archlinux.org/man/drm-memory.7.en
 
-Something like that, yes. :) I didn't try to implement it, but it seems
-like it should be possible implement this is a way that keeps the quirk
-handling isolated.
+Agreed, this could be read in the way you do. Is this being generated 
+from source somehow? The information is not incorrect, but how did they 
+get to this interpretation? It would definitely need an update with this 
+patch series applied. Citing from the man page:
 
-Johan 
+   "/bpp/ is the number of bits-per-pixel and must be a multiple of 8."
+
+That's what currently works on all drivers. But nothing enforces that it 
+"must by a multiple of 8". Doing so would prevent C1/C2/etc pixel 
+formats without over-allocation.  OR bpp is not bits-per-pixel but just 
+some factor that controls the buffer size. This is how you use it for 
+YUV formats.
+
+   "You most commonly want to pass 32 here."
+
+That's also just semi-true. 32 is simply what mostly works in practice 
+IFF you interpret it as XRGB8888. Userspace should read the formats from 
+the primary plane, or at least look at the driver-provided 
+preferred_depth field.
+
+>
+> https://cgit.freedesktop.org/drm/libdrm/tree/include/drm/drm_mode.h#n1055
+
+This one doesn't say anything specific AFAICT. Bpp is somewhat pointless 
+information without a known pixel and framebuffer layout, as I've 
+outlined before.
+
+>
+> I (mostly) understand all the complexities around here, thanks to your 
+> replies, and I think I'm ok with the series as it doesn't break 
+> anything (need to test the v3, though).
+
+Thank you so much.
+
+>
+> I still don't like it though =). And I would be happier with the 
+> simpler "bpp" interpretation that I mentioned above, instead of it 
+> being a color mode. But we can't have it both ways, and perhaps it's 
+> better to unify the code and have the behavior explained explicitly as 
+> you do in this series, even if the explanation only covers some RGB 
+> formats.
+
+No worries. The intention is not to break anything and existing code 
+will continue to work.
+
+Best regards
+Thomas
+
+>
+>  Tomi
+>
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstrasse 146, 90461 Nuernberg, Germany
+GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+HRB 36809 (AG Nuernberg)
+
 
