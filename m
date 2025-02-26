@@ -1,68 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-49521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3381FA46117
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 14:41:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6103AA4611A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 14:41:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 36CEE165A84
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 13:41:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 110CC189B574
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 13:41:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59B4A221545;
-	Wed, 26 Feb 2025 13:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F15FA221720;
+	Wed, 26 Feb 2025 13:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZvICAFxO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bWmMLq3u"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308652206BE;
-	Wed, 26 Feb 2025 13:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40AF22171D;
+	Wed, 26 Feb 2025 13:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740577255; cv=none; b=P/kHsD7jzsNQllWksrnBt8BqYznPaRfAa0y+1TqSmz8FhT7ttWlINcyAplDlaQh3TT4GGbGVeEaftoiT1FJ4apuNNN0HRxeuCHYydA9Fcen+2KFSYfIMxiP2KRm7bcD8eDfBQRa+szBTyG8Cm19khzKF4GkCLnHLSMHzZSkTets=
+	t=1740577256; cv=none; b=uS+VDb55GMaLPgs0TjH2TBEu5FV41vyGI6QzwKio2m03l+dBcFx/3b8eRqMLdfaRrIw63DJXzkJEhaY4PUKS34A2hKHUE0TpB3HwbYS3t6D8/lzZEcWjA4eMIbaB/jlBduGSfcx78nfgISze42KLHhDZTuM90JTR5QRHv53nQ0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740577255; c=relaxed/simple;
-	bh=bf1EJxLaypb4+0RqKwgkuzgRPbStL7bJ3ns99hinf+U=;
+	s=arc-20240116; t=1740577256; c=relaxed/simple;
+	bh=atuoiEKGjvWyG0l6/UFsnCxdhe/5kXleknnmrJEwoKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y3xoKXTcaXZqmsjUI7kdZ1MgYqnZHFXFLliVqpPfjXq3g5JdP5gH5L4z/5Jc7McYaHtlrW0cNwGoojHIzrCgSIE1/1Ke3y8OtpDCpaCwvciW+FaiaivMFrowJm25OadK37/eduy1xINd1gXMX+kSiKmB2xmfSjw+EiMfY5qR8MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZvICAFxO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF12FC4CED6;
-	Wed, 26 Feb 2025 13:40:53 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Q69EnpzLV2GINIWhksi7Rhj0yagWXe8Hog/ZKVBglCDqw6gEaCpM5fguYj31l7Dww0NbpP+3WdpsCuuq9MekWssvEeJNbQpn9PsUmBxyh50wdPoYEegoMuG4kdHWvAP8txTGk3rbrier/PA/NYlsrK8gKiKjwFVO7pi7VP0AG0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bWmMLq3u; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435EFC4CEEE;
+	Wed, 26 Feb 2025 13:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740577255;
-	bh=bf1EJxLaypb4+0RqKwgkuzgRPbStL7bJ3ns99hinf+U=;
+	s=k20201202; t=1740577256;
+	bh=atuoiEKGjvWyG0l6/UFsnCxdhe/5kXleknnmrJEwoKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvICAFxO+G7qzoafyqUaczoVwM+I/tesrzirjlBSnFqtq/U5clTHiFqeMjadxiXd3
-	 6UfFqGfTriM1HSpt6zBmJdiJsNf5hoZXgUs+hs4FebguZx9Hgc8fN0yWjjXNyJ71M+
-	 K4Q6auc6aj+G8u8pzoInsH0sOzNlil1+GjEcePDoBS+m2zTi1yJAg7ADI/kkuhRbVf
-	 2fGv2VXVL0BhsnsjCjtmIb8Xwe0QAi0ZLb3TkY0lFv48P4MXwZndP659Z1xujN7SbN
-	 JFn1zjUeaKqEI5rbzdZYdD78EkUfNaahmpUFlQwUCF2qQHLdxH/UdGrvHmOzsXQ/zD
-	 Sy3c9tzZEe3Zw==
+	b=bWmMLq3uAF3y2ZQT1/rQ3LleLhY4mG04y+swrybrChGcYmaD0gzzHxfrUW7wNJKQS
+	 44ieF4aFZxbAn0LZv8rSeJTA05U+LF8Y4ufHGIg3yUDOlXYi6nCU9vOQ0kvWl3YbWb
+	 FqfFqPVuE/N6Dd4g6X1xduVeYhy56riVWotlIfFH9qt/khY7AEyYQmUVjnODHeuyGQ
+	 u2lmx/75u895a460DSuovuz+DRRjOa4BMQBckbWQPGIT8goDnUnnUbcr0U2AMgkNwh
+	 IP/ATa7Q7Ay6g6Bgf75e8udLVsqCSL78oOBOYv5w2YdXkCgFuEc14/LURcMqT0MijD
+	 2Y6ZwAi1WI24Q==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Subject: Re: (subset) [PATCH v2 0/6] X1P42100 DT and PCIe PHY bits
-Date: Wed, 26 Feb 2025 07:40:45 -0600
-Message-ID: <174057724682.237840.3212969107242689758.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] Enable panel and GPU on Fairphone 5
+Date: Wed, 26 Feb 2025 07:40:46 -0600
+Message-ID: <174057724685.237840.10215426173351646866.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250203-topic-x1p4_dts-v2-0-72cd4cdc767b@oss.qualcomm.com>
-References: <20250203-topic-x1p4_dts-v2-0-72cd4cdc767b@oss.qualcomm.com>
+In-Reply-To: <20250202-fp5-display-v1-0-f52bf546e38f@fairphone.com>
+References: <20250202-fp5-display-v1-0-f52bf546e38f@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,25 +69,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 03 Feb 2025 15:43:19 +0100, Konrad Dybcio wrote:
-> X1P42100 is a(n indirect) derivative of X1E80100 - the silicon is
-> actually different and it's not a fused down part.
+On Sun, 02 Feb 2025 23:45:50 +0100, Luca Weiss wrote:
+> Now since upstream DPU driver can use 1:1:1 DSC topology, we can finally
+> enable the panel and GPU on Fairphone 5.
 > 
-> Introduce the DTS bits required to support it by mostly reusing the
-> X1E SoC and CRD DTSIs. The most notable differences from our software
-> PoV are a different GPU (support for which will be added later), 4
-> less CPUs and some nuances in the PCIe hardware.
+> Depends on https://lore.kernel.org/linux-arm-msm/20250122-dpu-111-topology-v2-1-505e95964af9@somainline.org/
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[4/6] arm64: dts: qcom: x1e80100: Wire up PCIe PHY NOCSR resets
-      commit: 62ca6669d62eb554eb467f2953cabb4238e18823
-[5/6] arm64: dts: qcom: Commonize X1 CRD DTSI
-      commit: fbf5e007588f3f2bace84309b4a0d428ad619322
-[6/6] arm64: dts: qcom: Add X1P42100 SoC and CRD
-      commit: f08edb5299166b7c6d4eae439b1d3f81c31ba50e
+[1/2] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable display
+      commit: c365a026155ca926f878dee528715be8a02dabc7
+[2/2] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable the GPU
+      commit: 984748d30cd3ce0e11d63b0ba16dcbd61f7b4b9d
 
 Best regards,
 -- 
