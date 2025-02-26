@@ -1,171 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-49537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9E9EA464FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 16:35:51 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8F30A46518
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 16:39:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 58C5918922C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 15:34:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 77FAD7AA5DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 15:38:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FFF6221DAD;
-	Wed, 26 Feb 2025 15:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 016CF22488E;
+	Wed, 26 Feb 2025 15:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ylNlPRPe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jPiIIrpc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC9122156A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 15:31:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03D721E0AA;
+	Wed, 26 Feb 2025 15:36:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740583894; cv=none; b=C0jVpQlYa6YNwz8tkonVkJ0ScpvWgojrgZrY5UVapKG58Rg2HFvSL3OtyE/hJhAC4jZ+AGZOgk+kmhDufhYwl35nLd1wbGGL1d4pTFvqMPbi8gkKmMZj3hIivoGBn4RYP+onb6biRbo0HLteI95za/HPuGVeXAxZjoYAaPXgMjM=
+	t=1740584211; cv=none; b=XMGOvvTpP2ZL1eCzFL24jhWKYqLnGU5x3xViOxoeeFPBjdpvxb8wrln68qq/JufkfmjYNWsvBwvSzs6I7Ua5ZipOcjtNJldWo3vHKTo+4bac3VZjlvi0ZsqQI1UwPGukefj7ytXwlC6iHj9cy2YephVWg8VFoT+RgePv8VQhFPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740583894; c=relaxed/simple;
-	bh=k4N0XlmGvdfOMTmWDEfUUGimUOVDhSaHXWbUuCud4bU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jiDNt16bgaz04VXH1NvapkV715C9LiLbwsOQQ8fL0ZWAq5gwkSERIwwsLL9K8OtSyu5N8l/E1iy2DFWOIyeU//PrTGFMO0NZExz4tpzJuEbxvv+NRuKIAxGgVNyMY5svN0gHvDKGhmc5NFtqzK2aMuGTCykYlRAHRSfcGqQJaEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ylNlPRPe; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-abb9709b5b5so1258850266b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 07:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740583890; x=1741188690; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eqAmajrUkSWP+RSh/qNpOLcasBUoO/Rx4Ka24d+ReWk=;
-        b=ylNlPRPeAKQtHh9Zt1uTQRSYCkoMX2oEjLTHfyBeWhueH7An0ZAcv3pZQ9Fx4H6IlE
-         /LbjgBqmdXYkNFM4RX/nJZepEMrGd7k1Qr4pcK/E+lHdHcOjNYLaFUy8S/n9q3l609C+
-         jLN/k0gdVrT6OXjcbJEihV5YfnmoUmF+fn6jOWQr9Vxh5+dSEVish2sS7uiex6KmngRi
-         /LWx1Dz1McZ/afnLwagyLAT4/w2uXl3KCF9un/7c4A7TEbE1LzNcvNZnRVZf9Y4KgYt4
-         AgQ1x3DzKkfi1j2EXRAvxVozVbVTSThC+S4EuYp3K7nK8ZSQFXQV1Rnvz6tVYwQ05YmE
-         pnLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740583890; x=1741188690;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eqAmajrUkSWP+RSh/qNpOLcasBUoO/Rx4Ka24d+ReWk=;
-        b=Ze2k9+PAEwZ13O0RwrF+tufR2eN3PT+8ixmZOPrZi7f4G5LMkyjIpzdqbna8jMpgdN
-         WsP9WxbW350BYqVMN/OR3AyjQ+YWsF5idjyj5Fe/L+4ONs2HL/6BMdFy1hCIRGD+5yOa
-         NIDnci83+AdE5hcyriNPfTQgnxuPxaQc0YwvqGjyu+CLsUz1vUorNqc/9SVvnCQK/bxM
-         ec4SzMHJ+JV5G+NP1Qv2zq5L97ng1gVgI09LOe3wHhE7NIEN/ApUNWXdImxHabFQeQsx
-         okgNcqWLRUFyIceVNqOyKupdoiDM6cUb723wKmKExyQdaWfEDrwHQP2yp0c8jxisfoIA
-         eiZg==
-X-Forwarded-Encrypted: i=1; AJvYcCU3Q4kqMBy5B7oWSf2doS3APqR/Sb5ooGS2l41qfxE8DuNKtzvBOPBs2AM028XGyOtvK7wFEmaKLGU1HG02@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtuLqDVUaBAnx0agO0nJEjf+bhmYOa+VL3K6FyY4s/7OoC8D7F
-	f9vz6prPgaSbmkrlMoSDKrhXNpe2ogXJrUFSIOGaWQkaN+GDaiSwW+5c8RTEnbA=
-X-Gm-Gg: ASbGnct0xHk3Aj3kA7iuLZx5or23bjgzGW5PLiWYlfBIt4FvqTwqqZFAohLNzy6d+VJ
-	lh8uwD7phULdAayclR4eeYvZRaJC9ZTCYc1wtFom8z08AfAx4M2DUPZmCqpmLB5SBN4rs14rIJN
-	+qd7qen0XGcx4EPLYmO52xM2ItbBiMf9QxoGBvGA0FuNc8l9sxnVeS/ySI5j3IkxOSN65IH12mU
-	Hy1KIWS2l08sLg7RjUNenJHU7i66dyVsLGk7HZxfGsaaSJD+ziOJtVXSmLwBuJ4zqEnLEVIc86g
-	h7KO4d3lOTsDsxnkUe2CO9gF
-X-Google-Smtp-Source: AGHT+IF0ukKgt11J8m92/F3mriaR7AMU8zhdZvDGdYgGmsDEjZlnfX63CFS/1zLHknAiaWI/zdCNdw==
-X-Received: by 2002:a17:907:94cc:b0:ab7:f0fa:1341 with SMTP id a640c23a62f3a-abed10fecbbmr789811466b.56.1740583889548;
-        Wed, 26 Feb 2025 07:31:29 -0800 (PST)
-Received: from [127.0.1.1] ([62.231.96.41])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abed1cdd82fsm347594766b.16.2025.02.26.07.31.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 07:31:28 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Wed, 26 Feb 2025 17:31:08 +0200
-Subject: [PATCH RFC] backlight: pwm_bl: Read back PWM period from provider
+	s=arc-20240116; t=1740584211; c=relaxed/simple;
+	bh=Kcxlg+wkdwQqRcewEbnIH5bR8ZjExYIUPT/bKiPZZzA=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=FKsGtzfk8E9Os/fu4OkZz2lolyGjnAWM0OhXjmk7O/dxYSpmBBfm6+7YXRTnoi+JfIY7v0rnLMOb3+RAUm9ZKXyqruucriNQlcwU+Q0nUSuWptQLVi6HGGZJKQ+QMMfda/O3iKS7mL33aq8tnd+VNFo+SXFqRsxiAZFC2a1QkIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jPiIIrpc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8C9C4CED6;
+	Wed, 26 Feb 2025 15:36:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740584211;
+	bh=Kcxlg+wkdwQqRcewEbnIH5bR8ZjExYIUPT/bKiPZZzA=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=jPiIIrpcBQVeaLUguCnE87OKpBphKCIQfTlQz+vcSIczYpVQ64VB/o+lcViLlKG1Z
+	 1tYvK4Iqgx4+qMw2GZx6BgbCkn5MS7TxFQSD5RWKB8F3Vah68MeDQgss2MrdGRE/j0
+	 Qz96eWw+jFIjVdXqNA/i4aA7wrG0Bc/3Im/DHKKyHntOzH+ygaG3hZt7ogO9SYFnyv
+	 WRWxe58bAbz9p019/dVtcPlGswsEw+FaFRSK4KvOoDup58AJR/iY1DJGV+37OuSwEt
+	 0MYoLrYZXmhPhxBQWUbPflEF8XkJg9AVZ/E+bYIiZG5oeg4YiiwTfcEFOYPbnMWOJe
+	 xz5HzbdDfK1bA==
+Date: Wed, 26 Feb 2025 09:36:49 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250226-pwm-bl-read-back-period-from-hw-v1-1-ccd1df656b23@linaro.org>
-X-B4-Tracking: v=1; b=H4sIALszv2cC/x2NQQrCMBAAv1L27EK6oKjXgg/wWnpIk41dtE3YQ
- CuU/t3F48Aws0NlFa5wb3ZQXqVKXgzaUwNh8suLUaIxkKOzI7pg2WYcP6jsI44+vLFYIEdMmme
- cNnRXs0KgdCMHVinKSb7/Qw/PRwfDcfwAI/cPvXYAAAA=
-X-Change-ID: 20250226-pwm-bl-read-back-period-from-hw-08226cc2f920
-To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
- Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>, 
- Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, 
- Sebastian Reichel <sre@kernel.org>, linux-pwm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
- linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2230; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=k4N0XlmGvdfOMTmWDEfUUGimUOVDhSaHXWbUuCud4bU=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnvzPErP7VvYpWIiwM5iOAh95Cl7Of3k5CJDYyY
- tofqZ7znOuJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ78zxAAKCRAbX0TJAJUV
- VpsBD/0R5b7F9kLEtwbwLoSttnGFhMw8cAjfYdA10nLSwkzvBDW4C7Mkib3L8buwyAi6Hw7SQj3
- LZmlKHmppMYlXI0n8HP3d+JzOhACkZUXIlQvmOt5zthhRxY1rC2RZTGbL2VoFwR18edWyWl7xu6
- BTJKr1Pp49cScIWMfZkLRKtvrcwn6bUx/zW9iMKleWEu8ZlwTWvH/t7jSPPHqSOGXpR0By2dhtL
- CuEVvNdeXkqYAECaiIaDUh1P4H4sMVFHzE4370KM8SH3zYmpquz+9RnrOEZhG0hdfygqsjd3dtB
- kSY8K6nH4Zpg2WbNDg2VXmhVxdWqMEjyC/FfhxlEv6QDIRFl1vBTfLj1wXml9eN3pMwNEQPje4n
- 7i3iULyvwcUPHnyfABIIo2IsZAJyzy9zipJ9r33u1zD5LAbFaVrETi+EExBcXAzfFEs5yD1Ocpp
- MnrkbT/QwfdB+Ef+VtsFuOJAkgNDpBhm9dZlI7B7Pzt7E0eqV+hNoseJ097j9aeiUD643lX5Ylk
- 53avnd6zhE0nXhcq6CA2/Q9UbgHbGJ/43DmuW22CjDIiiBma5X06gMMIdENplUTfx8HWJJX51uL
- gig32r0zM8+p2rjEye7qZFH42x132GPTs7+37B3IRPzyUQv2JgixEjtYkzQVbBO+zFLGvSCkuIy
- kqBHK3JKeE0OpeA==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Conor Dooley <conor+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ cros-qcom-dts-watchers@chromium.org, Mark Brown <broonie@kernel.org>, 
+ devicetree@vger.kernel.org, Takashi Iwai <tiwai@suse.com>, 
+ linux-arm-msm@vger.kernel.org, Jaroslav Kysela <perex@perex.cz>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-sound@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+In-Reply-To: <20250225-starqltechn_integration_upstream-v9-0-a5d80375cb66@gmail.com>
+References: <20250225-starqltechn_integration_upstream-v9-0-a5d80375cb66@gmail.com>
+Message-Id: <174058387176.2466803.5224190356165061330.robh@kernel.org>
+Subject: Re: [PATCH v9 00/12] This is continued work on Samsung S9(SM-9600)
+ starqltechn
 
-The current implementation assumes that the PWM provider will be able to
-meet the requested period, but that is not always the case. Some PWM
-providers have limited HW configuration capabilities and can only
-provide a period that is somewhat close to the requested one. This
-simply means that the duty cycle requested might either be above the
-PWM's maximum value or the 100% duty cycle is never reached.
 
-This could be easily fixed if the pwm_apply*() API family would allow
-overriding the period within the PWM state that's used for providing the
-duty cycle. But that is currently not the case.
+On Tue, 25 Feb 2025 19:38:51 +0300, Dzmitry Sankouski wrote:
+> Contains starqltechn device tree changes.
+> Add support for new features:
+> - sound (headphones and mics only)
+> - gpu
+> - panel
+> - buttons
+> - MAX77705 MFD:
+>   - charger
+>   - fuelgauge
+>   - haptic
+>   - led
+> 
+> Binding Dependencies:
+> - s2dos05: https://lore.kernel.org/r/20241007-starqltechn_integration_upstream-v6-0-264309aa66de@gmail.com
+>   - This series was applied to krzk/linux.git (for-next)
+> 
+> - max77705: https://lore.kernel.org/r/20241209-starqltechn_integration_upstream-v11-4-dc0598828e01@gmail.com
+>   - applied to
+>     git@gitolite.kernel.org/pub/scm/linux/kernel/git/lee/mfd.git
+> 
+> - s6e3ha8 panel: https://lore.kernel.org/r/20241006-starqltechn_integration_upstream-v6-0-8336b9cd6c34@gmail.com
+>   - applied to https://gitlab.freedesktop.org/drm/misc/kernel.git (drm-misc-next)
+> 
+> Runtime Dependencies:
+> - gcc845 gp clock: https://lore.kernel.org/r/20241007-starqltechn_integration_upstream-v6-0-dd75c06c708d@gmail.com
+>   - applied to clk-next
+> 
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> ---
+> Changes in v9:
+> - update applied dependency patchsets
+> - Link to v8: https://lore.kernel.org/r/20241209-starqltechn_integration_upstream-v8-0-ec604481d691@gmail.com
+> 
+> Changes in v8:
+> - add reviewed tags
+> - minor fixes
+> - remove 'reg' property in fuel-gauge to comply with v11 max77705 mfd
+> - Link to v7: https://lore.kernel.org/r/20241205-starqltechn_integration_upstream-v7-0-84f9a3547803@gmail.com
+> 
+> Changes in v7:
+> - review fixes.
+> - new patch with dt-binding header for wcd934x
+> - Link to v6: https://lore.kernel.org/r/20241008-starqltechn_integration_upstream-v6-0-5445365d3052@gmail.com
+> 
+> Changes in v6:
+> - refactor: no space between tags in commit message
+> - rename starqltechn to sdm845-starqltechn in commit summaries
+> - Link to v5: https://lore.kernel.org/r/20240926-starqltechn_integration_upstream-v5-0-d2084672ff2f@gmail.com
+> 
+> Changes in v5:
+> - Split patchset per subsystem
+> - Add links to subsystem patchsets in description
+> - Link to v4: https://lore.kernel.org/r/20240913-starqltechn_integration_upstream-v4-0-2d2efd5c5877@gmail.com
+> 
+> Changes in v4:
+> - Rewrite max77705, max77705_charger, max77705_fuel_gauge from scratch
+> - Reorder patches:
+>   - squash max77705 subdevice bindings in core file because
+>     no resources there
+>   - split device tree changes
+> - Use _ as space for filenames in power/supply like the majority
+> - Replace gcc-845 freq_tbl frequencies patch with new approach,
+>   based on automatic m/n/pre_div value generation
+> - Link to v3: https://lore.kernel.org/r/20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com
+> 
+> Changes in version 3:
+> - disable crypto patch removed(disabled on distro level)
+> - dts framebuffer node along with related patches removed,
+> because panel driver added
+> - fix 'make O=.output_arm64 CHECK_DTBS=y qcom/sdm845-samsung-starqltechn.dtb'
+> errors, but it still complains on 'monitored-battery' and
+> 'power-supplies' though I have 'power-supply.yaml' link in charger
+> and fuel gauge bindings.
+> 
+> ---
+> Dzmitry Sankouski (12):
+>       arm64: dts: qcom: sdm845: enable gmu
+>       arm64: dts: qcom: sdm845-starqltechn: remove wifi
+>       arm64: dts: qcom: sdm845-starqltechn: fix usb regulator mistake
+>       arm64: dts: qcom: sdm845-starqltechn: refactor node order
+>       arm64: dts: qcom: sdm845-starqltechn: remove excess reserved gpios
+>       arm64: dts: qcom: sdm845-starqltechn: add gpio keys
+>       arm64: dts: qcom: sdm845-starqltechn: add max77705 PMIC
+>       arm64: dts: qcom: sdm845-starqltechn: add display PMIC
+>       arm64: dts: qcom: sdm845-starqltechn: add touchscreen support
+>       arm64: dts: qcom: sdm845-starqltechn: add initial sound support
+>       arm64: dts: qcom: sdm845-starqltechn: add graphics support
+>       arm64: dts: qcom: sdm845-starqltechn: add modem support
+> 
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi                   |   4 ---
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts                   |   4 ---
+>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts                      |   4 ---
+>  arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi          |   4 ---
+>  arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts      | 600 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+>  arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts            |   4 ---
+>  arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi        |   4 ---
+>  arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi |   4 ---
+>  arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts           |   4 ---
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi                         |   2 --
+>  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts         |   4 ---
+>  11 files changed, 591 insertions(+), 47 deletions(-)
+> ---
+> base-commit: d4b0fd87ff0d4338b259dc79b2b3c6f7e70e8afa
+> change-id: 20240617-starqltechn_integration_upstream-bc86850b2fe3
+> 
+> Best regards,
+> --
+> Dzmitry Sankouski <dsankouski@gmail.com>
+> 
+> 
 
-So easiest fix here is to read back the period from the PWM provider via
-the provider's ->get_state() op, if implemented, which should provide the
-best matched period. Do this on probe after the first ->pwm_apply() op has
-been done, which will allow the provider to determine the best match
-period based on available configuration knobs. From there on, the
-backlight will use the best matched period, since the driver's internal
-PWM state is now synced up with the one from provider.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/video/backlight/pwm_bl.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
-diff --git a/drivers/video/backlight/pwm_bl.c b/drivers/video/backlight/pwm_bl.c
-index 237d3d3f3bb1a6d713c5f6ec3198af772bf1268c..71a3e9cd8844095e85c01b194d7466978f1ca78e 100644
---- a/drivers/video/backlight/pwm_bl.c
-+++ b/drivers/video/backlight/pwm_bl.c
-@@ -525,6 +525,17 @@ static int pwm_backlight_probe(struct platform_device *pdev)
- 		goto err_alloc;
- 	}
- 
-+	/*
-+	 * The actual period might differ from the requested one due to HW
-+	 * limitations, so sync up the period with one determined by the
-+	 * provider driver.
-+	 */
-+	ret = pwm_get_state_hw(pb->pwm, &pb->pwm->state);
-+	if (ret && ret != -EOPNOTSUPP) {
-+		dev_err(&pdev->dev, "failed to get PWM HW state");
-+		goto err_alloc;
-+	}
-+
- 	memset(&props, 0, sizeof(struct backlight_properties));
- 
- 	if (data->levels) {
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
 
----
-base-commit: 8433c776e1eb1371f5cd40b5fd3a61f9c7b7f3ad
-change-id: 20250226-pwm-bl-read-back-period-from-hw-08226cc2f920
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
 
-Best regards,
--- 
-Abel Vesa <abel.vesa@linaro.org>
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250225-starqltechn_integration_upstream-v9-0-a5d80375cb66@gmail.com:
+
+arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dtb: /soc@0/geniqup@ac0000/i2c@a98000/pmic@66: failed to match any schema with compatible: ['maxim,max77705']
+arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dtb: /soc@0/geniqup@ac0000/i2c@a98000/pmic@66/leds: failed to match any schema with compatible: ['maxim,max77705-rgb']
+arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dtb: /soc@0/geniqup@ac0000/i2c@a98000/pmic@66/haptic: failed to match any schema with compatible: ['maxim,max77705-haptic']
+arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dtb: /soc@0/geniqup@ac0000/i2c@a98000/charger@69: failed to match any schema with compatible: ['maxim,max77705-charger']
+
+
+
+
 
 
