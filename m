@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-49480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CADD5A45CA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 12:07:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DA02A45CB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 12:09:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8ADAE170FAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:07:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5FC1C162E30
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:09:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C4701C84B5;
-	Wed, 26 Feb 2025 11:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 564061A3169;
+	Wed, 26 Feb 2025 11:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xu6THLNG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K4PkizeA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316601A7044;
-	Wed, 26 Feb 2025 11:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287FA1925BA;
+	Wed, 26 Feb 2025 11:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740568054; cv=none; b=qHLf3GKisX4dg4iYej8DYXs+8KDtcJ0nQc1XFdUU3minAZoMP2BdhlcXg5DSQjlWL7CvQAxUxK73RF82lizTU0zLUwpkZpivY8M5DxyLsA/VZUOspUvUS76FFMb9Y9R1FyQtCg6Y1W/chdYhJ58y+2A0VzaUSy4aNHtzSyUBsYI=
+	t=1740568173; cv=none; b=mUp4ZKGlz7wtkB9wbZ3kgRROsWe1ow76VfOQUNvG2efoMR3zsqF8DmXDHs4cY22BPA1XG8FbL+KlKB9PgefdFwUZErY5oy6LYiIpaazox1ExKegjTgWbv0xIIPEc94ImLS1H22pXCtXqL6qzarM0ciwM9J0XK4t23neJbMmNKd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740568054; c=relaxed/simple;
-	bh=ZTBsCOjtBvKlejCxwaGw4Bbd2frZLqHUrvkP8WXmrwU=;
+	s=arc-20240116; t=1740568173; c=relaxed/simple;
+	bh=MHm2io10GdTyBbgyWfXeVlZ2/mG8TgvsSf8dQBDFNsY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FbC2cfS6jpFr6lKqy3zagly7CmHIzpnzs83joHWxssKJY/nGU+wV6OcU5l5EUQBlsPL/I/Qmr32ku2dyYV96xnb4piXQ82GnWyKSKBqUrBdNCfxGP2mr+SGY+62YtNfQc3tjATsxn873HbAW6BcZDIt6wBaL1TPnVX5PrOkXorg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xu6THLNG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28261C4CED6;
-	Wed, 26 Feb 2025 11:07:29 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=GsZbH0srL29oLnrWDqn/9L/gYaB/YwkwlNu839GNd0ElSkExUcgH9ZeJMTDFC8MKkJHlDrLpPPRCRV0LhYFyB6BmUS1yDzbalKRhkmDpKVSh4+i0erEqZglLf89nzeJmRyCrl+63Y+hUL2SAnrJtMPZUM+GFO8FuDcjry/iMN50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K4PkizeA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E4FC4CED6;
+	Wed, 26 Feb 2025 11:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740568053;
-	bh=ZTBsCOjtBvKlejCxwaGw4Bbd2frZLqHUrvkP8WXmrwU=;
+	s=k20201202; t=1740568173;
+	bh=MHm2io10GdTyBbgyWfXeVlZ2/mG8TgvsSf8dQBDFNsY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Xu6THLNG00JiNQn6JtdM4u2UJyZmTpxaSz1rkRcVgWL7OP8DYTfAZtfnGE7GprCdB
-	 UuGsDRqpgHjoFW/R4dNahDa92xq0ktjSPXzptu+XzKkV1ajw+urmoXcgewJGPQkjFu
-	 tqHOlZCxKmhyAGkF9SdAfl7rgSXQ0XR/Qm7QuQYFDinwWEiplVwP+hTMpz6UJLgzIF
-	 XRyWJ2SEDlXd6b13GHpIHLSBAw491/DNIF6OQIALRSIJHB6BkodIckxh9PdG+7Cn01
-	 iY+DFSzyXMlnARfWafNUJQemmFdnnRIGlQIbGMgVHkwDdQ7xRq2V/mM+NObKBwTE5n
-	 0kKYQSHCb3nIw==
-Message-ID: <19e9db80-e493-4494-a57f-18118c1ffad1@kernel.org>
-Date: Wed, 26 Feb 2025 12:07:27 +0100
+	b=K4PkizeAb0CwJrJrpZrO3qosJ9eAZth7PQoIJztZuGBBYEV62zHKJ/cW5ANB4n9Kl
+	 0BUz/oWgFSt+GSFN++Y2Yh5KGhum7dorKlNJmAnO4lxGcsaYJtP7C1SgegmZSJcHhd
+	 eoRrJMfeuhLfGhGv5PN+YLOOqqP+4asiP74LZkibMNjxYQqdEB40Nf55JAzqJjWx7J
+	 +mrv9QGPivd1EvtcvgcpzHTWMD3cc/AbcvwqxQE/MrKv4bm819yccQeczL6h+ZfPzy
+	 1DZ2g148h2DRbPhC61gL8ZsrkzaF6ioTN/b9xfRKTkSCMnC9Gc2WIy3LqXsAYkvkr9
+	 Ec8XgbOZN6bTQ==
+Message-ID: <d1c945bd-a738-4f01-8b93-c2a03b190c34@kernel.org>
+Date: Wed, 26 Feb 2025 12:09:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: arm: Add Coresight device Trace NOC
+Subject: Re: [PATCH v2 1/5] dt-bindings: arm: Add Coresight device Trace NOC
  definition
 To: Yuanfang Zhang <quic_yuanfang@quicinc.com>,
  Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
@@ -62,10 +62,8 @@ Cc: kernel@quicinc.com, linux-kernel@vger.kernel.org,
  coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
  kernel@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org
-References: <20250221-trace-noc-driver-v1-0-0a23fc643217@quicinc.com>
- <20250221-trace-noc-driver-v1-1-0a23fc643217@quicinc.com>
- <edfd6c6a-65d2-42f1-8225-0808359dd375@kernel.org>
- <593e1777-a033-4922-93c4-c056e6b9bf4c@quicinc.com>
+References: <20250226-trace-noc-driver-v2-0-8afc6584afc5@quicinc.com>
+ <20250226-trace-noc-driver-v2-1-8afc6584afc5@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,31 +109,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <593e1777-a033-4922-93c4-c056e6b9bf4c@quicinc.com>
+In-Reply-To: <20250226-trace-noc-driver-v2-1-8afc6584afc5@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26/02/2025 11:52, Yuanfang Zhang wrote:
-> 
-> 
-> On 2/22/2025 6:47 PM, Krzysztof Kozlowski wrote:
->> On 21/02/2025 08:40, Yuanfang Zhang wrote:
->>> Adds new coresight-tnoc.yaml file describing the bindings required
->>> to define Trace NOC in the device trees.
->>>
->>> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
->>
->>
->> So you just sent the same v1, ignoring previous review. That's not how
->> it works.
->>
-> sorry for this incorrect process. because i just update --to-cc list and no other
-> change, i forced the version to V1, hoped it would work like resend,
-> but the result was not as expected.
-
-
-But you got feedback, so why resending without implementing it? That's
-the problem, not you labeled/not-labeled it as resend.
+On 26/02/2025 12:05, Yuanfang Zhang wrote:
+> +
+> +  compatible:
+> +    items:
+> +      - const: qcom,coresight-tnoc
+> +      - const: arm,primecell
+> +
+> +  reg:
+> +    minItems: 1
+> +    maxItems: 2
+> +    description:
+> +      Physical address space of the device.
+Not much improved - still items are not listed. Which binding did you
+choose as an example as I asked to? (so I can fix it)
 
 Best regards,
 Krzysztof
