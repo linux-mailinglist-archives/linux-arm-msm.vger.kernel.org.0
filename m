@@ -1,188 +1,349 @@
-Return-Path: <linux-arm-msm+bounces-49397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74B7CA453D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 04:13:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D928FA4542A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 04:52:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9A3D819C02BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 03:12:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55770188CB2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 03:52:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C15122541D;
-	Wed, 26 Feb 2025 03:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47CBE266F07;
+	Wed, 26 Feb 2025 03:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pEPN86dz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FpNcZV1R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EAC18D626;
-	Wed, 26 Feb 2025 03:12:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15593218821;
+	Wed, 26 Feb 2025 03:52:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740539556; cv=none; b=YdeewpRR/f9NILIi2o7WjEaRMkDySe8I/8DhBki8DOj4yzmm7jGdwTJKvp3GwKY3/duDNtCeXUvrDrfUDju9x5XbGTIROKQzo0zOvQ4pU1/9HbboWAWGjGVfQu4sIgXlmX7feC7Savtink7FYiKCfzwQpGrbCKwRQekF3LjzgSI=
+	t=1740541956; cv=none; b=go6eEIwLYgH7HLl8TM8s9BJLHHes3+C5HHCSQJHPqPpiDV5O53ivZNeOQ7drwJrKuExLC+EwWRyBYwrry94cCStc92xHxpNudXvd2ksAuMbt4tc5tXraAw0ELJSLJ4gQVVxNItm8Eulm/Ugw5HmsKunL3YEZoMT174C3Cq+gp0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740539556; c=relaxed/simple;
-	bh=SKtM2MG3KETATLlqcoKJRNLbIZzBAj4Jgle7llgpepU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LCeie5DWjx8Un/XZhxFdbm+EPkHP9qjPw84t1ISkupZiekWIBqZoX8wgYHiEbg2wHqt3028z3ty/Rr2M3HohUVyDgM6M0/lRyO8kkI15VlUmkz7PjQAW4UscCLEZ7/+yOsMGA8KtnAcFt5Lqvknl0ogcmoGf4EP7SQSNPCgaQWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pEPN86dz; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51PMclDT000855;
-	Wed, 26 Feb 2025 03:12:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SKtM2MG3KETATLlqcoKJRNLbIZzBAj4Jgle7llgpepU=; b=pEPN86dzQb8UKyAM
-	RHimu1AWThWE/hRyrXEQQzl0mE6p2QnacLr/X4osSs8vVLJIJDvCVErlLYgQWhyD
-	P4TyOXknb3Rsb5gttEF8gA5EmoCGIwgCJ4sdc0ZnzbahyQbBjItjmtXVLIcEmetx
-	ylKj8T82p++40XQURj0RgvmfUiUhL3y1iVCel5pMkz46MsI2KjaWR2p6vmzzYWkE
-	s917Qe7Q6Qm1fwHQ0fmQh+MRKz0S4mGqMC+kfWeMTgJ5+YCKffLb1sDNlL6kRUWb
-	Tl4+V588Q09rnCejFbyuobUhu2wGEda6O73DigC+rN2cipwNHxKsXCzmk05C+CW7
-	VV9Rdw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451pu98hag-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Feb 2025 03:12:24 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51Q3COxS006447
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Feb 2025 03:12:24 GMT
-Received: from [10.239.29.178] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 25 Feb
- 2025 19:12:20 -0800
-Message-ID: <47f5ab83-d25f-4132-83a6-38236575510c@quicinc.com>
-Date: Wed, 26 Feb 2025 11:12:18 +0800
+	s=arc-20240116; t=1740541956; c=relaxed/simple;
+	bh=OBm/ktjRULhvR+Dl6u2sMQDmw8mJ6M9OwWXPNkjttKc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ce/IevglD+tAZrHtOf0pMzTUn/qTKbOzrrwD9KJz9FMagEFCd68f0Wh3plQaCpJpKHonmct3y+V9xJDhrXkdyom6kQ4pA4GhJVBAHA1f69guZvPl4CGnAd+lL0sszfAQ7NR1ohE6p8lFSPYPOdp7MGBqUXvgIpoMoA1TPL1ecxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FpNcZV1R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82F3C4CED6;
+	Wed, 26 Feb 2025 03:52:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740541955;
+	bh=OBm/ktjRULhvR+Dl6u2sMQDmw8mJ6M9OwWXPNkjttKc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FpNcZV1Rx9gCAbniiVBT3niX4lja3lc8UTa7H47JHlJBFiNXUXSHXWlgymTeEuiIn
+	 mq5KH0gkYQS5EhsSAI8WnlOz8OD7lcyGxWyKlI1aWwBQzwoIn0gcg71Au2tWECwoDG
+	 8SS/PmWsOHdqJ3gDEIJICkDfJlQlpu4iJJphJswatwHMHIqwrD1ywVURsYvAaqkDcG
+	 M7cKR3abiwhPZ0fCOYd0Hcpe084ltQnlVRqe54EJHve4r1mr4Y/Kbe33AKTd1fvibb
+	 BPYfzE7NUagOdqcX22BkDWSw7nCw/kbHH3Zb/9TqIyP5T4AYa/P0odlH6KmSZMIeH1
+	 KtGlScGkVX8tw==
+Date: Tue, 25 Feb 2025 21:52:32 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	ath12k@lists.infradead.org, linux-wireless@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: add wifi node for IPQ5332 based
+ RDP441
+Message-ID: <3iwfhcl5gmpwfiatsawwkm5qns4pmzvhcrroq236y45kklw244@6rngcplttabx>
+References: <20250130045900.1903927-1-quic_rajkbhag@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] phy: qcom: qmp-pcie: Add PHY register retention
- support
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "Wenbin Yao
- (Consultant)" <quic_wenbyao@quicinc.com>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <p.zabel@pengutronix.de>, <abel.vesa@linaro.org>,
-        <neil.armstrong@linaro.org>, <quic_devipriy@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250220102253.755116-1-quic_wenbyao@quicinc.com>
- <20250220102253.755116-3-quic_wenbyao@quicinc.com>
- <20250224073301.aqbw3gxjnupbejfy@thinkpad>
- <7ffb09cd-9c77-4407-9087-3e789cd8bf44@quicinc.com>
- <ea5de507-1252-4ff3-9b18-40981624afea@oss.qualcomm.com>
- <20250224122439.njrcoyrfsisddoer@thinkpad>
- <eea55dfa-3dd3-488b-958c-cd20e18a7d7d@quicinc.com>
- <20250225081744.3aprpztylrdgs2cl@thinkpad>
- <4a672888-a90e-434c-b494-bb58b91c99a2@quicinc.com>
- <zppwzqdi5xbggurbqho6ivuorvlubldpjw3pyw2fdgrap4nrhp@5otsko6o5cv3>
-Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <zppwzqdi5xbggurbqho6ivuorvlubldpjw3pyw2fdgrap4nrhp@5otsko6o5cv3>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JxTPftwjFwrazOXSMYzFrhgIQ1L4FHpx
-X-Proofpoint-ORIG-GUID: JxTPftwjFwrazOXSMYzFrhgIQ1L4FHpx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-25_08,2025-02-25_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 adultscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- bulkscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0 clxscore=1015
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502260023
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250130045900.1903927-1-quic_rajkbhag@quicinc.com>
+
+On Thu, Jan 30, 2025 at 10:29:00AM +0530, Raj Kumar Bhagat wrote:
+> RDP441 is based on IPQ5332. It has inbuilt AHB bus based IPQ5332 WiFi
+> device.
+> 
+> Describe and add WiFi node for RDP441. Also, reserve the memory
+> required by IPQ5332 firmware.
+> 
+> Depends-On: [PATCH V2 0/2] mailbox: tmel-qmp: Introduce QCOM TMEL QMP mailbox driver
+> Depends-On: [PATCH V3 0/8] Add new driver for WCSS secure PIL loading
+> Link: https://lore.kernel.org/lkml/20241231054900.2144961-1-quic_srichara@quicinc.com/
+> Link: https://lore.kernel.org/lkml/20250107101647.2087358-1-quic_gokulsri@quicinc.com/
+
+Please run "git log --grep 'Depends-on'" to see how this tag is expected
+to be used. As you can see, dependencies on other patches in flight does
+not go into the git history, and should as such be mentioned only below
+the --- line below.
+
+Please wait for these dependencies to be accepted before resubmitting
+this Devicetree change.
+
+> 
+> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+> ---
+> NOTE:
+> The DT binding changes for this patch has been posted along with the
+> driver ath12k AHB series.
+> Link: https://lore.kernel.org/all/20250130043508.1885026-1-quic_rajkbhag@quicinc.com/
+> 
+> v2:
+> - Dropped 'dt-bindings: net: wireless: describe the ath12k AHB module'.
+>   This DT binding is posted along with the ath12k AHB driver changes.
+> - Reserved four memory regions required by IPQ5332 ath12k firmware in DTS.
+>   These memory regions are also referenced in the WiFi node.
+> - Moved 'qcom,smem-states' and 'qcom,smem-states' to the ipq5332.dtsi file.
+> - Used lowercase hex values for the reg property.
+> 
+> v1: https://lore.kernel.org/all/20250128091012.2574478-1-quic_rajkbhag@quicinc.com/
+> ---
+>  arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts |  64 ++++++++++-
+>  arch/arm64/boot/dts/qcom/ipq5332.dtsi       | 113 ++++++++++++++++++++
+>  2 files changed, 176 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> index 846413817e9a..4b7a75e450ca 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> @@ -2,7 +2,7 @@
+>  /*
+>   * IPQ5332 AP-MI01.2 board device tree source
+>   *
+> - * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2022-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  /dts-v1/;
+> @@ -12,6 +12,61 @@
+>  / {
+>  	model = "Qualcomm Technologies, Inc. IPQ5332 MI01.2";
+>  	compatible = "qcom,ipq5332-ap-mi01.2", "qcom,ipq5332";
+> +
+> +	/*                 Default Profile
+
+Why is the title "Default Profile", is this expected to be changed by
+someone? At what point?
+
+> +	 * +============+==============+=====================+
+> +	 * |            |              |                     |
+> +	 * | Region     | Start Offset |       Size          |
+
+"Start Offset" relative to address 0 is typically called "base address".
+
+> +	 * |            |              |                     |
+> +	 * +------------+--------------+---------------------+
+> +	 * |            |              |                     |
+> +	 * |            |              |                     |
+> +	 * |            |              |                     |
+> +	 * | WLAN Q6    |  0x4A900000  |       43MB          |
+> +	 * |            |              |                     |
+> +	 * |            |              |                     |
+> +	 * +------------+--------------+---------------------+
+> +	 * | M3 Dump    |  0x4D400000  |       1MB           |
+> +	 * +------------+--------------+---------------------+
+> +	 * | Q6 caldb   |  0x4D500000  |       5MB           |
+> +	 * +------------+--------------+---------------------+
+> +	 * | MLO        |  0x4DB00000  |       18MB          |
+
+18MB is the same size in your graph as the 1MB segment, but somehow the
+43MB segment is 5 times the size of the 18MB segment. So the graph isn't
+to scale...
+
+> +	 * +============+==============+=====================+
+> +	 * |                                                 |
+> +	 * |                                                 |
+> +	 * |                                                 |
+> +	 * |            Rest of memory for Linux             |
+> +	 * |                                                 |
+> +	 * |                                                 |
+> +	 * |                                                 |
+> +	 * +=================================================+
+
+Doesn't DDR start on a more even address, such as 0x40000000? I presume
+the purpose of your picture was to give a good overview of the memory
+layout of this system, but the only thing it added to the table below is
+a curious question about what happened to the first 169MB of DDR.
 
 
-On 2/25/2025 7:46 PM, Dmitry Baryshkov wrote:
-> On Tue, Feb 25, 2025 at 06:08:03PM +0800, Qiang Yu wrote:
->> On 2/25/2025 4:17 PM, Manivannan Sadhasivam wrote:
->>> On Tue, Feb 25, 2025 at 04:06:16PM +0800, Wenbin Yao (Consultant) wrote:
->>>> On 2/24/2025 8:24 PM, Manivannan Sadhasivam wrote:
->>>>> On Mon, Feb 24, 2025 at 12:46:44PM +0100, Konrad Dybcio wrote:
->>>>>> On 24.02.2025 9:46 AM, Wenbin Yao (Consultant) wrote:
->>>>>>> On 2/24/2025 3:33 PM, Manivannan Sadhasivam wrote:
->>>>>>>> On Thu, Feb 20, 2025 at 06:22:53PM +0800, Wenbin Yao wrote:
->>>>>>>>> From: Qiang Yu <quic_qianyu@quicinc.com>
->>>>>>>>>
->>>>>>>>> Some QCOM PCIe PHYs support no_csr reset. Unlike BCR reset which resets the
->>>>>>>>> whole PHY (hardware and register), no_csr reset only resets PHY hardware
->>>>>>>>> but retains register values, which means PHY setting can be skipped during
->>>>>>>>> PHY init if PCIe link is enabled in booltloader and only no_csr is toggled
->>>>>>>>> after that.
->>>>>>>>>
->>>>>>>>> Hence, determine whether the PHY has been enabled in bootloader by
->>>>>>>>> verifying QPHY_START_CTRL register. If it's programmed and no_csr reset is
->>>>>>>>> available, skip BCR reset and PHY register setting to establish the PCIe
->>>>>>>>> link with bootloader - programmed PHY settings.
->>>>>>>>>
->>>>>>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>>>>>>> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
->>>>>>>> Some nitpicks below.
->>>>>>>>
->>>>>>>>> ---
->>>>>> [...]
->>>>>>
->>>>>>>>> +     * In this way, no matter whether the PHY settings were initially
->>>>>>>>> +     * programmed by bootloader or PHY driver itself, we can reuse them
->>>>>>>> It is really possible to have bootloader not programming the init sequence for
->>>>>>>> no_csr reset platforms? The comment sounds like it is possible. But I heard the
->>>>>>>> opposite.
->>>>>>> PCIe3 on X1E80100 QCP is disabled by default in UEFI. We need to enable it
->>>>>>> manually in UEFI shell if we want.
->>>>>> IIUC this will not be a concern going forward, and this is a special case
->>>>>>
->>>>> I'm wondering how many *special* cases we may have to deal with going forward.
->>>>> Anyhow, I would propose to atleast throw an error and fail probe() if:
->>>>>
->>>>> * the platform has no_csr reset AND
->>>>> * bootloader has not initialized the PHY AND
->>>>> * there are no init sequences in the kernel
->>>>>
->>>>> - Mani
->>>> Hmmm, regardless of whether it's a special case, we can't assume that UEFI
->>>> will enable the PHY supporting no_csr reset on all platforms. It's a bit
->>>> risky. If we make such an assumption, we also won't need to check whether
->>>> the PHY is enabled by UEFI during powering on. We just need to check
->>>> whether no_csr reset is available.
->>>>
->>> I am not supportive of this assumption to be clear. While I am OK with relying
->>> on no_csr reset and bootloader programming the PHY, we should also make sure to
->>> catch if the PHY doesn't initialize it. Otherwise, the driver would assume that
->>> the PHY is working, but the users won't see any PCIe devices.
->>>
->>>> But it makes sense to check the exsitence of PHY senquence. How about
->>>> adding the check in qmp_pcie_init, if a PHY supports no_csr reset and isn't
->>>> initialized in UEFI and there is no cfg->tbls, return error and print some
->>>> error log so that the PCIe controller will fail to probe.
->>>>
->>> Sounds good to me.
->> I'm wondering is it necessary to add this check? In current PHY driver,
->> for PHY that doesn't suppot no_csr reset there is also no such check.
->> If a PHY supports no_csr reset and isn't init in UEFI and there is no
->> cfg->tbls, the worst issue is link training fail and PCIe controller will
->> also fail to probe. Adding sucj check seems not change the result.
-> Failing the training is a random error which can mean a lot, e.g. the
-> missing voltage rail. An explicit check is beneficial, it helps
-> developers (and users) to better understand the reason of the failure.
-In the struct qmp_phy_cfg, tbls is not a pointer, we can't directly check
-if tbls == NULL to determine if the PHY init sequence is available. Can we
-add a separate patch to change the definition from
-"const struct qmp_phy_cfg_tbls tbls" to
-"const struct qmp_phy_cfg_tbls *tbls" like tlbs_rc and tbls_ep, even though
-this will affect all platforms?
+Please omit the graph, it doesn't add value beyond what's provided by
+the below text form of the "same" data.
+
+> +	 */
+> +
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		q6_region: wcss@4a900000 {
+> +			reg = <0x0 0x4a900000 0x0 0x02b00000>;
+> +			no-map;
+> +		};
+> +
+> +		m3_dump: m3-dump@4d400000 {
+> +			reg = <0x0 0x4d400000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		q6_caldb: q6-caldb@4d500000 {
+> +			reg = <0x0 0x4d500000 0x0 0x500000>;
+> +			no-map;
+> +		};
+> +
+> +		mlo_mem: mlo-global-mem@4db00000 {
+> +			reg = <0x0 0x4db00000 0x0 0x01200000>;
+> +			no-map;
+> +		};
+> +	};
+>  };
+>  
+>  &blsp1_i2c1 {
+> @@ -63,3 +118,10 @@ data-pins {
+>  		};
+>  	};
+>  };
+> +
+> +&wifi0 {
+> +	memory-region = <&q6_region>, <&m3_dump>, <&q6_caldb>, <&mlo_mem>;
+> +	memory-region-names = "q6-region", "m3-dump", "q6-caldb", "mlo-global-mem";
+
+As you are resubmitting this, it would be nice to have these two
+properties wrapped (one entry per line), to increase readability...
+
+Regards,
+Bjorn
+
+> +	qcom,rproc = <&q6v5_wcss>;
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> index 85e10b20342a..1653da89d413 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> @@ -485,6 +485,119 @@ frame@b128000 {
+>  			};
+>  		};
+>  
+> +		wifi0: wifi@c000000 {
+> +			compatible = "qcom,ipq5332-wifi";
+> +			reg = <0x0c000000 0x1000000>;
+> +			clocks = <&gcc GCC_XO_CLK>;
+> +			clock-names = "xo";
+> +			interrupts-extended = <&wcss_smp2p_in 8 IRQ_TYPE_NONE>,
+> +					      <&wcss_smp2p_in 9 IRQ_TYPE_NONE>,
+> +					      <&wcss_smp2p_in 12 IRQ_TYPE_NONE>,
+> +					      <&wcss_smp2p_in 11 IRQ_TYPE_NONE>,
+> +					      <&intc GIC_SPI 559 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 560 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 561 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 422 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 423 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 424 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 425 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 426 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 427 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 428 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 429 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 430 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 431 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 432 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 433 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 491 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 495 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 493 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 544 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 457 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 497 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 454 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 453 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 452 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 451 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 488 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 488 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 484 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 554 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 554 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 549 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 507 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 500 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 499 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 498 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 450 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 449 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 447 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 543 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 486 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 486 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 482 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 419 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "fatal",
+> +					  "ready",
+> +					  "spawn",
+> +					  "stop-ack",
+> +					  "misc-pulse1",
+> +					  "misc-latch",
+> +					  "sw-exception",
+> +					  "ce0",
+> +					  "ce1",
+> +					  "ce2",
+> +					  "ce3",
+> +					  "ce4",
+> +					  "ce5",
+> +					  "ce6",
+> +					  "ce7",
+> +					  "ce8",
+> +					  "ce9",
+> +					  "ce10",
+> +					  "ce11",
+> +					  "host2wbm-desc-feed",
+> +					  "host2reo-re-injection",
+> +					  "host2reo-command",
+> +					  "host2rxdma-monitor-ring1",
+> +					  "reo2ost-exception",
+> +					  "wbm2host-rx-release",
+> +					  "reo2host-status",
+> +					  "reo2host-destination-ring4",
+> +					  "reo2host-destination-ring3",
+> +					  "reo2host-destination-ring2",
+> +					  "reo2host-destination-ring1",
+> +					  "rxdma2host-monitor-destination-mac3",
+> +					  "rxdma2host-monitor-destination-mac2",
+> +					  "rxdma2host-monitor-destination-mac1",
+> +					  "host2rxdma-host-buf-ring-mac3",
+> +					  "host2rxdma-host-buf-ring-mac2",
+> +					  "host2rxdma-host-buf-ring-mac1",
+> +					  "host2tcl-input-ring4",
+> +					  "host2tcl-input-ring3",
+> +					  "host2tcl-input-ring2",
+> +					  "host2tcl-input-ring1",
+> +					  "wbm2host-tx-completions-ring4",
+> +					  "wbm2host-tx-completions-ring3",
+> +					  "wbm2host-tx-completions-ring2",
+> +					  "wbm2host-tx-completions-ring1",
+> +					  "host2tx-monitor-ring1",
+> +					  "txmon2host-monitor-destination-mac3",
+> +					  "txmon2host-monitor-destination-mac2",
+> +					  "txmon2host-monitor-destination-mac1",
+> +					  "umac-reset";
+> +
+> +			qcom,smem-states = <&wcss_smp2p_out 8>,
+> +					   <&wcss_smp2p_out 9>,
+> +					   <&wcss_smp2p_out 10>;
+> +			qcom,smem-state-names = "shutdown",
+> +						"stop",
+> +						"spawn";
+> +			status = "disabled";
+> +		};
+> +
+>  		q6v5_wcss: remoteproc@d100000 {
+>  			compatible = "qcom,ipq5332-wcss-sec-pil";
+>  			reg = <0xd100000 0x4040>;
+> -- 
+> 2.34.1
+> 
 
