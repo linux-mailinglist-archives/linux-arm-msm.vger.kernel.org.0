@@ -1,119 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-49532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 258ECA46311
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 15:38:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54F04A4638C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 15:48:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26315189DE6B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 14:38:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 390893B56BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 14:47:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2138321D3FE;
-	Wed, 26 Feb 2025 14:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AC632236E3;
+	Wed, 26 Feb 2025 14:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="hxxx/PkJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S64eu0v7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [45.141.101.25])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5DB1A01BF;
-	Wed, 26 Feb 2025 14:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.141.101.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0044822332C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 14:47:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740580672; cv=none; b=F2iiIyamv0xgV8E5ZRGqBY4waC9yQhUAAk+cwHeaK/BFe8qsnHWytxU9UtdjPJPp7XMMlaGXiqidjYT5TF/MUV7NFPE6b3+so6qENhorxbyFDqWuFR6G2vPC3DwHUmamt6QNVaWeRHHgKdQVaVazHdevqDJf7+o/BWJAee/6RrQ=
+	t=1740581228; cv=none; b=uU/c9qrztczxfhtotvrgWgdANDkD9tDGc6WDiuugLAtX8341JowWcflvEBodwsaeV07VXe4PEUHtFMhsfcoydPRUZ/PjDUEmTNOcMnVqqg1d9FdMg+pVn0FwnMSgJDP8TUOkqr+OjC0Dfu+qExC0RKARKBIrOZOt+cNuHDpazp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740580672; c=relaxed/simple;
-	bh=J3OeqIzPFKPB+WA/gVtAcJYjDsj3Dkc+2pfbrvfQvTo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SsAzatdtZMJzI94WJteMDbBkXHFh/UEJK+ASz5/UyuBriRxJ0lQYkQr4y/l2wuSvhvQb357bGYWasrWztC5NGUTWOqyE3nwBsKPIUnNXZnBGoxEPMuevwK/Jz5ONlRn7iMZwg3erkVYYkxlsHz8AVzonz6pWVtUYTg5IucbnGuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=hxxx/PkJ; arc=none smtp.client-ip=45.141.101.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1740580231; bh=J3OeqIzPFKPB+WA/gVtAcJYjDsj3Dkc+2pfbrvfQvTo=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=hxxx/PkJHwL8ZiOa00+T5buESuDGINQnL+oJ8Sr8CxgI10gsQ4c+Vc/HT6wX8950H
-	 cA7YwIFqH4WGXSj8ve86YDchoEi/RLUnJPtbgUDS1JM5jsRFKctX37ljXi9Y56MG8e
-	 UZaD9ptn0ObvboWzwc8B428ua7R2Pg/+6YUdJ5Ou7fcVDvYdRbTGaOJLe9h2qagGdN
-	 57r+T/lxJVqklr9k5olZdsGOMO7dK4ScovcPtHpePZoa2i15sOdff9zZ0/Mhx4XnLa
-	 kvfN2YRSkN3O3pQNpGPsBA2LS341Frg82E3fVATWCkLtiKHeNLvirVmmWbL1ZU0FLa
-	 eHA2gicpqaBBg==
-Received: from authenticated-user (box.trvn.ru [45.141.101.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id 732CD1B2BE;
-	Wed, 26 Feb 2025 19:30:30 +0500 (+05)
-From: Nikita Travkin <nikita@trvn.ru>
-Date: Wed, 26 Feb 2025 19:29:56 +0500
-Subject: [PATCH 2/2] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine:
- Fix the overlay root
+	s=arc-20240116; t=1740581228; c=relaxed/simple;
+	bh=m/XdZhhvS6FYiXUcwXOJ1LLkTXVWffO1oF02DIV7wEg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Z1PX0zzgNOOjWznSc4LQXbYz3X+ozWxjIXR8nIxEBzxYYBWYyG38rHm+br74HYYY9Ye6ocUvvQgF3J2CMA1Rhhm1boPscupTQsPp0uhy+i6oETcFGKrgWQdKDhiJyR3XYjLwW+ko2PZiMNpCZkDqE3L8fRquBIh6lEpntoOrwPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S64eu0v7; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-38f6287649eso5425177f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 06:47:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740581223; x=1741186023; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8pOyW28UvUKwTgBKlyrzwQ8HJbMn+0BIuk/+k9qJPJw=;
+        b=S64eu0v7kcYJRl94NyQejbkOgpNvivDTCue5bJsmUbKgycmp10LRfYgw2JK0jIeSSR
+         2HxeVGcDCrNiVEB8c1g1Y3HLuA4xnRL8LF8oLpzlopCa1RWX4wLlfvCtdZzJkjCr2PBM
+         mt/Fu+3LJiR4x8/Ei7BDgZQE7nUNar9ULoklm11wS3Ruibktvj8Gyr1D3x5oVTGqooL0
+         V0Bkg/OdQ2AOec5Tz6THR4ygE06twnjFcKpMbOt3mI6knb2Nzgk7w8+ogdmeM++L0OZH
+         RfWidhzjrLo5xZyl/lII2rgRiBkASRlsQTllTBQcO43wUlD8ff/uqraX771hn1o+Xu+m
+         7xzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740581223; x=1741186023;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8pOyW28UvUKwTgBKlyrzwQ8HJbMn+0BIuk/+k9qJPJw=;
+        b=kTdCAfP6tNVmyUIKCYfixTLJhkU8Kf+H2f/UNPfSzaxfi+x7nGLx/Nq9l5DmxHoJ+D
+         MNGFelAdyVPBc9vwU1gR9XkgXNT8RZIYZe7QQyuvwppTziDV2Zc+HSbJNXfikfe1mzAS
+         YkbnRQK1eW2QhqITRt2nnokr2iSM+Tvgy3Sm5AdK+g6uDyZSMIZ1+M79PSvXmhloqZbF
+         K8ZOkSHdHrWwV0gl13ORviJJCnnww3ShVx5LCJwYHIoaEXQbD3Q5Su2jWq8AxC8WfKM0
+         iToxmDdRnlCiIHpugNHTOL/m/DlQAK5klolUkdf+Vh42QahXWqW/tzMxdaIOYtRmnaJ4
+         Bm5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUL22nGIxB1q7cKK6h6qhTIapC+FwYADom8Aq3hyxetxBjbuPLqJdyD0JwRRuqwjp1hpKolikz6CXx9QtND@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDt7mWCiM8+dJzkPwFCKmoXOINo0qusXyUFgD3O89KDcFQfNEN
+	IC7uvcJvUvELbG053q90HtgLXeH9k+4K0/qJTmsIAF4JJBG9b1zRly0EIkvL1dY=
+X-Gm-Gg: ASbGnctxwCT+iqhyK1/LL6WzpXSirvr2/e8qnkZbL/fETUFQVSY8o8ZDD6JjyrOav1Z
+	12ApsIKhmgR7yV2E76MMlL+3RTbC107ma+ROdaX6IGjXzkC/f4+AkZ/l3dkcFdFgJX5Ieb07Gcj
+	QsDoa26zMCEMVXRL/6cSgnpT2DcLKs0W/6H4TbPwvL6hc9PymvRLcxMh4pf04K84CJfcZUdhAxr
+	gy0PYC8fvsOcPbYYAJibWCgcT/U1KOiP+QhSMS/zPF3QCHEnhqdo6vs8aHlLJKcmxiafUjU8Ghb
+	0x8ZmuD0MQJIlcwJmmZBvYW/kwQSCECa5WXHibF0OuuWzhI2iItUiD63i5VLGm9tVZI=
+X-Google-Smtp-Source: AGHT+IHNRfpULJPxhQY9HtJFoLDR0d9T57OoOlmyePOM9Y/l+ILE+lMCUBjbQM1hxPRcUu2S6ET/Lg==
+X-Received: by 2002:a05:6000:1a85:b0:38d:ba81:b5c2 with SMTP id ffacd0b85a97d-38f70854e1amr17780733f8f.47.1740581223249;
+        Wed, 26 Feb 2025 06:47:03 -0800 (PST)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390cd8fbb5dsm5716850f8f.84.2025.02.26.06.47.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Feb 2025 06:47:02 -0800 (PST)
+Message-ID: <eb06daf1-3cc3-4b31-a0bf-bc450cd0f041@linaro.org>
+Date: Wed, 26 Feb 2025 14:47:01 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Some small preparations around CAMSS D-PHY / C-PHY
+ support
+To: Luca Weiss <luca.weiss@fairphone.com>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Barnabas Czeman <barnabas.czeman@mainlining.org>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+ Caleb Connolly <caleb.connolly@linaro.org>, David Heidelberg <david@ixit.cz>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241209-camss-dphy-v1-0-5f1b6f25ed92@fairphone.com>
+ <D82FU3SIX5RZ.1Y525GJO0UOAA@fairphone.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <D82FU3SIX5RZ.1Y525GJO0UOAA@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250226-qcom-nonroot-overlays-v1-2-26c6e7605833@trvn.ru>
-References: <20250226-qcom-nonroot-overlays-v1-0-26c6e7605833@trvn.ru>
-In-Reply-To: <20250226-qcom-nonroot-overlays-v1-0-26c6e7605833@trvn.ru>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1223; i=nikita@trvn.ru;
- h=from:subject:message-id; bh=J3OeqIzPFKPB+WA/gVtAcJYjDsj3Dkc+2pfbrvfQvTo=;
- b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBnvyWDJ2WBTpOYZfIs+9+zBKtvdFf9ztudPMBP8
- zQIfFvlC0OJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZ78lgwAKCRBDHOzuKBm/
- daKsD/9IoHExUKzuCp430E/igBf1wm9tCaa5dwlpz/8QjCxhGK7Ju5bT/DyoSijd5b5DXYNGYmq
- JofB+E0BqDvkbTRKel67UCXQpgFR9H2VGiPcZTbWcWNiSyLClZ3w367Yza1C1WPWMoprzDkvw5g
- YeYXXcIT7shij+TMOZoGSa2c02dH9ryNUFlXI2pyKeabc//v2jzn2D5dP1PFWuaS09R80jCKIjz
- KTh9k+jhp+8SnLRZLnpBEXMVEeiG93UXH5v7cAPbeNuTmP23F9rGIMsJdO9SEb7hPOP8ywlx1mS
- B2huuaoOKHvWtYj2qt5wVZqnNgkaIuA0pX72IocU76FaQNPf/DHBp70AOk04Usj6zY0ShdTfDP8
- lPPmoLAIF2UbHAfVYwcoF4ovb+HO+3xU39jK2cq7QOO36/uolYfOFE4yWSHXraZMpq13bBcJ+lV
- 6tiWR6Wz5qSk+t/R8IpJiybuDCEQrljOsxGmkxc5y9KfInWqpGcF29ko2eqgcrg+cd7DrNsChT0
- dCCHWFdKbnHcyKV5rxdYkVQinTtFxZIdiHnsV+iiA+gxj61M/pYFQ+jSxNAH6aU6WiOaOcfAnkA
- yj1+MH84PcrCJhCVTKSzazzISruGBL8IM0F7tvVKP65sSdxd3eak8lIOEitLIceG+H9r/0nEMJK
- oLoiz1DrXs4Nnqg==
-X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
- fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 
-When converting to the overlay format, it was missed that "/" in the
-overlay corresponds to the overlay's own root node and not the fragment
-targeted to update root of the base dts, which should be "&{/}" instead.
-This results in the cma node never actually being applied by libfdt.
+On 26/02/2025 14:13, Luca Weiss wrote:
+> Hi all,
+> 
+> On Mon Dec 9, 2024 at 1:01 PM CET, Luca Weiss wrote:
+>> Since the hardware blocks on the SoCs generally support both D-PHY and
+>> C-PHY standards for camera, but the camss driver currently is only
+>> supporting D-PHY, do some preparations in order to add C-PHY support at
+>> some point.
+>>
+>> Make the dt bindings explicit that the hardware supports both (except
+>> for MSM8916) but also add a check to the driver that errors out in case
+>> a dt tries to use C-PHY since that's not supported yet.
+>>
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>> Luca Weiss (2):
+>>        media: dt-bindings: media: camss: Restrict bus-type property
+>>        media: qcom: camss: Restrict endpoint bus-type to D-PHY
+> 
+> This series is still pending, both patches got reviews and no pending
+> comments from what I can see.
+> 
+> Would be nice to get it in for 6.15.
+> 
+Yes this should be merged.
 
-Fix the overlay to use correct target node.
+Thanks for following up.
 
-Fixes: 30df676a31b7 ("arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Convert mezzanine riser to dtso")
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index 59970082da45203311146cc5249298f6188bf67a..d8c0021b23cb51bd19e1826b6cd8544f9e10a2fe 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -9,7 +9,7 @@
- #include <dt-bindings/clock/qcom,camcc-sdm845.h>
- #include <dt-bindings/gpio/gpio.h>
- 
--/ {
-+&{/} {
- 	reserved-memory {
- 		linux,cma {
- 			compatible = "shared-dma-pool";
-
--- 
-2.48.1
-
+bod
 
