@@ -1,60 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-49519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81871A46110
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 14:40:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9B9BA46113
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 14:41:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 955E53B1025
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 13:40:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA21A165A1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 13:41:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 141342192F4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1EF721D3E6;
 	Wed, 26 Feb 2025 13:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="plmDPQff"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ehqYx3Iv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00A541C71;
-	Wed, 26 Feb 2025 13:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C419F21D3D2;
+	Wed, 26 Feb 2025 13:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740577253; cv=none; b=ceDRyuBVXbX55MeGCAeT+Wn+VQrsg1DQy/8RB6ESFSBijoRAY7LXP9cI9JCexwSOQt1Wh+sdsZKcStCsvpOk3FN8OokgdzyZbCBCh+/3j/TcsZMwWma2tdPco61/CpueTnHH8Dym1ICm+pJR1+3zOsqAKPmSkvalBGL3fSN3NGk=
+	t=1740577253; cv=none; b=DX1wsYNOe97uk6ZeZNQcDNf032Eruh5PfE3fnyPIcYcPcoaRewZfYzt7K4I25BIbDXfBQAEYF/nHYcfhezXZIkkI4robHwSdtz9Qo/NLnrR+x3at8LEb4rZPfYke/rcePoC1Q/ompNOZlSJAcuzlHr1yDP3Yjj6OxYiatoFuvPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1740577253; c=relaxed/simple;
-	bh=L6uf8oK5Soc9nDM8bA/96inI4Vk9d8hajhh3H5dyhA8=;
+	bh=n04S9VbqhiiqdQwFXbsvHwByyGdRB1rNCTH9pn6rqVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oqZSyLMaN+EdQxSuMflXNxKqCl4QLA3dtqS/Cvwk37U6MgeKAEi+8MB/XUu+CjhIxOdD0y5xeBy8KFPxD6fvCci6GwJc8p17U0/WNxfejmRQAwXx+bEmWSj8V0xbHa4aww3D1cyWxwrWUUS9kpA+sRrPo9rq4k9sDJleHAIloVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=plmDPQff; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D8EC4CED6;
-	Wed, 26 Feb 2025 13:40:51 +0000 (UTC)
+	 MIME-Version:Content-Type; b=KZI2GlgZBxVKgt78Mo4MH4FWooWwJeKlgngQr2SFxZNA3suzAuZ9xdEoVNtfP4T/piUH0qNNwNoo8OHsL467S0jQKofC2ILaAftPplKrALUV5f4j4SJw94R5xP6VEleYTofDFGsK5L9QjlX+NzsPQE4/dF+zZULYOip4ZWIIJsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ehqYx3Iv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B704C4CEE4;
+	Wed, 26 Feb 2025 13:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740577252;
-	bh=L6uf8oK5Soc9nDM8bA/96inI4Vk9d8hajhh3H5dyhA8=;
+	s=k20201202; t=1740577253;
+	bh=n04S9VbqhiiqdQwFXbsvHwByyGdRB1rNCTH9pn6rqVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=plmDPQfffxLBH4hefq4ApcNM4TJVesG1HZV/fP+ogm+ZwC2Yupya4kxTTbreaj1yz
-	 kOlToeGuT+ljmA7W9+X+SgUILMCl77us2dowIa3gyvQNTiftYTr4krkzPDwBWdVsOH
-	 sooipGquFleq+wvGGNZMVBwdzFiK3VwJs25M0o1Clr+dJ5O+OWioL9P7x9WXqB8uyc
-	 37AH6uklzTA+cexv5RdXvqPm0E6PNN90JdQuzFrUY1sHrweIRaBq9GXdHeThUJWx6q
-	 aBQ3fpPio8+SnScMs0HYXhPVMiokMBORoc7l2+idJ4od/r48sZhr/DHZFOHsMRjSG3
-	 5/VYQAfD0hvfw==
+	b=ehqYx3IvF8Se6HE4ZBL+PFaRQqnILLojO4OGxoyToHK0cShvUhaUUu6DvItgWQ0Jn
+	 mJ4qAAY2Kq9G9/lX1QqYaGVQfc3bdwmyyICAltgEL7alAHvgjeuSYQeVYPM9Ddn8dx
+	 f6nKicaA+gymiAUiuTzYHsSMgf+Z4Lzi1FJh5YRsfWXX/7wbgumW0WRbvmo1ffI+CZ
+	 p94IqW4hrsWF2cHAMtyjoIiLZ+tyqmgEuRauigwqi3axNWHYBoaEasoQcilcR8XwTF
+	 vpcXwQNY+p89OQWJADIHTWrcE4JKrpl7d/Vl5U15RtWBCX90dFGpIm7My02QdHV+xR
+	 vaxRIdpDM+PCw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-arm-msm@vger.kernel.org,
+To: brgl@bgdev.pl,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	konradybcio@kernel.org,
+	Danila Tikhonov <danila@jiaxyga.com>
+Cc: linux-i2c@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org
-Subject: Re: (subset) [PATCH v3 0/3] Add missing SDCC resets for SDM630/660
-Date: Wed, 26 Feb 2025 07:40:43 -0600
-Message-ID: <174057724686.237840.12163185412028867634.b4-ty@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	linux@mainlining.org,
+	~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: (subset) [PATCH 0/4] sm7325-nothing-spacewar: Preparing for the cameras
+Date: Wed, 26 Feb 2025 07:40:44 -0600
+Message-ID: <174057724684.237840.17593685823629213204.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250203063427.358327-1-alexeymin@postmarketos.org>
-References: <20250203063427.358327-1-alexeymin@postmarketos.org>
+In-Reply-To: <20250203111429.22062-1-danila@jiaxyga.com>
+References: <20250203111429.22062-1-danila@jiaxyga.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,21 +70,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 03 Feb 2025 09:34:23 +0300, Alexey Minnekhanov wrote:
-> These resets are part of GCC space and were missed during initial
-> porting of the platform.
-> 
-> Changelog:
-> 
-> v3:
->  * dropped fixes tags, picked r-b
+On Mon, 03 Feb 2025 14:14:25 +0300, Danila Tikhonov wrote:
+> Nothing Phone (1) - sm7325-nothing-spacewar has three camera sensors:
+> - Wide sony,imx766
+> - Ultra wide samsung,s5kjn1
+> - Front sony,imx471
+> We tested the UW and Front cameras by hacking the IMX412 in our fork and
+> they work as expected. Wide is a C-PHY sensor, so unfortunately we haven't
+> tested it fully yet.
 > 
 > [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: sdm630: Add missing resets to mmc blocks
-      commit: 0e2a500eff87c710f3947926e274fd83d0cabb02
+[1/4] arm64: dts: qcom: sm7325-nothing-spacewar: Add CAM fixed-regulators
+      commit: 542b34247f3a5aeb4d094b21522803448005685a
+[4/4] arm64: dts: qcom: sm7325-nothing-spacewar: Enable camera EEPROMs
+      commit: 588a6d006d640fde038d794bbf8db99a2cc2646f
 
 Best regards,
 -- 
