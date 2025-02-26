@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-49524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BDA4A46120
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 14:42:01 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A1FFA46124
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 14:42:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D9C116A106
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 13:42:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1B0197A9AB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 13:41:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2DD0221F17;
-	Wed, 26 Feb 2025 13:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8978A2222B0;
+	Wed, 26 Feb 2025 13:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E4AZUMRW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KkoVsqQs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E2B221DBD;
-	Wed, 26 Feb 2025 13:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBD6219E86;
+	Wed, 26 Feb 2025 13:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740577258; cv=none; b=lZux5sY1JRdFfgTsXHFq0pizgSIp7fP9EAKKWSmYKYNfoVCAjYBQ7hcpcUTd/t3+1znCza8PrOosGnz71RSC6iZULMpjhc57AA/phsnMsoZelIeUdXGqqUveFF8IoOUS7jDS4h/63Vll0adVgdvsh+U5qVjJTYI92Xl6OnPOrp8=
+	t=1740577259; cv=none; b=OffOH34gP+alRQ5JKrfPdidO8AmPB2HiLqi8+Ffz7BUj2jjYENpxyq5lUU7UNydQ94lvOGEbM9wlPcNMz/LHboF5xz9OERh6mp70hZ5LS8soNAwSSdE1sMxTlJaIiLOdvlfF0byR+4m4Le4RGWWwsPSHxCGDIbHGRtWgQ2Aw8Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740577258; c=relaxed/simple;
-	bh=7Nm2sxzGfrhqpKTsXQs52GKnexHsUMFdQK39ivYGjZ8=;
+	s=arc-20240116; t=1740577259; c=relaxed/simple;
+	bh=EiDghBz5rOWEkCy7DfK1X7QaWLd5nUQck1/JK+pH5PQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T/0THeLvA4OQOba3K2nIe4NGYEpFqGsQkrKND7JKuuOwuzLxgUO1oUArWuLv0XGa8S61xoZfwTrcUOTKcGKWauRoY2iI18MMpPBPC6UhnsnA10dJxPkmX2L8B9DLrVAU9N2PlSaDQvY6QnBpYj0Uh1ftJkXs1i7uf1BS9u8gLlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E4AZUMRW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668BCC4CEEE;
-	Wed, 26 Feb 2025 13:40:57 +0000 (UTC)
+	 MIME-Version:Content-Type; b=PQt7ysmjQLGby+YqIV71aFdUWwtJupK3if7LRrw745VCmKZ1hxfbAiXVzwDt6eJuXTqO6IPw8pKFWAFXNGBIwLvt86Xnjt/SJ5pptAAe8/CN+Q3SSGXpedH6UHwpnzTN2+B5Z9jABty49mm3e/Cf8yBnU4rcISG2AgiAljeJfdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KkoVsqQs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C56DC4CEE8;
+	Wed, 26 Feb 2025 13:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740577258;
-	bh=7Nm2sxzGfrhqpKTsXQs52GKnexHsUMFdQK39ivYGjZ8=;
+	s=k20201202; t=1740577259;
+	bh=EiDghBz5rOWEkCy7DfK1X7QaWLd5nUQck1/JK+pH5PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E4AZUMRWlkEg4Ao5QFtWC0soBE0kPh5+GDbpU9hhe8HnbSB90xWG08837z2FhKaMU
-	 iFpk0QhilLzm9CQXm/0MuPXJwZbInFuV4ruC1KGN6RRlLm+MhKVGWpGX9I3wedmGv3
-	 I0XA+FGathyzqQevC5TnafjooxEZmnF6upReV2Ebj+x8wrjIRgLfTReJ0jJ0ZAJ5GH
-	 AhcAzkZkmwdM35g1+54psgkyihj0AcbT4iHfDeVWY7cjUrerG6f+6rr9xx64Sg3vka
-	 +wHXm7hgdtHy6HX14IBo7nOdw0CuhNKgl3VXy2Oqj/LGtaSgIss126Z8LAyXyODKki
-	 AAGHAfVb6siiQ==
+	b=KkoVsqQsiXFZriOBmPuWDNF4035dKvy6VvPiyroXJAbCOP6EoVtSrK5Sk9uVKjEfd
+	 msHXGBznQxkMOrbUdmGxSu69Yl9sj50u9PrAQgCK4ocTt6Eo1GUTz4u4MsPuHmRasv
+	 JD4hVBCMEuWiJ7pWL3Q+PfwEbS48mL9jf5JYm/9FIeK6EUcbTFSpu/DG72emy4GnDl
+	 BxfAn/8XJ3TUF+0V8PeG41oxtQSAVC57y8KQpSjw9kvhJuOo9hRwsGKmCu8ImciDLi
+	 aA8QxVVuRrXo5+1248zFFqMGzswQmnbC6fqHpGiHR1sQ2UPNs2Q3DeX/EJbi8GJkjk
+	 wBhGC54uJQbyQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v4 0/4] arm64: dts: qcom: sm8650: rework CPU & GPU thermal zones
-Date: Wed, 26 Feb 2025 07:40:48 -0600
-Message-ID: <174057724683.237840.9228702761146202585.b4-ty@kernel.org>
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Cc: quic_msavaliy@quicinc.com,
+	quic_anupkulk@quicinc.com
+Subject: Re: [PATCH v4 RESEND] arm64: dts: qcom: qcs8300: Add QUPv3 configuration
+Date: Wed, 26 Feb 2025 07:40:49 -0600
+Message-ID: <174057724680.237840.4730026381777923841.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250203-topic-sm8650-thermal-cpu-idle-v4-0-65e35f307301@linaro.org>
-References: <20250203-topic-sm8650-thermal-cpu-idle-v4-0-65e35f307301@linaro.org>
+In-Reply-To: <20250224063338.27306-1-quic_vdadhani@quicinc.com>
+References: <20250224063338.27306-1-quic_vdadhani@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,30 +68,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 03 Feb 2025 14:23:16 +0100, Neil Armstrong wrote:
-> On the SM8650 platform, the dynamic clock and voltage scaling (DCVS) for
-> the CPUs is handled by hardware & firmware using factory and
-> form-factor determined parameters in order to maximize frequency while
-> keeping the temperature way below the junction temperature where the SoC
-> would experience a thermal shutdown if not permanent damages.
+On Mon, 24 Feb 2025 12:03:38 +0530, Viken Dadhaniya wrote:
+> Add DT support for QUPV3 Serial Engines.
 > 
-> On the other side, the High Level Ooperating System (HLOS), like Linux,
-> is able to adjust the CPU and GPU frequency using the internal SoC
-> temperature sensors (here tsens) and it's UP/LOW interrupts, but it
-> effectly does the same work twice for CPU in an less effective manner.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/4] arm64: dts: qcom: sm8650: drop cpu thermal passive trip points
-      commit: 7f9a670396029116424a803d3971ff0e552ff0b3
-[2/4] arm64: dts: qcom: sm8650: setup gpu thermal with higher temperatures
-      commit: 2250f65b32565eb8b757e89248c75977f370f498
-[3/4] arm64: dts: qcom: sm8650: harmonize all unregulated thermal trip points
-      commit: c516beb248a96f5a93fb4f9a6cb0dda4155eadbb
-[4/4] arm64: dts: qcom: sm8650: drop remaining polling-delay-passive properties
-      commit: 30235bb8b0487537ddd7dd4a480c907add6cd19b
+[1/1] arm64: dts: qcom: qcs8300: Add QUPv3 configuration
+      commit: 467284a3097f4348cf227053b53eb1bba2af9ae5
 
 Best regards,
 -- 
