@@ -1,113 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-49450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FF51A4590E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 09:55:21 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3A65A4591A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 09:57:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E248D188AB96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 08:55:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E0D427AA8A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 08:55:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4A85224231;
-	Wed, 26 Feb 2025 08:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23A0822423C;
+	Wed, 26 Feb 2025 08:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mVDJWhkL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UAaiCEXv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9351E258CC2;
-	Wed, 26 Feb 2025 08:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53F2224223;
+	Wed, 26 Feb 2025 08:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740560109; cv=none; b=R/sogeEZxrxVFGsSO7EMpyi8eCuHXUXAnd/ikjwk3x6L8wOrB6vDwShxcy6fNmIAk2rJnOPIGUzpIzAlMJgfYxxWBy3XfF6g4UMuWqDUEyosR6EqYFS6yvr4wf+y9q+WcnLLKU3hiRXi2jNlzEkg+rOe6HvcDdBQPNcX7T6vMq8=
+	t=1740560197; cv=none; b=FXyoCrIiPAJWzzL2+STo5EOq8ofL1E43GY/vu8oSpp/UZDmEQdm6E3asGTh5ULceWGqub6KK2re4Ix2Ae1pYbtcGidWU7ibIEiOTn6GG469mu6h4lRRd+8kf15TagXSIeDjPEJg/+k2ms7Z2Z7rX8ShsT8ZdZTWkWf6HsS9PXyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740560109; c=relaxed/simple;
-	bh=k9Imo4Ndb+Av6okiCY/htILEn6oyEwrXzbQnbAjSjo4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ITcamPqDTfIX8u1fe3xDxYvL8L/plxI6fhxQDm1875MerY5nFfZSx5SbFynMB5DyhrRotkaDp4YkGRM9jYzaApveoNI5IFl7xOrD+WeUDGCbP9o5mVnyomnWD0BiQCLJhxvAAfjN7qJJIayQw4coDsqKSQnXYXphkV4HhVMUZMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mVDJWhkL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01663C4CED6;
-	Wed, 26 Feb 2025 08:55:09 +0000 (UTC)
+	s=arc-20240116; t=1740560197; c=relaxed/simple;
+	bh=DIghG7Un6r/EZf+0vYjWs17UV3/YXHHvJnrt7OX+iuc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qiTdDjYVjWDbKGryWLSk27jm5as65Q/4jV0C5LW21c8pOkWTYGlfYi4YDDMWXUAwP5fFyIgYlOogK+5rC+XxAz3koI3LGu8Ljz+2GLhkW+MV2iZ3vGfO2Ftat54vC0Oz7+03tjVjshAaCYEVKh2s4X32SuyNhQRA3UeSa+rB3o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UAaiCEXv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB38C4CEEA;
+	Wed, 26 Feb 2025 08:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740560109;
-	bh=k9Imo4Ndb+Av6okiCY/htILEn6oyEwrXzbQnbAjSjo4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mVDJWhkLl84U3eyL0yjbQXFgShXMKq3Ay6Mog2dflRLeJZVCBeTBR+E9F43TEA5iP
-	 wSN1Foc7A2kFeeM5JFDWbAbEPhtch38XJQKpb0POGXr0rHq+yWxFd74TN6LBUy9yac
-	 eXBzIfoIPpGBFqgorhgz8jVDVot8nifzXyFOU2KbOXy3c0o2Ix/HvjvGWE9WsQviKz
-	 iajrmmlAW0TY0/le6hESGZBTfxSJ/I2q3V9oPzsMntmRkLAJ1+LwK33W6s0GF+6yK6
-	 C3NtvikLi2Z+zRNhFjoSxAev4RpXFtyghSuZQdEYxnZdvh+se/tRh4JfZkWZJqKJbe
-	 rbJIlfRH0Tw8w==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tnDCL-000000007d2-0AyI;
-	Wed, 26 Feb 2025 09:55:21 +0100
-Date: Wed, 26 Feb 2025 09:55:21 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com,
-	dmitry.baryshkov@linaro.org, maz@kernel.org,
-	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	konradybcio@kernel.org
-Subject: Re: [RFC V6 2/2] firmware: arm_scmi: Add quirk to bypass SCP fw bug
-Message-ID: <Z77W-fKBUqAALZKJ@hovoldconsulting.com>
-References: <20250226024338.3994701-1-quic_sibis@quicinc.com>
- <20250226024338.3994701-3-quic_sibis@quicinc.com>
- <Z77M5iXHQsdMptWm@hovoldconsulting.com>
+	s=k20201202; t=1740560196;
+	bh=DIghG7Un6r/EZf+0vYjWs17UV3/YXHHvJnrt7OX+iuc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=UAaiCEXvw/yoBmi7n7NM3vY8zJguA8nCpifBHAPRuYHSMrMzgxsLBgy0sk69SQPiP
+	 NSKYO2P204JgtJUO/ZncHdt/SfsfbqO9qyEIcsfNM7ZwkEy2DKoVXi7ndDmj+sV8NZ
+	 H7jmRSbH19m39+sa+kODJnst/sZiR+icDtNCt9XLcsVM7cqkm+h7M60VAfWQbWlit5
+	 O5ClEhtjU4tCowVaAeBYz5WvbDsX6TCDxCE9kT6TmTIHFgQJfA9+Ua2IFh54Mpizrp
+	 aTBHB46mq/bWXS2c8HMXzike8HHh3QdOxkeZgQiqqs0eSgAYy8nSRsD45UmCKGvgnd
+	 hpSD8ptpnkmgw==
+Message-ID: <f6686e38-b6f1-4e7d-8033-58913d2ad4d8@kernel.org>
+Date: Wed, 26 Feb 2025 09:56:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z77M5iXHQsdMptWm@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] dt-bindings: nvmem: Add compatible for MSM8960
+To: Rudraksha Gupta <guptarud@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250226-expressatt-tsens-v2-0-7a4ce3a91f27@gmail.com>
+ <20250226-expressatt-tsens-v2-1-7a4ce3a91f27@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250226-expressatt-tsens-v2-1-7a4ce3a91f27@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Feb 26, 2025 at 09:12:23AM +0100, Johan Hovold wrote:
-> On Wed, Feb 26, 2025 at 08:13:38AM +0530, Sibi Sankar wrote:
+On 26/02/2025 09:11, Rudraksha Gupta wrote:
+> Document the QFPROM on MSM8960.
 
-> >  scmi_common_fastchannel_init(const struct scmi_protocol_handle *ph,
-> >  			     u8 describe_id, u32 message_id, u32 valid_size,
-> >  			     u32 domain, void __iomem **p_addr,
-> > -			     struct scmi_fc_db_info **p_db, u32 *rate_limit)
-> > +			     struct scmi_fc_db_info **p_db, u32 *rate_limit,
-> > +			     bool skip_check)
-> 
-> This does not look like it will scale.
 
-After taking a closer look, perhaps it needs to be done along these
-lines.
+Missing SoB.
 
-But calling the parameter 'force' or similar as Dan suggested should
-make it more readable.
+Please run scripts/checkpatch.pl and fix reported warnings.
 
-> 
-> >  {
-> >  	int ret;
-> >  	u32 flags;
-> > @@ -1919,7 +1920,7 @@ scmi_common_fastchannel_init(const struct scmi_protocol_handle *ph,
-> >  
-> >  	/* Check if the MSG_ID supports fastchannel */
-> >  	ret = scmi_protocol_msg_check(ph, message_id, &attributes);
-> > -	if (!ret && !MSG_SUPPORTS_FASTCHANNEL(attributes))
-> > +	if (!ret && !MSG_SUPPORTS_FASTCHANNEL(attributes) && !skip_check)
-> 
-> Why can't you just make sure that the bit is set in attributes as I
-> suggested? That seems like it should allow for a minimal implementation
-> of this.
-
-My idea here was that you could come up with some way of abstracting
-this so that you did not have to update every call site. Not sure how
-feasible that is.
-
-> >  		return;
-> >  
-> >  	if (!p_addr) {
-
-Johan
+Best regards,
+Krzysztof
 
