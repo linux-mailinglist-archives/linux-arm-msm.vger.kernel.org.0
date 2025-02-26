@@ -1,146 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-49463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07B8BA45A7B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 10:42:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C0ADA45ADA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 10:56:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20AE03A4FD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 09:42:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B59883A8AD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 09:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D50F23814D;
-	Wed, 26 Feb 2025 09:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE23C2459E9;
+	Wed, 26 Feb 2025 09:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R8TjwwNU"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T37V6VPH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E7D15573A;
-	Wed, 26 Feb 2025 09:42:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DF4258CED;
+	Wed, 26 Feb 2025 09:54:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740562969; cv=none; b=TGktkNwHurxV03jV6wxw8T08G9HrAlAv7ne2dk0oUTiNK5tAe1c263YHYMgsIf96L/sSAslVIFUWyzf3xW4QdrkZyhPMM0Nl0BR0Toi8PGLnsvsk8SOHh04BZzCx3FxY3Hg3o9LhiME6hvZI/er59djQzDK0o8zI9P4h4JISc8M=
+	t=1740563671; cv=none; b=AJZbFAQ//RimSmbVydLn6y+ZbzS/4RD3ncokdweaApYcdmPLFc8HaC/mXoQne9gdtLba6BWA0uwo9O9cujHUZQAdHAQFf+5I8SgTZUfJDl49yaEYG4U3yynKc0XRjjBL00Tb9F3qM+Wgm5yhcWhr5ptWfbc7fV1mmov/hst0Wrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740562969; c=relaxed/simple;
-	bh=TXsD6cyaUs1vrboGEfw3swxZlrVrTV10qnITKOu4cqs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UaaATFu5WK55CYtbVx2SYzPHYnlfszkY2hM/4e6k215t5H5rgVKx1y5DxKuOJ7DgcQFct0EeR/FUnIcS0+5KDjjaqQ4Pm1Of03Uh8z8kQUR3VatNJngG8SaRjloosgvKrgF64xaLxZdgfhtQ8ViMX8yBJxUinCh0rz41RlZu7uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R8TjwwNU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632BCC4CEE2;
-	Wed, 26 Feb 2025 09:42:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740562969;
-	bh=TXsD6cyaUs1vrboGEfw3swxZlrVrTV10qnITKOu4cqs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=R8TjwwNUM3RywPhcrwFEqs/7Yo3Bby9+S0lynM9NHItSSTuYvMRJaI5pjulX6wk9m
-	 YbsMvEhMEXBYPmxjJkpXUOoaPqq+KBen9+WiKVWQzGQo2sYhSuvE/ZOZiUndgPqguV
-	 TapHEdDFASK/lTyhAgIFtfQ3c2pGMXiIgpzRoioROhb88+snUMkQqg6GnMyPDvUBd8
-	 5k/wS+4GMYMLSZj++LlA0yvkZOOYMk+lFxRC9sPmSXY8c0734ZZK7xhMPW7/cRIach
-	 b7nRq8JyhkX5AAI281kW3q/N2jJIkeepd0g+y2w4NR6Zyc1ojBuuu5AQo8YZvWNAdI
-	 v0bYkBRErKZrA==
-Message-ID: <e3713d6c-acf1-45eb-90a6-3a135a281562@kernel.org>
-Date: Wed, 26 Feb 2025 10:42:40 +0100
+	s=arc-20240116; t=1740563671; c=relaxed/simple;
+	bh=ynYdVPkFH8NphPZahSZ/UfNkTCSOldanlpu9GJfKG88=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CKmwl+UKCjsfSSoFgOJmhH0u1ZuZNkNdRJo8LDXx1pUwweups3rJ13omgyQ3xpCjQEWl+p7iUAY6/wfk+Afdmdd3ntUP5vmMLmSRSuu/INVVPPSHYknKaGjccaDcHnyqH1RkZaYnNLtohzxZirDYnpqO10NsYP+1nbvJIpKrPS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T37V6VPH; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1740563670; x=1772099670;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ynYdVPkFH8NphPZahSZ/UfNkTCSOldanlpu9GJfKG88=;
+  b=T37V6VPHWz/GvggZXfYQhvn/Vylz0zulHjHkAYtg8l+/2QhV9ZKgjSHj
+   GP7p+FcqWaFfBKpwJ/x7yKXIXZIukDxJrOGhgSi4y4D8XJzxKZHb0Hbmv
+   6QY/Yc7JzdNsxHm4Na7ePYvfx7FBSHUvCj66E2mUbqozEKk1R+/8fM/H/
+   Ds7HJRcHJ3HKFa7hbFMek5bhpJim6LWNVGSiSX73cYoBEcJCJpChDSKU5
+   v8fZy+nfgXaAJawmKDIPyq7/a7do3aGaMVrFBiZ2JOjNN7UjJxuv/5nni
+   /rJ6SXc4Ur5jnsgeUipLYDSKELPlJqqOgG5zDH5JK1XqR6419x44ZPR/Q
+   w==;
+X-CSE-ConnectionGUID: lj33qjGSQHW47ySUgZIqLg==
+X-CSE-MsgGUID: nh/OEQprQDy/x0CYk/3coQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11356"; a="41103265"
+X-IronPort-AV: E=Sophos;i="6.13,316,1732608000"; 
+   d="scan'208";a="41103265"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 01:54:29 -0800
+X-CSE-ConnectionGUID: GwLkxpNnRbeFlR8dW1iuiQ==
+X-CSE-MsgGUID: y3dxM7/VQJaUwMmx3AzrdA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,316,1732608000"; 
+   d="scan'208";a="121269320"
+Received: from kuha.fi.intel.com ([10.237.72.152])
+  by fmviesa005.fm.intel.com with SMTP; 26 Feb 2025 01:54:25 -0800
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Wed, 26 Feb 2025 11:54:24 +0200
+Date: Wed, 26 Feb 2025 11:54:24 +0200
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] usb: typec: ps883x: fix registration race
+Message-ID: <Z77k0MzLV3htrIbd@kuha.fi.intel.com>
+References: <20250218152933.22992-1-johan+linaro@kernel.org>
+ <20250218152933.22992-2-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 3/5] dt-bindings: iio: adc: Add support for QCOM PMIC5
- Gen3 ADC
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Cc: jic23@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
- dmitry.baryshkov@linaro.org, konradybcio@kernel.org,
- daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
- thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
- subbaraman.narayanamurthy@oss.qualcomm.com, david.collins@oss.qualcomm.com,
- anjelique.melendez@oss.qualcomm.com, quic_kamalw@quicinc.com,
- rui.zhang@intel.com, lukasz.luba@arm.com, lars@metafoo.de,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
- quic_skakitap@quicinc.com, neil.armstrong@linaro.org
-References: <20250131183242.3653595-1-jishnu.prakash@oss.qualcomm.com>
- <20250131183242.3653595-4-jishnu.prakash@oss.qualcomm.com>
- <20250202-pragmatic-sparkling-spider-ccd90b@krzk-bin>
- <b5707f37-cc5d-47fb-a8d6-a1da8a9a7ff1@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <b5707f37-cc5d-47fb-a8d6-a1da8a9a7ff1@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250218152933.22992-2-johan+linaro@kernel.org>
 
-On 26/02/2025 09:51, Jishnu Prakash wrote:
->>> +
->>> +  interrupts:
->>> +    items:
->>> +      - description: SDAM0 end of conversion (EOC) interrupt
->>> +      - description: SDAM1 EOC interrupt
->>> +    minItems: 1
->>
->> Same question.
+On Tue, Feb 18, 2025 at 04:29:31PM +0100, Johan Hovold wrote:
+> Make sure that the retimer is fully setup before registering it to avoid
+> having consumers try to access it while it is being reset.
 > 
-> To explain why "reg" and "interrupts" are flexible:
-> 
-> We need to add one item under each of these properties, per ADC SDAM. The number of PMIC SDAM peripherals allocated for ADC is not correlated with the PMIC used, 
-> it is programmed in FW (PBS) and is fixed per SOC, based on the SOC requirements.
-> 
-> The number of ADC SDAMs used on a given SOC with a given PMIC (like PMK8550) will be fixed, but it is possible for
-> the same PMIC to have 1 of its SDAMs allocated for ADC when used on one SOC and 2 SDAMs allocated for ADC when used on another SOC.  
-> 
-> All boards using a particular (SOC + PMIC) combination will have the same number of ADC SDAMs supported on that PMIC.
+> Fixes: 257a087c8b52 ("usb: typec: Add support for Parade PS8830 Type-C Retimer")
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-OK. Parts of above should be captured in commit msg or binding description.
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
+> ---
+>  drivers/usb/typec/mux/ps883x.c | 31 ++++++++++++++++---------------
+>  1 file changed, 16 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/mux/ps883x.c b/drivers/usb/typec/mux/ps883x.c
+> index ef086989231f..274de7abe585 100644
+> --- a/drivers/usb/typec/mux/ps883x.c
+> +++ b/drivers/usb/typec/mux/ps883x.c
+> @@ -346,6 +346,22 @@ static int ps883x_retimer_probe(struct i2c_client *client)
+>  		goto err_vregs_disable;
+>  	}
+>  
+> +	/* skip resetting if already configured */
+> +	if (regmap_test_bits(retimer->regmap, REG_USB_PORT_CONN_STATUS_0,
+> +			     CONN_STATUS_0_CONNECTION_PRESENT) == 1) {
+> +		gpiod_direction_output(retimer->reset_gpio, 0);
+> +	} else {
+> +		gpiod_direction_output(retimer->reset_gpio, 1);
+> +
+> +		/* VDD IO supply enable to reset release delay */
+> +		usleep_range(4000, 14000);
+> +
+> +		gpiod_set_value(retimer->reset_gpio, 0);
+> +
+> +		/* firmware initialization delay */
+> +		msleep(60);
+> +	}
+> +
+>  	sw_desc.drvdata = retimer;
+>  	sw_desc.fwnode = dev_fwnode(dev);
+>  	sw_desc.set = ps883x_sw_set;
+> @@ -368,21 +384,6 @@ static int ps883x_retimer_probe(struct i2c_client *client)
+>  		goto err_switch_unregister;
+>  	}
+>  
+> -	/* skip resetting if already configured */
+> -	if (regmap_test_bits(retimer->regmap, REG_USB_PORT_CONN_STATUS_0,
+> -			     CONN_STATUS_0_CONNECTION_PRESENT) == 1)
+> -		return gpiod_direction_output(retimer->reset_gpio, 0);
+> -
+> -	gpiod_direction_output(retimer->reset_gpio, 1);
+> -
+> -	/* VDD IO supply enable to reset release delay */
+> -	usleep_range(4000, 14000);
+> -
+> -	gpiod_set_value(retimer->reset_gpio, 0);
+> -
+> -	/* firmware initialization delay */
+> -	msleep(60);
+> -
+>  	return 0;
+>  
+>  err_switch_unregister:
+> -- 
+> 2.45.3
 
-Best regards,
-Krzysztof
+-- 
+heikki
 
