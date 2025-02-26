@@ -1,58 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-49562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23B36A46E36
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 23:11:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 80F07A46E47
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 23:13:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F590168F52
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 22:11:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 63340164FCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 22:13:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C670926BD90;
-	Wed, 26 Feb 2025 22:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8652026FA44;
+	Wed, 26 Feb 2025 22:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F6QsClUc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XZcLE6rH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9427426BD86;
-	Wed, 26 Feb 2025 22:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560AC26F465;
+	Wed, 26 Feb 2025 22:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740607885; cv=none; b=acjkB7N4QAOILq8Ts0Sc1rukzjuQS7YmB7UCis2dm5OxTgm8KsArcT+xXObCG5uNldXCn/IHdggctIE2eo4lBbRdESndz2Nq5u1JHqc+Dh8hlurx2WdzMOgwcV4Xmm3uUM/FLbZlN8/Uo5BZ4iVLFHFQS/J8FAtjQpvhfRcwSPc=
+	t=1740607979; cv=none; b=jJg7b7VnOnoyIpuWEuWztFLgN7zV+s/zlmH0gtkM8rbZHqVxiYic6vZuUS/r/XZpypktuARIG+FFWBwkXw6ooAALWq6kDoyNN2bGddpESXeDkX/yW6PGS0ddPYd+QyPW3gpjrsCCeL0eErKD+xlpZ4zn5JgHgSMPJYiZTnoXPL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740607885; c=relaxed/simple;
-	bh=MOKIFSZgoUNKCofZ/c+V5IfPV1kAx0kHqbFI5F+m1W0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ab0lhBmGB4PYPiAHKbVavTRLHFZ3jaJPeC8rPkBG1T/vJAQDiaAObuNmv99MiHRV94a/kz1fzE8zq7QTQwuX/gpVhQUyAJD32iBHOQ+U4RrhDsievwo08mBS5ng+PbnSxVwJha1zitP1Hi79klmfpl3chv9+O+kxcspE05Jm64I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F6QsClUc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA05C4CED6;
-	Wed, 26 Feb 2025 22:11:24 +0000 (UTC)
+	s=arc-20240116; t=1740607979; c=relaxed/simple;
+	bh=AyITmA8rf9pMLh099tYprgLtyEciAbbLGdntk9qGI60=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=h8QEmOvaAmbLEzQygHjkw1aHKdYZPQfEX7tHAcnZXpJdDK39gpIUPZwSEDqftmLXra95L+b+OkfatCu+BgKOJ8H0Cs17BF3j9uN1d3CxiCk6UuDlAczWJUDhzIQozHpI5fkaqYLXPKDyBZXf1ZpxklRLIad1vnf4QyOcx1cE+uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XZcLE6rH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE78C4CEE9;
+	Wed, 26 Feb 2025 22:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740607885;
-	bh=MOKIFSZgoUNKCofZ/c+V5IfPV1kAx0kHqbFI5F+m1W0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=F6QsClUcEkZgfd8BOiDBQVyd/oHTHKKkB4d5j0+BAmQUZBoHqZFmblijlO5og9Tym
-	 IGdw6OtHQexNXuBZtkEwl4TJY8nB1G/B8DAclnjtbXxaoSF02mq6Tgyb9Ae26H2yp+
-	 ggpCiuMz7YHPfeNFUkzlIlUDPPizIH30KMkefpQar6sTbzPP37q4jIMGML1uASciEe
-	 m+SPD1kxP5IMjI4R6PU0bFD/044WBfCmzVvOmOifwvtAP3tUDxE4X9UuzRzeRziuzH
-	 gtpDJMZfJglVKUvgyvKmNYKMLPUTDTntc1W+OS2F2KOuDYiRrCPAsqRdppvY5fuvOm
-	 Ig+Hfds1l4kdg==
-Date: Wed, 26 Feb 2025 23:11:21 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc: Wolfram Sang <wsa@kernel.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] i2c: qup: Allow scaling power domains and
- interconnect
-Message-ID: <73kkvjpufwdt4fh63jyw3w2pksvfqz3dqo2wlos7ammlfray4f@6miusqrdxtok>
-References: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
+	s=k20201202; t=1740607978;
+	bh=AyITmA8rf9pMLh099tYprgLtyEciAbbLGdntk9qGI60=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=XZcLE6rH24Lom8DmUNZKENo7PwJQ/pixzYhyTfDgEUaSLt+KSpFefYJseuhnvDYCy
+	 Aa5pU4gq4QnOm/axD6ArmqMt2q7Z0QX0q8hHNL33dwPYjd7lwjEIRa6YEuxYfyA3Fn
+	 2B6TJZCkme4O/PvBFj/dqtnBT1/DnNWu+W+4JF/0bP7n9dgAnx75ahOCohlyPSN3GE
+	 tRSmZgqr2ck6WEIjWdeGaK7DuM0UpbvZPBhr+eGWqma//YwgDCVwN+H6ZRMzO4QwAu
+	 cBsdfD2VVtBLRAl1gZVhkAmyj2Q8dbH5xQCIsRRFGo1EKoPF8WCwmxfSKH/6ONomr5
+	 Eak0Yc1WgWIYg==
+Date: Wed, 26 Feb 2025 16:12:54 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	quic_mrana@quicinc.com, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v7 2/4] PCI: of: Add API to retrieve equalization presets
+ from device tree
+Message-ID: <20250226221254.GA561689@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,22 +68,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
+In-Reply-To: <20250225-preset_v6-v7-2-a593f3ef3951@oss.qualcomm.com>
 
-Hi Stephen,
-
-On Tue, Nov 28, 2023 at 10:48:34AM +0100, Stephan Gerhold wrote:
-> Make it possible to scale performance states of the power domain and
-> interconnect of the I2C QUP controller.
+On Tue, Feb 25, 2025 at 05:15:05PM +0530, Krishna Chaitanya Chundru wrote:
+> PCIe equalization presets are predefined settings used to optimize
+> signal integrity by compensating for signal loss and distortion in
+> high-speed data transmission.
 > 
-> This is necessary to guarantee performance with power management
-> enabled. Otherwise these resources might run at minimal performance
-> state which is not sufficient for certain workloads.
+> As per PCIe spec 6.0.1 revision section 8.3.3.3 & 4.2.4 for data rates
+> of 8.0 GT/s, 16.0 GT/s, 32.0 GT/s, and 64.0 GT/s, there is a way to
+> configure lane equalization presets for each lane to enhance the PCIe
+> link reliability. Each preset value represents a different combination
+> of pre-shoot and de-emphasis values. For each data rate, different
+> registers are defined: for 8.0 GT/s, registers are defined in section
+> 7.7.3.4; for 16.0 GT/s, in section 7.7.5.9, etc. The 8.0 GT/s rate has
+> an extra receiver preset hint, requiring 16 bits per lane, while the
+> remaining data rates use 8 bits per lane.
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> Based on the number of lanes and the supported data rate, this function
+> reads the device tree property and stores in the presets structure.
 
-merged to i2c/i2c-host.
+Can you mention the function name here somewhere so we don't have to
+dig it out of the patch?  If you put it in the subject, the function
+name is descriptive enough that you hardly need anything more, e.g.,
 
-Thanks,
-Andi
+  PCI: of: Add of_pci_get_equalization_presets() API
+
+> + * of_pci_get_equalization_presets - Parses the "eq-presets-Ngts" property.
+> + *
+> + * @dev: Device containing the properties.
+> + * @presets: Pointer to store the parsed data.
+> + * @num_lanes: Maximum number of lanes supported.
+> + *
+> + * If the property is present read and store the data in the preset structure
+> + * else assign default value 0xff to indicate property is not present.
+> + *
+> + * Return: 0 if the property is not available or successfully parsed; errno otherwise.
+
+Wrap to fit in 80 columns like the rest of the file.
+
+> + */
+> +int of_pci_get_equalization_presets(struct device *dev,
+> +				    struct pci_eq_presets *presets,
+> +				    int num_lanes)
+> +{
 
