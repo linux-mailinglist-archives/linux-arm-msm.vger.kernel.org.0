@@ -1,64 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-49429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41E6FA456BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 08:32:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50149A456ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 08:47:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5D77C7A2D34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 07:31:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 50912178A9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 07:47:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 200E6267F48;
-	Wed, 26 Feb 2025 07:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1D5B26BD89;
+	Wed, 26 Feb 2025 07:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZnSOWrc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QgqyvX99"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2052158DD4;
-	Wed, 26 Feb 2025 07:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7218526B089;
+	Wed, 26 Feb 2025 07:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740555166; cv=none; b=I461/mGzz8t4A0fS0+nteazJqitF0bD1lYyfor/FiuU4FMv7SNafmZ05+MIz/Io/YlAiwmYwZpgS9NbdaYXQ+Dj2cE1ORXpd8UofLF8C7dxrBBxWHtHWAXfWngAquO2uOXwNhubwDHFhMhjruwJLVuMmmpPd1QzXidEthJxSRzs=
+	t=1740556016; cv=none; b=Ztnn5LNRVdXNjW6enplwMCwZm+5RmKZu35Iwd9M151cuJOUrd1EB0jiolf85rWyRTEjbpn0a2zh0Ukl1r5J+bJhrBhpoM825tys+RTJhHqvM0o68UhoNIMyJ2piKauRi31iLX/LFJ3MdPAqTBRoo/ghGNQYBjWY82PdwCbtw8SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740555166; c=relaxed/simple;
-	bh=i3yBUJwWR2nHLbnkwSKlJvBidp8N1zKCYReFcAUDAhk=;
+	s=arc-20240116; t=1740556016; c=relaxed/simple;
+	bh=JoAj9xLaECtQl+Lj5BZuQBxUIeb2+n1Z1pxP79r2H3Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fk0DqwQR2aZxH/d+WfweiMLq4PeoPhqMjo4vhysWa63/JusyADlyGPLsxyF1jVenqqPMUNEYu1nsx+10H8DSra9QEbl0IoMiw6+1yOE9X+pJ5G2v54Dzq6ffwWdSgKAiDaz56/FiAGQKQW4CTBBgfJlYHHQicijg6PQY4ngV/qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZnSOWrc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8B4C4CED6;
-	Wed, 26 Feb 2025 07:32:44 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=eU9lyG/z4UHwTeSKKNts5ArqPqrLQThZNRaMXBXR5d9HzllUCI6FawshxGfYL9EVfBNS4VAU/T+R5nTnRwEsCK61bQU2WfrlbWgqpm8binmKcCC8kJB613GSQKC/zWhA0+eO5lMNoE0MrHBf/hjDGdnXOS7nCLOqCx8LRFoVpoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QgqyvX99; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DD5C4CED6;
+	Wed, 26 Feb 2025 07:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740555165;
-	bh=i3yBUJwWR2nHLbnkwSKlJvBidp8N1zKCYReFcAUDAhk=;
+	s=k20201202; t=1740556013;
+	bh=JoAj9xLaECtQl+Lj5BZuQBxUIeb2+n1Z1pxP79r2H3Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iZnSOWrc0534guOCFWF3FoGRqYV1GlyUmFrwgIbROiK9rLsd0ayqM1xEdlPXMAqSh
-	 HniEWuVBoyAGumLibd0DuSPosEoXMpfbgMy5KQxi7KDzAaqyN7eVmKBodgCv20Pfty
-	 gdLuTRnR34nSWCaiNJBkLSN8KuYktv5wvP0hSbGe2LV3C2BtSo+3RMmciVN7cCGvW6
-	 Od9ERN5yet2XqQOuCGRz4VZdEeL8bYVo0jKNJ5cmbRL5Pw65Yd1umqkbUNW2x0v5kc
-	 bbzqTcI9mp+unBHvd6ZBQnKcCT2KUKZtCHo0IHiTjWTkGsYQR1rOz20OFb7YRgkf/u
-	 xSI/Z6WfjK0IA==
-Date: Wed, 26 Feb 2025 08:32:42 +0100
+	b=QgqyvX991q884nQHjvQHuZwzm9PwsbnVmBzYqk3CBYUFaJ+IehlBR3Uc/dYSSApK8
+	 Ers6An5ej3cLmBul0T3wXnqmqZVpjcp8B+G1zE6YzWwkEvSMY1oLRUQagoKt14v7SK
+	 qksaH7l01YxnXAm+jKHOuNdqwauJdD8dc6yqrUrnN3NMKL7pCHetBWb1b2hfpgWWJH
+	 Hc01Ac9dcH4cvsYcyoL0GaXqoJZ2s+NEq8nYuzV+M+RGs9iib1uuuMO8suO2kVTOVk
+	 gXK/8oQVI9uLrC+De8O5bk7aP3pEQ1j+7QFaYzsPOc7d6VbrxB//6T6tgwF4IlKn2m
+	 GmBiGYyfnN1lg==
+Date: Wed, 26 Feb 2025 08:46:50 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Rob Herring <robh@kernel.org>, 
+To: Luca Weiss <luca@lucaweiss.eu>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	chaitanya chundru <quic_krichai@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
-	Jingoo Han <jingoohan1@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicnic.com, 
-	amitk@kernel.org, dmitry.baryshkov@linaro.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	jorge.ramirez@oss.qualcomm.com
-Subject: Re: [PATCH v4 09/10] dt-bindings: PCI: qcom,pcie-sc7280: Add
- 'global' interrupt
-Message-ID: <20250226-enlightened-chachalaca-of-artistry-2de5ea@krzk-bin>
-References: <20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com>
- <20250225-qps615_v4_1-v4-9-e08633a7bdf8@oss.qualcomm.com>
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] dt-bindings: display: panel: Add Himax HX83112B
+Message-ID: <20250226-speedy-dark-mushroom-5d7c4b@krzk-bin>
+References: <20250225-fp3-display-v2-0-0b1f05915fae@lucaweiss.eu>
+ <20250225-fp3-display-v2-2-0b1f05915fae@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,46 +65,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250225-qps615_v4_1-v4-9-e08633a7bdf8@oss.qualcomm.com>
+In-Reply-To: <20250225-fp3-display-v2-2-0b1f05915fae@lucaweiss.eu>
 
-On Tue, Feb 25, 2025 at 03:04:06PM +0530, Krishna Chaitanya Chundru wrote:
-> Qcom PCIe RC controllers are capable of generating 'global' SPI interrupt
-> to the host CPU. This interrupt can be used by the device driver to handle
-> PCIe link specific events such as Link up and Link down, which give the
-> driver a chance to start bus enumeration on its own when link is up and
-> initiate link training if link goes to a bad state. The PCIe driver can
-> still work without this interrupt but it will provide a nice user
-> experience when device gets plugged and removed.
+On Tue, Feb 25, 2025 at 10:14:30PM +0100, Luca Weiss wrote:
+> Himax HX83112B is a display driver IC used to drive LCD DSI panels.
+> Describe it and the Fairphone 3 panel (98-03057-6598B-I) from DJN using
+> it.
 > 
-> Hence, document it in the binding along with the existing MSI interrupts.
-> Global interrupt is parsed as optional in driver, so adding it in bindings
-> will not break the ABI.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 > ---
->  Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+>  .../bindings/display/panel/himax,hx83112b.yaml     | 75 ++++++++++++++++++++++
+>  1 file changed, 75 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
-> index 76cb9fbfd476..7ae09ba8da60 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
-> @@ -54,7 +54,7 @@ properties:
->  
->    interrupts:
->      minItems: 8
-> -    maxItems: 8
-> +    maxItems: 9
->  
->    interrupt-names:
->      items:
-> @@ -66,6 +66,7 @@ properties:
->        - const: msi5
->        - const: msi6
->        - const: msi7
-> +      - const: global
 
-Either context is missing or these are not synced with interrupts.
+Discussion is still going. Sending v2 after two days is hiding that
+previous talk, so that makes me sad.
+
+I am still at v1 and I am not going to review this one here.
 
 Best regards,
 Krzysztof
