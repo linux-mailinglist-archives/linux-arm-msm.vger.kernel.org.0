@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-49481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DA02A45CB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 12:09:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA132A45CD5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 12:14:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5FC1C162E30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:09:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 376C2162741
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:13:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 564061A3169;
-	Wed, 26 Feb 2025 11:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB32A2144DB;
+	Wed, 26 Feb 2025 11:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K4PkizeA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U4UZjGRV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287FA1925BA;
-	Wed, 26 Feb 2025 11:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6FF214207;
+	Wed, 26 Feb 2025 11:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740568173; cv=none; b=mUp4ZKGlz7wtkB9wbZ3kgRROsWe1ow76VfOQUNvG2efoMR3zsqF8DmXDHs4cY22BPA1XG8FbL+KlKB9PgefdFwUZErY5oy6LYiIpaazox1ExKegjTgWbv0xIIPEc94ImLS1H22pXCtXqL6qzarM0ciwM9J0XK4t23neJbMmNKd0=
+	t=1740568341; cv=none; b=LIyke05fPD0vHhojyUvzafcpEGuE4KdSH+iNzzWJYWyGikCMxRskPogkUUZr1JzgW3i3rx8WDx0atFobafqLi+FheZynCnqTfYYAbk7lbGUMsrlwEKnlucavhP8u3U0gOAJu8/B+/xRsMifr59gaHQxfFKX8b3z+7WC09LHKLtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740568173; c=relaxed/simple;
-	bh=MHm2io10GdTyBbgyWfXeVlZ2/mG8TgvsSf8dQBDFNsY=;
+	s=arc-20240116; t=1740568341; c=relaxed/simple;
+	bh=jZw9UiUOrosfMM/sq64CfD9dAVrPX0T09356az2lcn8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GsZbH0srL29oLnrWDqn/9L/gYaB/YwkwlNu839GNd0ElSkExUcgH9ZeJMTDFC8MKkJHlDrLpPPRCRV0LhYFyB6BmUS1yDzbalKRhkmDpKVSh4+i0erEqZglLf89nzeJmRyCrl+63Y+hUL2SAnrJtMPZUM+GFO8FuDcjry/iMN50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K4PkizeA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E4FC4CED6;
-	Wed, 26 Feb 2025 11:09:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=iMhF3KKKWgjCqIV0tgQWH+Jan/p4tfI5kwkRD3C3kY9p34BcM2/OJrpB07URYSZngLD4Y+RC5HFf/SD6ba3z8hC7GlUDGCDWpdqT0wDdEHkwap2sLDps7QceHb5fcWgEUIs6YUYCrEenotSnUsbEtWnsHLnyJRkR1/lDLZUxWUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U4UZjGRV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDEEC4CED6;
+	Wed, 26 Feb 2025 11:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740568173;
-	bh=MHm2io10GdTyBbgyWfXeVlZ2/mG8TgvsSf8dQBDFNsY=;
+	s=k20201202; t=1740568341;
+	bh=jZw9UiUOrosfMM/sq64CfD9dAVrPX0T09356az2lcn8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=K4PkizeAb0CwJrJrpZrO3qosJ9eAZth7PQoIJztZuGBBYEV62zHKJ/cW5ANB4n9Kl
-	 0BUz/oWgFSt+GSFN++Y2Yh5KGhum7dorKlNJmAnO4lxGcsaYJtP7C1SgegmZSJcHhd
-	 eoRrJMfeuhLfGhGv5PN+YLOOqqP+4asiP74LZkibMNjxYQqdEB40Nf55JAzqJjWx7J
-	 +mrv9QGPivd1EvtcvgcpzHTWMD3cc/AbcvwqxQE/MrKv4bm819yccQeczL6h+ZfPzy
-	 1DZ2g148h2DRbPhC61gL8ZsrkzaF6ioTN/b9xfRKTkSCMnC9Gc2WIy3LqXsAYkvkr9
-	 Ec8XgbOZN6bTQ==
-Message-ID: <d1c945bd-a738-4f01-8b93-c2a03b190c34@kernel.org>
-Date: Wed, 26 Feb 2025 12:09:27 +0100
+	b=U4UZjGRVj/GAe6cQw0SBXKABZXheweZqqsnuaK4R7FEnAhhYuB8935c1pxzUuKy23
+	 iKjuW4Gyk85euPwoTSQRQZXO3d5OS/TLNhoYgQAOdHbBsHV7Xo2oLkm3xSXxMdV9Lc
+	 R0AQM+OizId6HH0sYEAvA0CGTxafjlOnDoPQMAWbfdDFf/r//XF22TUUvNUWqx1810
+	 ZQhPRTOagkhWDk8B9E/QspEnB24zRmoHkblV1OSbhEx26tV7D3NGJu8fa+snYKJKoH
+	 6jllMkSzApR7AHf3oNSAJRZM0SvgnJujN9hKmFDFVb8L+fipgtmQVaBEmobtFW0jfn
+	 /5ZnapxjCVNow==
+Message-ID: <6f01269a-bd64-46e7-800f-d8d59c4bf72e@kernel.org>
+Date: Wed, 26 Feb 2025 12:12:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] dt-bindings: arm: Add Coresight device Trace NOC
- definition
+Subject: Re: [PATCH v2 5/5] coresight-tnoc: add nodes to configure freq packet
 To: Yuanfang Zhang <quic_yuanfang@quicinc.com>,
  Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
  <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
@@ -63,7 +62,7 @@ Cc: kernel@quicinc.com, linux-kernel@vger.kernel.org,
  kernel@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20250226-trace-noc-driver-v2-0-8afc6584afc5@quicinc.com>
- <20250226-trace-noc-driver-v2-1-8afc6584afc5@quicinc.com>
+ <20250226-trace-noc-driver-v2-5-8afc6584afc5@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,24 +108,58 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250226-trace-noc-driver-v2-1-8afc6584afc5@quicinc.com>
+In-Reply-To: <20250226-trace-noc-driver-v2-5-8afc6584afc5@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 26/02/2025 12:05, Yuanfang Zhang wrote:
+> Three nodes for freq packet config are added here:
+> 
+> 1. freq_type: used to set the type of issued ATB FREQ packets.
+> 0: 'FREQ' packets; 1: 'FREQ_TS' packets.
+> 
+> 2. freq_req_val: used to set frequency values carried by 'FREQ'
+> and 'FREQ_TS' packets.
+> 
+> 3. freq_ts_req: writing '1' to issue a 'FREQ' or 'FREQ_TS' packet.
+> 
+> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> ---
+>  drivers/hwtracing/coresight/coresight-tnoc.c | 97 ++++++++++++++++++++++++++++
+>  1 file changed, 97 insertions(+)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-tnoc.c b/drivers/hwtracing/coresight/coresight-tnoc.c
+> index ad973749250644760adc4dfd855240026d0a744c..24b1add4c921866b944d756e563d50b4172d583a 100644
+> --- a/drivers/hwtracing/coresight/coresight-tnoc.c
+> +++ b/drivers/hwtracing/coresight/coresight-tnoc.c
+> @@ -112,10 +112,107 @@ static ssize_t flag_type_show(struct device *dev,
+>  }
+>  static DEVICE_ATTR_RW(flag_type);
+>  
+> +static ssize_t freq_type_show(struct device *dev,
+> +			      struct device_attribute *attr,
+> +			      char *buf)
+> +{
+> +	struct trace_noc_drvdata *drvdata = dev_get_drvdata(dev->parent);
 > +
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-tnoc
-> +      - const: arm,primecell
+> +	return sysfs_emit(buf, "%u\n", drvdata->freq_type);
+> +}
 > +
-> +  reg:
-> +    minItems: 1
-> +    maxItems: 2
-> +    description:
-> +      Physical address space of the device.
-Not much improved - still items are not listed. Which binding did you
-choose as an example as I asked to? (so I can fix it)
+> +static ssize_t freq_type_store(struct device *dev,
+> +			       struct device_attribute *attr,
+> +			       const char *buf,
+> +			       size_t size)
+
+No improvements. You got here comments and you got also later my
+complain that yo missed comments already.
+
+You keep ignoring received feedback and that's a no go for me.
+
+Maybe process needs to be improved, so reach to your colleagues and
+learn how to interact with upstream. There is very comprehensive
+internal guideline in Qualcomm, so follow it carefully.
+
+I expect still to respond to my original comment or implement it fully.
 
 Best regards,
 Krzysztof
