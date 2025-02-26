@@ -1,196 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-49414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56F3AA454D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 06:19:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D657A454E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 06:30:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6FC4B3A9B6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 05:19:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1903F16C362
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 05:30:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A460319D8A4;
-	Wed, 26 Feb 2025 05:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2FC136358;
+	Wed, 26 Feb 2025 05:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i1JCnNMx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hoKf9oVM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EBD1925A6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 05:19:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3199D4430
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 05:30:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740547159; cv=none; b=FHOpc+8gcydfoo6jmzugD7Iza3akN/V84YkvLdWRE3h7o+neStyAxKHYQCa/LFn+Vj8SStKq49RLyXIz2YE7tjslvoA2fLsKAz+ny4Snk+v33K5LFQRsbg1he08wODH0ERLM/vndWtuulNn41FwGu14XENUaucWyCUoPEh1JiKQ=
+	t=1740547826; cv=none; b=Oduo/NCnnAfhIebdH9LH3d4e3UAGzE7OGfji0Lr+ps9Byx1ATNB5Z3YG4ktwzr1+LakQifjnSNZjmSxzdEwOlusD4mjX5p5G5vm8Mn1Oj/zcMdJpJPZUQbQgUgRIQHxTTkJ6V8EG4TuhF6jbgvYIhU5qnd95brPs9nGwG214+Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740547159; c=relaxed/simple;
-	bh=PU4rgz4UqbomnvL0C0GUKnj/4S461kaQTOJVw1OcS1U=;
+	s=arc-20240116; t=1740547826; c=relaxed/simple;
+	bh=PDCwV3qdEOjxXIjtKkWf5Vz2HcCqhICawWEfa4yI5K8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y5sSKLt46sga1JjZZzlQ8sQj6sQFll0EWQxW172goDRCNOiashD15NvsWINBUrwyB/NQasdLKHIkheoPzstzoZN07/whuQztVmbglPSH4va/HfBShrmpAJ0nQ35lN781wRnz8tVzvbqrN+ha3YcStGLV4t5/Gv/gBRFrL9OAlA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i1JCnNMx; arc=none smtp.client-ip=209.85.167.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=b+9TQLCt8a2M5kCzKMrq/wXb72NXLqXE3jn3Emn7eBHP2xbGbLVIhlwdoHojWuCbOQxh85I9EV90JL6cgpGtsmjaruh32sLp2z3vwFdcUN2+UyyIgiM10KJ/dROL7ZT/2EUrHlcfFj9ydU4pTs/OsmFhvO8WwkZsLsvYd8lU1gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hoKf9oVM; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5461dab4bfdso7585567e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 21:19:17 -0800 (PST)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-220e6028214so139634495ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 21:30:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740547155; x=1741151955; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740547824; x=1741152624; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=zF9gFcyKZ4Btfiq3+cszj8NUyBbRLBvZ0lzqaTVmau8=;
-        b=i1JCnNMx9xvwKnYBW4Px5mcZtIIpxNCzF0bm2s8PTsobK5HnWs0WOskdLuijF7IQ2/
-         L1OztCZ9hnrOcP2fzwS3cEmhHHSpG76pw21U+Qt80GXJaKMNuwKQ759B1MjvF/xjQteK
-         nTSQSlDNpNNO5UFlLNqxBS0YxasSc6SBwhHnA/ugDbMD9B7C8GHzTG3c6nWyyT3OJy+x
-         fP1rnENIkvH5j49K4q7dn+sgqMDbsXBubB7B7I2Js3pBv2+S/JFj+mrGDUeAP/kGvvyh
-         pikDsEs6s+AsPLaYYFuE9osAr8a5zkw9r0JOiZt1VSv7CQK69tlBFWmiMNKt2obTidaR
-         W16Q==
+        bh=Ysxu4HBM1PvBAX3G7aQAJNrxG8wBMOF98K3kSzCpKb4=;
+        b=hoKf9oVMGq/+2ovy8FOqD2fmzLHSTD8lGrmrZtUKQC7itxUJJAsI+fR+xw1l+RYBmD
+         Ljf6IgoB6vTyHnWa4Wsp4cEff0bvxOr5Zl5bIPXewCJuMn4jkgnHrBe5bJYJxNn95T0g
+         9Aj1ddGjbZ2QZdMcAqEiy3jOeXNlop7sABATIrmL43bVSHBvuqEwN4P95MtxaB6XdNHu
+         ZHn8xbComngq+Pocw2X1PxoBLcb1ViyAzCwjN2zlHoO4a1Gc8KjZc9WDw0rIlRsOLCl9
+         gcGSNCvvs4W20XyQjioyWvCflTIgoYEjvRfju2I9En4zpMKAt3Bq+O+lc/CNHdPLLYia
+         i57g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740547155; x=1741151955;
+        d=1e100.net; s=20230601; t=1740547824; x=1741152624;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zF9gFcyKZ4Btfiq3+cszj8NUyBbRLBvZ0lzqaTVmau8=;
-        b=Bv/c/C45/nbgwtLHcfLRN/jbGRxIRir5SrLoKtOMdHVipWGP7vLmz23F1wW3Lrbir9
-         Ao9mSda1TNHTEujS6wDz8AZikjPtvc9Mv71JGA/+dzlJ7x6vbJhcTgdyQNwP5q8jId/K
-         fC9f5AC2sCQGqy1Qx9mnUCpPav5gB4pc9sNl55ksAGyzK4RTjAV2zzRAz77YkTZZuivQ
-         7zySZwFCHdqheIcB6HvN6Ot/kQrfmuoZU36h0YMFJe/c8GmXJUrNp9KTn1VUId3c+Px8
-         4Q6IdoUboRe04ukCIziGpg6cXSdmExaiDpShqWwzzm+h8seARtcgWJuQ24ep2o+2jKtx
-         5V8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWljBf40wpHYvljQIk7QbvH4jRFIl5fvmtCsIPxqNvCYCw8/cVcIoVd/IpBIkSMNiWh3bo6boacKN8XMtYz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1V2FIMO/gd3sNkg3S1LQBmnAymBNJAL4xXXF5dMPtNhzWBj+i
-	jouwhBlAY0mxs+0RCiYfhHUYX68j6vU4N+YLBOzxpuZAZ9iaG0UnFa57SCa0fDA=
-X-Gm-Gg: ASbGnctwTmLUzh3AKCe3NHcF+6ehfkxDFVeQNSyaVhtSigh157JLrR4Wn7CwPFXv/0C
-	RYvPIyzZxTOMrs+HfZvQqbKCsiasWYw0sqOX0IcrV7td30BSvrZE9P9kbXBnbxR0oC/yIJP+Yqp
-	fi5xhenOPeNktGTeoiVuCUSQRn6O2Q9EKhGFONyROzv/LHAqXb0f2PGtrJpJyw018NE3olrv0wc
-	VIYsHL1V6AC84wbgnvPd29tyNE+QR1ivCAAJYeA+esnku4Srm5i3N8tVgno1Jj9yC16Cs3OwY3i
-	1q8jQ4TIAhTfWRqVtUMbs5DniNBnCYqXd52CkPoaL+Aj9prN9u4c7zBsi/rsfIZabENFOgXUGbU
-	JXxfAZA==
-X-Google-Smtp-Source: AGHT+IHxPX3HbPicsOXhvRZbaE9MW4TbT5RH1tcAURZxDzAmkFlXwfGCZD0yRzM+p1X+SJrXmqCkLQ==
-X-Received: by 2002:a05:6512:3049:b0:545:3031:b4d7 with SMTP id 2adb3069b0e04-54838edda6fmr8881336e87.6.1740547155397;
-        Tue, 25 Feb 2025 21:19:15 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-548514efdf7sm341633e87.108.2025.02.25.21.19.12
+        bh=Ysxu4HBM1PvBAX3G7aQAJNrxG8wBMOF98K3kSzCpKb4=;
+        b=Q941gvuvyhVeoI0rBf/l+47C/fITYGQ7iIbfaKqo/eSXA480Gv6n7SM/gknxnKUjnM
+         QXuW1Aqb/ThpuX6/rQE8VhIA7ty2lnXIngpd+Lwx8rVHY91C3Y2p6WE6di5HIJIwIKS9
+         7fZ57XLE74BtGaAT0rpNsfoaqBoLJ1DQ46q3dNcVsDqE2y8TNIqgN7VdRqU5HdpfOOJr
+         aFx2SaXIG9TcyyweRoDU1OOS1N4tl0NSGy6b553afPrE/SMrljS+964HUri70Pi4R6KV
+         pIwZEVDRWhI1qgmaUWtx4YTEOiwrpWaPwrNzAqMO5DBgMbT2TKiPI37IrzHfKri6n2tt
+         PvRg==
+X-Forwarded-Encrypted: i=1; AJvYcCWllPLCZz2fc9lvBaUv2LTI/+rm6LcDgq1Jgz/FKNQaybvWVRDe3EuSUYbO8B5xMn8M9HL6N4yspl61GDyK@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXsQiP7uo6OCSVTUpWo9xjgx1AmaJNoexUlqNwZ0qq4QAr+X+n
+	z70VgPZBMvroCf6lEjbGvdZBGquBFwdlVpbOl6cYR+kufQDDpyKLSQy/Sj4q5w==
+X-Gm-Gg: ASbGncs9NxK5XI4X4T4hC4Jz3efSn82Xx92xwwQBXfVm67MTUrBDmT+4+/Rnkz5Ms+1
+	WKZC4UtaLD1t7fvOI+TewhwfrpSWrN3T5e7A4KgQBwQqKgXfAvlHnr+eGmztn6OceBCZdSdxB09
+	f9k+m5fEUTKTVthe35ap6+7DsehLNopZYqsyGXZXanejZb0whdT86JdKS92A8yINH8WHfM52rgq
+	qXeW0z9E95O3fm82n4IiA59rOtw+qOZ6btugtVfXjuP1bCBKF08xwiqPmelvDwIHzggLlw1SHD5
+	rPbJvXwNW8Cwiqq4eNo7PReYMtV1eFfvDx8M
+X-Google-Smtp-Source: AGHT+IG1ATYcBA3Lx5kX9fxW7lirbjTeUCqtNQ1K3OphxIX9hK11KaA9lvhbUyRdKaGgUECgCpTu2A==
+X-Received: by 2002:a17:903:1c4:b0:215:5ea2:6544 with SMTP id d9443c01a7336-2219ff827b7mr300683495ad.7.1740547824537;
+        Tue, 25 Feb 2025 21:30:24 -0800 (PST)
+Received: from thinkpad ([120.60.72.190])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2230a0a6252sm23604675ad.186.2025.02.25.21.30.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 21:19:13 -0800 (PST)
-Date: Wed, 26 Feb 2025 07:19:11 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	"Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, vkoul@kernel.org, 
-	kishon@kernel.org, p.zabel@pengutronix.de, abel.vesa@linaro.org, 
-	neil.armstrong@linaro.org, quic_devipriy@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] phy: qcom: qmp-pcie: Add PHY register retention
- support
-Message-ID: <ophii26vvcogjtvktsexi6ffnug2wi5hjsppyb44uhypk43o5b@t4bbghgatd73>
-References: <20250220102253.755116-3-quic_wenbyao@quicinc.com>
- <20250224073301.aqbw3gxjnupbejfy@thinkpad>
- <7ffb09cd-9c77-4407-9087-3e789cd8bf44@quicinc.com>
- <ea5de507-1252-4ff3-9b18-40981624afea@oss.qualcomm.com>
- <20250224122439.njrcoyrfsisddoer@thinkpad>
- <eea55dfa-3dd3-488b-958c-cd20e18a7d7d@quicinc.com>
- <20250225081744.3aprpztylrdgs2cl@thinkpad>
- <4a672888-a90e-434c-b494-bb58b91c99a2@quicinc.com>
- <zppwzqdi5xbggurbqho6ivuorvlubldpjw3pyw2fdgrap4nrhp@5otsko6o5cv3>
- <47f5ab83-d25f-4132-83a6-38236575510c@quicinc.com>
+        Tue, 25 Feb 2025 21:30:23 -0800 (PST)
+Date: Wed, 26 Feb 2025 11:00:19 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bart Van Assche <bvanassche@acm.org>
+Cc: Manivannan Sadhasivam <manisadhasivam.linux@gmail.com>,
+	Manish Pandey <quic_mapa@quicinc.com>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_nitirawa@quicinc.com
+Subject: Re: [PATCH 0/3] scsi: ufs-qcom: Enable Dumping of Hibern8, MCQ, and
+ Testbus Registers
+Message-ID: <20250226053019.y6tdukcqpijkug4m@thinkpad>
+References: <20241025055054.23170-1-quic_mapa@quicinc.com>
+ <20241112075000.vausf7ulr2t5svmg@thinkpad>
+ <cb3b0c9c-4589-4b58-90a1-998743803c5a@acm.org>
+ <20241209040355.kc4ab6nfp6syw37q@thinkpad>
+ <3a850d86-5974-4b2d-95be-e79dad33636f@acm.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <47f5ab83-d25f-4132-83a6-38236575510c@quicinc.com>
+In-Reply-To: <3a850d86-5974-4b2d-95be-e79dad33636f@acm.org>
 
-On Wed, Feb 26, 2025 at 11:12:18AM +0800, Qiang Yu wrote:
-> 
-> On 2/25/2025 7:46 PM, Dmitry Baryshkov wrote:
-> > On Tue, Feb 25, 2025 at 06:08:03PM +0800, Qiang Yu wrote:
-> > > On 2/25/2025 4:17 PM, Manivannan Sadhasivam wrote:
-> > > > On Tue, Feb 25, 2025 at 04:06:16PM +0800, Wenbin Yao (Consultant) wrote:
-> > > > > On 2/24/2025 8:24 PM, Manivannan Sadhasivam wrote:
-> > > > > > On Mon, Feb 24, 2025 at 12:46:44PM +0100, Konrad Dybcio wrote:
-> > > > > > > On 24.02.2025 9:46 AM, Wenbin Yao (Consultant) wrote:
-> > > > > > > > On 2/24/2025 3:33 PM, Manivannan Sadhasivam wrote:
-> > > > > > > > > On Thu, Feb 20, 2025 at 06:22:53PM +0800, Wenbin Yao wrote:
-> > > > > > > > > > From: Qiang Yu <quic_qianyu@quicinc.com>
-> > > > > > > > > > 
-> > > > > > > > > > Some QCOM PCIe PHYs support no_csr reset. Unlike BCR reset which resets the
-> > > > > > > > > > whole PHY (hardware and register), no_csr reset only resets PHY hardware
-> > > > > > > > > > but retains register values, which means PHY setting can be skipped during
-> > > > > > > > > > PHY init if PCIe link is enabled in booltloader and only no_csr is toggled
-> > > > > > > > > > after that.
-> > > > > > > > > > 
-> > > > > > > > > > Hence, determine whether the PHY has been enabled in bootloader by
-> > > > > > > > > > verifying QPHY_START_CTRL register. If it's programmed and no_csr reset is
-> > > > > > > > > > available, skip BCR reset and PHY register setting to establish the PCIe
-> > > > > > > > > > link with bootloader - programmed PHY settings.
-> > > > > > > > > > 
-> > > > > > > > > > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> > > > > > > > > > Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
-> > > > > > > > > Some nitpicks below.
-> > > > > > > > > 
-> > > > > > > > > > ---
-> > > > > > > [...]
-> > > > > > > 
-> > > > > > > > > > +���� * In this way, no matter whether the PHY settings were initially
-> > > > > > > > > > +���� * programmed by bootloader or PHY driver itself, we can reuse them
-> > > > > > > > > It is really possible to have bootloader not programming the init sequence for
-> > > > > > > > > no_csr reset platforms? The comment sounds like it is possible. But I heard the
-> > > > > > > > > opposite.
-> > > > > > > > PCIe3 on X1E80100 QCP is disabled by default in UEFI. We need to enable it
-> > > > > > > > manually in UEFI shell if we want.
-> > > > > > > IIUC this will not be a concern going forward, and this is a special case
-> > > > > > > 
-> > > > > > I'm wondering how many *special* cases we may have to deal with going forward.
-> > > > > > Anyhow, I would propose to atleast throw an error and fail probe() if:
-> > > > > > 
-> > > > > > * the platform has no_csr reset AND
-> > > > > > * bootloader has not initialized the PHY AND
-> > > > > > * there are no init sequences in the kernel
-> > > > > > 
-> > > > > > - Mani
-> > > > > Hmmm, regardless of whether it's a special case, we can't assume that UEFI
-> > > > > will enable the PHY supporting no_csr reset on all platforms. It's a bit
-> > > > > risky. If we make such an assumption, we also won't need to check whether
-> > > > > the PHY is enabled by UEFI during powering on. We just need to check
-> > > > > whether no_csr reset is available.
+On Mon, Dec 09, 2024 at 10:35:39AM -0800, Bart Van Assche wrote:
+> On 12/8/24 12:03 PM, Manivannan Sadhasivam wrote:
+> > On Tue, Nov 12, 2024 at 10:10:02AM -0800, Bart Van Assche wrote:
+> > > On 11/11/24 11:50 PM, Manivannan Sadhasivam wrote:
+> > > > On Fri, Oct 25, 2024 at 11:20:51AM +0530, Manish Pandey wrote:
+> > > > > Submitting a series of patches aimed at enhancing the debugging and monitoring capabilities
+> > > > > of the UFS-QCOM driver. These patches introduce new functionalities that will significantly
+> > > > > aid in diagnosing and resolving issues related to hardware and software operations.
 > > > > > 
-> > > > I am not supportive of this assumption to be clear. While I am OK with relying
-> > > > on no_csr reset and bootloader programming the PHY, we should also make sure to
-> > > > catch if the PHY doesn't initialize it. Otherwise, the driver would assume that
-> > > > the PHY is working, but the users won't see any PCIe devices.
 > > > > 
-> > > > > But it makes sense to check the exsitence of PHY senquence. How about
-> > > > > adding the check in qmp_pcie_init, if a PHY supports no_csr reset and isn't
-> > > > > initialized in UEFI and there is no cfg->tbls, return error and print some
-> > > > > error log so that the PCIe controller will fail to probe.
-> > > > > 
-> > > > Sounds good to me.
-> > > I'm wondering is it necessary to add this check? In current PHY driver,
-> > > for PHY that doesn't suppot no_csr reset there is also no such check.
-> > > If a PHY supports no_csr reset and isn't init in UEFI and there is no
-> > > cfg->tbls, the worst issue is link training fail and PCIe controller will
-> > > also fail to probe. Adding sucj check seems not change the result.
-> > Failing the training is a random error which can mean a lot, e.g. the
-> > missing voltage rail. An explicit check is beneficial, it helps
-> > developers (and users) to better understand the reason of the failure.
-> In the struct qmp_phy_cfg, tbls is not a pointer, we can't directly check
-> if tbls == NULL to determine if the PHY init sequence is available. Can we
-> add a separate patch to change the definition from
-> "const struct qmp_phy_cfg_tbls tbls" to
-> "const struct qmp_phy_cfg_tbls *tbls" like tlbs_rc and tbls_ep, even though
-> this will affect all platforms?
+> > > > TBH, the current state of dumping UFSHC registers itself is just annoying as it
+> > > > pollutes the kernel ring buffer. I don't think any peripheral driver in the
+> > > > kernel does this. Please dump only relevant registers, not everything that you
+> > > > feel like dumping.
+> > > 
+> > > I wouldn't mind if the code for dumping  UFSHC registers would be removed.
+> > 
+> > Instead of removing, I'm planning to move the dump to dev_coredump framework.
+> > But should we move all the error prints also? Like all ufshcd_print_*()
+> > functions?
+> 
+> Hmm ... we may be better off to check which of these functions can be
+> removed rather than moving all of them to another framework.
+> 
 
-Of course no. There is no need to introduce extra indirection. Checking
-for qmp_phy_cfg.tbls.serdes_num should be more than enough. No matter
-what, the PHY with a proper configuration tables will have non-empty
-SERDES table.
+devcoredump turned out to be not a good fit for storage drivers. And I can't
+figure out another way. And Qcom is telling me that these debug prints are
+necessary for them to debug the issues going forward.
+
+Your thoughts?
+
+- Mani
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
