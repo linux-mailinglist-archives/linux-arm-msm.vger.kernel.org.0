@@ -1,208 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-49438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83EE6A457B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 09:10:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABB3FA457BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 09:11:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7792016BA78
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 08:10:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6C633A5328
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 08:11:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 751741898FB;
-	Wed, 26 Feb 2025 08:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CB65258CFE;
+	Wed, 26 Feb 2025 08:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kXcPbggz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OwKLCuh6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEA7258CC1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 08:10:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACB0258CC1;
+	Wed, 26 Feb 2025 08:11:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740557425; cv=none; b=PoQx/aYnFEbFfETNQ07LTNS+CbE1UGw4XvdHeNpdl8RRnZwgI6jMPnbALoX5tmEu4QIRu3zLsjb9bZ8qaW7LX6RQQMsAtVd24ci0QJpnGUilizbOLUVW9v/YURZk+nT7YExMeUDMzRdTjfodV7ZhQe+MaU5VgLK0v7qU9cZzZig=
+	t=1740557472; cv=none; b=Vcj+hCcFYa8Gory0Ra8jT+iw2y7biP05EMmU6OxKFe7OhtIO3PGDRWYKdKtiEJXgOBW0wI3vyf5Ovk3rMqpTuRVhpCL558rxz4lsrQ+KK1KrbxaNbsgF+VFco1MDdnC8QTfg4tgskQNy2UHoTnDmedSehLJzaw4AYGwy39KizNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740557425; c=relaxed/simple;
-	bh=m16n2a0G+H+R4XeqWbUshVKKT5SxZQTLx9zmaPENiPM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QZO1v8XS6HPOrxz4w3kNu5Up8s2FX/dvm5bLSQi93dQWk5CExljExvClVU1TNB6xpBoDqIgj7ufDNYFiDT2Lqo8qZAIdFU25ruzOPOo/u8xcGsVnnTc1KKkncQ7QNG9ay47ZkK2jY63XpOhwNKr7kmiBQ/7SjrDxb5FEUoHFYl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kXcPbggz; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-abb7f539c35so1262007266b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 00:10:21 -0800 (PST)
+	s=arc-20240116; t=1740557472; c=relaxed/simple;
+	bh=KDES5uF21mvxBvhM+ltGYgr2RNHky/xKTFAr5D9B0ik=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bn12kRqNBS5RoS5vglKmvI7avaCbvYIx4bGscdChRV9lQjl17WRfSOCT9K4giqU12QZ+NuE4+DXP5SLNqBs/M4zuxQ2gtSn6hsslC+KynCbRrYYDGCjzQtmckwFw54SAWuo2M8e++YK7G/u4cIrI5b6Zn8CEivs/kOsjsmEcR/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OwKLCuh6; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-22114b800f7so130320525ad.2;
+        Wed, 26 Feb 2025 00:11:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740557420; x=1741162220; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yzL0HH6+3pjB6JtUVnEkC+XEezkYR9X8Kd/L450a2PU=;
-        b=kXcPbggzg2g9xvRUylTF5YWyTUmcdLbmPK3oABsnoBDK//we7JdIKTt2/XMfMi1pC4
-         maH7IhVx4bOSVkDAdHuRhZCeoOTVOTXurXCh33QzGGNxaxN4zDXA1KM4ZQKJ17WBLNXm
-         N9/FO5S3PKTV0odv15Kw/EpbupM/Rge3xzhxs7vq5WEfiR2PYYax0UUENo1TiGWjSHkV
-         ChF203hu8Af5cv6LSBttJE7paPVm53c1CYnUTWWJOyysP+degwnaAbq9mAO//AWh5mam
-         zbOiuDUd0nG3K2jdkYuAF3sLbro82fStSj9cyDGcIwn22r1mvGXuWtKXDQjdD6+tKbBp
-         iIqA==
+        d=gmail.com; s=20230601; t=1740557470; x=1741162270; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3z1MJaCTxF1SDisC/mT94LqBSMyXwhbG907miCNkk+c=;
+        b=OwKLCuh6uTPR/9y9W4wEAQMZUbV719Xo3nFPo6y8OVWBsbmnHVSysYmDqISOBDz/C4
+         fhh6CpoJlAcRHoUmEtsreY7ScbCEgOQFFNKz1b30wmoVMwsTIRTHwLHWGNtNrQ/ThBk1
+         sSqQLPVGn+55Jt2nloOshhTezOyJG0Z1Opq0/VZi7WNPHBzY8lSFcnNWNP1aV9OTDsXn
+         Ps+ljV708OHooklLRQN4vfMMdNyNbOk0Qo3wIRecCgLL77k0kEZX6rt9OJtWnZWfaGnJ
+         aWxiv3GObqhh6Q8skVQyIqa90k+G8h8FfAbeNBKtfKGld6dg0kilnBBlCclIRjMyCwRK
+         /1Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740557420; x=1741162220;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yzL0HH6+3pjB6JtUVnEkC+XEezkYR9X8Kd/L450a2PU=;
-        b=IK+YS+ZrXSWNCar+7yT+Mk655sn87IfatlbNbHuMFIm3LeI3gywpaQvXZciEN/cBKs
-         3rIdgI67rRKcADCl/HwKnvZxr+eTVsqPvUI+SVGBxOdE8ooAJN/wVfW77nQUUnUf0eng
-         UGJJA9r58neg8+GJ9/Z+KECuRVOxUrU2ohDMYxgWqTrNisX7AcDgg2/Z59DTtgW//BJX
-         Kl70dXlEdOyc6OectFttfLKrAhqapXX7/f5v9ugGohdsI9V4TEe9NNlLsuQCyuXbzvTo
-         FfKlDBbTWpoW35zJe5egn+SfnqNmoXU3PwoPQ5nbzgTmuG87t9m0uFu5XLyyKUfXj6vf
-         5uGw==
-X-Forwarded-Encrypted: i=1; AJvYcCXtK+9jYn2SsjRMmVVPt41SHCkBLn3eF741hoEaQoz3i4WX2YGLMV+sbscCYRAKbeSFZ60beY7CuISC/RoT@vger.kernel.org
-X-Gm-Message-State: AOJu0YwvESRUJbkBOdFhS6V/BcMWYEbxAeB1MdfJ8/u8qyARDzJ1KPaQ
-	LW6mSpO75WyNc0PfVdUun+1TU5sqjxigzhUOFAH3mMDg04dVUivCOhWU4J0eY0E=
-X-Gm-Gg: ASbGncv1nWhtrT+pBbB+IzkE9ZdJuBMSZrmE7tn+oKLyCJO78w18H9ywMy1H2m0anio
-	9iwVLO8f5O+wvsPDUbIH+AwaMdF0WiTuN79PjWOjF7pFyTBYGxw/Dn1jXrMQTM97Kq/ZTf+yWyG
-	rmbQiQbKwiUwTh4l8JBHFUlgUE0gv0C7lXp//m6MhCbnSCfbMszkeSBcRk9w1tBZAmTGlgPBz0E
-	+6+qJQkX4tBBeUXSMsClcO8oxLDKBe6Mlb47UskdebSspZIDLP4kCKf5g8GoZdScyLmHYk7U4ao
-	ul9uvRVNVIaIq6NMArXzmrJO1QsGKuY=
-X-Google-Smtp-Source: AGHT+IHpAStU3+Mniiaci5QMGYjPh41Vll/PquOYd6UlaCbeosoKMMhRy2Vp0kLKhOE9xPeFAQTT2Q==
-X-Received: by 2002:a17:907:868a:b0:ab7:d179:2496 with SMTP id a640c23a62f3a-abed0c77de1mr720783166b.6.1740557420331;
-        Wed, 26 Feb 2025 00:10:20 -0800 (PST)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-abed1d5c369sm288355466b.60.2025.02.26.00.10.18
+        d=1e100.net; s=20230601; t=1740557470; x=1741162270;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3z1MJaCTxF1SDisC/mT94LqBSMyXwhbG907miCNkk+c=;
+        b=p6jaYyaz8Uyr/boYhTLfCxisz+mIl79jlM6o+dFKdFz1eZicLCUr0+U14b45JLUcUt
+         b3WCK48lzkNKToqk70vAIkov6UYf7oL0w3CSSoxkorS3mqPpjpwhVmB90Pg3nNv2Z6Oc
+         0G7l5HaPsbZz/8/vAWvCB/k9s2MtC3oMu686evjlgyqyPpvKBJIZI94ySDmVxfdwY0og
+         Vh9xDG8YV4rV5EpE3DV9b/SSzK4O+XRk0P8wWljp3seEhlc/FmIor41OtZukrwlXo02x
+         u8D4xJ6Gv7/d+tbJQGtHcaoL9WDHc+0ZcScQgMeTlAk/kKHNXRW8ywOpR2k9A1luoUhk
+         GnGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU16ORemPwRZlyPBp8Q6vGpUyNtYscVq87IV+vOIA1inFaIb4/Ne9Ab3b6L/octZoXT+UAMjYVc52g9@vger.kernel.org, AJvYcCUKJCrAdGpxAWMaKktyWi3pXsTGJN2UI093FVNQ8mBSLzqkiqg63NQD8K0kqDax9/P25r8+eZIy6eJLMKP+@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjvlkLbRUzqw53u7knR3m6MSvBdcBkWmQHCLblmTiBZ1m2ta+V
+	WY+cbSKGKq4TQEQSpEBIUvGWTTy7RNKMUYBgjo0YwDsqnbHyDr5j
+X-Gm-Gg: ASbGncvGMUjOTTn0wyT3L8gB0EzznD+h24IA4SllaSeu2I+fW0332wZfX0EM2cjUqoA
+	YGBDkJ77kwmG0ejvIkYfghDGgtrIoT+mg1WZBwsY4ZtyO7E+ndmj5TYr1c1JeTP8h0KXgrYRWI9
+	XYXD5rPL4uIgQmFURSROXZOQOHp2jaCGGtYalJR9IMgvgmWgNHm/tPlKBOr6eWZwUBbU+S7pajx
+	NB3fwZOTjgV5HIHu4BAjCde5zxY/qDRoXxiTc+PW4Ci2NX5H8nAVTnwuZwqQwt3PG4HQlP9gSDo
+	35ZV+3RqbF6TYNl33N8ucOc66+0=
+X-Google-Smtp-Source: AGHT+IGrEjsuyovLVVBUD1zJCuHlVPeYZo1Jl1kCwKkWE0Cjz8hNTBbtMQDWeIyL5PDqEm/McSUzhA==
+X-Received: by 2002:a17:902:f693:b0:220:d078:eb28 with SMTP id d9443c01a7336-223202081e2mr38579085ad.48.1740557469802;
+        Wed, 26 Feb 2025 00:11:09 -0800 (PST)
+Received: from [127.0.1.1] ([2601:644:8501:1640:3de5:6339:3d24:b93b])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2231fa8a570sm10641625ad.58.2025.02.26.00.11.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 00:10:19 -0800 (PST)
-Date: Wed, 26 Feb 2025 11:10:15 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, johan@kernel.org,
-	dmitry.baryshkov@linaro.org, maz@kernel.org,
-	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	konradybcio@kernel.org
-Subject: Re: [RFC V6 2/2] firmware: arm_scmi: Add quirk to bypass SCP fw bug
-Message-ID: <4fe60edd-6e0b-4e7f-9d4b-632203790b5b@stanley.mountain>
-References: <20250226024338.3994701-1-quic_sibis@quicinc.com>
- <20250226024338.3994701-3-quic_sibis@quicinc.com>
+        Wed, 26 Feb 2025 00:11:09 -0800 (PST)
+From: Rudraksha Gupta <guptarud@gmail.com>
+Subject: [PATCH v2 0/2] Copy tsens node from apq8064 and adjust some values
+Date: Wed, 26 Feb 2025 00:11:07 -0800
+Message-Id: <20250226-expressatt-tsens-v2-0-7a4ce3a91f27@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250226024338.3994701-3-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJvMvmcC/32NQQqDMBBFryKzbkocEpWueo/iItVRB2osmRAsk
+ rs39QBdvv/57x8gFJgEbtUBgRILb74AXioYFudnUjwWBtRoNaJVtL8DibgYVRTyonQzmsZ2rbO
+ dgTIr9cT7qXz0hReWuIXP+ZDqX/pHlmpVK43mSWQn1Ka9z6vj13XYVuhzzl9qbPh6sAAAAA==
+X-Change-ID: 20250225-expressatt-tsens-06d46587a584
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>, 
+ wctrl <wctrl@proton.me>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1740557468; l=774;
+ i=guptarud@gmail.com; s=20250208; h=from:subject:message-id;
+ bh=KDES5uF21mvxBvhM+ltGYgr2RNHky/xKTFAr5D9B0ik=;
+ b=QS/JKPte6GyYRYdeVpoFyUPlt0Mm2AN0P4hnMFPhzgj1GysqIl1HHM062EOPleir46hvGaNI+
+ cDD3TQxwn5qCbRB538uXzlVoRrGWXiB/nld5L817G/geEeJ3aPR85mI
+X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
+ pk=5lJNaiR/Bu7edToWFLriO5zXOrVqSQWrBKbAKwuEw04=
 
-On Wed, Feb 26, 2025 at 08:13:38AM +0530, Sibi Sankar wrote:
-> The addition of per message-id fastchannel support check exposed
-> a SCP firmware bug which leads to a device crash on X1E platforms.
+Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+---
+Changes in v2:
+- Remove coefficients as it's read from EEPROM
+- Fix dtsi formatting
+- Fix dtschema warnings introduced with v1
+- Link to v1: https://lore.kernel.org/r/20250225-expressatt-tsens-v1-1-024bee5f2047@gmail.com
 
-You're fixing a bug that is introduced in patch 1.  That's not allowed.
-These need to be squashed into one patch.  I means the patch will be
-slightly long and the commit message will be slightly long but I
-feel like it's manageable.
+---
+Rudraksha Gupta (2):
+      dt-bindings: nvmem: Add compatible for MSM8960
+      ARM: dts: qcom: msm8960: Add tsens
 
-> The X1E firmware supports fastchannel on LEVEL_GET but fails to
-> have this set in the protocol message attributes and the fallback
-> to regular messaging leads to a device crash since that implementation
-> has a bug for all the X1E devices in the wild. Fix this by introducing
-> a quirk that selectively skips the per message-id fastchannel check only
-> for the LEVEL_GET message on X1E platforms.
-> 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  drivers/firmware/arm_scmi/driver.c    |  5 +++--
->  drivers/firmware/arm_scmi/perf.c      | 30 +++++++++++++++++++++------
->  drivers/firmware/arm_scmi/powercap.c  |  8 +++----
->  drivers/firmware/arm_scmi/protocols.h |  2 +-
->  4 files changed, 32 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-> index 9313b9020fc1..b182fa8e8ccb 100644
-> --- a/drivers/firmware/arm_scmi/driver.c
-> +++ b/drivers/firmware/arm_scmi/driver.c
-> @@ -1903,7 +1903,8 @@ static void
->  scmi_common_fastchannel_init(const struct scmi_protocol_handle *ph,
->  			     u8 describe_id, u32 message_id, u32 valid_size,
->  			     u32 domain, void __iomem **p_addr,
-> -			     struct scmi_fc_db_info **p_db, u32 *rate_limit)
-> +			     struct scmi_fc_db_info **p_db, u32 *rate_limit,
-> +			     bool skip_check)
->  {
->  	int ret;
->  	u32 flags;
-> @@ -1919,7 +1920,7 @@ scmi_common_fastchannel_init(const struct scmi_protocol_handle *ph,
->  
->  	/* Check if the MSG_ID supports fastchannel */
->  	ret = scmi_protocol_msg_check(ph, message_id, &attributes);
-> -	if (!ret && !MSG_SUPPORTS_FASTCHANNEL(attributes))
-> +	if (!ret && !MSG_SUPPORTS_FASTCHANNEL(attributes) && !skip_check)
->  		return;
+ .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |  1 +
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           | 59 +++++++++++++++++++++-
+ 2 files changed, 59 insertions(+), 1 deletion(-)
+---
+base-commit: ffd294d346d185b70e28b1a28abe367bbfe53c04
+change-id: 20250225-expressatt-tsens-06d46587a584
 
-This is explained well in the commit message but the comment here needs
-to be better.  Also if scmi_protocol_msg_check() fails then we should
-return.  Let's rename the variable to "force_fastchannel".
-
-	ret = scmi_protocol_msg_check(ph, message_id, &attributes);
-	if (ret)
-		return;
-
-	/*
-	 * Check if the MSG_ID supports fastchannel.  The force_fastchannel
-	 * quirk is necessary to work around a firmware bug.  We can probably
-	 * remove that quirk in 2030.
-	 */
-	if (!force_fastchannel && !MSG_SUPPORTS_FASTCHANNEL(attributes))
-		return;
-
-
->  
->  	if (!p_addr) {
-> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-> index c7e5a34b254b..5b4559d0b054 100644
-> --- a/drivers/firmware/arm_scmi/perf.c
-> +++ b/drivers/firmware/arm_scmi/perf.c
-> @@ -48,6 +48,10 @@ enum {
->  	PERF_FC_MAX,
->  };
->  
-> +enum {
-> +	PERF_QUIRK_SKIP_FASTCHANNEL_LEVEL_GET,
-> +};
-
-Let's keep the FORCE_FASTCHANNEL naming.  Normally we would do this like:
-
-#define PERF_QUIRK_FORCE_FASTCHANNEL BIT(0)
-
-> +
->  struct scmi_opp {
->  	u32 perf;
->  	u32 power;
-> @@ -183,6 +187,7 @@ struct scmi_perf_info {
->  	enum scmi_power_scale power_scale;
->  	u64 stats_addr;
->  	u32 stats_size;
-> +	u32 quirks;
->  	bool notify_lvl_cmd;
->  	bool notify_lim_cmd;
->  	struct perf_dom_info *dom_info;
-> @@ -838,9 +843,10 @@ static int scmi_perf_level_limits_notify(const struct scmi_protocol_handle *ph,
->  }
->  
->  static void scmi_perf_domain_init_fc(const struct scmi_protocol_handle *ph,
-> -				     struct perf_dom_info *dom)
-> +				     struct perf_dom_info *dom, u32 quirks)
->  {
->  	struct scmi_fc_info *fc;
-> +	bool quirk_level_get = !!(quirks & BIT(PERF_QUIRK_SKIP_FASTCHANNEL_LEVEL_GET));
-
-	bool force_fastchannel = !!(quirks & PERF_QUIRK_FORCE_FASTCHANNEL);
-
->  
->  	fc = devm_kcalloc(ph->dev, PERF_FC_MAX, sizeof(*fc), GFP_KERNEL);
->  	if (!fc)
-
-regards,
-dan carpenter
+Best regards,
+-- 
+Rudraksha Gupta <guptarud@gmail.com>
 
 
