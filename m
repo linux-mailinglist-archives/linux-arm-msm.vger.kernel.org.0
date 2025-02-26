@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-49484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9352FA45CE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 12:17:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A97BA45CEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 12:20:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9557416141A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:17:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ECBE41883CEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:20:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AC8520E31F;
-	Wed, 26 Feb 2025 11:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48B4C214222;
+	Wed, 26 Feb 2025 11:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HaeThs8N"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FIQCwrrn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145931A2C0B;
-	Wed, 26 Feb 2025 11:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B40A18BC3F;
+	Wed, 26 Feb 2025 11:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740568658; cv=none; b=Apo30wq2NF8RQmqQfENAZIBWyNaF/NGavC/upP4Y3xi997VaISZ9bJaDr43apa0tySY7OkzXHpLKjfPVplC9i4b47kMUdYF8FywY3Wc0ob/84sX/9NMe85i9cccyudOp4qGahKwvHuiZRjRK2qBaKuirsv37lBWqbk2VrVl/rcA=
+	t=1740568821; cv=none; b=PX2TOUPHoi/H5XOJzhBfxDZUBuZ/ZwrDheDJMcH1IzsGfph01UJLz8bFMpghTNhzW8ktIrqvJO/GktXd7KgWGAbGuMLTfhny19v+hjgRxY4NwoFfJXPFr6lQPLrvr0QrFazNJW6sa5Df6ibVyB/4iBVqiOVxAgsOB+0LKxXNTC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740568658; c=relaxed/simple;
-	bh=7/KhHCNzmJJ/t9mQPUjzLL7Pfm96XkWSysYhhYdAhdA=;
+	s=arc-20240116; t=1740568821; c=relaxed/simple;
+	bh=gruYM7mrSaPUeCfe+9dZ9++l4fXt7v710dR5E5U2++M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NRLGO5fnp3QrkG7ISSLRb4OKMoJBezuVmEFBP487ykp536RhX3ljyaA59H9SE0hUgkrZw+YCclNpIaHrRmP9p2OIw8ToN7C4x8ivD0f+gLvrPq+2rDmdePiWAc9wt9QLGmCMnda8v/xoTPYopod6rL06z7b5iNjgGqSuhQa0qeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HaeThs8N; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E52C4CED6;
-	Wed, 26 Feb 2025 11:17:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=R7eggOn2DcqR5kOBRj+k2KLXBSDyVzNwmNFRP8nU0oS0b4i4hUo2Vqbo6sPicpALWA2peJ3j/6zosz4CZ+s/zWlTXgMiaAkJCt1yJyrlc6J118ckjvvV7OQxkRVRZ0HGKUA9CSU2s/fEF2K0jOMGa4peWXjmLAlXsel7T9E76wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FIQCwrrn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA70C4CED6;
+	Wed, 26 Feb 2025 11:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740568657;
-	bh=7/KhHCNzmJJ/t9mQPUjzLL7Pfm96XkWSysYhhYdAhdA=;
+	s=k20201202; t=1740568820;
+	bh=gruYM7mrSaPUeCfe+9dZ9++l4fXt7v710dR5E5U2++M=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HaeThs8No7iKfcEzyWyPGDMXgGzg/WV1VlirWCoZHyaa/8V0xQ42bPzHNpfVsKBtO
-	 r2Cq0ssLOARGeFsKeuw9IEAJeHfa4omw74hbtn52v0ZC9zO8KdXb12yxVl6rp+Qngj
-	 gj986yXmu2Yd8jV1L1rWL6IrOsBWJymtuoFNGMs50tKmc9EazcG03GqtV7Zi35n8aB
-	 vfIHXcj8CK0KOp9s1EF3ZWpRvP/obwEt/Ww9c/AcGNhyBcIJaA3wbyyQNEtKQvFcwQ
-	 UajmadIZq2fZZD6zPqx5oFA7PpURvwDqQ+O5RF0QOWqGZ9bzBRPjZq3bBrWV7FHxvS
-	 HcRYpVMrMUQPA==
-Message-ID: <e535b0ed-b79f-4c98-8585-be5aea69f18d@kernel.org>
-Date: Wed, 26 Feb 2025 12:17:28 +0100
+	b=FIQCwrrnDRdu/tRDZ7U/bvMl0v2SmpTeuIVRo4bfPnjRHpgUMg/1ST5t4729gLwyo
+	 JfOPjmp4jtR/snwZnDouCDgiBEWu+icl5uISKKvtVZ5/tKAxa8ITjjw6IquK3l5FID
+	 cnGCQmBbuzt3itpuMa+ivYR9brkk821CVaMKIKDhtsR8HzfO+Eib2JlAaWDhkYn9WH
+	 Hp8hmY62UVM1uAFQc5ia6Ju7V4Xdtkt1qkeGtqxzKM3h7kPSuSTxd42Do0jL6rBF5o
+	 MZGJiFTw/gzfizQAZaRUX4/DTKToezA/0njnwVM9HioFCckrrDknVsfHmSkSyG9mbW
+	 f2f2jpa78phMg==
+Message-ID: <c2759c9e-29e2-4df8-a9d0-7f1b3c079352@kernel.org>
+Date: Wed, 26 Feb 2025 12:20:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 6/6] arm64: defconfig: Build NSS Clock Controller
- driver for IPQ9574
-To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
- catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
- richardcochran@gmail.com, geert+renesas@glider.be,
- dmitry.baryshkov@linaro.org, arnd@arndb.de, nfraprado@collabora.com,
- biju.das.jz@bp.renesas.com, quic_tdas@quicinc.com, ebiggers@google.com,
- ardb@kernel.org, ross.burton@arm.com, quic_anusha@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org
-Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com
-References: <20250207073926.2735129-1-quic_mmanikan@quicinc.com>
- <20250207073926.2735129-7-quic_mmanikan@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 1/5] dt-bindings: arm: Add Coresight device Trace NOC
+ definition
+To: Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: kernel@quicinc.com, linux-kernel@vger.kernel.org,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ kernel@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250226-trace-noc-driver-v2-0-8afc6584afc5@quicinc.com>
+ <20250226-trace-noc-driver-v2-1-8afc6584afc5@quicinc.com>
+ <d1c945bd-a738-4f01-8b93-c2a03b190c34@kernel.org>
+ <913b8fd3-ffc2-45d9-a8bc-e52a05b85c81@quicinc.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -111,22 +111,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250207073926.2735129-7-quic_mmanikan@quicinc.com>
+In-Reply-To: <913b8fd3-ffc2-45d9-a8bc-e52a05b85c81@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 07/02/2025 08:39, Manikanta Mylavarapu wrote:
-> From: Devi Priya <quic_devipriy@quicinc.com>
+On 26/02/2025 12:16, Yuanfang Zhang wrote:
 > 
-> NSSCC driver is needed to enable the ethernet interfaces present
-> in RDP433 based on IPQ9574. Since this is not necessary for bootup
-> enabling it as a module.
 > 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> On 2/26/2025 7:09 PM, Krzysztof Kozlowski wrote:
+>> On 26/02/2025 12:05, Yuanfang Zhang wrote:
+>>> +
+>>> +  compatible:
+>>> +    items:
+>>> +      - const: qcom,coresight-tnoc
+>>> +      - const: arm,primecell
+>>> +
+>>> +  reg:
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>> +    description:
+>>> +      Physical address space of the device.
+>> Not much improved - still items are not listed. Which binding did you
+>> choose as an example as I asked to? (so I can fix it)
+>>
+> qcom,coresight-tpda.yaml
+But there is no description there. About the items, I will fix it, thanks.
 
 Best regards,
 Krzysztof
