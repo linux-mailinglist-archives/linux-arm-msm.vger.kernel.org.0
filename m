@@ -1,115 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-49563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80F07A46E47
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 23:13:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 517B8A46E62
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 23:18:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 63340164FCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 22:13:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B5DB71888CAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 22:19:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8652026FA44;
-	Wed, 26 Feb 2025 22:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 648D425BAD6;
+	Wed, 26 Feb 2025 22:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XZcLE6rH"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="CqdwBf3U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560AC26F465;
-	Wed, 26 Feb 2025 22:12:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E5A25BACE;
+	Wed, 26 Feb 2025 22:18:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740607979; cv=none; b=jJg7b7VnOnoyIpuWEuWztFLgN7zV+s/zlmH0gtkM8rbZHqVxiYic6vZuUS/r/XZpypktuARIG+FFWBwkXw6ooAALWq6kDoyNN2bGddpESXeDkX/yW6PGS0ddPYd+QyPW3gpjrsCCeL0eErKD+xlpZ4zn5JgHgSMPJYiZTnoXPL4=
+	t=1740608335; cv=none; b=CUJ/9v1ie62wOUcDxK/oio0Ul6rl12ldIljtDVjlybc4sxD63EAw//9G+865CoMKIIkuUIY7FQlRqm8p3R3U0DDq72D0Bn/RcsdiT/m8/jGwAlcYJaQF5l0G1h2GJNHLJ0rzE0BENrBnpf0Og7sB9HBSlvAeAGyrmXCzlY+6P5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740607979; c=relaxed/simple;
-	bh=AyITmA8rf9pMLh099tYprgLtyEciAbbLGdntk9qGI60=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=h8QEmOvaAmbLEzQygHjkw1aHKdYZPQfEX7tHAcnZXpJdDK39gpIUPZwSEDqftmLXra95L+b+OkfatCu+BgKOJ8H0Cs17BF3j9uN1d3CxiCk6UuDlAczWJUDhzIQozHpI5fkaqYLXPKDyBZXf1ZpxklRLIad1vnf4QyOcx1cE+uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XZcLE6rH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE78C4CEE9;
-	Wed, 26 Feb 2025 22:12:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740607978;
-	bh=AyITmA8rf9pMLh099tYprgLtyEciAbbLGdntk9qGI60=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=XZcLE6rH24Lom8DmUNZKENo7PwJQ/pixzYhyTfDgEUaSLt+KSpFefYJseuhnvDYCy
-	 Aa5pU4gq4QnOm/axD6ArmqMt2q7Z0QX0q8hHNL33dwPYjd7lwjEIRa6YEuxYfyA3Fn
-	 2B6TJZCkme4O/PvBFj/dqtnBT1/DnNWu+W+4JF/0bP7n9dgAnx75ahOCohlyPSN3GE
-	 tRSmZgqr2ck6WEIjWdeGaK7DuM0UpbvZPBhr+eGWqma//YwgDCVwN+H6ZRMzO4QwAu
-	 cBsdfD2VVtBLRAl1gZVhkAmyj2Q8dbH5xQCIsRRFGo1EKoPF8WCwmxfSKH/6ONomr5
-	 Eak0Yc1WgWIYg==
-Date: Wed, 26 Feb 2025 16:12:54 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	quic_mrana@quicinc.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v7 2/4] PCI: of: Add API to retrieve equalization presets
- from device tree
-Message-ID: <20250226221254.GA561689@bhelgaas>
+	s=arc-20240116; t=1740608335; c=relaxed/simple;
+	bh=6+ds0fDE230uGEJmCn7EW1JKMdx4MNGD35GrH5IvopU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fIwAFWmQH4oHXjeVp4SDeJmPcwQniCNJ+OzjnasJV6KMUE8kQ9TMyL5BqRKmsle6D/T1xlqsyHsRk1PtFo4GgrTYuB8JWARA0EX2ehpmMTWiXVSR/rmUuJs24ZfhuacUb1jnUUJt5lM3AtgSAC55DotSVVNREyQ69HTTq2q4D6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=CqdwBf3U; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1740608325; bh=6+ds0fDE230uGEJmCn7EW1JKMdx4MNGD35GrH5IvopU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=CqdwBf3UB1FYG6uHtww+aGb8/5OdgV02krxsyJZcuVQLjOzTnKnYfOuYkR1VXs7Ct
+	 fZDxUrIVkjl1mUzDYTvsB8Oc6I6Ys5P/i3jX4tU8q/vCgDR4RMaJZmxmSGWlbGYbZh
+	 BAiGNnPn9VpMhKhVsPuNO2/BjwTi3BESUE8Bfd8o=
+Message-ID: <ebb3d366-05a2-4ae8-9b50-4b6a76d108a0@lucaweiss.eu>
+Date: Wed, 26 Feb 2025 23:18:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250225-preset_v6-v7-2-a593f3ef3951@oss.qualcomm.com>
+Subject: Re: [PATCH v2 2/4] dt-bindings: display: panel: Add Himax HX83112B
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250225-fp3-display-v2-0-0b1f05915fae@lucaweiss.eu>
+ <20250225-fp3-display-v2-2-0b1f05915fae@lucaweiss.eu>
+ <20250226-speedy-dark-mushroom-5d7c4b@krzk-bin>
+Content-Language: en-US
+From: Luca Weiss <luca@lucaweiss.eu>
+In-Reply-To: <20250226-speedy-dark-mushroom-5d7c4b@krzk-bin>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 25, 2025 at 05:15:05PM +0530, Krishna Chaitanya Chundru wrote:
-> PCIe equalization presets are predefined settings used to optimize
-> signal integrity by compensating for signal loss and distortion in
-> high-speed data transmission.
+On 26-02-2025 8:46 a.m., Krzysztof Kozlowski wrote:
+> On Tue, Feb 25, 2025 at 10:14:30PM +0100, Luca Weiss wrote:
+>> Himax HX83112B is a display driver IC used to drive LCD DSI panels.
+>> Describe it and the Fairphone 3 panel (98-03057-6598B-I) from DJN using
+>> it.
+>>
+>> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+>> ---
+>>   .../bindings/display/panel/himax,hx83112b.yaml     | 75 ++++++++++++++++++++++
+>>   1 file changed, 75 insertions(+)
+>>
 > 
-> As per PCIe spec 6.0.1 revision section 8.3.3.3 & 4.2.4 for data rates
-> of 8.0 GT/s, 16.0 GT/s, 32.0 GT/s, and 64.0 GT/s, there is a way to
-> configure lane equalization presets for each lane to enhance the PCIe
-> link reliability. Each preset value represents a different combination
-> of pre-shoot and de-emphasis values. For each data rate, different
-> registers are defined: for 8.0 GT/s, registers are defined in section
-> 7.7.3.4; for 16.0 GT/s, in section 7.7.5.9, etc. The 8.0 GT/s rate has
-> an extra receiver preset hint, requiring 16 bits per lane, while the
-> remaining data rates use 8 bits per lane.
+> Discussion is still going. Sending v2 after two days is hiding that
+> previous talk, so that makes me sad.
 > 
-> Based on the number of lanes and the supported data rate, this function
-> reads the device tree property and stores in the presets structure.
+> I am still at v1 and I am not going to review this one here.
 
-Can you mention the function name here somewhere so we don't have to
-dig it out of the patch?  If you put it in the subject, the function
-name is descriptive enough that you hardly need anything more, e.g.,
+Sorry about that. I'm going to be away/not have time for kernel dev for 
+the next ~1.5 weeks so I thought I'd send v2 with the updated compatible 
+string already.
 
-  PCI: of: Add of_pci_get_equalization_presets() API
+Regards
+Luca
 
-> + * of_pci_get_equalization_presets - Parses the "eq-presets-Ngts" property.
-> + *
-> + * @dev: Device containing the properties.
-> + * @presets: Pointer to store the parsed data.
-> + * @num_lanes: Maximum number of lanes supported.
-> + *
-> + * If the property is present read and store the data in the preset structure
-> + * else assign default value 0xff to indicate property is not present.
-> + *
-> + * Return: 0 if the property is not available or successfully parsed; errno otherwise.
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Wrap to fit in 80 columns like the rest of the file.
-
-> + */
-> +int of_pci_get_equalization_presets(struct device *dev,
-> +				    struct pci_eq_presets *presets,
-> +				    int num_lanes)
-> +{
 
