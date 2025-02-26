@@ -1,76 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-49487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37B3FA45D0B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 12:29:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F1352A45D10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 12:29:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 38FEC16EA46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:29:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2B0A16ECBF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:29:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2867215179;
-	Wed, 26 Feb 2025 11:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 069D02153D5;
+	Wed, 26 Feb 2025 11:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EyQxRAVp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UWJoRuqt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9E821504E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 11:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B411A215176
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 11:29:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740569361; cv=none; b=s8V9C0HWFfCoceOcMDTq6uuJQXFzvaVbc9eTXmkOPSWJPOxtuL09kCxDo+H96z624T+d7MMUECM737qq0a4iNKfL0Ne5jJcKS71kAtSygWhV3fDYVdSc17rtrQotvCkcnTlnVv6QMXbhUznQXeNz2X3IY3Z4ifrmpAVKKA/Cq9s=
+	t=1740569363; cv=none; b=Q32FAi68wI8E0HA/N/Kqu9EJAs4AFyFCTGcMNHgzeArFy2uGbZ/LReNZyHJXSjhxtZvUVJlglkd44BMGepWWtdjhTucGskeFa6od9iZ+/0vZYRcLJfxvczPLkqchWQ15igh3p2FGNLfkY9dQved2aB2+YYll13gd9A9uFrk8bnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740569361; c=relaxed/simple;
-	bh=LA0Cvsrq+8BiKo6ol0t+mnrkriJeADHplK/m/Yv3P2c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ka+C/cAsOMsyd1thb55hwK2QRrw5JoqZies/8CWcV6TQB2UCR5SvlTWa/dMXtaOkW4yEqj4SUgo636EPH9T0R8t9F0ecJapIsJVDdDJIP8G5ShcCBafJglaGEOaqK6yBcPmtkkJruOSjOKLxM+0+F0r/BrBZwr1orFksX2EO5Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EyQxRAVp; arc=none smtp.client-ip=209.85.208.45
+	s=arc-20240116; t=1740569363; c=relaxed/simple;
+	bh=aKWtbob+2RSm5JyDWJSTEd1XNxeI/gXvLID19u4dptE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AZJwLU822O8VOAmex1a3/6rciDJ7qPa45XePaiz+Jwqfmc8MjqrUx50WVHbWOGeGGBWf+GxCaB9BgHjRJfg3scRb2Rx/xpQrunt/kclvepM+CBlRv8uBMyWchuCPk1wAkgs9lIelXI4sTvzneXMhLwgdKgj/RHyfvLjyWVtxnsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UWJoRuqt; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5dc5a32c313so1338333a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 03:29:19 -0800 (PST)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5dc191ca8baso1586882a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 03:29:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740569358; x=1741174158; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=s/LD16G1ckmo606r8mTAAXLS++qBREtl47/upA6EvrE=;
-        b=EyQxRAVpiJvtjEplkmTMnyNi0OwYgp9+GtZo975owiswoF0HcyZnvRlLp+F7riwg6n
-         1CiyKJvlIFJomsTktLtqI2sri0+GNrOGbzsf0aYMPKVvo5AtWpazYAIOBOEpAsYCFg9n
-         k4kMgDZQqm5GH1CSJ7TXfolA24HgnYvspPm9fj9Jod+nNb21vDjSHXWF3rc/2OCgYIT/
-         updspicA2sGDmadm+Ls0Jv7AQBUOR1mitV84/zPBDICn1Q/4S6CYBvtRn+XytM4eJwnX
-         POdTCae5J3WqYbiK9rAbfJANUv0jJvMQImg2re299GyQ0TnMCUKR/tp6JWSmdqdxgafa
-         1N3w==
+        d=linaro.org; s=google; t=1740569360; x=1741174160; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JQWD29wnrAJlObQ2+b6JbHQHIRXSBf6Z16/xLVUUT5k=;
+        b=UWJoRuqtpufSJ1eEwtIyOqn2Ffii8q3WfxUQoiW3l8eK1jfy8sO7ZSqSwzU+mewwwN
+         YNtCuoVEiQVFZLeH/a5zy3/LaQ13c8NVi7/429F7iSlAOXqTy0IPyPnjblh1a4blN8SB
+         b5sWXJgsFucLibb3IDcTiYsMaV0HAHplVBiLsqL2JLzbg35Q/ufYdBldLq0McgO6Za4f
+         7+5rh1Ihoszr4Hg9AMyBbjd/M54uOmWeWRvpPFfQXxMdepwv09zKFB7ldlpZtMKFkwbj
+         tCDmT29rjbw2WyHEBNi+n4xyX/HO33y0k0UVlgj2IHuTL8yl5gyYWloOkznjIxjCDl46
+         GDkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740569358; x=1741174158;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s/LD16G1ckmo606r8mTAAXLS++qBREtl47/upA6EvrE=;
-        b=SiYeh8BoyfxVjXgRwPrU7NlIEkqcFL656NQp3zbYIXM7tgWr+PojkTwOjJSodt5Z0P
-         GiZsPA/u3ZaxedK54wU8MVW68A97s6O14CiXxIzFtHojst33yBOqRAt36gYtR4kdXLgq
-         b1l/kSgQPHSZ+5y5iucV7LopIbiIK3nZf6obEhZPUhpYo2fm/du6n1pw4oV35ObTjP4N
-         fi4SA9GKiA7Hy5m4WfKwFLE6wM6p7zrTUN7xmWkiFy0F1ygQm+WRbf6NwZMUblUOFitf
-         ffNYuuzH5cX+xflcXqPdSpEgqcWF1CjAhsd+Uyit8s8vcQ9dM3dAiyvZYWVBTfFTQMHo
-         7DFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUoi3M1BP+B7Cuh/i+CcZwqyh9tXpCjkBMkRmkyraRx+VCG1Lb06cUubl/ZS9RgClZwcLRgfRZO54Uw8jZD@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWslOpYAcVJqORNNlv5YgX91fAYQymIq0kqXCa+aEQXSfZX/fJ
-	d2B6ACQHF838/tI5aF5NkrO9wf2TaqwesHVJ2qDvBf6rxrqbJ49CipT/A40Qup0=
-X-Gm-Gg: ASbGncufz4Y3OoqEQtQ0EjwtHEjCyJpOEVD3p1b/oFHlDt0Jhww9Fy8Xa5J+cb/S6hL
-	EzdTDQ8j4ZN4ZGeJYaQmJcnhKDR2LENmvtiyigB4vQ9sDOu4YFqC/YVR30vsVourDqZg4nPHYbE
-	mait2n4WHUduZTmNxnPu4rLw8vz8xJgL08WilkwWdP3kIYuTSDrfAHJzqaaXcmv8/nclqhmp+W4
-	vP5pl8K91HW/fbl+JTWCD0NUZRWD6gwYtnpEnS96w7R5+uZcGui3LSo5GPIbUK7GmhDGt2hg2uZ
-	90pQoojBgm7avvAELd6XCTt/atiGWrosj4Ma0Mxs662q1WHpE9P/BIapM9nx0cMYe6ZLNG9Q2QA
+        d=1e100.net; s=20230601; t=1740569360; x=1741174160;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JQWD29wnrAJlObQ2+b6JbHQHIRXSBf6Z16/xLVUUT5k=;
+        b=tUo6LMLAyoTxcDYWGgis9xlRyOSfJ+zkijVUzgBvwAmp7xLC5SwkRxaboDuTX4l3kR
+         0t7A7mlT6TOl9PsrWU/nGcOWY3nVVBeK1iyWcuuVNddJ9788yOCKa35U4I8pNmndsM+u
+         HbqR1WFD1WYdsTPrUXYvYiXEZEZhCGNsmllewp8uNWNK7vbkSpH2LDN6lKcCEo27GDT/
+         QG6T4QoH74DK/4djDvRf1N9+Tg8K6jeCxB9aNqFZltpykf5kUaae9UcnsgL3sYycDFiH
+         A9m+9w3+P5ReHhKULaEjc9VomJvWM/eIn6gwTgoYOOnMYp6aoLGX/TVOlZD6+Xq9fyVd
+         Rz0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCV0o0lximKsLoUUkmxLrsuGxJmV2GtF32TAO0ndZRcMLOnhpWzigiV3Km0IYZAOi+prbOHje386lvKL2Qts@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqTbJSlaLFjNpx2zEix5vs50QNPYi00I+RoRCjYODX07J6YqPV
+	27AZq4GWgNFPeTTsL5jFdQYhpQ3M/Kwk+kAYikeDFmNHWsaTCmdl/gniOv+hP6o=
+X-Gm-Gg: ASbGncveK40jBk514WIlG64xaYFaegVRRupiZyivqTtuVRaRucqTPWkkkjyUhTywJKF
+	LrcyqYWMerKSizyXhGD1fvXJOIB4NwM9IQCRuBtNTzLT9uSnC8aorCmqKoB/vxUD457brba+TqC
+	W6/vlDzZcPP4+cfvBMDug1Nn4xPvfQcg+7gButA3WfFBHZIs84OsLooCtQPHEpTcYkpODFiVw1a
+	f7B1EEdDxh8QBPxBiKsjOD67DdFiEklEXyEHV+RP5/CRXnaVDGoHU33WTip0r8kat7CmL8UopEj
+	LYUxekK+KfA8Qxcb50X4Mz0F8nooclooqySoJBMbengWqzJuI2XcmE2dN7Nlv7t1sWjBCbFKDNE
 	=
-X-Google-Smtp-Source: AGHT+IEfpVAmUdzqLH8Eb8qd4lEgmjl7ga6R1U3aAJPOZ5WOBG4ayDyk9a/gfYM6yY4U7qdRUnbeng==
-X-Received: by 2002:a50:ee19:0:b0:5e4:afaa:8d6a with SMTP id 4fb4d7f45d1cf-5e4afaa8f65mr292393a12.0.1740569358168;
-        Wed, 26 Feb 2025 03:29:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUGEs167MMU50Z/gsJMetu4k7d/Wn5NbBN1LtAChUhdquWuXdeMtmsG/KUgqB4AhKanou3/g==
+X-Received: by 2002:a05:6402:430c:b0:5dc:7ee8:866e with SMTP id 4fb4d7f45d1cf-5e0b70dadffmr7109591a12.3.1740569359899;
+        Wed, 26 Feb 2025 03:29:19 -0800 (PST)
 Received: from krzk-bin.. (78-11-220-99.static.ip.netia.com.pl. [78.11.220.99])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e45b7174cesm2610049a12.34.2025.02.26.03.29.16
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e45b7174cesm2610049a12.34.2025.02.26.03.29.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 03:29:17 -0800 (PST)
+        Wed, 26 Feb 2025 03:29:19 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Mike Leach <mike.leach@linaro.org>,
@@ -87,10 +89,12 @@ To: Suzuki K Poulose <suzuki.poulose@arm.com>,
 	linux-kernel@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	stable@vger.kernel.org
-Subject: [PATCH 1/2] dt-bindings: coresight: qcom,coresight-tpda: Fix too many 'reg'
-Date: Wed, 26 Feb 2025 12:29:13 +0100
-Message-ID: <20250226112914.94361-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 2/2] dt-bindings: coresight: qcom,coresight-tpdm: Fix too many 'reg'
+Date: Wed, 26 Feb 2025 12:29:14 +0100
+Message-ID: <20250226112914.94361-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250226112914.94361-1-krzysztof.kozlowski@linaro.org>
+References: <20250226112914.94361-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,18 +108,18 @@ however example DTS code, all in-tree DTS and Linux kernel driver
 mention only one address space, so drop the second to make binding
 precise and correctly describe the hardware.
 
-Fixes: a8fbe1442c2b ("dt-bindings: arm: Adds CoreSight TPDA hardware definitions")
+Fixes: 6c781a35133d ("dt-bindings: arm: Add CoreSight TPDM hardware")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml | 3 +--
+ Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-index b748cf21a4d7..4539a67d8bf8 100644
---- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-@@ -55,8 +55,7 @@ properties:
+diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+index 52ba5420c497..74eeb2b63ea3 100644
+--- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+@@ -41,8 +41,7 @@ properties:
        - const: arm,primecell
  
    reg:
@@ -123,8 +127,8 @@ index b748cf21a4d7..4539a67d8bf8 100644
 -    maxItems: 2
 +    maxItems: 1
  
-   clocks:
-     maxItems: 1
+   qcom,dsb-element-bits:
+     description:
 -- 
 2.43.0
 
