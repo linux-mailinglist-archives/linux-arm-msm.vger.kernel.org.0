@@ -1,123 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-49419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49987A45534
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 07:00:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC61FA455D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 07:42:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B1683A968F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 06:00:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 897BE177448
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 06:40:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 091E72676F6;
-	Wed, 26 Feb 2025 06:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C33FB269AEA;
+	Wed, 26 Feb 2025 06:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p3LlAIgE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KwSTyPY8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E38F1993B1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 06:00:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E867326A093;
+	Wed, 26 Feb 2025 06:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740549637; cv=none; b=GoyTIPCckU7HL2pAwkfyzGJYEIVuiYm2f/iOYBXPcOKLA+uHYK1S7d7M/mTqv8M+7xoZKSPFso2m/fIXBeRsi2wWo5qdyWZhaPSopWkPwPxrkxPianp36YWdH0SH3KnXuu6ABbnqh3rFxdCE27EYgbismDnpWgLZzOdJ05dEHfA=
+	t=1740552039; cv=none; b=OR9suJ9S00BuFPjV2SHCBKeqTSlOb5/PlAiFLAPikInqmiT7noSelk0d/79O6r1ORYfezT0soMa9XZFoQ3rsKGDH/pvp0aXm0awtJ0xnS6eLAASY9SF4VfuOgpsaC0tui8wwTZhygDkGmKu+49vxicBCNEVvGs8jDxDg2S6+icI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740549637; c=relaxed/simple;
-	bh=QJvs8FXWeaOfq2m4P6J0WZ5ujUFqp1HQJvlwASUdwDM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ESqqMX+fEjh+MmToslW/1SCepp5X3ecj4zvzAYm8/zuPH4a14ty1IVrivDxDqlC7kT/h0yq4jeL5Mhew+fzrc4vyGOcnTPge+4YRwAT/Y1oXC72M+1RWPtmqGqQSmdqax+rAAWx3gvsS9/YCkw+1uGFrf5lRYbK9A4Ffuyk2Kwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p3LlAIgE; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-30a36eecb9dso66594751fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2025 22:00:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740549634; x=1741154434; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=buEGqdHEp7hTwf0/u89pPDhKGvHlA+V+chO24Ab2MiA=;
-        b=p3LlAIgEvS+YQeglnDfIIlLNKF7COpzGftiNMzrRm8/S0uuWTEnFyWP0mlSHT4e/uv
-         C83Cs5KXGuQAfHpUAeV65oKPT/T7ZZk/dhKD7DBQXt7KRTVUbFkr3bETG/94aRC2DIi5
-         lyWQodAMf9LSizqbEZFpynXUD3c14TeyrWYpIFSfYdVAfBC3c2VonXOJTNgYx83Sa8Oy
-         a6hD1WiKNbAdU+P1cBcngE97pQ4xOwxH6NAkAOr9hoz521RNb61aLzQNHUAEdhaQ74Z6
-         rPGT+Dv/M9rkoLCQTGhDCj2PdGKWkpr7+0ntCDRKG0Zx+v7Zb8DjKOT/4BnFozdmZDPN
-         3uLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740549634; x=1741154434;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=buEGqdHEp7hTwf0/u89pPDhKGvHlA+V+chO24Ab2MiA=;
-        b=cL+JdDH+hjf898pLaStq37IjOxejIN7jJI3Xu7E024zpxj12l5gmy0KoquzZeCBU+I
-         DkydI+vTSNtpxvpjuiloLYOFGXDkyWrMid+43T8ARA9N71YgFNibS87wiTHFGp7P5kQX
-         zzxB7j7s7ekvg0Iw/daF2lUxc6I5bGzKHufHJjWJjsssrdfxV9+pSwTRbGr1PSUR6+j/
-         kRGsJrMoFBLEYxlATV5eyl+0rLb7xSLz7LiNn7BI8oR4A862hkGO/SI4D50Ip9/Dadru
-         9b1OIAydJ4nECwUaCS4I+3esQG5ppX3CVojNLa0xo2MEC3B0HOyIdf7Qi/FgwDSrYy6O
-         n6+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUMOxLLyYMYBHyzwgyuZ3XqIzls/jSpJe+SWoaDIl5Qd5tRgMUWFD5SQxpNqxD1R/ri1FiWR4AgBhTpYdJU@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzw4YS1+ZvCXLNCiFqwO3rw2SdxIDNswHTj1vamvb8A21w/uGX2
-	ezonGWFq9ycoUIXIpUtuavfdWVNtmTpw5gGi/VQZgoYWYkShVVsvZDZ1iuvyGAo=
-X-Gm-Gg: ASbGncs58nwd6ERfeBmUaHjCaQh9KjorkTAHltf5k4azboaIxRx3Uj9Kn/f6V7IY0XP
-	au8QGm+pZgLleGX56+N6YIWax5IlXixOf2Jsg8M/B6sAS34rYSyj2T5cnsrxZMK/TtVmCigy68A
-	WRRcNNy/N5NULZsfP/r+41EA1o6Ge+I+A3Il8jlELecwhosNw4PyddpR8tErCu9OHIAFaK/YjMK
-	co3z0Tk1gmhx8KKQavrhNsecGHHS1swjKbOuzfyDUiVmmtWz1cV8PpuxiAtB0/rMS8k4qqSPinG
-	5u0x2TVJ3iELBdFzI0bpb3DhxNH7POsG0XT43PAE8eMxgSBIp7wneVYnwYgqddps2aJuFHgJML1
-	tkPGdfQ==
-X-Google-Smtp-Source: AGHT+IG8CWS6G0bTARrClr5YZ5iAJEIALey0T04/2PiGrwpS70hRtWkWD+U3cdrkKaDh1s5/wDX5Bg==
-X-Received: by 2002:a2e:914f:0:b0:308:eb34:1012 with SMTP id 38308e7fff4ca-30a599702fdmr79176461fa.30.1740549633801;
-        Tue, 25 Feb 2025 22:00:33 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30a819f5b2esm4247241fa.64.2025.02.25.22.00.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 22:00:32 -0800 (PST)
-Date: Wed, 26 Feb 2025 08:00:30 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sdm632-fairphone-fp3: Enable
- display and GPU
-Message-ID: <wohqhsuu35m2ghd7a5xgsy7ktxvqn5id7nuzox536dyllczobc@vxyzse2wrlwu>
-References: <20250225-fp3-display-v2-0-0b1f05915fae@lucaweiss.eu>
- <20250225-fp3-display-v2-4-0b1f05915fae@lucaweiss.eu>
+	s=arc-20240116; t=1740552039; c=relaxed/simple;
+	bh=KA0z0sZI44EPNVCp0Ji9pEwp1ewbw9YFLH52MbjN6+Y=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ljvfK6mH6Pp2uZfw72cbMYUkebgOySeh0aTjwx8EYb/ro8SnoxW1SYC5NC5iwJNTZNBq3qyw/IGf9z49APHMU7LAJgTmAtxwTyXxMyeovQF0zhaOg88jHmQzRSp0bXbhFk1z/J7AsPj9UrP36zImnkhm72oAstLlt0ZoNdnTdx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KwSTyPY8; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51PMX2Nh011930;
+	Wed, 26 Feb 2025 06:40:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Q6KRKhgiFSyppJoyuQD2m7
+	H324VXci25W2Tl1Ha42rg=; b=KwSTyPY8oBBR1eK6gwSJGqHwV8neRtiv+HN/x8
+	ze7/jZS0P4bG0SiSqrRBmW51ptRnxuTmxbWctwXC8E6cQzXxkzQo7zZWX0VzFLVN
+	7vB4hUzDEXqE9wJoY2N9yDUQz0wqoBsbCBSsq/RNJV4c4dRMHevbEgiJcN7Yl+DX
+	NaJl9vkbcf7qJT+zabJdj6KB5J/J5HDZBLL7npox9cDzhXYHbPc+BBmisEHsPzCp
+	5pEJ2sn9VZTwlop+IJ/0JaHWkU+dynUUlOeWseOOmN97jbjSzWwWxCKFjV7LyjmZ
+	wMv7gBrLJBA40z5PrhSCZkbnxSQQfs/FqKl1BAumOitBqVnQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prk90hm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Feb 2025 06:40:27 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51Q6eQpA016207
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Feb 2025 06:40:26 GMT
+Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 25 Feb 2025 22:40:26 -0800
+From: Mao Jinlong <quic_jinlmao@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>
+CC: Mao Jinlong <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v4 0/3] Add support to configure TPDM MCMB subunit
+Date: Tue, 25 Feb 2025 22:40:05 -0800
+Message-ID: <20250226064008.2531037-1-quic_jinlmao@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250225-fp3-display-v2-4-0b1f05915fae@lucaweiss.eu>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: oJezr4Xre9TLScOU74gDakWWLUZPp_ZB
+X-Proofpoint-ORIG-GUID: oJezr4Xre9TLScOU74gDakWWLUZPp_ZB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-25_08,2025-02-26_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ bulkscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 malwarescore=0
+ impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0
+ mlxlogscore=832 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502260051
 
-On Tue, Feb 25, 2025 at 10:14:32PM +0100, Luca Weiss wrote:
-> Add the description for the display panel found on this phone.
-> Unfortunately the LCDB module on PMI632 isn't yet supported upstream so
-> we need to use a dummy regulator-fixed in the meantime.
-> 
-> And with this done we can also enable the GPU and set the zap shader
-> firmware path.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-> ---
->  arch/arm64/boot/dts/qcom/msm8953.dtsi             |  2 +-
->  arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 62 +++++++++++++++++++++++
->  2 files changed, 63 insertions(+), 1 deletion(-)
-> 
+Introduction of TPDM MCMB(Multi-lane Continuous Multi Bit) subunit
+MCMB (Multi-lane CMB) is a special form of CMB dataset type. MCMB
+subunit has the same number and usage of registers as CMB subunit.
+Just like the CMB subunit, the MCMB subunit must be configured prior
+to enablement. This series adds support for TPDM to configure the
+MCMB subunit.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Once this series patches are applied properly, the new tpdm nodes for
+should be observed at the tpdm path /sys/bus/coresight/devices/tpdm*
+which supports MCMB subunit. All sysfs files of CMB subunit TPDM are
+included in MCMB subunit TPDM. On this basis, MCMB subunit TPDM will
+have new sysfs files to select and enable the lane.
+
+Changes in V4:
+1. Update the date and kernel verison in ABI file.
+2. Update the year of copyright. 
+
+Changes in V3:
+1. Update the date in ABI file.
+2. Remove the unrelated change.
+3. Correct typo.
+4. Move the CMB_CR related definitions together.
+
+Changes in V2:
+1. Use tdpm_data->cmb instead of (tpdm_has_cmb_dataset(tpdm_data) ||
+tpdm_has_mcmb_dataset(tpdm_data)) for cmb dataset support.
+2. Embed mcmb_dataset struct into cmb struct.
+3. Update the date and version in sysfs-bus-coresight-devices-tpdm
+Link: https://patchwork.kernel.org/project/linux-arm-msm/patch/20241105123940.39602-4-quic_jinlmao@quicinc.com/
+
+Mao Jinlong (1):
+  coresight-tpdm: Add MCMB dataset support
+
+Tao Zhang (2):
+  coresight-tpdm: Add support to select lane
+  coresight-tpdm: Add support to enable the lane for MCMB TPDM
+
+ .../testing/sysfs-bus-coresight-devices-tpdm  |  15 +++
+ drivers/hwtracing/coresight/coresight-tpda.c  |   7 +-
+ drivers/hwtracing/coresight/coresight-tpdm.c  | 120 +++++++++++++++++-
+ drivers/hwtracing/coresight/coresight-tpdm.h  |  33 +++--
+ 4 files changed, 155 insertions(+), 20 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.17.1
+
 
