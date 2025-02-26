@@ -1,282 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-49471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 438E5A45BEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:36:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02028A45C15
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 11:44:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B8FE3A2063
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 10:36:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0D1A47A6DFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2025 10:43:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F7F024E01A;
-	Wed, 26 Feb 2025 10:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A9AD2673A3;
+	Wed, 26 Feb 2025 10:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KH8hnjpC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bIHTaAVG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B694E2459F9;
-	Wed, 26 Feb 2025 10:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B47824E01E;
+	Wed, 26 Feb 2025 10:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740566181; cv=none; b=iNCZ7TIb5FTQfrinnlH3mCgmArJ6fZRvd+DS6TWi4VCN5CxfUBUFzFmHHfrR0xO4tiE2wBE9Cv0Aloduh1A1jMKcNXD934Sgmc3Bp4jV7vaWDhto1VwvZtQoY+xoQgvgD1JQPrVRY8kx71JSZembeEyW0j4eFtWnrRiTFd4SkeI=
+	t=1740566674; cv=none; b=goiCuS/CwgYgl5viF3+/ITXkzDQ8lc6ukgWiCWSwEuyd3vhW8wjI1Xn7unCUV3yWkOki3kBv6ifi5FXt179syo6n5PRcvVf0FRukgubk+FhZ7ZO4RnV2iufR7OxB4/7802NHfMuIlFtpMOUzNEl68HQavwWdLQXN+dh4iv9fsU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740566181; c=relaxed/simple;
-	bh=y1jpnr7X2Fm0Kw66zSuSDG0C0u/elsNwI6lhXbciKpY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ibkiubolETmNq7Kw+hiwc3UUS72g5C/5oSVjvca5gg3R32qE/y+NHOghEfWzSQv+Ytc9YaCSDriYs+O9vF38sH7/Ib327beeIJ79AC7OdSjIjlGuqM3B+C2QfjSnBgno/BXsUTIkJa27/CaOY7nnTbeRMAK1Kxpz5zUgJXdjVsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KH8hnjpC; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1740566674; c=relaxed/simple;
+	bh=a+VLb1uo63X22UpMZnjWuAzAvl+QuCcIaAxbSBtDjDI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GpzXyRmtWEwZUx6BWkAbYL5NzLZwP8fETI0eGn7ql1YQdjohSwGV7BC8flDEoWaVleZMVjYz0XPMJgdif+bE+iB1WbYsCVbaMYMja+Va1GnKAgp9KnOnMLAtkMUxAcVd88qsQge0B3Ps2lE90/CRLiL/c6i60BjC79Xfv8QlFH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bIHTaAVG; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51QA32uq015835;
-	Wed, 26 Feb 2025 10:36:11 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51Q9xGdq023826;
+	Wed, 26 Feb 2025 10:44:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=22HlwGScnyU
-	Bg+pAP0+yyWz+8osfbOHcR3hnk0lXqkM=; b=KH8hnjpC3E3pn8QtBzF/Rh3eRa3
-	9q+RFeDfcBnJrDUJUxk9EMH2M9dpJO5KLe+OYBVoSp9nc4bp67R93VgY1lpdLXZE
-	thuYyaRUCa3ZiiFCckl0r5vVNXOmj7oHsZOvEgW49TONhAwhf20XjTF+S6oNwi3F
-	qO9q1/V1rypl7Wi2jPpkkux76LOmftd5hH572jNSRQjCsbmsdQ0qe8s+1tGIuVU3
-	RRTAe88e7ldP9sYPqCClKb/ArB3pNy4iQvhzUzNzXTwOXprwQQ3xvFZeXS5OGFp6
-	ziXj2Bgx/VPFeWBDf5yYMqdE/yuZ0gwRTujKPNqHsPri5CYC4/EqPOIJBlA==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prnhn0s-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RI3j6QNwCd3E9WU+AhkXeYiWCb5d3Rx1nK60VGbwaBM=; b=bIHTaAVGTL5S3YAH
+	jlA0utMUcg6yFORPmn1aHaZv1AyuVV8UgMlCRhaFAjeGnY+BTYCN5fdqb8fI7Z/u
+	2uPmO4+8knNVjYqU7PmEk+hlZ4lIQol+35kJYjM4CFzWH4HOMjcjR70tQ48r6X+a
+	1VDTtewbGaCmwrS5ekpb4/V5ZH+E7OsJvs2A/ByAYfwV740I6m09Ha+OGEIapg0Y
+	TSSlfiwJIbe9/ah7F8Rbp6NC3Q2mHjdR37TYUqCwPao2jqOsENehebJAfXBc7LYJ
+	aazGkMywkZJJAZVCuG03Lz8ISnj+QZvzrfBZkz64vyvfnhyYSeJZphwSAgJCnUsz
+	8a5fJg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prmhnw1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Feb 2025 10:36:10 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 51QAa8aO024017;
-	Wed, 26 Feb 2025 10:36:08 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 44y7nm1d8t-1
+	Wed, 26 Feb 2025 10:44:20 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51QAiJxp011305
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Feb 2025 10:36:08 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 51QAa7g8024005;
-	Wed, 26 Feb 2025 10:36:08 GMT
-Received: from cbsp-sh-gv.ap.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 51QAa7O6024002
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Feb 2025 10:36:07 +0000
-Received: by cbsp-sh-gv.ap.qualcomm.com (Postfix, from userid 4635958)
-	id AEF8A40DA1; Wed, 26 Feb 2025 18:36:06 +0800 (CST)
-From: Wenbin Yao <quic_wenbyao@quicinc.com>
-To: vkoul@kernel.org, kishon@kernel.org, p.zabel@pengutronix.de,
-        dmitry.baryshkov@linaro.org, abel.vesa@linaro.org,
-        quic_qianyu@quicinc.com, neil.armstrong@linaro.org,
-        manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com,
-        konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc: quic_wenbyao@quicinc.com
-Subject: [PATCH v5 2/2] phy: qcom: qmp-pcie: Add PHY register retention support
-Date: Wed, 26 Feb 2025 18:36:00 +0800
-Message-Id: <20250226103600.1923047-3-quic_wenbyao@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250226103600.1923047-1-quic_wenbyao@quicinc.com>
-References: <20250226103600.1923047-1-quic_wenbyao@quicinc.com>
+	Wed, 26 Feb 2025 10:44:19 GMT
+Received: from [10.239.133.114] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 26 Feb
+ 2025 02:44:11 -0800
+Message-ID: <13cabef8-8e68-412e-a6eb-42d22604f941@quicinc.com>
+Date: Wed, 26 Feb 2025 18:44:08 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] coresight: add coresight Trace NOC driver
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark
+	<james.clark@linaro.org>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <kernel@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <kernel@oss.qualcomm.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20250221-trace-noc-driver-v1-0-0a23fc643217@quicinc.com>
+ <20250221-trace-noc-driver-v1-2-0a23fc643217@quicinc.com>
+ <38996ae8-321b-4239-8fe9-b769fdff296c@kernel.org>
+Content-Language: en-US
+From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+In-Reply-To: <38996ae8-321b-4239-8fe9-b769fdff296c@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3vMc01sHJqifeJuCwE9kWdnJc1Sks486
-X-Proofpoint-ORIG-GUID: 3vMc01sHJqifeJuCwE9kWdnJc1Sks486
+X-Proofpoint-GUID: ix_23qutW023h22aYfSDWugCTYUvCKNE
+X-Proofpoint-ORIG-GUID: ix_23qutW023h22aYfSDWugCTYUvCKNE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-26_02,2025-02-26_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- mlxscore=0 mlxlogscore=999 bulkscore=0 adultscore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502260084
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 phishscore=0 bulkscore=0 malwarescore=0 mlxscore=0
+ priorityscore=1501 adultscore=0 spamscore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2502100000 definitions=main-2502260086
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
 
-Some QCOM PCIe PHYs support no_csr reset. Unlike BCR reset which resets the
-whole PHY (hardware and register), no_csr reset only resets PHY hardware
-but retains register values, which means PHY setting can be skipped during
-PHY init if PCIe link is enabled in booltloader and only no_csr is toggled
-after that.
 
-Hence, determine whether the PHY has been enabled in bootloader by
-verifying QPHY_START_CTRL register. If it's programmed and no_csr reset is
-available, skip BCR reset and PHY register setting to establish the PCIe
-link with bootloader - programmed PHY settings.
+On 2/22/2025 6:54 PM, Krzysztof Kozlowski wrote:
+> On 21/02/2025 08:40, Yuanfang Zhang wrote:
+>> Add driver to support Coresight device Trace NOC(Network On Chip).
+>> Trace NOC is an integration hierarchy which is a replacement of
+>> Dragonlink configuration. It brings together debug components like
+>> TPDA, funnel and interconnect Trace Noc.
+>>
+>> It sits in the different subsystem of SOC and aggregates the trace
+>> and transports to QDSS trace bus.
+>>
+>> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+>> ---
+>>  drivers/hwtracing/coresight/Kconfig          |  10 ++
+>>  drivers/hwtracing/coresight/Makefile         |   1 +
+>>  drivers/hwtracing/coresight/coresight-tnoc.c | 191 +++++++++++++++++++++++++++
+>>  drivers/hwtracing/coresight/coresight-tnoc.h |  53 ++++++++
+>>  4 files changed, 255 insertions(+)
+>>
+>> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
+>> index 06f0a7594169c5f03ca5f893b7debd294587de78..712b2469e37610e6fc5f15cedb2535bf570f99aa 100644
+>> --- a/drivers/hwtracing/coresight/Kconfig
+>> +++ b/drivers/hwtracing/coresight/Kconfig
+>> @@ -247,4 +247,14 @@ config CORESIGHT_DUMMY
+>>  
+>>  	  To compile this driver as a module, choose M here: the module will be
+>>  	  called coresight-dummy.
+>> +
+>> +config CORESIGHT_TNOC
+>> +	tristate "Coresight Trace Noc driver"
+>> +	help
+>> +	  This driver provides support for Trace NoC component.
+>> +	  Trace NoC is a interconnect that is used to collect trace from
+>> +	  various subsystems and transport it QDSS trace sink.It sits in
+>> +	  the different tiles of SOC and aggregates the trace local to the
+>> +	  tile and transports it another tile or to QDSS trace sink eventually.
+>> +
+>>  endif
+>> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
+>> index 4ba478211b318ea5305f9f98dda40a041759f09f..ab1cff8f027495fabe3872d52f8c0877e39f0ea8 100644
+>> --- a/drivers/hwtracing/coresight/Makefile
+>> +++ b/drivers/hwtracing/coresight/Makefile
+>> @@ -51,3 +51,4 @@ coresight-cti-y := coresight-cti-core.o	coresight-cti-platform.o \
+>>  		   coresight-cti-sysfs.o
+>>  obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
+>>  obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
+>> +obj-$(CONFIG_CORESIGHT_TNOC) += coresight-tnoc.o
+> 
+> Why do you keep adding entries to the end instead to some logically
+> ordered place?
+> 
+> Dummy driver, before tpda (obviously tpda should go after tpdm) and now
+> this... This is just unnecessarily making simultaneous edits difficult.
+> 
+sure, add it after funnel/replicator before etm, since it work as a link.
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 69 ++++++++++++++++++++----
- 1 file changed, 59 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 219266125cf2..c3642d1807e4 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -2805,6 +2805,7 @@ struct qmp_pcie {
- 
- 	const struct qmp_phy_cfg *cfg;
- 	bool tcsr_4ln_config;
-+	bool skip_init;
- 
- 	void __iomem *serdes;
- 	void __iomem *pcs;
-@@ -3976,18 +3977,38 @@ static int qmp_pcie_init(struct phy *phy)
- {
- 	struct qmp_pcie *qmp = phy_get_drvdata(phy);
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
-+	void __iomem *pcs = qmp->pcs;
-+	bool phy_initialized = !!(readl(pcs + cfg->regs[QPHY_START_CTRL]));
- 	int ret;
- 
-+	qmp->skip_init = qmp->nocsr_reset && phy_initialized;
-+	/*
-+	 * We need to check the existence of init sequences in two cases:
-+	 * 1. The PHY doesn't support no_csr reset.
-+	 * 2. The PHY supports no_csr reset but isn't initialized by bootloader.
-+	 * As we can't skip init in these two cases.
-+	 */
-+	if (!qmp->skip_init && !cfg->tbls.serdes_num) {
-+		dev_err(qmp->dev, "no init sequences are available\n");
-+		return -EINVAL;
-+	}
-+
- 	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
- 	if (ret) {
- 		dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
- 		return ret;
- 	}
- 
--	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
--	if (ret) {
--		dev_err(qmp->dev, "reset assert failed\n");
--		goto err_disable_regulators;
-+	/*
-+	 * Toggle BCR reset for PHY that doesn't support no_csr reset or has not
-+	 * been initialized.
-+	 */
-+	if (!qmp->skip_init) {
-+		ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+		if (ret) {
-+			dev_err(qmp->dev, "reset assert failed\n");
-+			goto err_disable_regulators;
-+		}
- 	}
- 
- 	ret = reset_control_assert(qmp->nocsr_reset);
-@@ -3998,10 +4019,12 @@ static int qmp_pcie_init(struct phy *phy)
- 
- 	usleep_range(200, 300);
- 
--	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
--	if (ret) {
--		dev_err(qmp->dev, "reset deassert failed\n");
--		goto err_assert_reset;
-+	if (!qmp->skip_init) {
-+		ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
-+		if (ret) {
-+			dev_err(qmp->dev, "reset deassert failed\n");
-+			goto err_assert_reset;
-+		}
- 	}
- 
- 	ret = clk_bulk_prepare_enable(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
-@@ -4011,7 +4034,8 @@ static int qmp_pcie_init(struct phy *phy)
- 	return 0;
- 
- err_assert_reset:
--	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+	if (!qmp->skip_init)
-+		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
- err_disable_regulators:
- 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
- 
-@@ -4023,7 +4047,10 @@ static int qmp_pcie_exit(struct phy *phy)
- 	struct qmp_pcie *qmp = phy_get_drvdata(phy);
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 
--	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+	if (qmp->nocsr_reset)
-+		reset_control_assert(qmp->nocsr_reset);
-+	else
-+		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
- 
- 	clk_bulk_disable_unprepare(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
- 
-@@ -4042,6 +4069,13 @@ static int qmp_pcie_power_on(struct phy *phy)
- 	unsigned int mask, val;
- 	int ret;
- 
-+	/*
-+	 * Write CSR register for PHY that doesn't support no_csr reset or has not
-+	 * been initialized.
-+	 */
-+	if (qmp->skip_init)
-+		goto skip_tbls_init;
-+
- 	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
- 			cfg->pwrdn_ctrl);
- 
-@@ -4053,6 +4087,7 @@ static int qmp_pcie_power_on(struct phy *phy)
- 	qmp_pcie_init_registers(qmp, &cfg->tbls);
- 	qmp_pcie_init_registers(qmp, mode_tbls);
- 
-+skip_tbls_init:
- 	ret = clk_bulk_prepare_enable(qmp->num_pipe_clks, qmp->pipe_clks);
- 	if (ret)
- 		return ret;
-@@ -4063,6 +4098,9 @@ static int qmp_pcie_power_on(struct phy *phy)
- 		goto err_disable_pipe_clk;
- 	}
- 
-+	if (qmp->skip_init)
-+		goto skip_serdes_start;
-+
- 	/* Pull PHY out of reset state */
- 	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
- 
-@@ -4072,6 +4110,7 @@ static int qmp_pcie_power_on(struct phy *phy)
- 	if (!cfg->skip_start_delay)
- 		usleep_range(1000, 1200);
- 
-+skip_serdes_start:
- 	status = pcs + cfg->regs[QPHY_PCS_STATUS];
- 	mask = cfg->phy_status;
- 	ret = readl_poll_timeout(status, val, !(val & mask), 200,
-@@ -4096,6 +4135,15 @@ static int qmp_pcie_power_off(struct phy *phy)
- 
- 	clk_bulk_disable_unprepare(qmp->num_pipe_clks, qmp->pipe_clks);
- 
-+	/*
-+	 * While powering off the PHY, only qmp->nocsr_reset needs to be checked. In
-+	 * this way, no matter whether the PHY settings were initially programmed by
-+	 * bootloader or PHY driver itself, we can reuse them when PHY is powered on
-+	 * next time.
-+	 */
-+	if (qmp->nocsr_reset)
-+		goto skip_phy_deinit;
-+
- 	/* PHY reset */
- 	qphy_setbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
- 
-@@ -4107,6 +4155,7 @@ static int qmp_pcie_power_off(struct phy *phy)
- 	qphy_clrbits(qmp->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
- 			cfg->pwrdn_ctrl);
- 
-+skip_phy_deinit:
- 	return 0;
- }
- 
--- 
-2.34.1
+>> diff --git a/drivers/hwtracing/coresight/coresight-tnoc.c b/drivers/hwtracing/coresight/coresight-tnoc.c
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..11b9a7fd1efdc9fff7c1e9666bda14acb41786cb
+>> --- /dev/null
+>> +++ b/drivers/hwtracing/coresight/coresight-tnoc.c
+>> @@ -0,0 +1,191 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/kernel.h>
+>> +#include <linux/module.h>
+>> +#include <linux/device.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/amba/bus.h>
+>> +#include <linux/io.h>
+>> +#include <linux/coresight.h>
+>> +#include <linux/of.h>
+>> +
+>> +#include "coresight-priv.h"
+>> +#include "coresight-tnoc.h"
+>> +#include "coresight-trace-id.h"
+>> +
+> 
+> 
+>> +
+>> +	drvdata->base = devm_ioremap_resource(dev, &adev->res);
+>> +	if (!drvdata->base)
+>> +		return -ENOMEM;
+>> +
+>> +	spin_lock_init(&drvdata->spinlock);
+>> +
+>> +	ret = trace_noc_init_default_data(drvdata);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	desc.ops = &trace_noc_cs_ops;
+>> +	desc.type = CORESIGHT_DEV_TYPE_LINK;
+>> +	desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_MERG;
+>> +	desc.pdata = adev->dev.platform_data;
+>> +	desc.dev = &adev->dev;
+>> +	desc.access = CSDEV_ACCESS_IOMEM(drvdata->base);
+>> +	drvdata->csdev = coresight_register(&desc);
+>> +	if (IS_ERR(drvdata->csdev))
+>> +		return PTR_ERR(drvdata->csdev);
+>> +
+>> +	pm_runtime_put(&adev->dev);
+>> +
+>> +	dev_dbg(drvdata->dev, "Trace Noc initialized\n");
+> 
+> 
+> Drop. There is really no need to tell that function finished.
+> 
+> Please run standard kernel tools for static analysis, like coccinelle,
+> smatch and sparse, and fix reported warnings. Also please check for
+> warnings when building with W=1. Most of these commands (checks or W=1
+> build) can build specific targets, like some directory, to narrow the
+> scope to only your code. The code here looks like it needs a fix. Feel
+> free to get in touch if the warning is not clear.
+> 
+Done.
+> 
+> Best regards,
+> Krzysztof
+> 
 
 
