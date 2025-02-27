@@ -1,206 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-49740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1160A485CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 17:54:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EA99A485F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 17:59:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A834D1732E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 16:46:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 746A617A747
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 16:51:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 422FF1B394E;
-	Thu, 27 Feb 2025 16:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 970AB1CAA94;
+	Thu, 27 Feb 2025 16:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KHnkUzWJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o0X+vPNM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAF614EC5B;
-	Thu, 27 Feb 2025 16:46:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6236C1AE003
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 16:50:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740674784; cv=none; b=ONo7sM4pVdQYAmqosm93JSM8kSFF/I2QxrHBnoD2JbVx1OWepHE/7Im/ZYUsfz81TRdOltPYAVdwhox+6ehYOzyrTsiatcM4l9nePU59VK1Yt1vyPLhQnuFmeMS1Ovg1dI8n48CagxOHU2/KETYIfY6rrB6Fu0RNBNy5Xkyt5w8=
+	t=1740675045; cv=none; b=IPYrdNJvZCks5xm0tGG2DznToOfOjEvLKHD1XtFwQGCer2dWZiDOtP2VDosHKgcdKwUlbVR0xWvEL+IIpMLy/vk33Jd5a3FzywyMmmNHz2daEzpHLCE5JvB0A+Qgob9mi8kwtT0pz9CtSOCDtd3p43RHZm/r4xIhaWUZb60L3ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740674784; c=relaxed/simple;
-	bh=rnGxcvGrlOu9S8hRsJDfy1plNsFwEiDmUYFSaKrM2so=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uwJQ6imaCpkO2dd7xhTiOTZqm2qZccjKH1Xpk8yzRxTgg/Z7auLotWSBPGmbsHsTpPk21PFN3h5d3520ETJSSfZUYo9bvD/NQkzzfU3Rcg6hflBTyjLVjmXI86mu5XAs42tZwDRZKLRHj2Uduk4hPaWP8ATZZ0+IYL3inm5suJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KHnkUzWJ; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-22356471820so16750995ad.0;
-        Thu, 27 Feb 2025 08:46:22 -0800 (PST)
+	s=arc-20240116; t=1740675045; c=relaxed/simple;
+	bh=12rVFyRRUPsF65d5vORiEKQQhPic/Db68beF7rEDFhU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jYDoD4GIyYoUaqdulAzcX1dJGfVUVg5dlIt9ebEqCbw95gQF3t9yJZMOgVl5HOUp2hXfwaSb65jDgbfyuTo5lZqwURgdkoCfwZwzir3I77KJkluMfY284/reQQmmZj3FHezxUxyW+V/RiVDDqGA+47cwEeweejc66OS+CRrIHRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=o0X+vPNM; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-aaf0f1adef8so216192766b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 08:50:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740674782; x=1741279582; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DRXDCZOpNFx7mEL7sD+vJQzvlE2qaUafze4CTsh+P/M=;
-        b=KHnkUzWJnGd7j8+xLvr3ixfvZJHoowxna7z2uMhuuGjhoR8uG9pQWMMbvMbqTCUtBM
-         qd5SIIaZq+GFtPtNoSvfi9zB1aqesxm58Y5KK+uhbL+YU1w2vP8QMljChwJ6QJdhr40C
-         v5/v77G7vBW7+R0UZQ9SFUooTayk4KBRxIr67YjY0rv+YozPRmuHc7GYrcPnDhFzUO1E
-         pCmeNUjjpz6DKY9fYgNqKUtriX6Uef+fPmyr3YGtPCxb39RCRbsCdSeouK4bzpUwQIB6
-         l40so+jLsYaZXjpyTTmIoUVMlRjGClN6Vs0zhANZx0Etr25SZgGBkXaDH7mIzEUEPYlp
-         plwg==
+        d=linaro.org; s=google; t=1740675042; x=1741279842; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=U9B6UFKW6QmOND+nqqfJHYUB8wm1gr52tPG9pQzTZMI=;
+        b=o0X+vPNM2eXFsR37rv83TIJFeqE8A9IflWWefDNfxZL8jK7+vRaZi/rOvHsbym7JMD
+         F6y7q82ui4bCT2FuDNj9DXp7HIrvwXH+u3Rxu5vgbR5jzdjcdDbwET1PZPIZP/TMjDQ6
+         vcaqkBMVc/Q4I10ryvXaU+eZ1YdpMrcBAdOd4lTsr/ZigHb14tbPzNTyzPba2IFjlAqS
+         n4ReHnGFAIG7UkKaYLxTVPqQwq09shARfO3rgt0oZ4P2+C95KtmTJpMCECmu3liElAdV
+         urbMhc9oAReLr5qz+uLYyF1ShfQ7+q4YDdgjuOJdpIV4/uy+KX5BHpdCq4FzLi2ywdWS
+         uRyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740674782; x=1741279582;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DRXDCZOpNFx7mEL7sD+vJQzvlE2qaUafze4CTsh+P/M=;
-        b=Z6BRpW36QCR1ZQZFFEtGzNpvlvKA4zWkNYJkt8xCmbxVrbHzpwo1apW0LiQ6MtCBcU
-         yZUQRl1NKgZ2xfs2RwVevKBMdIG7W+btfBam+gqqQHvV59ZTnJP9t4D7AI0qrisfeUnh
-         M5wZx2yGYfinud3P6YGTl4nTwnOoH7B0KV2seGAPHcRlkGaED++DgRSa15Xe71ayx7+D
-         Tq/WFtbdPU12Jm7sX8HY9aHItBUSi3FwlFwUawXh/C662HfjqhId9KA5nUUAVAw/+ofH
-         aDiglE/qpeUQJa2b1RelKkcLSMAzY18FXTH9HWoI1qA7sR8U7mUvVH1pMrQJnGkLzrIM
-         m4TQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW98Obyta1LTuQBlY+uHWTCWXe1IihXRzvRhzaUZEwe5B1Gv1sdhhsS84UWDLvAWdsZatYV8PHPAqtbZwkj@vger.kernel.org, AJvYcCXJXJ3W/73oFxzu4fY9uwula9RYtq7+n1ZeJ6bGKUIbATWf4feHlbiOgaS+aoWzjZP2eXOm2zJz/agM8Ol8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzny7+0DYtnl4/4R7apM9T1GgHa8wIDdwefImJmaU01rGXkydAY
-	osG3a6u18JbqMTDEZqJPDMLvFpgN8/AOp1CRf0lfm0ag4jKA5hbv
-X-Gm-Gg: ASbGncv3hINpTEZ1URmzmzTrht9GzZauOZn3vyqoUBMs0jlXEiYcZ/H1lClN7Pc71aP
-	0T/5fl8ZwpuLQy74CH6KHkMaWWtpe76/AF93ci/SmGGMP9FPqRd3PEHDHy0Sir7F1foXZCZDjh5
-	41X/VVt6kV3HdFLS0mf6VM2GqAwfFhpW9+Avr1GzzMW97uEoP9m9/mtDQ5pRNMrBHtPSNzNF5cV
-	zO4jDC7CH9dk86jeee+nyes2wcwF0ZLE6c2Rj8Pku2TtB34FttM+Ld5TgojRu1sWYiFFe4AM1yo
-	2Gs+8cFPKRBjPS4A8jJoHnWV2P82Zj8rWZphB+jC/Vyfc/f4pibu
-X-Google-Smtp-Source: AGHT+IGSorrpazKalpJZWfzSOXdCZYUFDo74/mLdsFxqv0//LTvqdmRqtXwe49OfXxH70F6yYFLubQ==
-X-Received: by 2002:a17:902:e946:b0:223:5945:ffd5 with SMTP id d9443c01a7336-22359460062mr37537585ad.32.1740674781845;
-        Thu, 27 Feb 2025 08:46:21 -0800 (PST)
-Received: from jamesmacinnes-VirtualBox ([66.119.214.127])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223504dc7e1sm17097255ad.176.2025.02.27.08.46.20
+        d=1e100.net; s=20230601; t=1740675042; x=1741279842;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U9B6UFKW6QmOND+nqqfJHYUB8wm1gr52tPG9pQzTZMI=;
+        b=UDEh3T+uXbge6FcMpPwwYa0xILrAc2s+sElrAWWly083fjYgKTba3t/+mRdEfXsQqS
+         HyGgLM25dvpolGkpD8yhhQpCR1WGwUfAUfN3W3MYiSS2wtTK1cq80ldGTnjnLswpe60M
+         YgdmVWSedWmpXGbzRk60eXzrE3S9MtAqjk+jHCqA298JGwvUmmaqUiEVEE3f3aeD74m3
+         7St0foGkvsNDDwdl26RMCQbmSlWXrJ1FE3wetjUrRtEiDcOGgx0ZkOk4qHZ/oiW1ejpI
+         AIoM5bTLA+LuDuPjGA4q2YplXuamhhoI1AlTMW/adLNLUrZwxPv1NsL7myAoNwbKtOr3
+         MF0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVIfLkNiwi+XPeFx0yVr8oQL0PAuumBJfZGGqezmUliXBM4qeLh4NemqWwEn2OAYM6vW01Ch9BHeEeU6sHg@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1K+hlq+8wT5qJSCKD2KCYnHeGdl+0dB1yXn7evilRHcMU9Tct
+	c3hP8G4uD0zi39Gk/y7mi09QTLpXhyxiQRO385niHcwNG/zjeQ9LpCP3AbQ4gUA=
+X-Gm-Gg: ASbGncvN7F8UMqX0vh0cssc6+cahHNLDpGVnz4fyDd9Ful+It/XuycGxmiiXpWwO3ZL
+	QZmTfxo9i5Zve0Z0h72Qy4Dxmc5Sym1/XA4oPOA5HuxqdaXxviJNmfj7DXRxxwlw//LLcP3toB0
+	m6ll0XODqXCTZsPYZ8g2g8fSNWDbFXrICaW0LDbevE+WL4HMdVkRrNRd76b4Ca7KcFbzoiUaQG/
+	areLlA+FSkk+U9ZlkJQ3gqFRpTcLQ/wYBPxG33mYlt2//cAHUUqwG/BO5XcbD4SDmGJxgpd5UKS
+	4aJTk0SV+MM0bxCLU9Fhsew=
+X-Google-Smtp-Source: AGHT+IGfoZwgSLt/LlIZbdRYkcSEc5pTARTCn2VKVHoHQpdHvHilVJZaKDcCop6xnuShR5HL0iFVCQ==
+X-Received: by 2002:a17:907:7f0a:b0:abb:aef3:6052 with SMTP id a640c23a62f3a-abf26838238mr11726366b.55.1740675041559;
+        Thu, 27 Feb 2025 08:50:41 -0800 (PST)
+Received: from linaro.org ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf0c0ba408sm149482266b.37.2025.02.27.08.50.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 08:46:21 -0800 (PST)
-Date: Thu, 27 Feb 2025 08:46:14 -0800
-From: "James A. MacInnes" <james.a.macinnes@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark
- <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul
- <sean@poorly.run>, David Airlie <airlied@gmail.com>, Simona Vetter
- <simona@ffwll.ch>, Chandan Uddaraju <chandanu@codeaurora.org>, Stephen Boyd
- <swboyd@chromium.org>, Vara Reddy <quic_varar@quicinc.com>, Tanmay Shah
- <tanmay@codeaurora.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, Guenter Roeck <groeck@chromium.org>, Rob
- Clark <robdclark@chromium.org>
-Subject: Re: [PATCH v2 1/2] drm/msm/dp: Disable wide bus support for SDM845
-Message-ID: <20250227084614.527e428d@jamesmacinnes-VirtualBox>
-In-Reply-To: <dk7udmgj3mexlvxxoxvgwut6p3cv4faxhtcbqrikvfp6h6odi3@myp4sxi7nh5c>
-References: <20250212-sdm845_dp-v2-0-4954e51458f4@gmail.com>
-	<20250212-sdm845_dp-v2-1-4954e51458f4@gmail.com>
-	<voecekzdacvrxedltgkiq5vwnaomchv2dryi6ukvk2xynw72wp@5nre7uesyvkk>
-	<dk7udmgj3mexlvxxoxvgwut6p3cv4faxhtcbqrikvfp6h6odi3@myp4sxi7nh5c>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+        Thu, 27 Feb 2025 08:50:39 -0800 (PST)
+Date: Thu, 27 Feb 2025 18:50:38 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Johan Hovold <johan@kernel.org>, Sebastian Reichel <sre@kernel.org>,
+	linux-pwm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC] backlight: pwm_bl: Read back PWM period from provider
+Message-ID: <Z8CX3vr1xuaKT38m@linaro.org>
+References: <20250226-pwm-bl-read-back-period-from-hw-v1-1-ccd1df656b23@linaro.org>
+ <xltamao27utfrsax2pc6mh5tthanmrqszz4k7gyw3knqkm24xp@4tydmhfh6g4j>
+ <Z8BjiRjLin8jTE8j@linaro.org>
+ <rplq65h5k7kfu7anwhuh3w6lmwtm47lzeruofon4ilsxkhogjl@6k7nmeotjidd>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <rplq65h5k7kfu7anwhuh3w6lmwtm47lzeruofon4ilsxkhogjl@6k7nmeotjidd>
 
-On Thu, 13 Feb 2025 01:58:06 +0200
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-
-> On Thu, Feb 13, 2025 at 12:41:02AM +0100, Marijn Suijten wrote:
-> > On 2025-02-12 15:03:46, James A. MacInnes wrote:  
-> > > SDM845 DPU hardware is rev 4.0.0 per hardware documents.
-> > > Original patch to enable wide_bus operation did not take into
-> > > account the SDM845 and it got carried over by accident.
+On 25-02-27 16:51:15, Uwe Kleine-König wrote:
+> Hello Abel,
+> 
+> On Thu, Feb 27, 2025 at 03:07:21PM +0200, Abel Vesa wrote:
+> > On 25-02-26 17:34:50, Uwe Kleine-König wrote:
+> > > On Wed, Feb 26, 2025 at 05:31:08PM +0200, Abel Vesa wrote:
+> > > > The current implementation assumes that the PWM provider will be able to
+> > > > meet the requested period, but that is not always the case. Some PWM
+> > > > providers have limited HW configuration capabilities and can only
+> > > > provide a period that is somewhat close to the requested one. This
+> > > > simply means that the duty cycle requested might either be above the
+> > > > PWM's maximum value or the 100% duty cycle is never reached.
 > > > 
-> > > - Incorrect setting caused inoperable DisplayPort.
-> > > - Corrected by separating SDM845 into its own descriptor.  
+> > > If you request a state with 100% relative duty cycle you should get 100%
+> > > unless the hardware cannot do that. Which PWM hardware are you using?
+> > > Which requests are you actually doing that don't match your expectation?
 > > 
-> > If anything I'd have appreciated to see our conversation in v1
-> > pasted here verbatim which is of the right verbosity to explain
-> > this.  I can't do much with a list of two items.
+> > The PWM hardware is Qualcomm PMK8550 PMIC. The way the duty cycle is
+> > controlled is described in the following comment found in lpg_calc_freq
+> > of the leds-qcom-lpg driver:
 > > 
-> > I don't have a clearer way of explaining what all I find confusing
-> > about this description, so let me propose what I would have written
-> > if this was my patch instead:
+> > /*
+> >  * The PWM period is determined by:
+> >  *
+> >  *          resolution * pre_div * 2^M
+> >  * period = --------------------------
+> >  *                   refclk
+> >  *
+> >  * Resolution = 2^9 bits for PWM or
+> >  *              2^{8, 9, 10, 11, 12, 13, 14, 15} bits for high resolution PWM
+> >  * pre_div = {1, 3, 5, 6} and
+> >  * M = [0..7].
+> >  *
+> >  * This allows for periods between 27uS and 384s for PWM channels and periods between
+> >  * 3uS and 24576s for high resolution PWMs.
+> >  * The PWM framework wants a period of equal or lower length than requested,
+> >  * reject anything below minimum period.
+> >  */
 > > 
-> > 	When widebus was enabled for DisplayPort in commit
-> > c7c412202623 ("drm/msm/dp: enable widebus on all relevant
-> > chipsets") it was clarified that it is only supported on DPU 5.0.0
-> > onwards which includes SC7180 on DPU revision 6.2. However, this
-> > patch missed that the description structure for SC7180 is also
-> > reused for SDM845 (because of identical io_start address) which is
-> > only DPU 4.0.0, leading to a wrongly enbled widebus feature and
-> > corruption on that platform.
-> > 
-> > 	Create a separate msm_dp_desc_sdm845 structure for this SoC
-> > compatible, with the wide_bus_supported flag turned off.
-> > 
-> > 	Note that no other DisplayPort compatibles currently exist
-> > for SoCs older than DPU 4.0.0 besides SDM845.  
+> > So if we request a period of 5MHz, that will not ever be reached no matter what config
+> > is used. Instead, the 4.26 MHz is selected as closest possible.
 > 
-> With more or less similar commit message:
-> 
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> 
-> > 
-> > Hope I'm not considered being too picky.  I first sketch **how**
-> > the original patch created a problem, then explain how this patch
-> > is intending to fix it, and finally describe that we went a step
-> > further and ensured no other SoCs are suffering from a similar
-> > problem.
-> > 
-> > - Marijn
-> >
-Not too picky at all. I will use your text. I apologize as I had changed
-the cover instead of the patch. I will do my best to balance too many
-words and not enough.
+> The trace in the other mail thread suggest that you asked for a period
+> of 5 ms, not 5 MHz. And that results in a period of 4.26 ms.
 
-Would it be appropriate to split this patch and the other into separate
-submissions?
+OK. So unit is ms. Got it.
 
-Thank you again.
+> 
+> > Now, the pwm_bl is not aware of this limitation and will request duty cycle values that
+> > go above 4.26MHz.
+> 
+> It requests .period = 5 ms + .duty_cycle = 5 ms. This is fine, and
+> according to the trace this results in both values becoming 4.26 ms in
+> real life. Seems fine to me.
 
- - James
+Right, but as I keep trying to explain is that, the consumer keeps
+asking for duty cycles that go over the 4.26ms, which is the period that
+the provider decided it can do instead of 5ms.
 
+> 
+> > > > This could be easily fixed if the pwm_apply*() API family would allow
+> > > > overriding the period within the PWM state that's used for providing the
+> > > > duty cycle. But that is currently not the case.
 > > > 
-> > > Fixes: c7c412202623 ("drm/msm/dp: enable widebus on all relevant
-> > > chipsets") Signed-off-by: James A. MacInnes
-> > > <james.a.macinnes@gmail.com> ---
-> > >  drivers/gpu/drm/msm/dp/dp_display.c | 7 ++++++-
-> > >  1 file changed, 6 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
-> > > b/drivers/gpu/drm/msm/dp/dp_display.c index
-> > > aff51bb973eb..e30cccd63910 100644 ---
-> > > a/drivers/gpu/drm/msm/dp/dp_display.c +++
-> > > b/drivers/gpu/drm/msm/dp/dp_display.c @@ -126,6 +126,11 @@ static
-> > > const struct msm_dp_desc msm_dp_desc_sa8775p[] = { {}
-> > >  };
-> > >  
-> > > +static const struct msm_dp_desc msm_dp_desc_sdm845[] = {
-> > > +	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
-> > > +	{}
-> > > +};
-> > > +
-> > >  static const struct msm_dp_desc msm_dp_desc_sc7180[] = {
-> > >  	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0,
-> > > .wide_bus_supported = true }, {}
-> > > @@ -178,7 +183,7 @@ static const struct of_device_id
-> > > msm_dp_dt_match[] = { { .compatible = "qcom,sc8180x-edp", .data =
-> > > &msm_dp_desc_sc8180x }, { .compatible = "qcom,sc8280xp-dp", .data
-> > > = &msm_dp_desc_sc8280xp }, { .compatible = "qcom,sc8280xp-edp",
-> > > .data = &msm_dp_desc_sc8280xp },
-> > > -	{ .compatible = "qcom,sdm845-dp", .data =
-> > > &msm_dp_desc_sc7180 },
-> > > +	{ .compatible = "qcom,sdm845-dp", .data =
-> > > &msm_dp_desc_sdm845 }, { .compatible = "qcom,sm8350-dp", .data =
-> > > &msm_dp_desc_sc7180 }, { .compatible = "qcom,sm8650-dp", .data =
-> > > &msm_dp_desc_sm8650 }, { .compatible = "qcom,x1e80100-dp", .data
-> > > = &msm_dp_desc_x1e80100 },
-> > > 
-> > > -- 
-> > > 2.43.0
-> > >   
+> > > I don't understand what you mean here.
+> > 
+> > What I was trying to say is that the PWM generic framework currently doesn't
+> > allow overriding the PWM state's period with one provided by the consumer,
+> > when calling pwm_apply_might_sleep().
 > 
+> Either I still don't understand what you want, or that is impossible or
+> useless. If you target .period = 5 ms and the hardware can only do 4.26
+> ms, why would you want to override period to 5 ms?
+
+Meaning the consumer should become aware of the period the provider can
+do before asking for a duty cycle. 
+
+If you look at the other mail thread, the trace there shows the
+following sequence for every new backlight update request:
+
+1. pwm_apply with consumer's period (5ms)
+2. pwm_get reads the provider's period (4.25ms) 
+   - which is what the provider is able to do instead of 5ms
+3. pwm_apply (due to debug) which uses the state from 2.
+4. pwm_get reads back exactly as 2.
+
+So we can ignore 3 and 4 for now as they are there due to debug,
+but the step 1 still requests a value over the 4.26ms (5ms),
+which in the provider will translate to a pwm value higher than allowed
+by the selected configuration.
+
+> 
+> > Also, the pwm_get_state_hw() doesn't cache the state either.
+> 
+> *shrug*.
+> 
+> > This results in always having to call pwm_get_state_hw() before calling
+> > pwm_apply_might_sleep().
+> 
+> I cannot follow this conclusion. At least one of us two didn't
+> understand some detail yet.
+> 
+> > On top of that, pwm_get_state_hw() doesn't default to the cached value if the
+> > provider doesn't implement the ->get_state() op.
+> 
+> If it did that, the consumer wouldn't know if the request was
+> implemented exactly or if there is no way to read back the actual
+> configuration.
+> 
+> > Please correct me if I'm wrong about these.
+> > 
+> > > 
+> > > > So easiest fix here is to read back the period from the PWM provider via
+> > > > the provider's ->get_state() op, if implemented, which should provide the
+> > > > best matched period. Do this on probe after the first ->pwm_apply() op has
+> > > > been done, which will allow the provider to determine the best match
+> > > > period based on available configuration knobs. From there on, the
+> > > > backlight will use the best matched period, since the driver's internal
+> > > > PWM state is now synced up with the one from provider.
+> > > > [...]
+> > > > diff --git a/drivers/video/backlight/pwm_bl.c b/drivers/video/backlight/pwm_bl.c
+> > > > index 237d3d3f3bb1a6d713c5f6ec3198af772bf1268c..71a3e9cd8844095e85c01b194d7466978f1ca78e 100644
+> > > > --- a/drivers/video/backlight/pwm_bl.c
+> > > > +++ b/drivers/video/backlight/pwm_bl.c
+> > > > @@ -525,6 +525,17 @@ static int pwm_backlight_probe(struct platform_device *pdev)
+> > > >  		goto err_alloc;
+> > > >  	}
+> > > >  
+> > > > +	/*
+> > > > +	 * The actual period might differ from the requested one due to HW
+> > > > +	 * limitations, so sync up the period with one determined by the
+> > > > +	 * provider driver.
+> > > > +	 */
+> > > > +	ret = pwm_get_state_hw(pb->pwm, &pb->pwm->state);
+> > > 
+> > > As a consumer you're not supposed to write to &pb->pwm->state. That's a
+> > > layer violation. Please call pwm_get_state_hw() with a struct pwm_state
+> > > that you own and save the relevant parts in your driver data.
+> > 
+> > Yep, that is indeed wrong. Maybe making the pwm opaque might be a good idea as well.
+> > 
+> > [1] Calling pwm_get_state_hw() would be wrong if the provider doesn't implement the ->get_state(),
+> > as I mentioned above.
+> > 
+> > But are you suggesting we replace all calls to pwm_get_state() with
+> > pwm_get_state_hw() in pwm_bl?
+> 
+> No, I still didn't understand the problem you want to fix here. So I'm
+> not suggesting anything yet.
+>  
+> Best regards
+> Uwe
+
 
 
