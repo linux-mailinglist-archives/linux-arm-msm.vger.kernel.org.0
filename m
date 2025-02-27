@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-49603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C51A0A473D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:58:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BF645A473DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:59:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD511168C09
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 03:57:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C423916DAB7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 03:59:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B08A1E5211;
-	Thu, 27 Feb 2025 03:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E2081D935C;
+	Thu, 27 Feb 2025 03:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JjGTnHjH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i/IqQmbT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B35111BF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 03:57:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE08111BF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 03:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740628670; cv=none; b=DmmQ/cazoea+qk/z63l9bbddZt7Gm1aDO7R7kApCvnZEx7gpM6JbiYzfiar4vYAA84RvhLFw7wfBs7DSDXAwR4MvCP6IltoF6+DnMhM9lhZeZaENEHMET/AMbn9s8Cppu/Z8uSr7fpGBpKKbJKGqpr/lf6jfBRM08ZkmDMVonjA=
+	t=1740628775; cv=none; b=K14lcgcAsoOsQNNj8evajoUZNcEaAofs8Xqso//93skjaOOY8OQJd+B7GO5AlPCLH5ki97CsfAskDM2DYQ3WEzeQdYjZxJ/bA/JX5zJ0dFKNMAQv/RoFLbfoKkzlcucBFxRM2MchX9JOcZGQBdDpa1iSufXxhac8ESrx0jpB7L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740628670; c=relaxed/simple;
-	bh=fxvwW0BgDnU0Z8eptn1J8Yat1c522qae0otlRUcc2DU=;
+	s=arc-20240116; t=1740628775; c=relaxed/simple;
+	bh=t1IbMHTQwzGZn8E5kdDVLr0B+r1xWesTbCZE3Ff1qig=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lqRHRPM2pt/DLzj6fyH6/Poh6psBKI+A9omZaZKd9WdIexF4QDk5NzYUOZwh3udyfWGbVSQZxKiGuUbUeByy4e6xtyE4t+7L5MPa4w8SVekqXLUenExCf3NQlEpaLGbYNx5c2F1h8McNRvZGpYbsHZcEJKWmHGOWHlcmkDCDKgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JjGTnHjH; arc=none smtp.client-ip=209.85.214.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=jJ7UGYaA2bgQwROA1uP/BKr01MLVdKHkgcnxJCX4+NZX7y255R0jUAhKuI/OMkdjBt4/gXHWyV6Q72v7yvMEt5Fx43yEUoiUZkWYRtlGW0FDyTCBTyAbgRhnUcaY2IhV+t/Gim+xvE9FN1gU/17SyjqQdg1ZCGeckXYHBEgyO1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i/IqQmbT; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22355618fd9so1595295ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 19:57:47 -0800 (PST)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-22339936bbfso6923195ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 19:59:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740628667; x=1741233467; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740628773; x=1741233573; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=3SORYFzlf5yk72wXc/hRXcaup5tJCWbmDlOEbyNefL0=;
-        b=JjGTnHjH0sQC4/E6Qc+Eu/2cKENM4OUiUSfYXLeGjGa0/fpieQxfmFBqvIW8u0i4vX
-         8z6WjA+pPQzbMm+Vidn9p/dVI1zzqvH4tvSO+OaRXXUV7H0+WiiMhrC22TSGSBn4j76Z
-         WpDoYZG1kUluwoXmggUyLiwa7GF9xVnibB3NReT9riRA03Od7sp9S7428OnOdoHKhkHb
-         Q6Ecm/RCjPTW4SlUvuBMEjDu/nA8H3fnWhhT8I+hmfLxf30mo26sBwScVTCkUOJBHzOs
-         fQm384EDtOVbIFLfJWSY6mteq5zqrrII4bvDoJVYCbaw1x3LFE+AXbWuwVZDoQ2oW83Z
-         yX7g==
+        bh=I3NGSTdG4pFVTBV4j6oj6tnlVJzj8q9uH1GkI67SifI=;
+        b=i/IqQmbTBA6/HkvSyWmcDXDDsJUV0hV/bF5h/6CRtBl4wFMyGbpWu/vSdXmseHcxio
+         2i3lRXVFnGge0UzZC7kN3emkaaQtkvV8TZYVCQiOt7p62q6VoSKbZZQJhCOHiJPOL0a4
+         gkN48Ju6TL1jbfbkP1ocuZRvst5rDt1zMCNWiWtIElCVRxIx/lzF4UYp9eES0oI/g67T
+         pD7bwgSxTmYj8kbKpIM4/tubQ2wenXVGlhGZMxksb5zMGD+GkJL0dkfXJWVJJo7RWuHC
+         /1jgbvz+B174sIrda6TkK3cvekp3UMf+zrD158Wj2P/W6S2XaGCBG8oveG5iyc5S7s4Q
+         3Pqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740628667; x=1741233467;
+        d=1e100.net; s=20230601; t=1740628773; x=1741233573;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3SORYFzlf5yk72wXc/hRXcaup5tJCWbmDlOEbyNefL0=;
-        b=ixElZi31+3OtaArArjHDDUHJGL5BlAvbLzF5C83XpmVMzaGH+ZoDdrKdVn6A2xHhHN
-         A1aaR676zp5I+H+XJgT9Ca5CT0+5Kj7vpiqtItn7Ubz084Q/iMUm85tmuKsZoMpiYcH7
-         +781llsGDr3mz0Pnt0R0ldmd/Tn5TNDDhrmH9KfO255dilWhilLcTM6OMUoMpl7QRiNK
-         o3lorX6iHOQBT1qgPI6DSKIZaQBc7Zl6ipX2WDBg8VdsuW1OD0+xH/0j/0qPuXQIlmxr
-         vx095Xskv1H5fvjMs4F02LEsxbxCRujfENwLyFWSWdaUh7qcPZYrg59Uwg+daT8GPXLO
-         uD5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUGfN6hFAffiSaM7J4VxRJK4djxBaHsqHsrE2xE516d3f/mkAoZzj8ieLAzoJvlZLpsGMiUmCkC3H74uHY3@vger.kernel.org
-X-Gm-Message-State: AOJu0YzAeG/5mUP16rmnQLIzr9eRSNzq5Ie+HLCQPya4MiiE1Oy6YtT4
-	QOagYHq0A/2XqqSHATyJDyies0/vTSwqy0DETrRSd2vCtbfi1R2B85kyJoyvjw==
-X-Gm-Gg: ASbGncsbUKRjS+bHKmiKkfZc5wiE1fGYMeGqwU3AfINrniJ3yPDQIz3daF5c4Bbjbae
-	R9Az2B1nXl0yGGP6Pi52OVy8Yrwx/DVCs+4wrqXxcz/7PJm0nR5sTb+9EIq7+lSIcYSLwLCA+F8
-	mbQ4YesqIzZtUOb9JKiWOo6oRfgNN5KunfUMfBPvfVJVx1anod8jWEz1+810M+GFHTtbZTiOP4i
-	bZJTQ9GpqwukT8pgsU2DRJfjIxUuapsGe9N626b0VtuGTO3v2jguVZ4SNALoSZ3ailDPUQDfOBn
-	fHnRmDB53gtCukRNyN6osFXNa154rNJAO6FN
-X-Google-Smtp-Source: AGHT+IFGj3WIOcX/QntWrbzx8bfoD4Nny+Kub8u7EqzoQCTumC6GVso2Yd/TuSLqdMuXJvGu8YLpUg==
-X-Received: by 2002:a05:6a00:13a2:b0:730:927c:d451 with SMTP id d2e1a72fcca58-73426d989a0mr37909350b3a.20.1740628666891;
-        Wed, 26 Feb 2025 19:57:46 -0800 (PST)
+        bh=I3NGSTdG4pFVTBV4j6oj6tnlVJzj8q9uH1GkI67SifI=;
+        b=X9Ogyj4jRP7tRqRcrdQUforGPNp0fqv6TNY9JaLH/FKheY0L8RVPUiDdteMY0GXYdA
+         NTwmyUAwPZm44uOxlSP4HK7VR5ormISCzTon6YukoWcUSPEeJMzy5wPx/nursN5Dc5yc
+         k6yzZYqqUf4otseRXkFXdU/O0c7LFBOluy1MVtmtOWwkGtB33YOxPyYo4KtWXhj5s1hE
+         bui1PBPy4jtpQOl3ZsODFtZ5pSz1rzv9Oruj1uDjL7Y3ta5JciDpW0JxMYvpmwlQQSuB
+         gjokYXIRshst+smeJ6RIy7DvOJnBNg98NLKgY1u8xEvPTaHg5O71LMZZIaoh0Cg1DUP7
+         SwJg==
+X-Forwarded-Encrypted: i=1; AJvYcCUbByQDbOJRK1xXieplI6xC9orDjAk7ZgEVFx3Ysme48rk29YPDX0jAYf5MHqSrkaiDXkd3BS63Lz4/oSJQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5PELkJlS1C8bObJ5Ay0c6cykh210+XQSoIeWxvLS7xTkaLwED
+	096yXWH6L9INlfKDfcL4rKbfI78xdsO96a6BzZ5v3Fr8Jrd40WGfs2IPW5rD/A==
+X-Gm-Gg: ASbGncszQyDnz0TYUDDbfqMn9PriiCuj/yiGH0nx/JP7jwkGqeMLSnPq8KRpBN0snuY
+	cLXmhBqio4HtV4L1JQR2Le2ulQCRnVNCYEuzkgrkBwc5vOoH3nTPv0qnqJ8Syp5ZnatqZ7WBE/z
+	1EExD39BI5Avl+jYf5lOn5mKrE8qd3jMjmdbq3n1ZbcxISjZr1kAPKqDK9Dgl72mVrUotN5Izwu
+	KqU6JWbpUi3On+tOqh6ZpFWTsvlXfBoSIgn7p2rXBE2W8L8CTjdpqcbuElx7cPoyOfsyaByt0Vq
+	YrwL0eE27as85kWIGoJFCXrhm1riaB/ieSeA
+X-Google-Smtp-Source: AGHT+IElQv9n7DcYHKKDz2CPpdLIF+QJaSa6MoLIk6Yn6zGzcgfx3cwXpeTVagFx1GUvBCafoZd6+w==
+X-Received: by 2002:a17:902:f60b:b0:216:725c:a137 with SMTP id d9443c01a7336-2219ffb8b58mr429858815ad.28.1740628773009;
+        Wed, 26 Feb 2025 19:59:33 -0800 (PST)
 Received: from thinkpad ([120.60.51.181])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-734a003fa5csm437097b3a.145.2025.02.26.19.57.40
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501d29d6sm4627845ad.24.2025.02.26.19.59.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 19:57:45 -0800 (PST)
-Date: Thu, 27 Feb 2025 09:27:37 +0530
+        Wed, 26 Feb 2025 19:59:32 -0800 (PST)
+Date: Thu, 27 Feb 2025 09:29:24 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 Cc: Bjorn Helgaas <bhelgaas@google.com>,
@@ -94,8 +94,9 @@ Cc: Bjorn Helgaas <bhelgaas@google.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Subject: Re: [PATCH v4 00/10] PCI: Enable Power and configure the TC956x PCIe
  switch
-Message-ID: <20250227035737.q7qlexdcieubbphx@thinkpad>
+Message-ID: <20250227035924.p43tpbtjmqszdww6@thinkpad>
 References: <20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com>
+ <20250227035737.q7qlexdcieubbphx@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,47 +106,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com>
+In-Reply-To: <20250227035737.q7qlexdcieubbphx@thinkpad>
 
-On Tue, Feb 25, 2025 at 03:03:57PM +0530, Krishna Chaitanya Chundru wrote:
-> TC956x is the PCIe switch which has one upstream and three downstream
-> ports. To one of the downstream ports ethernet MAC is connected as endpoint
-> device. Other two downstream ports are supposed to connect to external
-> device. One Host can connect to TC956x by upstream port.
+On Thu, Feb 27, 2025 at 09:27:47AM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Feb 25, 2025 at 03:03:57PM +0530, Krishna Chaitanya Chundru wrote:
+> > TC956x is the PCIe switch which has one upstream and three downstream
+> > ports. To one of the downstream ports ethernet MAC is connected as endpoint
+> > device. Other two downstream ports are supposed to connect to external
+> > device. One Host can connect to TC956x by upstream port.
+> > 
+> > TC956x switch power is controlled by the GPIO's. After powering on
+> > the switch will immediately participate in the link training. if the
+> > host is also ready by that time PCIe link will established. 
+> > 
+> > The TC956x needs to configured certain parameters like de-emphasis,
+> > disable unused port etc before link is established.
+> > 
+> > As the controller starts link training before the probe of pwrctl driver,
+> > the PCIe link may come up as soon as we power on the switch. Due to this
+> > configuring the switch itself through i2c will not have any effect as
+> > this configuration needs to done before link training. To avoid this
+> > introduce two functions in pci_ops to start_link() & stop_link() which
+> > will disable the link training if the PCIe link is not up yet.
+> > 
+> > Enable global IRQ for PCIe controller so that recan can happen when
+> > link was up through global IRQ.
+> >  
 > 
-> TC956x switch power is controlled by the GPIO's. After powering on
-> the switch will immediately participate in the link training. if the
-> host is also ready by that time PCIe link will established. 
+> Move these patches to a separate series.
 > 
-> The TC956x needs to configured certain parameters like de-emphasis,
-> disable unused port etc before link is established.
-> 
-> As the controller starts link training before the probe of pwrctl driver,
-> the PCIe link may come up as soon as we power on the switch. Due to this
-> configuring the switch itself through i2c will not have any effect as
-> this configuration needs to done before link training. To avoid this
-> introduce two functions in pci_ops to start_link() & stop_link() which
-> will disable the link training if the PCIe link is not up yet.
-> 
-> Enable global IRQ for PCIe controller so that recan can happen when
-> link was up through global IRQ.
->  
 
-Move these patches to a separate series.
-
-> This series depends on the https://lore.kernel.org/all/20250124101038.3871768-3-krishna.chundru@oss.qualcomm.com/
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
-> changes in v3:
-> - The QPS615 PCIe switch is rebranded version of Toshiba switch TC956x.
->   There is no difference between both the switches, both
->   has two open downstream ports and one embedded downstream port
->   to which Ethernet MAC is connected.
->   As QPS615 is the rebranded version of Toshiba switch rename qps615
->   with tc956x so that this driver can be leveraged by all who are using Toshiba switch.
-
-This should be moved to the description as a NOTE.
+Or you can just drop them. I have a series that adds global IRQ to most of the
+SoCs and sc7280 is one of them.
 
 - Mani
 
