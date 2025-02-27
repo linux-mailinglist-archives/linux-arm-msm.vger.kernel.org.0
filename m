@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-49719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79F4AA48391
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 16:53:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 259EDA48398
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 16:53:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E844E16284E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 15:53:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4BE94188FE0E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 15:53:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3B8F1ABED9;
-	Thu, 27 Feb 2025 15:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11B1E1A83F4;
+	Thu, 27 Feb 2025 15:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pRcKd7+N"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="apECHTMG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198981AAA05;
-	Thu, 27 Feb 2025 15:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4851A5B8E;
+	Thu, 27 Feb 2025 15:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740671569; cv=none; b=TAZjqAg5/7nnai4ByP4cJVPv8JSnoFFlilL2u5YGK6GEN8RNumyHbtz3JoqLzpqhGrntS9B2RFYWkEn5MpEA1gE/fO9929b/FqsnMAt292PX65vlAg4N7Yb9PG3ycSDu3Yuw03nGfkYz/sqTcz7JvY/pMcWbOz8BVZLD/r1vOSA=
+	t=1740671576; cv=none; b=RmLCg2i7VuXHUREDxsDfNexG6FtcOn8YSeN637eNZrtZLPOY3KGwhVlr3G+KbCWA9c5QoUWXvIxDxsIKCcqAHHd+c1cxGIysw9pq13s9iNQF1u17ev6rZLYrLzeIohESMbNbvJnpNTADroTxanbQ+MSlxeLVokK7YU5TExuEmkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740671569; c=relaxed/simple;
-	bh=ZpjANrkvsSnHCk6h/AbL6jM93e39NH50QwlC+ZXsiUo=;
+	s=arc-20240116; t=1740671576; c=relaxed/simple;
+	bh=7EYjOyxg6IRT1jKQTUf1dfWCA9NTlM8o6WmOW1tfSsY=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RyV/2W3VHvz6NzR5HwItiR3xwQgWzO1EdRuAk9ga+e+WyDtZaQI4KSyErfuvwiituxUHvfftOb/EwlUcvWqW4HQQpWmv8mUVjFAcWONMctKZ82NVOP2vNh32A5EjX+P6HWv+qoNUq4f23BlSCrOV5KAbgRwPHI38HTNZsdjdVrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pRcKd7+N; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=MFMgs+NxHZZgWoVQDY5r1QmoGX0TXsFexjzgBqj70rT1hxh9rm9d7QhDzCpSU88BHiTBB+Sd88mHRnp/bGa4JBn6kOe5Kvb+BnNmcXArN26+zE9WYwC50mM2BIcx87VmOUwhQPGUjChr8iZMyfWQuSFhq0fb0K4MjQz5v3CW33g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=apECHTMG; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51R8ftHx011791;
-	Thu, 27 Feb 2025 15:52:44 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51R8tWu1017852;
+	Thu, 27 Feb 2025 15:52:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6tGP+sqFgniXRjVGKZE3XbgZS6XrIMuMCDwtYl/eIWM=; b=pRcKd7+NwptSfZYQ
-	5PSLP5t49P8ElMD6P5MbL6wqCHgJKSqy7kIGnAee7Doz2rfUNz8PmnRhdLKqQFps
-	v9yb9dPuLXxsuMYYGlNQuPRKnXvjXmNMsx61JdpAI+7zP0zGpM1ZJccvaN9MUqzQ
-	fOeuDuwRfL9rnNmMRuGQWyBizgqxzx4H222OeV/ksT9K7RIDZUyMqyqk3nO3VB+K
-	A6XwhcnTGm8HhZnLqSKfxRG3WZK4k5GyW4GmJPsXcnzDKWgSBD8sgWnKZsBZqmvc
-	X4HDX3g2L/MbeITyFt1OrRcatXPhkMAxMSDH/z2zK73FHXfkKMuCGvESnyS8GGAS
-	1n3YLg==
+	gdghZV7rqmH9L13A0iLlP5v/RZs7EWdF+j996RUisN8=; b=apECHTMGRykkMRsc
+	/r55xz+LvjWpnTanVYUImexuT6ym3ReVue5A5aEZMlbHgAYVAEHWDyosaea42hRd
+	Za5HKr9c0HtF6kI7HCE3QUoEbbBqa1hlF1oVoWxohnO/P8KTa1hyPdstln46Au8m
+	c8wi4W0XWWv66g897TFUay8Kyv/vshWIWQQIzBrzV9sL5IFnTSACU6wNP1lZeqLE
+	g4sAVBUFfepUy1296dyeMLdndwCxCs+dYPgSo3Sq+x0sYWg2aWPhrQiu+iSu1UpQ
+	5c+drsUzgAJePyt/t+hoooxRrjXc30FKGkh3QIvRNDBMr3vhl4/Spe+mrXywzDfJ
+	4hdZ8g==
 Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prke88e-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prn688p-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Feb 2025 15:52:44 +0000 (GMT)
+	Thu, 27 Feb 2025 15:52:51 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51RFqhZT029927
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51RFqovP030449
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Feb 2025 15:52:43 GMT
+	Thu, 27 Feb 2025 15:52:50 GMT
 Received: from 0d558f49c4ed.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 27 Feb 2025 07:52:38 -0800
+ 15.2.1544.9; Thu, 27 Feb 2025 07:52:45 -0800
 From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
 To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -73,12 +73,10 @@ CC: Odelu Kukatla <quic_okukatla@quicinc.com>,
         <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
         Raviteja Laggyshetty
-	<quic_rlaggysh@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>
-Subject: [PATCH V9 1/7] dt-bindings: interconnect: Add EPSS L3 compatible for SA8775P
-Date: Thu, 27 Feb 2025 15:52:07 +0000
-Message-ID: <20250227155213.404-2-quic_rlaggysh@quicinc.com>
+	<quic_rlaggysh@quicinc.com>
+Subject: [PATCH V9 2/7] interconnect: core: Add dynamic id allocation support
+Date: Thu, 27 Feb 2025 15:52:08 +0000
+Message-ID: <20250227155213.404-3-quic_rlaggysh@quicinc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250227155213.404-1-quic_rlaggysh@quicinc.com>
 References: <20250227155213.404-1-quic_rlaggysh@quicinc.com>
@@ -94,44 +92,83 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4Bj7UTujf7BUmlp1hsQ5VJYSf_i6PX44
-X-Proofpoint-ORIG-GUID: 4Bj7UTujf7BUmlp1hsQ5VJYSf_i6PX44
+X-Proofpoint-ORIG-GUID: ayDeQPz1BpOX8v4T4olLWql-CzF6HsYX
+X-Proofpoint-GUID: ayDeQPz1BpOX8v4T4olLWql-CzF6HsYX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-27_06,2025-02-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- bulkscore=0 lowpriorityscore=0 phishscore=0 clxscore=1011 malwarescore=0
- impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 clxscore=1015 mlxscore=0 adultscore=0 mlxlogscore=999
+ suspectscore=0 phishscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502100000 definitions=main-2502270120
 
-Add Epoch Subsystem (EPSS) L3 interconnect provider binding on
-SA8775P SoCs.
-The L3 instance on the SA8775P SoC is similar to those on SoCs
-like SM8250 and SC7280. These SoCs use the PERF register instead
-of L3_REG for programming the performance level, which is managed
-in the data associated with the target-specific compatibles.
-Since the hardware remains the same across all EPSS-supporting SoCs,
-the generic compatible is retained for all SoCs.
+The current interconnect framework relies on static IDs for node
+creation and registration, which limits topologies with multiple
+instances of the same interconnect provider. To address this, update
+the interconnect framework APIs icc_node_create() and icc_link_create()
+APIs to dynamically allocate IDs for interconnect nodes during creation.
+This change removes the dependency on static IDs, allowing multiple
+instances of the same hardware, such as EPSS L3.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
 ---
- Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/interconnect/core.c  | 13 ++++++++++++-
+ include/linux/interconnect.h |  3 +++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-index 4ac0863205b3..cd4bb912e0dc 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-@@ -28,6 +28,7 @@ properties:
-           - const: qcom,osm-l3
-       - items:
-           - enum:
-+              - qcom,sa8775p-epss-l3
-               - qcom,sc7280-epss-l3
-               - qcom,sc8280xp-epss-l3
-               - qcom,sm6375-cpucp-l3
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index 9d5404a07e8a..40adc1d0d89a 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -20,6 +20,8 @@
+ 
+ #include "internal.h"
+ 
++#define ICC_DYN_ID_START 10000
++
+ #define CREATE_TRACE_POINTS
+ #include "trace.h"
+ 
+@@ -826,7 +828,12 @@ static struct icc_node *icc_node_create_nolock(int id)
+ 	if (!node)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	id = idr_alloc(&icc_idr, node, id, id + 1, GFP_KERNEL);
++	/* dynamic id allocation */
++	if (id == ALLOC_DYN_ID)
++		id = idr_alloc(&icc_idr, node, ICC_DYN_ID_START, 0, GFP_KERNEL);
++	else
++		id = idr_alloc(&icc_idr, node, id, id + 1, GFP_KERNEL);
++
+ 	if (id < 0) {
+ 		WARN(1, "%s: couldn't get idr\n", __func__);
+ 		kfree(node);
+@@ -962,6 +969,10 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
+ 	node->avg_bw = node->init_avg;
+ 	node->peak_bw = node->init_peak;
+ 
++	if (node->id >= ICC_DYN_ID_START)
++		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
++					    node->name, dev_name(provider->dev));
++
+ 	if (node->avg_bw || node->peak_bw) {
+ 		if (provider->pre_aggregate)
+ 			provider->pre_aggregate(node);
+diff --git a/include/linux/interconnect.h b/include/linux/interconnect.h
+index 97ac253df62c..8b0f892aaed2 100644
+--- a/include/linux/interconnect.h
++++ b/include/linux/interconnect.h
+@@ -20,6 +20,9 @@
+ #define Mbps_to_icc(x)	((x) * 1000 / 8)
+ #define Gbps_to_icc(x)	((x) * 1000 * 1000 / 8)
+ 
++/* macro to indicate dynamic id allocation */
++#define ALLOC_DYN_ID	-1
++
+ struct icc_path;
+ struct device;
+ 
 -- 
 2.43.0
 
