@@ -1,91 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-49613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BF23A47475
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:30:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E8F42A47479
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:32:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EDD9A188C200
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:30:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7DA6A188C209
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:32:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B3771D79A5;
-	Thu, 27 Feb 2025 04:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6550517A5A4;
+	Thu, 27 Feb 2025 04:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m0rimY+x"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ltyeMc7A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282522EAE4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9057842065
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:32:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740630625; cv=none; b=VrZXZr2fw01khKA03K1pWnmbYbkZappHGAq463qIkZIhsrZpBzrvQJZ7pL3GdiQj1TAywzlI6ni1dS1Xf3dcSN2fwEhPiBrAyOF4UCjvFITC0JnFUwHtv3HLd4itMpJBN8iXDSuX3yt2tR3c4O2j1gSowDBebDDgby73op7aGaI=
+	t=1740630733; cv=none; b=bwfgrnMY4ejw7hpZ4zKTUILZuCRR2lrG1aJ1hQCrsxwH8/TlnL1DCo5BU9MuimPmV/o+9ZTi3eSSyJQQsJYfpTsTE62kYYqpnV9HA5LmgQkJmjjcF7csIy3foyEa/cWaInuVAJyji/oEZ8kwMJyfQAm9vJopKVVckP7C11wWul4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740630625; c=relaxed/simple;
-	bh=K5Ig3YWAa+ZrYmIukjgNYwh4zK1sumsgYolE4PtduI4=;
+	s=arc-20240116; t=1740630733; c=relaxed/simple;
+	bh=YfV4BiA4SU0zInqqJL/OjxsR9HNALC7jGnJwCPLDFF8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OvAD2HW/44eO+vKr6JOU1rXRMkFpzn21y//xSlfeNIlkadAHdyoHul8XxpU5G11E4qtvS/Rh7PnM757Ased/+LGH4ZlE6moAz/IoNTEll7xOVu1LvUAe8X7GCY3FdIEhsBs7z72l76nCyF990sfTNHJiHt9J/4k2Mici1x7oOxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m0rimY+x; arc=none smtp.client-ip=209.85.167.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=lkdpnhEw25tHjyfhHItTHWQAULILgeZ5fUUHoPbwsURU+1vVSsmrZoTBEDZ+KJkTZLaYTbsAA+L6+Tw/i54b7+SoFW+8cx4Zt9dk7wksyQeSNY+FxcjbvPiTcZehd+yjuBXXylj9/U04DHQY+LAUmZRQg0enGR+2sLYedrJ3haM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ltyeMc7A; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5461dab4bfdso525445e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:30:22 -0800 (PST)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-30b83290d39so4625911fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:32:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740630621; x=1741235421; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740630730; x=1741235530; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6xImYWDi5dHhhhMYMyVIYxjxB6DJ6bmImK4QBDVtyf4=;
-        b=m0rimY+xPxa6Rt9eD08HgZpGg8Ufd978jWDP7E4h4nx7POfHYrERe9sZxNsD5bgi13
-         dNOFSqkegTp7FG3APXGDW2G9HHtfP0kENY4g16xAEPeATEwh8YO+a4dVt3oLmlAsUNSe
-         XNUdcnlwvGOy54bDCdhB0t66SgmDVGI4whLN0gmset1MmCqOj1m2iDaqlKQp6Yw3XWp3
-         NfpWrjqL7/iZhZfoqb1r3giKn7iZaO0Poj5BDDCrOOGIe985ink4dZzQVziwA4rv4I2g
-         OnijiDfD7bcurP/pl47Yp35iQi4J83i7HPSOqxeLhfX6/sNPNW+CJ97MFS1lKhc9kwBF
-         1tiA==
+        bh=eYkWT0rFcOGrEHleNW1VP59D6K495I1dl8pYg+JsebY=;
+        b=ltyeMc7A8cRz5KiSbRzrchNDGaTrtFvs2DsZlRupM6ksETx1NkclBryT2FyS3kXQij
+         vlklcHh6WjFT38+UDdmYybI9EkL4U7oQbC0Smchv4fFGFD/ySPhp6ofcmkolwiTGPtsW
+         zAklejywW02feHfng+300CXFaN9zc1yCFFsTOn0yGdTqDsN36+cOuRENmVl9RmlmoSXF
+         T8+RKZzh8LI/jr81KpQhEh0jfNDMqihO0YAK8BW4XYlsTTViu+yGcW+bdphICztDPdBf
+         1kOE0uFdy8mIe0e3/yThkPN3PGMRi9owUSnZsNzxGHKYX4ffyiInbod20wEWoBNoX4Jx
+         qVxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740630621; x=1741235421;
+        d=1e100.net; s=20230601; t=1740630730; x=1741235530;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6xImYWDi5dHhhhMYMyVIYxjxB6DJ6bmImK4QBDVtyf4=;
-        b=gQ/qCkogSS2L9nWml9v/UIhDD/uBmVAWX9AFzH6p39EvC/7oPYPEO6QbGx/zkuuvMt
-         eMnfPX6Ti4q6u/j35aEZaFopc2w1ikE5hFLSUS1IkhKKLoVbc4AlzJLr9+3ZfZaU4fGs
-         vjlLnszWgJjAkEByCvbqw8+Sx9AlfyteVaXb3vrumlGCTlsr5eeF+JP+bxPhL+QKM2rM
-         lw4m4m/Uk+dvEGXXLFT79mng5DJD1urfUbwXYcJLSB8N52qS9niVsLUTifkfXWnpr5Wx
-         PEC1PP588ruILbHEKTK/eh7u7gWCzOIJ3n+tfT5DhMw9EBAog2mk4S95AQwGzq9F238t
-         3pZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUSiWMAZIk3IzylspgRs98xXCexHSbyK2P1nWDLLCGvCvcCfSqz35S8wxpHV8dwzIGorzdWkb3VJd6u8oih@vger.kernel.org
-X-Gm-Message-State: AOJu0YyO0b3R3Nt8a5xk8QHexjeBh9HHyvHPE0lwNX1WtOuIADtj3jFW
-	o9Fq25ry9DRRnUAVYFsAq1NtNj1Fpcb6RyYySyUWkf7hyGZGjSgIzhcNY86CAtM=
-X-Gm-Gg: ASbGnctJNJwYNqFcbdyITnz29Lm7s8PVdRqNpdSmS6TKBbB5vLn503bXk6hOX3QCSaF
-	1VLwQYr/8Z72sHKIvoSJKQcEY8zdzXcPCds/S7AzNjYZq6IHMFVgobEKNZw4NITBhQHQ0mRVgGH
-	MQ4CWTy+20sJJEzmAlVQR00vrEpeeRPAjM5rFv0KoSw6q2iBZrxqEs37DEnTsObGasZTJEj0R5i
-	zQgjupGF4e1WEWruBZ5kkjAIvqk5w7fBmg9DDn7cqFOlpH23pBXsBZeJzCO2zVRG/F7Usw0Ar07
-	SrkNuOiDTmuxAH7jrYcnXAUMfPbJnhYdmaGofmkPRLKhhbDM9zFFkLhm2vxESimm9dRPeQYHAKM
-	DCE45lA==
-X-Google-Smtp-Source: AGHT+IGL7HDk5Dk+8hhQWHKYR6eLK127rmTECoFhOD2p60rLksOSOUqbp9cBZQmHY4NpEr7VKXUNsg==
-X-Received: by 2002:a05:6512:ea1:b0:545:2c25:44e6 with SMTP id 2adb3069b0e04-54838ef5865mr10147861e87.25.1740630621185;
-        Wed, 26 Feb 2025 20:30:21 -0800 (PST)
+        bh=eYkWT0rFcOGrEHleNW1VP59D6K495I1dl8pYg+JsebY=;
+        b=L471Tvn49bGAWuTdUvwX9dfln7sGKPqEdyHxFt9GGZJ/S6ce4YnRfo+CqTMal1L/Vq
+         hl2himBkSlt9/Xbzv+EVDU/0i413dhO/7Z1ZMuM2rkRiYb3u7yqYdV45PTNuOQVU9p1t
+         RwAbLuKsswPVsaQEB8YGkPUCUhgxJ6/iTVhpzvS+mlNnMRjSk/c4Nk+aPfI8a7xIGgOR
+         bUgSm3d3FoTeobaAARelRiCC/HfOQfVMkgoZ56HdNcm868spcXyjPpE978hlgVMOw4TS
+         w/JoT3XMdrM5mYObmSH4SwwColHWr4/fd/umjPeBbMpRO0sVCu30Y8DumRSi1vyN/hdR
+         D0Yw==
+X-Forwarded-Encrypted: i=1; AJvYcCW/Lo7d56bDXRoi3cgnrUFiasdQEo3HQvUVJs5SGQIZ/utC011QQUiOy8YFjRHgmFLYPAu1TPPwL5IblCeP@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6g/0251ZplycDR0X9rOBTuioyeEuLVKqqbu5vYIZs0VwVFBBh
+	AeO3cmN/KURv9I3EXyt3HJP8S+Kykmb0S7ZtdfjXHJ5B4xhoP3b8nuissGRj81+gPxkg2Gv+cu4
+	68hAGCQ==
+X-Gm-Gg: ASbGncsHEAcbWZQQCzhj72PFO+h76G059SiMMbhMpjPQUkuC3qugroeCRvbsCd9ZBGD
+	wS1Tev2FcOrSXZ28zCCj5qk0RXIuV2o/pWHPz4YT4Lcw+5bHliCpLdSKOxNCDKsLRP8ay8Y6SKU
+	MJ7YG9c/2c5wCDWgQ5oowbTA2Po+530+qtSFGoPY/6q0eJ3tRA7/3rTFsbeuK27+NclbPPvu0B7
+	Wlze741mQokWVK5ckKjCOajHlpDYqn7pLhwqYVJI/jmjKTI74a3O1FONtdkrhlnr3nbyVh7PXlR
+	XPikWQqJiWqd/nQhz9jctdwXHwF2/cgfY4+iQGHvWERaGa8wjGEqQO+PCc25OVUAzJefz90vPel
+	WbW8i8w==
+X-Google-Smtp-Source: AGHT+IGu8Gn8w7sBp1oaXjlnkPsoH4b8PCFLUA4nbhoKRrP0ufGqMjd5q/HZTx/sI0BrTKxk7c7PMg==
+X-Received: by 2002:a05:6512:3f0d:b0:53d:dd02:7cc5 with SMTP id 2adb3069b0e04-54838edd85fmr11347097e87.7.1740630729683;
+        Wed, 26 Feb 2025 20:32:09 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443cd06fsm60825e87.228.2025.02.26.20.30.18
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443cd03dsm62596e87.244.2025.02.26.20.32.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 20:30:19 -0800 (PST)
-Date: Thu, 27 Feb 2025 06:30:17 +0200
+        Wed, 26 Feb 2025 20:32:08 -0800 (PST)
+Date: Thu, 27 Feb 2025 06:32:05 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
+To: Taniya Das <quic_tdas@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
 	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, ~postmarketos/upstreaming@lists.sr.ht, 
-	phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: qcm6490-fairphone-fp5: Hook up
- DisplayPort over USB-C
-Message-ID: <it5pyziyolnzjlfzfcvugiupauf6vqrbes4kdjpae2edgoc2pc@zr3d4iqczuvc>
-References: <20250226-fp5-pmic-glink-dp-v1-0-e6661d38652c@fairphone.com>
- <20250226-fp5-pmic-glink-dp-v1-3-e6661d38652c@fairphone.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-idp: Update protected clocks
+ list
+Message-ID: <xwatlvi3xwu6q6difsd53ymh6htzebmcbyiq67mvworye6epq5@ash232dggqia>
+References: <20250206-protected_clock_qcm6490-v1-1-5923e8c47ab5@quicinc.com>
+ <j43f4wu6wgoho2tl4crckemnngyvek5mma6ghkdyqcivk65dcf@gfsimovfuqy5>
+ <72cc2c52-1d0d-4a60-93da-14acd5947f1f@quicinc.com>
+ <o53nnmt5ypuoms3b37lehtmpwloudusr7647alehvnwsiltsyo@grd6ua7mh4o2>
+ <0ab2552a-3b8d-4b4f-8f9e-8b0c4f5bf6ea@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,161 +98,44 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250226-fp5-pmic-glink-dp-v1-3-e6661d38652c@fairphone.com>
+In-Reply-To: <0ab2552a-3b8d-4b4f-8f9e-8b0c4f5bf6ea@quicinc.com>
 
-On Wed, Feb 26, 2025 at 03:10:20PM +0100, Luca Weiss wrote:
-> Extend the USB graph to connect the OCP96011 switch, the PTN36502
-> redriver, the USB controllers and the MDSS, so that DisplayPort over
-> USB-C is working.
+On Thu, Feb 27, 2025 at 09:56:27AM +0530, Taniya Das wrote:
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 67 +++++++++++++++++++++-
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               |  2 +
->  2 files changed, 67 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> index b3fc37dba51523ce5678ae6d73f7d835f8b26d9e..1e04c7ec7163538d93543f36094203e58212f600 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> @@ -101,7 +101,15 @@ port@1 {
->  					reg = <1>;
->  
->  					pmic_glink_ss_in: endpoint {
-> -						remote-endpoint = <&usb_1_dwc3_ss>;
-> +						remote-endpoint = <&redriver_ss_out>;
-> +					};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +
-> +					pmic_glink_sbu: endpoint {
-> +						remote-endpoint = <&ocp96011_sbu_mux>;
->  					};
->  				};
->  			};
-> @@ -758,6 +766,16 @@ typec-mux@42 {
->  		interrupts-extended = <&tlmm 7 IRQ_TYPE_LEVEL_LOW>;
->  
->  		vcc-supply = <&vreg_bob>;
-> +
-> +		mode-switch;
-> +		orientation-switch;
+> On 2/27/2025 9:50 AM, Dmitry Baryshkov wrote:
+> > On Thu, Feb 27, 2025 at 09:42:39AM +0530, Taniya Das wrote:
+> >>
+> >>
+> >> On 2/26/2025 10:12 AM, Bjorn Andersson wrote:
+> >>> On Thu, Feb 06, 2025 at 03:43:21PM +0530, Taniya Das wrote:
+> >>>> Certain clocks are not accessible on QCM6490-IDP board,
+> >>>> thus mark them as protected.
+> >>>>
+> >>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> >>>> ---
+> >>>> Mark few clocks as protected on IDP of QCM6490.
+> >>>>
+> >>>> This patchset is separated out from the series[1] to remove dependency from
+> >>>> the LPASS reset.
+> >>>> [1]: https://lore.kernel.org/all/20240816-qcm6490-lpass-reset-v1-0-a11f33cad3c5@quicinc.com/
+> >>>> ---
+> >>>>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 21 +++++++++++++++++++++
+> >>>
+> >>> I merged the patch adding this board in November 2023, are you saying
+> >>> that for the last 15 months no one has actually booted it!?
+> >>>
+> >>
+> >> I am not sure, I had got request to help boot the board which was not
+> >> due to these clocks.
+> > 
+> > So, was the original submission in November 2023 broken or was it broken
+> > by a later firmware upgrade which started to protect those clocks?
+> > 
+> That's a fair question, probably the later broke it.
 
-Should be a part of the previous patch.
-
-> +
-> +		port {
-> +			ocp96011_sbu_mux: endpoint {
-> +				remote-endpoint = <&pmic_glink_sbu>;
-> +				data-lanes = <1 0>;
-> +			};
-> +		};
->  	};
->  
->  	/* AW86927FCR haptics @ 5a */
-> @@ -778,6 +796,30 @@ typec-mux@1a {
->  		reg = <0x1a>;
->  
->  		vdd18-supply = <&vreg_usb_redrive_1v8>;
-> +
-> +		retimer-switch;
-> +		orientation-switch;
-
-Should be a part of the previous patch.
-
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			port@0 {
-> +				reg = <0>;
-> +
-> +				redriver_ss_out: endpoint {
-> +					remote-endpoint = <&pmic_glink_ss_in>;
-> +				};
-> +			};
-> +
-> +			port@1 {
-> +				reg = <1>;
-> +
-> +				redriver_ss_in: endpoint {
-> +					remote-endpoint = <&usb_dp_qmpphy_out>;
-> +				};
-> +			};
-> +		};
->  	};
->  };
->  
-> @@ -799,6 +841,15 @@ &mdss {
->  	status = "okay";
->  };
->  
-> +&mdss_dp {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_dp_out {
-> +	data-lanes = <0 1>;
-> +	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
-> +};
-> +
->  &mdss_dsi {
->  	vdda-supply = <&vreg_l6b>;
->  	status = "okay";
-> @@ -1297,7 +1348,7 @@ &usb_1_dwc3_hs {
->  };
->  
->  &usb_1_dwc3_ss {
-> -	remote-endpoint = <&pmic_glink_ss_in>;
-> +	remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
->  };
->  
->  &usb_1_hsphy {
-> @@ -1326,6 +1377,18 @@ &usb_1_qmpphy {
->  	status = "okay";
->  };
->  
-> +&usb_dp_qmpphy_dp_in {
-> +	remote-endpoint = <&mdss_dp_out>;
-> +};
-
-I think this one is static, plese push it to the SoC dtsi.
-
-> +
-> +&usb_dp_qmpphy_out {
-> +	remote-endpoint = <&redriver_ss_in>;
-> +};
-> +
-> +&usb_dp_qmpphy_usb_ss_in {
-> +	remote-endpoint = <&usb_1_dwc3_ss>;
-> +};
-
-And this one too.
-
-> +
->  &venus {
->  	firmware-name = "qcom/qcm6490/fairphone5/venus.mbn";
->  	status = "okay";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 0f2caf36910b65c398c9e03800a8ce0a8a1f8fc7..4880d26e745566fa7ef906a0489e3772f2426ab6 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -3639,6 +3639,8 @@ usb_1_qmpphy: phy@88e8000 {
->  			#clock-cells = <1>;
->  			#phy-cells = <1>;
->  
-> +			orientation-switch;
-> +
->  			ports {
->  				#address-cells = <1>;
->  				#size-cells = <0>;
-> 
-> -- 
-> 2.48.1
-> 
+Could you please document it this way? This would have removed possible
+questions by Bjorn.
 
 -- 
 With best wishes
