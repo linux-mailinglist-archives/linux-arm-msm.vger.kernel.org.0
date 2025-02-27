@@ -1,653 +1,357 @@
-Return-Path: <linux-arm-msm+bounces-49580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 509DEA46FF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 01:13:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F7BDA470B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 02:06:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E16C6188D426
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 00:13:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 922AF3AF278
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 01:05:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 191AC148857;
-	Thu, 27 Feb 2025 00:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E03471758B;
+	Thu, 27 Feb 2025 01:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="j3l93BQs"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QvVvOTDG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAB454764
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 00:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FA7ECF;
+	Thu, 27 Feb 2025 01:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740615118; cv=none; b=n0sJcbRgelFsipILhGurzXq0oHCRqL6QooOSrzFCKAooVx5heTZn58XiFhIKla3n4xBCIKhsGL9Z55eeMEg2chPB92bEscFhN5/xl2aLOqrNV3568+2XC1O2tTpngYSftzYTBibRQOQ9JwdPQ8L+1nSQhSJLLaA2iDu9PwfRiUc=
+	t=1740618365; cv=none; b=XpoQV8sP7WHJK2e1OKbQc+Wgo+sJwcD9SRSQ6C/4DwLJil2SFr13u302/Kw9Idg4SJ+3fYFnZ9deqlR8NDFnPpm1nnooZDdOO5bMLTlt3ZtCwGvSrMg0u2fKPeSt87qf+CT1Gk1RPYgijwXHNlLu3i49SP1eULf04R0ZngD96LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740615118; c=relaxed/simple;
-	bh=QZCpZlu53quw6nL6TnKxy5fmS1nRzhqSoUP2GUKX9/c=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=P6JU1jcDP81Q9Mx/KANAU3wCQsi15AgeuMZ175EVdIWj5NLH9Ce2IIHos32PDogXtSx7dj6S4iH1PycrKr3gTTUjqst6/OGDnb+7Hza5MUcQhh/02x7BIs7iPmEWE6yh7OqHL4r8wnkg7Jzl9nlIOnXi1HCFasUg28K2pCw7DHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=j3l93BQs; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51QK01rT021388
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 00:11:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1740618365; c=relaxed/simple;
+	bh=u6djUUCuS1OAInC4IJmiZCv7c7SfprcVAax5FLQ2KPE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Yw5yd+G4ySqrg5gq6EQjK/9cmWaHtsxiZ3ozn4e5Zlnuk4yrL3XUwH6A5fQSfBnP+kuayIlFXgL04vFMeDEZEbCFm85t4tP3OAYb2ja73CfRVG7PmuZ1SwCWaNI7eTwh8XhBN5URrkcDm2HSKqIiMr4Gty9gV0CnyncSrTrtIzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QvVvOTDG; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51QD9A33001059;
+	Thu, 27 Feb 2025 01:05:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7sVaiMs2t/yghLl4ZXum6gfPzebES0AYVlGI7YtV98s=; b=j3l93BQsPmbKgFo8
-	yXqGtSddVGsD3+Stq+UeW0xH4AKzvjwA4bdIfSWE6zbZUL0gwx915eoV2KtYNSuo
-	jXSIl0bkL2+Af50RjhkVJ+DycC/hGN4T7gxs/+FQlnBKeAe4JWVELod8X1+ZtWtI
-	qOZSPYR9aGMIStZh9dIznfdKKcVO0w2CZKKyLdQW8bMRCyj15NBSg32IbzLbE3nR
-	HfHbNtDOcXpQ/2orUSvShYze+OXYE7rdJG9r0Mt93UmJ1jqqAOYEpQO1rw8BRN36
-	JptxV6cGBRO96m/1LucfmdIYqMkaHOG5QXabwHQnxgGNsmyngzN+Pe/03rQfx/pi
-	m/5DIA==
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com [209.85.167.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prkkpwu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 00:11:54 +0000 (GMT)
-Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-3f3fbe101f7so341609b6e.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 16:11:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740615113; x=1741219913;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7sVaiMs2t/yghLl4ZXum6gfPzebES0AYVlGI7YtV98s=;
-        b=ies87USQVB2kQ+QdE7SuffPAiOmtYZNtPT6JHesqEFONAlQtr9hO7wZjaRW08B1Fuw
-         dWy0Tw4ZkQc7avoIGRN93meENG8Gi9rL+2mczn2ys4s/InL/faN5W1mwDy4DPkjChSbr
-         wYxXSE4L/yHqjr1UcRYLjG9tclBn5Tgii7/dTJQhE/99BbbRs0IQ7BhrHLTms867gwsU
-         DcKiqyvvZwaB9kvQpG1gek8idMQ2AZjPvsENPzuwmb0jjvkJ7VxBNqzgX8veK0BQQ66Z
-         n3mMhe+Qyqb2KZHqqgvW2O69ztGBOSdzK2zz7UaWHReEi5AjOfI+osdow2LU/ieHyg/d
-         ZKDA==
-X-Gm-Message-State: AOJu0YwhRyK4n8AYr+KnK/iaRmJeSlSRiMH1CJhtsfv09ChlHeCpmRKW
-	Jta8FGlEZ5q6lk/XcMzv8ym3ksE3q4x+zjDqi59+flVbV5IMkOOYGbbcCTuERM2xnr+puNceKlf
-	+oKh+jlbp+/8R27qKOZ/RcZ7m9a5n6fcRxo50lHsWsbAX6ue+f8tQR5NiK8CC0EdF
-X-Gm-Gg: ASbGncui9joevwxblzccy2VWRW1oBfOsIlh6bdlknyk5AOIPw6ifOHzwkjCZbP201Bp
-	ImXGrPoNy+aDQYbxIRxrm8PyyHoTXcb/azjD2knUvXk75RnsUEZ/hezfK9joxPsPB3UWrQV96f+
-	t8TH5PfUxn1scSiC7Mdsdv1NJWi+sH5JUL1rs3A/JMxP624WUI6sc2XzCI/4stqVSVrqYk5AUVu
-	imkabf6F6nQG7sAaQd4g7I/IVnE216D9aJqXJrLRBJcuKV4iOqtnNrD8Ty86WGxPW5/PUUUYfte
-	JeYSOaB348LEx23JZ32n/jdppl1KDEbVtMqDmENUBCI+/sQVjvL8xTDcEg7Z6khuS+dSfV8c+yF
-	9h/vfmbtWeQSORKk=
-X-Received: by 2002:a05:6808:2f1b:b0:3f4:1d3:b64e with SMTP id 5614622812f47-3f547e3a51cmr3153554b6e.28.1740615113504;
-        Wed, 26 Feb 2025 16:11:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEz12bIBQsr4nK93FSyPKMSCUl2KIJYpv2rvkY4dotioPJA0yGhdMzQznWTdCf6EYAGzyKhQQ==
-X-Received: by 2002:a05:6808:2f1b:b0:3f4:1d3:b64e with SMTP id 5614622812f47-3f547e3a51cmr3153538b6e.28.1740615113147;
-        Wed, 26 Feb 2025 16:11:53 -0800 (PST)
-Received: from [192.168.86.65] (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3f5507c40c6sm33988b6e.45.2025.02.26.16.11.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 16:11:52 -0800 (PST)
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Date: Wed, 26 Feb 2025 16:17:54 -0800
-Subject: [PATCH v4 7/7] arm64: dts: qcom: sc8280x: Flatten the USB nodes
+	Pw/qtYKWcNYdrX3Ze/kwVTdo38LzMv+SwIbu4uPn3MY=; b=QvVvOTDG9l8h7qPB
+	Cs1R0gJpTRIBeF8i7ZESBmZdWyzVRJ/cuDXABYnh6ifYJAf3paNXQy7vE5W5PeW1
+	iGy6/CM8skq9l2RuqelHLNonZiuCTGlimIvdzA7UDDPP4qo9f04ZWxCau1QivHYp
+	QAI0xw4PnbWs11SvLZPeCf8unjgnEdCAxnQ9qUYpra/+1EMt53zz58EAcm71D+FQ
+	apbqh152ozr/LyxJgPVhs7EskY4zdIrR0nDASNQbKYKhnPkS5U+ZT7k+MdKJx92S
+	If/2UIS9HXjyxuQwid5XRs1vbIkh7wgRynDplvl2GWpneEzoy/AC5tD5GHcljkZR
+	beh7dw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4523kc9qyc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 27 Feb 2025 01:05:46 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51R15j3N032305
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 27 Feb 2025 01:05:45 GMT
+Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 26 Feb
+ 2025 17:05:40 -0800
+Message-ID: <1ead93cb-863c-471c-8a5a-d8f0bef26f92@quicinc.com>
+Date: Thu, 27 Feb 2025 09:05:37 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250226-dwc3-refactor-v4-7-4415e7111e49@oss.qualcomm.com>
-References: <20250226-dwc3-refactor-v4-0-4415e7111e49@oss.qualcomm.com>
-In-Reply-To: <20250226-dwc3-refactor-v4-0-4415e7111e49@oss.qualcomm.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 02/10] Coresight: Add trace_id function to retrieving
+ the trace ID
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
         Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Saravana Kannan <saravanak@google.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+        Conor Dooley <conor+dt@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.li@nxp.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13628;
- i=bjorn.andersson@oss.qualcomm.com; h=from:subject:message-id;
- bh=QZCpZlu53quw6nL6TnKxy5fmS1nRzhqSoUP2GUKX9/c=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBnv684HKcj/LU0YRimWXlZfb1oENn1uGyR9QiHP
- XsReIu6WwaJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZ7+vOBUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcVggg/9HcXAYm1W+vm4lNilU8Ehnfpa4mENzQW+vaCfJrp
- 3QjWETR5BVYQEDD34Jwi4gn05OeV8r/m4M174d7ZZITe40/q+4LOy3cYOkGWtGimmCJ5R3hiOnf
- caCg1TxsSFiwUbDgJxwFswATsFiRR/D9vOFq2slk6npxEFpBRzQIsyMJAh8YAH8JCpg1KeOFpGt
- dpIkd6guBufBtB5251JjHPBYMOHSILvKFlq5fiBsMSOGCKueC9Rszdll3kEWy6suyDEgEhmzXg0
- n9agYZjKa/qTG/VmfOJZFpBYawTQZZS/5suPBnC5RsEBND9eybeHbSScP8GD7L6PNElNPk5WRbG
- roM/uz9Ua2wiRBSU2liyPiHPLZtDP76nEMOA4lieRJSRk2F1PSdGezK5RHOSRI5fMO4A/xC7AXr
- SZRkQHELwVUQbuSZSRrIQOHvkr3mV79CkSSyyxbfkZ8A3bqQR47d2oyhFOJ16Kf2F5FG8sbkt/1
- oymLVDaejE68XudZqMwv4mUZe40QUls52jcpNbtE3GoHDcPOMIe9wMshFB+cAWPjHljurqIxPI/
- ISy1Tv/wOh/m9kG7/Ar6lDELOeQSNV1fstKbAxMCZXvH1g0ckAQh17KrBtlPLhXrQZKnbCw7dEd
- BX7mTtua7Hs9+m4Pm1ZadQjISFom5xvS+qtQkhTS3fm4=
-X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=openpgp;
- fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
-X-Proofpoint-GUID: Xmr6riKVHF7eoTg6ATQjxwNAg-bgY83A
-X-Proofpoint-ORIG-GUID: Xmr6riKVHF7eoTg6ATQjxwNAg-bgY83A
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao
+	<quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+References: <20250226041342.53933-1-quic_jiegan@quicinc.com>
+ <20250226041342.53933-3-quic_jiegan@quicinc.com>
+ <abad8cd1-2436-416b-9db8-3c5e9eb38d73@arm.com>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <abad8cd1-2436-416b-9db8-3c5e9eb38d73@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6oUJsxGDNHEPIGhObqUQRvRSIA24JaS8
+X-Proofpoint-ORIG-GUID: 6oUJsxGDNHEPIGhObqUQRvRSIA24JaS8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-26_07,2025-02-26_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- adultscore=0 phishscore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 spamscore=0
+ definitions=2025-02-27_01,2025-02-26_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ bulkscore=0 mlxscore=0 impostorscore=0 spamscore=0 mlxlogscore=999
+ clxscore=1015 priorityscore=1501 adultscore=0 suspectscore=0
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502270000
+ engine=8.19.0-2502100000 definitions=main-2502270007
 
-Transition the three USB controllers found in sc8280xp to the newly
-introduced, flattened representation of the Qualcomm USB block, i.e.
-qcom,snps-dwc3, to show the end result.
 
-The reg and interrupts properties from the usb child node are merged
-with their counterpart in the outer node, remaining properties and child
-nodes are simply moved.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/sa8295p-adp.dts           |  12 +-
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts          |   5 +-
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          |  12 +-
- .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts      |  10 +-
- .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  11 +-
- .../boot/dts/qcom/sc8280xp-microsoft-arcata.dts    |  10 +-
- .../boot/dts/qcom/sc8280xp-microsoft-blackrock.dts |  18 +--
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 157 ++++++++++-----------
- 8 files changed, 95 insertions(+), 140 deletions(-)
+On 2/26/2025 7:55 PM, Suzuki K Poulose wrote:
+> On 26/02/2025 04:13, Jie Gan wrote:
+>> Add 'trace_id' function pointer in coresight_ops. It's responsible for 
+>> retrieving
+>> the device's trace ID.
+>>
+>> Co-developed-by: James Clark <james.clark@linaro.org>
+>> Signed-off-by: James Clark <james.clark@linaro.org>
+>> Reviewed-by: James Clark <james.clark@linaro.org>
+>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-core.c  | 27 +++++++++++++++++++
+>>   drivers/hwtracing/coresight/coresight-dummy.c | 13 ++++++++-
+>>   .../coresight/coresight-etm3x-core.c          |  1 +
+>>   .../coresight/coresight-etm4x-core.c          |  1 +
+>>   drivers/hwtracing/coresight/coresight-stm.c   | 11 ++++++++
+>>   drivers/hwtracing/coresight/coresight-tpda.c  | 11 ++++++++
+>>   include/linux/coresight.h                     |  5 ++++
+>>   7 files changed, 68 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/ 
+>> hwtracing/coresight/coresight-core.c
+>> index 0a9380350fb5..6cad777757f3 100644
+>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>> @@ -23,6 +23,7 @@
+>>   #include "coresight-etm-perf.h"
+>>   #include "coresight-priv.h"
+>>   #include "coresight-syscfg.h"
+>> +#include "coresight-trace-id.h"
+>>   /*
+>>    * Mutex used to lock all sysfs enable and disable actions and 
+>> loading and
+>> @@ -1515,6 +1516,32 @@ void coresight_remove_driver(struct amba_driver 
+>> *amba_drv,
+>>   }
+>>   EXPORT_SYMBOL_GPL(coresight_remove_driver);
+>> +int coresight_etm_get_trace_id(struct coresight_device *csdev, enum 
+>> cs_mode mode,
+>> +                   struct coresight_device *sink)
+>> +{
+>> +    int trace_id;
+>> +    int cpu = source_ops(csdev)->cpu_id(csdev);
+>> +
+>> +    switch (mode) {
+>> +    case CS_MODE_SYSFS:
+>> +        trace_id = coresight_trace_id_get_cpu_id(cpu);
+>> +        break;
+>> +    case CS_MODE_PERF:
+> 
+> Please could we handle a case where "sink" may be passed NULL ?
+> 
+>          if (WARN_ON(!sink))
+>              return -EINVAL;
+> 
+> Sorry, didn't spot that in the last review.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-index 2fd1dafe63ce..3d84cbf5af31 100644
---- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-@@ -631,12 +631,10 @@ &ufs_card_phy {
- };
- 
- &usb_0 {
--	status = "okay";
--};
--
--&usb_0_dwc3 {
- 	/* TODO: Define USB-C connector properly */
- 	dr_mode = "peripheral";
-+
-+	status = "okay";
- };
- 
- &usb_0_hsphy {
-@@ -655,12 +653,10 @@ &usb_0_qmpphy {
- };
- 
- &usb_1 {
--	status = "okay";
--};
--
--&usb_1_dwc3 {
- 	/* TODO: Define USB-C connector properly */
- 	dr_mode = "host";
-+
-+	status = "okay";
- };
- 
- &usb_1_hsphy {
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index 177b9dad6ff7..7be803fb7cbe 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -466,11 +466,8 @@ &ufs_mem_phy {
- };
- 
- &usb_0 {
--	status = "okay";
--};
--
--&usb_0_dwc3 {
- 	dr_mode = "peripheral";
-+	status = "okay";
- };
- 
- &usb_0_hsphy {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index 75adaa19d1c3..05fe5793f1f1 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -795,11 +795,9 @@ &ufs_mem_phy {
- };
- 
- &usb_0 {
--	status = "okay";
--};
--
--&usb_0_dwc3 {
- 	dr_mode = "host";
-+
-+	status = "okay";
- };
- 
- &usb_0_dwc3_hs {
-@@ -832,11 +830,9 @@ &usb_0_qmpphy_out {
- };
- 
- &usb_1 {
--	status = "okay";
--};
--
--&usb_1_dwc3 {
- 	dr_mode = "host";
-+
-+	status = "okay";
- };
- 
- &usb_1_dwc3_hs {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-index 09b95f89ee58..300c7dc999a4 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-@@ -997,11 +997,8 @@ bluetooth {
- };
- 
- &usb_0 {
--	status = "okay";
--};
--
--&usb_0_dwc3 {
- 	dr_mode = "host";
-+	status = "okay";
- };
- 
- &usb_0_hsphy {
-@@ -1026,11 +1023,8 @@ &usb_0_qmpphy_dp_in {
- };
- 
- &usb_1 {
--	status = "okay";
--};
--
--&usb_1_dwc3 {
- 	dr_mode = "host";
-+	status = "okay";
- };
- 
- &usb_1_hsphy {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index f3190f408f4b..1b9501cc82f4 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -1343,11 +1343,9 @@ bluetooth {
- };
- 
- &usb_0 {
--	status = "okay";
--};
--
--&usb_0_dwc3 {
- 	dr_mode = "host";
-+
-+	status = "okay";
- };
- 
- &usb_0_dwc3_hs {
-@@ -1380,11 +1378,8 @@ &usb_0_qmpphy_out {
- };
- 
- &usb_1 {
--	status = "okay";
--};
--
--&usb_1_dwc3 {
- 	dr_mode = "host";
-+	status = "okay";
- };
- 
- &usb_1_dwc3_hs {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-index ae5daeac8fe2..82672f441ea2 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-@@ -749,11 +749,8 @@ embedded-controller {
- };
- 
- &usb_0 {
--	status = "okay";
--};
--
--&usb_0_dwc3 {
- 	dr_mode = "host";
-+	status = "okay";
- };
- 
- &usb_0_dwc3_hs {
-@@ -786,11 +783,8 @@ &usb_0_qmpphy_out {
- };
- 
- &usb_1 {
--	status = "okay";
--};
--
--&usb_1_dwc3 {
- 	dr_mode = "host";
-+	status = "okay";
- };
- 
- &usb_1_dwc3_hs {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-index fa9d94105052..eeb69cfd4422 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-@@ -982,11 +982,9 @@ bluetooth {
- };
- 
- &usb_0 {
--	status = "okay";
--};
--
--&usb_0_dwc3 {
- 	dr_mode = "host";
-+
-+	status = "okay";
- };
- 
- &usb_0_dwc3_hs {
-@@ -1019,11 +1017,9 @@ &usb_0_qmpphy_out {
- };
- 
- &usb_1 {
--	status = "okay";
--};
--
--&usb_1_dwc3 {
- 	dr_mode = "host";
-+
-+	status = "okay";
- };
- 
- &usb_1_dwc3_hs {
-@@ -1059,12 +1055,10 @@ &usb_2 {
- 	pinctrl-0 = <&usb2_en_state>;
- 	pinctrl-names = "default";
- 
--	status = "okay";
--};
--
--&usb_2_dwc3 {
- 	phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
- 	phy-names = "usb2-0", "usb3-0";
-+
-+	status = "okay";
- };
- 
- &usb_2_hsphy0 {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 01501acb1790..3dea86b0e13d 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -3457,12 +3457,9 @@ system-cache-controller@9200000 {
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
--		usb_2: usb@a4f8800 {
--			compatible = "qcom,sc8280xp-dwc3-mp", "qcom,dwc3";
--			reg = <0 0x0a4f8800 0 0x400>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
-+		usb_2: usb@a400000 {
-+			compatible = "qcom,sc8280xp-dwc3-mp", "qcom,snps-dwc3";
-+			reg = <0 0x0a400000 0 0x10000>;
- 
- 			clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
- 				 <&gcc GCC_USB30_MP_MASTER_CLK>,
-@@ -3480,7 +3477,8 @@ usb_2: usb@a4f8800 {
- 					  <&gcc GCC_USB30_MP_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <200000000>;
- 
--			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>,
-@@ -3499,7 +3497,8 @@ usb_2: usb@a4f8800 {
- 					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
- 
--			interrupt-names = "pwr_event_1", "pwr_event_2",
-+			interrupt-names = "dwc_usb3",
-+					  "pwr_event_1", "pwr_event_2",
- 					  "pwr_event_3", "pwr_event_4",
- 					  "hs_phy_1",	 "hs_phy_2",
- 					  "hs_phy_3",	 "hs_phy_4",
-@@ -3509,6 +3508,7 @@ usb_2: usb@a4f8800 {
- 					  "dp_hs_phy_4", "dm_hs_phy_4",
- 					  "ss_phy_1",	 "ss_phy_2";
- 
-+			iommus = <&apps_smmu 0x800 0x0>;
- 			power-domains = <&gcc USB30_MP_GDSC>;
- 			required-opps = <&rpmhpd_opp_nom>;
- 
-@@ -3518,35 +3518,28 @@ usb_2: usb@a4f8800 {
- 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_MP 0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
-+			phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>,
-+			       <&usb_2_hsphy1>, <&usb_2_qmpphy1>,
-+			       <&usb_2_hsphy2>,
-+			       <&usb_2_hsphy3>;
-+			phy-names = "usb2-0", "usb3-0",
-+				    "usb2-1", "usb3-1",
-+				    "usb2-2",
-+				    "usb2-3";
-+
- 			wakeup-source;
- 
-+			dr_mode = "host";
-+
-+			snps,dis-u1-entry-quirk;
-+			snps,dis-u2-entry-quirk;
-+
- 			status = "disabled";
-+		};
- 
--			usb_2_dwc3: usb@a400000 {
--				compatible = "snps,dwc3";
--				reg = <0 0x0a400000 0 0xcd00>;
--				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
--				iommus = <&apps_smmu 0x800 0x0>;
--				phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>,
--				       <&usb_2_hsphy1>, <&usb_2_qmpphy1>,
--				       <&usb_2_hsphy2>,
--				       <&usb_2_hsphy3>;
--				phy-names = "usb2-0", "usb3-0",
--					    "usb2-1", "usb3-1",
--					    "usb2-2",
--					    "usb2-3";
--				dr_mode = "host";
--				snps,dis-u1-entry-quirk;
--				snps,dis-u2-entry-quirk;
--			};
--		};
--
--		usb_0: usb@a6f8800 {
--			compatible = "qcom,sc8280xp-dwc3", "qcom,dwc3";
--			reg = <0 0x0a6f8800 0 0x400>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
-+		usb_0: usb@a600000 {
-+			compatible = "qcom,sc8280xp-dwc3", "qcom,snps-dwc3";
-+			reg = <0 0x0a600000 0 0x20000>;
- 
- 			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
- 				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
-@@ -3564,17 +3557,20 @@ usb_0: usb@a6f8800 {
- 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <200000000>;
- 
--			interrupts-extended = <&intc GIC_SPI 804 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 803 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&intc GIC_SPI 804 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&intc GIC_SPI 805 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&pdc 14 IRQ_TYPE_EDGE_BOTH>,
- 					      <&pdc 15 IRQ_TYPE_EDGE_BOTH>,
- 					      <&pdc 138 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "pwr_event",
-+			interrupt-names = "dwc_usb3",
-+					  "pwr_event",
- 					  "hs_phy_irq",
- 					  "dp_hs_phy_irq",
- 					  "dm_hs_phy_irq",
- 					  "ss_phy_irq";
- 
-+			iommus = <&apps_smmu 0x820 0x0>;
- 			power-domains = <&gcc USB30_PRIM_GDSC>;
- 			required-opps = <&rpmhpd_opp_nom>;
- 
-@@ -3584,45 +3580,40 @@ usb_0: usb@a6f8800 {
- 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
-+			phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
-+			phy-names = "usb2-phy", "usb3-phy";
-+
- 			wakeup-source;
- 
--			status = "disabled";
-+			snps,dis-u1-entry-quirk;
-+			snps,dis-u2-entry-quirk;
- 
--			usb_0_dwc3: usb@a600000 {
--				compatible = "snps,dwc3";
--				reg = <0 0x0a600000 0 0xcd00>;
--				interrupts = <GIC_SPI 803 IRQ_TYPE_LEVEL_HIGH>;
--				iommus = <&apps_smmu 0x820 0x0>;
--				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
--				phy-names = "usb2-phy", "usb3-phy";
--				snps,dis-u1-entry-quirk;
--				snps,dis-u2-entry-quirk;
-+			status = "disabled";
- 
--				ports {
--					#address-cells = <1>;
--					#size-cells = <0>;
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
- 
--					port@0 {
--						reg = <0>;
-+				port@0 {
-+					reg = <0>;
- 
--						usb_0_dwc3_hs: endpoint {
--						};
-+					usb_0_dwc3_hs: endpoint {
- 					};
-+				};
- 
--					port@1 {
--						reg = <1>;
-+				port@1 {
-+					reg = <1>;
- 
--						usb_0_dwc3_ss: endpoint {
--							remote-endpoint = <&usb_0_qmpphy_usb_ss_in>;
--						};
-+					usb_0_dwc3_ss: endpoint {
-+						remote-endpoint = <&usb_0_qmpphy_usb_ss_in>;
- 					};
- 				};
- 			};
- 		};
- 
--		usb_1: usb@a8f8800 {
--			compatible = "qcom,sc8280xp-dwc3", "qcom,dwc3";
--			reg = <0 0x0a8f8800 0 0x400>;
-+		usb_1: usb@a800000 {
-+			compatible = "qcom,sc8280xp-dwc3", "qcom,snps-dwc3";
-+			reg = <0 0x0a800000 0 0x10000>;
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 			ranges;
-@@ -3643,17 +3634,20 @@ usb_1: usb@a8f8800 {
- 					  <&gcc GCC_USB30_SEC_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <200000000>;
- 
--			interrupts-extended = <&intc GIC_SPI 811 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 810 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&intc GIC_SPI 811 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&intc GIC_SPI 790 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&pdc 12 IRQ_TYPE_EDGE_BOTH>,
- 					      <&pdc 13 IRQ_TYPE_EDGE_BOTH>,
- 					      <&pdc 136 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "pwr_event",
-+			interrupt-names = "dwc_usb3",
-+					  "pwr_event",
- 					  "hs_phy_irq",
- 					  "dp_hs_phy_irq",
- 					  "dm_hs_phy_irq",
- 					  "ss_phy_irq";
- 
-+			iommus = <&apps_smmu 0x860 0x0>;
- 			power-domains = <&gcc USB30_SEC_GDSC>;
- 			required-opps = <&rpmhpd_opp_nom>;
- 
-@@ -3663,37 +3657,32 @@ usb_1: usb@a8f8800 {
- 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_1 0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
-+			phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
-+			phy-names = "usb2-phy", "usb3-phy";
-+
- 			wakeup-source;
- 
--			status = "disabled";
-+			snps,dis-u1-entry-quirk;
-+			snps,dis-u2-entry-quirk;
- 
--			usb_1_dwc3: usb@a800000 {
--				compatible = "snps,dwc3";
--				reg = <0 0x0a800000 0 0xcd00>;
--				interrupts = <GIC_SPI 810 IRQ_TYPE_LEVEL_HIGH>;
--				iommus = <&apps_smmu 0x860 0x0>;
--				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
--				phy-names = "usb2-phy", "usb3-phy";
--				snps,dis-u1-entry-quirk;
--				snps,dis-u2-entry-quirk;
-+			status = "disabled";
- 
--				ports {
--					#address-cells = <1>;
--					#size-cells = <0>;
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
- 
--					port@0 {
--						reg = <0>;
-+				port@0 {
-+					reg = <0>;
- 
--						usb_1_dwc3_hs: endpoint {
--						};
-+					usb_1_dwc3_hs: endpoint {
- 					};
-+				};
- 
--					port@1 {
--						reg = <1>;
-+				port@1 {
-+					reg = <1>;
- 
--						usb_1_dwc3_ss: endpoint {
--							remote-endpoint = <&usb_1_qmpphy_usb_ss_in>;
--						};
-+					usb_1_dwc3_ss: endpoint {
-+						remote-endpoint = <&usb_1_qmpphy_usb_ss_in>;
- 					};
- 				};
- 			};
+Hi Suzuki,
 
--- 
-2.45.2
+Thanks for poniting out.
+
+There are two scenarios for current useage:
+1. From traceid_show() - this is sysfs mode, so we dont need check sink.
+2. From coresight_path_assign_trace_id function, the sink is obtained 
+from coresight_path and the "sink" has been verified before building the 
+coresight_path.
+
+That's why I did not include the verification for sink before using it.
+But I think it's worthwhile to add this code to enhance our code's 
+robustness.
+
+Will fix it in next version.
+
+Thanks,
+Jie
+
+> 
+> Suzuki
+> 
+> 
+>> +        trace_id = coresight_trace_id_get_cpu_id_map(cpu, &sink- 
+>> >perf_sink_id_map);
+> 
+>> +        break;
+>> +    default:
+>> +        trace_id = -EINVAL;
+>> +        break;
+>> +    }
+>> +
+>> +    if (!IS_VALID_CS_TRACE_ID(trace_id))
+>> +        dev_err(&csdev->dev,
+>> +            "Failed to allocate trace ID on CPU%d\n", cpu);
+>> +
+>> +    return trace_id;
+>> +}
+>> +EXPORT_SYMBOL_GPL(coresight_etm_get_trace_id);
+>> +
+>>   MODULE_LICENSE("GPL v2");
+>>   MODULE_AUTHOR("Pratik Patel <pratikp@codeaurora.org>");
+>>   MODULE_AUTHOR("Mathieu Poirier <mathieu.poirier@linaro.org>");
+>> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/ 
+>> hwtracing/coresight/coresight-dummy.c
+>> index 9be53be8964b..b5692ba358c1 100644
+>> --- a/drivers/hwtracing/coresight/coresight-dummy.c
+>> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
+>> @@ -41,6 +41,16 @@ static void dummy_source_disable(struct 
+>> coresight_device *csdev,
+>>       dev_dbg(csdev->dev.parent, "Dummy source disabled\n");
+>>   }
+>> +static int dummy_source_trace_id(struct coresight_device *csdev, 
+>> __maybe_unused enum cs_mode mode,
+>> +                 __maybe_unused struct coresight_device *sink)
+>> +{
+>> +    struct dummy_drvdata *drvdata;
+>> +
+>> +    drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +
+>> +    return drvdata->traceid;
+>> +}
+>> +
+>>   static int dummy_sink_enable(struct coresight_device *csdev, enum 
+>> cs_mode mode,
+>>                   void *data)
+>>   {
+>> @@ -62,7 +72,8 @@ static const struct coresight_ops_source 
+>> dummy_source_ops = {
+>>   };
+>>   static const struct coresight_ops dummy_source_cs_ops = {
+>> -    .source_ops = &dummy_source_ops,
+>> +    .trace_id    = dummy_source_trace_id,
+>> +    .source_ops    = &dummy_source_ops,
+>>   };
+>>   static const struct coresight_ops_sink dummy_sink_ops = {
+>> diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/ 
+>> drivers/hwtracing/coresight/coresight-etm3x-core.c
+>> index c103f4c70f5d..c1dda4bc4a2f 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+>> @@ -704,6 +704,7 @@ static const struct coresight_ops_source 
+>> etm_source_ops = {
+>>   };
+>>   static const struct coresight_ops etm_cs_ops = {
+>> +    .trace_id    = coresight_etm_get_trace_id,
+>>       .source_ops    = &etm_source_ops,
+>>   };
+>> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/ 
+>> drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> index 2c1a60577728..cfd116b87460 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> @@ -1067,6 +1067,7 @@ static const struct coresight_ops_source 
+>> etm4_source_ops = {
+>>   };
+>>   static const struct coresight_ops etm4_cs_ops = {
+>> +    .trace_id    = coresight_etm_get_trace_id,
+>>       .source_ops    = &etm4_source_ops,
+>>   };
+>> diff --git a/drivers/hwtracing/coresight/coresight-stm.c b/drivers/ 
+>> hwtracing/coresight/coresight-stm.c
+>> index b581a30a1cd9..aca25b5e3be2 100644
+>> --- a/drivers/hwtracing/coresight/coresight-stm.c
+>> +++ b/drivers/hwtracing/coresight/coresight-stm.c
+>> @@ -281,12 +281,23 @@ static void stm_disable(struct coresight_device 
+>> *csdev,
+>>       }
+>>   }
+>> +static int stm_trace_id(struct coresight_device *csdev, 
+>> __maybe_unused enum cs_mode mode,
+>> +            __maybe_unused struct coresight_device *sink)
+>> +{
+>> +    struct stm_drvdata *drvdata;
+>> +
+>> +    drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +
+>> +    return drvdata->traceid;
+>> +}
+>> +
+>>   static const struct coresight_ops_source stm_source_ops = {
+>>       .enable        = stm_enable,
+>>       .disable    = stm_disable,
+>>   };
+>>   static const struct coresight_ops stm_cs_ops = {
+>> +    .trace_id    = stm_trace_id,
+>>       .source_ops    = &stm_source_ops,
+>>   };
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/ 
+>> hwtracing/coresight/coresight-tpda.c
+>> index 189a4abc2561..68079169b11b 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+>> @@ -241,12 +241,23 @@ static void tpda_disable(struct coresight_device 
+>> *csdev,
+>>       dev_dbg(drvdata->dev, "TPDA inport %d disabled\n", in->dest_port);
+>>   }
+>> +static int tpda_trace_id(struct coresight_device *csdev, 
+>> __maybe_unused enum cs_mode mode,
+>> +             __maybe_unused struct coresight_device *sink)
+>> +{
+>> +    struct tpda_drvdata *drvdata;
+>> +
+>> +    drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +
+>> +    return drvdata->atid;
+>> +}
+>> +
+>>   static const struct coresight_ops_link tpda_link_ops = {
+>>       .enable        = tpda_enable,
+>>       .disable    = tpda_disable,
+>>   };
+>>   static const struct coresight_ops tpda_cs_ops = {
+>> +    .trace_id    = tpda_trace_id,
+>>       .link_ops    = &tpda_link_ops,
+>>   };
+>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+>> index 157c4bd009a1..ce89ad24c2a2 100644
+>> --- a/include/linux/coresight.h
+>> +++ b/include/linux/coresight.h
+>> @@ -335,6 +335,7 @@ enum cs_mode {
+>>       CS_MODE_PERF,
+>>   };
+>> +#define coresight_ops(csdev)    csdev->ops
+>>   #define source_ops(csdev)    csdev->ops->source_ops
+>>   #define sink_ops(csdev)        csdev->ops->sink_ops
+>>   #define link_ops(csdev)        csdev->ops->link_ops
+>> @@ -410,6 +411,8 @@ struct coresight_ops_helper {
+>>   };
+>>   struct coresight_ops {
+>> +    int (*trace_id)(struct coresight_device *csdev, enum cs_mode mode,
+>> +            struct coresight_device *sink);
+>>       const struct coresight_ops_sink *sink_ops;
+>>       const struct coresight_ops_link *link_ops;
+>>       const struct coresight_ops_source *source_ops;
+>> @@ -697,4 +700,6 @@ int coresight_init_driver(const char *drv, struct 
+>> amba_driver *amba_drv,
+>>   void coresight_remove_driver(struct amba_driver *amba_drv,
+>>                    struct platform_driver *pdev_drv);
+>> +int coresight_etm_get_trace_id(struct coresight_device *csdev, enum 
+>> cs_mode mode,
+>> +                   struct coresight_device *sink);
+>>   #endif        /* _LINUX_COREISGHT_H */
+> 
 
 
