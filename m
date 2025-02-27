@@ -1,234 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-49636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AECA8A476B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 08:37:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29FB2A476C0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 08:42:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A84B83ACE1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 07:37:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB35F16C86E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 07:42:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D212121D587;
-	Thu, 27 Feb 2025 07:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 118A62222A7;
+	Thu, 27 Feb 2025 07:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NGgMx6H0"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="MqL0PS9N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB7B1EB194;
-	Thu, 27 Feb 2025 07:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D919A22170B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 07:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740641846; cv=none; b=q65mdNHTJJidhSqVMM9G+8Yhqnh0sVsFbu0ytmJCIj/qQ3cRjbGOtq5Ndefezt42GCEuMeITrh8s4ilnp7RXvlbGwEwy1tHuJ8UCojzHIZpAnvh0SeamO9IDJQyhL+Iy/1IkhFeP8kMIcPxU7855tZYVZIxeLrUjb9Waar+puAs=
+	t=1740642135; cv=none; b=AORFjmPfP/csN4opANZcmrujfybr4xfvK0vCtfmZzpF+TE87mVOrUBfrYdCko06AnttvWomDxIB8f2Fm21RPiYiO8IxH4Napwo28ySoQpZ4ZoN7p9ex4sZ6OGei8oAjPHM1P6xiTMg0RgrfEKLTUYNMBewWtd+Fu7qv7mjkQWZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740641846; c=relaxed/simple;
-	bh=d6+xsNMLGylxxEKXWbWqVK7LJVxyIb/Mz0Pc9ABIaXY=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s32lJs9VLRiKpKU4sHz0LpfXDlJ0HS0iLErpy5jjaTnvfjgptshkx3mxfoWJkOh4fATit6Zvaz9Shznqa2FsmgkCuAGPyJstbVwIBm0mgKA0jlrz4c4L5jbCK8H4onIn0AaqTHiGJGQFGuyD/s55EvYLh+Q3B19UE7ZxLpM2F1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NGgMx6H0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51QKrh46017852;
-	Thu, 27 Feb 2025 07:37:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=EZhXB7z7YOzRnW+XxlpcUTeG
-	X2DctPRP+TSIzjsr4os=; b=NGgMx6H0DlHKHOQoJfzsGPANqtnF2yrTHN1mFrm7
-	3NcryYbQECZDgp4IXB1FspIVscjG8wgLLs4BTTju0m7UFIp7Y/anG5q9Zhh1AFGS
-	YXRZgVfnKYC5AhRwTvF5ptyHqnrEk7qdJnrBazgZCm0HZOCOp+x2CeTMuQ/KwuzI
-	EZWaw+7FvEP3IzbRdYAlYweatp30vxpVQxGx9akiGNyCTiXfuh/v668uNiu6MUDo
-	6i1yhyDOz9f3zQpPrWzJ2rNc7Cu5B4AnihcE7tvjwhFSOIWleiCiFV+i5H/iioA3
-	MvtvHJchL3khbMnpJxPhzJU67cFUEu7yQ7Kixe87LJVuVA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prn4s24-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Feb 2025 07:37:20 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51R7bJ07017861
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Feb 2025 07:37:19 GMT
-Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 26 Feb 2025 23:37:11 -0800
-Date: Thu, 27 Feb 2025 13:07:02 +0530
-From: Wasim Nazir <quic_wasimn@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-Message-ID: <Z8AWHiVu05s0RJws@hu-wasimn-hyd.qualcomm.com>
-References: <4wmxjxcvt7un7wk5v43q3jpxqjs2jbc626mgah2fxbfuouu4q6@ptzibxe2apmx>
- <Z3eMxl1Af8TOAQW/@hu-wasimn-hyd.qualcomm.com>
- <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
- <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
- <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
- <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
- <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
- <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
- <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
- <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
+	s=arc-20240116; t=1740642135; c=relaxed/simple;
+	bh=hOWdYrxNiuPN+XNM7jJtHqXLqHZiONyk2eJf35zleLQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=lC1OGmeNal0Xkuvdcnxf3Xr9YyIqLt8nSCjtf5o1jVvlCEDfWnlOpQ27hY/NzD5Qdl4GeWXXRIqil/TEBNKzSlquh91CVRCtz889nthbF1vSWppE3O0MXSkR4RxMNo4K5aCoFSiovoPpdByenGfl4hXY4no0L10VTK/wNfb01dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=MqL0PS9N; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43994ef3872so3866805e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 23:42:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1740642130; x=1741246930; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vDstNabKa+U0RFMr+z3tANP7Vpq5gfUk2k27kasy3M0=;
+        b=MqL0PS9NAInaTWnWSw7cHRNWcriR0cflcIq2/WF0wQrPby2EiMBOywObtHbpAuQfBx
+         D8Wenx9alUaIUJ2vpZB/+mcuqA+o0UkrwxLcK6ImBng1qEuzymEgX0wJ5HCchYQbsqav
+         DznWcnMWq2E7KuITZAStKu3mcCsJp47bjhYAqbD5OR75oIJswJoRxOBBYoeZJGB6zzXF
+         Ksi4Vt97tMysPaGPnP++Lfi4vWz5VEwV7Gy9gi2fYaVyQuKyiCuM1Z+3hvDdm/I5hWAK
+         b0Um9R0jl5vFdol5oav0NVHltb1AfxHhUY5jtbLHZiKHGAm9Xv0TuGNVa8u6q+iU6DtG
+         ixwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740642130; x=1741246930;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vDstNabKa+U0RFMr+z3tANP7Vpq5gfUk2k27kasy3M0=;
+        b=L3TH+0fpBFHGvV9u+QpIt36eHJHD1733klLLF5Dy8tv2DIi8jjInbGukQ8QA+NTkKD
+         BZT+BdbDhRmtU9D8QJqoa/G14IOamNmT+oMQv+bpVfdAF6gtFL81l/AdDyIlYRo360Xy
+         31h066ipTMc9CaHzT2+L+0cN8TomNhFQ2VcAiMdVhSFdKtDKbbYdNPeIKJE4Ky1CzFeo
+         Ed/7OTulzMttbErvgO0Xydr34CvIBu6BOcoJ1mmGqWiGAEtHg8mG10FaB/HS9l+tgI+8
+         gf71Flvgo1ZIwY0+QNeWZYFTzFmzYuqOKU8JTxePwDwuiScesThwyDN0Q2Ae/sxCNLtM
+         9JKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUKlSOgjSVS/hmBL1YLvSttgsrHtPaS+EOpHNM79wMro4h70HW5iXseoRjirqUG+qJqiqfhJiGGR0umnTeA@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6PeBLhWz8NjA/NGtw8X6y9W0F0v7KWgbj245CZ7T9E2PGjdZV
+	AK1aSYaJAfxEc4QCZuuFS81MPnC4qZeL+6xM+cku0vHNrhCz1qRv71XRNRKaI/M=
+X-Gm-Gg: ASbGncsBZj9l+9IfhdVjU4Jd+1gbOZtsyelZaai+iHyVI4aDOmGEodMXqmfliUZRoRG
+	BFYl94jB9Ne8y9dg8CKJMIwE7UHgxhRppFse2P37rHs9DmXX3Kh9ejWa1FmMoQQJ4KWuq3uJaAN
+	EdbspOw+Jr7M9ngKS76COdtcrzA+pLeBQUQUUIzIC5TvQgyZ27Ztg4hbb1dqrQB7MsCmX7G/3Mc
+	/izKKQD7UbOOCc9vCgQlpzVkreGnQQC1DAId/JnhJwCSzd+0F1dSH4+rOk8kfEnYVpmDk/kzh6T
+	ThCGIbPzZNcFodpNRSZZ5BvPbmI64eVkqHH1348E17qumpJBB6U4P2MDViMtCcxh+SrAg4c=
+X-Google-Smtp-Source: AGHT+IEjgF0COFVrxkgx63jJMahBS/fzpXpuAZ0WbHEMTNr8DH0vZgYR2D9bi1jTvh7DSZQR0NvF4A==
+X-Received: by 2002:a05:600c:468e:b0:439:9828:c44b with SMTP id 5b1f17b1804b1-43ab0f3ccddmr106690235e9.14.1740642130144;
+        Wed, 26 Feb 2025 23:42:10 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43aba52b947sm45759585e9.2.2025.02.26.23.42.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Feb 2025 23:42:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bVkyS-N2-HDk6rlfPnogYgbU2vuiEstj
-X-Proofpoint-GUID: bVkyS-N2-HDk6rlfPnogYgbU2vuiEstj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-27_03,2025-02-26_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 clxscore=1015 mlxscore=0 adultscore=0 mlxlogscore=999
- suspectscore=0 phishscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502270057
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 27 Feb 2025 08:42:06 +0100
+Message-Id: <D8324XX78W5E.273JA9U5U4NV8@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 0/3] Fairphone 5 DisplayPort over USB-C support
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, <cros-qcom-dts-watchers@chromium.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250226-fp5-pmic-glink-dp-v1-0-e6661d38652c@fairphone.com>
+ <e5290e59-0022-4eba-abce-a11928d76d3a@oss.qualcomm.com>
+In-Reply-To: <e5290e59-0022-4eba-abce-a11928d76d3a@oss.qualcomm.com>
 
-On Wed, Jan 15, 2025 at 09:35:34AM +0100, Krzysztof Kozlowski wrote:
-> On 15/01/2025 06:48, Wasim Nazir wrote:
-> >> The the SoC, I am asking about the board. Why each of them is for
-> >> example r3?
-> >>
-> >> So this is not sufficient explanation, nothing about the board, and
-> >> again just look Renesas and NXP.
-> >>
-> > 
-> > Hi Krzysztof,
-> > 
-> > sa8775p(AUTO), qcs9100(IOT), qcs9075(IOT) are different SoCs based on
-> > safety capabilities and memory map, serving different purpose.
-> > Ride & Ride-r3 are different boards based on ethernet capabilities and
-> > are compatible with all the SoCs mentioned.
-> 
+On Wed Feb 26, 2025 at 6:44 PM CET, Konrad Dybcio wrote:
+> On 26.02.2025 3:10 PM, Luca Weiss wrote:
+>> This series adds all the necessary bits to enable DisplayPort-out over
+>> USB-C on Fairphone 5.
+>>=20
+>> There's currently a dt validation error with this, not quite sure how to
+>> resolve this:
+>>=20
+>>   arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: typec-mux@42: port=
+:endpoint: Unevaluated properties are not allowed ('data-lanes' was unexpec=
+ted)
+>>           from schema $id: http://devicetree.org/schemas/usb/fcs,fsa4480=
+.yaml#
+>>=20
+>> See also this mail plus replies:
+>> * https://lore.kernel.org/linux-arm-msm/D0H3VE6RLM2I.MK2NT1P9N02O@fairph=
+one.com/
+>>=20
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>> Luca Weiss (3):
+>>       arm64: dts: qcom: qcm6490-fairphone-fp5: Add PTN36502 redriver
+>>       arm64: dts: qcom: qcm6490-fairphone-fp5: Add OCP96011 audio switch
+>>       arm64: dts: qcom: qcm6490-fairphone-fp5: Hook up DisplayPort over =
+USB-C
+>>=20
+>>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 110 ++++++++++++++=
+++++++-
+>>  arch/arm64/boot/dts/qcom/sc7280.dtsi               |   2 +
+>>  2 files changed, 108 insertions(+), 4 deletions(-)
+>> ---
+>> base-commit: 417c2d4ed67b729abea7dc73d7fb2153b7154d31
+>
+> I don't see this commit in -next, master, or qcom/, this series fails
+> to apply atop next-20250225
 
-Hi Krzysztof,
+Maybe I was a bit fast in sending this series, the 2 patches this
+depends on have been merged into qcom tree yesterday, I've sent this
+series based on latest linux-next + arm64-for-6.15 merged in.
 
-> Compatible? What does it mean for a board?
-> 
+https://web.git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=
+=3Darm64-for-6.15
 
-Ride board is based on multiple daughter cards (SOC-card, display,
-camera, ethernet, pcie, sensor, etc.).
+Regards
+Luca
 
-The SOC is not directly soldered to Ride board, instead SOC is soldered
-on SIP (System in Package) card which can be mounted on SOC-daughter card of
-Ride board.
-	- SoC => SIP-card => SOC-daughter-card (Ride)
 
-Together with SIP cards and other daughter cards we are creating different
-<soc>-Ride Variants with differences in memory map & thermal mitigations.
+>
+> Konrad
 
-The SIP card consists of SOC, PMIC & DDR and it is pin compatible to the
-SOC daughter card of <soc>-Ride board. Only SOC is changing accross SIP
-cards, except an additional third party SIL-PMIC for SAIL, which is not
-present in QCS9075 Ride.
-
-Other daughter cards remains same for <soc>-Ride variants, except
-ethernet card which is different for <soc>-Ride rev3 variants.
-
-So the Ride board (combination of daughter cards) is same across the SIP,
-while SOC on SIP card is changing which can be sa8775p, qcs9100 or qcs9075.
-
-> Third time: did you look how other vendors do it?
-> 
-
-Yes, we have reviewed other vendors. However, please feel free to share
-any specific reference you would like us to follow.
-
-Here are few reference files we found from other vendors where similar
-tasks are performed which includes code refactoring and HW modularity:
- - Freescale: fsl-ls208xa.dtsi, fsl-ls2088a.dtsi, fsl-ls2081a-rdb.dts
- - Renesas: white-hawk-common.dtsi, r8a779g0-white-hawk.dts
- - Rockchip: px30-engicam-common.dtsi, px30-engicam-ctouch2.dtsi,
-   px30-engicam-px30-core-ctouch2.dts
-
-In our case along with describing the HW, code refactoring is also done
-which might be causing confusion, but we are ready for any inputs for
-correction.
-
-Putting this pictorial diagram for updated DT structure depicting our HW.
- - qcs9xxx-module.dtsi specifying QCS9xxx based SIP card/module having
-   SoC, PMICs, Memory-map updates.
- - qcom-ride-common.dtsi specifying ride daughter boards, here we are
-   doing code refactoring also as this is common for all ride boards.
- - qcom-ride-ethernet-aqr115c.dtso specifying ethernet overlay board which
-   uses 2.5G phy and can be overlayed to ride boards to get ride-r3.
-   By default ride uses 1G phy.
- - qcs9075-iq-9075-evk.dts is the new name for RB8 as per new product
-   name. We will be changing this in next patch series.
-
-+-----------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                                               |
-|                                                          sa8775p.dtsi                                                                         |
-|                                                              |                                                                                |
-|                                    +-------------------------+-----------------------+                                                        |
-|                                    |                         |                       |                                                        |
-|                                    v                         |                       v                                                        |
-|                             qcs9075-module.dtsi              |                qcs9100-module.dtsi                                             |
-|                                    |                         |                       |                                                        |
-|                                    v                         v                       v                                                        |
-|                                  (IOT)                    (AUTO)                   (IOT)                                                      |
-|                                    |                         |                       |                                                        |
-|             +----------------------+                         |                       |                                                        |
-|             |                      |                         |                       |                                                        |
-|             |                      | +-------------------------+-----------------------+-------------------< qcom-ride-common.dtsi            |
-|             |                      | |                       | |                     | |                                                      |
-|             v                      v v                       v v                     v v                                                      |
-|  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
-|                                    |                         |                       |                                                        |
-|                                    | +-------------------------+-----------------------+-------------------< qcom-ride-ethernet-aqr115c.dtso  |
-|                                    | |                       | |                     | |                                                      |
-|                                    v v                       v v                     v v                                                      |
-|                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
-|                                                                                                                                               |
-+-----------------------------------------------------------------------------------------------------------------------------------------------+
-
-> > 
-> > With the combination of these 3 SoCs and 2 boards, we have 6 platforms,
-> > all of which we need.
-> > - sa8775p-ride.dts is auto grade Ride platform with safety feature.
-> > - qcs9100-ride.dts is IOT grade Ride platform with safety feature.
-> > - qcs9075-ride.dts is IOT grade Ride platform without safety feature.
-> > 
-> > Since the Ride-r3 boards are essentially Ride boards with Ethernet
-> > modifications, we can convert the Ride-r3 DTS to overlays.
-> How one board can be with multiple SoCs? If it is soldered, it's close
-> to impossible - that's just not the same board. If it is not soldered,
-> why you are not explaining it? What is Ride board? What is there? What
-> can go there? How it can be used in other SoCs? Or for which SoCs? Is
-> there a datasheet available?
-> 
-
-As our SoC is based on SIP card and SIP card is compatible with Ride
-board, we could able to use same Ride board (which is combination of
-multiple daughter cards) with multiple SIP cards.
-These SIP cards can be of sa8775p, qcs9100 or qcs9075 SOC.
-
-> You keep repeating my about SoC and I keep responding the same: don't care.
-> 
-> Best regards,
-> Krzysztof
-
-Thanks & Regards,
-Wasim
 
