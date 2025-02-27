@@ -1,133 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-49706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9424DA481A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 15:39:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E979A48241
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 16:00:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80930188CB8E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 14:27:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 618D8188AA81
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 14:49:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0B8623496F;
-	Thu, 27 Feb 2025 14:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 293E525BAD6;
+	Thu, 27 Feb 2025 14:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="43dOkDkN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="judPU/uM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [45.141.101.25])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8862309AA;
-	Thu, 27 Feb 2025 14:27:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.141.101.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBD325BAD1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 14:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740666431; cv=none; b=t51LVgSLsLrQBZIPygYjpTruV+BMPZ8A3LV6wJ5Z20bjMahZ307ySdFQSJgcipr95MROB3d2d6IC0aex7Lj32tyscDH1n24j/vqd73+XcvXfonofMEZeg0d031QN1XFK9XriB/J/cgj3WuM43D2lmFc35Uovs05Nk17lFnU0Gfc=
+	t=1740667784; cv=none; b=jpdCAPLDdaW5MdJM/crKSpmnlP/Dy2K/QYcaEGvxovn97jwWHHFwYgWrPd+Ndwl9atWUw0AXJlfa5sW3Ka8mn0QYDk246wxR0IPl0kinG1rTaAwQ9C0GrBlEpyiju/l8nWH9cMvSTObPT9DBDarxBrHopPEFj7H19VuT8uCyuZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740666431; c=relaxed/simple;
-	bh=dyyzHix7FsjYghq8qoqSFkJvh7rVpVdTIin/CCYr2f0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kfSo7n1PVw0QQrn97BwAsxV1Rv31iaDXKJNjJHZDXcr675wIfZGN6dpUCRUZWewJ/6cLwhf4cA/EkvdTrfx1j1jxB0rnXteBDtLeIotBa5DGbiCAFLYd/DI3fBgyOq3yX/YigKEX7J1gom+BKrlUAStaMIkA/AVzruWFZldxj2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=43dOkDkN; arc=none smtp.client-ip=45.141.101.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1740666427; bh=dyyzHix7FsjYghq8qoqSFkJvh7rVpVdTIin/CCYr2f0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=43dOkDkNeW12CX6HVHrQBWxjyOLO824YbGjbNZipf/6EbOlsoW57gGsEKGyhqMopH
-	 6BYCzQeTcFrtZwcHD+SC3cEHViLHh4dU/Hu+RjvnQP41H8cCanteRry+j0y6pPx9bQ
-	 LBrSaPdrtFQ/M1bTIt+AEL8QDHW+cOQ7yrHlsdbtekuNIK+0ZoXQa+dSFge58CNTv+
-	 ftMZ0N9HvPVdz9rpWdMtBUHTT1NEn663aGkccMCm5D5d5fT6TWLpFpKOcVEaeTMewX
-	 op2VWrOcxGKcYjaJlD/5G31/TqDJ1S2R2vecwCQ8My0Bb5gdRqB+T2JzAt562Z++9w
-	 BPFO+0lakXmRw==
-Received: from authenticated-user (box.trvn.ru [45.141.101.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id 7FD5195BB;
-	Thu, 27 Feb 2025 19:27:06 +0500 (+05)
-From: Nikita Travkin <nikita@trvn.ru>
-Date: Thu, 27 Feb 2025 19:26:49 +0500
-Subject: [PATCH v2 2/2] arm64: dts: qcom:
- sdm845-db845c-navigation-mezzanine: Drop CMA heap
+	s=arc-20240116; t=1740667784; c=relaxed/simple;
+	bh=6faw81wFFaRXZ3ymmYdJwV0mSvCtlP2Ar7QjlZFTgoE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZMbmUqdKckFfJJ/QcPsw37e20R8KfgyQqfUmh9qCgx+vtr80exgRxLa2VLyPUIGkQ7ZR7HyhxUIZL7+y0VAtl8HmUydjmT/3Bybrgf0MxcWR+xiYCXHA+NQcqxLp4LAP9YlIys8X0XXe+X9Syfm5yCpMPrATbJkBh+9S4Ww7VZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=judPU/uM; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-22359001f1aso15614995ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 06:49:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740667782; x=1741272582; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=smnGGK6K/Wef+b2awCjLQ7c9xAU1Vqd0Z5QG8gAABNQ=;
+        b=judPU/uMsYozBnMd+rF7yQgjRKyWcfspUpOL7O4D6Qu0vGtEQXaW80EAINGBF3aSGO
+         noWvuuIibRn7Zf64JOzA405Y+lwU08n/udEMRvSiWCw9cj9YEPb0WR+zUWUhxQMXqjPm
+         lGVjMs8dWyyvSOfuqIGCunUofES+wOr51+mci83gfpqgaYYSG1n1jqZcW16M5wCGxQNi
+         WVNH28NbJEH931xJd29QZoC0PAk5zghXGwS+sznl4QI05OOadq4XkGOshBP+lGlh93Nb
+         d6IN/9auyIcVySUq9YVs+H+Lyc/6ozzn5cMqO5T3t4NsIUb1GZP5IaM+GUbmIccHDuXI
+         3DOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740667782; x=1741272582;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=smnGGK6K/Wef+b2awCjLQ7c9xAU1Vqd0Z5QG8gAABNQ=;
+        b=SR6fDreGWoBUMVfdLJ6m+yOnHLTbs+pH6y167CGfhT7PqK1n8pkHxYz4wQMjNJ0gcy
+         wJICUPbHIdeb68mg7QWPwxw7aEMcfdtpPEwwwAqU0p9xEC4vgvJe7Pmyu+0ne0uzFhFn
+         T5FTRr0qtHL+iTmWAGehSth/KSJB+B/25DirDjP5o0dxYpomST2lCpEJ2273T6//SCgd
+         qhWsxzFVGYXW31POP7E84MkTZ4lB3WmbBIV2pM8B3WB/UKvdHW+ztf9TmFsb7ovlImzV
+         Sd9oN3yUK+5FLxIGbZagnINHXPrKHgA9BHDGxdxjgSDcCwq0/wFrMTpHEkctZKXzL3Wz
+         Nh7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXt8vkslSHrNzESy+Ned8nWfWIun5vpE93mpDNFCdcpl0hFYdcJ9wslm3nvQOuw9KZQj7VZbBhIyxf9z++p@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx1rikoo+AUIXc1G1hDMM992Nxx6k6nA5yjCCqZ5bGa/q+2ViWL
+	CLpHluPjvNXtv99PvAo0r3QZ3NRIv9FXqW9KdMpi3WkAX2BfP8Ue7nU0DnnJzw==
+X-Gm-Gg: ASbGncuh7h5dfTcFtvM3WSlOgfbolUMSIsF4ZGP6TYZRN58ONzrYBaSMzgC5ahk++Jq
+	QoxWOSbgYXCd3MLU1YQXF3GpDWN17vGJY600vMsW2mx80LS6K1uZO5pDsglUXVWhLonKY1Tbipl
+	sg07/4fdHaSn5wF+dIGLeY54hxI4zWxK931rOKKpJdzM88wdq7dIhW+LnPTRKxMcOeoaRbBxL6T
+	KHgpBsY2nGlysSULwfJ2+2jWDex3e21mvDuqjC8dDE899c12LGi5TCOGRu4MC0ElxCJsf4KHOkB
+	ZjTWi6G6GPoph7XcTj1x1yzqYXAdhPSUZKs/
+X-Google-Smtp-Source: AGHT+IGPbMh9YLaLdnjg+qD36H+rS672w6Z7sxM9qS1ipKhQCSGEXPnAHeWSHqT6Fb4RF7dlqr8/wQ==
+X-Received: by 2002:a05:6a00:c94:b0:730:99cb:7c2f with SMTP id d2e1a72fcca58-73426cb3cdamr39658350b3a.6.1740667781668;
+        Thu, 27 Feb 2025 06:49:41 -0800 (PST)
+Received: from thinkpad ([120.60.51.181])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-734a0060069sm1661260b3a.159.2025.02.27.06.49.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2025 06:49:41 -0800 (PST)
+Date: Thu, 27 Feb 2025 20:19:36 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bart Van Assche <bvanassche@acm.org>
+Cc: Manivannan Sadhasivam <manisadhasivam.linux@gmail.com>,
+	Manish Pandey <quic_mapa@quicinc.com>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_nitirawa@quicinc.com
+Subject: Re: [PATCH 0/3] scsi: ufs-qcom: Enable Dumping of Hibern8, MCQ, and
+ Testbus Registers
+Message-ID: <20250227144936.4wrvydm4i4oenszf@thinkpad>
+References: <20241025055054.23170-1-quic_mapa@quicinc.com>
+ <20241112075000.vausf7ulr2t5svmg@thinkpad>
+ <cb3b0c9c-4589-4b58-90a1-998743803c5a@acm.org>
+ <20241209040355.kc4ab6nfp6syw37q@thinkpad>
+ <3a850d86-5974-4b2d-95be-e79dad33636f@acm.org>
+ <20250226053019.y6tdukcqpijkug4m@thinkpad>
+ <6eb9ec05-96f1-41d2-b055-56e34d5722ae@acm.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250227-qcom-nonroot-overlays-v2-2-bde44f708cbe@trvn.ru>
-References: <20250227-qcom-nonroot-overlays-v2-0-bde44f708cbe@trvn.ru>
-In-Reply-To: <20250227-qcom-nonroot-overlays-v2-0-bde44f708cbe@trvn.ru>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1652; i=nikita@trvn.ru;
- h=from:subject:message-id; bh=dyyzHix7FsjYghq8qoqSFkJvh7rVpVdTIin/CCYr2f0=;
- b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBnwHY31v/qUb+Ww0+Cy5RNOAZPfXCgmUlag56Av
- yalMvI73RuJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZ8B2NwAKCRBDHOzuKBm/
- deyAD/44FkhDxt6L5t9CJ0wPuFvwCLuC18CrmMuVthy73E95n4tEhCtDrJMJOKhxfGhLwPmtuDw
- AXDbj4OnNYfwEjycNl7nYNcruWmRq726qnVpvjTgtHxnxDiJTGK8VPe9kIRgjBlOutuwWuvIh2j
- 0P6AuwTH+9gnQa7uXUOQA1l9QZrgDKG7MHIys99ZVxUsqGuTkLG2lCHRnHqLNAJvr6+5FYEW/ks
- 0UYtKjdOptdIuzEOuIU7X9Wcf+Bqn8gDWS9JUfnkM69GzH1d2a/xlLdztzboi7txzO5PT2QvO/j
- 7/8lnJDrlJoRjYC8YleqYALh3/ZiOM999PHkDZ8vPnwGQ3lrqOpPdOrjp57WukqDDlETtlW8ddD
- 9yrVU3TubCB4C5DiFrQALf51oz6MKkIyhtDxob7ts9EvGztNyx4f8zYLE7R9ZpjybWKXaxK8hh8
- Yf/Bs19lkQMs4pYk79j87EHB9XWmPa1l36yfGizMYnw0FMaH9fQZRD3jv4T0x87dR3FKvRwOE3k
- WZcNmrToXEkqOGpEp7+PCCelYxWh2qQQ09S203AfdiO8izlGeb6Pv6pNk92QNxU9CziZ+lPdbTQ
- fGd9/J9fK6oRmrbNzcFgl+fY/muavTrF6ZP+M3+GA8RjFkDx4ktvwJGi8kXADtQulqVE2mA34Ii
- VHa75qyfQaDC/ag==
-X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
- fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6eb9ec05-96f1-41d2-b055-56e34d5722ae@acm.org>
 
-Initially added, the cma heap was supposed to help with libcamera swisp,
-however a mistake was made such that the node was never applied as part
-of the overlay since the change was added to the overlay root ("/") and
-not with a reference to the target dtb root ("&{/}"). Moveover libcamera
-doesn't require CMA heap on Qualcomm platforms anymore as it can now use
-UDMA buffers instead.
+On Wed, Feb 26, 2025 at 10:40:51AM -0800, Bart Van Assche wrote:
+> On 2/25/25 9:30 PM, Manivannan Sadhasivam wrote:
+> > On Mon, Dec 09, 2024 at 10:35:39AM -0800, Bart Van Assche wrote:
+> > > On 12/8/24 12:03 PM, Manivannan Sadhasivam wrote:
+> > > > On Tue, Nov 12, 2024 at 10:10:02AM -0800, Bart Van Assche wrote:
+> > > > > On 11/11/24 11:50 PM, Manivannan Sadhasivam wrote:
+> > > > > > On Fri, Oct 25, 2024 at 11:20:51AM +0530, Manish Pandey wrote:
+> > > > > > > Submitting a series of patches aimed at enhancing the debugging and monitoring capabilities
+> > > > > > > of the UFS-QCOM driver. These patches introduce new functionalities that will significantly
+> > > > > > > aid in diagnosing and resolving issues related to hardware and software operations.
+> > > > > > > 
+> > > > > > 
+> > > > > > TBH, the current state of dumping UFSHC registers itself is just annoying as it
+> > > > > > pollutes the kernel ring buffer. I don't think any peripheral driver in the
+> > > > > > kernel does this. Please dump only relevant registers, not everything that you
+> > > > > > feel like dumping.
+> > > > > 
+> > > > > I wouldn't mind if the code for dumping  UFSHC registers would be removed.
+> > > > 
+> > > > Instead of removing, I'm planning to move the dump to dev_coredump framework.
+> > > > But should we move all the error prints also? Like all ufshcd_print_*()
+> > > > functions?
+> > > 
+> > > Hmm ... we may be better off to check which of these functions can be
+> > > removed rather than moving all of them to another framework.
+> > 
+> > devcoredump turned out to be not a good fit for storage drivers. And I can't
+> > figure out another way. And Qcom is telling me that these debug prints are
+> > necessary for them to debug the issues going forward.
+> > 
+> > Your thoughts?
+> 
+> Does this mean that printk() is the best alternative we have available?
+> 
 
-Drop the CMA heap node. This change has no effect on the final dtb.
+For storage, yes unfortunately.
 
-This reverts commit d40fd02c1faf8faad57a7579b573bc5be51faabe.
-
-Fixes: d40fd02c1faf ("arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Add cma heap for libcamera softisp support")
-Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
----
- .../boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso     | 11 -----------
- 1 file changed, 11 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index 59970082da45203311146cc5249298f6188bf67a..51f1a4883ab8f0ee7c66fab89c6e1a88c868d2f8 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -9,17 +9,6 @@
- #include <dt-bindings/clock/qcom,camcc-sdm845.h>
- #include <dt-bindings/gpio/gpio.h>
- 
--/ {
--	reserved-memory {
--		linux,cma {
--			compatible = "shared-dma-pool";
--			size = <0x0 0x8000000>;
--			reusable;
--			linux,cma-default;
--		};
--	};
--};
--
- &camss {
- 	vdda-phy-supply = <&vreg_l1a_0p875>;
- 	vdda-pll-supply = <&vreg_l26a_1p2>;
+- Mani
 
 -- 
-2.48.1
-
+மணிவண்ணன் சதாசிவம்
 
