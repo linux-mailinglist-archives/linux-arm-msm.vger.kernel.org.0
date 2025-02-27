@@ -1,105 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-49618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA246A474B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:39:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3ED6BA474C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:41:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AFBDE16F9A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:39:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77A881881F74
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:40:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C70321CFF0;
-	Thu, 27 Feb 2025 04:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 691782222C4;
+	Thu, 27 Feb 2025 04:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XONjX9Od"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qJk3wNCD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3798A21C197
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:37:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB362206B8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:37:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740631064; cv=none; b=VhkfJMTDQgyo4SdFY5L9jew/KRbEqBh0AXs5TtEOIoMuorGgjS1oujM0yt8KDtmdnXDYXVe5dUmVUaXAbgKS3PiOe8nqG1OR3NbwSjo+NlhneD0nvts/VYRESg5HPuIZtzbB9SoKDvT0O1Q1PF9aux+9qtz8RzSL7OYIa1REfDk=
+	t=1740631068; cv=none; b=ZUsTCY1HlxMf9xi+4DZrQ7teFubj8jBCmGyZrj7c1of5Z7XMOd5X9TU8oM808FlzZSZ1g7YRICJCL2TsuRlNqV1nkw/tklsYcjw8O9CLAtePujzGGHZuTkXl+LXySQIhfBtOj+cx9mFBd28IZ1Hu4JB2fKiiUlf/a4A/wZ0Sz/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740631064; c=relaxed/simple;
-	bh=5S/D15mlBm5rVEaGgheBTXf1FTPfbkRnfOmUMhCyPoE=;
+	s=arc-20240116; t=1740631068; c=relaxed/simple;
+	bh=UAKk9n2MgbyCZoN+0ucDNxhrBHryl2KbQSyyMlhtXZ8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cUstglpG+iEKT6yBPj3wN/wn5fUohJha36h5SOplZ4s2uPzwLc5jOSTshhNONL09rJsLHwQTfCiJ8PdLxhLVkSZjvRAAFuqUdPQ0iBTodeQl6sEyxKLRe4CULgVc67MpVqzulFXdThzH1Svg7Zn176zTC557Jp0Qa0NWMuOgqHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XONjX9Od; arc=none smtp.client-ip=209.85.208.173
+	 MIME-Version:Content-Type; b=SoHQeVc2ta7zc0ZhRO2vAvs1yuItzYgYAFnqmk7s27jZGfEwPf/ZyRSiFRk5V4nzzFhygioLnhoXUfVlcIhBmyQXQesMpC3WXhxfnTux0Jekw94N1jk7VE3G8gIDATP+Tgxz8eSwTCGIC9OUEge2blk8esrmZTtHijrDs8Gk1y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qJk3wNCD; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-30b83290d39so4656981fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:37:42 -0800 (PST)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-54605bfcc72so1943360e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:37:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740631061; x=1741235861; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740631064; x=1741235864; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zLdVuzI2TCYgAh/XWLKAjlWKrpOk/yX1LLIu0K4lYkg=;
-        b=XONjX9OdHR7hLBVuxrdiGctVnmhmU9xLpk3Oi1Lfr6gLk7o9OErcZzehFejXSah63P
-         9YzA7WBvkf9eXvM6rF/KgLITDY9MA4LlCZUlCdQgW0TYVJJ6+XtrRmZylDrW9bAv4USm
-         0nIIAumQkhkLocKhoYlR6vI9LzJjmiDdsXUtVNI817MDwmAdz8imxHheBJiou/jh7fvp
-         gx8xzwH+vlyUjhQlrcFh0XSufv2umpKvvRdJNtjdQ+eGbniNJRHKFTc6GZRIWSlGy6zp
-         40TThxKCGxn1iIVf7ba+oSu2kRF7g8aONmJAlHuTI3xXPVMe6rffrEgqo5xTHsjPwCn5
-         F6Fg==
+        bh=GYRdSFJ0y3J8w0/MIT9m/pNCngOvo9+w+cz68lIRPZQ=;
+        b=qJk3wNCDcBenA1zw9NZiXPn9QcJU6ef9qZhEJ2OKo1L6PuZwO5qpiNI3RXRs2Di0LV
+         7VSdDJzVQbvAk+hHWQanPtaPqj1ZfLoAF/jUNDt6fXHLoZSINSt+bCSC4q4OxeIOFio5
+         sBYSKxpCl32ywjmUFNERgyA/zix0nUV6bFkBj64D1UmZvO4SxNUdFsnIuuNvpbgnQrA8
+         8NDoF8Ca/jgveY5pEXj76PtAavMvv8kjJFlF7DIB5xjbi0T7n91I3GqB7LeB8aS6cP9o
+         XMTUFaa8ZfvD9DQONqWmmbJqXHnbkkTSg9DNOzDt53qKG/wqBZgYxFqHFtT5667fq7kU
+         bHow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740631061; x=1741235861;
+        d=1e100.net; s=20230601; t=1740631064; x=1741235864;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zLdVuzI2TCYgAh/XWLKAjlWKrpOk/yX1LLIu0K4lYkg=;
-        b=wVvU2a+js+vB+Mpu4M4NBUELKuww7KgCKOzBM278qrBRHwzYmWC/LaegjXhw9EB/4H
-         T7xbgqMHnauhCroJ8re1DjeStlw2LHCZfrveKyQWbBohTDBNqsxTg77WKyTn8CRRnpP1
-         HnIx5RsWowruxXtSLAAnKkUuugLY48A1Dza0Y2Hnt79K4aQfTr6B1xb86Spt0UmzBw5u
-         LvPXCs1mY/sKLGGnm3NY85F6HrMzyQEY8/Ng9OYSApzZyiiA1S3r41EGaoPWZfDj5qfn
-         TzafZvH57e+2sljZCiqFAEvcuK6dWRFCdDXxpCUFbzd6vehLnyaG/Z63WSUNtB96wLV0
-         truA==
-X-Forwarded-Encrypted: i=1; AJvYcCVdd1TDOWqX+DvEN3uK6O7AKjATXWBUyV2bjuAXr7OeVJHtMNZo7NAzv5tV8hgOtUgPbw+yhwufP28NR3lc@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQYoD77w7q6w2aVureBNCfYZWgi7LvDQcqxjyTNPuuiukItgKb
-	wjlUAvHgzM29+tu0A7j0WHcrvgIHJeVvv4ZpwqfPecLts1URtPVjPDvSoH3/2ng=
-X-Gm-Gg: ASbGncvSMOpfZB5hZGYE/PgthAP6TCy0FdkFXKf7t+7mSczhO9cj9IwNKNBgL1J6jX6
-	hsHWnT5eEoWiPpCqaPuVtszSY/O6TseSSMKnz0XQw1VqWwMxl+pCYjQgJ+QHEsgZqiAQJRUJAMT
-	+BHzSt/ESYSEGHbYTeo+95+eNBPbq5Flx7ZJ53lNF+eE3AR0nU00T434ZdAsq8FNTTZZyl6qmmA
-	TlBeCFE6JRnAWBcO2WBcgsAEhoYcg/C/qXeBPMvGFVOblHCSC6Z6d8+JXiwGk3+ZW/lt+/kXyvk
-	TktQSrjhZicf/UFugLgVIFznn71kw+ZJTPIb0+QRTw==
-X-Google-Smtp-Source: AGHT+IGacFctMBxLdHDN1tWIihRZ45naAvEO/U64ZOz8X8unMaO6oCxI4XQ+wFwgv3egNhj+8j8tPA==
-X-Received: by 2002:a05:6512:10d4:b0:545:ae6:d740 with SMTP id 2adb3069b0e04-54838f4c919mr10727963e87.41.1740631061326;
-        Wed, 26 Feb 2025 20:37:41 -0800 (PST)
+        bh=GYRdSFJ0y3J8w0/MIT9m/pNCngOvo9+w+cz68lIRPZQ=;
+        b=KICLo1ZzxCJOa1iqG80kTILRNkyMaXjUW8/dkNQ6PxS2jGnZVWKchDeo5nshKDacfS
+         AQ4VAAXAgTbM0j58grnJ5xLUDaRD+gA6EwYQlvbr1O/zw8sHa9g1l79clQmqYwA/FQW9
+         eaLCq6BO+KSMK0usoZLdsvGug0pFDphGmvleLSFfSJiue0SUzkKTSR/YzHN7mOXQR5Z+
+         XFTWtKlMN08TJyCu3VQ+WiaFcEtHOeZLD3KbPdtJoAFa5LyBhnwN8OTkNtIyBMFy/Vy1
+         6Rg5ku2v86TAZvZyZolSg5CxHv96U6R/0wejqaTLuUlswisS+md5P5V8BzV+WNX5T+73
+         V77g==
+X-Gm-Message-State: AOJu0YxwGCXyjmSDqLKWGc+pmYSSt5i83p18Ler1Gnp8GDvvgV7NP3RO
+	d2sb6xf/Pd19UK1YbzJXJMmD5RMumk/rmx+Fzh7FvU4TFVfiZy4mCxZeK7QW8dM=
+X-Gm-Gg: ASbGnctIGKu5DKBNUO5OE6W8yGQeeVb9DL4XxVWQimYC5PmUdapsMhB0N6gl4BlKPRI
+	2Ae9+NBmbIS7QZI3qHl7Iv7eecZGEsjNmkFLK77z/eez4Y1/PK/dh1/8spO+QlSzyiky+kg0VYI
+	Q5ky79oo44ggSjHCmXYn8EgfLfvT9KyNNmTjHfZg8G0TQ+Iqf0Mn8RveFUKdeq/zbtjHqujv5Zi
+	WJrvYuIBBUmQssiyCa1Q1XTdCgeo/W19RJlfXdjuMXbl6AScymDmtKyMjjF0whay8M8OePqVLmr
+	IDlulJoxKNqCHOHQq10GJmGejScjYpRFhZS5iDCHyQ==
+X-Google-Smtp-Source: AGHT+IHInNYeeu7RJnY0u41TSawSb/sSqGvIZ8wxvnotJqXxQ14P4JT9/11iwOVMUCOL38JGxUNb9Q==
+X-Received: by 2002:a05:6512:3054:b0:545:5d:a5c7 with SMTP id 2adb3069b0e04-5494330bedcmr587647e87.21.1740631063830;
+        Wed, 26 Feb 2025 20:37:43 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443ccf45sm63485e87.229.2025.02.26.20.37.38
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443ccf45sm63485e87.229.2025.02.26.20.37.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 20:37:40 -0800 (PST)
+        Wed, 26 Feb 2025 20:37:42 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Chandan Uddaraju <chandanu@codeaurora.org>,
-	Jeykumar Sankaran <jsanka@codeaurora.org>,
-	Jordan Crouse <jordan@cosmicpenguin.net>,
-	Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Archit Taneja <architt@codeaurora.org>,
-	Rajesh Yadav <ryadav@codeaurora.org>,
-	linux-arm-msm@vger.kernel.org,
+To: robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	jonathan@marek.ca,
+	quic_jesszhan@quicinc.com,
+	konradybcio@kernel.org,
+	Haoxiang Li <haoxiang_li2024@163.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
-	Simona Vetter <simona.vetter@ffwll.ch>
-Subject: Re: [PATCH v2 0/4] drm/msm/dpu: follow rules for drm_atomic_helper_check_modeset()
-Date: Thu, 27 Feb 2025 06:37:23 +0200
-Message-Id: <174063096234.3733075.6920964252450515341.b4-ty@linaro.org>
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dsi: Add check for devm_kstrdup()
+Date: Thu, 27 Feb 2025 06:37:24 +0200
+Message-Id: <174063096227.3733075.13590017200932514746.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250123-drm-dirty-modeset-v2-0-bbfd3a6cd1a4@linaro.org>
-References: <20250123-drm-dirty-modeset-v2-0-bbfd3a6cd1a4@linaro.org>
+In-Reply-To: <20250219040712.2598161-1-haoxiang_li2024@163.com>
+References: <20250219040712.2598161-1-haoxiang_li2024@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -110,25 +103,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 23 Jan 2025 14:43:32 +0200, Dmitry Baryshkov wrote:
-> As pointed out by Simona, the drm_atomic_helper_check_modeset() and
-> drm_atomic_helper_check() require the former function is rerun if the
-> driver's callbacks modify crtc_state->mode_changed. MSM is one of the
-> drivers which failed to follow this requirement.
+On Wed, 19 Feb 2025 12:07:12 +0800, Haoxiang Li wrote:
+> Add check for the return value of devm_kstrdup() in
+> dsi_host_parse_dt() to catch potential exception.
 > 
-> Rework the MSM / DPU driver to follow the requirements of the
-> drm_atomic_helper_check_modeset() helper function.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/4] drm/msm/dpu: don't use active in atomic_check()
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/25b4614843bc
-[2/4] drm/msm/dpu: move needs_cdm setting to dpu_encoder_get_topology()
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/7d39f5bb82c0
-[3/4] drm/msm/dpu: simplify dpu_encoder_get_topology() interface
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/41921f231abf
+[1/1] drm/msm/dsi: Add check for devm_kstrdup()
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/52b3f0e118b1
 
 Best regards,
 -- 
