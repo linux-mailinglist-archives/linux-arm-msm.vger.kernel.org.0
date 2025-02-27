@@ -1,223 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-49631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DBC9A475AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 07:00:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23C3EA475C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 07:03:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 908D23A7CD8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 06:00:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D1DA3B14D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 06:03:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AF3421519B;
-	Thu, 27 Feb 2025 06:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 156F52063C0;
+	Thu, 27 Feb 2025 06:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WMJrpTBB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ed4dVYb6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3241E835A;
-	Thu, 27 Feb 2025 06:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAAA2E403;
+	Thu, 27 Feb 2025 06:03:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740636030; cv=none; b=QmNYoBHENIW2L2J0uRHVShbMT9xBHhp4xZYXwQk421ReWZymeYTQCHuZsL+xr93Udy4BDG7vGskZSqlBHvLpkzPsmsav59WJe0J6RBdyYLruh4iCqHHhfQOv67DBzCL3lsnFYGVxItf9xXzvSEK7uF+aKTKWqtdsQ0WPgvBH75M=
+	t=1740636188; cv=none; b=BmdBPALBkb713R2mbH4VsyeE/qlUeRD7PrJ1esneoF4GvelROcjFfAyYckkzUshcmYRLLKQ1JjwvMF+JWVm6A7MLsKq5CgrfP0Ssw+eIPSJSkuk4jeIo+uiFQR2wIlWACLc/XpWAxP0+kgHE61vFIbZPQNjVR8zGV3GKo0pT4Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740636030; c=relaxed/simple;
-	bh=tRUaBjfQeJhK+q/8PKXwiUJCfypbozRNjwBfu7BchpY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jkFUQUkbg16wM/Ob//Xc6FNqaNkc7sW1ZUlrciICNxAotV8/gE4ZbKcX5XQ+cm76BEd7Kbgha1j3Zh+rqMGqkNA6I8Q7Uvnbzv7BKmjORET56dRu/kW4r38tUw6OoP0rdna2fJHx/WfpNoCVdyqQs1rPCwI1o1THSwxI5pcIAZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WMJrpTBB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D976AC4CEDD;
-	Thu, 27 Feb 2025 06:00:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740636029;
-	bh=tRUaBjfQeJhK+q/8PKXwiUJCfypbozRNjwBfu7BchpY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WMJrpTBBQURZ3HaqKnlBxryXqMVZR/xjlhDc1PBJR9hEKzncjvOQA7FY9HHaQzP/d
-	 phWfOj+N+1sK9JpXRQIkslQuZNXBzN0LSMORIWpyPRdynEIv+aUM7jtFFm4m76+l1x
-	 +UAe0EtqgNsBm30m9XzXP1SsfG+71/dcvKSgqsrQdPoXMGMOtVGpjZCx85hl58mJtH
-	 vAW2MbRkUvwzW9O1qM0vt12s2vPBVkJnEHpa3OKFjI2BCv+SFzpXppoVUn3vjZ81+3
-	 rxjMS9svehUMC6bJlgJiFU4dwuFr7wgObypr86lbU78CUl5f+clfGUr8LVC2r8fd9u
-	 +Ge8iPjFZAZSg==
-Date: Thu, 27 Feb 2025 11:30:24 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org,
-	robh@kernel.org, bhelgaas@google.com, krzk+dt@kernel.org,
-	conor+dt@kernel.org, kishon@kernel.org, andersson@kernel.org,
-	konradybcio@kernel.org, p.zabel@pengutronix.de,
-	quic_nsekar@quicinc.com, dmitry.baryshkov@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org
-Subject: Re: [PATCH v10 2/7] phy: qcom: Introduce PCIe UNIPHY 28LP driver
-Message-ID: <Z7//eDJZw2SNNc5Z@vaman>
-References: <20250206121803.1128216-1-quic_varada@quicinc.com>
- <20250206121803.1128216-3-quic_varada@quicinc.com>
- <Z64xQcgHIgAEzKFb@vaman>
- <Z7MChDND+iClDNES@hu-varada-blr.qualcomm.com>
+	s=arc-20240116; t=1740636188; c=relaxed/simple;
+	bh=r0vZRXf74pxRftyAasxwH65UacrUG0HQDtK/8tZW/uU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XpVOm7p/7MJAxNUsQ3I1ec3ybiEedWGnjk2I5Da/lTt/7tZvYnnWAAiys9f/BXBi7HSzv0tp5URDClnTcwFx6/wznRVV8q0DWvE7uQMYeAFXnny7clbrGsYgYK0mx9gG9PY/flLiu7mAmXNxvZzKPfHz7iMkW7EWuU58jyMBGTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ed4dVYb6; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7c09a30e14dso100986085a.0;
+        Wed, 26 Feb 2025 22:03:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740636184; x=1741240984; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=r0vZRXf74pxRftyAasxwH65UacrUG0HQDtK/8tZW/uU=;
+        b=ed4dVYb6OXU1enmnI35zFzTS/dwIVUfBQohGFoxZa2s9qIk4c9Y0ll8HVZkzB5heiU
+         4Yi8aDZAv2nLXaT0FDCdfJ36YxRGP+pl+BPWebCQ2hi2ErUCLroUheEIMcEEYUTmr9Yb
+         JD0eoYXvSVTAfJGLoy4BVo41fM6NvpkbBRg85eAkhQ9szNet1fBAlWCtitJMhQ9bh2bH
+         Tw9AtVCK0bGbOocg0vETC3Hc3phzw9xgEeq22H0EtseMqziZtfrdrQSf/5foGd0sKfTJ
+         xGUD+WynfjgHZzk/irvjCqkIT1raO1GqBPznjO8qqz7/oU3w+nB0Pqx2gt0H4KHXie7h
+         zVOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740636184; x=1741240984;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=r0vZRXf74pxRftyAasxwH65UacrUG0HQDtK/8tZW/uU=;
+        b=hoiYbIVsS01FXnuuBCeciDF4Bb8Q9xpCUzlRUEQCH5mDrkqzSqKDo4yhICvFN6dQv4
+         fYdhLWmupWvM6Hoq6w8WSG/yDM5WwCIroBosyNVle2iU6yIs5fxNVNHJW6cUYwQTmTnV
+         mlV+UQlyOFRw8pzGb3ybXrd5W764fpzKyBG3e5hvJYaEHicILNAspJfbyaj9FIJG3h9I
+         c02FsGD5yFA0neP1N8kBSn2glM4cwAhho3FYNkUVEQsMgxd4ms7VjfkGb411JQC1wC0V
+         ayEgc/6G/2EDUR0s/47A7CnaKhlSz9xGmLj8/EyVasGvjn8yN65fPcLrFFqaGRFXYsIc
+         bF5A==
+X-Forwarded-Encrypted: i=1; AJvYcCUdKNBC5tXE0w0GgwjADgyjZ34A/J1RtgGJyfNhEmAHzp3e10tJHrwISyw4uTBrlnz9YHIyhgsloRmh@vger.kernel.org, AJvYcCUhw9GKIpBZS11yTSJuU/j9w0dqq89b6PpwRJwMB/tVr8mQehlq0Xw6PNsP2a1ZX1S3x6g3pjdlxk3iDJl55A==@vger.kernel.org, AJvYcCVfPkjLSbwgRlaBnojbTrIqVs50TPjdUBh39Lj5BK1/2p9vJsRuVO2FgGu/IZswQkqpNJr0oREsURn9c20m@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcCgL7IHdxp09CA1VMEaPFQGGk6RDHNGMo+lWnTEh95bzD0kHE
+	vInSWaAGgEHiyLhlTRl1voNMWvBb7AmwwMW/LExUCBtLEz24W32vkz9g71HXHAXLZfUfgMNMeAq
+	qswKr8FxWfdUwcFRkWe56Dic8gbS0oCupIic=
+X-Gm-Gg: ASbGncu4LCoVX2OLcLedYpQmf8e2fUh1s6jS+c5APZCTt4ZKwGrKL2WskV0qIGYSRM5
+	Aw15AnjN2paKh2yJQvDBrrv1dg0QzxIR+mQ2P1UdZlv731B4Zrfc8LIcdB+5RhSfGvH0KgdKPVC
+	uNYkDBeq2s/jznlRPC7Lmy/btB95I09VmXKiiaeYdB
+X-Google-Smtp-Source: AGHT+IG8TsJgh1LuuoWgmUmPf+1QE7q2pXs82GLabNXHK14+3oHihBWmdm6+6UHwIiOTggTv4y1kdXbJflqaFg7Ef0s=
+X-Received: by 2002:a05:6214:4102:b0:6df:99f7:a616 with SMTP id
+ 6a1803df08f44-6e87ab143bemr146206556d6.2.1740636184327; Wed, 26 Feb 2025
+ 22:03:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z7MChDND+iClDNES@hu-varada-blr.qualcomm.com>
+References: <20250226-expressatt-tsens-v3-0-bbf898dbec52@gmail.com>
+ <20250226-expressatt-tsens-v3-2-bbf898dbec52@gmail.com> <jt4o4btmvfxorguh24yqr4mxfy64o47h5uql4swtveqxlo4q2e@2ozfhduyvvst>
+In-Reply-To: <jt4o4btmvfxorguh24yqr4mxfy64o47h5uql4swtveqxlo4q2e@2ozfhduyvvst>
+From: Rudraksha Gupta <guptarud@gmail.com>
+Date: Thu, 27 Feb 2025 06:02:27 +0000
+X-Gm-Features: AQ5f1Jq7darmDqy2L1_11Pm2Q3wEtuLsiUyv0SFdgWsiHcMo3DiPCnwJIFMM8BY
+Message-ID: <CABhZbsXZXmVEu1zGyGPwY=v2hdODzRyPPybDhFqqj_2N0MYS2Q@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] ARM: dts: qcom: msm8960: Add tsens
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, wctrl@proton.me
+Content-Type: text/plain; charset="UTF-8"
 
-On 17-02-25, 15:03, Varadarajan Narayanan wrote:
-> On Thu, Feb 13, 2025 at 11:22:01PM +0530, Vinod Koul wrote:
-> [ . . .]
-> 
-> > > +static const struct qcom_uniphy_pcie_data ipq5332_data = {
-> > > +	.lane_offset	= 0x800,
-> > > +	.phy_type	= PHY_TYPE_PCIE_GEN3,
-> > > +	.init_seq	= ipq5332_regs,
-> > > +	.init_seq_num	= ARRAY_SIZE(ipq5332_regs),
-> > > +	.pipe_clk_rate	= 250000000,
-> >
-> > can be written as 250 * MEGA
-> 
-> Ok.
-> 
-> [ . . .]
-> 
-> > > +/*
-> > > + * Register a fixed rate pipe clock.
-> > > + *
-> > > + * The <s>_pipe_clksrc generated by PHY goes to the GCC that gate
-> > > + * controls it. The <s>_pipe_clk coming out of the GCC is requested
-> > > + * by the PHY driver for its operations.
-> > > + * We register the <s>_pipe_clksrc here. The gcc driver takes care
-> > > + * of assigning this <s>_pipe_clksrc as parent to <s>_pipe_clk.
-> > > + * Below picture shows this relationship.
-> > > + *
-> > > + *         +---------------+
-> > > + *         |   PHY block   |<<---------------------------------------+
-> > > + *         |               |                                         |
-> > > + *         |   +-------+   |                   +-----+               |
-> > > + *   I/P---^-->|  PLL  |---^--->pipe_clksrc--->| GCC |--->pipe_clk---+
-> > > + *    clk  |   +-------+   |                   +-----+
-> > > + *         +---------------+
-> > > + */
-> > > +static inline int phy_pipe_clk_register(struct qcom_uniphy_pcie *phy, int id)
-> > > +{
-> > > +	const struct qcom_uniphy_pcie_data *data = phy->data;
-> > > +	struct clk_hw *hw;
-> > > +	char name[64];
-> > > +
-> > > +	snprintf(name, sizeof(name), "phy%d_pipe_clk_src", id);
-> > > +	hw = devm_clk_hw_register_fixed_rate(phy->dev, name, NULL, 0,
-> > > +					     data->pipe_clk_rate);
-> > > +	if (IS_ERR(hw))
-> > > +		return dev_err_probe(phy->dev, PTR_ERR(hw),
-> > > +				     "Unable to register %s\n", name);
-> > > +
-> > > +	return devm_of_clk_add_hw_provider(phy->dev, of_clk_hw_simple_get, hw);
-> > > +}
-> > > +
-> > > +static const struct of_device_id qcom_uniphy_pcie_id_table[] = {
-> > > +	{
-> > > +		.compatible = "qcom,ipq5332-uniphy-pcie-phy",
-> > > +		.data = &ipq5332_data,
-> > > +	}, {
-> > > +		/* Sentinel */
-> > > +	},
-> > > +};
-> > > +MODULE_DEVICE_TABLE(of, qcom_uniphy_pcie_id_table);
-> > > +
-> > > +static const struct phy_ops pcie_ops = {
-> > > +	.power_on	= qcom_uniphy_pcie_power_on,
-> > > +	.power_off	= qcom_uniphy_pcie_power_off,
-> > > +	.owner          = THIS_MODULE,
-> > > +};
-> > > +
-> > > +static int qcom_uniphy_pcie_probe(struct platform_device *pdev)
-> > > +{
-> > > +	struct phy_provider *phy_provider;
-> > > +	struct device *dev = &pdev->dev;
-> > > +	struct qcom_uniphy_pcie *phy;
-> > > +	struct phy *generic_phy;
-> > > +	int ret;
-> > > +
-> > > +	phy = devm_kzalloc(&pdev->dev, sizeof(*phy), GFP_KERNEL);
-> > > +	if (!phy)
-> > > +		return -ENOMEM;
-> > > +
-> > > +	platform_set_drvdata(pdev, phy);
-> > > +	phy->dev = &pdev->dev;
-> > > +
-> > > +	phy->data = of_device_get_match_data(dev);
-> > > +	if (!phy->data)
-> > > +		return -EINVAL;
-> > > +
-> > > +	ret = of_property_read_u32(dev_of_node(dev), "num-lanes", &phy->lanes);
-> > > +	if (ret)
-> > > +		return dev_err_probe(dev, ret, "Couldn't read num-lanes\n");
-> > > +
-> > > +	ret = qcom_uniphy_pcie_get_resources(pdev, phy);
-> > > +	if (ret < 0)
-> > > +		return dev_err_probe(&pdev->dev, ret,
-> > > +				     "failed to get resources: %d\n", ret);
-> > > +
-> > > +	generic_phy = devm_phy_create(phy->dev, NULL, &pcie_ops);
-> > > +	if (IS_ERR(generic_phy))
-> > > +		return PTR_ERR(generic_phy);
-> > > +
-> > > +	phy_set_drvdata(generic_phy, phy);
-> > > +
-> > > +	ret = phy_pipe_clk_register(phy, generic_phy->id);
-> > > +	if (ret)
-> > > +		dev_err(&pdev->dev, "failed to register phy pipe clk\n");
-> > > +
-> > > +	phy_provider = devm_of_phy_provider_register(phy->dev,
-> > > +						     of_phy_simple_xlate);
-> > > +	if (IS_ERR(phy_provider))
-> > > +		return PTR_ERR(phy_provider);
-> >
-> > should we not unroll the pipe clk registration here?
-> 
-> Since it is a 'devm_' clk_hw_register_fixed_rate, wouldn't the devm
-> framework do the unregister?
-> 
-> 	$ git diff
-> 	diff --git a/drivers/clk/clk-fixed-rate.c b/drivers/clk/clk-fixed-rate.c
-> 	index 6b4f76b9c4da..3fd1a12cc163 100644
-> 	--- a/drivers/clk/clk-fixed-rate.c
-> 	+++ b/drivers/clk/clk-fixed-rate.c
-> 	@@ -58,6 +58,7 @@ static void
-> 	devm_clk_hw_register_fixed_rate_release(struct device *dev, void *re
-> 		 * the hw, resulting in double free. Just unregister the hw and
-> 		 * let
-> 		 * devres code kfree() it.
-> 		 */
-> 	+	printk("--> %s: %s\n", __func__, __clk_get_name(fix->hw.clk));
-> 		clk_hw_unregister(&fix->hw);
-> 	 }
-> 
-> 	diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
-> 	b/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
-> 	index 311f98181177..9a8d8d9a7c2b 100644
-> 	--- a/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
-> 	+++ b/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
-> 	@@ -267,6 +268,7 @@ static int qcom_uniphy_pcie_probe(struct
-> 	platform_device *pdev)
-> 
-> 		phy_provider = devm_of_phy_provider_register(phy->dev,
-> 							     of_phy_simple_xlate);
-> 	+	phy_provider = ERR_PTR(-EINVAL);
-> 		if (IS_ERR(phy_provider))
-> 			return PTR_ERR(phy_provider);
-> 
-> I forced an error here and saw that devm_clk_hw_register_fixed_rate_release
-> is getting called, which in turn calls clk_hw_unregister. Is that sufficient?
-> Or am i missing something.
+>
+> I'd say, this is probably the most unusal commit message message that
+> I've seen.
+>
+> Nevertheless,
+>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
 
-I missed that internally this is devm_, this is fine
+I agree. Please clarify what you mean by "Which values?" in v2. I've
+interpreted that comment as "list out the changes I made when copying
+the relevant nodes from apq8064".
 
--- 
-~Vinod
+There will likely be more comments by others, so I'll change the
+commit message to match how you would like me to word it. Thanks for
+your comments thus far.
 
