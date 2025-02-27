@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-49624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC5CBA474C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:42:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A54BBA474D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:45:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6CE1C16FFA9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:42:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65F791890892
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:42:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAC3E22DF80;
-	Thu, 27 Feb 2025 04:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CA2122E3EC;
+	Thu, 27 Feb 2025 04:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z49xeXAw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dq8MLF08"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC86E22CBD0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:37:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767D21F5844
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740631078; cv=none; b=ftP8Z0XH1NtIxaS6RXyt5/P4vtsPbW83Ln1YsW68gU2LK2m4oOz6On3Kwy7FnX7D0K5PWkS8Vt+PwQw19W1u3UKujWYx2qFbCOtZTCozP0IVguZrXUcQ/wxFVu0c0c7UEjeSX7M/YH7Bxo5ffX1YhKcTSZqlBhAtTc+huf4jchk=
+	t=1740631081; cv=none; b=b6I7TXCaBscQk2SEMzLz1GN0dmKW6grYcZgVyNpr876hTtebFNaCVQaFK4+63CLIMcJv/3L3aw2ljjCpVQeXSfvLcV8jnBqG7cAIYKlxIZnaGP8LWFnmp91IuIO16IGmGcfz/07l9F5O66xC00bcKZk2dAoI/kc3lVDAB4q8kVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740631078; c=relaxed/simple;
-	bh=3zyLLsNGRo/NqxJBZh+XUixvV4IVu35ZfNffeLgMl5U=;
+	s=arc-20240116; t=1740631081; c=relaxed/simple;
+	bh=+FtkdcKwebMwwWijXZdGjuw30u68u75GZtx0tF0H7xA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZUW/GRC95+9YUw/DpfCm+3unjmrRyJA+pCD2bLQ2/WzhdDByP+BW3D/8zveLDNToHOqu84kjxjzvnNzejaZKPt7UfcjuHLiSoR5h5jqCTcocPE4XJO8WfNI9C5gRs+B44drqdngMoVOUIULA2DUr0WVf/NgxxFRLoshWHTCxNgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z49xeXAw; arc=none smtp.client-ip=209.85.208.173
+	 MIME-Version:Content-Type; b=ej7Bh2aeQJUKjFGfzx36rkqhwx0ZxK2lYxAvJeLOBSRQ0TWs617F2lCXcxCDOwzCtyxszozu8EU0AWQvo/MB+NFZmPBsogRDjXgn+VfFdIUf9WoOiXAnmvhbJCcyjOsy5QmssYYtTC2qEMdOE6IbY47t1KH+re83G7UFV6KOvlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Dq8MLF08; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-30b823cc44aso4834781fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:37:56 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-547bcef2f96so517142e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740631075; x=1741235875; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740631077; x=1741235877; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L6XslM7pJXykrnKKkRhn2NSz+JQLPJqLzjVxpIMfxMM=;
-        b=z49xeXAw6ZvAzmo9xOklNM0NR68KG2z2RmMmF+fr6YEq10iwkPAOPGYw9qXejZC0LI
-         1MjzxA9y2vuDaaxywLe59DcJsR4HiGU73ip+H7WvXyo4xr9BDnDztvFQoCCmuo972B3D
-         jk3AvLQZkQ5rvd05prAkCIVveE1xrjTmupgfBmhc5JUl7LuTctVQQUhPynXSa8ftKkR3
-         fzEVziH+9Hu8x9k/8BuXScVyCD0yTy5gC9R2r1gN9DAw1Ju1UWDZ2HOSTKrwmgi0fGhO
-         k0m6+KOS+D64okD0l9qqMlLcpH6zO+pCILRagsQqtlxmXs0FdtezZ5hVJojvOLxgK9oV
-         Kwew==
+        bh=7UXkglY36wWDlWtl/BHCk6udvb24Qtv5ABZXv7WU9qc=;
+        b=Dq8MLF08Sodxfh5rH0TE+MnAknCMTi9Zv4ooZpGA7C8t/GhmXXp+I95gRf/xYmk/o9
+         O/vI0CYMwQHVN/BEYVfLkti9KO0TOGCDDqw8VeBsJ0l14uEHGfDMslZowuOX7AwfaOjr
+         z1O0ihy6A20FHop7hpCQEMVFat7n9G1iSGqnYLvComJPdPZBefl7UAzJkmhhDujsHVdD
+         jNQMHnCOgkLPAANkOdkhO6hsKhGMs/4tMVAIwEh6sxkLwJ9+dRkGNhaJUu7rRayEBea8
+         xoXwi1VPepV6/oNNUjRdPlxCTJPJsEhtYueSEavpdjXu+6+CQoTXojHmeBnTz1SaEhLS
+         RFRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740631075; x=1741235875;
+        d=1e100.net; s=20230601; t=1740631077; x=1741235877;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=L6XslM7pJXykrnKKkRhn2NSz+JQLPJqLzjVxpIMfxMM=;
-        b=taziysjlxzGXYlUO8LDNmcpNfLC9zYFfwUEwesMAsiRNFSh/o3Pj9FPdFudBiEbV+2
-         jlTC5Iu1IeH4JklcqQSMVAV1icTU3zULAHWUoZUYlR5O7Itdt977ZdR9LSlXh0ZTB7GL
-         Vlf6VPTVY8xOZtp06XRi3PY+o2uBlbIG910Vm11eKflTPeqWhHUBtwIIOgAv3SJGX++J
-         SOGqk0GvkCHTUmmOh9CEZhumMor8f0bUqMSD359f8YUU8F+gzRRXo2MJeMExagve4Ii2
-         wx5+hRXVhle0DFLcByIz8atuofOuQvyBzajbyywRQZA8RxkzB5JHHBYxCmb9hrHlRKK5
-         WGKA==
-X-Gm-Message-State: AOJu0YxpvAjkPm4Wuq4CRaiyL139jocl0q2GdnmE7KZeiTXloqxJXxlE
-	lE0QVMD8E1H9I90nCZJAJmDVfC7B4PFChP/ipMQVFQ5Wf7Dy6hsYdN4YZH+D0TA=
-X-Gm-Gg: ASbGnctyVpVPCkv0j6MikDFJDJxUr9FzZo+7I8qHf9y22aS2guweqD89PJUB+XzmrIn
-	iSc05Fng9LJHILAw1dZ21gna/ypxSrCs6J8IaLheqlR/CdQfp/TJvShfDSclHpuHvGWoIeAvJpw
-	E39jMi7im/obwnkKGch3k4MHlHaxu0PYcwq82ho+MtGtT1lh1RiEOTfKZlfc8FzTrT0jwKfdiQZ
-	lnzzzoTzjrcRBsDh/So2vhvFblsrYdYt2GMoSrOlzrYQuMuzU8gAQPZNJX17RXuQvwQoEYw51wv
-	AIurvp5bqraCzwLRJ8rTJVgclEtOF3SSN/i4XEJfsA==
-X-Google-Smtp-Source: AGHT+IG/y3BiL2mYCdzvxaR3HQ4vcwVJ7Z9hxPTuLMNoKwnf+P+hPCClI8k7cx+mmtTgSswFFHqxIA==
-X-Received: by 2002:a05:6512:39c9:b0:545:fad:a747 with SMTP id 2adb3069b0e04-5493c56f259mr3879927e87.5.1740631075092;
-        Wed, 26 Feb 2025 20:37:55 -0800 (PST)
+        bh=7UXkglY36wWDlWtl/BHCk6udvb24Qtv5ABZXv7WU9qc=;
+        b=eORN+gTXMhSH1YKJY9/VVXPgr62Sxi8wWVSkDj3fEngLEJEbO8nr6vV+cp5jKumPbb
+         dr1xLlFF2/shNvvTTdqn8Mi3FtwqG+NyaKKqkzUJWR4sLEz2Wpnqm7wT0jYXKw75Brlu
+         WX5rQ5Yq2Z96r2VoJfhb69HuJmAiOLOoFGVg6Gx5ZHTz3SvZWGeBLPr/3B+vL1EVE9I6
+         rkMmC479iWHfRLRz3Y+YxaBXoC++QJnCuBQ8ffuBXH3kLZ9SE0rNHb/XQeUVrdIYN6sn
+         opeI5smjbbAbBfLgAqVqYC+OWCfr3WDbbbaAUeTFv/aGxlHDQSyK2gkdJu3vMDdK5iwZ
+         3djQ==
+X-Gm-Message-State: AOJu0Yx6Z7ja/tUlvIapwIR/nSGuBaBygmgJnForipWk70E4pJdwVXTj
+	lZCgt5pIXKx31y4SuYvZ/3xouCrocN83UhrxXUjmADgxpJk62gUEJwIDj3oqYWw=
+X-Gm-Gg: ASbGncs+cAqW1bkvJZrMYe9kJRxpguw2KqdSYtqUyi2D62hXWqEdChW00pPXXDmoQ6d
+	uYBZ2jGKwEuO1CQODnj9cG3Ci4dqfL/B+bBamB+dBvbPx/WuiC+GxOmnNvD2p8A/6aejTv2WuX1
+	2UF7dBpEuFzbZehkjnm83yIhPlXnSYvpvNa920wLkIL38L1CjXBhdeuk8i8YnRqgbg4dE/yfTMi
+	3HmG4/eO2Pps2mYyIp31M9HulhOroZlE8zrJPHdANddqy3Ag1TDUGXfAGtve+WSDK3FySPbWFOx
+	VkeS4F5RR8XiLRvG6uzyuPO90iLPAZwmLy2/bhXfPQ==
+X-Google-Smtp-Source: AGHT+IFGmZMN8HiHF0dUQ37JUE6cIWIJ4a/etc3Mst5jjknmhWL9hK7goaPc0rslMBYFrA3hJCn4bg==
+X-Received: by 2002:ac2:4c4b:0:b0:545:76e:322 with SMTP id 2adb3069b0e04-54838ef895emr12381337e87.31.1740631077556;
+        Wed, 26 Feb 2025 20:37:57 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443ccf45sm63485e87.229.2025.02.26.20.37.52
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443ccf45sm63485e87.229.2025.02.26.20.37.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 20:37:53 -0800 (PST)
+        Wed, 26 Feb 2025 20:37:56 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -78,17 +78,19 @@ To: Rob Clark <robdclark@gmail.com>,
 	Marijn Suijten <marijn.suijten@somainline.org>,
 	David Airlie <airlied@gmail.com>,
 	Simona Vetter <simona@ffwll.ch>,
+	Jonathan Marek <jonathan@marek.ca>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] drm/msm/dsi: Minor cleanups
-Date: Thu, 27 Feb 2025 06:37:29 +0200
-Message-Id: <174063096231.3733075.12973526206464749561.b4-ty@linaro.org>
+	linux-kernel@vger.kernel.org,
+	Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH v5 0/2] drm/msm/dsi/phy: Improvements around concurrent PHY_CMN_CLK_CFG[01]
+Date: Thu, 27 Feb 2025 06:37:30 +0200
+Message-Id: <174063096227.3733075.7538565845819141467.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250214-drm-msm-cleanups-v2-0-1bec50f37dc1@linaro.org>
-References: <20250214-drm-msm-cleanups-v2-0-1bec50f37dc1@linaro.org>
+In-Reply-To: <20250219-drm-msm-phy-pll-cfg-reg-v5-0-d28973fa513a@linaro.org>
+References: <20250219-drm-msm-phy-pll-cfg-reg-v5-0-d28973fa513a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,26 +101,27 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 14 Feb 2025 14:17:43 +0100, Krzysztof Kozlowski wrote:
-> Changes in v2:
-> - Patch #2: Update commit msg
-> - Tags
-> - Link to v1: https://lore.kernel.org/r/20250106-drm-msm-cleanups-v1-0-271ff1c00795@linaro.org
+On Wed, 19 Feb 2025 17:23:31 +0100, Krzysztof Kozlowski wrote:
+> Changes in v5:
+> - Drop applied patches 1-3
+> - Split part touching pll_7nm_register() from last (#4) patch to new patch
+>    - Thus: new patch #1 in new numbering.
+> - Link to v4: https://lore.kernel.org/r/20250217-drm-msm-phy-pll-cfg-reg-v4-0-106b0d1df51e@linaro.org
 > 
-> Few minor improvements/cleanups why browsing the code.
+> Changes in v4:
+> - Add tags
+> - Patch #4: Add mising bitfield.h include
+> - One more FIELD_GET and DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL (Dmitry)
+> - Link to v3: https://lore.kernel.org/r/20250214-drm-msm-phy-pll-cfg-reg-v3-0-0943b850722c@linaro.org
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] drm/msm/dsi: Drop redundant NULL-ifying of clocks on error paths
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/709cc0620107
-[2/4] drm/msm/dsi: Simplify with dev_err_probe()
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/d5bc3c3389d7
-[3/4] drm/msm/dsi: Minor whitespace and style cleanup
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/cce156257ed3
-[4/4] drm/msm/dsi: Drop unnecessary -ENOMEM message
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/b39e7014ed31
+[1/2] drm/msm/dsi/phy: Use dsi_pll_cmn_clk_cfg1_update() when registering PLL
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/de36ea80b303
+[2/2] drm/msm/dsi/phy: Define PHY_CMN_CLK_CFG[01] bitfields and simplify saving
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/0699018b41d7
 
 Best regards,
 -- 
