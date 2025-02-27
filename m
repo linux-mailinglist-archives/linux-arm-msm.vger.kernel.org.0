@@ -1,98 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-49619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3ED6BA474C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:41:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBA52A474BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:40:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77A881881F74
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:40:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8AB13ABBF9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:40:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 691782222C4;
-	Thu, 27 Feb 2025 04:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 251FE226D13;
+	Thu, 27 Feb 2025 04:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qJk3wNCD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UHeNWJAT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB362206B8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:37:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437422222B7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:37:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740631068; cv=none; b=ZUsTCY1HlxMf9xi+4DZrQ7teFubj8jBCmGyZrj7c1of5Z7XMOd5X9TU8oM808FlzZSZ1g7YRICJCL2TsuRlNqV1nkw/tklsYcjw8O9CLAtePujzGGHZuTkXl+LXySQIhfBtOj+cx9mFBd28IZ1Hu4JB2fKiiUlf/a4A/wZ0Sz/A=
+	t=1740631070; cv=none; b=r2CKSVHSFIVd/jSKB6RFo8A0L4jzyNso+VVjOtxB+ewkDkn1OKfw/zqZ4zqi+Yr+H/12f/I33t01NqjktPb7CNijacTGKfAW1udKZYBxwKii/zVfR07R8XZA/O2KR5L1XO8WfPPl+aTuBKFIJneN3sclECXCUmmHqvHNgrigCXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740631068; c=relaxed/simple;
-	bh=UAKk9n2MgbyCZoN+0ucDNxhrBHryl2KbQSyyMlhtXZ8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SoHQeVc2ta7zc0ZhRO2vAvs1yuItzYgYAFnqmk7s27jZGfEwPf/ZyRSiFRk5V4nzzFhygioLnhoXUfVlcIhBmyQXQesMpC3WXhxfnTux0Jekw94N1jk7VE3G8gIDATP+Tgxz8eSwTCGIC9OUEge2blk8esrmZTtHijrDs8Gk1y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qJk3wNCD; arc=none smtp.client-ip=209.85.167.49
+	s=arc-20240116; t=1740631070; c=relaxed/simple;
+	bh=vpCutPqoDxQnJQCPEd51KBxUZ5j1zIGXF3PAmD3Zp3g=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uIS7Ro/5zXnV+FONfYc/HUbaXvIE5cBltYX5WiBiGXNEB5QWmnXuKBIaEIk0jlogkPbDsgVKuXhf18NEZHhtzxWEVnojzTVm7ZXmayS100JY+rJbE6Kl0OhFUdaqzxNnlhBhFi7oZbhsGI9kFu5fPjFbN1M12WMKW3EitA+Wavc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UHeNWJAT; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-54605bfcc72so1943360e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:37:45 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5452c29bacfso437727e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:37:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740631064; x=1741235864; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740631066; x=1741235866; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GYRdSFJ0y3J8w0/MIT9m/pNCngOvo9+w+cz68lIRPZQ=;
-        b=qJk3wNCDcBenA1zw9NZiXPn9QcJU6ef9qZhEJ2OKo1L6PuZwO5qpiNI3RXRs2Di0LV
-         7VSdDJzVQbvAk+hHWQanPtaPqj1ZfLoAF/jUNDt6fXHLoZSINSt+bCSC4q4OxeIOFio5
-         sBYSKxpCl32ywjmUFNERgyA/zix0nUV6bFkBj64D1UmZvO4SxNUdFsnIuuNvpbgnQrA8
-         8NDoF8Ca/jgveY5pEXj76PtAavMvv8kjJFlF7DIB5xjbi0T7n91I3GqB7LeB8aS6cP9o
-         XMTUFaa8ZfvD9DQONqWmmbJqXHnbkkTSg9DNOzDt53qKG/wqBZgYxFqHFtT5667fq7kU
-         bHow==
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pb4hUKvEHYfmi+I4u7PNH6BBXGvHJ7207dDOff1Xgt4=;
+        b=UHeNWJATzpJq11M/5kKGiYpV6MsrvqFG/hjtQXX8KqPjQBTiAIk+oNCk+SG8H31BcK
+         p7S6Yth7r+ddb+eaQnQcUUOd/twxEyxfRR60VMxl00gziFDEgcL/3aJHR9MRNwEvrl7I
+         s94S9gm+Gkv0m8I3GDh8rBuvP7wxqzTn57pfflcaBYtG4cueU5EMstqGe7xGfTOJulPJ
+         q7gzWbJWq71bX+qEHlUAjJ5SzUe8CC/4a00olJStu9QsSmbfFRU4yJLUm8QtiGZYcoA8
+         kF6V+zGhhHuM3TzDHMh4TFj2hwT1XLmaGpttDxcXgpnskW31QNkWhG8AYZ8RCXK0Boq1
+         We8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740631064; x=1741235864;
+        d=1e100.net; s=20230601; t=1740631066; x=1741235866;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GYRdSFJ0y3J8w0/MIT9m/pNCngOvo9+w+cz68lIRPZQ=;
-        b=KICLo1ZzxCJOa1iqG80kTILRNkyMaXjUW8/dkNQ6PxS2jGnZVWKchDeo5nshKDacfS
-         AQ4VAAXAgTbM0j58grnJ5xLUDaRD+gA6EwYQlvbr1O/zw8sHa9g1l79clQmqYwA/FQW9
-         eaLCq6BO+KSMK0usoZLdsvGug0pFDphGmvleLSFfSJiue0SUzkKTSR/YzHN7mOXQR5Z+
-         XFTWtKlMN08TJyCu3VQ+WiaFcEtHOeZLD3KbPdtJoAFa5LyBhnwN8OTkNtIyBMFy/Vy1
-         6Rg5ku2v86TAZvZyZolSg5CxHv96U6R/0wejqaTLuUlswisS+md5P5V8BzV+WNX5T+73
-         V77g==
-X-Gm-Message-State: AOJu0YxwGCXyjmSDqLKWGc+pmYSSt5i83p18Ler1Gnp8GDvvgV7NP3RO
-	d2sb6xf/Pd19UK1YbzJXJMmD5RMumk/rmx+Fzh7FvU4TFVfiZy4mCxZeK7QW8dM=
-X-Gm-Gg: ASbGnctIGKu5DKBNUO5OE6W8yGQeeVb9DL4XxVWQimYC5PmUdapsMhB0N6gl4BlKPRI
-	2Ae9+NBmbIS7QZI3qHl7Iv7eecZGEsjNmkFLK77z/eez4Y1/PK/dh1/8spO+QlSzyiky+kg0VYI
-	Q5ky79oo44ggSjHCmXYn8EgfLfvT9KyNNmTjHfZg8G0TQ+Iqf0Mn8RveFUKdeq/zbtjHqujv5Zi
-	WJrvYuIBBUmQssiyCa1Q1XTdCgeo/W19RJlfXdjuMXbl6AScymDmtKyMjjF0whay8M8OePqVLmr
-	IDlulJoxKNqCHOHQq10GJmGejScjYpRFhZS5iDCHyQ==
-X-Google-Smtp-Source: AGHT+IHInNYeeu7RJnY0u41TSawSb/sSqGvIZ8wxvnotJqXxQ14P4JT9/11iwOVMUCOL38JGxUNb9Q==
-X-Received: by 2002:a05:6512:3054:b0:545:5d:a5c7 with SMTP id 2adb3069b0e04-5494330bedcmr587647e87.21.1740631063830;
-        Wed, 26 Feb 2025 20:37:43 -0800 (PST)
+        bh=pb4hUKvEHYfmi+I4u7PNH6BBXGvHJ7207dDOff1Xgt4=;
+        b=M44H8fHWMmvEAIp69RTO1VWWxLZkhFt/bV9/pCG7j+dF72fEwTJ+v9l4ihOD3533F8
+         oCNfjVG/M7u97WXNbiS6C1MmU3Upi+zBn9mKzTdoOZRSEZSfPmVoGyJ68m94T/5aCk6d
+         i350PBaIgeEORURAHPAg7Okd+QyARKA4JIG5wv1Q6+Mm+NVZ5A4Bnq/FMHnQKXuI4TBB
+         uA4/ypQaiFRM8Rfqd1Aqw04j2aX5T4dgsnG74dM1TYRDAEHCNZnK1EigNJT+HUSk6+mo
+         qT0JJBe+h4vVdWVb0V6EMzAKk3Omjst+soz+f/DD7eUliytuHH/omjMnsj6Eko6QVJtP
+         WqAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXkjkmRjObHIzrdk2SAQGH6rpi3TQbMtp7qD2UR6D4KqxZINbBjXgkGNZAf0Y6v+0riLxhkvjp668dgQIMD@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUemseqgLb2lQgye/JoHahaWw8tubc15JPN406UlLa0VQ8fWaV
+	Xahm0HU4cGgp2M02+zPQrc/kdVPxIlVxWuijPolk+jOmRga6eVpLLTC9sik80oI=
+X-Gm-Gg: ASbGncv3AOCEyKzDsOqkPokyvUlxdRZe4BtcO6d6dYya6VtZ4kqcAqClUf+MhV95UoJ
+	E0gzuoxVeyY1OwpkyRX7GhNOVkKNR2Z5P/GwMxvnNQ9wIaS1E54c00iA9txv/DCsGczbyEaodak
+	enbh2lEiYG8JRu9XzbHOHsGlPRmgX/yJQec55KxKrwTSgtLF4sI2nZEB63yCGZPnkifV0bEnpFN
+	zTMzl50mJ2x/69C+a7HqTy5P0M494xt5WntPxnw+cqyrFCBitjw1MYf/0z8D9pIhxJa0WTHj8ip
+	174+RquxQfSCVSCR/8GtBEFtPFqwhxGdiboYEcE8JQ==
+X-Google-Smtp-Source: AGHT+IGd2rBcbdDnOO9mUn66I/dFLYCzyc1GlDdtB8pQVwoJ0TBIn1SVa4Lymy/rEO+PlXQ6q8GIig==
+X-Received: by 2002:a05:6512:3d0b:b0:545:aaf:13fd with SMTP id 2adb3069b0e04-548392717d1mr11821826e87.51.1740631066310;
+        Wed, 26 Feb 2025 20:37:46 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443ccf45sm63485e87.229.2025.02.26.20.37.41
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443ccf45sm63485e87.229.2025.02.26.20.37.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 20:37:42 -0800 (PST)
+        Wed, 26 Feb 2025 20:37:45 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	sean@poorly.run,
-	marijn.suijten@somainline.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	jonathan@marek.ca,
-	quic_jesszhan@quicinc.com,
-	konradybcio@kernel.org,
-	Haoxiang Li <haoxiang_li2024@163.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Krishna Manikandan <quic_mkrishn@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dsi: Add check for devm_kstrdup()
-Date: Thu, 27 Feb 2025 06:37:24 +0200
-Message-Id: <174063096227.3733075.13590017200932514746.b4-ty@linaro.org>
+	linux-clk@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/2] dt-bindings: display/msm/dsi-phy: Add header with exposed clock IDs
+Date: Thu, 27 Feb 2025 06:37:25 +0200
+Message-Id: <174063096233.3733075.8120055678466952428.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250219040712.2598161-1-haoxiang_li2024@163.com>
-References: <20250219040712.2598161-1-haoxiang_li2024@163.com>
+In-Reply-To: <20250127132105.107138-1-krzysztof.kozlowski@linaro.org>
+References: <20250127132105.107138-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,16 +112,19 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 19 Feb 2025 12:07:12 +0800, Haoxiang Li wrote:
-> Add check for the return value of devm_kstrdup() in
-> dsi_host_parse_dt() to catch potential exception.
+On Mon, 27 Jan 2025 14:21:04 +0100, Krzysztof Kozlowski wrote:
+> DSI phys, from earliest (28 nm) up to newest (3 nm) generation, provide
+> two clocks.  The respective clock ID is used by drivers and DTS, so it
+> should be documented as explicit ABI.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] drm/msm/dsi: Add check for devm_kstrdup()
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/52b3f0e118b1
+[1/2] dt-bindings: display/msm/dsi-phy: Add header with exposed clock IDs
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/d1f28e30a525
+[2/2] drm/msm/dsi/phy: Use the header with clock IDs
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/5100ae76b5ab
 
 Best regards,
 -- 
