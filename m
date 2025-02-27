@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-49666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CE0EA47956
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 10:32:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30E40A4790E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 10:27:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA44B18834EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 09:32:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6A3F4171F52
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 09:27:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FB0E22578A;
-	Thu, 27 Feb 2025 09:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90E1D227E88;
+	Thu, 27 Feb 2025 09:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CoR+neQu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="patfxaJp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3ACC2FB;
-	Thu, 27 Feb 2025 09:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A6E227BB6;
+	Thu, 27 Feb 2025 09:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740648742; cv=none; b=u/UQi0Bv2UJRxkq9CNBB9enld51Qb1SxtF9p0XDgrb7Fclkp4UXi0L616LNadRkLaL85wfdAzcCyR3sAsYIY7GtKk1yLb7/SJyUexe2SwkREqE4X+38mssgVnxRhkgMBKb3y4XApkxnZ8TUjSaHa4j35c7Il+hhbSjtBr+pTy8w=
+	t=1740648444; cv=none; b=FOAdeywqRUnr/lQxwC1YCen8Rej5OLWt55VZ/pf132aH+QuhV8apmTjrRyBtNrHcmIIgDFtkaD21WvLtbTXW2WnGJQIalgYouGX3dhknhupDFSPN7qGNUUktSUsDGd5VEyT2t+zBIcJmhIN6vR12B1P4/uy2aPHPPJUyKBLJnJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740648742; c=relaxed/simple;
-	bh=ksyORZfggmx3U8ODzo6J4oCaK38LSTNkF8MlXnW2hQs=;
+	s=arc-20240116; t=1740648444; c=relaxed/simple;
+	bh=JDgMkzjHJGabIu5vhs0AxG921yVqBa1hS9pyKAV9wD4=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y54t5EU15aWNqMPU/3JPkE8RLQaN21VugEb7PJikjeQD9xNcRbFwfmBEJlUfBTLJ1A4HAyUZVkQWnBP9LYAeKA4zr67Dkusmb1hb3aRm8RI6Cghv8HJOnFHNURDCvOOGAZB3XP9LH27+OEYa8HIGn7UJeU4DtgSTl2x3cO+MQrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CoR+neQu; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=Z232yX+vQNQw3/pXHxhVT6TWA0ZwoDC2oBFR5AH0uYQyannng0MsRSCZOH1A2MI63mdJIYpWlGPjLbrb3Qk7/oGEiUDQFT8yuOjDyrosO4PJs24F6cZlG77GhU+Amn2CCXYt1cLaVb5eDEgEyPPeh9oBf6vQxmEM8CqBqKVnj4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=patfxaJp; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51R8oxwx017600;
-	Thu, 27 Feb 2025 09:32:10 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51R9N7sJ017602;
+	Thu, 27 Feb 2025 09:27:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Bvt5GBLP24w9VGRM5yp31LbFCno0G7euDWaySVPaNa8=; b=CoR+neQu1Z+AE6ek
-	h3CUFXhuw53hQhHotB0fgCPj5FCHCUZC10knJN/+L5SGBUTFIAzgwR05obJJJVpr
-	jb/7eoLGIB4gL/XdTuGLpOOjJ2SgwG7wAjSXI07Dzh1uKRKRv5nnmGEDrkCZCHrI
-	XR8RnXl+tnrVQDuHVqmgdmx7y+kAxLPIliSs5IJXllqJS57uZXPXy8JSv42Zp4Az
-	jybaH8u3aoacwVWIB00F0ZSp0vZ2J/qSd2Qj13WSO3YZys6o6hboFeeQnU96pGiy
-	Ky9ZyL/OXQWEE0C/0Mu7a7jIUeS67eunLz2K+0XtCPqBoWgXc8xdqxO0TZuOH7+x
-	oyj0bw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prn53hu-1
+	2vLLCr0C7CBSwFASgTef7yr9Y3K8NM+33PnWJy0v1hs=; b=patfxaJplo+FWvdM
+	nNXGlD7mUXIAhkyQc2hj7o9FJgxbOVBsb9YRWUVGLbZ8acM0HMx8zak+JLRSRuac
+	QA/CDtu8/UMInqOo9pNGf3RXyJxl29hP6KDOhkW/H+YA2FoKi/utW3kgAHNhqg3i
+	3sEAjDYNz++5e4T/1rnMPO2ImXTuwlTkpHVsoVO7pg1epmHvgHGbdWXgOqJnj9Ol
+	TpgFRz1lLnSRI0Lxm3ID9e7tPZjAN5Kc2WVljn50UnCsg9Q+AAFKr/mypSub/DUe
+	VTAnc5ra3bJRWSmyR+M1rCZ/ahZvx36PzheWj/xF9Jh1BRSr0X5unM1QJMPnxRhL
+	3wQeBw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prn531t-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Feb 2025 09:32:09 +0000 (GMT)
+	Thu, 27 Feb 2025 09:27:11 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51R9R4TO011852
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51R9RAQT021082
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Feb 2025 09:27:04 GMT
+	Thu, 27 Feb 2025 09:27:10 GMT
 Received: from ap-cloud-sh02-lnx.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 27 Feb 2025 01:27:00 -0800
+ 15.2.1544.9; Thu, 27 Feb 2025 01:27:06 -0800
 From: songchai <quic_songchai@quicinc.com>
 To: Suzuki K Poulose <suzuki.poulose@arm.com>,
         Mike Leach
@@ -73,9 +73,9 @@ To: Suzuki K Poulose <suzuki.poulose@arm.com>,
 CC: Songwei Chai <quic_songchai@quicinc.com>, <linux-kernel@vger.kernel.org>,
         <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
         <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
-Subject: [PATCH v3 1/7] dt-bindings: arm: Add support for Coresight TGU trace
-Date: Thu, 27 Feb 2025 17:26:34 +0800
-Message-ID: <20250227092640.2666894-2-quic_songchai@quicinc.com>
+Subject: [PATCH v3 2/7] coresight: Add coresight TGU driver
+Date: Thu, 27 Feb 2025 17:26:35 +0800
+Message-ID: <20250227092640.2666894-3-quic_songchai@quicinc.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20250227092640.2666894-1-quic_songchai@quicinc.com>
 References: <20250227092640.2666894-1-quic_songchai@quicinc.com>
@@ -91,11 +91,11 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZliLooh1hQF1LACp0Yw4Or30QrQOB1Cu
-X-Proofpoint-GUID: ZliLooh1hQF1LACp0Yw4Or30QrQOB1Cu
+X-Proofpoint-ORIG-GUID: CtncMPrbBI6HXtCjMTSGvqBtuYS7kFAx
+X-Proofpoint-GUID: CtncMPrbBI6HXtCjMTSGvqBtuYS7kFAx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-27_04,2025-02-27_01,2024-11-22_01
+ definitions=2025-02-27_04,2025-02-26_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
  spamscore=0 clxscore=1011 mlxscore=0 adultscore=0 mlxlogscore=999
  suspectscore=0 phishscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
@@ -104,201 +104,333 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorit
 
 From: Songwei Chai <quic_songchai@quicinc.com>
 
-The Trigger Generation Unit (TGU) is designed to detect patterns or
-sequences within a specific region of the System on Chip (SoC). Once
-configured and activated, it monitors sense inputs and can detect a
-pre-programmed state or sequence across clock cycles, subsequently
-producing a trigger.
-
-   TGU configuration space
-        offset table
- x-------------------------x
- |                         |
- |                         |
- |                         |                           Step configuration
- |                         |                             space layout
- |   coresight management  |                           x-------------x
- |        registers        |                     |---> |             |
- |                         |                     |     |  reserve    |
- |                         |                     |     |             |
- |-------------------------|                     |     |-------------|
- |                         |                     |     | priority[3] |
- |         step[7]         |<--                  |     |-------------|
- |-------------------------|   |                 |     | priority[2] |
- |                         |   |                 |     |-------------|
- |           ...           |   |Steps region     |     | priority[1] |
- |                         |   |                 |     |-------------|
- |-------------------------|   |                 |     | priority[0] |
- |                         |<--                  |     |-------------|
- |         step[0]         |-------------------->      |             |
- |-------------------------|                           |  condition  |
- |                         |                           |             |
- |     control and status  |                           x-------------x
- |           space         |                           |             |
- x-------------------------x                           |Timer/Counter|
-                                                       |             |
-						       x-------------x
-TGU Configuration in Hardware
-
-The TGU provides a step region for user configuration, similar
-to a flow chart. Each step region consists of three register clusters:
-
-1.Priority Region: Sets the required signals with priority.
-2.Condition Region: Defines specific requirements (e.g., signal A
-reaches three times) and the subsequent action once the requirement is
-met.
-3.Timer/Counter (Optional): Provides timing or counting functionality.
-
-Add a new coresight-tgu.yaml file to describe the bindings required to
-define the TGU in the device trees.
+Add driver to support Coresight device TGU (Trigger Generation Unit).
+TGU is a Data Engine which can be utilized to sense a plurality of
+signals and create a trigger into the CTI or generate interrupts to
+processors. Add probe/enable/disable functions for tgu.
 
 Signed-off-by: Songwei Chai <quic_songchai@quicinc.com>
 Signed-off-by: songchai <quic_songchai@quicinc.com>
 ---
- .../bindings/arm/qcom,coresight-tgu.yaml      | 135 ++++++++++++++++++
- 1 file changed, 135 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
+ .../testing/sysfs-bus-coresight-devices-tgu   |   9 +
+ drivers/hwtracing/coresight/Kconfig           |  11 +
+ drivers/hwtracing/coresight/Makefile          |   1 +
+ drivers/hwtracing/coresight/coresight-tgu.c   | 218 ++++++++++++++++++
+ drivers/hwtracing/coresight/coresight-tgu.h   |  36 +++
+ 5 files changed, 275 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
+ create mode 100644 drivers/hwtracing/coresight/coresight-tgu.c
+ create mode 100644 drivers/hwtracing/coresight/coresight-tgu.h
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
+diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
 new file mode 100644
-index 000000000000..a41ac68a4fe7
+index 000000000000..741bc9fd9df5
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
-@@ -0,0 +1,135 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+# Copyright (c) 2023-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/arm/qcom,coresight-tgu.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
+@@ -0,0 +1,9 @@
++What:		/sys/bus/coresight/devices/<tgu-name>/enable_tgu
++Date:		February 2025
++KernelVersion	6.15
++Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Sam Chai (QUIC) <quic_songchai@quicinc.com>
++Description:
++		(RW) Set/Get the enable/disable status of TGU
++		Accepts only one of the 2 values -  0 or 1.
++		0 : disable TGU.
++		1 : enable TGU.
+diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
+index 06f0a7594169..3fe59c745dd4 100644
+--- a/drivers/hwtracing/coresight/Kconfig
++++ b/drivers/hwtracing/coresight/Kconfig
+@@ -247,4 +247,15 @@ config CORESIGHT_DUMMY
+ 
+ 	  To compile this driver as a module, choose M here: the module will be
+ 	  called coresight-dummy.
 +
-+title: Trigger Generation Unit - TGU
++config CORESIGHT_TGU
++	tristate "CoreSight Trigger Generation Unit driver"
++	help
++	  This driver provides support for Trigger Generation Unit that is
++	  used to detect patterns or sequences on a given set of signals.
++	  TGU is used to monitor a particular bus within a given region to
++	  detect illegal transaction sequences or slave responses. It is also
++	  used to monitor a data stream to detect protocol violations and to
++	  provide a trigger point for centering data around a specific event
++	  within the trace data buffer.
+ endif
+diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
+index 4ba478211b31..7c2b9e9cf1cd 100644
+--- a/drivers/hwtracing/coresight/Makefile
++++ b/drivers/hwtracing/coresight/Makefile
+@@ -51,3 +51,4 @@ coresight-cti-y := coresight-cti-core.o	coresight-cti-platform.o \
+ 		   coresight-cti-sysfs.o
+ obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
+ obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
++obj-$(CONFIG_CORESIGHT_TGU) += coresight-tgu.o
+diff --git a/drivers/hwtracing/coresight/coresight-tgu.c b/drivers/hwtracing/coresight/coresight-tgu.c
+new file mode 100644
+index 000000000000..da4c04ac1097
+--- /dev/null
++++ b/drivers/hwtracing/coresight/coresight-tgu.c
+@@ -0,0 +1,218 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
 +
-+description: |
-+  The Trigger Generation Unit (TGU) is a Data Engine which can be utilized
-+  to sense a plurality of signals and create a trigger into the CTI or
-+  generate interrupts to processors. The TGU is like the trigger circuit
-+  of a Logic Analyzer. The corresponding trigger logic can be realized by
-+  configuring the conditions for each step after sensing the signal.
-+  Once setup and enabled, it will observe sense inputs and based upon
-+  the activity of those inputs, even over clock cycles, may detect a
-+  preprogrammed state/sequence and then produce a trigger or interrupt.
++#include <linux/amba/bus.h>
++#include <linux/coresight.h>
++#include <linux/device.h>
++#include <linux/err.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/of.h>
 +
-+  The primary use case of the TGU is to detect patterns or sequences on a
-+  given set of signals within some region of the SoC.
++#include "coresight-priv.h"
++#include "coresight-tgu.h"
 +
-+maintainers:
-+  - Mao Jinlong <quic_jinlmao@quicinc.com>
-+  - Sam Chai <quic_songchai@quicinc.com>
++DEFINE_CORESIGHT_DEVLIST(tgu_devs, "tgu");
 +
-+# Need a custom select here or 'arm,primecell' will match on lots of nodes
-+select:
-+  properties:
-+    compatible:
-+      contains:
-+        enum:
-+          - qcom,coresight-tgu
-+  required:
-+    - compatible
++static void tgu_write_all_hw_regs(struct tgu_drvdata *drvdata)
++{
++	CS_UNLOCK(drvdata->base);
++	/* Enable TGU to program the triggers */
++	tgu_writel(drvdata, 1, TGU_CONTROL);
++	CS_LOCK(drvdata->base);
++}
 +
-+properties:
-+  compatible:
-+    items:
-+      - const: qcom,coresight-tgu
-+      - const: arm,primecell
++static int tgu_enable(struct coresight_device *csdev, enum cs_mode mode,
++		      void *data)
++{
++	struct tgu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
 +
-+  reg:
-+    maxItems: 1
++	spin_lock(&drvdata->spinlock);
 +
-+  clocks:
-+    maxItems: 1
++	if (drvdata->enable) {
++		spin_unlock(&drvdata->spinlock);
++		return -EBUSY;
++	}
++	tgu_write_all_hw_regs(drvdata);
++	drvdata->enable = true;
 +
-+  clock-names:
-+    items:
-+      - const: apb_pclk
++	spin_unlock(&drvdata->spinlock);
++	return 0;
++}
 +
-+  qcom,tgu-steps:
-+    description:
-+      The trigger logic is realized by configuring each step after sensing
-+      the signal. The parameter here is used to describe the maximum of steps
-+      that could be configured in the current TGU.
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    minimum: 1
-+    maximum: 8
++static int tgu_disable(struct coresight_device *csdev, void *data)
++{
++	struct tgu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
 +
-+  qcom,tgu-regs:
-+    description:
-+      There are some "groups" register clusters in each step, which are used to
-+      configure the signal that we want to detect. Meanwhile, each group has its
-+      own priority, and the priority increases with number of groups. For example,
-+      group3 has a higher priority than group2, the signal configured in group3
-+      will be sensed more preferentially than the signal which is configured in group2.
-+      The parameter here is used to describe the signal number that each group
-+      could be configured.
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    minimum: 1
-+    maximum: 18
++	spin_lock(&drvdata->spinlock);
 +
-+  qcom,tgu-conditions:
-+    description:
-+      A condition sets a specific requirement for a step and defines the subsequent
-+      action once the requirement is met. For example, in step two, if signal A is
-+      detected three times, the process jumps back to step one. The parameter describes
-+      the register number for each functionality, whether it is setting a specific
-+      requirement or defining a subsequent action.
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    minimum: 1
-+    maximum: 4
++	if (!drvdata->enable) {
++		spin_unlock(&drvdata->spinlock);
++		return 0;
++	}
 +
-+  qcom,tgu-timer-counters:
-+    description:
-+      TGU has timer and counter which are used to set some requirement on each step.
-+      For example, we could use counter to create a trigger into CTI once TGU senses
-+      the target signal three times.This parameter is used to describe the number of
-+      Timers/Counters in TGU.
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    minimum: 0
-+    maximum: 2
++	CS_UNLOCK(drvdata->base);
++	tgu_writel(drvdata, 0, TGU_CONTROL);
++	CS_LOCK(drvdata->base);
 +
-+  in-ports:
-+    $ref: /schemas/graph.yaml#/properties/ports
-+    additionalProperties: false
++	drvdata->enable = false;
++	spin_unlock(&drvdata->spinlock);
++	return 0;
++}
 +
-+    properties:
-+      port:
-+        description: AXI Slave connected to another Coresight component
-+        $ref: /schemas/graph.yaml#/properties/port
++static ssize_t enable_tgu_show(struct device *dev,
++			       struct device_attribute *attr, char *buf)
++{
++	bool enabled;
 +
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
++	struct tgu_drvdata *drvdata = dev_get_drvdata(dev->parent);
 +
-+additionalProperties: false
++	spin_lock(&drvdata->spinlock);
++	enabled = drvdata->enable;
++	spin_unlock(&drvdata->spinlock);
 +
-+examples:
-+  - |
-+    tgu@10b0e000 {
-+        compatible = "qcom,coresight-tgu", "arm,primecell";
-+        reg = <0x10b0e000 0x1000>;
++	return sprintf(buf, "%d\n", enabled);
++}
 +
-+        clocks = <&aoss_qmp>;
-+        clock-names = "apb_pclk";
++/* enable_tgu_store - Configure Trace and Gating Unit (TGU) triggers. */
++static ssize_t enable_tgu_store(struct device *dev,
++				struct device_attribute *attr, const char *buf,
++				size_t size)
++{
++	int ret = 0;
++	unsigned long val;
++	struct tgu_drvdata *drvdata = dev_get_drvdata(dev->parent);
 +
-+        qcom,tgu-steps = <3>;
-+        qcom,tgu-regs = <4>;
-+        qcom,tgu-conditions = <4>;
-+        qcom,tgu-timer-counters = <1>;
++	ret = kstrtoul(buf, 0, &val);
++	if (ret)
++		return ret;
 +
-+        in-ports {
-+            port {
-+                tgu_in_tpdm_swao: endpoint{
-+                    remote-endpoint = <&tpdm_swao_out_tgu>;
-+                };
-+            };
-+        };
-+    };
-+...
++	if (val) {
++		ret = pm_runtime_resume_and_get(dev->parent);
++		if (ret)
++			return ret;
++		ret = tgu_enable(drvdata->csdev, CS_MODE_SYSFS, NULL);
++		if (ret)
++			pm_runtime_put(dev->parent);
++	} else {
++		ret = tgu_disable(drvdata->csdev, NULL);
++		if (!ret)
++			pm_runtime_put(dev->parent);
++	}
++
++	if (ret)
++		return ret;
++	return size;
++}
++static DEVICE_ATTR_RW(enable_tgu);
++
++static const struct coresight_ops_helper tgu_helper_ops = {
++	.enable = tgu_enable,
++	.disable = tgu_disable,
++};
++
++static const struct coresight_ops tgu_ops = {
++	.helper_ops = &tgu_helper_ops,
++};
++
++static struct attribute *tgu_common_attrs[] = {
++	&dev_attr_enable_tgu.attr,
++	NULL,
++};
++
++static const struct attribute_group tgu_common_grp = {
++	.attrs = tgu_common_attrs,
++	NULL,
++};
++
++static const struct attribute_group *tgu_attr_groups[] = {
++	&tgu_common_grp,
++	NULL,
++};
++
++static int tgu_probe(struct amba_device *adev, const struct amba_id *id)
++{
++	int ret = 0;
++	struct device *dev = &adev->dev;
++	struct coresight_desc desc = { 0 };
++	struct coresight_platform_data *pdata;
++	struct tgu_drvdata *drvdata;
++
++	desc.name = coresight_alloc_device_name(&tgu_devs, dev);
++	if (!desc.name)
++		return -ENOMEM;
++
++	pdata = coresight_get_platform_data(dev);
++	if (IS_ERR(pdata))
++		return PTR_ERR(pdata);
++
++	adev->dev.platform_data = pdata;
++
++	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
++	if (!drvdata)
++		return -ENOMEM;
++
++	drvdata->dev = &adev->dev;
++	dev_set_drvdata(dev, drvdata);
++
++	drvdata->base = devm_ioremap_resource(dev, &adev->res);
++	if (!drvdata->base)
++		return -ENOMEM;
++
++	spin_lock_init(&drvdata->spinlock);
++
++	drvdata->enable = false;
++	desc.type = CORESIGHT_DEV_TYPE_HELPER;
++	desc.pdata = adev->dev.platform_data;
++	desc.dev = &adev->dev;
++	desc.ops = &tgu_ops;
++	desc.groups = tgu_attr_groups;
++
++	drvdata->csdev = coresight_register(&desc);
++	if (IS_ERR(drvdata->csdev)) {
++		ret = PTR_ERR(drvdata->csdev);
++		goto err;
++	}
++
++	pm_runtime_put(&adev->dev);
++	return 0;
++err:
++	pm_runtime_put(&adev->dev);
++	return ret;
++}
++
++static void tgu_remove(struct amba_device *adev)
++{
++	struct tgu_drvdata *drvdata = dev_get_drvdata(&adev->dev);
++
++	coresight_unregister(drvdata->csdev);
++}
++
++static const struct amba_id tgu_ids[] = {
++	{
++		.id = 0x000f0e00,
++		.mask = 0x000fffff,
++		.data = "TGU",
++	},
++	{ 0, 0, NULL },
++};
++
++MODULE_DEVICE_TABLE(amba, tgu_ids);
++
++static struct amba_driver tgu_driver = {
++	.drv = {
++		.name = "coresight-tgu",
++		.suppress_bind_attrs = true,
++	},
++	.probe	= tgu_probe,
++	.remove	= tgu_remove,
++	.id_table	= tgu_ids,
++};
++
++module_amba_driver(tgu_driver);
++
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("CoreSight TGU driver");
+diff --git a/drivers/hwtracing/coresight/coresight-tgu.h b/drivers/hwtracing/coresight/coresight-tgu.h
+new file mode 100644
+index 000000000000..380686f94130
+--- /dev/null
++++ b/drivers/hwtracing/coresight/coresight-tgu.h
+@@ -0,0 +1,36 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef _CORESIGHT_TGU_H
++#define _CORESIGHT_TGU_H
++
++/* Register addresses */
++#define TGU_CONTROL 0x0000
++
++/* Register read/write */
++#define tgu_writel(drvdata, val, off) __raw_writel((val), drvdata->base + off)
++#define tgu_readl(drvdata, off) __raw_readl(drvdata->base + off)
++
++/**
++ * struct tgu_drvdata - Data structure for a TGU (Trigger Generator Unit) device
++ * @base: Memory-mapped base address of the TGU device
++ * @dev: Pointer to the associated device structure
++ * @csdev: Pointer to the associated coresight device
++ * @spinlock: Spinlock for handling concurrent access
++ * @enable: Flag indicating whether the TGU device is enabled
++ *
++ * This structure defines the data associated with a TGU device, including its base
++ * address, device pointers, clock, spinlock for synchronization, trigger data pointers,
++ * maximum limits for various trigger-related parameters, and enable status.
++ */
++struct tgu_drvdata {
++	void __iomem *base;
++	struct device *dev;
++	struct coresight_device *csdev;
++	spinlock_t spinlock;
++	bool enable;
++};
++
++#endif
 
 
