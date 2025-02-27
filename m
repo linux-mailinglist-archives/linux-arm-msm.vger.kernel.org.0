@@ -1,88 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-49608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D6ABA47445
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:19:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F686A4744D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 05:21:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 84442188947D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:17:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B3071884892
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 04:20:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 505F91714B3;
-	Thu, 27 Feb 2025 04:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1201B1E521C;
+	Thu, 27 Feb 2025 04:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q5gXPcHC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l2GY7uxD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB72188006
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB22014D2B7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 04:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740629824; cv=none; b=uA815jPBaGLqMtjyqfj2tAmYtEp40cPeGJAMIEiL5J0F7zesNzSqUGchy1YgEoPtbeMbAWN/lM6eK5f0SEBLHqSGwAnPWJbr+I7gWY9EMceEdoq3HOxds6TRmbxCfN2qQVTvIvp3pGsHIc+busxrdqIS6IfPF6FcWfB07L99PPE=
+	t=1740630041; cv=none; b=B96XVduedIwtFfsJLe7kAnm/dNXbfNuC2yk3uoRI6ca4MGuoq2Dyr0/Mk5QgEc9V1XJaXo5KP0CJZ8SmBe+EcaeR+X+mcpAMMAX65DH8AiOezX0pLbG+W/GWirWdZ2RKjgvvFe7LgXDmbP8/pMdz/VG5Bz/pqoZf4RifzHltzc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740629824; c=relaxed/simple;
-	bh=cdH66nBgTf0Lwg3K/8eyHtCyVQMYcf9IUF1L6JQC4tk=;
+	s=arc-20240116; t=1740630041; c=relaxed/simple;
+	bh=D1qPXpKSXGu0P/skKJ8CN57rt1WpnhY+LrH45X3vgoU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jZ6SfW9BQQa88cczpO2K8IVCaHjiecQHAmB9pCPJSAQqcILBA+0QyV0FFtxNU4ixQ+AXme4JY4Dw0+rNklFTjMnqJ3msQYgjrK5jFi2vRnMmaJSAaIxj3Xao0UkgWsVlC3aKFWsvGfOPixj1tvy4X8PFl/1XOYPER968TF1VMto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Q5gXPcHC; arc=none smtp.client-ip=209.85.167.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=envJx5nrmwbzBMf3pm36pmC1Aquen1grkKCndS/yjCMZTkaQPLiDwM45SuASgHXryoNyR+8rWNrfai9rrT1Kju611ERz1v/czsV/Ni4oNR0jHVXfOc02StcMe/jP9+qtX2HQj9cAhdO+U/k1QYdBg61fKjhYcZo5kktjk9v0glg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l2GY7uxD; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5452e6f2999so436415e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:17:02 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5461dab4bfdso520387e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 20:20:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740629820; x=1741234620; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740630036; x=1741234836; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sbpE7A80HY+/Mdda5+FpAzRig9IYFvS6m/EoQDwpXAQ=;
-        b=Q5gXPcHC5lN5JVX2lf0aUyQc63bMtc0iG5JHy2/dODruChVNW2VZxhugXxooa3WQx1
-         OANOD/ClCw/F679fgDtLCFQQwk05hqG7NJWqIO1t44nZwU/aMMhb4fAgkhksL42G70c7
-         oydZhdGEKwC6yT3dNFwBRhHEyaOBDj2UU1KqoklO6D3q54Bf4j+tjqAHUufKVRl7Lhrw
-         mD3BlgOq9BjY9auio47tCYFtTalb1n6XvfzHLgxaEAfcK6L2nx4Tnc4MtKCYGibBdnRT
-         PZsSAB5RkuSshr+5X8fMcbTDraISIEp5EEvNdXLj8aR9L4e0Gnw/Jfluxihi4/Wk4nQo
-         wxZg==
+        bh=p8u23IlmQo/koZdDGMXILeSJTNSguPrHqDNPpEEp+yE=;
+        b=l2GY7uxDTYGSdPLCjCZocnRFmMU5D291UyK1PEYdb1r3bWiR0WQ7NpljWZqGMYOnx+
+         Ndz+MM7EoeU4CX5kCI7DxLBfITHtZIWYS3AK37bPW6DTObnYr3zhqsOOosAV9bgite2K
+         0JFF33A7YhiSo3KNNgnSYSkikk5MlN/nFjQBFzTP3z92HzYXTrQpDaddTtOyvrixT8Re
+         HVTCaszn5gmIaXWjf0JhJodgz2zyfm+3h5LYTWToFHzk/ljHRLbF4UJrxy4cdHYPUn4M
+         bF2WxDeZlzkQ8QDJuhkKba3kJ8tPMcqkLIDHuT2rXK9J7uTgkkWLN/tlrKh1HYsHJIFc
+         9I+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740629820; x=1741234620;
+        d=1e100.net; s=20230601; t=1740630036; x=1741234836;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sbpE7A80HY+/Mdda5+FpAzRig9IYFvS6m/EoQDwpXAQ=;
-        b=TMpDtduPZfgBbAEqkPE8cGcDwGS5D1L4z20mmLeG5jh50XkmAzoaTGef8OQCnSTanZ
-         EmCfOtB7Ws14jbZXaodg+JA1WS3A8GaODbu5EAz6BhTw4INilE9llA8MRy3ScT6jmNGZ
-         Tz9vx3G6A5Hs3mjhEqh7FJg0RlpTGxiaFwNRNTaB2cTbBP4Dzrl9ZNSVeQEIslXUTIl/
-         7P1Lqx/s4Nua105qj25/wKOCf4nHXX5kTxc/M5ieqpZDOeE3EzaTEKVHi7Ot9K4t9z2U
-         TvLTxVBWGx1NLETLREArRJSoSDbQGHnlT3K923udvvC08WPWe2u4wqN7Kd5BYsl/gMM1
-         1C9A==
-X-Forwarded-Encrypted: i=1; AJvYcCWSRriYD7kIxXX+3NZ4MawqMkNyt45FQkqv/hrd8p0asErFBqDHLkbbQNpcywYux9oDI6tHtYxIkrTaCf7G@vger.kernel.org
-X-Gm-Message-State: AOJu0Yys6ZrvVCgrI54NodgCFAv/D5/WV17H6Yc5XLfXpypmIbWGyN9Y
-	WzIeZyOl5Nl+Kn0cHEKfwUqnSepcVcPeg4+0Sz/Pwr7YxeVNAZUb0KnBYPobsDE=
-X-Gm-Gg: ASbGnctNtWCC7icBasHSeDinYoEmQkwyk7LG9XaRSbLhRf3+zeoW6Uure2VGRXEiGut
-	L1fsfOoNPjPnkbrTM+kPw/fSipfAc0LafKi1TbKkDctjVFuB5OXhMHiG0cFT6GrfrIpieIDRJJL
-	mSzWyTpWNpmBigieM0MF+6rc9ducv5aG0WYILN738hq7N7hX+KHvGjV1WVWdtvv2b7OQieNctEs
-	1e+AT3wmXaJ72zq0u9jyjutKS3FYzqtuvATywVxjeJfQezWyGsbpZ1GurrJLXz/MWQ5kttNmNCs
-	FILz+z65M9dhOothgAyWYv2x04fUIlenb0FosCRAzdzPQULKVLRrzQHWd7YW2icCAfaAlYNFoCB
-	4xIfcpw==
-X-Google-Smtp-Source: AGHT+IE5VURtJx3akR0wW8QuRF4r2+WixtLJlHwmRqGjmXOtaF1CwM79EnenRC2OLvGzgMnEngZwiw==
-X-Received: by 2002:ac2:4e15:0:b0:545:c7d:1791 with SMTP id 2adb3069b0e04-548510ed5d4mr6767391e87.43.1740629820504;
-        Wed, 26 Feb 2025 20:17:00 -0800 (PST)
+        bh=p8u23IlmQo/koZdDGMXILeSJTNSguPrHqDNPpEEp+yE=;
+        b=vbA/dpOP6QUwxvmfoTwp4zUwExrckkwKjUGbxrDgHSNiN0UmGtxFvdLR/sS2B9I5Rl
+         YP/RqPMReBqLh4DtQD1w7IPs0SY8VB+fACjo7EPdhMrk0y8rNbC5JrgfNdwI3QVTbrcM
+         bd1SZmPOl7rvjR550oUGKFrPWmTiRoUF9xtnK5GSsV9HdYdSuy63gn6aDpImgdTABYMK
+         ROTD6gJTmGpGddl2cbe3PT8LnrjrSGLsO6UvtIkdtgmnEpBwRExzp6kbGs6+0dJTJ7cn
+         FJya+D8TaBQueyTHNvBbz7QyF//kHo4TrZ2ZHLALbndnZpQXJHWLFH7Y+xoQBnxPg8P7
+         3Ilw==
+X-Forwarded-Encrypted: i=1; AJvYcCWVgqKzOTsGFN7Bmp6T3FI5USbQqBSROiWI56/D4iwey6IodguZLrL1Sg4GRAzKcz9AM0EzFYFlWVi98Ehk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7Nk/tiiqNN+Lhj/ZviS1AO733oWlSZHPYbA0jFHOGV1YtOn9j
+	X4ZtmYE9fTeoFKgW4FKHsMA14x77USen59cA8ZgbyFD0coi19BsW2yy19Dx0gvU=
+X-Gm-Gg: ASbGncsGndUBuDDWxtl88cX1yGtHq3YBrj3iCkvHNQgqRtuDWnO9eBNfhle0f3k1ym7
+	hJGeA7ZZURT3Levfo6loVfgwiMx9UOZCqWOl38+JaUt8/oxzYdRHWSQ+Gc+6mjovRQDx9Eut2Bu
+	MSkyu1FaSQQ3FjMmFTO96QTJjIULeJ13uby+s3TCT5yXmY+Hx4Q80ImaWc+kNEDm2nsJbKo7F2M
+	susrCFnX1YxGWnPDYt5mI5h7G4TwSf4/QfyoZ3FLovFQqcHHOvpy/NUfl++9OqU0jNoqSHYVUMK
+	xIV5o8v1TasH5dbmym8JdrOMZXGjw9SadOdXh2F8p7SByWTZvPYp+kBnq/GzXC8hQc4mqlN9lkf
+	UgvS5Gw==
+X-Google-Smtp-Source: AGHT+IGmU3ylt4nfxdW8+V50WKqSc6Rh6GtYKcalxG8gKf1aJ0RkCuq7iwjbHF3whqn1Nc8rCjt6iw==
+X-Received: by 2002:a05:6512:234b:b0:545:27b1:156 with SMTP id 2adb3069b0e04-54838ee91b3mr11320521e87.22.1740630035977;
+        Wed, 26 Feb 2025 20:20:35 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549441743c4sm61550e87.49.2025.02.26.20.16.58
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443cc9d3sm61249e87.224.2025.02.26.20.20.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 20:16:59 -0800 (PST)
-Date: Thu, 27 Feb 2025 06:16:56 +0200
+        Wed, 26 Feb 2025 20:20:34 -0800 (PST)
+Date: Thu, 27 Feb 2025 06:20:32 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Nikita Travkin <nikita@trvn.ru>
+To: Taniya Das <quic_tdas@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
 	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] {vision/navigation}-mezzanine: Fix overlay root node
-Message-ID: <vq5dcsi55aqn56h6ihysqk4lainhmjbyvot3jiqkxm3i7igsak@da5u6ro7rkvg>
-References: <20250226-qcom-nonroot-overlays-v1-0-26c6e7605833@trvn.ru>
+	Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-idp: Update protected clocks
+ list
+Message-ID: <o53nnmt5ypuoms3b37lehtmpwloudusr7647alehvnwsiltsyo@grd6ua7mh4o2>
+References: <20250206-protected_clock_qcm6490-v1-1-5923e8c47ab5@quicinc.com>
+ <j43f4wu6wgoho2tl4crckemnngyvek5mma6ghkdyqcivk65dcf@gfsimovfuqy5>
+ <72cc2c52-1d0d-4a60-93da-14acd5947f1f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,97 +95,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250226-qcom-nonroot-overlays-v1-0-26c6e7605833@trvn.ru>
+In-Reply-To: <72cc2c52-1d0d-4a60-93da-14acd5947f1f@quicinc.com>
 
-On Wed, Feb 26, 2025 at 07:29:54PM +0500, Nikita Travkin wrote:
-> While considering to propose WoA EL2 dt overlays upstream I was looking
-> at existing overlays and noticed that some of them are broken: they put
-> seemingly meaningful fixups into the overlay's "/" node, which places
-> them into the overlay "metadata" itself, not into a fixup fragment to be
-> applied to the actual dtb. This series fixes those two by changing to
-> full path "&{/}" which should work as it was initially intended.
+On Thu, Feb 27, 2025 at 09:42:39AM +0530, Taniya Das wrote:
 > 
-> See demonstration of the problem below:
 > 
-> $ cat base.dts
-> /dts-v1/;
-> / {
-> 	compatible = "fake,board";
-> 	fake,value = <42>;
-> };
+> On 2/26/2025 10:12 AM, Bjorn Andersson wrote:
+> > On Thu, Feb 06, 2025 at 03:43:21PM +0530, Taniya Das wrote:
+> >> Certain clocks are not accessible on QCM6490-IDP board,
+> >> thus mark them as protected.
+> >>
+> >> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> >> ---
+> >> Mark few clocks as protected on IDP of QCM6490.
+> >>
+> >> This patchset is separated out from the series[1] to remove dependency from
+> >> the LPASS reset.
+> >> [1]: https://lore.kernel.org/all/20240816-qcm6490-lpass-reset-v1-0-a11f33cad3c5@quicinc.com/
+> >> ---
+> >>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 21 +++++++++++++++++++++
+> > 
+> > I merged the patch adding this board in November 2023, are you saying
+> > that for the last 15 months no one has actually booted it!?
+> > 
 > 
-> $ cat extra.dtso
-> /dts-v1/;
-> /plugin/;
-> 
-> / {
-> 	foo;
-> 	bar { baz; };
-> };
-> &{/} { whatever-comes-next-after-baz; };
-> 
-> $ dtc base.dts -o base.dtb
-> $ dtc extra.dtso -o extra.dtbo
-> $ fdtoverlay -i base.dtb -o combine.dtb extra.dtbo
-> $ dtc base.dtb
-> /dts-v1/;
-> 
-> / {
-> 	compatible = "fake,board";
-> 	fake,value = <0x2a>;
-> };
-> 
-> $ dtc extra.dtbo
-> /dts-v1/;
-> 
-> / {
-> 	foo;
-> 
-> 	bar {
-> 		baz;
-> 	};
+> I am not sure, I had got request to help boot the board which was not
+> due to these clocks.
 
-Is this behaviour documented somewhere? I'd say, it would be a surprise
-to me.
-
-> 
-> 	fragment@0 {
-> 		target-path = "/";
-> 
-> 		__overlay__ {
-> 			whatever-comes-next-after-baz;
-> 		};
-> 	};
-> };
-> 
-> $ dtc combine.dtb
-> /dts-v1/;
-> 
-> / {
-> 	whatever-comes-next-after-baz;
-> 	compatible = "fake,board";
-> 	fake,value = <0x2a>;
-> };
-> 
-> In the resulting dtb foo bar and baz are missing.
-> 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> ---
-> Nikita Travkin (2):
->       arm64: dts: qcom: qrb5165-rb5-vision-mezzanine: Fix broken overlay root
->       arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Fix the overlay root
-> 
->  arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dtso       | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> ---
-> base-commit: 8433c776e1eb1371f5cd40b5fd3a61f9c7b7f3ad
-> change-id: 20250226-qcom-nonroot-overlays-bfe21d33be8c
-> 
-> Best regards,
-> -- 
-> Nikita Travkin <nikita@trvn.ru>
-> 
+So, was the original submission in November 2023 broken or was it broken
+by a later firmware upgrade which started to protect those clocks?
 
 -- 
 With best wishes
