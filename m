@@ -1,207 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-49739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5048CA484C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 17:24:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1160A485CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 17:54:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E27087A22ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 16:23:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A834D1732E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 16:46:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 799EB1B85E4;
-	Thu, 27 Feb 2025 16:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 422FF1B394E;
+	Thu, 27 Feb 2025 16:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KHnkUzWJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E21291B4F0A;
-	Thu, 27 Feb 2025 16:23:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAF614EC5B;
+	Thu, 27 Feb 2025 16:46:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740673437; cv=none; b=nF6TEAm85z8R5vQ3RGrc0Hjvjrpwc8RmgPfvftButKctC5vhphYXyJqpyiI7Qg2a3hHISuk43DXPBnZVgtKlqfFH2HPVmhx/2kg03uiv9DOc5/TkG1qVn3d1mYi4ez2BgSk5TJ0tBzVsV3Puf+pjHFy+hJ/myiY8LMQ83X0oCtk=
+	t=1740674784; cv=none; b=ONo7sM4pVdQYAmqosm93JSM8kSFF/I2QxrHBnoD2JbVx1OWepHE/7Im/ZYUsfz81TRdOltPYAVdwhox+6ehYOzyrTsiatcM4l9nePU59VK1Yt1vyPLhQnuFmeMS1Ovg1dI8n48CagxOHU2/KETYIfY6rrB6Fu0RNBNy5Xkyt5w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740673437; c=relaxed/simple;
-	bh=Kli9Zrxx4tniLHZRafKhSWOIsjFG4RSiHz0gzAbi3IE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Szom/wiCl7e5qa5yikQka+t+iXrgDmuwxsXRWzjMJ0D+KL/LrlPlvzHHPm0wy+fYfNfs73wtd41suwL2hu442p0wyhz/yWK7Cb3pQhJVuEZzrQm109G/KkEoG1dloEODNiJLTlo9xR64ypgO07mto7Wd02wTopTrpi/qyhgU0Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 997C91516;
-	Thu, 27 Feb 2025 08:24:09 -0800 (PST)
-Received: from localhost (e132581.arm.com [10.2.76.71])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AC1373F673;
-	Thu, 27 Feb 2025 08:23:53 -0800 (PST)
-Date: Thu, 27 Feb 2025 16:23:49 +0000
-From: Leo Yan <leo.yan@arm.com>
-To: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, kernel@quicinc.com,
-	linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org, kernel@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 3/5] coresight-tnoc: add nodes to configure flush
-Message-ID: <20250227162349.GB2157064@e132581.arm.com>
-References: <20250226-trace-noc-driver-v2-0-8afc6584afc5@quicinc.com>
- <20250226-trace-noc-driver-v2-3-8afc6584afc5@quicinc.com>
+	s=arc-20240116; t=1740674784; c=relaxed/simple;
+	bh=rnGxcvGrlOu9S8hRsJDfy1plNsFwEiDmUYFSaKrM2so=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uwJQ6imaCpkO2dd7xhTiOTZqm2qZccjKH1Xpk8yzRxTgg/Z7auLotWSBPGmbsHsTpPk21PFN3h5d3520ETJSSfZUYo9bvD/NQkzzfU3Rcg6hflBTyjLVjmXI86mu5XAs42tZwDRZKLRHj2Uduk4hPaWP8ATZZ0+IYL3inm5suJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KHnkUzWJ; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-22356471820so16750995ad.0;
+        Thu, 27 Feb 2025 08:46:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740674782; x=1741279582; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DRXDCZOpNFx7mEL7sD+vJQzvlE2qaUafze4CTsh+P/M=;
+        b=KHnkUzWJnGd7j8+xLvr3ixfvZJHoowxna7z2uMhuuGjhoR8uG9pQWMMbvMbqTCUtBM
+         qd5SIIaZq+GFtPtNoSvfi9zB1aqesxm58Y5KK+uhbL+YU1w2vP8QMljChwJ6QJdhr40C
+         v5/v77G7vBW7+R0UZQ9SFUooTayk4KBRxIr67YjY0rv+YozPRmuHc7GYrcPnDhFzUO1E
+         pCmeNUjjpz6DKY9fYgNqKUtriX6Uef+fPmyr3YGtPCxb39RCRbsCdSeouK4bzpUwQIB6
+         l40so+jLsYaZXjpyTTmIoUVMlRjGClN6Vs0zhANZx0Etr25SZgGBkXaDH7mIzEUEPYlp
+         plwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740674782; x=1741279582;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DRXDCZOpNFx7mEL7sD+vJQzvlE2qaUafze4CTsh+P/M=;
+        b=Z6BRpW36QCR1ZQZFFEtGzNpvlvKA4zWkNYJkt8xCmbxVrbHzpwo1apW0LiQ6MtCBcU
+         yZUQRl1NKgZ2xfs2RwVevKBMdIG7W+btfBam+gqqQHvV59ZTnJP9t4D7AI0qrisfeUnh
+         M5wZx2yGYfinud3P6YGTl4nTwnOoH7B0KV2seGAPHcRlkGaED++DgRSa15Xe71ayx7+D
+         Tq/WFtbdPU12Jm7sX8HY9aHItBUSi3FwlFwUawXh/C662HfjqhId9KA5nUUAVAw/+ofH
+         aDiglE/qpeUQJa2b1RelKkcLSMAzY18FXTH9HWoI1qA7sR8U7mUvVH1pMrQJnGkLzrIM
+         m4TQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW98Obyta1LTuQBlY+uHWTCWXe1IihXRzvRhzaUZEwe5B1Gv1sdhhsS84UWDLvAWdsZatYV8PHPAqtbZwkj@vger.kernel.org, AJvYcCXJXJ3W/73oFxzu4fY9uwula9RYtq7+n1ZeJ6bGKUIbATWf4feHlbiOgaS+aoWzjZP2eXOm2zJz/agM8Ol8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzny7+0DYtnl4/4R7apM9T1GgHa8wIDdwefImJmaU01rGXkydAY
+	osG3a6u18JbqMTDEZqJPDMLvFpgN8/AOp1CRf0lfm0ag4jKA5hbv
+X-Gm-Gg: ASbGncv3hINpTEZ1URmzmzTrht9GzZauOZn3vyqoUBMs0jlXEiYcZ/H1lClN7Pc71aP
+	0T/5fl8ZwpuLQy74CH6KHkMaWWtpe76/AF93ci/SmGGMP9FPqRd3PEHDHy0Sir7F1foXZCZDjh5
+	41X/VVt6kV3HdFLS0mf6VM2GqAwfFhpW9+Avr1GzzMW97uEoP9m9/mtDQ5pRNMrBHtPSNzNF5cV
+	zO4jDC7CH9dk86jeee+nyes2wcwF0ZLE6c2Rj8Pku2TtB34FttM+Ld5TgojRu1sWYiFFe4AM1yo
+	2Gs+8cFPKRBjPS4A8jJoHnWV2P82Zj8rWZphB+jC/Vyfc/f4pibu
+X-Google-Smtp-Source: AGHT+IGSorrpazKalpJZWfzSOXdCZYUFDo74/mLdsFxqv0//LTvqdmRqtXwe49OfXxH70F6yYFLubQ==
+X-Received: by 2002:a17:902:e946:b0:223:5945:ffd5 with SMTP id d9443c01a7336-22359460062mr37537585ad.32.1740674781845;
+        Thu, 27 Feb 2025 08:46:21 -0800 (PST)
+Received: from jamesmacinnes-VirtualBox ([66.119.214.127])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223504dc7e1sm17097255ad.176.2025.02.27.08.46.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2025 08:46:21 -0800 (PST)
+Date: Thu, 27 Feb 2025 08:46:14 -0800
+From: "James A. MacInnes" <james.a.macinnes@gmail.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark
+ <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul
+ <sean@poorly.run>, David Airlie <airlied@gmail.com>, Simona Vetter
+ <simona@ffwll.ch>, Chandan Uddaraju <chandanu@codeaurora.org>, Stephen Boyd
+ <swboyd@chromium.org>, Vara Reddy <quic_varar@quicinc.com>, Tanmay Shah
+ <tanmay@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, Guenter Roeck <groeck@chromium.org>, Rob
+ Clark <robdclark@chromium.org>
+Subject: Re: [PATCH v2 1/2] drm/msm/dp: Disable wide bus support for SDM845
+Message-ID: <20250227084614.527e428d@jamesmacinnes-VirtualBox>
+In-Reply-To: <dk7udmgj3mexlvxxoxvgwut6p3cv4faxhtcbqrikvfp6h6odi3@myp4sxi7nh5c>
+References: <20250212-sdm845_dp-v2-0-4954e51458f4@gmail.com>
+	<20250212-sdm845_dp-v2-1-4954e51458f4@gmail.com>
+	<voecekzdacvrxedltgkiq5vwnaomchv2dryi6ukvk2xynw72wp@5nre7uesyvkk>
+	<dk7udmgj3mexlvxxoxvgwut6p3cv4faxhtcbqrikvfp6h6odi3@myp4sxi7nh5c>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250226-trace-noc-driver-v2-3-8afc6584afc5@quicinc.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Wed, Feb 26, 2025 at 07:05:52PM +0800, Yuanfang Zhang wrote:
-> 
-> Two nodes for configure flush are added here:
-> 1. flush_req: write 1 to initiates a flush sequence.
-> 
-> 2. flush_state: read this node to get flush status. 0: sequence in
-> progress; 1: sequence has been completed.
-> 
-> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> ---
->  drivers/hwtracing/coresight/coresight-tnoc.c | 73 ++++++++++++++++++++++++++++
->  drivers/hwtracing/coresight/coresight-tnoc.h |  4 ++
->  2 files changed, 77 insertions(+)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-tnoc.c b/drivers/hwtracing/coresight/coresight-tnoc.c
-> index fad8e61f05ef25989aba1be342c547f835e8953a..20231f28ddcb6a60d9b3c1ca3e0ca4d731dac39c 100644
-> --- a/drivers/hwtracing/coresight/coresight-tnoc.c
-> +++ b/drivers/hwtracing/coresight/coresight-tnoc.c
-> @@ -16,6 +16,78 @@
->  #include "coresight-tnoc.h"
->  #include "coresight-trace-id.h"
-> 
-> +static ssize_t flush_req_store(struct device *dev,
-> +                              struct device_attribute *attr,
-> +                              const char *buf,
-> +                              size_t size)
-> +{
-> +       struct trace_noc_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +       struct coresight_device *csdev = drvdata->csdev;
-> +       unsigned long val;
-> +       u32 reg;
-> +
-> +       if (kstrtoul(buf, 10, &val))
-> +               return -EINVAL;
-> +
-> +       if (val != 1)
-> +               return -EINVAL;
-> +
-> +       spin_lock(&drvdata->spinlock);
-> +       if (csdev->refcnt == 0) {
-> +               spin_unlock(&drvdata->spinlock);
-> +               return -EPERM;
-> +       }
-> +
-> +       reg = readl_relaxed(drvdata->base + TRACE_NOC_CTRL);
-> +       reg = reg | TRACE_NOC_CTRL_FLUSHREQ;
-> +       writel_relaxed(reg, drvdata->base + TRACE_NOC_CTRL);
+On Thu, 13 Feb 2025 01:58:06 +0200
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
 
-How can userspace determine when to trigger a flush?
-
-Generally, a driver kicks off a flush operation for a hardware before
-reading data from buffer or when disable a link path.  I don't know the
-hardware mechanism of TNOC, but seems to me, it does not make sense to
-let the userspace to trigger a hardware flush, given the userspace has
-no knowledge for device's state.
-
-Furthermore, based on my understanding for patch 02 and 03, the working
-flow is also concerned me.  IIUC, you want to use the driver to create
-a linkage and then use userspace program to poll state and trigger
-flushing.  Could you explain why use this way for managing the device?
-
-Thanks,
-Leo
-
-> +
-> +       spin_unlock(&drvdata->spinlock);
-> +
-> +       return size;
-> +}
-> +static DEVICE_ATTR_WO(flush_req);
-> +
-> +/*
-> + * flush-sequence status:
-> + * value 0: sequence in progress;
-> + * value 1: sequence has been completed.
-> + */
-> +static ssize_t flush_status_show(struct device *dev,
-> +                                struct device_attribute *attr,
-> +                                char *buf)
-> +{
-> +       struct trace_noc_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +       struct coresight_device *csdev = drvdata->csdev;
-> +       u32 val;
-> +
-> +       spin_lock(&drvdata->spinlock);
-> +       if (csdev->refcnt == 0) {
-> +               spin_unlock(&drvdata->spinlock);
-> +               return -EPERM;
-> +       }
-> +
-> +       val = readl_relaxed(drvdata->base + TRACE_NOC_CTRL);
-> +       spin_unlock(&drvdata->spinlock);
-> +       return sysfs_emit(buf, "%lu\n", BMVAL(val, 2, 2));
-> +}
-> +static DEVICE_ATTR_RO(flush_status);
-> +
-> +static struct attribute *trace_noc_attrs[] = {
-> +       &dev_attr_flush_req.attr,
-> +       &dev_attr_flush_status.attr,
-> +       NULL,
-> +};
-> +
-> +static struct attribute_group trace_noc_attr_grp = {
-> +       .attrs = trace_noc_attrs,
-> +};
-> +
-> +static const struct attribute_group *trace_noc_attr_grps[] = {
-> +       &trace_noc_attr_grp,
-> +       NULL,
-> +};
-> +
->  static void trace_noc_enable_hw(struct trace_noc_drvdata *drvdata)
->  {
->         u32 val;
-> @@ -142,6 +214,7 @@ static int trace_noc_probe(struct amba_device *adev, const struct amba_id *id)
->                 return ret;
+> On Thu, Feb 13, 2025 at 12:41:02AM +0100, Marijn Suijten wrote:
+> > On 2025-02-12 15:03:46, James A. MacInnes wrote:  
+> > > SDM845 DPU hardware is rev 4.0.0 per hardware documents.
+> > > Original patch to enable wide_bus operation did not take into
+> > > account the SDM845 and it got carried over by accident.
+> > > 
+> > > - Incorrect setting caused inoperable DisplayPort.
+> > > - Corrected by separating SDM845 into its own descriptor.  
+> > 
+> > If anything I'd have appreciated to see our conversation in v1
+> > pasted here verbatim which is of the right verbosity to explain
+> > this.  I can't do much with a list of two items.
+> > 
+> > I don't have a clearer way of explaining what all I find confusing
+> > about this description, so let me propose what I would have written
+> > if this was my patch instead:
+> > 
+> > 	When widebus was enabled for DisplayPort in commit
+> > c7c412202623 ("drm/msm/dp: enable widebus on all relevant
+> > chipsets") it was clarified that it is only supported on DPU 5.0.0
+> > onwards which includes SC7180 on DPU revision 6.2. However, this
+> > patch missed that the description structure for SC7180 is also
+> > reused for SDM845 (because of identical io_start address) which is
+> > only DPU 4.0.0, leading to a wrongly enbled widebus feature and
+> > corruption on that platform.
+> > 
+> > 	Create a separate msm_dp_desc_sdm845 structure for this SoC
+> > compatible, with the wide_bus_supported flag turned off.
+> > 
+> > 	Note that no other DisplayPort compatibles currently exist
+> > for SoCs older than DPU 4.0.0 besides SDM845.  
 > 
->         desc.ops = &trace_noc_cs_ops;
-> +       desc.groups = trace_noc_attr_grps;
->         desc.type = CORESIGHT_DEV_TYPE_LINK;
->         desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_MERG;
->         desc.pdata = adev->dev.platform_data;
-> diff --git a/drivers/hwtracing/coresight/coresight-tnoc.h b/drivers/hwtracing/coresight/coresight-tnoc.h
-> index b6bd1ef659897d8e0994c5e8514e8cbdd16eebd8..d0fe8f52709ff4147d66dbf90987595012cfaa4e 100644
-> --- a/drivers/hwtracing/coresight/coresight-tnoc.h
-> +++ b/drivers/hwtracing/coresight/coresight-tnoc.h
-> @@ -10,6 +10,10 @@
+> With more or less similar commit message:
 > 
->  /* Enable generation of output ATB traffic.*/
->  #define TRACE_NOC_CTRL_PORTEN  BIT(0)
-> +/* Writing 1 to initiate a flush sequence.*/
-> +#define TRACE_NOC_CTRL_FLUSHREQ        BIT(1)
-> +/* 0: sequence in progress; 1: sequence has been completed.*/
-> +#define TRACE_NOC_CTRL_FLUSHSTATUS     BIT(2)
->  /* Writing 1 to issue a FREQ or FREQ_TS packet*/
->  #define TRACE_NOC_CTRL_FREQTSREQ       BIT(5)
->  /* Sets the type of issued ATB FLAG packets. 0: 'FLAG' packets; 1: 'FLAG_TS' packets.*/
 > 
-> --
-> 2.34.1
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> _______________________________________________
-> CoreSight mailing list -- coresight@lists.linaro.org
-> To unsubscribe send an email to coresight-leave@lists.linaro.org
+> 
+> > 
+> > Hope I'm not considered being too picky.  I first sketch **how**
+> > the original patch created a problem, then explain how this patch
+> > is intending to fix it, and finally describe that we went a step
+> > further and ensured no other SoCs are suffering from a similar
+> > problem.
+> > 
+> > - Marijn
+> >
+Not too picky at all. I will use your text. I apologize as I had changed
+the cover instead of the patch. I will do my best to balance too many
+words and not enough.
+
+Would it be appropriate to split this patch and the other into separate
+submissions?
+
+Thank you again.
+
+ - James
+
+> > > 
+> > > Fixes: c7c412202623 ("drm/msm/dp: enable widebus on all relevant
+> > > chipsets") Signed-off-by: James A. MacInnes
+> > > <james.a.macinnes@gmail.com> ---
+> > >  drivers/gpu/drm/msm/dp/dp_display.c | 7 ++++++-
+> > >  1 file changed, 6 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
+> > > b/drivers/gpu/drm/msm/dp/dp_display.c index
+> > > aff51bb973eb..e30cccd63910 100644 ---
+> > > a/drivers/gpu/drm/msm/dp/dp_display.c +++
+> > > b/drivers/gpu/drm/msm/dp/dp_display.c @@ -126,6 +126,11 @@ static
+> > > const struct msm_dp_desc msm_dp_desc_sa8775p[] = { {}
+> > >  };
+> > >  
+> > > +static const struct msm_dp_desc msm_dp_desc_sdm845[] = {
+> > > +	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
+> > > +	{}
+> > > +};
+> > > +
+> > >  static const struct msm_dp_desc msm_dp_desc_sc7180[] = {
+> > >  	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0,
+> > > .wide_bus_supported = true }, {}
+> > > @@ -178,7 +183,7 @@ static const struct of_device_id
+> > > msm_dp_dt_match[] = { { .compatible = "qcom,sc8180x-edp", .data =
+> > > &msm_dp_desc_sc8180x }, { .compatible = "qcom,sc8280xp-dp", .data
+> > > = &msm_dp_desc_sc8280xp }, { .compatible = "qcom,sc8280xp-edp",
+> > > .data = &msm_dp_desc_sc8280xp },
+> > > -	{ .compatible = "qcom,sdm845-dp", .data =
+> > > &msm_dp_desc_sc7180 },
+> > > +	{ .compatible = "qcom,sdm845-dp", .data =
+> > > &msm_dp_desc_sdm845 }, { .compatible = "qcom,sm8350-dp", .data =
+> > > &msm_dp_desc_sc7180 }, { .compatible = "qcom,sm8650-dp", .data =
+> > > &msm_dp_desc_sm8650 }, { .compatible = "qcom,x1e80100-dp", .data
+> > > = &msm_dp_desc_x1e80100 },
+> > > 
+> > > -- 
+> > > 2.43.0
+> > >   
+> 
+
 
