@@ -1,218 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-49679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1BD6A47E8A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 14:07:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86F6FA47F6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 14:41:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D487C3A6230
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 13:07:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9A5403ABC07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 13:40:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C36C224246;
-	Thu, 27 Feb 2025 13:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE6E3230275;
+	Thu, 27 Feb 2025 13:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XCEEYepn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MaTLX2GX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466B622E3F0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 13:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBBA22FE05;
+	Thu, 27 Feb 2025 13:40:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740661649; cv=none; b=uPheWES61cODZqIEVrmmcGrrN6SVmg8/iYoaK8g5lUM8rVEeU2H9xEdRSZMI5XJ0OZKn3PMRlhrQwTbQZIWikxh1MiAaGH5ygWobXAfVVpYonUBpeH1BaQie0WdL/hbWLw8eSWd2SYENyH8xapjtLrudF+n92MuOQXyr2Ft7MZM=
+	t=1740663654; cv=none; b=DodtGEgpHrwQnBJiovyRy1CWhxI8eXeTpT9DLP0amK1pUdQLNTAcVpIMb8R0stxGFp5VlFY9n1wspE2WB/gGeVKSFu43AkVZZindJVUT2AkpqjL7iOpYAgt9798nq6WxzBqLQvz0uqFZBwFQKLBqm4k4MOoTN30/f0Wc23eQU8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740661649; c=relaxed/simple;
-	bh=XL5kn7VGM3DLfqXNKKS9zls2n6nLce6SliFfWaxMstc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EDw/ylnaPmdFxx//s+vy2T6j4wnH7CHf7MIXQ2IWaJK7FNrHfDBDyeG5PIX1m/V13H3auIlvLcXxyIMnpgHLsD6wyjoOYkhETGX2aMoiSZf55uGhl3L3mpPGwz6qWExdO7mWdJfP4vBJGLW4sAbR1pN/l5mMiEs+8p9FtF1I9uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XCEEYepn; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5e0939c6456so1252123a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 05:07:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740661645; x=1741266445; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JTyMrNqruIfN80FNenPnWbn1JyAg6VWCPasiwyXp9FI=;
-        b=XCEEYepnOtcYlzOvGQVa5HBoZE+sD2IyfaRSWs3zkhagsWaT5zyd9SrPWU57iI7yDy
-         oq6CnHQ6jSDQjFJ8N6qJUFBk7aej0IU+7tjmB4U5lc5S7i4MZd5f5o1VB1eMbJnvwCfQ
-         3RFYPZSTRBPYqzj/MH9zh9qHShLujMgrE5oYiagB4KRAD4Ju38PX6cQ2SAsSo3pWb2np
-         0MQbzrhx1q3FoLb/Y3rg5DlhMAHHCWIcr335MAL1/bZJUOTTDyiU5WhpTRedGcZuT1IQ
-         PMrbaORjmz9twMHU+vFd7dXET69Wj4yspxbFj/R9xM0H2DQ2gPgA0/Gh1fO1e20J8PDt
-         sE2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740661645; x=1741266445;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JTyMrNqruIfN80FNenPnWbn1JyAg6VWCPasiwyXp9FI=;
-        b=rxOilC6tXTb9j1jR3vLkh8CxHBDxwPU6/jRNRu2PMkfob7z3I544wuVKuOi3x4Gjht
-         vG6Ite7RiIW7ee5/eCV0LZXW265v35jlhuQnV3rPxY31iRpmHUZvDGqWyM0lqSGC5wD3
-         p3zXLulR1WUujgNSR30762CY8KvJdYQY2k6vP4tZSUc7yWKc8vyGvA0hhkiPa3OasGHc
-         a0h85jPBsmx+z1+yoa2V9HuxCR6dc4PcTo/cxal4pxHtVFSpWuk2n3TL7P75HhSQT7qb
-         aFhu0BjWswK2/rxP1MPndlVnvd5acPU8LWy1S1niWXJ62EAL0UhsyiW+7ZafmjZChOck
-         u6AA==
-X-Forwarded-Encrypted: i=1; AJvYcCVhPzu4/lmWnqwQsRwMWA9KCYLsLnMGzmTGitMmYaobO19Hz2Er6ANqyBAA+QQfD/53Rx33Qm2vyl6Y9Ufq@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNFEdQvlb2zTZeLQKkEeE0vzf7DGiFsgvOIT7HSzCFphEiG18R
-	OHUrpxgKDDDxr8IdDyDJnnhVosq5ZaAVi0wOzhCRsRL+bdr7nHS6qvTqQoi+ndg=
-X-Gm-Gg: ASbGncvNMkMt2d0XKOceEr7hMVHLhYRXyAwJMsUZ8/ticwZ8UqvQ+vBBBRUJzm/qC0/
-	2vY8n8HIpUv/PBMqtAX4o/AkenOfHgH9JbBPvZ16ucFQXqDqr0O7sNbFhZquyK+Wb7Y46HtWzNT
-	+mds9BnSa6S7KbwHbO6BgxoXXTdWRFzDyMYnnng5l5Z4MjiEsOXce6YbMQtxPJa0WAZZE+8Xj/Y
-	HoHgA3aenVBVolQQ1LPLhmKg+98cWBu+P1F9wPYOu0H2uDvCnJHiSh8Os4R3tRD2a6foGWoZM8m
-	JSaPUUiClebKp854DJMyq+s=
-X-Google-Smtp-Source: AGHT+IGjfWHYiaAXdrqA594SKctf+/MPGNFwOKZ2m/oLfiL1GNAvt9xOlxqJ0+a9h6IWKjELe4604Q==
-X-Received: by 2002:a05:6402:2b86:b0:5d9:a54:f8b4 with SMTP id 4fb4d7f45d1cf-5e0b70dc05emr25956467a12.11.1740661645077;
-        Thu, 27 Feb 2025 05:07:25 -0800 (PST)
-Received: from linaro.org ([62.231.96.41])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e4c43a6ab7sm1071222a12.74.2025.02.27.05.07.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 05:07:24 -0800 (PST)
-Date: Thu, 27 Feb 2025 15:07:21 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
-Cc: Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan@kernel.org>, Sebastian Reichel <sre@kernel.org>,
-	linux-pwm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC] backlight: pwm_bl: Read back PWM period from provider
-Message-ID: <Z8BjiRjLin8jTE8j@linaro.org>
-References: <20250226-pwm-bl-read-back-period-from-hw-v1-1-ccd1df656b23@linaro.org>
- <xltamao27utfrsax2pc6mh5tthanmrqszz4k7gyw3knqkm24xp@4tydmhfh6g4j>
+	s=arc-20240116; t=1740663654; c=relaxed/simple;
+	bh=EDBrFEqGXCmp/lR9TA9ZDa3602RxAjfTzKEBgxyXAXg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=oGIIh8DCEVXW2yS417QwtV8ZXWbUaR827vJpunCES9hBF/qVV2wU7t9kYAby7+eNOsHkrSVrGXwwhKikmP32wM5wL7uLAsKzIYQAGW0MsHsWwQZav5rH5yNKV0fq/xNn966rdjXUa9Cmxfk84N7QPLqCFTEkq0YdHdJpiJ+5pbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MaTLX2GX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0021EC4CEE6;
+	Thu, 27 Feb 2025 13:40:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740663654;
+	bh=EDBrFEqGXCmp/lR9TA9ZDa3602RxAjfTzKEBgxyXAXg=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=MaTLX2GXYb9RSpelgkCu8mwzB7svaadG7W5aWyaDKQf7yCUO+XiQencqcL8Gyhcom
+	 VZCA9OXXJOSZYIbOKcBstBeHvgvJCo6H+N8TXaGyw5wjvB26MOSi1a/OfAZd1w67WK
+	 /cnqls4TgsVpaB/kzGFAStzgktftNjtTge+xKNeS7OmxJ+K5yjnHRSlHlfPkbebHbd
+	 0eQVbgnaTxmTjraa5JD61vb/Vq6up4JvC8M6nQz6CgwY0tEBJlb27m4AQmYwGfs9K9
+	 2nfTHD6abT1neDlca20GwgIpEWB111BqZAV9xcSjQA5/a3RTubLuIR7b0Yya7dolrv
+	 hcm/D1K4xov6A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0386C021BE;
+	Thu, 27 Feb 2025 13:40:53 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH 00/23] arm64: dts: qcom: Add 'global' IRQ to supported SoCs
+Date: Thu, 27 Feb 2025 19:10:42 +0530
+Message-Id: <20250227-pcie-global-irq-v1-0-2b70a7819d1e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xltamao27utfrsax2pc6mh5tthanmrqszz4k7gyw3knqkm24xp@4tydmhfh6g4j>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFtrwGcC/x3MQQqAIBBA0avIrBtIwZKuEi3KmWwgyhQikO6et
+ HyL/wtkTsIZBlUg8S1ZzqNCNwr8Nh+BUagaTGtsa0yP0Qtj2M9l3lHShUTak+2co15DrWLiVZ7
+ /OE7v+wGN/SjbYQAAAA==
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4126;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=EDBrFEqGXCmp/lR9TA9ZDa3602RxAjfTzKEBgxyXAXg=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnwGtdjTGtJxMtF4CD++uH0HTDRyZM+vVszZyrQ
+ XcJH0Cxgg2JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZ8BrXQAKCRBVnxHm/pHO
+ 9U5tB/9ud8/6+REWjHULCz/4oZ98TOULWIK4kUQj4wPAnsEWpbn2BF2ijppNUBNC7a44lH9zFGx
+ aXwz0D20UwaTap+9BQ4MjJvm4yQMiOK3Rb3XcMJ0nW8jwREvjH5F7ov7bCa8DqQKRklQ1jZxS1/
+ yKjiHtsZpHT0Ugq/QgKuHSPfupABu8ppYnTMJgfv1m+htJVn/CPEuoYH8Kt3g2WPnABCgZEJgWW
+ 6Uh59rlqEKyL6onWuO/dP2MHyXvay2b6xDjb9VDqROK5zHSKonDqfx3VwNziRP001szp55MzOqf
+ gdOCqy7le0WmuyrEIBCXcz8T1tYXv3jCX6NQ50o48DKZ0+1h
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
 
-On 25-02-26 17:34:50, Uwe Kleine-König wrote:
-> Hello,
-> 
-> On Wed, Feb 26, 2025 at 05:31:08PM +0200, Abel Vesa wrote:
-> > The current implementation assumes that the PWM provider will be able to
-> > meet the requested period, but that is not always the case. Some PWM
-> > providers have limited HW configuration capabilities and can only
-> > provide a period that is somewhat close to the requested one. This
-> > simply means that the duty cycle requested might either be above the
-> > PWM's maximum value or the 100% duty cycle is never reached.
-> 
-> If you request a state with 100% relative duty cycle you should get 100%
-> unless the hardware cannot do that. Which PWM hardware are you using?
-> Which requests are you actually doing that don't match your expectation?
+Hi,
 
-The PWM hardware is Qualcomm PMK8550 PMIC. The way the duty cycle is
-controlled is described in the following comment found in lpg_calc_freq
-of the leds-qcom-lpg driver:
+This series adds the Qualcomm specific 'global' IRQ to the supported SoCs.
+This IRQ is used to receive the PCIe controller and link specific events
+such as Link Up/Down, MSI, PTM etc... in the driver. Support for this IRQ
+was already added to the pcie-qcom driver. So enabling this IRQ would allow
+the driver to enumerate the endpoint device and also retrain the link when
+the device is removed [1] without user intervention.
 
-/*
- * The PWM period is determined by:
- *
- *          resolution * pre_div * 2^M
- * period = --------------------------
- *                   refclk
- *
- * Resolution = 2^9 bits for PWM or
- *              2^{8, 9, 10, 11, 12, 13, 14, 15} bits for high resolution PWM
- * pre_div = {1, 3, 5, 6} and
- * M = [0..7].
- *
- * This allows for periods between 27uS and 384s for PWM channels and periods between
- * 3uS and 24576s for high resolution PWMs.
- * The PWM framework wants a period of equal or lower length than requested,
- * reject anything below minimum period.
- */
+This series also adds missing MSI SPI IRQ to some of the SoCs.
 
-So if we request a period of 5MHz, that will not ever be reached no matter what config
-is used. Instead, the 4.26 MHz is selected as closest possible.
+Testing
+=======
 
-Now, the pwm_bl is not aware of this limitation and will request duty cycle values that
-go above 4.26MHz.
+This series was tested on Qualcomm RB5 board based on SM8250 SoC and
+Qualcomm Ride MX board based on SA8775p SoC.
 
->  
-> > This could be easily fixed if the pwm_apply*() API family would allow
-> > overriding the period within the PWM state that's used for providing the
-> > duty cycle. But that is currently not the case.
-> 
-> I don't understand what you mean here.
+NOTE
+====
 
-What I was trying to say is that the PWM generic framework currently doesn't
-allow overriding the PWM state's period with one provided by the consumer,
-when calling pwm_apply_might_sleep().
+I've left a few SoCs in the tree like QCS404, SC8280XP due to lack of
+documentation. Those will be added later.
 
-Also, the pwm_get_state_hw() doesn't cache the state either.
+[1] https://lore.kernel.org/linux-pci/20250221172309.120009-1-manivannan.sadhasivam@linaro.org/
 
-This results in always having to call pwm_get_state_hw() before calling
-pwm_apply_might_sleep().
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (23):
+      dt-bindings: PCI: qcom,pcie-sm8150: Add 'global' interrupt
+      arm64: dts: qcom: sm8150: Add 'global' PCIe interrupt
+      dt-bindings: PCI: qcom,pcie-sm8250: Add 'global' interrupt
+      arm64: dts: qcom: sm8250: Add 'global' PCIe interrupt
+      dt-bindings: PCI: qcom,pcie-sm8350: Add 'global' interrupt
+      arm64: dts: qcom: sm8350: Add 'global' PCIe interrupt
+      dt-bindings: PCI: qcom,pcie-sa8775p: Add 'global' interrupt
+      arm64: dts: qcom: sa8775p: Add 'global' PCIe interrupt
+      dt-bindings: PCI: qcom,pcie-sc7280: Add 'global' interrupt
+      arm64: dts: qcom: sc7280: Add 'global' PCIe interrupt
+      dt-bindings: PCI: qcom: Add 'global' interrupt for SDM845 SoC
+      arm64: dts: qcom: sdm845: Add missing MSI and 'global' IRQs
+      arm64: dts: qcom: msm8996: Add missing MSI SPI interrupts
+      dt-bindings: PCI: qcom: Allow MSM8998 to use 8 MSI and one 'global' interrupt
+      arm64: dts: qcom: msm8998: Add missing MSI and 'global' IRQs
+      dt-bindings: PCI: qcom: Allow IPQ8074 to use 8 MSI and one 'global' interrupt
+      arm64: dts: qcom: ipq8074: Add missing MSI and 'global' IRQs
+      dt-bindings: PCI: qcom: Allow IPQ6018 to use 8 MSI and one 'global' interrupt
+      arm64: dts: qcom: ipq6018: Add missing MSI and 'global' IRQs
+      dt-bindings: PCI: qcom,pcie-sc8180x: Add 'global' interrupt
+      arm64: dts: qcom: sc8180x: Add 'global' PCIe interrupt
+      arm64: dts: qcom: sar2130p: Add 'global' PCIe interrupt
+      arm64: dts: qcom: x1e80100: Add missing 'global' PCIe interrupt
 
-On top of that, pwm_get_state_hw() doesn't default to the cached value if the
-provider doesn't implement the ->get_state() op.
+ .../devicetree/bindings/pci/qcom,pcie-sa8775p.yaml | 10 ++--
+ .../devicetree/bindings/pci/qcom,pcie-sc7280.yaml  |  9 ++--
+ .../devicetree/bindings/pci/qcom,pcie-sc8180x.yaml | 10 ++--
+ .../devicetree/bindings/pci/qcom,pcie-sm8150.yaml  |  9 ++--
+ .../devicetree/bindings/pci/qcom,pcie-sm8250.yaml  |  9 ++--
+ .../devicetree/bindings/pci/qcom,pcie-sm8350.yaml  |  9 ++--
+ .../devicetree/bindings/pci/qcom,pcie.yaml         | 14 ++++--
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              | 20 +++++++-
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi              | 40 ++++++++++++++--
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              | 54 +++++++++++++++++++---
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              | 20 +++++++-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 28 ++++++++---
+ arch/arm64/boot/dts/qcom/sar2130p.dtsi             | 12 +++--
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 14 ++++--
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 24 ++++++----
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               | 40 ++++++++++++++--
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               | 12 +++--
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               | 18 +++++---
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               | 12 +++--
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 18 +++++---
+ 20 files changed, 300 insertions(+), 82 deletions(-)
+---
+base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+change-id: 20250227-pcie-global-irq-dd1cd5688d71
 
-Please correct me if I'm wrong about these.
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-> 
-> > So easiest fix here is to read back the period from the PWM provider via
-> > the provider's ->get_state() op, if implemented, which should provide the
-> > best matched period. Do this on probe after the first ->pwm_apply() op has
-> > been done, which will allow the provider to determine the best match
-> > period based on available configuration knobs. From there on, the
-> > backlight will use the best matched period, since the driver's internal
-> > PWM state is now synced up with the one from provider.
-> > [...]
-> > diff --git a/drivers/video/backlight/pwm_bl.c b/drivers/video/backlight/pwm_bl.c
-> > index 237d3d3f3bb1a6d713c5f6ec3198af772bf1268c..71a3e9cd8844095e85c01b194d7466978f1ca78e 100644
-> > --- a/drivers/video/backlight/pwm_bl.c
-> > +++ b/drivers/video/backlight/pwm_bl.c
-> > @@ -525,6 +525,17 @@ static int pwm_backlight_probe(struct platform_device *pdev)
-> >  		goto err_alloc;
-> >  	}
-> >  
-> > +	/*
-> > +	 * The actual period might differ from the requested one due to HW
-> > +	 * limitations, so sync up the period with one determined by the
-> > +	 * provider driver.
-> > +	 */
-> > +	ret = pwm_get_state_hw(pb->pwm, &pb->pwm->state);
-> 
-> As a consumer you're not supposed to write to &pb->pwm->state. That's a
-> layer violation. Please call pwm_get_state_hw() with a struct pwm_state
-> that you own and save the relevant parts in your driver data.
 
-Yep, that is indeed wrong. Maybe making the pwm opaque might be a good idea as well.
-
-[1] Calling pwm_get_state_hw() would be wrong if the provider doesn't implement the ->get_state(),
-as I mentioned above.
-
-But are you suggesting we replace all calls to pwm_get_state() with
-pwm_get_state_hw() in pwm_bl?
-
-I can do that, but the concern from [1] still stands.
-
-> 
-> > +	if (ret && ret != -EOPNOTSUPP) {
-> > +		dev_err(&pdev->dev, "failed to get PWM HW state");
-> > +		goto err_alloc;
-> > +	}
-> > +
-> >  	memset(&props, 0, sizeof(struct backlight_properties));
-> >  
-> >  	if (data->levels) {
-> 
-> Best regards
-> Uwe
-
-Thanks for reviewing,
-Abel
 
