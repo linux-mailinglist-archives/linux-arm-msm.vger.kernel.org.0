@@ -1,247 +1,286 @@
-Return-Path: <linux-arm-msm+bounces-49582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37F52A4719C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 02:50:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D487A471CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 02:56:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93BC41896EF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 01:41:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74AEA16061C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2025 01:56:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12028165EFC;
-	Thu, 27 Feb 2025 01:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35209137750;
+	Thu, 27 Feb 2025 01:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="W3vm1E4J"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xu7j209p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152D5156F20;
-	Thu, 27 Feb 2025 01:38:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F89A270037
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 01:55:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740620318; cv=none; b=ZydxK6yqBO5k61Dn4zw3gIO260UrhvaG3qakvp6fuFvPw03zmaQ3724nPkgLNRsxnj0J4xBPPPjNclrUxgg3Y418JyGuegF8o/OiyM9DLlOBX8vzd/BdYE81hmC6PAT/XLL9OcU0WZuzDnzgCdbskSqMBklHxqPGy8NfFwAObgE=
+	t=1740621351; cv=none; b=jizgb/CVbK2FynexLfRJEohqmwQrOQv8XUA0LmEi5GhVuR7a+R3sK6pqOvioXjTWFAVWNjzniy7wL7tkDUnm8zgwQUjaP0RVqDKyiaMyHy3pE0MZQ1WBomYJu/J2wDnemchwPL2W06w9DHaR2Yxk93z2I1/oJNmepNLxPxqMF84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740620318; c=relaxed/simple;
-	bh=pvYg4t9lWXebFVyawHewCdQ6S+riZY0XJx9CEbZDKPA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OT/4Qj57T5iEk/0qit31LMnGX4D0tMt1I3Q//WjR+qfv1Lu/psoJWmG5oV29MJ0FyMmiZ1NpNAoHE0W/cjFEquABrDKYDtp1hKXtbhCHcp6pDnLWKUeICE+7FYSeTPCItXm9OxGygpJMLSyU2d9KWuDD4seihKMsbeIqSaspwV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=W3vm1E4J; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51QLSZlp015559;
-	Thu, 27 Feb 2025 01:38:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rjAnrfyvBwd6Os7i9EHyyWdVdzQyQUILqpS9T0ZVvr8=; b=W3vm1E4JaMoBCWcj
-	DLA3/otPj92CP0zIGnmpJ0nSaObtHWAfTAI5EArVmrb9hJK2G8Um0acEJ+NDUG/D
-	lxTI214e7TOy2v3qEEysB3GwpiB0SfwQqx2RxoM/nc/1GZKODVMl5F+jxnD9uZTv
-	pw9fwrDRJJ30jbM/xTYNAFHT7wnT7sNUeL1C8JP2SuwoIrTr3ntSj5sriU4a+IQE
-	IdczK2LMDGKgCeETsxP/oLEudZsQpalz5IH/w75QccDtIgNEQfKhpm5YJvnk4pnb
-	A1NfeMMlu8ZLs+HEXOJIdNUWR2wUGAbvcYH2p45j8xItF6fm8DRpuSOvrOdqVjWZ
-	H5vX2g==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prnkvdq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Feb 2025 01:38:25 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51R1cOYh029212
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Feb 2025 01:38:24 GMT
-Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 26 Feb
- 2025 17:38:24 -0800
-Message-ID: <f7a1a1ef-bab7-4024-bfca-a9fa33f189b5@quicinc.com>
-Date: Wed, 26 Feb 2025 17:38:23 -0800
+	s=arc-20240116; t=1740621351; c=relaxed/simple;
+	bh=DC0eGp9v8d1QZfBU9fMOar1qrRj1i2mRnNeM6GJiBVo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gbdDQwSpdFsEOHBmvtu3u5ngAEuY6p+VJT0KfhiGRbf2VNqUMoVAHLUEiTxVcsa6pbXC/+utQkTB6Ow5sztp5EkX8DBDw9XMpxWx0vINhQcC7o5b45qe4RcbB+NzbOvJOCGOekkRluiVlAvpm28TtuQPTWarixcT/JRPAbmRJck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xu7j209p; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6fb7d64908fso4392487b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2025 17:55:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740621347; x=1741226147; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=k7ylmtH1h1K8CyuUFBBRJ+T9/XYWZO25bwG+O3oh1H0=;
+        b=Xu7j209peftU5weHwQO+Mrog9ooBGx8UIogelSH2jhI0RGhBbs3hUOtK+N0EWoklSZ
+         LrjnnO8osBrjd3F6qRP+nfq/FcIiX6dPWLFFcG9F4XT/eMArAmbIKHRkKYqM9ewYvo8l
+         UafmbOzNVXla+MpY8W6kSFFA07JtjPWEO5hbkfz6SYcmKO30L478mecwLLPaBDj4K3A0
+         PekRFJDuh0z+Q6MDvdyB9u79dbxcdBgCtEbUlYXksXu08mV11cpnD9dn4sT+KQpGX8I8
+         YuUvnYN9ogjIzg8ItkIFVUIWk1YJl28MQZouInDDTRNhZNZUen4s3iNP4A1PvvFP6hAr
+         tf/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740621347; x=1741226147;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k7ylmtH1h1K8CyuUFBBRJ+T9/XYWZO25bwG+O3oh1H0=;
+        b=qu6NMxV9Cbi616ArjdE8XSg2NR5Nexk2o28i6knwWWZJsu7+Cr1bBiES9scHlH4M2r
+         71T5WcE21khRXjbkefrLfAkvmW6QdvJCOM5n2CSjZTQAriCWJU57Z7lBuoLjN8UZhHqs
+         y6woMIU1iRFZXSE11k5mQ5/i4USOkjY82E8RKspevQPXijKdlb5y4ZsuWV/fgctyEjf7
+         uJgoCfEcF+dgN1BFqd3uRknvvk3T0bu5i7tRkHsmSpPWSFtLAgY04jHp6sVH5qNzfdor
+         rSG3IrqdhPXMCpjqtYOCC1i/2gBfAqpndj1qdFzpZ51OI9lTmvm+f0hJWqVnNRxUnDuN
+         R3sQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWf63qOvu00Wt5iebXNnRGFre1kzAJAJitt0ikGE0eaQIUKUX7kF3NJ7op8VbJEjcX00u+qljUErfw9/Zyv@vger.kernel.org
+X-Gm-Message-State: AOJu0YwnUF/R/urSKOBUt2UY0UQ88d53sUfQ0p8F1USHBLy1pjsyu+2T
+	uDvb1oiAYPoMmUljFFO7cDfr65eQzL63ijFdp8hXC6jKufvz2Uf2vwS1ArSRZdv/GHarKNDn721
+	Z5iSop1ZPI/qKNVn9JCPoeiFN9Jgsq6c7/C8oXg==
+X-Gm-Gg: ASbGncsGc7OIicLtU7xqnbPX1hVwo7tWoPZC9x5XybPkyC/Bt9V/+/i2XWV7+7wa5or
+	nz6KcnKou1fKksy2wd8CNAJC4176AB64Wae5oBToXYaT6/Y3I4ED7ZOTFUpppzYvFiBvrXfO3yy
+	lIdG1ZD2w=
+X-Google-Smtp-Source: AGHT+IHzvdnR1jDhSTQ8qilflEhVDXXhrfQPEbKHX390Tv5HVxnb5kCDP/uDUeA+G1lHLQvrrevPA0tkD3CkUNLb6+w=
+X-Received: by 2002:a0d:e543:0:b0:6fd:2587:cb32 with SMTP id
+ 00721157ae682-6fd2587ce9amr37319607b3.31.1740621347348; Wed, 26 Feb 2025
+ 17:55:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 11/15] drm/msm/dpu: split PIPES_PER_STAGE definition
- per plane and mixer
-Content-Language: en-US
-To: Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-0-8d5f5f426eb2@linaro.org>
- <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-11-8d5f5f426eb2@linaro.org>
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-11-8d5f5f426eb2@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RWQeOJmB_1teqzxZkS3y-wgxhF4zwpMs
-X-Proofpoint-ORIG-GUID: RWQeOJmB_1teqzxZkS3y-wgxhF4zwpMs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-27_01,2025-02-26_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- mlxscore=0 mlxlogscore=999 bulkscore=0 adultscore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502270011
+References: <20250113-sm8750_usb_master-v1-0-09afe1dc2524@quicinc.com>
+ <20250113-sm8750_usb_master-v1-5-09afe1dc2524@quicinc.com>
+ <rpwm6gimdb4zyvyusovfbfaw4uxrossm6elayebvt2gusb7zwk@67w7672qpcto> <92b42216-c409-4e21-a33e-54c29fa5f8a0@quicinc.com>
+In-Reply-To: <92b42216-c409-4e21-a33e-54c29fa5f8a0@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 27 Feb 2025 03:55:36 +0200
+X-Gm-Features: AQ5f1JoWpbR4msT08jh6oiWBnd9arDDGPKh6dQcrHSO5lw25XXPxGsD4vcj6_h4
+Message-ID: <CAA8EJpobfKD=WjapG7Vx0mMFrGYSbadsrsakWs65Lpt43z7wVg@mail.gmail.com>
+Subject: Re: [PATCH 5/7] phy: qcom: Add M31 based eUSB2 PHY driver
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: Melody Olvera <quic_molvera@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Wed, 26 Feb 2025 at 22:23, Wesley Cheng <quic_wcheng@quicinc.com> wrote:
+>
+>
+>
+> On 1/14/2025 2:34 AM, Dmitry Baryshkov wrote:
+> > On Mon, Jan 13, 2025 at 01:52:11PM -0800, Melody Olvera wrote:
+> >> From: Wesley Cheng <quic_wcheng@quicinc.com>
+> >>
+> >> On SM8750, the eUSB2 PHY used is M31 based. Add the initialization
+> >> sequences to bring it out of reset, and to initialize the associated eUSB2
+> >> repeater as well.
+> >
+> > What does M31 mean? What is the relationship between the eUSB and USB
+> > M31 PHYs?
+> >
+>
+> M31 is the vendor.  I'll reword this to make it a bit clearer.  There's no
+> relationship between eUSB2 and USB2 PHY drivers, as the eUSB2 based driver
+> would require some additional components such as a USB repeater.
+>
+> >>
+> >> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> >> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> >> ---
+> >>  drivers/phy/qualcomm/Kconfig              |  12 +-
+> >>  drivers/phy/qualcomm/Makefile             |   1 +
+> >>  drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 269 ++++++++++++++++++++++++++++++
+> >>  3 files changed, 281 insertions(+), 1 deletion(-)
+> >
+> > Please run the patch through checkpatch.pl --strict
+> >
+> >>
+> >> diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+> >> new file mode 100644
+> >> index 0000000000000000000000000000000000000000..e15529673e358db914936a60fa605c872cd2511a
+> >> --- /dev/null
+> >> +++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+> >> @@ -0,0 +1,269 @@
+> >> +// SPDX-License-Identifier: GPL-2.0+
+> >> +/*
+> >> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> >> + */
+> >> +
+> >> +#include <linux/clk.h>
+> >> +#include <linux/delay.h>
+> >> +#include <linux/err.h>
+> >> +#include <linux/io.h>
+> >> +#include <linux/kernel.h>
+> >> +#include <linux/module.h>
+> >> +#include <linux/of.h>
+> >> +#include <linux/phy/phy.h>
+> >> +#include <linux/platform_device.h>
+> >> +#include <linux/reset.h>
+> >> +#include <linux/slab.h>
+> >> +
+> >> +#define USB_PHY_UTMI_CTRL0          (0x3c)
+> >> +
+> >> +#define USB_PHY_UTMI_CTRL5          (0x50)
+> >> +
+> >> +#define USB_PHY_HS_PHY_CTRL_COMMON0 (0x54)
+> >> +#define FSEL                                (0x7 << 4)
+> >
+> > GENMASK()
+> >
+> >> +#define FSEL_38_4_MHZ_VAL           (0x6 << 4)
+> >
+> > FIELD_PREP
+> >
+> >> +
+> >> +#define USB_PHY_HS_PHY_CTRL2                (0x64)
+> >> +
+> >> +#define USB_PHY_CFG0                        (0x94)
+> >> +#define USB_PHY_CFG1                        (0x154)
+> >> +
+> >> +#define USB_PHY_FSEL_SEL            (0xb8)
+> >> +
+> >> +#define USB_PHY_XCFGI_39_32         (0x16c)
+> >> +#define USB_PHY_XCFGI_71_64         (0x17c)
+> >> +#define USB_PHY_XCFGI_31_24         (0x168)
+> >> +#define USB_PHY_XCFGI_7_0           (0x15c)
+> >> +
+> >> +#define M31_EUSB_PHY_INIT_CFG(o, b, v)      \
+> >> +{                           \
+> >> +    .off = o,               \
+> >> +    .mask = b,              \
+> >> +    .val = v,               \
+> >> +}
+> >> +
+> >> +struct m31_phy_tbl_entry {
+> >> +    u32 off;
+> >> +    u32 mask;
+> >> +    u32 val;
+> >> +};
+> >> +
+> >> +struct m31_eusb2_priv_data {
+> >> +    const struct m31_phy_tbl_entry  *setup_seq;
+> >> +    unsigned int                    setup_seq_nregs;
+> >> +    const struct m31_phy_tbl_entry  *override_seq;
+> >> +    unsigned int                    override_seq_nregs;
+> >> +    const struct m31_phy_tbl_entry  *reset_seq;
+> >> +    unsigned int                    reset_seq_nregs;
+> >> +    unsigned int                    fsel;
+> >> +};
+> >> +
+> >> +static const struct m31_phy_tbl_entry m31_eusb2_setup_tbl[] = {
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG0, BIT(1), 1),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_UTMI_CTRL5, BIT(1), 1),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG1, BIT(0), 1),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_FSEL_SEL, BIT(0), 1),
+> >> +};
+> >> +
+> >> +static const struct m31_phy_tbl_entry m31_eusb_phy_override_tbl[] = {
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_XCFGI_39_32, GENMASK(3, 2), 0),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_XCFGI_71_64, GENMASK(3, 0), 7),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_XCFGI_31_24, GENMASK(2, 0), 0),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_XCFGI_7_0, GENMASK(1, 0), 0),
+> >> +};
+> >> +
+> >> +static const struct m31_phy_tbl_entry m31_eusb_phy_reset_tbl[] = {
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL2, BIT(3), 1),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL2, BIT(2), 1),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_UTMI_CTRL0, BIT(0), 1),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL_COMMON0, BIT(1), 1),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL_COMMON0, BIT(2), 0),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_UTMI_CTRL5, BIT(1), 0),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL2, BIT(3), 0),
+> >> +    M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG0, BIT(1), 0),
+> >> +};
+> >> +
+> >> +struct m31eusb2_phy {
+> >> +    struct phy                      *phy;
+> >> +    void __iomem                    *base;
+> >> +    const struct m31_eusb2_priv_data        *data;
+> >> +
+> >> +    struct regulator                *vreg;
+> >> +    struct clk                      *clk;
+> >> +    struct reset_control            *reset;
+> >> +
+> >> +    struct phy *repeater;
+> >> +};
+> >> +
+> >> +static void msm_m31_eusb2_write_readback(void __iomem *base, u32 offset,
+> >> +                                    const u32 mask, u32 val)
+> >> +{
+> >> +    u32 write_val, tmp = readl_relaxed(base + offset);
+> >> +
+> >> +    tmp &= ~mask;
+> >> +    write_val = tmp | val;
+> >> +
+> >> +    writel_relaxed(write_val, base + offset);
+> >> +
+> >> +    tmp = readl_relaxed(base + offset);
+> >> +    tmp &= mask;
+> >> +
+> >> +    if (tmp != val)
+> >> +            pr_err("write: %x to offset: %x FAILED\n", val, offset);
+> >> +}
+> >> +
+> >> +static void m31eusb2_phy_write_sequence(struct m31eusb2_phy *phy,
+> >> +                                    const struct m31_phy_tbl_entry *tbl,
+> >> +                                    int num)
+> >> +{
+> >> +    int i;
+> >> +
+> >> +    for (i = 0 ; i < num; i++, tbl++) {
+> >> +            dev_dbg(&phy->phy->dev, "Offset:%x BitMask:%x Value:%x",
+> >> +                                    tbl->off, tbl->mask, tbl->val);
+> >> +
+> >> +            msm_m31_eusb2_write_readback(phy->base,
+> >> +                                    tbl->off, tbl->mask,
+> >> +                                    tbl->val << __ffs(tbl->mask));
+> >
+> > could you please check, what actually gets written? I suspect there
+> > should be a -1 here.
+> >
+>
+> The __ffs  uses the ctz/ctzl built in, which counts leading zeros, so the
+> -1 should already be accounted for.  FIELD_PREP uses the ffs builtin
+> directly, which would require the -1.  Confirmed that the writes are being
+> done as expected from the programming tables above.
+
+Ack, thanks.
 
 
 
-On 2/26/2025 4:31 AM, Jun Nie wrote:
-> The stage contains configuration for a mixer pair. Currently the plane
-> supports just one stage and 2 pipes. Quad-pipe support will require
-> handling 2 stages and 4 pipes at the same time. In preparation for that
-> add a separate define, PIPES_PER_PLANE, to denote number of pipes that
-> can be used by the plane.
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 14 +++++++-------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h   |  4 ++--
->   4 files changed, 11 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 193818b02197d0737c86de7765d98732fa914e8e..81474823e6799132db71c9712046d359e3535d90 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -463,7 +463,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
->   		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
->   			bg_alpha_enable = true;
->   
-> -		for (i = 0; i < PIPES_PER_STAGE; i++) {
-> +		for (i = 0; i < PIPES_PER_PLANE; i++) {
->   			if (!pstate->pipe[i].sspp)
->   				continue;
->   			set_bit(pstate->pipe[i].sspp->idx, fetch_active);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> index ba7bb05efe9b8cac01a908e53121117e130f91ec..5f010d36672cc6440c69779908b315aab285eaf0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> @@ -34,6 +34,7 @@
->   #define DPU_MAX_PLANES			4
->   #endif
->   
-> +#define PIPES_PER_PLANE			2
->   #define PIPES_PER_STAGE			2
->   #ifndef DPU_MAX_DE_CURVES
->   #define DPU_MAX_DE_CURVES		3
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index ef44af5ab681c8f526333fa92531a2225983aa09..d67f2ad20b4754ca4bcb759a65a39628b7236b0f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1078,7 +1078,7 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
->   		 * resources are freed by dpu_crtc_assign_plane_resources(),
->   		 * but clean them here.
->   		 */
-> -		for (i = 0; i < PIPES_PER_STAGE; i++)
-> +		for (i = 0; i < PIPES_PER_PLANE; i++)
->   			pstate->pipe[i].sspp = NULL;
->   
->   		return 0;
-> @@ -1129,7 +1129,7 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->   	pipe_cfg = &pstate->pipe_cfg[0];
->   	r_pipe_cfg = &pstate->pipe_cfg[1];
->   
-> -	for (i = 0; i < PIPES_PER_STAGE; i++)
-> +	for (i = 0; i < PIPES_PER_PLANE; i++)
->   		pstate->pipe[i].sspp = NULL;
->   
->   	if (!plane_state->fb)
-> @@ -1241,7 +1241,7 @@ void dpu_plane_flush(struct drm_plane *plane)
->   		/* force 100% alpha */
->   		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
->   	else {
-> -		for (i = 0; i < PIPES_PER_STAGE; i++)
-> +		for (i = 0; i < PIPES_PER_PLANE; i++)
-
-Hi Jun,
-
-Is there a reason why only this case was changed to PIPES_PER_PLANE but 
-_dpu_plane_color_fill() only loops over PIPES_PER_STAGE?
-
-Similarly, I see that dpu_plane_danger_signal_ctrl() also only loops 
-over PIPES_PER_STAGE.
-
-Thanks,
-
-Jessica Zhang
-
->   			dpu_plane_flush_csc(pdpu, &pstate->pipe[i]);
->   	}
->   
-> @@ -1364,7 +1364,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane,
->   			&fmt->pixel_format, MSM_FORMAT_IS_UBWC(fmt));
->   
->   	/* move the assignment here, to ease handling to another pairs later */
-> -	for (i = 0; i < PIPES_PER_STAGE; i++) {
-> +	for (i = 0; i < PIPES_PER_PLANE; i++) {
->   		if (!pstate->pipe[i].sspp)
->   			continue;
->   		dpu_plane_sspp_update_pipe(plane, &pstate->pipe[i],
-> @@ -1378,7 +1378,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane,
->   
->   	pstate->plane_fetch_bw = 0;
->   	pstate->plane_clk = 0;
-> -	for (i = 0; i < PIPES_PER_STAGE; i++) {
-> +	for (i = 0; i < PIPES_PER_PLANE; i++) {
->   		if (!pstate->pipe[i].sspp)
->   			continue;
->   		pstate->plane_fetch_bw += _dpu_plane_calc_bw(pdpu->catalog, fmt,
-> @@ -1397,7 +1397,7 @@ static void _dpu_plane_atomic_disable(struct drm_plane *plane)
->   	struct dpu_sw_pipe *pipe;
->   	int i;
->   
-> -	for (i = 0; i < PIPES_PER_STAGE; i += 1) {
-> +	for (i = 0; i < PIPES_PER_PLANE; i += 1) {
->   		pipe = &pstate->pipe[i];
->   		if (!pipe->sspp)
->   			continue;
-> @@ -1519,7 +1519,7 @@ static void dpu_plane_atomic_print_state(struct drm_printer *p,
->   
->   	drm_printf(p, "\tstage=%d\n", pstate->stage);
->   
-> -	for (i = 0; i < PIPES_PER_STAGE; i++) {
-> +	for (i = 0; i < PIPES_PER_PLANE; i++) {
->   		pipe = &pstate->pipe[i];
->   		if (!pipe->sspp)
->   			continue;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> index 052fd046e8463855b16b30389c2efc67c0c15281..18ff5ec2603ed63ce45f530ced3407d3b70c737b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> @@ -33,8 +33,8 @@
->   struct dpu_plane_state {
->   	struct drm_plane_state base;
->   	struct msm_gem_address_space *aspace;
-> -	struct dpu_sw_pipe pipe[PIPES_PER_STAGE];
-> -	struct dpu_sw_pipe_cfg pipe_cfg[PIPES_PER_STAGE];
-> +	struct dpu_sw_pipe pipe[PIPES_PER_PLANE];
-> +	struct dpu_sw_pipe_cfg pipe_cfg[PIPES_PER_PLANE];
->   	enum dpu_stage stage;
->   	bool needs_qos_remap;
->   	bool pending;
-> 
-> -- 
-> 2.34.1
-> 
-
+-- 
+With best wishes
+Dmitry
 
