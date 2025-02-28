@@ -1,121 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-49868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDE52A49D66
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 16:26:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15FC9A49E75
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 17:14:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A6CC188D0A1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 15:26:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C319A18850F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 16:14:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80A772702B7;
-	Fri, 28 Feb 2025 15:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4314B270EAB;
+	Fri, 28 Feb 2025 16:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="JkZu9ZW0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fSR635T8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFF11EF38B;
-	Fri, 28 Feb 2025 15:25:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAC026B2C8
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 16:14:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740756357; cv=none; b=kJdLWV+apbWkFv3L3RuiuP9o3OhBhlFzlWOPFBeufvVIGpJvll5WARaqkU+X9Mgc2eqG+k15G5bcq/27ph/M6rAq0KA4SRkD/nCOiCm+dcCC9nvE6voatLaiK2kbxdq+wDHRDYv2cI6/bBYGFP3khCah0W9ayIgfEsDz4mwb84E=
+	t=1740759276; cv=none; b=Fx+3DsFN7eqM+UP8cvNJcY1ylc3QtnpJ1kNwuJIigHc3QKXvkAHiqUqpO70hgd9ks2TzdJis3/mbUptCD3Gw/zeuxrFh7zEDr2jB8lPjEPBSJVp5pNipJYM44GCwfMFzDHFNcqXR89BajVKnJDGmdwBs1U9mjFCWspidc8qXb2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740756357; c=relaxed/simple;
-	bh=iSHhu8DojQZ/z0Bux1fFHThPhnvaqOETluuPREszvKE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cs0oyw9Nc0RDAnIl9D1IdgjIsyUOIRHfS54kVI6DPVqdT6Bd9UTIxx7mLfBgBiFq27LvEWdjoexovSACZfTkjRePg6E4krisCGHvFtw9D8b+ARlba5hfKhqKf5j3f0PCorDZtUIhx+D0o4lgh9nHxL+QDstxqt+JJCYbvCz22Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=JkZu9ZW0; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4Z4Bqd6q12z9scl;
-	Fri, 28 Feb 2025 16:25:49 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1740756350;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=K/zWPmaHu9T0gtGq/CPJkALifQhwYRPAKcGYrmHsfn4=;
-	b=JkZu9ZW0h0xb10B845As94XNc4ElaqnNKHtZ9LcuuIYuDz5ZvU0moGCdVvXmtbgB3h4rwY
-	nlcFOqQQwDKjK82vIZN5m+ZATxjTi+3Zcq1fpsm+PLSKHYzKk3QE4l6FeoAa84W2DynmHv
-	nNPstEFd8wmGU7eewLYBDULVS5K5mRs2NWkiROlKvBbA3n0rYCvHOURycwqYmL256NxkYR
-	Q3RwVNesB4OSrjNypRmNVkMdmRB498AZGkGNMomoAiQR5R34ieKY0gxFhhqEmTxYj8x679
-	Bz6+E1mqjnEMOcKEFPdmnIWuY7fBWSxelgNV29HulthBCXh3Ksa5b9ffCOX6yg==
-Date: Fri, 28 Feb 2025 16:25:47 +0100
-From: Anthony Ruhier <aruhier@mailbox.org>
-To: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND] power: supply: qcom_battmgr: abs() on POWER_NOW
- property
-Message-ID: <ycz7kwtr5d6bnrjjfmauktq2s7vtwsunpg7nfunfywxu5uou34@gfgoeeyarh46>
-References: <20250213-patch-qcomm-bat-uint-power-v1-1-16e7e2a77a02@mailbox.org>
- <yfbgbdugk4xdjpemozdzcuxczx4xd5aphykuksf3lhn22dsgkf@fcfgddu6gpyt>
- <ioiy4ixlvx5gxl3f4pqshwxz35ktrqghju2circpnd3qicgemc@oohazfsfvuag>
- <p5tszocxa7mcazgxsnt3gnv547m523gde2hj2yekiuoimm6rsy@pzofvxngb4ul>
- <7wbot7sxm3y5y7in5ashcn5lpx3mi55abnbfrkz2jta7nm6jep@zk6zvocd3tuz>
+	s=arc-20240116; t=1740759276; c=relaxed/simple;
+	bh=TsOMlzyWGhLPB8XA0OFllVNotLhXSAWLfRCutrm2gDA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Jm6Wnmgbxe7XGYszsaQQU+j4NL3MsmwueecBHYEYvEP6sSALudAxzhhQ2HVAz+eemdV/aVtxxFWdpqCuBM1LKqbjtSLrjevA/kFELxdy6ErsAieMA8evwuPcthmzFxUrf+djX86QQUsR14nhvww6vUGZV+Xn1sixdYXHr0dGWWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fSR635T8; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-439a1e8ba83so22371785e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 08:14:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740759272; x=1741364072; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mA0q1eDANk1VuTwQiJxyjICzoV7Kt4ns/vCaHe1Vf1s=;
+        b=fSR635T8Kz+puUHI2t35h/u3ZBDd6ZToYjmF4jyGBsk3OKDYMqAgFhAv+gUqZDA9++
+         KfhHtcev2KBB5BYVM3nG3ro0OiieDOIy2nMFmu1v3igUG+q9NeyYQN5v2lXa0IREIxwO
+         R19pNE63UIe7PDs3uyoyhcfHP+lX6xg9iAvjVaJ9C/B+P6ik0sXOUDkdhAvGpZN1cd4E
+         DCmebjW+CzpC9kxT28P0iiF7nUA19l0B3YLtD5CzFe0OT30AFvsdN1+62A4g8SppxAIV
+         vnttJU7LYREJQIzbrOy4jL8QVw6o+M+GoQgGkLrJxjCJmFCnj+Nw8Uz00jw0EEJ+rs8O
+         qfPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740759272; x=1741364072;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mA0q1eDANk1VuTwQiJxyjICzoV7Kt4ns/vCaHe1Vf1s=;
+        b=q85NIgb73xfWUr+kismEqj4ytPjTYDP2yghEfvMEJBlah/QvMcDwxHDS5bHIRcPShJ
+         cEnobe8SsgwDgpjurhR82rjOHt3/XK0hfyEpAxUb0ONBcIG0eeAORyUCh5fAj6hB2rC4
+         qqwTwGmCeoT6QDa3mlZaFAzq3esUqCyuRrIALyGDOctv56AV/I07ult/V5FsbUMww5cC
+         qbpZCztOHS5SzWvxb9YpfO/8gD0nCMBtE47VY3dTp/vR/lZoe6SFEXeyIRn8t6WYNz0l
+         D1Jus7huWU/56fGBsctXhR/0CcsCUivEpjXCVB45u+xrQhpvegjF1oGcnETAFjk1Rxqu
+         uE3A==
+X-Forwarded-Encrypted: i=1; AJvYcCXFab6ykR7235xyFWi1tZygJikeWf3HGRIV/LZtBji3rhii3c/ZDAW+N8GTnDjfk2I/y62ViVbs1ZV/CrBL@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPDiq7bHkHNETS7Rc18eucuIvqPt6Vk74uK3j3esRlkyksAkRY
+	78PC+s2OsbOrRclqYBi87gQJ/cE7j2gbYX/4qyjgYdcCTb+8L4BzwukveUgK5Lg=
+X-Gm-Gg: ASbGncv96L8rZ9U2orTp0XOHdVdU9MKULC1uWhMcP4ErOiqyxrAQCSwslan+2jSNWqF
+	GFG4MPgDN1r6wqQAxa+adbPMFT5P9uRFJ1Wa/+GXDUf5X06nMSThbh8AFOEAwLJGdZPUPYLf9Ed
+	Z8MSx9BQx9zcDkPRiwaeOMiFYZaJZgx54Vk4hIvFDzbtVHOxHHUcqbUOG+nAw3HCPVvlBEtlMAz
+	bpH8hBYG0bSBvS5a4sdqVb0SuNL/Ik4GVllqH3nurruvSpyLHyEkyzPhf7C+YASqGBZfWD5oSEj
+	u6Z8D9bBqwz5LKZL/oMgHVtlcwxI7LzWoi3VK6XlspJR5+66
+X-Google-Smtp-Source: AGHT+IEorpcQWBNQMknvoMwXDyrUVNGuGeLWwhyPQjwWgrfHo9N4oJU2oROHaGMiKCwUM7rlOaPVbg==
+X-Received: by 2002:a5d:5c84:0:b0:390:e62e:f31f with SMTP id ffacd0b85a97d-390ec7c67damr3299605f8f.3.1740759272554;
+        Fri, 28 Feb 2025 08:14:32 -0800 (PST)
+Received: from localhost.localdomain ([2a02:c7c:7213:c700:e992:6869:474c:a63f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e4795d30sm5690232f8f.10.2025.02.28.08.14.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Feb 2025 08:14:31 -0800 (PST)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+To: srinivas.kandagatla@linaro.org,
+	broonie@kernel.org,
+	lgirdwood@gmail.com
+Cc: perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] ASoC: qcom: sm8250: explicitly set format in sm8250_be_hw_params_fixup()
+Date: Fri, 28 Feb 2025 16:14:30 +0000
+Message-ID: <20250228161430.373961-1-alexey.klimov@linaro.org>
+X-Mailer: git-send-email 2.47.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7wbot7sxm3y5y7in5ashcn5lpx3mi55abnbfrkz2jta7nm6jep@zk6zvocd3tuz>
-X-MBO-RS-META: jxo8su5z4w5hog8w3ppqqzf45qezxabu
-X-MBO-RS-ID: 43b314216067739c03d
+Content-Transfer-Encoding: 8bit
 
-On Sat, Feb 15, 2025 at 04:08:25AM +0100, Sebastian Reichel wrote:
-> Hi,
->
-> There are other drivers reporting negative values as documented.
-> Most of the embedded ones do this actually and there surely are
-> (embedded) userspace programs relying on this by now. But the
-> most used driver - generic ACPI battery - does not. That's why
-> quite a few userspace tools handle it wrong without anyone
-> noticing for quite some time. Fixing it to follow the ABI would
-> obviously end up in a bunch of regression reports, so things are
-> a bit messy :(
->
-> > I think it is a problem of the 'acpi' tool. At least 'upower -d' uses
-> > fabs internally since the initial commit in 2008.
->
-> It's definitely sensible to fix the userspace tools. We can't change
-> the documented ABI for current_now after that many years and while
-> documentation for power_now is missing, it would be quite unexpected
-> to have it behave differently than current_now. Also userspace
-> tooling needs to handle current_now and power_now anyways. And we
-> surely can't change the behaviour for all drivers reporting signed
-> data. So let's keep qcom_battmgr as is. It follows the documented
-> ABI and hopefully helps giving this more exposure (I'm typing this
-> on a X1E laptop right now and can see your problem with waybar).
->
-> But we should document the power_now property. It somehow fell
-> through the cracks :)
->
-> -- Sebastian
+Setting format to s16le is required for compressed playback on compatible
+soundcards.
 
-Hi,
-As an update around this topic, I sent some patches in the different tools I'm
-using to correctly handle negative values in current_now and power_now:
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+---
+ sound/soc/qcom/sm8250.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-  * Waybar (included in release 0.12.0): https://github.com/Alexays/Waybar/pull/3942
-  * Powertop (merged): https://github.com/fenrus75/powertop/pull/173
-  * acpi-client (included in release 1.8): https://sourceforge.net/p/acpiclient/code/merge-requests/1/
+diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
+index 45e0c33fc3f3..9039107972e2 100644
+--- a/sound/soc/qcom/sm8250.c
++++ b/sound/soc/qcom/sm8250.c
+@@ -7,6 +7,7 @@
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
+ #include <sound/pcm.h>
++#include <sound/pcm_params.h>
+ #include <linux/soundwire/sdw.h>
+ #include <sound/jack.h>
+ #include <linux/input-event-codes.h>
+@@ -39,9 +40,11 @@ static int sm8250_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
+ 					SNDRV_PCM_HW_PARAM_RATE);
+ 	struct snd_interval *channels = hw_param_interval(params,
+ 					SNDRV_PCM_HW_PARAM_CHANNELS);
++	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
+ 
+ 	rate->min = rate->max = 48000;
+ 	channels->min = channels->max = 2;
++	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
+ 
+ 	return 0;
+ }
+-- 
+2.47.2
 
-It was quicker to get this merged than what I expected, which is good news!
-
-There's probably other tools to fix, I just fixed the tools I'm using. I
-encounter the issue on other tools, I'll send a patch.
-
---
-Anthony Ruhier
 
