@@ -1,157 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-49838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 964DBA496ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 11:20:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D64EA49823
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 12:12:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ECCD9175C59
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 10:19:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF69A189560D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 11:13:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9A7425BABD;
-	Fri, 28 Feb 2025 10:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6748F261365;
+	Fri, 28 Feb 2025 11:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R5E4+iw8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IigT0Kw1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C735E25A34F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 10:17:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C8A25D209;
+	Fri, 28 Feb 2025 11:12:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740737877; cv=none; b=j2b2xyLzqZ/UQdoI5+ipJe9GLFMkg4O4ZNUrpqJKFelWpS7z1arNQ0Dh9BqwswZgxo5MJi/1VrcCqqyWhrEiijT2racnQlsf5pmrhVNfcFNG/XYo7zATjPX3dUcEl4BDVqqaWSoKcjgkj+/MQGGNSDhjxNWOeHsNfWxbAJzIyAg=
+	t=1740741171; cv=none; b=BDSOPzZKa168OQ+mBUBXnmgYKofNSBjWu0/ryhhCYExQ0IMpHi2QY73qmEbXBzBVKFXUJ4CT4SOtnbSf5qIXskHSUL+kFbipI18h2zrsASQhXtE6OCX1uKTKdinoFjxqjNSBqgzNUerQ1a4TgG9Sh3L4hDvpixxfChQ6E1BYg9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740737877; c=relaxed/simple;
-	bh=9T7yEMjBzr/dGzam8l9t6bX4kbPkvk217sHLFZacMUY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CzA7iwe5ZOMZ5TjBfJRMMBDpTai/KIFRhlaquRaTOiOjJa2Juul2yxw8QkOZoEYh0yR2OrwTsYlVwrt/hUT8QpoQEhUcezvCU/MxD7pXFofduAagXHqed4BP52f6FP6Xohsg+z92W1E4yK52zYt/nlY7O0RRQD93vIZOPGHNkdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R5E4+iw8; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5494bc8a526so1022294e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 02:17:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740737874; x=1741342674; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CqCAMLKDFMDmg/J9XlohF5SNVValJDhS7J4k1e5y8j8=;
-        b=R5E4+iw8AGO+2Hgf78SuAvuj7rVM+kFboBOjlcwOVP8MytT7bToG9Wzx2+5DkqXxMk
-         q+MvKoyOWq1GItU2KSDoCW6+s9wtpziok5sOP1E5fm7mREr4TKTaAH4qZVvXjfyUinmU
-         hIxPEqCsYeWvxB2Bw57bnjaWA0ESrDD+swWSNQ8lpEmNr9WstXxA1N1eYQ294Jn6QNaM
-         INCEQ5PBBU8MPlXcFjQOZpKEIEZLR/dwDCPBLzOCUWhdjMdpALxpYA//XHgle0G+mhhA
-         bcJOhgronqv9erOkmZAKpgfATt3D2vEgY+f/PzgUEiTR9GadKwXcBrZnFCJ2tdU4LOh2
-         D6cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740737874; x=1741342674;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CqCAMLKDFMDmg/J9XlohF5SNVValJDhS7J4k1e5y8j8=;
-        b=MNtc9j5IWzZOaulxm3MlVljJU510iKnjukg6hiyVHgH3v9AwdRv2JdIJ2NllLAGfL7
-         P6M31IQF3QujCIddwMA3rhLDR3Lp0dD5sDT+ZuT3BoYnK4F0NfKfB5ssx9TOVW7YB4fi
-         vYv7ksLA/vlScLoVtID5OrSZt8iU6to4YVVkCBh+vQPeY42PBF4bo8OvK4/oJbHevSUi
-         ReYoqlLAE91bd9tE2+/AwMIClsp7wAyiN1C4MtZ726UYeuPcsZYM22PxJLHDPY9m6CxS
-         YIkkm9D6zO7lzY4hd9yIcMT0b27KhGIN6KO+c6Z3f5CWqFAoxew6JmDilGwXWo1o7tFx
-         qlmA==
-X-Forwarded-Encrypted: i=1; AJvYcCVIHSj9+09RhYzjvCvXbSoI4fkZ2KOTeDKLKTsHJ5H1R9uLDPzKfKT6gs13JmjOl9ISPi8NldafsuGazn4j@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxh5KaV3Vkv7Jm/WHAkGR/p4B2fKKUr9oieGgfT8mJih8SZSzVL
-	8zpgfBERvGcmjVASKJFkB0dvNXcWRrVGP+ondur4oQ0kdNGEWqTIH1K4fyWBCio=
-X-Gm-Gg: ASbGncso/Ap1gt+dGHFY5OIDGoMuL3qhwGCNn+lYWaXDNzM+/Yz3DvflG9fW2HsiwHX
-	GgzGL1brprERjY0/qYHZ5HEzpg0o4FeYrbYiMT5m/3ISPOBjeV4H4jA7deCJak0Bt4oxzbVqDKC
-	2byAesEag2ZMqclu+B/jt7G0K+3Gzj/nzUm8MJInxOM1OPZwcy1wxjOnlRs+U4uBnHBx5bXQs8t
-	zWcU0xiFj4UH3AAR+M1BgtTl5JMlyzbXVy7+Pi8QajYYqNYB0rAN0u63lq5Y3QZK2vSWvmtV5H9
-	6tslheAvNFGPPgcTWextuK5q+ATF4xXa2RnWQ5fTeVKhLPOZKk4fv5cYOSxQIO/GNjzhdxneX1E
-	g+QSpOg==
-X-Google-Smtp-Source: AGHT+IF3N0HBb4ltf2zBecIFj5x7J4NwmcVlVNLZd7wW8E14jB9yl9ngbFhq5O6DA0Qg+LTZLwm3ww==
-X-Received: by 2002:a05:6512:3d19:b0:545:ea9:1a19 with SMTP id 2adb3069b0e04-5494c10c72bmr1255712e87.5.1740737873802;
-        Fri, 28 Feb 2025 02:17:53 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5494417b62asm441359e87.85.2025.02.28.02.17.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2025 02:17:52 -0800 (PST)
-Date: Fri, 28 Feb 2025 12:17:49 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Jie Zhang <quic_jiezh@quicinc.com>
-Subject: Re: [PATCH v2 3/6] drm/msm/a6xx: Add support for Adreno 623
-Message-ID: <fje7r73olswfx5kbkvnlyvlhv3oqnj3ki26i2brb5fbuewfc3x@jsaz73zsd6rc>
-References: <20250228-a623-gpu-support-v2-0-aea654ecc1d3@quicinc.com>
- <20250228-a623-gpu-support-v2-3-aea654ecc1d3@quicinc.com>
- <67jiudy4bopd3mzoylj47stuxwc5jdt63akxwn5qqo4dov47za@xcece4v2k3m5>
- <4c81f193-a1d0-4abc-8be5-07c862de8937@quicinc.com>
+	s=arc-20240116; t=1740741171; c=relaxed/simple;
+	bh=uooaO+AYmybIR97lahj04lxe6GYC/8kahQFIIAj4gT0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=pn59IRSB/hDSL9ilr92zIndKx2LPrxtQZqd0o8+x1HreNYPr9KP4xNTUHfebjH6/+KHFa+SD4yQX/mUBOWQeCtjLDkCpQ/JezJpAlqeky3uK/05LBh1lTurOpwuNPIchFJjgoddJOdNpg56nLFYINazss26OA36z5gEGZi4ZHcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IigT0Kw1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51SAXGpW011006;
+	Fri, 28 Feb 2025 11:12:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	K4glEA5GmIAy9FLor+mvnyGuW3ESRrPbcTI9DSy7jqU=; b=IigT0Kw1RztNdV/q
+	T7ElRyGu2lxezGYxe6EFjYr8omqepWwaXhMrC8mCPZzHN9o8vACoc1M6ss1JCVFG
+	q9lmfIQyCBKdtiwZW3rx1H7DTb9fhyFVe3hIcmA8KxHzlRuvPD6C9y2bcQNEzMFE
+	GGUtk+pWDf+CJpVvKpphOSkpMfybQtCPo92jvjFJRnMghpQ+mAeq7S0NvROn9iJV
+	qw6kqLpL2iYnqlFFqBbo6Uw5/38VRhxiydT9F4qjWfye3yHo2AI3c5pYR7UUdRhG
+	2/TfNfapwSkI1X/iyGw3ti/YmRG7vmISJaTq4yRhcRmhcgyvU4EmEpNeFNrUYxLV
+	9uFb4Q==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prk947a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Feb 2025 11:12:45 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51SBCiIV026781
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Feb 2025 11:12:44 GMT
+Received: from [10.151.36.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Feb
+ 2025 03:12:41 -0800
+Message-ID: <94cba308-4c5c-d968-0a4b-e12ce8784bbf@quicinc.com>
+Date: Fri, 28 Feb 2025 16:42:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4c81f193-a1d0-4abc-8be5-07c862de8937@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v1 1/3] arm64: dts: qcom: ipq9574: Add SPI nand support
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250224113742.2829545-1-quic_mdalam@quicinc.com>
+ <20250224113742.2829545-2-quic_mdalam@quicinc.com>
+ <6980c805-92b8-4011-af94-a701a8218548@oss.qualcomm.com>
+Content-Language: en-US
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <6980c805-92b8-4011-af94-a701a8218548@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: kINb6u4Y87Tw7EYKfzVXap-MOHCpq_m4
+X-Proofpoint-ORIG-GUID: kINb6u4Y87Tw7EYKfzVXap-MOHCpq_m4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-28_02,2025-02-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
+ phishscore=0 spamscore=0 mlxscore=0 mlxlogscore=832 malwarescore=0
+ adultscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502280080
 
-On Fri, Feb 28, 2025 at 01:43:12PM +0530, Akhil P Oommen wrote:
-> On 2/28/2025 4:56 AM, Dmitry Baryshkov wrote:
-> > On Fri, Feb 28, 2025 at 01:37:51AM +0530, Akhil P Oommen wrote:
-> >> From: Jie Zhang <quic_jiezh@quicinc.com>
-> >>
-> >> Add support for Adreno 623 GPU found in QCS8300 chipsets.
-> >>
-> >> Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
-> >> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> >> ---
-> >>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c   | 29 +++++++++++++++++++++++++++++
-> >>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |  8 ++++++++
-> >>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  2 +-
-> >>  drivers/gpu/drm/msm/adreno/adreno_gpu.h     |  5 +++++
-> >>  4 files changed, 43 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >> index 0ae29a7c8a4d3f74236a35cc919f69d5c0a384a0..1820c167fcee609deee3d49e7b5dd3736da23d99 100644
-> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >> @@ -616,6 +616,14 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
-> >>  		gpu->ubwc_config.uavflagprd_inv = 2;
-> >>  	}
-> >>  
-> >> +	if (adreno_is_a623(gpu)) {
-> >> +		gpu->ubwc_config.highest_bank_bit = 16;
-> > 
-> > Just to doublecheck, the MDSS patch for QCS8300 used HBB=2, which
-> > means 15. Is 16 correct here? Or might the be a mistake in the MDSS
-> > patch?
-> 
-> https://patchwork.freedesktop.org/patch/632957/
-> I see HBB=3 here.
 
-Indeed. Excuse me for the noise.
 
+On 2/25/2025 2:06 AM, Konrad Dybcio wrote:
+> On 24.02.2025 12:37 PM, Md Sadre Alam wrote:
+>> Add SPI NAND support for ipq9574 SoC.
+>>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+>> * Moved changes in ipq9574-rdp-common.dtsi to separate patch
+>>
+>> * Prefixed zero for reg address in qpic_bam and qpic_nand
+>>
+>> * For full change history, please refer to https://lore.kernel.org/linux-arm-msm/20241120091507.1404368-8-quic_mdalam@quicinc.com/
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 28 +++++++++++++++++++++++++++
+>>   1 file changed, 28 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> index 942290028972..acbcf507adef 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> @@ -447,6 +447,34 @@ tcsr: syscon@1937000 {
+>>   			reg = <0x01937000 0x21000>;
+>>   		};
+>>   
+>> +		qpic_bam: dma-controller@7984000 {
+>> +			compatible = "qcom,bam-v1.7.0";
 > 
-> -Akhil
+> v1.7.4
+Ok
 > 
-> > 
-> >> +		gpu->ubwc_config.amsbc = 1;
-> >> +		gpu->ubwc_config.rgb565_predicator = 1;
-> >> +		gpu->ubwc_config.uavflagprd_inv = 2;
-> >> +		gpu->ubwc_config.macrotile_mode = 1;
-> >> +	}
-> >> +
-> >>  	if (adreno_is_a640_family(gpu))
-> >>  		gpu->ubwc_config.amsbc = 1;
-> >>  
+>> +			reg = <0x07984000 0x1c000>;
+>> +			interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
+>> +			clocks = <&gcc GCC_QPIC_AHB_CLK>;
+>> +			clock-names = "bam_clk";
+>> +			#dma-cells = <1>;
+>> +			qcom,ee = <0>;
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		qpic_nand: spi@79b0000 {
+>> +			compatible = "qcom,ipq9574-snand";
+>> +			reg = <0x079b0000 0x10000>;
+>> +			#address-cells = <1>;
+>> +			#size-cells = <0>;
+>> +			clocks = <&gcc GCC_QPIC_CLK>,
+>> +				 <&gcc GCC_QPIC_AHB_CLK>,
+>> +				 <&gcc GCC_QPIC_IO_MACRO_CLK>;
+>> +			clock-names = "core", "aon", "iom";
+>> +			dmas = <&qpic_bam 0>,
+>> +			       <&qpic_bam 1>,
+>> +			       <&qpic_bam 2>;
+>> +			dma-names = "tx", "rx", "cmd";
 > 
-
--- 
-With best wishes
-Dmitry
+> Please make clock-names & dma-names a vertical list, like clocks and dmas
+> and shift the nodes so that they're sorted by address
+Ok, will fix and post in next revision.
+> 
+> Konrad
 
