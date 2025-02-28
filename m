@@ -1,278 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-49794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EE66A4903B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 05:18:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A237FA4906D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 05:36:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3EDC93A344B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 04:17:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 587081892DDB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 04:36:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C83791A8F74;
-	Fri, 28 Feb 2025 04:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3680A1A8F98;
+	Fri, 28 Feb 2025 04:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="ZgECTZpG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GYGnsNzI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12olkn2043.outbound.protection.outlook.com [40.92.23.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32E21A4F0A;
-	Fri, 28 Feb 2025 04:17:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.23.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740716222; cv=fail; b=KZCDQt9EuPZztbSK5i+h0LGdcvrhmzUMmt9/BiGxBj7iey7YWeRrnmNywad2iP9O2l7hZqPUv719McKkCbtcxS7Kyju26ErMZ3mpAVJtQWPzOWoHYTpwXzHoolVHEoNqCYVV/qwaSI373wVGZhMRwFln1v0SW+vjBzw6bqAw2ZE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740716222; c=relaxed/simple;
-	bh=ezvY9/6b44+/jx0wNIz1MzCsNmMfuzceoGEOyqpX1ZY=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=ifrLC4Q4ZAYlqiZCQo2bOZunZj5f91QphUPPCCCH1WofJxswTvCBppkW3ZQPisq0n6UVHF2/AYKNMSFofdcm28FwTuvnR3o7guE8pTxDzWR47VJLtkgcFm12BMP7IHEtptffi7pZ4DNLuCAmhGBwzH9/w0ktjiD6g9tuhPiU8vE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=ZgECTZpG; arc=fail smtp.client-ip=40.92.23.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jZGFEkwCmamyPf8vrqwA4SHY7nY0RZz17oRZXtnedeaOCi2l/JdM93R1yUSDPmB0mltYsCD930nJ4e4i4jM6zOd9P6kuswl/ILd8sku+mkAO3PanZMN5SxrnU459BZRVjUiQAYjav0baeql3l7FjzLb63h3Zl5BtX5JV3SDLiBmgd6K8/cGLpooMXYfsqJqoxmvxMwr/KLc3M7a2PJ4Ud76tfs8EoaKwQ1u1+nCePaa5CA+2+UXzH00iV+BWBmRtkSsbCQdevcXqDZneIoaWq7XHBR7tW7J1wri80RV53NXXfIS0V1nUk//qHyNBuJTAzRUn2qats8r36yt7lIQfXQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hnSuhQceKRMFe/jOY9lYFf3xMBTt7R45wikzYsrpJ3c=;
- b=aiwGKlZf491+1s3eVFmtwAqRGArpmCRgZ3gGm37qkqsnwH85mSsxUR79cGtWv4hIrxKSxT2ono8UZtCfgEpJMYKzIsZ02QD96kX/u+8qL/+iuDJYof7oyLZcG/rGgFKhkI2efsCqeHnnLIV/d8Sq2rG2FDK1h/X8kfnKlNDhGX/7OfdPbdlVmEQD5bQDD7TBjVbdebv6y1udv0Tpz5iZbyp3GRICk8fJ7JT7fYjbODJnkPX3/iY5B5tKKP6u0mvWeGscgG1unzNqAi55V/6Ip4B87IyClci8H46p9EIJrzOgMYiiFIRpxARPPn7MtVlY1BGBphBNgjgak1Ve5QwKxQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hnSuhQceKRMFe/jOY9lYFf3xMBTt7R45wikzYsrpJ3c=;
- b=ZgECTZpG3FwUBUpTcE9KikoEC8NmAcTrrRzLailCll6Wzq3Ve9/oPnAsPGSm2B5idXH+XjK06bWUMvcHjWuFKWWlC1wxDUt3jqALp5Md3gxEsea5RBnTuzilYn2D2SF4LKwxhbxlwe8Bhdo/BJQAmATWd7NaOeSXv2DFzbw4ssXH6goG1XQ4F/U+X888U/Y2x/HFQtmHck62lu1b0Dv8NZjDzjKG3BgLwOglTwuwWtOqrFf1hM3aL/q7r+5ZXL5dT8+s4TbZrZi9pohYaFQ3WGA0m9Wft6ZXG5ybf5RJNtFC8GDDGjZnVayOjHgpNkrjti0ORQV8iYeYDAWeBTMQcw==
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
- by IA1PR19MB6204.namprd19.prod.outlook.com (2603:10b6:208:3ec::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.18; Fri, 28 Feb
- 2025 04:16:58 +0000
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::e0c2:5b31:534:4305%6]) with mapi id 15.20.8466.020; Fri, 28 Feb 2025
- 04:16:58 +0000
-Message-ID:
- <DS7PR19MB88835E5F6B906B0E9136CCF59DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
-Date: Fri, 28 Feb 2025 08:16:42 +0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/5] thermal: qcom: tsens: add support for tsens v1
- without RPM
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, daniel.lezcano@linaro.org, rafael@kernel.org,
- amitk@kernel.org, thara.gopinath@gmail.com, robh@kernel.org,
- krzk+dt@kernel.org, quic_srichara@quicinc.com
-References: <20250227110423.8418-1-george.moussalem@outlook.com>
- <DS7PR19MB888322C58FC555299256E8D99DCD2@DS7PR19MB8883.namprd19.prod.outlook.com>
- <eafirt5dg4vmafmu2wph47zrrzyqrz65z5ypqrl7fhr77qckfi@dgqwkkhnz4ge>
- <DS7PR19MB888363A4FF954A6275E81B4B9DCD2@DS7PR19MB8883.namprd19.prod.outlook.com>
- <xv3c2ube7the3gat7ustws4ok6t26c33fyywqi6x3utx52qtzb@owyidrxeprcp>
-Content-Language: en-US
-From: George Moussalem <george.moussalem@outlook.com>
-In-Reply-To: <xv3c2ube7the3gat7ustws4ok6t26c33fyywqi6x3utx52qtzb@owyidrxeprcp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DX0P273CA0087.AREP273.PROD.OUTLOOK.COM
- (2603:1086:300:5d::9) To DS7PR19MB8883.namprd19.prod.outlook.com
- (2603:10b6:8:253::16)
-X-Microsoft-Original-Message-ID:
- <638fcb3a-a23e-4bf1-82af-d967a9185158@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCA3145A05
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 04:36:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740717394; cv=none; b=RTo9wP9Oxh0XMuA6oQIHtknmjBNYwSzB1wBxJUSYOz3WAskKWjuElr6FP9uWw8K3dykQ/sRoBW8gwTsUbg6qd0ONexfCNBdfS6r+Q4BOJrpBqjLcXeAWPMj6y19JK8/pagfEGcWgQfYO+j/JdTemY78XW0EseSqWyI50GBeaAtI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740717394; c=relaxed/simple;
+	bh=JNNNAXVJUB1dUrWe5/CzrO8g7HtIc9lV+IcdN6AiXIc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qqLGSJHARmkKFHl/cWWz8DyYzzGBuPa68AHcKnKEiXK8od0Nvle2SQdFVUixZP0so6jINBRVmb/nMUDY7N7oJBdTxIxO+xx84ZckSgBVVYT5eaUI5ESdTc4u4Ddb7BFMbdwELqRq9kivP5PpmvEx2uU1IS4GFyD+73qdMlaH9bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GYGnsNzI; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5452e6f2999so1638488e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 20:36:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740717390; x=1741322190; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tIRTgNdswGDhbNbRHETd6FrKEXOOj6YkPcm/rw/JxR8=;
+        b=GYGnsNzI0x+RL+N/SS53OaMfHg7jTgV2UjHNGcVLcpGQb8xexAjMRxXe+3wqHwKKsh
+         uht+Puin7KkCFwyrmyIDlcbfm7O71eyuntT62AShW5AUdw+2cfczclCy7Dn9uI8j/iQg
+         M2/I8zX1DJ7XKl9f8tjN6WOy/HwHtLvjS6N83LbyefAxkXU3QCfRXC4Pmuouq/1bhbad
+         /DSMM/IzZ2I9R6yyPlqqSrPI8dPMsfVnvEy1i7UYDkhP0RQu91evgeIXArROwRbP9Zua
+         qCBQA9Zjpr4sNoafgqdUK30eb/FXW5HkhwDWYLDvTtfdpD5ymCxc7FJ8U7glEg+Vi1kp
+         c/vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740717390; x=1741322190;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tIRTgNdswGDhbNbRHETd6FrKEXOOj6YkPcm/rw/JxR8=;
+        b=uQi8aj7J+lwoKEl4g4K4o/kcJy5P3OzeJgvEaw5pP/bWMMcsRZKp5PiAzB/I29N4pv
+         0iFNMzePU+JrD+mnb9OBy3Xx0OWST1L0JsUd/tGGIajhDtmvEz3XijNYaT5tfOxOU/hU
+         pGWAlq9LlqTp0fQaPldDVSoghuwVLqw1aw7pL9C58dTM7sylTShMbgpIVh46FsoVaEEF
+         TqBeSDQQ7/jIg24y9rbDXRRuR+81usaxNeoNkKC5BNA0G2wMY5MryFrOjC9csBscLf8u
+         n7a8GbuYPxL4HjLVSAC40QchoML2Xs6Vmgx/6LqC8P8TSproyFM64PP2znkLr1R9ROv5
+         UgSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW77BSoDCJSDGXNQdaTn70/egNsTSvBLWfF6UO9d97mRNFnKRSktxdf5Itukh+s5BHskEn90oF9a2S7vj1M@vger.kernel.org
+X-Gm-Message-State: AOJu0YxinI2fv2aotmbVC+5ohZ4kMbzdmDXr+slb3srEZ9P9wYpo/WJm
+	93CiLiDKdGPUnHR1yJTLausa58k8AJr8peQYK6yXtJ5GpC8bp7thF2aKawo/SV/VYLkypQkUqzc
+	yTus=
+X-Gm-Gg: ASbGncsdWfv/kM6K1TmRhDPD+5nL36kOtkv3XNg0VsqZnO6foZOqDayjaY5rdkcCZJI
+	KbWWOyVHJNaGmoP3zQiyR7ku9hxoV1ZA+IynE9A8TX0aake86kAO0RlqYprXBgZdqXLlEnMuP9v
+	zwJzk9dL9KetTMW3lWD4aWCsg+iDVhnYRq+q7MBzr0I9XuyMDYb8e6w5muX7SsDD6zTo2Yr8TRz
+	UFqtGhWE6sBV6cqvppSiybkCjc3LjxHlrp90f3zmGO1dkDM+dkSVxZZGLGmxIwgyHWn+V89TLo+
+	7f4RAO/EBrXbxz18bivkCRF3K8TV31O5IHnJxFC9FspGp2+bKuu+SoHkfLxlq49XnNVhsnIPJ7H
+	BMxGk7Q==
+X-Google-Smtp-Source: AGHT+IGHdROVsAiv4I0ViQ1CiojRZcJgPBqIJ5QDNvWA3K8bpxYgEX8MrL0nwpc0aa81lDswmCSX0A==
+X-Received: by 2002:a05:6512:281d:b0:545:2950:5361 with SMTP id 2adb3069b0e04-5494c129f93mr754571e87.5.1740717389644;
+        Thu, 27 Feb 2025 20:36:29 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54951f50e37sm29273e87.38.2025.02.27.20.36.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2025 20:36:28 -0800 (PST)
+Date: Fri, 28 Feb 2025 06:36:25 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 12/15] drm/msm/dpu: blend pipes per mixer pairs config
+Message-ID: <56fcpdrg6lonf7trasxurwpoausfv4lahtlggab7vcsxmxrnwz@jseugb2oidwt>
+References: <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-0-8d5f5f426eb2@linaro.org>
+ <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-12-8d5f5f426eb2@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|IA1PR19MB6204:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8af8c7bf-a5d6-4ff7-428d-08dd57aebdcb
-X-MS-Exchange-SLBlob-MailProps:
-	WaIXnCbdHrPgu9FUvYZ88hunKvKD6srS0NlyBrObPrUIkROkmIViZF+jvwGElyQC/eCD2RPQ7NBok/MdS5+3hcGYEXViFLzxILfUbunt6IxoESQ02OaUGFp1BijAC7pSQsNAYPFh4OBsvRKGoykugI7BdayviXdM1Ssyfw/UiARGH04r63Z5feYWS7LWreTlMZaPv214bUY2UoMBCDLRHo00LZCl9tnl6Yj1BtgAtjI2EWIt/Nw80jhG4Lq2AOfjxSb0+53Olih2kqLDem50egxI18Gwn0T+7LLlNzZYolux5HPIpvmIWJMNAeJgPX4qe2/iXxvpC4GHptzCn243ZgiXagOvQs9SWyWeIW/AhkKN3Khfgu3G078FkGIqzeGVtESIsinhUUSYO/yA3Uv563ei8KN2XAcIczSWxnTcL6RlDgatQdhWjfkKsKLqeSM2s9npy6zdB6Lnh/kJuBrlFL1zhKqagrldGXcYo6oA3d3AViioN+iJoaSZsFPYmyVqVxAvYb7hWRvykabLcST6oW0dIF5/XD/S28g65f8MlDX/PbHyyyFpTGB3FctQD/qwN9RB0hz/k1mWLDRRcC6f24lArB+yhbfYJiX7kiJNpfyVYCHYhSYz0pPmENew+XGk9XgD7rmiGhqcTc283dbH296+GU9Swi/4sw2ZXY8pmeMihK23joTMcgwa2hwO5c4aDXL/6w188MTj1jZVaaHFPi/lyTW+jaLGJipAPVGCsd/NhlNjbttykfkhuOeE8mteYQNmxn4uaYw=
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|8060799006|19110799003|6090799003|7092599003|5072599009|461199028|15080799006|3412199025|440099028|41001999003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?cFo2YU5BcnlJM2l6b1NWS1J2M0d4SFVDbXYzUy91cDJ2cXhaSVBmaVlwSVJo?=
- =?utf-8?B?QXlwbjZmRWxnK2hrL2wrL0g2RzdVUExDTlJWY09IWG1vRXk2eXRjSkY0Szha?=
- =?utf-8?B?SXhIMVdzUGhVb1Y3NUkwMWNRRlRXclFBclQyU2FQNVF0bGczQzhMcG1NZVpq?=
- =?utf-8?B?Yi91eGxwRmVYb1ZxVnpYanFXQjBhUmJQYW0vL1ZVWUh0WlB6bndvakFLZW4y?=
- =?utf-8?B?enBLQVNGR1J2Y1l5d3NTRis5eStvM3QwV25LV0EvSHFES29vKzdLUEF5SjN2?=
- =?utf-8?B?T0U0bDQ5eU53ZVM5b3R4a1VGV01CM2pWa3dWbTY0V2xBUXhoVm5iWE1uTER3?=
- =?utf-8?B?SmRUcmFNZitqS3kyN002TkRIYTluUTh0d2VGNGxqdTdXT3FWZlk4OUw0RFlJ?=
- =?utf-8?B?V0FsYm4yd0J3Y2IrNkFrZlA0NTRYeThlc2hSVU9RWnViYlAySnZQMExOK1lP?=
- =?utf-8?B?OGVnYjdKdHpta1BheVFYR1R1MG96YmVRUGpndUdsdWx1VXdidjBvSndvcVpr?=
- =?utf-8?B?bHNwYnVLa0RaUTdyUVpiV09HMFFvYnBCR3BLR0JqdzlYYjNoWks3b3I2akhK?=
- =?utf-8?B?cDhhc2JRUTNoTmdCWWo0NVRiNGVMNG9CU2FoMlR4YUszYUN3REM3UEl0TTFJ?=
- =?utf-8?B?RWxoT1JwRWJybkJjWU9rL0Q2dnFNcVd0cGhZcFdOelh1WHNrWWVmUk9YYjlN?=
- =?utf-8?B?VXhCWHpIcDduL0JNdG95YTEvRWdUNjE1cjQxNlhLWmIvTEhMbGd4cEZmT0RI?=
- =?utf-8?B?K0RaR2VDeUo5UnBIN0t3UC9JUEwxcU1NSlBHUFMwbmI5Yjc5TjRPcXBFMW9n?=
- =?utf-8?B?Z3MxOXh1THlrRGk4NVE3b3N0bXZ5a0oxZ0pLOGlKM2RSQjZkTUFSOFFjWHFp?=
- =?utf-8?B?d0g0ayt3YjBuWFdHcUtRSkFpczdUODNLU3RIN29BTTZEQ0xISTkzdnFOeWly?=
- =?utf-8?B?aXJFL3RRMVViSlJlbWw5RjVhZWg1U3hiN0dMUlZWdjNyZmNEaXY1VzIxOWlp?=
- =?utf-8?B?bGQ2d0xBemVQSjE1aStzQ3RiNXNGb1N2T0FwWkFhS0NhbnlEVEtqeEJSaWtQ?=
- =?utf-8?B?MWgvN3JmVitGc3czWFNLemF1Q1hXL3VQcUR2YlFKajVyRTVWeXRRblNDdzFR?=
- =?utf-8?B?L09oSWY5b0lxMFFNY1pHeWtxcUtTbEhaMjc3SGNOblAxcVR0am1JZ1ZhQjlh?=
- =?utf-8?B?cjBqSm1tYzJ0a0FhNHVQOWpmdUFRd3A4VGtTeXJBNWRadUsvRHV1azI4WnpI?=
- =?utf-8?B?NExLeENVQUc4Uml1ZTNYSEdEZklyTXZaeEErSll1UGFMdkhuSHg0OWQ4QUtK?=
- =?utf-8?B?SzJyV2pBdkpKdmkxZWsvRWRSNjJYQko4TEZrUTRpdU5XV2N0RWVxN29paVhh?=
- =?utf-8?B?VmltWGJjTkJ3NURTd3NPUXdKbVBobURvV1J6VGpNS1hBaXRYUkl3MjdIRFk1?=
- =?utf-8?B?cXFTTjZRNHByT0lPbWRZUXhRMU9sc1JMVU1sUWFXMkpPTXEwQmE0TEVVMFpk?=
- =?utf-8?B?Snc0K0ZPOG1nL0lSTm45YmJKcnhoOENhYTFBKzgyZ1VNMnNLUGQxUVhhc1BB?=
- =?utf-8?B?YVU5QT09?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?MDVralNRMzNyT3JidHBWU3RBVjM2SmNiNzVSSkp6U2dibGREOGtwZ3B5amRM?=
- =?utf-8?B?cDVuVWx3QjVxclU2OTVoVEFNdFVMaG1zdWFIWkdzZmtIQkpiUm9rbkN4TFAx?=
- =?utf-8?B?MEZwNWdGd2sybEwvdWRCUmNSajAxSFhRN2w0d243Mk9IcDZ4ZXY0UExQNjNB?=
- =?utf-8?B?eVF2ekdkQjR6UCt5V3Q2amZHekpCcnJPVE5xM0Fic1VzTk94dXVvSlhTdVhU?=
- =?utf-8?B?ZTF4VVFHRU5GUHpIR2k2d3B3RStQc1J0ck9VcnFoTDcyRklzZ2xONHFRaUVL?=
- =?utf-8?B?dlZjWFRWVGcyeTdNdnRZTU14MkhJeHVhUkxEcXM2dmFlN2QvUUVaSmlCQ1pZ?=
- =?utf-8?B?U0VyUi9DYkhyQWRIdVA4S1YxajNuenZKYlBsOWFCbnJlWFBBOUhna0ZLS3RI?=
- =?utf-8?B?T3FpR28rd1dkSFRpYkNtaSswRmwyNENpSEJCeWpYTVZWMmZXUStvSnFtWkgy?=
- =?utf-8?B?YlVtMGdFTExvSDMySSs5Z0NYWHhuVEFZZ0p3Skp2UHcvazdDS2RwNmRDc3Fx?=
- =?utf-8?B?YktKTjljWUMxd1M3Q25ROFRlQXd3UTJ6U0JKNmhSSWQ2cXJkSWJyRGhscmZp?=
- =?utf-8?B?NlhYVHByMG9JOFdJTU5wZHFWaUFZdys2TXZ2N0tMN2FUV3k5TDVGdU9PK3Nn?=
- =?utf-8?B?VjQ0c1NmdWovbjNYUzBYeXg4WGNTc0YvZWlhUUxTWDMxNS9KQkUzMUFmWnFU?=
- =?utf-8?B?d3dtNkRKS3IwdWpLRXpuNm5PR3hnT3I3dHduWW1CS0RBYjYrMzNEWkUzOWRY?=
- =?utf-8?B?VXFmTWgrV0xRRnp6dUVsbm52NlVjODVJRUhjL0ZETlhSQ04xaFVqc0dIYmRj?=
- =?utf-8?B?K2VxekFmWHppTjJuVGdBTlJ5K3NzSFJwS3pzMWtnN2FYNTQyUmYvZ2duQkJS?=
- =?utf-8?B?c2QzQmlJdVlXK292YUZreU5KbEN1VnQyNlZHdFl3ZzFEanRjTU1XSWxCUUJs?=
- =?utf-8?B?aHk2MFFWbC8wdXFnZFNrOVdCYmhNVGd3RmZpWXRsS2EyYStJNDZUazEzMVFr?=
- =?utf-8?B?Z3VMOEhBNWN3aTlmeDlTc0FLLyszNEI1Z0FNdVdlbFNraHJmcjlLTVV5emRV?=
- =?utf-8?B?VDVPVzJIZGdNSHZIcUc2VnZiUVR1cjZPZXdUN0pYbkVZNjBlUGNoTHdxNE10?=
- =?utf-8?B?dkpiK1pSZkxHY2JYT0xJNmpjV3ZIcWhPOGtCQXJpazgrMVNIUVNjM1ZWNDBC?=
- =?utf-8?B?bmExdzNsZ2Y0YVZ4WkZENXpIc3ZYY290V0N3VG85ZjllTmJsZGRrS01MV3BL?=
- =?utf-8?B?dVV4QXhVRjZ4UnE0bXp1bXNmR2JLUnB6WXhRMDBNcXUzcEtQTk1raXNZakRr?=
- =?utf-8?B?eFhtRG1SRUtrWStQYTFoSlZXM2plQStaZGx2YjJ5ZGc2djFLb05Ya2tRWjdO?=
- =?utf-8?B?SDVrQ2dicTYyN2QzL3ZkZ3pxdlRLeU53eFE3MzE2ZHdVd3NaZWxJR0dxVC9F?=
- =?utf-8?B?cGNEK0hzb2xxdWpBQmxKWkcweW1UN0RhbVduQTBKcGl4aTVzWDc4TVkveVVh?=
- =?utf-8?B?RkMrUnRlZWdVSlcwTUt1N0RiMVkxZHhmdGhyemhSbFVRTTJ5WUo4RkRscTdq?=
- =?utf-8?B?a3N1eXdYdkFNSzhtdmxGSkdlOXpNVFZzOEhsWTVZQXEyY1VHaEZmMWhhUGdO?=
- =?utf-8?B?L2tmNmlURmpzQUE0WGw2Vlp0T28yQ3pLRVJEajVSNzRVc1h6cjBMSCtRSzUz?=
- =?utf-8?Q?oJIEsgS8tlaIM3D24haZ?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8af8c7bf-a5d6-4ff7-428d-08dd57aebdcb
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 04:16:58.5205
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR19MB6204
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-12-8d5f5f426eb2@linaro.org>
 
+On Wed, Feb 26, 2025 at 08:31:01PM +0800, Jun Nie wrote:
+> Currently, only 2 pipes are used at most for a plane. A stage structure
+> describes the configuration for a mixer pair. So only one stage is needed
+> for current usage cases. The quad-pipe case will be added in future and 2
+> stages are used in the case. So extend the stage to an array with array
+> size STAGES_PER_PLANE and blend pipes per mixer pair with configuration
+> in the stage structure.
+> 
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 45 +++++++++++++++++++----------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  3 +-
+>  2 files changed, 31 insertions(+), 17 deletions(-)
+> 
+> @@ -463,15 +463,24 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>  		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
+>  			bg_alpha_enable = true;
+>  
+> -		for (i = 0; i < PIPES_PER_PLANE; i++) {
+> -			if (!pstate->pipe[i].sspp)
+> -				continue;
+> -			set_bit(pstate->pipe[i].sspp->idx, fetch_active);
+> -			_dpu_crtc_blend_setup_pipe(crtc, plane,
+> -						   mixer, cstate->num_mixers,
+> -						   pstate->stage,
+> -						   format, fb ? fb->modifier : 0,
+> -						   &pstate->pipe[i], i, stage_cfg);
+> +		/* loop pipe per mixer pair with config in stage structure */
+> +		for (stage = 0; stage < STAGES_PER_PLANE; stage++) {
+> +			head_pipe_in_stage = stage * PIPES_PER_STAGE;
+> +			for (i = 0; i < PIPES_PER_STAGE; i++) {
+> +				pipe_idx = i + head_pipe_in_stage;
+> +				if (!pstate->pipe[pipe_idx].sspp)
+> +					continue;
 
+empty line
 
-On 2/27/25 23:02, Dmitry Baryshkov wrote:
-> On Thu, Feb 27, 2025 at 09:25:05PM +0400, George Moussalem wrote:
->> On 2/27/25 18:59, Dmitry Baryshkov wrote:
->>
->>> On Thu, Feb 27, 2025 at 02:56:41PM +0400, George Moussalem wrote:
->>>> Adding generic support for SoCs with tsens v1.0 IP with no RPM.
->>>> Due to lack of RPM, tsens has to be reset and enabled in the driver
->>>> init.
->>>>
->>>> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
->>>> ---
->>>>  drivers/thermal/qcom/tsens-v1.c | 48 +++++++++++++++++++++++++++++++++
->>>>  drivers/thermal/qcom/tsens.c    | 24 ++++++++++-------
->>>>  drivers/thermal/qcom/tsens.h    |  1 +
->>>>  3 files changed, 64 insertions(+), 9 deletions(-)
->>>>
->>>> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
->>>> index 1a7874676f68..877b27274fd2 100644
->>>> --- a/drivers/thermal/qcom/tsens-v1.c
->>>> +++ b/drivers/thermal/qcom/tsens-v1.c
->>>> @@ -79,6 +79,17 @@ static struct tsens_features tsens_v1_feat = {
->>>>  	.trip_max_temp	= 120000,
->>>>  };
->>>>  
->>>> +static struct tsens_features tsens_v1_no_rpm_feat = {
->>>> +	.ver_major	= VER_1_X_NO_RPM,
->>>> +	.crit_int	= 0,
->>>> +	.combo_int	= 0,
->>>> +	.adc		= 1,
->>>> +	.srot_split	= 1,
->>>> +	.max_sensors	= 11,
->>>> +	.trip_min_temp	= -40000,
->>>> +	.trip_max_temp	= 120000,
->>>> +};
->>>> +
->>>>  static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
->>>>  	/* ----- SROT ------ */
->>>>  	/* VERSION */
->>>> @@ -150,6 +161,43 @@ static int __init init_8956(struct tsens_priv *priv) {
->>>>  	return init_common(priv);
->>>>  }
->>>>  
->>>> +static int __init init_tsens_v1_no_rpm(struct tsens_priv *priv)
->>>> +{
->>>> +	int i, ret;
->>>> +	u32 mask = 0;
->>>> +
->>>> +	ret = init_common(priv);
->>>> +	if (ret < 0) {
->>>> +		dev_err(priv->dev, "Init common failed %d\n", ret);
->>>> +		return ret;
->>>> +	}
->>>> +
->>>> +	ret = regmap_field_write(priv->rf[TSENS_SW_RST], 1);
->>>> +	if (ret) {
->>>> +		dev_err(priv->dev, "Reset failed\n");
->>>> +		return ret;
->>>> +	}
->>>> +
->>>> +	for (i = 0; i < priv->num_sensors; i++)
->>>> +		mask |= BIT(priv->sensor[i].hw_id);
->>>> +
->>>> +	ret = regmap_field_update_bits(priv->rf[SENSOR_EN], mask, mask);
->>>> +	if (ret) {
->>>> +		dev_err(priv->dev, "Sensor Enable failed\n");
->>>> +		return ret;
->>>> +	}
->>>> +
->>>> +	ret = regmap_field_write(priv->rf[TSENS_EN], 1);
->>>> +	if (ret) {
->>>> +		dev_err(priv->dev, "Enable failed\n");
->>>> +		return ret;
->>>> +	}
->>>> +
->>>> +	ret = regmap_field_write(priv->rf[TSENS_SW_RST], 0);
->>>> +
->>>> +	return ret;
->>>> +}
->>>> +
->>>>  static const struct tsens_ops ops_generic_v1 = {
->>>>  	.init		= init_common,
->>>>  	.calibrate	= calibrate_v1,
->>>> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
->>>> index 1f5d4de017d9..f860ea86d130 100644
->>>> --- a/drivers/thermal/qcom/tsens.c
->>>> +++ b/drivers/thermal/qcom/tsens.c
->>>> @@ -447,7 +447,7 @@ static void tsens_set_interrupt(struct tsens_priv *priv, u32 hw_id,
->>>>  	dev_dbg(priv->dev, "[%u] %s: %s -> %s\n", hw_id, __func__,
->>>>  		irq_type ? ((irq_type == 1) ? "UP" : "CRITICAL") : "LOW",
->>>>  		enable ? "en" : "dis");
->>>> -	if (tsens_version(priv) > VER_1_X)
->>>> +	if (tsens_version(priv) > VER_1_X_NO_RPM)
->>> I'd suggest to replace these checks with >= VER_2_X. This saves us from
->>> all the troubles if there is another 1.x 'modification' later on.
->> makes sense, will change to >= VER_2_X. Thanks for the feedback.
-> THanks! It also makes sense to split this into two patches then: one
-> which changes the condition all over the place and the other one which
-> adds VER_1_X_NO_RPM.
-Sounds good, will split into two. Will send v9 shortly..
+> +				lms_in_pair = min(cstate->num_mixers - (stage * PIPES_PER_STAGE),
+> +						  PIPES_PER_STAGE);
+> +				set_bit(pstate->pipe[pipe_idx].sspp->idx, fetch_active);
+> +				_dpu_crtc_blend_setup_pipe(crtc, plane,
+> +							   &mixer[head_pipe_in_stage],
+> +							   lms_in_pair,
+> +							   pstate->stage,
+> +							   format, fb ? fb->modifier : 0,
+> +							   &pstate->pipe[pipe_idx], i,
+> +							   &stage_cfg[stage]);
+> +			}
+>  		}
+>  
+>  		/* blend config update */
 
-Kind regards,
-George
->>>>  		tsens_set_interrupt_v2(priv, hw_id, irq_type, enable);
->>>>  	else
->>>>  		tsens_set_interrupt_v1(priv, hw_id, irq_type, enable);
+[...]
 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> index 5f010d36672cc6440c69779908b315aab285eaf0..74bf3ab9d6cfb8152b32d89a6c66e4d92d5cee1d 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> @@ -34,8 +34,9 @@
+>  #define DPU_MAX_PLANES			4
+>  #endif
+>  
+> -#define PIPES_PER_PLANE			2
+> +#define STAGES_PER_PLANE		1
+>  #define PIPES_PER_STAGE			2
+> +#define PIPES_PER_PLANE			(PIPES_PER_STAGE * STAGES_PER_PLANE)
+
+PLease move this to the previous patch.
+
+With that fixed:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+>  #ifndef DPU_MAX_DE_CURVES
+>  #define DPU_MAX_DE_CURVES		3
+>  #endif
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
