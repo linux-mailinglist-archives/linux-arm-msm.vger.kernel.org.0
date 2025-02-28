@@ -1,260 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-49796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F859A49075
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 05:39:58 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BA98A4909E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 05:55:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C3B816F024
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 04:39:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4AB4F7A889C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 04:54:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BE6D1A9B5D;
-	Fri, 28 Feb 2025 04:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA91E1B415A;
+	Fri, 28 Feb 2025 04:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wDPbUTcF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mz9vsIn2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BCA1ADC9D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 04:39:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC501ADC8C;
+	Fri, 28 Feb 2025 04:54:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740717588; cv=none; b=ouBemkpzjfQ8a6PJMPealbBvoY1YYEAO1GYETN0RRxj2BIcLOXAAMF/ZPGB+/6AjJ6YyxB01JrZPFvLcAGmXIfdkwEWCcIXXARQbExVXiy5buyoPAN7zFNCj+FqYa+ZnmbJlm0snegdtmPeclbCf+I+nHR5uqbC+iR072Ch1BH0=
+	t=1740718471; cv=none; b=kw2yZ4W0eot1VSc/2DbCCkuSymK4eDGdm+KehYx7gWFcTk87f0gpn42c0fAP5zfJB1b6p9Y0IRJ0j9a2OPg4JTf4rnn0clNEMaeo9fC0JBQ3+N7g//KptCSNIVW3EgNxbB2BtQLZ32XmsnbkkRp9M6yoUujo7eDm+yqslTc7/Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740717588; c=relaxed/simple;
-	bh=XBbghQUqoT9zl7hjKLpvNgYWZx4LiZKyyLTJV1lVHKI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qnl8sMRSZm54kuFPMMIrqjcROeawI7rEn9xSD35q0pGnqKB6s0JGOjI7HjfCyfKNec7BjMT+yz00/gni6Pj02zrkDBJYFot1VVneExibct6S57liYtdbpZ0x2pJqbr50dFwkZuW9DskEZnBjU7O2IAnbD7sXdo0gqw5tMqP3Lyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wDPbUTcF; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5494e7ad57fso438074e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 20:39:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740717584; x=1741322384; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=t3/MIfx773wjuQMH+TAWe/YUS0t51KLheOq9LWJO68g=;
-        b=wDPbUTcFjpeysKd0hLn1+207z+korHDfaM74HJMhl21vFckF/ZcvET67pG59yF97+c
-         Pg0rzFcwHidJ8dQli5hO15tXefIPEEth29K5TNQjkWjQtTWet17DUToXS/2MuiVqnTre
-         XPaY4KEgA+iSuJLZkw0o2RzWRamCq/2Pfax4RLAUf12zLlI8/4lcEMwX+tZUNE5nu3zX
-         Nh+fmfHBBUO3SnAnXHgz7Z+hf+M/dyUDq1NICkX5k+//qOR5U///brA3ZCUMEAe3HctS
-         +3sw6H2K2gryTGm5H7TsMk0Xg6d0M0CV0Llzb0YW909kvFn70QJz8ZaG1yHG+ofzYzAc
-         g5sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740717584; x=1741322384;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=t3/MIfx773wjuQMH+TAWe/YUS0t51KLheOq9LWJO68g=;
-        b=YZtjRKaQXjUM7PuokQRsZCMHDoEZuj+jwoy+ZVC4Pr8Bujn+Nkyfhz0qRLLhYgY9fZ
-         nWdxg7QJnQyqYSufX+px/CAxy7CnZTCz9zLfzT1poRM3WkrgPl9QaVALb8nq/5OR8d3g
-         yMSBuFirBh8EN5Ct1lKLopplR/ErimWBOWv4FOtB0qdmAlm5tAw+wAeX+5ge4Nt8fOjm
-         tvPLaOyhscG6sBZPYgxVXIcAwtmrEU04P7mBKC41A+8AT1vwkC/2U9QT8rsWwxTMLh2Z
-         /hm4iQf3AgQgLoyONgj2RwH1y4n2V8l4DQZjtcmLikMKKHNMLk/02WoLZ0ffISicbvAV
-         hvgw==
-X-Forwarded-Encrypted: i=1; AJvYcCVvlPh+RahX3GqEVst9ElAIBsumCWFc3OVTGHjxhh+uazT7khxQ2vQrHhba9ROufok3pfuc9YQD46HDHJQ+@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWIHexIUpP95p5U8OhFphughzo1Mf5iNb6e+6sNxu47xYQM5Kl
-	LVpcROmO59uNXw8E4hzP1QaK2lrREw5xy/H7ey60zQBH7VuE1gogywTM7hcO01w=
-X-Gm-Gg: ASbGncsscoIAXQkN/ITCfz2YFx+kZL5LaNqh+vBwuTNP6YJjXpqbZ78UAPAHVngSael
-	PlcZtd5LPg18+9CVNSXK86mLyV9+JOILYwNKvc/YQTmju1pA45xjozsDEJbw8Y5V9ZYsZ/slPF0
-	+SaGDSzhJ8WXfFfYp1L6iE8X00zMFrvGAgy8UD9gZoUrSESR0hy2X9WZ0fZMIo/lGxxfJjtuu/V
-	4b7S9N2q04O7/Rd585rbnusU1E6L+UhzPP5C9veaCG9vaJLK7i5wSJfX0gefY08a93ArvRpxfQb
-	J1RV4pG2t2PKpF382ZdcDmFKiAxNPv+myUilTRmtmnXhNWCAUPQPEa8J41+RV28avBluZGhwsa7
-	rman35g==
-X-Google-Smtp-Source: AGHT+IFzdRDUvFtdJ8+IGgeDJSTgkwAGTDf8+ZHuGxd9RaHvWBONVJP3iDWwDWh9JCasSnbBlOn/nA==
-X-Received: by 2002:a05:6512:3f04:b0:545:2300:924d with SMTP id 2adb3069b0e04-5494c328342mr684654e87.22.1740717584159;
-        Thu, 27 Feb 2025 20:39:44 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443cd032sm348540e87.243.2025.02.27.20.39.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 20:39:42 -0800 (PST)
-Date: Fri, 28 Feb 2025 06:39:40 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 13/15] drm/msm/dpu: support SSPP assignment for
- quad-pipe case
-Message-ID: <ca2xiobwbga3bet6u4ktsyo62p2l7vvzetkyzkr7ovu6soo4fb@uprexbwa7z6w>
-References: <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-0-8d5f5f426eb2@linaro.org>
- <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-13-8d5f5f426eb2@linaro.org>
+	s=arc-20240116; t=1740718471; c=relaxed/simple;
+	bh=yHSIeOJUETG0EEY7pbf+x/nnCyav8TYXtrP7Y8Cj6m0=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mkPnT3eQZtU85v4VccS8+4/N7NJc7OmQvQLnB84tNigWvA3WmbeoOeo26hI1gg1I637x7dhspALr+W5xmGwVX118J2bpBE2b/vm+u4LN+867cLmgJNi+G7qvhxlQ0/xxjfaAXkcASQTimiQLg8evPkV1U9Ann5soUF+WCGR/wfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mz9vsIn2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51RN8pPO000630;
+	Fri, 28 Feb 2025 04:54:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=vPGnT+WVbb2puZMHMbw9Tu
+	e64f+s3+QUmvR5B1TiTkU=; b=Mz9vsIn2L7m2NyAxxvFWTutn8a6wq/CFf0mAIG
+	obgSspTDtfUugGusSFZne9zhSebRiB2vZ1nqqPPI7uonanKjEsfX1ze07Rmk4Y1U
+	iDKdbLmDlCcC4KUuXatyN/3WM7Jr/V29GHGwO5ojtCMBAP3L2pHd+tsKUys/Ii5T
+	giJb7kcHFiw1tVwiEGgd6zWJeps8Eq7LY4L7/0/iF+HbUkWlGo/zBKP1p1Es6gsD
+	FaYj7tomZiyV3x6/xNM4EFzNQqh3ynIwWuU3ql7ESJI6J6Qn+7BkMX28u9c6EW3i
+	Psb3d52KCRbwV1MpvHn6NMEljEYYdmCarvmj5OPuUpxke1rQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4522skx46j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Feb 2025 04:54:13 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51S4sBnX026359
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Feb 2025 04:54:11 GMT
+Received: from hu-srichara-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 27 Feb 2025 20:54:08 -0800
+From: Sricharan R <quic_srichara@quicinc.com>
+To: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>, <dmitry.baryshkov@linaro.org>,
+        <quic_srichara@quicinc.com>
+Subject: [PATCH V3  0/2] mailbox: tmel-qmp: Introduce QCOM TMEL QMP mailbox driver
+Date: Fri, 28 Feb 2025 10:23:54 +0530
+Message-ID: <20250228045356.3527662-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-13-8d5f5f426eb2@linaro.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cvsKK6V-3GsVY7JZps4NAwwEjuFZySji
+X-Proofpoint-ORIG-GUID: cvsKK6V-3GsVY7JZps4NAwwEjuFZySji
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-27_08,2025-02-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0 priorityscore=1501
+ mlxscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2502280032
 
-On Wed, Feb 26, 2025 at 08:31:02PM +0800, Jun Nie wrote:
-> Currently, SSPPs are assigned to a maximum of two pipes. However,
-> quad-pipe usage scenarios require four pipes and involve configuring
-> two stages. In quad-pipe case, the first two pipes share a set of
-> mixer configurations and enable multi-rect mode when certain
-> conditions are met. The same applies to the subsequent two pipes.
-> 
-> Assign SSPPs to the pipes in each stage using a unified method and
-> to loop the stages accordingly.
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 11 +++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |  2 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 71 ++++++++++++++++++++-----------
->  3 files changed, 58 insertions(+), 26 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 0a053c5888262d863a1e549e14e3aa40a80c3f06..9405453cbf5d852e72a5f954cd8c6aed3a222723 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1366,6 +1366,17 @@ int dpu_crtc_vblank(struct drm_crtc *crtc, bool en)
->  	return 0;
->  }
->  
-> +/**
-> + * dpu_crtc_get_num_lm - Get mixer number in this CRTC pipeline
-> + * @state: Pointer to drm crtc state object
-> + */
-> +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state)
-> +{
-> +	struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
-> +
-> +	return cstate->num_mixers;
-> +}
-> +
->  #ifdef CONFIG_DEBUG_FS
->  static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
->  {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index 0b148f3ce0d7af80ec4ffcd31d8632a5815b16f1..b14bab2754635953da402d09e11a43b9b4cf4153 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -264,4 +264,6 @@ static inline enum dpu_crtc_client_type dpu_crtc_get_client_type(
->  
->  void dpu_crtc_frame_event_cb(struct drm_crtc *crtc, u32 event);
->  
-> +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state);
-> +
->  #endif /* _DPU_CRTC_H_ */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index d67f2ad20b4754ca4bcb759a65a39628b7236b0f..d1d6c91ed0f8e1c62b757ca42546fbc421609f72 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1112,11 +1112,10 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->  	struct dpu_rm_sspp_requirements reqs;
->  	struct dpu_plane_state *pstate;
->  	struct dpu_sw_pipe *pipe;
-> -	struct dpu_sw_pipe *r_pipe;
->  	struct dpu_sw_pipe_cfg *pipe_cfg;
-> -	struct dpu_sw_pipe_cfg *r_pipe_cfg;
-> +	struct dpu_plane *pdpu = to_dpu_plane(plane);
->  	const struct msm_format *fmt;
-> -	int i;
-> +	int i, num_lm, stage_id, num_stages;
->  
->  	if (plane_state->crtc)
->  		crtc_state = drm_atomic_get_new_crtc_state(state,
-> @@ -1124,11 +1123,6 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->  
->  	pstate = to_dpu_plane_state(plane_state);
->  
-> -	pipe = &pstate->pipe[0];
-> -	r_pipe = &pstate->pipe[1];
-> -	pipe_cfg = &pstate->pipe_cfg[0];
-> -	r_pipe_cfg = &pstate->pipe_cfg[1];
-> -
->  	for (i = 0; i < PIPES_PER_PLANE; i++)
->  		pstate->pipe[i].sspp = NULL;
->  
-> @@ -1142,24 +1136,49 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->  
->  	reqs.rot90 = drm_rotation_90_or_270(plane_state->rotation);
->  
-> -	pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> -	if (!pipe->sspp)
-> -		return -ENODEV;
-> -
-> -	if (!dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
-> -					      pipe->sspp,
-> -					      msm_framebuffer_format(plane_state->fb),
-> -					      dpu_kms->catalog->caps->max_linewidth)) {
-> -		/* multirect is not possible, use two SSPP blocks */
-> -		r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> -		if (!r_pipe->sspp)
-> -			return -ENODEV;
-> -
-> -		pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -		pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -
-> -		r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +	num_lm = dpu_crtc_get_num_lm(crtc_state);
-> +	num_stages = (num_lm + 1) / 2;
-> +	for (stage_id = 0; stage_id < num_stages; stage_id++) {
-> +		for (i = stage_id * PIPES_PER_STAGE; i < (stage_id + 1) * PIPES_PER_STAGE; i++) {
-> +			struct dpu_sw_pipe *r_pipe;
-> +			struct dpu_sw_pipe_cfg *r_pipe_cfg;
-> +
-> +			pipe = &pstate->pipe[i];
-> +			pipe_cfg = &pstate->pipe_cfg[i];
-> +
-> +			if (drm_rect_width(&pipe_cfg->src_rect) == 0)
-> +				break;
-> +
-> +			pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> +			if (!pipe->sspp)
-> +				return -ENODEV;
-> +
-> +			/* use solo SSPP for the 2nd pipe in pipe pair */
-> +			if (i % PIPES_PER_STAGE != 0)
-> +				goto use_solo_sspp;
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-With this in place, do we need the nested loops? Wouldn't it be enough
-to loop through the all pipes in a single run, as this condition will
-force solo SSPP for the second pipes?
+The QMP mailbox is the primary means of communication between TME-L SS
+and other subsystem on the SoC. A dedicated pair of inbound and outbound
+mailboxes is implemented for each subsystem/external execution environment
+which needs to communicate with TMEL for security services. The inbound
+mailboxes are used to send IPC requests to TME-L, which are then processed
+by TME-L firmware and accordingly the responses are sent to the requestor
+via outbound mailboxes.
 
-> +
-> +			/*
-> +			 * Check multi-rect opportunity for the 2nd pipe in the
-> +			 * pair. SSPP multi-rect mode cross mixer pairs is not
-> +			 * supported.
-> +			 */
-> +			r_pipe = &pstate->pipe[i + 1];
-> +			r_pipe_cfg = &pstate->pipe_cfg[i + 1];
-> +
-> +			if (drm_rect_width(&r_pipe_cfg->src_rect) != 0 &&
-> +			    dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
-> +							      pipe->sspp,
-> +							      msm_framebuffer_format(plane_state->fb),
-> +							      dpu_kms->catalog->caps->max_linewidth)) {
-> +				i++;
-> +				continue;
-> +			}
-> +use_solo_sspp:
-> +			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +			DPU_DEBUG_PLANE(pdpu, "allocating sspp_%d for pipe %d.\n",
-> +					pipe->sspp->idx - SSPP_NONE, i);
-> +		}
->  	}
->  
->  	return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
-> 
-> -- 
-> 2.34.1
-> 
+It is an IPC transport protocol which is light weight and supports
+a subset of API's. It handles link initialization, negotiation,
+establishment and communication across client(APPSS/BTSS/AUDIOSS)
+and server(TME-L SS).
+
+   -----------------------------------------------       ---------------------------------------------------
+  |                                              |       |                                                 |
+  |                 SOC  CLIENT                  | SOC   |                TME-L  SS                        |
+  |                                              | AHB   |                                                 |
+  |     ----------    ---------   ---------      |       | ------    -------     --------    ------------  |
+  |     |        |    |       |   |       |      | WO    | |     | R |     |     |      |    |SERVICES   | |
+  |     | APPS   |<-->| TMEL  |<->|       |------------->| | IN  |-->|     |     | TMEL |    |--------   | |
+  |     |        |    | COM   |   | QMP   |      | RO    | |     | W | QMP |<--->| COM  |<-->| a) ATTEST | |
+  |     |        |    |       |   |       |<-------------| | OUT |<--|     |     |      |    | b) CRYPTO | |
+  |     |        |    |       |   |       |      |       | |     |   |     |     |      |    | .. more   | |
+  |     ---------     ---------   ---------      |       | ------    -------     -------     ------------  |
+  |                                              |       |                                                 |
+   -----------------------------------------------       --------------------------------------------------
+
+TME-L SS provides different kinds of services like secureboot, remote image authentication,
+key management, crypto, OEM provisioning etc. This patch adds support for remote image
+authentication. Support for rest of the services can be added.
+
+Remote proc driver subscribes to this mailbox and uses the mbox_send_message to use
+TME-L to securely authenticate/teardown the images.
+
+Since clients like same rproc driver use SCM/TMEL across socs, the goal here was to abstract the
+TMEL-QMP SS functionality, so that clients should be able to connect and send messages with
+a common API.
+
+[v3]
+     Patch #1
+     -------
+        Fixed wrappings.
+        Made mailbox-cells as a required property and changed value to '1'.
+        Fixed to use compatible as filename.
+        Renamed compatible as per Krzystof's comments.
+        Dropped unused label.
+
+
+     Patch #2
+     --------
+	Fixed wrong code/comments wrappings.
+        Fixed Kconfig and Makefile entries to right place.
+	Removed unused headers inclusion.
+        Fixed locking, removed the mutexes and having only tx spinlock.
+        Removed the use of global ptr for tmel, made it as device specific.
+        Replaced pr_err/pr_debug with dev_err/dev_dbg in all places.
+        Fixed usage of dev_err_probe.
+        Fixed xlate callback as per comments.
+        Used devm equivalents and kcalloc version as per comments.
+        Removed all un-nessecary wrapper macros for register access, inlined it
+        as per comments.
+        Re-organised the function layout as per comments and make it more readable.
+        Removed the pictures in headers files as per comments.
+        Used Field_prep/get as per comments.
+        Fixed all other comments as well.
+
+    Testing:
+    --------
+    Following tests were done and no issues.
+
+       *)  Checkpatch
+       *)  Codespell
+       *)  Sparse
+       *)  kerneldoc check
+       *)  Kernel lock debugging
+       *)  dt_binding_check and dtbs_check
+
+[v2]
+     Added HW description in the bindings patch.
+     Fixed review comments for bindings from Krzysztof and Dmitry
+     Changed patch#2 driver to add work for mailbox tx processing
+     Cleaned up patch#2 for some checkpatch warnings.
+     There are some checkpatch [CHECK] like below, which looks like false positive.
+
+	CHECK: Macro argument 'm' may be better as '(m)' to avoid precedence issues
+	#1072: FILE: include/linux/mailbox/tmelcom-qmp.h:40:
+	+#define TMEL_MSG_UID_CREATE(m, a)      ((u32)(((m & 0xff) << 8) | (a & 0xff)))
+
+[v1] RFC Post
+
+Sricharan Ramabadhran (2):
+  dt-bindings: mailbox: Document qcom,tmel-qmp
+  mailbox: tmelite-qmp: Introduce TMEL QMP mailbox driver
+
+ .../bindings/mailbox/qcom,ipq5424-tmel.yaml   |  62 ++
+ drivers/mailbox/Kconfig                       |  10 +
+ drivers/mailbox/Makefile                      |   2 +
+ drivers/mailbox/qcom-tmel-qmp.c               | 836 ++++++++++++++++++
+ include/linux/mailbox/tmelcom-qmp.h           | 122 +++
+ 5 files changed, 1032 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
+ create mode 100644 drivers/mailbox/qcom-tmel-qmp.c
+ create mode 100644 include/linux/mailbox/tmelcom-qmp.h
 
 -- 
-With best wishes
-Dmitry
+2.34.1
+
 
