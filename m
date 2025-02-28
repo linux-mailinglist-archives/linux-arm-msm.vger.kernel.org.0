@@ -1,149 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-49783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6853A48EC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 03:41:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B681A48FE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 05:04:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96F2F3B7BAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 02:41:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E63CD3AD0E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 04:03:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8320D19CD01;
-	Fri, 28 Feb 2025 02:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8503015A864;
+	Fri, 28 Feb 2025 04:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="THXMXRvd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CQxYpcq6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855FF192D87
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 02:40:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F05A85626
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 04:04:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740710456; cv=none; b=kxTKqKcD3hvp5WNrPDuo3yRF+hHr40lAcUUlKZsWwfArJeKTQDwTZV63byEbyTSn1yeatBcKYWEQfIHId7M49x+E3SVFhUZbYvvCLdPL+/v6axX+0rzZfTAbMwp1tTHJTdlmWI1id1/re/74kofRdzJt+uh1eCTKD7Ym/hR8Ne8=
+	t=1740715443; cv=none; b=KYWthiuor0Kr1p9sYEzju5jVbB62F2Xw8c18rDWOeBa8lLyqfZNG7fiQwEKXt6h8NY7OfnU0WIiRK2fnL5bqAei3Z9m+4Surj/+LXliYscUrnYeCXPSYfOu93ME0cmfi3K1oXmN24M6OMBZ0mioE+3yMTYg8rIlK4hMqsUH0rOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740710456; c=relaxed/simple;
-	bh=5ERbWujSiKto3U+OO7RC5nldxvAV3Xb1FsVd/34DI+E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VBI7c+1/d0HCaErsDwrrAHJ4YgVD+AksEsQIrQ+b5MS4p4UJvvg18xzegp4p2FHC6+Y6Dr9IDR1P3FSDiUaHEp4Wwwyxcr4/u5l7heIuiDZGqSHocNVHwrizQVc2Vq55jZR8eL+3D522Qa/jMmQ9ZjARcfvwe2tUsNZfdUaNgR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=THXMXRvd; arc=none smtp.client-ip=209.85.208.176
+	s=arc-20240116; t=1740715443; c=relaxed/simple;
+	bh=yjpHU47lcxuI7NezIsym2hhyx+WdaZiRRUZi87/74KA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sC91dfQr8jQbGzz7kzHZqeeqhKt5hg+O5A5+uTHnsNJrJime+CQx2Uk1alDZGhs2RD0HZfQgRxYmD1XHhDLNMSXZO4Yc6S/ZKPpQegMVgcTWbTgqCPXct/4MTRW17jFpquO9l/x7h2oSd3SDf6PCb58OzVcPsr9nhP+YsYdaF00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CQxYpcq6; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30a3092a9ebso17614861fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 18:40:54 -0800 (PST)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-30930b0b420so14332671fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2025 20:04:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740710453; x=1741315253; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C0drAA2PvbJ4hUCTdzmpW/pfB1rIMSFKchoim7lWctY=;
-        b=THXMXRvdIlfXj56fnnVKkVPc6C2OO/0JQlblGwdyclizvvKfuCl80dSXXLPxjQKijP
-         iSN5C+f/n9yhyDH9PqBwmhzk830A0prpcHRcDekKAmcDa7Bs9VOAyyx0725Yl2D20TYv
-         qHaZ40jlDQyi4CgFHKaMndE697BD8lq+H4xOcGu+zRC0jgYqk4YwNsPNqy7np0fcD5uM
-         XoxdYgQhDD/TV0Z3nkemnpREzxLgvUcogVwZi5cxv3wPYiV5bA6JD/TNq4VM29Bt9ADb
-         +fOgXGHb1Bi555pSWO1Hk40Y9nXgZshKhjmBOow2E7ibda+XZHkIlbGVMoS8nKXnNBYn
-         WaFg==
+        d=linaro.org; s=google; t=1740715439; x=1741320239; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qd/SSjZSdsFXpP8Mw5Z4CDkuUKoi98PoVJbFfa8a+ac=;
+        b=CQxYpcq6ft4BwgkFyYLcBYH4d7AkpbdbEHltFgzXFm1mij0oUF8XKRs2xjlm7JpQgo
+         5Zr4mvu2Wa2iNfR3C5SrY8mfFNH2h1UoTlZGYTuRuotDMmKZAXoMhhRa5ljtYUlPhAM+
+         n+yusGsbUEbLXd+31tE2EAQe8EEbGS8c8MDUt7jNLNE6ncnQlm7Akp0Gaba9p+cO1f4D
+         USHQgso6zURMyEYpEwNPYq2sXsmXHL8X9dZmz27VzTSlCVLf6uxSLfzt1gjXhgKYSL2c
+         yWoVdbAkAxdVbU4apO4ZyIXXGTUtwlwWYx7AkrhbbfsqzaxpBmgX11GX+hS0Cvm/wk+t
+         Orjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740710453; x=1741315253;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=C0drAA2PvbJ4hUCTdzmpW/pfB1rIMSFKchoim7lWctY=;
-        b=Ai8oOK77Su02ksTFrEKSsdfBwJvVMhXAhjJoENUE9ynCgLB+cU21garHIySKmpGwiT
-         FUJPFTeoLHPimDXPNyL03p2QfPm33NIKEmBFXOIRRmGaEHwV/h7/xBZwmOJIqfQT6+7O
-         o4cVekJKAkkyry9Zxq4IqRqVBftn9lOBqH6/mZ8ZiqA3xhmhIfw9+dnBI4mwDpw+jGyl
-         rhzn4ZgPWJYLe+zKKuMntjnU5gKOoJLpi8PI4RqTm+tazzUYtHVscI5LI3Bfe5pL6AHx
-         o1I7IEnDJWDQUnBpkjfs0rpsNQIbme5P8pRzuAcW2O+Pk5dfNQlApVDt3vZsGs0g7rl2
-         JI6Q==
-X-Gm-Message-State: AOJu0YxFQe0MTMHXj3XujvhB5QqbYI8NAx7CzDktfxAdUY9wov8Iw72W
-	V4+kAC3ZVMegIb5e/qKNTmifYw4+i6AOVHA46UoCabKO4UnQ060ygjTw7HvrrL8=
-X-Gm-Gg: ASbGncs6rmbY3SgDXqAqysI08M/3dX03DX5ExpJ3higrfCK1s2W9pRODlgcKPIL0d7M
-	cREHLpVSBJop/aDvChvvubsbX13+KVOPjeL49er/Ruvq7khO5zsMAyLcWS50ejm5C6nSWHxHIwU
-	1rhOoW9uxeIbgAql9LwoO2upvaKiJAWc4oTFPb3BUQUI+q9oxkDJIdb3bpvdYlFTBoIbRqkjx/D
-	0o6I8mpm4YY6mrXYU5NGR4tRK/UPC21HtNd5e6mzx1Q7ioREFdbQBHBY/K9I9NDGrqwmWUF4XW1
-	UfZ95vajaQhZf5/5segskbRedCKIuE82NQ==
-X-Google-Smtp-Source: AGHT+IEyA6OYswRzZk6KES4gyk4YksuY5o9aOh5bM9ecrpKh5LG64AXf+j9DZx4ELbV5JDnuU1skDA==
-X-Received: by 2002:a05:651c:b0d:b0:30b:8de7:c877 with SMTP id 38308e7fff4ca-30b932f27f5mr3782391fa.29.1740710452656;
-        Thu, 27 Feb 2025 18:40:52 -0800 (PST)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30b867a7403sm3493881fa.17.2025.02.27.18.40.50
+        d=1e100.net; s=20230601; t=1740715439; x=1741320239;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Qd/SSjZSdsFXpP8Mw5Z4CDkuUKoi98PoVJbFfa8a+ac=;
+        b=a1n7CePl3hmZ1RR2BxCpm3RpvlLIDJJOGwYchxkQDV3LoZDPXh4mkrUvIaBk8Nw6Nb
+         WoD9y3UDLX+1sr5pph4AhagYleeybHncUd69m1MBta0jPVWa/fU96eRWE8qn2o5qQBUH
+         NcqwHK4tP9/xGuuQQkK1BLNnd085kzivgVclaOAM7a4FC9/GtWQzwfSVwjNtex8TYAnL
+         fN31ogMZFFWaMkWbZp1UF2aS/vfEbz9hGZFaOylBMrBNBLCqyRoxQtt2fNz+pHOGWmiB
+         4LNyjlgMtuVWqumHDXKRDgqrDkHgrfi2G/8nMIlZ9H6WlpxLZiSa2IK3Rq6u1d7aERGp
+         EjHA==
+X-Forwarded-Encrypted: i=1; AJvYcCXkwHCa2qQNlN7H9Zn0zZ0LD7tKosuu5WDB7N7d8WXdAMx7vMI7hwnzTavWmdKZkbV4/zoZyzTjXQbjoA58@vger.kernel.org
+X-Gm-Message-State: AOJu0YxyXldaOiue9c4D5tnqywtatvhwIzt8WLua58JHa1/4C+ycCNUp
+	Y7UOt0zlLwRckdKWiQBdimy7m/wYqestiHP+L6dIN4w4apCJRFVO3jYMSL1HleABlsE6okNumM9
+	so9g=
+X-Gm-Gg: ASbGncssgjNGwzBKrVFJadcCd9u7lyejOJIzEqsB3i2BLMevQAsNpRIbnlxBDihrth4
+	xSpXqW9PM/PVZcnr1meIaHBNWvFWyCClsAl8YjRktZu3i/MuRDO7wtuzP1CqmjqGNQ4byztprdz
+	Vq8hr69KHVWOm9m8xglILi95BUw6dzP2t2r2qLesdxahpo64/pjZbDqX9GVM4F9RfvJlqkOpfaA
+	7AWPpFZP/hBcwQJmjWwwVo0QLhLG8tVbEQMsW5XK24qTeNKRx0pnV+X7joOiO+36Bz0T90Et5cG
+	HOgv5CLYX88i3hkI+iU65/OXcVKjhFU8RgupwVwam8ZBi0avgf+Wdm7vM2k4fLagDpA09G8EmSU
+	jbUsCPA==
+X-Google-Smtp-Source: AGHT+IHNQymHd5ykzqnXmyMsW1a5EMx9alc09Hn9+MB6NToh83PZlB6/RNRvKwbTSqirwQlRGlJx9g==
+X-Received: by 2002:a2e:b70f:0:b0:308:eb58:6571 with SMTP id 38308e7fff4ca-30b9341382cmr4665921fa.26.1740715439491;
+        Thu, 27 Feb 2025 20:03:59 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30b962da0ccsm1003861fa.27.2025.02.27.20.03.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 18:40:51 -0800 (PST)
+        Thu, 27 Feb 2025 20:03:58 -0800 (PST)
+Date: Fri, 28 Feb 2025 06:03:55 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 28 Feb 2025 04:40:41 +0200
-Subject: [PATCH 4/4] drm/msm/dpu: remove DSC feature bit for PINGPONG on
- SDM630
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 7/7] drm/msm/dpu: remove DPU_CTL_SPLIT_DISPLAY from CTL
+ blocks on DPU >= 5.0
+Message-ID: <6utf3iirzf7vtotsjxswtiuodt75mtrmhlofvsju5qfdmx7sdk@6mflw7g67ljy>
+References: <20250220-dpu-active-ctl-v1-0-71ca67a564f8@linaro.org>
+ <20250220-dpu-active-ctl-v1-7-71ca67a564f8@linaro.org>
+ <45evxcbkcenkoiufh6vqpq5ngfz3mz62evvjxehmqgp5sd4lo3@a5swxugzf4fm>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250228-dpu-fix-catalog-v1-4-b05d22fbc2b4@linaro.org>
-References: <20250228-dpu-fix-catalog-v1-0-b05d22fbc2b4@linaro.org>
-In-Reply-To: <20250228-dpu-fix-catalog-v1-0-b05d22fbc2b4@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1666;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=5ERbWujSiKto3U+OO7RC5nldxvAV3Xb1FsVd/34DI+E=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnwSIppBKKZZWahn5Gl8puGu+J1APz0T7Ew7c91
- NvB4zUOR9WJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ8EiKQAKCRCLPIo+Aiko
- 1eomB/kBscyXJstvxO1FfWarKxnLaj7+/cQqdJ7b2BZA4oKjEbWHt2gFNgSYoHv7kOWYpUX11BW
- GOEP2C05FVnfyF6dAFFx0mebAYSL3KQGKruZ5UmU/fXl3oAMzp5l3/H8Wav17TR+3S6eREXFEUX
- P6EYdVUAY+SIMsvoVXjsm+MEfBEe6hrDo6xtWeHDslnkniKMMZ8W6mfbNjXmaYMRafQtpOPTg+9
- EzqgYx/i//5cMR3KYNmfD8xzFYv6b1AjfzxcKEYahT3njHxlN0xubMbY9xyrNbULC769joFbum5
- 2HMO77CtKfK4Aaxm3utxQUGoihOPJq58CCHDcD12f+w5MiYE
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <45evxcbkcenkoiufh6vqpq5ngfz3mz62evvjxehmqgp5sd4lo3@a5swxugzf4fm>
 
-The MSM8937 platform doesn't have DSC blocks nor does have it DSC
-registers in the PINGPONG block. Drop the DPU_PINGPONG_DSC feature bit
-from the PINGPONG's feature mask, replacing PINGPONG_SDM845_MASK and
-PINGPONG_SDM845_TE2_MASK with proper bitmasks.
+On Fri, Feb 21, 2025 at 12:37:40AM +0100, Marijn Suijten wrote:
+> On 2025-02-20 12:26:24, Dmitry Baryshkov wrote:
+> > Since DPU 5.0 CTL blocks do not require DPU_CTL_SPLIT_DISPLAY, as single
+> > CTL is used for both interfaces. As both RM and encoder now handle
+> > active CTLs, drop that feature bit.
+> 
+> I was wondering if this bit only existed to ensure the right "pair" of CTLs
+> exist: not on DPU 4.0, but on DPU 3.0 we see that CTL_0 and CTL_2 have this bit
+> but not CTL_1.  Meaning that split display can only work when that specific pair
+> of CTL_0 and CTL_2 is used in conjunction?
 
-Fixes: 7204df5e7e68 ("drm/msm/dpu: add support for SDM660 and SDM630 platforms")
-Reported-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Unfortunately I don't have a deep knowledge of those platforms and I
+don't have a way to test it. My SDM660 board (IFC6560) doesn't have DSI1
+routed anywhere.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h
-index df01227fc36468f4945c03e767e1409ea4fc0896..4fdc9c19a74a0c52ae502b77fb8697a53bef0f97 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h
-@@ -115,14 +115,15 @@ static const struct dpu_pingpong_cfg sdm630_pp[] = {
- 	{
- 		.name = "pingpong_0", .id = PINGPONG_0,
- 		.base = 0x70000, .len = 0xd4,
--		.features = PINGPONG_SDM845_TE2_MASK,
-+		.features = BIT(DPU_PINGPONG_DITHER) |
-+			    BIT(DPU_PINGPONG_TE2),
- 		.sblk = &sdm845_pp_sblk_te,
- 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
- 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
- 	}, {
- 		.name = "pingpong_2", .id = PINGPONG_2,
- 		.base = 0x71000, .len = 0xd4,
--		.features = PINGPONG_SDM845_MASK,
-+		.features = BIT(DPU_PINGPONG_DITHER),
- 		.sblk = &sdm845_pp_sblk,
- 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
- 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14),
+> 
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> 
 
 -- 
-2.39.5
-
+With best wishes
+Dmitry
 
