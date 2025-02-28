@@ -1,205 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-49872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C969DA49F01
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 17:38:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B7057A4A035
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 18:22:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30C1F188282D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 16:38:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 59AE61898F1F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 17:23:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B9C9254861;
-	Fri, 28 Feb 2025 16:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43EA31F4C86;
+	Fri, 28 Feb 2025 17:22:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="0vRvbFFR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68AD28E7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 16:38:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894A41F4C81
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 17:22:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740760702; cv=none; b=aloOu6EsllQ9Pka6EcjY5+2qB9QIDDIqSJOhT87XmG/u5FqlifHUhdpO9YVBVJidKS+Yzn9Dh9k9HwLxulhYSr4SS8J4tatRfo/zxGgq/fQAHykHQruU3bhZaSB+rfTjNWI0EfhyUyZCOewgONULenElpbLz8k+KhpkLXe4pRQs=
+	t=1740763372; cv=none; b=DKeI98Rq7ADjfluk/3eEt8shGLdgzVYN/OmxjOIzIMD9Jw8nEHHrLLRzVsvEijHYvOSKGfkCDWTUh6UIsorgHVhLP+8zx4u4q8PmR6el5i0tClbyZDBrqraBHTLA+Azkc65nW6SjLZNWB+fYok1nYrk/IZ8h4ILHF+eqasyu6Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740760702; c=relaxed/simple;
-	bh=QErM3wHjLyAkdDm7rcn/oamG2MYpwbwyh/uwrbQVH+Y=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=I6dmW1WEwrEwk314FWUrjsbjvwokZ+i4jMU7BbzOkRCQE1S6OeeKEiR3glUod0vvidrtlY8ee4q6IrFYYtoPTwlSwWzTnKhdEIDJjUEV9lz+dxa5PJiKXGYfeSWXWXuGpq3/60SaxwDcvZ/KRV4oH+28aaG/kkG6TcZzO/C6NXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1to3NI-0004MW-V4; Fri, 28 Feb 2025 17:38:08 +0100
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1to3NH-003KIL-36;
-	Fri, 28 Feb 2025 17:38:07 +0100
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1to3NH-000D1T-2r;
-	Fri, 28 Feb 2025 17:38:07 +0100
-Message-ID: <1fcf08fe37a8e14c4acae445d65bd1503b13b6d2.camel@pengutronix.de>
-Subject: Re: [PATCH 3/4] media: platform: qcom/iris: add support for vpu33
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Neil Armstrong <neil.armstrong@linaro.org>, Vikash Garodia
- <quic_vgarodia@quicinc.com>, Dikshita Agarwal <quic_dikshita@quicinc.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Date: Fri, 28 Feb 2025 17:38:07 +0100
-In-Reply-To: <20250225-topic-sm8x50-iris-v10-v1-3-128ef05d9665@linaro.org>
-References: <20250225-topic-sm8x50-iris-v10-v1-0-128ef05d9665@linaro.org>
-	 <20250225-topic-sm8x50-iris-v10-v1-3-128ef05d9665@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1740763372; c=relaxed/simple;
+	bh=/EptXUak4oIDKFwY+d4BF8vrIOm7ZPyHAOn/R5h71TM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=C3sbjWXcGM0YNcHET8dySdACKJqcnpGR/54rA0TfueLrrd2jboOh2ajrF0OQiXnrg5jXspzoG6qIvuVN0iKg/eBEbUEAvMJPqDN4z6+TNyrwoIyWW0eKNyNWRYK/l5ciC1RA/oAanZZ0160p2tE/BfoPcP3Me4n1cAc6w1ERJKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=0vRvbFFR; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-472098e6e75so295221cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 09:22:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1740763369; x=1741368169; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=G/a2UWjgQkqdTI5HsTvQ71onwZTMNWEb7HeWzmw5uT4=;
+        b=0vRvbFFRTajaAJ6kqZCh9pda+Oul3iyMpTlIpgvK6P5DMOnN+pRWPKQOBkbyNbJKb3
+         ThKzDD6M4Z0Hc8CVPJLgyCGmzkWQMs634YU1bi1gNJLOaRQCN5NSW73P96wiSUrneec3
+         iFTrxbFX4Xkmjx5N8OPj79xYF6GfsIQRWHHfPocjOb7DlgdnYAhPscY1E6eq9GeiDCVt
+         CpHapHebITOhVs8bcOx+y11FdpRN+q//DFrPFjTSSf52tVb/JnErCYcib+d9K8+sJTKb
+         oBY6WmNhb1PsVKAXw+hfzuGiHsMXW2f/XSXyQuRIWHLNt0pftck82Dm+Rvc572MGh875
+         B80Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740763369; x=1741368169;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G/a2UWjgQkqdTI5HsTvQ71onwZTMNWEb7HeWzmw5uT4=;
+        b=F/kFuHNwEgvmVgjsB14loNyhJ2kcJdSQSHWlZenvBh4qaGnodLlhBG9GLBQ57wHOx2
+         NNjZi3n/k4inBk+ge7fELAVKvpRO2uQ+zdED9mJ/D4n+cgUm2dF+/nom+skVu3F9J8WR
+         A3j2CqyAcDUzTuLaFvb+SRuTbCOULF/N7ep/4tk6pz2BwGc8MKBOVze0+gaJL84ppLKF
+         6e4q1/hzthacI1iunE7jNRuqHH/Kb5ofZStcCp4giRx6NYxGiTF+5VtSN7ivMPFeroIr
+         EtpRx/gRCJp8+6srDndxlYSSWYquhovUNAbinQrTp7caQYDTKrLVHkskLeWH8Y40r1VU
+         xdHg==
+X-Forwarded-Encrypted: i=1; AJvYcCWHnzkQITIrCl1PXC+3UyjWx5286+La1USw7dyyXq0L8SLfDp8HICmGYGvTU5PqAh6i+JwOWC7oGq7MAfeN@vger.kernel.org
+X-Gm-Message-State: AOJu0YymGs1C6P1S0OhboLoDMDI75urEVEwiYlgmwLDqOkK7vraaTnvS
+	wS7ONLjwzS3VCBglV87nJBwqDt9CgwJqyYSIoKxnKZRbQJgjdiDlq4pxchChRs22AS6SDiM+EzV
+	3iHSoEOYcRk3ERxkUi7aXcRwhwTCDNFdM5OIt
+X-Gm-Gg: ASbGnct5M5d4rjJ4iBkrvTV9F5QtuF2dQE5VaGREaH5xVT+9yzR4IAXKEG6DGf6vLIw
+	x5SnjSSLkXjVsYvCJozFytAuEKXJFxW2fudisLL5tMtLhxFso2AeW3J0KQjJmh2fuY/r3jkWnDU
+	mUDyM=
+X-Google-Smtp-Source: AGHT+IGNihhgUrLxmnJiX8xoYuYEMEiLXOH8BXsKbEk/ejEZR6+wx/qspqpTF/usmPvMS/jdjbhGGnmO2UD7DWsi/6M=
+X-Received: by 2002:a05:622a:54f:b0:471:939c:a304 with SMTP id
+ d75a77b69052e-474bc08cbd6mr4750931cf.8.1740763369149; Fri, 28 Feb 2025
+ 09:22:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+References: <20250218172500.807733-1-tabba@google.com> <20250218172500.807733-5-tabba@google.com>
+ <Z8HjG9WlE3Djouko@x1.local>
+In-Reply-To: <Z8HjG9WlE3Djouko@x1.local>
+From: Fuad Tabba <tabba@google.com>
+Date: Fri, 28 Feb 2025 09:22:12 -0800
+X-Gm-Features: AQ5f1JpBi7_Gh4he9ov3als6nZxEfCC0aiYVThqoBIKa6XINpRRls12Z7Yy9QT4
+Message-ID: <CA+EHjTy60QBnJtMeZsVjOypZxUm5KW0r-Hm6_bEN7On0MLmxjw@mail.gmail.com>
+Subject: Re: [PATCH v4 04/10] KVM: guest_memfd: Add KVM capability to check if
+ guest_memfd is shared
+To: Peter Xu <peterx@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Di, 2025-02-25 at 10:05 +0100, Neil Armstrong wrote:
-> The IRIS acceleration found in the SM8650 platforms uses the vpu33
-> hardware version, and requires a slighly different reset and power off
-> sequences in order to properly get out of runtime suspend.
->=20
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/media/platform/qcom/iris/Makefile          |   1 +
->  drivers/media/platform/qcom/iris/iris_vpu33.c      | 315 +++++++++++++++=
-++++++
->  drivers/media/platform/qcom/iris/iris_vpu_common.h |   1 +
->  3 files changed, 317 insertions(+)
->=20
-> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/pl=
-atform/qcom/iris/Makefile
-> index 35390534534e93f4617c1036a05ca0921567ba1d..6b64c9988505afd9707c70444=
-9d60bb53209229f 100644
-> --- a/drivers/media/platform/qcom/iris/Makefile
-> +++ b/drivers/media/platform/qcom/iris/Makefile
-> @@ -21,6 +21,7 @@ qcom-iris-objs +=3D \
->               iris_vdec.o \
->               iris_vpu2.o \
->               iris_vpu3.o \
-> +             iris_vpu33.o \
->               iris_vpu_buffer.o \
->               iris_vpu_common.o \
-> =20
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu33.c b/drivers/medi=
-a/platform/qcom/iris/iris_vpu33.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..128a050f206f99ec0d43b97ff=
-995fa50d5684150
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu33.c
-> @@ -0,0 +1,315 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights r=
-eserved.
-> + */
-> +
-> +#include <linux/iopoll.h>
-> +#include <linux/reset.h>
-> +
-> +#include "iris_instance.h"
-> +#include "iris_vpu_common.h"
-> +#include "iris_vpu_register_defines.h"
-> +
-> +#define WRAPPER_TZ_BASE_OFFS			0x000C0000
-> +#define AON_BASE_OFFS				0x000E0000
-> +#define AON_MVP_NOC_RESET			0x0001F000
-> +
-> +#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
-> +#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
-> +#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
-> +#define REQ_POWER_DOWN_PREP			BIT(0)
-> +#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
-> +#define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
-> +#define CORE_CLK_RUN				0x0
-> +
-> +#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
-> +#define CTL_AXI_CLK_HALT			BIT(0)
-> +#define CTL_CLK_HALT				BIT(1)
-> +
-> +#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
-> +#define RESET_HIGH				BIT(0)
-> +
-> +#define CPU_CS_AHB_BRIDGE_SYNC_RESET		(CPU_CS_BASE_OFFS + 0x160)
-> +#define CORE_BRIDGE_SW_RESET			BIT(0)
-> +#define CORE_BRIDGE_HW_RESET_DISABLE		BIT(1)
-> +
-> +#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
-> +#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
-> +#define MSK_CORE_POWER_ON			BIT(1)
-> +
-> +#define AON_WRAPPER_MVP_NOC_RESET_REQ		(AON_MVP_NOC_RESET + 0x000)
-> +#define VIDEO_NOC_RESET_REQ			(BIT(0) | BIT(1))
-> +
-> +#define AON_WRAPPER_MVP_NOC_RESET_ACK		(AON_MVP_NOC_RESET + 0x004)
-> +
-> +#define VCODEC_SS_IDLE_STATUSN			(VCODEC_BASE_OFFS + 0x70)
-> +
-> +#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
-> +#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
-> +
-> +#define AON_WRAPPER_MVP_NOC_CORE_SW_RESET	(AON_BASE_OFFS + 0x18)
-> +#define SW_RESET				BIT(0)
-> +#define AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL	(AON_BASE_OFFS + 0x20)
-> +#define NOC_HALT				BIT(0)
-> +#define AON_WRAPPER_SPARE			(AON_BASE_OFFS + 0x28)
-> +
-> +#define VCODEC_DMA_SPARE_3 0x87B8
-> +
-> +static int reset_control_bulk_assert_id(int num_rstcs,
-> +					struct reset_control_bulk_data *rstcs,
-> +					char *id)
-> +{
-> +	int i;
-> +
-> +	for (i =3D 0; i < num_rstcs; ++i) {
-> +		if (!strcmp(rstcs[i].id, id))
-> +			return reset_control_assert(rstcs[i].rstc);
-> +	}
-> +
-> +	return -ENODEV;
-> +}
-> +
-> +static int reset_control_bulk_deassert_id(int num_rstcs,
-> +					  struct reset_control_bulk_data *rstcs,
-> +					  char *id)
-> +{
-> +	int i;
-> +
-> +	for (i =3D 0; i < num_rstcs; ++i) {
-> +		if (!strcmp(rstcs[i].id, id))
-> +			return reset_control_deassert(rstcs[i].rstc);
-> +	}
-> +
-> +	return -ENODEV;
-> +}
+Hi Peter,
 
-Please adapt the abstractions instead of working around them. If the
-driver isn't suited for a single reset_control_bulk_data in iris_core,
-split it into multiple groups, or store the resets individually.
+On Fri, 28 Feb 2025 at 08:24, Peter Xu <peterx@redhat.com> wrote:
+>
+> On Tue, Feb 18, 2025 at 05:24:54PM +0000, Fuad Tabba wrote:
+> > Add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which indicates
+> > that the VM supports shared memory in guest_memfd, or that the
+> > host can create VMs that support shared memory. Supporting shared
+> > memory implies that memory can be mapped when shared with the
+> > host.
+> >
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > ---
+> >  include/uapi/linux/kvm.h | 1 +
+> >  virt/kvm/kvm_main.c      | 4 ++++
+> >  2 files changed, 5 insertions(+)
+> >
+> > diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+> > index 45e6d8fca9b9..117937a895da 100644
+> > --- a/include/uapi/linux/kvm.h
+> > +++ b/include/uapi/linux/kvm.h
+> > @@ -929,6 +929,7 @@ struct kvm_enable_cap {
+> >  #define KVM_CAP_PRE_FAULT_MEMORY 236
+> >  #define KVM_CAP_X86_APIC_BUS_CYCLES_NS 237
+> >  #define KVM_CAP_X86_GUEST_MODE 238
+> > +#define KVM_CAP_GMEM_SHARED_MEM 239
+>
+> I think SHARED_MEM is ok.  Said that, to me the use case in this series is
+> more about "in-place" rather than "shared".
+>
+> In comparison, what I'm recently looking at is a "more" shared mode of
+> guest-memfd where it works almost like memfd.  So all pages will be shared
+> there.
+>
+> That helps me e.g. for the N:1 kvm binding issue I mentioned in another
+> email (in one of my relies in previous version), in which case I want to
+> enable gmemfd folios to be mapped more than once in a process.
+>
+> That'll work there as long as it's fully shared, because all things can be
+> registered in the old VA way, then there's no need to have N:1 restriction.
+> IOW, gmemfd will still rely on mmu notifier for tearing downs, and the
+> gmem->bindings will always be empty.
+>
+> So if this one would be called "in-place", then I'll have my use case as
+> "shared".
 
-At the very least, this could use constant indices instead of linear
-search with string compares.
+I understand what you mean. The naming here is to be consistent with
+the rest of the series. I don't really have a strong opinion. It means
+SHARED_IN_PLACE, but then that would be a mouthful. :)
 
-regards
-Philipp
+> I don't want to add any burden to your series, I think I can still make
+> that one "shared-full"..  So it's more of a pure comment just in case you
+> also think "in-place" suites more, or any name you think can identify
+> "in-place conversions" use case and "complete sharable" use cases.
+>
+> Please also feel free to copy me for newer posts.  I'd be more than happy
+> to know when gmemfd will have a basic fault() function.
+
+I definitely will. Thanks for your comments.
+
+Cheers,
+/fuad
+
+> Thanks,
+>
+> --
+> Peter Xu
+>
 
