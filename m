@@ -1,89 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-49836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11D05A496DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 11:18:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5523A496DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 11:19:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7526E1759A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 10:17:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D32C1881F26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 10:18:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACCB3256C74;
-	Fri, 28 Feb 2025 10:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D74D5255E58;
+	Fri, 28 Feb 2025 10:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MXQHh8SH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="raxQR0X/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1D91FE451
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 10:16:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB86225DAF4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 10:17:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740737782; cv=none; b=jJ6069rouH85BlmRPXNgyMrVWHXvNxsrz0xoYP+L/RZ/fDMQZ5TrfOOdtEa7YmLBkDrkWMdnOJHP7WWnDXjzCqRZgMBFAdq+OBvlS+joKBS7ovhl7TFW5ZVdnQVGhvnV3gvPjPcH1P2lnH840uy7R533g4hqJ2t7dRj4+Nemffw=
+	t=1740737849; cv=none; b=kpNzEfx6j8hQ4ETbqqkQejwihzyS9yLTb70V7+ezlTmJBwLoFCon6AUyAKuCvz6FMJLdC9mNX0lPFvmnRloxFh2hPkgaFDPHpeFNbOq87z5/lgSvLyF3VFpKVRNC2pVIhVkvVAjHhG/DpKesde68Sbd5Z4qIpkKXaRQjMaARkrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740737782; c=relaxed/simple;
-	bh=ElAgw7bPQpwdQMY7KlsMy4E7ti8qBB32uSy2iTZjWX8=;
+	s=arc-20240116; t=1740737849; c=relaxed/simple;
+	bh=b9yW9aKaAj0vv2X4pBwVEAQJxZ6g3pOXCix4VsedwdI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Irzfcn/jvqcmpzQYa5TJyzXa7yWCaRhRpk1vAYE2d8i3cihsv8IRwjojfJ0lxF0jto5FDSOAtzZYNOp7iE0SL3OkpQ/e3QG0VMCSnA2ADnqlJkcOAcAejWHdwVp2nNnKdEyyTckYQ0DQg4eWHUulARN4OwnYTYzJJcY+KztGqDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MXQHh8SH; arc=none smtp.client-ip=209.85.167.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nhaz5Eb4d+pkBO/H89sE7h9u2QHOQVz8GVWA0/7LXrf3IEbj2LaMmj13sPMIXgSldxaB/g/vnzB15kTe+svJh6Ot5ZOA4H/PdEma+QZVvRBqVEZWPX+TuJFqz4hk/V0yFyBtRlUR3w1egmqybpGkh3AcPHacYt+LnwkUMe1jjqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=raxQR0X/; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-546210287c1so1895467e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 02:16:20 -0800 (PST)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5494bc4d796so1027474e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 02:17:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740737778; x=1741342578; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740737846; x=1741342646; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wat92wf7UjNd1anwYmYBV9KhWwXM1sob582ltedV7ts=;
-        b=MXQHh8SHN7qhYLS0Xw/FUgcMg9llu850aedQHyKb7voHyW5x85JkHGawgounFOhokX
-         t6LX6/5EMxU6JFThZ0WjwHXbpc/q8jRhOUWkXZof1WJlql+42iL2c7LgrCTAfXum/gx9
-         2B6zmn2cAZGECvDjau0nA7T+hzM7o31QTEEteL3RUUmlnR47x//jhIRWtF2Q+4ZBRas2
-         MdxQfHAgKHdFSYkstAKQAnifwF4NHxP+uIt92ej2f01jqqRJrxab3bSt/yN65/my9j1I
-         L/MGFLN5/GzgdfGFRhP5lW+YrxyffbWpWT44qRRQ+fTAC7EUdQIUeN2CGS0IFHilJs6I
-         +0OA==
+        bh=BtF5m7Eo7tw5lbKf+07cY2Tp/XNLgGV8I/BZlAp6LwE=;
+        b=raxQR0X//11z6BewOta7agfUypiDhK4ApQngGZqwK+M/3S2fl4OV8WSIpzq8OPdwtN
+         YMmQnIEa9idk8m+Lg15ITcP+7txroImhd/spu9J3hzPt3njZlZwwSTDZirviFGVvLHq4
+         LgK3UXtjhnpBiFWB9hFhw+Az+OVik7TZWbmJiK2v8nLlICYhec6ODatU4mwlSTiBT7uT
+         HBUPBrWymsDYnxgmvn393qOrpJmFlLV5kpTHlZDCwp84Gge5dB621/Mf77BlTB1ughfd
+         TNY0ZcBQPYTPA/zp+C/AcVMGgL70cvPpL2bmzR8DQzYARGqDIbSjL75siqrpZiEfpR9L
+         nbdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740737778; x=1741342578;
+        d=1e100.net; s=20230601; t=1740737846; x=1741342646;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Wat92wf7UjNd1anwYmYBV9KhWwXM1sob582ltedV7ts=;
-        b=fgthHunujYhrR4p38RcVxreRlEVDyOcaNP2cAQU3SzhHnEXhZ/oZk58MIN+Nz33g1T
-         gfZGJFeUyt0iA3lSS+4FUowVemj6TrNt4uvHXMfz4VmdJtheoqBK3/Goyj9kT8pPnaA/
-         x9ih1NXuPNJBw1bS8eoNOGDXiRF1/fkLWffhBZaV/Rva+abctNsuOLRmqfbk51K6Agfm
-         bpBtab0wbpMqY0F6nz4BWphBNi+Mh+zMn0aaxWV0XOOORmmVMtDcossf/vAmHgDOBZYz
-         CgQZWH4mUcEotpzl7kbfbWOR4dO21PquMc++tXIskFJuw2mUTVz3TVcxqPBAtuanXbFN
-         PZhw==
-X-Forwarded-Encrypted: i=1; AJvYcCXtgwktKmOLIgNhgCWomFHsPAzwKpfxWqwHE+GFj9Quf2IUMSSVxpQZB/d5Z4LZRnV+EnaQfFzv3VBp5ePR@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz717IfU4wlUzFyqL79NisHNt6FSzhFTL7BTGiEj3mar2+Jkp4Y
-	+m32V1P5Cao1ruQwdxayU12MVrFjQSJjIB352t4pemYo13Sw9o/m2JT1st5x84Y=
-X-Gm-Gg: ASbGncs/c4PAlGf5rZhlxMLNwlA7CV5IieYptPiCJcE8e5ef8XhLoN/JNlBTUIhRkiT
-	XLKJZVmAOkCbUmEeBSQ1F6YW6pRiHvXr0wwRWNkD8dUTlCto14jsiauMakdfyK+1oYKSjHME4Ek
-	5qx/LzbIg3/X9EROU2t7Mghyk1O/1syn2M6aDXCmKtE18gypuPjpO+OAlJ5hY20RHisWmb+2lQD
-	Im4/xuWp824IuAe5YdzLSBWiUtmlldyakHZyGd99/Vj3iaZMkzKVCkn+8ew4tHfbWYJB2xF5/pb
-	eRmAdLOtShtwxU/CRqhu99Vgi13llxQnbuYQFuMLQuXLXERFGDY7jXpnU5qVYVNFM27STO/aXMe
-	xsl7qpw==
-X-Google-Smtp-Source: AGHT+IGBfL2RkQl+kxLXV/hMApga37HIH6Rl9s2LmnykJ9ZsNHMREbfcwnGOHv1Q2EhRdw2KuDyx9g==
-X-Received: by 2002:a05:6512:1047:b0:545:a1a:5576 with SMTP id 2adb3069b0e04-5494c32905fmr1113184e87.22.1740737778531;
-        Fri, 28 Feb 2025 02:16:18 -0800 (PST)
+        bh=BtF5m7Eo7tw5lbKf+07cY2Tp/XNLgGV8I/BZlAp6LwE=;
+        b=SYtdbuGgsvz7jq5wgZtcFZ4iZkVztm2QOPHWPrzB6uUlQ6VZP0ZU1fxW7XohvlpXG4
+         gP18xz3AWQizsGLXNOp+bz6fcK/qTOinETQdkEtQvEfI3Tynb5saoUXFDFYmumtJ4cwy
+         kg81YhWm4h6OSZmOW1k1JqdqPG2UtZQtwSISOFnRSUappxiGQtts9PdL36HtYTVEo2aN
+         pKk4byluI4EJlf3/jN5aEDzVTKa8fFM9CcVKRYJymOKYjnpROr2sKfsSrPNppuVGcs53
+         y63xqhUOamr10KKKoDJJGEqbsPvHPKYxuoGxuSqvtUV2wA4l7pKULUV9spi489bGdvgN
+         05AQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVVrJYA+BqTM9AMrtleQMRGBNpu75kQclwFxAq9mFYuBhjdNsxO80CIwmFIWikHDWZVJpSOdUqTxnL0Rqzq@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfKmgP9bH08LMXenreXK5VBd75EexWzWfZBPfm0NK8SKMX67jM
+	1lA5FQkVnA2zvuBd+cnebpCroIr39thdUe00AS4XHOVPGuJhqyq7Nk7ncLNesMc=
+X-Gm-Gg: ASbGncvo7cqZXrnQfHNpfTD3PFpOt/UizV2S78yfo22TXpVo+uTomNm51ibWyRiA3KE
+	QxJbA4dGk0KHN8oVYXkX2rAI1mqHaWSXfBEIxm+sSmhvPGPt8VwHGWtYOArHREUxA7z2fLuElLu
+	yyMhO0u3cK2c19e3MsTIs9ZAJ3HGJ6YijMrMlQxzXG1/XvzdKb2LKCQARUmgAglJGoJ7/OHzVbj
+	sHyv1k/m5udE/p5RUNOoSZMUD2QrEBHtZ35pqZYeNh1MsBM7d8STyvKe6XiA87oAzyKV16ZEG7/
+	8EINWCqnOQsuSB4Lr2ZMUdc2AgKBjbLYw/wsFuWAmfDo3zNwNHc6w52Zwl8/WD58MWhRL5ua4/b
+	p4lGt0g==
+X-Google-Smtp-Source: AGHT+IGumV9C8K5BUf/QNt3duu1Cz/DHryWxGnIRVWU5r5VemArqgE7BiCYNujMBRO+d3tj1JXx2Sg==
+X-Received: by 2002:ac2:4641:0:b0:549:54f7:e54 with SMTP id 2adb3069b0e04-54954f70ecfmr305434e87.50.1740737846015;
+        Fri, 28 Feb 2025 02:17:26 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443cb6ccsm445728e87.212.2025.02.28.02.16.15
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443cc9d3sm440219e87.224.2025.02.28.02.17.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2025 02:16:17 -0800 (PST)
-Date: Fri, 28 Feb 2025 12:16:14 +0200
+        Fri, 28 Feb 2025 02:17:24 -0800 (PST)
+Date: Fri, 28 Feb 2025 12:17:22 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/8] drm/msm/dpu: program master INTF value
-Message-ID: <r6lkyug64endt2oos4anz4lqven3rstw3oupfywnrwd3i6qece@zt36tm33lqc2>
-References: <20250228-dpu-active-ctl-v2-0-9a9df2ee5193@linaro.org>
- <20250228-dpu-active-ctl-v2-2-9a9df2ee5193@linaro.org>
- <CAACA6C8-441A-4B6E-AC07-A46094A02126@somainline.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Amit Kucheria <amitk@kernel.org>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, "Rafael J . Wysocki " <rafael@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] thermal/drivers/qcom-spmi-temp-alarm: drop unused driver
+ data
+Message-ID: <u6h3ekbyhlscbf75wz5zc7pusizky4o34i5h3uluch5xi22oba@x7y4mhohlvgx>
+References: <20250228082936.5694-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,99 +92,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAACA6C8-441A-4B6E-AC07-A46094A02126@somainline.org>
+In-Reply-To: <20250228082936.5694-1-johan+linaro@kernel.org>
 
-On Fri, Feb 28, 2025 at 10:23:54AM +0100, Marijn Suijten wrote:
-> On 28 February 2025 05:14:06 CET, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> >If several interfaces are being handled through a single CTL, a main
-> >('master') INTF needs to be programmed into a separate register. Write
-> >corresponding value into that register.
-> >
-> >Co-developed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >---
-> > drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 12 ++++++++++++
-> > drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h |  2 ++
-> > 2 files changed, 14 insertions(+)
-> >
-> >diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> >index 32ab33b314fc44e12ccb935c1695d2eea5c7d9b2..ffff60c4206c6f2833293fdcc56b653f7d3124a5 100644
-> >--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> >+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> >@@ -583,6 +583,9 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
-> > 	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, dsc_active);
-> > 	DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE, merge_3d_active);
-> > 
-> >+	if (cfg->intf_master)
-> >+		DPU_REG_WRITE(c, CTL_INTF_MASTER, BIT(cfg->intf_master - INTF_0));
-> >+
-> > 	if (cfg->cdm)
-> > 		DPU_REG_WRITE(c, CTL_CDM_ACTIVE, cfg->cdm);
-> > }
-> >@@ -625,6 +628,7 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
-> > {
-> > 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-> > 	u32 intf_active = 0;
-> >+	u32 intf_master = 0;
-> > 	u32 wb_active = 0;
-> > 	u32 merge3d_active = 0;
-> > 	u32 dsc_active;
-> >@@ -651,6 +655,14 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
-> > 		intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
-> > 		intf_active &= ~BIT(cfg->intf - INTF_0);
-> > 		DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
-> >+
-> >+		intf_master = DPU_REG_READ(c, CTL_INTF_MASTER);
-> >+
-> >+		/* Unset this intf as master, if it is the current master */
-> >+		if (intf_master == BIT(cfg->intf - INTF_0)) {
-> >+			DPU_DEBUG_DRIVER("Unsetting INTF_%d master\n", cfg->intf - INTF_0);
+On Fri, Feb 28, 2025 at 09:29:36AM +0100, Johan Hovold wrote:
+> The platform device driver data has not been used since commit
+> 7a4ca51b7040 ("thermal/drivers/qcom-spmi: Use devm_iio_channel_get") so
+> drop the unnecessary assignment.
 > 
-> Don't think you want to include my testing ramblings here: we didn't print a message either when the master was _set_, and don't print messages for other register writes either.
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+> 
+> I noticed this when doing some rework for pm8008 last year that I have
+> yet to finish.
+> 
+> This can go in meanwhile.
+> 
+> Johan
+> 
+> 
 
-Okay, I'll drop it.
-
-> 
-> After that:
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
-> >+			DPU_REG_WRITE(c, CTL_INTF_MASTER, 0);
-> >+		}
-> > 	}
-> > 
-> > 	if (cfg->wb) {
-> >diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> >index 85c6c835cc8780e6cb66f3a262d9897c91962935..e95989a2fdda6344d0cb9d3036e6ed22a0458675 100644
-> >--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> >+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> >@@ -36,6 +36,7 @@ struct dpu_hw_stage_cfg {
-> > /**
-> >  * struct dpu_hw_intf_cfg :Describes how the DPU writes data to output interface
-> >  * @intf :                 Interface id
-> >+ * @intf_master:           Master interface id in the dual pipe topology
-> 
-> Not sure if you've seen my comment in v1 about the dual word; maybe the quadpipe series can update it since they might need a master (or two?) as well?
-
-Yes, it should be updated by the quad-pipe series.
-
-> 
-> - Marijn
-> 
-> >  * @mode_3d:               3d mux configuration
-> >  * @merge_3d:              3d merge block used
-> >  * @intf_mode_sel:         Interface mode, cmd / vid
-> >@@ -45,6 +46,7 @@ struct dpu_hw_stage_cfg {
-> >  */
-> > struct dpu_hw_intf_cfg {
-> > 	enum dpu_intf intf;
-> >+	enum dpu_intf intf_master;
-> > 	enum dpu_wb wb;
-> > 	enum dpu_3d_blend_mode mode_3d;
-> > 	enum dpu_merge_3d merge_3d;
-> >
-> 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
