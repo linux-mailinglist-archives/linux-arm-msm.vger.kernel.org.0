@@ -1,82 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-49824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 469BDA49306
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 09:11:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3487A49312
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 09:13:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8DA637AAAFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 08:07:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF69F16F07A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 08:13:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 703F81E0B67;
-	Fri, 28 Feb 2025 08:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C39641FDA7E;
+	Fri, 28 Feb 2025 08:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x2v25klj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Idzy7Jv7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB9C1E0B70
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 08:07:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B201FCFF1;
+	Fri, 28 Feb 2025 08:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740730076; cv=none; b=tFUhpas1JmXURIDv1t38GXwgPdkHL65C8V2aRgW/9Cld9/uuObAOMai96efZMV/35wg6YSPQeu9lUfb/lmYkkxspzFKdkuW6wrceCx+x4nkf0fwGUBmoWkNBA0IGYbZp6gp/pUIr3G4V0gChvIkEWXyFvmAdWgrh/xv7SIxfGB8=
+	t=1740730424; cv=none; b=lN7z8bSnvpv/co+6EC9pAOnF9GY6MiBjC6UhqINraf7JeESz+LD2zDOI1JXSPjuHDQ/lXHbMv9kDwWcx+scKyv4+E4MM6iJRtQ4aSiQBoV3nKDnPTbGaLuP4KROu2gjRmKxBJESj0+i/cjTjqKY2ltVckC0ZCnC4PSSSL5ZQJjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740730076; c=relaxed/simple;
-	bh=av+GYBuah5kwsd+f6ZBwHxLGEhswPUOByxf64TBpD/k=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=mO1MUXJ8NHgECMLft4jO+LR508NTjsbttJD5n4d2B5SmrQ3NEaD2XTixB36n0by/HEF+zQYQnO4cVasB7r5R31JbynKaFVLMvmRbOs8sLxjBxdRSq00eoBIYZI55XZvobBaZoHR3auzVYlFkKLRaqaxyMgEig+OH4Hk4NlfMAcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x2v25klj; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43690d4605dso11642755e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 00:07:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740730073; x=1741334873; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m+8y/RjspiktbX4LE+yHfwUXNlIZh9WBbyGG87aWFoY=;
-        b=x2v25kljxXrJXcOYN0rjiQwsCSloL6w4HBs7z5dU7xJhGNZMWjCl8iSBmQbn7/Zzgc
-         w2A7yoL0qF27ALZChazLRNeaYJmbgIo8CvVR1mqHAfTW4LyuMYseD9Mbj0tyutqqqilt
-         eQXV38Q+54M/PxHAS2l0iWp2yfPP+4Nuj8nJRvKyoZOIIklW4o3tn5X5z4Lt4FR0B2mz
-         ukU83GqhTcZIot+PRhAIsCw+q+pSI4QL6Zi7fBEYAyuht16QgItOOP+nn7yhFsOPYDOI
-         azCt8YxgUwTOtxsDx3fKIPfP34D6ib/I9JpaQn2hHXgivOPgopESMYiPD/62lyN0iPep
-         Is9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740730073; x=1741334873;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=m+8y/RjspiktbX4LE+yHfwUXNlIZh9WBbyGG87aWFoY=;
-        b=KvfbbtxJoDox5TgB67GbFNnixmG9wGwNiaNYQ282FGk8CsUEysuGooQlHRDKVmB8BS
-         u5k9lwneNPpKTuU5ns9xa/7T92pH88scmGS9JA0D0n8WHxsid5k2YAXkabcyDf/QE69t
-         zkgKBji9iNJqQeA/fcfJ+CICfjmhYOlPfFtmziP2kyviCFnWwPr4EPix9Dh4GZcApuWF
-         thTtNiGBipn4DMXrYKTS0925c2LZziUOLNYT28zGRMYyZXct8u5Zhei0djiswdOXR9AF
-         mveu8ZGmMihR4tgJxXFSiZsMD9+oWNg6HDxiODmnGU1GM3tHnzb1eu9E6QYKvtrsUE0C
-         7xdg==
-X-Forwarded-Encrypted: i=1; AJvYcCXjxfRRBjYi4fPlAlCiqmU9rhejD9GGwdNvy5pZAlsqQb6j3Xp+Vkjs0sNxNZkPfJ462odgkEx7piznwBWQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyc6PrEKkjepbvoBAL6RK6M5TOgYgqQ5qB4orWCrsTTil/jVWpT
-	6+nIWutREf/8wxVr8eEEkA8L4tQMUIWhLI1YL4YlprWG/TWfBLGsQfvo70bXiUs=
-X-Gm-Gg: ASbGnctLbu+nEw7sWJkJtL/61HApjR7ljmr4ESBP8D/u3/xphVRBzg8fMvIbjU0X6bf
-	dT7lP+dyCIhuVv9NkV7B8nrVdDDwSRB15y69BL7YS4Zat77XD1k/uJjvizaZQKCA1XIFi3O/DWl
-	eMCWd1TCE+hmcozn3fLX1ThDg3jOWKRCbSFfGVebjv0P4mZYqiYNwwswTM7psN+ICJTrM2lZpgy
-	QVSFTCEPOnEhG/JsVyfVyMnTctGYT0IBGUWWzYwPZ9LszDLDGuaFePMY9mZ1z9HpiPmf/BmHkbs
-	3G+Y38N4qpUcdwsHsdDsmehBCnBRDL8GGCmDOcS56e14VtY5uoCDu+azWVocYIXW4NFynAJkr0S
-	420g=
-X-Google-Smtp-Source: AGHT+IGL1/oR2jv5lxHH3F0hdQ11YJv7QHlrvrb1+UqRBVZtgLJZd8ANUORgj2WPHhjqtZrRd0SoYg==
-X-Received: by 2002:a05:6000:1844:b0:390:db1a:15a9 with SMTP id ffacd0b85a97d-390ec9be589mr1857858f8f.31.1740730072615;
-        Fri, 28 Feb 2025 00:07:52 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:c728:ed22:3bb8:f351? ([2a01:e0a:982:cbb0:c728:ed22:3bb8:f351])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e47b7d12sm4510432f8f.58.2025.02.28.00.07.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Feb 2025 00:07:52 -0800 (PST)
-Message-ID: <9c15f084-ea4b-48e4-add6-c5b0c6de1155@linaro.org>
-Date: Fri, 28 Feb 2025 09:07:51 +0100
+	s=arc-20240116; t=1740730424; c=relaxed/simple;
+	bh=+xI0/YrWmnIyk7d2VJFE2dYzFFjAGnryzVHEBcN1FsA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=siZpv7/L6pqz2JnbYGGLg/13beT3ss321YFVgPzOD7X6K6yAY1r9HCK8Y3AGLJYiBn6FGRJhRzlEAD4plLWUYWUEzcIvcZhqjQF0BGd0kzjFFI6kkVOr1gyNUPN5k5PyqUFdgt1X4jOVc1qXBoWnLXCht+Nq89oe11ZaQd0dpu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Idzy7Jv7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51RK4skq017228;
+	Fri, 28 Feb 2025 08:13:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vk6FL4pS6q3UJRg3aCm+rZsEKLKYZ2ugK1Iil/+G0MA=; b=Idzy7Jv7kbLg0Irc
+	3jduhvEquRpgk/YWXsRoyXtbp4IH/wxvvYmGR8orMpOFbT2ScVhguMALktYCprFo
+	RsWfvqnz31S3mfL1VBpJ9RrVFoR0aVZZ7LoKTG8vW8tv9jvTRSowDPArdFp6jgwd
+	0Z5og+zf8llFLRZLES9xZ6BISSX85+XCjiqYNmqOPhNi/4WfsMjm5AQWBQRrkKUK
+	SSRUoMDYtnjuZbalIdzZXLtlYD2uklqsIfkwnIXaHk02S9DLqEXfFIjCt28XX9Uj
+	BDE4sDcAsrzbny1AYaNguEI6QIo7vjUAMgDmqI5+mekGe4/LlkaD9NAX/+HRts9M
+	iBInbQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 452nqkkem1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Feb 2025 08:13:22 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51S8DLpA027314
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Feb 2025 08:13:21 GMT
+Received: from [10.216.6.99] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Feb
+ 2025 00:13:14 -0800
+Message-ID: <4c81f193-a1d0-4abc-8be5-07c862de8937@quicinc.com>
+Date: Fri, 28 Feb 2025 13:43:12 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,105 +65,93 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 1/3] arm64: dts: qcom: sm8650: fix PMU interrupt flag
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250227-topic-sm8650-pmu-ppi-partition-v3-0-0f6feeefe50f@linaro.org>
- <20250227-topic-sm8650-pmu-ppi-partition-v3-1-0f6feeefe50f@linaro.org>
- <7535057b-b6fc-4831-ac5b-b68903083747@oss.qualcomm.com>
- <Z8Cza7ZZxy3fbBC9@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <Z8Cza7ZZxy3fbBC9@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 3/6] drm/msm/a6xx: Add support for Adreno 623
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Jie Zhang
+	<quic_jiezh@quicinc.com>
+References: <20250228-a623-gpu-support-v2-0-aea654ecc1d3@quicinc.com>
+ <20250228-a623-gpu-support-v2-3-aea654ecc1d3@quicinc.com>
+ <67jiudy4bopd3mzoylj47stuxwc5jdt63akxwn5qqo4dov47za@xcece4v2k3m5>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <67jiudy4bopd3mzoylj47stuxwc5jdt63akxwn5qqo4dov47za@xcece4v2k3m5>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 76zNlMOeirPR6Igo6MqysBl44PxpTEW2
+X-Proofpoint-GUID: 76zNlMOeirPR6Igo6MqysBl44PxpTEW2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-28_02,2025-02-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 adultscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ mlxlogscore=999 suspectscore=0 spamscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502280058
 
-On 27/02/2025 19:48, Stephan Gerhold wrote:
-> On Thu, Feb 27, 2025 at 06:50:31PM +0100, Konrad Dybcio wrote:
->> On 27.02.2025 5:04 PM, Neil Armstrong wrote:
->>> The ARM PMU interrupt is sometimes defined as IRQ_TYPE_LEVEL_LOW,
->>> or IRQ_TYPE_LEVEL_HIGH, but downstream and recent platforms used the
->>> IRQ_TYPE_LEVEL_HIGH flag so align the SM8650 definition to have a
->>> functional PMU working.
->>>
->>> Fixes: c8a346e408cb ("arm64: dts: qcom: Split PMU nodes for heterogeneous CPUs")
->>> Fixes: d2350377997f ("arm64: dts: qcom: add initial SM8650 dtsi")
->>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>> ---
+On 2/28/2025 4:56 AM, Dmitry Baryshkov wrote:
+> On Fri, Feb 28, 2025 at 01:37:51AM +0530, Akhil P Oommen wrote:
+>> From: Jie Zhang <quic_jiezh@quicinc.com>
 >>
->> I couldn't find anything to back this up, not inside, not on Arm's
->> website, but downstream agrees, so..
+>> Add support for Adreno 623 GPU found in QCS8300 chipsets.
 >>
+>> Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> ---
+>>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c   | 29 +++++++++++++++++++++++++++++
+>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |  8 ++++++++
+>>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  2 +-
+>>  drivers/gpu/drm/msm/adreno/adreno_gpu.h     |  5 +++++
+>>  4 files changed, 43 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> index 0ae29a7c8a4d3f74236a35cc919f69d5c0a384a0..1820c167fcee609deee3d49e7b5dd3736da23d99 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> @@ -616,6 +616,14 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+>>  		gpu->ubwc_config.uavflagprd_inv = 2;
+>>  	}
+>>  
+>> +	if (adreno_is_a623(gpu)) {
+>> +		gpu->ubwc_config.highest_bank_bit = 16;
 > 
-> The GIC doesn't really have a notion of LOW vs HIGH in the programmable
-> registers. This is generally a design time parameter, e.g. for GIC-600:
-> 
->    Level-sensitive PPI signals are active-LOW by default, as with
->    previous Arm GIC implementations. However, individual PPI signals can
->    be inverted and synchronized using parameters
->    gic600_<config_name>_PPI<ppi_id>_<cpu_number>_<ppi_number>_<INV/SYNC>.
-> 
->    https://developer.arm.com/documentation/100336/0106/components-and-configuration/redistributor/redistributor-ppi-signals
-> 
-> For Linux it shouldn't really matter, because gic_configure_irq()
-> ignores the polarity and looks only at IRQ_TYPE_LEVEL_MASK.
-> 
-> If you still want this to represent the actual truth, then all hints
-> I can find only back this down (not up) I'm afraid:
-> 
-> Arm® Cortex®‑A520 Core Technical Reference Manual
-> Arm® Cortex®-A720 Core Technical Reference Manual
-> Arm® Cortex®-X4 Core Technical Reference Manual
-> 
->    17.2 Performance monitors interrupts
->    When the PMU generates an interrupt, the nPMUIRQ[n] output is driven LOW.
-> 
->    https://developer.arm.com/documentation/102517/0004/Performance-Monitors-Extension-support-/Performance-monitors-interrupts
->    https://developer.arm.com/documentation/102530/0002/Performance-Monitors-Extension-support-/Performance-monitors-interrupts
->    https://developer.arm.com/documentation/102484/0003/Performance-Monitors-Extension-support-/Performance-monitors-interrupts
-> 
-> So please check if this patch is really needed, otherwise I'd suggest
-> dropping it.
+> Just to doublecheck, the MDSS patch for QCS8300 used HBB=2, which
+> means 15. Is 16 correct here? Or might the be a mistake in the MDSS
+> patch?
 
-Thanks a lot for looking into this !
+https://patchwork.freedesktop.org/patch/632957/
+I see HBB=3 here.
 
-I guess I'll drop this, and we may harmonize all qcom dtsi with LOW.
-
-Neil
+-Akhil
 
 > 
-> Thanks,
-> Stephan
+>> +		gpu->ubwc_config.amsbc = 1;
+>> +		gpu->ubwc_config.rgb565_predicator = 1;
+>> +		gpu->ubwc_config.uavflagprd_inv = 2;
+>> +		gpu->ubwc_config.macrotile_mode = 1;
+>> +	}
+>> +
+>>  	if (adreno_is_a640_family(gpu))
+>>  		gpu->ubwc_config.amsbc = 1;
+>>  
 
 
