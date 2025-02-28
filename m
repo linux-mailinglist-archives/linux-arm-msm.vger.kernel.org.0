@@ -1,396 +1,477 @@
-Return-Path: <linux-arm-msm+bounces-49842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CED2BA498C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 13:06:24 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89A4DA498C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 13:09:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A91643BBE2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 12:06:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83328169D8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 12:09:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E154526A1AB;
-	Fri, 28 Feb 2025 12:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C85C826A1B2;
+	Fri, 28 Feb 2025 12:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lNCuR113"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YZFvzejY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC1B25DD1F;
-	Fri, 28 Feb 2025 12:06:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE4E33E1;
+	Fri, 28 Feb 2025 12:09:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740744375; cv=none; b=pFEffCoFwGqnhT+aJqsD4r1SZ6qmBf9KxD/vOdilSbOS4hmjY1O8l/LfW4vl48s0QqooalVTU5L4Dr+jO1aFIFTPqycrOmcBkWWJyfSq/de0G6MzpK3O9nL0ibAUyTsxJH9p+4wXQNCwdGuf3FHHVHRgJJhRNcTKCBrap2AA1iM=
+	t=1740744593; cv=none; b=jT3bIP8gPCahvzPHV/DyRmfzZzpIfIRUofW3BnGxkO8tDfnCwHAUX82/q9ggo29hl44lRjsbSjJLCY8tQ9pCY8MQZ3+RbIkw5QvzlfNmW9XACBUX+grDH0FN85e/50nBAeRoRDFQe7+7iVhHMCqEOM8oMK9pAqeXgJ/AmpiPR4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740744375; c=relaxed/simple;
-	bh=xCz6URh5N68y/Bpste8IV03k10jt1dkDzC1Mga/T9Mo=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=XUBJXtHh9c5fCF5hv1yz7wj0mO5In41qI2kMd1pDou+JZTcPqRDp8FpwPIjMAWXj84i3U/I9iXZd84rB8XpPBdWk6hO3ZxUZfSFPDbkdQx+qwV+0rKiUQlvMSv3le/zdfD0D3uinhQRA+3hAH6NzZVaf6b4EjPGwgve0qPt0q8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lNCuR113; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1740744593; c=relaxed/simple;
+	bh=t2PDUAB0xRme5ZRaPFI9u0vJmjh2T1vW+CrvrFpxXFE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ORjUjFBqzU2RuJNqkKimJP/ODYq9t+wD0YTP461O8QkuzJc7z8kCfflwgvBrL3L/TtxGO8bXAlrIF45jybxht9dhUcuv0soSXi/eoCqCp5JT/3wxCpdwhKgU8iiKxGq9iDdSSqIzm+8B26mYjK+wpyKj3CfcHy2X7ly/WAXlVGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YZFvzejY; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51SAXGg1031891;
-	Fri, 28 Feb 2025 12:05:49 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51SAXDl3001799;
+	Fri, 28 Feb 2025 12:09:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	m4TF+meqj9oO8mFRWmIHylEZzspy0l0qdWfcYcpeo3I=; b=lNCuR113SCfv9GSo
-	u/TAnOEo+Zts0vh6DlkpfG3WxvCDiOAc21E3olFSCQoyjrmGIF/LE+omrklmHJX8
-	NlmmubpzdgKlZjgtb2C5qhrbZqY/ezXp1eHHLqVf8e2ZWmzh1v3eh7b1EYtygpXu
-	bsTWy8IFIdXi5etVacjRW6GuyDumWKtj+jsajT9EuGGdQPCuuhd9fFlZ250S57eB
-	qYNWe86k6NEsJkZ5dOSUSIcZLS8fiTq+uO2GERk1a2wkqQ9YR85+9i+WqvWb8Qpc
-	DeqyWZ9BvKP/gpV//DQE58HuHm1wExxtRZ1kiNsZgYIWT9LFwvJ6e6rT5aJ9nK2V
-	H2Fdng==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prksafa-1
+	RE/ZpVaQZ6gM9BjEVo8eLoE0ox8V3y1bF7wtyS5IeRY=; b=YZFvzejYD1QPPDwj
+	laWt4w3v42Vak6Akuitz/jCgculi6viPx+GCx3DIuJsqHoytgtd/u1x47tAI3TEg
+	OF3zKOl6aialWja/7fFnnIjI0SEDwYyY6tTqJSlV5eFr97liyCAwwc834BVqpada
+	q3+odh0zPOj/GPj5WMWewZpXTbZsD4pzXDZZLtT/rjSH2k37WUIfG0c4rhoYfk3u
+	nyLI0kOfWRQtRLVPeRjNNAjAwttX3pZJMMveqJgp2rOBV1hjxPL/LVARSwFJ5yA4
+	Q657m1BRoOA3/AmkVDuRdFJG7xpgGH7gmclce+VAuxXYa8MLBxBvYPDSb5IGxkKg
+	fSK13w==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 452ynwt4s6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Feb 2025 12:05:49 +0000 (GMT)
+	Fri, 28 Feb 2025 12:09:41 +0000 (GMT)
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51SC5mvs008689
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51SC9ehM011177
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Feb 2025 12:05:48 GMT
-Received: from [10.253.35.151] (10.80.80.8) by nasanex01a.na.qualcomm.com
+	Fri, 28 Feb 2025 12:09:40 GMT
+Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
  (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Feb
- 2025 04:05:42 -0800
-Message-ID: <3376db36-ffc5-480e-960a-5d808e438ce4@quicinc.com>
-Date: Fri, 28 Feb 2025 20:05:40 +0800
+ 2025 04:09:36 -0800
+Message-ID: <81ddeed3-0fa3-076a-8f73-f41aa9f24b88@quicinc.com>
+Date: Fri, 28 Feb 2025 17:39:33 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v5 0/5] Add PCS support for Qualcomm IPQ9574 SoC
-From: Lei Wei <quic_leiwei@quicinc.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>,
-        Jakub Kicinski
-	<kuba@kernel.org>
-CC: Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Paolo Abeni
-	<pabeni@redhat.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Andrew Lunn
-	<andrew@lunn.ch>,
-        Heiner Kallweit <hkallweit1@gmail.com>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_kkumarcs@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_luoj@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
-        <vsmuthu@qti.qualcomm.com>, <john@phrozen.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20250207-ipq_pcs_6-14_rc1-v5-0-be2ebec32921@quicinc.com>
- <20250211195934.47943371@kernel.org> <Z6x1xD0krK0_eycB@shell.armlinux.org.uk>
- <71a69eb6-9e24-48ab-8301-93ec3ff43cc7@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 3/4] media: platform: qcom/iris: add support for vpu33
 Content-Language: en-US
-In-Reply-To: <71a69eb6-9e24-48ab-8301-93ec3ff43cc7@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Dikshita Agarwal
+	<quic_dikshita@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250225-topic-sm8x50-iris-v10-v1-0-128ef05d9665@linaro.org>
+ <20250225-topic-sm8x50-iris-v10-v1-3-128ef05d9665@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <20250225-topic-sm8x50-iris-v10-v1-3-128ef05d9665@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iyewhzWLqWPW0sumEXL2RcB0hnzjKbZO
-X-Proofpoint-ORIG-GUID: iyewhzWLqWPW0sumEXL2RcB0hnzjKbZO
+X-Proofpoint-ORIG-GUID: Knn2xyFLhz9VoGSrFKmTEj81yvnLp1Om
+X-Proofpoint-GUID: Knn2xyFLhz9VoGSrFKmTEj81yvnLp1Om
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-02-28_02,2025-02-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- adultscore=0 phishscore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502280087
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 clxscore=1015
+ malwarescore=0 impostorscore=0 mlxscore=0 bulkscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2502280088
 
+Hello Neil,
 
+On 2/25/2025 2:35 PM, Neil Armstrong wrote:
+> The IRIS acceleration found in the SM8650 platforms uses the vpu33
+> hardware version, and requires a slighly different reset and power off
+> sequences in order to properly get out of runtime suspend.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  drivers/media/platform/qcom/iris/Makefile          |   1 +
+>  drivers/media/platform/qcom/iris/iris_vpu33.c      | 315 +++++++++++++++++++++
+>  drivers/media/platform/qcom/iris/iris_vpu_common.h |   1 +
+>  3 files changed, 317 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
+> index 35390534534e93f4617c1036a05ca0921567ba1d..6b64c9988505afd9707c704449d60bb53209229f 100644
+> --- a/drivers/media/platform/qcom/iris/Makefile
+> +++ b/drivers/media/platform/qcom/iris/Makefile
+> @@ -21,6 +21,7 @@ qcom-iris-objs += \
+>               iris_vdec.o \
+>               iris_vpu2.o \
+>               iris_vpu3.o \
+> +             iris_vpu33.o \
+>               iris_vpu_buffer.o \
+>               iris_vpu_common.o \
+>  
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu33.c b/drivers/media/platform/qcom/iris/iris_vpu33.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..128a050f206f99ec0d43b97ff995fa50d5684150
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu33.c
+> @@ -0,0 +1,315 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/iopoll.h>
+> +#include <linux/reset.h>
+> +
+> +#include "iris_instance.h"
+> +#include "iris_vpu_common.h"
+> +#include "iris_vpu_register_defines.h"
+> +
+> +#define WRAPPER_TZ_BASE_OFFS			0x000C0000
+> +#define AON_BASE_OFFS				0x000E0000
+> +#define AON_MVP_NOC_RESET			0x0001F000
+> +
+> +#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
+> +#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
+> +#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
+> +#define REQ_POWER_DOWN_PREP			BIT(0)
+> +#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
+> +#define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
+> +#define CORE_CLK_RUN				0x0
+> +
+> +#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
+> +#define CTL_AXI_CLK_HALT			BIT(0)
+> +#define CTL_CLK_HALT				BIT(1)
+> +
+> +#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
+> +#define RESET_HIGH				BIT(0)
+> +
+> +#define CPU_CS_AHB_BRIDGE_SYNC_RESET		(CPU_CS_BASE_OFFS + 0x160)
+> +#define CORE_BRIDGE_SW_RESET			BIT(0)
+> +#define CORE_BRIDGE_HW_RESET_DISABLE		BIT(1)
+> +
+> +#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
+> +#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
+> +#define MSK_CORE_POWER_ON			BIT(1)
+> +
+> +#define AON_WRAPPER_MVP_NOC_RESET_REQ		(AON_MVP_NOC_RESET + 0x000)
+> +#define VIDEO_NOC_RESET_REQ			(BIT(0) | BIT(1))
+> +
+> +#define AON_WRAPPER_MVP_NOC_RESET_ACK		(AON_MVP_NOC_RESET + 0x004)
+> +
+> +#define VCODEC_SS_IDLE_STATUSN			(VCODEC_BASE_OFFS + 0x70)
+> +
+> +#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
+> +#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
+> +
+> +#define AON_WRAPPER_MVP_NOC_CORE_SW_RESET	(AON_BASE_OFFS + 0x18)
+> +#define SW_RESET				BIT(0)
+> +#define AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL	(AON_BASE_OFFS + 0x20)
+> +#define NOC_HALT				BIT(0)
+> +#define AON_WRAPPER_SPARE			(AON_BASE_OFFS + 0x28)
+> +
+> +#define VCODEC_DMA_SPARE_3 0x87B8
+> +
+> +static int reset_control_bulk_assert_id(int num_rstcs,
+> +					struct reset_control_bulk_data *rstcs,
+> +					char *id)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < num_rstcs; ++i) {
+> +		if (!strcmp(rstcs[i].id, id))
+> +			return reset_control_assert(rstcs[i].rstc);
+> +	}
+> +
+> +	return -ENODEV;
+> +}
+> +
+> +static int reset_control_bulk_deassert_id(int num_rstcs,
+> +					  struct reset_control_bulk_data *rstcs,
+> +					  char *id)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < num_rstcs; ++i) {
+> +		if (!strcmp(rstcs[i].id, id))
+> +			return reset_control_deassert(rstcs[i].rstc);
+> +	}
+> +
+> +	return -ENODEV;
+> +}
+> +
+> +static bool iris_vpu33_hw_power_collapsed(struct iris_core *core)
+> +{
+> +	u32 value, pwr_status;
+> +
+> +	value = readl(core->reg_base + WRAPPER_CORE_POWER_STATUS);
+> +	pwr_status = value & BIT(1);
+> +
+> +	return pwr_status ? false : true;
+> +}
+> +
+> +static void iris_vpu33_power_off_hardware(struct iris_core *core)
+> +{
+> +	u32 reg_val = 0, value, i;
+> +	int ret;
+> +	int count = 0;
+> +
+> +	if (iris_vpu33_hw_power_collapsed(core))
+> +		goto disable_power;
+> +
+> +	value = readl(core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
+> +	if (value)
+> +		writel(CORE_CLK_RUN, core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
+> +
+> +	value = readl(core->reg_base + VCODEC_DMA_SPARE_3);
+> +	value |= BIT(0);
+> +	writel(value, core->reg_base + VCODEC_DMA_SPARE_3);
+DMA_SPARE_3 register programming here can be skipped. This register is about
+halting the DMA trasaction during power off, but did not yield desired result
+during our internal trials.
+> +
+> +	for (i = 0; i < core->iris_platform_data->num_vpp_pipe; i++) {
+> +		ret = readl_poll_timeout(core->reg_base + VCODEC_SS_IDLE_STATUSN + 4 * i,
+> +					 reg_val, reg_val & 0x400000, 2000, 20000);
+> +		if (ret)
+> +			goto disable_power;
+> +	}
+> +
+> +	/* set MNoC to low power, set PD_NOC_QREQ (bit 0) */
+> +	value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +	value |= BIT(0);
+> +	writel(value, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +
+> +	value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
+> +
+> +	while ((!(value & BIT(0))) && (value & BIT(1) || value & BIT(2))) {
+> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +		value &= ~BIT(0);
+> +		writel(value, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +
+> +		usleep_range(10, 20);
+> +
+> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +		value |= BIT(0);
+> +		writel(value, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +
+> +		usleep_range(10, 20);
+> +
+> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
+> +
+> +		++count;
+> +		if (count >= 1000)
+> +			break;
+> +	}
+> +
+> +	if (count < 1000) {
+> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +		value &= ~BIT(0);
+> +		writel(value, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+> +	}
+Again, above programming of LPI registers can be limited to below
 
-On 2/19/2025 6:46 PM, Lei Wei wrote:
-> 
-> 
-> On 2/12/2025 6:19 PM, Russell King (Oracle) wrote:
->> On Tue, Feb 11, 2025 at 07:59:34PM -0800, Jakub Kicinski wrote:
->>> On Fri, 7 Feb 2025 23:53:11 +0800 Lei Wei wrote:
->>>> The 'UNIPHY' PCS block in the Qualcomm IPQ9574 SoC provides Ethernet
->>>> PCS and SerDes functions. It supports 1Gbps mode PCS and 10-Gigabit
->>>> mode PCS (XPCS) functions, and supports various interface modes for
->>>> the connectivity between the Ethernet MAC and the external PHYs/Switch.
->>>> There are three UNIPHY (PCS) instances in IPQ9574, supporting the six
->>>> Ethernet ports.
->>>>
->>>> This patch series adds base driver support for initializing the PCS,
->>>> and PCS phylink ops for managing the PCS modes/states. Support for
->>>> SGMII/QSGMII (PCS) and USXGMII (XPCS) modes is being added initially.
->>>>
->>>> The Ethernet driver which handles the MAC operations will create the
->>>> PCS instances and phylink for the MAC, by utilizing the API exported
->>>> by this driver.
->>>>
->>>> While support is being added initially for IPQ9574, the driver is
->>>> expected to be easily extendable later for other SoCs in the IPQ
->>>> family such as IPQ5332.
->>>
->>> Could someone with PHY, or even, dare I say, phylink expertise
->>> take a look here?
->>
->> I've not had the time, sorry. Looking at it now, I have lots of
->> questions over this.
->>
->> 1) clocks.
->>
->> - Patch 2 provides clocks from this driver which are exported to the
->>    NSCCC block that are then used to provide the MII clocks.
->> - Patch 3 consumes clocks from the NSCCC block for use with each PCS.
->>
->> Surely this leads to a circular dependency, where the MSCCC driver
->> can't get the clocks it needs until this driver has initialised, but
->> this driver can't get the clocks it needs for each PCS from the NSCCC
->> because the MSCCC driver needs this driver to initialise.
->>
-> 
-> Sorry for the delay in response. Below is a description of the 
-> dependencies between the PCS/NSSCC drivers during initialization time 
-> and how the clock relationships are set up. Based on this, there should 
-> not any issue due to circular dependency, but please let me know if any 
-> improvement is possible here given the hardware clock dependency. The 
-> module loading order is as follows:
-> 
-> Step 1.) NSCC driver module
-> Step 2.) PCS driver module
-> Step 3.) Ethernet driver module
-> 
-> The 'UNIPHY' PCS clocks (from Serdes to NSSCC) are not needed to be 
-> available at the time of registration of PCS MII clocks (NSSCC to PCS 
-> MII) by the NSSCC driver (Step 1). The PCS MII clocks is registered 
-> before 'UNIPHY' PCS clock is registered, since by default the parent is 
-> initialized to 'xo' clock. Below is the output of clock tree on the 
-> board before the PCS driver is loaded.
-> 
-> xo-board-clk
->      nss_cc_port1_rx_clk_src
->          nss_cc_port1_rx_div_clk_src
->              nss_cc_uniphy_port1_rx_clk
->              nss_cc_port1_rx_clk
-> 
-> The 'UNIPHY' PCS clock is later configured as a parent to the PCS MII 
-> clock at the time when the Ethernet and PCS drivers are enabled (step3) 
-> and the MAC links up. At link up time, the NSSCC driver sets the NSSCC 
-> port clock rate (by configuring the divider) based on the link speed, 
-> during which time the NSSCC port clock's parent is switched to 'UNIPHY' 
-> PCS clock. Below is the clock tree dump after this step.
-> 
-> 7a00000.ethernet-pcs::rx_clk
->      nss_cc_port1_rx_clk_src
->          nss_cc_port1_rx_div_clk_src
->              nss_cc_uniphy_port1_rx_clk
->              nss_cc_port1_rx_clk
-> 
->> 2) there's yet another open coded "_get" function for getting the
->> PCS given a DT node which is different from every other "_get"
->> function - this one checks the parent DT node has an appropriate
->> compatible whereas others don't. The whole poliferation of "_get"
->> methods that are specific to each PCS still needs solving, and I
->> still have the big question around what happens when the PCS driver
->> gets unbound - and whether that causes the kernel to oops. I'm also
->> not a fan of "look up the struct device and then get its driver data".
->> There is *no* locking over accessing the driver data.
->>
-> 
-> The PCS device in IPQ9574 chipset is built into the SoC chip and is not 
-> pluggable. Also, the PCS driver module is not unloadable until the MAC 
-> driver that depends on it is unloaded. Therefore, marking the driver 
-> '.suppress_bind_attrs = true' to disable user unbind action may be good 
-> enough to cover all possible scenarios of device going away for IPQ9574 
-> PCS driver.
-> 
-> To avoid looking up the device and getting its driver data (which is 
-> also seen in other PCS device drivers currently), a common 
-> infrastructure is certainly preferable for the longer term to have a 
-> consistent lookup. As far as I understand, the urgency for the common 
-> infrastructure for lookup is perhaps more to resolve the issue of hot- 
-> pluggable devices going away, and less for devices that do not support it.
-> 
-> Also, the _get() API is only called once during MAC port initialization 
-> and never later, so if the device is not pluggable and unbind is not 
-> possible, there may not be any race concerns when accessing the driver 
-> data using the _get() API. Please let me know if this understanding is 
-> incorrect.
-> 
->> 3) doesn't populate supported_interfaces for the PCS - which would
->> make ipq_pcs_validate() unnecessary until patch 4 (but see 6 below.)
->>
-> 
-> Agree, we will update the patch to advertise 'supported interfaces' and 
-> use the 'pcs_validate' op only for patch4 as you pointed (for filtering 
-> half duplex modes for USXGMII.).
-> [The 'pcs_validate()' was suggested by you and added in the version 3 of 
-> this driver, and at that time, the pcs supported_interfaces is not 
-> introduced.]
-> 
->> 4)
->> "+       /* Nothing to do here as in-band autoneg mode is enabled
->> +        * by default for each PCS MII port."
->>
->> "by default" doesn't matter - what if in-band is disabled and then
->> subsequently enabled.
->>
-> 
-> OK, I will fix this function to handle both in-band neg enabled and 
-> disabled cases in next update.
-> 
->> 5) there seems to be an open-coded decision about the clock rate but
->> there's also ipq_pcs_clk_rate_get() which seems to make the same
->> decision.
->>
-> 
-> I think you may be referring to both ipq_pcs_config_mode() and 
-> ipq_pcs_clk_rate_get() functions having the similar switch case to 
-> decide the clock rate based on the interface mode. I do agree, we can 
-> simplify this by saving the clock rate in ipq_pcs_config_mode() before 
-> the clk_set_rate() is called, and then simply returning this clock rate 
-> from the recalc_rate() op.
-> 
-> 
->> 6) it seems this block has N PCS, but all PCS must operate in the same
->> mode (e.g. one PCS can't operate in SGMII mode, another in USXGMII
->> mode.) Currently, the last "config" wins over previous configs across
->> all interfaces. Is this the best solution? Should we be detecting
->> conflicting configurations? Unfortunately, pcs->supported_interfaces
->> can't really be changed after the PCS is being used, so I guess
->> any such restrictions would need to go in ipq_pcs_validate() which
->> should work fine - although it would mean that a MAC populating
->> its phylink_config->supported_interfaces using pcs->supported_interfaces
->> may end up with too many interface bits set.
->>
-> 
-> I would like to clarify on the hardware supported configurations for the
-> UNIPHY PCS hardware instances. [Note: There are three instances of 
-> 'UNIPHY PCS' in IPQ9574. However we take the example here for PCS0]
-> 
-> UNIPHY PCS0 --> pcs0_mii0..pcs0_mii4 (5 PCS MII channels maximum).
-> Possible combinations: QSGMII (4x 1 SGMII)
->              PSGMII (5 x 1 SGMII),
->              SGMII (1 x 1 SGMII)
->              USXGMII (1 x 1 USXGMII)
-> 
-> As we can see above, different PCS channels in a 'UNIPHY' PCS block 
-> working in different PHY interface modes is not supported by the 
-> hardware. So, it might not be necessary to detect that conflict. If the 
-> interface mode changes from one to another, the same interface mode is 
-> applicable to all the PCS channels that are associated with the UNIPHY 
-> PCS block.
-> 
-> Below is an example of a DTS configuration which depicts one board 
-> configuration where one 'UNIPHY' (PCS0) is connected with a QCA8075 Quad 
-> PHY, it has 4 MII channels enabled and connected with 4 PPE MAC ports, 
-> and all the PCS MII channels are in QSGMII mode. For the 'UNIPHY' 
-> connected with single SGMII or USXGMII PHY (PCS1), only one MII channel 
-> is enabled and connected with one PPE MAC port.
-> 
-> PHY:
-> &mdio {
->      ethernet-phy-package@0 {
->                  compatible = "qcom,qca8075-package";
->                  #address-cells = <1>;
->                  #size-cells = <0>;
->                  reg = <0x10>;
->                  qcom,package-mode = "qsgmii";
-> 
->                  phy0: ethernet-phy@10 {
->                          reg = <0x10>;
->                  };
-> 
->                  phy1: ethernet-phy@11 {
->                          reg = <0x11>;
->                  };
-> 
->                  phy2: ethernet-phy@12 {
->                          reg = <0x12>;
->                  };
-> 
->                  phy3: ethernet-phy@13 {
->                          reg = <0x13>;
->                  };
->      };
->      phy4: ethernet-phy@8 {
->                  compatible ="ethernet-phy-ieee802.3-c45";
->                  reg = <8>;
->          };
-> }
-> 
-> PCS:
-> pcs0: ethernet-pcs@7a00000 {
->      ......
->      pcs0_mii0: pcs-mii@0 {
->          reg = <0>;
->          status = "enabled";
->      };
-> 
->      ......
-> 
->      pcs0_mii3: pcs-mii@3 {
->          reg = <3>;
->          status = "enabled";
->      };
-> };
-> 
-> pcs1: ethernet-pcs@7a10000 {
->      ......
-> 
->      pcs1_mii0: pcs-mii@0 {
->          reg = <0>;
->          status = "enabled";
->      };
-> };
-> 
-> MAC:
-> port@1 {
->      phy-mode = "qsgmii";
->      phy-handle = <&phy0>;
->      pcs-handle = <&pcs0_mii0>;
-> }
-> 
-> port@2 {
->      phy-mode = "qsgmii";
->      phy-handle = <&phy1>;
->      pcs-handle = <&pcs0_mii1>;
-> }
-> port@3 {
->      phy-mode = "qsgmii";
->      phy-handle = <&phy2>;
->      pcs-handle = <&pcs0_mii2>;
-> }
-> port@4 {
->      phy-mode = "qsgmii";
->      phy-handle = <&phy3>;
->      pcs-handle = <&pcs0_mii3>;
-> }
-> port@5 {
->          phy-mode = "usxgmii";
->          phy-handle = <&phy4>;
->          pcs-handle = <&pcs1_mii0>;
-> }
-> 
->> (1), (2) and (6) are probably the major issues at the moment, and (2)
->> has been around for a while.
->>
->> Given (1), I'm just left wondering whether this has been runtime
->> tested, and how the driver model's driver dependencies cope with it
->> if the NSCCC driver is both a clock consumer of/provider to this
->> driver.
->>
-> 
-> Yes, I have tested the PCS driver along with NSSCC driver and PPE 
-> Ethernet driver.
+readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS, reg_val,
+reg_val & 0x1, 200, 2000);
 
-Hi Russell,
-Gentle reminder, to review my responses and provide your comments. Thank 
-you in advance.
+writel(BIT(0), core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+	
+> +
+> +	writel(VIDEO_NOC_RESET_REQ, core->reg_base + AON_WRAPPER_MVP_NOC_RESET_REQ);
+> +
+> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_RESET_ACK,
+> +				 reg_val, reg_val & 0x3, 200, 2000);
+> +	if (ret)
+> +		goto disable_power;
+> +
+> +	writel(0x0, core->reg_base + AON_WRAPPER_MVP_NOC_RESET_REQ);
+> +
+> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_RESET_ACK,
+> +				 reg_val, !(reg_val & 0x3), 200, 2000);
+> +	if (ret)
+> +		goto disable_power;
+Above NOC_RESET handling does not look applicable to SM8650, could you recheck ?
+
+Regards,
+Vikash
+> +
+> +	writel(CORE_BRIDGE_SW_RESET | CORE_BRIDGE_HW_RESET_DISABLE,
+> +	       core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
+> +	writel(CORE_BRIDGE_HW_RESET_DISABLE, core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
+> +	writel(0x0, core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
+> +
+> +disable_power:
+> +	iris_vpu_power_off_hw(core);
+> +}
+> +
+> +static int iris_vpu33_power_off_controller(struct iris_core *core)
+> +{
+> +	u32 rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
+> +	u32 val = 0;
+> +	int ret;
+> +
+> +	writel(MSK_SIGNAL_FROM_TENSILICA | MSK_CORE_POWER_ON, core->reg_base + CPU_CS_X2RPMH);
+> +
+> +	writel(REQ_POWER_DOWN_PREP, core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_CONTROL);
+> +
+> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_STATUS,
+> +				 val, val & BIT(0), 200, 2000);
+> +	if (ret)
+> +		goto disable_power;
+> +
+> +	writel(0x0, core->reg_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL);
+> +
+> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_DEBUG_BRIDGE_LPI_STATUS,
+> +				 val, val == 0, 200, 2000);
+> +	if (ret)
+> +		goto disable_power;
+> +
+> +	writel(CTL_AXI_CLK_HALT | CTL_CLK_HALT,
+> +	       core->reg_base + WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG);
+> +	writel(RESET_HIGH, core->reg_base + WRAPPER_TZ_QNS4PDXFIFO_RESET);
+> +	writel(0x0, core->reg_base + WRAPPER_TZ_QNS4PDXFIFO_RESET);
+> +	writel(0x0, core->reg_base + WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG);
+> +
+> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "bus");
+> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "core");
+> +	usleep_range(1000, 1100);
+> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "bus");
+> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "core");
+> +
+> +	/* Disable MVP NoC clock */
+> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
+> +	val |= NOC_HALT;
+> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
+> +
+> +	/* enable MVP NoC reset */
+> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
+> +	val |= SW_RESET;
+> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
+> +
+> +	/* poll AON spare register bit0 to become zero with 50ms timeout */
+> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_SPARE,
+> +				 val, (val & BIT(0)) == 0, 1000, 50000);
+> +	if (ret)
+> +		goto disable_power;
+> +
+> +	/* enable bit(1) to avoid cvp noc xo reset */
+> +	val = readl(core->reg_base + AON_WRAPPER_SPARE);
+> +	val |= BIT(1);
+> +	writel(val, core->reg_base + AON_WRAPPER_SPARE);
+> +
+> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "xo");
+> +
+> +	/* De-assert MVP NoC reset */
+> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
+> +	val &= ~SW_RESET;
+> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
+> +
+> +	usleep_range(80, 100);
+> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "xo");
+> +
+> +	/* reset AON spare register */
+> +	writel(0, core->reg_base + AON_WRAPPER_SPARE);
+> +
+> +	/* Enable MVP NoC clock */
+> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
+> +	val &= ~NOC_HALT;
+> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
+> +
+> +	iris_disable_unprepare_clock(core, IRIS_CTRL_CLK);
+> +
+> +disable_power:
+> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
+> +	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
+> +
+> +	return 0;
+> +}
+> +
+> +static u64 iris_vpu33_calculate_frequency(struct iris_inst *inst, size_t data_size)
+> +{
+> +	struct platform_inst_caps *caps = inst->core->iris_platform_data->inst_caps;
+> +	struct v4l2_format *inp_f = inst->fmt_src;
+> +	u32 height, width, mbs_per_second, mbpf;
+> +	u64 fw_cycles, fw_vpp_cycles;
+> +	u64 vsp_cycles, vpp_cycles;
+> +	u32 fps = DEFAULT_FPS;
+> +
+> +	width = max(inp_f->fmt.pix_mp.width, inst->crop.width);
+> +	height = max(inp_f->fmt.pix_mp.height, inst->crop.height);
+> +
+> +	mbpf = NUM_MBS_PER_FRAME(height, width);
+> +	mbs_per_second = mbpf * fps;
+> +
+> +	fw_cycles = fps * caps->mb_cycles_fw;
+> +	fw_vpp_cycles = fps * caps->mb_cycles_fw_vpp;
+> +
+> +	vpp_cycles = mult_frac(mbs_per_second, caps->mb_cycles_vpp, (u32)inst->fw_caps[PIPE].value);
+> +	/* 21 / 20 is minimum overhead factor */
+> +	vpp_cycles += max(div_u64(vpp_cycles, 20), fw_vpp_cycles);
+> +
+> +	/* 1.059 is multi-pipe overhead */
+> +	if (inst->fw_caps[PIPE].value > 1)
+> +		vpp_cycles += div_u64(vpp_cycles * 59, 1000);
+> +
+> +	vsp_cycles = fps * data_size * 8;
+> +	vsp_cycles = div_u64(vsp_cycles, 2);
+> +	/* VSP FW overhead 1.05 */
+> +	vsp_cycles = div_u64(vsp_cycles * 21, 20);
+> +
+> +	if (inst->fw_caps[STAGE].value == STAGE_1)
+> +		vsp_cycles = vsp_cycles * 3;
+> +
+> +	return max3(vpp_cycles, vsp_cycles, fw_cycles);
+> +}
+> +
+> +static int iris_vpu33_reset_controller(struct iris_core *core)
+> +{
+> +	u32 rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
+> +
+> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "bus");
+> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "core");
+> +
+> +	usleep_range(1000, 1100);
+> +
+> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "bus");
+> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "core");
+> +
+> +	return 0;
+> +}
+> +
+> +const struct vpu_ops iris_vpu33_ops = {
+> +	.reset_controller = iris_vpu33_reset_controller,
+> +	.power_off_hw = iris_vpu33_power_off_hardware,
+> +	.power_off_controller = iris_vpu33_power_off_controller,
+> +	.calc_freq = iris_vpu33_calculate_frequency,
+> +};
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.h b/drivers/media/platform/qcom/iris/iris_vpu_common.h
+> index c948d8b5aee87ccf1fd53c5518a27294232d8fb8..c4d02a3b884881eb033dc0342f948848adae2819 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.h
+> @@ -10,6 +10,7 @@ struct iris_core;
+>  
+>  extern const struct vpu_ops iris_vpu2_ops;
+>  extern const struct vpu_ops iris_vpu3_ops;
+> +extern const struct vpu_ops iris_vpu33_ops;
+>  
+>  struct vpu_ops {
+>  	int (*reset_controller)(struct iris_core *core);
+>
 
