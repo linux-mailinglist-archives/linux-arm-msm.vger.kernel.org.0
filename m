@@ -1,518 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-49848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D92FBA49979
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 13:37:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18263A49A0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 13:56:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A1DED3A8C91
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 12:37:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1DD113B3B32
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 12:56:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02A4926B2DE;
-	Fri, 28 Feb 2025 12:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8674E26B2DE;
+	Fri, 28 Feb 2025 12:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lWSlAYD7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oklBksJg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18C226B2A7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 12:36:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD6726B2C2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 12:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740746212; cv=none; b=ArZdw8IYQpxO2lH+gNzVPtOQVB14wrqI9yxUfQjRf46xNMAgWm5D+Zrnw35zZhzPDIkqGUjY5yRFwNnPPz1aBjPGjU28o/CDKCswp1RPtAiet/2r16e3QKg/OIb9yAYYP74JVOTs04ykGBDN5BT8+coz8u+p8ETqwq0bE1xDVhg=
+	t=1740747386; cv=none; b=F4lP3yzL7qyGcpt9AonGCI4ztvSIfozvgyNcnmLKWw85sFiErG21rNtr6cri5hL3IEX7ikzQ7TaqGNs+rKCMhslsSseQ3TXMbvdYMTcy4GtkOfbWqt5OD0wx83ZOoOdhpAHvWCEVSB0kRSXVOf40qODwueIDg7RyH0TJsxmt1b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740746212; c=relaxed/simple;
-	bh=t1VnN8328NlYzq1iq6gLc/Hy3NUPG5L9W8w/hEkCFzM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=rIAVZw7SHtF5YwBDKerdm81dxvudM1GpPo8MiAWkncEMDv9sw47eKu+iZaMiw/xa0U3oM4O3xIAWSQWnkoWI/GWLr9yHOZOlRY3mZQuQ2va2D+ReWiPO5nkAqikDLTotL5447K28q8euUXJSqTz+PlilA7otEx7NacLPw6B2yP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lWSlAYD7; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1740747386; c=relaxed/simple;
+	bh=QcUuATZDqaDCzqXNwCHDnbt5KpfVTBt3fQo8n4omq/s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cm9W9V5jQ6BPmfdwxtjrtNJGEIxbyF+iJ43nq+LJcQrwzCbbvt9CsqOGb2Ckoxu9HTHiKARtdZUYUFQOIfRcDd6OOCFsYZs9HvayFQuSrg7ACKfDuMB2zoxn/m5aCf7MXGAMtYrf6a8P8ppFsQguGGvB4KJELlruqIqzXP5w994=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oklBksJg; arc=none smtp.client-ip=209.85.219.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-439a4dec9d5so21738955e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 04:36:50 -0800 (PST)
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e3c8ae3a3b2so1563261276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 04:56:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740746209; x=1741351009; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GTX2OoBoCZWWUzLe/NFcn/6wSduWkagg9IGE3kQbiCA=;
-        b=lWSlAYD7XqrqbXEY8fRPs7vo41tSYzZjrDYH/L3ER21pCqdodfdO1UAM8WAyzp6ohd
-         cWRKDyHeWTpCqOY3yNUQ87PRZtERAU5Ur8j+wOD1P2M91E3B/zwa+WnuI//cPrCDcv2i
-         DISjFxuzqQ59IacI3Im1ub8XjgGMkcqEUXgmQD0T1dwpLUeVpdOjjD9uEX0sJkOPL/nP
-         1zbHHw5rRZKG6brTnOzGy/xByeIrYplRiaBMpbGnNeidsa5q0AMpvOgI54UlZ45tc8E3
-         s4PrGRNk40qL9ewNNXFHAXourfIzvAoBVsTlVSRj3YXGkNZByokJ0scQuMp2PDWlXw+4
-         Dv3Q==
+        d=linaro.org; s=google; t=1740747382; x=1741352182; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DTGCywFA/lKJ54Foy65iVuZAtehZv+71I6e9CYX3m94=;
+        b=oklBksJgi/CG2HzA97Dv7IM8uvDXc66qa/iJ2Ftv7R7RfG0DYtIbMdgXuzgRGAfnAo
+         v59Tu13cW3LCZ+cDLUsYLwd8mRjLYHdSCUCjkIvEDUmW3hN10okMrbxkSszD8n9iOzqZ
+         WV3wHUmOsiE5AP33cw0KI4gSufp+14HibCmlnygx+W7buI+dQVftQHWcGEy2yKOZWZhd
+         W97tBRCDRVkECpkIWTlFaDv9/kzMgEY2qbxKXJoPMuIyKLgDXUtoma2YChCMB8kpZtFe
+         0K29jtjX+MdfrxfUttmgPP/8qm+bFSMUWsbww7Ve+JefhfF4msEJ9BIANbl8Zh14oX72
+         Gh4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740746209; x=1741351009;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GTX2OoBoCZWWUzLe/NFcn/6wSduWkagg9IGE3kQbiCA=;
-        b=iccq7mfN+FgmhWX8gATJ5xemvrRblmFZejtBObaN/aadjYC3OUb0JJpRRzdCQZ8dqS
-         z/3T7w09uIE1Io3dWKtLGOTOkrvfOLrKCtRpoILYv1jQlnGUYNlYKJh1Qvzoc4ewGxuI
-         dgEcZfWx4b+51NrJNUx96uGazcIg2JEPO6ltaLhMrQUoi4ImTybdi4HkIa5MN2XMCtPM
-         qrROtnH4sWVhY+nY7LYIqmcxMoKV+Ouc0Hfn9u5RwQHazxGR0t/4i7V1ntZRQYzAhxmU
-         pYzoiDNWWdDC+WP1ry03t8adDrounyb5bWrXgGtWx9yQGE9CTZmpO5hH6Be6TWWoh6Bk
-         NfKg==
-X-Gm-Message-State: AOJu0YzZrhvEspKIbAao9CWao5zir3k46tAeyDy8fari058ukWxIGRu8
-	agEyv3nvimhzsHLIC2GUd//LGzBfS/7X9uyyOLXLWXR2NGxJMbxCebKYlnZmLfo=
-X-Gm-Gg: ASbGnctmZscoExIFvrSz9C69OWHwVfnLSY/xrTF/USAW98iAYGebKMnkrdJBa8iEDXf
-	1HAbL7q/nDEukhSgfk3c0ZkdhuPQJdkqDAJQR4V3tramNnS/OaLvT535jZk4wIJPek+AwtUK+Ru
-	xvhuA5cLXrrU89WbW4Fwd0uvB7KFDpItx/TnALhvCAHc4KbHowdaT9jCcpNsY0u8s1A4rPQlnnQ
-	uMaDP/ALA+UcM9XaZ9aUgdaI2XkEE/LTEMQqsjK50I/EEWHwQOG60qYudu+tYhmNNQg2xUL2M7j
-	KLETurhklBxVrCUHlqvUIcXewtPYYop6WSkNuamhLg1uzgAHIL4k+22D43GPUg6DqwMngJPxKd2
-	zeY0=
-X-Google-Smtp-Source: AGHT+IGJeaWh2AFLoCns6uInmEiFYCAdJD5yRpUAb31Sry+7WJ2O27eo1SiUw0kTuj3PZ0t7MAq8HA==
-X-Received: by 2002:a05:600c:1d8e:b0:439:b565:f457 with SMTP id 5b1f17b1804b1-43ba675c3afmr27956905e9.27.1740746208991;
-        Fri, 28 Feb 2025 04:36:48 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:c728:ed22:3bb8:f351? ([2a01:e0a:982:cbb0:c728:ed22:3bb8:f351])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43b736f839asm55473615e9.2.2025.02.28.04.36.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Feb 2025 04:36:48 -0800 (PST)
-Message-ID: <4286e8a9-9162-4af2-8b23-c6f0390b8235@linaro.org>
-Date: Fri, 28 Feb 2025 13:36:48 +0100
+        d=1e100.net; s=20230601; t=1740747382; x=1741352182;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DTGCywFA/lKJ54Foy65iVuZAtehZv+71I6e9CYX3m94=;
+        b=f9Hb/h6LHVFTWZqxP1kkZbsX0mLw3S3T/iyKvj8OKznV4tybWACSnyhjMKdXZywuvi
+         U5U4CwIkXDYCZ+TUAxM4M5LYaAk0GpfirxP+5s2Gi5Sp4Qqu0d4n5xMbqDQNWJS97jCm
+         SsA7mkFMNXJs4/xvfHHQ7FJGmBfnJTmFNFBDQqagM0Q/a1VvNJ9wzAujNQamIRSmkCv4
+         IlON1E5iieCLVdIZ+5FmVYvXu8yuZ+q3gxCqtv8bnp2kh/48TE67UUmGUGMvNuixWmUc
+         fxccB3ALNsiM+PLCm87i3YVfvjDBrV26MqLW5iGY5DqANe/w39LfDWMLfkBfDWkUlNBR
+         wfqA==
+X-Forwarded-Encrypted: i=1; AJvYcCWHo6R31qSMcDQNtp93X9wDwDvfv/1agsThDiW6fPZN9BrHXbHXUeTxQDquknBzdzCcFq1gyoXFVkhxtdIA@vger.kernel.org
+X-Gm-Message-State: AOJu0YwSFgQzsFdf4CoZzMpo1uAy8CNhced0i9q8KvpkOGoAvEC/DvPj
+	Z3UVESYcs7hBmfPPNOY2NniUi85h1TvvjzEZ82eqyzHTc7K6c85bfaveLVypjoYfUUOUsqIJl5m
+	1x+CHV9KlUe0k32JCQJyuLHTeVpLrsHk/3Z3Q1Q==
+X-Gm-Gg: ASbGncssTXFcdY0R/U5dDG+PPUuVq0ysWOujNHV9f3UKuDna/Rl7oW/i7CRdYHSlSBW
+	GOABGPxhOj69UiBjGdnrO+bfyA8fw933lCbv0By6JgHdZp8hoCWvd1fkdi4NGsPpnD8YnyFHKcl
+	gf6iYAIv0=
+X-Google-Smtp-Source: AGHT+IEgx8PWrXk4YwKsz1DBhe40DKB5Jr6qJyXMx6+X/MoJZz0+V/5dbn2iAtmsHRF32R5oGfjBLaMrRbF4zGOeWbI=
+X-Received: by 2002:a05:6902:26c9:b0:e60:983e:f3d6 with SMTP id
+ 3f1490d57ef6-e60b2eb2a54mr3178855276.22.1740747382106; Fri, 28 Feb 2025
+ 04:56:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 3/4] media: platform: qcom/iris: add support for vpu33
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250225-topic-sm8x50-iris-v10-v1-0-128ef05d9665@linaro.org>
- <20250225-topic-sm8x50-iris-v10-v1-3-128ef05d9665@linaro.org>
- <81ddeed3-0fa3-076a-8f73-f41aa9f24b88@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <81ddeed3-0fa3-076a-8f73-f41aa9f24b88@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-0-8d5f5f426eb2@linaro.org>
+ <20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-13-8d5f5f426eb2@linaro.org>
+ <ca2xiobwbga3bet6u4ktsyo62p2l7vvzetkyzkr7ovu6soo4fb@uprexbwa7z6w>
+In-Reply-To: <ca2xiobwbga3bet6u4ktsyo62p2l7vvzetkyzkr7ovu6soo4fb@uprexbwa7z6w>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Fri, 28 Feb 2025 20:56:11 +0800
+X-Gm-Features: AQ5f1JqP-1M6CXkD__nuPqEW9QDJY_QB45QigdFKQ_yi2VAR4ssCX691WtTs-2E
+Message-ID: <CABymUCMuEY5XGyVuZ4OXLKenawRSTWn6Mk6VgBtz0-0oCMPC_A@mail.gmail.com>
+Subject: Re: [PATCH v7 13/15] drm/msm/dpu: support SSPP assignment for
+ quad-pipe case
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 28/02/2025 13:09, Vikash Garodia wrote:
-> Hello Neil,
-> 
-> On 2/25/2025 2:35 PM, Neil Armstrong wrote:
->> The IRIS acceleration found in the SM8650 platforms uses the vpu33
->> hardware version, and requires a slighly different reset and power off
->> sequences in order to properly get out of runtime suspend.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/media/platform/qcom/iris/Makefile          |   1 +
->>   drivers/media/platform/qcom/iris/iris_vpu33.c      | 315 +++++++++++++++++++++
->>   drivers/media/platform/qcom/iris/iris_vpu_common.h |   1 +
->>   3 files changed, 317 insertions(+)
->>
->> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
->> index 35390534534e93f4617c1036a05ca0921567ba1d..6b64c9988505afd9707c704449d60bb53209229f 100644
->> --- a/drivers/media/platform/qcom/iris/Makefile
->> +++ b/drivers/media/platform/qcom/iris/Makefile
->> @@ -21,6 +21,7 @@ qcom-iris-objs += \
->>                iris_vdec.o \
->>                iris_vpu2.o \
->>                iris_vpu3.o \
->> +             iris_vpu33.o \
->>                iris_vpu_buffer.o \
->>                iris_vpu_common.o \
->>   
->> diff --git a/drivers/media/platform/qcom/iris/iris_vpu33.c b/drivers/media/platform/qcom/iris/iris_vpu33.c
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..128a050f206f99ec0d43b97ff995fa50d5684150
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/iris/iris_vpu33.c
->> @@ -0,0 +1,315 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#include <linux/iopoll.h>
->> +#include <linux/reset.h>
->> +
->> +#include "iris_instance.h"
->> +#include "iris_vpu_common.h"
->> +#include "iris_vpu_register_defines.h"
->> +
->> +#define WRAPPER_TZ_BASE_OFFS			0x000C0000
->> +#define AON_BASE_OFFS				0x000E0000
->> +#define AON_MVP_NOC_RESET			0x0001F000
->> +
->> +#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
->> +#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
->> +#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
->> +#define REQ_POWER_DOWN_PREP			BIT(0)
->> +#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
->> +#define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
->> +#define CORE_CLK_RUN				0x0
->> +
->> +#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
->> +#define CTL_AXI_CLK_HALT			BIT(0)
->> +#define CTL_CLK_HALT				BIT(1)
->> +
->> +#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
->> +#define RESET_HIGH				BIT(0)
->> +
->> +#define CPU_CS_AHB_BRIDGE_SYNC_RESET		(CPU_CS_BASE_OFFS + 0x160)
->> +#define CORE_BRIDGE_SW_RESET			BIT(0)
->> +#define CORE_BRIDGE_HW_RESET_DISABLE		BIT(1)
->> +
->> +#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
->> +#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
->> +#define MSK_CORE_POWER_ON			BIT(1)
->> +
->> +#define AON_WRAPPER_MVP_NOC_RESET_REQ		(AON_MVP_NOC_RESET + 0x000)
->> +#define VIDEO_NOC_RESET_REQ			(BIT(0) | BIT(1))
->> +
->> +#define AON_WRAPPER_MVP_NOC_RESET_ACK		(AON_MVP_NOC_RESET + 0x004)
->> +
->> +#define VCODEC_SS_IDLE_STATUSN			(VCODEC_BASE_OFFS + 0x70)
->> +
->> +#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
->> +#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
->> +
->> +#define AON_WRAPPER_MVP_NOC_CORE_SW_RESET	(AON_BASE_OFFS + 0x18)
->> +#define SW_RESET				BIT(0)
->> +#define AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL	(AON_BASE_OFFS + 0x20)
->> +#define NOC_HALT				BIT(0)
->> +#define AON_WRAPPER_SPARE			(AON_BASE_OFFS + 0x28)
->> +
->> +#define VCODEC_DMA_SPARE_3 0x87B8
->> +
->> +static int reset_control_bulk_assert_id(int num_rstcs,
->> +					struct reset_control_bulk_data *rstcs,
->> +					char *id)
->> +{
->> +	int i;
->> +
->> +	for (i = 0; i < num_rstcs; ++i) {
->> +		if (!strcmp(rstcs[i].id, id))
->> +			return reset_control_assert(rstcs[i].rstc);
->> +	}
->> +
->> +	return -ENODEV;
->> +}
->> +
->> +static int reset_control_bulk_deassert_id(int num_rstcs,
->> +					  struct reset_control_bulk_data *rstcs,
->> +					  char *id)
->> +{
->> +	int i;
->> +
->> +	for (i = 0; i < num_rstcs; ++i) {
->> +		if (!strcmp(rstcs[i].id, id))
->> +			return reset_control_deassert(rstcs[i].rstc);
->> +	}
->> +
->> +	return -ENODEV;
->> +}
->> +
->> +static bool iris_vpu33_hw_power_collapsed(struct iris_core *core)
->> +{
->> +	u32 value, pwr_status;
->> +
->> +	value = readl(core->reg_base + WRAPPER_CORE_POWER_STATUS);
->> +	pwr_status = value & BIT(1);
->> +
->> +	return pwr_status ? false : true;
->> +}
->> +
->> +static void iris_vpu33_power_off_hardware(struct iris_core *core)
->> +{
->> +	u32 reg_val = 0, value, i;
->> +	int ret;
->> +	int count = 0;
->> +
->> +	if (iris_vpu33_hw_power_collapsed(core))
->> +		goto disable_power;
->> +
->> +	value = readl(core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
->> +	if (value)
->> +		writel(CORE_CLK_RUN, core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
->> +
->> +	value = readl(core->reg_base + VCODEC_DMA_SPARE_3);
->> +	value |= BIT(0);
->> +	writel(value, core->reg_base + VCODEC_DMA_SPARE_3);
-> DMA_SPARE_3 register programming here can be skipped. This register is about
-> halting the DMA trasaction during power off, but did not yield desired result
-> during our internal trials.
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2025=E5=B9=B42=E6=
+=9C=8828=E6=97=A5=E5=91=A8=E4=BA=94 12:39=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Wed, Feb 26, 2025 at 08:31:02PM +0800, Jun Nie wrote:
+> > Currently, SSPPs are assigned to a maximum of two pipes. However,
+> > quad-pipe usage scenarios require four pipes and involve configuring
+> > two stages. In quad-pipe case, the first two pipes share a set of
+> > mixer configurations and enable multi-rect mode when certain
+> > conditions are met. The same applies to the subsequent two pipes.
+> >
+> > Assign SSPPs to the pipes in each stage using a unified method and
+> > to loop the stages accordingly.
+> >
+> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 11 +++++
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |  2 +
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 71 ++++++++++++++++++++---=
+--------
+> >  3 files changed, 58 insertions(+), 26 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm=
+/msm/disp/dpu1/dpu_crtc.c
+> > index 0a053c5888262d863a1e549e14e3aa40a80c3f06..9405453cbf5d852e72a5f95=
+4cd8c6aed3a222723 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > @@ -1366,6 +1366,17 @@ int dpu_crtc_vblank(struct drm_crtc *crtc, bool =
+en)
+> >       return 0;
+> >  }
+> >
+> > +/**
+> > + * dpu_crtc_get_num_lm - Get mixer number in this CRTC pipeline
+> > + * @state: Pointer to drm crtc state object
+> > + */
+> > +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state)
+> > +{
+> > +     struct dpu_crtc_state *cstate =3D to_dpu_crtc_state(state);
+> > +
+> > +     return cstate->num_mixers;
+> > +}
+> > +
+> >  #ifdef CONFIG_DEBUG_FS
+> >  static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
+> >  {
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm=
+/msm/disp/dpu1/dpu_crtc.h
+> > index 0b148f3ce0d7af80ec4ffcd31d8632a5815b16f1..b14bab2754635953da402d0=
+9e11a43b9b4cf4153 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > @@ -264,4 +264,6 @@ static inline enum dpu_crtc_client_type dpu_crtc_ge=
+t_client_type(
+> >
+> >  void dpu_crtc_frame_event_cb(struct drm_crtc *crtc, u32 event);
+> >
+> > +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state);
+> > +
+> >  #endif /* _DPU_CRTC_H_ */
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/dr=
+m/msm/disp/dpu1/dpu_plane.c
+> > index d67f2ad20b4754ca4bcb759a65a39628b7236b0f..d1d6c91ed0f8e1c62b757ca=
+42546fbc421609f72 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > @@ -1112,11 +1112,10 @@ static int dpu_plane_virtual_assign_resources(s=
+truct drm_crtc *crtc,
+> >       struct dpu_rm_sspp_requirements reqs;
+> >       struct dpu_plane_state *pstate;
+> >       struct dpu_sw_pipe *pipe;
+> > -     struct dpu_sw_pipe *r_pipe;
+> >       struct dpu_sw_pipe_cfg *pipe_cfg;
+> > -     struct dpu_sw_pipe_cfg *r_pipe_cfg;
+> > +     struct dpu_plane *pdpu =3D to_dpu_plane(plane);
+> >       const struct msm_format *fmt;
+> > -     int i;
+> > +     int i, num_lm, stage_id, num_stages;
+> >
+> >       if (plane_state->crtc)
+> >               crtc_state =3D drm_atomic_get_new_crtc_state(state,
+> > @@ -1124,11 +1123,6 @@ static int dpu_plane_virtual_assign_resources(st=
+ruct drm_crtc *crtc,
+> >
+> >       pstate =3D to_dpu_plane_state(plane_state);
+> >
+> > -     pipe =3D &pstate->pipe[0];
+> > -     r_pipe =3D &pstate->pipe[1];
+> > -     pipe_cfg =3D &pstate->pipe_cfg[0];
+> > -     r_pipe_cfg =3D &pstate->pipe_cfg[1];
+> > -
+> >       for (i =3D 0; i < PIPES_PER_PLANE; i++)
+> >               pstate->pipe[i].sspp =3D NULL;
+> >
+> > @@ -1142,24 +1136,49 @@ static int dpu_plane_virtual_assign_resources(s=
+truct drm_crtc *crtc,
+> >
+> >       reqs.rot90 =3D drm_rotation_90_or_270(plane_state->rotation);
+> >
+> > -     pipe->sspp =3D dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, cr=
+tc, &reqs);
+> > -     if (!pipe->sspp)
+> > -             return -ENODEV;
+> > -
+> > -     if (!dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_p=
+ipe_cfg,
+> > -                                           pipe->sspp,
+> > -                                           msm_framebuffer_format(plan=
+e_state->fb),
+> > -                                           dpu_kms->catalog->caps->max=
+_linewidth)) {
+> > -             /* multirect is not possible, use two SSPP blocks */
+> > -             r_pipe->sspp =3D dpu_rm_reserve_sspp(&dpu_kms->rm, global=
+_state, crtc, &reqs);
+> > -             if (!r_pipe->sspp)
+> > -                     return -ENODEV;
+> > -
+> > -             pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > -             pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
+> > -
+> > -             r_pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > -             r_pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
+> > +     num_lm =3D dpu_crtc_get_num_lm(crtc_state);
+> > +     num_stages =3D (num_lm + 1) / 2;
+> > +     for (stage_id =3D 0; stage_id < num_stages; stage_id++) {
+> > +             for (i =3D stage_id * PIPES_PER_STAGE; i < (stage_id + 1)=
+ * PIPES_PER_STAGE; i++) {
+> > +                     struct dpu_sw_pipe *r_pipe;
+> > +                     struct dpu_sw_pipe_cfg *r_pipe_cfg;
+> > +
+> > +                     pipe =3D &pstate->pipe[i];
+> > +                     pipe_cfg =3D &pstate->pipe_cfg[i];
+> > +
+> > +                     if (drm_rect_width(&pipe_cfg->src_rect) =3D=3D 0)
+> > +                             break;
+> > +
+> > +                     pipe->sspp =3D dpu_rm_reserve_sspp(&dpu_kms->rm, =
+global_state, crtc, &reqs);
+> > +                     if (!pipe->sspp)
+> > +                             return -ENODEV;
+> > +
+> > +                     /* use solo SSPP for the 2nd pipe in pipe pair */
+> > +                     if (i % PIPES_PER_STAGE !=3D 0)
+> > +                             goto use_solo_sspp;
+>
+> With this in place, do we need the nested loops? Wouldn't it be enough
+> to loop through the all pipes in a single run, as this condition will
+> force solo SSPP for the second pipes?
 
-OK, thanks for reporting that!
+Yeah, the internal loop for the 2 pipe in the stage can be expanded
+and assign SSPP
+directly if fail to use multi-rect mode. Will work on that.
 
->> +
->> +	for (i = 0; i < core->iris_platform_data->num_vpp_pipe; i++) {
->> +		ret = readl_poll_timeout(core->reg_base + VCODEC_SS_IDLE_STATUSN + 4 * i,
->> +					 reg_val, reg_val & 0x400000, 2000, 20000);
->> +		if (ret)
->> +			goto disable_power;
->> +	}
->> +
->> +	/* set MNoC to low power, set PD_NOC_QREQ (bit 0) */
->> +	value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->> +	value |= BIT(0);
->> +	writel(value, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->> +
->> +	value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
->> +
->> +	while ((!(value & BIT(0))) && (value & BIT(1) || value & BIT(2))) {
->> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->> +		value &= ~BIT(0);
->> +		writel(value, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->> +
->> +		usleep_range(10, 20);
->> +
->> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->> +		value |= BIT(0);
->> +		writel(value, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->> +
->> +		usleep_range(10, 20);
->> +
->> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS);
->> +
->> +		++count;
->> +		if (count >= 1000)
->> +			break;
->> +	}
->> +
->> +	if (count < 1000) {
->> +		value = readl(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->> +		value &= ~BIT(0);
->> +		writel(value, core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
->> +	}
-> Again, above programming of LPI registers can be limited to below
-> 
-> readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS, reg_val,
-> reg_val & 0x1, 200, 2000);
-> 
-> writel(BIT(0), core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
 
-Ack, will use that
+Jun
 
-> 	
->> +
->> +	writel(VIDEO_NOC_RESET_REQ, core->reg_base + AON_WRAPPER_MVP_NOC_RESET_REQ);
->> +
->> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_RESET_ACK,
->> +				 reg_val, reg_val & 0x3, 200, 2000);
->> +	if (ret)
->> +		goto disable_power;
->> +
->> +	writel(0x0, core->reg_base + AON_WRAPPER_MVP_NOC_RESET_REQ);
->> +
->> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_RESET_ACK,
->> +				 reg_val, !(reg_val & 0x3), 200, 2000);
->> +	if (ret)
->> +		goto disable_power;
-> Above NOC_RESET handling does not look applicable to SM8650, could you recheck ?
-
-Indeed it's not, I'll remove it,
-
-Thanks,
-Neil
-
-> 
-> Regards,
-> Vikash
->> +
->> +	writel(CORE_BRIDGE_SW_RESET | CORE_BRIDGE_HW_RESET_DISABLE,
->> +	       core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
->> +	writel(CORE_BRIDGE_HW_RESET_DISABLE, core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
->> +	writel(0x0, core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
->> +
->> +disable_power:
->> +	iris_vpu_power_off_hw(core);
->> +}
->> +
->> +static int iris_vpu33_power_off_controller(struct iris_core *core)
->> +{
->> +	u32 rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
->> +	u32 val = 0;
->> +	int ret;
->> +
->> +	writel(MSK_SIGNAL_FROM_TENSILICA | MSK_CORE_POWER_ON, core->reg_base + CPU_CS_X2RPMH);
->> +
->> +	writel(REQ_POWER_DOWN_PREP, core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_CONTROL);
->> +
->> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_STATUS,
->> +				 val, val & BIT(0), 200, 2000);
->> +	if (ret)
->> +		goto disable_power;
->> +
->> +	writel(0x0, core->reg_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL);
->> +
->> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_DEBUG_BRIDGE_LPI_STATUS,
->> +				 val, val == 0, 200, 2000);
->> +	if (ret)
->> +		goto disable_power;
->> +
->> +	writel(CTL_AXI_CLK_HALT | CTL_CLK_HALT,
->> +	       core->reg_base + WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG);
->> +	writel(RESET_HIGH, core->reg_base + WRAPPER_TZ_QNS4PDXFIFO_RESET);
->> +	writel(0x0, core->reg_base + WRAPPER_TZ_QNS4PDXFIFO_RESET);
->> +	writel(0x0, core->reg_base + WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG);
->> +
->> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "bus");
->> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "core");
->> +	usleep_range(1000, 1100);
->> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "bus");
->> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "core");
->> +
->> +	/* Disable MVP NoC clock */
->> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
->> +	val |= NOC_HALT;
->> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
->> +
->> +	/* enable MVP NoC reset */
->> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
->> +	val |= SW_RESET;
->> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
->> +
->> +	/* poll AON spare register bit0 to become zero with 50ms timeout */
->> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_SPARE,
->> +				 val, (val & BIT(0)) == 0, 1000, 50000);
->> +	if (ret)
->> +		goto disable_power;
->> +
->> +	/* enable bit(1) to avoid cvp noc xo reset */
->> +	val = readl(core->reg_base + AON_WRAPPER_SPARE);
->> +	val |= BIT(1);
->> +	writel(val, core->reg_base + AON_WRAPPER_SPARE);
->> +
->> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "xo");
->> +
->> +	/* De-assert MVP NoC reset */
->> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
->> +	val &= ~SW_RESET;
->> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
->> +
->> +	usleep_range(80, 100);
->> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "xo");
->> +
->> +	/* reset AON spare register */
->> +	writel(0, core->reg_base + AON_WRAPPER_SPARE);
->> +
->> +	/* Enable MVP NoC clock */
->> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
->> +	val &= ~NOC_HALT;
->> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
->> +
->> +	iris_disable_unprepare_clock(core, IRIS_CTRL_CLK);
->> +
->> +disable_power:
->> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
->> +	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
->> +
->> +	return 0;
->> +}
->> +
->> +static u64 iris_vpu33_calculate_frequency(struct iris_inst *inst, size_t data_size)
->> +{
->> +	struct platform_inst_caps *caps = inst->core->iris_platform_data->inst_caps;
->> +	struct v4l2_format *inp_f = inst->fmt_src;
->> +	u32 height, width, mbs_per_second, mbpf;
->> +	u64 fw_cycles, fw_vpp_cycles;
->> +	u64 vsp_cycles, vpp_cycles;
->> +	u32 fps = DEFAULT_FPS;
->> +
->> +	width = max(inp_f->fmt.pix_mp.width, inst->crop.width);
->> +	height = max(inp_f->fmt.pix_mp.height, inst->crop.height);
->> +
->> +	mbpf = NUM_MBS_PER_FRAME(height, width);
->> +	mbs_per_second = mbpf * fps;
->> +
->> +	fw_cycles = fps * caps->mb_cycles_fw;
->> +	fw_vpp_cycles = fps * caps->mb_cycles_fw_vpp;
->> +
->> +	vpp_cycles = mult_frac(mbs_per_second, caps->mb_cycles_vpp, (u32)inst->fw_caps[PIPE].value);
->> +	/* 21 / 20 is minimum overhead factor */
->> +	vpp_cycles += max(div_u64(vpp_cycles, 20), fw_vpp_cycles);
->> +
->> +	/* 1.059 is multi-pipe overhead */
->> +	if (inst->fw_caps[PIPE].value > 1)
->> +		vpp_cycles += div_u64(vpp_cycles * 59, 1000);
->> +
->> +	vsp_cycles = fps * data_size * 8;
->> +	vsp_cycles = div_u64(vsp_cycles, 2);
->> +	/* VSP FW overhead 1.05 */
->> +	vsp_cycles = div_u64(vsp_cycles * 21, 20);
->> +
->> +	if (inst->fw_caps[STAGE].value == STAGE_1)
->> +		vsp_cycles = vsp_cycles * 3;
->> +
->> +	return max3(vpp_cycles, vsp_cycles, fw_cycles);
->> +}
->> +
->> +static int iris_vpu33_reset_controller(struct iris_core *core)
->> +{
->> +	u32 rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
->> +
->> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "bus");
->> +	reset_control_bulk_assert_id(rst_tbl_size, core->resets, "core");
->> +
->> +	usleep_range(1000, 1100);
->> +
->> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "bus");
->> +	reset_control_bulk_deassert_id(rst_tbl_size, core->resets, "core");
->> +
->> +	return 0;
->> +}
->> +
->> +const struct vpu_ops iris_vpu33_ops = {
->> +	.reset_controller = iris_vpu33_reset_controller,
->> +	.power_off_hw = iris_vpu33_power_off_hardware,
->> +	.power_off_controller = iris_vpu33_power_off_controller,
->> +	.calc_freq = iris_vpu33_calculate_frequency,
->> +};
->> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.h b/drivers/media/platform/qcom/iris/iris_vpu_common.h
->> index c948d8b5aee87ccf1fd53c5518a27294232d8fb8..c4d02a3b884881eb033dc0342f948848adae2819 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.h
->> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.h
->> @@ -10,6 +10,7 @@ struct iris_core;
->>   
->>   extern const struct vpu_ops iris_vpu2_ops;
->>   extern const struct vpu_ops iris_vpu3_ops;
->> +extern const struct vpu_ops iris_vpu33_ops;
->>   
->>   struct vpu_ops {
->>   	int (*reset_controller)(struct iris_core *core);
->>
-
+>
+> > +
+> > +                     /*
+> > +                      * Check multi-rect opportunity for the 2nd pipe =
+in the
+> > +                      * pair. SSPP multi-rect mode cross mixer pairs i=
+s not
+> > +                      * supported.
+> > +                      */
+> > +                     r_pipe =3D &pstate->pipe[i + 1];
+> > +                     r_pipe_cfg =3D &pstate->pipe_cfg[i + 1];
+> > +
+> > +                     if (drm_rect_width(&r_pipe_cfg->src_rect) !=3D 0 =
+&&
+> > +                         dpu_plane_try_multirect_parallel(pipe, pipe_c=
+fg, r_pipe, r_pipe_cfg,
+> > +                                                           pipe->sspp,
+> > +                                                           msm_framebu=
+ffer_format(plane_state->fb),
+> > +                                                           dpu_kms->ca=
+talog->caps->max_linewidth)) {
+> > +                             i++;
+> > +                             continue;
+> > +                     }
+> > +use_solo_sspp:
+> > +                     pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > +                     pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
+> > +                     DPU_DEBUG_PLANE(pdpu, "allocating sspp_%d for pip=
+e %d.\n",
+> > +                                     pipe->sspp->idx - SSPP_NONE, i);
+> > +             }
+> >       }
+> >
+> >       return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
+> >
+> > --
+> > 2.34.1
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
