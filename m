@@ -1,107 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-49835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3FB8A49501
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 10:31:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6678CA494BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 10:21:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35D291895941
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 09:31:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7359A171021
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 09:21:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5AD02561B4;
-	Fri, 28 Feb 2025 09:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BA9B25743F;
+	Fri, 28 Feb 2025 09:20:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sg8aiEgZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A486E1F30A2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 09:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C4C256C9E;
+	Fri, 28 Feb 2025 09:20:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740734874; cv=none; b=nryn1HELJz6GrkgNCXLZWUkU6en+g1qJ5Y6LwUQY8310X1OJuzx09VYLcxezIuifXDDo+LbApottftRnPUvWjl/ujDUspZOh9XrNY/mkUillwA2Aj1J1R1t+lByp6MFVAq5zDrBMImVCi3v+wLuHNY8H/2l9Q+XsRR6qM08Cl3M=
+	t=1740734457; cv=none; b=IUWmDZZYljgvqRIpqN9h5o6Urqoo0XqhOnhgSQjvwcxROMdJNteqjkAHQfQ7O5ZM65Av6JA6BYuxhDa4+MmZXB/1DH5fiWXOL6KwvQ/+WSfQbfffkX9jxOY4PQA49QAzijGpo8XkYJHmr9GqqF+0X8zFWYn1Q0b65HmGE4mooZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740734874; c=relaxed/simple;
-	bh=UWrasMPhZgBN8iz+xsk13yZ0dRriDkIlfknmsEWbDn8=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=YHEe9+OqGew+Ocw3LEJKGEiVpRxON5qk6HR4Wnm/1JBYAICqFe3/GZ0GVaC+zdaDQvrKiM1ESxKnHpe1pBFMzKV5AfCFM/qWFF1UDr8QwZf/sfW8b3BvZ8EYxiOOAYxrkOQmU/DRU7rpjWsh63cuvezqHmKwY8CsXOnYH5UgiyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from [127.0.0.1] (161-51-78-170.static.ef-service.nl [161.51.78.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 13C6D3EE67;
-	Fri, 28 Feb 2025 10:08:48 +0100 (CET)
-Date: Fri, 28 Feb 2025 10:08:47 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>
-CC: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_8/8=5D_drm/msm/dpu=3A_drop_n?=
- =?US-ASCII?Q?ow-unused_condition_for_has=5Flegacy=5Fctls?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <20250228-dpu-active-ctl-v2-8-9a9df2ee5193@linaro.org>
-References: <20250228-dpu-active-ctl-v2-0-9a9df2ee5193@linaro.org> <20250228-dpu-active-ctl-v2-8-9a9df2ee5193@linaro.org>
-Message-ID: <CA752964-870A-4DB9-A6F7-0E701EA24AB2@somainline.org>
+	s=arc-20240116; t=1740734457; c=relaxed/simple;
+	bh=6fEjHT450t/mGPqxjywj47tlnyvUPeH/lRoVgSKpTko=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k0/uTNbYD6sJYiSavEA7Lh5XMeeKHhyo9uyXO6Pb7oGFYBJMcAbsqGBQ4J+J+fq5o99uq4ybZQZGbyEuwaWUBkdlsxR7Ww/dutEvJL7f01AtnTmcZ41Cy205zHrp5hoK/O8RS8bw4o0Bc2K2JBXgwiwaDHdfHDGWyErQ+OhgjpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sg8aiEgZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83BEC4CEE4;
+	Fri, 28 Feb 2025 09:20:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740734456;
+	bh=6fEjHT450t/mGPqxjywj47tlnyvUPeH/lRoVgSKpTko=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Sg8aiEgZGPNMUiwVzxxl7Dk0ozVMsn8cWMYnUbn2b+C5tU7sBZvDLcL34IanWu/tu
+	 ZhIczS/+qlW9Ei3aUh++XjAqyLisc9JHyjScaevppswa2yderDKmnYLNn7pEuDwIQ9
+	 t5OzJ+avjxvTXX0YC2h1hq+6qLlxIOmBPFsqfGXWysYiBASA9Y9Whx6y0zcnextEg5
+	 YsvA4zWW+O5kp7hMox32JSqbykohCjMnwhMtEUv7E+hWmrOLx40ogkZLlAcUtyqwlQ
+	 SbsFPaiqg7IjBkhLjD9aKbDW388z6bzsDh+WKZ97S0UANApDpM0bZU9GZlXnjITJSh
+	 LKB5ohwBn3sBQ==
+Message-ID: <d39893f1-0a1e-4197-aec4-60c8e632fe47@kernel.org>
+Date: Fri, 28 Feb 2025 10:20:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: defconfig: enable Qualcomm IRIS & VIDEOCC_8550
+ as module
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250227-topic-sm8x50-upstream-iris-defconfig-v2-1-13b490a4f402@linaro.org>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250227-topic-sm8x50-upstream-iris-defconfig-v2-1-13b490a4f402@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 28 February 2025 05:14:12 CET, Dmitry Baryshkov <dmitry=2Ebaryshkov@lina=
-ro=2Eorg> wrote:
->Now as we have dropped the DPU_CTL_SPLIT_DISPLAY from DPU >=3D 5=2E0
->configuration, drop the rm->has_legacy_ctl condition which short-cutted
->the check for those platforms=2E
->
->Suggested-by: Marijn Suijten <marijn=2Esuijten@somainline=2Eorg>
->Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
->
->---
->
->Note, it is imposible to reoder commits in any other sensible way=2E The
+On 27/02/2025 09:51, Neil Armstrong wrote:
+> In order to support the Qualcomm IRIS driver on the Qualcomm SM8550
+> platform, enable the IRIS and the VIDEOCC_8550 dependency as modules.
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
 
-Reorder :)
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
->DPU_CTL_SPLIT_DISPLAY can not be dropped before the patch that enables
->single-CTL support=2E
-
-Maybe I expected this note on patch 4/6 introducing it, but it disappears =
-after merging anyway so that's a mega-nit=2E Thanks for sending this!
-
-Reviewed-by: Marijn Suijten <marijn=2Esuijten@somainline=2Eorg>
-
->---
-> drivers/gpu/drm/msm/disp/dpu1/dpu_rm=2Ec | 3 +--
-> 1 file changed, 1 insertion(+), 2 deletions(-)
->
->diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm=2Ec b/drivers/gpu/drm/m=
-sm/disp/dpu1/dpu_rm=2Ec
->index 4dbc9bc7eb4f151f83055220665ee5fd238ae7ba=2E=2E2557effe639b5360bc948=
-a49b0cccdb59ee35dab 100644
->--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm=2Ec
->+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm=2Ec
->@@ -410,8 +410,7 @@ static int _dpu_rm_reserve_ctls(
->=20
-> 		DPU_DEBUG("ctl %d caps 0x%lX\n", j + CTL_0, features);
->=20
->-		if (rm->has_legacy_ctls &&
->-		    needs_split_display !=3D has_split_display)
->+		if (needs_split_display !=3D has_split_display)
-> 			continue;
->=20
-> 		ctl_idx[i] =3D j;
->
-
+Best regards,
+Krzysztof
 
