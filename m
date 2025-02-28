@@ -1,122 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-49833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6678CA494BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 10:21:37 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92E93A494C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 10:24:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7359A171021
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 09:21:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3633C7A2D72
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 09:23:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BA9B25743F;
-	Fri, 28 Feb 2025 09:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sg8aiEgZ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F5601DDC34;
+	Fri, 28 Feb 2025 09:24:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C4C256C9E;
-	Fri, 28 Feb 2025 09:20:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AB4276D3B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 09:23:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740734457; cv=none; b=IUWmDZZYljgvqRIpqN9h5o6Urqoo0XqhOnhgSQjvwcxROMdJNteqjkAHQfQ7O5ZM65Av6JA6BYuxhDa4+MmZXB/1DH5fiWXOL6KwvQ/+WSfQbfffkX9jxOY4PQA49QAzijGpo8XkYJHmr9GqqF+0X8zFWYn1Q0b65HmGE4mooZ8=
+	t=1740734640; cv=none; b=llSL4ATMC1EUC8jxIkPmPZl68ncYUg9PrC3xbqc7PqekeOVwPWMwyH9GVf/p5fVPTxTI9TYrvo8gtFJH5LyJ93Agf8Sokdznt+SNQk/q+mAkLS0HgNIWUEC2+MoI2ltJEUuASiqRk7Z+pK6w3O+ZPH2KyJbu47o3oaIs9picQRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740734457; c=relaxed/simple;
-	bh=6fEjHT450t/mGPqxjywj47tlnyvUPeH/lRoVgSKpTko=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k0/uTNbYD6sJYiSavEA7Lh5XMeeKHhyo9uyXO6Pb7oGFYBJMcAbsqGBQ4J+J+fq5o99uq4ybZQZGbyEuwaWUBkdlsxR7Ww/dutEvJL7f01AtnTmcZ41Cy205zHrp5hoK/O8RS8bw4o0Bc2K2JBXgwiwaDHdfHDGWyErQ+OhgjpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sg8aiEgZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83BEC4CEE4;
-	Fri, 28 Feb 2025 09:20:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740734456;
-	bh=6fEjHT450t/mGPqxjywj47tlnyvUPeH/lRoVgSKpTko=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Sg8aiEgZGPNMUiwVzxxl7Dk0ozVMsn8cWMYnUbn2b+C5tU7sBZvDLcL34IanWu/tu
-	 ZhIczS/+qlW9Ei3aUh++XjAqyLisc9JHyjScaevppswa2yderDKmnYLNn7pEuDwIQ9
-	 t5OzJ+avjxvTXX0YC2h1hq+6qLlxIOmBPFsqfGXWysYiBASA9Y9Whx6y0zcnextEg5
-	 YsvA4zWW+O5kp7hMox32JSqbykohCjMnwhMtEUv7E+hWmrOLx40ogkZLlAcUtyqwlQ
-	 SbsFPaiqg7IjBkhLjD9aKbDW388z6bzsDh+WKZ97S0UANApDpM0bZU9GZlXnjITJSh
-	 LKB5ohwBn3sBQ==
-Message-ID: <d39893f1-0a1e-4197-aec4-60c8e632fe47@kernel.org>
-Date: Fri, 28 Feb 2025 10:20:50 +0100
+	s=arc-20240116; t=1740734640; c=relaxed/simple;
+	bh=lWLCb46R8hij78SjcvmroxuHOuUYtOSrNx+gY4cGZB0=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=XjaIWYFQnNy2uHWGzWGL8sYCaHqliBKjt6zl9Aq8sNu14WeMDO1aGh3TyuSoQwDrlSTw6iORrvR7008kVaB2oLe/Kez44Jc7j98wMI/eSzqWBXalq8wQ8+ISOXq0EnhJJT71evSWTZ+Jmm7n3fPnQ4WgAaUEYIoSVQqygBs4PKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from [127.0.0.1] (161-51-78-170.static.ef-service.nl [161.51.78.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 6CDB03F26F;
+	Fri, 28 Feb 2025 10:23:55 +0100 (CET)
+Date: Fri, 28 Feb 2025 10:23:54 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>
+CC: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/8] drm/msm/dpu: program master INTF value
+User-Agent: Thunderbird for Android
+In-Reply-To: <20250228-dpu-active-ctl-v2-2-9a9df2ee5193@linaro.org>
+References: <20250228-dpu-active-ctl-v2-0-9a9df2ee5193@linaro.org> <20250228-dpu-active-ctl-v2-2-9a9df2ee5193@linaro.org>
+Message-ID: <CAACA6C8-441A-4B6E-AC07-A46094A02126@somainline.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: defconfig: enable Qualcomm IRIS & VIDEOCC_8550
- as module
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250227-topic-sm8x50-upstream-iris-defconfig-v2-1-13b490a4f402@linaro.org>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250227-topic-sm8x50-upstream-iris-defconfig-v2-1-13b490a4f402@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 27/02/2025 09:51, Neil Armstrong wrote:
-> In order to support the Qualcomm IRIS driver on the Qualcomm SM8550
-> platform, enable the IRIS and the VIDEOCC_8550 dependency as modules.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+On 28 February 2025 05:14:06 CET, Dmitry Baryshkov <dmitry=2Ebaryshkov@lina=
+ro=2Eorg> wrote:
+>If several interfaces are being handled through a single CTL, a main
+>('master') INTF needs to be programmed into a separate register=2E Write
+>corresponding value into that register=2E
+>
+>Co-developed-by: Marijn Suijten <marijn=2Esuijten@somainline=2Eorg>
+>Signed-off-by: Marijn Suijten <marijn=2Esuijten@somainline=2Eorg>
+>Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
+>---
+> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Ec | 12 ++++++++++++
+> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Eh |  2 ++
+> 2 files changed, 14 insertions(+)
+>
+>diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Ec b/drivers/gpu/d=
+rm/msm/disp/dpu1/dpu_hw_ctl=2Ec
+>index 32ab33b314fc44e12ccb935c1695d2eea5c7d9b2=2E=2Effff60c4206c6f2833293=
+fdcc56b653f7d3124a5 100644
+>--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Ec
+>+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Ec
+>@@ -583,6 +583,9 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl =
+*ctx,
+> 	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, dsc_active);
+> 	DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE, merge_3d_active);
+>=20
+>+	if (cfg->intf_master)
+>+		DPU_REG_WRITE(c, CTL_INTF_MASTER, BIT(cfg->intf_master - INTF_0));
+>+
+> 	if (cfg->cdm)
+> 		DPU_REG_WRITE(c, CTL_CDM_ACTIVE, cfg->cdm);
+> }
+>@@ -625,6 +628,7 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_h=
+w_ctl *ctx,
+> {
+> 	struct dpu_hw_blk_reg_map *c =3D &ctx->hw;
+> 	u32 intf_active =3D 0;
+>+	u32 intf_master =3D 0;
+> 	u32 wb_active =3D 0;
+> 	u32 merge3d_active =3D 0;
+> 	u32 dsc_active;
+>@@ -651,6 +655,14 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_=
+hw_ctl *ctx,
+> 		intf_active =3D DPU_REG_READ(c, CTL_INTF_ACTIVE);
+> 		intf_active &=3D ~BIT(cfg->intf - INTF_0);
+> 		DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
+>+
+>+		intf_master =3D DPU_REG_READ(c, CTL_INTF_MASTER);
+>+
+>+		/* Unset this intf as master, if it is the current master */
+>+		if (intf_master =3D=3D BIT(cfg->intf - INTF_0)) {
+>+			DPU_DEBUG_DRIVER("Unsetting INTF_%d master\n", cfg->intf - INTF_0);
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Don't think you want to include my testing ramblings here: we didn't print=
+ a message either when the master was _set_, and don't print messages for o=
+ther register writes either=2E
 
-Best regards,
-Krzysztof
+After that:
+
+Reviewed-by: Marijn Suijten <marijn=2Esuijten@somainline=2Eorg>
+
+>+			DPU_REG_WRITE(c, CTL_INTF_MASTER, 0);
+>+		}
+> 	}
+>=20
+> 	if (cfg->wb) {
+>diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Eh b/drivers/gpu/d=
+rm/msm/disp/dpu1/dpu_hw_ctl=2Eh
+>index 85c6c835cc8780e6cb66f3a262d9897c91962935=2E=2Ee95989a2fdda6344d0cb9=
+d3036e6ed22a0458675 100644
+>--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Eh
+>+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Eh
+>@@ -36,6 +36,7 @@ struct dpu_hw_stage_cfg {
+> /**
+>  * struct dpu_hw_intf_cfg :Describes how the DPU writes data to output i=
+nterface
+>  * @intf :                 Interface id
+>+ * @intf_master:           Master interface id in the dual pipe topology
+
+Not sure if you've seen my comment in v1 about the dual word; maybe the qu=
+adpipe series can update it since they might need a master (or two?) as wel=
+l?
+
+- Marijn
+
+>  * @mode_3d:               3d mux configuration
+>  * @merge_3d:              3d merge block used
+>  * @intf_mode_sel:         Interface mode, cmd / vid
+>@@ -45,6 +46,7 @@ struct dpu_hw_stage_cfg {
+>  */
+> struct dpu_hw_intf_cfg {
+> 	enum dpu_intf intf;
+>+	enum dpu_intf intf_master;
+> 	enum dpu_wb wb;
+> 	enum dpu_3d_blend_mode mode_3d;
+> 	enum dpu_merge_3d merge_3d;
+>
+
 
