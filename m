@@ -1,202 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-49774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 273B1A48D7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 01:40:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8622FA48DB9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 02:17:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BACEC16DD8E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 00:40:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8645216E740
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 01:17:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B9E2211C;
-	Fri, 28 Feb 2025 00:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B244335280;
+	Fri, 28 Feb 2025 01:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jzT3biDk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UnV3gaQY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62240182D0;
-	Fri, 28 Feb 2025 00:39:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD3A1CA8D;
+	Fri, 28 Feb 2025 01:16:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740703199; cv=none; b=TU5QNjkQujXPbsXJopUcwurAzOVr6H49YcM7ZncUo+k2gS8cr37Y2Al1zIZKplZ7svakReQ9sYZ+dkD2Qj1wpw4sFBELFPNbddgiGJeNf5Km5cQbVTeaMWyBX43MBO/Zluntss31CvCqK2czHUek/j/N0kMD/06Df2oS+R5GI6g=
+	t=1740705417; cv=none; b=uKKecew10cNj6dpFje+I6KwoudH/fGZBb2hG9txeHE9Z6xPKE9zRR6d7S0pSxsgf3974KvrBu79TWVuunWU6pNbgTu7HqqQI4ZCB8sNLEN3JKNqyCebFRCuVN/caX9Ze1sa8SdP6UgYfyKGLt9l+g1Xu+oHt7SR6/i8OK8s1+cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740703199; c=relaxed/simple;
-	bh=ZOo+t3tjZlWVGbfk1wn2SMiVrhVzuQM3wZ7uUv4EW4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PrBXzOSsQDrirY5GzSp6SyOBPzmSqw6trhfYQqMnepqMpxSuP+1fF+UCRVnopEkA4Scwtwj7LB34xaikyTvvmEqbcv4aqkxBUncsUEiL5gXW01HxoBYnH0YUfkf7d5+gzmDFFpHexL/IbQ90aqVO2RRbNfb5GH5tAOgW5iUaFDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jzT3biDk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEC2C4CEE4;
-	Fri, 28 Feb 2025 00:39:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740703198;
-	bh=ZOo+t3tjZlWVGbfk1wn2SMiVrhVzuQM3wZ7uUv4EW4w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jzT3biDkfelFWlaJR1wsrIqHikIsHyerNJBDSD0Ot8Um23ZFNQUwJkoOaQzxEx0aw
-	 1lFCFZ5XpO5elEvddPtf1wVVQh866F48VLsngWfAqyCl6sCCMuqlOnp3F7TJwdGkdx
-	 QdyLtWSis8X2jU/aj1QuVYWayiY+W0HOzNNLHLQxbkvSkinWd/ZvXPyIXW/Hs1KpkI
-	 Ca0Hzmj6JelmMbpSe7YpjUQV/vj3oKA9LjOaUKkQcyQBriOk2WGKUnEGRnKTZN+WJ7
-	 aoDTDFVCVgBWGJ6WUkE1XOidEU7jZELu+vlIJxilVZ5CIiIiJB2AM+RwOUsI3wPmgD
-	 o4i2uELWSIyyg==
-Date: Thu, 27 Feb 2025 18:39:55 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Odelu Kukatla <quic_okukatla@quicinc.com>, 
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Mike Tipton <mdtipton@quicinc.com>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V9 3/7] interconnect: qcom: Add multidev EPSS L3 support
-Message-ID: <a2hpdflba4wmho3wzphr2w5htgolksq43nuewcwqr7goy6rc5q@6fot5l6q6ods>
-References: <20250227155213.404-1-quic_rlaggysh@quicinc.com>
- <20250227155213.404-4-quic_rlaggysh@quicinc.com>
+	s=arc-20240116; t=1740705417; c=relaxed/simple;
+	bh=+IZmiwUM5BxihveDBxIS14EjXj53quT3A2UpsKE3fAk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jUTCjSyHYHIcERC/p6v9jTc24fS4zApe8t8+o+kDz0Rd7fAUcTaPJgyEWRZWszzfmOOVN69lJHZnrQCwuCQUDauNjQ27JdrehUxK7PYP01AfC6DwxjaZGiW6r+vVk/A/klD6yhJF6bg5i8xIxIxDglGVaeFUlX8k22vcMouuzV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UnV3gaQY; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-22114b800f7so32174335ad.2;
+        Thu, 27 Feb 2025 17:16:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740705415; x=1741310215; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0FL8GbosrI5o4UuvV7kTaXlK9ze1FkkxA8BpqG7bFWo=;
+        b=UnV3gaQYPY44g/95TsMPHVUyteo5PwpoydK87RiA/WF+WOTmWuwjBSZd9iQtFZ+DJB
+         MjRi3rRyP4kjHQ4+/7xIE8dRM7ckDkN21aIcgr4phXVrWlZWRHgjzOL5K/4KV0odOM1X
+         8vR/Bg4qrOHVk9ujt02e54M4rRpp88V0ctNSTkA09Mjzw41+kW2xyccLFcNQAr1Mciwh
+         Xt6dcpVmI64+ksTAkb8zPGASgxCzbHLsKeOOc9HDQ8LsM5rJSWYsGRExC5Qqq/cqti2j
+         8eAjb8J8h5k0rAtY9jQjhR0CrqfJWwnlF9XXqDqhC0Qs/T3et8s7astRYvwCIr9rpesE
+         p94Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740705415; x=1741310215;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0FL8GbosrI5o4UuvV7kTaXlK9ze1FkkxA8BpqG7bFWo=;
+        b=f4P8D79aflgbj/WOymqkMEdN6vovVslC0zYfFhmDY4lWEQN3zmsRzz5+5h1Xh8WHC2
+         u7XigOqF2h4QqNEREfAZ2qBzGg6hrQ+6n935xwERA8/eQUqnNN/GOLbOVaJn2EjSbPlc
+         1/D/YUj7yt6OVuUze5/tsoZJme4XdIERr4u+12wREWO9Jmo6gJK2VKAXtTglhXpFb7N0
+         uMk/MJHRGFEJ1DLt6V2nPXtZkH0B7e+dHaoBpl/m3tbVn3vvQCNUmssw99JlU/iO5EPe
+         5iiXqjmc45esof8uAgDjb5uilVLjiSWVtR2M3oP3PQOzZsmQ4C0t1kfPB4l26TVVt+Ma
+         3whw==
+X-Forwarded-Encrypted: i=1; AJvYcCU9FCoSkz4l35sRzzYLztQqbrD8+qG9sPRqKES8qm/JNx3dM1b7eZD1+Guceo8yS9NGvPQPjGX6OXyn@vger.kernel.org, AJvYcCVDRKPMs+8shksvPUS3wXPS7NuLVZSrLO9a8iz8Z+g4S8hWnB6aQa23sEXxS9KxAxrW2s2zI+EfO2ykyhQt@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw+xq8bsUUECyhJgUPvASQEyclzGQDgEuVnbxaRFz9aRk+0AJUi
+	2e72DFv4RLi366pd/BO7tIwskOQ9gl9u17KF3q6v8mv+vPEJ1mkz
+X-Gm-Gg: ASbGncu/D0rH+XcHBM6SsAOCHeC7CDNHdv08W9NmL/2rj57Ss5fkexkSSZKo2WJuMth
+	gzYI7CyjB+ch78bLgw+4Cn0SDRZ/SKPc+0cgDlTVltH3JO77+4DZOd0ibJ67AY8NTA3e6AZZr3h
+	LolgpRownOgBMvW7e2VGqqHG4zM5C9MvMbT6JMLPCD8MUrE6hobS13FyuFbWc4o4QEr2S3whcBc
+	J28+CVrGWHD0B0Nv9pZXMAqhUyEB5A/p2VcOTESh62TQmBSqgxUryhX5FNLW7u1b6kfdlhcrOmr
+	ZRNx03gY/sN67Mz+yvwP2iBE/v4=
+X-Google-Smtp-Source: AGHT+IF7UBcghuRpvHNwzqLzMPxjGhRuIXPtaSRGWd8JSOclzWjS1AJmfFqr8vF2CNwrCBO/MgbQWA==
+X-Received: by 2002:a05:6a00:1a8f:b0:730:8e2c:e53b with SMTP id d2e1a72fcca58-734ac3311b3mr2481892b3a.5.1740705415396;
+        Thu, 27 Feb 2025 17:16:55 -0800 (PST)
+Received: from [127.0.1.1] ([2601:644:8501:1640:aece:4d21:7e89:e9e0])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7349fe4ce55sm2535901b3a.68.2025.02.27.17.16.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2025 17:16:55 -0800 (PST)
+From: Rudraksha Gupta <guptarud@gmail.com>
+Subject: [PATCH v4 0/2] Copy tsens node from apq8064 and adjust values for
+ msm8960
+Date: Thu, 27 Feb 2025 17:16:53 -0800
+Message-Id: <20250227-expressatt-tsens-v4-0-d70afa5a1fd0@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250227155213.404-4-quic_rlaggysh@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIUOwWcC/4XNzQ6CMAzA8VchOzszysaHJ9/DeNhGB0sEzEoIh
+ vDuDk4kGj3+2/TXhREGj8QuycICTp780MeQp4TZVvcNcl/HZiBACQDFcX4GJNLjyEfCnrjIa5m
+ rstCqlCyexbXz807e7rFbT+MQXvuHKd2mP7Ap5SkXIA2iciBkcW067R9nO3RswyY4AvkXALjgh
+ ZYWM12lDj6A7B+QRcAYV1ZlbdAqOALrur4BWo1N1TIBAAA=
+X-Change-ID: 20250225-expressatt-tsens-06d46587a584
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, wctrl@proton.me, 
+ Rudraksha Gupta <guptarud@gmail.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1740705413; l=1273;
+ i=guptarud@gmail.com; s=20250208; h=from:subject:message-id;
+ bh=+IZmiwUM5BxihveDBxIS14EjXj53quT3A2UpsKE3fAk=;
+ b=QVBiuo2U8JZhDjRmovkhOCwn9XzOfnfxKU3QziuDpJIduIwHuUxXHqiRTlSjAN/2t//82lzMg
+ /x7D/zAmjbhCHnL6gztlx5b6R910BHC5maVeKyTDLA8a6+EdE+oFehe
+X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
+ pk=5lJNaiR/Bu7edToWFLriO5zXOrVqSQWrBKbAKwuEw04=
 
-On Thu, Feb 27, 2025 at 03:52:09PM +0000, Raviteja Laggyshetty wrote:
-> EPSS on SA8775P has two instances, necessitating the creation of two
-> device nodes with different compatibles due to the unique ICC node ID
-> and name limitations in the interconnect framework. Add multidevice
-> support for the OSM-L3 provider to dynamically obtain unique node IDs
-> and register with the framework.
-> EPSS topology includes a single master-slave pair within the same
-> provider, the node linking logic is simplified by directly connecting
-> the master node to the slave node.
-> 
-> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-> ---
->  drivers/interconnect/qcom/osm-l3.c | 37 ++++++++++--------------------
->  1 file changed, 12 insertions(+), 25 deletions(-)
-> 
-> diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-> index 6a656ed44d49..a9dacc4b7f2e 100644
-> --- a/drivers/interconnect/qcom/osm-l3.c
-> +++ b/drivers/interconnect/qcom/osm-l3.c
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0
->  /*
->   * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  #include <linux/args.h>
-> @@ -48,16 +49,10 @@ struct qcom_osm_l3_icc_provider {
->  /**
->   * struct qcom_osm_l3_node - Qualcomm specific interconnect nodes
->   * @name: the node name used in debugfs
-> - * @links: an array of nodes where we can go next while traversing
-> - * @id: a unique node identifier
-> - * @num_links: the total number of @links
->   * @buswidth: width of the interconnect between a node and the bus
->   */
->  struct qcom_osm_l3_node {
->  	const char *name;
-> -	u16 links[OSM_L3_MAX_LINKS];
-> -	u16 id;
-> -	u16 num_links;
->  	u16 buswidth;
->  };
->  
-> @@ -69,30 +64,22 @@ struct qcom_osm_l3_desc {
->  	unsigned int reg_perf_state;
->  };
->  
-> -enum {
-> -	OSM_L3_MASTER_NODE = 10000,
-> -	OSM_L3_SLAVE_NODE,
-> -};
-> -
-> -#define DEFINE_QNODE(_name, _id, _buswidth, ...)			\
-> +#define DEFINE_QNODE(_name, _buswidth)					\
->  	static const struct qcom_osm_l3_node _name = {			\
->  		.name = #_name,						\
-> -		.id = _id,						\
->  		.buswidth = _buswidth,					\
-> -		.num_links = COUNT_ARGS(__VA_ARGS__),			\
-> -		.links = { __VA_ARGS__ },				\
->  	}
->  
-> -DEFINE_QNODE(osm_l3_master, OSM_L3_MASTER_NODE, 16, OSM_L3_SLAVE_NODE);
-> -DEFINE_QNODE(osm_l3_slave, OSM_L3_SLAVE_NODE, 16);
-> +DEFINE_QNODE(osm_l3_master, 16);
-> +DEFINE_QNODE(osm_l3_slave, 16);
->  
->  static const struct qcom_osm_l3_node * const osm_l3_nodes[] = {
->  	[MASTER_OSM_L3_APPS] = &osm_l3_master,
->  	[SLAVE_OSM_L3] = &osm_l3_slave,
->  };
->  
-> -DEFINE_QNODE(epss_l3_master, OSM_L3_MASTER_NODE, 32, OSM_L3_SLAVE_NODE);
-> -DEFINE_QNODE(epss_l3_slave, OSM_L3_SLAVE_NODE, 32);
-> +DEFINE_QNODE(epss_l3_master, 32);
-> +DEFINE_QNODE(epss_l3_slave, 32);
->  
->  static const struct qcom_osm_l3_node * const epss_l3_nodes[] = {
->  	[MASTER_EPSS_L3_APPS] = &epss_l3_master,
-> @@ -242,10 +229,9 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
->  
->  	icc_provider_init(provider);
->  
-> +	/* Create nodes */
->  	for (i = 0; i < num_nodes; i++) {
-> -		size_t j;
-> -
-> -		node = icc_node_create(qnodes[i]->id);
-> +		node = icc_node_create(ALLOC_DYN_ID);
+Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+---
+Changes in v4:
+- Reword tsens commit message
+- Add critical trip
+- Link to v3: https://lore.kernel.org/r/20250226-expressatt-tsens-v3-0-bbf898dbec52@gmail.com
 
-Rather than passing a "magic value" as argument to alter how node
-creation happens, and in particular if we can avoid sprinkling
-ALLOC_DYN_ID across the provider.
+Changes in v3:
+- Add signoff to dt-bindings commit
+- Describe which values have been changed when copying over tsens from apq8064
+- Drop wctrl as they want to remain anonymous. They have been CC'd as acknowledgement
+- Link to v2: https://lore.kernel.org/r/20250226-expressatt-tsens-v2-0-7a4ce3a91f27@gmail.com
 
-How about creating a new function icc_node_create_dyn() and hide the
-ALLOC_DYN_ID within the interconnect framework?
+Changes in v2:
+- Remove coefficients as it's read from EEPROM
+- Fix dtsi formatting
+- Fix dtschema warnings introduced with v1
+- Link to v1: https://lore.kernel.org/r/20250225-expressatt-tsens-v1-1-024bee5f2047@gmail.com
 
+---
+Rudraksha Gupta (2):
+      dt-bindings: nvmem: Add compatible for MSM8960
+      ARM: dts: qcom: msm8960: Add thermal sensor (tsens)
 
-Other than that I really like how this is turning out.
+ .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |  1 +
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           | 71 +++++++++++++++++++++-
+ 2 files changed, 71 insertions(+), 1 deletion(-)
+---
+base-commit: ffd294d346d185b70e28b1a28abe367bbfe53c04
+change-id: 20250225-expressatt-tsens-06d46587a584
 
-Regards,
-Bjorn
+Best regards,
+-- 
+Rudraksha Gupta <guptarud@gmail.com>
 
->  		if (IS_ERR(node)) {
->  			ret = PTR_ERR(node);
->  			goto err;
-> @@ -256,12 +242,12 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
->  		node->data = (void *)qnodes[i];
->  		icc_node_add(node, provider);
->  
-> -		for (j = 0; j < qnodes[i]->num_links; j++)
-> -			icc_link_create(node, qnodes[i]->links[j]);
-> -
->  		data->nodes[i] = node;
->  	}
->  
-> +	/* Create link */
-> +	icc_link_create(data->nodes[MASTER_OSM_L3_APPS], data->nodes[SLAVE_OSM_L3]->id);
-> +
->  	ret = icc_provider_register(provider);
->  	if (ret)
->  		goto err;
-> @@ -278,6 +264,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
->  static const struct of_device_id osm_l3_of_match[] = {
->  	{ .compatible = "qcom,epss-l3", .data = &epss_l3_l3_vote },
->  	{ .compatible = "qcom,osm-l3", .data = &osm_l3 },
-> +	{ .compatible = "qcom,sa8775p-epss-l3", .data = &epss_l3_perf_state },
->  	{ .compatible = "qcom,sc7180-osm-l3", .data = &osm_l3 },
->  	{ .compatible = "qcom,sc7280-epss-l3", .data = &epss_l3_perf_state },
->  	{ .compatible = "qcom,sdm845-osm-l3", .data = &osm_l3 },
-> -- 
-> 2.43.0
-> 
 
