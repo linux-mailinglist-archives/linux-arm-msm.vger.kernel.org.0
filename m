@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-49892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FA7EA4A54E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 22:47:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27889A4A555
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 22:48:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 10CE816CCD8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 21:47:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E3325189BC8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 21:48:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667EF1DC98A;
-	Fri, 28 Feb 2025 21:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDB051DE2A4;
+	Fri, 28 Feb 2025 21:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEE62jSz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z183p9dP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A420D1DC04A;
-	Fri, 28 Feb 2025 21:47:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375DA1DC197;
+	Fri, 28 Feb 2025 21:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740779271; cv=none; b=nljX/jnkVQc38fA1KgUDZvbqU4PMUEw8FPGDkAjJKMnR+i7Xck7OdXSlhZKfDeiOBbp/rPEq74TSvMo+sysUmIUNc+LNlQ3mp3I5Pv4z2fhoDBJ1IOUUCXLHiCLT2Q8bR2SwMx9aPjDE/SxEqweoejc7sjCXa6uaeMAL8IigjTE=
+	t=1740779320; cv=none; b=EsrG26bqbio8Si/24i2z9tMaHG54lFZNl5u3FQUk8b8vFgAtv08yYe23+Mv7tYxO2OsCpM+8PXT+cu03YbUAQXPoHKXhebbhSb4w+aUVDqTUaF8APW9Hz2xTHiLsP23gqOd/hjqDg+C6PMl0mqWp4DsvPwXnxmTQuxC9N4zVV+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740779271; c=relaxed/simple;
-	bh=E8dTXEATRpIM3qJmtMmRiqbePawYIPNt+a3OVQYKFGk=;
+	s=arc-20240116; t=1740779320; c=relaxed/simple;
+	bh=nGdrqzmYBWLlIyKySsbXmwHw//4YoXKMbTDVFXoHdSU=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=SFuhmvY+SptH6yEHl+EotU9nHVl+DG2PO1voZTNiev07p4gZlunfzbAdAymxsBOps7yNel4C05eEE98O+rOmzpOPmco8m6Enn9Hyyisw0yGH9lXDzTJXtKgpvN1KXt+q8PQdhOEzsHph8q1NvNnUOXAedm3EkR4TcugsjNM0BH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OEE62jSz; arc=none smtp.client-ip=209.85.218.47
+	 In-Reply-To:Content-Type; b=qeCZEQTLdolbPIQvZs3AcryoZ81W43GRF9/JjMEtzduPzgByXreebA6pzux9SYECFwg+pYECyXPAN2FYJKu4lVdAMuLzGqMp2zY4l9f1kvJmu88b9is/NV9AdnSKVTYBly5KivrI6LcVourenOQ2iNfXzOFfK95q/JnutdXBJ68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z183p9dP; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-abb81285d33so486490566b.0;
-        Fri, 28 Feb 2025 13:47:49 -0800 (PST)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-abec8b750ebso422039166b.0;
+        Fri, 28 Feb 2025 13:48:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740779268; x=1741384068; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740779317; x=1741384117; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=G8CwhEspY1ms4dX4C4Y0HnOr+QSQfhHDkdgewsp42Pk=;
-        b=OEE62jSzjWaKUVzheB2qQ/pmX0Putkj0KYRT/UTZa+oR3NHQ67SYgacyfqaEGospVe
-         gQwfmYxPzr20lenY4J01qg6h9AOuCpVYljALSN3jddLrCClwl2EX327tSG1Mn6NG3MvV
-         W7/3Ai0/kmtHkMW7hofI2NeIt0je9+9P7DZOdV2V0P8/C6AGXq9bKATRthxA3rlCcv63
-         9JZ2d/VF1BEKu/VSgZTzeAZY9Yr+Cp8tKmS10H6RkNU1L8b3PmwZOGhLBWe7+H0B/k8r
-         WY4W4mprTD+9TP+aO+Vv/YSzBgTHbbkRbEGG75o76Akc7fPiwWILSexib4MVft1ZRx2S
-         3qMg==
+        bh=BdFnhhzQEC3jcbLOShIpWKd9ImN69zhVCCxS6xvU9/c=;
+        b=Z183p9dPS6nfQQneoVoeizW2vngPQaQMf1P3JlcDnRQEVJG0b3x5q3SniKiS6k8PjA
+         CFT1A1vgRcE0fJn3px1NqFfLS8Tu6QDBIJBXLw7EYFoQsTCvgRAsT3Rmm1p7s8+D/0Xv
+         BajS5VRGVbgc4kxs/xiqhrSbenMzz3ZDgwK0TAcN03cuWzrogTv8SdCo9/SWrtmjU+YM
+         EUh2g+yrFTPFIKXrWBzvxBuzpS82xO3bZurdZN7N30/h9s+0k431iMo8Ja0r8Ro1BYzt
+         UqfsSI7uMoBp99ZD/4STWN5D0O6CSaXaWy4sU1nXTk2GK8B9+gi7wyX1s6Sg2rljFbhI
+         lFuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740779268; x=1741384068;
+        d=1e100.net; s=20230601; t=1740779317; x=1741384117;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=G8CwhEspY1ms4dX4C4Y0HnOr+QSQfhHDkdgewsp42Pk=;
-        b=km/4Q+gLpCZjQPN1QA7rNTsO2pwhvAuPcCt8OfXLogHjJzYlP+W2J+BM5TurkdL+0J
-         CMcAoFWt8zxip5J0O81ggXIl19YdBW0/qkdWfBcEov96Q880gIhbNLGnAp5pPQ8gbn7X
-         zQUZFb4ytTlN+ahCSi677y9WqVXoXx/W/7A14lmN2ScZQ9XblxMuXOwgQPhvA9gi6JeE
-         ZNuSlHhIgOKUB7U+NfrYIxySKVcN0Fv6DzVvERhcXjNISY5lHQTLiFtDhxH5JgLab3CI
-         fOB0H18Z5Rw5XZQrA4Qvmel9wLf1jETYYrJ+ibqVkquZezwPSnN4MPaHcMOG5vEvHpmp
-         umaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWnjdM9GSPX3BWsArEgtLIvr65EYu62dTFv7k2H2ngF6JS1Q+YfIrmEb31zwZdAfqBqWW2DrBa46UIHE2HQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyd+qpfuMx5qIHYpgCYvY8rLHBmbX7Hu8tDAzxVcT1wUDJlQdSk
-	FMsovz6fo66Ah/wg9p6LhsED2izh2ipY2u6SfNdgsII393xR6D4Z
-X-Gm-Gg: ASbGncuVRLD+ZCCnqU+sSl6yhpSUFqMdU3Yw6SAolNfIMNq5LWUNUatKNJfUobiF8fi
-	KeB4zawzZ1VrTT2hr1Muj8d2UtEYaqlKbHHA3tHZKLfCdBJPSNVQlDUXueCzxOY77zyYxOdyjzX
-	p8mKgjwM6y1S7xNEN7WrQP5+5D3gGcn5SOSEz+HzBfhDdCgKqTH4k1tWINGv+gX+DahxgC905oZ
-	5JLRzthgcjp7HoiPyn2zDKO4znRHb4rYTUlAbTzL5RW3PC5KwQnROuZbRI14+V2GyOGi2rCI810
-	bfbWsQevP6NMeoTTdL5HhLeo9suTssVVcmck2rX+ZB1FyImDDy9kMgk5+4IV/P3sHufeWq3xVKX
-	JjfXruyDbkp3ctd45BLWrPAUsHUDI7c94ABI8zfER8G6eB5drkyVqbgUTR43PXXyfAWD7EcXdgv
-	vtJKP/GtbMP0dt5CFv/Q==
-X-Google-Smtp-Source: AGHT+IF+h/Li1VyE9OxDse2QjEcQlAaMcRq8CKJSdNUVXrvqPL44/VoyPNWybJjCTgD/lHb/PQPcVw==
-X-Received: by 2002:a17:907:d8a:b0:ab7:b072:8481 with SMTP id a640c23a62f3a-abf265ce47bmr488214866b.45.1740779267725;
-        Fri, 28 Feb 2025 13:47:47 -0800 (PST)
+        bh=BdFnhhzQEC3jcbLOShIpWKd9ImN69zhVCCxS6xvU9/c=;
+        b=RG00843w33Ht96kSpCCas0dLMbPuwHydfPE0JtXYXf/5eP2aSReRoJr9HBUvO6SBdx
+         l+4atRQbjLX2qWy8SiX16v8iOcE7GhK0FiDvInE8hV/IKGjcLszl5ZXT3mLdJUV9gU3n
+         tzZgKTjwROVbCb+OgYXPngPWdAUj6UIrB3/ZXYb76U0rXfbYejFdcOaW9FEh1Wb03uko
+         Hm22xTVyEfQgOtolOJA0OD/B4ezV5HH/5O1xjFRMkokWQ+FQg5u99ADiGMSux2umP6cY
+         vBv9X6w/gGt15tavrZxnYuvvvFpv9tqLx79EsVV8yRgCwO+NCNIcpqiExsNsgJJ4dGOI
+         Omyw==
+X-Forwarded-Encrypted: i=1; AJvYcCUSBsK3Vg7Ss7p/yDgTP0a45JgidSNuSA6lNLidUh0ST4VKnGF5jeFSczkKTQDws76wKNI1N+qHPe7l9Wax@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6mbWQ+goZSk8/5hrUz+N+jZH6iqPlebnmXGguyco/TP0gXCR7
+	IkJ/cQTHj2TmCQCpbDKCg1nsFhRTQiAgGshhYEMpCdxqHKE8MkqD
+X-Gm-Gg: ASbGnct0bf3O/NU9Z7muF0RfD1e+fBRFD3c5vGyKEWh5WixikChJQr264CCVUUx6d1H
+	VHW4vuUCs1CSCNf36SSbcS9ejiftj1kFGZSkAFeJpzW1Hay3Ul9zPwcumktDbbQ9y6+wauilNMF
+	vxRGYiRJaDPUGXouIss3Hk0IW3Q+O4miy6gDbFz+9ihiHS3Hto98+ziaQQIp65FcPisxf6Bd0b6
+	+I0o+f9Z2oa5x+uOJ6gx33ZupwMPYRAF9s3v0QWZllObjVono4aYGh4N7iwSaKe9xIv2POLVhJk
+	nvV/NHtbMTNO4RgK7haCRjG/omLrcSi3fcqTQ2t/T/pXLBlxPKrrLZt3PGjyA+fTKnF3YPiAVwq
+	P+DNLExNWZWnUIoG4DahTDhM7d1LC0MGPN4F1dxeSb8fyqif90WXq/nEOET8cECw5CJD0x/A7LB
+	hPCaPpe8m28mmHjdUNcQ==
+X-Google-Smtp-Source: AGHT+IGuc7T5ZPUaJlrjeMMzg7I4sdxgXUWWoxuE3TuzE3PG9L1NUSegwaSuEsT0oIrc2J6ogPxZTA==
+X-Received: by 2002:a17:906:c108:b0:abb:eec3:394b with SMTP id a640c23a62f3a-abf26822d5fmr478801666b.46.1740779317355;
+        Fri, 28 Feb 2025 13:48:37 -0800 (PST)
 Received: from ?IPV6:2a02:3100:af43:5200:e57d:90a4:e6b5:1175? (dynamic-2a02-3100-af43-5200-e57d-90a4-e6b5-1175.310.pool.telefonica.de. [2a02:3100:af43:5200:e57d:90a4:e6b5:1175])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abf0c0b91dcsm351095766b.21.2025.02.28.13.47.46
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abf4b7385ebsm42461666b.106.2025.02.28.13.48.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Feb 2025 13:47:47 -0800 (PST)
-Message-ID: <2a197fb0-322d-45bb-8fb5-0ec8d93a47f7@gmail.com>
-Date: Fri, 28 Feb 2025 22:48:49 +0100
+        Fri, 28 Feb 2025 13:48:36 -0800 (PST)
+Message-ID: <0edd6489-ecf8-451b-b175-6d6bbc6b9a1f@gmail.com>
+Date: Fri, 28 Feb 2025 22:49:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,8 +84,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH net-next v2 4/8] net: phy: micrel: use new phy_package_shared
- getters
+Subject: [PATCH net-next v2 5/8] net: phy: mediatek: use new
+ phy_package_shared getters
 From: Heiner Kallweit <hkallweit1@gmail.com>
 To: Andrew Lunn <andrew@lunn.ch>,
  Russell King - ARM Linux <linux@armlinux.org.uk>,
@@ -154,50 +154,48 @@ Use the new getters for members of struct phy_package_shared.
 
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 ---
- drivers/net/phy/micrel.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/phy/mediatek/mtk-ge-soc.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 9c0b1c229..289e1d56a 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -34,6 +34,8 @@
- #include <linux/net_tstamp.h>
- #include <linux/gpio/consumer.h>
+diff --git a/drivers/net/phy/mediatek/mtk-ge-soc.c b/drivers/net/phy/mediatek/mtk-ge-soc.c
+index 9de6fbb45..175cf5239 100644
+--- a/drivers/net/phy/mediatek/mtk-ge-soc.c
++++ b/drivers/net/phy/mediatek/mtk-ge-soc.c
+@@ -8,6 +8,7 @@
+ #include <linux/phy.h>
+ #include <linux/regmap.h>
  
-+#include "phylib.h"
-+
- /* Operation Mode Strap Override */
- #define MII_KSZPHY_OMSO				0x16
- #define KSZPHY_OMSO_FACTORY_TEST		BIT(15)
-@@ -2631,8 +2633,7 @@ static void lan8814_ptp_tx_ts_get(struct phy_device *phydev,
- static int lan8814_ts_info(struct mii_timestamper *mii_ts, struct kernel_ethtool_ts_info *info)
++#include "../phylib.h"
+ #include "mtk.h"
+ 
+ #define MTK_GPHY_ID_MT7981			0x03a29461
+@@ -1278,7 +1279,7 @@ static int mt798x_phy_led_hw_control_set(struct phy_device *phydev, u8 index,
+ 
+ static bool mt7988_phy_led_get_polarity(struct phy_device *phydev, int led_num)
  {
- 	struct kszphy_ptp_priv *ptp_priv = container_of(mii_ts, struct kszphy_ptp_priv, mii_ts);
--	struct phy_device *phydev = ptp_priv->phydev;
--	struct lan8814_shared_priv *shared = phydev->shared->priv;
-+	struct lan8814_shared_priv *shared = phy_package_get_priv(ptp_priv->phydev);
+-	struct mtk_socphy_shared *priv = phydev->shared->priv;
++	struct mtk_socphy_shared *priv = phy_package_get_priv(phydev);
+ 	u32 polarities;
  
- 	info->so_timestamping = SOF_TIMESTAMPING_TX_HARDWARE |
- 				SOF_TIMESTAMPING_RX_HARDWARE |
-@@ -3653,7 +3654,7 @@ static int lan8814_gpio_process_cap(struct lan8814_shared_priv *shared)
- 
- static int lan8814_handle_gpio_interrupt(struct phy_device *phydev, u16 status)
+ 	if (led_num == 0)
+@@ -1317,7 +1318,7 @@ static int mt7988_phy_fix_leds_polarities(struct phy_device *phydev)
+ static int mt7988_phy_probe_shared(struct phy_device *phydev)
  {
--	struct lan8814_shared_priv *shared = phydev->shared->priv;
-+	struct lan8814_shared_priv *shared = phy_package_get_priv(phydev);
+ 	struct device_node *np = dev_of_node(&phydev->mdio.bus->dev);
+-	struct mtk_socphy_shared *shared = phydev->shared->priv;
++	struct mtk_socphy_shared *shared = phy_package_get_priv(phydev);
+ 	struct regmap *regmap;
+ 	u32 reg;
  	int ret;
+@@ -1368,7 +1369,7 @@ static int mt7988_phy_probe(struct phy_device *phydev)
+ 			return err;
+ 	}
  
- 	mutex_lock(&shared->shared_lock);
-@@ -3864,7 +3865,7 @@ static void lan8814_ptp_init(struct phy_device *phydev)
+-	shared = phydev->shared->priv;
++	shared = phy_package_get_priv(phydev);
+ 	priv = &shared->priv[phydev->mdio.addr];
  
- static int lan8814_ptp_probe_once(struct phy_device *phydev)
- {
--	struct lan8814_shared_priv *shared = phydev->shared->priv;
-+	struct lan8814_shared_priv *shared = phy_package_get_priv(phydev);
- 
- 	/* Initialise shared lock for clock*/
- 	mutex_init(&shared->shared_lock);
+ 	phydev->priv = priv;
 -- 
 2.48.1
 
