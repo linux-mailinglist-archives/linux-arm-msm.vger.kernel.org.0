@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-49891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96838A4A549
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 22:47:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FA7EA4A54E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 22:47:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67D5A16C01C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 21:47:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 10CE816CCD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 21:47:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93AF11DCB0E;
-	Fri, 28 Feb 2025 21:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667EF1DC98A;
+	Fri, 28 Feb 2025 21:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aIQDKWxW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEE62jSz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87191D9A50;
-	Fri, 28 Feb 2025 21:47:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A420D1DC04A;
+	Fri, 28 Feb 2025 21:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740779225; cv=none; b=rnZWVZ1drWba1C5YwfAz9Kv4TNUE7cb1tqaBZO2WT1DoK83dv1RV3rt23NSi++mmnjunBkKFO9lff85N3VCgWVZRYdRku9rSBVwDEapWfInKW5+EYsgAiv77JAktGhgeXDSTkml8PdWfo5ddPAvn5221KNmVryvADNIhYGD5t3Y=
+	t=1740779271; cv=none; b=nljX/jnkVQc38fA1KgUDZvbqU4PMUEw8FPGDkAjJKMnR+i7Xck7OdXSlhZKfDeiOBbp/rPEq74TSvMo+sysUmIUNc+LNlQ3mp3I5Pv4z2fhoDBJ1IOUUCXLHiCLT2Q8bR2SwMx9aPjDE/SxEqweoejc7sjCXa6uaeMAL8IigjTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740779225; c=relaxed/simple;
-	bh=uguFkPyhLHqqHy6Oa3gPcmGsNAcmpL4z+DzL8HxNyMI=;
+	s=arc-20240116; t=1740779271; c=relaxed/simple;
+	bh=E8dTXEATRpIM3qJmtMmRiqbePawYIPNt+a3OVQYKFGk=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=VwCoUdVZ0+AL1MYzw8Oh0bWXcoGclVPjAiOr9zFnqVKjU4rByvKoIxtgs2fKspovDLNmWiMYcJvPks9ZNBprf26rDpmQDfjoz0HYqEUP/AaZ2Nwq6JO4o7dc14eK9Vb0jD88wPWeuhFmwXnQUlJlhfBOixn3eSM2XYMoCfpNxEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aIQDKWxW; arc=none smtp.client-ip=209.85.208.54
+	 In-Reply-To:Content-Type; b=SFuhmvY+SptH6yEHl+EotU9nHVl+DG2PO1voZTNiev07p4gZlunfzbAdAymxsBOps7yNel4C05eEE98O+rOmzpOPmco8m6Enn9Hyyisw0yGH9lXDzTJXtKgpvN1KXt+q8PQdhOEzsHph8q1NvNnUOXAedm3EkR4TcugsjNM0BH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OEE62jSz; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5e05717755bso3746058a12.0;
-        Fri, 28 Feb 2025 13:47:03 -0800 (PST)
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-abb81285d33so486490566b.0;
+        Fri, 28 Feb 2025 13:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740779222; x=1741384022; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740779268; x=1741384068; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rbOxg+2NOcU8S02BJzsCpuBN1u0Nv4BgUhVkmfXa+II=;
-        b=aIQDKWxWZnunp8lfujCD93yDHsYagLZi9PbVcByqzXCGVb8wrQ6rKZXbHO/sDW0NeS
-         NbHlXQK+CyhEz8I94JiURRRDUDhI2vZULVLBmOMM2t+qRpErwSzGYY+X5qDkR+vqnB2Q
-         wASDjhC/IdZ8FBVDXg0C6nZl4tbBFWaH/aXZ0kh8yAxWhY77ODOjhSxTL+5buoVqHcUM
-         41x6vDTrf3JMIt7BiTSihhq+c5Dwqm8zA/yue4rvksWD4+yPJxBeGp1VnnKgglQ9uBm6
-         ELgStzFP9Ms0N/hDyBAp+q2QvO/UeT2x87s4WNh+ffTJGsz/FqmSvNvROfx0Vr4XZ5To
-         d7tg==
+        bh=G8CwhEspY1ms4dX4C4Y0HnOr+QSQfhHDkdgewsp42Pk=;
+        b=OEE62jSzjWaKUVzheB2qQ/pmX0Putkj0KYRT/UTZa+oR3NHQ67SYgacyfqaEGospVe
+         gQwfmYxPzr20lenY4J01qg6h9AOuCpVYljALSN3jddLrCClwl2EX327tSG1Mn6NG3MvV
+         W7/3Ai0/kmtHkMW7hofI2NeIt0je9+9P7DZOdV2V0P8/C6AGXq9bKATRthxA3rlCcv63
+         9JZ2d/VF1BEKu/VSgZTzeAZY9Yr+Cp8tKmS10H6RkNU1L8b3PmwZOGhLBWe7+H0B/k8r
+         WY4W4mprTD+9TP+aO+Vv/YSzBgTHbbkRbEGG75o76Akc7fPiwWILSexib4MVft1ZRx2S
+         3qMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740779222; x=1741384022;
+        d=1e100.net; s=20230601; t=1740779268; x=1741384068;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rbOxg+2NOcU8S02BJzsCpuBN1u0Nv4BgUhVkmfXa+II=;
-        b=gG2Sq8C7fElQN4qxTbRw9S1YGELX2jHkwgx2eSc86MzdgTlVRQTJUynD5lok40iwUR
-         bl9vggOAHV/ETg7uEhOmga3cNPUCKN8r+fhuilLTKnp0lO0LKxomVafAfYs734RimOk6
-         phMjrmKciba9R0EhtorEMj+qd/iTalUSwf1ibqrPgGJk3IQtv+dCzkVXjM1fBA95nCbh
-         VBVt4X+dJTyL9cD65jFsyXUIMHDvkr5mzllUIjbzFFD4Pkr3MUUKPyxQvYR0m97H9cHa
-         9Njag0+lwRKqsPPgui0c6IpYr5TRrCwSZZnN1D3/tigZMihsXrV4aIqkDXOC+VLTdNF2
-         4DFw==
-X-Forwarded-Encrypted: i=1; AJvYcCWXtFyAg79cE5/h0/l+MaLxSTxekGY6Hkpfi5z5462qXUEjXzjf3g8SXjK6VXH3gLubqKB9m84n2HG4Dpqt@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKkqSkgAzSDw34Z5gg3uxmEZT12MKaF3GVfkrOQYnSSLKzSjQZ
-	bnWypov2L7UmK5Bu24DJDS9j0VAo+5Nc5iwJJBkYl+pxK90xv+GU
-X-Gm-Gg: ASbGnctjL5z1z0tjX0s5y89dcWCmL9MJd6QDuxhjSr9TtDH+bauNbk9a91LR8vMFPhO
-	cQIPAzcwB/1ZoXCFqh9FJ3VEOQSiG5p5lNLuEwbeKv2hSWSDp85IBZxgqE+pEYwrLiGC55Q5/KO
-	GFZtvcnQyZrePx08G2CDLkgSwR/xEBh4oOQ88ZCW9IRlVLmHXK1n6meMr6t56goaLHWw7BF5UEs
-	3ZFloeHMjx/f/wufMjbnGuJJMRy8aEZG0t3cGjbnAsZV0y+F0V5cWZa1Hbb0YXJYU09FKBAyVi1
-	PKwGdTQ2oO2tBnzmnMCsbrCPnv7/8cYP3xcAOGFGn/tdpmytRq7BjqpcZHpRennAxsv63cHpOVH
-	fSSQ/hEZunalXxsZCfKnTx9zG/oIJyv3sNxLu1rmaMJ7bAUou8+Kzshp2J64D1kFneRk8aS9KGg
-	E9EdNHzLSfOy8KwlFoxQ==
-X-Google-Smtp-Source: AGHT+IExl1j4pHBwdTbidpfyZFj4T5YmQ4QIQxv+UwSzRsUopoj7fPWFY6xPxbeL8P2l/qxJQ1aoCA==
-X-Received: by 2002:a17:907:96a2:b0:abe:eebf:ae54 with SMTP id a640c23a62f3a-abf25fdbdb3mr501157666b.20.1740779221688;
-        Fri, 28 Feb 2025 13:47:01 -0800 (PST)
+        bh=G8CwhEspY1ms4dX4C4Y0HnOr+QSQfhHDkdgewsp42Pk=;
+        b=km/4Q+gLpCZjQPN1QA7rNTsO2pwhvAuPcCt8OfXLogHjJzYlP+W2J+BM5TurkdL+0J
+         CMcAoFWt8zxip5J0O81ggXIl19YdBW0/qkdWfBcEov96Q880gIhbNLGnAp5pPQ8gbn7X
+         zQUZFb4ytTlN+ahCSi677y9WqVXoXx/W/7A14lmN2ScZQ9XblxMuXOwgQPhvA9gi6JeE
+         ZNuSlHhIgOKUB7U+NfrYIxySKVcN0Fv6DzVvERhcXjNISY5lHQTLiFtDhxH5JgLab3CI
+         fOB0H18Z5Rw5XZQrA4Qvmel9wLf1jETYYrJ+ibqVkquZezwPSnN4MPaHcMOG5vEvHpmp
+         umaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWnjdM9GSPX3BWsArEgtLIvr65EYu62dTFv7k2H2ngF6JS1Q+YfIrmEb31zwZdAfqBqWW2DrBa46UIHE2HQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyd+qpfuMx5qIHYpgCYvY8rLHBmbX7Hu8tDAzxVcT1wUDJlQdSk
+	FMsovz6fo66Ah/wg9p6LhsED2izh2ipY2u6SfNdgsII393xR6D4Z
+X-Gm-Gg: ASbGncuVRLD+ZCCnqU+sSl6yhpSUFqMdU3Yw6SAolNfIMNq5LWUNUatKNJfUobiF8fi
+	KeB4zawzZ1VrTT2hr1Muj8d2UtEYaqlKbHHA3tHZKLfCdBJPSNVQlDUXueCzxOY77zyYxOdyjzX
+	p8mKgjwM6y1S7xNEN7WrQP5+5D3gGcn5SOSEz+HzBfhDdCgKqTH4k1tWINGv+gX+DahxgC905oZ
+	5JLRzthgcjp7HoiPyn2zDKO4znRHb4rYTUlAbTzL5RW3PC5KwQnROuZbRI14+V2GyOGi2rCI810
+	bfbWsQevP6NMeoTTdL5HhLeo9suTssVVcmck2rX+ZB1FyImDDy9kMgk5+4IV/P3sHufeWq3xVKX
+	JjfXruyDbkp3ctd45BLWrPAUsHUDI7c94ABI8zfER8G6eB5drkyVqbgUTR43PXXyfAWD7EcXdgv
+	vtJKP/GtbMP0dt5CFv/Q==
+X-Google-Smtp-Source: AGHT+IF+h/Li1VyE9OxDse2QjEcQlAaMcRq8CKJSdNUVXrvqPL44/VoyPNWybJjCTgD/lHb/PQPcVw==
+X-Received: by 2002:a17:907:d8a:b0:ab7:b072:8481 with SMTP id a640c23a62f3a-abf265ce47bmr488214866b.45.1740779267725;
+        Fri, 28 Feb 2025 13:47:47 -0800 (PST)
 Received: from ?IPV6:2a02:3100:af43:5200:e57d:90a4:e6b5:1175? (dynamic-2a02-3100-af43-5200-e57d-90a4-e6b5-1175.310.pool.telefonica.de. [2a02:3100:af43:5200:e57d:90a4:e6b5:1175])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abf0c6ee486sm356284766b.90.2025.02.28.13.47.00
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abf0c0b91dcsm351095766b.21.2025.02.28.13.47.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Feb 2025 13:47:01 -0800 (PST)
-Message-ID: <fbdf85ea-81d4-4a87-9560-262edeb97468@gmail.com>
-Date: Fri, 28 Feb 2025 22:48:03 +0100
+        Fri, 28 Feb 2025 13:47:47 -0800 (PST)
+Message-ID: <2a197fb0-322d-45bb-8fb5-0ec8d93a47f7@gmail.com>
+Date: Fri, 28 Feb 2025 22:48:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH net-next v2 3/8] net: phy: qca807x: use new phy_package_shared
+Subject: [PATCH net-next v2 4/8] net: phy: micrel: use new phy_package_shared
  getters
 From: Heiner Kallweit <hkallweit1@gmail.com>
 To: Andrew Lunn <andrew@lunn.ch>,
@@ -154,75 +154,50 @@ Use the new getters for members of struct phy_package_shared.
 
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 ---
- drivers/net/phy/qcom/qca807x.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/net/phy/micrel.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/phy/qcom/qca807x.c b/drivers/net/phy/qcom/qca807x.c
-index 2ad8c2586..1af6b5ead 100644
---- a/drivers/net/phy/qcom/qca807x.c
-+++ b/drivers/net/phy/qcom/qca807x.c
-@@ -15,6 +15,7 @@
- #include <linux/gpio/driver.h>
- #include <linux/sfp.h>
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index 9c0b1c229..289e1d56a 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -34,6 +34,8 @@
+ #include <linux/net_tstamp.h>
+ #include <linux/gpio/consumer.h>
  
-+#include "../phylib.h"
- #include "qcom.h"
- 
- #define QCA807X_CHIP_CONFIGURATION				0x1f
-@@ -486,13 +487,13 @@ static int qca807x_read_status(struct phy_device *phydev)
- 
- static int qca807x_phy_package_probe_once(struct phy_device *phydev)
++#include "phylib.h"
++
+ /* Operation Mode Strap Override */
+ #define MII_KSZPHY_OMSO				0x16
+ #define KSZPHY_OMSO_FACTORY_TEST		BIT(15)
+@@ -2631,8 +2633,7 @@ static void lan8814_ptp_tx_ts_get(struct phy_device *phydev,
+ static int lan8814_ts_info(struct mii_timestamper *mii_ts, struct kernel_ethtool_ts_info *info)
  {
--	struct phy_package_shared *shared = phydev->shared;
--	struct qca807x_shared_priv *priv = shared->priv;
-+	struct qca807x_shared_priv *priv = phy_package_get_priv(phydev);
-+	struct device_node *np = phy_package_get_node(phydev);
- 	unsigned int tx_drive_strength;
- 	const char *package_mode_name;
+ 	struct kszphy_ptp_priv *ptp_priv = container_of(mii_ts, struct kszphy_ptp_priv, mii_ts);
+-	struct phy_device *phydev = ptp_priv->phydev;
+-	struct lan8814_shared_priv *shared = phydev->shared->priv;
++	struct lan8814_shared_priv *shared = phy_package_get_priv(ptp_priv->phydev);
  
- 	/* Default to 600mw if not defined */
--	if (of_property_read_u32(shared->np, "qcom,tx-drive-strength-milliwatt",
-+	if (of_property_read_u32(np, "qcom,tx-drive-strength-milliwatt",
- 				 &tx_drive_strength))
- 		tx_drive_strength = 600;
+ 	info->so_timestamping = SOF_TIMESTAMPING_TX_HARDWARE |
+ 				SOF_TIMESTAMPING_RX_HARDWARE |
+@@ -3653,7 +3654,7 @@ static int lan8814_gpio_process_cap(struct lan8814_shared_priv *shared)
  
-@@ -541,7 +542,7 @@ static int qca807x_phy_package_probe_once(struct phy_device *phydev)
- 	}
- 
- 	priv->package_mode = PHY_INTERFACE_MODE_NA;
--	if (!of_property_read_string(shared->np, "qcom,package-mode",
-+	if (!of_property_read_string(np, "qcom,package-mode",
- 				     &package_mode_name)) {
- 		if (!strcasecmp(package_mode_name,
- 				phy_modes(PHY_INTERFACE_MODE_PSGMII)))
-@@ -558,8 +559,7 @@ static int qca807x_phy_package_probe_once(struct phy_device *phydev)
- 
- static int qca807x_phy_package_config_init_once(struct phy_device *phydev)
+ static int lan8814_handle_gpio_interrupt(struct phy_device *phydev, u16 status)
  {
--	struct phy_package_shared *shared = phydev->shared;
--	struct qca807x_shared_priv *priv = shared->priv;
-+	struct qca807x_shared_priv *priv = phy_package_get_priv(phydev);
- 	int val, ret;
- 
- 	/* Make sure PHY follow PHY package mode if enforced */
-@@ -708,7 +708,6 @@ static int qca807x_probe(struct phy_device *phydev)
- 	struct device_node *node = phydev->mdio.dev.of_node;
- 	struct qca807x_shared_priv *shared_priv;
- 	struct device *dev = &phydev->mdio.dev;
--	struct phy_package_shared *shared;
- 	struct qca807x_priv *priv;
+-	struct lan8814_shared_priv *shared = phydev->shared->priv;
++	struct lan8814_shared_priv *shared = phy_package_get_priv(phydev);
  	int ret;
  
-@@ -722,8 +721,7 @@ static int qca807x_probe(struct phy_device *phydev)
- 			return ret;
- 	}
+ 	mutex_lock(&shared->shared_lock);
+@@ -3864,7 +3865,7 @@ static void lan8814_ptp_init(struct phy_device *phydev)
  
--	shared = phydev->shared;
--	shared_priv = shared->priv;
-+	shared_priv = phy_package_get_priv(phydev);
+ static int lan8814_ptp_probe_once(struct phy_device *phydev)
+ {
+-	struct lan8814_shared_priv *shared = phydev->shared->priv;
++	struct lan8814_shared_priv *shared = phy_package_get_priv(phydev);
  
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
+ 	/* Initialise shared lock for clock*/
+ 	mutex_init(&shared->shared_lock);
 -- 
 2.48.1
 
