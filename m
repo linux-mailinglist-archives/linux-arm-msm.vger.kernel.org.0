@@ -1,143 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-49800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D91A9A490B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 06:09:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B73ABA490BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 06:15:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8BEF616CAB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 05:09:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D7503B2388
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 05:15:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8003E1BC062;
-	Fri, 28 Feb 2025 05:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59E8118D649;
+	Fri, 28 Feb 2025 05:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fTzk5aUq"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="hM8HcyjQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11olkn2025.outbound.protection.outlook.com [40.92.18.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DEA1B6CE8;
-	Fri, 28 Feb 2025 05:09:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740719362; cv=none; b=ij0QyI9obBKL54dqNJ0Re3PKl9hzayxEpB6oWifmgrVhcJWxnOsLvkdqn+gaf+k40ohWhphOj/20h8NGyj707wQhdxfYs7IdJTfkSnMYsp8YKAvPvKCpUAKb2JYPvNJAotaIZYjStP4a6FzT6laqyWTHjxoZ/KAzbvL31IcVwh0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740719362; c=relaxed/simple;
-	bh=pyEpxRsjDv1Vp5XUqCc2KvoRzTGi4Jn5FvxxFOA8b6M=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C71GOp6b91Ag2bsBlSauHizdNYj/PI2bvIzHev/9nC3sosyz3isKV4TwNBCS/mma34CnNoWmmyxP3UJ0H+lswiIUUd//zOFxVmRHf5wAG2+GUghNfG4Bn/jG/CalqqbsNeJXzhV6PEIFHa2JfCnWwy74Hp566THBItZDG+4VqYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fTzk5aUq; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51RJI7Wj017602;
-	Fri, 28 Feb 2025 05:09:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=FVTwoYTTC+nsaPq7ZifRjG3l
-	o1tRW2WUQg1YyfusBZk=; b=fTzk5aUqEiwNtwIsq/sc6SW9Uwa1XU+oqtgSmNE5
-	QfxgEtFQRPw9N0v5evp9qbU/RVUqdrmboKaAfP8zSe4jU379sghfl1Y3w73+eIih
-	dHmnguAS+pPNn2k4dx1Js61zJJzFm3Wp+m/fDYW04gL621d/E7x9fzTtp4F+Qy8k
-	V0GYaf45Nq1DGtKCyyBgn2zXP+BH3k1rkNWV01B2VMQY80crolV4p2yTfJks/d8k
-	dFX1jruGJDr35/Fm5zh64FKcay4sDFJqW/m7lkv3+0aOUJzY5X1r1X6yzcm5/uFm
-	n7TMfvrl0v+iaJsGIdkppFAaM6eG2BXzMbFdOeUdgh6Snw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 451prn81jv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Feb 2025 05:09:13 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51S59CgP024814
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Feb 2025 05:09:12 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 27 Feb 2025 21:09:09 -0800
-Date: Fri, 28 Feb 2025 10:39:06 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1] arm64: dts: qcom: ipq5424: Enable MMC
-Message-ID: <Z8FE8nmYm8uqya6k@hu-varada-blr.qualcomm.com>
-References: <20250227094226.2380930-1-quic_varada@quicinc.com>
- <ryfawl6uykry5ds5kovujvepkwffdwitbqltx75wnnrqrbl4b2@i2pjwegs3u4n>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749F1632;
+	Fri, 28 Feb 2025 05:15:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.18.25
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740719742; cv=fail; b=RpFRhOZJcKGs1rD5HUQL1JuF/ckoyZT9ZjP9bAakdBtKK0e93k4IGQQWj0azLOhI86KaikubKRcVqW2OU8wZl+vw/eLIZU8tz/mU/BcfjrQSPhRAIbDbWT67SlbVL8uTZUWO/2YhdPSnpVXG7rUgooZAHugIsMmXA0ayHlyxqhI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740719742; c=relaxed/simple;
+	bh=DToZa9zVz0m2GunOjKOBmphkoitC/ibQTJlg4Le/IeM=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=YUDJODZyeg2dWGQ/Y24QvgSbJKSUMmg7pVhRtpHqVUyTS5K0g5k7cMHvi8Wy1XeEIHO9mcYJFWTinlwLORSUChVwpgnLm7AJxh0i0KewPejevGfC0TS6+h9VG9eW2NNoLS6Rrwk74S1CZVmrJFuAEoOaZg9v2Jv2kvqbFrlE39g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=hM8HcyjQ; arc=fail smtp.client-ip=40.92.18.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TGE8MegnQmAoEjG3uHkoyylLyHMzJTOlWvaf7JrUa1QqD3ZisYTLiQvFHB6/pR+no7u9wX3V4xjvdNmRivFBxz8NA9V3TzIzni1hF4hXMaXjV9NDeU9GeWPiZp14mX51Eu/Sm1Yc5hbZwHkBtz3wno+dfnQUiYCRc52rQ7hooC1lXSgauqjh1DL1Xrb0HKTZkl94J4RW0flBMLBFK1dofwMhu/Dnoz40ZRuvZawXepavLmFUIV00RlWLHO6dzY+ZhHGEQJfK7luLYeHJB96SqZFPrTS350bNw/xJ1jmYKXUv8bGR4vt8yG4uHMahaEpYuOyr1XVQW8Y2LvT0eWgq8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=k1q8ZPKVFSUZicImLgH5Wb6aLZh2u9GgthMU2Y7tEqc=;
+ b=L1naAfF1+DvG9EYihh5YfFsnhroBjaRf4tiz/ab67lteIIl/dOOxYoPufu8MKhUaR2lKvPBIFrIg3zV/UQvlCgc+nwqMz86ziaxPFnNagIbQ97OlvGP555jZoGKbFEk9rBKXeeHY6aGZEpeAzWH3oG9qUQOtLdW90sbFcLq96e97qOio8p1u+dp/piNDfqqshQuY7YoMD9Yrke5I0dBJ11R/t1rk7GW4O0embCFsZf1m47+erYWX+5Kw4ZfqxiqIwK+VlEUji1ImYMJ2nz2aBS+Rjj3ctzjHmJvXrIdm9PXVcPHAn9DiW6QSjeUpSFPugJUcjNI9+n5Q9AQUnVhf4Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=k1q8ZPKVFSUZicImLgH5Wb6aLZh2u9GgthMU2Y7tEqc=;
+ b=hM8HcyjQqbePaVAp3Uirf1JygNa689BaoLvVcKsbKKCWybM8YaABTCr0P9+znlg3zKQ5Ozq2ZA7peq8y6nXevVGBa4v8VvELVHBYuGoeJz+gPRgxTp0eCR789V0znABmfjm25h2QLN4sYaVd+Z7KhhHfA2Cfsr8FqF8vVH4ZZRNu+drb9wIMdvqWUL3FuZs5JDLB+JhnTavFCRksJ8aJKp/BWwKYfxKa2Zuc6Zp7ybd4BQGaQ6yxT5vJdBS05UOFlG37/xSbEqIyBSITn99IW53vASrt1MkBB/oaCwiJS49W3IF6d4uikyAW1WQKOWj33O6GMHT1AJILR/tdmBn91A==
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
+ by LV3PR19MB8318.namprd19.prod.outlook.com (2603:10b6:408:215::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.21; Fri, 28 Feb
+ 2025 05:15:38 +0000
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305%6]) with mapi id 15.20.8466.020; Fri, 28 Feb 2025
+ 05:15:38 +0000
+From: George Moussalem <george.moussalem@outlook.com>
+To: linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	daniel.lezcano@linaro.org,
+	rafael@kernel.org,
+	amitk@kernel.org,
+	thara.gopinath@gmail.com,
+	dmitry.baryshkov@linaro.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	quic_srichara@quicinc.com
+Subject: [PATCH v9 0/6] Add support for IPQ5018 tsens
+Date: Fri, 28 Feb 2025 09:11:32 +0400
+Message-ID:
+ <DS7PR19MB8883ADA4537830A07495397F9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
+X-Mailer: git-send-email 2.48.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: DX1P273CA0013.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:300:21::18) To DS7PR19MB8883.namprd19.prod.outlook.com
+ (2603:10b6:8:253::16)
+X-Microsoft-Original-Message-ID:
+ <20250228051521.138214-1-george.moussalem@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ryfawl6uykry5ds5kovujvepkwffdwitbqltx75wnnrqrbl4b2@i2pjwegs3u4n>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Ow1mVos_vONoQRd7XiNIWc4sX8C5gp2H
-X-Proofpoint-GUID: Ow1mVos_vONoQRd7XiNIWc4sX8C5gp2H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-27_08,2025-02-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 clxscore=1015 mlxscore=0 adultscore=0 mlxlogscore=635
- suspectscore=0 phishscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502280034
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|LV3PR19MB8318:EE_
+X-MS-Office365-Filtering-Correlation-Id: 11dbc81b-6d2a-4545-cea4-08dd57b6ee1e
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199028|5062599005|7092599003|8060799006|5072599009|19110799003|15080799006|41001999003|1602099012|10035399004|3412199025|4302099013|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?1xyQVjWJxh0V5C4/uc/LpuBhcyeULWCPDbT2y+vJeVCfwlNFJadctG2lrLzn?=
+ =?us-ascii?Q?g96NdRO8iCJGXgNKSqny+m4PpHqaiKe6tWpjXYhTaeNJFw9zmfiEqKotbC1j?=
+ =?us-ascii?Q?S3iqQ5nEC6CCU9513rXIds0OrAMWRvzlKlI6q3GoouTfHkRdWpGKlaKtguCV?=
+ =?us-ascii?Q?/jVIO4E5IUQu0valjXJjTXqPR98QcPtaPtXdMslf9eF4SjoFqNEdWllD8iXg?=
+ =?us-ascii?Q?bUI1eqB7yGfY8P32sE1QUuk+Qv5oRNXN4L5A83gltqH3oW/FsgBGU3XUDGYP?=
+ =?us-ascii?Q?VYkiyN70q+vUXrcyRZG9KoUjZ1blrjxDYoUCt85DYjizbH81WOPFMPJf1jje?=
+ =?us-ascii?Q?l6pwnpt0AZ3hFzwqlBBLy2PjnTI6DLvD9Sasv+vBN1+PTmiCpg08HZRN99//?=
+ =?us-ascii?Q?u9QRY8xw29UkT9oB/ughk0ROIrPOUMyaTcavzXYo4x53RVzRZT1978MsaQWN?=
+ =?us-ascii?Q?bSzGJjAt9U+u5QIX0uVZEqaEN9qTMMK4LSTxZ4OqHP3UeO3IoXxBRmhc0PFa?=
+ =?us-ascii?Q?Tt7++7NOloU0cgnoaoO8InIK/Au1iDhCkCFE0J2Khy2s8xT+QO6tYA50q8w9?=
+ =?us-ascii?Q?6gdR+ACFyBvRboOLMvvHy4h7fDgpex3cYnoRET3aOk6guk81XQHhq0U3rRn7?=
+ =?us-ascii?Q?xaa0OuIGwVpci9YKki5Mh7LgKTpo1tftDnV8fyp0eVdsOZtSFGqlac7T4tpO?=
+ =?us-ascii?Q?+rQt/0aGqsaFj6CevP8a5i4oaYrNhAk8x2oTc4w/EcQqfB5G6InCgSws9DPP?=
+ =?us-ascii?Q?y5F3hra7o8hh1HfPjPZYzrNmIJizJeWV5dASznPLEiW3MRkWXLP3eP9IHmzr?=
+ =?us-ascii?Q?9aL8hzXTyxFU9Zj51FLBbyFS4mUgqDmryCnlmUiGAPhEJHBo/ynZhDOU55AH?=
+ =?us-ascii?Q?wMLkk8uS+W58lKR6WyrrkqE1IUMzCIgcexUk+ZjF6lEli8qc/4ftomHg5/oI?=
+ =?us-ascii?Q?0UORM/Wnr45UDN7OiD8ZMWHOhXIggu99F1fEzRPg6b9rQcsuchm62VnULQOC?=
+ =?us-ascii?Q?yvhjjq0TqapBjsM1ZdaSUeWP/9yIWnPg4xP/8vglTU9rRDJ67y2fiZswGP8l?=
+ =?us-ascii?Q?3K+J+TZKj4E2FkiYVJAx4q79O8WUFTOz58GhLe8WqzEK972CgQa665wmfO3E?=
+ =?us-ascii?Q?4XIQT1t5MSqyJt91vtrEcXDBf/5UbXteFXsPC0E/GqOjrhxRlNRk7jAWoqJj?=
+ =?us-ascii?Q?XDxGmd29k+e0mKylmRfQgEg//arah7LsdZIAl5OUMPSmjMudVKiA0OogMil5?=
+ =?us-ascii?Q?Wfh37gEAOFEc/DebCFK1IrQgNJhAKalumcf7Sb7ShbkE78Pw05Kh3hpl05DY?=
+ =?us-ascii?Q?DQJjDMWKSLjF07TZxrIM1NKJ?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?VqX7gLmB9+m6/GRzQ0Z1YNb9iNg+oc31jL5+btoji8PPa/UQMusp4SwpKVi6?=
+ =?us-ascii?Q?zcApLr/PRAiIjiNx7u7ovhdpmzsPtVmJJy6YvcAUWWy1pY9eaoxfS1MdWsxy?=
+ =?us-ascii?Q?xc+Q8eT8ijMaaY3jfBN+aU3vCkdSRkF7fJrAVr2G8R+QtHY0+RVaFksENqDr?=
+ =?us-ascii?Q?uKjiCCuBV0kPcKdrAJ1Tg7CO496qX3T0UU0biXnVqHkKklhiX8X9/X6D542e?=
+ =?us-ascii?Q?sNAnMuH3EnT9ToqOFlYLEJ2CBpU3kYA2aWPeGInun7vkZIV60Z1rPhIdG07n?=
+ =?us-ascii?Q?BfiUJsLTm7NVqIHEa5NCBViL32Q7eO60ZkQzR4Yuls9JWswX+SK8qK92Z2Po?=
+ =?us-ascii?Q?tAiUc4wTMfvZL63qFpThBODspJpTmPVG23gJxt1EURxZ0khQlPvawGGDX+TI?=
+ =?us-ascii?Q?YBBm3HRYFa/sIyhjJQh1Hi6qeG6lg5W9vOobxCyABiyvmjOwRAt7tIs70EeK?=
+ =?us-ascii?Q?oUUZO1n2yqmwc7XKMZ7gKvDOW5UqZk9N+ogcmmadoWE45KtGMK2EBDkruj1a?=
+ =?us-ascii?Q?+WobQv+HMnBcuQ36Kc8nZVZ/kCTEKZwJluZvf0Fgik4C051bKtOvZeE79gEf?=
+ =?us-ascii?Q?Y9olV7c+Z1rfIOqpqpU2dcAatMuNmKAScA2oShgc2a9fsZLtzlojvbC6FqFD?=
+ =?us-ascii?Q?AS0NJUM8TIp/L0js4rOVzVn+Enxti5VWzEI4YwDTDeEmUXCpxHhhRhhAe/cS?=
+ =?us-ascii?Q?iBKYVXtCKxBcZM80i9yrZT5TlhQsZZAVpzORYkfVcuSj2m9R/ElJBr0kQZdR?=
+ =?us-ascii?Q?OhcpVdLwB35j8yA5ARVjf1osCkk2lkv9PuT05QNGpofWlTp4DCLITz0aI5Ya?=
+ =?us-ascii?Q?QYxVw073lVKM7qBj715PN/RhjWkUlkP7P9nlXns6J8C3Q/iaQ9iLH9z8yhS+?=
+ =?us-ascii?Q?cnA2k26+cCcQlwGv60OpGetPMz92a+ssG4PyDCMF7hu/L3TT4bDjynn2rP6E?=
+ =?us-ascii?Q?6Shn0CD3Fbsv6XtK92m8aORaRaCDoqYD9IwhadUd087GAmJkencC8GZklUXR?=
+ =?us-ascii?Q?E2YapGpqaOPE+XKwy9qWnohvayP2XZgVsxS7Dohh96wLk0UzP+0OFPPV3NiF?=
+ =?us-ascii?Q?XXqroTqH9RY1OA4jte6JwFsZ7S4Qo/r9nF3KK3gaxCWsykRNeVUvUtLZwYZQ?=
+ =?us-ascii?Q?d7KUD/O0KN3JGQenKlGTpLrXVESEnu6melaozUeBd+WtLZzNkG4/x6XpxBUD?=
+ =?us-ascii?Q?ubb3qtHzChcvWRZe2/h9Se2Obi5OI7BxWpPmewvY/eGIhztEEsMSzg/iWv5H?=
+ =?us-ascii?Q?oZTCxFdObEWxPxMsVlUs?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11dbc81b-6d2a-4545-cea4-08dd57b6ee1e
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 05:15:35.5290
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR19MB8318
 
-On Thu, Feb 27, 2025 at 05:03:10PM +0200, Dmitry Baryshkov wrote:
-> On Thu, Feb 27, 2025 at 03:12:26PM +0530, Varadarajan Narayanan wrote:
-> > Enable MMC and relevant pinctrl entries.
-> >
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> > index b6e4bb3328b3..252687be9dc3 100644
-> > --- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> > +++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> > @@ -69,6 +69,14 @@ &qusb_phy_1 {
-> >  	status = "okay";
-> >  };
-> >
-> > +&sdhc {
-> > +	pinctrl-0 = <&sdc_default_state>;
->
-> Where is it defined?
+IPQ5018 has tsens V1.0 IP with 5 sensors, of which 4 are in use,
+and 1 interrupt. There is no RPM present in the soc to do tsens early
+enable. Adding support for the same here.
 
-Few lines below [1] in the same dts file.
+Last patch series sent by Qualcomm dates back to Sep 22, 2023.
+Since I'm working on OpenWrt support for IPQ5018 based boards (routers)
+and Sricharan Ramabadhran <quic_srichara@quicinc.com> in below email
+confirmed this SoC is still active, I'm continuing the efforts to send
+patches upstream for Linux kernel support.
+https://lore.kernel.org/all/63dc4054-b1e2-4e7a-94e7-643beb26a6f3@quicinc.com/
 
->
-> > +	pinctrl-names = "default";
-> > +	supports-cqe;
->
-> This property should be a part of the SoC dtsi.
+[v9]
+	*) Updated checks in tsens to more strictly evaluate for v2+ upon enabling
+	   v2 features as suggsted by Dmitry.
+	*) Split patch 3 into two, one to update conditional statements as
+	   mentioned above and the other to implement tsens IP v1 without RPM.
+	*) Added back Dmitry's RB tag on patch 6 which wasn't carried over
+	   from v7 to v8
+	*) Link to v8: https://lore.kernel.org/all/DS7PR19MB88833F7A9C8F4FC484977BA69DCD2@DS7PR19MB8883.namprd19.prod.outlook.com/
 
-Will move it.
+[v8]
+	*) Tsens V1 uses v1 interrupts and watchdog is not present (only on v2.3+).
+	   As such, replaced VER_1_X with VER_1_X_NO_RPM in conditons to ensure
+	   v1 interrupts are set and watchdog isn't enabled.
+	*) Tested on Linksys MX2000 and SPNMX56
+	*) Link to v7: https://lore.kernel.org/all/DS7PR19MB88831624F11516945C63400F9DC22@DS7PR19MB8883.namprd19.prod.outlook.com/
 
-Thanks
-Varada
+[v7]
+	*) Updated cover letter
+	*) Replaced patch 3 with a new one to add support for tsens v1.0 with
+	   no RPM and removed Dmitry's 'Reviewed-by tag
+	*) Refactored patch 4 and split support for IPQ5018 from support for
+	   tsens v1.0 without RPM. As such, also removed Dmitry's RB tag.
+	*) Depends on patch 1 and 2 from patch series to add support for
+	   IQP5332 and IPQ5424 applied on Feb 11 2025:
+	   https://patchwork.kernel.org/project/linux-arm-msm/cover/20250210120436.821684-1-quic_mmanikan@quicinc.com/
+	*) Link to v6: https://lore.kernel.org/all/DS7PR19MB88838833C0A3BFC3C7FC481F9DC02@DS7PR19MB8883.namprd19.prod.outlook.com/
 
-1 - https://web.git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts#n128
-> > +
-> > +	status = "okay";
-> > +};
-> > +
-> >  &sleep_clk {
-> >  	clock-frequency = <32000>;
-> >  };
-> > --
-> > 2.34.1
-> >
->
-> --
-> With best wishes
-> Dmitry
+[v6]
+	*) Include (this) cover letter
+	*) Picked up Dmitry's Reviewed-by tag on patch 5
+	*) Link to v5: https://lore.kernel.org/all/DS7PR19MB88832FDED68D3EBB0EE7E99F9DC72@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+[v5]
+	*) Adjusted commit messages to indicate IPQ5018 has 5 sensors of
+	   which 4 are described and in use as per downstream driver and dts.
+	*) Padded addresses of tsens and qfprom nodes with leading zeros.
+	*) Link to v4: https://lore.kernel.org/all/DS7PR19MB8883BE38C2B500D03213747A9DC72@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+[v4]
+	*) Documented ipq5018 in qcom,qfprom bindings
+	*) Constrained ipq5018-tsens to one interrupt with description
+	*) Added Rob's Acked-by tag
+	*) Added Dmitry's Reviewed-by tag
+	*) Fixed modpost warning: added __init to init_common
+	*) Sorted tsens nodes by address
+	*) Sorted thermal-zones nodes by name
+	*) Link to v3: https://lore.kernel.org/all/20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com/
+
+[v3]
+	*) Added the tsens-ipq5018 as  new binding without rpm
+	*) Added Dmitry's Reviewed tag
+	*) Fixed Dmitry's comments for error checks in init_ipq5018
+	*) Ordered the qfprom device node properties
+	*) Link to v2: https://lore.kernel.org/all/20230915121504.806672-1-quic_srichara@quicinc.com/
+
+[v2]
+	*) Sorted the compatible and removed example
+	*) Fixed the name for new tsens_feature
+	*) Used tsend_calibrate_common instead of legacy
+	   and addressed comments from Dmitry.
+	*) Squashed patch 3 & 4
+	*) Fixed node names, order and added qfprom cells
+            for points seprately
+	*) Squashed patch 6 & 7
+	*) Link to v1: https://lore.kernel.org/all/1693250307-8910-1-git-send-email-quic_srichara@quicinc.com/
+
+
+George Moussalem (2):
+  thermal: qcom: tsens: update conditions to strictly evaluate for IP
+    v2+
+  thermal: qcom: tsens: add support for tsens v1 without RPM
+
+Sricharan Ramabadhran (4):
+  dt-bindings: nvmem: Add compatible for IPQ5018
+  dt-bindings: thermal: qcom-tsens: Add ipq5018 compatible
+  thermal: qcom: tsens: Add support for IPQ5018 tsens
+  arm64: dts: qcom: ipq5018: Add tsens node
+
+ .../bindings/nvmem/qcom,qfprom.yaml           |   1 +
+ .../bindings/thermal/qcom-tsens.yaml          |   2 +
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 169 ++++++++++++++++++
+ drivers/thermal/qcom/tsens-v1.c               |  62 +++++++
+ drivers/thermal/qcom/tsens.c                  |  27 ++-
+ drivers/thermal/qcom/tsens.h                  |   4 +
+ 6 files changed, 256 insertions(+), 9 deletions(-)
+
+-- 
+2.48.1
+
+
 
