@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-49924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB270A4ADF4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 21:41:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52384A4ADF6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 21:41:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA73516CD31
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 20:41:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 901CC3AF7AA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 20:41:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7312D1E98E0;
-	Sat,  1 Mar 2025 20:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E81221EA7D2;
+	Sat,  1 Mar 2025 20:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i2jyJ+Fq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zrAYQ2nM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0D31EB182
-	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Mar 2025 20:40:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065161E98EB
+	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Mar 2025 20:40:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740861604; cv=none; b=QjoF+ASm3qZd2aBByFu1mDElYAdNMZ6LK71t34akcSfng4VY3ZM2hwADkA1t3hRIm/unV972mRQD6sOVosh+ouRYF5Xix9NxHxG+s06On9Vr5pmytYIiu2UcxjiaLgmk8RtIJkCp9zAI1OFoNIG/TzyVOvKjf1VVMjCcTxYCL7E=
+	t=1740861606; cv=none; b=fz4xPf7jWccM9pKKOoYVpHrz5gzZPdToaHqwo9kcfkq7Mi6jL2KqI0SZk+miV0eUon+hhhjuF/CRRNcn90sKEUueZDM/QncX0BVv6LzKCa3srLRyYJOiYsPrIFVOAWTO9xNK8mtCkCkWXGxK553s5P1WTB5+UFLiNlyIm+TghZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740861604; c=relaxed/simple;
-	bh=HHjW0O7WQSBAANLkv3PxOaSuiPNntikvFuh8IL45sr0=;
+	s=arc-20240116; t=1740861606; c=relaxed/simple;
+	bh=AezDpTs9i2rYRC6AeDwZvqAV87zlWZZG2GdTd51PPFs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eBO8qgbhaoUaVk4yMLdzRQCV2FS8BeYymV4BR1h0BYCfsOqfVEfQuXdSF005mCAPyQPBhywBRPJLoA4byoxnonPJeHcaN1MZAYTS891srOjCJl74AGcS7FPj7M+4RQ8mHsQ5hCLInn/gNZJsnDTxhpNkpO5mlLAj5ZC7sas34I4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i2jyJ+Fq; arc=none smtp.client-ip=209.85.208.174
+	 In-Reply-To:To:Cc; b=n2ryD4GIE9d3e3+vh+xJXuYE9X7XynUsLSDFZnS1o84gBTc81Tej8Z1pG1A74mM++jr+uaoqezMLaBEHPahwDcaUvu9Y8nn9/qTMChyrgnfYoNAJCS3LQBLikkcvuXD9z5bSH7ubovMi07ybtqiBlWPdDOc6p7xe4yeXg4xcsyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zrAYQ2nM; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-30613802a6bso35400431fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Mar 2025 12:40:02 -0800 (PST)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-30b83290b7bso37431141fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Mar 2025 12:40:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740861601; x=1741466401; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740861603; x=1741466403; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jYrdrwRo+yNorklir9aiIfrQ532fAXHnljH3DnfnqN8=;
-        b=i2jyJ+Fq9Ynwioh9AzL4G5Hb6UcPpaXbkIcybPR39BCWsubukVO4kqNVyxMmTFZl6u
-         pEX7canjMta59MFCCxU8n3tlOiZWEhWjMUaNXKAeGVgUdZ91qnOxfAr4BHmB1opqO/0l
-         hnfJHvq778rCQ09BuCMv0OJm+CMVw8jd4ffxMpWAMqqWiHvnFznj+MsTy0rxuz8v9kNy
-         3jrNkgi+VfOk5KU9L2kHL32aDnptGVwNQLtQ6PpUs1wRg1mljdtNa3zPilU5Ba68mAdY
-         Th6IjDVw6Fqv7GIkYkkdfeBePAGP2dGpoON9FdBN4VooYBMwdOasGXOCodI01jinZdwa
-         pSQA==
+        bh=/rrKZtC/bMyEQV7p861KyPu6bgZA7HKXFytfcKKDOBo=;
+        b=zrAYQ2nMM/alrGYOPsjP3jvzE0EoHdk/ZQM7vdDCI+J6VSXcoofTh4qyjyvhid8CJt
+         MvoOIbetiPjIDxU56erOKuAOe2Hoy+SGsOnam0gqRmOqDTNgBp60wgufjh8uvJJKfJsa
+         hmBGT7ML32ZM9YV1vsEpt/JDAZduYMertnNDmPqh0XFUh/I3e2dl5/jvTyLF3jDx+hRb
+         2K+9P5h0O830MfWhCxn5MmBn0gx+9yJdjOvOhugQ2vM88XGHTZWtx3PKgI058Xr3mLy8
+         5mPNYwMTT1fyG5S498KzY/jkcl/5GfuHtbjiEBebb5L9CYZHMG6NZf3bCjgMjBRacZSQ
+         O6nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740861601; x=1741466401;
+        d=1e100.net; s=20230601; t=1740861603; x=1741466403;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jYrdrwRo+yNorklir9aiIfrQ532fAXHnljH3DnfnqN8=;
-        b=AQe25bW+qVq/tEahAnSQKklnIOJPpsT/yZE4RMh4IWzU/nC52u7sp9jOuYTfVDRPfN
-         6asmA5kia+9TTNBgG6hreGoiIghHoBfuLtp7Wm+YyoKb7YEq+hLNpPJzMqrpqTJlgBQN
-         z3GI0VzrVrzRAh87CAl/tnStzJf3YbvaGOd8QFUMPyCjQzmrzOlqOMNf00rKmE2F1v2i
-         uwGNWSAg76FqxQ+3ijzBT3M13AovKZhcnAMu52K1cy1fGqAOQSXRfNiAxGwEz8K30pCL
-         pn5ssDDHMF/C0wG12Dp74dbyB7+kMef4dOo+tZ/juX+tbITQ5vaeOdtZJXpp2OD61YdR
-         D8/w==
-X-Forwarded-Encrypted: i=1; AJvYcCX+amiTx2r0ESXt0xmIxkxs9qK7FCpJ/e66+pQz1s88njzYlj7ywLpMQdGHCeu7GIGvfAR2kS7LtgsKN6ln@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3LXvpC3Dlj1/TmQR2/jbVDWO/MS8hI2nxWKVDD816sew48EJO
-	Ng06Uyz8zxX6XBZJeI/raA5r8MDC8KuUyFm5foHcyhSrjcIrkoQ/xHIV+HluC0M=
-X-Gm-Gg: ASbGnctXOtlycyTC0Oq0rM3g158NIIiyo4jGAyZu3O/VE01cT86xCvVpF65O5sdBifc
-	5rNtDIcksp0Z3j7fZIgR2ZV0WSisYG4GKAu6u+NcvfRxcBeBnOlZ0hTUfpx1cbjJIuDMTQHz6fj
-	IVZJsVWcHMvHNSMqPc/6D98/9Riy+5fIEW8kgJZM1QT2a/ex35AoUCCxZvx9uVlyO3gzusv5eur
-	NuV6x+ZQL6oIGj+sP3aYnO5c1iEDx4yjy7YsuJ7GJR194ZGSytdzO3Udsa2k9SbMKkx2ANd/5dq
-	pnEKQn8yQUKSg/Dv65+49OdO0BnRqJX24x935o4DzgYYlSi38HRt
-X-Google-Smtp-Source: AGHT+IFIQ73CSqterSygP59oLSLGB7LkTMeGFU1IoItlJFqHpDnIUflR4fLf8ybWK1VQb+C9fX5cNg==
-X-Received: by 2002:a2e:a588:0:b0:308:f4cc:9519 with SMTP id 38308e7fff4ca-30b932123b4mr30410351fa.5.1740861600540;
-        Sat, 01 Mar 2025 12:40:00 -0800 (PST)
+        bh=/rrKZtC/bMyEQV7p861KyPu6bgZA7HKXFytfcKKDOBo=;
+        b=e3t09iTb6dSfPPxBdLSR1Qt3sCQnSSXi/iSMa0UaaBfbC3C54K004aowOIF81UGSEZ
+         iLDmi9dZQ30dB781K/TSy57z49v1JOQvGl19L8fU9waMqtDOv8IsseMzb5yvdzK6214l
+         sLjg2+0W+engc3BzxhvSDm0of7xnGduM2Co+I1FWxd84qyOEgo+WhMGf9ZJzg+TJs/tu
+         cfA8GzEen5KLB3r/ulSbXyR7MuSjLhkIu1G9tTLV5tP6EA79Hioh98OYoCPy/VFsg8OQ
+         Zyhws80XO5taZ0YtZV/EfQy1U1NK8JLzu5PC9nF9YVsdyNGFjDQXIuXxCCa7AVi8qW04
+         vFHw==
+X-Forwarded-Encrypted: i=1; AJvYcCXd60JCJd69Rt9/SmnmPA5VRNiKvejBdiBy0Jqy3AEA4bKzHn5lWqYdwBqCz5Zmq5mdR468H741X1jA2Wsj@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVuKFsBljMrQ055UgJiV4vko03QsmVgf4MjN7RVDaJXkVkkgGi
+	oK8I6v8lxWsxyTCcdN6aW5nf/8V99IHWuHoDD+Bek3JZFztEcujFlJvuTpyMXhg=
+X-Gm-Gg: ASbGncv4P2cz+axy38yrhclawd4YmfK7oiJshwaPDpddjpSnVzPCo8dE0qRc5IsQECL
+	b0GfQw9QMKXMaFOSzgOSTyOlxf0FYGL8Y0JGxQSKXq0A8lCwNgrdSYiuj7yNi6dLBDtgzE6GEvA
+	ObRkkQQde1Xz5Oh43NyFcRlGu/jJqBQdAZyBy5Ge1whXbDbA1r6CbWFhoYgc7HiBMaz/1eE/z/L
+	gv0tUj0Z/0MAl56wiLnwNYErF9Pu1/ciV9QIlmXHysfXWuvWm5Y6Fm5fghB6OWYviDMaAZavL4/
+	WTjDjYOmCT1kGgUWy+k2aucCsaaoJI0Oiur7NvOB3Ru2TK4H2Spn
+X-Google-Smtp-Source: AGHT+IGzJuIl1nriLCLHVpXfC1qxg6TocNRgoMvm3sF5xsxOv1PgMaKL1vLpURJQMUg29MdXarznzw==
+X-Received: by 2002:a05:651c:b2a:b0:30b:8dbd:b7b with SMTP id 38308e7fff4ca-30b9325c8eemr30950491fa.19.1740861602945;
+        Sat, 01 Mar 2025 12:40:02 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30b931524efsm6668921fa.60.2025.03.01.12.39.58
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30b931524efsm6668921fa.60.2025.03.01.12.40.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 12:39:59 -0800 (PST)
+        Sat, 01 Mar 2025 12:40:01 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 01 Mar 2025 22:39:41 +0200
-Subject: [PATCH RFC v2 6/7] drm/display: dp-mst-topology: use new DCPD
- access helpers
+Date: Sat, 01 Mar 2025 22:39:42 +0200
+Subject: [PATCH RFC v2 7/7] drm/display: dp-tunnel: use new DCPD access
+ helpers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250301-drm-rework-dpcd-access-v2-6-4d92602fc7cd@linaro.org>
+Message-Id: <20250301-drm-rework-dpcd-access-v2-7-4d92602fc7cd@linaro.org>
 References: <20250301-drm-rework-dpcd-access-v2-0-4d92602fc7cd@linaro.org>
 In-Reply-To: <20250301-drm-rework-dpcd-access-v2-0-4d92602fc7cd@linaro.org>
 To: Lyude Paul <lyude@redhat.com>, 
@@ -98,258 +98,120 @@ Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
  Jani Nikula <jani.nikula@intel.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8924;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4082;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=HHjW0O7WQSBAANLkv3PxOaSuiPNntikvFuh8IL45sr0=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ/rhgglmUrfWx2drzfArilcwPvWRuXfzrNXn0wu5VwWuU
- dixLbOjk9GYhYGRi0FWTJHFp6Blasym5LAPO6bWwwxiZQKZwsDFKQATcdJn/2eVzHx3utvM/Wlv
- Ej5v/b1a0lrxc0f9su7HXqJW8buc7wRvEI19NE+Thd3H6T1LaZz8O+Y/tjaWJ208jPr3mCxbN/W
- WRVM5s4PhEa1XPTOqlDnWG98r/vGAMXFxVrtNF4fLD/Fnlq92LXK3Tk9/0cU1vUvvQe4NocKWZd
- /6QjuKj0pe2s8Z5DhRKUDXbZ6kidDadsM9UVasL/XPfex08V9WeSf1X9mbigBBtYjlN2NMjY6Kf
- aiTOM53bOKNTW9/y+8/mrN/cl+n9B63lbkvJ2e/8/jLZXPVQO7xVfeLwuu2+d8vzXQ/V60VOL9P
- KWWyZZfok71HPWXemK7ZdOOOdru8xTfj7rLHnoI+esd5AQ==
+ bh=AezDpTs9i2rYRC6AeDwZvqAV87zlWZZG2GdTd51PPFs=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ/rhggk3/sV12amrbT3Pe02nov6j6csCu47VZ5cXfao4/
+ dVhquTeTkZjFgZGLgZZMUUWn4KWqTGbksM+7JhaDzOIlQlkCgMXpwBMxKGa/X+hwLufpUrF3SdX
+ 3LhoFNIVapbxLr/w5zWZ7wGZP9b8KNj6JTX38dnpAgV5MdbTipeK//8T4qjhHx03Ued81S8Xq9N
+ GwSWXUpYXSV2wTg76x/C0v6SNy7o/J1XB7Ex53YUas69tWerxP4R9r5wQLjFvMWi9vPKKzk+rK0
+ nyzGFHEh6L8Qb63PeZ7/Bvy5l1/1tNbQ1N/7lcq+H+zMWo0Ffwku3CfoHri9uFTWf/+KOtNy0o4
+ dHPJ/fvVSYzxZecW/h+fprD6iPefqtXMi/hcuVs23Wqd+OjF4+bg+M6XxUfakub9Hep1oRiFe07
+ u+P36vAbxNlfUVZfW/zGmZ3PuTWwVlmAbbv2P0OXXaoOAA==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Switch drm_dp_mst_topology.c to use new set of DPCD read / write helpers.
+Switch drm_dp_tunnel.c to use new set of DPCD read / write helpers.
 
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Acked-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c | 105 +++++++++++++-------------
- 1 file changed, 51 insertions(+), 54 deletions(-)
+ drivers/gpu/drm/display/drm_dp_tunnel.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_dp_mst_topology.c b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-index 8b68bb3fbffb04dfcbd910fd0fd78b998440d6e8..e8716e73480bdf6abbef71897d1632f69a7b8a47 100644
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -2201,15 +2201,12 @@ static int drm_dp_check_mstb_guid(struct drm_dp_mst_branch *mstb, guid_t *guid)
- 						     mstb->port_parent,
- 						     DP_GUID, sizeof(buf), buf);
- 		} else {
--			ret = drm_dp_dpcd_write(mstb->mgr->aux,
--						DP_GUID, buf, sizeof(buf));
-+			ret = drm_dp_dpcd_write_data(mstb->mgr->aux,
-+						     DP_GUID, buf, sizeof(buf));
- 		}
- 	}
+diff --git a/drivers/gpu/drm/display/drm_dp_tunnel.c b/drivers/gpu/drm/display/drm_dp_tunnel.c
+index 90fe07a89260e21e78f2db7f57a90602be921a11..076edf1610480275c62395334ab0536befa42f15 100644
+--- a/drivers/gpu/drm/display/drm_dp_tunnel.c
++++ b/drivers/gpu/drm/display/drm_dp_tunnel.c
+@@ -222,7 +222,7 @@ static int read_tunnel_regs(struct drm_dp_aux *aux, struct drm_dp_tunnel_regs *r
+ 	while ((len = next_reg_area(&offset))) {
+ 		int address = DP_TUNNELING_BASE + offset;
  
--	if (ret < 16 && ret > 0)
--		return -EPROTO;
--
--	return ret == 16 ? 0 : ret;
-+	return ret;
- }
- 
- static void build_mst_prop_path(const struct drm_dp_mst_branch *mstb,
-@@ -2744,14 +2741,13 @@ static int drm_dp_send_sideband_msg(struct drm_dp_mst_topology_mgr *mgr,
- 	do {
- 		tosend = min3(mgr->max_dpcd_transaction_bytes, 16, total);
- 
--		ret = drm_dp_dpcd_write(mgr->aux, regbase + offset,
--					&msg[offset],
--					tosend);
--		if (ret != tosend) {
--			if (ret == -EIO && retries < 5) {
--				retries++;
--				goto retry;
--			}
-+		ret = drm_dp_dpcd_write_data(mgr->aux, regbase + offset,
-+					     &msg[offset],
-+					     tosend);
-+		if (ret == -EIO && retries < 5) {
-+			retries++;
-+			goto retry;
-+		} else if (ret < 0) {
- 			drm_dbg_kms(mgr->dev, "failed to dpcd write %d %d\n", tosend, ret);
- 
+-		if (drm_dp_dpcd_read(aux, address, tunnel_reg_ptr(regs, address), len) < 0)
++		if (drm_dp_dpcd_read_data(aux, address, tunnel_reg_ptr(regs, address), len) < 0)
  			return -EIO;
-@@ -3624,7 +3620,7 @@ enum drm_dp_mst_mode drm_dp_read_mst_cap(struct drm_dp_aux *aux,
- 	if (dpcd[DP_DPCD_REV] < DP_DPCD_REV_12)
- 		return DRM_DP_SST;
  
--	if (drm_dp_dpcd_readb(aux, DP_MSTM_CAP, &mstm_cap) != 1)
-+	if (drm_dp_dpcd_read_byte(aux, DP_MSTM_CAP, &mstm_cap) < 0)
- 		return DRM_DP_SST;
+ 		offset += len;
+@@ -913,7 +913,7 @@ static int set_bw_alloc_mode(struct drm_dp_tunnel *tunnel, bool enable)
+ 	u8 mask = DP_DISPLAY_DRIVER_BW_ALLOCATION_MODE_ENABLE | DP_UNMASK_BW_ALLOCATION_IRQ;
+ 	u8 val;
  
- 	if (mstm_cap & DP_MST_CAP)
-@@ -3679,10 +3675,10 @@ int drm_dp_mst_topology_mgr_set_mst(struct drm_dp_mst_topology_mgr *mgr, bool ms
- 		mgr->mst_primary = mstb;
- 		drm_dp_mst_topology_get_mstb(mgr->mst_primary);
+-	if (drm_dp_dpcd_readb(tunnel->aux, DP_DPTX_BW_ALLOCATION_MODE_CONTROL, &val) < 0)
++	if (drm_dp_dpcd_read_byte(tunnel->aux, DP_DPTX_BW_ALLOCATION_MODE_CONTROL, &val) < 0)
+ 		goto out_err;
  
--		ret = drm_dp_dpcd_writeb(mgr->aux, DP_MSTM_CTRL,
--					 DP_MST_EN |
--					 DP_UP_REQ_EN |
--					 DP_UPSTREAM_IS_SRC);
-+		ret = drm_dp_dpcd_write_byte(mgr->aux, DP_MSTM_CTRL,
-+					     DP_MST_EN |
-+					     DP_UP_REQ_EN |
-+					     DP_UPSTREAM_IS_SRC);
- 		if (ret < 0)
- 			goto out_unlock;
+ 	if (enable)
+@@ -921,7 +921,7 @@ static int set_bw_alloc_mode(struct drm_dp_tunnel *tunnel, bool enable)
+ 	else
+ 		val &= ~mask;
  
-@@ -3697,7 +3693,7 @@ int drm_dp_mst_topology_mgr_set_mst(struct drm_dp_mst_topology_mgr *mgr, bool ms
- 		mstb = mgr->mst_primary;
- 		mgr->mst_primary = NULL;
- 		/* this can fail if the device is gone */
--		drm_dp_dpcd_writeb(mgr->aux, DP_MSTM_CTRL, 0);
-+		drm_dp_dpcd_write_byte(mgr->aux, DP_MSTM_CTRL, 0);
- 		ret = 0;
- 		mgr->payload_id_table_cleared = false;
+-	if (drm_dp_dpcd_writeb(tunnel->aux, DP_DPTX_BW_ALLOCATION_MODE_CONTROL, val) < 0)
++	if (drm_dp_dpcd_write_byte(tunnel->aux, DP_DPTX_BW_ALLOCATION_MODE_CONTROL, val) < 0)
+ 		goto out_err;
  
-@@ -3763,8 +3759,8 @@ EXPORT_SYMBOL(drm_dp_mst_topology_queue_probe);
- void drm_dp_mst_topology_mgr_suspend(struct drm_dp_mst_topology_mgr *mgr)
+ 	tunnel->bw_alloc_enabled = enable;
+@@ -1039,7 +1039,7 @@ static int clear_bw_req_state(struct drm_dp_aux *aux)
  {
- 	mutex_lock(&mgr->lock);
--	drm_dp_dpcd_writeb(mgr->aux, DP_MSTM_CTRL,
--			   DP_MST_EN | DP_UPSTREAM_IS_SRC);
-+	drm_dp_dpcd_write_byte(mgr->aux, DP_MSTM_CTRL,
-+			       DP_MST_EN | DP_UPSTREAM_IS_SRC);
- 	mutex_unlock(&mgr->lock);
- 	flush_work(&mgr->up_req_work);
- 	flush_work(&mgr->work);
-@@ -3813,18 +3809,18 @@ int drm_dp_mst_topology_mgr_resume(struct drm_dp_mst_topology_mgr *mgr,
- 		goto out_fail;
+ 	u8 bw_req_mask = DP_BW_REQUEST_SUCCEEDED | DP_BW_REQUEST_FAILED;
+ 
+-	if (drm_dp_dpcd_writeb(aux, DP_TUNNELING_STATUS, bw_req_mask) < 0)
++	if (drm_dp_dpcd_write_byte(aux, DP_TUNNELING_STATUS, bw_req_mask) < 0)
+ 		return -EIO;
+ 
+ 	return 0;
+@@ -1052,7 +1052,7 @@ static int bw_req_complete(struct drm_dp_aux *aux, bool *status_changed)
+ 	u8 val;
+ 	int err;
+ 
+-	if (drm_dp_dpcd_readb(aux, DP_TUNNELING_STATUS, &val) < 0)
++	if (drm_dp_dpcd_read_byte(aux, DP_TUNNELING_STATUS, &val) < 0)
+ 		return -EIO;
+ 
+ 	*status_changed = val & status_change_mask;
+@@ -1095,7 +1095,7 @@ static int allocate_tunnel_bw(struct drm_dp_tunnel *tunnel, int bw)
+ 	if (err)
+ 		goto out;
+ 
+-	if (drm_dp_dpcd_writeb(tunnel->aux, DP_REQUEST_BW, request_bw) < 0) {
++	if (drm_dp_dpcd_write_byte(tunnel->aux, DP_REQUEST_BW, request_bw) < 0) {
+ 		err = -EIO;
+ 		goto out;
  	}
+@@ -1196,13 +1196,13 @@ static int check_and_clear_status_change(struct drm_dp_tunnel *tunnel)
+ 	u8 mask = DP_BW_ALLOCATION_CAPABILITY_CHANGED | DP_ESTIMATED_BW_CHANGED;
+ 	u8 val;
  
--	ret = drm_dp_dpcd_writeb(mgr->aux, DP_MSTM_CTRL,
--				 DP_MST_EN |
--				 DP_UP_REQ_EN |
--				 DP_UPSTREAM_IS_SRC);
-+	ret = drm_dp_dpcd_write_byte(mgr->aux, DP_MSTM_CTRL,
-+				     DP_MST_EN |
-+				     DP_UP_REQ_EN |
-+				     DP_UPSTREAM_IS_SRC);
- 	if (ret < 0) {
- 		drm_dbg_kms(mgr->dev, "mst write failed - undocked during suspend?\n");
- 		goto out_fail;
- 	}
+-	if (drm_dp_dpcd_readb(tunnel->aux, DP_TUNNELING_STATUS, &val) < 0)
++	if (drm_dp_dpcd_read_byte(tunnel->aux, DP_TUNNELING_STATUS, &val) < 0)
+ 		goto out_err;
  
- 	/* Some hubs forget their guids after they resume */
--	ret = drm_dp_dpcd_read(mgr->aux, DP_GUID, buf, sizeof(buf));
--	if (ret != sizeof(buf)) {
-+	ret = drm_dp_dpcd_read_data(mgr->aux, DP_GUID, buf, sizeof(buf));
-+	if (ret < 0) {
- 		drm_dbg_kms(mgr->dev, "dpcd read failed - undocked during suspend?\n");
- 		goto out_fail;
- 	}
-@@ -3883,8 +3879,8 @@ drm_dp_get_one_sb_msg(struct drm_dp_mst_topology_mgr *mgr, bool up,
- 		*mstb = NULL;
+ 	val &= mask;
  
- 	len = min(mgr->max_dpcd_transaction_bytes, 16);
--	ret = drm_dp_dpcd_read(mgr->aux, basereg, replyblock, len);
--	if (ret != len) {
-+	ret = drm_dp_dpcd_read_data(mgr->aux, basereg, replyblock, len);
-+	if (ret < 0) {
- 		drm_dbg_kms(mgr->dev, "failed to read DPCD down rep %d %d\n", len, ret);
- 		return false;
- 	}
-@@ -3922,9 +3918,9 @@ drm_dp_get_one_sb_msg(struct drm_dp_mst_topology_mgr *mgr, bool up,
- 	curreply = len;
- 	while (replylen > 0) {
- 		len = min3(replylen, mgr->max_dpcd_transaction_bytes, 16);
--		ret = drm_dp_dpcd_read(mgr->aux, basereg + curreply,
--				    replyblock, len);
--		if (ret != len) {
-+		ret = drm_dp_dpcd_read_data(mgr->aux, basereg + curreply,
-+					    replyblock, len);
-+		if (ret < 0) {
- 			drm_dbg_kms(mgr->dev, "failed to read a chunk (len %d, ret %d)\n",
- 				    len, ret);
- 			return false;
-@@ -4873,9 +4869,9 @@ static bool dump_dp_payload_table(struct drm_dp_mst_topology_mgr *mgr,
- 	int i;
+ 	if (val) {
+-		if (drm_dp_dpcd_writeb(tunnel->aux, DP_TUNNELING_STATUS, val) < 0)
++		if (drm_dp_dpcd_write_byte(tunnel->aux, DP_TUNNELING_STATUS, val) < 0)
+ 			goto out_err;
  
- 	for (i = 0; i < DP_PAYLOAD_TABLE_SIZE; i += 16) {
--		if (drm_dp_dpcd_read(mgr->aux,
--				     DP_PAYLOAD_TABLE_UPDATE_STATUS + i,
--				     &buf[i], 16) != 16)
-+		if (drm_dp_dpcd_read_data(mgr->aux,
-+					  DP_PAYLOAD_TABLE_UPDATE_STATUS + i,
-+					  &buf[i], 16) < 0)
- 			return false;
- 	}
- 	return true;
-@@ -4964,23 +4960,24 @@ void drm_dp_mst_dump_topology(struct seq_file *m,
- 		}
- 		seq_printf(m, "dpcd: %*ph\n", DP_RECEIVER_CAP_SIZE, buf);
- 
--		ret = drm_dp_dpcd_read(mgr->aux, DP_FAUX_CAP, buf, 2);
--		if (ret != 2) {
-+		ret = drm_dp_dpcd_read_data(mgr->aux, DP_FAUX_CAP, buf, 2);
-+		if (ret < 0) {
- 			seq_printf(m, "faux/mst read failed\n");
- 			goto out;
- 		}
- 		seq_printf(m, "faux/mst: %*ph\n", 2, buf);
- 
--		ret = drm_dp_dpcd_read(mgr->aux, DP_MSTM_CTRL, buf, 1);
--		if (ret != 1) {
-+		ret = drm_dp_dpcd_read_data(mgr->aux, DP_MSTM_CTRL, buf, 1);
-+		if (ret < 0) {
- 			seq_printf(m, "mst ctrl read failed\n");
- 			goto out;
- 		}
- 		seq_printf(m, "mst ctrl: %*ph\n", 1, buf);
- 
- 		/* dump the standard OUI branch header */
--		ret = drm_dp_dpcd_read(mgr->aux, DP_BRANCH_OUI, buf, DP_BRANCH_OUI_HEADER_SIZE);
--		if (ret != DP_BRANCH_OUI_HEADER_SIZE) {
-+		ret = drm_dp_dpcd_read_data(mgr->aux, DP_BRANCH_OUI, buf,
-+					    DP_BRANCH_OUI_HEADER_SIZE);
-+		if (ret < 0) {
- 			seq_printf(m, "branch oui read failed\n");
- 			goto out;
- 		}
-@@ -6104,14 +6101,14 @@ struct drm_dp_aux *drm_dp_mst_dsc_aux_for_port(struct drm_dp_mst_port *port)
- 
- 	/* DP-to-DP peer device */
- 	if (drm_dp_mst_is_virtual_dpcd(immediate_upstream_port)) {
--		if (drm_dp_dpcd_read(&port->aux,
--				     DP_DSC_SUPPORT, &endpoint_dsc, 1) != 1)
-+		if (drm_dp_dpcd_read_data(&port->aux,
-+					  DP_DSC_SUPPORT, &endpoint_dsc, 1) < 0)
- 			return NULL;
--		if (drm_dp_dpcd_read(&port->aux,
--				     DP_FEC_CAPABILITY, &endpoint_fec, 1) != 1)
-+		if (drm_dp_dpcd_read_data(&port->aux,
-+					  DP_FEC_CAPABILITY, &endpoint_fec, 1) < 0)
- 			return NULL;
--		if (drm_dp_dpcd_read(&immediate_upstream_port->aux,
--				     DP_DSC_SUPPORT, &upstream_dsc, 1) != 1)
-+		if (drm_dp_dpcd_read_data(&immediate_upstream_port->aux,
-+					  DP_DSC_SUPPORT, &upstream_dsc, 1) < 0)
- 			return NULL;
- 
- 		/* Enpoint decompression with DP-to-DP peer device */
-@@ -6149,8 +6146,8 @@ struct drm_dp_aux *drm_dp_mst_dsc_aux_for_port(struct drm_dp_mst_port *port)
- 	if (drm_dp_has_quirk(&desc, DP_DPCD_QUIRK_DSC_WITHOUT_VIRTUAL_DPCD)) {
- 		u8 dpcd_ext[DP_RECEIVER_CAP_SIZE];
- 
--		if (drm_dp_dpcd_read(immediate_upstream_aux,
--				     DP_DSC_SUPPORT, &upstream_dsc, 1) != 1)
-+		if (drm_dp_dpcd_read_data(immediate_upstream_aux,
-+					  DP_DSC_SUPPORT, &upstream_dsc, 1) < 0)
- 			return NULL;
- 
- 		if (!(upstream_dsc & DP_DSC_DECOMPRESSION_IS_SUPPORTED))
-@@ -6172,11 +6169,11 @@ struct drm_dp_aux *drm_dp_mst_dsc_aux_for_port(struct drm_dp_mst_port *port)
- 	 * therefore the endpoint needs to be
- 	 * both DSC and FEC capable.
+ 		return 1;
+@@ -1215,7 +1215,7 @@ static int check_and_clear_status_change(struct drm_dp_tunnel *tunnel)
+ 	 * Check for estimated BW changes explicitly to account for lost
+ 	 * BW change notifications.
  	 */
--	if (drm_dp_dpcd_read(&port->aux,
--	   DP_DSC_SUPPORT, &endpoint_dsc, 1) != 1)
-+	if (drm_dp_dpcd_read_data(&port->aux,
-+				  DP_DSC_SUPPORT, &endpoint_dsc, 1) < 0)
- 		return NULL;
--	if (drm_dp_dpcd_read(&port->aux,
--	   DP_FEC_CAPABILITY, &endpoint_fec, 1) != 1)
-+	if (drm_dp_dpcd_read_data(&port->aux,
-+				  DP_FEC_CAPABILITY, &endpoint_fec, 1) < 0)
- 		return NULL;
- 	if ((endpoint_dsc & DP_DSC_DECOMPRESSION_IS_SUPPORTED) &&
- 	   (endpoint_fec & DP_FEC_CAPABLE))
+-	if (drm_dp_dpcd_readb(tunnel->aux, DP_ESTIMATED_BW, &val) < 0)
++	if (drm_dp_dpcd_read_byte(tunnel->aux, DP_ESTIMATED_BW, &val) < 0)
+ 		goto out_err;
+ 
+ 	if (val * tunnel->bw_granularity != tunnel->estimated_bw)
+@@ -1300,7 +1300,7 @@ int drm_dp_tunnel_handle_irq(struct drm_dp_tunnel_mgr *mgr, struct drm_dp_aux *a
+ {
+ 	u8 val;
+ 
+-	if (drm_dp_dpcd_readb(aux, DP_TUNNELING_STATUS, &val) < 0)
++	if (drm_dp_dpcd_read_byte(aux, DP_TUNNELING_STATUS, &val) < 0)
+ 		return -EIO;
+ 
+ 	if (val & (DP_BW_REQUEST_SUCCEEDED | DP_BW_REQUEST_FAILED))
 
 -- 
 2.39.5
