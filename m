@@ -1,82 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-49909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F98AA4AA9D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 12:15:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF0A0A4AB43
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 14:36:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 864867A165D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 11:14:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B21E63B576C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 13:36:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0364A1D88BE;
-	Sat,  1 Mar 2025 11:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C61C61DE3CE;
+	Sat,  1 Mar 2025 13:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P0ELbJkY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQmyFtbt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC8B1AF4E9;
-	Sat,  1 Mar 2025 11:15:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9578579CD;
+	Sat,  1 Mar 2025 13:36:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740827723; cv=none; b=Oxd05VwJYgdbdv77U8B2J+tgqtVGgMcu95BmdY4AYm8Hf6oONdGtwBFj+VSyYk071McWLnrKERwTHOpgabwsE0Utgyg2kMFQLU3uAEcisosuT7UMGefp+0Cigv5UvbsW1ou12BX+T4OpZx9NkD6SrGUWucNT5Z0qobp1TaRQrzc=
+	t=1740836183; cv=none; b=aKfjzYm9DFnd/O9b0MyLSVc6NSIX17iWMVhJKVb5jBnvvrlRE2YteR0R54FsUbptgbZhsDyPJ5Xj8zjO7sRzzXtbVnx0e19na3zRGfAw2quaZq6rUp3Ulbybfqz55pTj9wqTwUJCNvKeI9DaCvPUBrU8Ei+gUl98scxx25JzP4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740827723; c=relaxed/simple;
-	bh=24RoCBjDilAT9gQzoswus6kU0eHglZ+gkUNrN65FMu0=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=XzIXh9ZAUvH52n8egckUn+oD2wMMTOvbCI1sQqHQzxkR3S2TFWDTy2aWxWsnYCqjA61CRy1uxNe/eidE0w1QPgG4pupVfOwNNC+phZDUnLTNmb2gItQjCsCg5Eu0yjxyadj2YUuPgyKP8KH3yejoDrwtQ7L5RTeIQjIT0Ls4e84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P0ELbJkY; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-390e702d481so1266318f8f.1;
-        Sat, 01 Mar 2025 03:15:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740827720; x=1741432520; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=BW4uLn5drWL4uMiqxENZomGBK16riTSXmRDtWBO7MFg=;
-        b=P0ELbJkYwyFiAEieaM5+LhJcHEiTHPX4NO8R3CxEnYII0ZIskbev+eyQm9yHO3pjke
-         o2TZyEyij9b2livUfI8o8M7gOMfZgdqz6JndwP1nySuml9MCoLryHigb/wEM1hIshgaE
-         nHldw8fQXrb5LsSHZsRfBaFB9SOhtBAt1vSK8HLHgyezwUZeZ+UaaIOBsgQxACfc1i+F
-         03tM4pKDtr4xGWhk4INoSam6pjT3df1KEUDq9KWAKZ+zclxtbc0m7H9Mm28cLyno/1YI
-         XFiXIlu2GeZyfUPVQ8mQUGuz5L5bTaDyY/hdOfzRIzRA1AEECEWyLvL+CnZCR6qW6ANy
-         l1uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740827720; x=1741432520;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BW4uLn5drWL4uMiqxENZomGBK16riTSXmRDtWBO7MFg=;
-        b=k3Bbkg/NWiGQRkh1nAyhszEt8IanmYa0fZbSRTsyxybTm8JcGwsA33T7NA+Q1TwlTr
-         h04fP6DNjt/AOCbMYiWXRApLYrOVxhWZcnVd36tGy6TaJ4Gxgx65iHe+hf5+1PC+oXXt
-         /e/jL0esQfv6BzFcPQwKaNP1bW8veD/JitKQSIAAjNDWsJl0jRJ0Q7j9R++YRdtZjcZV
-         IdnLrBzbDP3tRmFgKyfB/yPd4S+iyGjZNM+UEB4Xv8yjKsXQEXrztkap+Mwn5PVVJWlb
-         tESpMVzP65kU1kFjL1oN5+w8puhIWaAka8YD/9KzJC4eZmojD05olLMLTZsChlnfwsJ3
-         7NEg==
-X-Forwarded-Encrypted: i=1; AJvYcCUOLPzSGSRO1hGt67MpiBTeyclYOGQ9voc9K60wBB6r/2skZ9ukY65QZ1OM6SDsH8LyqF03AYnboLenN/Gw@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCpX7QwFFmfXJ8wbsV7NjzRzMJL5WL3Ju9/wamDQK5jT/Zy5Ii
-	dtgI2u1YOl2iFM68BWOqG68tzkUzXAKg7S4bQJPUsQhjB9jUh5vO
-X-Gm-Gg: ASbGncv719HoJyN1fCB5W+5vcfi3jr+oDCcOQO8/aKKk7GYA6BFQuxoS0dNJ+evgCwJ
-	zguP6+ToW04+CGnszZXzWilA3aSeihWDXTMcubxt16t8ywxdDCBZp7iqykowDehr6Oz2HUCxYsS
-	YXRhu5VU0TrsJ5GJZzKPI2LWd7FUITEsbtsDoK5ja0piVpUIoaXvFkkhQLuEZycti1akz70GqCG
-	29MLA2Dk04cKTHGMPDq6bllH3tAGim2iIURGy8qQzGX96G44UgOU2Gf1FGnEOQPjsfAlLQuZBXd
-	K0naN3D48Rg5+6VXKg9sQV9QCIWxp/h6ftzlDiOIye9Q1U7lcbxOKB/lDADY10MHn83T32W5f3j
-	xCEQfe8nAUaii9635i3yZDQNmJxJXysl6chQPul+wINkrtyQau5V2JVuxOZfSfqZeDkCW0MEW0s
-	U4W0JMsyu/pOmfbuwe4SuGf8XZqyL47+M=
-X-Google-Smtp-Source: AGHT+IGpmQtc55e2rC0oDiMpjZuvVLvExfxez2ECnJVlr1ZHQqc8FlYuHJBAHPH2pgPyr2wvBEnbSQ==
-X-Received: by 2002:a5d:6d0f:0:b0:390:e158:a1b8 with SMTP id ffacd0b85a97d-390eca34b3bmr7538068f8f.43.1740827720123;
-        Sat, 01 Mar 2025 03:15:20 -0800 (PST)
-Received: from ?IPV6:2a02:3100:a9db:600:159b:603:111e:5ffd? (dynamic-2a02-3100-a9db-0600-159b-0603-111e-5ffd.310.pool.telefonica.de. [2a02:3100:a9db:600:159b:603:111e:5ffd])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-390e4795962sm8309523f8f.13.2025.03.01.03.15.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Mar 2025 03:15:19 -0800 (PST)
-Message-ID: <6cb88f4b-15c9-4b6c-8226-63442b79492c@gmail.com>
-Date: Sat, 1 Mar 2025 12:16:23 +0100
+	s=arc-20240116; t=1740836183; c=relaxed/simple;
+	bh=+9olZMe927bo25HXvSSkBgPAgO3eFw27jWtLQ6l/+eU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UzvFN0YSXf+zJx/cohFlVKQ0veI/7Vg2kIXz8y0Y6Wq15JXV/Kfm2ZUR3iIlWbLsYaJNtusWCsLokZyQAbvLmeDfo/iYBDNziT4gcuiJi1HXKNG8eYVQOqkDRvqesOXVof5W86RBV0rswclbKf2HX1QRjCzssiSTNhjrmvELkSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQmyFtbt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA96DC4CEDD;
+	Sat,  1 Mar 2025 13:36:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740836183;
+	bh=+9olZMe927bo25HXvSSkBgPAgO3eFw27jWtLQ6l/+eU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=kQmyFtbtDyuo5bbqrr2PvxVxV4WLJ0eUsGg2Vf9cxH8PryGo4faSy7B022DLbwJjU
+	 2MkQwpATxW/D213tvfHM1CNNOtt0uxvH7T1fDkrI0VvceeVnCoAMC/UkU62+4CtaM6
+	 JAhttLlCy6z5u2VlVuXQeFqRfRuunExO0zt6Ct3qbTzd8VeZwA1h1pli53/PIq1yIN
+	 MPhFGA4hzatxFdXZF3h1LtfU/vyo7cPcksPJfBBblhdoZsQ6Bs+X/7dxH65S1Sv6sY
+	 M1MWqxx2XrRVqDSokvJJdlsG02ZfSdFNjn3yUGBNe3AjqzgryIyHR9pNYXsy2NlsTK
+	 qoEUXpx03IIrQ==
+Message-ID: <d5f67734-db1e-4096-98f9-3f026e4bd46b@kernel.org>
+Date: Sat, 1 Mar 2025 14:36:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,110 +50,145 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v2 0/8] net: phy: move PHY package code to its
- own source file
-From: Heiner Kallweit <hkallweit1@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>,
- Russell King - ARM Linux <linux@armlinux.org.uk>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Eric Dumazet <edumazet@google.com>, David Miller <davem@davemloft.net>,
- Daniel Golle <daniel@makrotopia.org>, Qingfang Deng <dqfext@gmail.com>,
- SkyLake Huang <SkyLake.Huang@mediatek.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Richard Cochran <richardcochran@gmail.com>
-Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, Robert Marko <robimarko@gmail.com>,
- =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>
-References: <8b290ccf-ca0c-422f-b853-6fc7af045f99@gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sa8775p: add QCrypto node
+To: Bjorn Andersson <andersson@kernel.org>,
+ Yuvaraj Ranganathan <quic_yrangana@quicinc.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250227180817.3386795-1-quic_yrangana@quicinc.com>
+ <2mlmhzllhb5fhcbwtupy2nk74my5hruliayyr3kayrjvmtou25@em5encygrn2i>
+ <7b219289-4f3d-4428-a0af-42491acb1cbb@quicinc.com>
+ <uohwigzosxv2onh7dtgvhqdkdu2jufiukp6ztxrvfbjoihrypx@cq3apkdx2rhw>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=hkallweit1@gmail.com; keydata=
- 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
-In-Reply-To: <8b290ccf-ca0c-422f-b853-6fc7af045f99@gmail.com>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <uohwigzosxv2onh7dtgvhqdkdu2jufiukp6ztxrvfbjoihrypx@cq3apkdx2rhw>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28.02.2025 22:44, Heiner Kallweit wrote:
-> This series contributes to cleaning up phylib by moving PHY package
-> related code to its own source file.
+On 28/02/2025 15:14, Bjorn Andersson wrote:
+> On Fri, Feb 28, 2025 at 11:01:16AM +0530, Yuvaraj Ranganathan wrote:
+>> On 2/28/2025 5:56 AM, Bjorn Andersson wrote:
+>>> On Thu, Feb 27, 2025 at 11:38:16PM +0530, Yuvaraj Ranganathan wrote:
+>>>> The initial QCE node change is reverted by the following patch 
+>>>
+>>> s/is/was/
+>>>
+>>>> https://lore.kernel.org/all/20250128115333.95021-1-krzysztof.kozlowski@linaro.org/
+>>>> because of the build warning,
+>>>>
+>>>>   sa8775p-ride.dtb: crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
+>>>>     ...
+>>>>     'qcom,sa8775p-qce' is not one of ['qcom,ipq4019-qce', 'qcom,sm8150-qce']
+>>>>
+>>>> Add the QCE node back that fix the warnings.
+>>>>
+>>>
+>>> Are you saying that adding this node back will fix the warning?
+>>>
+>>> I'd expect that you would say something like "The changes to the
+>>> Devicetree binding has accepted, so add the node back".
+>>>
+>>> Regards,
+>>> Bjorn
+>>>
+>>>> Signed-off-by: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 12 ++++++++++++
+>>>>  1 file changed, 12 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>>>> index 23049cc58896..b0d77b109305 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>>>> @@ -2418,6 +2418,18 @@ cryptobam: dma-controller@1dc4000 {
+>>>>  				 <&apps_smmu 0x481 0x00>;
+>>>>  		};
+>>>>  
+>>>> +		crypto: crypto@1dfa000 {
+>>>> +			compatible = "qcom,sa8775p-qce", "qcom,sm8150-qce", "qcom,qce";
+>>>> +			reg = <0x0 0x01dfa000 0x0 0x6000>;
+>>>> +			dmas = <&cryptobam 4>, <&cryptobam 5>;
+>>>> +			dma-names = "rx", "tx";
+>>>> +			iommus = <&apps_smmu 0x480 0x00>,
+>>>> +				 <&apps_smmu 0x481 0x00>;
+>>>> +			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE0 0
+>>>> +					 &mc_virt SLAVE_EBI1 0>;
+>>>> +			interconnect-names = "memory";
+>>>> +		};
+>>>> +
+>>>>  		stm: stm@4002000 {
+>>>>  			compatible = "arm,coresight-stm", "arm,primecell";
+>>>>  			reg = <0x0 0x4002000 0x0 0x1000>,
+>>>> -- 
+>>>> 2.34.1
+>>>>
+>>
+>> DeviceTree bindings were accepted but the comptabile string does not
+>> properly bind to it. Hence, adding the correct binding string in the
+>> compatible has resolved the issue.
+>>
 > 
-> v2:
-> - rename the getters
-> - add a new header file phylib.h, which is used by PHY drivers only
+> Please then write that in the commit message.
 > 
-> Heiner Kallweit (8):
->   net: phy: move PHY package code from phy_device.c to own source file
->   net: phy: add getters for public members in struct phy_package_shared
->   net: phy: qca807x: use new phy_package_shared getters
->   net: phy: micrel: use new phy_package_shared getters
->   net: phy: mediatek: use new phy_package_shared getters
->   net: phy: mscc: use new phy_package_shared getters
->   net: phy: move PHY package related code from phy.h to phy_package.c
->   net: phy: remove remaining PHY package related definitions from phy.h
 > 
->  drivers/net/phy/Makefile              |   3 +-
->  drivers/net/phy/mediatek/mtk-ge-soc.c |   7 +-
->  drivers/net/phy/micrel.c              |   9 +-
->  drivers/net/phy/mscc/mscc_main.c      |   2 +
->  drivers/net/phy/mscc/mscc_ptp.c       |  14 +-
->  drivers/net/phy/phy-core.c            |   1 +
->  drivers/net/phy/phy_device.c          | 237 -----------------
->  drivers/net/phy/phy_package.c         | 350 ++++++++++++++++++++++++++
->  drivers/net/phy/phylib-internal.h     |   2 +
->  drivers/net/phy/phylib.h              |  28 +++
->  drivers/net/phy/qcom/qca807x.c        |  16 +-
->  include/linux/phy.h                   | 124 ---------
->  12 files changed, 409 insertions(+), 384 deletions(-)
->  create mode 100644 drivers/net/phy/phy_package.c
->  create mode 100644 drivers/net/phy/phylib.h
+> That said, what did you base this patch on? While I have picked
+> Krzysztof's two reverts in my local tree, I have not yet published them.
+> So your patch is not even based on v6.14-rc1, which now is 4 weeks old.
 > 
+> Patches sent upstream should be built and tested on a suitable upstream
+> branch!
 
-CI is complaining about one issue in patch 7 which I have to correct.
-Will wait for other feedback before resubmitting.
---
-pw-bot: cr
+I sent reverts because author, even though pinged more than once (!),
+ignored reported problems.
 
+It seems that reverting the code gets some attention, so maybe author
+will fix the original issue and my reverts can be dropped/ignored.
+
+Best regards,
+Krzysztof
 
