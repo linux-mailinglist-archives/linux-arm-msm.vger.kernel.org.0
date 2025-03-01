@@ -1,145 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-49899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9373EA4A60C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 23:38:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 404D4A4A843
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 04:25:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A310E1776BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2025 22:38:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F7AA189B8FA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 03:25:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87E8A1DED44;
-	Fri, 28 Feb 2025 22:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ABEB19004A;
+	Sat,  1 Mar 2025 03:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XO/Y1l1p"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qV1yj3pP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D591DE3AC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 22:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1D71CD15;
+	Sat,  1 Mar 2025 03:25:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740782335; cv=none; b=OroaD2IILyHzd4da1uct0M+Fn2ZXKtid/8PZBX8hPCllPmUgJ770uJNxrc1oryjY7YdUnaLA78yFYAhuXO235cFdVi/Tf2uHoYebw/o+z7YFwGmdI92aaclXULaH6sfbJX/yq/c7rac49haktMEVy05oxnG7vSKy6+qXFK3F/4Q=
+	t=1740799542; cv=none; b=ScnnbYWqzmdzoGXE7nkjSnfZJVQ8vmffM9DycY0871rBPwT+RpSLLmAYsnSpB3dXb+UavnZjdzdDCylHML2GZ5rlrKCMph0sA0pP4x+wyZBfKskjUvIf4mHD/NjrCXLNSn/JSXVbiJUuhy1Nc66wfRq3xy8Xjq3dpjzvNxh5Fwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740782335; c=relaxed/simple;
-	bh=qxmpwgVoph1AElRgemrOMCNkM0UQR+WMiPiIC7BqPOc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O1mYgMQb8n+V/ig1+Rb1z3auWEJFcIx6pE/fwkDSGNe9lKzjjCzRppZ/R7j2dWG2Lftv4kEMpTDsGeztec8Zm3NzQdqhCAW9AxzL9Cx1dO+JrGkGBvm3VNkwwd8sakxz5t0k3BogCdhu4fDhPWWo38qeDLsSi1W+TyQq2voRLCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XO/Y1l1p; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-54959d1a856so104886e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2025 14:38:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740782331; x=1741387131; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jVLtEZWmEyfafXYzQagUTDqOcJoOxE4zFmdp+hx7MFI=;
-        b=XO/Y1l1px9lPYSETYZ0dht9OL8qhdlVxau0kP6KT0GhMKh83TytQeVT5xvM8R5Jb6u
-         SWjfhD9XmY+W0rFy2kZgd3KJbHJe/1gcRshO1fae8ajFJrAImeN9rt5KyMR/Fw5UmSMm
-         Unu5u6aJdDV9qBB9s/MeVFAkEmRNbF7VcJZc3Bb10NNAkZpET1xgl5isg9uB9gz0QiXf
-         lUv57wxZ1+j53BSaRN7W37/1/7mUUcL9HoSoQB3KvyxRDGY6Odk5aEdRhHOSftCRNkXd
-         6IXf1qtw9wpqZMOKNjx7i9aVo/QCWPxvPJHsg9TPlZZDGd4WpvGc14+joUEy0ySM0+rz
-         5PKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740782331; x=1741387131;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jVLtEZWmEyfafXYzQagUTDqOcJoOxE4zFmdp+hx7MFI=;
-        b=brV2cD9j1Eh8TMTj3H+or55wh75L4hB3M05I7Vp2tFKQoxpq6CEhuNttBxHLSZaQ0o
-         ONgfXHPp4eLNPWW0eNYFdSKdG8e4eXilxGI3F9XtUGUF63jgGvu7eSdZXghecpko4vLj
-         NbLaKMqCHdio4gAFLPFE3kX2QOU4Xyf1pxhefsxLHFn0iIc6g13KH6urxBLt9p34q47a
-         7SNTnfX5dR95fEUiakt03pK6prgrBF3pDBDn2m02Lh71s20ztFV3Di9682cxYTrCDeq7
-         8NfcJqvq3Xmv5fwTynaMWffEJCfQ2CxVDUbD9jn71q9BDrpruzQ5JoPnM67z39JYcvZV
-         ED0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVdgDwFiZYZXPyB/RNcD7Ypwa6dNc9zplPOAm8e3q8guwIId5lSSF7Df1lRsZODximHnIHrGa7kRgqe57YY@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoAjXv3dvjBclrZNDU3UYCAbAUzMr5BpoVHniUzK9MOQQBkkLR
-	TZ6r7TERRkT6Ea0mC9M4WGxOHLtTXGXiWp7s1hMXymKQpYmOEstDN7EApHEQVGc=
-X-Gm-Gg: ASbGnctDJzC/UQP3KZKwsMX4npSBVP0+hhPT845E7CA/X577gEz9Zm0LIQgRC8PLG2H
-	Wvh1TAFsFpgLe/6AgdT8Ha6EalQ4aso2UtuZOrEAIMZEvL33xsccqc3kC8zqQAE+urnZje3drzX
-	3xFeuTS19sjOSoBmYwFZNhjYHpecsspk3wpl3Qbw0es9Kb+MZm2H4JHnxyv5e9RaGu9XTz/Kurg
-	kNnLzjIDnZY0itmQFPAl5FaQ8eDn+OLlgfaoqkIeIbuVb1/gf18nH/3dfAKhI3i3K/mej/LKU0k
-	+cAtDSAOw9ioTFbINMhyJZQyBEz50TOgyUzG7iRwbdap0WfV7kGSPx5fS0VBtyPxSwjXn59yznn
-	Su10fdw==
-X-Google-Smtp-Source: AGHT+IG9mAgP7zVwIktUs/UBARKaqjA/kl0Vs6vq5xs6d+5Gc5O4KLLVSbymtcmIIJXCsZL/fle75A==
-X-Received: by 2002:a05:6512:128e:b0:545:2474:2c9b with SMTP id 2adb3069b0e04-5494c35e0camr2328617e87.22.1740782331571;
-        Fri, 28 Feb 2025 14:38:51 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549443b1286sm630135e87.158.2025.02.28.14.38.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2025 14:38:50 -0800 (PST)
-Date: Sat, 1 Mar 2025 00:38:47 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/4] clk: qcom: Constify 'struct qcom_cc_desc'
-Message-ID: <jzqxj6b5brslayz6crvgenjiynlkagszdve3w5ablm5yyimmtv@pf3slvisucbv>
-References: <20250228-clk-qcom-const-v1-0-611ab80d45e4@linaro.org>
+	s=arc-20240116; t=1740799542; c=relaxed/simple;
+	bh=FmQ/Wz4ZtwGsNlXMLA2I4TgbrEPenZCG9Iv0gdXbVDg=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uI+aXHhdrVCV1cgBOwZr6u4L9UN6Zod/qpIMXK4nk8ZlvQar017VVd6yXsgmOKKCOoehfgOuDok5afU8eG2UI21aPI3rJrx5luLb59VkR3uwcthIPmMDzpp6FNdJg7u/rNKQWbC56rMb3Zjt8ww+wQ1LSP/6itkHM35BcqUibug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qV1yj3pP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A14C4CED6;
+	Sat,  1 Mar 2025 03:25:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740799541;
+	bh=FmQ/Wz4ZtwGsNlXMLA2I4TgbrEPenZCG9Iv0gdXbVDg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=qV1yj3pP/YiTqZmytVT+45Crbjp118n/HZY9xCXrKEDhw6EhxgHtjfA2o8ZdUF12+
+	 ZbIOz258SUZx59KzguFDK05TvwmCAgWyRV2iOzm2Zx2M5WeHOQOSsUR3rJeRR26G9j
+	 vWwoRxzoBRTKWaFrFAp8HenVq+Z0uSLafSMVdOHiDYHg36sCMgNiQUSFbPaAY0h1o6
+	 6WCCeGb5OyzmoNepcX1bJQmEy4U+82W5hnAVDVz0qYLpN17t3CkijlOR0tHcHNF1k9
+	 ry4cRubRiLiX08yUeLpCZosIvSYsZLp7m+uDTzl3ze6ScOZg9eHc77y5kbk1THz1Kl
+	 Q1XbG+Sek+o7A==
+Date: Sat, 1 Mar 2025 03:25:19 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ agross@kernel.org, andersson@kernel.org, dmitry.baryshkov@linaro.org,
+ konradybcio@kernel.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
+ amitk@kernel.org, thara.gopinath@gmail.com, lee@kernel.org,
+ rafael@kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com,
+ david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
+ quic_kamalw@quicinc.com, rui.zhang@intel.com, lukasz.luba@arm.com,
+ lars@metafoo.de, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+ quic_skakitap@quicinc.com, neil.armstrong@linaro.org
+Subject: Re: [PATCH V5 4/5] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+Message-ID: <20250301032519.16e77288@jic23-huawei>
+In-Reply-To: <9e14f58f-e345-4bae-b14e-de25fc28d9a8@oss.qualcomm.com>
+References: <20250131183242.3653595-1-jishnu.prakash@oss.qualcomm.com>
+	<20250131183242.3653595-5-jishnu.prakash@oss.qualcomm.com>
+	<20250201121134.53040aae@jic23-huawei>
+	<9e14f58f-e345-4bae-b14e-de25fc28d9a8@oss.qualcomm.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250228-clk-qcom-const-v1-0-611ab80d45e4@linaro.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Fri, Feb 28, 2025 at 03:59:37PM +0100, Krzysztof Kozlowski wrote:
-> Make static 'struct qcom_cc_desc' const.
+On Wed, 26 Feb 2025 14:22:05 +0530
+Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
 
-For the series:
-
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Hi Jonathan,
 > 
-> Best regards,
-> Krzysztof
+> On 2/1/2025 5:41 PM, Jonathan Cameron wrote:
+> > On Sat,  1 Feb 2025 00:02:41 +0530
+> > Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
+> >   
+> >> The ADC architecture on PMIC5 Gen3 is similar to that on PMIC5 Gen2,
+> >> with all SW communication to ADC going through PMK8550 which
+> >> communicates with other PMICs through PBS.
+> >>
+> >> One major difference is that the register interface used here is that
+> >> of an SDAM (Shared Direct Access Memory) peripheral present on PMK8550.
+> >> There may be more than one SDAM used for ADC5 Gen3 and each has eight
+> >> channels, which may be used for either immediate reads (same functionality
+> >> as previous PMIC5 and PMIC5 Gen2 ADC peripherals) or recurring measurements
+> >> (same as ADC_TM functionality).
+> >>
+> >> By convention, we reserve the first channel of the first SDAM for all
+> >> immediate reads and use the remaining channels across all SDAMs for
+> >> ADC_TM monitoring functionality.
+> >>
+> >> Add support for PMIC5 Gen3 ADC driver for immediate read functionality.
+> >> ADC_TM is implemented as an auxiliary thermal driver under this ADC
+> >> driver.
+> >>
+> >> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>  
+> > Hi,
+> > 
+> > A few minor things inline.  One general one is keep to under 80 chars
+> > for line wrap unless going over that makes a significant improvement
+> > to readability.
+> > 
+> > Jonathan
+> >   
+> >> ---
+> >> Changes since v4:
+> >> - Moved out common funtions from newly added .h file into a separate .c
+> >>   file to avoid duplicating them. Updated interrupt name as suggested
+> >>   by reviewer. Updated namespace export symbol statement to have a string
+> >>   as second argument to follow framework change.
+> >>  
 > 
-> ---
-> Krzysztof Kozlowski (4):
->       clk: qcom: camcc: Constify 'struct qcom_cc_desc'
->       clk: qcom: dispcc: Constify 'struct qcom_cc_desc'
->       clk: qcom: gpucc: Constify 'struct qcom_cc_desc'
->       clk: qcom: videocc: Constify 'struct qcom_cc_desc'
+> ...
 > 
->  drivers/clk/qcom/camcc-sa8775p.c   | 2 +-
->  drivers/clk/qcom/camcc-sc8280xp.c  | 2 +-
->  drivers/clk/qcom/camcc-sm4450.c    | 2 +-
->  drivers/clk/qcom/camcc-sm8150.c    | 2 +-
->  drivers/clk/qcom/camcc-sm8550.c    | 2 +-
->  drivers/clk/qcom/camcc-sm8650.c    | 2 +-
->  drivers/clk/qcom/dispcc-sc8280xp.c | 4 ++--
->  drivers/clk/qcom/dispcc-sm4450.c   | 2 +-
->  drivers/clk/qcom/dispcc-sm8450.c   | 2 +-
->  drivers/clk/qcom/dispcc-sm8550.c   | 2 +-
->  drivers/clk/qcom/dispcc-sm8750.c   | 2 +-
->  drivers/clk/qcom/dispcc0-sa8775p.c | 2 +-
->  drivers/clk/qcom/dispcc1-sa8775p.c | 2 +-
->  drivers/clk/qcom/gpucc-sc8280xp.c  | 2 +-
->  drivers/clk/qcom/gpucc-x1p42100.c  | 2 +-
->  drivers/clk/qcom/videocc-sa8775p.c | 2 +-
->  drivers/clk/qcom/videocc-sm8350.c  | 2 +-
->  drivers/clk/qcom/videocc-sm8450.c  | 2 +-
->  drivers/clk/qcom/videocc-sm8550.c  | 2 +-
->  19 files changed, 20 insertions(+), 20 deletions(-)
-> ---
-> base-commit: 8936cec5cb6e27649b86fabf383d7ce4113bba49
-> change-id: 20250228-clk-qcom-const-4218c42710a9
+> >> +
+> >> +			if (!conv_req)
+> >> +				return 0;
+> >> +		}
+> >> +
+> >> +		usleep_range(ADC5_GEN3_HS_DELAY_MIN_US, ADC5_GEN3_HS_DELAY_MAX_US);  
+> > fsleep() perhaps as I doubt the extra tolerance that will give will matter
+> > much.  
+> >> +	}
+> >> +
+> >> +	pr_err("Setting HS ready bit timed out, sdam_index:%d, status:%#x\n", sdam_index, status);
+> >> +	return -ETIMEDOUT;
+> >> +}
+> >> +EXPORT_SYMBOL(adc5_gen3_poll_wait_hs);  
+> > 
+> > At some point may be worth namespacing all these exports.
+> > Probably not in this series though!  
 > 
-> Best regards,
-> -- 
-> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> In the main driver file (qcom-spmi-adc5-gen3.c), I have already exported some functions to a namespace ("QCOM_SPMI_ADC5_GEN3"),
+> which is imported in the auxiliary driver file (qcom-spmi-adc-tm5-gen3.c).
 > 
+> Do you think I should export these functions to the same or a different namespace? Or should we check this later?
+Later is fine.
 
--- 
-With best wishes
-Dmitry
+> >> +void adc5_take_mutex_lock(struct device *dev, bool lock)
+> >> +{
+> >> +	struct iio_dev *indio_dev = dev_get_drvdata(dev->parent);
+> >> +	struct adc5_chip *adc = iio_priv(indio_dev);
+> >> +
+> >> +	if (lock)
+> >> +		mutex_lock(&adc->lock);
+> >> +	else
+> >> +		mutex_unlock(&adc->lock);
+> >> +}
+> >> +EXPORT_SYMBOL_NS_GPL(adc5_take_mutex_lock, "QCOM_SPMI_ADC5_GEN3");  
+> > 
+> > This is potentially going to make a mess for sparse.  Might be better to split
+> > it in two so you can had __acquires and __releases markings.
+> > 
+> > If you don't get any warnings with sparse then I guess we are fine.
+> >   
+> 
+> I had tried building with sparse in my local workspace and I did not get any errors in this file. Do you think I can keep this unchanged?
+> Also, would any kernel bots run sparse later on this patch, if it's not already done?
+
+Problems around this tend to turn up a bit late in build tests as requires
+particular combinations of features.  Here you may not see problems because
+sparse can't see far enough to understand the locking.
+
+I would still split this into lock / unlock as that matches better
+with common syntax for locks.  We can then add markings
+as necessary later.
+
+> >> +/*  
+> > 
+> > Looks like valid kernel doc, so /** and check it builds fine
+> > with the kernel-doc script.
+> >   
+> >> + * struct adc5_channel_prop - ADC channel property.
+> >> + * @channel: channel number, refer to the channel list.
+> >> + * @cal_method: calibration method.
+> >> + * @decimation: sampling rate supported for the channel.
+> >> + * @sid: slave id of PMIC owning the channel.  
+> > 
+> > In common with most of the kernel, if there is another name that
+> > can be used, I'd prefer avoiding that term.
+> > ID probably fine for example or leave it ambiguous as SID
+> >   
+> 
+> Just to be sure, does this look fine?
+> 
+> @sid: ID of PMIC owning the channel.
+Ok.
+> 
+> I'll address all your other comments in the next patch series.
+> 
+When replying with feedback on some items crop out the rest
+of the email just to maintain relevant context.
+Saves time and makes less likely important parts of your reply
+might be missed.
+
+thanks,
+
+Jonathan
+
+> Thanks,
+> Jishnu
 
