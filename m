@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-49904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7431A4A9F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 10:25:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C9BEA4A9FD
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 10:25:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F9D43BACCA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 09:25:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88DF43BAD40
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Mar 2025 09:25:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A12C91D5ADE;
-	Sat,  1 Mar 2025 09:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 547121D63DA;
+	Sat,  1 Mar 2025 09:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KqWkuggm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MP/oQIyq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C143D189BB0
-	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Mar 2025 09:25:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8571D5CF9
+	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Mar 2025 09:25:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740821105; cv=none; b=EKUABC+5l7uTwtSbsPwd3LLGJIvlWXyeUpUspn7cZuR6aaMBoVu7AJV1M+Ec2ZcKc9LMHn8T8a1TcOwGpus9YXuNaX5pCIAsO0T1XX5tTX2CjO/J46P38VPd0DVtOlTBZZXDx0+PVKEXuri8kHpEQJwYkDTUce+kn/mzRRcwmzI=
+	t=1740821108; cv=none; b=cgh8OsDy3OOAcBxDdLGDeAqZc5ZNAZApd0Zhs/bLhLgd/Ss+cANQd9FkwDL7lrSVtPBhwlsXNMxWhm1jwuE8X3GsBQpzz17fKY3jfJw7gS8MF6+I/wKlomvMtQzCXcAbsENs34J6MrCgXl/L5WzhRSGJWVLI4EF+JYibBiw77do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740821105; c=relaxed/simple;
-	bh=6iPuaAjsYMeQVkUS24obUEbYrmaOHTnqfR5LGKvkJrI=;
+	s=arc-20240116; t=1740821108; c=relaxed/simple;
+	bh=MfIfb1GLue9MerIIR2rhWjY6rmZBoFPVe5vbiAysvVc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RKR8uDDzmX0I+cwJJLTh+MxTcKFIeOfxEhR4kZ2F3PC/nRHcmLMvkPh/CkmJe/oEc0XhZ8gIyBCAtUqaIm72xbrEBwMU42IBtQzSo/JPe79lSMK5F6dnnguXzKhmkFcuzyrDVQial0wTFs8WyJR2X0Dr872x+H/cvmqwoUb4u1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KqWkuggm; arc=none smtp.client-ip=209.85.167.43
+	 In-Reply-To:To:Cc; b=dxNXnabo/RANTVuEoP8ob5trY660y5M41LQS1Oc/8t0f0gngXrUM4PTjBsE20d1aEx6Vl5Q8qVqEpe4nmEgw2nGGGkCQejwVBBiTWjvG/pPi5Mm02ggqYDChDEi64A9BtIZEaClZIe+virPXCByInNYtJT11gR+KAMgCw7vdMe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MP/oQIyq; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5494bc4d796so2168245e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Mar 2025 01:25:03 -0800 (PST)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-30613802a59so32836921fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Mar 2025 01:25:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740821102; x=1741425902; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1740821104; x=1741425904; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0JVwBbchrlGfLWd7zeEe09mlkUBfIcbBf0ReoU16PUE=;
-        b=KqWkuggm8CoUDhxNCcgRfn4i1ZR6fyU18f5kXaZaac12hId2I7aO3jDjQ9VusDZj2X
-         7/vU069FFJqucxtJHvrHG0hPMcksTNz6fwh0Fn4sl/NGFk6kmiEjwfzOywjGax1HNrUE
-         TQiz2dSDoksa/hMMCSGWpadvFWlE5uPnQn4Ias4y7uxHZdL5O4T+qTFdbzs/6WeDlyGr
-         ygOmOLzpzYzAvygX6KOrbJdXMyI+Andy3x3XRqMfx/LEPAqDqzqd/55qNWhAwEp+uXKu
-         +Anb5tgCvKWaWYQLv0boQU7JbQCv5gtmNrsHKWDJpeOkWY+n8sUOFkrhD5c01LYBeT1X
-         Bywg==
+        bh=h5L/pucqd7w1XEPp1X1sTPz+Fsqhsm/pl7T20lV9Gm8=;
+        b=MP/oQIyquOx26Q21G81qpr+vaZGzVIX+MQ4sXIZjY3L6JjhzZiXQDID5dXLjP4h5mS
+         mfQ/BaC7lcVm9DD2SR0cLHbo45FlMYnDulKravts6Oslzr4LvCzrhThIuvHXwlkLaEXC
+         EN8U/Nr3YDowkHz+5oyAGEMMQ+uPiYQ/tFGKxiXtEijN4mAAvp5DoccbMqaRRqy023Bl
+         bib4GI/iCJNniG6WyfROPrNRUtdYHCplv1oS0F8upMFigPQ5FOsXv4Hz7vbolbNaK2AU
+         1MRBOnvk2KyXwEykpIoUNTvpUcVxxk8M/wh79R9T079/v8XrMPhJzXoLD4Q+Xg+d5yok
+         nMug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740821102; x=1741425902;
+        d=1e100.net; s=20230601; t=1740821104; x=1741425904;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0JVwBbchrlGfLWd7zeEe09mlkUBfIcbBf0ReoU16PUE=;
-        b=RET7lCN3yqotc4qZxAVJUM7/dj2o3KNCso+lmLRmLaDh1nX6OzuvL6SurAHy2tdG1Q
-         grXzXdx5mXepyxLAUFf4CtpYkSSsorfuRC2iDOXk9gIFiM9qmMJZ4vxWjZI7ZobPMuH9
-         unuseiyVWd2jKfjmGuAyqbIQQ18Go0+VEd8aj86HppiLG80uK8/DtVft5zBDBM9ar598
-         4cdY7w2a6Lnne4gBpL5pK9MJChjiksLZNBRqeOe4ZEHNjq/EPvMt4FhcKODO5a8EBx+z
-         +oClE06EIvUh/gx34ZMsu4Nax09vgcXINN4jIdz+qHaeU1WODxOAAgCx8lsSyQsW1IN+
-         hCUQ==
-X-Gm-Message-State: AOJu0YylK0yC+LLleNNNi9Plfd36gt43fsKyLg9TWMcBytoRuNrD8NhW
-	3umueOQxJ3K012KDHVuuPhaxb0QZp8ChtkcAPEL6OgJ1BUB1XDmkfaCYiZ9xdBE=
-X-Gm-Gg: ASbGnctlnrfuRprk0E+hJE6Zw/krEHqHqS68vCY+r50MhCglacILSivCOjA6Jh9hxeo
-	u+A4bXGgbMdJDJmsc82KAcrvPfCQCavSXeEtIgzTjUuZRybhW3H30dpY8e0mZhz/F/+TgzsAWTL
-	PlMNJYkQxmwJ4EMyrHVA9to+m6kLXKDF//1wus0u3jAhNITTgr851nXijvDomVZT8sDh/PT2Q+J
-	g3gAWlPG04JlAQkTHyPrmSUNFJOgImP//+5ntdQk+ottbmSdLmvBNZ2yfgasDrJCbLF8rNop5qI
-	fjznZEwi4s+/pANHrqOnbzUByskb3KCLF3+59pfGKPZ5BevUcQCP
-X-Google-Smtp-Source: AGHT+IFyI4K4ofy4rt283J1E493B2LFgM14L99NpHlb5eH+sLu5qjueAHc56DM5e2fZC/5lr7A1fIQ==
-X-Received: by 2002:a05:6512:158f:b0:546:2ea9:6666 with SMTP id 2adb3069b0e04-5494c37d8b1mr2545975e87.34.1740821101846;
-        Sat, 01 Mar 2025 01:25:01 -0800 (PST)
+        bh=h5L/pucqd7w1XEPp1X1sTPz+Fsqhsm/pl7T20lV9Gm8=;
+        b=n9thRYc2cJUsle8w5H4lJ4z0qVowuOfowGPDoLf+c5v3GRd5q9V2ATx/kVaIUwu/bI
+         4UJMbOII3MWzjHeVX4HRkZ5DTvZgLC8TjH0FrhNugUn5ArdIdkpE0hV0AgocD19GLjxl
+         VD9U6PaBhb8eRW3A4DqPPkpdEW6rB0atzCG66wTZqVuUmIjumvT1hBzvaK71JFe5TE6k
+         aTGPla2pmi4sQoM9wQo+lRY4v8GltC24WvlLfixKotitF46JRtHC/6r7c0/0vMXrMYJO
+         anTCjmzPNY/SxBH4c3EdLgQDDaDgEY3BuyXT78kJOJGKqZt7EyHQNLC+U0LbzNaIVuZS
+         /D3g==
+X-Gm-Message-State: AOJu0Yw0p5U711+CAKCm8supW1xuXzKZlS5UV1uZdlQUnERP14ESZvwR
+	v6fPsqXGF1kxM6GGf0cokx/e2GWkyDMiM1vUde6NaWxnQaPADj7L59DauirmhFyRHh1kBuwcnIZ
+	wjnA=
+X-Gm-Gg: ASbGncs+AmKZmNNcO2fwQ7RTPdWSVc/dlyfI3Cc1oWSVqauPX35cikJ+VWzF0ufKT9F
+	eTuZjvbGAql1g3h3bNl/BwCjASLxAqjf361kvRhxxLrsOHf2bVLz3fpltJ71LWs0Xl+WtGswrw6
+	okdFa6ZHba18qkLilWwrAs6NxMwNrg0Sx04h5xdHT4BaINEYHY4huYc3U4u2lbUZ3QVUn089Zay
+	DE9/dU/MzjjUfyon1Zo2DNjUAiAewKDOJ5LBl40B4RHQrm+gcq6nfooMr/zvw+oX4KiQugx03W3
+	7I7qty8l6SRy9tOqItL/KZKkCeGKt2zNiopUzz/L+EpN73LyPRPD
+X-Google-Smtp-Source: AGHT+IF6bPkXh6K3Q11IgVbCAEx/raWQukTULWZwW0cWZdP4xoy62YD1VO5brez04BzTxzWt6zMIbA==
+X-Received: by 2002:a2e:9d16:0:b0:308:eb58:6591 with SMTP id 38308e7fff4ca-30b93310978mr18756901fa.25.1740821104442;
+        Sat, 01 Mar 2025 01:25:04 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5494417432csm738406e87.52.2025.03.01.01.24.59
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5494417432csm738406e87.52.2025.03.01.01.25.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 01:25:00 -0800 (PST)
+        Sat, 01 Mar 2025 01:25:03 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 01 Mar 2025 11:24:54 +0200
-Subject: [PATCH v2 1/5] drm/msm/dpu: remove DSC feature bit for PINGPONG on
- MSM8937
+Date: Sat, 01 Mar 2025 11:24:55 +0200
+Subject: [PATCH v2 2/5] drm/msm/dpu: remove DSC feature bit for PINGPONG on
+ MSM8917
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250301-dpu-fix-catalog-v2-1-498271be8b50@linaro.org>
+Message-Id: <20250301-dpu-fix-catalog-v2-2-498271be8b50@linaro.org>
 References: <20250301-dpu-fix-catalog-v2-0-498271be8b50@linaro.org>
 In-Reply-To: <20250301-dpu-fix-catalog-v2-0-498271be8b50@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -96,37 +97,37 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1574;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1305;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=6iPuaAjsYMeQVkUS24obUEbYrmaOHTnqfR5LGKvkJrI=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnwtJn4QALW4Yp9jHaAiSTff5oWqqXJrWsumAXS
- yBUql9GT86JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ8LSZwAKCRCLPIo+Aiko
- 1bKaB/0TSkQtXBypTrGIYYMHCArbLA2WM5wcSRk1VeH/6Oy/jD6i8npth08Pb7n3qqv42TSGdFP
- 9Ah5kV7z1VZiMxs16n5Zqq/sUNCXg4gVnuuNUTp/Q0RQGDZdwMyhANgV7PFR//V6/UVDw0BKhub
- t8ehERkXMhY00pPHTnpuTRlqvUkbpsWNx8xy801MR0qAm4NSJ9PFmWbiaa7+zbDlpSxoU3g6kog
- AlLCfhbQ1mQpBiCGvxrFEvOayxMX+Qra03tg/D9jtulkr8Qyn52sfGmKsoMENLpc7PBh5isfGBE
- w1iRAIAElUBfHMniHEFWvPnwro0GxfbQZM5s+GTcwVjZCYk6
+ bh=MfIfb1GLue9MerIIR2rhWjY6rmZBoFPVe5vbiAysvVc=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnwtJobSugy0kB0JIsHODpjBT4yZPMEcMtlazNt
+ TTJpig19bCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ8LSaAAKCRCLPIo+Aiko
+ 1VQ0B/9QjGsUEpb+DwWLNz/fIYKFPwXC7E2uGmZ4Yredir90cNDR1OI3lNMPAxYFaM6qoQOcRjk
+ WHdMYESn1aXu0fSNpX0hxt3d7J29pPQL7AsmolGiYRLsx7b4ioytiHfzQPqpveYeIp3UHcjrfSo
+ fghL+fxJZ755HA3xa/g4tia4Djz6aKIp5opjOkNZXxi9oy3y6DUDoimd4GFk071lq3uxox9vmqI
+ XDqnMFtuQ0Igx3CHoEOCW5cJLpu+sDu+Xa0gy+pMis6++f/Vz+F5GFANsvu7KxEDzTe0A8pLOm9
+ AkvmZBtxY/piGB36iX2mR/pJTxjinj661+YqhnTvu+St/Kv1
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The MSM8937 platform doesn't have DSC blocks nor does have it DSC
+The MSM8917 platform doesn't have DSC blocks nor does have it DSC
 registers in the PINGPONG block. Drop the DPU_PINGPONG_DSC feature bit
 from the PINGPONG's feature mask and, as it is the only remaining bit,
 drop the .features assignment completely.
 
-Fixes: c079680bb0fa ("drm/msm/dpu: Add support for MSM8937")
+Fixes: 62af6e1cb596 ("drm/msm/dpu: Add support for MSM8917")
 Reported-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
-index ab3dfb0b374ead36c7f07b0a77c703fb2c09ff8a..a848f825c5948c5819758e131af60b83b543b15a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
-@@ -100,14 +100,12 @@ static const struct dpu_pingpong_cfg msm8937_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h
+index 6bdaecca676144f9162ab1839d99f3e2e3386dc7..6f2c40b303e2b017fc3f913563a1a251779a9124 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h
+@@ -93,7 +93,6 @@ static const struct dpu_pingpong_cfg msm8917_pp[] = {
  	{
  		.name = "pingpong_0", .id = PINGPONG_0,
  		.base = 0x70000, .len = 0xd4,
@@ -134,13 +135,6 @@ index ab3dfb0b374ead36c7f07b0a77c703fb2c09ff8a..a848f825c5948c5819758e131af60b83
  		.sblk = &msm8996_pp_sblk,
  		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
  		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
- 	}, {
- 		.name = "pingpong_1", .id = PINGPONG_1,
- 		.base = 0x70800, .len = 0xd4,
--		.features = PINGPONG_MSM8996_MASK,
- 		.sblk = &msm8996_pp_sblk,
- 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
- 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
 
 -- 
 2.39.5
