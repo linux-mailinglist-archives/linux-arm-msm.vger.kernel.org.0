@@ -1,115 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-49950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC4CAA4B426
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 19:43:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AEFAA4B4BF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 21:56:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 96E2716ABB2
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 18:43:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B2F3189108D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 20:56:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B00F1EB195;
-	Sun,  2 Mar 2025 18:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3465F1EB1B9;
+	Sun,  2 Mar 2025 20:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xHSKZRXJ"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="fHY9471d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B57C1EBA08
-	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Mar 2025 18:43:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651AD3597E;
+	Sun,  2 Mar 2025 20:56:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740940992; cv=none; b=FmaH9XuqQY10XKC1F916pvCfSICK6AwH+vn5emrCz0JyeRTQ16RzOIUa5J+xwTfIDjGIVIAROVYx+lqkRNJCpDgNfiKNOe6BTEcWnPocAgSv2m97AK3RGQB6paMsLI7SsbH4B/K3DjyPc9xU7HFM2eLy9BKRRTa/XPX1yRolfuk=
+	t=1740948974; cv=none; b=Tn0h6zvBIuHfYAKpv2Nmwm7xl2nxBm+myLEer4OZCyjrvB+hnr2zv0gUJBSqpCbK4LBFRMtFJ/jrFwFXFrWzrQLUjyhKKjDa4Upi+qJ08Qlg9Yt/5NJHMq/PNmWm6JLJB1vz41kdvIr91PBGWJIV2kZ2AQMs3zHDQn8DFNrRvvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740940992; c=relaxed/simple;
-	bh=+H1JYRsmzoPrlN0IZH2KXuNuKiNSEAFuP+sgrI0/RtU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TZR5fmdF0iG4SUuSY3r8LijYMWbpXeptNaR4BX6vQRsFzz6InaWYJ5ntm5pxkz3CRx064vjaeQk4vmSwk5qNLD0fCfb4AxqF/RDiZ6de8MS7TsxUWWRPoyMQQ6ojjQNkTObqClD9jvfokUjvy1Sqlb/qPI6JZ9wclRMnCr9+ur0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xHSKZRXJ; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-307c13298eeso44891541fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Mar 2025 10:43:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740940988; x=1741545788; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JYfSZwjrk1wuwLyH83CewpZux6QazFFyjHhdeIqoGk0=;
-        b=xHSKZRXJmjxn4HtvvUvqGeQ3d5UkVE4L2yO2HyRj9rBsz9uRxhFKfXP094NjQPckcZ
-         g4cJNRAjO3RmQZL9XMrNqP2VavpOcqVHM0JDkc37E089owDZM5GhbB0jZ8S/MTRI72FK
-         qMxQnPZicawaODzDBql/UUr33T4B3dNiKZQMSJ3Ix5zG6Vx2UoH+tbC9jZfTd8k8emJC
-         cj6dV/wcHGnXOUf9GT/94+gAWp3FecbemdSpgjlLI39L54uFLvJ68LcrRHaLkMsaAQXk
-         C2Je81kM3X2WkAr68jAX7Mu5sU0guaW1p4bWVVrbmqXPN34Ge3/hxWKUaItxjE7iDBp0
-         D7fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740940988; x=1741545788;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JYfSZwjrk1wuwLyH83CewpZux6QazFFyjHhdeIqoGk0=;
-        b=kv066O1yiPfNyo2h4qFic3jGBzV9DyE1g7cTbyOxXnbrVxUrBAjXX91rsm1KHTw1kn
-         nM6st1fXzHSdCNjI06LIDwl/wtwIxo7TtxqXrbEAQkWAMpO+TcQJ+iR04zGI61uqB+Pl
-         18P3+3XJ9jMJzFrMQABohb3NMrLGFH9WjKxyfR7tr9O0YPPiFvCqhP+6SlzXj0kyrmpP
-         nSZR9R2FU12LM+9sjL3/pEqVdauX7GXHtuIorCtX4LMRu+TyE0XGu0dPHLLkp8UTizSl
-         OReqps6vkixgmKe+DHeTrA9h09qfsofr7CA+xdEZeCpIOzI8wCcp1sMQsnca8xKh/AXt
-         cLzg==
-X-Forwarded-Encrypted: i=1; AJvYcCXVBdwVc1nR6XCviM2T3CPfwKfpJRkUIi0FodqDSmjYw3FNw/R9SvlX9VjnACEYO5nK7/tRTEvRjSoZ+Khn@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNzRI9NQcLrw7HMboWxntn7RWLSytAo6i+UDBtWRyocS6g4JHK
-	Xi/hpok5+K4GRo6tP6yRllG4n3teErodgKKJj3VMjimed/fQeWYdSbiYxlmN/noZ1C0IiuLKExq
-	7JcP3pg==
-X-Gm-Gg: ASbGnctlK1r8bYzrnEDjRGcfh5M/phVZEfRMOcpecSCaiGo3jug1q3ppMlAOcgz8Qv1
-	KJf+/RQ7tZI2CqjkA7KHC88YQi+RFCfISDHZ9+7EzRtxxx4KABIuSTt0JWKH//YzzSPT0/EHz08
-	js1n5FliCvV2jGypBcXIlbJbOqNzZqyqewxa90C5CTjvCxM8OGqSmumQWDMG9gFAubyrL/UL4YG
-	vwv3++iRnJ3mht/Y1+BSuKz5xCOWyuXsyDnDLJbDJW+dDhBk/nAbv51ch1pRguK3D35tXu8vRpX
-	8Pko27TWlp3+rXM/jWYd8hgyV4VW6LA4t8yyDwZ+AnwXLkD6SkCa9AOhLgEIKnQK/GMBoKlQX7W
-	Tldf+bti2x2WCTF0+MxZL3DwG
-X-Google-Smtp-Source: AGHT+IEYTGmoWgInNdncfhUdNvmlzFmlOJQaw/FJcWHC4CdZnaQ0MmPAPvQbmmMMOiLgnNAPW8hDoA==
-X-Received: by 2002:a2e:a4b9:0:b0:30b:919e:3021 with SMTP id 38308e7fff4ca-30b919e30aamr32112101fa.10.1740940988464;
-        Sun, 02 Mar 2025 10:43:08 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30bbf2927a3sm347551fa.1.2025.03.02.10.43.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Mar 2025 10:43:07 -0800 (PST)
-Date: Sun, 2 Mar 2025 20:43:04 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: andersson@kernel.org, Michael.Srba@seznam.cz, konradybcio@kernel.org, 
-	jeffrey.l.hugo@gmail.com, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH 1/2] bus: qcom-ssc-block-bus: Remove some duplicated
- iounmap() calls
-Message-ID: <keric3hixhjbxscdtqbgbi66lz5oklj7dunhfbmmtscjlmjykd@6ud3faz63pvz>
-References: <cover.1740932040.git.christophe.jaillet@wanadoo.fr>
- <efd06711b126e761a06eb5ef82daf9ad4e116a10.1740932040.git.christophe.jaillet@wanadoo.fr>
+	s=arc-20240116; t=1740948974; c=relaxed/simple;
+	bh=p6syizpmJ76lC1s5B/Bojjtqe0nJEKWlGClU5qNt4hA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Ut1T4offmgqhaoCG28kPg78mR0EcnkTrWc5ibZRt6pwJZZE6FPxKVbIxQaR/QNOr7+bF8A9DTpNHESsVgCEyjfCZ2AkTF1ph31/GbjPUHn7vGh58lSB7k5g/0ttfPCQUbVL4G9ay4AIeQYsmTmsfEv8KoCt1ZWlCRQf6DxbydE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=fHY9471d; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1740948962; x=1741553762; i=markus.elfring@web.de;
+	bh=mGq/gU9aiLC9wUlZmOgz0EtXdzSoBZk03x6MS/EQwvY=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=fHY9471ddlM03q0Z3Z3datTM3jBbdpRS22zBeKT8ZliBajHIdlhHQvGGEo6+58c/
+	 aW/Veu4zpHaWYtpfla1mnxKePDKXcoTsODUenhZTQeA2VCMi3DsQD0MuTyIoBTl/i
+	 4gZwYLSC4+E+9PgGeTXl1FGO7fuOpxUE+IsEHRBsrMFejAJoZMM/1ldkENDxTfguL
+	 hFmR3HsGN8XJESDazCiRHCYD3LEVdr89EL+QKiKUQt9uHfNCVgShdvN0ZpzDAwpu+
+	 hgArzZXRhJl6XDfjpzygg9k84ChZb6Vy1mdhpjn0l+k6vq6Am/oX/hnj4dSo4qnmn
+	 VcnftArw3ZeAqk/ifg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.70.30]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MLzmv-1tXRvX2K49-00Mg55; Sun, 02
+ Mar 2025 21:56:02 +0100
+Message-ID: <54c30a69-71cf-4582-9086-50eb0d39f273@web.de>
+Date: Sun, 2 Mar 2025 21:56:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <efd06711b126e761a06eb5ef82daf9ad4e116a10.1740932040.git.christophe.jaillet@wanadoo.fr>
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH RESEND] drm/msm/dpu: Delete a variable initialisation before a
+ null pointer check in two functions
+From: Markus Elfring <Markus.Elfring@web.de>
+To: kernel-janitors@vger.kernel.org, freedreno@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Archit Taneja <architt@codeaurora.org>, Daniel Vetter <daniel@ffwll.ch>,
+ David Airlie <airlied@gmail.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Jeykumar Sankaran <jsanka@codeaurora.org>,
+ Jordan Crouse <jordan@cosmicpenguin.net>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Simona Vetter <simona@ffwll.ch>, Vinod Koul <vkoul@kernel.org>
+Cc: cocci@inria.fr, LKML <linux-kernel@vger.kernel.org>
+References: <40c60719-4bfe-b1a4-ead7-724b84637f55@web.de>
+ <1a11455f-ab57-dce0-1677-6beb8492a257@web.de>
+ <13566308-9a80-e4aa-f64e-978c02b1406d@web.de>
+Content-Language: en-GB
+In-Reply-To: <13566308-9a80-e4aa-f64e-978c02b1406d@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ZXKKocm9YimrPH2Ai0mrevWkO84hjFpKhemYZk0/ziXAXy6/WRt
+ MVT16mJFRDXIppSjxv77pPSQJFitb+KAakBf3ndC0onKZSiEhxx92Rw7fKew5iXRUWM/kbA
+ NXlThqdMLWdKw4ICz/gOgP2zk7b1y5j85NjdlXYP0URExCPCbJ/ep3jYrenWGue6Bouz2qL
+ Apu5N46AkpQFobLYGONFA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:kuP3KBswb/c=;sypnX5yZi7yu/vG/c6hJxyLA9sm
+ 4FFHfcQSG4QIpCBVcJ4623jDYFkTg7UBOSCc/c5lbAK880V3IIjOf932Ji3oe2JigEZlU+Lxu
+ V/GEr8r/L6g8jm+hd53cinFUfMb/ZXxOJk0ZkJkSZUhjMiaOkGW6HWWIp+eLOCrEq6F+WVejU
+ P1Y3iPVu/tOvw5Sb36cnOWDEbooRvc+76ttxhKGLioRNgQN9pINxdWGZXe9mkfhvUVFutjQbH
+ +YQIDirHQMSXh/KGmFgbyuM8gJiypXUJjTrm7WutWHQ1gmWbGCaXKUTN+PdD6op7sacXpwrDj
+ 88skEnupulUC2wRnSHi/T6g/v47xUaU4zHStF5l3EdtBWxR7EuZ8WJQGT5FvkyPuE8Nj5/isy
+ ESGdZNQ6ONGI14/6O5q6N9gch8qRMHIQr0ecpdVJt7Lh+Vv5jjTsvjItas1eF+M2v0zOlvP0b
+ sMQYoRWmY7jtnzjOLEhCQ8X+O0RbShmqNetrvMMQSOnp/aQPM6i9Rluhf5L6cScZIdnTgTP2t
+ d5e7dAk++hwUcRx7LtipOyZcVFtK1yMv+CnGD/L4s8dvIkbS/lQQgqzgtH6vZnKOm3928+cj7
+ tpH7QjfcZvpOiWNkRlKvynX+IXQAs2plsiyvJBrN/NbNpwBWNhW+aEXa6ES+tuWyeUmcwlztm
+ kS2zd+BHBiB1dWloIP2bIcUaaJzrCmHeKNrSJKCPNpPkLwpyGO+mUkSa3h5PHvXuyGVuPpkRS
+ s2LsvkXgh1IkirHLe48B1kje4OSStHoUULlBWPS2q/FBEt16rXqn3RbYNRv6tZbdYz6AdXlJJ
+ UIchkTLxZJgZDsjpzbDfagbNvB6kSctp/c1NfxTkQ9chfgnaaBSt6JQ1cez9LgNudeJbrNU84
+ gbmMcs0iwvnJGmRs1ODQoBEl6kOU6ILn4X4pKd7kBGPswj87DNqn1QrZDMSI3Tbr6K+YEnzGz
+ ViMRFwe7916RUnYV70lMOrYJTQBE8CO8FOe1PdPAqgu9++58oQD6zjCxXqMVTIBU1s4VNEaIO
+ S6pTuSYmvHFttfd37kKiqikzJCCw+fl90dYNuQK+XaMKIOMc8IkuJFi/SEHwsYDYnL74SkRuM
+ 8fDQQT0ASTWwBv+86LV2vv01kwBoVHZOf+rJR2Wlo4aWUrhXN1sCnysVPVrEoRJVYRsnOOB/B
+ RF+M2H/sOdKNAfbCCGn0CpFIEHRl/X2ngW139q8RnABV/B/ImcIjh6Tt+9++OcAYQWmG3tdFt
+ 8w0CVuB6bu5iFPGeBjfAp87r/t3+qi/l/RKg0d2cCEYRhqy5Lj/dCIX1A4xRTequnnSWsbbqk
+ T5G+5TerQFlj4fBrOPJ8pkaiPZVlawL+pAl0e8RtUG15k16LCPfRx7j7B1SGEaB7DSBMSl/Kl
+ PpTcXuUSKKZA8sBfxaV4TM5OHBPjRd9xAslXujSz6RfP5fgcsq6G/jQ06rZJQrUdh2s1cegqs
+ WID3uCQ==
 
-On Sun, Mar 02, 2025 at 05:21:34PM +0100, Christophe JAILLET wrote:
-> reg_mpm_sscaon_config[01] are allocated with devm_ioremap_resource(). So,
-> they will be unmapped automatically by the manage resource framework.
-> 
-> Remove the incorrect explicit iounmap() calls from the remove function.
-> 
-> Fixes: 97d485edc1d9 ("bus: add driver for initializing the SSC bus on (some) qcom SoCs")
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-> ---
->  drivers/bus/qcom-ssc-block-bus.c | 3 ---
->  1 file changed, 3 deletions(-)
-> 
+From: Markus Elfring <elfring@users.sourceforge.net>
+Date: Tue, 11 Apr 2023 18:24:24 +0200
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+The address of a data structure member was determined before
+a corresponding null pointer check in the implementation of
+the functions =E2=80=9Cdpu_hw_pp_enable_te=E2=80=9D and =E2=80=9Cdpu_hw_pp=
+_get_vsync_info=E2=80=9D.
 
--- 
-With best wishes
-Dmitry
+Thus avoid the risk for undefined behaviour by removing extra
+initialisations for the variable =E2=80=9Cc=E2=80=9D (also because it was =
+already
+reassigned with the same value behind this pointer check).
+
+This issue was detected by using the Coccinelle software.
+
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+=2D--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu=
+/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+index 0fcad9760b6f..870ab3ebbc94 100644
+=2D-- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+@@ -176,7 +176,7 @@ static int dpu_hw_pp_enable_te(struct dpu_hw_pingpong =
+*pp, bool enable)
+ static int dpu_hw_pp_connect_external_te(struct dpu_hw_pingpong *pp,
+ 		bool enable_external_te)
+ {
+-	struct dpu_hw_blk_reg_map *c =3D &pp->hw;
++	struct dpu_hw_blk_reg_map *c;
+ 	u32 cfg;
+ 	int orig;
+
+@@ -221,7 +221,7 @@ static int dpu_hw_pp_get_vsync_info(struct dpu_hw_ping=
+pong *pp,
+
+ static u32 dpu_hw_pp_get_line_count(struct dpu_hw_pingpong *pp)
+ {
+-	struct dpu_hw_blk_reg_map *c =3D &pp->hw;
++	struct dpu_hw_blk_reg_map *c;
+ 	u32 height, init;
+ 	u32 line =3D 0xFFFF;
+
+=2D-
+2.40.0
+
 
