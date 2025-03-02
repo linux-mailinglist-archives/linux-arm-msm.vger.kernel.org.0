@@ -1,198 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-49945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD15EA4B2BD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 16:56:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A820A4B316
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 17:23:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A13C17A46AD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 15:55:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2ED523A64F1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 16:22:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B39541E882F;
-	Sun,  2 Mar 2025 15:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55DF51E9B26;
+	Sun,  2 Mar 2025 16:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UZUpOoDb"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="FHv+LKRi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.smtpout.orange.fr (smtp-22.smtpout.orange.fr [80.12.242.22])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965411E3DCF
-	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Mar 2025 15:56:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7B13594F
+	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Mar 2025 16:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740930970; cv=none; b=VvbCiGkZ4AdDIZnNxZQu0G935V6qiGYv0q8slX0kaei49eCCDvyaqciwYcn4ivQHemOaLi4QPC/+Itsi8az04QyncEtN4TvEmQWZbzxmFBj1tPz3PBY6cihQcCE0sn40o0iu4XtpFEto+i6OHTZeDvaLmwndN6StMW16ckVwP+k=
+	t=1740932583; cv=none; b=GxCDxgC5kIExs1dIZP3s9BOf7Jo3xL5bJqSC0hFcmcBRpqA2CxxjecPGi9+RUIxjV//tmsqkbeB6cOCp4lSLyZ9yhVYgkbh3rSiwWiUzj8Dr13LRpt2TEzC7QWHlbYDyNaTkXSkjWsEgRTQvPkoK2AuXcAP1Xi1M9KhwIwstsIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740930970; c=relaxed/simple;
-	bh=H8X4S94pGAKOquO0l2C2cojT9a6H8qXbxIRVykkPpQE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MA9yFZpyenl6L4VnpU6HEijI3DqOpQQJZnM3IiTLKREzdrq50a6fFAmAGPnBY/23LqEkzTv7vuFE5HLFMKa6+1IAu3O5FhOfDgMbLpZKWRCPKbPzUSPadDcSbES1rqpZq9wpi6jXQd1VQ7w9QlVQrm+1Ii3fwdjKVsBdU61Cwc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UZUpOoDb; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-439ac3216dcso24742735e9.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Mar 2025 07:56:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740930967; x=1741535767; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hlpIq9SPuf0qn1v2edQTVWT/w0C8xiNzl1ulEaeBlbw=;
-        b=UZUpOoDb5Gn07chugCDy61oyPhAXj+3aVWWz/P8n/a+3wmU7w8Ow7A/nLLBFIMYldj
-         xChVIE9nn0t5vErEFtSSInvFUsmCQpkh2ec999UvziRRX7D71OZThHffUUrvgk/+Kfar
-         I2Q3yNqPW8Q/8xKQJJYHfVIwlYu7byiRnS3bQCqKBBE4D0Jvry+u6RISiNXWuVsejqT5
-         6b3zkqazt4zylqtfeV/8gUVzujq/VNZosSFPc5vPg6TxpjX59iLwKnpz9z7pGLRA78lC
-         lPThFrvZP88RMv1ql2mlCVfeECd4aHCUi9ne6YGaNmE+gb48zIVptKtwOgFPSR+w2ol0
-         2tuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740930967; x=1741535767;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hlpIq9SPuf0qn1v2edQTVWT/w0C8xiNzl1ulEaeBlbw=;
-        b=RmL5BA9z8ceKs2Iu503xvNlYoWkU3D9C0PvL+wA5Mi4mBWFZkRZg89Poviv3eg6Y1j
-         N8EkCo7mijmaeGIDICp91FoewEZ5W71T9r3LDCvS0yiHA9zfEsptqvPPK32qab+ujAoX
-         jFgUNjHBGXeGtagurNfCxkqtrigaU/T5kHbJ8bzRhadXUg6GELSJEqUHQM0TzxKdS0L9
-         znYCeiEJ9ZCW5pmuwck9Rm0Stp42U0NeP/VFXsOPNwigmDKachA/eApsBmnpiefms/HV
-         d5stVzIKWlGBnmywwRJxLypFsNDhFEWhXHWUTYf3BPywTsiw9L9BNGgg3hRV7ITRh2tX
-         Jduw==
-X-Forwarded-Encrypted: i=1; AJvYcCVlDIikxM1tUIXYvB6uCgh98DKw0d7jPrUjIRxYiiUEbEjdqjwTSY3vEOebbCWWzmfANhW6MN06orDSaUMs@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJrSX6rPBKwDbZTqggTvzYCBNd7REQ+lVZa/tWp5i8OxGP+tJg
-	dLa3vImHNe5WcnEt9UUZzMROU0Vrl2rL8wHxJ394g3q7q1Jg1mLMqmgb18ahtdc=
-X-Gm-Gg: ASbGnctzU7e5OkrCCkakFzDY/3RJ2NmmbLRU8idTkngheweN5xI8Nl+hVr75F3/l/P/
-	bBNMvdBN13CbZCQoXM9HqAwsGRV8yV17iL425Ac2DnFJMMJ+tSeIg+ERmn0mt5w8hunsmi3eOa1
-	1tWhduDs2clLvjP0SRhbbFbe83Lw1Z2E5xCTsYx2hOmgfP2lz51m4UpXndu+KqdMeeafEIZ8QY/
-	4YA5UXu2qZ7rO9eDgBUxOLNgQlgD4N1YdfhmOB1DIHgLYD+T85BmxEkTWk1/i+ywM2EilYR3JlK
-	nzavDKUTH6BV5ovAMXncLnf4kMPKFDwz1XAYDOEKb7GmZsOACZKiGCkSOPXbKAoDcpRoG4mFFMQ
-	zf9EzI6F1dg==
-X-Google-Smtp-Source: AGHT+IHhDgttzslV/5SoS5Hp8trBu+m77gcArllf4u4+s29M07vSbx2XO1Tt/k0SG6UzXxJv1kT95A==
-X-Received: by 2002:a05:600c:2292:b0:43b:c0fa:f9ce with SMTP id 5b1f17b1804b1-43bc0fafff1mr5402165e9.14.1740930966691;
-        Sun, 02 Mar 2025 07:56:06 -0800 (PST)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43b736f839asm127814985e9.2.2025.03.02.07.56.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Mar 2025 07:56:06 -0800 (PST)
-Message-ID: <19109672-2856-457f-b1f6-305abc6c4434@linaro.org>
-Date: Sun, 2 Mar 2025 15:56:04 +0000
+	s=arc-20240116; t=1740932583; c=relaxed/simple;
+	bh=IjiqYfOaFT/5bcZk8bWzCldlSR2W+8zYw0RxG3snBeM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Tg8gC8+/54cZ00d5OThYrP8fOwpWxVxGSP97KcudE2kNdP4DaJsyADjhaNdDV3lsp/1Z9oAPoM9h3UGLK4jNsE1zxFlsjL+hJN3wvG/gX5rgYQ9Ukuxh90+MDk8w560qB1hA8GHFwOiWHM+BSmDBrP1smSMEvnuWxwCrUHgIDhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=FHv+LKRi; arc=none smtp.client-ip=80.12.242.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from fedora.home ([90.11.132.44])
+	by smtp.orange.fr with ESMTPA
+	id om4YtTJnYVX8Kom4btOvoD; Sun, 02 Mar 2025 17:21:50 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1740932510;
+	bh=iipt5Yn3YiPOXNMgfxQ8YWRnO9V/lrPEOyeJI1wMlbY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=FHv+LKRiGR6lZ+NPxG9FsMoGQDc4hl+YDqaTSvO5ym240lMZXEu4ax7mz5cGl7FIC
+	 UC40eL+bsSFicmSFH/DxOtIkjdPktO/02UssrVWWlgt7fb0N+rVKib1BXMKFrVRC/n
+	 CTLwl1P3pRCMY52ndBh/TgcbFtjfObZUHZlxz9ft7/se4NPyDiJmp51QfsBPuTIrZQ
+	 OkET8rq2EMnNjZWDjXVEXXJy6k9WX9ELhZRVvy6IAb+Mct2mc2Ovhao1MAZZGh8Ad9
+	 Wtt0NLoKKPlZdtBGokikHSZRBbC2bKC4ppAk3Q+17p98n7puYLhvmug4OQvBnJ6WlC
+	 6wS+NiJxWDrrg==
+X-ME-Helo: fedora.home
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sun, 02 Mar 2025 17:21:50 +0100
+X-ME-IP: 90.11.132.44
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To: andersson@kernel.org,
+	Michael.Srba@seznam.cz,
+	konradybcio@kernel.org,
+	jeffrey.l.hugo@gmail.com
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	kernel-janitors@vger.kernel.org,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: [PATCH 0/2] bus: qcom-ssc-block-bus:  Fix some error handling paths
+Date: Sun,  2 Mar 2025 17:21:33 +0100
+Message-ID: <cover.1740932040.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] venus driver fixes to avoid possible OOB read
- access
-To: Vedang Nagar <quic_vnagar@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250215-venus-security-fixes-v2-0-cfc7e4b87168@quicinc.com>
- <c3b27e55-f627-417c-bb62-3189f248fb99@linaro.org>
- <7bf1aeaa-e1bd-412b-90fc-eda30b5f5b37@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <7bf1aeaa-e1bd-412b-90fc-eda30b5f5b37@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 02/03/2025 11:58, Vedang Nagar wrote:
->>
->> The basic question : what is the lifetime of the data from RX 
->> interrupt to consumption by another system agent, DSP, userspace, 
->> whatever ?
-> As mentioned in [1], With the regular firmware, after RX interrupt the 
-> data can be considered as valid until next interrupt is raised, but with 
-> the rouge firmware, data can get invalid during the second read and our 
-> intention is to avoid out of bound access read because of such issues.
+Patch 1 should be straight forward. It removes some ioumap() from
+resources allocated with devm_ioremap_resource().
 
-This is definitely the part I don't compute.
+Patch 2 is more speculative. It releases some resources in the error
+handling path of the probe, as done in the .remove() function.
 
-1. RX interrupt
-2. Frame#0 Some amount of time data is always valid
-3. RX interrupt - new data
-4. Frame#1 new data delivered into a buffer
 
-Are you describing a case between RX interrupts 1-3 or a case after 1-4?
+Finally, the .remove() function also has some 
+	pm_runtime_disable(&pdev->dev);
+	pm_clk_destroy(&pdev->dev);
+calls.
 
-Why do we need to write code for rouge firmware anyway ?
+Usually pm_runtime_disable() is paired with pm_runtime_enable() and I
+would expect some pm_clk_add(() calls related to pm_clk_destroy().
+Neither exists.
 
-And the real question - if the data can be invalidated in the 1-3 window 
-above when is the safe time to snapshot that data ?
+So I wonder if these 2 calls are correct in the .remove() function.
+Thought?
 
-We seem to have alot of submissions to deal with 'rouge' firmware 
-without I think properly describing the problem of the _expected_ data 
-lifetime.
+Christophe JAILLET (2):
+  bus: qcom-ssc-block-bus: Remove some duplicated iounmap() calls
+  bus: qcom-ssc-block-bus: Fix the error handling path of
+    qcom_ssc_block_bus_probe()
 
-So
+ drivers/bus/qcom-ssc-block-bus.c | 34 ++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-a) What is the expected data lifetime of an RX buffer between one
-    RX IRQ and the next ?
-    I hope the answer to this is - APSS owns the buffer.
-    This is BTW usually the case in these types of asymmetric setups
-    with a flag or some other kind of semaphore that indicates which
-    side of the data-exchange owns the buffer.
+-- 
+2.48.1
 
-b) In this rouge - buggy - firmware case what is the scope of the
-    potential race condition ?
-
-    What I'd really like to know here is why we have to seemingly
-    memcpy() again and again in seemingly incongrous and not
-    immediately obvious places in the code.
-
-    Would we not be better advised to do a memcpy() of the entire
-    RX frame in the RX IRQ handler path if as you appear to me
-    suggesting - the firmware can "race" with the APSS
-    i.e. the data-buffer ownership flag either doesn't work
-    or isn't respected by one side in the data-exchange.
-
-Can we please have a detailed description of the race condition here ?
-
-I don't doubt the new memcpy() makes sense to you but without this 
-detailed understanding of the underlying problem its virtually 
-impossible to debate the appropriate remediation - perhaps this patch 
-you've submitted - or some other solution.
-
-Sorry to dig into my trench here but, way more detail is needed.
-
-> [1]: https://lore.kernel.org/lkml/4cfc1fe1-2fab-4256-9ce2- 
-> b4a0aad1069e@linaro.org/T/#m5f1737b16e68f8b8fc1d75517356b6566d0ec619
->>
->> Why is it in this small specific window that the data can change but 
->> not later ? What is the mechanism the data can change and how do the 
->> changes you propose here address the data lifetime problem ?
-> Currently this issue has been discovered by external researchers at this 
-> point, but if any such OOB issue is discovered at later point as well 
-> then we shall fix them as well.
-
-Right but, I'm looking for a detailed description of the problem.
-
-Can you describe from RX interrupt again what the expected data lifetime 
-of the RX frame is, which I hope we agree is until the next RX interrupt 
-associated with a given buffer with an ownership flag shared between 
-firmware and APSS - and then under what circumstances that "software 
-contract" is being violated.
-
-> Also, with rougue firmware we cannot fix the data lifetime problem in my 
-> opinion, but atleast we can fix the out of bound issues.
->>
->> Without that context, I don't believe it is really possible to 
->> validate an additional memcpy() here and there in the code as fixing 
->> anything.
-> There is no additional memcpy() now in the v2 patch, but as part of the 
-> fix, we are just trying to retain the length of the packet which was 
-> being read in the first memcpy() to avoid the OOB read access.
-
-I can't make a suggestion because - personally speaking I still don't 
-quite understand the data-race you are describing.
-
-I get that you say the firmware is breaking the contract but, without 
-more detail on _how_ it breaks that contract I don't think it's really 
-possible to validate your fix here, fixes anything.
-
----
-bod
 
