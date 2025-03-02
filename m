@@ -1,172 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-49943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AEAEA4B157
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 12:58:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28076A4B1E3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 14:35:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 732FA1892E75
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 11:59:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1CE2516A621
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 13:35:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 786CF1DFD8B;
-	Sun,  2 Mar 2025 11:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7767D1DDC11;
+	Sun,  2 Mar 2025 13:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DVL1tmc2"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="sLvdYjX2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CE41DC07D;
-	Sun,  2 Mar 2025 11:58:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAB27E110;
+	Sun,  2 Mar 2025 13:35:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740916733; cv=none; b=nkmH20Fsu8YQYRVbDMDRS4uOoJSwpcgHYpFiSsbkzrj7QsScDs8apB1lp8b7yAOGt7Q9hb8VAyGYhxCup012zL4JX91puZP4M/fkSgaauwiheHVmCHFK9sb7VesfU5GT89eg2CiNvsPLn0Tg4k8PiZCtm0sQxxcipCa1ltouY7M=
+	t=1740922503; cv=none; b=fy0jY2fomEIY+SdaBXwIAjD8aK3hxzrNIqAJfjv6Ykte61Qm9DVuzx9M//Z6/pvMEQWeP5+MRB08Et0V92HVZS2tuCfnclcFxyjgd3gnNQIKfn8o7u9UssE6Ousj3nDw3nGk05z+SBgDho6z61HfNyz9UbK0qRJfH+DQwZszWEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740916733; c=relaxed/simple;
-	bh=dfZhNz/vQKL0f30bzuxXzK40XE/QNdhkHWdLhAzlVgw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=r2YklqVFt8FEQP6+Ej6RQmrb+kUDua66RtID0SEzYK6ovxT3E0IoXXMIFY4P5XGCRkh03YOFIPPTnbZ2eY+HI+cWcfFARr9AouGlkX4s9smBXM2bD0l59A4PWPf5+PjEVKBazFj+3irZVqcX9aw6jiA79Lq5J6iu3Y1V8NsZ49I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DVL1tmc2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 522Bm7XD024209;
-	Sun, 2 Mar 2025 11:58:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VuML3wkEE0XvJn393R3V2Ul5uMaKfz+p2L0gk9SYgUU=; b=DVL1tmc2akgiLz2Y
-	B8P2Zt+xEzghm8WOd5YQLVeZHbqCSUtz1Q+z6gLsG6ALja1tqP42P+dPKBXV6oxF
-	BL2WEgq9JqTPRKv6AdRF4N/pTR2Rt/Yhvw5IKdBxTT5xIVPsPbG/RKULCyvmz7kc
-	hXuwSPzjL7h2XX3L21YLzYGuu8GoGSO7kM0bQfeBimjBOWiC49F1wXRwdLimfWtR
-	53SMW7ciSWVCtUX7OVnQX9kQb24SBVxGAuWIHBismESa9ACdAyI330L2kRF/LOxB
-	P/JWye/DZhYyLkyDdJUTMz7mAGeIaiq/ZFe14I9r/V2ChU4LT6B74+91C4B4cNZR
-	OIo6nQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453t9929rd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 02 Mar 2025 11:58:34 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 522BwXg8002933
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 2 Mar 2025 11:58:33 GMT
-Received: from [10.50.60.31] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 2 Mar 2025
- 03:58:31 -0800
-Message-ID: <7bf1aeaa-e1bd-412b-90fc-eda30b5f5b37@quicinc.com>
-Date: Sun, 2 Mar 2025 17:28:28 +0530
+	s=arc-20240116; t=1740922503; c=relaxed/simple;
+	bh=MSQ2cKPPkPjmDrmJy/FLeiPBxlbYekvi38q/5qc4FFc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YQH67QbbxWMvyz8JKa2PGYHydU/YuuPG9+LirryVv4DXOp3FUxr9Qosl6piCvUXpSmPBDLL9W0sD8OOGUuJd8sBTHh4r7h4TEqF8ShsSPxPIGymVk3KyaX1TW+kcSIKgZs/OSLPl85hN1nciA49E0AlIOa7Hv5pee6IAF6OkCIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=sLvdYjX2; arc=none smtp.client-ip=212.227.17.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1740922482; x=1741527282;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=nTJClktE5S3QxaECergyaKe3EYsuCTuLnJ+cWLyTAko=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=sLvdYjX2fVCY0heiOxqBy/peKGfkFzF4u/g0W8aLZPs8SKXgZhUeO4bSlpAEj2zq
+	 DSMK49CItU2RTi446G/bDBrn9hX3GLwqORCXNDIkOnOxVCYvMxcreLjEggiSLWDDV
+	 uKe5/L/2an8+XHcrAGTXBr3cOM0sIXK3WgjU/qYN34ePvObRyR0IFUP3AD13/S7hq
+	 SbhppjYyaRAI5skaYB1LyTjO5a9degu+OYv1Dg+bgf+LTzJBl4iOl8QvdcsO3Fo63
+	 Qymv9PMkddj6BWvNDDqfKSogZsSiiOtcj4deeHgNaMMu/jgmaqFgNj8+RA2a5BhzR
+	 MQ771Y5oQgglA+6NXA==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([62.226.41.231]) by mrelayeu.kundenserver.de
+ (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1N4hBx-1t6Yez34nH-017qyN; Sun, 02 Mar 2025 14:34:42 +0100
+Message-ID: <8c6f9c8c-3d03-45d3-b601-989e6c441501@oldschoolsolutions.biz>
+Date: Sun, 2 Mar 2025 14:34:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] venus driver fixes to avoid possible OOB read
- access
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250215-venus-security-fixes-v2-0-cfc7e4b87168@quicinc.com>
- <c3b27e55-f627-417c-bb62-3189f248fb99@linaro.org>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH 2/3] usb: typec: ps883x: fix missing accessibility check
+To: Johan Hovold <johan+linaro@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>,
+ Stephan Gerhold <stephan.gerhold@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250218152933.22992-1-johan+linaro@kernel.org>
+ <20250218152933.22992-3-johan+linaro@kernel.org>
 Content-Language: en-US
-From: Vedang Nagar <quic_vnagar@quicinc.com>
-In-Reply-To: <c3b27e55-f627-417c-bb62-3189f248fb99@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iAoQJ-xCzA94z79URgWm-cPIoWWjTmd0
-X-Proofpoint-GUID: iAoQJ-xCzA94z79URgWm-cPIoWWjTmd0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-02_03,2025-02-28_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- mlxscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
- clxscore=1015 spamscore=0 adultscore=0 impostorscore=0 malwarescore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503020096
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <20250218152933.22992-3-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:4UxoOcT8+yz/0EC6f0+pYJva2U5iIsfbA6Qx4EkaG0kJwbIjL8m
+ vV1zDRA1mQtmFSOzDTMUfi2DfrrvO+cYXZVS4k8J8VKRRNXetzdaAUeUyemJGvix2qF4QBn
+ 9C4v4lYWBrfQfiMq5yV+CmT/YJg4nl+FYL1Mm9sBaSvYISD9JJduwzR8YU9SWS30NlRnvkw
+ vUvWFPIerripu5+L1OoTw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:uBKyAR++kJg=;56OUr16z7fYfQd5r7RK6dOmPuPk
+ 73EoC6UI+4sLkTIw25uNcMD8ygJVxm4ipsZNym+xPGAjPiYF0AFVEkJxC9YPNQ4sUZUWYfk9B
+ 9igW1mZUZxzXE5Vfb8ehMoODE7iz+/4M9BaGaSM+WiHoTM9YzV3kuhqjZQX3s2sYMkDEvHgNm
+ TWklYGkJhwjsn/FnGAvoVw7yhrz7a8TlaOZ7ckX9Ak8zJ7UpOP31QyXCBibZJWFt7RmBINDA5
+ B4PvYn/4Us8ASofOOKQJvTQTLQ7jMMYlxTGeDZ+ONCM4WXutvni3lk6z91oocxcDy4ggk4EI6
+ 79iJ7YXSbHkNEbLi8pYabsTvlvm+6TQ3BuqRDJH7/0BnW4ZSjesHYFtr1XmYNFCkKsGKhW/We
+ 0+2JxV73Is1swXGQbkwgOGSfAUSnjZZA0l85lrP5SkPYuE+kkRbivzqJN9FueyA7ra944GkRU
+ 61yDOElsj/4IQ9VKQSZ1oJuQS/TTWZJVkI+gLabd7DBAlYdaWRPRZ3oKEZRDvbq0jiC4+iLTp
+ 417z/DujamsJZVvQO8LBVcC7Fg/hIBMjyp+oE2YyQc4QMqB9JRKt6BApULxDqQ12hFL7U9mOT
+ wh2duWeKXhNOosMZGYpuctRr5tO7kkNfxbmd0pOAI6avcFgcXKlT3IA4UhgjEmWj0WHob+hWB
+ nZ4/dq8nZW87LYXjz3LrpERODP24s4tpezUlypV18QzgqGmJGthXRrKLVvTq1QHC5qu5ZbZvy
+ 50Fu4yvdYkLv7O/EuMhyiKW1lDroY0S/xMzbwCTwpQDNJ5OLpFdMwiSnSBaaW2uRc1ODVitOJ
+ 0g2eqg0ZaBtnRVwRjQdMa9RTds3RX7SqDnfHU8lSNB0mLzmC749dA9nS00stTMz+q24YKE4w2
+ jVKZvRH7dv/JC8tiIZJJoleFZtHZn2ibRh0TJgq6mhKVccAiVMx4j2qdXxeghhQD/j65hd34M
+ GoNqdkIOpq9EFjFhTfUqSY3DqqIeDRlsPuHVqyjiQjtTtIp4uoQd8nPkZ6o9tJwG5/Qzzlq5w
+ t1T3sQeByfyP65/PexI7PrajzBV8kLQir63GgSUWdzECiE1XR+0OJVuCUfAeytkYaO8wSvgqX
+ BI1KclswrgS5QF9xGy/hDU+o+0i47e0uq114eyjh+HlXmAZ8co9cU3pWsPVF5O0Qg58adVTud
+ thxGaY5py7HaVvCsJnlWq/MvyotT7V2qaPdzO+Bwg/nHsNiA/RgP7Za+gH3eAivTgJnq8MYvO
+ BRQXu2Z7i4/u2K0wOGq1uGCIXUQuWyKlwrXlTWoOQMDgltqRRDcqJu9u/5X0CnmNJ1yYbJPal
+ 17+6IEBKM6+dGva7rpse0HEyyUZW5Vmj8P6cWu3hTpfntdwElIMhfpWY43pJlGeDfkaglvJzL
+ TuvJaYK0yptc5Nrg==
 
-Hi Bryan,
+Hi Johan,
 
-On 2/16/2025 9:33 PM, Bryan O'Donoghue wrote:
-> On 15/02/2025 17:19, Vedang Nagar wrote:
->> This series primarily adds check at relevant places in venus driver
->> where there are possible OOB accesses due to unexpected payload
->> from venus firmware. The patches describes the specific OOB possibility.
->>
->> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
->> ---
->> Changes in v2:
->> - Decompose sequence change event function.
->> - Fix repopulating the packet .with the first read during read_queue.
->> - Link to v1: https://lore.kernel.org/r/20250104-venus-security-fixes- 
->> v1-0-9d0dd4594cb4@quicinc.com
->>
->> ---
->> Vedang Nagar (2):
->>        media: venus: fix OOB read issue due to double read
->>        media: venus: fix OOB access issue while reading sequence 
->> changed events
->>
->>   drivers/media/platform/qcom/venus/hfi_msgs.c  | 72 +++++++++++++++++ 
->> ++++++----
->>   drivers/media/platform/qcom/venus/hfi_venus.c |  1 +
->>   2 files changed, 63 insertions(+), 10 deletions(-)
->> ---
->> base-commit: 91e71d606356e50f238d7a87aacdee4abc427f07
->> change-id: 20241211-venus-security-fixes-50c22e2564d5
->>
->> Best regards,
-> 
-> Could you please address the feedback I gave you / questions posited in 
-> these two messages ?
-> 
-> 4cfc1fe1-2fab-4256-9ce2-b4a0aad1069e@linaro.org
-> 
-> 0eab7323-ce86-40c7-9737-06eedcdf492d@linaro.org
-> 
-> The basic question : what is the lifetime of the data from RX interrupt 
-> to consumption by another system agent, DSP, userspace, whatever ?
-As mentioned in [1], With the regular firmware, after RX interrupt the 
-data can be considered as valid until next interrupt is raised, but with 
-the rouge firmware, data can get invalid during the second read and our 
-intention is to avoid out of bound access read because of such issues.
+On 2/18/25 16:29, Johan Hovold wrote:
+> Make sure that the retimer is accessible before registering to avoid
+> having later consumer calls fail to configure it, something which, for
+> example, can lead to a hotplugged display not being recognised:
+>
+> 	[drm:msm_dp_panel_read_sink_caps [msm]] *ERROR* read dpcd failed -110
+>
+> Fixes: 257a087c8b52 ("usb: typec: Add support for Parade PS8830 Type-C R=
+etimer")
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-[1]: 
-https://lore.kernel.org/lkml/4cfc1fe1-2fab-4256-9ce2-b4a0aad1069e@linaro.org/T/#m5f1737b16e68f8b8fc1d75517356b6566d0ec619
-> 
-> Why is it in this small specific window that the data can change but not 
-> later ? What is the mechanism the data can change and how do the changes 
-> you propose here address the data lifetime problem ?
-Currently this issue has been discovered by external researchers at this 
-point, but if any such OOB issue is discovered at later point as well 
-then we shall fix them as well.
+unfortunately, this one goes south on the HP Omnibook X14, and also on
+the Elitebook G1Q. After excluding a lot of other causes, like inverted
+resets and wrong i2c channels, I did a bisect and landed at this commit.
 
-Also, with rougue firmware we cannot fix the data lifetime problem in my 
-opinion, but atleast we can fix the out of bound issues.
-> 
-> Without that context, I don't believe it is really possible to validate 
-> an additional memcpy() here and there in the code as fixing anything.
-There is no additional memcpy() now in the v2 patch, but as part of the 
-fix, we are just trying to retain the length of the packet which was 
-being read in the first memcpy() to avoid the OOB read access.
+Looking at it, I speculatively increased the firmware initialization
+delay to 200ms. To no effect. Reverting this patch "resolves" the issue.
 
-Please let me know if you have any other suggestions.
+with best regards
 
-Regards,
-Vedang Nagar
-> 
-> ---
-> bod
+Jens
 
 
