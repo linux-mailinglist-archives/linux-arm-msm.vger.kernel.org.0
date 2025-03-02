@@ -1,153 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-49942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9737A4B118
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 12:12:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AEAEA4B157
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 12:58:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6FA023A351D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 11:12:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 732FA1892E75
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 11:59:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6B0A1BC58;
-	Sun,  2 Mar 2025 11:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 786CF1DFD8B;
+	Sun,  2 Mar 2025 11:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aooXR+7V"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DVL1tmc2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F9D1DBB38
-	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Mar 2025 11:12:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CE41DC07D;
+	Sun,  2 Mar 2025 11:58:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740913936; cv=none; b=DPBDKcI40UhwmcG6vdXV0SR/ic+iXRT7wYWGO7vpeFb1BMlkjQxb8YxmwiOK7kYQfmEMzJs5zq1wvN5npg0QU99R1rHOUenNskxMwHmV7rLqT9YgkPy0365R9ymGdT/V3Z7QoBgFg7YL8DAlh/avk5fA/5iAzGOfRbwX8LKhrFw=
+	t=1740916733; cv=none; b=nkmH20Fsu8YQYRVbDMDRS4uOoJSwpcgHYpFiSsbkzrj7QsScDs8apB1lp8b7yAOGt7Q9hb8VAyGYhxCup012zL4JX91puZP4M/fkSgaauwiheHVmCHFK9sb7VesfU5GT89eg2CiNvsPLn0Tg4k8PiZCtm0sQxxcipCa1ltouY7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740913936; c=relaxed/simple;
-	bh=r/E6LYdvBIOak/3//3gj1xJnve0xQ99P5eZuiofdHBM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u+oE8lWhdsVR/6Kx2yDb3JyKcyDn2oSdFSgIRk6XIjhwDizZNeZjCW+pFG6Uq4129P+GBz66+bu9Fsb6Jgwbn6U2ymGcbkqK4mLbFWZDEma7Zkybl003ACcpCcCo46BN0+Oy8YW/N4L/xFSXbwV+KpuqiWrHGdgLzdmCoDNaN9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aooXR+7V; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADCDC4AF09
-	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Mar 2025 11:12:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740913936;
-	bh=r/E6LYdvBIOak/3//3gj1xJnve0xQ99P5eZuiofdHBM=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=aooXR+7VXvcH/6f6zYxI/NB0+JCxNoNsNcXKPniLlNfl9QzReuxQUe6U+TObi3bJw
-	 8EKv7Lp2XjlglDw8aYX809DkRNHxb4CjV9mwjiANdoU515uFJdI0OSwmUcyOiq0pYk
-	 i3dkWhuoKm+ifsYcwOhGiidlkzWd4A54Qv/6j2l8rpC9c6SxfPZes52+f4LDdDzbWH
-	 fUkekrEFbjXMt7ou4u0DkmL1EeWCORefX55+pOtCSGZqIVLBH7m3Q1WN2m7AF6yOZg
-	 wXwCh0q8heLNsgpZVPp9rdJXXaZTffYcIqYJqZ0iM8A1A3bHP2XykyGh2Tps4N781K
-	 sSFPYDfJKzdEg==
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-abf4802b242so253017366b.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Mar 2025 03:12:16 -0800 (PST)
-X-Gm-Message-State: AOJu0YwcEb7YOZao+UmyTTNh7e/dN6KFsagl45r0chPrb5VyoZ2yjb2G
-	n+zEYd4s4jpbhTofCW+EG3fPNvr8ly2jeVSOrQhtkc2Wha4LwyUbXFblqehIZ6xh4iYMR9oM1hV
-	ogIfZsMDYJqKSci/OGoyxDZ0mppRAQGboJUwHIg==
-X-Google-Smtp-Source: AGHT+IFd32O0cccPkVHyQRUGAgtLUbYK+uQRte/DydLBmgbHW6tCrbh5UXeoEHiox6cW6eWJEnsnCGH2skEnueF6o6M=
-X-Received: by 2002:a17:906:6a04:b0:ab2:b84b:2dab with SMTP id
- a640c23a62f3a-abf261cdfa0mr1142238466b.30.1740913934658; Sun, 02 Mar 2025
- 03:12:14 -0800 (PST)
+	s=arc-20240116; t=1740916733; c=relaxed/simple;
+	bh=dfZhNz/vQKL0f30bzuxXzK40XE/QNdhkHWdLhAzlVgw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=r2YklqVFt8FEQP6+Ej6RQmrb+kUDua66RtID0SEzYK6ovxT3E0IoXXMIFY4P5XGCRkh03YOFIPPTnbZ2eY+HI+cWcfFARr9AouGlkX4s9smBXM2bD0l59A4PWPf5+PjEVKBazFj+3irZVqcX9aw6jiA79Lq5J6iu3Y1V8NsZ49I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DVL1tmc2; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 522Bm7XD024209;
+	Sun, 2 Mar 2025 11:58:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	VuML3wkEE0XvJn393R3V2Ul5uMaKfz+p2L0gk9SYgUU=; b=DVL1tmc2akgiLz2Y
+	B8P2Zt+xEzghm8WOd5YQLVeZHbqCSUtz1Q+z6gLsG6ALja1tqP42P+dPKBXV6oxF
+	BL2WEgq9JqTPRKv6AdRF4N/pTR2Rt/Yhvw5IKdBxTT5xIVPsPbG/RKULCyvmz7kc
+	hXuwSPzjL7h2XX3L21YLzYGuu8GoGSO7kM0bQfeBimjBOWiC49F1wXRwdLimfWtR
+	53SMW7ciSWVCtUX7OVnQX9kQb24SBVxGAuWIHBismESa9ACdAyI330L2kRF/LOxB
+	P/JWye/DZhYyLkyDdJUTMz7mAGeIaiq/ZFe14I9r/V2ChU4LT6B74+91C4B4cNZR
+	OIo6nQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453t9929rd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 02 Mar 2025 11:58:34 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 522BwXg8002933
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 2 Mar 2025 11:58:33 GMT
+Received: from [10.50.60.31] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 2 Mar 2025
+ 03:58:31 -0800
+Message-ID: <7bf1aeaa-e1bd-412b-90fc-eda30b5f5b37@quicinc.com>
+Date: Sun, 2 Mar 2025 17:28:28 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250228051521.138214-1-george.moussalem@outlook.com> <DS7PR19MB8883434CAA053648E22AA8AC9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
-In-Reply-To: <DS7PR19MB8883434CAA053648E22AA8AC9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
-From: Amit Kucheria <amitk@kernel.org>
-Date: Sun, 2 Mar 2025 16:42:03 +0530
-X-Gmail-Original-Message-ID: <CAHLCerN=jDXtsGCGUMaerh=-oSZf4+ExdnvVHFcXTjjTRvW-ig@mail.gmail.com>
-X-Gm-Features: AQ5f1Joo-9vQhdZihXI6_SZRgjhU3sAL0Uv-PUaO4J3qP3ecnI1uP64WCbn4VBE
-Message-ID: <CAHLCerN=jDXtsGCGUMaerh=-oSZf4+ExdnvVHFcXTjjTRvW-ig@mail.gmail.com>
-Subject: Re: [PATCH v9 3/6] thermal: qcom: tsens: update conditions to
- strictly evaluate for IP v2+
-To: George Moussalem <george.moussalem@outlook.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, daniel.lezcano@linaro.org, rafael@kernel.org, 
-	thara.gopinath@gmail.com, dmitry.baryshkov@linaro.org, robh@kernel.org, 
-	krzk+dt@kernel.org, quic_srichara@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] venus driver fixes to avoid possible OOB read
+ access
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250215-venus-security-fixes-v2-0-cfc7e4b87168@quicinc.com>
+ <c3b27e55-f627-417c-bb62-3189f248fb99@linaro.org>
+Content-Language: en-US
+From: Vedang Nagar <quic_vnagar@quicinc.com>
+In-Reply-To: <c3b27e55-f627-417c-bb62-3189f248fb99@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: iAoQJ-xCzA94z79URgWm-cPIoWWjTmd0
+X-Proofpoint-GUID: iAoQJ-xCzA94z79URgWm-cPIoWWjTmd0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-02_03,2025-02-28_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ mlxscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
+ clxscore=1015 spamscore=0 adultscore=0 impostorscore=0 malwarescore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503020096
 
-On Fri, Feb 28, 2025 at 10:46=E2=80=AFAM George Moussalem
-<george.moussalem@outlook.com> wrote:
->
-> TSENS v2.0+ leverage features not available to prior versions such as
-> updated interrupts init routine, masked interrupts, and watchdog.
-> Currently, the checks in place evaluate whether the IP version is greater
-> than v1 which invalidates when updates to v1 or v1 minor versions are
-> implemented. As such, update the conditional statements to strictly
-> evaluate whether the version is greater than or equal to v2 (inclusive).
->
-> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+Hi Bryan,
 
-Reviewed-by: Amit Kucheria <amitk@kernel.org>
+On 2/16/2025 9:33 PM, Bryan O'Donoghue wrote:
+> On 15/02/2025 17:19, Vedang Nagar wrote:
+>> This series primarily adds check at relevant places in venus driver
+>> where there are possible OOB accesses due to unexpected payload
+>> from venus firmware. The patches describes the specific OOB possibility.
+>>
+>> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+>> ---
+>> Changes in v2:
+>> - Decompose sequence change event function.
+>> - Fix repopulating the packet .with the first read during read_queue.
+>> - Link to v1: https://lore.kernel.org/r/20250104-venus-security-fixes- 
+>> v1-0-9d0dd4594cb4@quicinc.com
+>>
+>> ---
+>> Vedang Nagar (2):
+>>        media: venus: fix OOB read issue due to double read
+>>        media: venus: fix OOB access issue while reading sequence 
+>> changed events
+>>
+>>   drivers/media/platform/qcom/venus/hfi_msgs.c  | 72 +++++++++++++++++ 
+>> ++++++----
+>>   drivers/media/platform/qcom/venus/hfi_venus.c |  1 +
+>>   2 files changed, 63 insertions(+), 10 deletions(-)
+>> ---
+>> base-commit: 91e71d606356e50f238d7a87aacdee4abc427f07
+>> change-id: 20241211-venus-security-fixes-50c22e2564d5
+>>
+>> Best regards,
+> 
+> Could you please address the feedback I gave you / questions posited in 
+> these two messages ?
+> 
+> 4cfc1fe1-2fab-4256-9ce2-b4a0aad1069e@linaro.org
+> 
+> 0eab7323-ce86-40c7-9737-06eedcdf492d@linaro.org
+> 
+> The basic question : what is the lifetime of the data from RX interrupt 
+> to consumption by another system agent, DSP, userspace, whatever ?
+As mentioned in [1], With the regular firmware, after RX interrupt the 
+data can be considered as valid until next interrupt is raised, but with 
+the rouge firmware, data can get invalid during the second read and our 
+intention is to avoid out of bound access read because of such issues.
 
+[1]: 
+https://lore.kernel.org/lkml/4cfc1fe1-2fab-4256-9ce2-b4a0aad1069e@linaro.org/T/#m5f1737b16e68f8b8fc1d75517356b6566d0ec619
+> 
+> Why is it in this small specific window that the data can change but not 
+> later ? What is the mechanism the data can change and how do the changes 
+> you propose here address the data lifetime problem ?
+Currently this issue has been discovered by external researchers at this 
+point, but if any such OOB issue is discovered at later point as well 
+then we shall fix them as well.
+
+Also, with rougue firmware we cannot fix the data lifetime problem in my 
+opinion, but atleast we can fix the out of bound issues.
+> 
+> Without that context, I don't believe it is really possible to validate 
+> an additional memcpy() here and there in the code as fixing anything.
+There is no additional memcpy() now in the v2 patch, but as part of the 
+fix, we are just trying to retain the length of the packet which was 
+being read in the first memcpy() to avoid the OOB read access.
+
+Please let me know if you have any other suggestions.
+
+Regards,
+Vedang Nagar
+> 
 > ---
->  drivers/thermal/qcom/tsens.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 1f5d4de017d9..43b388bcc7d6 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -447,7 +447,7 @@ static void tsens_set_interrupt(struct tsens_priv *pr=
-iv, u32 hw_id,
->         dev_dbg(priv->dev, "[%u] %s: %s -> %s\n", hw_id, __func__,
->                 irq_type ? ((irq_type =3D=3D 1) ? "UP" : "CRITICAL") : "L=
-OW",
->                 enable ? "en" : "dis");
-> -       if (tsens_version(priv) > VER_1_X)
-> +       if (tsens_version(priv) >=3D VER_2_X)
->                 tsens_set_interrupt_v2(priv, hw_id, irq_type, enable);
->         else
->                 tsens_set_interrupt_v1(priv, hw_id, irq_type, enable);
-> @@ -499,7 +499,7 @@ static int tsens_read_irq_state(struct tsens_priv *pr=
-iv, u32 hw_id,
->         ret =3D regmap_field_read(priv->rf[LOW_INT_CLEAR_0 + hw_id], &d->=
-low_irq_clear);
->         if (ret)
->                 return ret;
-> -       if (tsens_version(priv) > VER_1_X) {
-> +       if (tsens_version(priv) >=3D VER_2_X) {
->                 ret =3D regmap_field_read(priv->rf[UP_INT_MASK_0 + hw_id]=
-, &d->up_irq_mask);
->                 if (ret)
->                         return ret;
-> @@ -543,7 +543,7 @@ static int tsens_read_irq_state(struct tsens_priv *pr=
-iv, u32 hw_id,
->
->  static inline u32 masked_irq(u32 hw_id, u32 mask, enum tsens_ver ver)
->  {
-> -       if (ver > VER_1_X)
-> +       if (ver >=3D VER_2_X)
->                 return mask & (1 << hw_id);
->
->         /* v1, v0.1 don't have a irq mask register */
-> @@ -733,7 +733,7 @@ static int tsens_set_trips(struct thermal_zone_device=
- *tz, int low, int high)
->  static int tsens_enable_irq(struct tsens_priv *priv)
->  {
->         int ret;
-> -       int val =3D tsens_version(priv) > VER_1_X ? 7 : 1;
-> +       int val =3D tsens_version(priv) >=3D VER_2_X ? 7 : 1;
->
->         ret =3D regmap_field_write(priv->rf[INT_EN], val);
->         if (ret < 0)
-> @@ -1040,7 +1040,7 @@ int __init init_common(struct tsens_priv *priv)
->                 }
->         }
->
-> -       if (tsens_version(priv) > VER_1_X &&  ver_minor > 2) {
-> +       if (tsens_version(priv) >=3D VER_2_X &&  ver_minor > 2) {
->                 /* Watchdog is present only on v2.3+ */
->                 priv->feat->has_watchdog =3D 1;
->                 for (i =3D WDOG_BARK_STATUS; i <=3D CC_MON_MASK; i++) {
-> --
-> 2.48.1
->
+> bod
+
 
