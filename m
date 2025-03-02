@@ -1,128 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-49944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28076A4B1E3
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 14:35:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD15EA4B2BD
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 16:56:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1CE2516A621
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 13:35:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A13C17A46AD
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 15:55:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7767D1DDC11;
-	Sun,  2 Mar 2025 13:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B39541E882F;
+	Sun,  2 Mar 2025 15:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="sLvdYjX2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UZUpOoDb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAB27E110;
-	Sun,  2 Mar 2025 13:35:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965411E3DCF
+	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Mar 2025 15:56:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740922503; cv=none; b=fy0jY2fomEIY+SdaBXwIAjD8aK3hxzrNIqAJfjv6Ykte61Qm9DVuzx9M//Z6/pvMEQWeP5+MRB08Et0V92HVZS2tuCfnclcFxyjgd3gnNQIKfn8o7u9UssE6Ousj3nDw3nGk05z+SBgDho6z61HfNyz9UbK0qRJfH+DQwZszWEU=
+	t=1740930970; cv=none; b=VvbCiGkZ4AdDIZnNxZQu0G935V6qiGYv0q8slX0kaei49eCCDvyaqciwYcn4ivQHemOaLi4QPC/+Itsi8az04QyncEtN4TvEmQWZbzxmFBj1tPz3PBY6cihQcCE0sn40o0iu4XtpFEto+i6OHTZeDvaLmwndN6StMW16ckVwP+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740922503; c=relaxed/simple;
-	bh=MSQ2cKPPkPjmDrmJy/FLeiPBxlbYekvi38q/5qc4FFc=;
+	s=arc-20240116; t=1740930970; c=relaxed/simple;
+	bh=H8X4S94pGAKOquO0l2C2cojT9a6H8qXbxIRVykkPpQE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YQH67QbbxWMvyz8JKa2PGYHydU/YuuPG9+LirryVv4DXOp3FUxr9Qosl6piCvUXpSmPBDLL9W0sD8OOGUuJd8sBTHh4r7h4TEqF8ShsSPxPIGymVk3KyaX1TW+kcSIKgZs/OSLPl85hN1nciA49E0AlIOa7Hv5pee6IAF6OkCIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=sLvdYjX2; arc=none smtp.client-ip=212.227.17.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+	 In-Reply-To:Content-Type; b=MA9yFZpyenl6L4VnpU6HEijI3DqOpQQJZnM3IiTLKREzdrq50a6fFAmAGPnBY/23LqEkzTv7vuFE5HLFMKa6+1IAu3O5FhOfDgMbLpZKWRCPKbPzUSPadDcSbES1rqpZq9wpi6jXQd1VQ7w9QlVQrm+1Ii3fwdjKVsBdU61Cwc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UZUpOoDb; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-439ac3216dcso24742735e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Mar 2025 07:56:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1740922482; x=1741527282;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=nTJClktE5S3QxaECergyaKe3EYsuCTuLnJ+cWLyTAko=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=sLvdYjX2fVCY0heiOxqBy/peKGfkFzF4u/g0W8aLZPs8SKXgZhUeO4bSlpAEj2zq
-	 DSMK49CItU2RTi446G/bDBrn9hX3GLwqORCXNDIkOnOxVCYvMxcreLjEggiSLWDDV
-	 uKe5/L/2an8+XHcrAGTXBr3cOM0sIXK3WgjU/qYN34ePvObRyR0IFUP3AD13/S7hq
-	 SbhppjYyaRAI5skaYB1LyTjO5a9degu+OYv1Dg+bgf+LTzJBl4iOl8QvdcsO3Fo63
-	 Qymv9PMkddj6BWvNDDqfKSogZsSiiOtcj4deeHgNaMMu/jgmaqFgNj8+RA2a5BhzR
-	 MQ771Y5oQgglA+6NXA==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.174] ([62.226.41.231]) by mrelayeu.kundenserver.de
- (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1N4hBx-1t6Yez34nH-017qyN; Sun, 02 Mar 2025 14:34:42 +0100
-Message-ID: <8c6f9c8c-3d03-45d3-b601-989e6c441501@oldschoolsolutions.biz>
-Date: Sun, 2 Mar 2025 14:34:41 +0100
+        d=linaro.org; s=google; t=1740930967; x=1741535767; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hlpIq9SPuf0qn1v2edQTVWT/w0C8xiNzl1ulEaeBlbw=;
+        b=UZUpOoDb5Gn07chugCDy61oyPhAXj+3aVWWz/P8n/a+3wmU7w8Ow7A/nLLBFIMYldj
+         xChVIE9nn0t5vErEFtSSInvFUsmCQpkh2ec999UvziRRX7D71OZThHffUUrvgk/+Kfar
+         I2Q3yNqPW8Q/8xKQJJYHfVIwlYu7byiRnS3bQCqKBBE4D0Jvry+u6RISiNXWuVsejqT5
+         6b3zkqazt4zylqtfeV/8gUVzujq/VNZosSFPc5vPg6TxpjX59iLwKnpz9z7pGLRA78lC
+         lPThFrvZP88RMv1ql2mlCVfeECd4aHCUi9ne6YGaNmE+gb48zIVptKtwOgFPSR+w2ol0
+         2tuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740930967; x=1741535767;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hlpIq9SPuf0qn1v2edQTVWT/w0C8xiNzl1ulEaeBlbw=;
+        b=RmL5BA9z8ceKs2Iu503xvNlYoWkU3D9C0PvL+wA5Mi4mBWFZkRZg89Poviv3eg6Y1j
+         N8EkCo7mijmaeGIDICp91FoewEZ5W71T9r3LDCvS0yiHA9zfEsptqvPPK32qab+ujAoX
+         jFgUNjHBGXeGtagurNfCxkqtrigaU/T5kHbJ8bzRhadXUg6GELSJEqUHQM0TzxKdS0L9
+         znYCeiEJ9ZCW5pmuwck9Rm0Stp42U0NeP/VFXsOPNwigmDKachA/eApsBmnpiefms/HV
+         d5stVzIKWlGBnmywwRJxLypFsNDhFEWhXHWUTYf3BPywTsiw9L9BNGgg3hRV7ITRh2tX
+         Jduw==
+X-Forwarded-Encrypted: i=1; AJvYcCVlDIikxM1tUIXYvB6uCgh98DKw0d7jPrUjIRxYiiUEbEjdqjwTSY3vEOebbCWWzmfANhW6MN06orDSaUMs@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJrSX6rPBKwDbZTqggTvzYCBNd7REQ+lVZa/tWp5i8OxGP+tJg
+	dLa3vImHNe5WcnEt9UUZzMROU0Vrl2rL8wHxJ394g3q7q1Jg1mLMqmgb18ahtdc=
+X-Gm-Gg: ASbGnctzU7e5OkrCCkakFzDY/3RJ2NmmbLRU8idTkngheweN5xI8Nl+hVr75F3/l/P/
+	bBNMvdBN13CbZCQoXM9HqAwsGRV8yV17iL425Ac2DnFJMMJ+tSeIg+ERmn0mt5w8hunsmi3eOa1
+	1tWhduDs2clLvjP0SRhbbFbe83Lw1Z2E5xCTsYx2hOmgfP2lz51m4UpXndu+KqdMeeafEIZ8QY/
+	4YA5UXu2qZ7rO9eDgBUxOLNgQlgD4N1YdfhmOB1DIHgLYD+T85BmxEkTWk1/i+ywM2EilYR3JlK
+	nzavDKUTH6BV5ovAMXncLnf4kMPKFDwz1XAYDOEKb7GmZsOACZKiGCkSOPXbKAoDcpRoG4mFFMQ
+	zf9EzI6F1dg==
+X-Google-Smtp-Source: AGHT+IHhDgttzslV/5SoS5Hp8trBu+m77gcArllf4u4+s29M07vSbx2XO1Tt/k0SG6UzXxJv1kT95A==
+X-Received: by 2002:a05:600c:2292:b0:43b:c0fa:f9ce with SMTP id 5b1f17b1804b1-43bc0fafff1mr5402165e9.14.1740930966691;
+        Sun, 02 Mar 2025 07:56:06 -0800 (PST)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43b736f839asm127814985e9.2.2025.03.02.07.56.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 02 Mar 2025 07:56:06 -0800 (PST)
+Message-ID: <19109672-2856-457f-b1f6-305abc6c4434@linaro.org>
+Date: Sun, 2 Mar 2025 15:56:04 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 2/3] usb: typec: ps883x: fix missing accessibility check
-To: Johan Hovold <johan+linaro@kernel.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>,
- Stephan Gerhold <stephan.gerhold@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250218152933.22992-1-johan+linaro@kernel.org>
- <20250218152933.22992-3-johan+linaro@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] venus driver fixes to avoid possible OOB read
+ access
+To: Vedang Nagar <quic_vnagar@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250215-venus-security-fixes-v2-0-cfc7e4b87168@quicinc.com>
+ <c3b27e55-f627-417c-bb62-3189f248fb99@linaro.org>
+ <7bf1aeaa-e1bd-412b-90fc-eda30b5f5b37@quicinc.com>
 Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <20250218152933.22992-3-johan+linaro@kernel.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <7bf1aeaa-e1bd-412b-90fc-eda30b5f5b37@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:4UxoOcT8+yz/0EC6f0+pYJva2U5iIsfbA6Qx4EkaG0kJwbIjL8m
- vV1zDRA1mQtmFSOzDTMUfi2DfrrvO+cYXZVS4k8J8VKRRNXetzdaAUeUyemJGvix2qF4QBn
- 9C4v4lYWBrfQfiMq5yV+CmT/YJg4nl+FYL1Mm9sBaSvYISD9JJduwzR8YU9SWS30NlRnvkw
- vUvWFPIerripu5+L1OoTw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:uBKyAR++kJg=;56OUr16z7fYfQd5r7RK6dOmPuPk
- 73EoC6UI+4sLkTIw25uNcMD8ygJVxm4ipsZNym+xPGAjPiYF0AFVEkJxC9YPNQ4sUZUWYfk9B
- 9igW1mZUZxzXE5Vfb8ehMoODE7iz+/4M9BaGaSM+WiHoTM9YzV3kuhqjZQX3s2sYMkDEvHgNm
- TWklYGkJhwjsn/FnGAvoVw7yhrz7a8TlaOZ7ckX9Ak8zJ7UpOP31QyXCBibZJWFt7RmBINDA5
- B4PvYn/4Us8ASofOOKQJvTQTLQ7jMMYlxTGeDZ+ONCM4WXutvni3lk6z91oocxcDy4ggk4EI6
- 79iJ7YXSbHkNEbLi8pYabsTvlvm+6TQ3BuqRDJH7/0BnW4ZSjesHYFtr1XmYNFCkKsGKhW/We
- 0+2JxV73Is1swXGQbkwgOGSfAUSnjZZA0l85lrP5SkPYuE+kkRbivzqJN9FueyA7ra944GkRU
- 61yDOElsj/4IQ9VKQSZ1oJuQS/TTWZJVkI+gLabd7DBAlYdaWRPRZ3oKEZRDvbq0jiC4+iLTp
- 417z/DujamsJZVvQO8LBVcC7Fg/hIBMjyp+oE2YyQc4QMqB9JRKt6BApULxDqQ12hFL7U9mOT
- wh2duWeKXhNOosMZGYpuctRr5tO7kkNfxbmd0pOAI6avcFgcXKlT3IA4UhgjEmWj0WHob+hWB
- nZ4/dq8nZW87LYXjz3LrpERODP24s4tpezUlypV18QzgqGmJGthXRrKLVvTq1QHC5qu5ZbZvy
- 50Fu4yvdYkLv7O/EuMhyiKW1lDroY0S/xMzbwCTwpQDNJ5OLpFdMwiSnSBaaW2uRc1ODVitOJ
- 0g2eqg0ZaBtnRVwRjQdMa9RTds3RX7SqDnfHU8lSNB0mLzmC749dA9nS00stTMz+q24YKE4w2
- jVKZvRH7dv/JC8tiIZJJoleFZtHZn2ibRh0TJgq6mhKVccAiVMx4j2qdXxeghhQD/j65hd34M
- GoNqdkIOpq9EFjFhTfUqSY3DqqIeDRlsPuHVqyjiQjtTtIp4uoQd8nPkZ6o9tJwG5/Qzzlq5w
- t1T3sQeByfyP65/PexI7PrajzBV8kLQir63GgSUWdzECiE1XR+0OJVuCUfAeytkYaO8wSvgqX
- BI1KclswrgS5QF9xGy/hDU+o+0i47e0uq114eyjh+HlXmAZ8co9cU3pWsPVF5O0Qg58adVTud
- thxGaY5py7HaVvCsJnlWq/MvyotT7V2qaPdzO+Bwg/nHsNiA/RgP7Za+gH3eAivTgJnq8MYvO
- BRQXu2Z7i4/u2K0wOGq1uGCIXUQuWyKlwrXlTWoOQMDgltqRRDcqJu9u/5X0CnmNJ1yYbJPal
- 17+6IEBKM6+dGva7rpse0HEyyUZW5Vmj8P6cWu3hTpfntdwElIMhfpWY43pJlGeDfkaglvJzL
- TuvJaYK0yptc5Nrg==
+Content-Transfer-Encoding: 7bit
 
-Hi Johan,
+On 02/03/2025 11:58, Vedang Nagar wrote:
+>>
+>> The basic question : what is the lifetime of the data from RX 
+>> interrupt to consumption by another system agent, DSP, userspace, 
+>> whatever ?
+> As mentioned in [1], With the regular firmware, after RX interrupt the 
+> data can be considered as valid until next interrupt is raised, but with 
+> the rouge firmware, data can get invalid during the second read and our 
+> intention is to avoid out of bound access read because of such issues.
 
-On 2/18/25 16:29, Johan Hovold wrote:
-> Make sure that the retimer is accessible before registering to avoid
-> having later consumer calls fail to configure it, something which, for
-> example, can lead to a hotplugged display not being recognised:
->
-> 	[drm:msm_dp_panel_read_sink_caps [msm]] *ERROR* read dpcd failed -110
->
-> Fixes: 257a087c8b52 ("usb: typec: Add support for Parade PS8830 Type-C R=
-etimer")
-> Cc: Abel Vesa <abel.vesa@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+This is definitely the part I don't compute.
 
-unfortunately, this one goes south on the HP Omnibook X14, and also on
-the Elitebook G1Q. After excluding a lot of other causes, like inverted
-resets and wrong i2c channels, I did a bisect and landed at this commit.
+1. RX interrupt
+2. Frame#0 Some amount of time data is always valid
+3. RX interrupt - new data
+4. Frame#1 new data delivered into a buffer
 
-Looking at it, I speculatively increased the firmware initialization
-delay to 200ms. To no effect. Reverting this patch "resolves" the issue.
+Are you describing a case between RX interrupts 1-3 or a case after 1-4?
 
-with best regards
+Why do we need to write code for rouge firmware anyway ?
 
-Jens
+And the real question - if the data can be invalidated in the 1-3 window 
+above when is the safe time to snapshot that data ?
 
+We seem to have alot of submissions to deal with 'rouge' firmware 
+without I think properly describing the problem of the _expected_ data 
+lifetime.
+
+So
+
+a) What is the expected data lifetime of an RX buffer between one
+    RX IRQ and the next ?
+    I hope the answer to this is - APSS owns the buffer.
+    This is BTW usually the case in these types of asymmetric setups
+    with a flag or some other kind of semaphore that indicates which
+    side of the data-exchange owns the buffer.
+
+b) In this rouge - buggy - firmware case what is the scope of the
+    potential race condition ?
+
+    What I'd really like to know here is why we have to seemingly
+    memcpy() again and again in seemingly incongrous and not
+    immediately obvious places in the code.
+
+    Would we not be better advised to do a memcpy() of the entire
+    RX frame in the RX IRQ handler path if as you appear to me
+    suggesting - the firmware can "race" with the APSS
+    i.e. the data-buffer ownership flag either doesn't work
+    or isn't respected by one side in the data-exchange.
+
+Can we please have a detailed description of the race condition here ?
+
+I don't doubt the new memcpy() makes sense to you but without this 
+detailed understanding of the underlying problem its virtually 
+impossible to debate the appropriate remediation - perhaps this patch 
+you've submitted - or some other solution.
+
+Sorry to dig into my trench here but, way more detail is needed.
+
+> [1]: https://lore.kernel.org/lkml/4cfc1fe1-2fab-4256-9ce2- 
+> b4a0aad1069e@linaro.org/T/#m5f1737b16e68f8b8fc1d75517356b6566d0ec619
+>>
+>> Why is it in this small specific window that the data can change but 
+>> not later ? What is the mechanism the data can change and how do the 
+>> changes you propose here address the data lifetime problem ?
+> Currently this issue has been discovered by external researchers at this 
+> point, but if any such OOB issue is discovered at later point as well 
+> then we shall fix them as well.
+
+Right but, I'm looking for a detailed description of the problem.
+
+Can you describe from RX interrupt again what the expected data lifetime 
+of the RX frame is, which I hope we agree is until the next RX interrupt 
+associated with a given buffer with an ownership flag shared between 
+firmware and APSS - and then under what circumstances that "software 
+contract" is being violated.
+
+> Also, with rougue firmware we cannot fix the data lifetime problem in my 
+> opinion, but atleast we can fix the out of bound issues.
+>>
+>> Without that context, I don't believe it is really possible to 
+>> validate an additional memcpy() here and there in the code as fixing 
+>> anything.
+> There is no additional memcpy() now in the v2 patch, but as part of the 
+> fix, we are just trying to retain the length of the packet which was 
+> being read in the first memcpy() to avoid the OOB read access.
+
+I can't make a suggestion because - personally speaking I still don't 
+quite understand the data-race you are describing.
+
+I get that you say the firmware is breaking the contract but, without 
+more detail on _how_ it breaks that contract I don't think it's really 
+possible to validate your fix here, fixes anything.
+
+---
+bod
 
