@@ -1,205 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-49941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E52FA4B0CE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 10:16:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9737A4B118
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 12:12:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A8E716B887
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 09:16:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6FA023A351D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Mar 2025 11:12:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8F151D54C0;
-	Sun,  2 Mar 2025 09:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6B0A1BC58;
+	Sun,  2 Mar 2025 11:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VqtUrY5n"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aooXR+7V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA631C695;
-	Sun,  2 Mar 2025 09:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F9D1DBB38
+	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Mar 2025 11:12:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740907004; cv=none; b=YJvsWRb6papDzna2BRRUqk9lZf2bGjGRMRMMANWB3EAeRSaLS6B21dQlLPPNlmIS5mpFGdvwELIdzkvhG++TeSU3GbZ3B2qd8BRx3pc695o+y2hR5r3YehnlovaKTP80SJfkwpuLn9SNy9/2jZ7IoJXNz9YpCt/dUfBVWnf8pE8=
+	t=1740913936; cv=none; b=DPBDKcI40UhwmcG6vdXV0SR/ic+iXRT7wYWGO7vpeFb1BMlkjQxb8YxmwiOK7kYQfmEMzJs5zq1wvN5npg0QU99R1rHOUenNskxMwHmV7rLqT9YgkPy0365R9ymGdT/V3Z7QoBgFg7YL8DAlh/avk5fA/5iAzGOfRbwX8LKhrFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740907004; c=relaxed/simple;
-	bh=H44sFfK1LqDLlQt24Q6gB7Vof+guX4WP72Q4KQ0UZj0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ugTtw3YvVCFWRBsNGYRNFEbB1uElRUqOvdNt8dWLFsV155lDt797DlUcgJf2FWQFUrF3ZqvJou4P5YZr2AneigG3k5pqCQrRVaIpa/o4tZ4ztEReRwYM5+ltYuF9vbN412+icKfmcxZbK1jCWCC15SXtX48bSrLdNYkjFUPIuIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VqtUrY5n; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e04064af07so6296559a12.0;
-        Sun, 02 Mar 2025 01:16:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740907001; x=1741511801; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gt4e/Q1bzVAKDz/zUzGYf19qKql6n2SPXCwUMfSa3zM=;
-        b=VqtUrY5nnlS3Aa0vP/29A123vZXDlxGeVwUcqGepPVvQ0po5F6rAhby2K4gBfbfibH
-         uYEMTA05VtesO8Cp2mHTLNBOL+toWjmZK6AWKDLPWRHQSkln66+35ccHnWIQBlz70+3n
-         7IoECgvmrYYWkfTZMqjmTTnhVq+BCJEZeZbeNDiLNgC0EhoQnK5ddIfAG2WI6nhX0GEs
-         PU+hzwhcwfB48S6GQCN4xUPYwIoeP51dmulyUvljsR3EsW34ywhsCcXCb5ICxturaI5p
-         Ur3oleq2EnqA24bfMtGZlJq4PcLB+iaOPJAEmSeBFz0ySv9Hrfhgo/OvruGhAZ7VqnWj
-         k5DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740907001; x=1741511801;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gt4e/Q1bzVAKDz/zUzGYf19qKql6n2SPXCwUMfSa3zM=;
-        b=TSYjuwipiE0xp4T3wNDfNmhA6PIM8O74QzWo5e3pz26VLiexyfiTzHRI7dmvlfX0Pp
-         VSr52wMsnlMCwCQT66TCa1/rOivzwxavrHxS7JtQmkz7Gs9EAIZzS1tcOpk30fx7JJYR
-         LXv4tPrvRxdXlBDr+HrgvtWMk7+MdxeB/krC7wxR12O5CedwXOdrc9oec7AeqXnJvEEa
-         YqKwN9lQPH9+u7fIu1w4dRmzxTUdaeRanQ0xjLlpRsDQOzBOOnvDJWADuXPIadmFO77x
-         CvUcyqC/kWhSX1XhV11afUJXbrXqEPl3L13+6vXgT5aWVMgYosTAnKTCCY7+pLvomlKc
-         p2XQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUC0a/o3NqZpUMeN4awjJalGTvHi/GUOEJ58eNF367PgSmkhSQeJAshV8zCXbsQEQSgwYERRUAeGVAjwmJ9tQ==@vger.kernel.org, AJvYcCUVo9ipuNnuNp7jwfEut/XC8bpymJteYr79IvWyeYgvbRwyoRWIa2PK62b/hT344QxeMaCT3jhikEia@vger.kernel.org, AJvYcCUq3oDlGDGjdjYgJPViYmEwVPYiZYhNvkChWwTOSX24ZA2eOTrVLzwuwWG2vZE7uXZ6aJxuYdq6tfXFdRql@vger.kernel.org, AJvYcCXNWumUJqiVJ3cjvXtw97Ksexd4VTCHb29UbdHMtxClamEQ7IbWyIm14/fPeEGDaM5nesEe5gVn1LGtlnLddmW0m1o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJNScHIaVjV0XMM2/WOtT4rvXgr0Yf5oH/l3KjoNh9Bb4FrZmA
-	WwDjibAf1DM+MgdEEcEx7odYYqWQ8NO7G6OWybKAANiOPADWe2/HluWLqA==
-X-Gm-Gg: ASbGnctZtldh1S7J2dc6p5Kh9AxfN6+9L3CMU7e5lvdkZAqGGS6VkjkyXBii55UgvjX
-	mEpSwO3JsjEfNs543l9FIb95lnIce7Z3l7fbLPLJ83pDBoUwmbGplmEMZxMI65QxM1NsU8A85tc
-	FyhEJQxF4ZS2iX6iUZs29Mhz9Q1/pU0lS+GOFZ6VEm9JuaTmc/3zxwjz9viscnffmxZiXIEkSe7
-	KsQhuIXEfCOMUQs8uHOmeF6mLuF+uqdcF3dRS02scQFKsM5AQHn0EkutzUdSD50U/1MWZzrBvuw
-	Ewmbygx1sxF6otwlKNNiig+q6sU268PDd/3+Xxs91wKbMsw1sUNr4yBv2Xj6TV2AESOQOcm/Cuz
-	8okVaE34F643xhLSzEjlbfNI=
-X-Google-Smtp-Source: AGHT+IEYSDw2sP7Dh+Z2pA1UtfA1dKfkOfTidFVCkHLXhYUdHVMwVkHLto91nPU2C2aCCuTbWanVJQ==
-X-Received: by 2002:a17:907:3f22:b0:abe:c3a8:7aa2 with SMTP id a640c23a62f3a-abf268228c1mr1096068066b.46.1740907000673;
-        Sun, 02 Mar 2025 01:16:40 -0800 (PST)
-Received: from [192.168.1.105] (91-139-201-119.stz.ddns.bulsat.com. [91.139.201.119])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf0c6ee49dsm624648366b.105.2025.03.02.01.16.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Mar 2025 01:16:39 -0800 (PST)
-Message-ID: <4502b578-96e6-49e0-8f3b-54f6e5640c55@gmail.com>
-Date: Sun, 2 Mar 2025 11:16:38 +0200
+	s=arc-20240116; t=1740913936; c=relaxed/simple;
+	bh=r/E6LYdvBIOak/3//3gj1xJnve0xQ99P5eZuiofdHBM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u+oE8lWhdsVR/6Kx2yDb3JyKcyDn2oSdFSgIRk6XIjhwDizZNeZjCW+pFG6Uq4129P+GBz66+bu9Fsb6Jgwbn6U2ymGcbkqK4mLbFWZDEma7Zkybl003ACcpCcCo46BN0+Oy8YW/N4L/xFSXbwV+KpuqiWrHGdgLzdmCoDNaN9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aooXR+7V; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADCDC4AF09
+	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Mar 2025 11:12:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740913936;
+	bh=r/E6LYdvBIOak/3//3gj1xJnve0xQ99P5eZuiofdHBM=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=aooXR+7VXvcH/6f6zYxI/NB0+JCxNoNsNcXKPniLlNfl9QzReuxQUe6U+TObi3bJw
+	 8EKv7Lp2XjlglDw8aYX809DkRNHxb4CjV9mwjiANdoU515uFJdI0OSwmUcyOiq0pYk
+	 i3dkWhuoKm+ifsYcwOhGiidlkzWd4A54Qv/6j2l8rpC9c6SxfPZes52+f4LDdDzbWH
+	 fUkekrEFbjXMt7ou4u0DkmL1EeWCORefX55+pOtCSGZqIVLBH7m3Q1WN2m7AF6yOZg
+	 wXwCh0q8heLNsgpZVPp9rdJXXaZTffYcIqYJqZ0iM8A1A3bHP2XykyGh2Tps4N781K
+	 sSFPYDfJKzdEg==
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-abf4802b242so253017366b.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Mar 2025 03:12:16 -0800 (PST)
+X-Gm-Message-State: AOJu0YwcEb7YOZao+UmyTTNh7e/dN6KFsagl45r0chPrb5VyoZ2yjb2G
+	n+zEYd4s4jpbhTofCW+EG3fPNvr8ly2jeVSOrQhtkc2Wha4LwyUbXFblqehIZ6xh4iYMR9oM1hV
+	ogIfZsMDYJqKSci/OGoyxDZ0mppRAQGboJUwHIg==
+X-Google-Smtp-Source: AGHT+IFd32O0cccPkVHyQRUGAgtLUbYK+uQRte/DydLBmgbHW6tCrbh5UXeoEHiox6cW6eWJEnsnCGH2skEnueF6o6M=
+X-Received: by 2002:a17:906:6a04:b0:ab2:b84b:2dab with SMTP id
+ a640c23a62f3a-abf261cdfa0mr1142238466b.30.1740913934658; Sun, 02 Mar 2025
+ 03:12:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] dt-bindings: phy: add
- samsung,exynos2200-usbcon-phy schema file
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Abel Vesa <abel.vesa@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
- <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
- <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
- <a4f63721-d094-4eda-b68a-6ef62ff54680@gmail.com>
- <c8184542-5dab-4403-bee4-867810397ae4@kernel.org>
-From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-In-Reply-To: <c8184542-5dab-4403-bee4-867810397ae4@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20250228051521.138214-1-george.moussalem@outlook.com> <DS7PR19MB8883434CAA053648E22AA8AC9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
+In-Reply-To: <DS7PR19MB8883434CAA053648E22AA8AC9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
+From: Amit Kucheria <amitk@kernel.org>
+Date: Sun, 2 Mar 2025 16:42:03 +0530
+X-Gmail-Original-Message-ID: <CAHLCerN=jDXtsGCGUMaerh=-oSZf4+ExdnvVHFcXTjjTRvW-ig@mail.gmail.com>
+X-Gm-Features: AQ5f1Joo-9vQhdZihXI6_SZRgjhU3sAL0Uv-PUaO4J3qP3ecnI1uP64WCbn4VBE
+Message-ID: <CAHLCerN=jDXtsGCGUMaerh=-oSZf4+ExdnvVHFcXTjjTRvW-ig@mail.gmail.com>
+Subject: Re: [PATCH v9 3/6] thermal: qcom: tsens: update conditions to
+ strictly evaluate for IP v2+
+To: George Moussalem <george.moussalem@outlook.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, daniel.lezcano@linaro.org, rafael@kernel.org, 
+	thara.gopinath@gmail.com, dmitry.baryshkov@linaro.org, robh@kernel.org, 
+	krzk+dt@kernel.org, quic_srichara@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2/25/25 10:11, Krzysztof Kozlowski wrote:
-> On 24/02/2025 11:48, Ivaylo Ivanov wrote:
->> On 2/24/25 10:56, Krzysztof Kozlowski wrote:
->>> On Sun, Feb 23, 2025 at 02:22:22PM +0200, Ivaylo Ivanov wrote:
->>>> The Exynos2200 SoC has a USB controller PHY, which acts as an
->>>> intermediary between a USB controller (typically DWC3) and other PHYs
->>>> (UTMI, PIPE3). Add a dt-binding schema for it.
->>>>
->>>> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->>>> ---
->>>>  .../phy/samsung,exynos2200-usbcon-phy.yaml    | 76 +++++++++++++++++++
->>>>  1 file changed, 76 insertions(+)
->>>>  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->>> You have undocumented dependencies which prevent merging this file.
->>> First, dependencies have to be clearly expressed.
->> They are, in the cover letter.
-> Where? I read it twice. Dependencies is the most important thing and
-> should scream at beginning of the cover letter, so if you bury them
-> somewhere deep it also would not matter - just like they were missing.
+On Fri, Feb 28, 2025 at 10:46=E2=80=AFAM George Moussalem
+<george.moussalem@outlook.com> wrote:
 >
->>> Second, you should
->>> rather decouple the code from header dependencies, otherwise this cannot
->>> be merged for current release (just use clocks with long names, without IDs).
->> Sure
+> TSENS v2.0+ leverage features not available to prior versions such as
+> updated interrupts init routine, masked interrupts, and watchdog.
+> Currently, the checks in place evaluate whether the IP version is greater
+> than v1 which invalidates when updates to v1 or v1 minor versions are
+> implemented. As such, update the conditional statements to strictly
+> evaluate whether the version is greater than or equal to v2 (inclusive).
 >
->>>> diff --git a/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->>>> new file mode 100644
->>>> index 000000000..7d879ec8b
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->>>> @@ -0,0 +1,76 @@
->>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/phy/samsung,exynos2200-usbcon-phy.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: Exynos2200 USB controller PHY
->>>> +
->>>> +maintainers:
->>>> +  - Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->>>> +
->>>> +description:
->>>> +  Exynos2200 USB controller PHY is an intermediary between a USB controller
->>>> +  (typically DWC3) and other PHYs (UTMI, PIPE3).
->>> Isn't this the same as usbdrd phy? see: samsung,usb3-drd-phy.yaml
->> It's not (I think). There's a few reasons I've decided to make this separate
->> from the usb3-drd-phy bindings and exynos5-usbdrd driver:
->>
->> 1. This PHY does not provide UTMI and PIPE3 on its own. There's no tuning
-> USBDRD phy does not provide UTMI and PIPE on its own either if you look
-> at diagram - they call it phy controller.
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 
-Ughm. What? So in most exynos cases, there's a combination of multiple phys?
+Reviewed-by: Amit Kucheria <amitk@kernel.org>
 
+> ---
+>  drivers/thermal/qcom/tsens.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 >
->> for them, and all that is needed from it is to disable HWACG, assert/
->> deassert reset and force bvalid/vbusvalid. After that SNPS eUSB2
->> initialization can be done and USB2 works. If the USBCON phy is not set
->> up before the eUSB2 one, the device hangs, so there is definitely a
->> dependancy between them. For PIPE3 we'd need to control the pipe3
->> attaching/deattaching and then initialize the synopsys USBDP combophy.
-> Does it mean there is no USB DRD phy controller as before?
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 1f5d4de017d9..43b388bcc7d6 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -447,7 +447,7 @@ static void tsens_set_interrupt(struct tsens_priv *pr=
+iv, u32 hw_id,
+>         dev_dbg(priv->dev, "[%u] %s: %s -> %s\n", hw_id, __func__,
+>                 irq_type ? ((irq_type =3D=3D 1) ? "UP" : "CRITICAL") : "L=
+OW",
+>                 enable ? "en" : "dis");
+> -       if (tsens_version(priv) > VER_1_X)
+> +       if (tsens_version(priv) >=3D VER_2_X)
+>                 tsens_set_interrupt_v2(priv, hw_id, irq_type, enable);
+>         else
+>                 tsens_set_interrupt_v1(priv, hw_id, irq_type, enable);
+> @@ -499,7 +499,7 @@ static int tsens_read_irq_state(struct tsens_priv *pr=
+iv, u32 hw_id,
+>         ret =3D regmap_field_read(priv->rf[LOW_INT_CLEAR_0 + hw_id], &d->=
+low_irq_clear);
+>         if (ret)
+>                 return ret;
+> -       if (tsens_version(priv) > VER_1_X) {
+> +       if (tsens_version(priv) >=3D VER_2_X) {
+>                 ret =3D regmap_field_read(priv->rf[UP_INT_MASK_0 + hw_id]=
+, &d->up_irq_mask);
+>                 if (ret)
+>                         return ret;
+> @@ -543,7 +543,7 @@ static int tsens_read_irq_state(struct tsens_priv *pr=
+iv, u32 hw_id,
 >
-> Anyway the problem is you have DWC3 -> PHY -> PHY. Looks one phy too many.
-
-So...
-
-DWC3 -> USBDRD (USBCON) -> PHYs?
-
-...with usbdrd controller connecting and controlling the USB2 and USB3
-phys, as well as dual role mode? Well, where is the DRD part in the exynos5
-driver?
-
-I guess it does perfectly fit the job of a usbdrd controller then (if it
-even deals with DRD). But then again,  this brings up two questions:
-1. Should this driver even be named exynos2200-usbcon and not, for
-example, exynos2200-usbdrd?
-2. Are the exynos5-usbdrd phys really only USBDRD, or do they implement
-USB speed functionality? What is the UTMI/PIPE3 setup for then?
-
-ps: dealing with this without any documentations sucks.
-
-Best regards,
-Ivaylo
-
+>  static inline u32 masked_irq(u32 hw_id, u32 mask, enum tsens_ver ver)
+>  {
+> -       if (ver > VER_1_X)
+> +       if (ver >=3D VER_2_X)
+>                 return mask & (1 << hw_id);
 >
+>         /* v1, v0.1 don't have a irq mask register */
+> @@ -733,7 +733,7 @@ static int tsens_set_trips(struct thermal_zone_device=
+ *tz, int low, int high)
+>  static int tsens_enable_irq(struct tsens_priv *priv)
+>  {
+>         int ret;
+> -       int val =3D tsens_version(priv) > VER_1_X ? 7 : 1;
+> +       int val =3D tsens_version(priv) >=3D VER_2_X ? 7 : 1;
 >
->> 2. With the way it's modelled, we need to parse phandles from eUSB2 and
->> USBDP to the controller. Adding that to the usbdrd driver would be...
->> weird. It makes more sense to model it as a separate driver, because
->> it functions in a different way.
-> Just to be clear: we don't talk about drivers here.
+>         ret =3D regmap_field_write(priv->rf[INT_EN], val);
+>         if (ret < 0)
+> @@ -1040,7 +1040,7 @@ int __init init_common(struct tsens_priv *priv)
+>                 }
+>         }
 >
+> -       if (tsens_version(priv) > VER_1_X &&  ver_minor > 2) {
+> +       if (tsens_version(priv) >=3D VER_2_X &&  ver_minor > 2) {
+>                 /* Watchdog is present only on v2.3+ */
+>                 priv->feat->has_watchdog =3D 1;
+>                 for (i =3D WDOG_BARK_STATUS; i <=3D CC_MON_MASK; i++) {
+> --
+> 2.48.1
 >
-> Best regards,
-> Krzysztof
-
 
