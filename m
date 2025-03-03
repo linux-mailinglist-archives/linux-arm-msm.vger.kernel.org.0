@@ -1,181 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-50010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A871CA4C414
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 16:01:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC1EBA4C41A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 16:02:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D383188FC3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 15:01:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA9A11896882
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 15:01:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50F72214201;
-	Mon,  3 Mar 2025 15:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC26F156F5E;
+	Mon,  3 Mar 2025 15:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KPU0XJGi"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jW59Z29H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B121213E6F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Mar 2025 15:00:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B3D15689A;
+	Mon,  3 Mar 2025 15:01:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741014028; cv=none; b=Tz0Ctbui1wai7od5iivFLwGoNtV7jJ70CtiJpa9zF6s2cjOoCZCOA3hmfyu8wl/0Yg+vH5k0I43HDgqs0cp9za/gfA1eNO5wqsTAswVbX4i/GKZV81I6JsdMsMH9W+iMVleTWXTXbfJzfyjIuekQSKj1b7DhE6xWVbsLGhsJ0IA=
+	t=1741014083; cv=none; b=M1Xhq7gyDF5bzpAsN3i+fGfFnApnAZ+5ig+YIHG5Fg+XbszxBk1Ap6jT5p1qiYE9aiZcgm/tElEhU0VuSd+BCUTDFuVBVUel7ZNM59cdw8iQRALKpAtM7PHov08cQ9MYz4lqnGgMJdIGQY1xFTryADMGaLYn2ZZjiLAtRdZxYvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741014028; c=relaxed/simple;
-	bh=YYeGUb3k93KBXD4drA2C9f+vdF4GK7YW6npk41CFHg4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=b38VZYBRckDT9ItfaxEWwVOyaAP3VQQvIxs/zo980u+gKlv+HGyphwoWMoRzfZAoYuMYFG6Z+FVczDJrd5HVEztgJAULiOZbtI7J9ZtznTxZQapfyi1ve/sPWaE537/Ef1qspVWu1sZi2tBq10VnAF0j1ERfIfCONfIi1RFZc3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KPU0XJGi; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-439946a49e1so29235015e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Mar 2025 07:00:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741014023; x=1741618823; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CS8fOkB/2o1tqv0C/vSIKz5akXsPp61Y6yRvRf4d3qg=;
-        b=KPU0XJGivr7YJE0a0FTD3hXgPa/k7z74xhQRAZrI1qq8tRNDpSh/tu8C+YdJG7ix+l
-         L5j82wMWek5f0Sjc0Tzv6CVETw5eqJXDHtnnAcu+edqeBdfuGV7Bbf0iCD5EbRBmGJkq
-         ed5TdmXm5BfXYoE897X3Pi3OCx0lQ9M/UmI3vE1VevdVvEPRp2Paeyl/52kkWMM7dpMc
-         yRgBQxFCahd7+8bJT89J0DNr2NY4J+0zUvxYs7pMZa0mYLkNf4Bmj9wDUmd37h0Cl4Hf
-         vq3w8DDOvnVfEh7l4BOU8dRIKTdgsmGJls+XDi7R2q7JKWjRf4cR1+Qt8IAxMP9h6i5I
-         CWXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741014023; x=1741618823;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CS8fOkB/2o1tqv0C/vSIKz5akXsPp61Y6yRvRf4d3qg=;
-        b=vzcNOtggKu741w9XgghVlGs140LN67gq5YtxPl7a2Zf6xoo1Cw9k8U937tpyfm6QBK
-         jFkU5b2I3dunOBbFIbzsY7GeMNYWXChEYKyecEh1EiBPxIVsBnJzIostp0C0jO1pailu
-         O/ohrfT7r/At96BS36sEjC9BGgSytPCosgNnfVaYIoPuxOr2r6rmxXpONnnZ8Vchjdxa
-         uakxWmbb/pVh6r7tiig+TX3wOMWmqKhGqHPV5px4xC8C/fHzwA0iScMMAZqUYK+NKZTa
-         1Y8z7TeFRVGXjHRu6CFXvRkO9VZ45C+kuLhfrFFTXCDiA3Lf+nbCRQ7/6/Sny6TpHtkI
-         Oypw==
-X-Forwarded-Encrypted: i=1; AJvYcCUMzkn/tPONuCHTXMhEGuxihyAXbnt1RNtI3npu4yKkPv5h2s40BnLnHWyDKIwT9ati6U1mE6ZC1/oxF8WG@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/HhMI3xsaVKKjazLiKK85A7TX70izQy0CS7kWPOctl5C7h1KX
-	SL08KdxPff01s/mP2OfxUsHxeIa8weSHS85BZ7UvGqtosI2ztQ7ghA/Lyp5T54Q=
-X-Gm-Gg: ASbGncvUadSCgQ3wvm3DtaSWlps5U9A000qJDKJ1xsegwI2W1PjxJyCYjhTgt8NpAZe
-	BwA2nV5/MrqRTPLB2VTd4eHqO/4mRa31rgl1vFKVCsYN4XfhWXnkibmtuLqA/WkTlDzRxNirZ/x
-	LRsMKlRpGv9y8vbHm/bbVt39y6qD5CA2VNycZbhDqLeq/YWvYaJ0xvEYHWfqFrU5CVdi72zW+ua
-	EbgwhqggJbwOw/TFJTxTGWXaCWSugJws+L4QT46R2TBrp6mM+zOzv8C0JfRgR9NyP8cL+BILXan
-	CSYxN0t9iPMOCa6CEAG8nPvK18a3Tv4HEJdQ/c8wrq099wFCldEDJ5t3YhtsX8qCJw==
-X-Google-Smtp-Source: AGHT+IGzxcAosUY7UZOkZGBKGsfyOleMjoBQWswmFK4WzjmdOJ8Zb7pyuQRUwLOTwEQbHnLoZZ+osw==
-X-Received: by 2002:a05:6000:1a8f:b0:390:ef12:2ee4 with SMTP id ffacd0b85a97d-390ef122f8emr11173836f8f.25.1741014023167;
-        Mon, 03 Mar 2025 07:00:23 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e485e03asm14985727f8f.95.2025.03.03.07.00.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Mar 2025 07:00:22 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Mon, 03 Mar 2025 16:00:20 +0100
-Subject: [PATCH net] wifi: ath12k: properly set single_chip_mlo_supp to
- true in ath12k_core_alloc()
+	s=arc-20240116; t=1741014083; c=relaxed/simple;
+	bh=mnjeVl2mN4jHuBcMO5JFqG50fhPaMs1NaBTfoT42oUY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=sYKpwt8KAlRl2cLPi40sEUk3Qv4+ekHXMBlrJNiPXVAbzwunlS1W31CME6ixk5t1ob3OB9fLXkF0VRcMnlH207XC3d2x/IChq0/gcCHPQOjvg1whTtpuhypPHV/9osDDepGSw8luMgI1SOtFrLeCtEa7O5mNFb4+EYNRsB4yhTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jW59Z29H; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523AxZ9U000604;
+	Mon, 3 Mar 2025 15:01:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	OISDrqdIVcBCSCzx/5dL+42792OcKY+XGwEX8jSBKL4=; b=jW59Z29HLk5R1nyz
+	XNIQtCMTNboVB/v8KtuNwMWIMDygPqy7gjyQY/y9B2zHNNFoo1Xlk5DdYzozni2v
+	AeAsUEz06vrM3czJag2B8LCMZhk8kPZ/grAZRsImtz3OprZI5aSbio11InTWq9/1
+	0FHmJLwWGz2Z9dRxjal5AGZQ1cLLEY2uOYRa8J6nDR9E7Tqq/XP3SlPfYhZ+g+pW
+	XvYjTNeBNznhPfOE+KW7OOHh2fo4glsxYJlEmosf9uwbgWumOA/2xTlXj9A8Awko
+	pADDM7u7NnhX2hh+KtoC9nJBQbOYSdwfAngvtHy3QQH9z2/nkz+jU1NkJB6GeheU
+	b+iJWA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453t88w96r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Mar 2025 15:01:12 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 523F1BPQ025287
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Mar 2025 15:01:12 GMT
+Received: from [10.216.10.45] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Mar 2025
+ 07:01:09 -0800
+Message-ID: <e64ff5f0-8dc5-fec6-ae9b-98076016365f@quicinc.com>
+Date: Mon, 3 Mar 2025 20:31:06 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250303-topic-ath12k-fix-crash-v1-1-f871d4e4d968@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAAPExWcC/x2MWwqAIBAArxL73YKPDOwq0YfYlkugoRJBdPekz
- 2GYeaBQZiowdQ9kurhwig1k34EPLu6EvDYGJZQRWmis6WSPrgapDtz4Rp9dCThYssIYP0onocV
- npib/8QyRKizv+wEmJKefbQAAAA==
-X-Change-ID: 20250303-topic-ath12k-fix-crash-49e9055c61a1
-To: Johannes Berg <johannes@sipsolutions.net>, 
- Jeff Johnson <jjohnson@kernel.org>, 
- Aditya Kumar Singh <quic_adisi@quicinc.com>, Kalle Valo <kvalo@kernel.org>
-Cc: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
- linux-wireless@vger.kernel.org, ath12k@lists.infradead.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3032;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=YYeGUb3k93KBXD4drA2C9f+vdF4GK7YW6npk41CFHg4=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnxcQGiac9YMG/uxNSPYupMemIH+BO2QczD7l4HE93
- pmHw18GJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ8XEBgAKCRB33NvayMhJ0Z8gD/
- oCcwjPhgqu+IULIv7xd9PpGqkN/jqJgGafyQmUriQbfj7JnoGNj2DO86DHIKhjb/1vi0+6LC0imcBd
- /EtuQk9MZWgAfqYQYEOCbPVk9UtJnpG5C6osAjU6j73F90p5bF0MZkvU3asA8H6Gps5tNXqpwumVGG
- OV4cXFWX/20HZ4w/T+WZLWh5dJsJ7YFvrigU0x10VtEoz5eIGkS7rcznvKdOARlksoxr/WMQNI9CLc
- gDNltzB1STfhE5y0EnBbfhEs58cHcK1QOrx2IUits+JgXmmRiDmgtplYoMzxz78lDyrMZOpl2aFpfZ
- 0TxpPa270xeoyFBppIdyJcoxw9H/T3SuvoPrZbIO2o1XUBmVhUjzapQTiNzHfgkkuc3TKDr3f9vkNq
- wzQIEhMh9+Avtsx7dH/9Ml5zPFRHYJmFe8dZo4XlgNyWvZlO+QbqRyT3yIj+Z9tGONDZX6HpuWNivJ
- +ndvDl/MFsLEcxsyqs4m3eVpyIt3yoNn2mDUNm7qRn2JGuJmqlymvihHGZB4MJ330YYmY/3cgXy/Te
- Z6U4C27bdtZRgyAZvtoKZnvs0rb4fDXK39kq8b2M4YWry/N4+aHTo8UoO/o5+e6rDQVzJfqAeA4iW3
- bDivOa6LJ3bzuntyU+fEf+bDWUWLU+1v+K+lxjQ+mTzfq6uavdLN5BB9r6tQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v2 0/2] venus driver fixes to avoid possible OOB read
+ access
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vedang Nagar
+	<quic_vnagar@quicinc.com>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250215-venus-security-fixes-v2-0-cfc7e4b87168@quicinc.com>
+ <c3b27e55-f627-417c-bb62-3189f248fb99@linaro.org>
+ <7bf1aeaa-e1bd-412b-90fc-eda30b5f5b37@quicinc.com>
+ <19109672-2856-457f-b1f6-305abc6c4434@linaro.org>
+ <ba1e7a20-2f68-15e0-bc4a-fe52bc4036cc@quicinc.com>
+ <2ac68f21-cea8-400c-8a61-3638e545bac8@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <2ac68f21-cea8-400c-8a61-3638e545bac8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: hmy3jk05t9wLn4qdxbkL5l5BlKPGvinL
+X-Proofpoint-GUID: hmy3jk05t9wLn4qdxbkL5l5BlKPGvinL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-03_07,2025-03-03_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ impostorscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 mlxlogscore=999 mlxscore=0 clxscore=1015 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503030115
 
-In commit 46d16f7e1d14 ("wifi: ath12k: rename mlo_capable_flags to single_chip_mlo_supp")
-the line:
-	ab->mlo_capable_flags = ATH12K_INTRA_DEVICE_MLO_SUPPORT;
-was incorrectly updated to:
-	ab->single_chip_mlo_supp = false;
-leading to always disabling INTRA_DEVICE_MLO even if the device supports it.
 
-The firmware "WLAN.HMT.1.1.c5-00156-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1"
-crashes on driver initialization with:
- ath12k_pci 0000:01:00.0: chip_id 0x2 chip_family 0x4 board_id 0x3d soc_id 0x40170200
- ath12k_pci 0000:01:00.0: fw_version 0x110f009c fw_build_timestamp 2024-05-30 11:35 fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HMT.1.1.c5-00156-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
- ath12k_pci 0000:01:00.0: ignore reset dev flags 0x200
- ath12k_pci 0000:01:00.0: failed to receive wmi unified ready event: -110
- ath12k_pci 0000:01:00.0: failed to start core: -110
- failed to send QMI message
- ath12k_pci 0000:01:00.0: qmi failed to send mode request, mode: 4, err = -5
- ath12k_pci 0000:01:00.0: qmi failed to send wlan mode off
-
-With ab->single_chip_mlo_supp set to True, firmware loads nominally.
-
-Fixes: 46d16f7e1d14 ("wifi: ath12k: rename mlo_capable_flags to single_chip_mlo_supp")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
-Bisect log for reference:
-The bisect leaded to:
-git bisect start 'v6.14-rc4' 'v6.12'
-git bisect good 5757b31666277e2b177b406e48878dc48d587a46
-git bisect bad d78794d4f4dbeac0a39e15d2fbc8e917741b5b7c
-git bisect bad cf33d96f50903214226b379b3f10d1f262dae018
-git bisect good 12e070eb6964b341b41677fd260af5a305316a1f
-git bisect bad 6917d207b469ee81e6dc7f8ccca29c234a16916d
-git bisect good 4fefbc66dfb356145633e571475be2459d73ce16
-git bisect bad a6ac667467b642c94928c24ac2eb40d20110983c
-git bisect bad b05d30c2b6df7e2172b18bf1baee9b202f9c6b53
-git bisect good 56dcbf0b520796e26b2bbe5686bdd305ad924954
-git bisect bad d302ac65ac938516487f57ae20f11e9cf6327606
-git bisect good 8c2143702d0719a0357600bca0236900781ffc78
-git bisect good a5686ae820fa7ab03226a3b0ff529720b7bac599
-git bisect bad 6f245ea0ec6c29b90c8fa4fdf6e178c646125d7e
-git bisect bad 46d16f7e1d1413ad7ff99c1334d8874623717745
----
- drivers/net/wireless/ath/ath12k/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index 0606116d6b9c491b6ede401b2e1aedfb619339a8..33aba5fceec946fad5a47a11a4d86b7be96e682e 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -1927,7 +1927,7 @@ struct ath12k_base *ath12k_core_alloc(struct device *dev, size_t priv_size,
- 	ab->dev = dev;
- 	ab->hif.bus = bus;
- 	ab->qmi.num_radios = U8_MAX;
--	ab->single_chip_mlo_supp = false;
-+	ab->single_chip_mlo_supp = true;
- 
- 	/* Device index used to identify the devices in a group.
- 	 *
-
----
-base-commit: 7eb172143d5508b4da468ed59ee857c6e5e01da6
-change-id: 20250303-topic-ath12k-fix-crash-49e9055c61a1
-
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+On 3/3/2025 8:26 PM, Bryan O'Donoghue wrote:
+> On 03/03/2025 13:12, Vikash Garodia wrote:
+>>
+>> On 3/2/2025 9:26 PM, Bryan O'Donoghue wrote:
+>>> On 02/03/2025 11:58, Vedang Nagar wrote:
+>>>>>
+>>>>> The basic question : what is the lifetime of the data from RX interrupt to
+>>>>> consumption by another system agent, DSP, userspace, whatever ?
+>>>> As mentioned in [1], With the regular firmware, after RX interrupt the data
+>>>> can be considered as valid until next interrupt is raised, but with the rouge
+>>>> firmware, data can get invalid during the second read and our intention is to
+>>>> avoid out of bound access read because of such issues.
+>>>
+>>> This is definitely the part I don't compute.
+>>>
+>>> 1. RX interrupt
+>>> 2. Frame#0 Some amount of time data is always valid
+>> This is not correct. Its not the amount of time which determines the validity of
+>> the data, its the possibility of rogue firmware which, if incase, puts up the
+>> date in shared queue, would always be invalid, irrespective of time.
+>>
+>>> 3. RX interrupt - new data
+>>> 4. Frame#1 new data delivered into a buffer
+>>>
+>>> Are you describing a case between RX interrupts 1-3 or a case after 1-4?
+>>>
+>>> Why do we need to write code for rouge firmware anyway ?
+>> It is a way to prevent any possibility of OOB, similar to how any API does check
+>> for validity of any arguments passed to it, prior to processing.
+>>>
+>>> And the real question - if the data can be invalidated in the 1-3 window above
+>>> when is the safe time to snapshot that data ?
+>>>
+>>> We seem to have alot of submissions to deal with 'rouge' firmware without I
+>>> think properly describing the problem of the _expected_ data lifetime.
+>>>
+>>> So
+>>>
+>>> a) What is the expected data lifetime of an RX buffer between one
+>>>     RX IRQ and the next ?
+>>>     I hope the answer to this is - APSS owns the buffer.
+>>>     This is BTW usually the case in these types of asymmetric setups
+>>>     with a flag or some other kind of semaphore that indicates which
+>>>     side of the data-exchange owns the buffer.
+>>>
+>>> b) In this rouge - buggy - firmware case what is the scope of the
+>>>     potential race condition ?
+>>>
+>>>     What I'd really like to know here is why we have to seemingly
+>>>     memcpy() again and again in seemingly incongrous and not
+>>>     immediately obvious places in the code.
+>>>
+>>>     Would we not be better advised to do a memcpy() of the entire
+>>>     RX frame in the RX IRQ handler path if as you appear to me
+>>>     suggesting - the firmware can "race" with the APSS
+>>>     i.e. the data-buffer ownership flag either doesn't work
+>>>     or isn't respected by one side in the data-exchange.
+>>>
+>>> Can we please have a detailed description of the race condition here ?
+>> Below is the report which the reporter reported leading to OOB, let me know if
+>> you are unable to deduce the trail leading to OOB here.
+>>
+>> OOB read issue is in function event_seq_changed, please reference below code
+>> snippet:
+>>
+>> Buggy code snippet:
+>>
+>> static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
+>>          struct hfi_msg_event_notify_pkt *pkt)
+>> ...
+>> num_properties_changed = pkt->event_data2; //num_properties_changed is from
+>> message and is not validated.
+>> ...
+>> data_ptr = (u8 *)&pkt->ext_event_data[0];
+>> do {
+>>   ptype = *((u32 *)data_ptr);
+>>   switch (ptype) {
+>>   case HFI_PROPERTY_PARAM_FRAME_SIZE:
+>>    data_ptr += sizeof(u32);
+>>    frame_sz = (struct hfi_framesize *)data_ptr;
+>>    event.width = frame_sz->width;
+>> ...
+>>   }
+>>   num_properties_changed--;
+>> } while (num_properties_changed > 0);
+>> ```
+>> There is no validation against `num_properties_changed = pkt->event_data2`, so
+>> OOB read occurs.
+>>>
+>>> I don't doubt the new memcpy() makes sense to you but without this detailed
+>>> understanding of the underlying problem its virtually impossible to debate the
+>>> appropriate remediation - perhaps this patch you've submitted - or some other
+>>> solution.
+>>>
+>>> Sorry to dig into my trench here but, way more detail is needed.
+>>>
+>>>> [1]: https://lore.kernel.org/lkml/4cfc1fe1-2fab-4256-9ce2-
+>>>> b4a0aad1069e@linaro.org/T/#m5f1737b16e68f8b8fc1d75517356b6566d0ec619
+>>>>>
+>>>>> Why is it in this small specific window that the data can change but not
+>>>>> later ? What is the mechanism the data can change and how do the changes you
+>>>>> propose here address the data lifetime problem ?
+>>>> Currently this issue has been discovered by external researchers at this
+>>>> point, but if any such OOB issue is discovered at later point as well then we
+>>>> shall fix them as well.
+>>>
+>>> Right but, I'm looking for a detailed description of the problem.
+>>>
+>>> Can you describe from RX interrupt again what the expected data lifetime of the
+>>> RX frame is, which I hope we agree is until the next RX interrupt associated
+>>> with a given buffer with an ownership flag shared between firmware and APSS -
+>>> and then under what circumstances that "software contract" is being violated.
+>>>
+>>>> Also, with rougue firmware we cannot fix the data lifetime problem in my
+>>>> opinion, but atleast we can fix the out of bound issues.
+>>>>>
+>>>>> Without that context, I don't believe it is really possible to validate an
+>>>>> additional memcpy() here and there in the code as fixing anything.
+>>>> There is no additional memcpy() now in the v2 patch, but as part of the fix,
+>>>> we are just trying to retain the length of the packet which was being read in
+>>>> the first memcpy() to avoid the OOB read access.
+>>>
+>>> I can't make a suggestion because - personally speaking I still don't quite
+>>> understand the data-race you are describing.
+>> Go through the reports from the reporter, it was quite evident in leading upto
+>> OOB case.
+>> Putting up the sequence for you to go over the interrupt handling and message
+>> queue parsing of the packets from firmware
+>> 1.
+>> https://elixir.bootlin.com/linux/v6.14-rc4/source/drivers/media/platform/qcom/venus/hfi_venus.c#L1082
+>> 2.
+>> https://elixir.bootlin.com/linux/v6.14-rc4/source/drivers/media/platform/qcom/venus/hfi_msgs.c#L816
+>> 3. event handling (this particular case)
+>> https://elixir.bootlin.com/linux/v6.14-rc4/source/drivers/media/platform/qcom/venus/hfi_msgs.c#L658
+>> 4.
+>> https://elixir.bootlin.com/linux/v6.14-rc4/source/drivers/media/platform/qcom/venus/hfi_msgs.c#L22
+>>
+>> the "struct hfi_msg_event_notify_pkt *pkt" pkt here is having the data read from
+>> shared queue.
+>>
+>>>
+>>> I get that you say the firmware is breaking the contract but, without more
+>>> detail on _how_ it breaks that contract I don't think it's really possible to
+>>> validate your fix here, fixes anything.
+>>>
+>>> ---
+>>> bod
+>>
+>> Regards,
+>> Vikash
+> 
+> I'll go through all of these links given here, thanks.
+I would request you to go through the description putup by the reporter of this
+OOB as well, i added in my earlier response. It provided a good background of
+how the firmware response can led to this particular OOB, atleast that was the
+source of OOB info for us.
+Regards,
+Vikash
+> 
+> Whatever the result of the review, this detail needs to go into the commit log
+> so that a reviewer can reasonably read the problem description and evaluate
+> against submitted code as a fix.
+> 
+> ---
+> bod
 
