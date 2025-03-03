@@ -1,133 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-49971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43EA4A4B8ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 09:15:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29F41A4B8F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 09:16:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B5D0188C9EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 08:15:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AEA233A3816
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 08:16:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78A711EDA33;
-	Mon,  3 Mar 2025 08:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93BCF1EEA37;
+	Mon,  3 Mar 2025 08:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="sa3oqQFX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Bmzhnwcs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E100C1C8FB5;
-	Mon,  3 Mar 2025 08:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50501E9B3D;
+	Mon,  3 Mar 2025 08:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740989731; cv=none; b=g0N88FdjwsOv25CeBv5/JTni/RZ87c4jWouG8HzC/Pk30UCS4XDwxqR6w/bhghHbp1Zj+rrVeDVwU8niqDURce3Po9K6a2ZvpiaQiogoB9wxoFu5oqYkjQEX1AwoCQ7czWvKNlpoWUSvGiU3O61io9mZXo+grUHyWT533OyWvao=
+	t=1740989781; cv=none; b=hM+OiZP5fgD2CDapf7wNk6dMyWJ6XU/i4nYzsonIu0MrNbBe/omcA58DXQtbkSX55rMRGud4YABFettvE9fc0nGwSOUCAosfT8Rla1cSlf4Yo9IG+tZ4DZZA1zqMzvmy3lzu8SSg7h0s8dfT5kjwWwhQ4RaSZ9nHme62lxO4k14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740989731; c=relaxed/simple;
-	bh=C+FdRvhtkVZnGaaa2bGtGDngNfD2yjN7+GvSLwFeCRQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JZURCTaxC6Rz7LQ7rhDA2O9nlD0PuarAxRUd+JavykjutzYoqtareHoVn5iCmXdf0m6NyBeOhR7DO/AA1ZqpdCA7XpROqtjgOVkUyMxcO5/3SiFBikP5Wyg0WG3X+okpCn9kWFYrmAQiUZVLUcaIoEBuI8pCGxoDlErhBupkCRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=sa3oqQFX; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1740989726; x=1741594526; i=markus.elfring@web.de;
-	bh=C+FdRvhtkVZnGaaa2bGtGDngNfD2yjN7+GvSLwFeCRQ=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=sa3oqQFX1K2fQENnZAtmV2Ls/aPlRJf7KVvq08Kbwdu8bhEu9tt2+Vdm8x2FeHov
-	 a5xtfQ+T1eBzrnW6sLurLTKrV+wbphXYHxzBLePh3vSS3+1Fo17+k7melT+wTeoDe
-	 dHwq+iLPhgRsRCmA0oj6wwVYTL2J/lIq9TpjdinHNI8C593aSG1Oeyxdh+XSagV6x
-	 V9okUZEw5t9MkcxIzsQz/+wyuBXYJGuRyT+CMfuQ/gjKIiDwSMVGmV1ARN+gldLvB
-	 CdIZt+PToF26Byj3YVlZ4+xbUBgubl1BGOC3GgNHW861FSln4UPnDsW4PyFrOZERU
-	 IMs4eCavpmBGVLLR6w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([94.31.93.19]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M9ISh-1tsbSD388V-0019Kz; Mon, 03
- Mar 2025 09:15:26 +0100
-Message-ID: <12050afd-ab60-4bac-bd25-0c3cc925b38b@web.de>
-Date: Mon, 3 Mar 2025 09:15:14 +0100
+	s=arc-20240116; t=1740989781; c=relaxed/simple;
+	bh=snJo+3NGpRyC94Rcz8FErDyfwR5EriJ5LEungpm3iZU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bTLhZ3wfqDWDV0sO2m+GAM58nllzJl7QJZ8U181gly9VCzealFt4puU5c8Z/ZdfViOJoaMMrmB7MfK8lG6XyO2tergQIkft/6mi7XpRpRQhLjqpKvLBLiQATJr1FR3+qdK7IM0WRfOJROJb9fVhwcDrumzsYSz2EUQ8LgUO4vD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Bmzhnwcs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52300fWI001154;
+	Mon, 3 Mar 2025 08:16:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	OIFJa4WhZpyK9Ffdk2fp+kxCySGaf8wagwDQVCjDp3Y=; b=BmzhnwcsHUd5LGbJ
+	u/aEWeFgVmSLH1J472ZPnCRFbetpwnK0XrJR/nUlphkGJp4zYKS1Qegys8sUcuC4
+	5iwR4i+H48/aGLz/xTw1lQpL8ANJ+BhrwGtq6iWuCWZDf2F+Lnc2RR53wKVfedSu
+	FRi7DnWXiw6dZHl5/qlMc9wgE/W2hL9JpWQWzThd2iuOxPFOgTdaNfC7smklIfES
+	pSYELCfWx41PsBB3Ym254gWnRAhQcbduL7s3KOh7j6Cgt82MDuiOjiN4M0u6+LyT
+	azEya/2CIlMnjC5blIle49yvyK980Yq096mgqaq6HDg3yQ8p1p1dV12OODxt+2Bs
+	pBp68g==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453tasc7ca-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Mar 2025 08:16:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5238GAkb008570
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Mar 2025 08:16:10 GMT
+Received: from [10.50.28.15] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Mar 2025
+ 00:16:07 -0800
+Message-ID: <18aa7433-4eac-f632-0787-c56fcb363fd5@quicinc.com>
+Date: Mon, 3 Mar 2025 13:45:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND] drm/msm/dpu: Delete a variable initialisation before a
- null pointer check in two functions
-To: Dan Carpenter <dan.carpenter@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org
-Cc: kernel-janitors@vger.kernel.org, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Archit Taneja <architt@codeaurora.org>,
- Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
- Jeykumar Sankaran <jsanka@codeaurora.org>,
- Jordan Crouse <jordan@cosmicpenguin.net>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Simona Vetter <simona@ffwll.ch>, Vinod Koul <vkoul@kernel.org>,
- cocci@inria.fr, LKML <linux-kernel@vger.kernel.org>
-References: <40c60719-4bfe-b1a4-ead7-724b84637f55@web.de>
- <1a11455f-ab57-dce0-1677-6beb8492a257@web.de>
- <13566308-9a80-e4aa-f64e-978c02b1406d@web.de>
- <54c30a69-71cf-4582-9086-50eb0d39f273@web.de>
- <k7un3bjavyt4ogscgc7jn7thfobegaguqqiy7gtypmq6vq7zox@l4bsevbsjrud>
- <29b32b0d-312d-4848-9e26-9e5e76e527a7@stanley.mountain>
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <29b32b0d-312d-4848-9e26-9e5e76e527a7@stanley.mountain>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:l61V0/AxxnfLP2CwSsghwK08nUFAsuRp8A9xZrnTeiVv24ZQ/3i
- G3RqnUSDyuxhHQZurimb7PiKwXU+E3AYQdbSIZXeIB08KV04ZaIwwV6knwRGWgTrx/XbTMg
- CBbyohY7P+EBXFxvTLfoNgfYBAMIogVtGwuVEb013+xJ6c0saMHuLXFWDU4EPclYOhKB/Ey
- tGrwZLuNRsk+/ZLmwQalw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:+dEdQWoQ7kU=;IasLY5SUCezkQ/oK2dlxCFJnD1K
- EJ01spAXIy6+nudFKoE9Ket7tA810fP2bclD61wzlHRGOv4tQIHAjxmFEE2d8kFXsN+a/mPkG
- FEVtu9wjQZHMXgKSMoC5BPZoDpkzD/U1ZXB1CUWPUuDB0pv7RJq5r/R6B12AP1OMXzCfTU9JD
- HQKL7MyACkb/xotarJowiXBcVEu/6aHj1Zp36NpLfQeCQEVhsprW05XRB6zJS5J5Glc6AS3Ie
- uc4MkOzsy8XU3/HU4AS+inJMduJnuSWrdSxzFrNSMYND/jnPk5zOirakBHoh1yny/3+M6oDeY
- 9Atayo8H9W9OCjxR6DcXcnhUTdAlzZrMlUm9pZKpxtatC3AgFgv1XDDOKcf4yaidQ9xLSr/rn
- +GqCxAvIKhT+dR3vCubnYfZPN8xmkJxyPgqRYueCCKSBxhqvTzfYv7IKEMxImJWM5wpQvo5fz
- mgt/io8nxznlCpVV1uZl7qtzsUkOrletjiSuj0aOdQp87vlnvem0wTUWyqLiITCi6Y2NFcZgY
- +OASaJoFYY3kXCTYlhJWCHe6qXguImSMFZ4YobohpinTpKWiZbTw2cZikfKH6z1fCdTrMd/xA
- 2jj47hfyTHRDcT1ViLdRrZrNumqNOBggSDj/wCDaLFVXlGV/vZIqRvo5SfOZqDiWj2KMmQnJL
- bwM0Wis7oqvKHx4WWYMpArgPX9Yv4aNySc+wg4M689OM3e+3vDQBUG+N9LF1C3MC7LGGyoG5f
- N7xOGsxwTbTlwpJiRk3BjZjdOFgdZgLfzg6gkZQSG6ABrJrKTP6l/K0Po2QG61tOmeRXILOoy
- 5r1UjE9ozIkmxKQhxRgrZn44y1hHW6/Sx+wb0hm402OQx/ZQ6aA6dlhiYdGICGYHGpcTlmExg
- 9K8IAbsr4QQpm7X1hHLtmrxfU7NoUzLGnU5twl0X2YskzuQlhbprv4pq3PliEkqOKgWHKnYaI
- uxDhPlHk3d0UbaV9ognngBO09PQe20k8Cv0i9JB9PkWhY7LySQe01zHatFls93m4uTyZDBkx7
- ButtyGSLIyuqZrDn32SlKwjM/H3LhvbD/nAVfC0nDv5QxMgrPd9jQXhi2vAmsm7j/5rveS5ut
- 4zIqLIODlafpEp/zwlGAqFZBpXsHIDgfS+HgKLLI3wzft0e46RCZ07BYVVN8aJSC54MVKdORR
- 5DOOgieAt6BNAtTj8hAXKQas//8niv2v7DbX2AFyatHBiySgO2uhFDUnOrXGlgvVoQPMgOdFm
- xNgbzehk63lnxFNhe3Y2yOuKjXmbhUFzrz4Ojv0zdX7bZdZXJwJM+SklDknLXtWtfkHvT57jt
- Qs2Q0HSAVP2jzgt785f8S4Woib/Cznidc0aV/A9Zb9zQJ0H8XYRoAUMO83x4+9gEFPgIXeDOP
- ZbqiAAcogIiZv76m3m2cgXepNh/SPn4ffLOmgAUFkyH/UmqOi7sgcs3Zv1buxi1Si7rTdgDOH
- +r3VzdjatZdYYDqtQCigjk2oylo8=
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] venus: vdec: queue dpb buffers to firmware for video seek
+To: Renjiang Han <quic_renjiang@quicinc.com>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250227-fix-seek-bug-v1-1-497ee6406477@quicinc.com>
+Content-Language: en-US
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <20250227-fix-seek-bug-v1-1-497ee6406477@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: OtwKdNZylEqQXlZ4evboooJAPMv5ysDg
+X-Proofpoint-ORIG-GUID: OtwKdNZylEqQXlZ4evboooJAPMv5ysDg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-03_03,2025-03-03_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 spamscore=0 phishscore=0 mlxscore=0 priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503030061
 
->>> The address of a data structure member was determined before
->>> a corresponding null pointer check in the implementation of
->>> the functions =E2=80=9Cdpu_hw_pp_enable_te=E2=80=9D and =E2=80=9Cdpu_h=
-w_pp_get_vsync_info=E2=80=9D.
->>>
->>> Thus avoid the risk for undefined behaviour by removing extra
->>> initialisations for the variable =E2=80=9Cc=E2=80=9D (also because it =
-was already
->>> reassigned with the same value behind this pointer check).
->
-> There is no undefined behavior here.
-Will any software development concerns evolve further also according to
-undesirable null pointer dereferences?
-https://wiki.sei.cmu.edu/confluence/display/c/EXP34-C.+Do+not+dereference+=
-null+pointers
 
-Regards,
-Markus
+
+On 2/27/2025 8:13 AM, Renjiang Han wrote:
+> For the seek case, the input port will be called stream_off and then
+> stream_on in the driver. Firmware will flush all buffers during stream_off
+> input port. Therefore, driver needs to queue DPB buffers to firmware
+> during stream_on input port to ensure that decoder can decode normally
+> when it receives enough input and output buffers. Otherwise, decoder
+> will not be able to decode due to lack of DPB buffer even if there are
+> enough input and output buffers.
+> 
+> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+> ---
+>  drivers/media/platform/qcom/venus/vdec.c | 14 ++++++++++++--
+>  1 file changed, 12 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 6252a6b3d4ba6d49b343bb53dfb7b0e683410bb4..7d932c985a0b82aa547a7ada75b620c65cb44030 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1110,10 +1110,20 @@ static int vdec_start_output(struct venus_inst *inst)
+>  
+>  	if (inst->codec_state == VENUS_DEC_STATE_SEEK) {
+>  		ret = venus_helper_process_initial_out_bufs(inst);
+> -		if (inst->next_buf_last)
+> +		if (ret)
+> +			return ret;
+> +
+> +		if (inst->next_buf_last) {
+>  			inst->codec_state = VENUS_DEC_STATE_DRC;
+> -		else
+> +		} else {
+>  			inst->codec_state = VENUS_DEC_STATE_DECODING;
+> +
+> +			if (inst->streamon_cap) {
+> +				ret = venus_helper_queue_dpb_bufs(inst);
+> +				if (ret)
+> +					return ret;
+> +			}
+> +		}
+>  		goto done;
+>  	}
+>  
+LGTM.
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> 
+> ---
+> base-commit: 63b3ff03d91ae8f875fe8747c781a521f78cde17
+> change-id: 20250227-fix-seek-bug-7d3cf544bd2f
+> 
+> Best regards,
 
