@@ -1,111 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-50251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 921F6A4EA04
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:54:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECBB8A4EC62
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 19:50:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F483189398F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:48:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 94F5A902958
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:18:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BECBA27C86A;
-	Tue,  4 Mar 2025 17:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A98BB25DCEC;
+	Tue,  4 Mar 2025 18:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ocnUXlce"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tcEKZu3A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from beeline2.cc.itu.edu.tr (beeline2.cc.itu.edu.tr [160.75.25.116])
+Received: from beeline3.cc.itu.edu.tr (beeline3.cc.itu.edu.tr [160.75.25.117])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2658E20E6E2
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 17:26:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=160.75.25.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E897E253B5E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 18:04:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=160.75.25.117
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741109176; cv=pass; b=PbWduVDRd4axNKKLPbk9s29zvLIcMw8s/2EPKuvV5bH7b/ixdzpuI9W2bUR7oWNBsONpWmxwmlSpcJJiR/F8qZm33tYjBUQKvNHioEs28sQMathof5wvlWnuV0vqOUiboQm4vz1QLWFkg0oHkS9gNll7K8gQnyoMW27j1CxJokk=
+	t=1741111496; cv=pass; b=t42WysVxUK1fa6UneUaVx9lR32zRLjbY6TgDuNsrdxyS229pFTpb6FIkEwcmDMCmeRuxmrUbJPr9oHVKjLKhKmtBTi5GM1M3rP5O4QpWh46zgiWRphUravYtz2Ows9lM2I5jLMj8vnm3ZJ31ukbcaAPw+1lJxcw3IGKzucPz67U=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741109176; c=relaxed/simple;
-	bh=Ga6GFweHOtTnn56R1/QNU2fziTaVnQURE0NFf7Zw8tk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=NcMkTH412nzeFZVo1JC1N5KStY0RwkcMyBdUUXRBlQEVefwi4YIfX1pY5/+Y+86JInbT69YR751NTxNsF0qiUSUlH6eLncPWINELx2mm6c2ylmgD2dsKltNrZjDEL6dT7vNFgpP0ILvPtLynDcic/1Que6jsMpuOVRxarYGn+O8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=none smtp.mailfrom=cc.itu.edu.tr; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ocnUXlce; arc=none smtp.client-ip=205.220.168.131; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; arc=pass smtp.client-ip=160.75.25.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+	s=arc-20240116; t=1741111496; c=relaxed/simple;
+	bh=uKlaO0VtSYqlCulEvoLtkmUhyB9oj5gsIjZc4WzZr5I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=YfacDs+AMfnvgkjAz6qgwryIX7UIvBvH2dLg64f6/T+44HwwvQWrG9+4oSeeqvUk/lOxvCXOTneGQTcC9PEb1XHblBtc2zrhM9STONUWgSfeYFgt96tNzIpWzyv7lVXiu3CLE1YOZCqpBEmLFl89BthyDaDcujtz7jRRc1zHpPo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=none smtp.mailfrom=cc.itu.edu.tr; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tcEKZu3A; arc=none smtp.client-ip=209.85.218.47; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; arc=pass smtp.client-ip=160.75.25.117
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cc.itu.edu.tr
-Received: from lesvatest1.cc.itu.edu.tr (lesvatest1.cc.itu.edu.tr [10.146.128.1])
+Received: from lesvatest1.cc.itu.edu.tr (unknown [10.146.128.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by beeline2.cc.itu.edu.tr (Postfix) with ESMTPS id 61CF6408B5FA
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 20:26:13 +0300 (+03)
+	by beeline3.cc.itu.edu.tr (Postfix) with ESMTPS id 2D5D440D1F52
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 21:04:53 +0300 (+03)
 X-Envelope-From: <root@cc.itu.edu.tr>
-Authentication-Results: lesvatest1.cc.itu.edu.tr;
-	dkim=pass (2048-bit key, unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ocnUXlce
 Received: from lesva1.cc.itu.edu.tr (unknown [160.75.70.79])
-	by lesvatest1.cc.itu.edu.tr (Postfix) with ESMTP id 4Z6dgX345YzFx43
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 17:42:16 +0300 (+03)
+	by lesvatest1.cc.itu.edu.tr (Postfix) with ESMTP id 4Z6gMK56WKzG1C4
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 18:58:21 +0300 (+03)
 Received: by le1 (Postfix, from userid 0)
-	id 7844A42721; Tue,  4 Mar 2025 17:42:09 +0300 (+03)
+	id 87DE442724; Tue,  4 Mar 2025 18:58:15 +0300 (+03)
 Authentication-Results: lesva1.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ocnUXlce
-X-Envelope-From: <linux-kernel+bounces-541484-bozkiru=itu.edu.tr@vger.kernel.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tcEKZu3A
+X-Envelope-From: <linux-kernel+bounces-541641-bozkiru=itu.edu.tr@vger.kernel.org>
 Authentication-Results: lesva2.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ocnUXlce
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tcEKZu3A
 Received: from fgw1.itu.edu.tr (fgw1.itu.edu.tr [160.75.25.103])
-	by le2 (Postfix) with ESMTP id 2AED541FDF
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 14:09:23 +0300 (+03)
+	by le2 (Postfix) with ESMTP id A503442827
+	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 14:58:34 +0300 (+03)
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by fgw1.itu.edu.tr (Postfix) with SMTP id BBD74305F789
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 14:09:22 +0300 (+03)
+	by fgw1.itu.edu.tr (Postfix) with SMTP id 3B9A0305F789
+	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 14:58:34 +0300 (+03)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 698203AC6C2
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 11:03:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32E8D3BA730
+	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 11:53:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E54E1F4631;
-	Mon,  3 Mar 2025 11:01:52 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC00520E007;
+	Mon,  3 Mar 2025 11:53:17 +0000 (UTC)
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1601F1921;
-	Mon,  3 Mar 2025 11:01:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5141F426F
+	for <linux-kernel@vger.kernel.org>; Mon,  3 Mar 2025 11:53:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740999709; cv=none; b=YzedWdGCSmG28pOTfcbaszhjV0Oyf4X0u3CCcz5x9HGCDJrfRiFm6pJRAyI/1LY+29tavw4srr9ztDD167jFKHeEjIsCYDETVn/Qwwx0LL4fI2/2d9fzJzqZ3bPxSaNWYTeAqUIEVTZzoA0/3nYsb+JKkXg87F1gPJSuvEteNhU=
+	t=1741002794; cv=none; b=E3QZf36eajPzrWrn+PAIvIEm3hyTcYUzBSGqosD2JSqMJISCBlKgpcr2GCIhLv+fGoJ3pcmaCHCFKL/tyin8u9SWClp86mc1gTX0i4VAl2GxQWzF5MxeJKhtlxRZ1js4qMVzRGcRKRQcUg0yzMGCzbKc2+ArmwzuMGrOivJM2tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740999709; c=relaxed/simple;
-	bh=Ga6GFweHOtTnn56R1/QNU2fziTaVnQURE0NFf7Zw8tk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=mqV0pzMjzM5RodXuUe5f/J2hn+tGX6WUabOFG2N+LU1H2xUWU3LMoWftPgDWrczoPJp+GKuS9HdB5tyKIY+a3BOHyBD0ZKvGCcnCGoeU7IfEt1VSUfqV5A/s2FTY8CLwpT9u2WZ+e7YN9e/hg4JU3xzYz72qqkQdQyXjj1e3AaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ocnUXlce; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523AaRUc016148;
-	Mon, 3 Mar 2025 11:01:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=uAvC6pWrqVX+r4YoVIlWhm
-	DuCdaEkH0XJXwuhCpB/s8=; b=ocnUXlceq5RmpszQThhDm8nnRmBOa1N1D+zGd9
-	y5A/sKDjVdi4W2jCeDpFvItoyZA01JtbNVqrkJhzRLlonDUzFSThC8BNwetoDtxJ
-	uhyFDVB67Dq/DATW+7z1/RnhzmPTwQ7sDxzY4bffzcDIvaN9/tfzYBbWhhHU0TWU
-	MnzxDI0Xgxcuz5pg040axFgIkwmS1OoZtZzjTaYNoIBtmAVlBWUIp+HC7V0OQkup
-	TMLAZYNmZmfiSk5HmA9cg360d0PuR3TQIIz+iHAhbzAd1mLI9KysVELzjDfDU/Xx
-	Av0WP2AWwqsfjj2Lw4lu+czld9eoUsKl8MXx5Y7tiksjetQw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453udgvck8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Mar 2025 11:01:44 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 523B1hxw004102
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Mar 2025 11:01:43 GMT
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 3 Mar 2025 03:01:40 -0800
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-Date: Mon, 3 Mar 2025 16:31:16 +0530
-Subject: [PATCH] arm64: dts: qcom: sc7280: drop video decoder and encoder
- nodes
+	s=arc-20240116; t=1741002794; c=relaxed/simple;
+	bh=uKlaO0VtSYqlCulEvoLtkmUhyB9oj5gsIjZc4WzZr5I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=UFlwjXE3geUi987IReGrhhlVUnQJeabKaIsfu+yp5Xn9j7v3zpVy9AZv8mCXZpxuCLZvcv2Qje5P/6bPqofJoPVa576bi+vKERINzLNQZZjvxdVHNuvgsWIwH76Oqkbt3o/06PG/sKIzuSC6oOnroYqdej/5D540pNxaes0/Aqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tcEKZu3A; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-abffb7b9619so129404766b.0
+        for <linux-kernel@vger.kernel.org>; Mon, 03 Mar 2025 03:53:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741002791; x=1741607591; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DtXhuUfoSsHo3hqQz5EZhILyhw+RNyGbAyDJWOR+1Fw=;
+        b=tcEKZu3APPhdgjUAY/aHvcuQkgyftTG8+65l130l4oW3yr4NET89g/Yjlh2GJV//9C
+         Jou0K+svlQ0InU2V2RPif4ceEhz4eqDgx0CCLtlRWImnnVEWJKCd8EUwd3NOKLjn1wwf
+         6POx8Zrz8T+IB7Ysa61iw2gOBRwNCnTmWpmDAxM6odhxiBlXpjg11vAV7ZTxBMG/SGmG
+         p8VFseHLZEmVF4OWjnDjHrgR6zZ1uzNVLKvmLRrUMEtadjgnMx+g+aVKSE2lB/Z2bP14
+         lGyYr+yoZXohaxh2NRe2YeuFB5PIPfCrC22bEzRIY1LF8lwj43/+aBWlzxoiZjkfZeb/
+         YXbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741002791; x=1741607591;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DtXhuUfoSsHo3hqQz5EZhILyhw+RNyGbAyDJWOR+1Fw=;
+        b=vxxsSSFbJEY70+CCHaS2mPqWZHsJiBelAGenUPf5OWa8Ku6PWmvW0RGMoJFSVzxrQh
+         5L5+xFWztZLqkhB5B4HpuS7j5z1sPlS2qUZN4UQlDIbc4E6NdrYai7EJCXWB0t56HpCZ
+         zpMV6tLBT1+XhLi8P8iSqbj/hQAIXIjohCmSGQFY2JZ9yIc+zifGuzEYYnqNvf3qemk/
+         4DdOG3EIQUpeez1QIi3eru4qQihdufXxpMAQvpfzWocw62WddlfUrXLo/Nn3rFdOfF35
+         2kcEH9T0jxpxF1Wbyb6tzbPSvyWUFDNWMb06Xk1egmfjPVdKlAG/P9VNYml26DrJaRRp
+         /ifw==
+X-Forwarded-Encrypted: i=1; AJvYcCXXxC2JZT0SfSvTxDtQRlJ9jXkTUfFPidqqgI+TCWjp4Zu9Ug5kLNRJg7EVR+H1A0IgiKqoqljUkNnTHY0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz28KdnrW26CIFbHZDkLo8xuVOe1wOkhcZiYmTVFpVaQmBP/jNZ
+	IrwPJ/SRdge9ugp9xvSiLFepW73PY56dKetFGCIGHhikjjSalqG9U41CeIOiJzA=
+X-Gm-Gg: ASbGnctNT9/LtuSt2fAJY00uYS8rRCSBGAF2aLAGwYRhWbugzYFjswWdWCV1cKAzryI
+	rV70ccjZhkTBXbaRH7BGu9ofHpWbDfoE7OX/mIOhknw2ChM2UBSIbmZfNR30kwHyic6o2vHK8pT
+	CgN+L40wbbDPn3zs+oKzF8swxGn1UDIBsBxivlvPkewk+M2DWOR2/lWcGMeH4dIc/jsrFBU3JWR
+	8t2BJUPdqdEZkBR2XstNlcZgIpikADxiRHyfu30fLxQNC0i5wYmwgxHNoh9hKll+xgW5KWmI8Hg
+	ijnP7vJN14KHhFSjdDLhsKwFcIkGfZjHEzn0ZFZxUMA=
+X-Google-Smtp-Source: AGHT+IFiXqW+Lwb1rqttilbKTCuFqrnwCuwyzVJ/cOH1SDiElNMin3wYFpdUDPax2lPnPWv8bfRXEA==
+X-Received: by 2002:a17:907:9717:b0:ac1:e53c:d15a with SMTP id a640c23a62f3a-ac1e53cdb94mr96050266b.54.1741002790638;
+        Mon, 03 Mar 2025 03:53:10 -0800 (PST)
+Received: from [127.0.1.1] ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac1de83fa49sm86833866b.158.2025.03.03.03.53.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Mar 2025 03:53:10 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Mon, 03 Mar 2025 13:52:50 +0200
+Subject: [PATCH v3 1/3] leds: rgb: leds-qcom-lpg: Fix pwm resolution max
+ for normal PWMs
 Precedence: bulk
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -115,86 +132,81 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250303-b4-media-v1-1-ddc5c81cc2b3@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAPuLxWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDYwNj3SQT3dzUlMxEXXPLtDQDc2OLJMvkNCWg8oKi1LTMCrBR0bG1tQC
- 66C5nWgAAAA==
-X-Change-ID: 20250303-b4-media-79ff0738b9cf
-To: <cros-qcom-dts-watchers@chromium.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1740999700; l=1011;
- i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
- bh=Ga6GFweHOtTnn56R1/QNU2fziTaVnQURE0NFf7Zw8tk=;
- b=Qvf0eMgJygcYPtaCv3tONFp1gRMVG+jri29Z1lO6DY8H1UHOQFxljlNVbwqcYTDz4gs/cetY8
- bmySnjXJD5VDFRbT3/7HBo2Gdc9HLvQnQdS0kYE8TS7KjvG8zXM+vgW
-X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
- pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: d3ToDk6ffYYqtrJICS0MM5zkiR_R06ZS
-X-Proofpoint-ORIG-GUID: d3ToDk6ffYYqtrJICS0MM5zkiR_R06ZS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-03_04,2025-03-03_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1011
- lowpriorityscore=0 malwarescore=0 mlxscore=0 suspectscore=0 bulkscore=0
- impostorscore=0 mlxlogscore=537 priorityscore=1501 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503030084
+Message-Id: <20250303-leds-qcom-lpg-fix-max-pwm-on-hi-res-v3-1-62703c0ab76a@linaro.org>
+References: <20250303-leds-qcom-lpg-fix-max-pwm-on-hi-res-v3-0-62703c0ab76a@linaro.org>
+In-Reply-To: <20250303-leds-qcom-lpg-fix-max-pwm-on-hi-res-v3-0-62703c0ab76a@linaro.org>
+To: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, 
+ Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+Cc: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Kamal Wadhwa <quic_kamalw@quicinc.com>, 
+ Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, 
+ Sebastian Reichel <sre@kernel.org>, Pavel Machek <pavel@ucw.cz>, 
+ linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1589; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=uKlaO0VtSYqlCulEvoLtkmUhyB9oj5gsIjZc4WzZr5I=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnxZggiuDOGZkfqUQVY+9AhAVfnorbl76qyE9MP
+ JBMYI0CuO6JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ8WYIAAKCRAbX0TJAJUV
+ Vt1NEACPUiQuUoYbNCNbZokEmpQboLB57GjVIEzFMwPmh1FQEiRui9yAA3dOOo+/2l4/d/sY1Nm
+ iqGo2Tqn71CiK2WEZhI44HoMD0jJypHcAQIKEKmzLXLTd9GcW+GxCMwXg4G5N2VGLccJY2yKHoD
+ vZl/9Gts5SgVB+z+TJgzK5JQLIBotZJlqJTqa2xrJ4GpB+NW91c7OmpgfIaEkP6XU0+0HVKNaYZ
+ BopTmw2p+42Heqv29pyGRm+WCTpRFv3PWFLahDT8woEp92Qw+Bu1nj7s+jeVm99zs008LcnyAK5
+ gVSQU5RNN8q5XHQ6sv1POSU8N5j+R/c4bY+PdnuAFOtNw87XUULyFcWYIzDSvuCIcHiTSRxvqKM
+ SA7+4TxqL6PyMbOr2Xjx724j9pHszGQSkD3q5wth/DlJpu8lphKMH0XpxwVMRoTfwfC0X/Tr65O
+ SJiafnT2TiAIa50gTnitnQCaoXGXRiH2Qt2yYrzNKJ/e0zWaFM40KePsqHQQeTr3bVOq5Xygcy7
+ y12cIrmJPryAn2SMbO+CFuasEq4XPvcsSHVCKfTRgp5OjTByyR0Ppl7AswN6g4kEB2yxnoo9hXn
+ /fR51OFPyN31yZR594DFRNcul687gYj5VPRrklVimZJGrffgLfTwpEM13fgkNQIkF7lJStAsPHY
+ C0i0LawvGl2MSJw==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 X-ITU-Libra-ESVA-Information: Please contact Istanbul Teknik Universitesi for more information
-X-ITU-Libra-ESVA-ID: 4Z6dgX345YzFx43
+X-ITU-Libra-ESVA-ID: 4Z6gMK56WKzG1C4
 X-ITU-Libra-ESVA: No virus found
 X-ITU-Libra-ESVA-From: root@cc.itu.edu.tr
-X-ITU-Libra-ESVA-Watermark: 1741713861.51961@ezV3bPaCFYUcosT4YHOsKQ
+X-ITU-Libra-ESVA-Watermark: 1741716182.65283@uqQc3dkxxrulwReJbgJFnw
 X-ITU-MailScanner-SpamCheck: not spam
 
-Decoder and encoder nodes are already deprecated from bindings. Update
-the venus node to align with bindings.
+Ideally, the requested duty cycle should never translate to a PWM
+value higher than the selected resolution (PWM size), but currently the
+best matched period is never reported back to the PWM consumer, so the
+consumer will still be using the requested period which is higher than
+the best matched one. This will result in PWM consumer requesting
+duty cycle values higher than the allowed PWM value.
 
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+In case of normal PWMs (non Hi-Res), the current implementation is
+capping the PWM value at a 9-bit resolution, even when the 6-bit
+resolution is selected.
+
+Fix the issue by capping the PWM value to the maximum value allowed by
+the selected resolution.
+
+Fixes: 7a3350495d9a ("leds: rgb: leds-qcom-lpg: Add support for 6-bit PWM resolution")
+Suggested-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/leds/rgb/leds-qcom-lpg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 0f2caf36910b65c398c9e03800a8ce0a8a1f8fc7..31abb2b9555f37ecc9c7753509e95acd57acf015 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -4301,14 +4301,6 @@ venus: video-codec@aa00000 {
- 
- 			status = "disabled";
- 
--			video-decoder {
--				compatible = "venus-decoder";
--			};
--
--			video-encoder {
--				compatible = "venus-encoder";
--			};
--
- 			venus_opp_table: opp-table {
- 				compatible = "operating-points-v2";
+diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+index 4e5c56ded1f0412c9913670699e912b24f3408bd..4454fc6a38480b61916318dd170f3eddc32976d6 100644
+--- a/drivers/leds/rgb/leds-qcom-lpg.c
++++ b/drivers/leds/rgb/leds-qcom-lpg.c
+@@ -533,7 +533,7 @@ static void lpg_calc_duty(struct lpg_channel *chan, uint64_t duty)
+ 		max = LPG_RESOLUTION_15BIT - 1;
+ 		clk_rate = lpg_clk_rates_hi_res[chan->clk_sel];
+ 	} else {
+-		max = LPG_RESOLUTION_9BIT - 1;
++		max = BIT(lpg_pwm_resolution[chan->pwm_resolution_sel]) - 1;
+ 		clk_rate = lpg_clk_rates[chan->clk_sel];
+ 	}
  
 
----
-base-commit: d98e9213a768a3cc3a99f5e1abe09ad3baff2104
-change-id: 20250303-b4-media-79ff0738b9cf
-
-Best regards,
 -- 
-Vikash Garodia <quic_vgarodia@quicinc.com>
+2.34.1
 
 
 
