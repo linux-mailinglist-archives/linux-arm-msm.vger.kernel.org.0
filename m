@@ -1,300 +1,224 @@
-Return-Path: <linux-arm-msm+bounces-50002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB708A4C0EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 13:48:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A5FCA4C12A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 14:03:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0008E3AC2F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 12:47:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C407B169C01
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 13:03:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E05BA20370D;
-	Mon,  3 Mar 2025 12:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7CE72101A0;
+	Mon,  3 Mar 2025 13:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qy4Y32JG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DXDwVUdr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C137D07D;
-	Mon,  3 Mar 2025 12:47:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0117286323
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Mar 2025 13:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741006046; cv=none; b=WKuB/fsPZwBN1FofX6EtmsLNjiiMu+2/BVH3T9txQGlsafNeUR3vYlqadnW63NkeKdidWzYR6RwGiEYbpyu7I2QAL3ynMijJ3ktFNG4Bboo+gOBOoE/FpI48GwlIB/8jMuaheCcy+szRSLwwjsNZsFuH3wiRofBAbPn6SQyISpQ=
+	t=1741006993; cv=none; b=MfteHkd8uMp+h3HaiiOYAp1bzrJaQik6qhCjQG3CK+wbP5LKXEJeICWVcGG0/XyRXbE0CmGICBUGiUS83uK+YVW5UweFqbgtbtQmPUCpZ5UC59Mw+bVBDcgDmuqtEgoEnTMl62eU4oVEQPIBuUOpbK0jLk+d2EAgu83cGc0s+kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741006046; c=relaxed/simple;
-	bh=oqjzi/zAhOsterMeAfvhd2Lrly5BuIHrXEyDJXM1IIY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NkO2DKa2XDcVRkNUMTHBOHrbW5b03u5VVXDOMwSJeoUiiPf3q9H8RGdI4dBf2+kP/z4s2la5ACAkNmsljcsPoTJ8ptBeUapn3eS3ZqXVItkT7qpNWJheIUg4DC4tWvAEls5vIa4dv2t74UlhKlJBFZBqC9CleL2LTzVMFud0jFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Qy4Y32JG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523B8kNN025661;
-	Mon, 3 Mar 2025 12:47:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rN2bGVg8ZzYNF7l4VQygrAQDDlBNhEOeiHkgxlotQ7E=; b=Qy4Y32JGSiSmCU/w
-	RE3acnnO3HQsFwnkJGjzGvjL7RFItt6du1G+NBV0npjsxGKsXPVTL9Tre8fApAx2
-	r3WB+xgmZIGaYkFOFymYCW5bu6o+/s74NAqo4WSLD41CAtBdSK7C/lekbDPd5SsD
-	+zsIfx7d/q66yF/ncMI3yX+Rzq0nN4bW6tfhbJKvxZnoNB3gS7KwSDXp8a5FT2YZ
-	66nrFf/b6T3q8HK7CJoBniL/H4wbCy1OcRGIMyoTrkF8EUkLI+Iy4ddXMQVaz1pH
-	6yY8HKb3i9po4eU9IUVBesSvsuv0Ip4SX09ev/kbJLrWttHkH3T7Gs9cp5P0UaDu
-	feAdyg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453t6k4rft-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Mar 2025 12:47:19 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 523ClI1M030976
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Mar 2025 12:47:18 GMT
-Received: from [10.216.31.193] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Mar 2025
- 04:47:12 -0800
-Message-ID: <f20b98fb-1cbc-4211-b616-5421bf43301f@quicinc.com>
-Date: Mon, 3 Mar 2025 18:17:09 +0530
+	s=arc-20240116; t=1741006993; c=relaxed/simple;
+	bh=DhfNdV/O+uocDkBJFYE83PtsNs9K9z/PTwLsOVi9J/g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mv8vAVSvjf9ua9Kb5+oD9ka0hSDNakGdMXovP2pwETf/Dc5LxhscUQwAwntdYGdDNvnsS81WU7olOT9RKCXfFqnsnP9YdFJD3bS7mvX1a2NZ7htTk9aHua6mGPUuIJUyPVpyEj/kBVm6bLrKxAHLDFz8JfwjV23tMVR9zBazRA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DXDwVUdr; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30bb2fdbb09so12803171fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Mar 2025 05:03:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741006989; x=1741611789; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DuRt7sNsxjnBZpSJFW4wxc/r2PcIDt/KOhq8Vg4VK/w=;
+        b=DXDwVUdrSsk322dDuE/L5lNxzKO0jvB87EdzYcRP5Vd11T20vU0VTNeKiuqCLMLeL2
+         k2ruho4K1IWjXKIsxt9x1yrt07HeD0ScVdLkhON6ws9VS5OToCBdMcHkCkNpbIoaPlur
+         VAU2fxn5X7+SCLtZOLjCLTVVXgR9wzsx0+ftg97sMR0XNnMZvEHzDlJxqNn6AHaW/Ako
+         Ba9SvliI4uKdVzlICirU+0fIrfURpTQJXhsNGE+d/S8PBErEDZfNEUAifm9cfI6ds+fh
+         3puE4q7FZIilXLMLa3zS1GNjQCIgE8/RkIvI/MGIHuwHp5L8j0i47qqcyKQELgSFEpmA
+         M28A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741006989; x=1741611789;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DuRt7sNsxjnBZpSJFW4wxc/r2PcIDt/KOhq8Vg4VK/w=;
+        b=Rden+41ADFWG+BW9P84YdGIMgLJSgDVmduFwTndZKJZyBMV/Kiyn9pSy2OejQd1b9+
+         vMvGeSuai9GuDD9wlXUu3IbW4+6dnFFHF4ekELWtK8r185vL0u57CfBEWgTID9RkFfZL
+         fQlJ1KkmY8ZSN3rw7puFzXXqxaASXXwh3TwDLWNLJKuzOLxMpozuX8lbWAPpagqX1kjX
+         cKiQp22yfPe+UGXZ8z8hBZeUR9URhkAY26M4fnCmd98l1zv0X9ZSKM0kmzoxdfa8GqmT
+         YNUzvfFv/r4ssow+cshJfwgU4EoY6rbhW0xzlzpKI9q6xuJX5fG+WXoezgQjOTQtPYWH
+         y8uQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXIaaVFqnUw8/lQdsbHzss3tvYO5KthonkXLmz2Ugp60XkaYYY3Iy+tQJsEzrnaq0W5/Fuz9hsmK36njjW2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz1s5RCfyYZfNT04T89ldu3SD2XvcIna/io1hxNzIiVdeKP//TB
+	eyI08bSZLPyz2qTYYLgkfmIacL2cBI6RRZkXUzfbriNLH3HTtOp7//XCl2h1GPU=
+X-Gm-Gg: ASbGncu6ft58wf94GeR66LcUfBCeEaWzg4Ywgj+eZc6FrUzXjTbrxD5bKLSJpDU0g17
+	AEboXwJdED7xkSQLXgH7OR5SFd0n9WWaE/Jw6co+4/WoTDqL8B1cX9ytH7/km6zKeDHfpKfAIP1
+	t1vUE7Ywv8+8AL1UGXZaKP3ndQRR/DqERz8KmN9CQEMcyfYwQEchsd6AZ6xw5ZabXcv/bXb4a2s
+	l++2eQ8eZ5cW8n5+JJB8F9juKm8JQa/G6acIU9B49B5Qss/Zv/NfxBgJ6OEUMIJ2grOL+B2uTBn
+	gB0iPbE0M0Usn39mopHH3PkjdChK1QilfpivwdlzAJumSveQ0t1yC5bE2XfFaXc5ouTZVo8mmav
+	mS+d6LDwPm7XQIRia62+TUh6x
+X-Google-Smtp-Source: AGHT+IF1PolbJR152vR5fP4sMo4m1QykoHvieTbCTpVgWNk/bMvUDzzFZWCKpBvAuMT571N86KTxyA==
+X-Received: by 2002:a2e:bc18:0:b0:30b:b7c3:ea71 with SMTP id 38308e7fff4ca-30bb7c3ef87mr18110021fa.15.1741006988806;
+        Mon, 03 Mar 2025 05:03:08 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30bba62b892sm3743161fa.66.2025.03.03.05.03.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Mar 2025 05:03:08 -0800 (PST)
+Date: Mon, 3 Mar 2025 15:03:06 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Cc: jassisinghbrar@gmail.com, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	manivannan.sadhasivam@linaro.org
+Subject: Re: [PATCH V3 1/2] dt-bindings: mailbox: Document qcom,tmel-qmp
+Message-ID: <5xjtb4cifjjagkeifpkgx4y5cb7mwrocv7sxq3lh4lhadtw2bn@umtwhw7eqkhe>
+References: <20250228045356.3527662-1-quic_srichara@quicinc.com>
+ <20250228045356.3527662-2-quic_srichara@quicinc.com>
+ <velvqajyhrdaipmqmsduv3l3dsv56sy4rfukwm2hrdvh47hgqx@7sbnrgkzsn67>
+ <1a22a637-c3f1-49b3-adf5-3e952c7d336a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] soc: qcom: geni-se: Add support to load QUP SE
- Firmware via Linux subsystem
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andi.shyti@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <jirislaby@kernel.org>,
-        <broonie@kernel.or>, <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <johan+linaro@kernel.org>, <dianders@chromium.org>,
-        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-i2c@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-serial@vger.kernel.org>,
-        <linux-spi@vger.kernel.org>
-CC: <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
-References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
- <20250124105309.295769-6-quic_vdadhani@quicinc.com>
- <af27ae90-99d7-497f-b8f5-b8ca0b039753@kernel.org>
-Content-Language: en-US
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-In-Reply-To: <af27ae90-99d7-497f-b8f5-b8ca0b039753@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: M1Rln0lZesj2TR50AXa1YgGCXMKjmv9Q
-X-Proofpoint-ORIG-GUID: M1Rln0lZesj2TR50AXa1YgGCXMKjmv9Q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-03_07,2025-03-03_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=999 mlxscore=0
- lowpriorityscore=0 clxscore=1015 spamscore=0 malwarescore=0 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503030098
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1a22a637-c3f1-49b3-adf5-3e952c7d336a@quicinc.com>
 
-
-
-On 1/27/2025 12:36 PM, Krzysztof Kozlowski wrote:
-> On 24/01/2025 11:53, Viken Dadhaniya wrote:
->>   /* Common SE registers */
->> @@ -891,6 +896,445 @@ int geni_icc_disable(struct geni_se *se)
->>   }
->>   EXPORT_SYMBOL_GPL(geni_icc_disable);
->>   
->> +/**
->> + * elf_phdr_valid: Function to validate elf header.
->> + * @phdr: A pointer to a elf header.
->> + *
->> + * This function validates elf header by comparing fields
-> 
-> Drop "This function" and use imperative. It's redundant and you keep
-> using it everywherre here
->  
-
-Updated in V3.
-
-> ...
-> 
->> +static int qup_fw_load(struct qup_se_rsc *rsc, const char *fw_name)
->> +{
->> +	int ret;
->> +	const struct firmware *fw;
->> +	struct device *dev = rsc->se->dev;
->> +
->> +	ret = request_firmware(&fw, fw_name, dev);
->> +	if (ret) {
->> +		dev_err(dev, "request_firmware failed for %d: %d\n", rsc->protocol, ret);
->> +		return ret;
->> +	}
->> +
->> +	ret = (rsc->protocol != GENI_SE_NONE) ? geni_load_se_fw(rsc, fw) : -EINVAL;
-> 
-> Drop ternary operator. Not easy to read
-Updated in V3.
-
-> 
->> +
->> +	release_firmware(fw);
->> +
->> +	return ret;
->> +}
-> 
->> +
->> +/**
->> + * geni_load_se_firmware: Function to initiate firmware loading.
->> + * @se: Serial engine details.
->> + * @protocol: protocol from spi, i2c or uart for which firmware to
->> + * be loaded
->> + *
->> + * This function is called from the probe function of protocol driver.
->> + * if dtsi properties are configured to load QUP firmware and firmware
->> + * is already not loaded, it will start firmware loading. if dtsi
->> + * properties are not defined,it will skip loading firmware assuming
->> + * it is already loaded by TZ.
->> + *
->> + * return: Return 0 if no error, else return error value.
->> + */
->> +int geni_load_se_firmware(struct geni_se *se,
->> +			  enum geni_se_protocol_type protocol)
->> +{
->> +	struct qup_se_rsc rsc;
->> +	const char *fw_name;
->> +	int ret;
->> +
->> +	ret = device_property_read_string(se->wrapper->dev, "firmware-name", &fw_name);
->> +	if (ret)
->> +		return  -EINVAL;
->> +
->> +	rsc.se = se;
->> +	rsc.protocol = protocol;
->> +
->> +	/* Set default xfer mode to FIFO*/
->> +	rsc.mode = GENI_SE_FIFO;
->> +	of_property_read_u32(se->dev->of_node, "qcom,xfer-mode", &rsc.mode);
->> +	switch (rsc.mode) {
->> +	case GENI_SE_FIFO:
->> +	case GENI_SE_DMA:
-> 
-> How value of 2 is acceptable? Your bindings said it is not.
-
-Corrected in V3.
-
+On Mon, Mar 03, 2025 at 12:51:44PM +0530, Sricharan Ramabadhran wrote:
 > 
 > 
->> +	case GENI_GPI_DMA:
->> +		break;
->> +	default:
->> +		dev_err(se->dev, "Invalid xfer mode specified: %d\n", rsc.mode);
->> +		return -EINVAL;
->> +	}
->> +
->> +	ret = qup_fw_load(&rsc, fw_name);
->> +	if (ret) {
->> +		dev_err(se->dev,  "Firmware Loading failed for proto: %s Error: %d\n",
->> +			protocol_name[rsc.protocol], ret);
+> On 2/28/2025 11:36 AM, Dmitry Baryshkov wrote:
+> > On Fri, Feb 28, 2025 at 10:23:55AM +0530, Sricharan R wrote:
+> > > From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> > > 
+> > > TMEL SS provides different kinds of services like secureboot, remote image
+> > 
+> > What is TMEL SS? What is Q6, etc? Please provide a definition on the
+> > first usagem both in the commit message and in the bindings text. And in
+> > the cover letter. Also, in some places you use TME-L instead of TMEL.
+> > Please settle on one of those, unless there is a difference between
+> > them,
+> > 
+> ok, both are same, will expand and fix same in all places
 > 
-> Aren't you printing same error multiple times?
+> > > authentication, key management, crypto, OEM provisioning etc. This patch
+> > > adds support for remote image authentication. Support for rest of the
+> > > services can be added.
+> > > 
+> > > The QMP mailbox is the primary means of communication between TMEL SS and
+> > > other subsystem on the SoC. A dedicated pair of inbound and outbound
+> > > mailboxes is implemented for each subsystem/external execution environment
+> > > which needs to communicate with TMEL for security services. The inbound
+> > > mailboxes are used to send IPC requests to TMEL, which are then processed
+> > > by TMEL firmware and accordingly the responses are sent back via outbound
+> > > mailboxes.
+> > > 
+> > > It is an IPC transport protocol which is light weight and supports a subset
+> > > of API's. It handles link initialization, negotiation, establishment and
+> > > communication across client(CPU/BTSS/AUDIOSS) and server(TMEL SS).
+> > > 
+> > >     -----------------------------------------------       ---------------------------------------------------
+> > >    |                                              |       |                                                 |
+> > >    |                 SOC  CLIENT                  | SOC   |                TMEL  SS                         |
+> > >    |                                              | AHB   |                                                 |
+> > >    |     ----------    ---------   ---------      |       | ------    -------     --------    ------------  |
+> > >    |     |        |    |       |   |       |      | WO    | |     | R |     |     |      |    |SERVICES   | |
+> > >    |     | CPU    |<-->| TMEL  |<->|       |------------->| | IN  |-->|     |     | TMEL |    |--------   | |
+> > >    |     |        |    | COM   |   | QMP   |      | RO    | |     | W | QMP |<--->| COM  |<-->| a) ATTEST | |
+> > >    |     |        |    |       |   |       |<-------------| | OUT |<--|     |     |      |    | b) CRYPTO | |
+> > >    |     |        |    |       |   |       |      |       | |     |   |     |     |      |    | .. more   | |
+> > >    |     ---------     ---------   ---------      |       | ------    -------     -------     ------------  |
+> > >    |                                              |       |                                                 |
+> > >     -----------------------------------------------       --------------------------------------------------
+> > > 
+> > > This binding describes the component responsible for communication between
+> > > the TMEL server based subsystems (Q6) and the TMEL client
+> > > (CPU/BTSS/AUDIOSS), used for security services like secure image
+> > > authentication, enable/disable efuses, crypto services. Each client in the
+> > > SoC has its own block of message RAM and IRQ for communication with the
+> > > TMEL SS.
+> > > 
+> > > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> > > ---
+> > > #V3:
+> > 
+> > Creative. Where are the previous changelogs?
+> > 
+> ok, will add
+> 
+> > > ---
+> > >          Fixed wrappings.
+> > >          Made mailbox-cells as a required property and changed value to '1'.
+> > >          Fixed to use compatible as filename.
+> > >          Renamed compatible as per Krzystof's comments.
+> > >          Dropped unused label.
+> > > 
+> > >      Following tests were done and no issues.
+> > > 
+> > >         *)  Checkpatch
+> > >         *)  Codespell
+> > >         *)  Sparse
+> > >         *)  kerneldoc check
+> > >         *)  Kernel lock debugging
+> > >         *)  dt_binding_check and dtbs_check
+> > > 
+> > >   .../bindings/mailbox/qcom,ipq5424-tmel.yaml   | 62 +++++++++++++++++++
+> > >   1 file changed, 62 insertions(+)
+> > >   create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml b/Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
+> > > new file mode 100644
+> > > index 000000000000..2e3c79add405
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
+> > > @@ -0,0 +1,62 @@
+> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/mailbox/qcom,ipq5424-tmel.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: Qualcomm TMEL IPCC channel
+> > > +
+> > > +maintainers:
+> > > +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> > > +
+> > > +description:
+> > > +  TMEL SS provides different kinds of services like secureboot, remote image authentication,
+> > > +  key management, crypto, OEM provisioning etc. This patch adds support for remote image
+> > > +  authentication. Support for rest of the services can be added.
+> > > +
+> > > +  The QMP mailbox is the primary means of communication between TMEL SS and other subsystem on
+> > > +  the SoC. A dedicated pair of inbound and outbound mailboxes is implemented for each
+> > > +  subsystem/external execution environment which needs to communicate with TMEL for security
+> > > +  services. The inbound mailboxes are used to send IPC requests to TMEL, which are then processed
+> > 
+> > This string is 100 chars long. What is the recommended wrapping
+> > boundary?
+> > 
+> I kept it as 100 and checkpatch did not throw any warnings.
 
-Removed in V3.
+"The preferred limit on the length of a single line is 80 columns."
+
+Documentation/process/coding-style.rst
 
 > 
->> +		return ret;
->> +	}
->> +
->> +	dev_dbg(se->dev, "Firmware load for %s protocol is Success for xfer mode %d\n",
->> +		protocol_name[rsc.protocol], rsc.mode);
->> +	return ret;
->> +}
->> +EXPORT_SYMBOL_GPL(geni_load_se_firmware);
->> +
->>   static int geni_se_probe(struct platform_device *pdev)
->>   {
->>   	struct device *dev = &pdev->dev;
->> diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
->> index 2996a3c28ef3..289fa6675d2b 100644
->> --- a/include/linux/soc/qcom/geni-se.h
->> +++ b/include/linux/soc/qcom/geni-se.h
->> @@ -1,6 +1,7 @@
->>   /* SPDX-License-Identifier: GPL-2.0 */
->>   /*
->>    * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2023-2025 Qualcomm Innovation Center, Inc. All rights reserved.
->>    */
->>   
->>   #ifndef _LINUX_QCOM_GENI_SE
->> @@ -72,6 +73,19 @@ struct geni_se {
->>   	struct geni_icc_path icc_paths[3];
->>   };
->>   
->> +/**
->> + * struct qup_se_rsc - Structure containing se details protocol and xfer mode
->> + *
->> + * @mode: transfer mode se fifo, dma or gsi.
->> + * @protocol: Protocol spi or i2c or serial.
->> + * @se: Pointer to the concerned serial engine.
->> + */
->> +struct qup_se_rsc {
->> +	struct geni_se *se;
->> +	enum geni_se_xfer_mode mode;
->> +	enum geni_se_protocol_type protocol;
->> +};
->> +
->>   /* Common SE registers */
->>   #define GENI_FORCE_DEFAULT_REG		0x20
->>   #define GENI_OUTPUT_CTRL		0x24
->> @@ -531,5 +545,8 @@ void geni_icc_set_tag(struct geni_se *se, u32 tag);
->>   int geni_icc_enable(struct geni_se *se);
->>   
->>   int geni_icc_disable(struct geni_se *se);
->> +
->> +int geni_load_se_firmware(struct geni_se *se,
->> +			  enum geni_se_protocol_type protocol);
->>   #endif
->>   #endif
->> diff --git a/include/linux/soc/qcom/qup-fw-load.h b/include/linux/soc/qcom/qup-fw-load.h
->> new file mode 100644
->> index 000000000000..b9b58e81f5cb
->> --- /dev/null
->> +++ b/include/linux/soc/qcom/qup-fw-load.h
->> @@ -0,0 +1,179 @@
->> +/* SPDX-License-Identifier: GPL-2.0 */
->> +/*
->> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +#ifndef _LINUX_QCOM_QUP_FW_LOAD
->> +#define _LINUX_QCOM_QUP_FW_LOAD
->> +
->> +#include <linux/device.h>
->> +#include <linux/elf.h>
->> +#include <linux/firmware.h>
->> +#include <linux/kernel.h>
->> +
->> +/*Magic numbers*/
->> +#define MAGIC_NUM_SE			0x57464553
->> +
->> +/* Common SE registers*/
->> +#define GENI_INIT_CFG_REVISION		0x0
->> +#define GENI_S_INIT_CFG_REVISION	0x4
->> +#define GENI_FORCE_DEFAULT_REG		0x20
->> +#define GENI_CGC_CTRL			0x28
->> +#define GENI_CFG_REG0			0x100
->> +
->> +#define	QUPV3_SE_HW_PARAM_1		0xE28
+> Regards,
+>  Sricharan
 > 
-> Drop indentation after 'define'
 
-Updated in V3.
-
-> 
-> 
-> Best regards,
-> Krzysztof
+-- 
+With best wishes
+Dmitry
 
