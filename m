@@ -1,218 +1,264 @@
-Return-Path: <linux-arm-msm+bounces-50045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEFD1A4C9D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 18:38:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A06AA4CAF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 19:28:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A75D817DB1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 17:32:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B9EE189538C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 18:28:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C93C021D3C6;
-	Mon,  3 Mar 2025 17:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E90AC22CBFC;
+	Mon,  3 Mar 2025 18:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S7V0U+X+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nYlOwgyz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E88215058;
-	Mon,  3 Mar 2025 17:18:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6320217F33;
+	Mon,  3 Mar 2025 18:28:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741022295; cv=none; b=VOcfc6aSOEJr14OVHHXeqvZ0eiWYxui++loHp6y3bgr6YmJ4nBYqM7QfRW+u7o0PiUUMiGfO6z9iIunsoc9t1n9VzAdAUQIov3SLmkUeOzZmqgkOnnD7kkCOMlPfhlO5+IhoJvEUSXZPcxiuwnFi11Tu/5U37HaVCOhB1SRHfq4=
+	t=1741026497; cv=none; b=ixCQbLD2RvEpVihcT6xhXAzuHPt492oukARPmD/LoTxmrewFrwfwszdUHl0I8Iw7xFoXNS7VZ72gKv9+1jLXSFyOj0qMKhwE/vaq/YBUv8ClOupcBveTlPDWUBg8T7BkZ8Px+8dC1w9ioCKAfuelc/UyFW9E1HiuiicqRBqNTb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741022295; c=relaxed/simple;
-	bh=K3f+hP5t9ewtluT0jldKg8o6hk6upDlrFdMEHUxzmUk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bW16REnEIGyi2y/3QxYdoIZgqMgzEjLtY19bTHBNKKXxlpCl3iFjMYIjv1J7KNbJIxXrilj2iDbS1u2x6JRauH3+V2Gk2uIN5pS8ZTx/0Rlk3pN0RMXJc0KsFQk5I13YKIFBIa/mBk9CtXftSajxD4IxVkTNLZKIr2x/dmd8XjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S7V0U+X+; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5e50de0b5easo3293889a12.3;
-        Mon, 03 Mar 2025 09:18:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741022292; x=1741627092; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sE2nwe2DjINW/dM2gZS6aKt8qAr3QCojkbk7uIqO54s=;
-        b=S7V0U+X+KVCpQOhbcM9IOJUUJnlDTDAWSGoiRFdgi1miUZGuVCpOvha2vAqMBZK6zx
-         lELSx+a0tfvk83mJtIcWgXH52X1O4GKnWLRa8YDXIltOj+CReuDrXNcNIWa/+hthYcyZ
-         B1F0H4RozUT4uEPtCmCUjbv6jA2RZ7FNyZ7vhHvxeOsUi3QEDfdEn3HatlEs7AOIwiNo
-         KOeGOM1pDyD2ifq7sNwjl/r1AlOzUHUYeYlivf1ibgrNV39adKcDywnzbni5RxNImktP
-         c0l9fDWryMQw/as+LwVUu+C09mj9WiVti6qgdUcMcPcNrQIgRj+0NkpxxvNE0pIempnE
-         Lw7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741022292; x=1741627092;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sE2nwe2DjINW/dM2gZS6aKt8qAr3QCojkbk7uIqO54s=;
-        b=bctevaHKftpAW7G9G1sy6RVh1RahEwzOA3DcC6fju8jujmHJTKtgGXMBFqRLEXf5XV
-         QzL3kDclQawxEmV9NnPLseaQNg0FTy6ZdmNEVo4mjjuS2QzwdETQj7KNLfoRchCGiLuk
-         t6/nHHINUICOqGdntU5qhXCDn0OLi64+5Wy12CEtwc2r2XG3MExifMUAM0aNzKbUS4c1
-         v/JlAWZuhC735FXLoSnWaj/gPBGHWGI7oOZHfd06hAB5lVGbxuWi0aM6bCHmKIK41yOZ
-         FzHXFanoHOJvTgzRm/ltiWuEc9XHceASl/O12kwJkWSn0DkyXJpJnT4CMpQ+7RXIbF7N
-         7HKg==
-X-Forwarded-Encrypted: i=1; AJvYcCVL5qmdikWXRBDY91+snC7cev8YWD3atVx3NISt5OTHKf3fp42OgF5/TyhiVaBhqFoDJXr+G+NlKQZET1hhQw==@vger.kernel.org, AJvYcCVXJwBm+uu4g13yhMu726b0QTqpvtMws0ZRxDyLBxXuIzkshWHZLDhrPrZEZuqM1UjosXBYYQVkq9Cv6a48@vger.kernel.org, AJvYcCVt9u1BL1i1NwDXyWdfZVtezhMmy/zS1nMTY5TtbdlswNdmGgmvd54QRpluE8LPibPG7CowicTdrcdy@vger.kernel.org, AJvYcCXaJXsR3wOPnufvoljIKDnn0vYFYGwuwWEz8LMTpNjMeLqTV6DYPEasdgmZ8Sp8LRwA2+YUSuyttIqlZITG+m7H0s8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzshDarz2YT9L9pQwrXbJGtXxXP4UaxIYD6ab/uL3d+SoyVK85t
-	ZC23Gtuqvsye3HwjFbO+RCsbAMocjY06gFCdaWmuypjk4y5hKqndhyJX7Q==
-X-Gm-Gg: ASbGncvh3+YNmICHoDn1GzuQaUhZqd4ymMfQtBiWz5mFne0qdmT7toKI3OeqMs/MRjL
-	f/fdwO+05soeYSHBZNUnflWVuwLY6Ko6PcXb8nKIKhCJU0GxPkWEAFqQ3SAeDvooaJfbN8Vqg0m
-	inUAmwgTQKKZgkFyq0lcYa1qnZpdh6WKr9RlrF5eYjAyqj7EZw4eNXZd4nTKbpjITRvnCPr6WlP
-	1JGnw1l5qiHBYVwpdZ9hVAVZfSGsUOtJkq6m6r+s3fMcAjVuqmUZUYss9F3EAKZI4J3qINt+bXD
-	vF9H4+5WsQ+eylLDM4xaUXeK00h2UTiQJ3WMKYMXbVqVzxFAzpxyXZ98cYAs41YHE1QZubI5Ak/
-	nQmavi/91sV3v5ArfHVYWyj0=
-X-Google-Smtp-Source: AGHT+IHI1CoDf0zET93TFTFwi+XLCs8pimREfQejaLODOte+CXbwQ8+LefkOYFI2CcaZ0a8rBCUzIw==
-X-Received: by 2002:a05:6402:2748:b0:5e5:71e:8c63 with SMTP id 4fb4d7f45d1cf-5e5071e8edemr14033147a12.15.1741022291813;
-        Mon, 03 Mar 2025 09:18:11 -0800 (PST)
-Received: from [192.168.1.105] (91-139-201-119.stz.ddns.bulsat.com. [91.139.201.119])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e4c43a55besm7022334a12.72.2025.03.03.09.18.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Mar 2025 09:18:11 -0800 (PST)
-Message-ID: <9fb63a04-5b3d-40cc-b96f-eb4f297f307e@gmail.com>
-Date: Mon, 3 Mar 2025 19:18:09 +0200
+	s=arc-20240116; t=1741026497; c=relaxed/simple;
+	bh=rTv0ijG4Y1jg8aOqfg1mevw98KDyQ3ZbLmXyHct+QcM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=G6zCVN5JRrSese0eNpJjNXXgM69uHOwWvqSr+slDP+GHrxXSwkeepswpeEN8rDdBdarYv1FWZm9WsauhXP6hy2XIcbHulVOz/eWDuX3UO8MqZjddyCGIL7SozngHNaF5XNdDk+aXKLJO/RW2GjcNonqHh37OzWVfuBNbxZAFwWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nYlOwgyz; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523B17Gj000958;
+	Mon, 3 Mar 2025 18:28:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=mWBUAND2jMvUI68h8cXcib
+	OJmnxxc14QYWwE2utG2JY=; b=nYlOwgyzzHZtx2jIzlcHfITsArrrGWfN3kDJ2t
+	WPoxeyXkl8TQ4gaHhdYOewV0ch/S3a69vGHk92R2uuZG/zLhBGV6WliQX9wPFljE
+	tFAhwVrzeCKZVXHkVudlDEPc4sFQo0Yj4Yx+EzR5+7a5JUaWnGwHTHjVbPOOS7bW
+	5j2Sqt7/0VTCN6dk8Ojf7QsxwNd4wqTwwubm2XCuNUyWAdj4ONqH/MpraW7+iLeB
+	2DjUtvSDSJf/ioqM14KVYCY2u5jLbX4cQLi4tnuwRO80EVH1PmzJZMmqSAfMWA2L
+	4Lo9zb6FyFjYQ2J9GgGv4bjxwxar1XyVH/IGDkd5Fd972Z7Q==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453t95wsva-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Mar 2025 18:28:07 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 523IS6EM006933
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Mar 2025 18:28:06 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 3 Mar 2025 10:28:05 -0800
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Date: Mon, 3 Mar 2025 10:28:00 -0800
+Subject: [PATCH RFC] drm/msm/dpu: Force modeset if new CTLs have been
+ reserved
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] dt-bindings: phy: add
- samsung,exynos2200-usbcon-phy schema file
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Abel Vesa <abel.vesa@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
- <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
- <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
- <a4f63721-d094-4eda-b68a-6ef62ff54680@gmail.com>
- <c8184542-5dab-4403-bee4-867810397ae4@kernel.org>
- <4502b578-96e6-49e0-8f3b-54f6e5640c55@gmail.com>
- <354d6100-311f-44d7-b8a5-1fd671b651e3@kernel.org>
-From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-In-Reply-To: <354d6100-311f-44d7-b8a5-1fd671b651e3@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20250303-force-modeset-hw-ctl-v1-1-9cbf6d4fbf8e@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIALD0xWcC/21PyWrDMBD9FaNzBdLI2nwt9AN6LTloGdWC2E5lx
+ WkJ+fcqaQiF9jS8mbfNmaxYMq5k6M6k4JbXvMwN8KeOhNHN70hzbJgAA8kADE1LCUinJeKKlY4
+ nGuqeRgbeMAfe94E06aFgyp832zfy+vJMdj/Lgh/HFlHvl0fC0DX/ngMAjWWiMZf69cgwhmnrI
+ 2iHatiA/K52E7ZizNJ4ONIgkgvapKC4vlMProbxxkzeoNPeog5GJnd1lMYGJSXnzAgDDoRk7P8
+ AzlurOmJpY3V+j9Rr7TkKbrVOw8b/qnqmuKFhmcOxFJwrPXlqdVQgjE5WwrCpq8i7FRtrmnIdO
+ qMU9sLbXvpkTTLYfo/J9RKDs5Cs4Ek4JoDsLpdvv8X1kbwBAAA=
+X-Change-ID: 20250228-force-modeset-hw-ctl-d02b80a2bb4c
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: Abhinav Kumar <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>,
+        "Jessica
+ Zhang" <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.15-dev-f0f05
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1741026485; l=6237;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=rTv0ijG4Y1jg8aOqfg1mevw98KDyQ3ZbLmXyHct+QcM=;
+ b=/AoYFcIzBi1s8fDLKXYokxW3oiO45xaz61z7I/CT+KWZL6btUS9MQuO6wJUCxUECMh7wqLwwQ
+ PkxYIxyOUTCCsA7eb2BcCZ/+WHRkfDD0KtmJqJQW5JI6ZgFR7SslPzK
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 0E42vUDQHO_gYKbLxyznwv8ZLb1_5t1p
+X-Proofpoint-GUID: 0E42vUDQHO_gYKbLxyznwv8ZLb1_5t1p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-03_09,2025-03-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ phishscore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503030141
 
-On 3/3/25 09:24, Krzysztof Kozlowski wrote:
-> On 02/03/2025 10:16, Ivaylo Ivanov wrote:
->> On 2/25/25 10:11, Krzysztof Kozlowski wrote:
->>> On 24/02/2025 11:48, Ivaylo Ivanov wrote:
->>>> On 2/24/25 10:56, Krzysztof Kozlowski wrote:
->>>>> On Sun, Feb 23, 2025 at 02:22:22PM +0200, Ivaylo Ivanov wrote:
->>>>>> The Exynos2200 SoC has a USB controller PHY, which acts as an
->>>>>> intermediary between a USB controller (typically DWC3) and other PHYs
->>>>>> (UTMI, PIPE3). Add a dt-binding schema for it.
->>>>>>
->>>>>> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->>>>>> ---
->>>>>>  .../phy/samsung,exynos2200-usbcon-phy.yaml    | 76 +++++++++++++++++++
->>>>>>  1 file changed, 76 insertions(+)
->>>>>>  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->>>>> You have undocumented dependencies which prevent merging this file.
->>>>> First, dependencies have to be clearly expressed.
->>>> They are, in the cover letter.
->>> Where? I read it twice. Dependencies is the most important thing and
->>> should scream at beginning of the cover letter, so if you bury them
->>> somewhere deep it also would not matter - just like they were missing.
->>>
->>>>> Second, you should
->>>>> rather decouple the code from header dependencies, otherwise this cannot
->>>>> be merged for current release (just use clocks with long names, without IDs).
->>>> Sure
->>>>>> diff --git a/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->>>>>> new file mode 100644
->>>>>> index 000000000..7d879ec8b
->>>>>> --- /dev/null
->>>>>> +++ b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->>>>>> @@ -0,0 +1,76 @@
->>>>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>>>>> +%YAML 1.2
->>>>>> +---
->>>>>> +$id: http://devicetree.org/schemas/phy/samsung,exynos2200-usbcon-phy.yaml#
->>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>>>> +
->>>>>> +title: Exynos2200 USB controller PHY
->>>>>> +
->>>>>> +maintainers:
->>>>>> +  - Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->>>>>> +
->>>>>> +description:
->>>>>> +  Exynos2200 USB controller PHY is an intermediary between a USB controller
->>>>>> +  (typically DWC3) and other PHYs (UTMI, PIPE3).
->>>>> Isn't this the same as usbdrd phy? see: samsung,usb3-drd-phy.yaml
->>>> It's not (I think). There's a few reasons I've decided to make this separate
->>>> from the usb3-drd-phy bindings and exynos5-usbdrd driver:
->>>>
->>>> 1. This PHY does not provide UTMI and PIPE3 on its own. There's no tuning
->>> USBDRD phy does not provide UTMI and PIPE on its own either if you look
->>> at diagram - they call it phy controller.
->> Ughm. What? So in most exynos cases, there's a combination of multiple phys?
->
->>>> for them, and all that is needed from it is to disable HWACG, assert/
->>>> deassert reset and force bvalid/vbusvalid. After that SNPS eUSB2
->>>> initialization can be done and USB2 works. If the USBCON phy is not set
->>>> up before the eUSB2 one, the device hangs, so there is definitely a
->>>> dependancy between them. For PIPE3 we'd need to control the pipe3
->>>> attaching/deattaching and then initialize the synopsys USBDP combophy.
->>> Does it mean there is no USB DRD phy controller as before?
->>>
->>> Anyway the problem is you have DWC3 -> PHY -> PHY. Looks one phy too many.
->> So...
->>
->> DWC3 -> USBDRD (USBCON) -> PHYs?
-> No, drop last phy. You just wrote the same as me - two phys, because
-> usbdrd is the phy. In all existing designs there is no such controllable
-> object from the point of view of operating system.
+If new CTLs are reserved by CRTC but atomic_enable() is skipped, the
+encoders will configure the stale CTL instead of the newly reserved one.
 
-What? Per my understanding, the phy property should refer to whatever is
-is connected to dwc3 UTMI. In this case it's the so-called USBDRD phy (called
-usbcon in downstream). Considering that the eUSB2 IP definitely also has UTMI
-that has to be connected to something, doesn't that mean we have clearly
-separated hardware blocks? Now, I guess one could argue that this USBCON
-hardware block could be classified as a syscon. But I don't see the problem
-with the current binding description, nor the modelling, as it represents
-how the hardware is (unless I've gotten it completely wrong).
+Avoid this by setting mode_changed to true if new CTLs have been
+reserved by CRTC.
+
+Note: This patch only adds tracking for the CTL reservation, but eventually
+all HW blocks used by encoders (i.e. DSC, PINGPONG, CWB) should have a
+similar check to avoid the same issue.
+
+Suggested-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Closes: https://lists.freedesktop.org/archives/freedreno/2025-February/036719.html
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 13 +++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 12 ++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  1 +
+ 3 files changed, 26 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 4073d821158c0..a1a8be8f5ab9f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -1406,19 +1406,32 @@ int dpu_crtc_check_mode_changed(struct drm_crtc_state *old_crtc_state,
+ 	struct drm_crtc *crtc = new_crtc_state->crtc;
+ 	bool clone_mode_enabled = drm_crtc_in_clone_mode(old_crtc_state);
+ 	bool clone_mode_requested = drm_crtc_in_clone_mode(new_crtc_state);
++	struct dpu_crtc_state *cstate = to_dpu_crtc_state(new_crtc_state);
++	uint32_t enc_ctl_mask = 0;
++	uint32_t crtc_ctl_mask = 0;
++	struct dpu_crtc_mixer *m;
+ 
+ 	DRM_DEBUG_ATOMIC("%d\n", crtc->base.id);
+ 
++	for (int i = 0; i < cstate->num_mixers; i++) {
++		m = &cstate->mixers[i];
++		crtc_ctl_mask |= BIT(m->lm_ctl->idx - CTL_0);
++	}
++
+ 	/* there might be cases where encoder needs a modeset too */
+ 	drm_for_each_encoder_mask(drm_enc, crtc->dev, new_crtc_state->encoder_mask) {
+ 		if (dpu_encoder_needs_modeset(drm_enc, new_crtc_state->state))
+ 			new_crtc_state->mode_changed = true;
++		enc_ctl_mask |= dpu_encoder_get_ctls(drm_enc);
+ 	}
+ 
+ 	if ((clone_mode_requested && !clone_mode_enabled) ||
+ 	    (!clone_mode_requested && clone_mode_enabled))
+ 		new_crtc_state->mode_changed = true;
+ 
++	if (crtc_ctl_mask != enc_ctl_mask)
++		new_crtc_state->mode_changed = true;
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index a61598710acda..2f3101caeba91 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -188,6 +188,7 @@ struct dpu_encoder_virt {
+ 
+ 	unsigned int dsc_mask;
+ 	unsigned int cwb_mask;
++	unsigned int ctl_mask;
+ 
+ 	bool intfs_swapped;
+ 
+@@ -707,6 +708,13 @@ void dpu_encoder_update_topology(struct drm_encoder *drm_enc,
+ 	}
+ }
+ 
++uint32_t dpu_encoder_get_ctls(struct drm_encoder *drm_enc)
++{
++	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
++
++	return dpu_enc->ctl_mask;
++}
++
+ bool dpu_encoder_needs_modeset(struct drm_encoder *drm_enc, struct drm_atomic_state *state)
+ {
+ 	struct drm_connector *connector;
+@@ -1155,6 +1163,7 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+ 	bool is_cwb_encoder;
+ 	unsigned int dsc_mask = 0;
+ 	unsigned int cwb_mask = 0;
++	unsigned int ctl_mask = 0;
+ 	int i;
+ 
+ 	if (!drm_enc) {
+@@ -1245,11 +1254,14 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+ 				"no ctl block assigned at idx: %d\n", i);
+ 			return;
+ 		}
++		ctl_mask |= BIT(phys->hw_ctl->idx - CTL_0);
+ 
+ 		phys->cached_mode = crtc_state->adjusted_mode;
+ 		if (phys->ops.atomic_mode_set)
+ 			phys->ops.atomic_mode_set(phys, crtc_state, conn_state);
+ 	}
++
++	dpu_enc->ctl_mask = ctl_mask;
+ }
+ 
+ static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+index ca1ca2e51d7ea..70b03743dc346 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+@@ -91,6 +91,7 @@ bool dpu_encoder_needs_modeset(struct drm_encoder *drm_enc, struct drm_atomic_st
+ 
+ void dpu_encoder_prepare_wb_job(struct drm_encoder *drm_enc,
+ 		struct drm_writeback_job *job);
++uint32_t dpu_encoder_get_ctls(struct drm_encoder *drm_enc);
+ 
+ void dpu_encoder_cleanup_wb_job(struct drm_encoder *drm_enc,
+ 		struct drm_writeback_job *job);
+
+---
+base-commit: 866e43b945bf98f8e807dfa45eca92f931f3a032
+change-id: 20250228-force-modeset-hw-ctl-d02b80a2bb4c
+prerequisite-change-id: 20241222-drm-dirty-modeset-88079bd27ae6:v2
+prerequisite-patch-id: 0c61aabfcd13651203f476985380cbf4d3c299e6
+prerequisite-patch-id: c6026f08011c288fd301676e9fa6f46d0cc1dab7
+prerequisite-patch-id: b0cb06d5c88791d6e4755d879ced0d5050aa3cbf
+prerequisite-patch-id: fd72ddde9dba0df053113bc505c213961a9760da
+prerequisite-change-id: 20250209-dpu-c3fac78fc617:v2
+prerequisite-patch-id: c84d2b4b06be06384968429085d1e8ebae23a583
+prerequisite-patch-id: fb8ea7b9e7c85fabd27589c6551108382a235002
+prerequisite-change-id: 20250211-dither-disable-b77b1e31977f:v1
+prerequisite-patch-id: 079e04296212b4b83d51394b5a9b5eea6870d98a
+prerequisite-change-id: 20240618-concurrent-wb-97d62387f952:v6
+prerequisite-patch-id: b52034179741dc182aea9411fd446e270fdc69d1
+prerequisite-patch-id: bc472765a7d5214691f3d92696cc8b0119f3252e
+prerequisite-patch-id: c959bc480e96b04297ebaf30fea3a68bbac69da6
+prerequisite-patch-id: f7db8449b241a41faac357d9257f8c7cb16503ec
+prerequisite-patch-id: 7beb73131d0ab100f266fcd3c1f67c818a3263f4
+prerequisite-patch-id: c08cbb5cf4e67e308afd61fdad6684b89429d3b6
+prerequisite-patch-id: a4e343143b8fbe98ae4aa068cc459c750105eb9d
+prerequisite-patch-id: 1d09edcf12ef7e7ab43547eefacae5b604b698e9
+prerequisite-patch-id: 0008f9802bfd3c5877267666cceb7608203e5830
+prerequisite-patch-id: 49402eb767c97915faf2378c5f5d05ced2dcfdac
+prerequisite-patch-id: 522be2a6b5fe4e3a2d609526bb1539f9bc6f828f
+prerequisite-patch-id: 031da00d0fffd522f74d682a551362f3ecda0c71
+prerequisite-patch-id: 9454cec22231a8f3f01c33d52a5df3e26dd88287
+prerequisite-patch-id: 7edbeaace3549332e581bee3183a76b0e4d18163
 
 Best regards,
-Ivaylo
-
->
->> ...with usbdrd controller connecting and controlling the USB2 and USB3
->> phys, as well as dual role mode?
-> Yes.
->
->> Well, where is the DRD part in the exynos5
->> driver?
-> DRD? I believe it is part of DWC3, the same as in every other standard
-> implementation of Synopsys DWC3.
->
->> I guess it does perfectly fit the job of a usbdrd controller then (if it
->> even deals with DRD). But then again,  this brings up two questions:
->> 1. Should this driver even be named exynos2200-usbcon and not, for
->> example, exynos2200-usbdrd?
-> Are you sure we talk about the same thing? USBDRD is IP block in the
-> Exynos and a device driver. Call your device as appropriate it is -
-> based on datasheet or downstream sources.
->
->> 2. Are the exynos5-usbdrd phys really only USBDRD, or do they implement
->> USB speed functionality? What is the UTMI/PIPE3 setup for then?
-> Dunno, I don't get what you mean by "exynos5-usbdrd phys really only
-> USBDRD". USBDRD is just the name of the device.
->
-> Best regards,
-> Krzysztof
+-- 
+Jessica Zhang <quic_jesszhan@quicinc.com>
 
 
