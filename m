@@ -1,246 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-50042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F2E1A4C97F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 18:30:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 85F81A4C9B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 18:35:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0806166B0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 17:23:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 365C9178EBB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 17:28:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 952E52505AC;
-	Mon,  3 Mar 2025 17:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3350622B587;
+	Mon,  3 Mar 2025 17:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="C213ZEtX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RAH8S/Eu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A072500C6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Mar 2025 17:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0394284A3E;
+	Mon,  3 Mar 2025 17:13:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741021838; cv=none; b=JlgDo2LcUi0myPgusbOZQ9/qPP01bNF2Kq4qCjGklGhvRA2nFTMP/XqWEMvwm/YZD9mLt5R6U230+qfJE+/w55GQjfkv1TH66Yli/UfZOj8kagY0kLB9UoDdn9JPJw8HNSedMm+3y5U7nxHn+5vRCfwlGr8lRYj0SGmz9o7KyMY=
+	t=1741022007; cv=none; b=UAhKJTw4tIz9q9id9D3HM4EPBljqn+N67JWVxq8Y1ct2PCzj7fWxv+0/mPE+KgFomBUWhjZuu2E25aYpGyBPw9Ezi1mcODhClfUh2d8TmAiuUbJUwBKFJO/eNyG2o3NR7RqG1CzflBsPGyb5ldD++GcpNiWhaZAQsuAD+ebJKJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741021838; c=relaxed/simple;
-	bh=hHukxtvv+DhlvOpnT6JJgLuCaUBAiA8jyPZaBpcbwYI=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=RT2DJoeVhUSFhAMBPYjTJlnOpOPuJbJrsfB1dinWuqH/MQwUbOScvmLBxfbSxLD5Gole1tsW+yn//edLp5UCf4DW6c0qCvV364tEwH7DfiMDWbguewrlArn74i4iEroO/sSwi9p95sVp2GLeiTSPlKqVYkQkNyqQlBiWD9w4/Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=C213ZEtX; arc=none smtp.client-ip=209.85.128.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-4399c32efb4so24411255e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Mar 2025 09:10:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1741021835; x=1741626635; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=shxzjltmhVCSEs3XLEEf6Hj2khLkpxaqKL228sddyqU=;
-        b=C213ZEtXEyvOT7om2kBYwZvTyG2f2rRjVduaq9UV7JfVr8UTn1RuuPQmfBdmdo8F6D
-         6a4UD48fVYtI4+AFwK/jjTjWuqGeAuJUJCcmsNujeVl1dD0LwrdXQL/yokT99Sd145l5
-         C7HRuhWPvAUp7o1Yuv7lF6QQsPJNJkYjPn4LQejBW7bd6U5REVJCrGsIoM6cSeFGNGcZ
-         0VL/o8TVGXOvrnNe0jdbVElZyBdJw6rYVmKqs10O2tfnRbw4zJ//RWWgHIL1djEudJOh
-         KZzBn0uda4dTrAIWj95uldgnzz2G28kWsSd0LbIahwpkjzrkm7hRVoqU7yUlZwMDh/ZI
-         zQyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741021835; x=1741626635;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=shxzjltmhVCSEs3XLEEf6Hj2khLkpxaqKL228sddyqU=;
-        b=OKeh/IMA6UqUvdo01BA7uZH4cuzqKze4MHGjxnkdVocWCe93w82tMqp1wlq8SdY2ca
-         ZaAHy5QhG6yr3jkt+tuPE55DEodmErMUy5nH41BAiHplLmpVWbFTJXabP1x+r8Q/SxzO
-         xxURzH+y475xTtaA0OSP000Maf2z82yi98YKTTr4H7/0mMc+yQIrpuZ+Xnfgf4sS8JFa
-         n3VxBZrnHfLqW2OV2GGwSO7ha7a5R+Qn4OtjKuJAQOohXHgrcFHE+9bwy5emsJp0lmqs
-         dGKKtHeVYV9vTKzX1NF8Yxtb5WBALIa1knTJ1cC2qTrwX3lP6xz1xhYJ10y8Ef4uCOSj
-         ehug==
-X-Forwarded-Encrypted: i=1; AJvYcCWcNI2oCBrv0R+JKhq4gc1XEXPoOGTEY+/Paz+JF7TUVINukCz0lK7hzlr7vZ2pOmSCOVZ2XFDP2O8Yweyq@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCSGdFEIX5Fea4SKwaOboM+ATwSLNp5NKWuAU9aStBya8SVuNr
-	//xy7OkRgLRW6/VwBffk1ymu02HBBmmneRCzMoxYsZ2gwDbs/EKqICE4P7hHTnWAaiMbyNvNGw=
-	=
-X-Google-Smtp-Source: AGHT+IFRshHAVxkzqZnB+ggYu/XSK/78X/FWHRdv+7cCRWE1mXA23VnZ9DwQ8SGznRbx9niCQ37rSqzPuA==
-X-Received: from wmsd10.prod.google.com ([2002:a05:600c:3aca:b0:439:7e67:ca7b])
- (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6000:2c7:b0:390:f0ff:2c10
- with SMTP id ffacd0b85a97d-390f0ff30camr10550328f8f.19.1741021834976; Mon, 03
- Mar 2025 09:10:34 -0800 (PST)
-Date: Mon,  3 Mar 2025 17:10:13 +0000
-In-Reply-To: <20250303171013.3548775-1-tabba@google.com>
+	s=arc-20240116; t=1741022007; c=relaxed/simple;
+	bh=1luRRAtHx62+WeyQsGa1fiqfn/Fgjx0ffNr7iR6L68E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=M3UD0o3o/2XAk7bLKWe3I1kHpSzmxDncfNMkKrs7h4fynG5gp1RSXfyUUugLi4pq9lW0kcvUWMysIARw7x6vc5p/uIlsymPks9jRmzxWrGllQop+81Vx8zf8h3VZs7mXqZmnPDWDc4fwa4vcQPPDzjd6fnBHNc2S4MDBRBqWTEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RAH8S/Eu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722FCC4CED6;
+	Mon,  3 Mar 2025 17:13:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741022006;
+	bh=1luRRAtHx62+WeyQsGa1fiqfn/Fgjx0ffNr7iR6L68E=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RAH8S/EuQyPZe3MAfJsJjXWxXXWboT5EskNh7vcL+l/GmwKZpQ1D1TgcG9wGmrtDw
+	 YqDN2fS1kiFVEs5U3sSIDqjFIj5+ap5MfPwd3OXHpCOkCyHfcX676TG2AAgjvXquwa
+	 N+xdmRV3pExjHjGACQyy+4rQV/XLm+/h8Sw5WBhy7WzWLHyKfAZhn6jtbUn1sGkceP
+	 l5q+ZuymxW96M8eq1Py/nxU37zQT7J7sSHUsTHdkSS6KUupB+vt63e6VJdU5/7LcXJ
+	 hd40JriH7RDWRbREPUE7XhRUaqiJOUCioUlBp15t1T1rtIQnZAXEDZ5lAU7BOxUzt0
+	 F3MOi+iIe1OKw==
+Message-ID: <ca8e6569-b466-4f83-83af-38c51891d395@kernel.org>
+Date: Mon, 3 Mar 2025 18:13:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250303171013.3548775-1-tabba@google.com>
-X-Mailer: git-send-email 2.48.1.711.g2feabab25a-goog
-Message-ID: <20250303171013.3548775-10-tabba@google.com>
-Subject: [PATCH v5 9/9] KVM: guest_memfd: selftests: guest_memfd mmap() test
- when mapping is allowed
-From: Fuad Tabba <tabba@google.com>
-To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 2/2] arm64: dts: qcom:
+ qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20250208225143.2868279-1-quic_vikramsa@quicinc.com>
+ <20250208225143.2868279-3-quic_vikramsa@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250208225143.2868279-3-quic_vikramsa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Expand the guest_memfd selftests to include testing mapping guest
-memory for VM types that support it.
+On 08/02/2025 23:51, Vikram Sharma wrote:
+> The Vision Mezzanine for the Qualcomm RB3 Gen 2 ships with an imx577
+> camera sensor. Enable IMX577 on the vision mezzanine.
+> 
+> An example media-ctl pipeline for the imx577 is:
+> 
+> media-ctl --reset
+> media-ctl -V '"imx577 '17-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
 
-Also, build the guest_memfd selftest for aarch64.
+AFAIU, camss does not support SRGGB10, but only SRGGB10P.
 
-Signed-off-by: Fuad Tabba <tabba@google.com>
----
- tools/testing/selftests/kvm/Makefile.kvm      |  1 +
- .../testing/selftests/kvm/guest_memfd_test.c  | 75 +++++++++++++++++--
- 2 files changed, 70 insertions(+), 6 deletions(-)
+Based on tests reported on IRC I think this might not have been tested
+correctly.
 
-diff --git a/tools/testing/selftests/kvm/Makefile.kvm b/tools/testing/selftests/kvm/Makefile.kvm
-index 4277b983cace..c9a3f30e28dd 100644
---- a/tools/testing/selftests/kvm/Makefile.kvm
-+++ b/tools/testing/selftests/kvm/Makefile.kvm
-@@ -160,6 +160,7 @@ TEST_GEN_PROGS_arm64 += coalesced_io_test
- TEST_GEN_PROGS_arm64 += demand_paging_test
- TEST_GEN_PROGS_arm64 += dirty_log_test
- TEST_GEN_PROGS_arm64 += dirty_log_perf_test
-+TEST_GEN_PROGS_arm64 += guest_memfd_test
- TEST_GEN_PROGS_arm64 += guest_print_test
- TEST_GEN_PROGS_arm64 += get-reg-list
- TEST_GEN_PROGS_arm64 += kvm_create_max_vcpus
-diff --git a/tools/testing/selftests/kvm/guest_memfd_test.c b/tools/testing/selftests/kvm/guest_memfd_test.c
-index ce687f8d248f..38c501e49e0e 100644
---- a/tools/testing/selftests/kvm/guest_memfd_test.c
-+++ b/tools/testing/selftests/kvm/guest_memfd_test.c
-@@ -34,12 +34,48 @@ static void test_file_read_write(int fd)
- 		    "pwrite on a guest_mem fd should fail");
- }
- 
--static void test_mmap(int fd, size_t page_size)
-+static void test_mmap_allowed(int fd, size_t total_size)
- {
-+	size_t page_size = getpagesize();
-+	const char val = 0xaa;
-+	char *mem;
-+	int ret;
-+	int i;
-+
-+	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-+	TEST_ASSERT(mem != MAP_FAILED, "mmaping() guest memory should pass.");
-+
-+	memset(mem, val, total_size);
-+	for (i = 0; i < total_size; i++)
-+		TEST_ASSERT_EQ(mem[i], val);
-+
-+	ret = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, 0,
-+			page_size);
-+	TEST_ASSERT(!ret, "fallocate the first page should succeed");
-+
-+	for (i = 0; i < page_size; i++)
-+		TEST_ASSERT_EQ(mem[i], 0x00);
-+	for (; i < total_size; i++)
-+		TEST_ASSERT_EQ(mem[i], val);
-+
-+	memset(mem, val, total_size);
-+	for (i = 0; i < total_size; i++)
-+		TEST_ASSERT_EQ(mem[i], val);
-+
-+	ret = munmap(mem, total_size);
-+	TEST_ASSERT(!ret, "munmap should succeed");
-+}
-+
-+static void test_mmap_denied(int fd, size_t total_size)
-+{
-+	size_t page_size = getpagesize();
- 	char *mem;
- 
- 	mem = mmap(NULL, page_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
- 	TEST_ASSERT_EQ(mem, MAP_FAILED);
-+
-+	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-+	TEST_ASSERT_EQ(mem, MAP_FAILED);
- }
- 
- static void test_file_size(int fd, size_t page_size, size_t total_size)
-@@ -170,19 +206,27 @@ static void test_create_guest_memfd_multiple(struct kvm_vm *vm)
- 	close(fd1);
- }
- 
--int main(int argc, char *argv[])
-+unsigned long get_shared_type(void)
- {
--	size_t page_size;
-+#ifdef __x86_64__
-+	return KVM_X86_SW_PROTECTED_VM;
-+#endif
-+	return 0;
-+}
-+
-+void test_vm_type(unsigned long type, bool is_shared)
-+{
-+	struct kvm_vm *vm;
- 	size_t total_size;
-+	size_t page_size;
- 	int fd;
--	struct kvm_vm *vm;
- 
- 	TEST_REQUIRE(kvm_has_cap(KVM_CAP_GUEST_MEMFD));
- 
- 	page_size = getpagesize();
- 	total_size = page_size * 4;
- 
--	vm = vm_create_barebones();
-+	vm = vm_create_barebones_type(type);
- 
- 	test_create_guest_memfd_invalid(vm);
- 	test_create_guest_memfd_multiple(vm);
-@@ -190,10 +234,29 @@ int main(int argc, char *argv[])
- 	fd = vm_create_guest_memfd(vm, total_size, 0);
- 
- 	test_file_read_write(fd);
--	test_mmap(fd, page_size);
-+
-+	if (is_shared)
-+		test_mmap_allowed(fd, total_size);
-+	else
-+		test_mmap_denied(fd, total_size);
-+
- 	test_file_size(fd, page_size, total_size);
- 	test_fallocate(fd, page_size, total_size);
- 	test_invalid_punch_hole(fd, page_size, total_size);
- 
- 	close(fd);
-+	kvm_vm_release(vm);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+#ifndef __aarch64__
-+	/* For now, arm64 only supports shared guest memory. */
-+	test_vm_type(VM_TYPE_DEFAULT, false);
-+#endif
-+
-+	if (kvm_has_cap(KVM_CAP_GMEM_SHARED_MEM))
-+		test_vm_type(get_shared_type(), true);
-+
-+	return 0;
- }
--- 
-2.48.1.711.g2feabab25a-goog
-
+Best regards,
+Krzysztof
 
