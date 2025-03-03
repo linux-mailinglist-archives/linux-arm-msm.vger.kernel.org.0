@@ -1,250 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-50005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD80BA4C169
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 14:13:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29202A4C22D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 14:39:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A5B53A9098
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 13:12:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35D8C171485
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 13:39:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC5E121147C;
-	Mon,  3 Mar 2025 13:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C924A78F44;
+	Mon,  3 Mar 2025 13:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="be79Ceip"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hX7P9/Jp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9E31CAA71;
-	Mon,  3 Mar 2025 13:12:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A96C212B15
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Mar 2025 13:39:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741007569; cv=none; b=X5Up04KHrq1fQTX/zkG9u76tQ6pWHL5mQtkEfYTDfaU5A+IoIjr1fL92nuiaBRcg3P1DstKfT9QwL4YHyrInFNx1Ur9KJU4zu1hEiDnf4k74XQ2Ey7IfURB9MVsZxETsUrqLlgtNcQQf1tbhzP4wyXYziNh/XJd66Qvi9+pZQpE=
+	t=1741009175; cv=none; b=us8nL3MK8sznuXpbuYbvigGl1YvTsGIe1YQOzWFkYdEApl2BUMrPQ5fZHNaazn9vXAA6uWCTooHI2ReyTyupmK+d3amtdlH5hYrh/VJs1CzO7pyJkwciWmaCQSVtcvSniQA3+YQAdimEtxKWK0RzJ+RC3wTAAYcqzNNZMZGqsVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741007569; c=relaxed/simple;
-	bh=rRzYE95dsqN15rv7okacsGJpSNtv6A5QyDSxOsXYKB0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qpHbVJ6WimfCaUwF0FcF5aNcX4+HKiJFzvZghx/W/O6nRgENd8z4tLoAEKrKW+1DdN8fEHugr+QjYWKOHow2rx9T9/F+nBMgO/eink+Xx3nLHWXztdbrXejDQkMqbx1lUSfgLxXIszERrm+MKiXGAsqXgsIbq/ZrIUhiSkjRVco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=be79Ceip; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523A9uuO031419;
-	Mon, 3 Mar 2025 13:12:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/A5hTENiBu6HWH+Nll002NAkm5mg5aAMGPNhwCyq8Wg=; b=be79CeipphQnuti0
-	eEXAx7YntFPSRO4+IT7A83BccjaLdhFGYNLUS3AO2lwGlM0QrNZrO4p7eR1oVsop
-	TDWNCJwNmLRxbNn3B1mai8Sy88mvEdfn+wKGYcKQD5N51jE9+jD1512YqdXgyFfU
-	JxHGBIa2+vooUO079egA/rZCWwxrFE2nToxBc32NC4nzI6Ti4KIKWaguR+v24tUP
-	PheOyAd4SUV2haqVRgK2+iG1xwTZfMKCEDsG0Eqh4rl8K7ZFk3wJIHu3g7mFQovR
-	XOMVXaydVcoEy1iaQPsQ2S8R/vFs9a/G4cktu7RuzmJymfonl83f4tOPu7DJ95N3
-	jIwGtA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453uh74q41-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Mar 2025 13:12:42 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 523DCgWI007733
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Mar 2025 13:12:42 GMT
-Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Mar 2025
- 05:12:39 -0800
-Message-ID: <ba1e7a20-2f68-15e0-bc4a-fe52bc4036cc@quicinc.com>
-Date: Mon, 3 Mar 2025 18:42:36 +0530
+	s=arc-20240116; t=1741009175; c=relaxed/simple;
+	bh=W42VFbcHM6C8HgZoC7QynK+IoHwG9vv9+hfbJQmY/dU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=t8W/fh9I/sQdvbpDJ8pJCDIW8Bq6qsioviC4YAxgUfUHPgG3RAqaZ63Vo1gu4OdYHetEctN6MCV71JM3DNgzG5IJErTqECnvBgpDhoIxAaubQF2+IicrQqkMo2TzHySouuOqRZ9rVWF1Uvv7MLtPQgYBqcPSqW3RPjExL9LjbTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hX7P9/Jp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523AaHQ8017350
+	for <linux-arm-msm@vger.kernel.org>; Mon, 3 Mar 2025 13:39:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=nIQVnwUkhcucJ5H4WOAoDo
+	sI74zNR+7bQG2dUOq+y6g=; b=hX7P9/JpXtq8Bw8UBWc35JBKUJ0MdCrPjAtwWa
+	AqUwoi6dCkaE7HFlJkuNQltmwuXx3tZfCtgyne5P7vuK6xT+y7ZF1O9MVKYfergL
+	B9mFLQU3bn0UFiIlJdsCxN6XWC5YGWroc0VO/FsltQZTVNn5GIhwnUuRRivrxbUN
+	vOI40Ona0QfQmNg1L4zE8oZRIpXCGXfgeOtH5FJxbju+YrSg6hUJykzU7x0IR259
+	vFkukdQOAZkv6CKWEMvkvsyF+iqJbF083VwdFhuF/KtHaKKv8Niic1pq+RwYOmtF
+	EfRKVoimXJ+5Z+YQANtS9ynbYwzSX8JKE4Ah5+BiCu3Gg6xg==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453t95w37w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 03 Mar 2025 13:39:32 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-223a2770b75so26038895ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Mar 2025 05:39:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741009171; x=1741613971;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nIQVnwUkhcucJ5H4WOAoDosI74zNR+7bQG2dUOq+y6g=;
+        b=aEanR+ZF+rbaFC66veXKKl3vVz3QX7uQ70IxFcO454ZdXGcAxBMGP9esGbrwqAR+JG
+         U9n+2d1i+5x3W8iIiiY4eVK3TqkeTpNX5uoAWphmSEoe7gxw63s6NF4pWInM0QeEmvoe
+         ktj+n5I5rKJuorKd5ZsVp1VXLox8bijzkWYTjCutdt1VWQ9nEytGhgmP7Ay8hnFRPFQ6
+         b3koM/sj0YJQXUM6QseYZgUhulARX/PPahh39pQKNWbgu3WAkWMwmjEkLVMbKkHHfJ5U
+         5S8np8RxPxte6E8UGWgjSuXz8M1krka8zysyzmsC8PHkBd0TPSLk4QRe5e2BnJJDv64C
+         ZdOA==
+X-Gm-Message-State: AOJu0YydG2HfFLxcIly62IBjpwz0Sbm0g7NN3IW5YceAJrtBKzHWVlg2
+	XdG/YgRRZx6ogPs+274eEkBI4l2Y9U+ATlwFv6fFk2fcWRPmKD2hHW0ATqzHAeLI4P9UFYBFbzi
+	b9qxWOt7FbQHPfESWIXtlc36/NMai6vLILSok1wkZTLy45YM/xr4bGpO1Q7IDbsmHvBl/j60I
+X-Gm-Gg: ASbGncui6u9Trfj1HDfYPnYUQ9C0aPQj60rbYPEyIiNUxgh6oUaGkSnviDZ89vyEcIT
+	6F5SuE1fHFsoIakU6GF8awTJVqZvDivy0oJUm7VCU6Id5LfGj0DrxI5fWPZM5aw3ibyztupcVKv
+	160W4e3xUR8nSfJ7tWmc1U68Ic7uXGT3gE/Pck1L1TGRQwf09uYkfET/dfgegro5rmk8A0xZiFL
+	GDKXEjCbMK9IVy9fTCD6cYD+BMVL/fssjRKjFEAxqC/vtgtEC5RqHttQmP0ubygFzrFbjwN8SZj
+	R3bTLh7Pfn1NmWvisLMbbo8eqaiPgdrsOqDFPu3DDQON3Z/Zz65mhLQR5871Zig+z63+aQGOUx9
+	Hgd+t+dtU5MyOE6JFFW+GqEbH3di66iLICkvvn9QTFdU48LI4XSA=
+X-Received: by 2002:a05:6a00:1395:b0:736:34a2:8a23 with SMTP id d2e1a72fcca58-73634a28b2emr12020352b3a.15.1741009170910;
+        Mon, 03 Mar 2025 05:39:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGhCNCrjRuRuCl022cqkXQEPD1tlSMudTTCp9392WLz5n8Bj4Pqwey3S/sR07jQTUFTopqirA==
+X-Received: by 2002:a05:6a00:1395:b0:736:34a2:8a23 with SMTP id d2e1a72fcca58-73634a28b2emr12020313b3a.15.1741009170425;
+        Mon, 03 Mar 2025 05:39:30 -0800 (PST)
+Received: from hu-kathirav-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73669aa1497sm221264b3a.92.2025.03.03.05.39.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Mar 2025 05:39:29 -0800 (PST)
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Date: Mon, 03 Mar 2025 19:09:26 +0530
+Subject: [PATCH v2] mailmap: update my email address
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 0/2] venus driver fixes to avoid possible OOB read
- access
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vedang Nagar
-	<quic_vnagar@quicinc.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250215-venus-security-fixes-v2-0-cfc7e4b87168@quicinc.com>
- <c3b27e55-f627-417c-bb62-3189f248fb99@linaro.org>
- <7bf1aeaa-e1bd-412b-90fc-eda30b5f5b37@quicinc.com>
- <19109672-2856-457f-b1f6-305abc6c4434@linaro.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <19109672-2856-457f-b1f6-305abc6c4434@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IZoZLtLgfR3WMfodOcgW0ONGMJVU3Ybc
-X-Proofpoint-ORIG-GUID: IZoZLtLgfR3WMfodOcgW0ONGMJVU3Ybc
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250303-mailmap-v2-1-4a325bca941a@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAA2xxWcC/2WMwQ7CIBAFf6XZszQsVKme/A/TA6XUblJKBSWah
+ n8Xe/XyknmZzAbRBrIRLtUGwSaK5JcC4lCBmfRyt4yGwiC4OHLJJXOaZqdXJs+9MnhC1aCGYq/
+ BjvTeS7eu8ETx6cNnDyf8vf+NhAyZalohx8G03PRXH2P9eOnZeOfqMtDlnL9J4ZVwpQAAAA==
+X-Change-ID: 20250303-mailmap-39b7c161741a
+To: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1741009168; l=1473;
+ i=kathiravan.thirumoorthy@oss.qualcomm.com; s=20230906;
+ h=from:subject:message-id; bh=W42VFbcHM6C8HgZoC7QynK+IoHwG9vv9+hfbJQmY/dU=;
+ b=7IbBPU3YePa+D/g1N6+Mtj+EdOl4SVCL5ns1KKzYNeLsNBAjAbjnZDw4SnvbZwiCbwCXzjek7
+ dWRCFz1lQs1AMy9940gsuK3X07u3gPJSgvae1budABX1pXXp6B9cyYj
+X-Developer-Key: i=kathiravan.thirumoorthy@oss.qualcomm.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+X-Proofpoint-ORIG-GUID: gy-0tGRJV1LvVAvNatUUE-DdukEKeleK
+X-Proofpoint-GUID: gy-0tGRJV1LvVAvNatUUE-DdukEKeleK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-03_07,2025-03-03_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 phishscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 mlxscore=0 spamscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503030101
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ phishscore=0 mlxlogscore=858 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503030105
 
+Qualcomm is migrating away from quicinc.com email addresses towards ones
+with *.qualcomm.com. Incorporate the same.
 
-On 3/2/2025 9:26 PM, Bryan O'Donoghue wrote:
-> On 02/03/2025 11:58, Vedang Nagar wrote:
->>>
->>> The basic question : what is the lifetime of the data from RX interrupt to
->>> consumption by another system agent, DSP, userspace, whatever ?
->> As mentioned in [1], With the regular firmware, after RX interrupt the data
->> can be considered as valid until next interrupt is raised, but with the rouge
->> firmware, data can get invalid during the second read and our intention is to
->> avoid out of bound access read because of such issues.
-> 
-> This is definitely the part I don't compute.
-> 
-> 1. RX interrupt
-> 2. Frame#0 Some amount of time data is always valid
-This is not correct. Its not the amount of time which determines the validity of
-the data, its the possibility of rogue firmware which, if incase, puts up the
-date in shared queue, would always be invalid, irrespective of time.
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+---
+Changes in v2:
+- added linux-arm-msm in the TO list
+- Link to v1: https://lore.kernel.org/r/20250303-mailmap-v1-1-74823fdc80cb@oss.qualcomm.com
+---
+ .mailmap | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-> 3. RX interrupt - new data
-> 4. Frame#1 new data delivered into a buffer
-> 
-> Are you describing a case between RX interrupts 1-3 or a case after 1-4?
-> 
-> Why do we need to write code for rouge firmware anyway ?
-It is a way to prevent any possibility of OOB, similar to how any API does check
-for validity of any arguments passed to it, prior to processing.
-> 
-> And the real question - if the data can be invalidated in the 1-3 window above
-> when is the safe time to snapshot that data ?
-> 
-> We seem to have alot of submissions to deal with 'rouge' firmware without I
-> think properly describing the problem of the _expected_ data lifetime.
-> 
-> So
-> 
-> a) What is the expected data lifetime of an RX buffer between one
->    RX IRQ and the next ?
->    I hope the answer to this is - APSS owns the buffer.
->    This is BTW usually the case in these types of asymmetric setups
->    with a flag or some other kind of semaphore that indicates which
->    side of the data-exchange owns the buffer.
-> 
-> b) In this rouge - buggy - firmware case what is the scope of the
->    potential race condition ?
-> 
->    What I'd really like to know here is why we have to seemingly
->    memcpy() again and again in seemingly incongrous and not
->    immediately obvious places in the code.
-> 
->    Would we not be better advised to do a memcpy() of the entire
->    RX frame in the RX IRQ handler path if as you appear to me
->    suggesting - the firmware can "race" with the APSS
->    i.e. the data-buffer ownership flag either doesn't work
->    or isn't respected by one side in the data-exchange.
-> 
-> Can we please have a detailed description of the race condition here ?
-Below is the report which the reporter reported leading to OOB, let me know if
-you are unable to deduce the trail leading to OOB here.
+diff --git a/.mailmap b/.mailmap
+index 01145c078838bf9348e8d0e5e48b7b0954248dc5..928bcf4e45bcd0f6f8d275b59ef876fb3581a108 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -381,7 +381,8 @@ Kalle Valo <kvalo@kernel.org> <kvalo@codeaurora.org>
+ Kalle Valo <kvalo@kernel.org> <quic_kvalo@quicinc.com>
+ Kalyan Thota <quic_kalyant@quicinc.com> <kalyan_t@codeaurora.org>
+ Karthikeyan Periyasamy <quic_periyasa@quicinc.com> <periyasa@codeaurora.org>
+-Kathiravan T <quic_kathirav@quicinc.com> <kathirav@codeaurora.org>
++Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com> <kathirav@codeaurora.org>
++Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com> <quic_kathirav@quicinc.com>
+ Kay Sievers <kay.sievers@vrfy.org>
+ Kees Cook <kees@kernel.org> <kees.cook@canonical.com>
+ Kees Cook <kees@kernel.org> <keescook@chromium.org>
 
-OOB read issue is in function event_seq_changed, please reference below code
-snippet:
+---
+base-commit: cd3215bbcb9d4321def93fea6cfad4d5b42b9d1d
+change-id: 20250303-mailmap-39b7c161741a
 
-Buggy code snippet:
+Best regards,
+-- 
+Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
-static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
-        struct hfi_msg_event_notify_pkt *pkt)
-...
-num_properties_changed = pkt->event_data2; //num_properties_changed is from
-message and is not validated.
-...
-data_ptr = (u8 *)&pkt->ext_event_data[0];
-do {
- ptype = *((u32 *)data_ptr);
- switch (ptype) {
- case HFI_PROPERTY_PARAM_FRAME_SIZE:
-  data_ptr += sizeof(u32);
-  frame_sz = (struct hfi_framesize *)data_ptr;
-  event.width = frame_sz->width;
-...
- }
- num_properties_changed--;
-} while (num_properties_changed > 0);
-```
-There is no validation against `num_properties_changed = pkt->event_data2`, so
-OOB read occurs.
-> 
-> I don't doubt the new memcpy() makes sense to you but without this detailed
-> understanding of the underlying problem its virtually impossible to debate the
-> appropriate remediation - perhaps this patch you've submitted - or some other
-> solution.
-> 
-> Sorry to dig into my trench here but, way more detail is needed.
-> 
->> [1]: https://lore.kernel.org/lkml/4cfc1fe1-2fab-4256-9ce2-
->> b4a0aad1069e@linaro.org/T/#m5f1737b16e68f8b8fc1d75517356b6566d0ec619
->>>
->>> Why is it in this small specific window that the data can change but not
->>> later ? What is the mechanism the data can change and how do the changes you
->>> propose here address the data lifetime problem ?
->> Currently this issue has been discovered by external researchers at this
->> point, but if any such OOB issue is discovered at later point as well then we
->> shall fix them as well.
-> 
-> Right but, I'm looking for a detailed description of the problem.
-> 
-> Can you describe from RX interrupt again what the expected data lifetime of the
-> RX frame is, which I hope we agree is until the next RX interrupt associated
-> with a given buffer with an ownership flag shared between firmware and APSS -
-> and then under what circumstances that "software contract" is being violated.
-> 
->> Also, with rougue firmware we cannot fix the data lifetime problem in my
->> opinion, but atleast we can fix the out of bound issues.
->>>
->>> Without that context, I don't believe it is really possible to validate an
->>> additional memcpy() here and there in the code as fixing anything.
->> There is no additional memcpy() now in the v2 patch, but as part of the fix,
->> we are just trying to retain the length of the packet which was being read in
->> the first memcpy() to avoid the OOB read access.
-> 
-> I can't make a suggestion because - personally speaking I still don't quite
-> understand the data-race you are describing.
-Go through the reports from the reporter, it was quite evident in leading upto
-OOB case.
-Putting up the sequence for you to go over the interrupt handling and message
-queue parsing of the packets from firmware
-1.
-https://elixir.bootlin.com/linux/v6.14-rc4/source/drivers/media/platform/qcom/venus/hfi_venus.c#L1082
-2.
-https://elixir.bootlin.com/linux/v6.14-rc4/source/drivers/media/platform/qcom/venus/hfi_msgs.c#L816
-3. event handling (this particular case)
-https://elixir.bootlin.com/linux/v6.14-rc4/source/drivers/media/platform/qcom/venus/hfi_msgs.c#L658
-4.
-https://elixir.bootlin.com/linux/v6.14-rc4/source/drivers/media/platform/qcom/venus/hfi_msgs.c#L22
-
-the "struct hfi_msg_event_notify_pkt *pkt" pkt here is having the data read from
-shared queue.
-
-> 
-> I get that you say the firmware is breaking the contract but, without more
-> detail on _how_ it breaks that contract I don't think it's really possible to
-> validate your fix here, fixes anything.
-> 
-> ---
-> bod
-
-Regards,
-Vikash
 
