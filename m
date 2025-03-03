@@ -1,112 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-50205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B794A4E3FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 16:45:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C16BA4E61D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:35:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 254601889A13
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 15:39:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F8228A60DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 16:10:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4080227C844;
-	Tue,  4 Mar 2025 15:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 639A727932E;
+	Tue,  4 Mar 2025 15:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B5pYH20n"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gxu0A/+q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from beeline3.cc.itu.edu.tr (beeline3.cc.itu.edu.tr [160.75.25.117])
+Received: from beeline1.cc.itu.edu.tr (beeline1.cc.itu.edu.tr [160.75.25.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990D327C876
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 15:25:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=160.75.25.117
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D993C278159
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 15:50:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=160.75.25.115
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741101947; cv=pass; b=Ac/H064ndQD8hT7KsKxTnQIC5hQLf2pL2OG5EV4NriiQBAoS+JWzO9Li9itopjQI4oEyguYXPd82kZ5aUSU87GrAIIWjz/dORoqNwGcCwemi2zM346kvk5L4mvgeIdf0k4j39PdVUYc6i5KkJMmTVU4mYmXTExGf2toe+p3d4KY=
+	t=1741103411; cv=pass; b=VlaRgnhf3DxUeJuUfH2EM0Ws0MIpzb36f0Qwauvx0zeDc5yeWAv7ApZ8vEiltqJDYyCa0fYwS9D+COCkCVCp2aLS4+DtktOzm7iBdvjOWlJfOMOyL8kK9gScn+Fd4yLHSAZygjix0l5WT8WJkq2hp0MXRY7CwvnBrvgHlfNsPHY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741101947; c=relaxed/simple;
-	bh=d+vzEwgjupu0/77CHBo1T27lBxQg4sfPtaX0+5uTUTE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=eWAqkcNT4RytWNLXgJ6fJx1b6zB/W2vF84insPGehb1ZEyfkWJvnGuQ55TxHdWuyFyJNH6X814xiQHsDyclbFkpUaxY90eE//OIKdYUaQ1jrQhGcvnroJ2FErIvCwg5Fa7+f0GvSn3hWORu/YPDkRGl36swpT9GxN29x2rl1aiE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=none smtp.mailfrom=cc.itu.edu.tr; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B5pYH20n; arc=none smtp.client-ip=205.220.168.131; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; arc=pass smtp.client-ip=160.75.25.117
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+	s=arc-20240116; t=1741103411; c=relaxed/simple;
+	bh=4NFD8mCLdjfFv7HK+TuasEXX4+ZXOu+KJooAIqhe+hQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SdqtTfPnQJ6wmvBMaHVusgDNk2XBBQGzjbPDR3gz9OcGHbFdnuaVvfihha+eY1sEQo94Sts6oVOFPq44h6obVBO/oHd4zjNrbBNjpoIcsVdN+EP62AwJIMa1M9bbBgLhHP8K1E/7PjBht+n+6oaLsDIHqjb4ZDnu+AR7NC7rmfQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; spf=none smtp.mailfrom=cc.itu.edu.tr; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gxu0A/+q; arc=none smtp.client-ip=10.30.226.201; arc=pass smtp.client-ip=160.75.25.115
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cc.itu.edu.tr
 Received: from lesvatest1.cc.itu.edu.tr (lesvatest1.cc.itu.edu.tr [10.146.128.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by beeline3.cc.itu.edu.tr (Postfix) with ESMTPS id CD76D40CEC8C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 18:25:43 +0300 (+03)
+	by beeline1.cc.itu.edu.tr (Postfix) with ESMTPS id 1B7B340D573D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 18:50:08 +0300 (+03)
 X-Envelope-From: <root@cc.itu.edu.tr>
 Authentication-Results: lesvatest1.cc.itu.edu.tr;
-	dkim=pass (2048-bit key, unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=B5pYH20n
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=gxu0A/+q
 Received: from lesva1.cc.itu.edu.tr (unknown [160.75.70.79])
-	by lesvatest1.cc.itu.edu.tr (Postfix) with ESMTP id 4Z6fbX4JfTzG04L
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 18:23:52 +0300 (+03)
+	by lesvatest1.cc.itu.edu.tr (Postfix) with ESMTP id 4Z6g6k28whzG1VH
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 18:47:26 +0300 (+03)
 Received: by le1 (Postfix, from userid 0)
-	id 67FA942728; Tue,  4 Mar 2025 18:23:50 +0300 (+03)
+	id B54D44274E; Tue,  4 Mar 2025 18:47:18 +0300 (+03)
 Authentication-Results: lesva1.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B5pYH20n
-X-Envelope-From: <linux-kernel+bounces-541658-bozkiru=itu.edu.tr@vger.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gxu0A/+q
+X-Envelope-From: <linux-kernel+bounces-541678-bozkiru=itu.edu.tr@vger.kernel.org>
 Authentication-Results: lesva2.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B5pYH20n
-Received: from fgw1.itu.edu.tr (fgw1.itu.edu.tr [160.75.25.103])
-	by le2 (Postfix) with ESMTP id 6D57E42921
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 15:00:24 +0300 (+03)
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by fgw1.itu.edu.tr (Postfix) with SMTP id 4A3223063EFF
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 15:00:24 +0300 (+03)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gxu0A/+q
+Received: from fgw2.itu.edu.tr (fgw2.itu.edu.tr [160.75.25.104])
+	by le2 (Postfix) with ESMTP id 9344C4235B
+	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 15:14:26 +0300 (+03)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by fgw2.itu.edu.tr (Postfix) with SMTP id 285842DCE0
+	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 15:14:25 +0300 (+03)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B29F9188E1A4
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 11:59:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 472A33B0C23
+	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 12:12:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA80F20DD6D;
-	Mon,  3 Mar 2025 11:59:33 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7107520E716;
+	Mon,  3 Mar 2025 12:12:35 +0000 (UTC)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A376120CCDF;
-	Mon,  3 Mar 2025 11:59:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2659204092;
+	Mon,  3 Mar 2025 12:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741003171; cv=none; b=dJ5zfhOIXwANz7RmtZHfCITQ7kduKMRRkgt1TlMcmzIsdAbOErWlCHwSI8oeapFAF/W4zreGwKi+GnIBYgD5RzR7n6zfc2RnicN4PxvST+3eyQOR0znRkpzzLWTc2kWA0bVbO4uevU8CA4zLT7n1OqbdQIbf++1IBlS3JD+qtMs=
+	t=1741003952; cv=none; b=AcXRI2GiOSX6VIUJh0wXAvf0h/USpfcdUFUWFOaNNQ8pfhLQaQtX4Eh1rwOuvxXHUiJI3DJLKwZNafpo8RjQfU4jezIDwR650IJglJiM/f0rD0a32oyYT+W90q5iup2Pcf7atYBIlWvrJrnzohWc2W6jQ+JCO/2u5Um1V31rPuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741003171; c=relaxed/simple;
-	bh=d+vzEwgjupu0/77CHBo1T27lBxQg4sfPtaX0+5uTUTE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tUpmSppJLyoqV2DCxVd/ADca1LEz/x/Ig/exStgR+XTK0nBYmqP05TlKXjgk+zcP3n2NXuX6CvsY8rkgUTpe1LK6T2Jn5RvxgyhPi7T7cK1XbecLFXVQjNcuIRKgP3hKnChO9KmfxSxLdmq8rVTHLzYtCPTXmOkqObspyhjICtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B5pYH20n; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523B6wYi006580;
-	Mon, 3 Mar 2025 11:59:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QF0ASAHpAxj/q8GZgd0wP+R+aHXSmNyo9XU3EaLp8lY=; b=B5pYH20nLkszZuZw
-	IyBjpxMzdQfCm+3cubdRMgFt5Jd4aenXcNsCRNzcS7A7fXozNaYX1Uz8XCbxFA3m
-	6NLFarvWmKCDcfqF1acR20j4z8OFx23EBpqzlfUnY2OMbmEFmmzoJTxMB8vV04KE
-	ZJeuKWs08j6ETvyVBDnmFAomAOQlDhQ7zKcb9K/mM2VJeJZVbUtMc8rb/gblpZZq
-	LGefihTdG6rR4yXHuhrUDBFonXJd57aup1nzzAkIXi1zcyzPQVz0f1iEdABDL0hJ
-	ZdcUfkap6cOevCh6h+ppL0Y54/Ig1ejrq2buKPejvbfSMtXwWkGlCS2rizPGRh/g
-	8fSVSw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453t994pq8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Mar 2025 11:59:13 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 523BxDET026439
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Mar 2025 11:59:13 GMT
-Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Mar 2025
- 03:59:10 -0800
-Message-ID: <7b3b52a7-5a4b-b34f-3450-8e4a60ade22c@quicinc.com>
-Date: Mon, 3 Mar 2025 17:29:07 +0530
+	s=arc-20240116; t=1741003952; c=relaxed/simple;
+	bh=4NFD8mCLdjfFv7HK+TuasEXX4+ZXOu+KJooAIqhe+hQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dx7J6WfbYW/ANJwLbJNF7jZlIG+PIYMTxd9uAAGBok9ahA4+LVSuujRHBFMOxILe55DFWzh/Sw+tVWxPcUTWRw3EKjhFRmdpRmbLbwqQbbszkOL0Neup1Vu6E9DGDgLOtDZuYFHn0qy3RUu/mmfEFosr4LWT7tzdLp68TC60W9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gxu0A/+q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6797AC4CED6;
+	Mon,  3 Mar 2025 12:12:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741003952;
+	bh=4NFD8mCLdjfFv7HK+TuasEXX4+ZXOu+KJooAIqhe+hQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gxu0A/+qtayq7f9bVNUpb7d8CFiJLOMDjKotEE32PQzuGyMBf1iSVKY1Yp0qDNPny
+	 jFLZragyb/sCZog1Bip5ziVFU3ZZLgpK3WVa8hUQXWDKyT9E+TGL1QLr8/64eC/BgK
+	 1x/G1aptrFwA4m34hiRG1OZIGSURGNMIFyKew2BhBViKXGhQCTWFKJ2jHNLvEFfFcQ
+	 2TRyTe82HyGry37+094pLNk2sSk938euZY3enzSqcFoZypDq0LyLXJfEbguMakuiXy
+	 aivbSX8FSLjWkdews1IOwLnhNOT6Kq/CzlDcSSorB6MOmkYOEIYMFRGXzJYGDdg/AH
+	 As1sj2rnavWZg==
+Message-ID: <fa239ce1-add4-4199-a57b-3c91a2118e2a@kernel.org>
+Date: Mon, 3 Mar 2025 13:12:27 +0100
 Precedence: bulk
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -114,73 +99,92 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: dts: qcom: sc7280: drop video decoder and encoder
  nodes
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20250303-b4-media-v1-1-ddc5c81cc2b3@quicinc.com>
  <9cf0f5cf-1287-485c-a75d-1a4333c6e457@kernel.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <9cf0f5cf-1287-485c-a75d-1a4333c6e457@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+ <7b3b52a7-5a4b-b34f-3450-8e4a60ade22c@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <7b3b52a7-5a4b-b34f-3450-8e4a60ade22c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 44Mq91G0J83_GNLhyIsZ60sukPo-NzgH
-X-Proofpoint-GUID: 44Mq91G0J83_GNLhyIsZ60sukPo-NzgH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-03_07,2025-03-03_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=770
- mlxscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
- clxscore=1015 spamscore=0 adultscore=0 impostorscore=0 malwarescore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503030092
 X-ITU-Libra-ESVA-Information: Please contact Istanbul Teknik Universitesi for more information
-X-ITU-Libra-ESVA-ID: 4Z6fbX4JfTzG04L
+X-ITU-Libra-ESVA-ID: 4Z6g6k28whzG1VH
 X-ITU-Libra-ESVA: No virus found
 X-ITU-Libra-ESVA-From: root@cc.itu.edu.tr
-X-ITU-Libra-ESVA-Watermark: 1741706648.93874@BSGs4xDTCKOuIpvpAa6bcQ
+X-ITU-Libra-ESVA-Watermark: 1741708128.8753@WFGxrNl29T3/h7GMU4cKiQ
 X-ITU-MailScanner-SpamCheck: not spam
 
-
-On 3/3/2025 5:06 PM, Krzysztof Kozlowski wrote:
-> On 03/03/2025 12:01, Vikash Garodia wrote:
->> Decoder and encoder nodes are already deprecated from bindings. Update
+On 03/03/2025 12:59, Vikash Garodia wrote:
 > 
-> Deprecated since when? commit or release.
-commit - 459997e8990d9cdf7fb126057c31ec0ca8ff66ca
-
-https://lore.kernel.org/all/20241230-media-staging-24-11-25-rb3-hw-compat-string-v6-3-a4d5070d3aaa@linaro.org/
-
->> the venus node to align with bindings.
-> 
-> Since which release kernel does not rely on these?
-I can see in 6.14-rc1
-
-Regards,
-Vikash
+> On 3/3/2025 5:06 PM, Krzysztof Kozlowski wrote:
+>> On 03/03/2025 12:01, Vikash Garodia wrote:
+>>> Decoder and encoder nodes are already deprecated from bindings. Update
 >>
->> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 8 --------
->>  1 file changed, 8 deletions(-)
+>> Deprecated since when? commit or release.
+> commit - 459997e8990d9cdf7fb126057c31ec0ca8ff66ca
 > 
-> Best regards,
-> Krzysztof
+> https://lore.kernel.org/all/20241230-media-staging-24-11-25-rb3-hw-compat-string-v6-3-a4d5070d3aaa@linaro.org/
+> 
+>>> the venus node to align with bindings.
+>>
+>> Since which release kernel does not rely on these?
+> I can see in 6.14-rc1
+> 
+Then both or at least the second part should be in the commit msg.
+
+Best regards,
+Krzysztof
 
 
