@@ -1,130 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-50082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8602BA4CEE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 23:56:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29F2DA4CF67
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 00:43:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 778C218987B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 22:56:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E9883AC84D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 23:43:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D8F823C8C1;
-	Mon,  3 Mar 2025 22:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A0351F55E0;
+	Mon,  3 Mar 2025 23:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LNcaZywe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aU3r7LMo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8163923A99B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Mar 2025 22:55:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FCF23A9BA
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Mar 2025 23:43:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741042540; cv=none; b=Br95haZXgDMHyLAT7GJ9ry8tSPqwoZwhAgpZA0vB9eZItNxfcU4oNwZpuzA24AJ6spgZjgDlEsTafSKq/nFO1lbb6CC/eOAUJAo1hs3K94uZrkowEUa3XLr3DbX725X0QMYiLy6GMzrxvAo//HoafDkEbrtIMcCj66SO5983xUc=
+	t=1741045397; cv=none; b=l1+ggrEys1aR/GMY3uEH7WQJUxumIAUshxHtHBifdS4OfMmAUtSdIOkSWspGwTwwWgow4+6ljRc4wSC8REjc700fmiGOy5qg50hr8Gg2305WbUHmOdzQoYHzN44ZSs1NrteU+oLaLkJWvZqRJDVrh3+KGer17zwZDzy5gxBnaLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741042540; c=relaxed/simple;
-	bh=j9JOgzmcmvDWHrhUDefHzjBfMqmkn65YnVmg+X/UHck=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghi9KTG3IwDVpNPgjYNmd6XcQEsckIJqk2hNCigPPaxsFQY7eiTTrStNOXkIR+glALdb2kQKDKSF5q/qHrKrmCEwB4Tv2EiT5Q0n0UmQQrolnONDCvuK+NUGhef6HzOTtavk3hARVWaJgZjdBpC5SweV3YQ6Hf3+CMBqaCmS7TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LNcaZywe; arc=none smtp.client-ip=209.85.167.54
+	s=arc-20240116; t=1741045397; c=relaxed/simple;
+	bh=/dMbpUd2EG9fiX3jjz7cjeqoQ1s2VzMXg8hc2KArzCE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pedfab9j1V5/Buc51lKAbiFpLGdb3rkD7wihQ9vij5lQQ7VsQr8gFW/z73L5aqemy5sv+iNI+7NVyJkn6d5ZiojYIUHx83sAMd39JFPezAVfXf8TxvYllVtN+cUeX4Hm9262+OeCS2QkrcQK2qq+WCNKk+liscnW8H5E8GOBUog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aU3r7LMo; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-54958d611afso284085e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Mar 2025 14:55:38 -0800 (PST)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-3078fb1fa28so43495501fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Mar 2025 15:43:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741042537; x=1741647337; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Bvxvtp/PgMA+KOB5zPz/+gF3wZdvPxrXXnP8gY1icsI=;
-        b=LNcaZyweoqme/xlGnNO+1hGw9phHQZmJpbsGABYj8/EXBay54/emWwFkCmAwUioOni
-         Yt7m1xSHjXL9nQFz3197eq2beCjLgY60g8NJC1BGwTkdLwBTc14ISiVpz4evTHAdPVtz
-         gREv9RXyH2isBHurXT75c5sD3dQw8yfk1uzT6RYe1kc1Umzhy3xDOj4Pgo7+EFE1lTEq
-         6RPDTOe28O1TSSqEfM4wlyE142VpMCT45Vs752Ykw8NBy63vwtrXQmm9dp/a3Qzc/jMN
-         2AxLFg8FZMkdLdgm6biJQ34VL6vpcXpNPCVOit3XmL7e+E1oq9kabC9to+F7j+CmxFb9
-         7FDg==
+        d=linaro.org; s=google; t=1741045393; x=1741650193; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yfy39VluGQcEyItLjFB3XiPgmFo3CCnquxjFCjbOFIA=;
+        b=aU3r7LMo2WlyCKKy0GZN1JBRjYGwJeYLFB6DKsNadS7s9RHqbgHzzs3R/XaxyUzO3k
+         Fk4m+afoy7TIza05nL4YQbaXRH8AlLB+WqoM+AIqs+D5KyzCNQ2Qo8ZZUMl1s8OJyAPY
+         MW7JV2mHf2Oao9JO6wdjXzhHs2hxMvQc2vmL/pWr+vM2sDe5AuUvq7fjEMHAwYIBUPeC
+         4szRKAUakmQ1HBo1Gdq2Nxdwaa+gm1E2ewa3jeP7J22aR5s3Q0pt3mQmO8hnxakJBN4o
+         kKUVT8g5V8te4g9eI3zNMPaNBFkkyDUCH1nU7iWkazpivylXw5erYC4Jh3jRVdp+vgxw
+         qD/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741042537; x=1741647337;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Bvxvtp/PgMA+KOB5zPz/+gF3wZdvPxrXXnP8gY1icsI=;
-        b=Ff21zb880hbwOMqQ1Ai0AY3oeIEZrYymTsSQr9FfThG7O93KxR0m8987XdOtfNv7JX
-         XOnzPAmewD/vu7p41I+mGR8HDQsM1x4wR1lGeweNF3TuQVVfaHeyCVLSj3if7i3T65+T
-         39ybVLtCfZcWqWYDLDozFOD3WW7aI2PZvR0r+XfSeHi6LerZgMDtMJ7pO4FRDgGh5A6g
-         mph0Hh3XaUMwKSy6ooeaJAfU9sHtkMB46Q8E8nLilEoqADdpByXgvpyPpVH3Gm53GKSJ
-         1DF2ZzGOYEGUDMcBNdNS9ISGUXm3YD80xKZIh893WeyBxJz4U6KDNCYPgoSWgUkLq1BK
-         6g8w==
-X-Forwarded-Encrypted: i=1; AJvYcCWZDT2JQ4u3buRlVdlOTVOcNd60Tfc23aVCSs2yZ4QwPfwZnFMzZw51ReVI9mlH5W60dZOC+Fo92W3H6nIF@vger.kernel.org
-X-Gm-Message-State: AOJu0YxppQPw02U5sotDPfw2yKrqJHkeHPE3wxBtBU78QCBv0L2oWQh8
-	p7aWD8UM4X1Tdj5Z4nVwbHhRHpKzPBkwB7N2o4QIKiNYMA5YX+h8fVkEdYk3JoY=
-X-Gm-Gg: ASbGncumdzGq+pb9mFt8GcgISnxUcpATvZXnTG3PmqQ4u2/9jHQBOQEKhSdWCiM10Qm
-	EsQZxgA/dxZ3+BfVyZCxAmwuQ0ABTU+qqN4PJDoKnkXHr1NRdKx9srkpPLupc10qD+FBuSuw0vu
-	S5TLbrD7udGJOwSmNvf3cYqpTbEE0792LnGAZN3usA42dYO5r8t3qcCYEUG2BAAzfdmbcvg+30X
-	xsQ2S91ae/dZTcbl0m1FeMl2NmPij5toRnb5M2GY22/1sPDDGkiasNX8F8JrA6/l+S4ij2CekAM
-	0YvPV9aNezoO3LQootvV+Zmy8K8580C85t4Tzi3q/kbBFPVGGBQgYgJ5B4N4x7j9obKmqaaPnqF
-	sUf6QeRqpGSQc7KOI7OQpEAvKBgUdIWlaZg==
-X-Google-Smtp-Source: AGHT+IHzrwEy7B1YWBxSPh2b/rjqFRLEHa6zuKP4h6nXsDizpRThpZqROcTmTjkAlkgT4Q8oWxRx6w==
-X-Received: by 2002:a05:6512:2810:b0:545:6f8:232a with SMTP id 2adb3069b0e04-5494c3682d2mr2008050e87.13.1741042536678;
-        Mon, 03 Mar 2025 14:55:36 -0800 (PST)
-Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5495f630cb5sm662059e87.212.2025.03.03.14.55.35
+        d=1e100.net; s=20230601; t=1741045393; x=1741650193;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Yfy39VluGQcEyItLjFB3XiPgmFo3CCnquxjFCjbOFIA=;
+        b=CeK/yYscYnDjvthzDS/EhwN0t0mgnW2eh95mEcnjxhLbZS1dXFsmJBp/N+WCWuC5zd
+         jH2xri7h3bROeJR1xTaLCPPWvlOB17XVS00mjAuWY687RRO5N3iorqwY2j4iX4z0WfUB
+         ndf9RzyQgSixyerMXTK/j6BOFaWp2uuwd4T2YDvfqvOlYVqMMlIHWdMsr85wnHRAuU/S
+         1kLCGQrFZhXCxoiZy/y0YfUn4w/GCdNuSW61D4qEaBc5d0y20M59TQTULzEilCTLXDKX
+         p2HeSBYFgyceZXaBx1pmap1VN2uhbcLlefKHBV5q/2CxFr256wuExc9HBNGy8ilJH2W5
+         ZFjg==
+X-Forwarded-Encrypted: i=1; AJvYcCWslNExGmc2ePjywLlyKPVONencNsLFyd27UHeXoevQtNfkcNlA7iixhbjS2UbmIhzpNe8OYeeTp6arffuL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxx0RPFNA9DIMT9ZSxNiSQRuZe/ffOcVfyBWJGlOQoiUpRPH9gn
+	oIYEX8GLYR9ELjwD2oNjqjUWTdNlWQWyN4nlJrgmOjejHQ9e0oCU3V4lID6N2fs=
+X-Gm-Gg: ASbGncuanSyek8/YmJeIY1aca5FrwudjrMmc7ZNEORypV1T0Y0lQGnF5fjvZEWw1qfK
+	PMt6kq5Afjb87WU1TD4PfcdnUlcabVKKz508SKQhzk+UOF/sFwoAWwnbVsd4Fdjo20Njn5bRv6o
+	jJQK9MB/rTLKFY8DUdfp2mi4xYjV5Y5Uk4NG1osF89JhPH7NBkjQPM4UcYCpL2dhT5Bb2sb9MWS
+	7mzI1/f6BWBcHcI8G9IziC9y5Q6vYc3zXRYmBKlfG2dl9IcyNYX5I3NnUgYoSIyVaqQgndxbwmQ
+	/FcsUUghVh1ooM1uS13Mf0AzylqjxYFApxxT2vWD/ExO0EZDEYLtQKxROV2NGNy/6ffQLUSH2e3
+	0TieTfEDj/m8lPe85GoOGT5ka
+X-Google-Smtp-Source: AGHT+IHS43FrPoYrbI5lM/r4eVcPkidPny7B+4+NzFlSF1VJA+JMi5IVAexs7xXUBzw/FSOsOiL98Q==
+X-Received: by 2002:a05:6512:1085:b0:545:1d96:d702 with SMTP id 2adb3069b0e04-5494c38c05dmr6560457e87.48.1741045393007;
+        Mon, 03 Mar 2025 15:43:13 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5495f4c36d1sm667879e87.52.2025.03.03.15.43.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Mar 2025 14:55:36 -0800 (PST)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8550: Additionally manage MXC power domain in camcc
-Date: Tue,  4 Mar 2025 00:55:21 +0200
-Message-ID: <20250303225521.1780611-3-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250303225521.1780611-1-vladimir.zapolskiy@linaro.org>
-References: <20250303225521.1780611-1-vladimir.zapolskiy@linaro.org>
+        Mon, 03 Mar 2025 15:43:12 -0800 (PST)
+Date: Tue, 4 Mar 2025 01:43:09 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Simona Vetter <simona@ffwll.ch>, Simona Vetter <simona.vetter@ffwll.ch>, 
+	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
+	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+Subject: Re: [PATCH v6 03/14] drm/msm/dpu: switch RM to use crtc_id rather
+ than enc_id for allocation
+Message-ID: <da6e2hygdv6ewdr5hqeks2ocsxwvfvozby4b53unk5ckyqvu7t@wh3y4jnucapl>
+References: <20250214-concurrent-wb-v6-0-a44c293cf422@quicinc.com>
+ <20250214-concurrent-wb-v6-3-a44c293cf422@quicinc.com>
+ <se4b4kzp3vej4b6albecdc2t65ueiuba4kidutwvrv2rcfyjwr@e62fn225jwcr>
+ <8c727bd6-94f1-4ee3-9bf3-793899038895@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8c727bd6-94f1-4ee3-9bf3-793899038895@quicinc.com>
 
-SM8550 Camera Clock Controller shall enable both MXC and MMCX power
-domains.
+On Mon, Mar 03, 2025 at 10:45:19AM -0800, Jessica Zhang wrote:
+> 
+> 
+> On 2/27/2025 7:07 AM, Dmitry Baryshkov wrote:
+> > On Fri, Feb 14, 2025 at 04:14:26PM -0800, Jessica Zhang wrote:
+> > > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > 
+> > > Up to now the driver has been using encoder to allocate hardware
+> > > resources. Switch it to use CRTC id in preparation for the next step.
+> > > 
+> > > Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > > ---
+> > > Changes in v6:
+> > > - Drop duplicate cstate initialization code and unnecessary memset
+> > > Changes in v5:
+> > > - Reordered to prevent breaking CI and upon partial application
+> > > 
+> > > Changes in v4 (due to rebase):
+> > > - moved *_get_assigned_resources() changes for DSPP and LM from
+> > >    encoder *_virt_atomic_mode_set() to *_assign_crtc_resources()
+> > > ---
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  18 +--
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  10 +-
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  12 +-
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 189 ++++++++++++++--------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |   7 +-
+> > >   5 files changed, 110 insertions(+), 126 deletions(-)
+> > 
+> > This commit breaks several tests in CI:
+> > - sc7180-trogdor-kingoftown:
+> >    - kms_cursor_crc@cursor-dpms
+> >    - kms_pipe_crc_basic@disable-crc-after-crtc
+> > - sc7180-trogdor-lazor-limozeen
+> >    - kms_cursor_crc@cursor-dpms
+> >    - kms_pipe_crc_basic@disable-crc-after-crtc
+> 
+> Hey Dmitry,
+> 
+> Thanks for catching this. Looks like this was exposed due to a recent IGT
+> uprev that included  dc2d7fb4f978 ("lib/igt_kms: move setting
+> DRM_CLIENT_CAP_WRITEBACK_CONNECTORS to kms_writeback").
+> 
+> The issue itself is that when DPMS is toggled, it is possible for RM to
+> reserve new HW resources but skip the atomic_enable() due to the checks here
+> [1]. This means that the change in HW block reservation won't be propagated
+> to encoder if DPMS is set to off.
 
-Fixes: e271b59e39a6f ("arm64: dts: qcom: sm8550: Add camera clock controller")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Could you possibly clarify this. What is the state change that causes
+the issue (describe CRTC / connectors / encoders and active / enabled
+state). Why does the issue manifest only after switching to the CRTC id
+for resource allocation (the tests run successfully before this patch,
+i.e. with the resource allocation being moved to CRTC, but using the
+encoder ID for allocation).
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index d02d80d731b9..d22b1753d521 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -3329,7 +3329,8 @@ camcc: clock-controller@ade0000 {
- 				 <&bi_tcxo_div2>,
- 				 <&bi_tcxo_ao_div2>,
- 				 <&sleep_clk>;
--			power-domains = <&rpmhpd SM8550_MMCX>;
-+			power-domains = <&rpmhpd SM8550_MXC>,
-+					<&rpmhpd SM8550_MMCX>;
- 			required-opps = <&rpmhpd_opp_low_svs>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
+Note, the CRTC won't re-allocate resources if
+drm_atomic_crtc_needs_modeset() is not true. So I'm not sure how can we
+end up in a situation when the resources are reallocated _and_ we need
+to raise the mode_changed flag.
+
+> I've posted a fix for this here [2].
+> 
+> Thanks,
+> 
+> Jessica Zhang
+> 
+> [1] https://elixir.bootlin.com/linux/v6.14-rc4/source/drivers/gpu/drm/drm_atomic_helper.c#L1502
+> [2] https://patchwork.freedesktop.org/series/145735/
+> 
+> > 
+> > Corresponding pipeline is available at [1]
+> > 
+> > As I had to rebase your changes on top of msm-next, corresponding tree
+> > is available at [2]. It might be possible that the regression is
+> > introduced by my rebase.
+> > 
+> > [1] https://gitlab.freedesktop.org/drm/msm/-/pipelines/1374165
+> > 
+> > [2] https://gitlab.freedesktop.org/lumag/msm/-/commits/msm-next-lumag-cwb
+> > 
+> > -- 
+> > With best wishes
+> > Dmitry
+> 
+
 -- 
-2.43.0
-
+With best wishes
+Dmitry
 
