@@ -1,151 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-49972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29F41A4B8F3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 09:16:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 948E0A4B940
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 09:28:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AEA233A3816
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 08:16:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 002923B260C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 08:25:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93BCF1EEA37;
-	Mon,  3 Mar 2025 08:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C7B41EF091;
+	Mon,  3 Mar 2025 08:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Bmzhnwcs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZQ1W/RQ5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50501E9B3D;
-	Mon,  3 Mar 2025 08:16:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510F31E98FF
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Mar 2025 08:24:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740989781; cv=none; b=hM+OiZP5fgD2CDapf7wNk6dMyWJ6XU/i4nYzsonIu0MrNbBe/omcA58DXQtbkSX55rMRGud4YABFettvE9fc0nGwSOUCAosfT8Rla1cSlf4Yo9IG+tZ4DZZA1zqMzvmy3lzu8SSg7h0s8dfT5kjwWwhQ4RaSZ9nHme62lxO4k14=
+	t=1740990274; cv=none; b=BzHsmm5x48P+nOQHEd/0F0S+dqWWfgqll4bdbyJmAOMR/i8OFwOOqkC+L78HCRvReiexE8vQ9aar4KQpTl+w5NnKNnSEuP1OF46B7451cvW75Ym3wChPYbQ/dGz/8bjBL3z1OcAw9hKB+Oo5J4+EaINy9huTOxGn7ShjLnI9AVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740989781; c=relaxed/simple;
-	bh=snJo+3NGpRyC94Rcz8FErDyfwR5EriJ5LEungpm3iZU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bTLhZ3wfqDWDV0sO2m+GAM58nllzJl7QJZ8U181gly9VCzealFt4puU5c8Z/ZdfViOJoaMMrmB7MfK8lG6XyO2tergQIkft/6mi7XpRpRQhLjqpKvLBLiQATJr1FR3+qdK7IM0WRfOJROJb9fVhwcDrumzsYSz2EUQ8LgUO4vD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Bmzhnwcs; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52300fWI001154;
-	Mon, 3 Mar 2025 08:16:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OIFJa4WhZpyK9Ffdk2fp+kxCySGaf8wagwDQVCjDp3Y=; b=BmzhnwcsHUd5LGbJ
-	u/aEWeFgVmSLH1J472ZPnCRFbetpwnK0XrJR/nUlphkGJp4zYKS1Qegys8sUcuC4
-	5iwR4i+H48/aGLz/xTw1lQpL8ANJ+BhrwGtq6iWuCWZDf2F+Lnc2RR53wKVfedSu
-	FRi7DnWXiw6dZHl5/qlMc9wgE/W2hL9JpWQWzThd2iuOxPFOgTdaNfC7smklIfES
-	pSYELCfWx41PsBB3Ym254gWnRAhQcbduL7s3KOh7j6Cgt82MDuiOjiN4M0u6+LyT
-	azEya/2CIlMnjC5blIle49yvyK980Yq096mgqaq6HDg3yQ8p1p1dV12OODxt+2Bs
-	pBp68g==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453tasc7ca-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Mar 2025 08:16:11 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5238GAkb008570
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Mar 2025 08:16:10 GMT
-Received: from [10.50.28.15] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Mar 2025
- 00:16:07 -0800
-Message-ID: <18aa7433-4eac-f632-0787-c56fcb363fd5@quicinc.com>
-Date: Mon, 3 Mar 2025 13:45:52 +0530
+	s=arc-20240116; t=1740990274; c=relaxed/simple;
+	bh=hSBIYLscn2H9J+MqRxZlM/7jQNfEuoPNFDdWWYwe6ss=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bEXOBSOV3AFkmiDbEOsb6kkT8Ll1QJ+DZuY+1VGKKgIP7tf+Q0IUuPU52qH0QYtV8sg5BZpWZg/a+WN5rqzVyI4UxxW59FXxvW6LQSvI/hE8uaFFAwZtLqXFKzjUlqQ9/Sv+zO68KTfD1Mig5J/dluDQGJU1MYBo3YJ1kpOCgTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZQ1W/RQ5; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ac0b6e8d96cso86148766b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Mar 2025 00:24:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740990270; x=1741595070; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=RaZ/CcmeFoBTR8ddNDuQVJv3AT8EACnAOxQQ2V8mS5A=;
+        b=ZQ1W/RQ5pKHe6TuSfXOOT8Y1/PkFTG7ziIuqCfIBuPCyOp5tNnH1ufGf9RtfhRcTGh
+         1M76XPwwFhZLx3vuuIWLTXaC0F+nLB4dwcXcIwomg6E9VBPNJdyKw251zXFlkxJOIK0g
+         aSzJrZlR7Eanw6I82ZLVXkksb3VXsx8SCU30MNrIJMrV9chLYs3a2wzboY5gTtRsZBTy
+         iqxnfXUG89mZwhF9E0Q8mPMSA2CdkWuM5nK67He+MWYzkm47y2wGu28LBrnKFi73Wrlz
+         OMXrXhBsJHaIjUsvI08nypKwfYvs0Ze0r676YLdW/ELE8/11cd/B4x8WI1swGZOFjZMV
+         ndgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740990270; x=1741595070;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RaZ/CcmeFoBTR8ddNDuQVJv3AT8EACnAOxQQ2V8mS5A=;
+        b=opsv6Bf8HC6rnfTfwobGKn/UVImA0j9tojiWBh9LKZXxzH9s+HlVsjcJbErGsrVGCP
+         16sPPpDl8yCJDAovdKvd6SXU0cGvcPlUeyyf57xCSAyxIbb0JLhfH3uMebc4A8vNPo2h
+         1LAbJW7kCr6lztrbEQfzF3D74CTgXPK78B4S4qN0h9b0VbI8oqZw9Jfj5sdWrIQzal0t
+         R0jAS2hN3X2kypKYs9kv/eZqVjQrMSLnFbov4cId5uSnHY0tRKWojNfl5lyYyUpw4jMb
+         5w8iILgl29RghOuyjz2E6enuVNh9YyMiXxnjl0IZIKkrN7EWQyreKY1vg56Uk6TFJQtD
+         Vgyw==
+X-Forwarded-Encrypted: i=1; AJvYcCXg9vZUr7Ad512sq5mI6QMj9ghwpIls/OZ3fXjV6wsXAeFCpl9qXM1qrOa4kMl6LfpFQI+BlH9ddIVNRGr4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxg4r0BN9UZ5H0SJaBaAIg8YRUoRVpQEryj5Un17DN1kYeWjcOw
+	1CMqVZUW9r9jxblse0QtG8x5F9GIrZbMVEGy6DCOICNgP4Og6XBLao+CH6O2oW4=
+X-Gm-Gg: ASbGncvVgfHosv7bO4ZpoEb1FhmDZbPtqzYIDwxB6+RfOKUccCTwFo8vtLBbAusL2sD
+	yjFhweHrXPR21GckV7q7KIwQge7RdQANGVL+BJQHPNMelGekIFxqUWcog0/ExCwE6Uf+vjOi0gN
+	FL5OSn9hvvPBn4hOuFMSWx7CXcUFtHxAJsKgFU6kxNm8tWKAKweIBR69LJ4YsVIOICwEhHHMSLi
+	xK77PtLUQGN2q2J7r+0gldHhkBZT/yRBypoF8bppNbcro0jR/86+hd0+clOPdUa3OGqCfmbd4lv
+	7zFlea+hnPzKLK1D0VmgmwPest2jTaXSwaFon+GNLbX9iM2lKg==
+X-Google-Smtp-Source: AGHT+IFy4o0lL4wbVfv25BbUZiZprY5pePIQkrVcMtYcd0n6ALHYFSnKECFQ/9k22YMwYBQpC08ZKg==
+X-Received: by 2002:a17:907:6d0c:b0:ac1:791c:1526 with SMTP id a640c23a62f3a-ac1791c1cd3mr169820066b.56.1740990270586;
+        Mon, 03 Mar 2025 00:24:30 -0800 (PST)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-abf3f3bbfb3sm525674166b.77.2025.03.03.00.24.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Mar 2025 00:24:30 -0800 (PST)
+Date: Mon, 3 Mar 2025 11:24:26 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Markus Elfring <Markus.Elfring@web.de>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Archit Taneja <architt@codeaurora.org>,
+	Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
+	Jeykumar Sankaran <jsanka@codeaurora.org>,
+	Jordan Crouse <jordan@cosmicpenguin.net>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Simona Vetter <simona@ffwll.ch>, Vinod Koul <vkoul@kernel.org>,
+	cocci@inria.fr, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [RESEND] drm/msm/dpu: Delete a variable initialisation before a
+ null pointer check in two functions
+Message-ID: <ce9599fb-a798-4f22-b51a-3341e690f8bc@stanley.mountain>
+References: <40c60719-4bfe-b1a4-ead7-724b84637f55@web.de>
+ <1a11455f-ab57-dce0-1677-6beb8492a257@web.de>
+ <13566308-9a80-e4aa-f64e-978c02b1406d@web.de>
+ <54c30a69-71cf-4582-9086-50eb0d39f273@web.de>
+ <k7un3bjavyt4ogscgc7jn7thfobegaguqqiy7gtypmq6vq7zox@l4bsevbsjrud>
+ <29b32b0d-312d-4848-9e26-9e5e76e527a7@stanley.mountain>
+ <12050afd-ab60-4bac-bd25-0c3cc925b38b@web.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] venus: vdec: queue dpb buffers to firmware for video seek
-To: Renjiang Han <quic_renjiang@quicinc.com>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250227-fix-seek-bug-v1-1-497ee6406477@quicinc.com>
-Content-Language: en-US
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20250227-fix-seek-bug-v1-1-497ee6406477@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OtwKdNZylEqQXlZ4evboooJAPMv5ysDg
-X-Proofpoint-ORIG-GUID: OtwKdNZylEqQXlZ4evboooJAPMv5ysDg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-03_03,2025-03-03_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=999 spamscore=0 phishscore=0 mlxscore=0 priorityscore=1501
- bulkscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503030061
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <12050afd-ab60-4bac-bd25-0c3cc925b38b@web.de>
 
+On Mon, Mar 03, 2025 at 09:15:14AM +0100, Markus Elfring wrote:
+> >>> The address of a data structure member was determined before
+> >>> a corresponding null pointer check in the implementation of
+> >>> the functions “dpu_hw_pp_enable_te” and “dpu_hw_pp_get_vsync_info”.
+> >>>
+> >>> Thus avoid the risk for undefined behaviour by removing extra
+> >>> initialisations for the variable “c” (also because it was already
+> >>> reassigned with the same value behind this pointer check).
+> >
+> > There is no undefined behavior here.
+> Will any software development concerns evolve further also according to
+> undesirable null pointer dereferences?
+> https://wiki.sei.cmu.edu/confluence/display/c/EXP34-C.+Do+not+dereference+null+pointers
+> 
 
+It's not a NULL pointer dereference.  It's just pointer math.  It was
+a common way to implement offsetof() before we had a builtin for that.
 
-On 2/27/2025 8:13 AM, Renjiang Han wrote:
-> For the seek case, the input port will be called stream_off and then
-> stream_on in the driver. Firmware will flush all buffers during stream_off
-> input port. Therefore, driver needs to queue DPB buffers to firmware
-> during stream_on input port to ensure that decoder can decode normally
-> when it receives enough input and output buffers. Otherwise, decoder
-> will not be able to decode due to lack of DPB buffer even if there are
-> enough input and output buffers.
-> 
-> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
-> ---
->  drivers/media/platform/qcom/venus/vdec.c | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 6252a6b3d4ba6d49b343bb53dfb7b0e683410bb4..7d932c985a0b82aa547a7ada75b620c65cb44030 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1110,10 +1110,20 @@ static int vdec_start_output(struct venus_inst *inst)
->  
->  	if (inst->codec_state == VENUS_DEC_STATE_SEEK) {
->  		ret = venus_helper_process_initial_out_bufs(inst);
-> -		if (inst->next_buf_last)
-> +		if (ret)
-> +			return ret;
-> +
-> +		if (inst->next_buf_last) {
->  			inst->codec_state = VENUS_DEC_STATE_DRC;
-> -		else
-> +		} else {
->  			inst->codec_state = VENUS_DEC_STATE_DECODING;
-> +
-> +			if (inst->streamon_cap) {
-> +				ret = venus_helper_queue_dpb_bufs(inst);
-> +				if (ret)
-> +					return ret;
-> +			}
-> +		}
->  		goto done;
->  	}
->  
-LGTM.
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> 
-> ---
-> base-commit: 63b3ff03d91ae8f875fe8747c781a521f78cde17
-> change-id: 20250227-fix-seek-bug-7d3cf544bd2f
-> 
-> Best regards,
+samples/bpf/test_lru_dist.c
+# define offsetof(TYPE, MEMBER) ((size_t)&((TYPE *)0)->MEMBER)
+
+regards,
+dan carpenter
 
