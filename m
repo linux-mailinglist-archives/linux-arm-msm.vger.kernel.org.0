@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-49969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-49970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1621A4B849
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 08:24:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B220FA4B87C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 08:47:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EBAE17A5BDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 07:23:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C8F4189076B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Mar 2025 07:47:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B2271E9B18;
-	Mon,  3 Mar 2025 07:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D42171E9B27;
+	Mon,  3 Mar 2025 07:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HbA7VZDt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jk5ZUSjp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE1212B93;
-	Mon,  3 Mar 2025 07:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B7F8635F;
+	Mon,  3 Mar 2025 07:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740986661; cv=none; b=rFLgIQ3ah9Y7hYb3lLbMin1wESpjKObR/m/kH9WKOzEMfMivM7FHp2W45S4zlGhzpSYShJn6Px/pNdrtBvGyxnc2tu6xX7z9w0pCgSqhybtb9EaHJDvFjDBpMQrH8VwXTOK7L0lHIgQgRfeFrVUalwBrL/m7x16bC8wJRONaC9k=
+	t=1740988022; cv=none; b=iMfap7p4AZ7tRBkGwhB6XXFJ4kyYOutNXkExOacARu62YMfbE/sqZiuO2hnI5izjsHE46LU+tMa2FmVMVrSgywA9512J2H/J+T+d9Z8axS4kVDTPKKD5xQEB/DKYMR0EJIUmtauhnRi8+FXAOkShhBVJsWDO35LTSDTj8mmnA5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740986661; c=relaxed/simple;
-	bh=VySOvvJYVOXMBNDZlPELZwP+g8cJ/Y6sF/YKn/PvvDk=;
+	s=arc-20240116; t=1740988022; c=relaxed/simple;
+	bh=xwdHDiSfiVLcZ3PJ+2tZNXkhHrgoE2+XcqPiorQMmzc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=efDOi8jLCCqIst4DrtXOy3L7IUWSRDOo0StuYP0ZQDPXXYIKTfZM/eK81y/+wATf/QcglUGlo5og35yxW5o1OJE5V+882EBN/mZ7g0o4hFvvEyffyBhs727MKNMBdxYVtm1377dU1oWNSYw0JFBaEv6VbHzUFulYUxCsa5PP0lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HbA7VZDt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB72C4CED6;
-	Mon,  3 Mar 2025 07:24:15 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=hsD+MVkuDQcroYhPJJGHpt1zS1EO0uIKvJ1RS8GSPhJ+9jpBNnU/LINCtSi45biLRey88Uk0sZENJKqz7lVOJMZLg7aX8DKjQL/GflY3lQCnAXM+ExFKzlJeaTrtjmLDaUbrvoGYdUZIWfBI0UhOxYSiMAM5rQJvvys5rX6prYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jk5ZUSjp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B4FC4CED6;
+	Mon,  3 Mar 2025 07:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740986660;
-	bh=VySOvvJYVOXMBNDZlPELZwP+g8cJ/Y6sF/YKn/PvvDk=;
+	s=k20201202; t=1740988022;
+	bh=xwdHDiSfiVLcZ3PJ+2tZNXkhHrgoE2+XcqPiorQMmzc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HbA7VZDtl/TNWqG62oFhLMl+naJrz6RHcKCe2eecOjSTmvNSgowWBBPxsqrF0Xutl
-	 Dh+A/xjoB+v7Ap3lvHzUuCe135CCplLe/N1S07bo2GYI6gkcl1AMINuRjrRBxE5//N
-	 j9I48zLi8ourbw6TRjONfcLqJdrhGI03lmYfyk0cy6xI9QGn6ituRFuS2RzH2yBl7b
-	 WWcnGOrM78y2AmOp5XWTzwjEhwuBAXYPo9EIBdC4yIS+8lfVThl/2HnWcYCR8N2m3t
-	 PyiITAnhBIZMCHJYkm99gtdy4ktesE9VcdxGvtqjWuJHQg7BI1X7JHUT+QqLIyL5K7
-	 OfjucJD27eRog==
-Message-ID: <354d6100-311f-44d7-b8a5-1fd671b651e3@kernel.org>
-Date: Mon, 3 Mar 2025 08:24:13 +0100
+	b=Jk5ZUSjpndAm65Mc13hxIQ2yr1Aek+IIrzp6+ysfq17A3F+txLY8o1+ERBjV6d4xl
+	 W3WzGznNE8v/kWt5FGuzHw5mZVbTUVkZmknVbiKEw2TPogl4r4VIDVM0djijxUHcmC
+	 JPkjMJ5oQ5T5dxeD7u10aLajBrBgRt1N+KcUzYsapjwVXsv4GafQRVLOOvB+35OLWl
+	 X/p98SQU2hpTqLfL2TV840CXu8KeWphhpA5AV+xVG25BbbfUhyZ5pR9LHzt+cvVJSf
+	 eyDfc1vGXQOKnhsKvB1JtUggVCVnEctYHsgOoDhjXfB8Q9KSNG5Dv8TYZDgpNRtdHz
+	 TnpdwpiXDqK9Q==
+Message-ID: <a8991221-88b2-4a39-a51b-587c4cdeebe4@kernel.org>
+Date: Mon, 3 Mar 2025 08:46:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] dt-bindings: phy: add
- samsung,exynos2200-usbcon-phy schema file
-To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
+ Ride-r3
+To: Wasim Nazir <quic_wasimn@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Abel Vesa <abel.vesa@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
- <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
- <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
- <a4f63721-d094-4eda-b68a-6ef62ff54680@gmail.com>
- <c8184542-5dab-4403-bee4-867810397ae4@kernel.org>
- <4502b578-96e6-49e0-8f3b-54f6e5640c55@gmail.com>
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <4wmxjxcvt7un7wk5v43q3jpxqjs2jbc626mgah2fxbfuouu4q6@ptzibxe2apmx>
+ <Z3eMxl1Af8TOAQW/@hu-wasimn-hyd.qualcomm.com>
+ <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
+ <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
+ <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
+ <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
+ <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
+ <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
+ <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
+ <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
+ <Z8AWHiVu05s0RJws@hu-wasimn-hyd.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,114 +115,162 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <4502b578-96e6-49e0-8f3b-54f6e5640c55@gmail.com>
+In-Reply-To: <Z8AWHiVu05s0RJws@hu-wasimn-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 02/03/2025 10:16, Ivaylo Ivanov wrote:
-> On 2/25/25 10:11, Krzysztof Kozlowski wrote:
->> On 24/02/2025 11:48, Ivaylo Ivanov wrote:
->>> On 2/24/25 10:56, Krzysztof Kozlowski wrote:
->>>> On Sun, Feb 23, 2025 at 02:22:22PM +0200, Ivaylo Ivanov wrote:
->>>>> The Exynos2200 SoC has a USB controller PHY, which acts as an
->>>>> intermediary between a USB controller (typically DWC3) and other PHYs
->>>>> (UTMI, PIPE3). Add a dt-binding schema for it.
->>>>>
->>>>> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->>>>> ---
->>>>>  .../phy/samsung,exynos2200-usbcon-phy.yaml    | 76 +++++++++++++++++++
->>>>>  1 file changed, 76 insertions(+)
->>>>>  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->>>> You have undocumented dependencies which prevent merging this file.
->>>> First, dependencies have to be clearly expressed.
->>> They are, in the cover letter.
->> Where? I read it twice. Dependencies is the most important thing and
->> should scream at beginning of the cover letter, so if you bury them
->> somewhere deep it also would not matter - just like they were missing.
->>
->>>> Second, you should
->>>> rather decouple the code from header dependencies, otherwise this cannot
->>>> be merged for current release (just use clocks with long names, without IDs).
->>> Sure
->>
->>>>> diff --git a/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->>>>> new file mode 100644
->>>>> index 000000000..7d879ec8b
->>>>> --- /dev/null
->>>>> +++ b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
->>>>> @@ -0,0 +1,76 @@
->>>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>>>> +%YAML 1.2
->>>>> +---
->>>>> +$id: http://devicetree.org/schemas/phy/samsung,exynos2200-usbcon-phy.yaml#
->>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>>> +
->>>>> +title: Exynos2200 USB controller PHY
->>>>> +
->>>>> +maintainers:
->>>>> +  - Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->>>>> +
->>>>> +description:
->>>>> +  Exynos2200 USB controller PHY is an intermediary between a USB controller
->>>>> +  (typically DWC3) and other PHYs (UTMI, PIPE3).
->>>> Isn't this the same as usbdrd phy? see: samsung,usb3-drd-phy.yaml
->>> It's not (I think). There's a few reasons I've decided to make this separate
->>> from the usb3-drd-phy bindings and exynos5-usbdrd driver:
+On 27/02/2025 08:37, Wasim Nazir wrote:
+> On Wed, Jan 15, 2025 at 09:35:34AM +0100, Krzysztof Kozlowski wrote:
+>> On 15/01/2025 06:48, Wasim Nazir wrote:
+>>>> The the SoC, I am asking about the board. Why each of them is for
+>>>> example r3?
+>>>>
+>>>> So this is not sufficient explanation, nothing about the board, and
+>>>> again just look Renesas and NXP.
+>>>>
 >>>
->>> 1. This PHY does not provide UTMI and PIPE3 on its own. There's no tuning
->> USBDRD phy does not provide UTMI and PIPE on its own either if you look
->> at diagram - they call it phy controller.
-> 
-> Ughm. What? So in most exynos cases, there's a combination of multiple phys?
-
-
-> 
+>>> Hi Krzysztof,
+>>>
+>>> sa8775p(AUTO), qcs9100(IOT), qcs9075(IOT) are different SoCs based on
+>>> safety capabilities and memory map, serving different purpose.
+>>> Ride & Ride-r3 are different boards based on ethernet capabilities and
+>>> are compatible with all the SoCs mentioned.
 >>
->>> for them, and all that is needed from it is to disable HWACG, assert/
->>> deassert reset and force bvalid/vbusvalid. After that SNPS eUSB2
->>> initialization can be done and USB2 works. If the USBCON phy is not set
->>> up before the eUSB2 one, the device hangs, so there is definitely a
->>> dependancy between them. For PIPE3 we'd need to control the pipe3
->>> attaching/deattaching and then initialize the synopsys USBDP combophy.
->> Does it mean there is no USB DRD phy controller as before?
+> 
+> Hi Krzysztof,
+> 
+>> Compatible? What does it mean for a board?
 >>
->> Anyway the problem is you have DWC3 -> PHY -> PHY. Looks one phy too many.
 > 
-> So...
+> Ride board is based on multiple daughter cards (SOC-card, display,
+> camera, ethernet, pcie, sensor, etc.).
 > 
-> DWC3 -> USBDRD (USBCON) -> PHYs?
+> The SOC is not directly soldered to Ride board, instead SOC is soldered
+> on SIP (System in Package) card which can be mounted on SOC-daughter card of
+> Ride board.
+> 	- SoC => SIP-card => SOC-daughter-card (Ride)
 
-No, drop last phy. You just wrote the same as me - two phys, because
-usbdrd is the phy. In all existing designs there is no such controllable
-object from the point of view of operating system.
 
-> 
-> ...with usbdrd controller connecting and controlling the USB2 and USB3
-> phys, as well as dual role mode?
-
-Yes.
-
-> Well, where is the DRD part in the exynos5
-> driver?
-
-DRD? I believe it is part of DWC3, the same as in every other standard
-implementation of Synopsys DWC3.
+So basically pretty like other designs using SoM.
 
 > 
-> I guess it does perfectly fit the job of a usbdrd controller then (if it
-> even deals with DRD). But then again,  this brings up two questions:
-> 1. Should this driver even be named exynos2200-usbcon and not, for
-> example, exynos2200-usbdrd?
+> Together with SIP cards and other daughter cards we are creating different
+> <soc>-Ride Variants with differences in memory map & thermal mitigations.
+> 
+> The SIP card consists of SOC, PMIC & DDR and it is pin compatible to the
+> SOC daughter card of <soc>-Ride board. Only SOC is changing accross SIP
+> cards, except an additional third party SIL-PMIC for SAIL, which is not
+> present in QCS9075 Ride.
 
-Are you sure we talk about the same thing? USBDRD is IP block in the
-Exynos and a device driver. Call your device as appropriate it is -
-based on datasheet or downstream sources.
+Just like every SoM
 
-> 2. Are the exynos5-usbdrd phys really only USBDRD, or do they implement
-> USB speed functionality? What is the UTMI/PIPE3 setup for then?
+> 
+> Other daughter cards remains same for <soc>-Ride variants, except
+> ethernet card which is different for <soc>-Ride rev3 variants.
+> 
+> So the Ride board (combination of daughter cards) is same across the SIP,
+> while SOC on SIP card is changing which can be sa8775p, qcs9100 or qcs9075.
+> 
+>> Third time: did you look how other vendors do it?
+>>
+> 
+> Yes, we have reviewed other vendors. However, please feel free to share
+> any specific reference you would like us to follow.
+> 
+> Here are few reference files we found from other vendors where similar
+> tasks are performed which includes code refactoring and HW modularity:
+>  - Freescale: fsl-ls208xa.dtsi, fsl-ls2088a.dtsi, fsl-ls2081a-rdb.dts
 
-Dunno, I don't get what you mean by "exynos5-usbdrd phys really only
-USBDRD". USBDRD is just the name of the device.
+That's an unexpected choice - I would rather look at dozen of SoMs for
+iMX platforms.
+
+>  - Renesas: white-hawk-common.dtsi, r8a779g0-white-hawk.dts
+>  - Rockchip: px30-engicam-common.dtsi, px30-engicam-ctouch2.dtsi,
+>    px30-engicam-px30-core-ctouch2.dts
+> 
+> In our case along with describing the HW, code refactoring is also done
+> which might be causing confusion, but we are ready for any inputs for
+> correction.
+
+I don't understand why this was not properly described since beginning.
+You had the hardware in your hands and went with incomplete or even
+incorrect hardware description.
+
+> 
+> Putting this pictorial diagram for updated DT structure depicting our HW.
+>  - qcs9xxx-module.dtsi specifying QCS9xxx based SIP card/module having
+>    SoC, PMICs, Memory-map updates.
+>  - qcom-ride-common.dtsi specifying ride daughter boards, here we are
+>    doing code refactoring also as this is common for all ride boards.
+>  - qcom-ride-ethernet-aqr115c.dtso specifying ethernet overlay board which
+>    uses 2.5G phy and can be overlayed to ride boards to get ride-r3.
+>    By default ride uses 1G phy.
+>  - qcs9075-iq-9075-evk.dts is the new name for RB8 as per new product
+>    name. We will be changing this in next patch series.
+> 
+> +-----------------------------------------------------------------------------------------------------------------------------------------------+
+> |                                                                                                                                               |
+> |                                                          sa8775p.dtsi                                                                         |
+> |                                                              |                                                                                |
+> |                                    +-------------------------+-----------------------+                                                        |
+> |                                    |                         |                       |                                                        |
+> |                                    v                         |                       v                                                        |
+> |                             qcs9075-module.dtsi              |                qcs9100-module.dtsi                                             |
+
+So this is the SoM?
+
+> |                                    |                         |                       |                                                        |
+> |                                    v                         v                       v                                                        |
+> |                                  (IOT)                    (AUTO)                   (IOT)                                                      |
+> |                                    |                         |                       |                                                        |
+> |             +----------------------+                         |                       |                                                        |
+> |             |                      |                         |                       |                                                        |
+> |             |                      | +-------------------------+-----------------------+-------------------< qcom-ride-common.dtsi            |
+
+Which piece of actual hardware is represented in qcom-ride-common?
+
+> |             |                      | |                       | |                     | |                                                      |
+> |             v                      v v                       v v                     v v                                                      |
+> |  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
+> |                                    |                         |                       |                                                        |
+> |                                    | +-------------------------+-----------------------+-------------------< qcom-ride-ethernet-aqr115c.dtso  |
+> |                                    | |                       | |                     | |                                                      |
+> |                                    v v                       v v                     v v                                                      |
+> |                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
+
+I think I gave already few times that answer: No. You cannot reference
+from a module.c another .c file. You cannot reference DTS from DTS.
+
+Strictly speaking you can, of course, but you must not. That's not how
+source code is done to be manageable and readable.
+
+> |                                                                                                                                               |
+> +-----------------------------------------------------------------------------------------------------------------------------------------------+
+> 
+>>>
+>>> With the combination of these 3 SoCs and 2 boards, we have 6 platforms,
+>>> all of which we need.
+>>> - sa8775p-ride.dts is auto grade Ride platform with safety feature.
+>>> - qcs9100-ride.dts is IOT grade Ride platform with safety feature.
+>>> - qcs9075-ride.dts is IOT grade Ride platform without safety feature.
+>>>
+>>> Since the Ride-r3 boards are essentially Ride boards with Ethernet
+>>> modifications, we can convert the Ride-r3 DTS to overlays.
+>> How one board can be with multiple SoCs? If it is soldered, it's close
+>> to impossible - that's just not the same board. If it is not soldered,
+>> why you are not explaining it? What is Ride board? What is there? What
+>> can go there? How it can be used in other SoCs? Or for which SoCs? Is
+>> there a datasheet available?
+>>
+> 
+> As our SoC is based on SIP card and SIP card is compatible with Ride
+> board, we could able to use same Ride board (which is combination of
+> multiple daughter cards) with multiple SIP cards.
+> These SIP cards can be of sa8775p, qcs9100 or qcs9075 SOC.
+
+Describe properly the hardware - if you have a module or SIP if you
+decide not to use industry-standard naming (but why...), then describe
+it in DTSI.
 
 Best regards,
 Krzysztof
