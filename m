@@ -1,116 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-50189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98FD7A4DFCC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 14:53:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0165A4E016
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 15:03:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 57A177A1C3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 13:52:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 067113B66F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 14:01:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C6552046AF;
-	Tue,  4 Mar 2025 13:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C04720551B;
+	Tue,  4 Mar 2025 14:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="NUefgo7k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oCiV58v8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF485202F79
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 13:53:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF3E204695;
+	Tue,  4 Mar 2025 14:00:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741096429; cv=none; b=kCyTXb6jRBbwdsuoOLebnDxP5oyTRJexSQrl5JJD2g+hMwuCl43gG2HYDNE91rh/NN3RGwsORqT+3xDXe4bMXJMRZbn92bCnNy75e+CTY+lYza6/nGm7/0+9uafb86eu2jolbhnZub2cRpblcqLj4ZYpYdy+Ly/FV8iXFNgPXzA=
+	t=1741096846; cv=none; b=Mbcs4kkZMSIt29RAbAcODvCU5GsFijY2I0JiJez9Ipo7AltzprfzPY1NZkNz5+y4mv0iJ5QIUJ4AhktSE3nZqpXmeCr6c6DliSXSYaljVridR9JXcTcnGnYq02KalsY92WRADgHWU0yiDH7LbIuW0DipOQjZgB4niH5UZewSadE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741096429; c=relaxed/simple;
-	bh=bPfPD93l7XWp4K+A8697cOeG4hODBPIveR4prBwHvnk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=My2EUBVeKYwhnRw81G54Vo12TT0DSALB4Tgaqga3j1/cG0Odi5Y331P7JHSxtg3lgEQ9yOo4KioJ0bYV6Mb2sKCavHLdqf+oLkhDoWW6s2yS+uBTWw7A9f1k+FnmW5KaUtwOmX9Y1jCIEf7cfaD4eIS4YJiDHUhGKrDvlVZo7QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=NUefgo7k; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-30762598511so60521991fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 05:53:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1741096426; x=1741701226; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bPfPD93l7XWp4K+A8697cOeG4hODBPIveR4prBwHvnk=;
-        b=NUefgo7kHIk+4aFdgqDgTSFip5L2P1BdbtbOiVnb3neDYbdirwG3e5bniKbKaXoXxR
-         27t5+yl4cui/jMEdOSG9BbdcxZO3elc2PGVV9E9oVfjpMmiFZiCWaeQZGV4D5Caq81nT
-         Emjl0DNvlnBMrZVOT7eeu1tva+AKNl2jyodvwtmUftGwiZPBpi4MONrp93tEhGYBeS5b
-         267Ccd2QT1/j8Wwbp74DGwzcTdWIG1sAbxESyFVhNwh2Tx87aAkHu30v/yHGmiAoGG6F
-         L1Rzr3Ej5/YOG9wD/wuOn5VW2W6A3shmWcd1aHjUN1286LXfHq9SuOBCpOrjFs/jtNE/
-         jUgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741096426; x=1741701226;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bPfPD93l7XWp4K+A8697cOeG4hODBPIveR4prBwHvnk=;
-        b=LzkhGCR6UgiIQTn0bOW5FXOdC8SiSFMz0ybrrxTiufrCFn1GCX3HPJldLsi3XM0SO3
-         wsBBlXSsuzDatJV38Ozfb7NHT8fenuiEKcaKLvO4BatyD+CSN/XVeU5OqmvTdABP8RLr
-         kV3Nu/GButwviPCgYHn4I1RP8e5JSUJKylM0/0BJtEzVAnNmvtfCytjEC8rEXt41e8uJ
-         UkbTwOu4uUsYQvHpiQpP0JbearD/XDe+By4hOxWulWWy9ge80+IjgAgDGRmfnnfUmLS1
-         Fk0J5Bf+lsSxMwxh1qX70irqVAFcHEiOXHrTdASyfp2Gl2+pX4fBTjZ/jNiw+pF3atQD
-         p5Vg==
-X-Forwarded-Encrypted: i=1; AJvYcCWnqmXD7yk2xbu2+ACy9/T6WEwQsnHFMxmYtMC92GqsxKa1YQuZTSrqDGHW6gpt/4ptwok1xHntOW5T2OH5@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBuPT9syRNGo6jCLSU9jX7QCbN5KGif82V5a2pcpMOJBIQkz2e
-	KAzvNslAJ4diZRmQqvVlMnilXmnbTypwJti4bkYDPMkHq0/jvJ+Mrk95+wSOFKN3R9nygfoE8H5
-	WvBL3XmrDfzr9y1E+ASJ8ZYdkbpRxB/Ajb6ZEtQ==
-X-Gm-Gg: ASbGncuqZsMt2XIudr/ZdidpGn7yraINPJkJamB8jIFzFM3UIWMVpzEic99LO1W6EZO
-	jWlThoa3DQ9Ipcx5LdFCkTUPuP7yY8ykC3VAqIWmysQ8gBCG2TQpRX4s6iit6xnCtw+Id6tdfRF
-	DdrCJF6iloSgGKtbUabmsVviB1/Qdjf3p/6LxZRL6pWsoHBuvoRwvKxuNrHg==
-X-Google-Smtp-Source: AGHT+IH0S2v41EEsvJXTKAOj3SfZ26o8r//LfcPgvdTehENLascdrE2cLJn81POKQEF9iSB4U34UjDsa7ZB3cfqLe1Q=
-X-Received: by 2002:a2e:b8d1:0:b0:308:eb58:6581 with SMTP id
- 38308e7fff4ca-30b9310e789mr74920241fa.0.1741096425972; Tue, 04 Mar 2025
- 05:53:45 -0800 (PST)
+	s=arc-20240116; t=1741096846; c=relaxed/simple;
+	bh=iOf/Btd00TVbhUUPH7qKnM1gAcJ9dD7LIZMQq0bBGOA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fv2XEikB9MyEAAbVijT7Jl+bSr60P73mEQcmiUxo1xgGh9mU0ABIJbZjZe3LwvePaDjSZHYmqMBAwLiDY+sC0tquRsosWp5xrXmfcsbPvhdjTOpbg9m7ib/Va5nty8McwzBE71yiGEwZV7/OXXDc/RThj+Qn7BL4V2NocLlk6Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oCiV58v8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA4AAC4CEE7;
+	Tue,  4 Mar 2025 14:00:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741096845;
+	bh=iOf/Btd00TVbhUUPH7qKnM1gAcJ9dD7LIZMQq0bBGOA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=oCiV58v8EKD9fbf6RJJ84xkHHP0cyJ6kpYnTV3hbiQeDBMFuJka+DR6/TIyAU8XHG
+	 voTacVP2wbLrRZPinrWGWnPIswT6op/wpkDOjncQ0v1T8AxmRllVlGArM04mr05fly
+	 nNLE5fkl9EqOeBAQ/4oiABfG/+vRXfU23ct75+7JxEIuCSa0SGTBTYOxKQiJrBq9zJ
+	 vVi3l2v5SZBnXu4mmMjA2PjT+DyqXIAxUKkxzy+Dxt6oP3tBIlthQGHE/BURS5NEZw
+	 MvNk5AZSgPJtQhtHMe1fDfWg53wfahLVcJlJLf7xoLpXmFZ94HwB5zaUIJbsnQr+X9
+	 gQeCJlanbfPww==
+Message-ID: <6f7fea59-310d-4a7e-94f7-2483363012ba@kernel.org>
+Date: Tue, 4 Mar 2025 15:00:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250227-multi_waitq_scm-v5-0-16984ea97edf@oss.qualcomm.com> <20250227-multi_waitq_scm-v5-1-16984ea97edf@oss.qualcomm.com>
-In-Reply-To: <20250227-multi_waitq_scm-v5-1-16984ea97edf@oss.qualcomm.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 4 Mar 2025 14:53:34 +0100
-X-Gm-Features: AQ5f1Jo4X3PGLBSfl3KtFivfqe8YrWZi-sunmx5ghXII1IKVvNqLLxFv_MJbJ_I
-Message-ID: <CAMRc=Md=QY-HdA0Tdpd3rh1pma8cCtdde0mv91TtG0ML8Ej_pQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/2] firmware: qcom_scm: Add API to get waitqueue IRQ info
-To: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	kernel@oss.qualcomm.com, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>, 
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] media: dt-bindings: Document SC8280XP/SM8350 Venus
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Johan Hovold <johan+linaro@kernel.org>
+References: <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-0-279c7ea55493@linaro.org>
+ <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-1-279c7ea55493@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-1-279c7ea55493@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Feb 28, 2025 at 6:40=E2=80=AFAM Unnathi Chalicheemala
-<unnathi.chalicheemala@oss.qualcomm.com> wrote:
->
-> Bootloader and firmware for SM8650 and older chipsets expect node
-> name as "qcom_scm", in order to patch the wait queue IRQ information.
-> However, DeviceTree uses node name "scm" and this mismatch prevents
-> firmware from correctly identifying waitqueue IRQ information. Waitqueue
-> IRQ is used for signaling between secure and non-secure worlds.
->
-> To resolve this, introduce qcom_scm_get_waitq_irq() that'll get the
-> hardware IRQ number to be used from firmware instead of relying on data
-> provided by devicetree, thereby bypassing the DeviceTree node name
-> mismatch.
->
-> This hardware IRQ number is converted to a Linux IRQ number using newly
-> defined fill_irq_fwspec_params(). This Linux IRQ number is then supplied
-> to the threaded_irq call.
->
-> Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.=
-com>
+On 04/03/2025 14:07, Bryan O'Donoghue wrote:
+> From: Konrad Dybcio <konradybcio@kernel.org>
+> 
+> Both of these SoCs implement an IRIS2 block, with SC8280XP being able
+> to clock it a bit higher.
+> 
+> Document it.
+> 
+> Signed-off-by: Konrad Dybcio <konradybcio@kernel.org>
+> Link: https://lore.kernel.org/r/20230731-topic-8280_venus-v1-1-8c8bbe1983a5@linaro.org
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> [ bod: dropped dts video-encoder/video-decoder ]
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
+If this is the same version, then please implement previous feedback.
+
+If this is a new version, then please mark it as v2 and provide
+changelog. This is what b4 gave me:
+
+b4 diff
+'<20250304-b4-linux-media-comitters-sc8280xp-venus-v1-1-279c7ea55493@linaro.org>'
+Grabbing thread from
+lore.kernel.org/all/20250304-b4-linux-media-comitters-sc8280xp-venus-v1-1-279c7ea55493@linaro.org/t.mbox.gz
+Breaking thread to remove parents of
+20250304-b4-linux-media-comitters-sc8280xp-venus-v1-0-279c7ea55493@linaro.org
+---
+Analyzing 9 messages in the thread
+Could not find lower series to compare against.
+
+...
+
+> +
+> +        operating-points-v2 = <&venus_opp_table>;
+> +        iommus = <&apps_smmu 0x2100 0x400>;
+> +        memory-region = <&pil_video_mem>;
+> +
+> +        status = "disabled";
+
+So it is the same...
+
+Same comments apply, same review.
+
+Best regards,
+Krzysztof
 
