@@ -1,103 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-50243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5DFCA4E904
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:34:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 130B9A4E956
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:39:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA2C517DBA9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:28:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 16F837AA8A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:36:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1051627F4D4;
-	Tue,  4 Mar 2025 17:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 066E3281346;
+	Tue,  4 Mar 2025 17:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RKNo/AJW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGYo0f47"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC51B27D79B;
-	Tue,  4 Mar 2025 17:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1BA25F979;
+	Tue,  4 Mar 2025 17:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741107900; cv=none; b=k5gwbZImCtlBKVorkngEwIPBc+A1gz4xyb1NpwDsLUGoznHuUP8BxZjYr4x/qtZLLI2Z26mk70zFQSHnPROLpscvnh7xA7pFqjTJOFq2/A+aHjmpX6fgj3HQe2aqRRn9nzGAa/IwgzfTnlHGgch9OoW93ItrjkCZ0TdRNQhXTd0=
+	t=1741108261; cv=none; b=iGjUh/dG3guyzeYDLN26g0EQ+L0kRvYJQNwnkcNPORoIicswOZgrAbWuKiyfyJgWrCOaz9G8EzfQZheGl2urNGdVFbfB2Q6Ury48YwODN1gJEjZD6/zE4IztXc91ZvMFbP3pMYE+P7cVRd5zKBWuND81VsPN1n13dTuvIaDZMtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741107900; c=relaxed/simple;
-	bh=VOr4C/YufA34Z7C2Wk93o9PgftV0cO+24SD6BSpr8zk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sy8ksJ1rveNTEuVW8c8t1qSLsXPyK9QuZWczTIsRUbX6DQdTCfDxDV8zLfT1h7NxGSLINuXHnpfNEjKbXeNcfGGe3SThzBtIQSrTCyhq11fxVCaoHc7uIGHhZYAfUHHTT/SMEkopPavGlFuHTVT41M71K4EFvxI7lIuEwUuxVss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RKNo/AJW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA7EC4CEE5;
-	Tue,  4 Mar 2025 17:04:59 +0000 (UTC)
+	s=arc-20240116; t=1741108261; c=relaxed/simple;
+	bh=QyJnJjJ/lXLnZyjDS28b5GSFwV9FD3aP+4XwcadNkRM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GBvbkuYUNurxcqRUuFTeDWwKye3926VzeVNr/b73xALqNPzpLN5/lrwarfJhwK3wptDKH2mtLGyWS16OigyLyuOplx2x7qQSRCY8+WV1lOVSLefACltJTUR/5b1Zec07EN/3wtiRh+zdWNrDqibbKp101FsL7wEjH5FYb02Sq+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGYo0f47; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746AEC4CEE5;
+	Tue,  4 Mar 2025 17:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741107899;
-	bh=VOr4C/YufA34Z7C2Wk93o9PgftV0cO+24SD6BSpr8zk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RKNo/AJWgngX+8gFX0PVeUl/icP5ndylf6Nh2y2ihfLcqgcQrdXCfiphCaUA4fGy1
-	 aPfhXAEo6quMMzhOZcCG0yPsuMyZ0zBhChsfpaihVSXpofQCJRMBjLpI/EQ8Kspazd
-	 RPr9QtKS60iWfIZgnjONqc5PcahrkWTyjmu67UYZtWLMqbi9T1pNAGGMy5yt0w3pcZ
-	 u4C69I/VIuJu5o4sgRPGbL26w/EFDoLxzxKWe5R7rIWFMl6JmhOUjWDoocFUGwWpSy
-	 1OvqVDpFUFWrbUehoOAdfBhjXIjX+XEOdGoBiUTV1nvLJUgKrj807LVgY/hfsZauot
-	 tnovLTHqnYK3Q==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tpVhP-000000007bF-26pi;
-	Tue, 04 Mar 2025 18:04:55 +0100
-Date: Tue, 4 Mar 2025 18:04:55 +0100
-From: Johan Hovold <johan@kernel.org>
-To: srinivas.kandagatla@linaro.org
-Cc: broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-	krzysztof.kozlowski@linaro.org, linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dmitry.baryshkov@linaro.org, johan+linaro@kernel.org
-Subject: Re: [PATCH v3 0/6] ASoC: q6apm: fix under runs and fragment sizes
-Message-ID: <Z8cyt2n7qj4GkcJC@hovoldconsulting.com>
-References: <20250304105723.10579-1-srinivas.kandagatla@linaro.org>
+	s=k20201202; t=1741108261;
+	bh=QyJnJjJ/lXLnZyjDS28b5GSFwV9FD3aP+4XwcadNkRM=;
+	h=From:Date:Subject:To:Cc:From;
+	b=RGYo0f47bdIphAXi3nG487Me7SQvi3vSP8HlcI1krepoc4UIgzfLABTZlLoOOYEd/
+	 vFjRPpa8mV2DKyp63Z0hnG4BYKK2A8gKBlyiQxCfuNsSrc6h+MFtRio80jn3RrdsdH
+	 1Ypn9wEvG2YXqlWYFZSUwmDZ5a6Ze7EyhR+ZIojN0M3O+JRsGeGrho7IjgrPDns68p
+	 O1bkgcSAUphQluzSh8pco38/wZn80RA4ZLOgqtXzGFU82K7aeVbbb95PiWxi+icVnu
+	 axyq/oDmmp5VqJMHb0i6cUoxhRs6fQnM7wvUxf4M9X56lbLLhUxIn0vhG8Bo53BiRJ
+	 f6xmAKe5Bf9Lw==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Tue, 04 Mar 2025 18:10:46 +0100
+Subject: [PATCH] arm64: dts: qcom: x1e80100-romulus: Keep L12B and L15B
+ always on
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250304105723.10579-1-srinivas.kandagatla@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250304-topic-sl7_vregs_aon-v1-1-b2dc706e4157@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIABU0x2cC/x3M2wpAQBRG4VfRvjY1ByKvIknjxy7NaLak5N1NL
+ r+LtR4SJIZQVzyUcLFwDBmmLMhvU1iheM4mq22tna7UGQ/2SvZmvBJWGacYlLHaALX1aB3l8kh
+ Y+P6v/fC+H9PfDDJlAAAA
+X-Change-ID: 20250304-topic-sl7_vregs_aon-1201ee52ce83
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ Konrad Dybcio <quic_kdybcio@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Johan Hovold <johan+linaro@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1741108257; l=1496;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=Q1raCAdNlbWo+epSFVrbDIAnmmxs+X4h74jjAxQUfLU=;
+ b=IgCjeXZpbP0EeY9TZrvIxpTFUsVbsEiCtkLNSlhtHr/5lSuxS8wjCBfFcFaacDGfZmKXuNfuJ
+ pKaHFJs9pPWBF7BW4EaRURpD3WMB3vJTE+yTLQhnlc99aoiPrEESgUJ
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On Tue, Mar 04, 2025 at 10:57:17AM +0000, Srinivas Kandagatla wrote:
-> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> 
-> On Qualcomm Audioreach setup, some of the audio artifacts are seen in
-> both recording and playback. These patches fix issues by
-> 1. Adjusting the fragment size that dsp can service.
-> 2. schedule available playback buffers in time for dsp to not hit under runs 
-> 3. remove some of the manual calculations done to get hardware pointer.
-> 
-> With these patches, am able to see Audio quality improvements.
-> 
-> Any testing would be appreciated.
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-This fixes the playback and capture issues with Pipewire, including the
-heavily distorted, choppy playback when pavucontrol is open. Turns out
-that the pavucontrol volume meters reduces the output sink quantum size
-from the default 1024 to 256, which was too low with v2 but now seems to
-work.
+These regulators power some electronic components onboard. They're
+most likely kept online by other pieces of firmware, but you can never
+be sure enough.
 
-Unfortunately, this series still regresses Pulseaudio as capture is now
-choppy (e.g. when recording using parecord).
+Fixes: 09d77be56093 ("arm64: dts: qcom: Add support for X1-based Surface Laptop 7 devices")
+Reported-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-During our off-list debugging sessions you suggested reducing the max
-capture period size (that this series increases) to 6144 (same as min)
-and that fixed the Pulseaudio capture issue. In v3 the, the max period
-is again increased to 65536 which appears to break Pulseaudio capture.
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
+index 5867953c73564ca7ae1279b73f6834aa1d732792..6a883fafe3c77a45e045beba8357d67caa88dabf 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
+@@ -510,6 +510,7 @@ vreg_l12b: ldo12 {
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1200000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
+ 
+ 		vreg_l13b: ldo13 {
+@@ -531,6 +532,7 @@ vreg_l15b: ldo15 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
+ 
+ 		vreg_l16b: ldo16 {
 
-> Changes since v2:
-> 	- dropped patch which is causing regression with pluseaudio.
-> 	- setup period sizes only for capture path
-> 	- fix underruns/overruns in dsp pipelines.
-> 	- add fixes tag
-> 	- add patch to fix buffer alignment
+---
+base-commit: 20d5c66e1810e6e8805ec0d01373afb2dba9f51a
+change-id: 20250304-topic-sl7_vregs_aon-1201ee52ce83
 
-Johan
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
