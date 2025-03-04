@@ -1,199 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-50286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4327A4F0B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 23:46:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D353A4F11C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 00:05:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE5D6188D0F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 22:47:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55B373AD7E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 23:05:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E49F1FE47C;
-	Tue,  4 Mar 2025 22:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5303925F99E;
+	Tue,  4 Mar 2025 23:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D/jcaYBg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZER8gjj3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A7D1F4611;
-	Tue,  4 Mar 2025 22:46:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0204279323
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 23:05:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741128415; cv=none; b=J8RYXTSXzjqwvVnlcboyfnC2lDveBwG4xnancIVJb++yTybgMNrJz9+KfE4EfZjPE2Tpu8wZYeTtdCJ+myV6YlLnEXLM3lVbrZPlyaHxmEyM1+Gn1nzhli/ZJIVx6mMqoLpUXzx28b15RZCKZaDxVRJmzJvt52ehecV0RPkDoJ8=
+	t=1741129509; cv=none; b=fHIemm6ENvCG8vF4s8ZJwcxg5DSp0n99CzpaQ48RnOQqmRJ/DGNIi2wb153ZvuVbsxo/TZUrDXF2xMSMJfzL/+MaIS5oynC+vcTx6Axe26cjzWC3n2OeQW8O2Q/bNztN7Sq4JglEtwsgOeKN1XT9op7X85Pm2/OaMG92NtUWCxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741128415; c=relaxed/simple;
-	bh=v0g4BhzX+oxQUTu43WMPEeP6GZ8btdAYmtKYz+4cFHY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QhEEVd3O4uE2VW8LaXmYOyvFK+XPWpPff7r+4LS9ErBEdwkfpqnbmAeaP09A2N4gZHZYrAsjY9mm9hWhybhQXgjDLeEiu18AZtFRsTlaPC/WF/jNSQ41rKLSIVUg+QAEavL6LQMgvZaphNMyYFcY9U6St6OkiG5o8ajtU7WQyrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D/jcaYBg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524Kio0i000988;
-	Tue, 4 Mar 2025 22:46:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3NwIGTcVv3klJr/RLcrTlS8Yu+Du9AxTXUb6muo8eOw=; b=D/jcaYBgLoLOBV00
-	30atQphosIV3bb+gin5IEbuDqLl9VQzDD0IXU8mQz+cOy8eFei7LqghxLy8V4aEO
-	8tThITjPrIJkzmj4eI1uQNEch495xGUyYS59cOmWWXOl2C5QO3leyUAEzpUzVVcR
-	ccekj81muoEpnd3kKbdMuB5rK+3oaRrs6J32K6iYw5Fe5pr6AXtO1Pm+7Gn3M6yw
-	hIvZjrr1cj+sAjFnv0Mt+nEG8DWASyD0n9qPdHqJoqJPBt9hVMlcrcKlO0SZvx8f
-	RitwiINpVd9iq4MSNY+OSHnuMmS9FxYxQLIef9EtaPdbPNRgE39G0vbxVRTBOJJ2
-	ybPkYA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6vkf5d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Mar 2025 22:46:35 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 524MkYrs002179
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 4 Mar 2025 22:46:34 GMT
-Received: from [10.71.114.206] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Mar 2025
- 14:46:33 -0800
-Message-ID: <ee5cb6bc-963a-4e31-8ac4-07120fb9ff70@quicinc.com>
-Date: Tue, 4 Mar 2025 14:46:28 -0800
+	s=arc-20240116; t=1741129509; c=relaxed/simple;
+	bh=JQep0ZQ8KR7wNqUuL8Umc/S8sL+su7GsAMhW1J6fjnY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=nOp620I7w4RycPYH+WJg7EyNSs71JkGmIui91YdjaGIcd4VFGDYpgZz+mrnfw/15QjRikeC3Czc57yjRInLtc3jFi3J6U18TsNQWMPMRnKVY20CTenbGaB5lY5DM+cXojTMuwjbsfGkjznTKzCGgj521Gxg+mTAZ8tC3k7IHEd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZER8gjj3; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524Ji231021535
+	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Mar 2025 23:05:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=+k0/7n0ayENZ3P/X9hSe8bRKUyB6TgoFwbi
+	S2F0zQa0=; b=ZER8gjj3fegQ5557Mwhd/DZXTAYmWRcKH27hvsirMInc+l1YhcY
+	b6mHAHKpWNti76lytRLtG7wlMPgEsvymFab9trVlo/K/3fYRez8tFjkKF2+xnG/n
+	eLbgvKEPyv4a5EKUS9uaEKSxNk1/MI/2YBb+x3QQl16GxqDi0M8isP2e4/fMIQU9
+	qF7X1HJXXhR1D82beZ5CDWDT/uHsIu2vp6+4MHVfe/Ycs+T90upZJFn8hqJvGRgv
+	1xJnPUHBRR9akOYfL7KcTYo1L+dBqrP8L+NV7CpIkEIlsZwu8SOWGl4Obo00ap6P
+	S/8GuyMpXjZ+zkjYpel5228Vy7ZfuJueSMw==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6t3fbf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 23:05:05 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-22379af38e0so66027815ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 15:05:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741129504; x=1741734304;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+k0/7n0ayENZ3P/X9hSe8bRKUyB6TgoFwbiS2F0zQa0=;
+        b=m+bpaKAUoBvj/LKfG470IqZ7u+udSAKySK/a+o1pGpffPmkZn0wp55pgzBBRD3dagu
+         75xaEE77NF12VRrtk+oyTGWHx48uUGX+3Ce+5G8rdCeV4Oo/phWBXIFmY8KBFbJU1EBJ
+         A63otXMP6hXzAu+mEcghutq/Hdx/0tDNud+LoWScjS/wHoPe7HXYXHAx7yUXLUG8Gt0j
+         YdrLlMv4ckimcvOIcPOe3Pg7oxyXXRPRmU+t4TgCBxBU5gmvmHLU/5j8weKTMBBgh2F8
+         uNYFOIEJ22Q+2LmtqA6hlmYHLr3b4LAd8PhmNHYENn/kuhqNCjm+0jQrcSnz6HvQljS5
+         TXsA==
+X-Forwarded-Encrypted: i=1; AJvYcCUdRttm0rYwwGJ9SiD4S0Xmd6+2K93ImGAk4r3Q4eA/vKELZx4d7DZSWRBOVUk4T8ghFNBGUpS8rkCMNPKZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz6Avl1Z8dG1EKFIna4rJGQ1lpUMSpWVevyiFMtqGjL4NkJijyx
+	oCBzo3KzCuvqPl2naVbFUilIG2R9nigZxeDA582UG7vIHoBhPBiKXt4yS9V+opBoWhf6wMgOyLW
+	7b4vAXBBOkT6dTQ5YhPE59+eEEXIaFl+HO9yqM28Khsfk8xFS/W4RRiHIaUADFzzw
+X-Gm-Gg: ASbGncs72SCGwOTFEv6bNZkaYMS34e9LMxrURxHS1wdQsGtQwAj8FKVRA+Au5GLEtwt
+	Eowsb0BmQgUYwUaP5+P/EAjD7uI3Tmb1sbdQSOH3Fv9GIvExMtoys8pRvAOFPHSyvsv8OPGTmA6
+	sIcYKBN7XOsvzSXSllR55nGySIhrBJiHE5VKs9vGvSAeFvBqLaFOryacoIDNcQZDdiZz0bMBQre
+	xI4WnP2s2IF/jrgMyIJmjLuF4HBetPtlzvH3gFJMdleqES1jx5NWl/cPc0dRiozE6zGw6er2bXu
+	Ad9fPsNiHhnye/Wm1or0nSsY4hn08kU1NdO6WdPd9lkf3TZgyawv2fCu9oZYNZWB6QfpfRFXME3
+	Tdyw=
+X-Received: by 2002:a17:902:ea06:b0:21f:4b01:b985 with SMTP id d9443c01a7336-223f1d3a25dmr15090565ad.45.1741129504151;
+        Tue, 04 Mar 2025 15:05:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEnGhUpQy825/DMxvlXW2Ue+mmydLdhow3pf6c4GZU71xZ3fvsbSsXGKnIpJE8MZcF6q6FiqA==
+X-Received: by 2002:a17:902:ea06:b0:21f:4b01:b985 with SMTP id d9443c01a7336-223f1d3a25dmr15090185ad.45.1741129503766;
+        Tue, 04 Mar 2025 15:05:03 -0800 (PST)
+Received: from hu-amelende-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7349fe6cfd9sm11492793b3a.76.2025.03.04.15.05.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Mar 2025 15:05:03 -0800 (PST)
+From: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+To: amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org
+Cc: rui.zhang@intel.com, lukasz.luba@arm.com, david.collins@oss.qualcomm.com,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org
+Subject: [PATCH v3 0/5] thermal: qcom-spmi-temp-alarm: Add support for new TEMP_ALARM subtypes
+Date: Tue,  4 Mar 2025 15:04:57 -0800
+Message-Id: <20250304230502.1470523-1-anjelique.melendez@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v35 00/31] Introduce QC USB SND audio offloading support
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-CC: Greg KH <gregkh@linuxfoundation.org>, <srinivas.kandagatla@linaro.org>,
-        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
-        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
-        <lgirdwood@gmail.com>, <tiwai@suse.com>, <krzk+dt@kernel.org>,
-        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
-        <robh@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>
-References: <20250219004754.497985-1-quic_wcheng@quicinc.com>
- <Z7W_Vz_kVDjIcp5N@linaro.org>
- <82ce69a3-d248-494f-6ddb-098f392c78a0@quicinc.com>
- <Z8a4WYq4GqWBVNyX@linaro.org>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <Z8a4WYq4GqWBVNyX@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Lbil9AyCLexrYewfigB777EYp9i9QjEK
-X-Authority-Analysis: v=2.4 cv=LYfG6ifi c=1 sm=1 tr=0 ts=67c782cb cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=OF3dkDXz7wlyf22mrvMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: Lbil9AyCLexrYewfigB777EYp9i9QjEK
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=I/ufRMgg c=1 sm=1 tr=0 ts=67c78721 cx=c_pps a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=p-nOP-kxAAAA:8 a=Ke_cMI1aEn6YhuwJoicA:9 a=uG9DUKGECoFWVXl0Dc02:22
+ a=TjNXssC_j7lpFel5tvFf:22 a=XN2wCei03jY4uMu7D0Wg:22
+X-Proofpoint-GUID: 0TTkbobHw4G-KfJsSffxF48yOdKgDp4S
+X-Proofpoint-ORIG-GUID: 0TTkbobHw4G-KfJsSffxF48yOdKgDp4S
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-04_09,2025-03-04_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 clxscore=1015 phishscore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 bulkscore=0 mlxscore=0 suspectscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam authscore=0 adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2502100000 definitions=main-2503040181
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
+ spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0
+ clxscore=1015 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503040183
 
-Hi Stephan,
+Add support in the qcom-spmi-temp-alarm driver for the new PMIC
+TEMP_ALARM peripheral subtypes: GEN2 rev 2 and LITE. The GEN2 rev 2
+subtype provides greater flexibility in temperature threshold
+specification by using an independent register value to configure
+each of the three thresholds. The LITE subtype utilizes a simplified
+set of control registers to configure two thresholds: warning and
+shutdown. While at it refactor the qcom-spmi-temp-alarm driver to limit
+code reuse and if/else statements when deciphering between TEMP_ALARM 
+peripheral subtypes. 
 
-On 3/4/2025 12:22 AM, Stephan Gerhold wrote:
-> On Mon, Mar 03, 2025 at 06:39:52PM -0800, Wesley Cheng wrote:
->>
->>
->> On 2/19/2025 3:24 AM, Stephan Gerhold wrote:
->>> On Tue, Feb 18, 2025 at 04:47:23PM -0800, Wesley Cheng wrote:
->>>> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
->>>>
->>>> Several Qualcomm based chipsets can support USB audio offloading to a
->>>> dedicated audio DSP, which can take over issuing transfers to the USB
->>>> host controller.  The intention is to reduce the load on the main
->>>> processors in the SoC, and allow them to be placed into lower power modes.
->>>> There are several parts to this design:
->>>>   1. Adding ASoC binding layer
->>>>   2. Create a USB backend for Q6DSP
->>>>   3. Introduce XHCI interrupter support
->>>>   4. Create vendor ops for the USB SND driver
->>>>
->>>>       USB                          |            ASoC
->>>> --------------------------------------------------------------------
->>>>                                    |  _________________________
->>>>                                    | |sm8250 platform card     |
->>>>                                    | |_________________________|
->>>>                                    |         |           |
->>>>                                    |      ___V____   ____V____
->>>>                                    |     |Q6USB   | |Q6AFE    |
->>>> |     |"codec" | |"cpu"    |
->>>>                                    |     |________| |_________|
->>>>                                    |         ^  ^        ^
->>>>                                    |         |  |________|
->>>>                                    |      ___V____    |
->>>>                                    |     |SOC-USB |   |
->>>>    ________       ________               |        |   |
->>>>   |USB SND |<--->|QC offld|<------------>|________|   |
->>>>   |(card.c)|     |        |<----------                |
->>>>   |________|     |________|___     | |                |
->>>>       ^               ^       |    | |    ____________V_________
->>>>       |               |       |    | |   |APR/GLINK             |
->>>>    __ V_______________V_____  |    | |   |______________________|
->>>>   |USB SND (endpoint.c)     | |    | |              ^
->>>>   |_________________________| |    | |              |
->>>>               ^               |    | |   ___________V___________
->>>>               |               |    | |->|audio DSP              |
->>>>    ___________V_____________  |    |    |_______________________|
->>>>   |XHCI HCD                 |<-    |
->>>>   |_________________________|      |
->>>>
->>>
->>> As I noted on v34 [1], this version is still missing instructions and
->>> changes needed for testing this series. The device tree changes don't
->>> need to be part of the same series, but there should be at least a link
->>> provided to give other people the chance to provide Tested-by tags.
->>>
->>> IMO we shouldn't merge this series without those instructions, otherwise
->>> we risk that this just ends up being dead code that no one can use.
->>>
->>> Can you please share the device tree changes for a board upstream and
->>> any other changes needed to be able to test this series? E.g. for
->>> sm8250-mtp.dts, based on the examples in your cover letter.
->>>
->>
->> To clarify I'm testing this on sm8350 in recent times, but utilizing sm8250
->> definitions for the ASoC platform card, as the platform sound card is more
->> or less the same between the two SoCs.  Back
->> when I started this series, sm8350 was missing a bunch of dependent
->> components, such as aDSP not being loaded, and missing platform sound card
->> definition, so I had to define and enable those on my own, which required a
->> slew of new DT nodes, hence why it wasn't as straight forward to include
->> the DT definitions yet for sm8350.  Not thinking that this series would
->> take as long as it did, I was planning on separating out the DT changes in
->> a different series to enable offloading for the devices I have tested with.
->> (sm8150, sm8250 and sm8350)
->>
->> There's still a pretty big chunk of dependencies missing from sm8350, so
->> those would also be handled in the follow up DT submission.  For now, its a
->> much bigger hurdle to get the main/functional changes in, and that was
->> taking a significant amount of time from my end to manage.
->>
->> If you want, I can give you the changes I have offline to enable this for
->> sm8350, since I haven't spent time formatting/prepping the changes for
->> submission yet.
->>
-> 
-> Can you push it to a public branch somewhere (e.g. on CodeLinaro)? I was
-> talking to some people from the community about testing this on some of
-> the smartphones we have in upstream, so it wouldn't help if I just have
-> the changes privately.
+Also add support to avoid a potential issue on certain versions of
+the TEMP_ALARM GEN2 subtype when automatic stage 2 partial shutdown
+is disabled.
 
-Which CLO project/branch did you want me to push it to?  Sorry, I haven't
-worked too much with the CLO open branches.  I have an account though.
+This patch series is a continuation of older series from 7/2024
+(https://lore.kernel.org/all/20240729231259.2122976-1-quic_amelende@quicinc.com/)
+but current series has been reworked to address the change in thermal framework to
+update .set_trip_temp() callback function variables
+(https://lore.kernel.org/all/8392906.T7Z3S40VBb@rjwysocki.net/)
 
-Thanks
-Wesley Cheng
+Changes since v2:
+  - Updated function name to include "gen1" in patch 2/5
+  - Added Dmitry's reviewed-by tag in patch 2/5
+Changes since v1:
+  - Remove unnecessary moving of code
+  - Added new v2 patch 3/5 add a preparation patch to v1 patch 2/5
+  - Updated temp alarm data function names to be consistently named
+
+Anjelique Melendez (4):
+  thermal: qcom-spmi-temp-alarm: Add temp alarm data struct based on HW
+    subtype
+  thermal: qcom-spmi-temp-alarm: Prepare to support additional Temp
+    Alarm subtypes
+  thermal: qcom-spmi-temp-alarm: add support for GEN2 rev 2 PMIC
+    peripherals
+  thermal: qcom-spmi-temp-alarm: add support for LITE PMIC peripherals
+
+David Collins (1):
+  thermal: qcom-spmi-temp-alarm: enable stage 2 shutdown when required
+
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 515 ++++++++++++++++++--
+ 1 file changed, 464 insertions(+), 51 deletions(-)
+
+-- 
+2.34.1
+
 
