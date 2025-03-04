@@ -1,63 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-50101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D8A6A4D25A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 05:09:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 500C9A4D261
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 05:10:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 701F4171452
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 04:09:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CD601716B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 04:10:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D03FB1F417B;
-	Tue,  4 Mar 2025 04:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 559DB1F0E52;
+	Tue,  4 Mar 2025 04:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YmIVy6WF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZWM0lDes"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18801F4161;
-	Tue,  4 Mar 2025 04:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293F51F03E5;
+	Tue,  4 Mar 2025 04:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741061361; cv=none; b=hWkwc+aedh/LeXOFhjUqRH3psVZYKytS5TxomARocvITSDnXWI+pkrcqfw9tcv0iiPZAgPCPLbS0woSz2c+jKWbGd1iDNUIdn4hEkiTBloVJnW6oHomU2nuEe0wPl7K/bvw4N0ilLjoLYlERkXsF+k9OurLtEfZK6yRk7AydYgk=
+	t=1741061384; cv=none; b=n8NYzscajr7CaUQ/cdWHXOI0KwLmnU2yWJrHvqoqHWobV/hpRAwcTBWZk6uPzzSpR+ZZ3RpTj5z9K7Jn7gZZPJPXDbvALRtZ1+OAM0prSWD9U+rbRtLgrGvx70gYEibklxVMYPnOroScOEBz6etMzNLvqcjpp4hq4cxZkHBO1rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741061361; c=relaxed/simple;
-	bh=bsQPXXCCjGVJZ5dkWrd5NllEN/Zgl7X98JItl6lgNoM=;
+	s=arc-20240116; t=1741061384; c=relaxed/simple;
+	bh=KoGK/SjJaX6GjbwfYx3L4okHGnPh1ZByOgGd9NDsAxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oBROw72GPZSv86PYBncOxl8ZT2USoV6LZj7cbLwjKHg6SUreTctx5UI95PRcz8+UevKX7GnVkjliVlvaqNoU0Fjn7CJWSY40pAHz84RRIWtKqQFdBupcJrYIyXQJv6khBv1sXnqs5kvMuv1jFl5LiPpu3Rv7lsLpaDbJ7t6NXPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YmIVy6WF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6585BC4CEEA;
-	Tue,  4 Mar 2025 04:09:19 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Lmj6zPhgBULh+NmDi9VZv2iOCooCim6d4InW61A9JD0fezUmoL6fTU7wNVeTbakwTEVZ5vzruD4qIaYNH+GGoQ3BnNeG/fSfQEUel8lHUEHXe4avZkZ9fYStzEw0GLoCn2jAQWIDVlhbcpX3N9WM0zvC4RR8ZfBvHVhFRoZVbk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZWM0lDes; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B9CC4CEE7;
+	Tue,  4 Mar 2025 04:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741061360;
-	bh=bsQPXXCCjGVJZ5dkWrd5NllEN/Zgl7X98JItl6lgNoM=;
+	s=k20201202; t=1741061383;
+	bh=KoGK/SjJaX6GjbwfYx3L4okHGnPh1ZByOgGd9NDsAxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YmIVy6WFgt7ldYru/6odnu5DYMAyih6dCZb+f/0qlAChD6FzUlboxB6vfhFQ2yoMA
-	 KX5GEhx7Ok4n5rXbjDLdKvGd1WyWH6/TCjlUQmEBnb8LBIw0wzTb52yKcwvZrvj+QY
-	 d90wa6Fy7L8Xm0h5Q5GyasNF2RIKKxBkm+cSiY3lO9hXJdjbnPTg6R91w7R6rbAJ9U
-	 yN/2dwX5XX4pPQKSAkg53EhVtiXBOmfjkyW+3cS3DKkwIvB+ujf8uFVjlhyn4Y/Q0T
-	 L37QiaJd+6BNKoBDZ75uIchPHUCf6F5kK0HDk5SSzheVAU1QW7GmTX2cFc1gOdVnku
-	 30oqEi83Dg6lQ==
+	b=ZWM0lDesbH2B/UElPhlfb+bhe+SQDXqTDNysRNOXZT/Dfa05I+xeIMHkAwhURMck9
+	 z09VkbebeazYisj98yDsAUTFVtsS2whLTyGJxUMJTUP5Rvk3kQCVfavE40/BGfrFM7
+	 VJEdu6pFbEoX7fHGpxDrtVvxz1VaYyScHlTDaJFc5aVRBwsNgwj/yEmIrDdsckQR3+
+	 dymaIuo62e8fXR30TtyCVDlif9+r00DiiBnv2dIyULDC4OLpVNK19Os+IFNF6H244v
+	 FXOzh/ir08qdfDxDIiR/Q369BUJuiH+dV+E6jd/h2qzqSRXYJyNFv3jfVCJzqBrCc9
+	 5ovBpA/xJKy1Q==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <quic_kdybcio@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 0/2] dt-bindings: display: qcom,sm8[56]50-mdss: properly document the interconnect paths
-Date: Mon,  3 Mar 2025 22:09:15 -0600
-Message-ID: <174106135204.690218.18053860461752631665.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH] Revert "arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu"
+Date: Mon,  3 Mar 2025 22:09:39 -0600
+Message-ID: <174106137700.690572.13341685389729259019.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250227-topic-sm8x50-mdss-interconnect-bindings-fix-v5-0-bf6233c6ebe5@linaro.org>
-References: <20250227-topic-sm8x50-mdss-interconnect-bindings-fix-v5-0-bf6233c6ebe5@linaro.org>
+In-Reply-To: <20250225-topic-845_smmu_not_coherent-v1-1-98ca9d17471c@oss.qualcomm.com>
+References: <20250225-topic-845_smmu_not_coherent-v1-1-98ca9d17471c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,24 +69,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 27 Feb 2025 10:00:31 +0100, Neil Armstrong wrote:
-> The mdp1-mem is not supported on the SM8550 & SM8650 SoCs, so properly document
-> the mdp0-mem and cpu-cfg interconnect entries.
+On Tue, 25 Feb 2025 14:44:40 +0100, Konrad Dybcio wrote:
+> There are reports that the pagetable walker cache coherency is not a
+> given across the spectrum of SDM845/850 devices, leading to lock-ups
+> and resets. It works fine on some devices (like the Dragonboard 845c,
+> but not so much on the Lenovo Yoga C630).
 > 
-> This fixes the following errors:
-> display-subsystem@ae00000: interconnects: [[200, 3, 7, 32, 1, 7]] is too short
->         from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-mdss.yaml#
-> display-subsystem@ae00000: interconnect-names: ['mdp0-mem'] is too short
->         from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-mdss.yaml#
+> This unfortunately looks like a fluke in firmware development, where
+> likely somewhere in the vast hypervisor stack, a change to accommodate
+> for this was only introduced after the initial software release (which
+> often serves as a baseline for products).
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: sm8550: add missing cpu-cfg interconnect path in the mdss node
-      commit: 327d489d1ecaf16182952f079cc21f04cf83f967
-[2/2] arm64: dts: qcom: sm8650: add missing cpu-cfg interconnect path in the mdss node
-      commit: f22be5c1dd3e12519e3f3b80c14d10b90be2c2fc
+[1/1] Revert "arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu"
+      commit: f00db31d235946853fb430de8c6aa1295efc8353
 
 Best regards,
 -- 
