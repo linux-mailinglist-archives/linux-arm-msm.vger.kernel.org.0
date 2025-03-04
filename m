@@ -1,59 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-50173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1352A4DE05
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 13:34:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B532A4DE12
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 13:35:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0341C1783C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 12:34:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E5A618939BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 12:35:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C13B22040BC;
-	Tue,  4 Mar 2025 12:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 068442046B5;
+	Tue,  4 Mar 2025 12:34:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IQtCJjjs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rkL4x7tL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D2B202C5C;
-	Tue,  4 Mar 2025 12:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1C62040B3;
+	Tue,  4 Mar 2025 12:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741091630; cv=none; b=jnuDDPFSIz7qIZflNkMzNxDRzk3kF3Q9hS4W5wb/Y/6C1GfhQUcjYGb+yQE9KRvNZDvJxSCNDWg5Iy2Valfbheu2hjcvxtoSd2O6XAZyOtMml5czNZXqxMk8hTe3GQd4I+RpreSoSr2BkoC5DE+2mK0gojn/9fOZsDGI14hwbmw=
+	t=1741091651; cv=none; b=Tx/x1on3CVUvjtxkTLNSgOdRIWNJWD7VTBj7GqgiPza9lj1bbJEw0ywXJEY2lMmusdIHr8ZAMgIQ21zcbw6iLksVgusgwDn+1qjqcK8IpffqfGweIjwkzic/LZvdjnJ9/mJfOhb/r/w18RMO1Xxr+i2U2qnyvaUCQbkg/1sv3rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741091630; c=relaxed/simple;
-	bh=0zUFOrw8shW7MFjQk03ahVPm0Wdqf9mwdxeXee8/Z1o=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=AeOYgC4sjxOjNCkgkzgOCJ32xgXAdPfMTPN3Hyq3ymYv2xIvvrcOQe3+xpO+cgaHeoSXh4Q3Uc7QqAOkfkPAOkEhiSppiove1iEw7UkqbtIfeVs93km2flNFsZYbL35fgvAiiXrEKXx5PRSSMLBye6cZECHsFPIbW+Jb6DZcF9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IQtCJjjs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180D8C4CEEB;
-	Tue,  4 Mar 2025 12:33:47 +0000 (UTC)
+	s=arc-20240116; t=1741091651; c=relaxed/simple;
+	bh=7b5Aviksp18gj3Jq/M/ztXfxsWCEz69HfwGOfusOsCo=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=OofsAvOVLIOZdIyNPcvPi5Ek00OgJXkMklnKIn0Zgr2AhwkcrelWu8cWgwe/k44ENtUqeB/r+B6cFnD9VS1+hPc0wtH5NB7/tBB8h4HO7zVM6dp0QOkt9tCIBbMeOCDrZiR3T0dFqTzdQ5f0WyyqlHH9gMoGZ2tb1FQWU4aHXQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rkL4x7tL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4FCC4CEE5;
+	Tue,  4 Mar 2025 12:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741091630;
-	bh=0zUFOrw8shW7MFjQk03ahVPm0Wdqf9mwdxeXee8/Z1o=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=IQtCJjjsqrJ/wP1A6hezusBljzE8lD5Mzy+yAmTODCewUL/QDMQr+1k1H75BGZnan
-	 IJTggTpG6/20xIPqcBx39mbvZ0rMH65SGzPqrAGMsrHz1VyPySm9iG7hpn5rp+7Bjw
-	 SEfi9WUD3a79Sfg8Rbk1RTaVT09uPKn73W/Mhsw8eGUYJknk4wMxEuxUeYS/HNgbEu
-	 OVvdEv2hg2bq8DLduSN4Cph8lPgNoitYl5hUucNhmfNeBJdEno7c45GqEm4mLVd7Rj
-	 ecF+VxX9hsTvQRpwino8wb/CWQNJbffM+qibeQ92wj1UAcmviGKeQIjBB/f+t6eY8l
-	 tDVX8a/jIDRfg==
+	s=k20201202; t=1741091650;
+	bh=7b5Aviksp18gj3Jq/M/ztXfxsWCEz69HfwGOfusOsCo=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=rkL4x7tLqt7ImDjZfOPzjkOeP2FvDPrEC/cQJtAycV6AgYSj9SIblZCpQKL7EyxHV
+	 XCFLRrSGQE8PQ9fOtV3z5M7ERYqhTOTxfvAn31fHV5pGYTx69lCwMMEJ0UsBr36pRW
+	 ocvu3HQ++TOe97EWv46FpYD9sY/OTPTVtVMPLj+ChKoM3S//EcNse99Z5z48UUrUJP
+	 w80gHguBe3dgtcjdRdd5VQJH8J9w1b7SRLwEV6cMAHmkIxbJVlmF73aQcXvl15CadY
+	 dUOwxJQ8ox6Knc4+a/yaZ3ANo3xi//dCrB1iOtijWdHvCJTVk2X+gEmweouV/Hrv9d
+	 34O28QthIyVMQ==
 From: Mark Brown <broonie@kernel.org>
-To: srinivas.kandagatla@linaro.org, lgirdwood@gmail.com, 
- Alexey Klimov <alexey.klimov@linaro.org>
-Cc: krzysztof.kozlowski@linaro.org, steev@kali.org, perex@perex.cz, 
- tiwai@suse.com, jdelvare@suse.com, linux@roeck-us.net, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org
-In-Reply-To: <20250221032141.1206902-1-alexey.klimov@linaro.org>
-References: <20250221032141.1206902-1-alexey.klimov@linaro.org>
-Subject: Re: [PATCH v2] ASoC: codecs: wsa883x: Implement temperature
- reading and hwmon
-Message-Id: <174109162783.25452.6890803817267804274.b4-ty@kernel.org>
-Date: Tue, 04 Mar 2025 12:33:47 +0000
+To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+ miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com, 
+ linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-mtd@lists.infradead.org, Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20250224111414.2809669-1-quic_mdalam@quicinc.com>
+References: <20250224111414.2809669-1-quic_mdalam@quicinc.com>
+Subject: Re: [PATCH v15 0/2] Add QPIC SPI NAND driver
+Message-Id: <174109164799.27220.16782141488752139254.b4-ty@kernel.org>
+Date: Tue, 04 Mar 2025 12:34:07 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,24 +62,27 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-1b0d6
 
-On Fri, 21 Feb 2025 03:21:41 +0000, Alexey Klimov wrote:
-> Read temperature of the amplifier and expose it via hwmon interface, which
-> will be later used during calibration of speaker protection algorithms.
-> The method is the same as for wsa884x and therefore this is based on
-> Krzysztof Kozlowski's approach implemented in commit 6b99dc62d940 ("ASoC:
-> codecs: wsa884x: Implement temperature reading and hwmon").
-> 
+On Mon, 24 Feb 2025 16:44:12 +0530, Md Sadre Alam wrote:
+> v15:
+>  * Skipping the following patches
+> 	Merged:-
+> 		mtd: rawnand: qcom: cleanup qcom_nandc driver
+> 		mtd: rawnand: qcom: Add qcom prefix to common api
+> 		mtd: nand: Add qpic_common API file
+> 		mtd: rawnand: qcom: use FIELD_PREP and GENMASK
 > 
 > [...]
 
 Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
 Thanks!
 
-[1/1] ASoC: codecs: wsa883x: Implement temperature reading and hwmon
-      commit: a02c42d41af7d66db71ca43c52531c3253ebe35e
+[1/2] spi: dt-bindings: Introduce qcom,spi-qpic-snand
+      commit: fd6bc2ba410bf7828dc2104bf78b51ccbb216c40
+[2/2] spi: spi-qpic: add driver for QCOM SPI NAND flash Interface
+      commit: 7304d1909080ef0c9da703500a97f46c98393fcd
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
