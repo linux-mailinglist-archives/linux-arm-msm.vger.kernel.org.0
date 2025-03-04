@@ -1,94 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-50193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CD86A4E069
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 15:16:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 506C2A4E133
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 15:38:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A34F1169F0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 14:14:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E6EB3188AE78
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 14:34:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 775C5204F6C;
-	Tue,  4 Mar 2025 14:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9F7323A984;
+	Tue,  4 Mar 2025 14:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VMIW/0bK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a1+JpL1H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49100204C0C;
-	Tue,  4 Mar 2025 14:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2AB262D3F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 14:31:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741097643; cv=none; b=E9dsWt/O+/CBQ2iGS+1OM9UczK76GMyg8lFcEy7TNNTlkNlJVhTLK2xfd6cVEp/Z1tsrm6dKEe2DMKO//OYevmcegbhAvbqkI/Ju1RqtcDKcrYbOWETkIoQoET7En2rxOUfEB4fbSisDe+Q6629PHgdGAfW+bDvm1ZfKvv0oHLo=
+	t=1741098722; cv=none; b=IL82vEokISttU6nH4DWRWrBi8BiZZCpIZdsJxme6B4shqnQ6WyeCQ0bDHv6Dv8nvSqxOuPYgjN9ZJaR/IY7CvU0EGaWkhCGklz1Xbw7dxb+dKoEjGsoBrYS3ziv4LqVH+Hj52SCnprX2IzECFTbmW+WKXDoCyMhCZsWOtIIwpos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741097643; c=relaxed/simple;
-	bh=OV2CJNpd5RbwY36OXuv9fH3F4quuWs+tUzGPKWB+dfk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DHZIxszB74F99lUfbJc4p8xj/E37B6t9ySiwI9X4uo0v63DsCUhsNOA8dPmV2HhWq/1y0UsQx0FgRSPUdH7CIOBLLKoeFhtZKcVRdA4HSqN4TYitykzNaZe3TcPTkJZtNSasz9isg9AY4gAijeq7BOl2lRkBcCTjHQH7/vhUck8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VMIW/0bK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE3DC4CEE5;
-	Tue,  4 Mar 2025 14:14:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741097642;
-	bh=OV2CJNpd5RbwY36OXuv9fH3F4quuWs+tUzGPKWB+dfk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VMIW/0bKjE1tZRI1Rs4ZbR6vix5C+Lkx3ktgfcBNXMYTo7IpY2nynzK3XXIcmMoJA
-	 guRel6Y8URIZeXm6QdNsdATb3Pc+sUCVkPiGk+2xSM7UiPu6PXVFbJADiEUNDnB4N9
-	 Wg45jZb1/yRt0R9ubWsPvXxDrhpYL3gdBZnuN02PbQBIiZyfcSrLr7mmqhjqslUSPb
-	 KihOCuDjdjvIdQT0ZLL8r0IC7DlY5UsPstzds7CXOK5dw1P8s2jyDcfayAtYyGt4wA
-	 OaiWrUTG1igICyRY17FzDyFKTgnzf3Uj+uzenZjOMLiwg2kxo7xLwgY5mf1DCdzBg4
-	 0WPPq+tBH0M/g==
-Date: Tue, 4 Mar 2025 08:14:01 -0600
-From: Rob Herring <robh@kernel.org>
-To: Gabriel Gonzales <semfault@disroot.org>
-Cc: linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
+	s=arc-20240116; t=1741098722; c=relaxed/simple;
+	bh=VL1eomr7TYKNMZFzlAbBFJ5Cl5ZiG3QKGLhOiDkJJFU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FMlxxYfyoCQ7J/FnLLH3u3xYdw2HOJada8VXvndCrv9qElWMBtn7W69BC8sqZMFN+65dEQTvVXITA1lozrjNc5sUn5c+f4it9PoIF0xXLItxvXlNCEwFXIGzq7V0u5tjonHulXsnXq/Wt2h4t/4vndEiH4AVJDXTmsi9YqxCMHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a1+JpL1H; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5495e1e4389so404488e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 06:31:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741098718; x=1741703518; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zQnSQpQb2bQVsADPOwC5vQPziAGbC3qGxhORonLAzC0=;
+        b=a1+JpL1HTOxL5irqgn/SRJoUMD1jfWfrSSuQwewTaPQJNBe0+GPiTHS+Ls8LvmsLBd
+         r3xM/1jCJXL2T7Q9aEk59C4s7YCXBUrCEYZ9LcjV6lvpHiOhycO3IoYqPTaLrjN/0nc7
+         l2WO5FpzYrLpklz6oAPfro4wX50edtVv7gxN2hRGzv9/XpmKHEePTKroZadRDcrUg/aR
+         05pSdNmCI9PGDbVFhTeu0Ee4fF2hzE1pLl0rWkVVKgWQ1hC6b158NaR7jL0ytcDPNR6m
+         PClafMTpQkFiZ82Se6e56lttZiFqiQh0TNtmcVc34Co+SWr+U176KVQ/8qAMoBz2+hDU
+         U14Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741098718; x=1741703518;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zQnSQpQb2bQVsADPOwC5vQPziAGbC3qGxhORonLAzC0=;
+        b=NfUlG2kM3mXqopJNGyGUj7F2fnuHH5ulD/QmdircLFcTHVdjgPsvadhI6ZVe7LH65Z
+         Zci2/FRLZJ9xl2tfVuUNXBR2jvW9kdmh0aEQMLFmyUGQjr1MLIshypBGspRqEhxZ5oCD
+         BBwZscupRCHGMR+f7UFxd1MlrgQdAHHPQeV+2SIQoeTBW67MWggyCP2qcAv26ub9kI83
+         AoLR+IKlBj3AdQh8pvSqYs34B58H5Ign7RZiqkCtDzVfBb6C+TW8XNxAzwTy403fGS5y
+         x672QOMEJ7k8LpDqGb9ucN7bQ3drIIRfnm+eKZRdxEaHre7IhR6LO7vSlq/r9CrNKWbe
+         /B6g==
+X-Forwarded-Encrypted: i=1; AJvYcCWoJmp0F9LWQY9AJ91JeTQq233qTI1yoQxo7Ub3FJLurjIfMwJfEHH4a41Jmc9PbkH5AAdVeTAShMLMVkko@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNPoqK4R4rMiSzSOSXEA3QzdqZjzeSvn8AefLGT8M/dHvjQXKp
+	stNUUTVgzyawbclGhWmiRhJvpVISp2H7zdQRFISl6nHu7OzJoL1K1n65msYuwMg=
+X-Gm-Gg: ASbGncu8zi9jHiVzG9uOtzU//1BrnlCMXA1Vq61dMC9zEpodkCyfD3yCauIt7dVnJKO
+	783F4HyzOmnD3WotmQ5+6BIlOdYA/WynJffCz9ZIXNkvYe7IvXYmeJtjn/l84c6KGdtxiRI7DUM
+	li2vN1wJPg5h+CwlI+dNwq+EfxsxN7kB4ogwMkvjmI4TP87/5n+5RALvFtkFq+Yj+ZBLnYW9DDR
+	p1HBZTIP3UcA9R70tEV6L5j2+6sptuimEK36d8IQPniW5u8TXjzHXJ0mxriGijMmRHrRu+i1yxE
+	bYOowS7w8OxFfHMv65RIzUSrGllABa+mjQwldc7G1zLhKGztZSvExKWX9mtabja+vRXFGO4gp1m
+	6q3IIFmWe8E5xANaOv0grcTiZG/YHQQbxdw==
+X-Google-Smtp-Source: AGHT+IFhc6yFO+VR/PFQ6SlkWPLfhadsyPa+Xiq2trlhv6hTkDGgE+oaR83aYaPKsRsQzXMcSNIbbQ==
+X-Received: by 2002:a05:6512:3b10:b0:545:8a1:536d with SMTP id 2adb3069b0e04-549763adbb1mr409879e87.2.1741098718068;
+        Tue, 04 Mar 2025 06:31:58 -0800 (PST)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5496862ee0fsm672202e87.189.2025.03.04.06.31.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Mar 2025 06:31:56 -0800 (PST)
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: qcom: Add Xiaomi Redmi Note 8
-Message-ID: <20250304141401.GA2537006-robh@kernel.org>
-References: <20250304043742.9252-1-semfault@disroot.org>
+Subject: [PATCH] dt-bindings: clock: qcom,x1e80100-camcc: Fix the list of required-opps
+Date: Tue,  4 Mar 2025 16:31:52 +0200
+Message-ID: <20250304143152.1799966-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250304043742.9252-1-semfault@disroot.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 04, 2025 at 12:37:39PM +0800, Gabriel Gonzales wrote:
-> Document the Xiaomi Redmi Note 8, which is based off the SM6125 SoC
+The switch to multiple power domains implies that the required-opps
+property shall be updated accordingly, a record in one property
+corresponds to a record in another one.
 
-Period.
+Fixes: 7ec95ff9abf4 ("dt-bindings: clock: move qcom,x1e80100-camcc to its own file")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ .../devicetree/bindings/clock/qcom,x1e80100-camcc.yaml   | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-Perhaps mention where ginkgo comes from. It's not clear if one looks at 
-just the commit msg or just the schema.
+diff --git a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+index 5bbbaa15a260..938a2f1ff3fc 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+@@ -40,9 +40,9 @@ properties:
+       - description: A phandle to the MMCX power-domain
+ 
+   required-opps:
+-    maxItems: 1
+-    description:
+-      A phandle to an OPP node describing MMCX performance points.
++    items:
++      - description: A phandle to an OPP node describing MXC performance points
++      - description: A phandle to an OPP node describing MMCX performance points
+ 
+ required:
+   - compatible
+@@ -66,7 +66,8 @@ examples:
+                <&sleep_clk>;
+       power-domains = <&rpmhpd RPMHPD_MXC>,
+                       <&rpmhpd RPMHPD_MMCX>;
+-      required-opps = <&rpmhpd_opp_low_svs>;
++      required-opps = <&rpmhpd_opp_low_svs>,
++                      <&rpmhpd_opp_low_svs>;
+       #clock-cells = <1>;
+       #reset-cells = <1>;
+       #power-domain-cells = <1>;
+-- 
+2.45.2
 
-> 
-> Signed-off-by: Gabriel Gonzales <semfault@disroot.org>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 618a87693..52f7b217b 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -1020,6 +1020,7 @@ properties:
->        - items:
->            - enum:
->                - sony,pdx201
-> +              - xiaomi,ginkgo
->                - xiaomi,laurel-sprout
->            - const: qcom,sm6125
->  
-> -- 
-> 2.47.0
-> 
 
