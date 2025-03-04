@@ -1,63 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-50140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 684A4A4D8BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:39:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C026A4D8CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:40:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 587373B5818
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:35:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2B913A634A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:36:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 846A61FDE27;
-	Tue,  4 Mar 2025 09:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 449D21FE469;
+	Tue,  4 Mar 2025 09:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L56dBXf5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iq5OVPHh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47FD1FDE1B;
-	Tue,  4 Mar 2025 09:30:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0071FE456
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 09:31:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741080658; cv=none; b=Y3vu+8sOy3jtWsQbvLwt3RrE9jIFsrzyFXRtg0MmqLZPvxE62H91FDu8JrK2T+2v3kVMt0Jd1apPT4axrMMMP4+w24G4MdhOsfGCsGmyJH0qeCpYx2scgy//wEV9gsDs1RI9c9wdjlvnLSglhF3Oki7VfTEVNdCaR1DOHOymOPk=
+	t=1741080694; cv=none; b=ulV4PLcbLi5UdCGo4UHN9DHzOsBX+DfHH2XaBOvc3fHE6QwwsY06EOZj5S3fjdZ4lGHN3zUIokDSZkVmy+SI8PK0GCGBjDfqTQr1x+t1xKqXLLdAY5OH2uK02TFQx0eAfnoVvCKBxALfMyYeYMmHin4z+Rz6hPggw9RtPmvYg/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741080658; c=relaxed/simple;
-	bh=azR/n+ME0OmekE2Xm4FRbD4LwYTYZKxi63PxlSTZAi8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JKpf8DS7/73n5HoGjueg9J01SsYR/lu4xRE6hPcuQ0NJgbP0eByHcxeZiMilJ78Kfjybkjysm/GtMk582zsbg8wLOca46djSUkKbcYvQ2vXzDNGnWD6OrugtAIxJLY6kEofCPfAOWOPVuRGG5njRGY8RsIx5u63OvDXH6K+MBXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L56dBXf5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523NX4HG027319;
-	Tue, 4 Mar 2025 09:30:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	E8a1MoI/DSxQaVM5wDw1IAkuYTIlsrqYIzpG40JKed8=; b=L56dBXf5yPBG4No1
-	rqXnA4Lx02tbLzkucYYJsXKN4PvM92u6jI6rf7Wx8vWQRma1nG70rhO080zMkvjU
-	XmLMXP+Mar4/RZ5vliroe1qgVZfLzMxqZGdkeuGRdto4Tmkm8acFAEolSRwXMblu
-	BIlT45UWJ9bRQkdQefpT/1gOGty/xlBhZA9955L2DOXzkL9aTBsbj3pUX9+XPr0P
-	jjLZy4XkM2eU+vKf6c8V/EDXOofctX0KDIqDZt+I1TN1NTfcN5LRtAHi07yAV/bN
-	FV6/EYlb7JfZsiw0PN4L3DFqO3xngk3l6ibfdVSAT0ps+wl4OSrud1PGjRerWtjt
-	iLkxNA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6uhbq6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Mar 2025 09:30:35 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5249UZhU011921
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 4 Mar 2025 09:30:35 GMT
-Received: from [10.204.66.137] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Mar 2025
- 01:30:28 -0800
-Message-ID: <91934960-c9fc-4442-88f3-ba1371470d05@quicinc.com>
-Date: Tue, 4 Mar 2025 15:00:25 +0530
+	s=arc-20240116; t=1741080694; c=relaxed/simple;
+	bh=f0m1CDKNfTuQsPCxO4ffsoS1wvQEZPAKQ0P61rR00WI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nYJXOIkx+PBV1SBJ8B/FTfhJwPXrbbLmk9lNFSeZi9eOAsAEMDT6ZojDN4Iat4BcYQ9A+MwYZBTaNuiLaH12XANAbhqOKtg+6cyMsweGPtXryL+bxTVDE1soEYDXjS2faUaT5kp1Fldg1HKMGKe1h+T81r1p9hH1lijMZpX1H4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iq5OVPHh; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43948f77f1aso34882025e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 01:31:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741080690; x=1741685490; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FjiqFuGa9IcB3oeyaig5ZQnZ00t+YOxd30bANitLrmQ=;
+        b=iq5OVPHheceJRwXMmBBkWDDIXePY4+nTw1w9RIzOx0lk0PlDX+s4ip4ggj//wjfVSq
+         YxCToq93c18sH85js9pNLENi1Iq5eHYsdJTgm2EA6y2sote/PwTqx3r6oBgtl9V9Emro
+         KmNMeZRf/L6qby8ICBoYQ8IONQy3fgwc1g06elkAPlbi2QSPv8Yijy1rPtarygNbZ2yy
+         adGNCVVTFpRLPlIm2xWrqHZHnFv106L4ji4dlH8Ssc0XJbW/bQZpnmDfgHkE4gVLNR24
+         Xt+JG2q48PpEddvFvGmTh4RLaJtbcmTeN3yW3QUP9MrlXlIFb9aSUgFIh2/sepMt2jm2
+         8qiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741080690; x=1741685490;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FjiqFuGa9IcB3oeyaig5ZQnZ00t+YOxd30bANitLrmQ=;
+        b=DFwYkF/aF+mpGrZU//uxw2Ato4Qu0uRivSvbJ2wagFkI1qU5ejAkOkU5JAuYBDpkcY
+         HwFFz+LlEjgRDFj8fN5j2fbSvzRpUKQCCndlM+Dmzqr2JaS6FphokCzxmugpKmC7tIdK
+         B7eBgNdG2XfdPb5yPsQkatooURZ0AlNUU/swGQd2bQZ029uFA6rIBTeG+MpzsiWBW0Kt
+         P8M1oP3xifqSsIhtqsdyPKJ0cHBCZuGk86W6hsf2XlC8hCkh/YbP94R5caTn4GbIPudk
+         3WHkaoOeZBlkqlLFvFLE8dWe/Usz4jQHzZNndxZIMdg8HWtI8zCmK+FRgau2jLhat/64
+         7d9A==
+X-Forwarded-Encrypted: i=1; AJvYcCWJ01gWMCMRYyLQGgT6bE2ZG7RTmNy+zGqiFosx2xUsYLR/LpcR/C00w2OjtEJ12nkWkEEW9ldESwaLop2V@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYhEnIZflgsa8SCtcwmix1w6FAsOckVpmS9Jywe/9CXbiTy3/X
+	CadnoRBAA7lCyIc7dG+IkeKKQgXZMktEuP7IlJMAvHS+GU73VdMbwxYy/zw1O1s=
+X-Gm-Gg: ASbGncuWeBjGWyzrzJSr+2kRytNQM1nKUDh+CGQwr6l/9XhEqFb/RryOQJkCbugukLP
+	I9CR10BkJmJrTNX1qAe4CleToVh6MWtMPHAWmlcdUFMQVvAWJyINKxOsdL7Qduq331Az8Ln/Z9N
+	kRGpM7Q5A6qo4lT83OBJZ55+D6dSvajEfgl25V6QzlKesggvXLDgb+FfOXi8LJq9nOWia41Heu+
+	H+ShHzGZHngDDZiwinCFDa6JMuSVpl1zlf202g47SExmCG0Tr98V3m982FVZVq/FELW7r0pZ6p/
+	9yBgdAMl5Xv03k+qYxn+o9aDExdu9ORoYGHpcuOueGPa0oPrZzmzUwJwtMXigN7+sKaQy0wjyJr
+	nwW5rfL6mmg==
+X-Google-Smtp-Source: AGHT+IG2b8tLFvBTyW6XgxUEsNgYn+1nm37EUJ3QIriKIIZDPawo7iAw5RKC6G9gHRH1sm2cXjjVyg==
+X-Received: by 2002:a05:600c:3c9c:b0:439:89e9:4eff with SMTP id 5b1f17b1804b1-43ba66e6b5dmr142345715e9.10.1741080689654;
+        Tue, 04 Mar 2025 01:31:29 -0800 (PST)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bc447a0b3sm57631335e9.3.2025.03.04.01.31.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Mar 2025 01:31:29 -0800 (PST)
+Message-ID: <e66acb3a-7805-47f5-9179-1fab95754727@linaro.org>
+Date: Tue, 4 Mar 2025 09:31:27 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,83 +82,43 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/11] drm/msm/dsi: add DSI support for SA8775P
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <marijn.suijten@somainline.org>,
-        <andersson@kernel.org>, <robh@kernel.org>, <robh+dt@kernel.org>,
-        <krzk+dt@kernel.org>, <konradybcio@kernel.org>, <conor+dt@kernel.org>,
-        <andrzej.hajda@intel.com>, <neil.armstrong@linaro.org>,
-        <rfoss@kernel.org>, <Laurent.pinchart@ideasonboard.com>,
-        <jonas@kwiboo.se>, <jernej.skrabec@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
-        <quic_vproddut@quicinc.com>, <quic_jesszhan@quicinc.com>
-References: <20250225121824.3869719-1-quic_amakhija@quicinc.com>
- <20250225121824.3869719-6-quic_amakhija@quicinc.com>
- <hl352hhpv6imtilpw554njkpod4nycjlls4gg75barlugc2e42@okw2snj2bqm3>
+Subject: Re: [PATCH] dt-bindings: clock: qcom: sm8450-camcc: Remove
+ qcom,x1e80100-camcc leftover
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20250303223936.1780441-1-vladimir.zapolskiy@linaro.org>
 Content-Language: en-US
-From: Ayushi Makhija <quic_amakhija@quicinc.com>
-In-Reply-To: <hl352hhpv6imtilpw554njkpod4nycjlls4gg75barlugc2e42@okw2snj2bqm3>
-Content-Type: text/plain; charset="UTF-8"
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250303223936.1780441-1-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YAGyFw0Vmnxo5OEXqgHet3JwugnAXHCB
-X-Authority-Analysis: v=2.4 cv=H40hw/Yi c=1 sm=1 tr=0 ts=67c6c83b cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=SqrKEsC-_tjMY2b0tDgA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: YAGyFw0Vmnxo5OEXqgHet3JwugnAXHCB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-04_04,2025-03-03_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- impostorscore=0 clxscore=1015 malwarescore=0 priorityscore=1501 mlxscore=0
- lowpriorityscore=0 phishscore=0 suspectscore=0 spamscore=0 mlxlogscore=999
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503040080
 
-On 2/25/2025 10:48 PM, Dmitry Baryshkov wrote:
-> On Tue, Feb 25, 2025 at 05:48:18PM +0530, Ayushi Makhija wrote:
->> Add DSI Controller v2.5.1 support for SA8775P SoC.
->>
->> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
->> ---
->>  drivers/gpu/drm/msm/dsi/dsi_cfg.c | 18 ++++++++++++++++++
->>  drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
->>  2 files changed, 19 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
->> index 7754dcec33d0..71881d9370af 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
->> @@ -221,6 +221,22 @@ static const struct msm_dsi_config sc7280_dsi_cfg = {
->>  	},
->>  };
->>  
->> +static const struct regulator_bulk_data sa8775p_dsi_regulators[] = {
->> +	{ .supply = "vdda", .init_load_uA = 30100 },    /* 1.2 V */
->> +	{ .supply = "refgen" },
->> +};
+On 03/03/2025 22:39, Vladimir Zapolskiy wrote:
+> Qualcomm x1e80100-camcc was moved to its own dt bindings description
+> file, however a small leftover was left, remove it.
 > 
-> sc7280 has 8350 uA here. I'd say, having those two next to each other is
-> suspicious. Could you please doublecheck it?
+> Fixes: 7ec95ff9abf4 ("dt-bindings: clock: move qcom,x1e80100-camcc to its own file")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>   Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> LGTM otherwise
-> 
-
-Hi Dmitry,
-Thanks, for the review.
-
-This chipset is being used in Auto, and I have taken the init load values from the downstream code.
-After you raised the doubt, I checked in the power grid for the DSI ctrl 1p2 supply (mdss0_dsi0 && mdss0_dsi1) and found the load is 8300 uA. 
-I also checked DSI PHY 0p9 supply (mdss0_dsi0_phy & mdss0_dsi1_phy) load and it seems the downstream SW values are incorrect for the PHY as well.
-Correct value for 0p9 supply as per the Power grid is 48000 uA. 
-I have tested using update load and it's working fine. I will update the both in my next patchset.
-
-Thanks,
-Ayushi
-
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+> index b88b6c9b399a..9e79f8fec437 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+> @@ -64,7 +64,6 @@ allOf:
+>                 - qcom,sc8280xp-camcc
+>                 - qcom,sm8450-camcc
+>                 - qcom,sm8550-camcc
+> -              - qcom,x1e80100-camcc
+>       then:
+>         required:
+>           - required-opps
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
