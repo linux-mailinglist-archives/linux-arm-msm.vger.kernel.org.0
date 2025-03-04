@@ -1,94 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-50267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81B08A4EEDE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 21:55:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0FACA4EEEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 21:59:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D7691893699
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 20:55:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 72F7C188E7C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 20:59:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5479260A3E;
-	Tue,  4 Mar 2025 20:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0513B2641F4;
+	Tue,  4 Mar 2025 20:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TBUSB3JN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yLRykez/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDC925290A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 20:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2347E25290A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 20:58:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741121739; cv=none; b=JOfF7oC0uQrkpo+BC0rbAL3w2/eXiAiXOndaNPfNQgJQgrgrbOYmGNBiM/IW9OH46oippi/pMD9yGKInklOcbwaQjTg3HF5cQOvO2b6ytlCG/Ae7LkQV6TrApOI6g9Jg9VRPgaIyAtPi5j6DkK+yd8OQewdS/f0rbQH0raQhAzY=
+	t=1741121931; cv=none; b=ozG2q3Ezlov3BhKD2+B7vTNn5mSf3DmbZVojA4ZEH4y+A5EhWZyhsFl0dMSpAyCKt3jVWvjNaL5+kt0kRz3WH7YyzT8SxXJB2Kg48SqeAVKfKbQ5Hyi56kqkyTd/Iagt6zvqnZmjdRnkspPPQ0DGEABNlJCAT38iiBHNoN/gosI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741121739; c=relaxed/simple;
-	bh=NSNt9Id4lXxpJ93KsFSenjzsktLV4E4jeRdB9AxjTdE=;
+	s=arc-20240116; t=1741121931; c=relaxed/simple;
+	bh=5CJK1L3DdT2P27pS4L8DUKmYYJnFR7F+MB9nM8vDjq0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qH3Y09WVQ5e9AfQzMPXh08EMzlOIID39cjzFdcSs3UFgmDkOWjvxv+59n7e0nIGz66yDjnw+0y+SbH4NrTCaRK8NRM6vZwA36/btNkwN3HNN5h44USDa9h4SfFxkUr0kTFciF+fJjJ8BHET4GPHPI9U18jtX3leEO2kbv1x9We8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TBUSB3JN; arc=none smtp.client-ip=209.85.167.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=PwEzFMvOCJm8o35XyXpH/AVU3WigYKCNCkUh3Tqx8PvqeAH3hi0WnYzVZADgjq3X9iVIMo8ZQsB6+AqjYgHacluiz6FtWtB+MI+Qr8wf2ReRIXLDU4m8tpcEtkrsUdHRXwrnPukBTBdu0PDTGySqNYkA8Nnpn6aaZQ/y4vGIzDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yLRykez/; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-54963160818so3697527e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 12:55:37 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-547bcef2f96so6897551e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 12:58:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741121736; x=1741726536; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1741121927; x=1741726727; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zlnut3W9WMDFb8LsQDCStS5e+lluNoYb/y0OfzkgWag=;
-        b=TBUSB3JNOYb7BZUCA/zt0FRsICNG5GXpiwgpTfqfwwi71LeajB/CHyB4mwAmD95LP6
-         ElSy0COPGzhSBQDIb4/maxmLSr39HA+OJTXL3eLzm3uC3KFQBW+UHbot0fn84qGS5Ja6
-         UfE22bC8Ek0tSdmN7OZgdXvgBGRowIlWxOS6mE7VRq+owzo7ib8LTS/1hXiPHR5RvI99
-         Ah7cJOFH/3EjKDFuNHuInNAmfXuiEkGcSaP448qWYPB3F3FhCG7mAAq20bGQjhgnp92f
-         tvejK1GubQK4SyB+U0aBcMPJk6V4NDMqyO4EzP1SIpeXGJ8cjPYf651pg7tJlzlf1Guv
-         KWlw==
+        bh=5mmSXUaSzYlxPu2USBQ5qryQWG6hHSfkcGFhsLiuIng=;
+        b=yLRykez/HSbsccAl3klZNZQqm+dTAeD/0VLjmeTb1XzXJfhMmKA2Ae7rqJV/9BPtks
+         N1qgKKdfdzhkczmiQMbMZ1SHf0HL9vdL6gjqyt93ARiB8b03Blubnvg4HeDhsYfhpzYO
+         KD4KDeNLRF59PO5NrTv6gYnakgnONv5NbKvsNoCqhBB56AWhiZZ2EIl3smVuLLys7CHm
+         tKJN5DH8Hp4LlTDqvQk4LT6pezCVim5EC1ji5bGpM+mwGkp0IHRmmuFISvLNnGMn7Wqb
+         rNU+EEUcnoZX3rwkRRWnRHPbucF3j9d3ojXhWK86YABn2x6el0JiNZ6+ASrDekC6IIk8
+         5q0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741121736; x=1741726536;
+        d=1e100.net; s=20230601; t=1741121927; x=1741726727;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Zlnut3W9WMDFb8LsQDCStS5e+lluNoYb/y0OfzkgWag=;
-        b=KAPTWGcxGlJeB3qa2GeSm8I8kiozi4J00L1IJqeRH7z6bGLwGoxXP8Cy977PIqLdlu
-         uKMrUIpHjEmASogPHS0Deffms7EgHH9MXH6LN5mMMRIIfb+oTauw7J1sjJiAGmOly9nu
-         4X6Qt2wv7bQ+rPEF56eelYzb/UHcOCgpl42Es+aoFWOTEacizhk1t6qPD/VpmtLlIgyY
-         ia4ylgReEpEvM91jKR7gRQ4B2oe8GikuSSmQp4f97CKjGNZbqy5OwkYnlYG5Xl5GpcQD
-         FGwkF0RYgJc29ZvgTxaYi+zEzl0nXFPxrHb++Pbl7nPTO76zIwDirA4xFRF2bbtt5H+X
-         abYw==
-X-Forwarded-Encrypted: i=1; AJvYcCVnCJMcXlpR7fsc1dz/wkjWrEdo0h+wKI2O9iOUWlzUbJa6c97TB3Xewu6RgEtuoGJ/M/eMvfBDS//NVXsk@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjGvCgT90pBEaKyc6bHhjRjAip2l70URYrNPeSX7uMTJwLJD6X
-	P3q2RpnLlhzcQaCVlSemsWF2yY3y7BmD/vqfoo3o5ZNgln5K00oCXhITLe3dGsY=
-X-Gm-Gg: ASbGncs7rSSYIw9OA4nKzUOSwpNJV59AHSEO4V6YXRLF7qeOJCiDM4Tt9Kn+Jn2jaht
-	r8BwxE2Oz86tj4/c9ZcHDEiBR0inqRtvJLWYIyX6kcXDNhnIZc4Kur6W+28c6SekcUgz8uB+JGH
-	GrT5J77bHnQNjWygkGOjiSRBkmpbFdiHL5GyamFHQMSe5eFi/VRhzIeCl4ZsbKLwetGiwGZ63Xg
-	PSWYYyp7vYhTHElNgf0fYRgVVJ86Zw1NjZdzF1wyrwj/bJmAOjTi//YPwV4R8sqbZoytupnxOmZ
-	eJ0yL6mEmXlwW9Cb9hTcqxc+VAACZKUVTln18woDh88m6VJD7Y03J0a119/snZ0cEQ8/WGXOTrG
-	7aU351IwoV/KbJZbjeZ7NcxYc
-X-Google-Smtp-Source: AGHT+IEIFo+QJ3gjvVNTH+uDIO5F147DYqk0crHu9Qb2qxeLZA30uWfc69h6oFKSES/bityKAXb6aQ==
-X-Received: by 2002:a05:6512:33c4:b0:545:381:70a with SMTP id 2adb3069b0e04-5497d3368cfmr244970e87.15.1741121735864;
-        Tue, 04 Mar 2025 12:55:35 -0800 (PST)
+        bh=5mmSXUaSzYlxPu2USBQ5qryQWG6hHSfkcGFhsLiuIng=;
+        b=FSE5E8o9NYxBjn1T9iwfwVC+Gb6nKgRUFSAN2mKoYRR0LAPvL7NgcGfn6Auk40pDA9
+         0M73trvIc0GhoI6gJ2Vmkfw8NI3+WheHN1QwT0ygCB4o7SfgmvNrUzqbeHalqtceD2ie
+         Osb7Wvp+FlKznE4ZQ0eDvXnTxEw23m4pdaxiE5Us32reenwCu+Ew441NMMJNEyY1lurl
+         82s8qnKwjUV+ZBDtWauIOARN/kN/ftvoqxM1MVulbgm1AEwrmn4NDUwouqcT9H+LcnJA
+         u31Uqi9Tttf6yVEmuNAyPLnv0e02vPJFWleiLPeStgDYPKmr2Zgw0GIloAsMn9P2islh
+         sTYw==
+X-Forwarded-Encrypted: i=1; AJvYcCVE6IRF45TD+vOYAt0bi5sT5XPL8KJvvhThjQYroAILU4sb+5Op1oz/eQicVBFWHEGCArIytdOJSJ8C/oql@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4U8MZesG91s4zm0McMciFMfuYlMyw8ycRic9LS/XY33wDCyPv
+	fBpLrT+exoAMoZ4c0bqAZRehKVWMZRmv/Ee+VZiar+ufyojP5ROzi66y+dGwB34=
+X-Gm-Gg: ASbGncvXw8YZaC+1A7UENweYb58SECzco9ww74+Mm/W9Qf6M+HEn09nGHVbwvM+e1Ya
+	HVfg4+I5rAtr3TfdNZr6wwk9AxClACqW3OHjgUaZH2VviWvjq4XMLKqiMmSXCwGDpVvIuh9xg3t
+	QT8ukHYdufjYe2R43lMHvXIEsCKlcVICE1cQVsl75b2k+quE6YLkoMZpcfwtELMHmmCu1V3EOAA
+	abQEc0lnSnEH/aRlhbMdmPwFammru8dvrRb/kT0Qpoot9oTR847OWXde6yjBDpJSZSCxmduKXM2
+	oWmJDqfYpNCQU25Pj2EP03SbHH8KQXomUlJGZeEoL2C4/tgnVJq+hO5FI9hE66+pewcjKu5zRtp
+	8qwZyilaRKLPebD/Hcmry3xYQ
+X-Google-Smtp-Source: AGHT+IEkteX/WZFejhteH6gRB1PUmIKU/gh7k+WBHiisHZu0Tfo1WrX2L4UA0SJ992cRS807pAM8qg==
+X-Received: by 2002:a05:6512:1289:b0:549:7394:2cfa with SMTP id 2adb3069b0e04-5497d377287mr150803e87.38.1741121927123;
+        Tue, 04 Mar 2025 12:58:47 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5495c9d3307sm1006543e87.81.2025.03.04.12.55.33
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549591c8bacsm1132258e87.122.2025.03.04.12.58.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Mar 2025 12:55:34 -0800 (PST)
-Date: Tue, 4 Mar 2025 22:55:32 +0200
+        Tue, 04 Mar 2025 12:58:45 -0800 (PST)
+Date: Tue, 4 Mar 2025 22:58:44 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
-	Vikash Garodia <quic_vgarodia@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: sc8280xp: Add Venus
-Message-ID: <cvbunupn64syfeomju3rb4n2xfri6zdjm4dfo67osbt2esrwuo@7g3ji5hnt5bc>
-References: <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-0-279c7ea55493@linaro.org>
- <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-7-279c7ea55493@linaro.org>
- <77475c23-c173-4512-b257-d7b01fa2054d@kernel.org>
- <d4d658a3-e276-4e0f-ae71-5efd077e8a12@oss.qualcomm.com>
+To: Kaustubh Pandey <quic_kapandey@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_rpavan@quicinc.com, 
+	quic_sharathv@quicinc.com, quic_sarata@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: qcom6490-idp: Add IPA nodes
+Message-ID: <7jupetl37t6nshmme5raxavvbjo3vo5eajusroh6j3ccdxnpo5@7qaz2nckghcf>
+References: <20250304152133.GA2763820@hu-kapandey-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,26 +90,45 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d4d658a3-e276-4e0f-ae71-5efd077e8a12@oss.qualcomm.com>
+In-Reply-To: <20250304152133.GA2763820@hu-kapandey-hyd.qualcomm.com>
 
-On Tue, Mar 04, 2025 at 05:41:27PM +0100, Konrad Dybcio wrote:
-> On 4.03.2025 3:02 PM, Krzysztof Kozlowski wrote:
-> > On 04/03/2025 14:07, Bryan O'Donoghue wrote:
-> >> From: Konrad Dybcio <konradybcio@kernel.org>
-> >>
-> >> Add the required nodes to enable Venus on sc8280xp.
-> >>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > 
-> > 
-> > SoB and From do not match.
+On Tue, Mar 04, 2025 at 08:51:33PM +0530, Kaustubh Pandey wrote:
+> Add IPA nodes for Qualcomm qcm6490 board.
 > 
-> .mailmap breaks this
+> Signed-off-by: Kaustubh Pandey <quic_kapandey@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 > 
-> I previously worked around this by kicking the relevant entries from the
-> file, but that in turn broke base-commit in the cover letter
+> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> index 9209efcc49b5..ba47786d6474 100644
+> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> @@ -19,7 +19,6 @@
+>  #include "pm8350c.dtsi"
+>  #include "pmk8350.dtsi"
+> 
+> -/delete-node/ &ipa_fw_mem;
+>  /delete-node/ &rmtfs_mem;
+>  /delete-node/ &adsp_mem;
+>  /delete-node/ &cdsp_mem;
+> @@ -515,6 +514,13 @@ &gpu_zap_shader {
+>  	firmware-name = "qcom/qcm6490/a660_zap.mbn";
+>  };
+> 
+> +&ipa {
+> +	qcom,gsi-loader = "self";
+> +	memory-region = <&ipa_fw_mem>;
+> +	firmware-name = "qcom/qcm6490/ipa_fws.mdt";
 
-You can override that by using 'b4 --edit-deps'
+"qcom/qcm6490/ipa_fws.mbn". There is no .mdt in linux-firmware.
+
+> +	status = "okay";
+> +};
+> +
+>  &mdss {
+>  	status = "okay";
+>  };
 
 -- 
 With best wishes
