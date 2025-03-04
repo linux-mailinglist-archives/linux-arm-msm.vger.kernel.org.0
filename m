@@ -1,150 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-50146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A3D9A4D921
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:48:37 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E3C0A4D911
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:47:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A5034177C4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:46:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F30A17A7FDA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:46:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1851FCFDA;
-	Tue,  4 Mar 2025 09:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DEE71FDA7B;
+	Tue,  4 Mar 2025 09:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lhRpietm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AmIgf7ma"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6836B1FCF5F;
-	Tue,  4 Mar 2025 09:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9696F1F5854
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 09:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741081570; cv=none; b=drQWUSVHcydvoxB5phNSVvIeMuwHY4CTE4z3vt22mAh1BQ/mqUlZHkOR2+YiOBaO0Z/d4MYY/aG9PH8JYrztPrzLqTQMNx45ZNvdRbT5NtCmYu6H+faILoWQl3Tz4CoIXUEUcql7CCg+MiFpV7oSJyOVIsV7SiOoUbHXMkTttnw=
+	t=1741081594; cv=none; b=pWhdTSIxCLJ3+5DELEf6Ox0q6QPqDzEU1aqrGQ7uDNTvcr12RrOBgz0WcHNWtXw2f0LBJNsOk3y28azsha/dYGOqGWGRALRGCDW6f57o8UHT1FJTC94A41D/sSGexaNH/FS74sFxtsiSVc1D98Te1zCCUr/pQsTsx03bYeu9ybc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741081570; c=relaxed/simple;
-	bh=INrPSVavl8zMkrHNZpRUzth30ZLyDccF9J8o2rj2eFs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N+Kpl8vi35BA2Hs/oApTEnhYqwe2nO5OCP+NmtTHOO6me0vK0CD9gVdF5dXNKiaKSIdO4uvClSZQaetbUpWFghUJoqvO15TkrghDdjSUy+vxrfnPCZMhCxzW7sESj61anfmJEGCUhxZnrKbv4AlF86+OFjOsJC29IJKiLP/tQTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lhRpietm; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741081569; x=1772617569;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=INrPSVavl8zMkrHNZpRUzth30ZLyDccF9J8o2rj2eFs=;
-  b=lhRpietmD6SrYc8DAQXEpLK7Z2dWhTcId/JM/cxaeRRuyIZpN4Da7KwD
-   d+iUtXv3jikUR7deHtJXvQgsUM6dQ1rP8lr4N8s7B4DlsQFBDjpQdcKEG
-   yYTBFDFSAJIehjAP3nhocE7ue3ZmyIwcVZs8pCMQnVaq6HQ/1Re5mJ6zO
-   2qdrPkCxbXlT0wjpA8t8M1dvKxRxI2kBp7tjS1wwinx+wVB5OsqWYP0Vs
-   /XVJTwG/G4eSlaF/GJ39+A1I2I5qiBlUOf9143GUAdk1FmD+DbtsZbtgd
-   em78s9Mmwll2FVY2g7DpBgAGNrahz2inf3fiZitgBEjBdkTM1sb0Fs9v3
-   A==;
-X-CSE-ConnectionGUID: g422eFSVSQ2n4BosbOKQ0A==
-X-CSE-MsgGUID: rCiT7oxxRfKCsUbBaxdRwQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11362"; a="52972824"
-X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; 
-   d="scan'208";a="52972824"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2025 01:45:52 -0800
-X-CSE-ConnectionGUID: Z8M3669jSW2Bst8ygeNLFA==
-X-CSE-MsgGUID: snKJwRccREShHF9WnwaFmg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; 
-   d="scan'208";a="118125869"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by fmviesa006.fm.intel.com with ESMTP; 04 Mar 2025 01:45:48 -0800
-Received: by black.fi.intel.com (Postfix, from userid 1000)
-	id B26B418F; Tue, 04 Mar 2025 11:45:47 +0200 (EET)
-Date: Tue, 4 Mar 2025 11:45:47 +0200
-From: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
-	ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, 
-	quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, 
-	yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, 
-	qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, 
-	hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, 
-	fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com
-Subject: Re: [PATCH v5 3/9] KVM: guest_memfd: Allow host to map guest_memfd()
- pages
-Message-ID: <nfil6ngejfz2ehruzbguin35hnbsidr5rxywruhmpbarpiyvlp@7yepe2euriff>
-References: <20250303171013.3548775-1-tabba@google.com>
- <20250303171013.3548775-4-tabba@google.com>
- <dedrbmbqyvmsjywilcjvu4lt5a3vess3l4p6ygum62gfpmnyce@cgtpjwf4krfw>
- <CA+EHjTygT1eqQgg59NzUK3uonikKrgi8qDhojPVnONH3qS33mQ@mail.gmail.com>
+	s=arc-20240116; t=1741081594; c=relaxed/simple;
+	bh=lkcrIjTkq1UIQT0SkOH+4uaD7wIEqpSNJVOOJw0jvRE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tVg6xhxS8AS9jEirzbjWDhDjJ8RPPobtEu3qr1/X5hJYbqJDZWiA1Nwsm7oxP2eYgAt8CMChekPon8Q1GV/IUhOpNvzx6d6ZlDgnfykmYHJea+brzGPCw2z03RM4HR+1YvZ3Bh4FDPicMnv0dHjfCZCJCsPI308j1opy3pquv00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AmIgf7ma; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e4419a47887so4074482276.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 01:46:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741081590; x=1741686390; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=42NUMWp1p+p6ckMbx/Ocz1ORWAedvf6DRggC3Szep3o=;
+        b=AmIgf7maqmzagac5ef2fAlXpysjAYeZowCfg41F3wnuqeXXYXZv3lHHu3pRtbLAPR/
+         LdjzbFCFPCArCWjdJvNh1BnKlIRT+0pWzbAvmB/EBe66Gbq1PwHXtSSLNwIgaK844dMd
+         W2LqmzLU3GHI5/bA/M+pJ0218TnT9YNnrbJZ+1KlP9GgqyChSFEgHCpxv8tgVpi5Qt37
+         RDwbukLmk2LTLvRZNv51PDRCu8DlMpRQMWmVdmu1fqzxEaM0SGjBsLDYHw7vAt6kmFUs
+         PS+UH/NpRVpTtXtws9uYmnUyYP9TK8KxqfXs62CFMlP1bAenrOv6Fc2/sy2tAQyNZ1u+
+         I9Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741081590; x=1741686390;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=42NUMWp1p+p6ckMbx/Ocz1ORWAedvf6DRggC3Szep3o=;
+        b=RUeDqhqEhUXPiJTHnv3hmkKW6TX2ZZnOf7AkO0EKHv9tHZQJajGcoXP26Z/5QHxiL9
+         AXXaUb1ef9sORuTcX4aFgFkZFEIZKnSlBpd/MHnA61LcaAZ1rABhPbH5ATFhIBG+XBqG
+         el9AbVwvw5qlG/NFRuKgPneHLuwXEGfUzkmTGZIhyiQkaIBFI7ZjQhOZAWADtZnm1UJe
+         KyE27A9Lwl4L1gPW2aiaUuGNXaDTJfr4zGB+yR37T+xPxsmRe7BdkYbneR6zbLOzKJ65
+         6RTIrMuQwOVHYC35GZsxwjsRqs7QrOrpbNS3AYDtaQjUnobj1n2t0MrLrn5lj96dAtAl
+         WLMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUqizvDmFNCC50RfwkG87xNOEUV62DgaDuIo6/MGpKrH9so92ZzavyIkBil8xHzhGtA/UnhuyH/6Z+LqzYC@vger.kernel.org
+X-Gm-Message-State: AOJu0YwNild0PxBRpTm8C/PKt/AlhQjKNkdaADfdUnjU8VSaJXbQ4cNz
+	kJaoKNx39qjfkfLMROe+tAmS4/CSbYF/bB6H9exfoct1RRGbqCQYEd67ql6qgvt7LFCsYKCyG39
+	Z3zZGwFI3molY4o0QUwEOu5X0u5mT0+ocyxu5qQ==
+X-Gm-Gg: ASbGncsS1zX3SM/457fuKXrqXDb+RUNfTyujXPw3jxoHnJLVwUbm/OZ5DPpTInIfw/+
+	2hQ7c42BQ9syvAFvEn544uG5+HmY7bGhL+njOtvuPwPok68GZK/tmr8BmVBdnfJW1Jh9uwv7giJ
+	DMFr1CEWzRClUez154pdELHMAa
+X-Google-Smtp-Source: AGHT+IFInbqjmWLZj4CguI5UAuggpoFNnXPyCXEm68iY1s881uvIpdVSxHhbK99CylDz15ZxH6O+wYWkYQJcVjpg4TU=
+X-Received: by 2002:a05:6902:161e:b0:e5d:ce4f:66bc with SMTP id
+ 3f1490d57ef6-e60b2f5c916mr21056408276.45.1741081590555; Tue, 04 Mar 2025
+ 01:46:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+EHjTygT1eqQgg59NzUK3uonikKrgi8qDhojPVnONH3qS33mQ@mail.gmail.com>
+References: <20250228045356.3527662-1-quic_srichara@quicinc.com>
+ <20250228045356.3527662-3-quic_srichara@quicinc.com> <lakoxihaqlu3vq42eoqtlip23ggdieizotyzax5up5n6ndbwsi@ddqyzvsdtmkv>
+ <1359984c-2ace-450b-a3ff-bac0b9fb5cc9@quicinc.com> <2xpu26pu4ovnchumwx7xzlp2gldpfgsurnhuqaioygb4a6xmsp@ygmpk6furqs6>
+ <3e326578-ab46-4d7e-ad1e-3d572613498b@quicinc.com>
+In-Reply-To: <3e326578-ab46-4d7e-ad1e-3d572613498b@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 4 Mar 2025 10:46:19 +0100
+X-Gm-Features: AQ5f1JrLWZmbA3L3ZWFZ6k5ZbyNJk4rnUbtfMAyZmdQl1qilIhBMnwVu8p1019I
+Message-ID: <CAA8EJppXHXafwx+GPh0UhFLRLW5DNj8RwXdO4+fDdXp=SE13Uw@mail.gmail.com>
+Subject: Re: [PATCH V3 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox driver
+To: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Cc: jassisinghbrar@gmail.com, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	andersson@kernel.org, konradybcio@kernel.org, 
+	manivannan.sadhasivam@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Mar 04, 2025 at 09:27:06AM +0000, Fuad Tabba wrote:
-> Hi Kirill,
-> 
-> On Tue, 4 Mar 2025 at 08:58, Kirill A. Shutemov
-> <kirill.shutemov@linux.intel.com> wrote:
+On Tue, 4 Mar 2025 at 10:33, Sricharan Ramabadhran
+<quic_srichara@quicinc.com> wrote:
+>
+>
+>
+> On 3/3/2025 6:34 PM, Dmitry Baryshkov wrote:
+> > On Mon, Mar 03, 2025 at 03:58:42PM +0530, Sricharan Ramabadhran wrote:
+> >>
+> >>
+> >> On 2/28/2025 12:03 PM, Dmitry Baryshkov wrote:
+> >>> On Fri, Feb 28, 2025 at 10:23:56AM +0530, Sricharan R wrote:
 > >
-> > On Mon, Mar 03, 2025 at 05:10:07PM +0000, Fuad Tabba wrote:
-> > > Add support for mmap() and fault() for guest_memfd backed memory
-> > > in the host for VMs that support in-place conversion between
-> > > shared and private. To that end, this patch adds the ability to
-> > > check whether the VM type supports in-place conversion, and only
-> > > allows mapping its memory if that's the case.
-> > >
-> > > Also add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
-> > > indicates that the VM supports shared memory in guest_memfd, or
-> > > that the host can create VMs that support shared memory.
-> > > Supporting shared memory implies that memory can be mapped when
-> > > shared with the host.
-> > >
-> > > This is controlled by the KVM_GMEM_SHARED_MEM configuration
-> > > option.
-> > >
-> > > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > > ---
-> > >  include/linux/kvm_host.h |  11 ++++
-> > >  include/uapi/linux/kvm.h |   1 +
-> > >  virt/kvm/guest_memfd.c   | 105 +++++++++++++++++++++++++++++++++++++++
-> > >  virt/kvm/kvm_main.c      |   4 ++
-> > >  4 files changed, 121 insertions(+)
-> > >
-> > > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> > > index 7788e3625f6d..2d025b8ee20e 100644
-> > > --- a/include/linux/kvm_host.h
-> > > +++ b/include/linux/kvm_host.h
-> > > @@ -728,6 +728,17 @@ static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
-> > >  }
-> > >  #endif
-> > >
-> > > +/*
-> > > + * Arch code must define kvm_arch_gmem_supports_shared_mem if support for
-> > > + * private memory is enabled and it supports in-place shared/private conversion.
-> > > + */
-> > > +#if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_KVM_PRIVATE_MEM)
+> >>>> +          dev_err(dev, "Failed with status: %d\n", msg.resp.status);
+> >>>> +          ret = msg.resp.status;
+> >>>
+> >>> return msg.resp.status (is it really errno?)
+> >>>
+> >> ok, yes error.
 > >
-> > Hm. Do we expect any caller for !CONFIG_KVM_PRIVATE_MEM?
+> > The question was if it is an errno, not if it is an error.
+> status != 0 is an error always.
 
-I think you missed this.
+Is it an _errno_ ?
+
 
 -- 
-  Kiryl Shutsemau / Kirill A. Shutemov
+With best wishes
+Dmitry
 
