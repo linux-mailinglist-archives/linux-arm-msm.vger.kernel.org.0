@@ -1,268 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-50217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 336FBA4E7A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:08:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BFB6A4E7BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:09:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9971F425C44
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:00:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0FEBB179B34
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:03:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FB0C27C845;
-	Tue,  4 Mar 2025 16:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FFF12080F4;
+	Tue,  4 Mar 2025 16:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fl/RLT8+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CYCxbjOt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A36266561;
-	Tue,  4 Mar 2025 16:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC822066DA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 16:41:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741106299; cv=none; b=HBMFi+wezY321xpVcqz2zmug6pKDUJr0dqLroQ7GEKs8jcNlkjMmSUFyUhXkArMmTmiQNSucx25gv4uxmg4RALVXEIAXPRW9JSPAyxMF8GOnKouKbrd6hR0xnb+Ahz947ntaAvs9n4EB8FtojpHWlezMukZuMzoJvGwOEuNWlbQ=
+	t=1741106495; cv=none; b=kt/oH+3WmecE5AJvo7snE8MUHsb1A88/keFzhymb6rX7RvtDRmdFcdxGb1rwr3i3AOXpu1iKOdyo0SdUg3UGwl458FpVDvKwtTIdMUsYZtTYgM53+CFpinpzFSbD2fo9mgf00utbITeQT7p6AzoTnlgv6WIp0vvHkHe46im2szQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741106299; c=relaxed/simple;
-	bh=xOBqQU1/wBdBKF+hOUQI10NBZHd2K9ykweBVZqgwYKM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=advCMsHOdlC0W699E2NthW+EKE6f8z2KFSLRZanHp4opl5TN7+l1u6LrYaTZvjNIbjEz04YQogLzK9vIgXEpAh6O8MLdj/H3DNhqoZ24jomzMKm8X7TwpJmxqCGP0Qwq30iXTtdCeiDyWjPPa3I/tKZaTGnCUa6vnoWp0XZeT9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fl/RLT8+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE116C4CEEB;
-	Tue,  4 Mar 2025 16:38:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741106298;
-	bh=xOBqQU1/wBdBKF+hOUQI10NBZHd2K9ykweBVZqgwYKM=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=fl/RLT8+SH6U5FcsYMizhYNwOFPKh2pnMtRJ8LqLRYztUAP6Ah3LWeOK0yb7lQYFd
-	 8ZLQCbGzyTu4SxwZ6f8Ftf/S+uaQ0ifI2OfH4voAFPTo3F196LHfTv6wcAEuK6uIbN
-	 NYW5ljY3Ql5FDAiPrJtFjQeYbcMn4IdkWfLU9IrV3HNNFB/BnCgOBwPspY54Nr59tC
-	 SP7jVp8VvgI2js4Icd/gb2kWNi6u0krw0PFq1WmaZO8P9gyavUfEPQb9rpfYjwCDGw
-	 ZMceWjyq84T+6YshAGGRM2hjSqGCvMihvX7UTsWZMl2nvTv6CioAFkgh2pgSFfKIXf
-	 S0B40y08ZAlQg==
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-abf615d5f31so569740766b.2;
-        Tue, 04 Mar 2025 08:38:18 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU6to/WPUMLO+vkDXk+RyKBqlRb0Oj/7xJTpOOxfpUOBe/p31ANpCW8urMLOv5G/DEG+shJwLlbhdpI@vger.kernel.org, AJvYcCVAI0Mbw8pXsSCsnMf3YRimprdCerMeJjvIIYzRvzQF5NgmbIVKJKFOzaDhJFL/sCxO+k6hSOH8mrRWyRM4@vger.kernel.org, AJvYcCX8cRQxPdC3G3BmJNewFIFeXLlpArH+gonybhHw3kZRo55hS+kCDj0Xso3rufKr1+E6krXQe/2d59hk7Ittew==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwP8uFso5J3rZpZkf9gfBS6UAYmUsRPcP6QOooQDTIjJl4LJ6dS
-	PmBVrYA1Hw80+0qx2znnbFp445ZKupz/ti9gE2wAJNATjXKgypT1cxFMZrTo7bUdsfVIaDNOTgX
-	9Pbtg8cXAYqQgyoq/b8iCcrvOGA==
-X-Google-Smtp-Source: AGHT+IEw+X5joqLWCPWv0VGQNAmhXwfbVOK9kqhQQdx1rRlbl9aTYNRL5ii4DIWF7RvyE9RZ769TVeWAWpvYjsaHw8g=
-X-Received: by 2002:a17:906:dc8f:b0:abf:777e:79e5 with SMTP id
- a640c23a62f3a-abf777e7cfbmr954338266b.9.1741106297250; Tue, 04 Mar 2025
- 08:38:17 -0800 (PST)
+	s=arc-20240116; t=1741106495; c=relaxed/simple;
+	bh=ffThSbYQesCsr5BdSh0lmlwxJuRduHy19rXFVPc7B+o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=f9jKcDmJci9Uch8zb21XcXGk0QAc4Dmag2aUCBdBOxO79HpXB8v2x3naSSJhOxEHvUCmHDi4cILS/FvbeIZdoHegz2mJoC64UAkVdYBCzaa561hCfhNZ7Qbz+ekKm+t+/7sBrzbW/SA0X42QpxUZOLaJeBO8CbzForYlg+PdCF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CYCxbjOt; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524A9B78015492
+	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Mar 2025 16:41:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Aweo2aVYPK68EM8Nsal2jdoc4Zn3ezHG6xAKnUyHqJU=; b=CYCxbjOtLrNjzUq6
+	ZRHZL7OodaIbFoCVNd72utSpRZnzo16Y+klL9VIBMLbNc7fZpBOcvefuHjdEGYfl
+	9NaxEvVFKLWFQIRzpmU6n+wd8fmDEC+BUvgmC0CqVQte2rFUHcx7oew/zWrDYUlN
+	CHP995YgliwP4CVwpzrVXw0MnuW+y3B8zOrEFk2GzOBPn+v+ERszd/PlrlnZDRWg
+	2e0Iqyq0WnJi169XuStO9wBKOnKcklTdWoDUPlF88b0uTNxmHpVuBOA2ITMKXG41
+	n6gtkA+tx/m+TxLVqlCrXzbQJFAyJcKn9KTOATuF9DJzzCVHDPM4PZ3u6cvqvYZ/
+	U56d+Q==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6v2fmx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 16:41:32 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6e89902aaa5so11399256d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 08:41:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741106491; x=1741711291;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Aweo2aVYPK68EM8Nsal2jdoc4Zn3ezHG6xAKnUyHqJU=;
+        b=dbP75EGEqtjRBlcmK1QPazOzWpnEouvxquVIycJ3GDwBSV22z6+ChEPJMvnhyOaK9P
+         B8i8206R4dnJldEf9DNdfxe/FpnFcalkq2hExZn48B6jxdU4tiUayDmhRFIfMYFEBzAw
+         A2kR2MkBKn7P7LVWLXB3K5ATz+HHfnL5kc/gxfqD+WJGKQEw72/VI6mvzygAmVvUczmT
+         S3eNeIcdnKoYKmYoUz5XJnKSleC2Y8zE83KncuZ0e/yCjJD2Dn0rU2C6WuoGGSna7Zmp
+         nl07rDx4DTS4DXxsKJFl6UdBMySv9eakpiNkVpuP+xFMkR+5HTyeN04tAgitu9O6eYyt
+         I5Xw==
+X-Forwarded-Encrypted: i=1; AJvYcCVxOIPPwdwLFSQR1uI+cugJ9adIFy6B8Tr2Ee/uLfq/isTeyQN9BPBOHzUx40mnwLHHJTZrklpoRvTU6NiG@vger.kernel.org
+X-Gm-Message-State: AOJu0YzEc9oESmVk1+joWf8DI0WAE0A+/m2x1qecGYQhJDPrfyZJAwkS
+	xVoVJ+ZhjJvuAQunG2IZmmu1NApyn2qnnDiIpUTIU6LUpEI38fNtBA6l/4HCDeQOjjSjP+sp6cP
+	ERk9dE6zq0+QHCmo3Cgw5Da2f6pBvBIkUF7Fs0wEdg2KcKmjlLJoyS8eCGblPXd6P
+X-Gm-Gg: ASbGncsDUsHLqBn8UOSiFvu8XLKT19uVoVrSojbPIA9W3HKA8VkpTocA8Ypiged6iaR
+	+ng1wxd579lvcKt0H3W4Y4tlqIR3w5GqQdYL40KtMPfUWqiL+kmsp8tAODA3XSGLmpg0kNrQQ8g
+	X5PIC9uBHceet/NanL5ln0X5GMnTi5Z3nJ73sCFLRjOZFmhjR5FYSmC3jaqirLMWhSIJA2MChjE
+	EVm8jlFfgNiE+yZSfsbROnkNPj9Pso4XJHVZCMDOfZfxlLi5YZIiGVllX4zINKH5gqfuHGXP/mF
+	0RvkT+JV7ditRScAMLoGfC9hvjuzH/HPMHj2cRXfM08nDfO44Wj/NP1njalhlb6m7oyJvQ==
+X-Received: by 2002:ad4:5f0a:0:b0:6d8:8283:445c with SMTP id 6a1803df08f44-6e8a0d05d81mr86128616d6.4.1741106491374;
+        Tue, 04 Mar 2025 08:41:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF1Cz9Nh6swuZbgLPf/pRvOeYz9E1GRDU9wKVJ0wtg4BkA6pMrkakuUP21/Z1WqbGOiSQ7Lyw==
+X-Received: by 2002:ad4:5f0a:0:b0:6d8:8283:445c with SMTP id 6a1803df08f44-6e8a0d05d81mr86128426d6.4.1741106491049;
+        Tue, 04 Mar 2025 08:41:31 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf0c74c714sm975253166b.124.2025.03.04.08.41.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Mar 2025 08:41:30 -0800 (PST)
+Message-ID: <d4d658a3-e276-4e0f-ae71-5efd077e8a12@oss.qualcomm.com>
+Date: Tue, 4 Mar 2025 17:41:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241129-topic-sl7_feat2-v2-0-fb6cf5660cfc@oss.qualcomm.com> <20241129-topic-sl7_feat2-v2-3-fb6cf5660cfc@oss.qualcomm.com>
-In-Reply-To: <20241129-topic-sl7_feat2-v2-3-fb6cf5660cfc@oss.qualcomm.com>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 4 Mar 2025 10:38:05 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJVVJD91Q=xG_gkuFXg5mq-EQReUGVbyy7HZ+YQm1EAiw@mail.gmail.com>
-X-Gm-Features: AQ5f1JpY0Y8giIR5-SdVrOf21k37EMiWJTHMP4VfoTckpgm1PsiQyNH9qk-Zj7Y
-Message-ID: <CAL_JsqJVVJD91Q=xG_gkuFXg5mq-EQReUGVbyy7HZ+YQm1EAiw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: x1e80100-romulus: Set up PS8830s
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: sc8280xp: Add Venus
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+References: <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-0-279c7ea55493@linaro.org>
+ <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-7-279c7ea55493@linaro.org>
+ <77475c23-c173-4512-b257-d7b01fa2054d@kernel.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <77475c23-c173-4512-b257-d7b01fa2054d@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: af7ZsS8fraFjoMdtJgWH4ntUdJP11MFv
+X-Proofpoint-ORIG-GUID: af7ZsS8fraFjoMdtJgWH4ntUdJP11MFv
+X-Authority-Analysis: v=2.4 cv=fatXy1QF c=1 sm=1 tr=0 ts=67c72d3c cx=c_pps a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=iUC3nf1AerQT-j-K12QA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-04_07,2025-03-03_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ spamscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=832 mlxscore=0 adultscore=0 suspectscore=0
+ phishscore=0 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503040134
 
-On Fri, Nov 29, 2024 at 11:20=E2=80=AFAM Konrad Dybcio <konradybcio@kernel.=
-org> wrote:
->
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->
-> The Laptop 7 features two USB-C ports, each one sporting a PS8830 USB-C
-> retimer/mux. Wire them up.
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  .../boot/dts/qcom/x1e80100-microsoft-romulus.dtsi  | 282 +++++++++++++++=
-+++++-
->  1 file changed, 276 insertions(+), 6 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/a=
-rch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-> index 80fbcaea5d83e1147a74dd3320ae8fe8c953db57..2236095023a135d8fb1baaede=
-111a34be54d160c 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-> @@ -124,7 +124,15 @@ port@1 {
->                                         reg =3D <1>;
->
->                                         pmic_glink_ss0_ss_in: endpoint {
-> -                                               remote-endpoint =3D <&usb=
-_1_ss0_qmpphy_out>;
-> +                                               remote-endpoint =3D <&ret=
-imer_ss0_ss_out>;
-> +                                       };
-> +                               };
-> +
-> +                               port@2 {
-> +                                       reg =3D <2>;
-> +
-> +                                       pmic_glink_ss0_con_sbu_in: endpoi=
-nt {
-> +                                               remote-endpoint =3D <&ret=
-imer_ss0_con_sbu_out>;
->                                         };
->                                 };
->                         };
-> @@ -153,7 +161,15 @@ port@1 {
->                                         reg =3D <1>;
->
->                                         pmic_glink_ss1_ss_in: endpoint {
-> -                                               remote-endpoint =3D <&usb=
-_1_ss1_qmpphy_out>;
-> +                                               remote-endpoint =3D <&ret=
-imer_ss1_ss_out>;
-> +                                       };
-> +                               };
-> +
-> +                               port@2 {
-> +                                       reg =3D <2>;
-> +
-> +                                       pmic_glink_ss1_con_sbu_in: endpoi=
-nt {
-> +                                               remote-endpoint =3D <&ret=
-imer_ss1_con_sbu_out>;
->                                         };
->                                 };
->                         };
-> @@ -185,6 +201,109 @@ vreg_edp_3p3: regulator-edp-3p3 {
->                 regulator-boot-on;
->         };
->
-> +       vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
-> +               compatible =3D "regulator-fixed";
-> +
-> +               regulator-name =3D "VREG_RTMR0_1P15";
-> +
-> +               regulator-min-microvolt =3D <1150000>;
-> +               regulator-max-microvolt =3D <1150000>;
-> +
-> +               gpio =3D <&pmc8380_5_gpios 8 GPIO_ACTIVE_HIGH>;
-> +               enable-active-high;
-> +
-> +               pinctrl-0 =3D <&rtmr0_1p15_reg_en>;
-> +               pinctrl-names =3D "default";
-> +
-> +               regulator-boot-on;
-> +       };
-> +
-> +       vreg_rtmr0_1p8: regulator-rtmr0-1p8 {
-> +               compatible =3D "regulator-fixed";
-> +
-> +               regulator-name =3D "VREG_RTMR0_1P8";
-> +
-> +               regulator-min-microvolt =3D <1800000>;
-> +               regulator-max-microvolt =3D <1800000>;
-> +
-> +               gpio =3D <&pm8550ve_9_gpios 8 GPIO_ACTIVE_HIGH>;
-> +               enable-active-high;
-> +
-> +               pinctrl-0 =3D <&rtmr0_1p8_reg_en>;
-> +               pinctrl-names =3D "default";
-> +
-> +               regulator-boot-on;
-> +       };
-> +
-> +       vreg_rtmr0_3p3: regulator-rtmr0-3p3 {
-> +               compatible =3D "regulator-fixed";
-> +
-> +               regulator-name =3D "VREG_RTMR0_3P3";
-> +
-> +               regulator-min-microvolt =3D <3300000>;
-> +               regulator-max-microvolt =3D <3300000>;
-> +
-> +               gpio =3D <&pm8550_gpios 11 GPIO_ACTIVE_HIGH>;
-> +               enable-active-high;
-> +
-> +               pinctrl-0 =3D <&rtmr0_3p3_reg_en>;
-> +               pinctrl-names =3D "default";
-> +
-> +               regulator-boot-on;
-> +       };
-> +
-> +       vreg_rtmr1_1p15: regulator-rtmr1-1p15 {
-> +               compatible =3D "regulator-fixed";
-> +
-> +               regulator-name =3D "VREG_RTMR1_1P15";
-> +
-> +               regulator-min-microvolt =3D <1150000>;
-> +               regulator-max-microvolt =3D <1150000>;
-> +
-> +               gpio =3D <&tlmm 188 GPIO_ACTIVE_HIGH>;
-> +               enable-active-high;
-> +
-> +               pinctrl-0 =3D <&rtmr1_1p15_reg_en>;
-> +               pinctrl-names =3D "default";
-> +
-> +               regulator-boot-on;
-> +       };
-> +
-> +       vreg_rtmr1_1p8: regulator-rtmr1-1p8 {
-> +               compatible =3D "regulator-fixed";
-> +
-> +               regulator-name =3D "VREG_RTMR1_1P8";
-> +
-> +               regulator-min-microvolt =3D <1800000>;
-> +               regulator-max-microvolt =3D <1800000>;
-> +
-> +               gpio =3D <&tlmm 175 GPIO_ACTIVE_HIGH>;
-> +               enable-active-high;
-> +
-> +               pinctrl-0 =3D <&rtmr1_1p8_reg_en>;
-> +               pinctrl-names =3D "default";
-> +
-> +               regulator-boot-on;
-> +       };
-> +
-> +       vreg_rtmr1_3p3: regulator-rtmr1-3p3 {
-> +               compatible =3D "regulator-fixed";
-> +
-> +               regulator-name =3D "VREG_RTMR1_3P3";
-> +
-> +               regulator-min-microvolt =3D <3300000>;
-> +               regulator-max-microvolt =3D <3300000>;
-> +
-> +               gpio =3D <&tlmm 186 GPIO_ACTIVE_HIGH>;
-> +               enable-active-high;
-> +
-> +               pinctrl-0 =3D <&rtmr1_3p3_reg_en>;
-> +               pinctrl-names =3D "default";
-> +
-> +               regulator-boot-on;
-> +       };
-> +
-> +
->         vreg_nvme: regulator-nvme {
->                 compatible =3D "regulator-fixed";
->
-> @@ -665,7 +784,59 @@ &i2c3 {
->
->         status =3D "okay";
->
-> -       /* PS8830 USB retimer @8 */
-> +       /* Left-side rear port */
-> +       typec-mux@8 {
-> +               compatible =3D "parade,ps8830";
-> +               reg =3D <0x8>;
-> +
-> +               reset-gpios =3D <&pm8550_gpios 10 GPIO_ACTIVE_LOW>;
-> +
-> +               clocks =3D <&rpmhcc RPMH_RF_CLK3>;
-> +               clock-names =3D "xo";
+On 4.03.2025 3:02 PM, Krzysztof Kozlowski wrote:
+> On 04/03/2025 14:07, Bryan O'Donoghue wrote:
+>> From: Konrad Dybcio <konradybcio@kernel.org>
+>>
+>> Add the required nodes to enable Venus on sc8280xp.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> 
+> SoB and From do not match.
 
-clock-names is not part of the binding.
+.mailmap breaks this
 
-Rob
+I previously worked around this by kicking the relevant entries from the
+file, but that in turn broke base-commit in the cover letter
+
+Konrad
 
