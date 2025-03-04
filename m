@@ -1,137 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-50089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FC48A4CFB9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 01:10:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC0A4A4CFEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 01:31:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20CC23AD8C3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 00:10:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9863171D8D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 00:31:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC7102905;
-	Tue,  4 Mar 2025 00:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E2128C1E;
+	Tue,  4 Mar 2025 00:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F8rweL6z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IB+jv4b/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AB81F92A;
-	Tue,  4 Mar 2025 00:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F893234;
+	Tue,  4 Mar 2025 00:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741046991; cv=none; b=Jrc4hszOHWLLMJ18bqCa0DObidmhKIdLfpXo9jb+EdLH4qWAb/wbPiBXXhGCROEFpUtpgzpgg+LafJWtRoxOS6StlqVIwVE11tdVE3+rXlVlf0+pduiFEvZsfHCGwNxw+8r0IJmOEgklBYyNxEqf8x2PKFOq6iS0UNCUY5uu4Bo=
+	t=1741048292; cv=none; b=tDe+ZjLso7iL9tTivk30H1DrlAIGAvhcHXZZ/HkI+/llyrSBiTANsMw6pwn68OeFXWcd6gKvfIZpsd7H7OlXNW2yreG7yTvXM0hGbENrs5U3OLVj3uu2MPpBlbsncoY9waB2WKKEl3dmEh57wa+fkjmILxY8gBA4hnjal4r/ng4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741046991; c=relaxed/simple;
-	bh=HYDy0V16CbXKV+Z0Ebwz9QqNroH1o7OVsMOOPFZOv8o=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NjypXU5gyzx8AbixocZWMiNSVRsmFe12eXEUFlnphTNgla63GMO2goH6ZGz2TG8izyseh6Vdea+z+SBAqZo7BJ14QPBt+8ViRtI97B6mao3blSzhDdKdkBPctO/B7C/jaWcLHB7YH7WRZEAkieYGGCKHaQ68ObyM1Qb8nxb/+nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F8rweL6z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92D3C4CEE4;
-	Tue,  4 Mar 2025 00:09:38 +0000 (UTC)
+	s=arc-20240116; t=1741048292; c=relaxed/simple;
+	bh=5r6idPmTwzP60SqUWhl564mBKyg6hOsj15HEbUlFjVs=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=qVzI0aSWInYA5kd5zhH5xEm6H0PLKn6NBXZsQ8+dXET6j4yMZg/zXMtf6THKmekk4bHGlcARhs3E+mSl11cG/BHHA+GZehtmDXFnGx8DfTdqBBwZGdZ+yk9McfF4EhOIKtFvi7s8K8CiqU7KqUXDihdQ9N1xxyrGSfAMJOFfLrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IB+jv4b/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81CE9C4CEE4;
+	Tue,  4 Mar 2025 00:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741046990;
-	bh=HYDy0V16CbXKV+Z0Ebwz9QqNroH1o7OVsMOOPFZOv8o=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=F8rweL6z8sb03sGNJu6P+EjwBBwv8zF1+YLwXCWEPWym0DdxXODtNhIrVss7pzQuF
-	 ht+XrUeCTypcwk4Sf5/2Dzy7AVdsJsTxvhL/IkCKRAu6Ih7aKaE37UZHC8fEo9Y8Dz
-	 +xTRikR0XQQ68mdX1zTebYrZ2ZOM02sYc3MLzCMH2FUmX+WtyUK/DE3YH7UjKlDSU5
-	 xsrniPbzjCkDbNHZ6AGjVKAqTJjXlhnUyXVj77GzEnLIBqi5tRmNIQL9dWUr4NzSvy
-	 zv+ZZz1iKxkpvYuIQLcpoeYNw4i1AbeSiCYNa8YmfH69T6sR9PHknK3KcJOXUvt8zg
-	 bVqlAq6dyNbaw==
-Date: Tue, 4 Mar 2025 00:09:31 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- agross@kernel.org, andersson@kernel.org, dmitry.baryshkov@linaro.org,
- konradybcio@kernel.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
- amitk@kernel.org, thara.gopinath@gmail.com, lee@kernel.org,
- rafael@kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com,
- david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
- quic_kamalw@quicinc.com, rui.zhang@intel.com, lukasz.luba@arm.com,
- lars@metafoo.de, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
- quic_skakitap@quicinc.com, neil.armstrong@linaro.org
-Subject: Re: [PATCH V5 4/5] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
-Message-ID: <20250304000931.5be25de1@jic23-huawei>
-In-Reply-To: <449712bb-961e-4ccf-bf74-50dd55315abc@oss.qualcomm.com>
-References: <20250131183242.3653595-1-jishnu.prakash@oss.qualcomm.com>
-	<20250131183242.3653595-5-jishnu.prakash@oss.qualcomm.com>
-	<20250201121134.53040aae@jic23-huawei>
-	<9e14f58f-e345-4bae-b14e-de25fc28d9a8@oss.qualcomm.com>
-	<20250301032519.16e77288@jic23-huawei>
-	<449712bb-961e-4ccf-bf74-50dd55315abc@oss.qualcomm.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-pc-linux-gnu)
+	s=k20201202; t=1741048291;
+	bh=5r6idPmTwzP60SqUWhl564mBKyg6hOsj15HEbUlFjVs=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=IB+jv4b/VpWHr3i2hdRSVKiov03lFmbUbLTYGFjpCWfnE3PYSZrJOrikkJ7X8EYzd
+	 gkA+qyHDwAm2Qo7gFtZ+iJbY2u+00INa6ZtEoNd56neuX61eCtdga0D+BhSzJ/JgvX
+	 I+GGaJhSkg0+jaa7gNPNauhK5+aCH9ob8Z4LcDVqNa7MHqbux8tNWXI0rGnS9ma9zf
+	 vf2V8A1ynAG6ID/+q/Gk9/eMFZWEdXWq+YrJn0yrTKiLnposfMpswg2QmhZfEvarC9
+	 98XFZ+mCJVWJhExmjXAzYOyZpqTQrOr8FX4mUHF54dFeIp0G2Uc1rrGGwHOuwwSjN3
+	 9AOksb/cI9ZRg==
+Date: Mon, 03 Mar 2025 18:31:29 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-clk@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Jagadeesh Kona <quic_jkona@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Taniya Das <quic_tdas@quicinc.com>, Conor Dooley <conor+dt@kernel.org>, 
+ Stephen Boyd <sboyd@kernel.org>
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20250303225521.1780611-2-vladimir.zapolskiy@linaro.org>
+References: <20250303225521.1780611-1-vladimir.zapolskiy@linaro.org>
+ <20250303225521.1780611-2-vladimir.zapolskiy@linaro.org>
+Message-Id: <174104826596.3018989.9977459897261478346.robh@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: clock: qcom: sm8450-camcc: Allow to
+ specify two power domains
 
-On Mon, 3 Mar 2025 19:26:37 +0530
-Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
 
-> Hi Jonathan,
+On Tue, 04 Mar 2025 00:55:20 +0200, Vladimir Zapolskiy wrote:
+> During the tests it was unveiled and later it was confirmed that SM8550
+> Camera Clock Controller shall enable both MXC and MMCX power domains.
 > 
-> On 3/1/2025 8:55 AM, Jonathan Cameron wrote:
-> > On Wed, 26 Feb 2025 14:22:05 +0530
-> > Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
-> >   
-> ...
-> >>>> +void adc5_take_mutex_lock(struct device *dev, bool lock)
-> >>>> +{
-> >>>> +	struct iio_dev *indio_dev = dev_get_drvdata(dev->parent);
-> >>>> +	struct adc5_chip *adc = iio_priv(indio_dev);
-> >>>> +
-> >>>> +	if (lock)
-> >>>> +		mutex_lock(&adc->lock);
-> >>>> +	else
-> >>>> +		mutex_unlock(&adc->lock);
-> >>>> +}
-> >>>> +EXPORT_SYMBOL_NS_GPL(adc5_take_mutex_lock, "QCOM_SPMI_ADC5_GEN3");    
-> >>>
-> >>> This is potentially going to make a mess for sparse.  Might be better to split
-> >>> it in two so you can had __acquires and __releases markings.
-> >>>
-> >>> If you don't get any warnings with sparse then I guess we are fine.
-> >>>     
-> >>
-> >> I had tried building with sparse in my local workspace and I did not get any errors in this file. Do you think I can keep this unchanged?
-> >> Also, would any kernel bots run sparse later on this patch, if it's not already done?  
-> > 
-> > Problems around this tend to turn up a bit late in build tests as requires
-> > particular combinations of features.  Here you may not see problems because
-> > sparse can't see far enough to understand the locking.
-> > 
-> > I would still split this into lock / unlock as that matches better
-> > with common syntax for locks.  We can then add markings
-> > as necessary later.
-> >   
+> Since power-domains property is not specific to MMCX anymore, its
+> description is removed.
 > 
-> OK, I can split this into separate lock and unlock functions.
-> And for markings, you mean I should add these:
+> Fixes: 9cbc64745fc6 ("dt-bindings: clock: qcom: Add SM8550 camera clock controller")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,sm8450-camcc.yaml          | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
 > 
->     __acquires(&adc->lock)
->     __releases(&adc->lock)
-> 
-> under the lock and unlock functions respectively?
-yes
 
-> 
-> Thanks,
-> Jishnu
-> 
-> >>>> +/*    
-> >>>
-> >>> Looks like valid kernel doc, so /** and check it builds fine
-> >>> with the kernel-doc script.
-> >>>     
-> 
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.example.dtb: clock-controller@ade0000: power-domains: [[4294967295, 6]] is too short
+	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8450-camcc.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.example.dtb: clock-controller@ade0000: Unevaluated properties are not allowed ('power-domains' was unexpected)
+	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8450-camcc.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250303225521.1780611-2-vladimir.zapolskiy@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
