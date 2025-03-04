@@ -1,149 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-50145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ED7FA4D90A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:45:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A3D9A4D921
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:48:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2F1637AAB9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:44:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A5034177C4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:46:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A01E61FCFF7;
-	Tue,  4 Mar 2025 09:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1851FCFDA;
+	Tue,  4 Mar 2025 09:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YsVVuzkc"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lhRpietm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93BE1F891D;
-	Tue,  4 Mar 2025 09:45:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6836B1FCF5F;
+	Tue,  4 Mar 2025 09:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741081524; cv=none; b=SpNKlJgt65NHy1zu3/V03G0afRfvV5qJa+5xPxLidNB1pU5f7xiMG7+rjw0q+Mdhllmfqqf8v6RUawMZSsJEIBg4wbOt4Zk0mza+bLYwCNL+35jRVf0MEXfM/vQCZ9E1UFSxo5x7flFfpE8TCEQCoFrypmLvP2GH4+jcmJ6ER5I=
+	t=1741081570; cv=none; b=drQWUSVHcydvoxB5phNSVvIeMuwHY4CTE4z3vt22mAh1BQ/mqUlZHkOR2+YiOBaO0Z/d4MYY/aG9PH8JYrztPrzLqTQMNx45ZNvdRbT5NtCmYu6H+faILoWQl3Tz4CoIXUEUcql7CCg+MiFpV7oSJyOVIsV7SiOoUbHXMkTttnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741081524; c=relaxed/simple;
-	bh=yu/fxRp+Qq731GPWqvxv7CxYw/oO+dxoj2ZKMgIk3yY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Cxh2Rr33VLlNB8nQ0vU08TUxhKwD9cvtDHGKQc2EEOYL0jJ280bjXNaFRH38MxF60kz9yqh1Ri5aE3pUN4XCH0GtHMRlSWxXtF7tbWb815W5PHBDjPQM5MtIDOwzzSVlBxUalp0o3cDlksQ3EVEI8TZkxF5U+gzhG/Or/HVrRJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YsVVuzkc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523NXGmo017322;
-	Tue, 4 Mar 2025 09:45:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6oWK79+LmvvrmQWMaq/+oZ+bqCxhDrEG7H+xB6EtRf4=; b=YsVVuzkcObuQvFDt
-	HKI4Fh4wAmTfydF3pCeFO88l1xjQMQW53oJ5UVrEyHcbvMktaawCIYdfLzpKeix+
-	XCmZF0WcbUUZzm7iQXYjmwOhI8kPtgcLAEpurD6UCqcRoo0IxWEdl7SzMcYUR0o0
-	vNDUO9tDy/pBXVktR3V0kZPQBgT69JOX3Tr8rPAFi0V3SYqCcYsBqgTXTZvtVeu0
-	2fxPOyjBnajgb7Otzrvcqx8z3vLumG4oW/dad2pC7o1kcxLUzbKaV6rYPQmHoK/d
-	q5TDcmcx+1Gh1grnXjbmTLHigp8g5PIosG4n/FmgHBGsnsCHczQ8LMdlsxENokg3
-	8Rtpig==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6theh3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Mar 2025 09:45:07 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5249j76l023483
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 4 Mar 2025 09:45:07 GMT
-Received: from [10.204.66.137] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Mar 2025
- 01:45:00 -0800
-Message-ID: <5293f723-2a27-4d2a-8939-059226d460c3@quicinc.com>
-Date: Tue, 4 Mar 2025 15:14:57 +0530
+	s=arc-20240116; t=1741081570; c=relaxed/simple;
+	bh=INrPSVavl8zMkrHNZpRUzth30ZLyDccF9J8o2rj2eFs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N+Kpl8vi35BA2Hs/oApTEnhYqwe2nO5OCP+NmtTHOO6me0vK0CD9gVdF5dXNKiaKSIdO4uvClSZQaetbUpWFghUJoqvO15TkrghDdjSUy+vxrfnPCZMhCxzW7sESj61anfmJEGCUhxZnrKbv4AlF86+OFjOsJC29IJKiLP/tQTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lhRpietm; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1741081569; x=1772617569;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=INrPSVavl8zMkrHNZpRUzth30ZLyDccF9J8o2rj2eFs=;
+  b=lhRpietmD6SrYc8DAQXEpLK7Z2dWhTcId/JM/cxaeRRuyIZpN4Da7KwD
+   d+iUtXv3jikUR7deHtJXvQgsUM6dQ1rP8lr4N8s7B4DlsQFBDjpQdcKEG
+   yYTBFDFSAJIehjAP3nhocE7ue3ZmyIwcVZs8pCMQnVaq6HQ/1Re5mJ6zO
+   2qdrPkCxbXlT0wjpA8t8M1dvKxRxI2kBp7tjS1wwinx+wVB5OsqWYP0Vs
+   /XVJTwG/G4eSlaF/GJ39+A1I2I5qiBlUOf9143GUAdk1FmD+DbtsZbtgd
+   em78s9Mmwll2FVY2g7DpBgAGNrahz2inf3fiZitgBEjBdkTM1sb0Fs9v3
+   A==;
+X-CSE-ConnectionGUID: g422eFSVSQ2n4BosbOKQ0A==
+X-CSE-MsgGUID: rCiT7oxxRfKCsUbBaxdRwQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11362"; a="52972824"
+X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; 
+   d="scan'208";a="52972824"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2025 01:45:52 -0800
+X-CSE-ConnectionGUID: Z8M3669jSW2Bst8ygeNLFA==
+X-CSE-MsgGUID: snKJwRccREShHF9WnwaFmg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; 
+   d="scan'208";a="118125869"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmviesa006.fm.intel.com with ESMTP; 04 Mar 2025 01:45:48 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1000)
+	id B26B418F; Tue, 04 Mar 2025 11:45:47 +0200 (EET)
+Date: Tue, 4 Mar 2025 11:45:47 +0200
+From: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
+	ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, 
+	quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, 
+	yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, 
+	qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, 
+	hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, 
+	fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com
+Subject: Re: [PATCH v5 3/9] KVM: guest_memfd: Allow host to map guest_memfd()
+ pages
+Message-ID: <nfil6ngejfz2ehruzbguin35hnbsidr5rxywruhmpbarpiyvlp@7yepe2euriff>
+References: <20250303171013.3548775-1-tabba@google.com>
+ <20250303171013.3548775-4-tabba@google.com>
+ <dedrbmbqyvmsjywilcjvu4lt5a3vess3l4p6ygum62gfpmnyce@cgtpjwf4krfw>
+ <CA+EHjTygT1eqQgg59NzUK3uonikKrgi8qDhojPVnONH3qS33mQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/11] arm64: dts: qcom: sa8775p-ride: enable Display
- serial interface
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <marijn.suijten@somainline.org>,
-        <andersson@kernel.org>, <robh@kernel.org>, <robh+dt@kernel.org>,
-        <krzk+dt@kernel.org>, <konradybcio@kernel.org>, <conor+dt@kernel.org>,
-        <andrzej.hajda@intel.com>, <neil.armstrong@linaro.org>,
-        <rfoss@kernel.org>, <Laurent.pinchart@ideasonboard.com>,
-        <jonas@kwiboo.se>, <jernej.skrabec@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
-        <quic_vproddut@quicinc.com>, <quic_jesszhan@quicinc.com>
-References: <20250225121824.3869719-1-quic_amakhija@quicinc.com>
- <20250225121824.3869719-9-quic_amakhija@quicinc.com>
- <tfd27qk543dt4sqcawogoszsjax3cqxmi6mcy3qd2mwzauedpf@l6xmy5okswrd>
-Content-Language: en-US
-From: Ayushi Makhija <quic_amakhija@quicinc.com>
-In-Reply-To: <tfd27qk543dt4sqcawogoszsjax3cqxmi6mcy3qd2mwzauedpf@l6xmy5okswrd>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=PMb1+eqC c=1 sm=1 tr=0 ts=67c6cba3 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=5EIoLlhqkPllPMRGZxYA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: u7ZpYciTQNRFJC6gt9X6GZO_zKOShwbl
-X-Proofpoint-GUID: u7ZpYciTQNRFJC6gt9X6GZO_zKOShwbl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-04_04,2025-03-03_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- phishscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
- mlxscore=0 adultscore=0 spamscore=0 suspectscore=0 impostorscore=0
- clxscore=1015 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503040082
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+EHjTygT1eqQgg59NzUK3uonikKrgi8qDhojPVnONH3qS33mQ@mail.gmail.com>
 
-On 2/25/2025 11:25 PM, Dmitry Baryshkov wrote:
-> On Tue, Feb 25, 2025 at 05:48:21PM +0530, Ayushi Makhija wrote:
->> Enable both DSI to DP bridge ports on SA8775P Ride plaftrom.
->>
->> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 66 +++++++++++++++++++++-
->>  1 file changed, 64 insertions(+), 2 deletions(-)
+On Tue, Mar 04, 2025 at 09:27:06AM +0000, Fuad Tabba wrote:
+> Hi Kirill,
 > 
-> Please squash into the previous patch. It doesn't make a lot of sense separately.
-> 
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->> index 151f66512303..02d8a9c2c909 100644
->> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->> @@ -128,6 +128,30 @@ dp1_connector_in: endpoint {
->>  			};
->>  		};
->>  	};
->> +
->> +	dsi0-connector {
-> 
-> dpN-connector. It is not DSI.
+> On Tue, 4 Mar 2025 at 08:58, Kirill A. Shutemov
+> <kirill.shutemov@linux.intel.com> wrote:
+> >
+> > On Mon, Mar 03, 2025 at 05:10:07PM +0000, Fuad Tabba wrote:
+> > > Add support for mmap() and fault() for guest_memfd backed memory
+> > > in the host for VMs that support in-place conversion between
+> > > shared and private. To that end, this patch adds the ability to
+> > > check whether the VM type supports in-place conversion, and only
+> > > allows mapping its memory if that's the case.
+> > >
+> > > Also add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
+> > > indicates that the VM supports shared memory in guest_memfd, or
+> > > that the host can create VMs that support shared memory.
+> > > Supporting shared memory implies that memory can be mapped when
+> > > shared with the host.
+> > >
+> > > This is controlled by the KVM_GMEM_SHARED_MEM configuration
+> > > option.
+> > >
+> > > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > > ---
+> > >  include/linux/kvm_host.h |  11 ++++
+> > >  include/uapi/linux/kvm.h |   1 +
+> > >  virt/kvm/guest_memfd.c   | 105 +++++++++++++++++++++++++++++++++++++++
+> > >  virt/kvm/kvm_main.c      |   4 ++
+> > >  4 files changed, 121 insertions(+)
+> > >
+> > > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> > > index 7788e3625f6d..2d025b8ee20e 100644
+> > > --- a/include/linux/kvm_host.h
+> > > +++ b/include/linux/kvm_host.h
+> > > @@ -728,6 +728,17 @@ static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
+> > >  }
+> > >  #endif
+> > >
+> > > +/*
+> > > + * Arch code must define kvm_arch_gmem_supports_shared_mem if support for
+> > > + * private memory is enabled and it supports in-place shared/private conversion.
+> > > + */
+> > > +#if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_KVM_PRIVATE_MEM)
+> >
+> > Hm. Do we expect any caller for !CONFIG_KVM_PRIVATE_MEM?
 
-Hi Dmitry, Konrad
+I think you missed this.
 
-Thanks, for the review.
-
-I will change dsi0-connector -> dp2-connector and dsi1-connector -> dp3-connector respectively.
-
-> 
->> +		compatible = "dp-connector";
->> +		label = "DSI0";
-> 
-> Is it an actual label on it?
-
-The label for DSI to DP bridge ports itself on the device is DSI0 and DSI1 respectively.
-
-Thanks,
-Ayushi
-
+-- 
+  Kiryl Shutsemau / Kirill A. Shutemov
 
