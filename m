@@ -1,203 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-50136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0602DA4D75C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:06:19 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5019EA4D782
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:10:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 04865171CA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:05:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 522377A2A5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:08:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45DC620297E;
-	Tue,  4 Mar 2025 08:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B97631EEA34;
+	Tue,  4 Mar 2025 09:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YbmHcSoK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dj7AkWGM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C79201276;
-	Tue,  4 Mar 2025 08:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B3B1EB5FE;
+	Tue,  4 Mar 2025 09:09:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741078703; cv=none; b=HRGFq4uw4F2vmmjPbjF8MdDwmWofn1hQjFtYtpylAccu0xAVaMbo+fjHwXklcjg4TvkYtF2OiUuOCQHreEGz1+55Wks17YuqV/cHTzrovQoC7snoXY80RnR0FU+rPNjjYiLhKAdY0Avbga1FM7ZMbtbuOxl3yU9kZxBMDSaFQ9w=
+	t=1741079377; cv=none; b=ZKba2w5MggqLXtdoKGD0d0r3oQYY/JPeTYJJg/3HNfyS4I89mpmiJF7HXqbHq42kbEqThRbAeyUlJmCRRb+Dm3y9tupYJ0x1YTyNvvd3ibRoQ341SFioeuUR5XCgaJAu50t1IB7U4epr353qsVg7V2fT2Dwxb1ioiawFiUWE5io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741078703; c=relaxed/simple;
-	bh=+Rvj17kOTh2FpRb4oCsHlapbTzPh8IIrAuc3/0o8fKg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WmUOgAojSzGMGTDEQ1263y+dLYmcPrlBkBBx8SHpzBjFNVetVMic/BygjJpRFGXm30g3hJaU7GP1AHTSHjwLx3o+5dJnM5/8kC7wirwE8o4sCALd9ApMPl1GF9UolIm1u4Tb9NIXF16C088V5DZjVHWs95WD2tuAvXY1jkL6I0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YbmHcSoK; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741078702; x=1772614702;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+Rvj17kOTh2FpRb4oCsHlapbTzPh8IIrAuc3/0o8fKg=;
-  b=YbmHcSoKdp/rfH0WAIL0Labdkka7KDr/lOcQKE8oW9UOcuILaLbGmTmL
-   d7aysFmDKqy0O7g6oneotzKGQe/CwbD+4tF261YnU2a383SsyJCiPbgAb
-   GcB/mGINN7n/DLu0NZ5XFQLp5pQIkMU7ldYP15P2rA7saO0knDbLTQZxl
-   N9tBObHUcWjGuvsQQdVVY8dCAHViV/jmcDVFZxOKvjb73nisD9u+3RSOq
-   ywdvL1vyyuV1Moa5gFiL9VBYd/CKkrOHayp4XOp0OgZ3C0sDqZi1rV+48
-   9x99dC8mqvyY3w8OixfjEN+96YzvDshew3cLA24vyiWPbiGsqlAohJhGz
-   w==;
-X-CSE-ConnectionGUID: YyGqKRGSQt+gmwJWGyoWig==
-X-CSE-MsgGUID: IIEk1DKrSXuIGY9fdJ4LYg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11362"; a="64431869"
-X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; 
-   d="scan'208";a="64431869"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2025 00:58:21 -0800
-X-CSE-ConnectionGUID: 1J0hsscSTSeWEYVfBaqiXA==
-X-CSE-MsgGUID: UBDgDT8dQcCDM7nFzpESSg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,331,1732608000"; 
-   d="scan'208";a="118323372"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orviesa006.jf.intel.com with ESMTP; 04 Mar 2025 00:58:18 -0800
-Received: by black.fi.intel.com (Postfix, from userid 1000)
-	id C5A6518F; Tue, 04 Mar 2025 10:58:16 +0200 (EET)
-Date: Tue, 4 Mar 2025 10:58:16 +0200
-From: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
-	ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, 
-	quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com, 
-	yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, 
-	qperret@google.com, keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, 
-	hch@infradead.org, jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, 
-	fvdl@google.com, hughd@google.com, jthoughton@google.com, peterx@redhat.com
-Subject: Re: [PATCH v5 3/9] KVM: guest_memfd: Allow host to map guest_memfd()
- pages
-Message-ID: <dedrbmbqyvmsjywilcjvu4lt5a3vess3l4p6ygum62gfpmnyce@cgtpjwf4krfw>
-References: <20250303171013.3548775-1-tabba@google.com>
- <20250303171013.3548775-4-tabba@google.com>
+	s=arc-20240116; t=1741079377; c=relaxed/simple;
+	bh=5m/S8dOUa5jS8/I75V46PnC0QPJDV4p1m/QGckspTRs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rmXAf2/GzLK4dpCZggJsQNjiG+9o6FfjAH4uL767koYZrqSemzLjEkRuYQwxX7G7q+Ubqnwv8s6q/xgDt9xSXz8UoJC9D398JcEygmvf6iB5NmS6ai6PhZGQxVuCoByj6nAvyjVUorsPuebIxkxtDvtSMs4hRE5jZECvpz+IX/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dj7AkWGM; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aaecf50578eso1024827166b.2;
+        Tue, 04 Mar 2025 01:09:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741079374; x=1741684174; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tUJhQaYNJ+KP9IjzaIHtUMcbg4p7nFeoB9PoVn3AGzE=;
+        b=Dj7AkWGMSzb5+2JeJFqU7W+iUJOjeBvVYnTvcfj/alcGJ9Ba9rNy1fr88Ab33reetf
+         nPgzKMo7fy1iGCrdnG189MZHLmBc+kGPJ14igt/WQCeUky+fRXbBPyZfDqh5Y+DYiF6p
+         9T+G0gr+EzywlCnRZjoPTRQlW3FWPngjjT4mw1gdHfaEcnwbF27cgkuRP0r8ToNcdJFB
+         trJk66K3wDqomf56rOtsrNyZiBVYwAdeTdJ+sh8kyjCDZuPEOSFHTMyqbLS2QILwVRUS
+         E4/YLWfHOF5RmUE44L0nt5ZmmHr1+iPSpKE14BfoI8wPgnwl/N9xVnYRQ2/8rsF0CB7l
+         xmMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741079374; x=1741684174;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tUJhQaYNJ+KP9IjzaIHtUMcbg4p7nFeoB9PoVn3AGzE=;
+        b=hSFAhdof6lErwwiBq5wigTwCFs5YmCbk7hO5bN+nOtDeS5ROjvSLD6w0iums9u0O9u
+         zL9MCEzbyvnWtm9krqCOgTdOCNVuQD4ouniQdptg4fJb1NMkWDf2slIDiDUs30AsnIbJ
+         Kf2Dqt9gdS++e8KYZ5G5tqH/r1XKX25rAe3vOpCahTWVedxyIVhbuaxEmYbWCCLlpHVY
+         RkLtk24+SNp62Mvo9PtJzLBbPyaoX3e0ZISZVRemY5cS7o+JzlcyYu3dtaGqyESmH2dn
+         /+sbQAvjGQnR/OG70wGOf+EXzXQETwXLlHzvRmDT0oggnojWgMjagSXYCXkP08q/a6m8
+         yiWw==
+X-Forwarded-Encrypted: i=1; AJvYcCUPDA4twdO9V3eOURA3ZjoZLVdvCT3bF+UPPQFj9FWlLs5vuyCAeMNa2dr2SOds81X9TzXqj9EbuH5j@vger.kernel.org, AJvYcCUVXjVx6izyXAFfg7v3zqPkbUvO0YNYSUaGTUj3x0XSliJlzQEUjwBnjsnBl9kwa34hezVZUkl71TJY/G0KrA==@vger.kernel.org, AJvYcCXPHHPB+Lm0L9gs8Fz1KsqukhBLIbTJ6kREHN2w6ccG5i2lCI/bLvZbW5uFBw/LfWIejoB64Lkmq7b+HdFGEvuft/c=@vger.kernel.org, AJvYcCXyp/WSCj2SGMDNe+dgyZILPwHKFf1XwdTcyiAXoRyl5XWxiQ9U4uFTtzvOlDXxOqPMrSgLoClIXJDFVTTq@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywt3DNpNU5zE5/MLr7ypk3bAKixF40NnsE8kYoSjPz0dU2Z3FT4
+	rAQSFb+Zu+CkBd4nv0GEcUzK/Qgsfz5p+ooi9/AfH56+ZiBoyAXG+t6OFw==
+X-Gm-Gg: ASbGncvyFX0H7V6XMMeMEcquyTHwF5o8rfp2zmoY46AhxR2rEYDHOElvdzvf0qOmrku
+	Vfk23hjHS9hsObcZe6se9gn73xhL2CmX76nRz1IglVkieVHSvng3KZsCUQElgvQRPa3vIyt8cu8
+	fZ4vtN7MY3WF77qcy3mKX+SM9MRhBoKgxL0cJX1jJfMIOgs2hNCeoIr0AVt8uiSGq1M7VEDmtjl
+	xARkbXdWXVngJ8vWv9Uymf41XK4WBemy6VDltXpj3YnaPU6fb01dORLol4FthvFjAMZxP35NFDq
+	04R0p7gjb556Lhvy3vzu974JxxSiKDImnhT8zrOFLREbxXk6u+zEuF92NeQ=
+X-Google-Smtp-Source: AGHT+IH6P2PZuxm+2sKzdyVK3yViDvKypolcGeIQSD9E5vIhDHGm27LOpDLzkoiZ0cOSnYMoTvPPYw==
+X-Received: by 2002:a17:907:9812:b0:ac1:f162:fb0d with SMTP id a640c23a62f3a-ac1f1631229mr242134566b.37.1741079373793;
+        Tue, 04 Mar 2025 01:09:33 -0800 (PST)
+Received: from [192.168.43.21] ([77.85.230.22])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf75481eb4sm343379066b.83.2025.03.04.01.09.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Mar 2025 01:09:33 -0800 (PST)
+Message-ID: <21460de5-76a0-4576-a7e6-f4873e40de48@gmail.com>
+Date: Tue, 4 Mar 2025 11:09:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250303171013.3548775-4-tabba@google.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/8] dt-bindings: phy: add
+ samsung,exynos2200-usbcon-phy schema file
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Abel Vesa <abel.vesa@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
+ <20250223122227.725233-4-ivo.ivanov.ivanov1@gmail.com>
+ <20250224-curly-cyber-spaniel-efdc39@krzk-bin>
+ <a4f63721-d094-4eda-b68a-6ef62ff54680@gmail.com>
+ <c8184542-5dab-4403-bee4-867810397ae4@kernel.org>
+ <4502b578-96e6-49e0-8f3b-54f6e5640c55@gmail.com>
+ <354d6100-311f-44d7-b8a5-1fd671b651e3@kernel.org>
+ <9fb63a04-5b3d-40cc-b96f-eb4f297f307e@gmail.com>
+ <027decb4-3fa9-40a5-9cf4-65f9a69b4566@kernel.org>
+From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+In-Reply-To: <027decb4-3fa9-40a5-9cf4-65f9a69b4566@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 03, 2025 at 05:10:07PM +0000, Fuad Tabba wrote:
-> Add support for mmap() and fault() for guest_memfd backed memory
-> in the host for VMs that support in-place conversion between
-> shared and private. To that end, this patch adds the ability to
-> check whether the VM type supports in-place conversion, and only
-> allows mapping its memory if that's the case.
-> 
-> Also add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
-> indicates that the VM supports shared memory in guest_memfd, or
-> that the host can create VMs that support shared memory.
-> Supporting shared memory implies that memory can be mapped when
-> shared with the host.
-> 
-> This is controlled by the KVM_GMEM_SHARED_MEM configuration
-> option.
-> 
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->  include/linux/kvm_host.h |  11 ++++
->  include/uapi/linux/kvm.h |   1 +
->  virt/kvm/guest_memfd.c   | 105 +++++++++++++++++++++++++++++++++++++++
->  virt/kvm/kvm_main.c      |   4 ++
->  4 files changed, 121 insertions(+)
-> 
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 7788e3625f6d..2d025b8ee20e 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -728,6 +728,17 @@ static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
->  }
->  #endif
->  
-> +/*
-> + * Arch code must define kvm_arch_gmem_supports_shared_mem if support for
-> + * private memory is enabled and it supports in-place shared/private conversion.
-> + */
-> +#if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_KVM_PRIVATE_MEM)
+On 3/4/25 09:21, Krzysztof Kozlowski wrote:
+> On 03/03/2025 18:18, Ivaylo Ivanov wrote:
+>> On 3/3/25 09:24, Krzysztof Kozlowski wrote:
+>>> On 02/03/2025 10:16, Ivaylo Ivanov wrote:
+>>>> On 2/25/25 10:11, Krzysztof Kozlowski wrote:
+>>>>> On 24/02/2025 11:48, Ivaylo Ivanov wrote:
+>>>>>> On 2/24/25 10:56, Krzysztof Kozlowski wrote:
+>>>>>>> On Sun, Feb 23, 2025 at 02:22:22PM +0200, Ivaylo Ivanov wrote:
+>>>>>>>> The Exynos2200 SoC has a USB controller PHY, which acts as an
+>>>>>>>> intermediary between a USB controller (typically DWC3) and other PHYs
+>>>>>>>> (UTMI, PIPE3). Add a dt-binding schema for it.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+>>>>>>>> ---
+>>>>>>>>  .../phy/samsung,exynos2200-usbcon-phy.yaml    | 76 +++++++++++++++++++
+>>>>>>>>  1 file changed, 76 insertions(+)
+>>>>>>>>  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
+>>>>>>> You have undocumented dependencies which prevent merging this file.
+>>>>>>> First, dependencies have to be clearly expressed.
+>>>>>> They are, in the cover letter.
+>>>>> Where? I read it twice. Dependencies is the most important thing and
+>>>>> should scream at beginning of the cover letter, so if you bury them
+>>>>> somewhere deep it also would not matter - just like they were missing.
+>>>>>
+>>>>>>> Second, you should
+>>>>>>> rather decouple the code from header dependencies, otherwise this cannot
+>>>>>>> be merged for current release (just use clocks with long names, without IDs).
+>>>>>> Sure
+>>>>>>>> diff --git a/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
+>>>>>>>> new file mode 100644
+>>>>>>>> index 000000000..7d879ec8b
+>>>>>>>> --- /dev/null
+>>>>>>>> +++ b/Documentation/devicetree/bindings/phy/samsung,exynos2200-usbcon-phy.yaml
+>>>>>>>> @@ -0,0 +1,76 @@
+>>>>>>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>>>>>>> +%YAML 1.2
+>>>>>>>> +---
+>>>>>>>> +$id: http://devicetree.org/schemas/phy/samsung,exynos2200-usbcon-phy.yaml#
+>>>>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>>>>>> +
+>>>>>>>> +title: Exynos2200 USB controller PHY
+>>>>>>>> +
+>>>>>>>> +maintainers:
+>>>>>>>> +  - Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+>>>>>>>> +
+>>>>>>>> +description:
+>>>>>>>> +  Exynos2200 USB controller PHY is an intermediary between a USB controller
+>>>>>>>> +  (typically DWC3) and other PHYs (UTMI, PIPE3).
+>>>>>>> Isn't this the same as usbdrd phy? see: samsung,usb3-drd-phy.yaml
+>>>>>> It's not (I think). There's a few reasons I've decided to make this separate
+>>>>>> from the usb3-drd-phy bindings and exynos5-usbdrd driver:
+>>>>>>
+>>>>>> 1. This PHY does not provide UTMI and PIPE3 on its own. There's no tuning
+>>>>> USBDRD phy does not provide UTMI and PIPE on its own either if you look
+>>>>> at diagram - they call it phy controller.
+>>>> Ughm. What? So in most exynos cases, there's a combination of multiple phys?
+>>>>>> for them, and all that is needed from it is to disable HWACG, assert/
+>>>>>> deassert reset and force bvalid/vbusvalid. After that SNPS eUSB2
+>>>>>> initialization can be done and USB2 works. If the USBCON phy is not set
+>>>>>> up before the eUSB2 one, the device hangs, so there is definitely a
+>>>>>> dependancy between them. For PIPE3 we'd need to control the pipe3
+>>>>>> attaching/deattaching and then initialize the synopsys USBDP combophy.
+>>>>> Does it mean there is no USB DRD phy controller as before?
+>>>>>
+>>>>> Anyway the problem is you have DWC3 -> PHY -> PHY. Looks one phy too many.
+>>>> So...
+>>>>
+>>>> DWC3 -> USBDRD (USBCON) -> PHYs?
+>>> No, drop last phy. You just wrote the same as me - two phys, because
+>>> usbdrd is the phy. In all existing designs there is no such controllable
+>>> object from the point of view of operating system.
+>> What? Per my understanding, the phy property should refer to whatever is
+>> is connected to dwc3 UTMI. In this case it's the so-called USBDRD phy (called
+>> usbcon in downstream). Considering that the eUSB2 IP definitely also has UTMI
+>> that has to be connected to something, doesn't that mean we have clearly
+> The entire point is that eUSB2 is connected to DWC3, no? That's exactly
+> how it is done for example on Qualcomm SoC. Otherwise you claim that
+> DWC3 controls one phy, which controls another phy which controls UTMI...
 
-Hm. Do we expect any caller for !CONFIG_KVM_PRIVATE_MEM?
+But where does the USBCON fit? Is it just a side controller? Why's it needed
+in the first place? This is what I don't understand.
 
-> +static inline bool kvm_arch_gmem_supports_shared_mem(struct kvm *kvm)
-> +{
-> +	return false;
-> +}
-> +#endif
-> +
->  #ifndef kvm_arch_has_readonly_mem
->  static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
->  {
+>
+>> separated hardware blocks? Now, I guess one could argue that this USBCON
+>> hardware block could be classified as a syscon. But I don't see the problem
+>> with the current binding description, nor the modelling, as it represents
+>> how the hardware is (unless I've gotten it completely wrong).
+> It is the first time you use argument that it represents how the
+> hardware is and this is what we actually disagree. It is not like that.
+> You do not have chain of phys. Just look at any USB 3.0 DRD DWC diagram
+> from any Samsung SoC: where would you squeeze these two phys in relation
+> to what is called there "USB 3.0 PHY" which would be the third phy (!!!).
 
-... 
+Yeah, my point was that it was different from any previous design. Now,
+I don't know if it's actually theoretically possible to design it like so. It's
+hard to just guess how the hardware is designed without having access
+to die shots, documentations or even just schematics.
 
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index b2aa6bf24d3a..4291956b51ae 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -312,7 +312,112 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
->  	return gfn - slot->base_gfn + slot->gmem.pgoff;
->  }
->  
-> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
-> +static bool kvm_gmem_offset_is_shared(struct file *file, pgoff_t index)
-> +{
-> +	struct kvm_gmem *gmem = file->private_data;
-> +
-> +	/* For now, VMs that support shared memory share all their memory. */
-> +	return kvm_arch_gmem_supports_shared_mem(gmem->kvm);
-> +}
-> +
-> +static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
-> +{
-> +	struct inode *inode = file_inode(vmf->vma->vm_file);
-> +	struct folio *folio;
-> +	vm_fault_t ret = VM_FAULT_LOCKED;
-> +
-> +	filemap_invalidate_lock_shared(inode->i_mapping);
-> +
-> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> +	if (IS_ERR(folio)) {
-> +		switch (PTR_ERR(folio)) {
-> +		case -EAGAIN:
-> +			ret = VM_FAULT_RETRY;
-> +			break;
-> +		case -ENOMEM:
-> +			ret = VM_FAULT_OOM;
-> +			break;
-> +		default:
-> +			ret = VM_FAULT_SIGBUS;
-> +			break;
-> +		}
-> +		goto out_filemap;
-> +	}
-> +
-> +	if (folio_test_hwpoison(folio)) {
-> +		ret = VM_FAULT_HWPOISON;
-> +		goto out_folio;
-> +	}
-> +
-> +	/* Must be called with folio lock held, i.e., after kvm_gmem_get_folio() */
+Let's make it clear now, the changes your request are to document USBCON
+in the existing exynos binding, as well as to correct all explanations of how
+this block functions, right?
 
-If this is a requirement, it would be cleaner to rename the function and
-pass down the folio and check the lock state inside.
+Best regards,
+Ivaylo
 
--- 
-  Kiryl Shutsemau / Kirill A. Shutemov
+>
+> Best regards,
+> Krzysztof
+
 
