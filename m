@@ -1,60 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-50172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00647A4DE02
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 13:34:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1352A4DE05
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 13:34:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 538BC7A5114
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 12:33:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0341C1783C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 12:34:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5469320409A;
-	Tue,  4 Mar 2025 12:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C13B22040BC;
+	Tue,  4 Mar 2025 12:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WhcQ5yCL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IQtCJjjs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243372036E6;
-	Tue,  4 Mar 2025 12:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D2B202C5C;
+	Tue,  4 Mar 2025 12:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741091628; cv=none; b=ssgI92sVt76dK34Q51QDJ9z69GwVFmT3l0GEnpNgt4ebsnke9xB69Yzork60Pu5dwfNOwa18Tti80/fg5FtamEyP5SZF9JKfXdBO/x3m8aVxjfCKjlcntgYL2SjrRx1wIjPXOJln9W48RjJtIn8z84NzpIrfvUu9emv4vunOpes=
+	t=1741091630; cv=none; b=jnuDDPFSIz7qIZflNkMzNxDRzk3kF3Q9hS4W5wb/Y/6C1GfhQUcjYGb+yQE9KRvNZDvJxSCNDWg5Iy2Valfbheu2hjcvxtoSd2O6XAZyOtMml5czNZXqxMk8hTe3GQd4I+RpreSoSr2BkoC5DE+2mK0gojn/9fOZsDGI14hwbmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741091628; c=relaxed/simple;
-	bh=rB/uyJghjRZ9Y1X1fJ21a32rEF+Ml0D56Cgz3IRTFh4=;
+	s=arc-20240116; t=1741091630; c=relaxed/simple;
+	bh=0zUFOrw8shW7MFjQk03ahVPm0Wdqf9mwdxeXee8/Z1o=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=sl5ZcUm8UCKmaSuPaOPfKJaTjImyKe71QQDp8Xm3uuv5FiO67mLd8BCn8R6FAEW9fmnlVAIH0Mt+HsGZg8a5xv0Zmz8HOkrDZeiMziljV0YH7KzwSglFoiUezFIqxkbtP49e8wvf33w4IlUw7PyF4MHp0ZdXOShcvjMhJUtciII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WhcQ5yCL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472B0C4CEE7;
-	Tue,  4 Mar 2025 12:33:45 +0000 (UTC)
+	 MIME-Version:Content-Type; b=AeOYgC4sjxOjNCkgkzgOCJ32xgXAdPfMTPN3Hyq3ymYv2xIvvrcOQe3+xpO+cgaHeoSXh4Q3Uc7QqAOkfkPAOkEhiSppiove1iEw7UkqbtIfeVs93km2flNFsZYbL35fgvAiiXrEKXx5PRSSMLBye6cZECHsFPIbW+Jb6DZcF9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IQtCJjjs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180D8C4CEEB;
+	Tue,  4 Mar 2025 12:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741091627;
-	bh=rB/uyJghjRZ9Y1X1fJ21a32rEF+Ml0D56Cgz3IRTFh4=;
+	s=k20201202; t=1741091630;
+	bh=0zUFOrw8shW7MFjQk03ahVPm0Wdqf9mwdxeXee8/Z1o=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=WhcQ5yCLYgyfBw7MF8n8axEuh0VK4rtikfH64EshCL0KIv13ZQTnLSCjDVP4HVLKf
-	 Q4WL0Z7SBNkbPRT5UjAQbcJW8gVZt6FABVlDVX3FIjOVFZwIhnZ751xgvXyDLvj/xo
-	 8R989Zbd/hJ4NPZRCHSu9XwhnBbjhegDMciMzDZuNdUpo69hgsC5FM3Yh4KGP7bXkv
-	 4wp49/7CMcmcK5yLEt/hYiEatUzZVbqzGrp1gH9l60eBrZwWW67vVnBCAoO9y9CqfZ
-	 UlVgS83zcGgl03WHkqsen/Q+kWgLA11Sz1NQAz8xNgya5gK4wSYEqejxgCP8QIskaZ
-	 oP+19WCk8akRg==
+	b=IQtCJjjsqrJ/wP1A6hezusBljzE8lD5Mzy+yAmTODCewUL/QDMQr+1k1H75BGZnan
+	 IJTggTpG6/20xIPqcBx39mbvZ0rMH65SGzPqrAGMsrHz1VyPySm9iG7hpn5rp+7Bjw
+	 SEfi9WUD3a79Sfg8Rbk1RTaVT09uPKn73W/Mhsw8eGUYJknk4wMxEuxUeYS/HNgbEu
+	 OVvdEv2hg2bq8DLduSN4Cph8lPgNoitYl5hUucNhmfNeBJdEno7c45GqEm4mLVd7Rj
+	 ecF+VxX9hsTvQRpwino8wb/CWQNJbffM+qibeQ92wj1UAcmviGKeQIjBB/f+t6eY8l
+	 tDVX8a/jIDRfg==
 From: Mark Brown <broonie@kernel.org>
 To: srinivas.kandagatla@linaro.org, lgirdwood@gmail.com, 
  Alexey Klimov <alexey.klimov@linaro.org>
-Cc: krzysztof.kozlowski@linaro.org, abel.vesa@linaro.org, 
- neil.armstrong@linaro.org, perex@perex.cz, tiwai@suse.com, 
- jdelvare@suse.com, linux-sound@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-hwmon@vger.kernel.org
-In-Reply-To: <20250221044024.1207921-1-alexey.klimov@linaro.org>
-References: <20250221044024.1207921-1-alexey.klimov@linaro.org>
-Subject: Re: [PATCH] ASoC: codecs: wsa884x: report temps to hwmon in
- millidegree of Celsius
-Message-Id: <174109162502.25452.5105677983342188583.b4-ty@kernel.org>
-Date: Tue, 04 Mar 2025 12:33:45 +0000
+Cc: krzysztof.kozlowski@linaro.org, steev@kali.org, perex@perex.cz, 
+ tiwai@suse.com, jdelvare@suse.com, linux@roeck-us.net, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org
+In-Reply-To: <20250221032141.1206902-1-alexey.klimov@linaro.org>
+References: <20250221032141.1206902-1-alexey.klimov@linaro.org>
+Subject: Re: [PATCH v2] ASoC: codecs: wsa883x: Implement temperature
+ reading and hwmon
+Message-Id: <174109162783.25452.6890803817267804274.b4-ty@kernel.org>
+Date: Tue, 04 Mar 2025 12:33:47 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,13 +64,13 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-1b0d6
 
-On Fri, 21 Feb 2025 04:40:24 +0000, Alexey Klimov wrote:
-> Temperatures are reported in units of Celsius however hwmon expects
-> values to be in millidegree of Celsius. Userspace tools observe values
-> close to zero and report it as "Not available" or incorrect values like
-> 0C or 1C. Add a simple conversion to fix that.
+On Fri, 21 Feb 2025 03:21:41 +0000, Alexey Klimov wrote:
+> Read temperature of the amplifier and expose it via hwmon interface, which
+> will be later used during calibration of speaker protection algorithms.
+> The method is the same as for wsa884x and therefore this is based on
+> Krzysztof Kozlowski's approach implemented in commit 6b99dc62d940 ("ASoC:
+> codecs: wsa884x: Implement temperature reading and hwmon").
 > 
-> Before the change:
 > 
 > [...]
 
@@ -81,8 +80,8 @@ Applied to
 
 Thanks!
 
-[1/1] ASoC: codecs: wsa884x: report temps to hwmon in millidegree of Celsius
-      commit: d776f016d24816f15033169dcd081f077b6c10f4
+[1/1] ASoC: codecs: wsa883x: Implement temperature reading and hwmon
+      commit: a02c42d41af7d66db71ca43c52531c3253ebe35e
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
