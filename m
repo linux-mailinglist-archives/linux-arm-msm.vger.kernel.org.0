@@ -1,64 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-50102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 500C9A4D261
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 05:10:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 81BAEA4D263
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 05:10:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CD601716B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 04:10:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ADF41171630
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 04:10:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 559DB1F0E52;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B280D1F237D;
 	Tue,  4 Mar 2025 04:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZWM0lDes"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GIabnGAM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293F51F03E5;
-	Tue,  4 Mar 2025 04:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875FA1F03EE;
+	Tue,  4 Mar 2025 04:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741061384; cv=none; b=n8NYzscajr7CaUQ/cdWHXOI0KwLmnU2yWJrHvqoqHWobV/hpRAwcTBWZk6uPzzSpR+ZZ3RpTj5z9K7Jn7gZZPJPXDbvALRtZ1+OAM0prSWD9U+rbRtLgrGvx70gYEibklxVMYPnOroScOEBz6etMzNLvqcjpp4hq4cxZkHBO1rM=
+	t=1741061384; cv=none; b=meumSOlnB/P7a/Mc5fxZgWhvqNFZVLv7sEagHJCzwlKLkGlHvoWe1Q4sxix5UslfobRCA2T789bZQbBJa0kc6qghtlY+erT0U9O9T+ydQymovDouIbFe8EQZDyfrVAL6BQBcANi2UFSO/0xW/Mfh+lNzAUAqz0XwNPPG95J+QeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1741061384; c=relaxed/simple;
-	bh=KoGK/SjJaX6GjbwfYx3L4okHGnPh1ZByOgGd9NDsAxI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lmj6zPhgBULh+NmDi9VZv2iOCooCim6d4InW61A9JD0fezUmoL6fTU7wNVeTbakwTEVZ5vzruD4qIaYNH+GGoQ3BnNeG/fSfQEUel8lHUEHXe4avZkZ9fYStzEw0GLoCn2jAQWIDVlhbcpX3N9WM0zvC4RR8ZfBvHVhFRoZVbk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZWM0lDes; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B9CC4CEE7;
-	Tue,  4 Mar 2025 04:09:42 +0000 (UTC)
+	bh=syIdLpCJWVBcGCAZBQ+VYIF0MGuaIBWI4fi5pFzAmKA=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PVzw6DBFdN/I99fYATGwkrcZLU5LwdOlS33PRV+EZu16S8A2hOQDPltfj0EWXcgqmyJC/wOM2lfWUlQWitvKH1nDX7wvFUpdr9TImQl8u5wpV6o3ZFVhH0bD4BwjcEdL7yQ418p9eKEbsRTh1g3SqmsjhNeGZnpci6y+mJStTxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GIabnGAM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F7EC4CEE8;
+	Tue,  4 Mar 2025 04:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741061383;
-	bh=KoGK/SjJaX6GjbwfYx3L4okHGnPh1ZByOgGd9NDsAxI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZWM0lDesbH2B/UElPhlfb+bhe+SQDXqTDNysRNOXZT/Dfa05I+xeIMHkAwhURMck9
-	 z09VkbebeazYisj98yDsAUTFVtsS2whLTyGJxUMJTUP5Rvk3kQCVfavE40/BGfrFM7
-	 VJEdu6pFbEoX7fHGpxDrtVvxz1VaYyScHlTDaJFc5aVRBwsNgwj/yEmIrDdsckQR3+
-	 dymaIuo62e8fXR30TtyCVDlif9+r00DiiBnv2dIyULDC4OLpVNK19Os+IFNF6H244v
-	 FXOzh/ir08qdfDxDIiR/Q369BUJuiH+dV+E6jd/h2qzqSRXYJyNFv3jfVCJzqBrCc9
-	 5ovBpA/xJKy1Q==
+	s=k20201202; t=1741061384;
+	bh=syIdLpCJWVBcGCAZBQ+VYIF0MGuaIBWI4fi5pFzAmKA=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=GIabnGAM9pVYc852fc8WWCm2RGNHABkN76Nca3XivkgkvzEBS8uYuT1IY8/oCslb3
+	 UkssSc/Z1KUvm4GblYc9En9WUb8BYmY8p4V0lYLjLjoI5zaINtHbMHOJrMbATYxAA/
+	 sA2hdE4yzAw+aCFeixwlLuPJyDDkYljyZQmiK+9HFtzP9xI9+wi/Y29YTo0nJYwtmn
+	 lx4ITo4BzxGPyRdamMYtITdS/0oA+CoqUUUlFjryOG4x5eMRi/arJ9bn9HWl3n/yeP
+	 shme2fDGG8e8OaF1Zpckh8ilufWcX7iMrfMUokzrbovmmd+yrwjBXvW7XTr6PMLUz6
+	 8uta/QN7aUCpA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <quic_kdybcio@quicinc.com>,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH] Revert "arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu"
-Date: Mon,  3 Mar 2025 22:09:39 -0600
-Message-ID: <174106137700.690572.13341685389729259019.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] clk: qcom: dispcc-sm8750: Drop incorrect CLK_SET_RATE_PARENT on byte intf parent
+Date: Mon,  3 Mar 2025 22:09:40 -0600
+Message-ID: <174106137701.690572.12789649327185591563.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250225-topic-845_smmu_not_coherent-v1-1-98ca9d17471c@oss.qualcomm.com>
-References: <20250225-topic-845_smmu_not_coherent-v1-1-98ca9d17471c@oss.qualcomm.com>
+In-Reply-To: <20250129154519.209791-1-krzysztof.kozlowski@linaro.org>
+References: <20250129154519.209791-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,23 +64,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 25 Feb 2025 14:44:40 +0100, Konrad Dybcio wrote:
-> There are reports that the pagetable walker cache coherency is not a
-> given across the spectrum of SDM845/850 devices, leading to lock-ups
-> and resets. It works fine on some devices (like the Dragonboard 845c,
-> but not so much on the Lenovo Yoga C630).
+On Wed, 29 Jan 2025 16:45:19 +0100, Krzysztof Kozlowski wrote:
+> The parent of disp_cc_mdss_byte0_intf_clk clock should not propagate up
+> the rates, because this messes up entire clock hierarchy when setting
+> clock rates in MSM DSI driver.
 > 
-> This unfortunately looks like a fluke in firmware development, where
-> likely somewhere in the vast hypervisor stack, a change to accommodate
-> for this was only introduced after the initial software release (which
-> often serves as a baseline for products).
+> The dsi_link_clk_set_rate_6g() first sets entire clock hierarchy rates
+> via dev_pm_opp_set_rate() on byte clock and then sets individual clock
+> rates, like pixel and byte_intf clocks, to proper frequencies.  Having
+> CLK_SET_RATE_PARENT caused that entire tree was re-calced and the byte
+> clock received halved frequency.  Drop CLK_SET_RATE_PARENT to fix this
+> and align with SM8550 and SM8650.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] Revert "arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu"
-      commit: f00db31d235946853fb430de8c6aa1295efc8353
+[1/1] clk: qcom: dispcc-sm8750: Drop incorrect CLK_SET_RATE_PARENT on byte intf parent
+      commit: 787289a1d13d50ff4ce0f496947f8817ef3fdea9
 
 Best regards,
 -- 
