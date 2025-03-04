@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-50236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2B5DA4EB38
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 19:21:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 628FAA4E8CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:30:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 837123BAD0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:24:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D0EC17D1C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:24:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FB54297515;
-	Tue,  4 Mar 2025 17:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41DFE27C84C;
+	Tue,  4 Mar 2025 17:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q68Hd11Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r/9qrtS7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F227029750B;
-	Tue,  4 Mar 2025 17:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7BC297531;
+	Tue,  4 Mar 2025 17:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741107625; cv=none; b=ex9fOqqdZmGf6DfOZg6OsOMDZTH2G4FKkeYhvrhXT5JkyudIhbmfzxomGEENm052Jkr5cbZnI5ZsWKiMkl5zujybI4RjokYj/hoKLWmzdsI2ibsYUntKz8lucj4O/YkBiH6+y2E2DGzggIduf1Jf/gRrzK40kJ+MUMWB6U4jxOQ=
+	t=1741107626; cv=none; b=oL8LfHFBId8YRPP11n53MGrOIcGhU7SzeyRegzQUwdTKRRChAXwzR+pqg7bzhRfI0rRcPXVGGPV0UP4djoOjKQ33tF6n1KIB+2nl9zPsABBJzh1miAU/WE+mI1zZKYXo6z+VoRL7+HjZ8tKQibzx3069XpwxgMMH3NPRYimlnhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741107625; c=relaxed/simple;
-	bh=odl7vD2Fhh0HGGKw+7qv4YRTSw0Yw1QD5gPNMpwtngU=;
+	s=arc-20240116; t=1741107626; c=relaxed/simple;
+	bh=pUu2d22qYVrLa+Mu9wVY0IHyvP4C0hcCN9akYiGoTn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n+bAj0HMFl3l2EO3TT+SjQgCeLy0V1GSIZ2PjNG7lHknxWSiN+s6pxWCdMJb8DED4httFR34Eey2VpXePm0j6Qm+XjsN5fvVTu6FNOacG0m6zycMx7JgDtlCMdj2g+1AUuA+KK/+8YyUHJh3R/DNJB0uEbjZuh5ffJ0mzCGApCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q68Hd11Y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B8FC4CEEC;
-	Tue,  4 Mar 2025 17:00:23 +0000 (UTC)
+	 MIME-Version:Content-Type; b=L2p5OpbmMiP0mcjKAEtQS7d3EGWB4z12Qox9uDqKnc05pgVupx3kPxm1zKLcInme2+n2WyL593NpxNPyI6Gv9Nt5yP1k66iHIdapD9G9l8iNbG1PhJUaVsvjktRW8s4upiQ/nt9f+PVHh1kaO3rXnxoapdQXh4XR7K1SOgVoMX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r/9qrtS7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933DAC4CEF2;
+	Tue,  4 Mar 2025 17:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741107624;
-	bh=odl7vD2Fhh0HGGKw+7qv4YRTSw0Yw1QD5gPNMpwtngU=;
+	s=k20201202; t=1741107625;
+	bh=pUu2d22qYVrLa+Mu9wVY0IHyvP4C0hcCN9akYiGoTn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q68Hd11YUKSSpWIJaz5D7xqPrFsjoQqitjoz4Yr6JYO63fKbXubrYZq+1uahG7Tbk
-	 7yRAVg6RI2N/B/8fEBKhyBanjKvGi0mf24GOYMGBQfFJxAYq4Ds5fObiaB6ZMqJDfJ
-	 8q1yzeBDVAxPRMuAisZ6qnNXWcW95bMyXURSuCIWVLC0BLKrtaVkxxm67caJGLl9DI
-	 kBe0NhZr0uEW4h95YA6cDLDS1Q1LRGhKmSVJXRI556MZDg0wFxaHRwcvvBRUG71Gtt
-	 ut1g4VjtPxhUr84syHTa0adfX1uMi90KYlMWp2OvSxJES2azJ94I6kixwi8HYPqytR
-	 TDU6iT2LSc+wg==
+	b=r/9qrtS7xuFF8l0vTIW182Td/XKsBhLhPnGyBG/DIq2z8M0wCtuAzs0zu+/9Q1EBL
+	 MR/MlzTOGKnWLKtN6ge4IBLz3Mzg3kXVAzJicCViKBK9geBjd2AhXeL2MAvZWu47jq
+	 WvTRyTnBfGradtpR7pPdm5nExmQpTHWTfqZP3lPt6f9AZUryQAq/5Zmz9XmOrDsXHa
+	 XId0VwZvBTsyo5CJHnGvUnwAzFZmqQDTnEwfh+Sasf7KeRE/xZM3qFcrz/JCsW56zX
+	 ZGv6fioGLP370Axaso1wrH2d7LLxm0xHMD1PxgZq7Y8+/1G5ZsEN6kCNaUeNi7RaXz
+	 aylFrcxc0McOA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	Konrad Dybcio <konradybcio@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Luca Weiss <luca@lucaweiss.eu>
+	Maulik Shah <maulik.shah@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/4] Some cleanups for Fairphone 3, set firmware-name, enable modem
-Date: Tue,  4 Mar 2025 11:00:11 -0600
-Message-ID: <174110761301.741733.8731154388965384357.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	quic_lsrao@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: sm8750: Add RPMh sleep stats
+Date: Tue,  4 Mar 2025 11:00:12 -0600
+Message-ID: <174110761302.741733.10360231448965582681.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250222-fp3-remoteprocs-firmware-v1-0-237ed21c334a@lucaweiss.eu>
-References: <20250222-fp3-remoteprocs-firmware-v1-0-237ed21c334a@lucaweiss.eu>
+In-Reply-To: <20250218-sm8750_stats-v1-1-8902e213f82d@oss.qualcomm.com>
+References: <20250218-sm8750_stats-v1-1-8902e213f82d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,26 +67,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 22 Feb 2025 14:00:46 +0100, Luca Weiss wrote:
-> The main objective is setting firmware-name for the remoteprocs and
-> enabling the modem.
-> 
-> The first two patches are just some cleanups to align the dts style with
-> contemporary style.
+On Tue, 18 Feb 2025 11:21:48 +0530, Maulik Shah wrote:
+> Add RPMh stats to read low power statistics for various subsystem
+> and SoC sleep modes.
 > 
 > 
-> [...]
 
 Applied, thanks!
 
-[1/4] arm64: dts: qcom: sdm632-fairphone-fp3: Move status properties last
-      commit: 09a3840bcb72bcd9b43cbffbb7dedccf85e6d558
-[2/4] arm64: dts: qcom: sdm632-fairphone-fp3: Add newlines between regulator nodes
-      commit: a4600b160eca7f889c4b4a370d42e4619fa5162a
-[3/4] arm64: dts: qcom: sdm632-fairphone-fp3: Add firmware-name for adsp & wcnss
-      commit: 9ab813d5191f61301dbaeaf8e82d21e689b080f4
-[4/4] arm64: dts: qcom: sdm632-fairphone-fp3: Enable modem
-      commit: d0c38cbe3556fea446b9350ec597a8e9c2cdaf36
+[1/1] arm64: dts: qcom: sm8750: Add RPMh sleep stats
+      commit: 97bf440d95f1bafd8345739663ad3c04627f1505
 
 Best regards,
 -- 
