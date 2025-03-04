@@ -1,80 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-50141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C026A4D8CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:40:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 686B9A4D8DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 10:42:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2B913A634A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:36:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1DC513B38BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 09:37:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 449D21FE469;
-	Tue,  4 Mar 2025 09:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CC241FECC1;
+	Tue,  4 Mar 2025 09:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iq5OVPHh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mXmQ0X2N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0071FE456
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 09:31:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26E21FE461;
+	Tue,  4 Mar 2025 09:33:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741080694; cv=none; b=ulV4PLcbLi5UdCGo4UHN9DHzOsBX+DfHH2XaBOvc3fHE6QwwsY06EOZj5S3fjdZ4lGHN3zUIokDSZkVmy+SI8PK0GCGBjDfqTQr1x+t1xKqXLLdAY5OH2uK02TFQx0eAfnoVvCKBxALfMyYeYMmHin4z+Rz6hPggw9RtPmvYg/o=
+	t=1741080830; cv=none; b=u7Q12Bo0B60/bQ6oc4Pbk82G3vPf+zbVIctSMYQ8k6LxgY5OVbHHAzyaCJgJK7e3Q9p4Bk+Fw/uZbZr0ugAR3fC9EiPXwr9gSFV/xMTnFFZARwGVyoSKwIteG6yj/4ImmHnZPsf6nnSYsr6b55S+IslJwZ3n1TA6Qw9XFR8HpTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741080694; c=relaxed/simple;
-	bh=f0m1CDKNfTuQsPCxO4ffsoS1wvQEZPAKQ0P61rR00WI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nYJXOIkx+PBV1SBJ8B/FTfhJwPXrbbLmk9lNFSeZi9eOAsAEMDT6ZojDN4Iat4BcYQ9A+MwYZBTaNuiLaH12XANAbhqOKtg+6cyMsweGPtXryL+bxTVDE1soEYDXjS2faUaT5kp1Fldg1HKMGKe1h+T81r1p9hH1lijMZpX1H4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iq5OVPHh; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43948f77f1aso34882025e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 01:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741080690; x=1741685490; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FjiqFuGa9IcB3oeyaig5ZQnZ00t+YOxd30bANitLrmQ=;
-        b=iq5OVPHheceJRwXMmBBkWDDIXePY4+nTw1w9RIzOx0lk0PlDX+s4ip4ggj//wjfVSq
-         YxCToq93c18sH85js9pNLENi1Iq5eHYsdJTgm2EA6y2sote/PwTqx3r6oBgtl9V9Emro
-         KmNMeZRf/L6qby8ICBoYQ8IONQy3fgwc1g06elkAPlbi2QSPv8Yijy1rPtarygNbZ2yy
-         adGNCVVTFpRLPlIm2xWrqHZHnFv106L4ji4dlH8Ssc0XJbW/bQZpnmDfgHkE4gVLNR24
-         Xt+JG2q48PpEddvFvGmTh4RLaJtbcmTeN3yW3QUP9MrlXlIFb9aSUgFIh2/sepMt2jm2
-         8qiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741080690; x=1741685490;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FjiqFuGa9IcB3oeyaig5ZQnZ00t+YOxd30bANitLrmQ=;
-        b=DFwYkF/aF+mpGrZU//uxw2Ato4Qu0uRivSvbJ2wagFkI1qU5ejAkOkU5JAuYBDpkcY
-         HwFFz+LlEjgRDFj8fN5j2fbSvzRpUKQCCndlM+Dmzqr2JaS6FphokCzxmugpKmC7tIdK
-         B7eBgNdG2XfdPb5yPsQkatooURZ0AlNUU/swGQd2bQZ029uFA6rIBTeG+MpzsiWBW0Kt
-         P8M1oP3xifqSsIhtqsdyPKJ0cHBCZuGk86W6hsf2XlC8hCkh/YbP94R5caTn4GbIPudk
-         3WHkaoOeZBlkqlLFvFLE8dWe/Usz4jQHzZNndxZIMdg8HWtI8zCmK+FRgau2jLhat/64
-         7d9A==
-X-Forwarded-Encrypted: i=1; AJvYcCWJ01gWMCMRYyLQGgT6bE2ZG7RTmNy+zGqiFosx2xUsYLR/LpcR/C00w2OjtEJ12nkWkEEW9ldESwaLop2V@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYhEnIZflgsa8SCtcwmix1w6FAsOckVpmS9Jywe/9CXbiTy3/X
-	CadnoRBAA7lCyIc7dG+IkeKKQgXZMktEuP7IlJMAvHS+GU73VdMbwxYy/zw1O1s=
-X-Gm-Gg: ASbGncuWeBjGWyzrzJSr+2kRytNQM1nKUDh+CGQwr6l/9XhEqFb/RryOQJkCbugukLP
-	I9CR10BkJmJrTNX1qAe4CleToVh6MWtMPHAWmlcdUFMQVvAWJyINKxOsdL7Qduq331Az8Ln/Z9N
-	kRGpM7Q5A6qo4lT83OBJZ55+D6dSvajEfgl25V6QzlKesggvXLDgb+FfOXi8LJq9nOWia41Heu+
-	H+ShHzGZHngDDZiwinCFDa6JMuSVpl1zlf202g47SExmCG0Tr98V3m982FVZVq/FELW7r0pZ6p/
-	9yBgdAMl5Xv03k+qYxn+o9aDExdu9ORoYGHpcuOueGPa0oPrZzmzUwJwtMXigN7+sKaQy0wjyJr
-	nwW5rfL6mmg==
-X-Google-Smtp-Source: AGHT+IG2b8tLFvBTyW6XgxUEsNgYn+1nm37EUJ3QIriKIIZDPawo7iAw5RKC6G9gHRH1sm2cXjjVyg==
-X-Received: by 2002:a05:600c:3c9c:b0:439:89e9:4eff with SMTP id 5b1f17b1804b1-43ba66e6b5dmr142345715e9.10.1741080689654;
-        Tue, 04 Mar 2025 01:31:29 -0800 (PST)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bc447a0b3sm57631335e9.3.2025.03.04.01.31.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Mar 2025 01:31:29 -0800 (PST)
-Message-ID: <e66acb3a-7805-47f5-9179-1fab95754727@linaro.org>
-Date: Tue, 4 Mar 2025 09:31:27 +0000
+	s=arc-20240116; t=1741080830; c=relaxed/simple;
+	bh=sCMxdWqWBgT7wcDnVU1vXE/zXMg835gttAWrQN4HdMI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=T0TXh7YNFD4a0Rp/O0jFBi4D0XPe+hrBYpu1/1PCAtd2/tHBDud5tUlftu90KVL5XbmUOcTgmut402ro6v3meeAAr40+BGIrvWFzO7NYTqU8HGFjRhwB/swLo55FG+sl/hGCg8HjMBgJghvPnoTV42CTIu06mGcw/9pJsxJq0Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mXmQ0X2N; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523NX1QJ006039;
+	Tue, 4 Mar 2025 09:33:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hRWCWD7/cNz1+Wdyv1WgxPLPyPdC5uDrIIUSEyacE4w=; b=mXmQ0X2NzaxIpTjW
+	T7fExqCw6dklMz6rbZrVL0mJnKBa8tSHMLVOgsqpDrS4wsydT5VoN24vIn4AR8oc
+	sbPZnlGBQbVrLnKNqSyhhgN80EveKlKJBeJV10FlKB1be3F9nYEVX4HW1NKO+XAh
+	NOpcIH4c2X10IrqP93pkH9TwMDkLVXkYEexY3MYIXKTTwYY/nAm9DGNSLricXMeH
+	KPk9uqQFyodv/i/Y0ELZhb+6+ymHXTc3Le0rECGGvDgGWcwWyNSOGFV7OI0U/K8/
+	8OCdF7rDRTOZQ874B5InKxBC7q4UAwFcaaSgVhk7cnsbpZXapMiNHvCh7mqSogtT
+	ctlBng==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6thcbw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 04 Mar 2025 09:33:44 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5249Xhqh019872
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 4 Mar 2025 09:33:43 GMT
+Received: from [10.216.44.43] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Mar 2025
+ 01:33:39 -0800
+Message-ID: <3e326578-ab46-4d7e-ad1e-3d572613498b@quicinc.com>
+Date: Tue, 4 Mar 2025 15:03:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,43 +65,59 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: clock: qcom: sm8450-camcc: Remove
- qcom,x1e80100-camcc leftover
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20250303223936.1780441-1-vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH V3 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox
+ driver
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>
+References: <20250228045356.3527662-1-quic_srichara@quicinc.com>
+ <20250228045356.3527662-3-quic_srichara@quicinc.com>
+ <lakoxihaqlu3vq42eoqtlip23ggdieizotyzax5up5n6ndbwsi@ddqyzvsdtmkv>
+ <1359984c-2ace-450b-a3ff-bac0b9fb5cc9@quicinc.com>
+ <2xpu26pu4ovnchumwx7xzlp2gldpfgsurnhuqaioygb4a6xmsp@ygmpk6furqs6>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250303223936.1780441-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <2xpu26pu4ovnchumwx7xzlp2gldpfgsurnhuqaioygb4a6xmsp@ygmpk6furqs6>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=HZbuTjE8 c=1 sm=1 tr=0 ts=67c6c8f8 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=YG1pY_6daD2ShUQ-MVQA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: qVg67mCIES3UR4jTgMAQyGDR6K4_NGmO
+X-Proofpoint-ORIG-GUID: qVg67mCIES3UR4jTgMAQyGDR6K4_NGmO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-04_04,2025-03-03_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 mlxscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=642 classifier=spam authscore=0 adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2502100000 definitions=main-2503040081
 
-On 03/03/2025 22:39, Vladimir Zapolskiy wrote:
-> Qualcomm x1e80100-camcc was moved to its own dt bindings description
-> file, however a small leftover was left, remove it.
+
+
+On 3/3/2025 6:34 PM, Dmitry Baryshkov wrote:
+> On Mon, Mar 03, 2025 at 03:58:42PM +0530, Sricharan Ramabadhran wrote:
+>>
+>>
+>> On 2/28/2025 12:03 PM, Dmitry Baryshkov wrote:
+>>> On Fri, Feb 28, 2025 at 10:23:56AM +0530, Sricharan R wrote:
 > 
-> Fixes: 7ec95ff9abf4 ("dt-bindings: clock: move qcom,x1e80100-camcc to its own file")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->   Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml | 1 -
->   1 file changed, 1 deletion(-)
+>>>> +		dev_err(dev, "Failed with status: %d\n", msg.resp.status);
+>>>> +		ret = msg.resp.status;
+>>>
+>>> return msg.resp.status (is it really errno?)
+>>>
+>> ok, yes error.
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> index b88b6c9b399a..9e79f8fec437 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> @@ -64,7 +64,6 @@ allOf:
->                 - qcom,sc8280xp-camcc
->                 - qcom,sm8450-camcc
->                 - qcom,sm8550-camcc
-> -              - qcom,x1e80100-camcc
->       then:
->         required:
->           - required-opps
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> The question was if it is an errno, not if it is an error.
+status != 0 is an error always.
+
+Regards,
+  Sricharan
 
