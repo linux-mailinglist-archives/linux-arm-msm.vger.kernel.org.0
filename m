@@ -1,120 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-50247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 130B9A4E956
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:39:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83519A4E989
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:43:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 16F837AA8A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:36:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A558F1883EE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:38:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 066E3281346;
-	Tue,  4 Mar 2025 17:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0170929614E;
+	Tue,  4 Mar 2025 17:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGYo0f47"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SgJgYQu+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1BA25F979;
-	Tue,  4 Mar 2025 17:11:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47868255255
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 17:12:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741108261; cv=none; b=iGjUh/dG3guyzeYDLN26g0EQ+L0kRvYJQNwnkcNPORoIicswOZgrAbWuKiyfyJgWrCOaz9G8EzfQZheGl2urNGdVFbfB2Q6Ury48YwODN1gJEjZD6/zE4IztXc91ZvMFbP3pMYE+P7cVRd5zKBWuND81VsPN1n13dTuvIaDZMtc=
+	t=1741108346; cv=none; b=ESGnsScAeRUdxiuG4IawD8BHLU1ORdSBTlc0kdSco4xykoVNDc5f6ZBSGUPfLwcgoOFoZ3lFnkSsxgNWD9+n9eKHiuv2NsStswqQXwswAUBbz5UowAwxqNfExJj8sJy078VQnD8Xp0yuhbjrZbV57EKZx4vTo5953lG/DV6EXTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741108261; c=relaxed/simple;
-	bh=QyJnJjJ/lXLnZyjDS28b5GSFwV9FD3aP+4XwcadNkRM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GBvbkuYUNurxcqRUuFTeDWwKye3926VzeVNr/b73xALqNPzpLN5/lrwarfJhwK3wptDKH2mtLGyWS16OigyLyuOplx2x7qQSRCY8+WV1lOVSLefACltJTUR/5b1Zec07EN/3wtiRh+zdWNrDqibbKp101FsL7wEjH5FYb02Sq+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGYo0f47; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746AEC4CEE5;
-	Tue,  4 Mar 2025 17:10:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741108261;
-	bh=QyJnJjJ/lXLnZyjDS28b5GSFwV9FD3aP+4XwcadNkRM=;
-	h=From:Date:Subject:To:Cc:From;
-	b=RGYo0f47bdIphAXi3nG487Me7SQvi3vSP8HlcI1krepoc4UIgzfLABTZlLoOOYEd/
-	 vFjRPpa8mV2DKyp63Z0hnG4BYKK2A8gKBlyiQxCfuNsSrc6h+MFtRio80jn3RrdsdH
-	 1Ypn9wEvG2YXqlWYFZSUwmDZ5a6Ze7EyhR+ZIojN0M3O+JRsGeGrho7IjgrPDns68p
-	 O1bkgcSAUphQluzSh8pco38/wZn80RA4ZLOgqtXzGFU82K7aeVbbb95PiWxi+icVnu
-	 axyq/oDmmp5VqJMHb0i6cUoxhRs6fQnM7wvUxf4M9X56lbLLhUxIn0vhG8Bo53BiRJ
-	 f6xmAKe5Bf9Lw==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Tue, 04 Mar 2025 18:10:46 +0100
-Subject: [PATCH] arm64: dts: qcom: x1e80100-romulus: Keep L12B and L15B
- always on
+	s=arc-20240116; t=1741108346; c=relaxed/simple;
+	bh=tK7rBHUGh88Jv85U3Obnwi/LSusFZfvVT+DZtwysNBo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AYusDMs+01+C9vrcGBEE0t0UUJnXI81QAhpP6kH1X98ZXfr/F/5o+3rEckPLezhDWYvNdrptiAXpUAju+paD43ShrkKPM0j3HMUkA/pqnTexCFF3RmSF5HkqR6QLY202bEagrUG35lEDxs3CSqrpcYa5onA5eG5UbfbHOsYFwog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SgJgYQu+; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6dd15d03eacso124736d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 09:12:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741108344; x=1741713144; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=huCv0mb4ZOJJrK8J1aZdeB4j1q2c+FJIRS5JdUarnXk=;
+        b=SgJgYQu+2UAm9iJIvCNO8UzFEzypayzj6iM3eEGAbcJKJAG44aIrwCfutRhnxKJB2m
+         SvDXcT2ATCz9xBOnllCSE/6kGCsvi3uvKTMnen4cPV0939r1rt/joMkJ3QkQhyLOorPc
+         5ewPuCrkbkgeFHFMrcUrjctpSNW2RlKuBA1gg6dyUHn+NEdnUR8WWb7lcfNAW8y5jQIP
+         gE9bmHZBCGTnaX56Vk3lm2IugCyHLpDPp8KjJA7bMifR1MfQPY0kIpfh5hktFe/AvWAC
+         0KqY4QxfuDYUm3fHtJPFt6mAK1Wox7oTy18Lstigv5/7sk+4VwJfi7HCVLzZVQJ4QQpC
+         0gPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741108344; x=1741713144;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=huCv0mb4ZOJJrK8J1aZdeB4j1q2c+FJIRS5JdUarnXk=;
+        b=k7F2dzUIJkb7znxIBxZYVOTWK10DUd7tlLL8w3YaRS5ZLlTyqixKPROWm46MZceYa2
+         mJDFlgc94fHlG8VshRmaLymE3FrIoicpkyNGsDNmzJtGI9Z5DfAYaN2xXGg2u/cAgfYq
+         ae6MuYd7b1Rbg0nAYttXuSRkmnHF6X0BKfTbSb4+faS0AfvFT4Y6RZcYL+5ibZR65QcO
+         728borDuL6jNVlaNROiay3KWm+lKEIHY/S9+rsUm/s1/cIiLnI9tUXRaLzD6CS9szcpk
+         BXc3bxun/R8eFmkUTUT1h32YLOl40nJtAsb1PjyAl3Yg7B/rr0JJs5RLRTjENK7KMldZ
+         +63A==
+X-Forwarded-Encrypted: i=1; AJvYcCWrYpxm/9nkykGzql+FDYghGmbfuHKnUvZWbz2eiZ59jcArLlFCSo2Z24Grr6gT4STutTO583umTWZ6X/fx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4kgHJKJp0zwVu6UQb1fh3rB3ivLmQd15TtlOuLPViUehkrEZi
+	KFnDM9EQfkLtp/o5//E0gCS9Tg0esuAaHxAaURkAq96WvLzffKQJg4memvqK/Nk=
+X-Gm-Gg: ASbGncvcu4N7Ee0iu8Ezk0aC/viSIuNwbGhlYhF1s02421OxxOYGKZYllQHfOnQFwFA
+	iGtsxsAuH6F3Bm06f5GSLFS5GSx9GqRTNV+zRW+Z6MGZ+v2+4AZfTmHXQyJOtcfRDOZ7gi1/o7c
+	e/mykZ0yUVxG+yAT1+EvogmAgHgpskR/hyIxUMCMH5lDAO7m2BKlhzAzfSC7Ump+j3Vpy1L4puE
+	S/V1ys22pzwi1SrRxip7Nl4JJqq1x6JdGcUV5hWATbvlO12oY/AXDEC32dv8K9KumMa+tZ8YvU6
+	SftaoBEwq747GutTFKzwVXegruqUxBXxgsLfqsYyWS1wT2CRnI/8gao9lZz3zf0=
+X-Google-Smtp-Source: AGHT+IHfPOMGCbV4hkPXelv9oZ/KI5jlSwi7fgElY8sgzLskKKZnKJpWwLFxwJldwCE+ZDN8gBZpKA==
+X-Received: by 2002:ad4:5fc9:0:b0:6e1:715f:cdf5 with SMTP id 6a1803df08f44-6e8da892b1emr57409106d6.15.1741108344085;
+        Tue, 04 Mar 2025 09:12:24 -0800 (PST)
+Received: from [192.168.68.113] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id 6a1803df08f44-6e8bf2c3ed0sm37973426d6.11.2025.03.04.09.12.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Mar 2025 09:12:23 -0800 (PST)
+Message-ID: <5831d9b1-4a05-4a7b-8733-5050588b4e59@linaro.org>
+Date: Tue, 4 Mar 2025 17:12:20 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/6] ASoC: q6apm: fix under runs and fragment sizes
+To: Johan Hovold <johan@kernel.org>
+Cc: broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+ krzysztof.kozlowski@linaro.org, linux-sound@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dmitry.baryshkov@linaro.org, johan+linaro@kernel.org
+References: <20250304105723.10579-1-srinivas.kandagatla@linaro.org>
+ <Z8cyt2n7qj4GkcJC@hovoldconsulting.com>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <Z8cyt2n7qj4GkcJC@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250304-topic-sl7_vregs_aon-v1-1-b2dc706e4157@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIABU0x2cC/x3M2wpAQBRG4VfRvjY1ByKvIknjxy7NaLak5N1NL
- r+LtR4SJIZQVzyUcLFwDBmmLMhvU1iheM4mq22tna7UGQ/2SvZmvBJWGacYlLHaALX1aB3l8kh
- Y+P6v/fC+H9PfDDJlAAAA
-X-Change-ID: 20250304-topic-sl7_vregs_aon-1201ee52ce83
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- Konrad Dybcio <quic_kdybcio@quicinc.com>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Johan Hovold <johan+linaro@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1741108257; l=1496;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=Q1raCAdNlbWo+epSFVrbDIAnmmxs+X4h74jjAxQUfLU=;
- b=IgCjeXZpbP0EeY9TZrvIxpTFUsVbsEiCtkLNSlhtHr/5lSuxS8wjCBfFcFaacDGfZmKXuNfuJ
- pKaHFJs9pPWBF7BW4EaRURpD3WMB3vJTE+yTLQhnlc99aoiPrEESgUJ
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-These regulators power some electronic components onboard. They're
-most likely kept online by other pieces of firmware, but you can never
-be sure enough.
 
-Fixes: 09d77be56093 ("arm64: dts: qcom: Add support for X1-based Surface Laptop 7 devices")
-Reported-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+On 04/03/2025 17:04, Johan Hovold wrote:
+> On Tue, Mar 04, 2025 at 10:57:17AM +0000, Srinivas Kandagatla wrote:
+>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>
+>> On Qualcomm Audioreach setup, some of the audio artifacts are seen in
+>> both recording and playback. These patches fix issues by
+>> 1. Adjusting the fragment size that dsp can service.
+>> 2. schedule available playback buffers in time for dsp to not hit under runs
+>> 3. remove some of the manual calculations done to get hardware pointer.
+>>
+>> With these patches, am able to see Audio quality improvements.
+>>
+>> Any testing would be appreciated.
+> 
+> This fixes the playback and capture issues with Pipewire, including the
+> heavily distorted, choppy playback when pavucontrol is open. Turns out
+> that the pavucontrol volume meters reduces the output sink quantum size
+> from the default 1024 to 256, which was too low with v2 but now seems to
+> work.
+> 
+> Unfortunately, this series still regresses Pulseaudio as capture is now
+> choppy (e.g. when recording using parecord).
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-index 5867953c73564ca7ae1279b73f6834aa1d732792..6a883fafe3c77a45e045beba8357d67caa88dabf 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-@@ -510,6 +510,7 @@ vreg_l12b: ldo12 {
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
- 		};
- 
- 		vreg_l13b: ldo13 {
-@@ -531,6 +532,7 @@ vreg_l15b: ldo15 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
- 		};
- 
- 		vreg_l16b: ldo16 {
+> 
+> During our off-list debugging sessions you suggested reducing the max
+> capture period size (that this series increases) to 6144 (same as min)
+> and that fixed the Pulseaudio capture issue. In v3 the, the max period
+> is again increased to 65536 which appears to break Pulseaudio capture.
 
----
-base-commit: 20d5c66e1810e6e8805ec0d01373afb2dba9f51a
-change-id: 20250304-topic-sl7_vregs_aon-1201ee52ce83
+I have verified pulseaudio on my side as well, the 64 byte alignment 
+should have fixed the issue on the pulseaudio side.
 
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Did you pick up the [PATCH v3 4/6] ASoC: qdsp6: q6apm-dai: set correct 
+period and buffer alignment. patch in your tests?
 
+thanks,
+Srini
+> 
+>> Changes since v2:
+>> 	- dropped patch which is causing regression with pluseaudio.
+>> 	- setup period sizes only for capture path
+>> 	- fix underruns/overruns in dsp pipelines.
+>> 	- add fixes tag
+>> 	- add patch to fix buffer alignment
+> 
+> Johan
 
