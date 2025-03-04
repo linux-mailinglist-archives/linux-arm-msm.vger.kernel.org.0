@@ -1,126 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-50204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9DCEA4E3E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 16:43:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37B7EA4E5A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:23:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B28719C50E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 15:33:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 58AE68A4CF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 15:55:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39B5A2686B8;
-	Tue,  4 Mar 2025 15:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8DFB28FFD5;
+	Tue,  4 Mar 2025 15:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Oh4zShkx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eZD+JurH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A380326738D;
-	Tue,  4 Mar 2025 15:22:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873BD28FFD1;
+	Tue,  4 Mar 2025 15:39:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741101723; cv=none; b=UyCJ7ygEz1nRdKkkHaB3C45dL0DGDa9NahN8qo7gzj6Xmiee53XJZk8NsAS3+q2Mnq9uQgNJ87r1OmYvdm9vEf4KI6Gtk97fI+6epKxFTSLqxi+odEIfXyXR9DGTxnYLKnKkMq5O07wkJFa5F8pWWRkx157v8w9qaXm/t0rZkbs=
+	t=1741102741; cv=none; b=SPlmKBO0CRxkKTEmBbd1wmtWIO8O4OPY7zFpWeeS8JauaE6uFs6lYtppvtDHw5NPuNUiMOxbUcke5phHQ3Lhqlg5oVbCT0SJvxeObY2NLuHaSrsbl4sCUeXTYchEoWydpgkHfS58QBVu765x0/MaNqYLXF3ePjzPfD8uH2hmKLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741101723; c=relaxed/simple;
-	bh=F81PowR6sTnmuitnJ10Ri0uZKVplt0OjHyJEHqWjwg4=;
-	h=Date:From:To:CC:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=nKZ9+o+t4Sal/tXUO6QpZincOLgq8tadkJ6mgbl9UmJKhrc3kLUD0D0SexPWp4Z7muEmMOxBfFFYU6jX5LYsWSecmHNuu8pUZrGzQLMO4gYcc7i5ueBtw8j4IhKfQLABUZ8Onz7D52n6Yd7JgRNDrMVd0ezpuvogCdJzA9+x4Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Oh4zShkx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524AJHfY024801;
-	Tue, 4 Mar 2025 15:21:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=ZcXd1JyQgP9h0Ejk9LgMatug1HZzggFfE1sUzObyScg=; b=Oh
-	4zShkxrb5z89u1rwjJMpuIxkhWO27VQeQ9zO5aDRumBGjo5sIxLX8LUmD1dyCPqh
-	9jiLKGDbenOucidVCJAqhtapfKSL9HO+S6Bqr9SmMkpLLy4P0xU7PeVE7F65nvHi
-	Nh+K0f3GCpIehA1vJvQm6v8vyYhtbe+AYIk45u6gS3EoWLF+UQ02N5NS7DU2DfYv
-	hmSu5ICWfAuXNio2cVAcHj8MdIXdwaSE4RkfO94alXk7tiIaenadgKRbhhefAxCn
-	8rQhGeI/S1yKuagQduAu+jLKgD6KAFgj3UY3AokcxqLm6c/cwDfEB8OINirrnssb
-	mty8gkKXGMRSdt1SAomg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p9327qp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Mar 2025 15:21:46 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 524FLkpx004267
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 4 Mar 2025 15:21:46 GMT
-Received: from hu-kapandey-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 4 Mar 2025 07:21:42 -0800
-Date: Tue, 4 Mar 2025 20:51:33 +0530
-From: Kaustubh Pandey <quic_kapandey@quicinc.com>
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_rpavan@quicinc.com>, <quic_sharathv@quicinc.com>,
-        <quic_sarata@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: qcom6490-idp: Add IPA nodes
-Message-ID: <20250304152133.GA2763820@hu-kapandey-hyd.qualcomm.com>
+	s=arc-20240116; t=1741102741; c=relaxed/simple;
+	bh=LmmUDES04mGNUWw2sZpLxKlKIEhol4VSewPbqfeMwjk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IAv4kJITcn9VHQ/wFqvGnVm5+fIWKHb0+U959f6o7qRdkkZHSLrsaBw/biMZMs7vm0u/ojvDgm8uB9Szyge9nBRF/uJTKo2MLFE9+B9FOCO58bSiRVjbrZAS5/ckyg84rm9AnMqeoWftKZySsuI5zlfdw1Wt8czWcgF1gxkHm7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eZD+JurH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52463C4CEE9;
+	Tue,  4 Mar 2025 15:39:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741102741;
+	bh=LmmUDES04mGNUWw2sZpLxKlKIEhol4VSewPbqfeMwjk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eZD+JurHongg1WwduqAxWTQ69tyw66IF/3nzgBX1onoxvJlLBhoHhhMqMJWAuygVv
+	 /67gnTJruEMl5+W/PQDjbmpwPTuC0UR9tmXqNj18L2RnNkWRvSZEzb8ZaMuhLi0PUK
+	 zJpdLlcqYaW0CASb6ji1B/rP3M5P0casgYYXquFsdXn4haNsP5xIjFrtZpb8Dat9l1
+	 dehXeU/7j9r/MQsXCFtDr5O6IHxuVClJi7L6bgOQST9sgvYKEyn8SrSclDTu5ryrOV
+	 8TExnjqcIcQIRRWAPmu498leI/mCu9d/K09tIegF/PUAffHNGpYn8nJ6Tvkvuz8j1+
+	 KSOR9OSe2qWqg==
+Date: Tue, 4 Mar 2025 16:38:57 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, 
+	Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>, Kamal Wadhwa <quic_kamalw@quicinc.com>, 
+	Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, 
+	Sebastian Reichel <sre@kernel.org>, Pavel Machek <pavel@ucw.cz>, linux-leds@vger.kernel.org, 
+	linux-pwm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC] leds: rgb: leds-qcom-lpg: Compute PWM value based on
+ period instead
+Message-ID: <5uk75v3cpy2hymdgjyvqdwyda34t2pn7jqyupyvhmqgo3wlxkl@uim4lth7lipa>
+References: <20250303-leds-qcom-lpg-compute-pwm-value-using-period-v1-1-833e729e3da2@linaro.org>
+ <ylnkjxnukss7askv7ip5htrb4tyjzhpw7jim2se6rloleq5h6w@ngk7lbk26hxj>
+ <Z8bGHV4PIkY4te6V@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jxjluywedohfii7r"
 Content-Disposition: inline
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=Me2Wu4/f c=1 sm=1 tr=0 ts=67c71a8a cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=6w_Dn63UQQp3T8FYcDMA:9 a=CjuIK1q_8ugA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: IIT9KV-VFE-Cr0T_OIb-zs_Vtn3Wuxlm
-X-Proofpoint-ORIG-GUID: IIT9KV-VFE-Cr0T_OIb-zs_Vtn3Wuxlm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-04_06,2025-03-03_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1011
- suspectscore=0 mlxscore=0 malwarescore=0 phishscore=0 spamscore=0
- adultscore=0 lowpriorityscore=0 mlxlogscore=710 priorityscore=1501
- impostorscore=0 classifier=spam authscore=0 adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2502100000 definitions=main-2503040124
+In-Reply-To: <Z8bGHV4PIkY4te6V@linaro.org>
 
-Add IPA nodes for Qualcomm qcm6490 board.
 
-Signed-off-by: Kaustubh Pandey <quic_kapandey@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+--jxjluywedohfii7r
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH RFC] leds: rgb: leds-qcom-lpg: Compute PWM value based on
+ period instead
+MIME-Version: 1.0
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index 9209efcc49b5..ba47786d6474 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -19,7 +19,6 @@
- #include "pm8350c.dtsi"
- #include "pmk8350.dtsi"
+On Tue, Mar 04, 2025 at 11:21:33AM +0200, Abel Vesa wrote:
+> On 25-03-04 07:24:32, Uwe Kleine-K=F6nig wrote:
+> > Hello Abel,
+> >=20
+> > On Mon, Mar 03, 2025 at 06:14:36PM +0200, Abel Vesa wrote:
+> > > Currently, the implementation computes the best matched period based
+> > > on the requested one, by looping through all possible register
+> > > configurations. The best matched period is below the requested period.
+> >=20
+> > The best matched period *isn't above* the requested one. An exact match
+> > is fine.
+> >=20
+>=20
+> Yep, that's better. Will re-word.
+>=20
+> > > This means the PWM consumer could request duty cycle values between
+> > > the best matched period and the requested period, which with the curr=
+ent
+> > > implementation for computing the PWM value, it will result in values =
+out
+> > > of range with respect to the selected resolution.
+> >=20
+> > I still don't understand what you mean with resolution here.
+>=20
+> Resolution in this context means the number of bits the PWM value
+> (register value) is represented in. Currently, the driver supporst two PWM
+> HW subtypes: normal and Hi-Res. Normal ones recently got support for chan=
+ging
+> the resolution between 6 bits or 9 bits. The high resolution ones support
+> anything between 8 bits and 15 bits.
+>=20
+> >=20
+> > I guess you spend some time understanding the workings of the driver and
+> > you also have an example request that results in a hardware
+> > configuration you don't like. Please share the latter to a) support your
+> > case and b) make it easier for your reviewers to judge if your change is
+> > indeed an improvement.
+>=20
+> Sure, will bring up the 5ms period scenario again.
+>=20
+> When the consumer requests a period of 5ms, the closest the HW can do in
+> this case is actually 4.26ms. Since the PWM API will continue to ask for
+> duty cycle values based on the 5ms period, for any duty cycle value
+> between 4.26ms and 5ms, the resulting PWM value will be above 255, which
+> has been selected as best resolution for the 4.26ms best matched period.
+>=20
+> For example, when 5ms duty cycle value is requested, it will result in a
+> PWM value of 300, which overflows the 255 selected resolution.
 
--/delete-node/ &ipa_fw_mem;
- /delete-node/ &rmtfs_mem;
- /delete-node/ &adsp_mem;
- /delete-node/ &cdsp_mem;
-@@ -515,6 +514,13 @@ &gpu_zap_shader {
- 	firmware-name = "qcom/qcm6490/a660_zap.mbn";
- };
+this is the bug you have to fix then. The PWM value (that defines the
+duty cycle) has to be calculated based on .period =3D 4.26 ms and capped
+at 255. So assuming that 0 yields a duty cycle of 0 ms and 255 yields
+4.26 ms, a request for .duty_cycle =3D 4; + .period =3D 5 should result in =
+an
+actual .duty_cycle =3D 239 / 255 * 4.26 ms =3D 3.992705882352941 ms;
++ .period =3D 4.26 ms.
 
-+&ipa {
-+	qcom,gsi-loader = "self";
-+	memory-region = <&ipa_fw_mem>;
-+	firmware-name = "qcom/qcm6490/ipa_fws.mdt";
-+	status = "okay";
-+};
-+
- &mdss {
- 	status = "okay";
- };
+> > > So change the way the PWM value is determined as a ratio between the
+> > > requested period and duty cycle, mapped on the resolution interval.
+> >=20
+> > Is the intention here that (for the picked period) a duty_cycle is
+> > selected that approximates the requested relative duty_cycle (i.e.
+> > .duty_cycle / .period)?
+>=20
+> Yes, that exactly what the intention is.
+>=20
+> > If it's that: Nack. This might be the right thing for your use case, but
+> > it's wrong for others, it complicates the driver because you have spend
+> > more effort in the calculation and (from my POV even worse) the driver's
+> > behaviour deviates from the usual one for pwm drivers. I admit there are
+> > some other lowlevel pwm drivers that are not aligned to the procedure I
+> > described that should be used to determine the register settings for a
+> > given request. But I target a common behaviour of all pwm drivers
+> > because that is the only way the pwm API functions can make a promise to
+> > its consumers about the resulting behaviour. Reaching this is difficult,
+> > because some consumers might depend on the "broken" behaviour of a given
+> > lowlevel driver (and also because analysing a driver to check and fix
+> > its behaviour is an effort). But "fixing" a driver to deviate from the
+> > declared right behaviour is wrong and includes all downsides that make
+> > me hesitate to align the old drivers to the common policy.
+>=20
+> OK, fair enough. But I still don't get what you expect from the provider
+> that can't give the exact requested period. Do you expect the consumer
+> to request a period, then provider compute a best matched one, which in
+> our case is pretty far, and then still give exact duty cycle values ?
+>=20
+> Like: request 5ms period, get 4.26ms instead, then request 4ms duty
+> cycle and get exact 4ms duty cycle when measured, instead of a
+> proportional value to the best matched period?
+
+Yes.
+=20
+> If so, then what happens when consumer asks for 5ms duty cycle?
+> Everything above the 4.26ms will just represent 100% duty cycle.
+
+Yes.
+
+> > The policy to pick a hardware setting is a compromise between consumer
+> > needs and what is straight forward to implement for (most) hardware
+> > drivers. Please stick to that. If you want more flexibility and
+> > precision in your consumer, please consider converting the pwm driver to
+> > the waveform API.
+>=20
+> That means the pwm_bl driver will have to switch to waveform API, IIUC.
+
+Yes, if the pwm_bl driver cares about that precision it has to switch.
+
+While the waveform API isn't expressive enough, just use 4260000 as
+period in the pwm_bl device, or ignore the missing precision.
+
+> That might break other providers for the pwm_bl consumer, wouldn't it?
+
+Given that the consumer side of the waveform API only works with drivers
+that are converted: maybe. You could fall-back to the legacy API.
+=20
+> > > [...]
+> > > ---
+> > > base-commit: 0067a4b21c9ab441bbe6bf3635b3ddd21f6ca7c3
+> >=20
+> > My git repo doesn't know that commit. Given that you said your patch
+> > bases on that other series, this isn't surprising. Please use a publicly
+> > available commit as base parameter, otherwise you (and I) don't benefit
+> > from the armada of build bots because they just silently fail to test in
+> > this case.
+>=20
+> Well, this is a pretty common practice. When the patch relies on other
+> patches that haven't been merged yet, but are still on the list, you
+> can't really base it on a publicly available commit.
+>=20
+> And the fixes patchset that this is based on is needed for this to work.
+>=20
+> So I really don't get how this can be done differently.
+
+You can still use --base=3D$newestpubliccommit and git-format-patch will
+at least give a chance to the build bots by emitting patch-ids for all
+the commits between the public base and the start of your patch series.
+
+Best regards
+Uwe
+
+--jxjluywedohfii7r
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmfHHo8ACgkQj4D7WH0S
+/k7OHQf8D54fFKGPCmwFzm1pqUVRJmEfRHlxBqo84n+xLsEbGtFdc9YO/yGABfu3
+zsfp5NhfT1k+EEZfKvWvICyyu3JfWCscLbEb/Xze81GU6DuKr1LG9r+1YX3NFuwZ
+j3XKYd70DcZRVykUmUdDPG22tunWrSNWFYBGc432VqCvNR6eXSy5ifYndAYHxpbu
+56xnutFpNZheu/G8JnsFk5bzODRBwcK2U14YXwmDrmky1nNGKTX+OEGLuBv/7CVI
+svGHRH9pJ0qQuOChyTKoAFbb47qdUH5q60YCY9lQyqEBhcaXrg/2jX/O43h5yKZ0
+s5oX/wYmFFPvRaijPPNFjjCyPdkivA==
+=G6kq
+-----END PGP SIGNATURE-----
+
+--jxjluywedohfii7r--
 
