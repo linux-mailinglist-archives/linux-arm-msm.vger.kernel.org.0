@@ -1,279 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-50198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E815A4E1B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 15:50:25 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B570A4DEB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 14:07:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E733D172E37
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 14:43:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 52EC37A60CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 13:06:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDDDF25FA0A;
-	Tue,  4 Mar 2025 14:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D33E203713;
+	Tue,  4 Mar 2025 13:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DXDwVUdr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p1t912bg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from beeline2.cc.itu.edu.tr (beeline2.cc.itu.edu.tr [160.75.25.116])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015FF23A9AB
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 14:41:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=160.75.25.116
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741099278; cv=pass; b=H/bCNJfc/h/MvhrBEEFfrhVjTR3B9EUL8xXipjw0GD1/5PIoEOpjVc5LCNT130PvbJxNwr3pEn0F48eSEKbPn/rN3Sl/gUZIOkmzBcrqAqVnkgnXTqFrsskXRqNivlgUV2lxeagfcCFB7b+RqWJ2xBPeXQnGEoquO0RjobwdBUE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741099278; c=relaxed/simple;
-	bh=DhfNdV/O+uocDkBJFYE83PtsNs9K9z/PTwLsOVi9J/g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pynFPxMRY0U8kmCB7LBIgHNSDhvUyLCvNJCxrjMIE34rFTM4Vz5bS+chI1Dc02MAGD53JTeL8hrQCaX9iwdspBn+Fp5xD/INggRvVOXnIDZH6en3PrnJOQ5PlSr9jdWaaYG6BayRDIUZFKs3O5VJpRhTFzyZYTKmk0CsU7cBLa8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=none smtp.mailfrom=cc.itu.edu.tr; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DXDwVUdr; arc=none smtp.client-ip=209.85.208.177; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; arc=pass smtp.client-ip=160.75.25.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cc.itu.edu.tr
-Received: from lesvatest1.cc.itu.edu.tr (unknown [10.146.128.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by beeline2.cc.itu.edu.tr (Postfix) with ESMTPS id 3AE5740F1CE2
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 17:41:15 +0300 (+03)
-X-Envelope-From: <root@cc.itu.edu.tr>
-Received: from lesva1.cc.itu.edu.tr (unknown [160.75.70.79])
-	by lesvatest1.cc.itu.edu.tr (Postfix) with ESMTP id 4Z6dcX6MHLzFxJ3
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 17:39:40 +0300 (+03)
-Received: by le1 (Postfix, from userid 0)
-	id B0C7042723; Tue,  4 Mar 2025 17:39:39 +0300 (+03)
-Authentication-Results: lesva1.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DXDwVUdr
-X-Envelope-From: <linux-kernel+bounces-541752-bozkiru=itu.edu.tr@vger.kernel.org>
-Authentication-Results: lesva2.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DXDwVUdr
-Received: from fgw1.itu.edu.tr (fgw1.itu.edu.tr [160.75.25.103])
-	by le2 (Postfix) with ESMTP id 26FDB41E1E
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 16:03:42 +0300 (+03)
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by fgw1.itu.edu.tr (Postfix) with SMTP id AF1383063EFC
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 16:03:41 +0300 (+03)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83A803A9F53
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 13:03:18 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA8BA21148C;
-	Mon,  3 Mar 2025 13:03:16 +0000 (UTC)
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8495288D2
-	for <linux-kernel@vger.kernel.org>; Mon,  3 Mar 2025 13:03:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725B51FCFD3
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 13:07:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741006992; cv=none; b=JW5CenFoqcfRai+YlI4wgYjlMC/kr6c1/Uos7yPFn3IAf7t/MnQjWKpCnKiILBtwUYfcIukEtjczLt6djK33l88gIgJWpLRH7HE9Z6nuYGw5g00F95X2kJIiBcUFbnmaXLEHqolAJXncY4o8z7pW7JK6hrDs+n/fe/jPf9wL2q0=
+	t=1741093633; cv=none; b=jrEn1MSBo8/w01zWwHmjRoL2C6kD8jTgzCYts/BUr7IgZAyvRNYAFc/+T8SIc9V91LKpwXsiMwBJzeC1vaXU/cjnfObRKzJo4WvaYMGgRWCRdc/69wjr5bE3zDafxa9NjW8g2MnnuNTKvQXbd58NPfuzbXR2mnLhjMCSQAvGWvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741006992; c=relaxed/simple;
-	bh=DhfNdV/O+uocDkBJFYE83PtsNs9K9z/PTwLsOVi9J/g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oPI7RUxV5vv1Op/BuDUa/ZWC/PEK2mlHsJgj67HvTLI8QI9JlGfZa2JQQFnioi4QcIylSqTYEU/CuhqTRuSSlyKFNzdcd4zzu2MV1jKQLOmBW2EUk7eAHZfp7ikCceGn3Ovb0qlYYmHV4Q33wzjN4j7olOVDtTg94Y8vKgZqx10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DXDwVUdr; arc=none smtp.client-ip=209.85.208.177
+	s=arc-20240116; t=1741093633; c=relaxed/simple;
+	bh=Ky+fvdyDoG3IissBsaiMMbiz45nPeSzwNjFD36o7tK0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pKY5F0Cc0/Drc5mtzTb9ZJH8NkJC2pXCRyN7EACAedsHJNLoO5GtW8noXpmzHbb8m599A4MOfQ1i0CwU5rx5dHrnyyl15FkPXJGIuarHAHmtxU1aqsqGiz4+QU9rXYW9H9Zs8eUu5UOA87foTdjY9fBYTUAwP5fBprrnkRFSsb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p1t912bg; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-30bb2fdbb09so12803181fa.2
-        for <linux-kernel@vger.kernel.org>; Mon, 03 Mar 2025 05:03:10 -0800 (PST)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43690d4605dso36179515e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Mar 2025 05:07:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741006989; x=1741611789; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DuRt7sNsxjnBZpSJFW4wxc/r2PcIDt/KOhq8Vg4VK/w=;
-        b=DXDwVUdrSsk322dDuE/L5lNxzKO0jvB87EdzYcRP5Vd11T20vU0VTNeKiuqCLMLeL2
-         k2ruho4K1IWjXKIsxt9x1yrt07HeD0ScVdLkhON6ws9VS5OToCBdMcHkCkNpbIoaPlur
-         VAU2fxn5X7+SCLtZOLjCLTVVXgR9wzsx0+ftg97sMR0XNnMZvEHzDlJxqNn6AHaW/Ako
-         Ba9SvliI4uKdVzlICirU+0fIrfURpTQJXhsNGE+d/S8PBErEDZfNEUAifm9cfI6ds+fh
-         3puE4q7FZIilXLMLa3zS1GNjQCIgE8/RkIvI/MGIHuwHp5L8j0i47qqcyKQELgSFEpmA
-         M28A==
+        d=linaro.org; s=google; t=1741093630; x=1741698430; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wZFlPwqznQHgnLAxscIdZsj0o5PqYme1kBm8s2m+DWI=;
+        b=p1t912bgiEA7pVQg6xF8m1DSuE39EYevTwd//iwOHkfXAn45PIX+1Z7RtQP0DKzRJ7
+         gz2+3/82sOEdxS4dCzhWJV0CEnRkbwWPXDwAvzrCMoH3fDEjrosC2cMGmAHcfpMdehd+
+         y1sIJWSIhKFGnJkTirWAgyZtwm4/WVFj1VQ8RAIxK3GA2v3xv8eR1319V1hM3HLnd8M5
+         OVzWtQHK86GG42TG03grZPyga84uqi+5z6i4IUKfD2AvUa4a3DW1nWTd4DPsKcFls6V1
+         ZGShdabnxDtBQozz4eccKwURIhLaVe1w3Pa+fAfW01g7hLDniJn1zqSAfZgrmNgq4yXd
+         1xDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741006989; x=1741611789;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DuRt7sNsxjnBZpSJFW4wxc/r2PcIDt/KOhq8Vg4VK/w=;
-        b=mVfXdJAZk7k/MeC9xtHdDiwFqnFylveYH81ang1dZAhJqgUwi3CuhuAMY05olG2usX
-         iUgTa2qH1ZLuFF//kT5ne1B6n+ga0ZRAflQ1Izo+jE76S2D9Qq5xQLQCDSUgSgZARoPp
-         xpAjREmJHL9MqBl+Vnmzw6Fy/njXNRZNOR3BAImtL+pySimTZ92nGnELR076pWO9SdM3
-         trrDzLefs0fxo+J42ECwbDhU49Tz2qTN2FXDALMmCoAXxirD9bx9y7a2/kAS9Zs1BjpI
-         BIgqfNdr4ii75BqZzPHz+mQdYzHxxxN5XzWIO4YN62QM5k1g/Nww9S/g3BM8UavOZLAL
-         ENdw==
-X-Forwarded-Encrypted: i=1; AJvYcCVNRjC8EZAIV85N75gPJVudnGexI/nC29RN4D0KOjIB0MM+US8vZjhpZTWiskCHl9nIaSehCGkppd0TjIc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZUSIb1iSa9dT4iPTqunGGv2WkUwxT16k7LeiN0NkbmCTsWPo9
-	EeJyreJ8Cjfb40aRDNJhfYwynifaWttpiRGUDngWc8vjcpo86CVVlDVxZgkyQOw=
-X-Gm-Gg: ASbGnctAJF4YMtEGnlIBqeil5a70Wmb8M0kTKXbrMdXQZqvJxtrEe/PSFnSu522D/uf
-	B+7VS/FoRLnUHRMKhJQA423n5rMpADd64ZcCMUot6DomE2Xg6Tma1FvucF9x7bxtynNWscm9c/S
-	IEIJUrSReEviNtpsz91ptnvhZcqGW1y/CZVSjwsuM89N1BrBsGg16gt86zqEzUA3tgHbFgEivfI
-	bUw8hCT+JyGdpuaQzJrceH+xs0OaMwIyxHmO4Oo0nGl2KvRpvEByg50jl/ytZNcMGtS7vzeL7Xn
-	6UEWNSvIwI/lNmsnY/cn4Vy17l1HbQofgRg28EKMZZfvQLAxwPR2u+67rNTPyPoWOZv3CMNHrU+
-	yRJxSyryQJUAWGMNdue6IUcmI
-X-Google-Smtp-Source: AGHT+IF1PolbJR152vR5fP4sMo4m1QykoHvieTbCTpVgWNk/bMvUDzzFZWCKpBvAuMT571N86KTxyA==
-X-Received: by 2002:a2e:bc18:0:b0:30b:b7c3:ea71 with SMTP id 38308e7fff4ca-30bb7c3ef87mr18110021fa.15.1741006988806;
-        Mon, 03 Mar 2025 05:03:08 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30bba62b892sm3743161fa.66.2025.03.03.05.03.08
+        d=1e100.net; s=20230601; t=1741093630; x=1741698430;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wZFlPwqznQHgnLAxscIdZsj0o5PqYme1kBm8s2m+DWI=;
+        b=C2f7NnPLjJqFI852mWjdjAyFBoCVYBlK3eZArbLXJAoY2P4gPeYn18Xh2vUgiSjyn/
+         Vol8hR9cWWngmDJnW8qa7R3Of1PKtGEt5DlP84koWTIE4X9mM28o4wacQyhCk0b0OLr1
+         h8kBHstMtmQfskYTtOw4q7ORlDzW88nEv6BtVHVRF4PHOOkXiEFApjIkCWJjGHPcC0VW
+         6L+zsASKEfRLDEfpT1QThetbNOnHuNsx001xbyo48LrorjeXtybtM1/8Bvgr2kzuvonm
+         ICvJr0jr41F9AP8ok6+ZXZ5KPhdvKpt4W3pgQLAfssNOoJCJ59VJ148rMZGy77pC7XN3
+         uvSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXx4R6IO5LMVsAADFtJ5sXzzFyroOK1LMh7Q1jCCAdZz2FlssuMQsQbqTzsUfnNh3mMgiaZquFySJ7iqXjR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6hMJ/a6BucmhaxgpQR1WmaMEAQ4BG25OhJ5fLBQ9SVKFWgriG
+	oM5N6IG3ZLEu6uGbvRocdzC9uSlznl1NIwjCqu0fxQrE0eCPLn46oj2RP6xQ1GM=
+X-Gm-Gg: ASbGncsoQpMuTgyk3gj19I+cZ2+P4523SilMNjy4bL2ENFE7hdtvUvSEgcLRsv3Sd0G
+	m37hGJvDnnzhgS2C77OUGWVLEOA8PLn6Im7rqQYVcwLG6P3K+UrnEoevanMgTpgcJBzBCRr3qiU
+	e0XA+QkmreheGkzDj2/6vkp6uE1u0MBvPW58RXy4X/jCEeKj1jHOaRME0VF+jyp7WQAtUUYXjOo
+	+S89CvstSVjkWryKgxh6/NCQGF8X0dWqEtHsZNOBi3y91ps0QrU+MzJ2rzdw+YUSrdI2KmvuPsX
+	oEaaZNLRvio9OgqFPIuj/THpfk35DD4pqlszcqB4BaBJOaEw495SCn7yP1dgljrBKgBh0okNiU+
+	oF9Jrcg==
+X-Google-Smtp-Source: AGHT+IEHFxGtqrv8BoxoMocArVZG35gEJU/5Ocm93/iIVY0b3mdodulWU6Lr+CIjH7ZiEcVq6DZcLA==
+X-Received: by 2002:a05:600c:3114:b0:439:9946:af60 with SMTP id 5b1f17b1804b1-43ba676e393mr123014035e9.25.1741093629721;
+        Tue, 04 Mar 2025 05:07:09 -0800 (PST)
+Received: from [127.0.1.1] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e47b6cd8sm17401715f8f.44.2025.03.04.05.07.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Mar 2025 05:03:08 -0800 (PST)
-Date: Mon, 3 Mar 2025 15:03:06 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Cc: jassisinghbrar@gmail.com, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
-	manivannan.sadhasivam@linaro.org
-Subject: Re: [PATCH V3 1/2] dt-bindings: mailbox: Document qcom,tmel-qmp
-Message-ID: <5xjtb4cifjjagkeifpkgx4y5cb7mwrocv7sxq3lh4lhadtw2bn@umtwhw7eqkhe>
-References: <20250228045356.3527662-1-quic_srichara@quicinc.com>
- <20250228045356.3527662-2-quic_srichara@quicinc.com>
- <velvqajyhrdaipmqmsduv3l3dsv56sy4rfukwm2hrdvh47hgqx@7sbnrgkzsn67>
- <1a22a637-c3f1-49b3-adf5-3e952c7d336a@quicinc.com>
-Precedence: bulk
+        Tue, 04 Mar 2025 05:07:09 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/8] Reup: SM8350 and SC8280XP venus support
+Date: Tue, 04 Mar 2025 13:07:06 +0000
+Message-Id: <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-0-279c7ea55493@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1a22a637-c3f1-49b3-adf5-3e952c7d336a@quicinc.com>
-X-ITU-Libra-ESVA-Information: Please contact Istanbul Teknik Universitesi for more information
-X-ITU-Libra-ESVA-ID: 4Z6dcX6MHLzFxJ3
-X-ITU-Libra-ESVA: No virus found
-X-ITU-Libra-ESVA-From: root@cc.itu.edu.tr
-X-ITU-Libra-ESVA-Watermark: 1741703988.70917@d5I67gZJiqBtf7pMWIOWog
-X-ITU-MailScanner-SpamCheck: not spam
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPr6xmcC/x3NQQqDMBBA0avIrDswRqW2VykuYjK2AzVKJkpAv
+ LvB5dv8f4ByFFZ4VwdE3kVlCQX1owL3s+HLKL4YDJmOGqpxbPEvYcs4sxeLbpklJY6K6nrTU15
+ x57ApsnHWd8/X2E4EpbZGniTfp89wnhcILkOjeQAAAA==
+X-Change-ID: 20250301-b4-linux-media-comitters-sc8280xp-venus-e2cad579b4f0
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+ Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+X-Mailer: b4 0.15-dev-33ea6
 
-On Mon, Mar 03, 2025 at 12:51:44PM +0530, Sricharan Ramabadhran wrote:
-> 
-> 
-> On 2/28/2025 11:36 AM, Dmitry Baryshkov wrote:
-> > On Fri, Feb 28, 2025 at 10:23:55AM +0530, Sricharan R wrote:
-> > > From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> > > 
-> > > TMEL SS provides different kinds of services like secureboot, remote image
-> > 
-> > What is TMEL SS? What is Q6, etc? Please provide a definition on the
-> > first usagem both in the commit message and in the bindings text. And in
-> > the cover letter. Also, in some places you use TME-L instead of TMEL.
-> > Please settle on one of those, unless there is a difference between
-> > them,
-> > 
-> ok, both are same, will expand and fix same in all places
-> 
-> > > authentication, key management, crypto, OEM provisioning etc. This patch
-> > > adds support for remote image authentication. Support for rest of the
-> > > services can be added.
-> > > 
-> > > The QMP mailbox is the primary means of communication between TMEL SS and
-> > > other subsystem on the SoC. A dedicated pair of inbound and outbound
-> > > mailboxes is implemented for each subsystem/external execution environment
-> > > which needs to communicate with TMEL for security services. The inbound
-> > > mailboxes are used to send IPC requests to TMEL, which are then processed
-> > > by TMEL firmware and accordingly the responses are sent back via outbound
-> > > mailboxes.
-> > > 
-> > > It is an IPC transport protocol which is light weight and supports a subset
-> > > of API's. It handles link initialization, negotiation, establishment and
-> > > communication across client(CPU/BTSS/AUDIOSS) and server(TMEL SS).
-> > > 
-> > >     -----------------------------------------------       ---------------------------------------------------
-> > >    |                                              |       |                                                 |
-> > >    |                 SOC  CLIENT                  | SOC   |                TMEL  SS                         |
-> > >    |                                              | AHB   |                                                 |
-> > >    |     ----------    ---------   ---------      |       | ------    -------     --------    ------------  |
-> > >    |     |        |    |       |   |       |      | WO    | |     | R |     |     |      |    |SERVICES   | |
-> > >    |     | CPU    |<-->| TMEL  |<->|       |------------->| | IN  |-->|     |     | TMEL |    |--------   | |
-> > >    |     |        |    | COM   |   | QMP   |      | RO    | |     | W | QMP |<--->| COM  |<-->| a) ATTEST | |
-> > >    |     |        |    |       |   |       |<-------------| | OUT |<--|     |     |      |    | b) CRYPTO | |
-> > >    |     |        |    |       |   |       |      |       | |     |   |     |     |      |    | .. more   | |
-> > >    |     ---------     ---------   ---------      |       | ------    -------     -------     ------------  |
-> > >    |                                              |       |                                                 |
-> > >     -----------------------------------------------       --------------------------------------------------
-> > > 
-> > > This binding describes the component responsible for communication between
-> > > the TMEL server based subsystems (Q6) and the TMEL client
-> > > (CPU/BTSS/AUDIOSS), used for security services like secure image
-> > > authentication, enable/disable efuses, crypto services. Each client in the
-> > > SoC has its own block of message RAM and IRQ for communication with the
-> > > TMEL SS.
-> > > 
-> > > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> > > ---
-> > > #V3:
-> > 
-> > Creative. Where are the previous changelogs?
-> > 
-> ok, will add
-> 
-> > > ---
-> > >          Fixed wrappings.
-> > >          Made mailbox-cells as a required property and changed value to '1'.
-> > >          Fixed to use compatible as filename.
-> > >          Renamed compatible as per Krzystof's comments.
-> > >          Dropped unused label.
-> > > 
-> > >      Following tests were done and no issues.
-> > > 
-> > >         *)  Checkpatch
-> > >         *)  Codespell
-> > >         *)  Sparse
-> > >         *)  kerneldoc check
-> > >         *)  Kernel lock debugging
-> > >         *)  dt_binding_check and dtbs_check
-> > > 
-> > >   .../bindings/mailbox/qcom,ipq5424-tmel.yaml   | 62 +++++++++++++++++++
-> > >   1 file changed, 62 insertions(+)
-> > >   create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml b/Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
-> > > new file mode 100644
-> > > index 000000000000..2e3c79add405
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
-> > > @@ -0,0 +1,62 @@
-> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: http://devicetree.org/schemas/mailbox/qcom,ipq5424-tmel.yaml#
-> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > +
-> > > +title: Qualcomm TMEL IPCC channel
-> > > +
-> > > +maintainers:
-> > > +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> > > +
-> > > +description:
-> > > +  TMEL SS provides different kinds of services like secureboot, remote image authentication,
-> > > +  key management, crypto, OEM provisioning etc. This patch adds support for remote image
-> > > +  authentication. Support for rest of the services can be added.
-> > > +
-> > > +  The QMP mailbox is the primary means of communication between TMEL SS and other subsystem on
-> > > +  the SoC. A dedicated pair of inbound and outbound mailboxes is implemented for each
-> > > +  subsystem/external execution environment which needs to communicate with TMEL for security
-> > > +  services. The inbound mailboxes are used to send IPC requests to TMEL, which are then processed
-> > 
-> > This string is 100 chars long. What is the recommended wrapping
-> > boundary?
-> > 
-> I kept it as 100 and checkpatch did not throw any warnings.
+This series is a re-up of Konrad's original venus series for sc8280xp and
+sm8350.
 
-"The preferred limit on the length of a single line is 80 columns."
+Link: https://lore.kernel.org/all/20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org/
 
-Documentation/process/coding-style.rst
+The main obstacle to merging that series at the time was the longstanding
+but invalid usage of "video-encoder" and "video-decoder" which is a
+driver level configuration option not a description of hardware.
 
-> 
-> Regards,
->  Sricharan
-> 
+Following on from that discussion a backwards compatible means of
+statically selecting transcoder mode was upstreamed
 
+commit: 687bfbba5a1c ("media: venus: Add support for static video encoder/decoder declarations")
+
+Reworking this series from Konrad to incorporate this simple change
+
+- Removing dts dependencies/declarations on the offending compat strings
+- Inclusion of necessary static configuration in the 8350/8280xp driver
+  config
+- A small update to interconnect tags which Konrad pointed out on IRC to me
+- Fixed author and SOB on first patch to match
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Konrad Dybcio (8):
+      media: dt-bindings: Document SC8280XP/SM8350 Venus
+      media: venus: core: Remove trailing commas from of match entries
+      media: venus: hfi_venus: Support only updating certain bits with presets
+      media: platform: venus: Add optional LLCC path
+      media: venus: core: Add SM8350 resource struct
+      media: venus: core: Add SC8280XP resource struct
+      arm64: dts: qcom: sc8280xp: Add Venus
+      arm64: dts: qcom: sc8280xp-x13s: Enable Venus
+
+ .../bindings/media/qcom,sm8350-venus.yaml          | 119 ++++++++++++++++++++
+ .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |   5 +
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi             |  82 ++++++++++++++
+ drivers/media/platform/qcom/venus/core.c           | 125 +++++++++++++++++++--
+ drivers/media/platform/qcom/venus/core.h           |   4 +
+ drivers/media/platform/qcom/venus/hfi_venus.c      |  15 ++-
+ drivers/media/platform/qcom/venus/pm_helpers.c     |   3 +
+ 7 files changed, 341 insertions(+), 12 deletions(-)
+---
+base-commit: d98e9213a768a3cc3a99f5e1abe09ad3baff2104
+change-id: 20250301-b4-linux-media-comitters-sc8280xp-venus-e2cad579b4f0
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
