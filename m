@@ -1,135 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-50256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A48D9A4EB29
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 19:20:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1DAEA4E847
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:17:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8FBFD188CD4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:15:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E5AC08C205C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 16:52:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9B44290BB0;
-	Tue,  4 Mar 2025 17:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48B8D2BE7DD;
+	Tue,  4 Mar 2025 16:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fQDbMs8G"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LXs8xEwP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from beeline2.cc.itu.edu.tr (beeline2.cc.itu.edu.tr [160.75.25.116])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F550284B47
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 17:58:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=160.75.25.116
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741111128; cv=pass; b=OHS82anWrCo3agt/9E+KZSbnAKQM2JsTVTJ4nGbt2wbyVIWWu1DTSGewDttVQcndsEV0hXwbTutCzJZRMUaDiBOlsUwSez99GTIX6FDNMAcJuxxW649rnHoLxl2TRqOz30AxXe5pGwEhSHN7z8XESL8rke50QHepzc6EnS4KOxw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741111128; c=relaxed/simple;
-	bh=Oul6vhkXR4va+z/+WhoZ0xRll3TSdgvTz5RPoDjs9Do=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VplK4l+93I4BAijOVJILLr9HmJnuHgkTsJvUkyec72hNE1W6e/SIdFCH4p+0mVDTiCQwk0vcVCjyViDV34z/FWeZRqW7crhfOZHveuwkiofde3y+9oQ8JtJFEBh7Ca7k24AO5kRjIlcS4InezWvCGMBpGB4miiKxQkrl27jNpyc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=none smtp.mailfrom=cc.itu.edu.tr; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fQDbMs8G; arc=none smtp.client-ip=205.220.180.131; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; arc=pass smtp.client-ip=160.75.25.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cc.itu.edu.tr
-Received: from lesvatest1.cc.itu.edu.tr (lesvatest1.cc.itu.edu.tr [10.146.128.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by beeline2.cc.itu.edu.tr (Postfix) with ESMTPS id 36CB840CECCE
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 20:58:45 +0300 (+03)
-X-Envelope-From: <root@cc.itu.edu.tr>
-Received: from lesva1.cc.itu.edu.tr (unknown [160.75.70.79])
-	by lesvatest1.cc.itu.edu.tr (Postfix) with ESMTP id 4Z6fzR66GYzG0nc
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Mar 2025 18:41:07 +0300 (+03)
-Received: by le1 (Postfix, from userid 0)
-	id 36C2142746; Tue,  4 Mar 2025 18:40:42 +0300 (+03)
-Authentication-Results: lesva1.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fQDbMs8G
-X-Envelope-From: <linux-kernel+bounces-541861-bozkiru=itu.edu.tr@vger.kernel.org>
-Authentication-Results: lesva2.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fQDbMs8G
-Received: from fgw2.itu.edu.tr (fgw2.itu.edu.tr [160.75.25.104])
-	by le2 (Postfix) with ESMTP id 88B3C41CB7
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 16:57:10 +0300 (+03)
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by fgw2.itu.edu.tr (Postfix) with SMTP id 3C3C02DCE3
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 16:57:10 +0300 (+03)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E8661689E7
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 13:57:09 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E17C2135A5;
-	Mon,  3 Mar 2025 13:56:57 +0000 (UTC)
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE55A212FB3
-	for <linux-kernel@vger.kernel.org>; Mon,  3 Mar 2025 13:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186E229B204;
+	Tue,  4 Mar 2025 16:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741010214; cv=none; b=rjUtt5D61v7K7jD5pYLLJ7yGuUSOECtbqS5G2r5c58NhjDz4Cm3lELyG2nVfzrs9+pip+J/f2ntgkVzNJ5qKhhGVcGRDSluRT+Pi3GFo+imRXWjZDny0NlwcZb27B8q7cNjq69U6qLVUZD5zQSe+l7Ah8V3CXaJCJSpgP2dcPjI=
+	t=1741105849; cv=none; b=I6x2QuHKxU4SCAJuhcXEKesOeJ2jZCBApMCujGjmnUhGuKdLRyeaVytnck1ZzqI+PXd6Wm4wSKkf1QWW+EuLrl3P5j+jviJ+QE/KKFo5cYZRn0IKE23y/oNY5p+CRtoMIxXWGg24MlxD39FMGIMWnFJZwCKEtDAdSKJMAkf+p4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741010214; c=relaxed/simple;
-	bh=Oul6vhkXR4va+z/+WhoZ0xRll3TSdgvTz5RPoDjs9Do=;
+	s=arc-20240116; t=1741105849; c=relaxed/simple;
+	bh=7SSmhJywGvGXc8ZpfXpgY0nfMFXwgP1l6sL+dAYzJYA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h6UwhjttP03X/m0cbOEZB9e47i645Vf8McJxKoQPS1Alx4bU7UXefz1vwvNPJp7leip9g9LpSo/ZokNWmk0yxv9aCcX8Fbdffe0XhIbl3ZSkLqGmsqboaZTcyi3CSMvzUEfXFSWrR0Ww5bHsqUx7xh2pZIzQ6mrGjUgeblqZdwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fQDbMs8G; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 523B6x9K030846
-	for <linux-kernel@vger.kernel.org>; Mon, 3 Mar 2025 13:56:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UHuL7NNx8i87z9rx+SL91u+ZQbG95A3iELLmhhDeB5A=; b=fQDbMs8Gkr0StbCH
-	j1Vag3AkItreSFPe4uNsUjhVeTQNecsBYKieSpUdfKaVQd0PtZlw/1Jr4lUh5IGo
-	OXNvHUGqFOHmD1xQ21JYyWhHwf3MFf0YkT7003hJp1kLqYQilF8sT+lbOQeQTVlo
-	1naZwUkfKUwvySmxwzRfhQWLMF4TqfdRfpmVSaKvEtIuG1EP7EccxRmWr7FYoHDB
-	KZH/PXXKzrMYykw3oFScaSuVWxjmerdjZyqArdsB1ajSpWNHp+mNJVDtLCiKOAi6
-	weFw8aXgWhGh64SNsR3uq+/EUC1FbpfokcZoTWo+sSz8BjuMgZIsDmTp7k5WIQuj
-	TrZadw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 453t88w4df-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-kernel@vger.kernel.org>; Mon, 03 Mar 2025 13:56:51 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-22331df540aso135183825ad.1
-        for <linux-kernel@vger.kernel.org>; Mon, 03 Mar 2025 05:56:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741010210; x=1741615010;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UHuL7NNx8i87z9rx+SL91u+ZQbG95A3iELLmhhDeB5A=;
-        b=hFsjZHfPL9X440nsUqTSVXoiz5p2MzlCPlaCgGLqAugh40MJ7DAzXU63Hno0CUEo+s
-         bJpasj4KvHvFcEFYWHU4iZYEhpM1oPSjvYqwuXgpSK48pvSc7uSBhlA36zbWKrCaUw75
-         FiywaXwMVDF1s7+AyVxAy77c5thv0VYjQJJ7HaHfASzHd5QolrOzKoJD865ENcool3DO
-         lzGGoJGAd8SBZJDcr4QoqcI0PUXmhOMmfKADq6EBF1yxQbAafBRxcIIQU8M166AHD9mE
-         Joeg+m3eypqdIoFxIRtJquQGU8KPklalG+QuGUJ1yz/oDipDKw6Gs8S/QowC+tcDyWtz
-         qtAg==
-X-Forwarded-Encrypted: i=1; AJvYcCXtN+qgcmVGfwFb0lIr9uLD1Ad23XRGDUnoCZBVreWzIgOw0ZBiStl71HegG2H7KqQHxOp4keNSFHF2BXE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWszmVgKE+VhARvVAmcR25upto0k4CWJxoVZhJsDAPUj/4ilDg
-	MTH9KZzokShlXjeGnGVLI3Crd6ipjKW8fqwcY4T6Jv2Q6AP2FmP8q4uimrQrY9dZQOHxJ8BIlt8
-	iubHco72r8ad/cjdJcQo06RLAQIBxP0W4gljxfCyCucF3j7Mej+FhPJgZqbGXFF4=
-X-Gm-Gg: ASbGncsXsGUNcSVF+6DFKJ147+OZXzv0HDJnxme92avRGw89TblxxrmirfpHsyCo7ZI
-	ATIiJM0FJQ74mlD9nD6/BVHdem0e2GfXHcKBY1N8IkU9FrP2QABnEsXzeTJQazW+sjH/23yP5E+
-	yRHQrA6IkqHcD+ZE/+A8whHVYlPG+95vcet2HSebj7NUbbICAUX08XtCa7zaAGBlBYL5lu5foOJ
-	53oRdxdqS5/miE99Xj2wXqFeNZdIMv02GbybljESaMZH/I8whop/BVdlmwnNZgsNwkhl9gHEWyB
-	BDqVbl0xMrJ8xlB2craxhIxL2D08GJOgHoKxhNKWAw==
-X-Received: by 2002:a05:6a00:1895:b0:736:3be3:3d76 with SMTP id d2e1a72fcca58-7363be33e3emr9864320b3a.17.1741010208484;
-        Mon, 03 Mar 2025 05:56:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEUiUadUO0TJSNEbJpg+ohvZHRFRRVAl7dtA6ZreELy4A3DZdvPJ97GRjZfVWJgUCtgDVhYkw==
-X-Received: by 2002:a05:6a00:1895:b0:736:3be3:3d76 with SMTP id d2e1a72fcca58-7363be33e3emr9864180b3a.17.1741010206632;
-        Mon, 03 Mar 2025 05:56:46 -0800 (PST)
-Received: from [10.218.7.34] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7363d010101sm4064636b3a.115.2025.03.03.05.56.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Mar 2025 05:56:46 -0800 (PST)
-Message-ID: <449712bb-961e-4ccf-bf74-50dd55315abc@oss.qualcomm.com>
-Date: Mon, 3 Mar 2025 19:26:37 +0530
-Precedence: bulk
+	 In-Reply-To:Content-Type; b=bpHvQohRkggWMY+7Izmpwc7VByFy5s3nVXUQJesDaUgi2xq53eQ092oFxonyIwXdYl49YEXOAnxrobzFQabbINdcRREEFWZ+vDDjRdZLxaOi5pt/Z5VX/U0brmeBvEf11mlpN3D1jypoKckBycuArdWvec25L9+9XS/eiw8z0Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LXs8xEwP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BA3C4CEE9;
+	Tue,  4 Mar 2025 16:30:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741105848;
+	bh=7SSmhJywGvGXc8ZpfXpgY0nfMFXwgP1l6sL+dAYzJYA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=LXs8xEwPWUgdhyjLjpvHxsFPl+SiYytOtTnhGS7Hg+YqfKsElI3/5JEjyuQ79hX1e
+	 MYYvB+NUnklV63UQclOVXfwzBhWU4GIJLbTB2NRo7tjjjQlg+ugSxUywpRly289oSa
+	 UqcCCgsNBpfs5TryeYPiDFh6SL/8XdqYvc5ddJE6+EM5NsfQXVM6Ftgy5bKwXPe7nM
+	 6c1X6ywJ6ISq5a6kCan/bcToHzW0eVQ/GXutQhyS/p4eB0G9E4XJwwKZO0nCnpY76P
+	 IdSeRWHgJXzUXHEnxU1zqf+h3BNecf8cFWAIqxW9Rjrm77qL15kB00hHFYU0yNock+
+	 YiAHhFsphxHmw==
+Message-ID: <bdca9e9f-7e0d-4ca7-8e8b-f27ea8bb3b54@kernel.org>
+Date: Tue, 4 Mar 2025 17:30:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -137,100 +50,115 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 4/5] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, dmitry.baryshkov@linaro.org,
-        konradybcio@kernel.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
-        amitk@kernel.org, thara.gopinath@gmail.com, lee@kernel.org,
-        rafael@kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com,
-        david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
-        quic_kamalw@quicinc.com, rui.zhang@intel.com, lukasz.luba@arm.com,
-        lars@metafoo.de, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        cros-qcom-dts-watchers@chromium.org, quic_skakitap@quicinc.com,
-        neil.armstrong@linaro.org
-References: <20250131183242.3653595-1-jishnu.prakash@oss.qualcomm.com>
- <20250131183242.3653595-5-jishnu.prakash@oss.qualcomm.com>
- <20250201121134.53040aae@jic23-huawei>
- <9e14f58f-e345-4bae-b14e-de25fc28d9a8@oss.qualcomm.com>
- <20250301032519.16e77288@jic23-huawei>
+Subject: Re: [PATCH RFC] leds: rgb: leds-qcom-lpg: Compute PWM value based on
+ period instead
+To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>, Lee Jones <lee@kernel.org>,
+ Pavel Machek <pavel@kernel.org>,
+ Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
+ Kamal Wadhwa <quic_kamalw@quicinc.com>,
+ Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>,
+ Sebastian Reichel <sre@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+ linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250303-leds-qcom-lpg-compute-pwm-value-using-period-v1-1-833e729e3da2@linaro.org>
+ <ylnkjxnukss7askv7ip5htrb4tyjzhpw7jim2se6rloleq5h6w@ngk7lbk26hxj>
+ <dbfb17df-90e2-4a7c-9921-9dff5e9382f4@kernel.org>
+ <ovnmhbzwwimil3opuv6e2ayyntlx7upxfkzm5qdfskx2x7hl7x@wmtul33ttow5>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-In-Reply-To: <20250301032519.16e77288@jic23-huawei>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <ovnmhbzwwimil3opuv6e2ayyntlx7upxfkzm5qdfskx2x7hl7x@wmtul33ttow5>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: NX1dR6-oc6tpjPo9egELKQAiOGfJge2p
-X-Proofpoint-GUID: NX1dR6-oc6tpjPo9egELKQAiOGfJge2p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-03_07,2025-03-03_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
- impostorscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=793 mlxscore=0 clxscore=1015 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503030106
-X-ITU-Libra-ESVA-Information: Please contact Istanbul Teknik Universitesi for more information
-X-ITU-Libra-ESVA-ID: 4Z6fzR66GYzG0nc
-X-ITU-Libra-ESVA: No virus found
-X-ITU-Libra-ESVA-From: root@cc.itu.edu.tr
-X-ITU-Libra-ESVA-Watermark: 1741715806.46161@0OZc2KxvxuboTVbdNVOEag
-X-ITU-MailScanner-SpamCheck: not spam
+Content-Transfer-Encoding: 8bit
 
-Hi Jonathan,
-
-On 3/1/2025 8:55 AM, Jonathan Cameron wrote:
-> On Wed, 26 Feb 2025 14:22:05 +0530
-> Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
+On 04/03/2025 17:03, Uwe Kleine-König wrote:
+> Hello Krzysztof,
 > 
-...
->>>> +void adc5_take_mutex_lock(struct device *dev, bool lock)
->>>> +{
->>>> +	struct iio_dev *indio_dev = dev_get_drvdata(dev->parent);
->>>> +	struct adc5_chip *adc = iio_priv(indio_dev);
->>>> +
->>>> +	if (lock)
->>>> +		mutex_lock(&adc->lock);
->>>> +	else
->>>> +		mutex_unlock(&adc->lock);
->>>> +}
->>>> +EXPORT_SYMBOL_NS_GPL(adc5_take_mutex_lock, "QCOM_SPMI_ADC5_GEN3");  
+> On Tue, Mar 04, 2025 at 10:53:53AM +0100, Krzysztof Kozlowski wrote:
+>> On 04/03/2025 07:24, Uwe Kleine-KÃ¶nig wrote:
+>>> instead which gives you a more exact result. The challenge here however
+>>> is that the multiplication might overflow. If you know that the result
+>>> fits into a u64, mul_u64_u64_div_u64() is the function that gets this
+>>> right for you.
 >>>
->>> This is potentially going to make a mess for sparse.  Might be better to split
->>> it in two so you can had __acquires and __releases markings.
+>>>>  	chan->pwm_value = min(val, max);
+>>>>  }
+>>>> [...]
+>>>> ---
+>>>> base-commit: 0067a4b21c9ab441bbe6bf3635b3ddd21f6ca7c3
 >>>
->>> If you don't get any warnings with sparse then I guess we are fine.
->>>   
+>>> My git repo doesn't know that commit. Given that you said your patch
+>>> bases on that other series, this isn't surprising. Please use a publicly
+>>> available commit as base parameter, otherwise you (and I) don't benefit
+>>> from the armada of build bots because they just silently fail to test in
 >>
->> I had tried building with sparse in my local workspace and I did not get any errors in this file. Do you think I can keep this unchanged?
->> Also, would any kernel bots run sparse later on this patch, if it's not already done?
+>> As you can easily see in the signature, this patchset was generated by
+>> b4 and such tag was added automatically. No point in stripping it even
+>> if it is not useful (life, happens).
 > 
-> Problems around this tend to turn up a bit late in build tests as requires
-> particular combinations of features.  Here you may not see problems because
-> sparse can't see far enough to understand the locking.
+> My request was not about stripping it, but making it useful. I don't
+> know the b4 patch sending side, but git send-email has the capability to
+> make it more useful in this scenario. I didn't check, but
+> `b4 --edit-deps` which Abel mentioned sounds about right.
 > 
-> I would still split this into lock / unlock as that matches better
-> with common syntax for locks.  We can then add markings
-> as necessary later.
-> 
+> The relevant documentation for the git side is the paragraph "BASE TREE
+> INFORMATION" in git-format-patch(1).
 
-OK, I can split this into separate lock and unlock functions.
-And for markings, you mean I should add these:
+Useful how? The dependency is on the lists, so there is no base-commit
+you would know.
 
-    __acquires(&adc->lock)
-    __releases(&adc->lock)
+And regardless of edit-deps, that base-commit tag is standard from b4,
+so what do you expect from all submitters even if this was not RFC?
+Always base on known commit? But for most of the cases this is
+irrelevant. I can have intermediate commit between linux-next tip and my
+patch, thus base-commit will be bogus for you, but it does not matter
+for the patch - it's based on linux-next.
 
-under the lock and unlock functions respectively?
-
-Thanks,
-Jishnu
-
->>>> +/*  
->>>
->>> Looks like valid kernel doc, so /** and check it builds fine
->>> with the kernel-doc script.
->>>   
-
-
+Best regards,
+Krzysztof
 
