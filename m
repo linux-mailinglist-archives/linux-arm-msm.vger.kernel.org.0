@@ -1,66 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-50240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91F25A4E8D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:31:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C86BA4E8C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 18:30:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C46819C6949
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:25:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C4E817A37A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 17:25:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6362E2D4F6F;
-	Tue,  4 Mar 2025 17:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C3732D4F9C;
+	Tue,  4 Mar 2025 17:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJlWyxRq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h0fIf5Lk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369992D4F69;
-	Tue,  4 Mar 2025 17:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527AA2D4F96;
+	Tue,  4 Mar 2025 17:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741107629; cv=none; b=dZFBHGs0/+i38oK9KzVRZF+zwR7SjuhMIfBzsTNhW+AjReO0kKUe5OGrpzAkTP1UflnUBgco4q2JBfiWjFsh5GfF0atGpQxmco28/h72LmV2PER3pecSwkGiDNytf23iCCASu0Agdnmf21Qg92Uo3GY+3Ko2ASmIx+szWVVBbz0=
+	t=1741107630; cv=none; b=JUMAVnB6g3UG7LSMUWkaBy6JrFZwgrgMH6HMe4YzQwEaQlOKUvUK+TL3OwuARtN3Sr28xvZaQHopfbvzgR1BhfgonWm0VNz4HJFXEYCJMNeswlmpGjvpsq7OlHl3mEa9niAXhbdPwXGAYePXXhQdpbY+GrQtfyIEnKA3PbkVNvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741107629; c=relaxed/simple;
-	bh=9gibLqvWUPuANTGwlU/le9ljNRIT06WjyHahCuDGN7g=;
+	s=arc-20240116; t=1741107630; c=relaxed/simple;
+	bh=lyFxQ5IUjLDopgDR0aTUQqnUDoqT73OFpGJnb/ypW6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GbeaMFOj9I1130GJOw9Hko+I/DmhtxldR8GI1Y2cRZzhHufRnJWnqh3bKEjRH6TC8IP2mqurq/PfJCzouesfVGallB7Zb0Tvjg3cBMIA1trpMp/oqo1q+3pCvLn/JMO+JYH1OQxZMwJZnlpMbSjzQ3Y4ceDvsWajG10+cR//oWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJlWyxRq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2B8C4CEEF;
-	Tue,  4 Mar 2025 17:00:27 +0000 (UTC)
+	 MIME-Version:Content-Type; b=bWetOvX98QI7nplKFGgJw2T6z76vh1DBsqlv38cKDlNEI+68+AMm+XDQQkXhwj19ptMwIlE2xQopkaTPIxpp2gODAzKG6HxircKyXes5Rrj18/W3VnVhtwtKaXOTkPUD7QmTcUDx4T703BC4Wf8JqOwDe57pySMXNQxmKXfSwKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h0fIf5Lk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A59C4CEE9;
+	Tue,  4 Mar 2025 17:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741107628;
-	bh=9gibLqvWUPuANTGwlU/le9ljNRIT06WjyHahCuDGN7g=;
+	s=k20201202; t=1741107629;
+	bh=lyFxQ5IUjLDopgDR0aTUQqnUDoqT73OFpGJnb/ypW6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XJlWyxRquQJVEUZFM2yX8IoqEqNmfWnqUrXVNXGteMg0z431fZBPIZI9nTyU3kGIy
-	 yHrZy25cWQgAIDhgzPE5E5WZrij25jlgTUxvLXBeJWZGXddc0dG9f1TamBJ8Y8CExX
-	 Y9jwmTThu85IbYq+9parubm5L+DL8QIUvEHumUvj80c2k+p0YWbggEc65dYV/d6D4r
-	 dfCvGGovmtoGww7ybti4+tpY7pDafMJAshzr4N5Rfua6rpn6P7N2PwDGM3IXHP1wGl
-	 HXUBIbovjZgwL6mhvCqXpp55lE5yqVbRuwtirdzxvWu8nQqPGAI2bpr8WOhCPf8ch0
-	 m0Tbj0s2EC+qg==
+	b=h0fIf5LkCU9N9fJ3OjaUXhJbxJZiy8QDgvpM/5qUhT+SbcgVQf7xS9x+MewDRrAA5
+	 Cs+ZHyiyJPK6v4Ooz4ASgIIETr4HpbhF2VEbogo5QrfhE4ZJApVgx+hVO/s41y6ty+
+	 t6MSOfntiWZR6TUwbFFVyn5MEqUU4h2iXMlurtAGkDIe+pKhO6jBh3ffN38uQHbRNy
+	 jjr/wuMF2BnCgTpJV9N6wyXrcwPALrSn5uqcAuC9OSe/LNVcirmJSKlFFR6968Lj4q
+	 pQkXEXxupvJ4rSJe3MtNdqzRud+Jt3GeT8ImMlNcAzSrckRkt7uJyyosvgOm9yBzRT
+	 rvhmsMzpC9xRA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Stephan Gerhold <stephan.gerhold@linaro.org>
 Cc: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Johan Hovold <johan@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 0/4] arm64: dts: qcom: x1e80100: Fix thermal trip points
-Date: Tue,  4 Mar 2025 11:00:15 -0600
-Message-ID: <174110761295.741733.9570226432916228065.b4-ty@kernel.org>
+	Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH v3] arm64: dts: qcom: x1e80100-qcp: Add WiFi/BT pwrseq
+Date: Tue,  4 Mar 2025 11:00:16 -0600
+Message-ID: <174110761303.741733.2522984900645480505.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250219-x1e80100-thermal-fixes-v1-0-d110e44ac3f9@linaro.org>
-References: <20250219-x1e80100-thermal-fixes-v1-0-d110e44ac3f9@linaro.org>
+In-Reply-To: <20250217-x1e80100-pwrseq-qcp-v3-1-a0525cc01666@linaro.org>
+References: <20250217-x1e80100-pwrseq-qcp-v3-1-a0525cc01666@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,27 +70,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 19 Feb 2025 12:36:17 +0100, Stephan Gerhold wrote:
-> There are some mistakes in the thermal trip points currently used on
-> X1E80100. Several of the critical trip points are too high, so the hardware
-> will trigger an emergency reset before the kernel has the chance to
-> shutdown cleanly. We're also missing GPU cooling in the device tree, which
-> prevents running certain GPU-intensive applications without reaching the
-> critical shutdown temperatures. The CPU on the other hand throttles itself
-> automatically, so we can just drop the passive trip points there.
+On Mon, 17 Feb 2025 18:55:23 +0100, Stephan Gerhold wrote:
+> Add the WiFi/BT nodes for QCP and describe the regulators for the WCN7850
+> combo chip using the new power sequencing bindings. All voltages are
+> derived from chained fixed regulators controlled using a single GPIO.
+> 
+> The same setup also works for CRD (and likely most of the other X1E80100
+> laptops). However, unlike the QCP they use soldered or removable M.2 cards
+> supplied by a single 3.3V fixed regulator. The other necessary voltages are
+> then derived inside the M.2 card. Describing this properly requires
+> new bindings, so this commit only adds QCP for now.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] arm64: dts: qcom: x1e80100: Fix video thermal zone
-      commit: 801befff4c827aa72e3698367c5afc18987a6a3f
-[2/4] arm64: dts: qcom: x1e80100: Apply consistent critical thermal shutdown
-      commit: 03f2b8eed73418269a158ccebad5d8d8f2f6daa1
-[3/4] arm64: dts: qcom: x1e80100: Add GPU cooling
-      commit: 5ba21fa11f473c9827f378ace8c9f983de9e0287
-[4/4] arm64: dts: qcom: x1e80100: Drop unused passive thermal trip points for CPU
-      commit: 06eadce936971dd11279e53b6dfb151804137836
+[1/1] arm64: dts: qcom: x1e80100-qcp: Add WiFi/BT pwrseq
+      commit: d09ab685a8f51ba412d37305ea62628a01cbea57
 
 Best regards,
 -- 
