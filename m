@@ -1,198 +1,365 @@
-Return-Path: <linux-arm-msm+bounces-50387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07648A50737
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 18:55:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CABCA50959
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 19:17:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B3A61892137
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 17:55:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 069C0189625E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 18:15:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62832517A6;
-	Wed,  5 Mar 2025 17:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A3D6252908;
+	Wed,  5 Mar 2025 18:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="hVTw/dZZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZKKp6wS1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12olkn2019.outbound.protection.outlook.com [40.92.21.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011F52512F7;
-	Wed,  5 Mar 2025 17:55:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.21.19
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197305; cv=fail; b=AOb8J55Z3hKyuhlmyoXEObbX/l8ierEHnt5L1qu+ZKEr9qQXSbtFjkHB5ET5lKnyAYwEbtphGp/5hODQDqAevgZv16rR5XLSEsWTZ9GNtnesBbThjLWuBRvgwiT6NzsbZFgY20w2W36WlJLfnyut98ZqpXF7TaMi6G7Y05lILZM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197305; c=relaxed/simple;
-	bh=UjB/w8RZhcSs/U7OuSc2JDoId2gmt1brfKU7/y+9H+M=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=grElloCMNe6KRlpSII5iEBpoG4cHLADl3nfmrFx0twGWejQfekwsr6kjbCBUkqYz9PG9lLz/etgkMyeJUIVffvCxz4NAAWwt79QuJ1dMfM6oia52A/kQd1qWmyhpN8tsetQeGUes+m4eU9YjfMo9KpvsBRWXHV88bP7kmnDm+fw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=hVTw/dZZ; arc=fail smtp.client-ip=40.92.21.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aG+IfdjCeI/LHTuk+0DtIK2gi0djXMWaHLFgC0O65xMErzUEpaIQV0G3nATyMjylhHgwiX4Vb/rxCWjuo6btCqr1a/EzjqjXduJmCZLMz0X7kFAIKpiAHyfMeOnMCrTNn8HxajpHrphzyWUdrvPxj8U45uJueiqPI0Ed5zLUCiyL8lSiObmdIc7gXhpG96lT0jIpyE9G5eo+kzlR8zDw8gWfIpX1UlASrMG2hX86rc05wKp+SA5lMDsaAQ25NFQiN88eZzLbZ+IvaZPKAxdls+6jEhvdaWuxLQxGwVioWek9kWTmexSfyzBughV7oJxOdnJrHq7rafW0br57Dgw+/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WooY3fgCjk9rglRF+E2KzUYGbNktauhVlhD28ANQiQA=;
- b=mbSostjIVXYE4/JHuDPpGTpUoIEq8ETp2aaTBhSXp/Z2YEZv5qL3nmAi2FqNE6lIDgNTpvwkjSA+izCJw+GRLWcyDoSe4NGYvWl2dqXUfislPEWNZD53bMvOORdQlhjcEa3KGGghQApPmyxld9JU214EdqhAZmyajPIKSwL98yy4xe9Jzoye22yw3+xIYdlPRvO179F44fUBim9rJJyxW48eytAaFtMhnNHtj9pEY8MtimlXZi97HqvT0SSnFtmyEMMeSwGI00hcaga6YtZ9/Z2ahm5lVtLi3WzBZSg8fElvusc32hGCWiogD9ggtOSENc9XtgXGbvRP5V23Oi882Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WooY3fgCjk9rglRF+E2KzUYGbNktauhVlhD28ANQiQA=;
- b=hVTw/dZZMmeLakVoi9NLPZEyJl6I+T+a4+10IBtVLulFIgAa3tJ59FCFhedl8v698bS/5+Z6fiscQ4TDu3FZ8JQLUAudEGBdQrmGdMpb/8my1tVluil2nta2MVuSNpZI2/BBPvao+PpIJo6C/hT6CRfRXm5CtPpWhMBX5WiMbeIXgK+iyUYo4fkxf4olxPm7G5acalbrmVaZkwlQtOmHPb+jGBJgDs5moWE17aij6ai+2dyUJu/a6+g7IAc5/ogaylcPZlKzbIHSpUETw+ZnTQTwKKwFb1SHGLytBUbaOTtzdbBgnOr1QO//kQM42FINbu2LpFRvDiAXlmMsgnnBaQ==
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
- by SA0PR19MB4556.namprd19.prod.outlook.com (2603:10b6:806:bb::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.16; Wed, 5 Mar
- 2025 17:55:01 +0000
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::e0c2:5b31:534:4305%6]) with mapi id 15.20.8489.025; Wed, 5 Mar 2025
- 17:55:00 +0000
-Message-ID:
- <DS7PR19MB8883932996C1C2BBD84249BD9DCB2@DS7PR19MB8883.namprd19.prod.outlook.com>
-Date: Wed, 5 Mar 2025 21:54:47 +0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/6] Enable IPQ5018 PCI support
-To: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-phy@lists.infradead.org, andersson@kernel.org, bhelgaas@google.com,
- conor+dt@kernel.org, devicetree@vger.kernel.org,
- dmitry.baryshkov@linaro.org, kishon@kernel.org, konradybcio@kernel.org,
- krzk+dt@kernel.org, kw@linux.com, lpieralisi@kernel.org,
- manivannan.sadhasivam@linaro.org, p.zabel@pengutronix.de,
- quic_nsekar@quicinc.com, robh@kernel.org, robimarko@gmail.com,
- vkoul@kernel.org
-Cc: quic_srichara@quicinc.com
-References: <DS7PR19MB8883BC190797BECAA78EC50F9DCB2@DS7PR19MB8883.namprd19.prod.outlook.com>
- <db186c37-e8f3-4a7d-8024-48832b1208f6@kernel.org>
-Content-Language: en-US
-From: George Moussalem <george.moussalem@outlook.com>
-In-Reply-To: <db186c37-e8f3-4a7d-8024-48832b1208f6@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DX0P273CA0096.AREP273.PROD.OUTLOOK.COM
- (2603:1086:300:5c::17) To DS7PR19MB8883.namprd19.prod.outlook.com
- (2603:10b6:8:253::16)
-X-Microsoft-Original-Message-ID:
- <cc065244-3a04-4422-9d09-e8b24875c1c6@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAB82517AE
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Mar 2025 18:14:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1741198495; cv=none; b=mTOQFn24AbaIrT9lybBfwU1aVH+pfwYowJ/gyU1u3N2MgQoLvzxCZkEpNvhIMf9AYWHu0Hs8fsXM+4URakkoPZDX/gRghmdwuP/wsYyoD2MVCFKhi5atjo9rSGJRFnN6FU85KQyYc+UY2Tf0R2Lb0PvjxJe5OkYbJC3TVes8zA8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1741198495; c=relaxed/simple;
+	bh=ul8sDPmVIBMYaIuM/ep9OTRkTM4OCXHhN3IN3R3wVwM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JC+6xMSxmqsuW20IaU/7j4AwFMXEc3WOr0ZBkNcTMnzgJ66g6bMYCwDIcV3CTHF5AvKqajJ9qP1Yn24Pyb4qRFQucU9fccQeqnKAMz0nuxmJD+bP8AQgCrJGyRiU1oHgM9kNuGynmFxH4zAxdspBo3EcWVloWJeuBAU/mdEwACk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZKKp6wS1; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-223cc017ef5so57440195ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 10:14:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741198492; x=1741803292; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=i6MBTqEjrPhqT7NQz2LhiFoqvbZCZMQa9JAre3ZYDSc=;
+        b=ZKKp6wS1SmA4eo2U9SRsvICEpxKlOKANEYSKAJ/uJ+Rw0wIMlClLE5qZndxcDAeXtx
+         Cm1qLzQAWmEAzikKsuCj+/ThlKbp74aPO2tQI9rw1hDGbaWRNqAoJa/NARr/4E8GGn6l
+         gjebwrTT7VhwH7XVUDvN7YrG1aVAKRXg2mmciswPvt8jDyQnvsXfLHXQ0JvSfgglv7JY
+         JMMatPazbtWAQa/QEA3yarZeRA56DCnEO5eMjg58/6/SjEaOXtPg0q7mKmJigNtLvshf
+         rWOICPJIgdAIgEu8sxpGTkEgxBHe+bNmof7zVs0hTpvooopKeAAHXUmX5XAIfZ7Fsg/Y
+         Kl1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741198492; x=1741803292;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i6MBTqEjrPhqT7NQz2LhiFoqvbZCZMQa9JAre3ZYDSc=;
+        b=POjmV27nl83SyCJRk7MEppjELm/AWwurWXA/PLvjxKC4pTco+6nyP2nlc/ZrGS88js
+         /UWBQz4oixRc50dSB36QtLimR2QVqhRgjDretc05KMb+CHTY8p/qbncOCf81xfomFAX4
+         RO9k42AdP60IMBJ7x90GPlC/zt0dk2s1E/KssmJnfAZ4+xlyibUrDPXw/prp6IUTVzEU
+         dNu/GNy2RTycpiq3rBdBLF5YGwz1tv3hGIiksJ0am4XtnTnP4hyXBwGwPKWyAqDNUGVH
+         XnswwFO83k0uKuJ/605dwPIZ1F7CEJyN7EfrMFj3uHe5qSxnG1jfACtbmGKdUbYQ3Jpb
+         ybIw==
+X-Forwarded-Encrypted: i=1; AJvYcCX67SBenxq3x2D7SqCeRixPMK7NbnZIzdYA7MZ1FuoN3Li0lon+SnQ09tPxC3qvldhy4/0eZx0MuuS0Tyiz@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDcl8mdn2Da1jQ2TaXmAaQycS4WT+znsRLZ8UUmrPkuS+vdoYS
+	kqTtLBD195iXH0reZix9voy5SaEWIRKPOJG35GnO3kUO3YjwOkjNL7Kf7pvjug==
+X-Gm-Gg: ASbGnctQAyfn50zcLGUcWQXCntIYTPv8IcTv8nucPB4tC2vNV+un2V0zbWNl3QbJl2M
+	P6kh13Lt1ZeZ7qsDqPDlQiBDWrxHR+xLlPvZkKPWo47eLpYdx66tIWkRTVmNhOs8KGncmf9yWKM
+	3A2n1ZEv6Lg5uxpIVJoQStdzCKkgQE5SlCVQOPoPKi/w5YoL0p/l7GVcfPoiJN9oZqGAbs2dMaU
+	L32TO3U+1XizEfVpgB4H9Am3tmkT/xjAc2GsnRH6omL4JlZu2NIGIlsktwsFVA7vV3QcxsuYuZf
+	evClJJvQZAz4zChim6/wE3i2Taig+LPJGdXo0gY1MxfLwQ8GSasf3kZk
+X-Google-Smtp-Source: AGHT+IEzcJn1LsfQ6+F4shfozJf1rlCdLMZmUl3EDE20/7Zu4E6fNsmxwyidQhHgvhoE32oNOSexAA==
+X-Received: by 2002:a17:902:ce82:b0:220:c34c:5760 with SMTP id d9443c01a7336-223f1d35ba2mr54246475ad.51.1741198491709;
+        Wed, 05 Mar 2025 10:14:51 -0800 (PST)
+Received: from thinkpad ([120.60.140.239])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501fb004sm116523775ad.64.2025.03.05.10.14.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Mar 2025 10:14:51 -0800 (PST)
+Date: Wed, 5 Mar 2025 23:44:44 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_mrana@quicinc.com, quic_vpernami@quicinc.com,
+	mmareddy@quicinc.com
+Subject: Re: [PATCH v4 2/4] PCI: dwc: Add ECAM support with iATU configuration
+Message-ID: <20250305181444.3zteaxr6r4pq3lz4@thinkpad>
+References: <20250207-ecam_v4-v4-0-94b5d5ec5017@oss.qualcomm.com>
+ <20250207-ecam_v4-v4-2-94b5d5ec5017@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|SA0PR19MB4556:EE_
-X-MS-Office365-Filtering-Correlation-Id: 17f48502-dd2d-44c3-10d2-08dd5c0ed91b
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|8060799006|6090799003|5072599009|15080799006|19110799003|461199028|7092599003|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?YklGc2JCL3F4YUp4a29aQlErQ2Eyd2ZzN0tJQWxobk9mWDNNdTk3KzcrcjNM?=
- =?utf-8?B?cGo0UEc4V1pHOUdYbTNjcUhTN2pvOTlzSFhNMVFkTTZ6V3ppNVppYzU4a0xl?=
- =?utf-8?B?azhzeTN6K3grLysxbzFYaEQ2QjBLdnk4R2pTcWZDd2tzS2RsZ1JHdHBXL09Y?=
- =?utf-8?B?bmhuV3M0bm1CbDhTNGlDNmNraXF6VmIrVWlNY29LTTd3TGpvMGozdjQrZTIv?=
- =?utf-8?B?aTZ0VFJIM0pUZnhYRUxSN2RhYkV6K1dmMEFHV25UcHcxYnRPc0ZhSmw0WEdW?=
- =?utf-8?B?SVNrS2F6UWFqbjlUVytoTEdlVTl0ajA5VDc2aVYvZHVQUjhOTVg5WHpSeWhL?=
- =?utf-8?B?aUw4M3p3Y1U4R0FreERXUk1rbnV2MHg3dWtyZm0vR1hYZ0VYTDdISVBRdGU2?=
- =?utf-8?B?UzRINDBEUTdyTGVGa0ZSQTVOUnUySFZDU3JlWGgwVW5HRXJxbjU1RFNBRHVz?=
- =?utf-8?B?VXNHbXJsS1k0QUxPUXI3Q2FzRE1rRnZ2Sm9iY2Y1SGpNSU1oSEZxTjBaam43?=
- =?utf-8?B?Mzg2OHRESTBkVDd0WHdDM1NLdThsL2s0alhVdCtLaGdZTUNCempRdGEyODE5?=
- =?utf-8?B?Nmx4Zm9IVDhDK0luYytSZmVETGtQR084Z2lhWFFBUFlac3FXdUVzT3QvV3F2?=
- =?utf-8?B?Y3NmOHVEbjd2MjQzQ2VhbnV6TUduelFBbUdRVk5ydVBmMHZ2QTZwS240ZW9Q?=
- =?utf-8?B?WWdSYXg0WDdqaEE3QlVzOVpLdkFnRDJHR3FqSTRKQ0NTaG1IWEkxUXBpcjZF?=
- =?utf-8?B?TWNEaFowSE5udlNZRWhUZFZSS2ExbGp2TWM4OEVuVVVOeTdvbjE5WEl6dHU3?=
- =?utf-8?B?N3hzR2k0aitGY2ZITFBJaXNUV0MrK2w1MkJJR3RuV3N0ZE96d3NKazJvOFlS?=
- =?utf-8?B?RElzL2JUT2lsdzFNTWgxdjRjNi9PVmlDWXRVbm9ZWVowRnZpZlEzSmJJbjMv?=
- =?utf-8?B?UTU5eEY1N1NhWGxuc0Z4eUQ1Nk1YV1RmdUR2SFNhSGVOR2sreE42ZE5jWlow?=
- =?utf-8?B?UzBMQm5VbENCdE9WZWtrZk5xR3NpUFdUcnpjbGp5bnNSSHFkR1pEMUxUY3cz?=
- =?utf-8?B?b1pTTTJ3VWExWVZac1p0dWY4T1NVWnpSVXZBUVpneGFpMXYxSmpqS3R1UnFZ?=
- =?utf-8?B?OWlBMXMwWkU0VUF1MjBtdlMzWG1nb2xSdC9rV2J6aDN2VXdvNXpwNE54SitM?=
- =?utf-8?B?V1p3bEdMUTVGYmZXSURLU1NVd3NickNJSWhpdGIzeWRDS2hyb3gyOHNTcW1C?=
- =?utf-8?B?M25mZHYvd1ZpZmhXNk0xN0VUSUw4TzlZSGUvN1MwWWg5M2sxL3BwRzVPTzRs?=
- =?utf-8?B?K0p0eGxxcFlPYzhtcVVHWmovWnllZndhSlhZMlRnWnVmcWZvYko1WGVRYXRL?=
- =?utf-8?B?QUI5bVRGazZaaERpS0pWRndWL1JiSGZnTm56cnVyVHBqTG5JbWlzOXpxR01q?=
- =?utf-8?B?ZXdhUEplOFdMejUybTRLSEpTVE5DOEVvN1llcExRb0JzTXlWblB3bnB4UUVQ?=
- =?utf-8?Q?DRQQ/s=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dzc2MkRoS0lRSDBrdTdHc2pwQ1dRc2tSWDg5ZXBVUEFWSGtWRTdDcytTck45?=
- =?utf-8?B?bVkvVmJFczVPTmNvOVRTWWIwbmxFc3NYVjB5b3I1dFQ1NmthT1EyRnRHVVdp?=
- =?utf-8?B?Zi9WaHh0M0VlQjFIRkFWeTZ4emxXbFpZV2xUOFBWMmFJaVRGWFhWMGJ5ejEy?=
- =?utf-8?B?YVgzUUErNSt0ejRuMDZNTE1QTjRabmxhNWdpQXZ3VlpsYXZ6VWpzQ3Bjbmhm?=
- =?utf-8?B?b3R3WUViUE9SR1J6TXQ5SU8wS3paZWxYc09HemRoWGlPV1pNNG16Y3EyTFVu?=
- =?utf-8?B?bWhhYnVPWTZLUXdWdm83NWNEeXoxSExPMGs2UWtyNGhib2Q5S1pjaG9OS1kx?=
- =?utf-8?B?VDF0eGNiZWI5eXZES1g5VVBWKzlGOUU3cURtZDMwZyt1SmdLejBXbjg1bXM1?=
- =?utf-8?B?RitjMCtIZTBzSG9XdmtHam9xMnlaNHNtN2oxeE5JcVlMeko1WGQxRzd3cDdv?=
- =?utf-8?B?V2RLaXNiYmxpazVQSFZvT3lGckpxSkRrbFY5d3dQNnA3ZzRWbVhHcXFuWmFt?=
- =?utf-8?B?THh6Z3FMT0lPaWpsSDFXS2Q2SXoxVXVRRk1jR2Ftb3BQSklmNEtSdmV4NWp2?=
- =?utf-8?B?QUlWc1RqMXVtQjNFdTFQSGJEVFphMnlpOG9vNnFoTTQzbjE4cFpLci9kcDBr?=
- =?utf-8?B?bE9UeURuU2FISFNtbDJhNFIzY0hMZzJScTNIRWZQNU9HWXFsUVNtRHZkeXVs?=
- =?utf-8?B?STZNZ2pZZXhaWWZJdC9XNVB3bkV3K3RobmJPK3AvK1duTnUrM1AzYmVkRUpQ?=
- =?utf-8?B?aHRYaHlKSVhqUHlzcDZ1aDNtdEh0NlF4eUc1M0c5YWh2cmdHakZzWnFicGVF?=
- =?utf-8?B?WkZYU0hSYTJzSnZxSTZ4QUVjeC9SSzFIMEpwNDR0L1gzQnpOQzJwTUtVMmxq?=
- =?utf-8?B?QUh3cldpR0Irb0w5NER6Mm80di8yeXVYcExpS05uZnhTMXR3TDVKTlJtdm1N?=
- =?utf-8?B?dVdCRDdDd1VkYkhJbFYycGJvbXZQd2NXbWNJNDdNNzZkUGMzbDU1eksyTHVZ?=
- =?utf-8?B?YmRaaVl1T0xMTk56STdDYTNWSTEvNkp1KzVYOUdtbzB3S29INDFLbVowZ1lw?=
- =?utf-8?B?dE9kQ0UwNHdaVnp0aEZnaGxnWitYZ2NnYlBuMFdNbkJZRURPYkdNeC9hZFJy?=
- =?utf-8?B?UDNpKzlNSmJpZHBVR3FTNG1jQXJyTUxhVzZZOC9EbmVNZUVlVytyREtFTWhl?=
- =?utf-8?B?K09kYVdvMDRGYk5XbXpyMm5GL1hNdStWc2NYNFA0MnB1THlWc2Fjbjd0WGNM?=
- =?utf-8?B?YkxNYmRERW4zcml2UjBFUEJqdGpkL1dXSUlvUktQcFBjd0xHZFZYVWhCWSsy?=
- =?utf-8?B?YTlBc2tVVXV4SlNXZ1cwbk9qUkxnL05WSFpKbnEwTUxsWTV4L0tmVDJieDZY?=
- =?utf-8?B?VWNJVU9VYVhvei95VHRKNDl6MUN5c05SZm1udzFlTFpaZTJlRWZqUVY5b1pj?=
- =?utf-8?B?Rm5BaWNRYjFCVlNMd2c1ZnRLaUM3WlkrQ2IrMHQ5aGRhVGluZUFuaEs2NXlx?=
- =?utf-8?B?WnJmQnpCRGlxZHhaMjVPbkMwOUxPUkVWeHJlTW93ZzVUTWF5YnhldWxaVmpU?=
- =?utf-8?B?dkpXeEFrT0JDL1MwWU9va01JYjFDOXZUYnRtMFowTldzV2g1Zlc3YjVOZmli?=
- =?utf-8?B?WEF5bGUwM0JkbnhGVjhzWmovMEFJbGg4WXhla1hnT1BiQmlnbDdUUGd0a1lI?=
- =?utf-8?Q?ZBJAuw0cFsnLY1kJnQox?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 17f48502-dd2d-44c3-10d2-08dd5c0ed91b
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2025 17:55:00.8473
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR19MB4556
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250207-ecam_v4-v4-2-94b5d5ec5017@oss.qualcomm.com>
 
+On Fri, Feb 07, 2025 at 04:58:57AM +0530, Krishna Chaitanya Chundru wrote:
+> The current implementation requires iATU for every configuration
+> space access which increases latency & cpu utilization.
+> 
+> Designware databook 5.20a, section 3.10.10.3 says about CFG Shift Feature,
+> which shifts/maps the BDF (bits [31:16] of the third header DWORD, which
+> would be matched against the Base and Limit addresses) of the incoming
+> CfgRd0/CfgWr0 down to bits[27:12]of the translated address.
+> 
+> Configuring iATU in config shift feature enables ECAM feature to access the
+> config space, which avoids iATU configuration for every config access.
+> 
+> Add "ctrl2" into struct dw_pcie_ob_atu_cfg  to enable config shift feature.
+> 
+> As DBI comes under config space, this avoids remapping of DBI space
+> separately. Instead, it uses the mapped config space address returned from
+> ECAM initialization. Change the order of dw_pcie_get_resources() execution
+> to achieve this.
+> 
+> Enable the ECAM feature if the config space size is equal to size required
+> to represent number of buses in the bus range property, add a function
+> which checks this. The DWC glue drivers uses this function and decide to
+> enable ECAM mode or not.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/Kconfig                |   1 +
+>  drivers/pci/controller/dwc/pcie-designware-host.c | 133 +++++++++++++++++++---
+>  drivers/pci/controller/dwc/pcie-designware.c      |   2 +-
+>  drivers/pci/controller/dwc/pcie-designware.h      |  11 ++
+>  4 files changed, 132 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+> index b6d6778b0698..73c3aed6b60a 100644
+> --- a/drivers/pci/controller/dwc/Kconfig
+> +++ b/drivers/pci/controller/dwc/Kconfig
+> @@ -9,6 +9,7 @@ config PCIE_DW
+>  config PCIE_DW_HOST
+>  	bool
+>  	select PCIE_DW
+> +	select PCI_HOST_COMMON
+>  
+>  config PCIE_DW_EP
+>  	bool
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index ffaded8f2df7..826ff9338646 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -418,6 +418,66 @@ static void dw_pcie_host_request_msg_tlp_res(struct dw_pcie_rp *pp)
+>  	}
+>  }
+>  
+> +static int dw_pcie_config_ecam_iatu(struct dw_pcie_rp *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct dw_pcie_ob_atu_cfg atu = {0};
+> +	resource_size_t bus_range_max;
+> +	struct resource_entry *bus;
+> +	int ret;
+> +
+> +	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
+> +
+> +	/*
+> +	 * Root bus under the host bridge doesn't require any iATU configuration
+> +	 * as DBI space will represent Root bus configuration space.
 
+'as DBI region will be used to access root bus config space'
 
-On 3/5/25 20:47, Krzysztof Kozlowski wrote:
-> On 05/03/2025 14:41, George Moussalem wrote:
->> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>
->> This patch series adds the relevant phy and controller
->> DT configurations for enabling PCI gen2 support
->> on IPQ5018. IPQ5018 has two phys and two controllers, 
->> one dual-lane and one single-lane.
->>
->> Last patch series (v2) submitted dates back to August 27, 2024.
->> As I've worked to add IPQ5018 platform support in OpenWrt, I'm
->> continuing the efforts to add Linux kernel support.
-> Why is this changelog separate? We talked about this 5 revisions ago and
-> you keep doing the same mistakes.
-I've finally figured it out. It wasn't a git send-email bug I was running into.
-I just analyzed the entire mail flow and found Outlook.com smtp servers replace the Message-ID
-header value with the server name handling the email and places the actual Message-ID in another attribute
-called X-Microsoft-Original-Message-ID. So when send-email sets the In-Reply-To header,
-it uses the right one but the outlook.com mail servers replaced it with another value so threading breaks.
+> +	 * Immediate bus under Root Bus, needs type 0 iATU configuration and
+> +	 * remaining buses need type 1 iATU configuration.
+> +	 */
+> +	atu.index = 0;
+> +	atu.type = PCIE_ATU_TYPE_CFG0;
+> +	atu.cpu_addr = pp->cfg0_base + SZ_1M;
+> +	atu.size = SZ_1M;
+> +	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
+> +	ret = dw_pcie_prog_outbound_atu(pci, &atu);
+> +	if (ret)
+> +		return ret;
+> +
+> +	bus_range_max = resource_size(bus->res);
+> +
+> +	if (bus_range_max < 2)
+> +		return 0;
+> +
+> +	/* Configure remaining buses in type 1 iATU configuration */
+> +	atu.index = 1;
+> +	atu.type = PCIE_ATU_TYPE_CFG1;
+> +	atu.cpu_addr = pp->cfg0_base + SZ_2M;
+> +	atu.size = (SZ_1M * (bus_range_max - 2));
+> +	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
+> +
+> +	return dw_pcie_prog_outbound_atu(pci, &atu);
+> +}
+> +
+> +static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct resource *res)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct device *dev = pci->dev;
+> +	struct resource_entry *bus;
+> +
+> +	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
+> +	if (!bus)
+> +		return -ENODEV;
+> +
+> +	pp->cfg = pci_ecam_create(dev, res, bus->res, &pci_generic_ecam_ops);
+> +	if (IS_ERR(pp->cfg))
+> +		return PTR_ERR(pp->cfg);
+> +
+> +	pci->dbi_base = pp->cfg->win;
+> +	pci->dbi_phys_addr = res->start;
+> +
+> +	return 0;
+> +}
+> +
+>  int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  {
+>  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> @@ -431,10 +491,6 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  
+>  	raw_spin_lock_init(&pp->lock);
+>  
+> -	ret = dw_pcie_get_resources(pci);
+> -	if (ret)
+> -		return ret;
+> -
+>  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config");
+>  	if (!res) {
+>  		dev_err(dev, "Missing \"config\" reg space\n");
+> @@ -444,9 +500,28 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  	pp->cfg0_size = resource_size(res);
+>  	pp->cfg0_base = res->start;
+>  
+> -	pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
+> -	if (IS_ERR(pp->va_cfg0_base))
+> -		return PTR_ERR(pp->va_cfg0_base);
+> +	if (pp->ecam_mode) {
+> +		ret = dw_pcie_create_ecam_window(pp, res);
+> +		if (ret)
+> +			return ret;
+> +
+> +		bridge->ops = (struct pci_ops *)&pci_generic_ecam_ops.pci_ops;
+> +		pp->bridge->sysdata = pp->cfg;
+> +		pp->cfg->priv = pp;
+> +	} else {
+> +		pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
+> +		if (IS_ERR(pp->va_cfg0_base))
+> +			return PTR_ERR(pp->va_cfg0_base);
+> +
+> +		/* Set default bus ops */
+> +		bridge->ops = &dw_pcie_ops;
+> +		bridge->child_ops = &dw_child_pcie_ops;
+> +		bridge->sysdata = pp;
+> +	}
 
-As a workaround, which I just tested, I will send the cover letter separately first, pick up the value
-of Message-ID (which isn't the original one), and send the remaining patches with the --in-reply-to
-argument of git send-email set to the newly replaced Message-ID.
+So you dereference 'bridge' that is allocated only below? It doesn't matter
+whether the upcoming commits allocate it earlier or not. This commit alone is
+going to cause NULL ptr dereference.
 
-This works. And apologies for the confusion/mess.
->
-> Best regards,
-> Krzysztof
-Best regards,
-George
+> +
+> +	ret = dw_pcie_get_resources(pci);
+> +	if (ret)
+> +		return ret;
+>  
+>  	bridge = devm_pci_alloc_host_bridge(dev, 0);
+>  	if (!bridge)
+> @@ -462,14 +537,10 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  		pp->io_base = pci_pio_to_address(win->res->start);
+>  	}
+>  
+> -	/* Set default bus ops */
+> -	bridge->ops = &dw_pcie_ops;
+> -	bridge->child_ops = &dw_child_pcie_ops;
+> -
+>  	if (pp->ops->init) {
+>  		ret = pp->ops->init(pp);
+>  		if (ret)
+> -			return ret;
+> +			goto err_free_ecam;
+>  	}
+>  
+>  	if (pci_msi_enabled()) {
+> @@ -504,6 +575,14 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  
+>  	dw_pcie_iatu_detect(pci);
+>  
+> +	if (pp->ecam_mode) {
+> +		ret = dw_pcie_config_ecam_iatu(pp);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to confuure iATU\n");
+
+'configure'
+
+> +			goto err_free_msi;
+> +		}
+> +	}
+> +
+>  	/*
+>  	 * Allocate the resource for MSG TLP before programming the iATU
+>  	 * outbound window in dw_pcie_setup_rc(). Since the allocation depends
+> @@ -539,8 +618,6 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  		/* Ignore errors, the link may come up later */
+>  		dw_pcie_wait_for_link(pci);
+>  
+> -	bridge->sysdata = pp;
+> -
+>  	ret = pci_host_probe(bridge);
+>  	if (ret)
+>  		goto err_stop_link;
+> @@ -564,6 +641,10 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  	if (pp->ops->deinit)
+>  		pp->ops->deinit(pp);
+>  
+> +err_free_ecam:
+> +	if (pp->cfg)
+> +		pci_ecam_free(pp->cfg);
+> +
+>  	return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(dw_pcie_host_init);
+> @@ -584,6 +665,9 @@ void dw_pcie_host_deinit(struct dw_pcie_rp *pp)
+>  
+>  	if (pp->ops->deinit)
+>  		pp->ops->deinit(pp);
+> +
+> +	if (pp->cfg)
+> +		pci_ecam_free(pp->cfg);
+>  }
+>  EXPORT_SYMBOL_GPL(dw_pcie_host_deinit);
+>  
+> @@ -999,3 +1083,24 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
+>  	return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(dw_pcie_resume_noirq);
+> +
+> +bool dw_pcie_ecam_supported(struct dw_pcie_rp *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct platform_device *pdev = to_platform_device(pci->dev);
+> +	struct resource *config_res, *bus_range;
+> +	u64 bus_config_space_count;
+> +
+> +	bus_range = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS)->res;
+> +	if (!bus_range)
+> +		return false;
+> +
+> +	config_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config");
+> +	if (!config_res)
+> +		return false;
+> +
+> +	bus_config_space_count = resource_size(config_res) >> PCIE_ECAM_BUS_SHIFT;
+
+s/bus_config_space_count/nr_buses
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
