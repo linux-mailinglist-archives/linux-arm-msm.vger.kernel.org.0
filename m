@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-50294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 427A3A4F1E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 00:58:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F046A4F1F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 01:00:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AB453A60F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Mar 2025 23:58:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0EA1B16BCEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 00:00:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E87DC27811A;
-	Tue,  4 Mar 2025 23:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B19114A1D;
+	Wed,  5 Mar 2025 00:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IVVExXtr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HRVdt61T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F366277021;
-	Tue,  4 Mar 2025 23:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1060C8F54;
+	Wed,  5 Mar 2025 00:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741132699; cv=none; b=Vs5DqumiemkVyQkjZw0IqrKwW73lp+vQSnmGmkr1rfv5db0vcc3LPM5R/Zj3oDNEz+Mf8NgxYtrvPeE73CcjGQbKtV72uLjKzL+lw/Fpe/rtgftS26kdnQj97UR+fES21KJLvPivc5Xnb6H7wO7aDND1K8sJZxrIuwcN49M5K+8=
+	t=1741132844; cv=none; b=j84xyh6W0U8wQSXmHxGUp1ZXnFG5/3xA8yCGZjMkPEuzojEZJOGqnpSKoOMBJ8XDHmSQMcgKTq+w+AdHcjZV1ThfiAu9IzWAnF3tJTwkoz08HliJpTeqx7wpotP36XZPiStGW0USirpzLju4omMkGxbH+sAJjkf4IgSulnSRgW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741132699; c=relaxed/simple;
-	bh=NElNSuBMxgzeC8rTu/edZDnWeRf0KAL4VeHwtLzomRA=;
+	s=arc-20240116; t=1741132844; c=relaxed/simple;
+	bh=RCpiqLvwQDW3d64NAp2e6H/ZDNGCJsNTgIuHDQw1yaQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fXRoJRaSKBzDZEmwi5zpEBkOdpWk8z1Br25NP//DTQ8ZDM/N21Wqe6E8zhIh29Sjhvh/uS09u24Em7cXkHVI4A06JQg/YO8RnxtpfdCRC0ld2EaA/j8wOhV4rqwBtG5W3LIq8S3wu1XSq8V97Qp8QNdnyIK9u9nPljMj6JdIiiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IVVExXtr; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=borUW4r+WJI4lE41R5VPR/p+bWylaGLBZDDmLgtMx2dPruN7ljXMHose7vXcfAjVv6e6f3IGk25qmMCtEMTnk/1bTBEC+rgX/qzRVlvVycdRQv/Chy/n533eqn1axZpuHemW8ClnzANCN2SgzJ/J4Y71XjlXL34NDPljeNhvVcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HRVdt61T; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524NAHVM031827;
-	Tue, 4 Mar 2025 23:58:12 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524NAHVW031827;
+	Wed, 5 Mar 2025 00:00:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	So9hw38GyjjRtkgUGbm08Srs6SjHk0risyVY6nRFrG4=; b=IVVExXtr/tBBAmvp
-	lDTvpGBXXCTjDvDuhOxRyDypyoSboJzQs28hh6elrPToK8xuiB0c3+bo3ddRD6VB
-	PLkRcD6t0klmjT8+OB2DmDuOggMnervrp2KLlXaHYcYZUoHkojbi5LcIo5Vydjpa
-	ptCTtFvfxtaUg0VC54vPjNYnP9HRrsSil9AH/h7X4iw4p9n1ELtD0l82ndX3Ne6a
-	2hYgyCXDHSdC9qSw8fZS44Vt7q/FMosM15Y6wBkPdbnOBb7UM9tFgGVbvMORp74T
-	muM2eal7Upkcu/zHJcrcinn2zmtcuotZk0Rg0Acdhyf2gPzo6iUz/fevdaJsA8Jz
-	eUQa5A==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6t3hv6-1
+	jxtt3HZrGPoT2LV9PishgDJcmzgpZkNVYAcCirTB0pc=; b=HRVdt61TE1+qu+j6
+	ueT1indn/+W4Y7EMB468pEZEr+rUyPD2GFzvQBi+wP+MorcmEC7SOP4ZtJzWy8ie
+	QMA/bodsTOUjF9dvAc2t9MbZrwA/SUAhbY+ZyVTLYtyjZDwjrKFhL5AvqmXx5MC+
+	gptfwabwcva6yvD1D476CRuvNivlRjSMXclpwo8/kdbSnku/YJzoj3ws9CWP58oP
+	PhaEwSMUP37TCewKpcsXw0lbJJ9NBoiupDDZ8l97dMtu9pTAKbvLy2mlxtMII02m
+	oG08HZ6JZrDMAXPnK8hwCkAEw0ld00kvU97UEPSvgOguUrci6OmHcSb+sZdUE4sm
+	wNvLNg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6t3j0n-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Mar 2025 23:58:12 +0000 (GMT)
+	Wed, 05 Mar 2025 00:00:33 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 524NwBB7016230
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52500WnV030387
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 4 Mar 2025 23:58:11 GMT
-Received: from [10.71.108.112] (10.80.80.8) by nasanex01b.na.qualcomm.com
+	Wed, 5 Mar 2025 00:00:32 GMT
+Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Mar 2025
- 15:58:11 -0800
-Message-ID: <454b1755-241d-4b68-b62f-4150e78d393a@quicinc.com>
-Date: Tue, 4 Mar 2025 15:58:10 -0800
+ 16:00:32 -0800
+Message-ID: <21645a8e-d8fd-4abd-906c-dd184ebbb8d1@quicinc.com>
+Date: Tue, 4 Mar 2025 16:00:32 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,48 +65,39 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8750: Add BWMONs
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Stephan Gerhold
-	<stephan.gerhold@linaro.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Georgi Djakov
-	<djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Satya
- Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
-        Trilok Soni
-	<quic_tsoni@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Shivnandan Kumar <quic_kshivnan@quicinc.com>
-References: <20250113-sm8750_bwmon_master-v1-0-f082da3a3308@quicinc.com>
- <20250113-sm8750_bwmon_master-v1-2-f082da3a3308@quicinc.com>
- <Z4k8T31cw_CxHFLC@linaro.org>
- <a02922b6-7b48-4305-8cf3-8019cbe9a069@oss.qualcomm.com>
+Subject: Re: [PATCH v8 12/15] drm/msm/dpu: blend pipes per mixer pairs config
 Content-Language: en-US
-From: Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <a02922b6-7b48-4305-8cf3-8019cbe9a069@oss.qualcomm.com>
+To: Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>,
+        "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20250303-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v8-0-eb5df105c807@linaro.org>
+ <20250303-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v8-12-eb5df105c807@linaro.org>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20250303-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v8-12-eb5df105c807@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KXX36bico5VNvAaKhC7ESsAttKumilkB
-X-Authority-Analysis: v=2.4 cv=KfMosRYD c=1 sm=1 tr=0 ts=67c79394 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=tmWJlMiWa1-9U-Hj8hsA:9 a=QEXdDO2ut3YA:10
- a=flcwpJxnCEoFzraN3UnM:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: KXX36bico5VNvAaKhC7ESsAttKumilkB
+X-Proofpoint-GUID: aSYvmhFGQPmsVDdlJ0zifZBGmSrC4Jjb
+X-Authority-Analysis: v=2.4 cv=KfMosRYD c=1 sm=1 tr=0 ts=67c79421 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=JNjiuPNCUcLITEZ8of0A:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: aSYvmhFGQPmsVDdlJ0zifZBGmSrC4Jjb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-04_09,2025-03-04_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- spamscore=0 suspectscore=0 phishscore=0 malwarescore=0 clxscore=1011
+ spamscore=0 suspectscore=0 phishscore=0 malwarescore=0 clxscore=1015
  priorityscore=1501 impostorscore=0 mlxlogscore=999 adultscore=0
  bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
@@ -114,44 +105,127 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscor
 
 
 
-On 2/7/2025 5:48 PM, Konrad Dybcio wrote:
-> On 16.01.2025 6:05 PM, Stephan Gerhold wrote:
->> On Mon, Jan 13, 2025 at 01:08:18PM -0800, Melody Olvera wrote:
->>> From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
->>>
->>> Add the CPU BWMONs for SM8750 SoCs.
->>>
->>> Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
->>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm8750.dtsi | 74 ++++++++++++++++++++++++++++++++++++
->>>   1 file changed, 74 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> index 3bbd7d18598ee0a3a0d5130c03a3166e1fc14d82..09fe3149da1926b74a98280fe209ae7f423db864 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> @@ -2802,6 +2802,80 @@ rpmhpd_opp_super_turbo_no_cpr: opp-480 {
->>>   			};
->>>   		};
->>>   
->>> +		/* cluster0 */
->>> +		pmu@240b3400 {
->>> +			compatible = "qcom,sm8750-cpu-bwmon", "qcom,sdm845-bwmon";
->>> +			reg = <0x0 0x240b3400 0x0 0x600>;
->>> +
->>> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
->>> +
->>> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
->>> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
->> The start of the interconnect path is QCOM_ICC_TAG_ACTIVE_ONLY, but the
->> destination is QCOM_ICC_TAG_ALWAYS? This is strange. Interconnect used
->> by the CPU should be QCOM_ICC_TAG_ACTIVE_ONLY.
-> I'm not sure if this is a question, but I second, both should be ACTIVE_ONLY
+On 3/3/2025 7:14 AM, Jun Nie wrote:
+> Currently, only 2 pipes are used at most for a plane. A stage structure
+> describes the configuration for a mixer pair. So only one stage is needed
+> for current usage cases. The quad-pipe case will be added in future and 2
+> stages are used in the case. So extend the stage to an array with array
+> size STAGES_PER_PLANE and blend pipes per mixer pair with configuration
+> in the stage structure.
+> 
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Apologies for not getting back to this for a while, but I spoke w some 
-folks and y'all are right. Will correct.
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-Thanks,
-Melody
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 46 +++++++++++++++++++++-----------
+>   1 file changed, 30 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 81474823e6799132db71c9712046d359e3535d90..6fbe42e8988edac7e7917ae8de180aefdaf443e9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -392,7 +392,7 @@ static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
+>   static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
+>   				       struct drm_plane *plane,
+>   				       struct dpu_crtc_mixer *mixer,
+> -				       u32 num_mixers,
+> +				       u32 lms_in_stage,
+>   				       enum dpu_stage stage,
+>   				       const struct msm_format *format,
+>   				       uint64_t modifier,
+> @@ -426,7 +426,7 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
+>   	stage_cfg->multirect_index[stage][stage_idx] = pipe->multirect_index;
+>   
+>   	/* blend config update */
+> -	for (lm_idx = 0; lm_idx < num_mixers; lm_idx++)
+> +	for (lm_idx = 0; lm_idx < lms_in_stage; lm_idx++)
+>   		mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
+>   }
+>   
+> @@ -442,7 +442,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   	const struct msm_format *format;
+>   	struct dpu_hw_ctl *ctl = mixer->lm_ctl;
+>   
+> -	uint32_t lm_idx, i;
+> +	uint32_t lm_idx, stage, i, pipe_idx, head_pipe_in_stage, lms_in_stage;
+>   	bool bg_alpha_enable = false;
+>   	DECLARE_BITMAP(fetch_active, SSPP_MAX);
+>   
+> @@ -463,15 +463,25 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
+>   			bg_alpha_enable = true;
+>   
+> -		for (i = 0; i < PIPES_PER_PLANE; i++) {
+> -			if (!pstate->pipe[i].sspp)
+> -				continue;
+> -			set_bit(pstate->pipe[i].sspp->idx, fetch_active);
+> -			_dpu_crtc_blend_setup_pipe(crtc, plane,
+> -						   mixer, cstate->num_mixers,
+> -						   pstate->stage,
+> -						   format, fb ? fb->modifier : 0,
+> -						   &pstate->pipe[i], i, stage_cfg);
+> +		/* loop pipe per mixer pair with config in stage structure */
+> +		for (stage = 0; stage < STAGES_PER_PLANE; stage++) {
+> +			head_pipe_in_stage = stage * PIPES_PER_STAGE;
+> +			for (i = 0; i < PIPES_PER_STAGE; i++) {
+> +				pipe_idx = i + head_pipe_in_stage;
+> +				if (!pstate->pipe[pipe_idx].sspp)
+> +					continue;
+> +
+> +				lms_in_stage = min(cstate->num_mixers - (stage * PIPES_PER_STAGE),
+> +						  PIPES_PER_STAGE);
+> +				set_bit(pstate->pipe[pipe_idx].sspp->idx, fetch_active);
+> +				_dpu_crtc_blend_setup_pipe(crtc, plane,
+> +							   &mixer[head_pipe_in_stage],
+> +							   lms_in_stage,
+> +							   pstate->stage,
+> +							   format, fb ? fb->modifier : 0,
+> +							   &pstate->pipe[pipe_idx], i,
+> +							   &stage_cfg[stage]);
+> +			}
+>   		}
+>   
+>   		/* blend config update */
+> @@ -503,7 +513,7 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
+>   	struct dpu_crtc_mixer *mixer = cstate->mixers;
+>   	struct dpu_hw_ctl *ctl;
+>   	struct dpu_hw_mixer *lm;
+> -	struct dpu_hw_stage_cfg stage_cfg;
+> +	struct dpu_hw_stage_cfg stage_cfg[STAGES_PER_PLANE];
+>   	int i;
+>   
+>   	DRM_DEBUG_ATOMIC("%s\n", dpu_crtc->name);
+> @@ -516,9 +526,9 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
+>   	}
+>   
+>   	/* initialize stage cfg */
+> -	memset(&stage_cfg, 0, sizeof(struct dpu_hw_stage_cfg));
+> +	memset(&stage_cfg, 0, sizeof(stage_cfg));
+>   
+> -	_dpu_crtc_blend_setup_mixer(crtc, dpu_crtc, mixer, &stage_cfg);
+> +	_dpu_crtc_blend_setup_mixer(crtc, dpu_crtc, mixer, stage_cfg);
+>   
+>   	for (i = 0; i < cstate->num_mixers; i++) {
+>   		ctl = mixer[i].lm_ctl;
+> @@ -535,8 +545,12 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
+>   			mixer[i].mixer_op_mode,
+>   			ctl->idx - CTL_0);
+>   
+> +		/*
+> +		 * call dpu_hw_ctl_setup_blendstage() to blend layers per stage cfg.
+> +		 * stage data is shared between PIPES_PER_STAGE pipes.
+> +		 */
+>   		ctl->ops.setup_blendstage(ctl, mixer[i].hw_lm->idx,
+> -			&stage_cfg);
+> +			&stage_cfg[i / PIPES_PER_STAGE]);
+>   	}
+>   }
+>   
+> 
+> -- 
+> 2.34.1
+> 
+
 
