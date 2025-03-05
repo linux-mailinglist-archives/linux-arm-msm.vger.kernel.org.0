@@ -1,145 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-50343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B2F6A4FCAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 11:49:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45D82A4FD29
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 12:06:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4AE8F1895784
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 10:47:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74BEE164E0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 11:06:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D032233701;
-	Wed,  5 Mar 2025 10:45:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JbikqChn"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEC0B233701;
+	Wed,  5 Mar 2025 11:05:48 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBC623371E;
-	Wed,  5 Mar 2025 10:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC809205515;
+	Wed,  5 Mar 2025 11:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741171508; cv=none; b=LheVMUmHXY+eMSepQ4j1FcdNVvRvJXD0uqIbHB5aJ3U3sDkixFd7WGlKGtzb60Gx9hIn8D1+aFfucJq6GaK+hFe6fGy3THueV2KMf1OUPKGxlzbq+OXxVqoL8iF6fvvoW7RJHw8t+LM+dUQg9u/eNiWmvNv5Hi8KtVuFFj9DWCs=
+	t=1741172748; cv=none; b=iNMX8PEqO+Phikrg7q3tR97Z6myg1P8a+aDYnydY/ClMSgul0o9ESHIvqPe/bHLiSQnekoENJ4jURKo/9cOPnJl9L7p6WKF0cMzYakl/WB93xPVD3TEPMuYjllHUfz1lv8KGTAG/W+w1GaHW1acpWnuNgeN1pB9i2QZx+ZpdOOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741171508; c=relaxed/simple;
-	bh=mu3p373SrrySq8g/RV9x5TuranPSMUCdx5D8T3gB1H0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CFLZ1ClxdrwCI1N0DFIXJKIIQV5/8jLi8IS7tX1XgI7vqy4YRFpNyoccshxGMM7R0s63jkJIRiyOKzKr2ClCw+IrooF1Z2PZkhqfk3iW5lgJmkaNZYUup777JRcBZnn0mBK0UZUy490FaPpLsMWVmtKKOpmlKdPzudUYQFhstTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JbikqChn; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 525AQNnH005857;
-	Wed, 5 Mar 2025 10:45:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KQSQDK/2o+SPfsRLf55GkNL8rYdBJaoWAAJgwIL3vks=; b=JbikqChnS13aY43g
-	FNImpblluRhlH6KJFVGzcNbK2yPwV+GnafHGcNy9usy6qCTZvSzwXtk6uLBC/Vp3
-	btB0BiF6f4LQ+BMVWflL/VjNCZzn+KVi+7CLX7Dr9ynToEe+P+s8dJSQbUB+xE2K
-	FVQ9Xt90/csErV2NR3ZyMm/lpd9c8BKiIttNFEFDs0mGf20ojuhmkuj7bRMf3PB7
-	VyKY+OKjqr/7CP1EErfT+tX+mjsV9Isr0LzKOSmF8ImtRAlxmvg55MFnJCT0goIt
-	NqMWogTafxv91eAeLHYzUSUHtVUiKLBUVBwKzacCp6ROLFJ3vJL86Y2p8XEi79Zt
-	eBxj3w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6v50mu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Mar 2025 10:45:03 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 525Aj2bZ012191
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 5 Mar 2025 10:45:02 GMT
-Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 5 Mar 2025 02:44:59 -0800
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-To: <quic_vgarodia@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <mchehab@kernel.org>, <quic_dikshita@quicinc.com>
-CC: <hverkuil@xs4all.nl>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH 12/12] media: iris: Add handling for no show frames
-Date: Wed, 5 Mar 2025 16:13:35 +0530
-Message-ID: <20250305104335.3629945-13-quic_dikshita@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250305104335.3629945-1-quic_dikshita@quicinc.com>
-References: <20250305104335.3629945-1-quic_dikshita@quicinc.com>
+	s=arc-20240116; t=1741172748; c=relaxed/simple;
+	bh=BZnuyGU/uDQhYwqyS/UzYfPqyjhn01YRbPgefTN3ySg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=C+caX209KqzTn/UAVBE4//ifLPsU56Qgod+j1L8P6jz7mjauGQXLLwkJCgQy83ugShfhXNjwgsN6OW0k1Md9QldDIEJmbKOLMUMX53kuyDy3zZfupOy6V/RZoMN5DZauPCRCvUJJgTciszrhEYQjXjEHV0F2xYnlUa0tXWckECs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4267BFEC;
+	Wed,  5 Mar 2025 03:05:59 -0800 (PST)
+Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 7CBD73F673;
+	Wed,  5 Mar 2025 03:05:43 -0800 (PST)
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Jie Gan <quic_jiegan@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Tingwei Zhang <quic_tingweiz@quicinc.com>,
+	Jinlong Mao <quic_jinlmao@quicinc.com>,
+	coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH v15 00/10] [subset] Coresight: Add Coresight TMC Control Unit driver
+Date: Wed,  5 Mar 2025 11:05:31 +0000
+Message-ID: <174117263579.1942819.17038167511866554035.b4-ty@arm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250303032931.2500935-1-quic_jiegan@quicinc.com>
+References: <20250303032931.2500935-1-quic_jiegan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OmKSkUBKI_o6SuR9IwHxcb9DAtd24iOG
-X-Proofpoint-ORIG-GUID: OmKSkUBKI_o6SuR9IwHxcb9DAtd24iOG
-X-Authority-Analysis: v=2.4 cv=fatXy1QF c=1 sm=1 tr=0 ts=67c82b2f cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=jWvzItAkzE0BTinG1IUA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-05_04,2025-03-05_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
- lowpriorityscore=0 mlxlogscore=800 mlxscore=0 adultscore=0 suspectscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503050086
 
-Firmware sends the picture type as NO_SHOW for frames which are not
-supposed to be displayed, add handling for the same in driver to drop
-them.
 
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
----
- drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h  | 1 +
- drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c | 7 +++----
- 2 files changed, 4 insertions(+), 4 deletions(-)
+On Mon, 03 Mar 2025 11:29:21 +0800, Jie Gan wrote:
+> The Coresight TMC Control Unit(CTCU) device hosts miscellaneous configuration
+> registers to control various features related to TMC ETR device.
+> 
+> The CTCU device works as a helper device physically connected to the TMC ETR device.
+> ---------------------------------------------------------
+>              |ETR0|             |ETR1|
+>               . \                 / .
+>               .  \               /  .
+>               .   \             /   .
+>               .    \           /    .
+> ---------------------------------------------------
+> ETR0ATID0-ETR0ATID3     CTCU    ETR1ATID0-ETR1ATID3
+> ---------------------------------------------------
+> Each ETR has four ATID registers with 128 bits long in total.
+> e.g. ETR0ATID0-ETR0ATID3 registers are used by ETR0 device.
+> 
+> [...]
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-index 48c507a1ec27..5f13dc11bea5 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-@@ -117,6 +117,7 @@ enum hfi_picture_type {
- 	HFI_PICTURE_I				= 0x00000008,
- 	HFI_PICTURE_CRA				= 0x00000010,
- 	HFI_PICTURE_BLA				= 0x00000020,
-+	HFI_PICTURE_NOSHOW			= 0x00000040,
- };
- 
- enum hfi_buffer_type {
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-index bb0ecb79fc24..406b760712e7 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-@@ -91,7 +91,9 @@ static int iris_hfi_gen2_get_driver_buffer_flags(struct iris_inst *inst, u32 hfi
- 	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
- 	u32 driver_flags = 0;
- 
--	if (inst_hfi_gen2->hfi_frame_info.picture_type & keyframe)
-+	if (inst_hfi_gen2->hfi_frame_info.picture_type & HFI_PICTURE_NOSHOW)
-+		driver_flags |= V4L2_BUF_FLAG_ERROR;
-+	else if (inst_hfi_gen2->hfi_frame_info.picture_type & keyframe)
- 		driver_flags |= V4L2_BUF_FLAG_KEYFRAME;
- 	else if (inst_hfi_gen2->hfi_frame_info.picture_type & HFI_PICTURE_P)
- 		driver_flags |= V4L2_BUF_FLAG_PFRAME;
-@@ -657,9 +659,6 @@ static int iris_hfi_gen2_handle_session_property(struct iris_inst *inst,
- {
- 	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
- 
--	if (pkt->port != HFI_PORT_BITSTREAM)
--		return 0;
--
- 	if (pkt->flags & HFI_FW_FLAGS_INFORMATION)
- 		return 0;
- 
+I have applied patches 1-9, leaving the DTS update for the platform.
+
+[01/10] Coresight: Add support for new APB clock name
+        https://git.kernel.org/coresight/c/dc872c5f
+[02/10] Coresight: Add trace_id function to retrieving the trace ID
+        https://git.kernel.org/coresight/c/c367a89d
+[03/10] Coresight: Use coresight_etm_get_trace_id() in traceid_show()
+        https://git.kernel.org/coresight/c/182e8c70
+[04/10] Coresight: Introduce a new struct coresight_path
+        https://git.kernel.org/coresight/c/3c03c49b
+[05/10] Coresight: Allocate trace ID after building the path
+        https://git.kernel.org/coresight/c/d87d76d8
+[06/10] Coresight: Change to read the trace ID from coresight_path
+        https://git.kernel.org/coresight/c/7b365f05
+[07/10] Coresight: Change functions to accept the coresight_path
+        https://git.kernel.org/coresight/c/080ee83c
+[08/10] dt-bindings: arm: Add Coresight TMC Control Unit hardware
+        https://git.kernel.org/coresight/c/166df2a1
+[09/10] Coresight: Add Coresight TMC Control Unit driver
+        https://git.kernel.org/coresight/c/f78d206f
+
+Best regards,
 -- 
-2.34.1
-
+Suzuki K Poulose <suzuki.poulose@arm.com>
 
