@@ -1,100 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-50316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C767A4F7EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 08:32:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C98AA4F7F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 08:34:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7BFA916E72D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 07:32:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 771BB1887618
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 07:34:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A6201EA7E6;
-	Wed,  5 Mar 2025 07:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5A311E5B74;
+	Wed,  5 Mar 2025 07:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WzXE2Tck"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nQ9rInBa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AF619D06A;
-	Wed,  5 Mar 2025 07:32:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3E341C92;
+	Wed,  5 Mar 2025 07:34:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741159931; cv=none; b=aI6iLPdBBgvrQgo+cOtLIrYoeSkXdSHbyh3qtQDDwiged+vwdK92erw/gtEubqWhdLIWqeLLY/aSCeOUIheS6JN/P5PUu0J+m4/uet45vq3HJfIlretLnGS+TiUIsh9Ssaw+mdifhfv2sXHKGfdzwuLfjJrjzRdQYymksctvYHo=
+	t=1741160046; cv=none; b=TGLNdaNL6Np2Zqb7WF54vQp5u7YFiOAG/U7CQeyPum1W5Zw+F930dvMVTNzpJes0Pv4/PfDFLT37PpzyMZHRg1j5J+9brJkvLtZIM3cXXmOtS3vwAK93dUsAChan2jfIJIZM93BZmaN9bT7i+knImacX2giMgPimPCVfzE4WgzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741159931; c=relaxed/simple;
-	bh=m62ntYl+OHjI4BbSj3eSfbV1M2IVOsVTJYXyzyiQ8cE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wnvru/COUnND6K9yFMrDi5Ussqift8ihSKWwt+Ul/j2PpxB44fAFDaznBTN5gkG1FOagQAmsZZPa8C0aLIXbL+x1gJhL1fZCn7QbOOEKFP0Ds7TZm+L2TKMFHS4+w66fkQStbFmv0NjZYzF1tJyWAS+oX3uv0n5fZoA7+JoLAVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WzXE2Tck; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83236C4CEE2;
-	Wed,  5 Mar 2025 07:32:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741159930;
-	bh=m62ntYl+OHjI4BbSj3eSfbV1M2IVOsVTJYXyzyiQ8cE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WzXE2Tck/lDhxGd7+olXHUH9tYc7zFNpzzbFM4ShYSxjDqPsUD1z4Vjq5v/0+/Xe9
-	 VHbU8E5BDJ2sqSrjARXmS6zWQdCRz1gE8SfwD/dbNDC5V+ks6RXYI7RYn905tGiwb7
-	 wWBA4+wkkYTW8Y3dxJAagG9DGnY/QQvFVhVbHeOMVsTPBIqn4v4aUZW7mBv8pkfn6F
-	 dx7qGEByHTDHznB/rhUumWoB4hDNWNK8ayR/5TwRNLxjF7uMAu3fE5NTeIn2M+TVGl
-	 jzTzpoMEA8pLjq3wQF493TFciUCEpc3Mq5VJoDNedxso9It7grlylT4n8jxN8i5G2L
-	 LNJ3/7YiXXepg==
-Date: Wed, 5 Mar 2025 08:32:06 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Melody Olvera <quic_molvera@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Wesley Cheng <quic_wcheng@quicinc.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v2 2/9] dt-bindings: phy: Add the M31 based eUSB2 PHY
- bindings
-Message-ID: <20250305-furry-finch-of-camouflage-e7ee5e@krzk-bin>
-References: <20250304-sm8750_usb_master-v2-0-a698a2e68e06@quicinc.com>
- <20250304-sm8750_usb_master-v2-2-a698a2e68e06@quicinc.com>
+	s=arc-20240116; t=1741160046; c=relaxed/simple;
+	bh=XEGSmpn2aHGdVbjCkRrNxXXTUI+JIObF9Ktsf8Iuaz8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=nSl0TBtmhc5zqkhxhIpdmaIQcIjxK1vhFEk4TenzH7TfHYUcVTVQgqFGr62T0V/20gjv0beMPG0QuM6F7PoAuZ7vP6t74Et6nKhVlAJFdEs3YyYO3QMC5XsVnsq5nMi0g7MAJ6AfBS6G0hcnZu1bBfeCmSPvYsAMKwCsmaufYKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nQ9rInBa; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524NA1TR012504;
+	Wed, 5 Mar 2025 07:34:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hkbd+w83jA6vLO9ch5oNuqVahKhyrbFYg9Yesc5oBOs=; b=nQ9rInBagpCMC0i8
+	RP7f1KLdZK69iksb2wv7YZQ5qWKjQ3CqN1mWXSCXO5kS/QFwzlLSLYEQXzM8MRZD
+	EQGTLryFpULb2Mw3GInIWgrWxDDWqj57g5kSXpKGOoLOd7pq4oF5ms4tMKR1H216
+	8XDpLrVmFsJzVyuVn9aCq5INVQiIu9aW2RUwTKuPeseHblRJdwLkNbOdXIKuAeBn
+	uLAbvF8jAN/TOJpA9EbQG6V05My/zdZfBe245wgTfXh2r7oorbNY2m5/2cgzMqhH
+	TCl2O5ztAvRz6bUfwqQ+umR61P8mXwkD62fJEG6baPEcThalvq1RLxWbslFz+Enm
+	tAz7Dg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6wmf83-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 05 Mar 2025 07:34:00 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5257XxTc028396
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 5 Mar 2025 07:33:59 GMT
+Received: from [10.216.38.32] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Mar 2025
+ 23:33:55 -0800
+Message-ID: <60b2e0d3-bd95-47bf-ab02-edae8b86c392@quicinc.com>
+Date: Wed, 5 Mar 2025 13:03:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250304-sm8750_usb_master-v2-2-a698a2e68e06@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox
+ driver
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>
+References: <20250228045356.3527662-1-quic_srichara@quicinc.com>
+ <20250228045356.3527662-3-quic_srichara@quicinc.com>
+ <lakoxihaqlu3vq42eoqtlip23ggdieizotyzax5up5n6ndbwsi@ddqyzvsdtmkv>
+ <1359984c-2ace-450b-a3ff-bac0b9fb5cc9@quicinc.com>
+ <2xpu26pu4ovnchumwx7xzlp2gldpfgsurnhuqaioygb4a6xmsp@ygmpk6furqs6>
+ <3e326578-ab46-4d7e-ad1e-3d572613498b@quicinc.com>
+ <CAA8EJppXHXafwx+GPh0UhFLRLW5DNj8RwXdO4+fDdXp=SE13Uw@mail.gmail.com>
+ <f8efc961-2fbe-496b-93d2-55f9072bd08c@oss.qualcomm.com>
+Content-Language: en-US
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <f8efc961-2fbe-496b-93d2-55f9072bd08c@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=EZcyQOmC c=1 sm=1 tr=0 ts=67c7fe68 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=x5kFa4O9RGVme2nmDfEA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: Vgg5Kig8y_noRb9aTM1MItbPiMledeJN
+X-Proofpoint-ORIG-GUID: Vgg5Kig8y_noRb9aTM1MItbPiMledeJN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-05_03,2025-03-05_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 mlxlogscore=796 suspectscore=0 bulkscore=0
+ clxscore=1015 priorityscore=1501 spamscore=0 impostorscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503050059
 
-On Tue, Mar 04, 2025 at 01:56:35PM -0800, Melody Olvera wrote:
-> +  vdd-supply:
-> +    description:
-> +      Phandle to 0.88V regulator supply to PHY digital circuit.
-> +
-> +  vdda12-supply:
-> +    description:
-> +      Phandle to 1.2V regulator supply to PHY refclk pll block.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - "#phy-cells"
-> +  - clocks
-> +  - clock-names
-> +  - vdd-supply
-> +  - vdda12-supply
-> +  - resets
 
-Keep the same order as in "properties" list.
 
-> +
-> +additionalProperties: false
+On 3/4/2025 10:16 PM, Konrad Dybcio wrote:
+> On 4.03.2025 10:46 AM, Dmitry Baryshkov wrote:
+>> On Tue, 4 Mar 2025 at 10:33, Sricharan Ramabadhran
+>> <quic_srichara@quicinc.com> wrote:
+>>>
+>>>
+>>>
+>>> On 3/3/2025 6:34 PM, Dmitry Baryshkov wrote:
+>>>> On Mon, Mar 03, 2025 at 03:58:42PM +0530, Sricharan Ramabadhran wrote:
+>>>>>
+>>>>>
+>>>>> On 2/28/2025 12:03 PM, Dmitry Baryshkov wrote:
+>>>>>> On Fri, Feb 28, 2025 at 10:23:56AM +0530, Sricharan R wrote:
+>>>>
+>>>>>>> +          dev_err(dev, "Failed with status: %d\n", msg.resp.status);
+>>>>>>> +          ret = msg.resp.status;
+>>>>>>
+>>>>>> return msg.resp.status (is it really errno?)
+>>>>>>
+>>>>> ok, yes error.
+>>>>
+>>>> The question was if it is an errno, not if it is an error.
+>>> status != 0 is an error always.
+>>
+>> Is it an _errno_ ?
+> 
+> Dmitry's asking whether the status conforms to the Linux's errno.h
+> ABI. If not, add something like:
+> 
+> ret = msg.resp.status ? -EINVAL : 0
+Yeah, responded on other thread. It does not, so will add the mapping.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Regards,
+Sricharan
 
