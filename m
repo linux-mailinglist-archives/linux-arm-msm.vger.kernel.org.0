@@ -1,158 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-50346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07D78A4FD49
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 12:12:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93ABCA4FD8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 12:25:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 447AF7A2CF6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 11:10:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C4CBF16C68F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 11:25:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D27B6233709;
-	Wed,  5 Mar 2025 11:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ED42233700;
+	Wed,  5 Mar 2025 11:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LqYBMGg6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e9z5ulmS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875DC221F04;
-	Wed,  5 Mar 2025 11:11:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B9221421B;
+	Wed,  5 Mar 2025 11:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741173065; cv=none; b=XXrLo2hIbktrwMKZGzjMDtlcuysKqaz45OL4U3gm2eIKWgcTRqK7eH1TQoE/7aKIVeg5uEWaBj7WJo2a4M0FiZgzr3KGaZhdoQ8qo1KOiLcnUHd37Ku+pOugpMbtyknXxhu8omTx0/z8DLmBLUmB6ksXJFzYwyqbXv5ePemApBw=
+	t=1741173946; cv=none; b=CNfbirXHzH7U6YLzATyonL0BSinz2mw0+eyRFqeuXP7cokRzIo/kT95KG/ngyDaEwk308RQ45WZS7DMzz5HHlNuIq6Ont9dtQ0osAwQdL+kRB0uQmDr9OT9pwqO/3CpaLUvLLMpLBRsFhsf4oG35PsM+/nTqnb5XE+yyTuQgnKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741173065; c=relaxed/simple;
-	bh=qTAsdsrJUTUWbKK4ZhG4aLb6W6hfmAB8F+V2U1SJfH4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h0R9IbGxTboKsNC0RDTDN/JXO2yTLOLyX7HBrVBLBCUNNRXN572aZUZLixhWm6yU9RDoChjnHYrj4XVPV8eVJ9BaHQyU+WwrcQ/s8+S3Q+ViyQbw4iguJTRknotz4eY8aG2skv4AcUUT23PAUPBAWwr9ySUOKTa4aqagdBA5x4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LqYBMGg6; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741173064; x=1772709064;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=qTAsdsrJUTUWbKK4ZhG4aLb6W6hfmAB8F+V2U1SJfH4=;
-  b=LqYBMGg611hqYLrQkfU60T9M4P5AO//fuJ6JU/g4w2tpXRdk1teEvkX9
-   QZ6/GDhxuHsSPncKnYlmBNKq5PJ7LQuq3p4/etH+0rVXuS0iCXKFP4VwV
-   OKh/3SoXKdU+ydorkrfAUO/8Y8Lf18w7JyP/YJ43nvQqwpbWZ67rY1sQT
-   pQFqDD7oSt5w5RT2gsBDBCK3dgvWV7HB+B68CLsXitSq3bSAMwGsyPgAC
-   wwOtRCjh47NmB5JSb5htrL4VOdI7mACTKBIW9agZ8RjBzq++cyjFSRAKZ
-   MOCdSdjVbwPprbAhHvAnLb9LlA5CKIarfKb6od2jFJqUY2zudbFqTmCxb
-   g==;
-X-CSE-ConnectionGUID: TXArdFR0QgiMkTHflGSoJw==
-X-CSE-MsgGUID: WSa6s9TxT8KqK74+aSdAWw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="59674659"
-X-IronPort-AV: E=Sophos;i="6.14,222,1736841600"; 
-   d="scan'208";a="59674659"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2025 03:11:03 -0800
-X-CSE-ConnectionGUID: MaOciZMWRDqStSP/9MpIeg==
-X-CSE-MsgGUID: ikPbNuTZS7GH8zhz5aqrgA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,222,1736841600"; 
-   d="scan'208";a="123691321"
-Received: from lkp-server02.sh.intel.com (HELO 76cde6cc1f07) ([10.239.97.151])
-  by orviesa004.jf.intel.com with ESMTP; 05 Mar 2025 03:11:00 -0800
-Received: from kbuild by 76cde6cc1f07 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tpmeL-000KsU-1o;
-	Wed, 05 Mar 2025 11:10:54 +0000
-Date: Wed, 5 Mar 2025 19:10:24 +0800
-From: kernel test robot <lkp@intel.com>
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, gregkh@linuxfoundation.org,
-	jirislaby@kernel.org, johan+linaro@kernel.org,
-	dianders@chromium.org, konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Subject: Re: [PATCH v1] serial: qcom-geni: Remove alias dependency from qcom
- serial driver
-Message-ID: <202503051821.tqFJ961p-lkp@intel.com>
-References: <20250304071423.4033565-1-quic_vdadhani@quicinc.com>
+	s=arc-20240116; t=1741173946; c=relaxed/simple;
+	bh=80mzRx1gZi6s/i8Tc9zi6G0YP5JCRzmj8kgPBqzBKZA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Msvrx9Zx9dU8c1zXGbNnry2dwCPKHn0eELlnWtfkh0mqaO9iKtlXdhQgF2aDGD4nMlU/uvRmvlvSW/hkRkIbOxqroQ05f4mcITkzOHjkA0sKo6jwQ9BkcnfL7oLsPaVNuP6aoTqhTkCPCHMbzeN01DDPzABB6UzLTgIGMcl764k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e9z5ulmS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 525B1B13029016;
+	Wed, 5 Mar 2025 11:25:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ggpKhzhXasTU/fGYnPTZ/bmi5BaVyOLTD83OpA3mNRo=; b=e9z5ulmS8wpuk7sv
+	3KDlZj0VtKQJFj1MJm8wYDJbYMZXEKIWV56UjtDAheVEvmbFIqwMeSR+gMuLGe96
+	X20KOiq7xD9Xn4pJosj1xToeARUSlYkE7sdyLIxO1ANrjqanh/caiT/aJev3m/Bm
+	fhNTEzFL5Exv/pixMcatdsKeQrswZ2sfZIhfZXcAGIPbwIzK3v2JEBp7AEceqIL7
+	JwBrLNOJXOYLBSV5a7Nh7G9Da39J02w3lR1wDveMP4Q6SieJykGNUq4rFTsTjwGw
+	tQbnZ1ou8gEEWHnzviZK3UZHP2VMmzSvHLxr/vKqY8Zv5/UdV7cR+2kHK390NO1Q
+	d1+M1w==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6tn5jh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 05 Mar 2025 11:25:25 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 525BPOJO032203
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 5 Mar 2025 11:25:24 GMT
+Received: from [10.152.201.53] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 5 Mar 2025
+ 03:25:20 -0800
+Message-ID: <04ca77f0-55de-3f1d-7cc8-5a7b9aa70b33@quicinc.com>
+Date: Wed, 5 Mar 2025 16:55:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250304071423.4033565-1-quic_vdadhani@quicinc.com>
-
-Hi Viken,
-
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on tty/tty-testing]
-[also build test WARNING on tty/tty-next tty/tty-linus usb/usb-testing usb/usb-next usb/usb-linus linus/master v6.14-rc5 next-20250304]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Viken-Dadhaniya/serial-qcom-geni-Remove-alias-dependency-from-qcom-serial-driver/20250304-152222
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
-patch link:    https://lore.kernel.org/r/20250304071423.4033565-1-quic_vdadhani%40quicinc.com
-patch subject: [PATCH v1] serial: qcom-geni: Remove alias dependency from qcom serial driver
-config: x86_64-buildonly-randconfig-006-20250305 (https://download.01.org/0day-ci/archive/20250305/202503051821.tqFJ961p-lkp@intel.com/config)
-compiler: clang version 19.1.7 (https://github.com/llvm/llvm-project cd708029e0b2869e80abe31ddb175f7c35361f90)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250305/202503051821.tqFJ961p-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503051821.tqFJ961p-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/tty/serial/qcom_geni_serial.c:267:40: warning: variable 'port' is uninitialized when used here [-Wuninitialized]
-     267 |                         line = idr_alloc(&port_idr, (void *)port, max_alias_num + 1, nr_ports,
-         |                                                             ^~~~
-   drivers/tty/serial/qcom_geni_serial.c:255:36: note: initialize the variable 'port' to silence this warning
-     255 |         struct qcom_geni_serial_port *port;
-         |                                           ^
-         |                                            = NULL
-   1 warning generated.
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v15 0/2] Add QPIC SPI NAND driver
+To: Mark Brown <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
+        <vigneshr@ti.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
+References: <20250224111414.2809669-1-quic_mdalam@quicinc.com>
+ <174109164799.27220.16782141488752139254.b4-ty@kernel.org>
+Content-Language: en-US
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <174109164799.27220.16782141488752139254.b4-ty@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=PMb1+eqC c=1 sm=1 tr=0 ts=67c834a5 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=PR9Bvw7T5Ps_q21Qd_UA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: -NSwt4c7gjvIN-N7JVhRMFkvSfB5O153
+X-Proofpoint-GUID: -NSwt4c7gjvIN-N7JVhRMFkvSfB5O153
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-05_04,2025-03-05_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=918
+ phishscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
+ mlxscore=0 adultscore=0 spamscore=0 suspectscore=0 impostorscore=0
+ clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503050092
 
 
-vim +/port +267 drivers/tty/serial/qcom_geni_serial.c
 
-   252	
-   253	static struct qcom_geni_serial_port *get_port_from_line(int line, bool console)
-   254	{
-   255		struct qcom_geni_serial_port *port;
-   256		int nr_ports = console ? GENI_UART_CONS_PORTS : GENI_UART_PORTS;
-   257	
-   258		if (console) {
-   259			if (line < 0 || line >= nr_ports)
-   260				return ERR_PTR(-ENXIO);
-   261	
-   262			port = &qcom_geni_console_port;
-   263		} else {
-   264			int max_alias_num = of_alias_get_highest_id("serial");
-   265	
-   266			if (line < 0 || line >= nr_ports)
- > 267				line = idr_alloc(&port_idr, (void *)port, max_alias_num + 1, nr_ports,
-   268						 GFP_KERNEL);
-   269			else
-   270				line = idr_alloc(&port_idr, (void *)port, line, nr_ports, GFP_KERNEL);
-   271	
-   272			if (line < 0)
-   273				return ERR_PTR(-ENXIO);
-   274	
-   275			port = &qcom_geni_uart_ports[line];
-   276		}
-   277		return port;
-   278	}
-   279	
+On 3/4/2025 6:04 PM, Mark Brown wrote:
+> On Mon, 24 Feb 2025 16:44:12 +0530, Md Sadre Alam wrote:
+>> v15:
+>>   * Skipping the following patches
+>> 	Merged:-
+>> 		mtd: rawnand: qcom: cleanup qcom_nandc driver
+>> 		mtd: rawnand: qcom: Add qcom prefix to common api
+>> 		mtd: nand: Add qpic_common API file
+>> 		mtd: rawnand: qcom: use FIELD_PREP and GENMASK
+>>
+>> [...]
+> 
+> Applied to
+> 
+>     https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+> 
+> Thanks!
+> 
+> [1/2] spi: dt-bindings: Introduce qcom,spi-qpic-snand
+>        commit: fd6bc2ba410bf7828dc2104bf78b51ccbb216c40
+> [2/2] spi: spi-qpic: add driver for QCOM SPI NAND flash Interface
+>        commit: 7304d1909080ef0c9da703500a97f46c98393fcd
+> 
+> All being well this means that it will be integrated into the linux-next
+> tree (usually sometime in the next 24 hours) and sent to Linus during
+> the next merge window (or sooner if it is a bug fix), however if
+> problems are discovered then the patch may be dropped or reverted.
+> 
+> You may get further e-mails resulting from automated or manual testing
+> and review of the tree, please engage with people reporting problems and
+> send followup patches addressing any issues that are reported if needed.
+> 
+> If any updates are required or you are submitting further changes they
+> should be sent as incremental updates against current git, existing
+> patches will not be replaced.
+> 
+> Please add any relevant lists and maintainers to the CCs when replying
+> to this mail.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Thanks Mark for pulling this ! I will follow it up
+
+Regards,
+Alam
 
