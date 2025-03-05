@@ -1,257 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-50389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86FF8A509A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 19:22:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E2F3A509D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 19:24:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B5BE188A997
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 18:20:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9EDD31887871
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 18:22:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 592C3253340;
-	Wed,  5 Mar 2025 18:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ECF42561AA;
+	Wed,  5 Mar 2025 18:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cR+e/FWR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yM7PyJ8X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1B92586CE;
-	Wed,  5 Mar 2025 18:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D2C253F3C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Mar 2025 18:18:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198604; cv=none; b=ouR5ZJBh90eCfpTVW14fFUeYEe0uKettSGUT3yTTmoKJWZfy3NCm2wkSKOU8U8z3D32WwXUJ67PSeTboRHKCh75mBEQGWjiydNytv6B81nqrD+2QEHisQ71iZE+xqdR6MIy+7bbuRzOFmGX8UnBxDy+G97TEoe9XuCKZe5rEapA=
+	t=1741198712; cv=none; b=lls13RtGSnwsqvilQuAd0ZQEpm4+cEUXHNImic80ZzZaO/s0vxSbN7qmCwT8CHu7SKKAeA56InBNQdXWg8G6RScPjhj4I0ax8YI2AMP2MUbTi+VjyWkznqG16wkvdHbNDnpK0CUvP0ztECCFQ0dE1tWd78H66xmPp7l32X4vlps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198604; c=relaxed/simple;
-	bh=IuhiorAeQVnzBjx5HSQYhc0QJ+5NAQdcEifEXX+IIt0=;
+	s=arc-20240116; t=1741198712; c=relaxed/simple;
+	bh=CHVPeNV4aZlMVIMSYfYeSO8Ba+Yk0fM8VLR/eAjSu4I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S6DxcF0uW45z0EnU0p7jySlzNfqNpNQFS7HBNZWsWEtmgdx45+zkIWYaG19UcdCw1grXsU+TE4YsYSUyYZgaRcHH6T27qLMVwKe+nLO4mFzJaht8QmN3DHhf+sFl076acnQ1e7X3mJvgupl2ZL1l5BMRheKPo1rMTYkfYe3YzMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cR+e/FWR; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741198602; x=1772734602;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=IuhiorAeQVnzBjx5HSQYhc0QJ+5NAQdcEifEXX+IIt0=;
-  b=cR+e/FWRcgIFpZ3FWIOZcDysuA07R1YhR33nFKFHdpdkQ1CfXcpHwUxU
-   tpN/LMDUR0r7tEgW/gAJe3Llx9ANJ5U8AlMXMVIQjYw1EsBKWLKGqWGGM
-   e49K4P8VKTTwqWCM40DGDAntBI6XseVnxOOKxUCWwkc8VgNBgONmojzq7
-   ukRaQs7E69n6Jk8nrp4vAx4NNmPLOX6nSPTtTN50avQBf437T9sxoRrOq
-   UF3EpqUIW1M3HsmJ6YXxT4acRUj3XDf/eMtD6Yfu6FrcgvJ3qFxN8MCAy
-   HLLlt0eaOMv/9ZwKehhQaNFuTzun0C8iUxS0ux4MStWerOxUbPF2dUA0p
-   w==;
-X-CSE-ConnectionGUID: fcC38o8mRs6kipXPwXaj0w==
-X-CSE-MsgGUID: YX390XDdRMKMjGOQKxa1yA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="42309697"
-X-IronPort-AV: E=Sophos;i="6.14,223,1736841600"; 
-   d="scan'208";a="42309697"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2025 10:16:39 -0800
-X-CSE-ConnectionGUID: pXyTLAHCRMyz68hR9SIvrQ==
-X-CSE-MsgGUID: kSx3iCvITgSvNkTh5sVCCw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,223,1736841600"; 
-   d="scan'208";a="123870140"
-Received: from lkp-server02.sh.intel.com (HELO 76cde6cc1f07) ([10.239.97.151])
-  by fmviesa004.fm.intel.com with ESMTP; 05 Mar 2025 10:16:35 -0800
-Received: from kbuild by 76cde6cc1f07 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tptIG-000Lrm-20;
-	Wed, 05 Mar 2025 18:16:32 +0000
-Date: Thu, 6 Mar 2025 02:16:23 +0800
-From: kernel test robot <lkp@intel.com>
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andi.shyti@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	gregkh@linuxfoundation.org, jirislaby@kernel.org, broonie@kernel.or,
-	andersson@kernel.org, konradybcio@kernel.org,
-	johan+linaro@kernel.org, dianders@chromium.org, agross@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+	 Content-Type:Content-Disposition:In-Reply-To; b=oIz0O4M8O19D8+7i+8O8cAPmJHfJz6YJu4+FZCZ4E+8e7Zt3FxMNxASYMeeB2AHLvxXFR4tCBB9w4rHDq7LRHtlepJU9+iRcRaBCbQmZ9gGS5OWRqGYwowpcbNitXsi40UWYSZHt0cGg4GDgzWCY4Pw2NrD0rhgDk/ocBFyV1qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yM7PyJ8X; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-22349dc31bcso128512625ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 10:18:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741198710; x=1741803510; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=oqKBFVD7BmtZnDhxGEB2Az6asxUlkas0B0Pi0JaurnM=;
+        b=yM7PyJ8X4kk63j4ccy9lJ0gMgtJ5teBQflWki6SSlA+gugv6ZOhbi+XXFQnSP3f1TJ
+         Z6U+mpkx5qRk3MRLL/T0XZggZBuCa6Pobkf+NSrBNmiIkDbs6HH10CDpdor79mZdafrf
+         SHw8QZHVtJt7ODMkHICpOHoBneG+dhYOCD9o/o2koj8poTkM9QegttakW7r7Q5uS8X+8
+         vPULZJ+wCAD1j+yTbCg+0tEIlNNdtPsmDRFpR1uphrFUzVLgVgI02CU1fj62ltwrRYuF
+         whdZeqfJOAmdV6DOr92JhLy6vz20mO099Zm+USL434UxpcOjTRiyIgxFwPhq+vcbHIwu
+         fqNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741198710; x=1741803510;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oqKBFVD7BmtZnDhxGEB2Az6asxUlkas0B0Pi0JaurnM=;
+        b=JcagnJKf+N0DbpdxRKCfVI7kBp7CyjLXmVmT+Iriyr2F7Yje9aG7keUhouCwlNghlm
+         BVb5bq/hNMV3bP8xal4ovwcTzXBnsPQrEZdFW/GPaRLyen4Jy6NIa5X1J3HO3Gu2bmax
+         J3JMNJ9sh93I5pgud66hMlBA4yl7jwRaRk4iFOad91WPCsS26CnMMlEsXsmyw3gscZJ9
+         qDA7j0lcAg8funYSq+qZADmfULUZfKJQl/fAhwsIE1MHAa8ue9iXQud/83IktVq5y+bt
+         UV/y7yDiwAi0sQHVQvy7HfrRlxZ0sqrOtEE0HVYuJ3+7TIW7JzARtWwrSvFmNfraPiZw
+         sjmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW8emhGT48kN0BhDDcEq46rrYzoiwv3pUeEG0CkvBFdwKRRFQKhN9EDz2ON5wHQQWc9CAWeRqe5t2hPTj+8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yym3WppnUTS5fK0Uuxl7UqAgFDRBlF2au+a1l3TtRhfCDQuoxeD
+	7xBU7myVDzUHLkO5uUpp0V6DS+c53fMUyECNNVLcTGKD8ybI5m1HELa4Zf9gMQ==
+X-Gm-Gg: ASbGncvVApBw/s1uBbXVY8lllM6vvVveTvZ+Lf+PU3BGCV3EJXZ8ndf3lzoGlfkhzsA
+	0JvcOHnjpDEqSWlvf12Em8RrEqxgvusfbm7ZblkZqyMgGd1W3wPzOX6h+2R2TOKUveJ5X3ArH6Q
+	hJZ4gFh1+MRs5xdCUbCbu4y6WX2QbrhDvfBb6eV2/exVwTDyGUa41RFxnJxNyDuIMGXJcL7bNoS
+	9qipiFfBkV1sxd1ovTvf0KhQRZczFWk+HfszIeQQ5GC1rOotJvj+3l+mA/5/5zyv11wK7b/k99z
+	KoFaRQz6tVz6eoMpamm8ydg0Le87ypc5El/FzX6lRO6agiHthkQnfnKQ
+X-Google-Smtp-Source: AGHT+IHTeeIhNi/0pb7+gb1R76gjf4Wb38QT5wJFtMtan4n6WS8u6zPjBJy02e3tGW2OydQi15Tvtw==
+X-Received: by 2002:a17:903:240a:b0:224:6a7:a5b0 with SMTP id d9443c01a7336-22406a7a82amr15559775ad.2.1741198710127;
+        Wed, 05 Mar 2025 10:18:30 -0800 (PST)
+Received: from thinkpad ([120.60.140.239])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22350514239sm116134605ad.219.2025.03.05.10.18.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Mar 2025 10:18:29 -0800 (PST)
+Date: Wed, 5 Mar 2025 23:48:23 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org, linux-spi@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, quic_msavaliy@quicinc.com,
-	quic_anupkulk@quicinc.com,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Subject: Re: [PATCH v3 6/9] soc: qcom: geni-se: Add support to load QUP SE
- Firmware via Linux subsystem
-Message-ID: <202503060145.gERd9R0P-lkp@intel.com>
-References: <20250303124349.3474185-7-quic_vdadhani@quicinc.com>
+	linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_mrana@quicinc.com, quic_vpernami@quicinc.com,
+	mmareddy@quicinc.com
+Subject: Re: [PATCH v4 3/4] PCI: dwc: Reduce DT reads by allocating host
+ bridge via DWC glue driver
+Message-ID: <20250305181823.ltm54e4yxaj5etw5@thinkpad>
+References: <20250207-ecam_v4-v4-0-94b5d5ec5017@oss.qualcomm.com>
+ <20250207-ecam_v4-v4-3-94b5d5ec5017@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250303124349.3474185-7-quic_vdadhani@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250207-ecam_v4-v4-3-94b5d5ec5017@oss.qualcomm.com>
 
-Hi Viken,
+On Fri, Feb 07, 2025 at 04:58:58AM +0530, Krishna Chaitanya Chundru wrote:
+> dw_pcie_ecam_supported() needs to read bus-range to find the maximum
+> bus range value. The devm_pci_alloc_host_bridge() is already reading
+> bus range and storing it in host bridge.If devm_pci_alloc_host_bridge()
+> moved to start of the controller probe, the dt reading can be avoided
+> and use values stored in the host bridge.
+> 
+> Allow DWC glue drivers to allocate the host bridge, avoiding redundant
+> device tree reads primarily in dw_pcie_ecam_supported().
+> 
+> Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware-host.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 826ff9338646..a18cb1e411e4 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -484,8 +484,8 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  	struct device *dev = pci->dev;
+>  	struct device_node *np = dev->of_node;
+>  	struct platform_device *pdev = to_platform_device(dev);
+> +	struct pci_host_bridge *bridge = pp->bridge;
+>  	struct resource_entry *win;
+> -	struct pci_host_bridge *bridge;
+>  	struct resource *res;
+>  	int ret;
+>  
+> @@ -527,7 +527,12 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  	if (!bridge)
+>  		return -ENOMEM;
+>  
+> -	pp->bridge = bridge;
+> +	if (!pp->bridge) {
 
-kernel test robot noticed the following build warnings:
+'pp->bridge' is getting dereferenced above as I indicated in patch 1.
 
-[auto build test WARNING on andi-shyti/i2c/i2c-host]
-[also build test WARNING on robh/for-next tty/tty-testing tty/tty-next tty/tty-linus linus/master v6.14-rc5 next-20250305]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> +		bridge = devm_pci_alloc_host_bridge(dev, 0);
+> +		if (!bridge)
+> +			return -ENOMEM;
+> +		pp->bridge = bridge;
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Viken-Dadhaniya/dt-bindings-qcom-geni-se-Add-firmware-name-property-for-firmware-loading/20250303-204936
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git i2c/i2c-host
-patch link:    https://lore.kernel.org/r/20250303124349.3474185-7-quic_vdadhani%40quicinc.com
-patch subject: [PATCH v3 6/9] soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem
-config: mips-randconfig-r131-20250305 (https://download.01.org/0day-ci/archive/20250306/202503060145.gERd9R0P-lkp@intel.com/config)
-compiler: clang version 21.0.0git (https://github.com/llvm/llvm-project 14170b16028c087ca154878f5ed93d3089a965c6)
-reproduce: (https://download.01.org/0day-ci/archive/20250306/202503060145.gERd9R0P-lkp@intel.com/reproduce)
+There is already a previous devm_pci_alloc_host_bridge() call before this and
+you are just duplicating the code here.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503060145.gERd9R0P-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/soc/qcom/qcom-geni-se.c:1215:9: sparse: sparse: cast removes address space '__iomem' of expression
->> drivers/soc/qcom/qcom-geni-se.c:1215:9: sparse: sparse: cast removes address space '__iomem' of expression
->> drivers/soc/qcom/qcom-geni-se.c:1215:9: sparse: sparse: cast removes address space '__iomem' of expression
-
-vim +/__iomem +1215 drivers/soc/qcom/qcom-geni-se.c
-
-  1112	
-  1113	/**
-  1114	 * geni_load_se_fw() - Load Serial Engine specific firmware.
-  1115	 * @rsc: Pointer to a structure representing SE-related resources.
-  1116	 * @fw: Pointer to the firmware structure.
-  1117	 *
-  1118	 * Load the protocol firmware into the IRAM of the Serial Engine.
-  1119	 *
-  1120	 * Return: 0 if successful, otherwise return an error value.
-  1121	 */
-  1122	static int geni_load_se_fw(struct qup_se_rsc *rsc, const struct firmware *fw)
-  1123	{
-  1124		const u32 *fw_val_arr, *cfg_val_arr;
-  1125		const u8 *cfg_idx_arr;
-  1126		u32 i, reg_value, mask, ramn_cnt;
-  1127		int ret;
-  1128		struct elf_se_hdr *hdr;
-  1129		struct elf32_phdr *phdr;
-  1130	
-  1131		ret = geni_icc_set_bw(rsc->se);
-  1132		if (ret) {
-  1133			dev_err(rsc->se->dev, "%s: Failed to set ICC BW %d\n", __func__, ret);
-  1134			return ret;
-  1135		}
-  1136	
-  1137		ret = geni_icc_enable(rsc->se);
-  1138		if (ret) {
-  1139			dev_err(rsc->se->dev, "%s: Failed to enable ICC %d\n", __func__, ret);
-  1140			return ret;
-  1141		}
-  1142	
-  1143		ret = geni_se_resources_on(rsc->se);
-  1144		if (ret) {
-  1145			dev_err(rsc->se->dev, "%s: Failed to enable common clocks %d\n", __func__, ret);
-  1146			goto err;
-  1147		}
-  1148	
-  1149		ret = read_elf(rsc, fw, &hdr, &phdr);
-  1150		if (ret) {
-  1151			dev_err(rsc->se->dev, "%s: ELF parsing failed ret: %d\n", __func__, ret);
-  1152			goto err;
-  1153		}
-  1154	
-  1155		fw_val_arr = (const u32 *)((u8 *)hdr + hdr->fw_offset);
-  1156		cfg_idx_arr = (const u8 *)hdr + hdr->cfg_idx_offset;
-  1157		cfg_val_arr = (const u32 *)((u8 *)hdr + hdr->cfg_val_offset);
-  1158	
-  1159		geni_config_common_control(rsc);
-  1160	
-  1161		/* Allows to drive corresponding data according to hardware value. */
-  1162		writel_relaxed(0x0, rsc->se->base + GENI_OUTPUT_CTRL);
-  1163	
-  1164		/* Set SCLK and HCLK to program RAM */
-  1165		setbits32(rsc->se->base + GENI_CGC_CTRL, GENI_CGC_CTRL_PROG_RAM_SCLK_OFF_BMSK |
-  1166				GENI_CGC_CTRL_PROG_RAM_HCLK_OFF_BMSK);
-  1167		writel_relaxed(0x0, rsc->se->base + SE_GENI_CLK_CTRL);
-  1168		clrbits32(rsc->se->base + GENI_CGC_CTRL, GENI_CGC_CTRL_PROG_RAM_SCLK_OFF_BMSK |
-  1169				GENI_CGC_CTRL_PROG_RAM_HCLK_OFF_BMSK);
-  1170	
-  1171		/* Enable required clocks for DMA CSR, TX and RX. */
-  1172		reg_value = DMA_GENERAL_CFG_AHB_SEC_SLV_CLK_CGC_ON_BMSK |
-  1173			DMA_GENERAL_CFG_DMA_AHB_SLV_CLK_CGC_ON_BMSK |
-  1174			DMA_GENERAL_CFG_DMA_TX_CLK_CGC_ON_BMSK |
-  1175			DMA_GENERAL_CFG_DMA_RX_CLK_CGC_ON_BMSK;
-  1176	
-  1177		setbits32(rsc->se->base + DMA_GENERAL_CFG, reg_value);
-  1178	
-  1179		/* Let hardware control CGC by default. */
-  1180		writel_relaxed(DEFAULT_CGC_EN, rsc->se->base + GENI_CGC_CTRL);
-  1181	
-  1182		/* Set version of the configuration register part of firmware. */
-  1183		writel_relaxed(hdr->cfg_version, rsc->se->base + GENI_INIT_CFG_REVISION);
-  1184		writel_relaxed(hdr->cfg_version, rsc->se->base + GENI_S_INIT_CFG_REVISION);
-  1185	
-  1186		/* Configure GENI primitive table. */
-  1187		for (i = 0; i < hdr->cfg_size_in_items; i++)
-  1188			writel_relaxed(cfg_val_arr[i],
-  1189				       rsc->se->base + GENI_CFG_REG0 + (cfg_idx_arr[i] * sizeof(u32)));
-  1190	
-  1191		/* Configure condition for assertion of RX_RFR_WATERMARK condition. */
-  1192		reg_value = readl_relaxed(rsc->se->base + QUPV3_SE_HW_PARAM_1);
-  1193		mask = (reg_value >> RX_FIFO_WIDTH_BIT) & RX_FIFO_WIDTH_MASK;
-  1194		writel_relaxed(mask - 2, rsc->se->base + GENI_RX_RFR_WATERMARK_REG);
-  1195	
-  1196		/* Let hardware control CGC */
-  1197		setbits32(rsc->se->base + GENI_OUTPUT_CTRL, DEFAULT_IO_OUTPUT_CTRL_MSK);
-  1198	
-  1199		ret = geni_configure_xfer_mode(rsc);
-  1200		if (ret)
-  1201			goto err_resource;
-  1202	
-  1203		geni_enable_interrupts(rsc);
-  1204	
-  1205		geni_flash_fw_revision(rsc, hdr);
-  1206	
-  1207		ramn_cnt = hdr->fw_size_in_items;
-  1208		if (hdr->fw_size_in_items % 2 != 0)
-  1209			ramn_cnt++;
-  1210	
-  1211		if (ramn_cnt >= MAX_GENI_CFG_RAMn_CNT)
-  1212			goto err_resource;
-  1213	
-  1214		/* Program RAM address space. */
-> 1215		memcpy((void *)(rsc->se->base + SE_GENI_CFG_RAMN), fw_val_arr, ramn_cnt * sizeof(u32));
-  1216	
-  1217		/* Put default values on GENI's output pads. */
-  1218		writel_relaxed(0x1, rsc->se->base + GENI_FORCE_DEFAULT_REG);
-  1219	
-  1220		/* High to low SCLK and HCLK to finish RAM. */
-  1221		setbits32(rsc->se->base + GENI_CGC_CTRL, GENI_CGC_CTRL_PROG_RAM_SCLK_OFF_BMSK |
-  1222				GENI_CGC_CTRL_PROG_RAM_HCLK_OFF_BMSK);
-  1223		setbits32(rsc->se->base + SE_GENI_CLK_CTRL, GENI_CLK_CTRL_SER_CLK_SEL_BMSK);
-  1224		clrbits32(rsc->se->base + GENI_CGC_CTRL, GENI_CGC_CTRL_PROG_RAM_SCLK_OFF_BMSK |
-  1225				GENI_CGC_CTRL_PROG_RAM_HCLK_OFF_BMSK);
-  1226	
-  1227		/* Serial engine DMA interface is enabled. */
-  1228		setbits32(rsc->se->base + SE_DMA_IF_EN, DMA_IF_EN_DMA_IF_EN_BMSK);
-  1229	
-  1230		/* Enable or disable FIFO interface of the serial engine. */
-  1231		if (rsc->mode == GENI_SE_FIFO)
-  1232			clrbits32(rsc->se->base + SE_FIFO_IF_DISABLE, FIFO_IF_DISABLE);
-  1233		else
-  1234			setbits32(rsc->se->base + SE_FIFO_IF_DISABLE, FIFO_IF_DISABLE);
-  1235	
-  1236	err_resource:
-  1237		geni_se_resources_off(rsc->se);
-  1238	err:
-  1239		geni_icc_disable(rsc->se);
-  1240		return ret;
-  1241	}
-  1242	
+- Mani
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+மணிவண்ணன் சதாசிவம்
 
