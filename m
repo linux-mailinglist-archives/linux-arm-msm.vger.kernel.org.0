@@ -1,150 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-50369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F5FFA50196
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 15:17:42 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3C26A501C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 15:23:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A273B189506E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 14:17:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5FDD87A58E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 14:22:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A69C1624D2;
-	Wed,  5 Mar 2025 14:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82E4E24C66B;
+	Wed,  5 Mar 2025 14:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MG7RhF0m"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="beXjxic7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FACE1519BD;
-	Wed,  5 Mar 2025 14:17:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCC624BC04
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Mar 2025 14:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741184259; cv=none; b=atgagzA1GyTz/fN43ixIN4VxLAXhxososHJEz1RZ0jdO5yvAiddLmD+WMsH9NqZRiC0RRwOaoYesHoUjJqLeN9oPHCQmUk5uype9pvUuj+c7DJv1peSGRtRTfLMEjCJOdbv900Vn6l+LYjgqalY/NUy0CwN/xVwcarpXYOBlJz0=
+	t=1741184569; cv=none; b=LZOUZjIKyws/qYB6P3/7c2h75zxwx8+V+cdiSEapRr+GR72SjNshcSr4KDGnMDbasiLGqX8g0oNjGCaUp/F9Aisc2HaqZg6CPn10d7ez0U8jaWee9rDmQxhZqQl2MLg52Cp6Pm6ycxG5d3QRl6SRyzSGOlfYtdBoko8nck3RPG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741184259; c=relaxed/simple;
-	bh=szqbKH7W9vbz4ovkEVsJkbRnb9ADDfH2Na4Vmjiwx4g=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OdhdmTvmfoD+YKI/eiuKG/HMrVtFxA9Wh/yfYbFt8pBaxQ5q5+O449yzUYfhBxOJoUuPSbjVx7s74ZtBLi/JXsB9D7o/JR1MyxKz1xzmFUL2/cOGIb/N5F6qXvUSacuXwkrHzhcObe4R3DwKcsoDhtMUObrjumy027Hd1nDvr9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MG7RhF0m; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43bcc04d4fcso12767595e9.2;
-        Wed, 05 Mar 2025 06:17:37 -0800 (PST)
+	s=arc-20240116; t=1741184569; c=relaxed/simple;
+	bh=AALPqvcYdPu/fCVh5D4pZZdU0PPcB5iUhjNbx3HZ620=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=lQQf5fDLrPi89p8Ncap7gva59JbCh0ShH/aOmDl1+LR8B5Ao4EEyaOUc8jZI7XCoPoECprPhtSyRuHPtHLNW04sNMI/h4nJAqy3zFTxtp6U19DzriIfF1dAfiHtgz75jedjolKfI90gkJ5xRiVGow8+uUsfYwi6QjfFSj28ooUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=beXjxic7; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-438a39e659cso46815705e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 06:22:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741184255; x=1741789055; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BvAmhIp672FcTh8QydCVgJQ9OGkof1lTKDgnIKxGf1A=;
-        b=MG7RhF0mrpLyoJ1UdLoHjN0rvOp0+QJWOpYybZY5QtvllNYLqxQB+LI5BTmLzEBMm5
-         Jw7lbAAvdjzGrTdxXp7qLki07iLyATNsKbhdFXR0dwIHqwEfZQ0Yc1OyXv5xgRFU2ywa
-         9+PpcTmURwmTw2zkCZjtLGgUzOsMqd3rZEUjhnq5AR9q/vfY60qsx9IWsSQvAHe6tiql
-         1IZnkQqFJ0EiI0b/5mK4GYaGBrqRlFi/P0mZ00CjKA828tJkRyrjGlxY/V7/5jt/e5Vw
-         OogZrcQGIn9bxSV8pNsX2/hhLHzzAGSgRJ4cUJ1MjPcQTWVaLTU6OlOysdUEV/SrzNe9
-         gc1Q==
+        d=linaro.org; s=google; t=1741184564; x=1741789364; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lSyv7n07CeQN6+Dte2tX+sn3X8BMnYtDKpvbKeDUuO8=;
+        b=beXjxic7ijorklMY2vS9QAfyD0PO88EenyjCpr8siL119joxL/npEIgh8UgQ484xT9
+         12HgcXcIFyGFju4mbhDdT0nPRlkZbqYLrwKBmU+X5gm01n8K49nvIA8n4U2l7C9fFf6m
+         m7V025ox7qIML9YmVHwLlz+cS1nazOYwW92MFyTpautwUp+CSbT+JcT8GZYjTi6ETQXo
+         mNUZZsbPKjb0gEZB4j0w3QYsLysXmcVue/hU3R8ZEp1TFQPhrj6pBVT3II/M/ugtaHHB
+         yhsc4C4wrku5CGusLNaK7oifODyUht2RVaJ55baxunmLeguzAIHFpyNLpxc9A5hUF8fA
+         tAJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741184255; x=1741789055;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BvAmhIp672FcTh8QydCVgJQ9OGkof1lTKDgnIKxGf1A=;
-        b=YC+HIbr6WUpV9aaAkwhkJx4WRF6254jod4v4GQXyO7oDL2tS/NyMix3JfngYF8sP/v
-         IXsMjm+N+HrFcqoPBpPrI0YmJUqrm/kd+hHvESoGGuswEbtR9IHUEjV9FFuAHC/3Se6O
-         JiNnSja/9G+ZftngUTjBpU8IR7acbMYD7CyoJnp5NJA+y2323ZHG0xdY4cK5Fu3oThLF
-         QVsAkkLf1la4l7TqPKYZq4YPo0UqEOGgjSrWtrsvclP2m6Gq5iWhMHTZT2Dd718u1a2o
-         5iKjFHCOWSEUQnwP0yLkfGv2YrE1ztQ9OftgewkgS60WUidZ6RATVsaHe9J1aIa+BKdN
-         bRYw==
-X-Forwarded-Encrypted: i=1; AJvYcCUUCCz/alWfxNJsDOJYO2bM7FI5S4f4rt8oE0ScvTbd1R/cazAi0tguEpdCtCOb/ZNqeAUIZ1+WbaHIaH2R@vger.kernel.org, AJvYcCVOhfilVoZJnAYGzq9w6TKTmtFwwCIOaAxbXS9Hr7B1MoExbvLGE6nOMgrc7p17bbt5v2shg8nR7HLqrY6GUQ==@vger.kernel.org, AJvYcCVn9qM2u7UKWt7kz12Wt2HQk9jISMuV407lDOaLFXkyyz87ybnNiwtY5sqUl04nLSI0gQjE28ElcBcmb4rfQII=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYPX/q4nN8jcqQeAzrWeu5Cq3oCJ0+dJIHxNdtcWVYivDdRt0Y
-	kqqfGJ/D0AThqcNgXsAcGauzM5J5S788NfTIVnpOzcxNaOcR/YEA
-X-Gm-Gg: ASbGnctrTrxd1b/jYje6ilMTHt5QzkEBKIf8YPoVIECrZLsAtM/v+K6ZFbXdZP7oIxU
-	Ydk3IRJOxvFk1NLm+gGYalWUwJtSvujso3M40If09cwhrEeWJ++DAKl0y8FR4T49Bb03M2vzP/e
-	MIeVsPyMCFsMd+rsuJlo7Zon1q8rFkIVUOEgZOVA9rqiMItnY4HJrtT/pZYK3ACr/KHxlxsTxJ8
-	elDRB8SLcegPPDlBsO3GIXesFqhiUSHno7nZiBx4VHT79IccN+m0+ou4+jWKbSWvruQNsSnRgE5
-	2UJY1qXYSWxCEhyg8xrMu+qCN58G5hUi2QpiLItV2GzQCg/CUMKXq2bpyAr/Ui2xP3YvU5mMQya
-	d9ScUCfA=
-X-Google-Smtp-Source: AGHT+IHvrbtQypROMlLTHn2hwI/hJh1CATinBr60gY+FLSdoAnk3R75qGQ0/XKEyAvFG+ldQ1Dh+tA==
-X-Received: by 2002:a05:600c:35d4:b0:439:9f42:c137 with SMTP id 5b1f17b1804b1-43bd298f9fbmr29484425e9.11.1741184254319;
-        Wed, 05 Mar 2025 06:17:34 -0800 (PST)
-Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bd4291ffbsm18687465e9.15.2025.03.05.06.17.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Mar 2025 06:17:33 -0800 (PST)
-Date: Wed, 5 Mar 2025 14:17:32 +0000
-From: David Laight <david.laight.linux@gmail.com>
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Markus Elfring <Markus.Elfring@web.de>, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, kernel-janitors@vger.kernel.org,
- freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Archit Taneja <architt@codeaurora.org>, Daniel Vetter <daniel@ffwll.ch>,
- David Airlie <airlied@gmail.com>, Jeykumar Sankaran
- <jsanka@codeaurora.org>, Jordan Crouse <jordan@cosmicpenguin.net>, Marijn
- Suijten <marijn.suijten@somainline.org>, Rob Clark <robdclark@gmail.com>,
- Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>, Vinod Koul
- <vkoul@kernel.org>, cocci@inria.fr, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC] Clarification for =?UTF-8?B?4oCcdW5kZWZpbmVkIGJlaGF2?=
- =?UTF-8?B?aW91cuKAnT8=?=
-Message-ID: <20250305141732.26b91742@pumpkin>
-In-Reply-To: <4c489b64-4c25-43e3-90d3-37f2f335d665@stanley.mountain>
-References: <40c60719-4bfe-b1a4-ead7-724b84637f55@web.de>
-	<1a11455f-ab57-dce0-1677-6beb8492a257@web.de>
-	<13566308-9a80-e4aa-f64e-978c02b1406d@web.de>
-	<54c30a69-71cf-4582-9086-50eb0d39f273@web.de>
-	<k7un3bjavyt4ogscgc7jn7thfobegaguqqiy7gtypmq6vq7zox@l4bsevbsjrud>
-	<29b32b0d-312d-4848-9e26-9e5e76e527a7@stanley.mountain>
-	<e665514b-5a62-4afb-b267-7c320e4872af@web.de>
-	<4c489b64-4c25-43e3-90d3-37f2f335d665@stanley.mountain>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
+        d=1e100.net; s=20230601; t=1741184564; x=1741789364;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lSyv7n07CeQN6+Dte2tX+sn3X8BMnYtDKpvbKeDUuO8=;
+        b=B4Tuv8NGTmx8MAiKscCElJcVS/bphrSPSdqX2mEKnzf3Pz/IK/vzfFkhFnp5Acw+Um
+         RphttwhGXNswIO+KgZHcqJkeq0JCBrK7EKAJs5RGm02wGpGiUE3dT4jRgLIWhKZ18VeM
+         N8aNv30O2aLq2tY80k/GJ3wF7pDvIitO3X94zN3hKt46v7UgjAXJYDAN1wNFBzn02TzN
+         7ZAEwQ/8hrTbX63TR5KGJN1eHLJID2vE8TA5CWGzm54vp1Rq8Qmi6zJHiza58gZ4zDBY
+         GcmfCtmKuvI+Ob0levje1eIwYG6HpZfAEs/maIKj/9YH5cHc/iHbur0kgOK2sjZnGQk5
+         6NvA==
+X-Forwarded-Encrypted: i=1; AJvYcCW9ba0PJR9NoCMWgWo8+7QXe3pbaW0/1uqLBhZ+4aXuHwkoaUn1mSv4XXcwjuSF+blyrb7OrfNLjX3A+mRo@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0pCig5chwNhPYtbzuySaA814YsjkipUsw4TozGgVU4XI0s9Lw
+	VAjXpgdDTZ70DYs6wWqU7FfUUbJToWsL56S679pzJkGfX1HsoAkH6K1gB12MHrw=
+X-Gm-Gg: ASbGncuXOoMHvm7Ahb362KryxxwUC4UzqXmWjuqG+Upv7wzegqilJ/XJuPtNdo55OMP
+	O62hdm6EQ3YSHkDQUmgDufYGKzmMU2gEN5o1+CL2EwR0l1iXhEeOBltwWSt6BPsBiEwyRUxp59G
+	euT/g/6oZlvwBT7AvWrY8Tz6SGLT8QEUYWy5x/cgVwaRQgHvd+NNGfz2qh3nXIAo2QsUh8LfkJk
+	M4BQtDFHiu3k11oO41j1K7GB9sfN8SMjeuakGOR9VpPgqyMxkNtLICKYjRUgQ+Pmn8bBeRwyXj8
+	KY70+5rDsmuGBnsfGrDaO4yCbCGTH3OSFH8/Qg5vNpUmhedJDb0kT4xsG4pNop9ABvQR9xi5JdT
+	p0gCCxvAc7NiLGRiTjhZMpg==
+X-Google-Smtp-Source: AGHT+IFB474KXfR5EAvEooEwHvPvIfuEC3OzGNc/14oi/JyC0//Cf/vNiQaW0zY3Obiz1lHAh1K7zg==
+X-Received: by 2002:a05:600c:190a:b0:43b:cbe2:ec0c with SMTP id 5b1f17b1804b1-43bd29c9377mr25131845e9.27.1741184564283;
+        Wed, 05 Mar 2025 06:22:44 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:d001:4ab2:d11a:658b? ([2a01:e0a:982:cbb0:d001:4ab2:d11a:658b])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bd4292f0bsm18746375e9.15.2025.03.05.06.22.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Mar 2025 06:22:43 -0800 (PST)
+Message-ID: <6d88effc-2aed-4f92-89a7-17d48f43ccd3@linaro.org>
+Date: Wed, 5 Mar 2025 15:22:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [RFC PATCH 00/12] Add support for HEVC and VP9 codecs in decoder
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>, quic_vgarodia@quicinc.com,
+ quic_abhinavk@quicinc.com, mchehab@kernel.org
+Cc: hverkuil@xs4all.nl, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250305104335.3629945-1-quic_dikshita@quicinc.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250305104335.3629945-1-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 5 Mar 2025 11:51:59 +0300
-Dan Carpenter <dan.carpenter@linaro.org> wrote:
+Hi,
 
-> On Wed, Mar 05, 2025 at 09:40:43AM +0100, Markus Elfring wrote:
-> > >>> The address of a data structure member was determined before
-> > >>> a corresponding null pointer check in the implementation of
-> > >>> the functions =E2=80=9Cdpu_hw_pp_enable_te=E2=80=9D and =E2=80=9Cdp=
-u_hw_pp_get_vsync_info=E2=80=9D.
-> > >>>
-> > >>> Thus avoid the risk for undefined behaviour by removing extra
-> > >>> initialisations for the variable =E2=80=9Cc=E2=80=9D (also because =
-it was already
-> > >>> reassigned with the same value behind this pointer check). =20
-> > > There is no undefined behavior here. =20
-> >=20
-> > Is there a need to improve the wording precision?
-> >=20
-> > There are words which denote a special meaning according to aspects of
-> > the programming language =E2=80=9CC=E2=80=9D.
-> > https://en.cppreference.com/w/c/language/behavior
-> >=20
-> > Dereferences of null pointers are treated in special ways. =20
->=20
-> This not a dereference.  It's just pointer math.
+On 05/03/2025 11:43, Dikshita Agarwal wrote:
+> Hi all,
+> 
+> This patch series adds initial support for the HEVC(H.265) and VP9
+> codecs in iris decoder. The objective of this work is to extend the
+> decoder's capabilities to handle HEVC and VP9 codec streams,
+> including necessary format handling and buffer management.
+> In addition, the series also includes a set of fixes to address issues
+> identified during testing of these additional codecs.
+> 
+> I'm sharing this series as an RFC because compliance and conformance
+> testing are still in progress.
+> While initial functional tests show positive results, I would
+> appreciate early feedback on the design, implementation, and fixes
+> before moving to a formal submission.
+> 
+> I plan to submit a formal patch series after completing all compliance
+> checks. Meanwhile, any feedback or suggestion to improve this work are
+> very welcome.
+> 
+> Thanks,
+> Dikshita
+> 
+> Dikshita Agarwal (12):
+>    media: iris: Add HEVC and VP9 formats for decoder
+>    media: iris: Add platform capabilities for HEVC and VP9 decoders
+>    media: iris: Set mandatory properties for HEVC and VP9 decoders.
+>    media: iris: Add internal buffer calculation for HEVC and VP9 decoders
+>    media: iris: Skip destroying internal buffer if not dequeued
+>    media: iris: Update CAPTURE format info based on OUTPUT format
+>    media: iris: Add handling for corrupt and drop frames
+>    media: iris: Avoid updating frame size to firmware during reconfig
+>    media: iris: Avoid sending LAST flag multiple times
+>    media: iris: Send V4L2_BUF_FLAG_ERROR for buffers with 0 filled length
+>    media: iris: Fix handling of eos buffer during drain
+>    media: iris: Add handling for no show frames
 
-And the 'fun' starts because NULL isn't required to use the all-zero
-bit pattern.
-Regardless of the bit-pattern, things like (void *)(1 - 1) are valid
-NULL pointers.
+I should be better to move patches 1, 2 & 3 at the end, after the patches
+adding support for specific hecv & h265 features, and please check that
+none of the patches breaks h264 at any time to keep bisectability.
 
-Of course, while C allows this, I doubt NULL has ever been other than 0.
-(It was 0 on a system I used many years ago where the O/S invalid pointer
-was ~0.)
+Neil
 
-I know Clang has started warning about arithmetic on NULL.
-I wonder when it is going to start warning about memset(p, 0, sz)
-for anything that contains a pointer - equally invalid.
+Neil
 
-	David
+> 
+>   .../media/platform/qcom/iris/iris_buffer.c    |  22 +-
+>   drivers/media/platform/qcom/iris/iris_ctrls.c |  28 +-
+>   .../platform/qcom/iris/iris_hfi_common.h      |   1 +
+>   .../qcom/iris/iris_hfi_gen1_command.c         |  38 +-
+>   .../qcom/iris/iris_hfi_gen1_defines.h         |   4 +
+>   .../qcom/iris/iris_hfi_gen1_response.c        |  11 +
+>   .../qcom/iris/iris_hfi_gen2_command.c         | 129 +++++-
+>   .../qcom/iris/iris_hfi_gen2_defines.h         |   5 +
+>   .../qcom/iris/iris_hfi_gen2_response.c        |  56 ++-
+>   .../media/platform/qcom/iris/iris_instance.h  |   6 +
+>   .../platform/qcom/iris/iris_platform_common.h |  25 +-
+>   .../platform/qcom/iris/iris_platform_sm8250.c |   4 +-
+>   .../platform/qcom/iris/iris_platform_sm8550.c | 141 ++++++-
+>   drivers/media/platform/qcom/iris/iris_vb2.c   |   3 +-
+>   drivers/media/platform/qcom/iris/iris_vdec.c  |  80 +++-
+>   drivers/media/platform/qcom/iris/iris_vdec.h  |  11 +
+>   drivers/media/platform/qcom/iris/iris_vidc.c  |   3 -
+>   .../platform/qcom/iris/iris_vpu_buffer.c      | 397 +++++++++++++++++-
+>   .../platform/qcom/iris/iris_vpu_buffer.h      |  46 +-
+>   19 files changed, 931 insertions(+), 79 deletions(-)
+> 
+
 
