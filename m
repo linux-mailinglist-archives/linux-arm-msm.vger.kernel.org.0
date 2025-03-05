@@ -1,293 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-50330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 188ECA4FBB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 11:21:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E604DA4FC77
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 11:44:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C14916CE5F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 10:21:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B53816C529
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 10:44:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42D342066F0;
-	Wed,  5 Mar 2025 10:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B37F520C49B;
+	Wed,  5 Mar 2025 10:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B8S6wrjo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ewLhR7Ov"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A4C13AC1;
-	Wed,  5 Mar 2025 10:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFE62066F3;
+	Wed,  5 Mar 2025 10:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741170082; cv=none; b=d8RvJ/xRrv8H5y/90EknqQ9Gahz7WJRp7gXaKH6qXSP3pGOrOUsXQBR2IrMnsEcvBAAoydY52rl15mgV4bOCa+O1bgaqjUdbg/2RFaC3eTlmXdglwdDPjNborFhJ3mJNOr9bR2fuse9hzlwjvixQkAvIzuusr4/WxF7cBMbai5w=
+	t=1741171473; cv=none; b=ne72R7eeNR6HhBJdDNkeSy7pR0bXx91KUb9m4DpbGmIL48cPiCj0TnJKKeXKPRgEI+7He71QqKPA28FeUQKj8B32eT8r5GPybaUFNDFyD61/ZK0d3Tae3F/KGC8KProiohA2fmtDbAMqj/Z1TRJ8LJnjHtqIG0r3HHG+oagkx00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741170082; c=relaxed/simple;
-	bh=QbxmpxWZZBeNxYcyEBZNbVhuzYUT1ZuDLIY1dbcagA0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GhYRHVv4yilzjNFwpeFtsWr5YhtCmOumF/X2xkPVRT5BFMQVIbWi13ob8H208vfKz3fVcspAknRgH2wXsOgIBxntyGGhyPRN/iCVkSdOdxXQSEOlYElL3OvMtuLuhGcUWoXbqtYfkZ7afla3NRTTp9DxYjD9bRADjHTRFzU1Ps4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B8S6wrjo; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1741171473; c=relaxed/simple;
+	bh=/OYfXaBPrkoa14cxdMWTGkLSKxQbTY1GqVh8e14rxBA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cZ0we3jksE7B1h/W37yrxTvpKVpUp9CzB8xyAQTQQ/aGGBa/gCiEJe13PtKaxqrEQ9y8vucAJjJgURYvcEiUIsQEk6agsuvQj9Px+fL2ZyS4XcrUGrXWzw9Bbp6UpQ4oIOb/9BioU+YERYdIBzFaDh68Bhc9RzPuBgSNA0fZL1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ewLhR7Ov; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524N9vor012465;
-	Wed, 5 Mar 2025 10:20:56 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 524NAbFZ027880;
+	Wed, 5 Mar 2025 10:44:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+ROcKvUblyM/oecfiHr/sopXV3L5MwWZxt5566wETFk=; b=B8S6wrjoJnL3Kufd
-	x4hMdJukTjzGSOwZhbsWIhxbNoStYsP4fXUTuyMMqIyJcg4T+QkFVN70e8GpeWku
-	JEEiTDpuhnZ1Tr51IO48SJoGpz1gTRVvPjEnCjrev7bbL54JE4fWPEYaKYQWTgWq
-	lHbp8kuBzfHGj/+2yL9BiE+tf5TIY0AIYHg8hCk93p0M/QC9/y4i8zxC/zTss9ji
-	6zBPjGRqympcB9RPK39BkqZLjl70dSt+cBs9ovPPu4QWpXTRstXq/WNxt5BiSqI0
-	wuXVCTv3cqMgClSf6a77r21TBEdfoE2cxWXG8oE2csVpHFxoVrMKBUl5GXlyKKpR
-	rkZ7nA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6wmwne-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Uyqzo+cNiMRXmYzSgNRL10
+	Oc1Cs45lIbNAMtMMlQhAU=; b=ewLhR7OvP3Gz8oEHi87sLA6rkrmeMBI+NiA/9A
+	SSU3SujxZamlxJun3gKIpUvGWBGMNAK/SMh958YaDLUfKuwSG03M9bbelfHVpZ42
+	w3XxDnvnou4CUKcG176f7qgpEWeLqnNciWPPaUcEYtt6UDH2vd5fMk/C/jFq+hHt
+	OtVYHm0B9XEjfsAUMyoietNR48liV82jUC6TV4mtTsBy/VSPhkVqBeH2KR3WN0fu
+	JrtIAS0Hz3BwMU3ld6g6in6ynIlJV9Ky59OJ57zGhvp/Mhh5mvjEY+wqnIWZt8kS
+	qxQgFeyH+3/n/dVj/869muKaA9d6U/6BSJOBMUOB/qNzPctA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6tw1ad-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Mar 2025 10:20:56 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 525AKtQk014188
+	Wed, 05 Mar 2025 10:44:28 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 525AiRKJ013545
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 5 Mar 2025 10:20:55 GMT
-Received: from [10.64.16.135] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 5 Mar 2025
- 02:20:47 -0800
-Message-ID: <4c06aeec-161d-4e67-9a64-ac74991a0f73@quicinc.com>
-Date: Wed, 5 Mar 2025 18:20:45 +0800
+	Wed, 5 Mar 2025 10:44:27 GMT
+Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 5 Mar 2025 02:44:23 -0800
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+To: <quic_vgarodia@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <mchehab@kernel.org>, <quic_dikshita@quicinc.com>
+CC: <hverkuil@xs4all.nl>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [RFC PATCH 00/12] Add support for HEVC and VP9 codecs in decoder 
+Date: Wed, 5 Mar 2025 16:13:23 +0530
+Message-ID: <20250305104335.3629945-1-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] phy: qcom: qmp-usbc: Add DP phy mode support on
- QCS615
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Kuogee
- Hsieh" <quic_khsieh@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon
- Vijay Abraham I" <kishon@kernel.org>,
-        Linus Walleij
-	<linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_lliu6@quicinc.com>,
-        <quic_fangez@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-gpio@vger.kernel.org>
-References: <20241129-add-displayport-support-for-qcs615-platform-v1-3-09a4338d93ef@quicinc.com>
- <CAA8EJppOR_UXoVpMt-dhfWdCz3UNfsXGdz8X9NqpaSmYj3AZDg@mail.gmail.com>
- <5ea14162-567b-462d-be02-b73b954b7507@quicinc.com>
- <5whv4z7u6fkfwlv5muox5dmv6fow4mga76ammapw7wph7vwv3f@xibcjdfqorgf>
- <iqcofcntirmlwcpyfr4yabymqfcgyrij57bibf337tmxpa73t6@npkt6wquenf6>
- <527baded-f348-48a8-81cd-3f84c0ff1077@quicinc.com>
- <t5vcjlf44fhae4f2h75cfs3f7r6tdstw4ysmkapvvawj6xp23x@xnxqnxvyhshe>
- <d5151b82-5f05-4826-99b4-e925c20550b4@quicinc.com>
- <7vdaasc3flhpabnorjty5qjorlbp22honuscgpbteakgagg2tq@frqa6flk2mmv>
- <df1a4457-129e-452c-8089-ee1e6f9a3e12@quicinc.com>
- <jdw3xuknq2atcowl5xboimp3fol56t5nilefrxzpbdpwdoo5oc@pggif3lysjhh>
-From: Xiangxu Yin <quic_xiangxuy@quicinc.com>
-In-Reply-To: <jdw3xuknq2atcowl5xboimp3fol56t5nilefrxzpbdpwdoo5oc@pggif3lysjhh>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=EZcyQOmC c=1 sm=1 tr=0 ts=67c82588 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=g_gWVRsLUC6QYS0Rm0QA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: T5Scpoiq5Hu68qu9Zq7NdwV2CxK3fPes
-X-Proofpoint-ORIG-GUID: T5Scpoiq5Hu68qu9Zq7NdwV2CxK3fPes
+X-Proofpoint-GUID: Z__YNv9APdeHcw_-cMr_pmkDV9dfwlT4
+X-Proofpoint-ORIG-GUID: Z__YNv9APdeHcw_-cMr_pmkDV9dfwlT4
+X-Authority-Analysis: v=2.4 cv=Sf4NduRu c=1 sm=1 tr=0 ts=67c82b0c cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=HO69U94CIm5YmXkL_XkA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-05_04,2025-03-05_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
- clxscore=1015 priorityscore=1501 spamscore=0 impostorscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 phishscore=0
+ suspectscore=0 clxscore=1015 malwarescore=0 bulkscore=0 mlxlogscore=999
+ mlxscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503050082
+ definitions=main-2503050086
 
+Hi all,
 
+This patch series adds initial support for the HEVC(H.265) and VP9
+codecs in iris decoder. The objective of this work is to extend the 
+decoder's capabilities to handle HEVC and VP9 codec streams,
+including necessary format handling and buffer management.
+In addition, the series also includes a set of fixes to address issues
+identified during testing of these additional codecs.
 
-On 12/20/2024 8:01 AM, Dmitry Baryshkov wrote:
-> On Wed, Dec 18, 2024 at 08:55:54PM +0800, Xiangxu Yin wrote:
->>
->>
->> On 12/12/2024 3:15 AM, Dmitry Baryshkov wrote:
->>> On Wed, Dec 11, 2024 at 08:50:02PM +0800, Xiangxu Yin wrote:
->>>>
->>>>
->>>> On 12/11/2024 5:46 PM, Dmitry Baryshkov wrote:
->>>>> On Wed, Dec 11, 2024 at 08:46:16AM +0800, Xiangxu Yin wrote:
->>>>>>
->>>>>>
->>>>>> On 12/10/2024 11:09 PM, Dmitry Baryshkov wrote:
->>>>>>> On Thu, Dec 05, 2024 at 08:31:24PM +0200, Dmitry Baryshkov wrote:
->>>>>>>> On Thu, Dec 05, 2024 at 09:26:47PM +0800, Xiangxu Yin wrote:
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> On 11/29/2024 10:33 PM, Dmitry Baryshkov wrote:
->>>>>>>>>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
->>>>>>>>>>>
->>>>>>>>>>> Extended DP support for QCS615 USB or DP phy. Differentiated between
->>>>>>>>>>> USBC and DP PHY using the match table’s type, dynamically generating
->>>>>>>>>>> different types of cfg and layout attributes during initialization based
->>>>>>>>>>> on this type. Static variables are stored in cfg, while parsed values
->>>>>>>>>>> are organized into the layout structure.
->>>>>>>>>>
->>>>>>>>>> We didn't have an understanding / conclusion whether
->>>>>>>>>> qcom,usb-ssphy-qmp-usb3-or-dp PHYs are actually a single device / PHY
->>>>>>>>>> or two PHYs being placed next to each other. Could you please start
->>>>>>>>>> your commit message by explaining it? Or even better, make that a part
->>>>>>>>>> of the cover letter for a new series touching just the USBC PHY
->>>>>>>>>> driver. DP changes don't have anything in common with the PHY changes,
->>>>>>>>>> so you can split the series into two.
->>>>>>>>>>
->>>>>>>>> Before implement DP extension, we have discussed with abhinav and krishna about whether use combo, usbc or separate phy.
->>>>>>>>
->>>>>>>> What is "DP extension"?
->>>>>>>>
->>>>>> I'm sorry confusion casued by my description. It's means extend DP implemnt for USBC phy driver.
->>>>>>>>>
->>>>>>>>> We identified that DP and USB share some common controls for phy_mode and orientation.
->>>>>>>>> Specifically, 'TCSR_USB3_0_DP_PHYMODE' controls who must use the lanes - USB or DP,
->>>>>>>>> while PERIPH_SS_USB0_USB3PHY_PCS_MISC_TYPEC_CTRL controls the orientation.
->>>>>>>>> It would be more efficient for a single driver to manage these controls. 
->>>>>>>>
->>>>>>>> The question is about the hardware, not about the driver.
->>>>>>>>
->>>>>>>>> Additionally, this PHY does not support Alt Mode, and the two control registers are located in separate address spaces. 
->>>>>>>>> Therefore, even though the orientation for DP on this platform is always normal and connected to the video output board, 
->>>>>>>>> we still decided to base it on the USBC extension.
->>>>>>>>
->>>>>>>> Could you please clarify, do usb3-or-dp PHYs support DP-over-USB-C? I
->>>>>>>> thought that usbc-or-dp platforms support that, but they don't
->>>>>>>> support DP+USB pin configuration. Note, the question is broader than
->>>>>>>> just QCS615, it covers the PHY type itself.
->>>>>>>>
->>>>>>>> Also, is TCSR configuration read/write or read-only? Are we supposed to
->>>>>>>> set the register from OS or are we supposed to read it and thus detemine
->>>>>>>> the PHY mode?
->>>>>>>
->>>>>>> Any updates on these two topics?
->>>>>>>
->>>>>> Still confirming detail info with HW & design team.
->>>>>> I’ll update the information that has been confirmed so far.
->>>>>> This phy support DP-over-USB-C,but it's not support alt-mode which 2 lane work for DP, other 2 lane work for USB.
->>>>>> TCSR phy mode is read/write reg and we can read for determine phy mode.
->>>>>
->>>>> Ok, thanks for the explanation. From my point of view:
->>>>>
->>>>> - Implement the DP PHY to be a part of the same driver. Each device
->>>>>   supported by the usbc driver should get both PHYs.
->>>>>
->>>>> - Make sure not to break the ABI: #phy-cells = <0> should still work and
->>>>>   return USB PHY, keeping backwards compatibility. Newer devices or
->>>>>   upgraded DT for old devices should return USB PHY for <... 0> and DP
->>>>>   PHY for <... 1>.
->>>>>
->>>> Yes, currently we have implemented like your description,
->>>> Each deivce shoud get both PHYs, DP PHY for <... 1> and USB PHY for <... 0>.
->>>
->>> Please note the backwards compatibility clause.
->>>
->> For the USB node, we kept the same implementation as the original function interface, and the devicetree node definition also remains unchanged.
->> In subsequent patches, I will follow Krzysztof’s suggestion to use a separate DT-binding to describe the DP PHY configuration, 
->> without making changes to the USB devicetree and DT-binding implementation.
->>>>> - I'm not shure how to handle the USB and DP coexistence, especially in
->>>>>   your case of the USB-or-DP PHY.
->>>>>
->>>> For coexistence process:
->>>>
->>>> When we start implement DP part, usb driver team said only need config TCSR phy mode and orientation during switch in USB-C port.
->>>> Based on your previous comments avout SW_PWRDN, I'm confirming with the USB team whether SW_REST/SWPWRDN/START_CTRL registers might affect DP.
->>>
->>> Thanks!
->>>
->>>> Anyway, even though the original SoC design supports DP or USB over Type-C，
->>>> but on QCS615 ADP AIR platform, there are only four USB-A port which works with 'qcs615-qmp-usb3-phy' driver, and no USB-C port.
->>>> DP port is mappped from usb pin to the video out sub-board.
->>>> so we are unable to verify the switching case between DP and USB devices under USB-C.
->>>
->>> That's also fine. We will get to that point once MSM8998 / SDM660
->>> get USB-C support (the only current blocker is the support for the
->>> TYPEC block of the PMI8998).
->>>
->> I can't access MSM8998 / SDM660 documents now, but I have confirmed detail info about USB & DP phy design for sm6150.
->>
->> The 'usb-ssphy-qmp-usb3-or-dp PHY' on the current platform is essentially composed of three sub-PHYs, 
->> which can even be considered as three separate PHYs: USB3 primary PHY, USB3 secondary PHY, and USB3 DP PHY.
-> 
-> I've looked at sm6150-usb.dtsi and now I'm completely puzzled by your
-> answer. The msm-4.14 kernel lists a single USB QMP PHY at 0x88e6000,
-> used for the primary USB3 host. It it defined as
-> qcom,usb-ssphy-qmp-usb3-or-dp. Secondary USB host is listed as USB 2.0
-> only. So what do you mean by the USB3 secondary PHY? Which PHY and which
-> pins are connected to your video-out board?
-> 
-Five PHYs are integrated into Talos SoC: two USB2 PHYs, two USB3 PHYs, and one DP PHY.
-PERIPH_SS_QUSB2PHY_PRIM_QUSB2PHY_PRIM_CM_QUSB2_LQ_1EX (0x088E2000)
-PERIPH_SS_QUSB2PHY_SEC_QUSB2PHY_SEC_CM_QUSB2_LQ_1EX (0x088E3000)
-PERIPH_SS_USB0_USB3PHY_USB0_USB3PHY_CM_USB3_SW (0x088E6000)
-PERIPH_SS_USB1_USB3PHY_USB1_USB3PHY_CM_USB3_SW (0x088E8000)
-PERIPH_SS_DP_PHY_DP_PHY_CM_DP_4LN_SW (0x088E9000)
+I'm sharing this series as an RFC because compliance and conformance
+testing are still in progress.
+While initial functional tests show positive results, I would
+appreciate early feedback on the design, implementation, and fixes
+before moving to a formal submission.
 
-The USB3 secondary PHY(0x088E8000) is the one mutually exclusive with the DP PHY, which controlled by the TCSR switch.
-USB3 secondary PHY is not configed in qcs615 dtsi.
+I plan to submit a formal patch series after completing all compliance
+checks. Meanwhile, any feedback or suggestion to improve this work are
+very welcome.
 
-In Ride, DP PHY, DP lane 0~3 and DP aux pins are connected to video-out board.
->>
->> On the QCS615, the USB primary PHY is currently used to handle USB 3.0 communication for the previously mentioned four USB Type-A ports, 
->> while the USB3 secondary PHY and USB3 DP PHY are used for the output of the Type-C port,
->> but since the Type-C port is forcibly pin-to-pin configured to the video out board, the Type-C port will always configure as DP PHY.
->>
->> The internal registers of these three PHYs are independent of each other, Neither their respective SWPWR_DN nor SWRST will affect the other two PHYs.
->> Additionally, there was a misunderstanding about the orientation previously.
->> The USB orientation setting only affects the current PHY and does not impact the DP PHY. The DP PHY is configured in the DP_PHY_CFG_1.
->>
->> TSCR_PHY_MODE can specify which PHY outputs to the Type-C port, and the global reset will simultaneously reset the two associated PHYs. 
->> Therefore, the correct switching process is as follows.
->> When switching the inserted device:
->> 	1.Identify the PHY type.
->> 	2.Enable the regulator.
->> 	3.Trigger a reset.
->> 	4.Enable the clock.
->> 	5.Configure PHY type related orientation
->> 	6.switch the TCSR PHY mode.
->> 	7.Configure the registers of PHY.
->> During release:
->> 	1.Reset.
->> 	2.Disable the clock.
->> 	3.Disable the regulator.
->>
->> Our current design overall complies with this process, but it lacks the configuration for DP_PHY_CFG_1.
->>
->> Shall we continue the discussion to clarify remain comments of the USBC driver?
->>
->>>> However, I'm also confirming whether anything other will affect USB and DP each other.
->>>
->>
-> 
+Thanks,
+Dikshita
+
+Dikshita Agarwal (12):
+  media: iris: Add HEVC and VP9 formats for decoder
+  media: iris: Add platform capabilities for HEVC and VP9 decoders
+  media: iris: Set mandatory properties for HEVC and VP9 decoders.
+  media: iris: Add internal buffer calculation for HEVC and VP9 decoders
+  media: iris: Skip destroying internal buffer if not dequeued
+  media: iris: Update CAPTURE format info based on OUTPUT format
+  media: iris: Add handling for corrupt and drop frames
+  media: iris: Avoid updating frame size to firmware during reconfig
+  media: iris: Avoid sending LAST flag multiple times
+  media: iris: Send V4L2_BUF_FLAG_ERROR for buffers with 0 filled length
+  media: iris: Fix handling of eos buffer during drain
+  media: iris: Add handling for no show frames
+
+ .../media/platform/qcom/iris/iris_buffer.c    |  22 +-
+ drivers/media/platform/qcom/iris/iris_ctrls.c |  28 +-
+ .../platform/qcom/iris/iris_hfi_common.h      |   1 +
+ .../qcom/iris/iris_hfi_gen1_command.c         |  38 +-
+ .../qcom/iris/iris_hfi_gen1_defines.h         |   4 +
+ .../qcom/iris/iris_hfi_gen1_response.c        |  11 +
+ .../qcom/iris/iris_hfi_gen2_command.c         | 129 +++++-
+ .../qcom/iris/iris_hfi_gen2_defines.h         |   5 +
+ .../qcom/iris/iris_hfi_gen2_response.c        |  56 ++-
+ .../media/platform/qcom/iris/iris_instance.h  |   6 +
+ .../platform/qcom/iris/iris_platform_common.h |  25 +-
+ .../platform/qcom/iris/iris_platform_sm8250.c |   4 +-
+ .../platform/qcom/iris/iris_platform_sm8550.c | 141 ++++++-
+ drivers/media/platform/qcom/iris/iris_vb2.c   |   3 +-
+ drivers/media/platform/qcom/iris/iris_vdec.c  |  80 +++-
+ drivers/media/platform/qcom/iris/iris_vdec.h  |  11 +
+ drivers/media/platform/qcom/iris/iris_vidc.c  |   3 -
+ .../platform/qcom/iris/iris_vpu_buffer.c      | 397 +++++++++++++++++-
+ .../platform/qcom/iris/iris_vpu_buffer.h      |  46 +-
+ 19 files changed, 931 insertions(+), 79 deletions(-)
+
+-- 
+2.34.1
 
 
