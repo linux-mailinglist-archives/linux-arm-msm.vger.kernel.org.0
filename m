@@ -1,75 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-50319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C9F1A4F83D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 08:49:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65EC2A4F856
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 08:57:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 26A437A61AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 07:48:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A428188BA4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 07:57:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 509141EEA4E;
-	Wed,  5 Mar 2025 07:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1490B1F3D30;
+	Wed,  5 Mar 2025 07:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hzz1qEpJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F5wtnzha"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2067E78F24;
-	Wed,  5 Mar 2025 07:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0531DA617;
+	Wed,  5 Mar 2025 07:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741160930; cv=none; b=G20iCxnf2Z8sp9GFTaAkVEe1Jhh5VlL1wjFNIqY039RKnScP9Bylimqlk7eGKqNlImbA5P/UikapoPhOXPDXimGjb20lEHHBPlZzVNapf6+hLqUWLyhYoL4n2HS1qG1K/wQFmFHSgDThHL5ZcCCmkTshaA3Dp0037uS4pWBmX7A=
+	t=1741161424; cv=none; b=R1jFFp9zumEXeEmlURZKsoD2bcH38/WTjhX6vm9pMm/N3bghrGzHBTCBn0HTnXnbG8oqQfp9+lscBaltEDj76FY+oGadWH4jQKBe9wj25zYiqeeNoiDMm0UvXlZr5W/igWLiFk5Ab16BnQ+4R7xhmoqH5o8740eDFucWCfwhZr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741160930; c=relaxed/simple;
-	bh=OUCqZ6jMMZxBf9sqcmDm9unaPoc0Cv7q8uEblBwG+q0=;
+	s=arc-20240116; t=1741161424; c=relaxed/simple;
+	bh=8IP+iFERUlAs/RNgCUjK96QKjj05HNIgRHJ5emaWY7w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LHOIdx93znecOKCBu/pFRCiuBbCGSEZlcAzN8FIirrSoP5BompCZztI2vrFqklOhBHUtF3Npy8Wn+wDXispmbZ0r/aDzW+/coZlIyU9NlVrMTpVEL7dmFg/WB0C9o6y3SYTP89Q7NNOfJCfOCQ4kzwDFm2ogpldymFsDNxvVs+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hzz1qEpJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037BDC4CEE2;
-	Wed,  5 Mar 2025 07:48:42 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=XifUQq9mL6kIcqKzW+2E1TvO7iJztHn+kNFOJZSwlrvnKfR6+WiLLIZFdeSBkMR8jC+usY1y41dK5t/adQ7h8E/qQ8+iQZI3hYgCSQlwatF/2K5KEbKWII5kf1J9oYNn2XnCRXmaxukQ1vX/HoOD3rHrrKU1DMgMrHf24+joVdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F5wtnzha; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86210C4CEE2;
+	Wed,  5 Mar 2025 07:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741160929;
-	bh=OUCqZ6jMMZxBf9sqcmDm9unaPoc0Cv7q8uEblBwG+q0=;
+	s=k20201202; t=1741161423;
+	bh=8IP+iFERUlAs/RNgCUjK96QKjj05HNIgRHJ5emaWY7w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hzz1qEpJvAZIrMHA8YdBhYwQcClYq9e1oLRPfh7ueEqokk+eWiYidSDPkcIrrYipN
-	 pKTwIh9AcpeILhk2kIaMXgr39B9b953rmYZAzw9nmKzzdHgCchOauJ0HrCB0T7zN+8
-	 46liGS3NnWAbqu+d22MFm7NEDp0k6FWYWm24TYQa8n1O0cxTi5MEUPHOCXdloGQxXB
-	 MXimGPjGz/eGcxpkdNI0xy8gK76DX+jMGuMDDnO23Xk0Dd0ic36lti1ADfk8kNBGpz
-	 pdR5sdFCvhxq388VfA7tLI/Cy7TzDHN50GlVkPXxhlDcvlbSbIpyPt1bfZR+oCHbyo
-	 QejNR0w3xVXYQ==
-Date: Wed, 5 Mar 2025 13:18:38 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	chaitanya chundru <quic_krichai@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicnic.com,
-	amitk@kernel.org, dmitry.baryshkov@linaro.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 09/10] dt-bindings: PCI: qcom,pcie-sc7280: Add
- 'global' interrupt
-Message-ID: <20250305074838.yjhvpqrm4xrzta2y@thinkpad>
-References: <20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com>
- <20250225-qps615_v4_1-v4-9-e08633a7bdf8@oss.qualcomm.com>
- <20250226-enlightened-chachalaca-of-artistry-2de5ea@krzk-bin>
- <t34rurxh5cb7hwzvt6ps3fgw4kh4ddwcieukskxxz5mo3pegst@jkapxm6izq7p>
- <Z8f++i4MFku8ODKf@trex>
+	b=F5wtnzhaMlIjaMwLl/FU/V7kn/HDJYTOHA928pUoTrt1o71oMrhkud0nEY8YTUTSr
+	 8t/7sdNTw89l18tfQrgOC/q+f9NHb5eIg9iF5inj0mZtykh9OBo1gjmseEt13TAsPW
+	 XHQh1ybKCxs7eO9FlCxlwQ4S+dgvxVeekUhkcHiIUFCm5Aq4H8fnvoOXxdOdSUR9Kh
+	 tLaKUGJAxx0d1XNCRm+lUVU91PU4TAYjPHGHsVHaR9CWCZ9C0BAS5yWB1SnQjTeb17
+	 sys3CF7R3D7jDeg10mP2swgF868vn/fgnIUucuGd+hC27USPZrZbJ2YZWqsZM+E4ro
+	 IaxnTjfEA7IaQ==
+Date: Wed, 5 Mar 2025 08:56:59 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: clock: qcom,x1e80100-camcc: Fix the list of
+ required-opps
+Message-ID: <20250305-little-frigatebird-of-calibration-244f79@krzk-bin>
+References: <20250304143152.1799966-1-vladimir.zapolskiy@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,81 +62,46 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z8f++i4MFku8ODKf@trex>
+In-Reply-To: <20250304143152.1799966-1-vladimir.zapolskiy@linaro.org>
 
-On Wed, Mar 05, 2025 at 08:36:26AM +0100, Jorge Ramirez wrote:
-> On 26/02/25 10:29:43, Bjorn Andersson wrote:
-> > On Wed, Feb 26, 2025 at 08:32:42AM +0100, Krzysztof Kozlowski wrote:
-> > > On Tue, Feb 25, 2025 at 03:04:06PM +0530, Krishna Chaitanya Chundru wrote:
-> > > > Qcom PCIe RC controllers are capable of generating 'global' SPI interrupt
-> > > > to the host CPU. This interrupt can be used by the device driver to handle
-> > > > PCIe link specific events such as Link up and Link down, which give the
-> > > > driver a chance to start bus enumeration on its own when link is up and
-> > > > initiate link training if link goes to a bad state. The PCIe driver can
-> > > > still work without this interrupt but it will provide a nice user
-> > > > experience when device gets plugged and removed.
-> > > > 
-> > > > Hence, document it in the binding along with the existing MSI interrupts.
-> > > > Global interrupt is parsed as optional in driver, so adding it in bindings
-> > > > will not break the ABI.
-> > > > 
-> > > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > > > ---
-> > > >  Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml | 8 +++++---
-> > > >  1 file changed, 5 insertions(+), 3 deletions(-)
-> > > > 
-> > > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
-> > > > index 76cb9fbfd476..7ae09ba8da60 100644
-> > > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
-> > > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
-> > > > @@ -54,7 +54,7 @@ properties:
-> > > >  
-> > > >    interrupts:
-> > > >      minItems: 8
-> > > > -    maxItems: 8
-> > > > +    maxItems: 9
-> > > >  
-> > > >    interrupt-names:
-> > > >      items:
-> > > > @@ -66,6 +66,7 @@ properties:
-> > > >        - const: msi5
-> > > >        - const: msi6
-> > > >        - const: msi7
-> > > > +      - const: global
-> > > 
-> > > Either context is missing or these are not synced with interrupts.
-> > > 
-> > 
-> > I think the patch context ("properties") is confusing here, but it looks
-> > to me that these are in sync: interrupts is defined to have 8 items, and
-> > interrupt-names is a list of msi0 through msi7.
-> > 
-> > @Krishna, these two last patches (adding the global interrupt) doesn't
-> > seem strongly connected to the switch patches. So, if Krzysztof agrees
-> > with above assessment, please submit them separately (i.e. a new series,
-> > 2 patches, v5).
+On Tue, Mar 04, 2025 at 04:31:52PM +0200, Vladimir Zapolskiy wrote:
+> The switch to multiple power domains implies that the required-opps
+> property shall be updated accordingly, a record in one property
+> corresponds to a record in another one.
 > 
-> um, but without these two patches, the functionality is broken requiring
-> users to manually rescan the pci bus (ie, via sysfs) to see what is
-> behind the bridge.
+> Fixes: 7ec95ff9abf4 ("dt-bindings: clock: move qcom,x1e80100-camcc to its own file")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,x1e80100-camcc.yaml   | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+> index 5bbbaa15a260..938a2f1ff3fc 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+> @@ -40,9 +40,9 @@ properties:
+>        - description: A phandle to the MMCX power-domain
+>  
+>    required-opps:
+> -    maxItems: 1
+> -    description:
+> -      A phandle to an OPP node describing MMCX performance points.
+> +    items:
+> +      - description: A phandle to an OPP node describing MXC performance points
+> +      - description: A phandle to an OPP node describing MMCX performance points
 
-It is not *broken* actually. The series is for enabling the PCIe switch and the
-'global' IRQ is a host behavior. So technically both are not dependent on each
-other.
+If rewriting this, then:
+s/A phandle to an OPP node describing//
+because it is redundant (this cannot be anything else).
 
-> shouldnt the set include all the necessary patches? 
-> 
+But more important is that you introduced ABI break, without actual
+reason. Switch to multiple power domains does not look like fix so
+neither should this be. Reverse the items to keep the ABI intact...
+unless ABI was broken earlier and this just keeps doing it to make code
+consistent. But then please explain it in commit msg why we need to
+break it second time.
 
-FWIW, I have submitted a series that adds the IRQ for most of the arm64
-platforms:
-https://lore.kernel.org/linux-arm-msm/20250227-pcie-global-irq-v1-0-2b70a7819d1e@linaro.org/
+Best regards,
+Krzysztof
 
-There is a possibility that the above series could get merged before this one.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
