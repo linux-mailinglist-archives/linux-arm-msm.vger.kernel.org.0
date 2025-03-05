@@ -1,129 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-50327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED410A4F9CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 10:21:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8370A4F9C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 10:21:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2904B16CF29
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 09:21:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3222F18867F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 09:21:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CCFF2045AC;
-	Wed,  5 Mar 2025 09:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B88B72040B0;
+	Wed,  5 Mar 2025 09:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="cMUx7bA1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qcM1q5ZI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498262040B7;
-	Wed,  5 Mar 2025 09:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891F91F416F;
+	Wed,  5 Mar 2025 09:21:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741166495; cv=none; b=oYIFsLVfjBHLJm8KeDYQNk2K0e0ukuHpdrQS+tiafs/DylkUmra+f8prL5w2e/0o4MlteMzisvJP9xCnXTsRj/oxB47JMhOHT1B5X3auJPLEf+mdpp6Q52ug39xSqegFf2iE1pnMbNKMfymEjI1WJuDztgcnM0UHCLwDsmk+y0M=
+	t=1741166476; cv=none; b=B0zzPQAoOHdmdEm9VLD8PEwcbOmpATnKhXGwuXXXUlCal1x8kg8q9OaxxtaKgE0EOLb0yCsV/zVVtfDt3tr/pEb6tuw/RiXHAbZeLjwJS9haGix3urhbK48/1XfhudOxuYrSsGGHe2LE2RVqOaJMnlJZU1ZIRA0qSVS6y1QJpjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741166495; c=relaxed/simple;
-	bh=24L0NED3DjrdA3GApGnbDzpGeLHrvcfd0hoJ8hWeYK0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=otpttMSIW8mAyjm1CWm6SWTPMwzDBK1DwUsN2EYS8CT77VHnzru64N/LmVUC/RZGviT3jk3ya+sXoD/5O1RYMK73GGIRT2perMeMCuYMKgSXceef3f06KuwV+lZm4oslK+YwK1VLk9VkE+vpA2FRsxnHYLUviS5SiyNqGqp2TdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=cMUx7bA1; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1741166452; x=1741771252; i=markus.elfring@web.de;
-	bh=h7MF2pukzcCQNx/zWpZiCS3hgViBAj+HXBu+xCaW0ac=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=cMUx7bA1rSuadObqsP5/9GPP77G0F95Jptm825dUCW0m387ivjweN2joWqlMXaI+
-	 IcBA7fuTgGI0FF01eQqUH8fECJ9YtmF2yf9wWYvc24jJeXCH2KbsuBO4jpZK3FtVh
-	 NmyDRIc/+dORmuANznZSyZK8yX78IqwUgid3oSoNWoOzDUxpn68i2Ifd53uRZQkXp
-	 3X/nLV15MA00SxregkO7FtgxdOD8g1sHWgGzGnax07K/UJxrEXMnNNSFA2G9WtdCa
-	 2kpTtojfihhjt5kYreeSuJsvLBlvL2ziOR91h4uTsDhNq/ojzAIo0oqVyeGGrm0Tq
-	 2gwmSMJmm38DLSiFMw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([94.31.70.10]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M5QqN-1tr7qL1mQ1-000RCH; Wed, 05
- Mar 2025 10:20:52 +0100
-Message-ID: <a6243882-e289-4a08-9119-3c73933d6458@web.de>
-Date: Wed, 5 Mar 2025 10:20:50 +0100
+	s=arc-20240116; t=1741166476; c=relaxed/simple;
+	bh=Z6IPlzuZvYc5ZzGlOAloXZI2q2aupm/MR9VZ6w8t95U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KCPXtexMfQXTffL+Btg1QnP2NyHhPfrH3UWieKT6J7QOBl9PJ/+gaNs/8TpJhw64T7Lh6kAVQAjZnprJNpzje0wU+6mKUoeW5tUXlKQO3gr496qL78qUEXv4dwS9AJBWEKyx5UCYnYgxG16NWVWrwO2pEang/UZcot1WMfpyFaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qcM1q5ZI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CFAC4CEE2;
+	Wed,  5 Mar 2025 09:21:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741166476;
+	bh=Z6IPlzuZvYc5ZzGlOAloXZI2q2aupm/MR9VZ6w8t95U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qcM1q5ZIRIS/y8SzL8qPpKqUEsscViSYT2kUY1axHPISobn7Np7NEV1NxcCao219a
+	 QDpzw9aKboSRHUszIb9LnKK+1YAf4VZW2XRxwbipMr8lTUG72FAxbyUFN/rq9gpwfn
+	 V/DC1WGmcuPs+vtw2dYg0Ig3UNk+fr3n1b5PKOKSygOwV6090vpKRBkNcInNueK2sp
+	 jOn5nJdTTh5RyEBblzrm5CfcQv6Z8ryQ52kg1fHKXVb6/T4gM7d86xHPhTQj4cmZ4M
+	 nizrj7mk0axD567kCTzFJ1owY37tQ+0CAcmBMUBDbHZU7yw9DTW3KvkdgXR4I2n4Nx
+	 PvDwGvrNhY2EA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tpkwB-000000007Hd-2js2;
+	Wed, 05 Mar 2025 10:21:12 +0100
+Date: Wed, 5 Mar 2025 10:21:11 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+	krzysztof.kozlowski@linaro.org, linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	dmitry.baryshkov@linaro.org, johan+linaro@kernel.org
+Subject: Re: [PATCH v3 0/6] ASoC: q6apm: fix under runs and fragment sizes
+Message-ID: <Z8gXh4CrVJPznNvC@hovoldconsulting.com>
+References: <20250304105723.10579-1-srinivas.kandagatla@linaro.org>
+ <Z8cyt2n7qj4GkcJC@hovoldconsulting.com>
+ <5831d9b1-4a05-4a7b-8733-5050588b4e59@linaro.org>
+ <Z8c2OVRp8af1K1D1@hovoldconsulting.com>
+ <Z8gULECJ463Ilv2p@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BRFC=5D_Clarification_for_=E2=80=9Cundefined_beha?=
- =?UTF-8?B?dmlvdXLigJ0/?=
-To: Dan Carpenter <dan.carpenter@linaro.org>,
- kernel-janitors@vger.kernel.org, freedreno@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Archit Taneja <architt@codeaurora.org>, Daniel Vetter <daniel@ffwll.ch>,
- David Airlie <airlied@gmail.com>, Jeykumar Sankaran <jsanka@codeaurora.org>,
- Jordan Crouse <jordan@cosmicpenguin.net>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Simona Vetter <simona@ffwll.ch>, Vinod Koul <vkoul@kernel.org>,
- cocci@inria.fr, LKML <linux-kernel@vger.kernel.org>
-References: <40c60719-4bfe-b1a4-ead7-724b84637f55@web.de>
- <1a11455f-ab57-dce0-1677-6beb8492a257@web.de>
- <13566308-9a80-e4aa-f64e-978c02b1406d@web.de>
- <54c30a69-71cf-4582-9086-50eb0d39f273@web.de>
- <k7un3bjavyt4ogscgc7jn7thfobegaguqqiy7gtypmq6vq7zox@l4bsevbsjrud>
- <29b32b0d-312d-4848-9e26-9e5e76e527a7@stanley.mountain>
- <e665514b-5a62-4afb-b267-7c320e4872af@web.de>
- <4c489b64-4c25-43e3-90d3-37f2f335d665@stanley.mountain>
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <4c489b64-4c25-43e3-90d3-37f2f335d665@stanley.mountain>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:PPRCchf5c9fDV82ZnVt3zyworm0/jc6du/DkLT7OlMhlEOw06gL
- 14PuC/lWkV/JePSRYwvu623J4IKThp5oaGF4ynFVpdhJXlVZxPSJjnmuEmhahu+d2ScWbqm
- o8a3oV/4fBh9DAyhBQ3CB5ZRuZZKROAleHVK2qANvWYGsHI0540nBiweJw10osUjOHUwX7V
- R0TgSdK86F/K8S5BWqmdw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:HnHMVUu0qf8=;HtW5MydlmAVPgeX+uSbHvOiYseX
- dM0hYYg+7B7fGA9abFJssSljkkmmEfoM3sCZ57ejyN7SkfRkB/eHpf5YwPwnybrimceAO3nol
- tyhUZepOSoQFqbR0W+vyRfnLUhiu/Bfla7goEUf1YSK/DxSRE8F03d56EH68VDTWRtN0AX09E
- l4sdclwQTcxe6pMuVRcS7I6dXcgLzZUqTaqD4WN3wZUlFUteqY3xGT6+iDobs9GFDpcMYW6iD
- aC7TOD8jjJXgViB212eXZgyV0q9LQcV4JB7lpQBeuCIyXdMRqdG7RTXLDr7l36nOn8vFveT8o
- 4pF11vYIbpsCPh2/VCUo6JgduPAuB/ZJI50lFc34gTQvxD7SsjHlcPSzAKSWmUVYcnvhia+2d
- YaXhvf/7bTuF3pTNoOWFzKx8yXdJl2Kza6a3kdzA2YTa3iwz8ONBvrIFdLhk7BHlF2ouT04Ff
- OmxyMXmIyAbWbst3L9v5xZz4dhndC4p+ytsiiqAl47057acFB7GDxNKPeKXS2p0wThhNTtfWO
- IbRQpLRTby8ogQrtbzbGNScxofF0CfJsu5mWl84xMVn5jdEgTLd0iYtIt3Lag92yw/7IYR/vI
- w9SKBfGKiFhLdzdT6L7QYvbVRpMwm6Z08zdbov1TYWsA/pm87SG50mRoN5+gma+R8zxHrjFQX
- 2uLxXKhOPsTbsSaDxNKrgY7p0w0txZVc8eeFchvb/1x4+1zOpm2iJ4JlZrxHpPZj3lu9yBvk3
- MmnqlL79molwdVDEzXKjotOq2tMGmcpdLbg4zsN1FSm71YNAzUS0ipSBZlcUuz1JhLH0m7wfw
- 8nJnYjLY9QthG5v+pdbFCSGkn0tPY8+gDPZyj/o1iSB2812Bj6A/il38tFJqqQ0GRHZImDWJv
- hI9lNCLnosx4+ii36ET2MfDgeLR29z4hrQiK5cUDr58us3kmj1AmFJVSzd1VgzwHo9woONiSC
- n3RFz8L6e1GLU4fOL6y1TKWsI6ICKZgQDXMqsr/b+/OWgVZ+3FbJ3AtRZMsN5+iFqiIJPuufp
- jKFUCMJObBE/lYvqfcIJPviwZ84qFJT1coeF5jDRMUWOHnwaNnjCNet4W6U4GIOsXEmM8VRi7
- Y9l8ZVPemT88XSrKUw5hcgzAk5rYc5GD2Bf/0BxjAd0CqjMkOfD3CbkoJd3C887ueTYiA8vvD
- mZcVwKZJlWSuIqz5fY2MshrrzceyR0Io5cp31d1wWoA+7stG1dgX6wxREQ7Ezr/LZBPNXhryh
- 9tNzBGUSeSQnDQb/cFw5FZ2daVXwh/9DhcuXMHh+30NnqzVCeEDwnRDclYpbYr/QLOFKlIFoi
- zOiBhA1Ad2vPtg246rgJPa519l8GD7+5moJmn66X5omhMmrkddJ8plri//4gp2uyKhKOZm/sT
- 7PnBLvEdJdpiT6KMa/v/wqhb+QUlejdCRwtMxB6oH2H+tlxG5875+Rk5GZBpmfaK/GZIELIx1
- WaQEILRh7bwQuBTcx4u4kZSHVGfM=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z8gULECJ463Ilv2p@hovoldconsulting.com>
 
->> Dereferences of null pointers are treated in special ways.
->
-> This not a dereference.  It's just pointer math.
-Do you prefer the wording =E2=80=9Cmember access through pointer=E2=80=9D =
-occasionally?
-https://en.cppreference.com/w/c/language/operator_member_access
+On Wed, Mar 05, 2025 at 10:06:52AM +0100, Johan Hovold wrote:
+> On Tue, Mar 04, 2025 at 06:19:53PM +0100, Johan Hovold wrote:
+> > On Tue, Mar 04, 2025 at 05:12:20PM +0000, Srinivas Kandagatla wrote:
+> > > On 04/03/2025 17:04, Johan Hovold wrote:
+> > 
+> > > > Unfortunately, this series still regresses Pulseaudio as capture is now
+> > > > choppy (e.g. when recording using parecord).
+> > > > 
+> > > > During our off-list debugging sessions you suggested reducing the max
+> > > > capture period size (that this series increases) to 6144 (same as min)
+> > > > and that fixed the Pulseaudio capture issue. In v3 the, the max period
+> > > > is again increased to 65536 which appears to break Pulseaudio capture.
+> > > 
+> > > I have verified pulseaudio on my side as well, the 64 byte alignment 
+> > > should have fixed the issue on the pulseaudio side.
+> > > 
+> > > Did you pick up the [PATCH v3 4/6] ASoC: qdsp6: q6apm-dai: set correct 
+> > > period and buffer alignment. patch in your tests?
+> > 
+> > Yes, I'm running with the full series applied. I tested PA on the X13s
+> > (and PW on the T14s).
+> 
+> I just tested PA on the T14s and it has the same problem with
+> choppy recording with this series applied.
+> 
+> As with the (amended) v2, setting the max capture period size to 6144
+> appears to make the problem go away.
 
-How do you tend to describe (and detect) null pointer dereferences so far?
-https://wiki.sei.cmu.edu/confluence/display/c/EXP34-C.+Do+not+dereference+=
-null+pointers#EXP34C.Donotdereferencenullpointers-AutomatedDetection
-
-Regards,
-Markus
+Actually, there may still be some distortion also with the max period
+size capped at 6144 with PA (there's a hint of it breaking up as with
+the non-modified v3). At least the PW recording sounded cleaner, even if
+I guess there could be other causes for this.
+ 
+Johan
 
