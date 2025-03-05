@@ -1,153 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-50416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A60ACA50E6A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 23:17:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A6E5BA50EE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 23:44:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F30C73ABC76
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 22:17:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2B9E3AD29E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 22:44:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72AD6266577;
-	Wed,  5 Mar 2025 22:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEFE9205E21;
+	Wed,  5 Mar 2025 22:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b2uq83Ow"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FFjhWvcF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E5F1FCF68
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Mar 2025 22:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896332E339F;
+	Wed,  5 Mar 2025 22:44:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741213049; cv=none; b=PvXE+tjzEge6pSwvcirVQNowWRJ8qKrW7ZzCxAd9LJM+HGyO/Colj+Nch0MPDcsgVzxcIwtS8eGebSh0vVU/+iodlkhPDkzQBJjpEXMpJJ33dDw8Tu72uctv0qcngTC906ybCduL8IdfL703R/YimOjrlVWvAwlKj4rb7cmuf5Q=
+	t=1741214685; cv=none; b=F1CTRY731Hgk4eVRWE24qBK458Ge6qfBVBobA7tQ0WN5OJR2Rj0QpDXt68se7WSVnanhqEDCVSFQVSp9kRw0r7ZbLhPKtGuC+RTACeYdHPUhpkw8xHkhx2Nre6vl1+5XQbSfCr4up272glYCfjeiCqRc1MR1OYm1bRxzOUZQ+Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741213049; c=relaxed/simple;
-	bh=0EASBjsKyosgnKgR5LYlE5kSUH+MJui/0SdB/Sv1BfA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JcbjYnSAxgeoNRN+4crZOEshooVjTlo6CIcwh3WHCSARmvfJiFsBkmzT1WncsePoJmp1agsIjHfIOd1kLWuf6mayUj+Jy+ys5V4iJ/YcPirHNTrwJAVtQKh2csXLt3Xp39qzMCLiofhQTnuslRvb1RLkcG7JTbe3qm1oC1LLs58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b2uq83Ow; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ab771575040so238865166b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 14:17:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741213044; x=1741817844; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=05I7Zu62yUz7WtzNJ79+oYpmHE/xDrzeMJzIBYcCoB4=;
-        b=b2uq83OwB9ki9tUUbRqfmeWLQFYcDUD68KGCMGgw2qVq5gbwJJNMfyZdHkxeNgku8L
-         M5yUcqZjAE3y1nm26Ng3dsyHQO4uTHCGG7xCJxd5/bRchYVFOTUz4GEg2nUua4byZPQq
-         hwlaw0CGNMWPIvr9Pj7wof48/j5QUKt4KxM+u6O6QVB1NL2GYmvgJhOPEgiA9Li+7mx4
-         vOFn6IKFO/FukHhXNEnwX5a/692UlSL4Cg6DLD0iSbhdwRXjNziBKawlhcMhfeNHGE75
-         B142Iifu389obFDsIsCSUzgTd3b3MejpvosPQYKi6pA/sQq2vMIaaNQKnRDBqYq8BKar
-         HNZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741213044; x=1741817844;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=05I7Zu62yUz7WtzNJ79+oYpmHE/xDrzeMJzIBYcCoB4=;
-        b=D8O5ykm2/WBZM7Bq+5WUdC85uM+UdSnx/sjPAk184Qza3PooZbey6wmXv5gzyrv+Il
-         KT4I3f2YWh0sn//h0lriJUTQDvGLxi0IU//oGEljLrzYAJGbLeA2OPcYasl2eL7A8r9E
-         AOMGOITFC3G1XYGMv7adr1zm2lAwTT0fM7Zp4AzOwHaK7bk868NKD6VW/U7f/1Bh4HaR
-         Dslr071NozhH7ozkkSUQR93dZngDoThMrXwEva7uCDx1I2eXc9iFCO/CwDieXvHEANTz
-         yvGPkw/lh68TAvRQmsKWMdGwS8Xc5owc/MqasTPdrWoN4qS9PkjNm70/9VomTZoJU1KL
-         dSfg==
-X-Forwarded-Encrypted: i=1; AJvYcCXvkfR3aMeXN14PJLI/aqeL3SM4U94Z5Oq2W4JFgK8NhhZD4up1U8mQZSjruimjvMI37dResPwnLhuTujeE@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEiNVyCQE86qdux55r8JqEg8Aj9nZbF7co3foICITkTG3VBh6m
-	ke0GZrTrQ7Vg4dL8POV9cmEwztw1JdOhSsjdJLimfbHyBURZRKYZtgQLxnMlqN8=
-X-Gm-Gg: ASbGncs5DJZxdoTcpRbpAwRbXNaiK2zb8qpByOU58YiTp7Fesh2wJWmSPv6UBskItQ6
-	e+oWkYcNZvESZ2jIw39Nd5yRnKr0TRdAGPa+RK16JBsqhL19DztnxbKO+L/mYTgJW37TPxm2pCX
-	g1ieWaqbWSDxLuupzCb6SlorNY4i9Qv8a18RpJXjp+corZl15AyJXA/T7O5jW2VaqzNS8xBHEfk
-	2O59y8Rx4f/dhPxuzoxrrxUv1acmwbM17QlxFUD67CIFSFiAlmCgc8v7K79YyCIqtH8jYM4/n3r
-	o9cc8wSW29wPXGlqXiQU7fk8yQzigILQpVt5oQMQRk5p7iRhHwt21OyPgIg8quBxw7EIUWDrKQe
-	y+l4oGI7N51X36C3HtWg7O/o61w==
-X-Google-Smtp-Source: AGHT+IFySJJTv+uF4nFVy3MQo13MAKioll0wB0jIBjyasXh3UmkhJxVLukr73dcjkJKsIaPAWkDHfg==
-X-Received: by 2002:a17:907:d24:b0:ac1:e45f:9c71 with SMTP id a640c23a62f3a-ac22caa102emr73495566b.1.1741213044551;
-        Wed, 05 Mar 2025 14:17:24 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:1d11:ab01:1352:bac1:449e:9a8e? ([2a0a:ef40:1d11:ab01:1352:bac1:449e:9a8e])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac117f39e04sm529347966b.94.2025.03.05.14.17.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Mar 2025 14:17:23 -0800 (PST)
-Message-ID: <ea047098-2baf-456a-a57f-b698c0ce1b6e@linaro.org>
-Date: Wed, 5 Mar 2025 22:17:22 +0000
+	s=arc-20240116; t=1741214685; c=relaxed/simple;
+	bh=m+B22u9Aqj6/oDms5/yYBB6yk0CyqE6jQ8Qo7nxZEz4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dL0mzHP5X9wYJdpWkfzGX2+vi7sLdSvDvKv22YgCL6oEy33V+VuQdtLJxjg1fnopQeYESpOCmM9to6+ITWlttltbwo++w3GGuFLDNydeNmZomLVWtKZ8Y++PNvO8YGD97/icLRSK1wJXFJSm30QWYiOfLP86jezAHGvLI796MMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FFjhWvcF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F944C4CED1;
+	Wed,  5 Mar 2025 22:44:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741214685;
+	bh=m+B22u9Aqj6/oDms5/yYBB6yk0CyqE6jQ8Qo7nxZEz4=;
+	h=From:Subject:Date:To:Cc:From;
+	b=FFjhWvcFxBohFFaqD3LiFL+FdhkfEmUpRkJIHMKGKdRaMkUsdocvytFWjgwG3iz+O
+	 HXgRqTT1npyFgJqwrBjc1AirrnwGhV/OnIXBnsl8xL9Un+zsidWQO8hRTHSg/mh9A2
+	 miFe6iYUUXRS3V0irt1HivQ+/iXFY/6blTGvHFABmL9XmcmJkmrhK6ACTB/js8QaR1
+	 aJPRTXHERtH1cjRS27Mqbwh+EcenIDeGE7DpvE6o+rQ9KPzBVAvtAC68b5BYWoZM06
+	 cIJ3cFFv52MsvPOtr06Hm6VKG6GdE/bjLxO3aXIDbVZJoSUAzfS/6ZTGc8ffZ9SzSC
+	 bkPX00f8eaBlg==
+From: Dmitry Baryshkov <lumag@kernel.org>
+Subject: [PATCH 0/2] MAINTAINERS: update my email address
+Date: Thu, 06 Mar 2025 00:44:35 +0200
+Message-Id: <20250306-update-email-v1-0-9a231571e905@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/6] ASoC: q6apm: fix under runs and fragment sizes
-To: srinivas.kandagatla@linaro.org, broonie@kernel.org
-Cc: perex@perex.cz, tiwai@suse.com, krzysztof.kozlowski@linaro.org,
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org,
- johan+linaro@kernel.org
-References: <20250304105723.10579-1-srinivas.kandagatla@linaro.org>
-Content-Language: en-US
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20250304105723.10579-1-srinivas.kandagatla@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANPTyGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDYwMz3dKClMSSVN3U3MTMHF3TREMLi8Tk1JQ0CxMloJaCotS0zAqwcdG
+ xtbUA9UbI6V4AAAA=
+X-Change-ID: 20250306-update-email-5a188acedf84
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=636; i=lumag@kernel.org;
+ h=from:subject:message-id; bh=m+B22u9Aqj6/oDms5/yYBB6yk0CyqE6jQ8Qo7nxZEz4=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnyNPawLxw7i/5YgqCcD75ZhMf+oY1DZmqYqm/4
+ BuaxE93y7iJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ8jT2gAKCRCLPIo+Aiko
+ 1dNhB/99EOuC2OYCMOYy3nK9ZnP/MCqYIGiG2oEWf2uRlYsXyieS460JZctwU3uze7EqIMH02c0
+ WN3DqgHrBCUZQNecVhyTXruW6iA73fK0XJnMVguRU8J4ubSW4Pkz3Q4sUSIHMBAgh2Hrdrms8jn
+ nBJ/LSrbol8jX4FLsyJpzPp70PVsbjxpr4+iXCKP6VkNV5Rf2CYoFJCEW9mGv+BMCCkAK1WiNcF
+ HaPuGUQczB36mDu9A+GFGeDVJC+tPZPLsgbfBgJjVCqTrUXrjdoCE6CXS96MIq9UeeSBUUpm/F2
+ geYF3cs20Mxoy1Ab9az4xNMY+CfJIriSdoELLIqa7t891o4/
+X-Developer-Key: i=lumag@kernel.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Hi Srini,
+Update .mailmap and MAINTAINERS to point to the @kernel.org instead of
+the @linaro.org. Linaro address will stop working in several days.
 
-On 3/4/25 10:57, srinivas.kandagatla@linaro.org wrote:
-> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> 
-> On Qualcomm Audioreach setup, some of the audio artifacts are seen in
-> both recording and playback. These patches fix issues by
-> 1. Adjusting the fragment size that dsp can service.
-> 2. schedule available playback buffers in time for dsp to not hit under runs
-> 3. remove some of the manual calculations done to get hardware pointer.
-> 
-> With these patches, am able to see Audio quality improvements.
-> 
-> Any testing would be appreciated.
+Rob, could you please pick these two patches?
 
-This totally breaks audio on SDM845, and often results in a hard-crash 
-to crashdump mode on my OnePlus 6.
+Signed-off-by: Dmitry Baryshkov <lumag@kernel.org>
+---
+Dmitry Baryshkov (2):
+      MAINTAINERS: use kernel.org alias
+      mailmap: remap all addresses to kernel.org alias
 
-Unfortunately I can't get UART logs right now. But I imagine this is 
-reproducible on RB3.
+ .mailmap    | 9 +++++----
+ MAINTAINERS | 2 +-
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+---
+base-commit: 20d5c66e1810e6e8805ec0d01373afb2dba9f51a
+change-id: 20250306-update-email-5a188acedf84
 
-Kind regards,
-> 
-> thanks,
-> Srini
-> 
-> Changes since v2:
-> 	- dropped patch which is causing regression with pluseaudio.
-> 	- setup period sizes only for capture path
-> 	- fix underruns/overruns in dsp pipelines.
-> 	- add fixes tag
-> 	- add patch to fix buffer alignment
-> 
-> Changes since v1:
-> 	- added new patches to fix the fragment size, pointer
-> 	  calculations
-> 	- updated to schedule only available buffers.
-> 
-> Srinivas Kandagatla (6):
->    ASoC: q6apm-dai: schedule all available frames to avoid dsp under-runs
->    ASoC: q6apm: add q6apm_get_hw_pointer helper
->    ASoC: q6apm-dai: make use of q6apm_get_hw_pointer
->    ASoC: qdsp6: q6apm-dai: set correct period and buffer alignment.
->    ASoC: qdsp6: q6apm-dai: fix capture pipeline overruns.
->    ASoC: qdsp6: q6apm-dai: fix playback dsp pipeline underruns
-> 
->   sound/soc/qcom/qdsp6/q6apm-dai.c | 63 +++++++++++++++++---------------
->   sound/soc/qcom/qdsp6/q6apm.c     | 18 ++++++++-
->   sound/soc/qcom/qdsp6/q6apm.h     |  3 ++
->   3 files changed, 53 insertions(+), 31 deletions(-)
-> 
-
+Best regards,
 -- 
-Caleb (they/them)
+Dmitry Baryshkov <lumag@kernel.org>
 
 
