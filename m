@@ -1,215 +1,401 @@
-Return-Path: <linux-arm-msm+bounces-50407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66DB2A50B74
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 20:28:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5063DA50BA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 20:39:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 91E3F188EC74
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 19:28:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE56C3A2D41
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Mar 2025 19:38:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E16724C07D;
-	Wed,  5 Mar 2025 19:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BDC5253B76;
+	Wed,  5 Mar 2025 19:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DyMfLyM2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D89TlMKg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BB519F438;
-	Wed,  5 Mar 2025 19:28:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9553518E362
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Mar 2025 19:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741202914; cv=none; b=TDHoQC9dQfwFKV775VdSGA8pwH/5jNTJRBYxYd2gxTk/ET9DSYnvk4TzSvpCU9o+dknkjaNUyk8Sf2v5jFaHo8jINN3qvZj5xV0Ovrp3pBcfIpAoiRkm2mil6kvYpDmRtHp8rxK36Xq+kIJ5o6kd14gmDnX7jkw3zUBSNZZAwHk=
+	t=1741203528; cv=none; b=GANYLTK4yrj5RcKCbumrX5tICbX+VhqMwvl2o1UfYMI3H2prUQpfi3345hsq1PPCIn3aJmdryXfxSAUD1X6/Al/LSMgKHUv2iOn4RZwlgNRqLpVQAli59pduacP3O86QJXQTVJ3VFW2cGPW1Nz29lz0jNVCxjjaKAXwhgbOGJwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741202914; c=relaxed/simple;
-	bh=GNL0K+Zm8sPa6uZ6xJkLDdmfP36t6ZfM3ghJIcH1dXY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZhTBvFsO579Gy/nphkfLTfpdTTnH0N1UePSW/jusC9iNN83ycwCldYd4KyvASsYZFBIERnxoA/EX1fNjyKsaROG1Ij4T37/pQdkwhOggPzmeWPcC1YRcq4ciQQJDNw/1NGg7QTHox8iYrOBBTdAZ4vTKSRBcBUbRRJgxFxdLgZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DyMfLyM2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 525B4W0u025488;
-	Wed, 5 Mar 2025 19:28:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Kyw5fiMLd0ITsHzLG43UR740fhNTgpgXfvtAkSdLCfU=; b=DyMfLyM2E7+R1PyS
-	1s/qSu7MT6bhg475Rh/9DG/hbFefFcjfxBeDV/kQWG+5NN7LGDAd0fo23QI8ta7z
-	VHa1WmHb3QNu3peEOiLzMlmXPRsgi+s51T8zJxTGUvH/WfJQzpdMOYB4YuZU3d7+
-	+r0RDoRvHHBIR/T2Gfr93zXf92xr/pXeza6ualSd9OxWLq8haSv/hILeaVU6Vza3
-	CIFa1pp2d8hMM1mxT+4eF8BuuI6QY7Czw5RH8Uy3uakMvenPMdFPLyeXnjVzhPws
-	tvhtbdr1LXgSB/TgE/Oe7EQyDaVPHC3NRTbOzMa6nyA/jLEXyn3cnaUBJLjWcDjw
-	1JFPog==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6txhpk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Mar 2025 19:28:13 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 525JSCgv026672
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 5 Mar 2025 19:28:12 GMT
-Received: from [10.110.60.163] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 5 Mar 2025
- 11:28:11 -0800
-Message-ID: <0dfca6b2-2875-4aef-be95-9ed0a33beebd@quicinc.com>
-Date: Wed, 5 Mar 2025 11:28:10 -0800
+	s=arc-20240116; t=1741203528; c=relaxed/simple;
+	bh=5IZF43266tVOPpXKJ+edVRwFMIRrRRwzhduxrJwCjcA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QC+FBETs4EFrIWQI3+/c7WLdSx3lFW8blGsVhv0X1RzbVfqmMHNYzcAkLbS4GRHHjKJhMK/vEoOJ+pATCYD6A7ndkUnIQZRww1OIVH0bqwwb2Rige0uhrAmf0HoJ5HT6UduA6REVf0+RoGThnLokAvqTTwwV+dOm8gFYH81DbuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D89TlMKg; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2217875d103so19477195ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 11:38:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741203525; x=1741808325; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5VSNFszbahKaJkcW+v0MHhL95zb4sCAydonSXrjA+2M=;
+        b=D89TlMKgtKoDN7MIMqeYNKGvLKReEAU9oCBQLoLYbuPcD0pyvho7ML5GmJtGmb4JJE
+         hCCLg/V3mcOWNIoHtTGUGd7AsDp62lKRSZpar1dKyOeJkSLjze091m85fWLFm2APpvi4
+         K17uoxaJuih0wCanOBjor81SxhaD64XmgQ9QE/F4jOr8krHL/rxUOjNabTyHYpYxznyy
+         Iu6YQMLhYDlcGPoIRFyKRqnvxBHNYcxsiJvxlFAopH23jURPEAuiE5AwKvv7BDQNHecK
+         BqFQpj2yUsMCf+lFSxKjQi6TqzY/MIEyhqvX1S8mlPzMq1SHofF2RLE+U5vij340wUV+
+         iM+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741203525; x=1741808325;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5VSNFszbahKaJkcW+v0MHhL95zb4sCAydonSXrjA+2M=;
+        b=WwODzXhvrYFbLIhwY/IdZT2cIAPw+V7xDoAm3gkTNtfkn8PlPBoF6m4ZKbanYmWL+x
+         05W2MOXWQIrVaGRCYAhFma92nsurRbJPtWaPGgSw5/OJxwMFSwZdLtxZLZPW1zMXXnZu
+         8L79XgoSI9rFSDFTNb8Lmw3gIUFQ2VZ/gRJSM6h6zj4ShDmWomOcn8KjUvH4YiqjML1U
+         rYrg7R4sjYzmFRJqPeaCFamUiesSw7k5HhiDHbEdIL5mLBZrKu7ggIYWX9ON9YwKQFYl
+         JBByeX0mJF1Qx6TXk7I/K0U8ghq4qpeGLvHURWiTaCGZF39yiZBSz8bOh2UjEm7i4we3
+         5jrw==
+X-Forwarded-Encrypted: i=1; AJvYcCUUXZ+esUe/Dm/jwIe+BNd36K5v8RYWylEUjJaBlTsfgPWW+Z96UnjmQ62Q8y1urUfw9x0ZxbPP/igWlNu6@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVf7k2nwItdqO8fiC98rDH0nZ45BIZlXjCyYtVweUZKJozIHkX
+	C0oUjnz2LhK24v4hIoooWHpf8MeQluqvnh0grSLQTdumhBhj155R/ZChuMGdPYw4WSG0BcsegbM
+	MmNMd7OEOO0fdIgNfA2dBiDkQQh+3BA==
+X-Gm-Gg: ASbGncusunML3j5TLiNw5rO9eRp7paWFZRkufiak8+pMmm2ynVRj07x3nC/B4LqNL5p
+	lD1Qr5mFd6tpdZJUsou9g7j8TLjJ/miO94WhWjQp3n2LQKHOvGLQrJAHBfisNPy9oTePXcHUxD1
+	L2psMxV6EyFCcohuWxIT6TgL9+/w==
+X-Google-Smtp-Source: AGHT+IGkUD67LVwvrDDzeIP3Gk8ODe8QE0TQVfS+q8UCYC5dtWHz2mbZqV0v//k1ot8vwNyp2q8z92TRSaaL2MCYYq8=
+X-Received: by 2002:a17:903:11c3:b0:223:397e:a55b with SMTP id
+ d9443c01a7336-223f1c9821cmr25525185ad.4.1741203524671; Wed, 05 Mar 2025
+ 11:38:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v35 00/31] Introduce QC USB SND audio offloading support
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>
-CC: Greg KH <gregkh@linuxfoundation.org>, <srinivas.kandagatla@linaro.org>,
-        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
-        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
-        <lgirdwood@gmail.com>, <tiwai@suse.com>, <krzk+dt@kernel.org>,
-        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
-        <robh@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>
-References: <20250219004754.497985-1-quic_wcheng@quicinc.com>
- <Z7W_Vz_kVDjIcp5N@linaro.org>
- <82ce69a3-d248-494f-6ddb-098f392c78a0@quicinc.com>
- <Z8a4WYq4GqWBVNyX@linaro.org>
- <ee5cb6bc-963a-4e31-8ac4-07120fb9ff70@quicinc.com>
- <Z8ikt2K0uekU2dVZ@linaro.org>
-Content-Language: en-US
-From: Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <Z8ikt2K0uekU2dVZ@linaro.org>
+References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
+ <20250304-msm-gpu-fault-fixes-next-v4-5-be14be37f4c3@gmail.com> <CAF6AEGufRP9NuqC1gYy6jrQ9z+XqGFd7KNsbQw8C8NscSOJnJQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGufRP9NuqC1gYy6jrQ9z+XqGFd7KNsbQw8C8NscSOJnJQ@mail.gmail.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Wed, 5 Mar 2025 14:38:32 -0500
+X-Gm-Features: AQ5f1Jp1eKuGw2SRyjhHwJJ1tVPBo4HU7lGgDAsHmIIiVFDPfMP5Apowl_tCUTo
+Message-ID: <CACu1E7FPO253T+EvdJdaBuqh3kb7H_r7WhBE+bVxSHMPq6ixEg@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] drm/msm: Temporarily disable stall-on-fault after
+ a page fault
+To: Rob Clark <robdclark@gmail.com>
+Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: XEk_VzWDUbK1S4q_1dOj7KYELWxNwc_i
-X-Proofpoint-ORIG-GUID: XEk_VzWDUbK1S4q_1dOj7KYELWxNwc_i
-X-Authority-Analysis: v=2.4 cv=Sf4NduRu c=1 sm=1 tr=0 ts=67c8a5cd cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=qC_FGOx9AAAA:8 a=HTecfl5s7U67J0CcF8QA:9 a=QEXdDO2ut3YA:10
- a=fsdK_YakeE02zTmptMdW:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-05_08,2025-03-05_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 phishscore=0
- suspectscore=0 clxscore=1011 malwarescore=0 bulkscore=0 mlxlogscore=999
- mlxscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503050148
+Content-Transfer-Encoding: quoted-printable
 
-On 3/5/2025 11:23 AM, Stephan Gerhold wrote:
-> On Tue, Mar 04, 2025 at 02:46:28PM -0800, Wesley Cheng wrote:
->> On 3/4/2025 12:22 AM, Stephan Gerhold wrote:
->>> On Mon, Mar 03, 2025 at 06:39:52PM -0800, Wesley Cheng wrote:
->>>> On 2/19/2025 3:24 AM, Stephan Gerhold wrote:
->>>>> On Tue, Feb 18, 2025 at 04:47:23PM -0800, Wesley Cheng wrote:
->>>>>> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
->>>>>>
->>>>>> Several Qualcomm based chipsets can support USB audio offloading to a
->>>>>> dedicated audio DSP, which can take over issuing transfers to the USB
->>>>>> host controller.  The intention is to reduce the load on the main
->>>>>> processors in the SoC, and allow them to be placed into lower power modes.
->>>>>> There are several parts to this design:
->>>>>>   1. Adding ASoC binding layer
->>>>>>   2. Create a USB backend for Q6DSP
->>>>>>   3. Introduce XHCI interrupter support
->>>>>>   4. Create vendor ops for the USB SND driver
->>>>>>
->>>>>>       USB                          |            ASoC
->>>>>> --------------------------------------------------------------------
->>>>>>                                    |  _________________________
->>>>>>                                    | |sm8250 platform card     |
->>>>>>                                    | |_________________________|
->>>>>>                                    |         |           |
->>>>>>                                    |      ___V____   ____V____
->>>>>>                                    |     |Q6USB   | |Q6AFE    |
->>>>>> |     |"codec" | |"cpu"    |
->>>>>>                                    |     |________| |_________|
->>>>>>                                    |         ^  ^        ^
->>>>>>                                    |         |  |________|
->>>>>>                                    |      ___V____    |
->>>>>>                                    |     |SOC-USB |   |
->>>>>>    ________       ________               |        |   |
->>>>>>   |USB SND |<--->|QC offld|<------------>|________|   |
->>>>>>   |(card.c)|     |        |<----------                |
->>>>>>   |________|     |________|___     | |                |
->>>>>>       ^               ^       |    | |    ____________V_________
->>>>>>       |               |       |    | |   |APR/GLINK             |
->>>>>>    __ V_______________V_____  |    | |   |______________________|
->>>>>>   |USB SND (endpoint.c)     | |    | |              ^
->>>>>>   |_________________________| |    | |              |
->>>>>>               ^               |    | |   ___________V___________
->>>>>>               |               |    | |->|audio DSP              |
->>>>>>    ___________V_____________  |    |    |_______________________|
->>>>>>   |XHCI HCD                 |<-    |
->>>>>>   |_________________________|      |
->>>>>>
->>>>>
->>>>> As I noted on v34 [1], this version is still missing instructions and
->>>>> changes needed for testing this series. The device tree changes don't
->>>>> need to be part of the same series, but there should be at least a link
->>>>> provided to give other people the chance to provide Tested-by tags.
->>>>>
->>>>> IMO we shouldn't merge this series without those instructions, otherwise
->>>>> we risk that this just ends up being dead code that no one can use.
->>>>>
->>>>> Can you please share the device tree changes for a board upstream and
->>>>> any other changes needed to be able to test this series? E.g. for
->>>>> sm8250-mtp.dts, based on the examples in your cover letter.
->>>>>
->>>>
->>>> To clarify I'm testing this on sm8350 in recent times, but utilizing sm8250
->>>> definitions for the ASoC platform card, as the platform sound card is more
->>>> or less the same between the two SoCs.  Back
->>>> when I started this series, sm8350 was missing a bunch of dependent
->>>> components, such as aDSP not being loaded, and missing platform sound card
->>>> definition, so I had to define and enable those on my own, which required a
->>>> slew of new DT nodes, hence why it wasn't as straight forward to include
->>>> the DT definitions yet for sm8350.  Not thinking that this series would
->>>> take as long as it did, I was planning on separating out the DT changes in
->>>> a different series to enable offloading for the devices I have tested with.
->>>> (sm8150, sm8250 and sm8350)
->>>>
->>>> There's still a pretty big chunk of dependencies missing from sm8350, so
->>>> those would also be handled in the follow up DT submission.  For now, its a
->>>> much bigger hurdle to get the main/functional changes in, and that was
->>>> taking a significant amount of time from my end to manage.
->>>>
->>>> If you want, I can give you the changes I have offline to enable this for
->>>> sm8350, since I haven't spent time formatting/prepping the changes for
->>>> submission yet.
->>>>
->>>
->>> Can you push it to a public branch somewhere (e.g. on CodeLinaro)? I was
->>> talking to some people from the community about testing this on some of
->>> the smartphones we have in upstream, so it wouldn't help if I just have
->>> the changes privately.
->>
->> Which CLO project/branch did you want me to push it to?  Sorry, I haven't
->> worked too much with the CLO open branches.  I have an account though.
->>
-> 
-> Any project/branch is fine for me, I suggested CLO only because I
-> assumed you already have an account there.
-> 
-> You should be able to create a personal project and push it there. You
-> could also use the fork button on
-> https://git.codelinaro.org/linaro/linux/kernel/torvalds/linux to avoid
-> having to push the full history yourself. It should result in a project
-> similar to mine: https://git.codelinaro.org/stephan.gerhold/linux
+On Wed, Mar 5, 2025 at 2:07=E2=80=AFPM Rob Clark <robdclark@gmail.com> wrot=
+e:
+>
+> On Tue, Mar 4, 2025 at 8:57=E2=80=AFAM Connor Abbott <cwabbott0@gmail.com=
+> wrote:
+> >
+> > When things go wrong, the GPU is capable of quickly generating millions
+> > of faulting translation requests per second. When that happens, in the
+> > stall-on-fault model each access will stall until it wins the race to
+> > signal the fault and then the RESUME register is written. This slows
+> > processing page faults to a crawl as the GPU can generate faults much
+> > faster than the CPU can acknowledge them. It also means that all
+> > available resources in the SMMU are saturated waiting for the stalled
+> > transactions, so that other transactions such as transactions generated
+> > by the GMU, which shares a context bank with the GPU, cannot proceed.
+>
+> Nit, the GMU does not actually share a cb.. looking on x1e80100.dtsi,
+> the GMU has cb 5 and gpu has 0 and 1.  (Currently we just use the
+> first, but I guess the 2nd would be used if we supported protected
+> content?)
 
-Wesley - if not CLO, feel free to use the github. We can help you offline. 
+Yeah, I realized after writing this that's the case. But I guess the
+QoS issues happen even with separate context banks due to the way they
+allocate translation units?
 
--- 
----Trilok Soni
+Connor
+
+>
+> fwiw, you can read this from dtsi, ie. in the GMU node, "iommus =3D
+> <&adreno_smmu 5 0x0>;"
+>
+> > This causes a GMU watchdog timeout, which leads to a failed reset
+> > because GX cannot collapse when there is a transaction pending and a
+> > permanently hung GPU.
+> >
+> > On older platforms with qcom,smmu-v2, it seems that when one transactio=
+n
+> > is stalled subsequent faulting transactions are terminated, which avoid=
+s
+> > this problem, but the MMU-500 follows the spec here.
+> >
+> > To work around these problem, disable stall-on-fault as soon as we get =
+a
+> > page fault until a cooldown period after pagefaults stop. This allows
+> > the GMU some guaranteed time to continue working. We only use
+> > stall-on-fault to halt the GPU while we collect a devcoredump and we
+> > always terminate the transaction afterward, so it's fine to miss some
+> > subsequent page faults. We also keep it disabled so long as the current
+> > devcoredump hasn't been deleted, because in that case we likely won't
+> > capture another one if there's a fault.
+> >
+> > After this commit HFI messages still occasionally time out, because the
+> > crashdump handler doesn't run fast enough to let the GMU resume, but th=
+e
+> > driver seems to recover from it. This will probably go away after the
+> > HFI timeout is increased.
+> >
+> > Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  2 ++
+> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  4 ++++
+> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 42 +++++++++++++++++++++++++=
++++++++-
+> >  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 24 +++++++++++++++++++
+> >  drivers/gpu/drm/msm/msm_iommu.c         |  9 +++++++
+> >  drivers/gpu/drm/msm/msm_mmu.h           |  1 +
+> >  6 files changed, 81 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/ms=
+m/adreno/a5xx_gpu.c
+> > index 71dca78cd7a5324e9ff5b14f173e2209fa42e196..670141531112c9d29cef8ef=
+1fd51b74759fdd6d2 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > @@ -131,6 +131,8 @@ static void a5xx_submit(struct msm_gpu *gpu, struct=
+ msm_gem_submit *submit)
+> >         struct msm_ringbuffer *ring =3D submit->ring;
+> >         unsigned int i, ibs =3D 0;
+> >
+> > +       adreno_check_and_reenable_stall(adreno_gpu);
+> > +
+> >         if (IS_ENABLED(CONFIG_DRM_MSM_GPU_SUDO) && submit->in_rb) {
+> >                 ring->cur_ctx_seqno =3D 0;
+> >                 a5xx_submit_in_rb(gpu, submit);
+> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/ms=
+m/adreno/a6xx_gpu.c
+> > index 0ae29a7c8a4d3f74236a35cc919f69d5c0a384a0..5a34cd2109a2d74c9284144=
+8a61ccb0d4f34e264 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > @@ -212,6 +212,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct=
+ msm_gem_submit *submit)
+> >         struct msm_ringbuffer *ring =3D submit->ring;
+> >         unsigned int i, ibs =3D 0;
+> >
+> > +       adreno_check_and_reenable_stall(adreno_gpu);
+> > +
+> >         a6xx_set_pagetable(a6xx_gpu, ring, submit);
+> >
+> >         get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP(0),
+> > @@ -335,6 +337,8 @@ static void a7xx_submit(struct msm_gpu *gpu, struct=
+ msm_gem_submit *submit)
+> >         struct msm_ringbuffer *ring =3D submit->ring;
+> >         unsigned int i, ibs =3D 0;
+> >
+> > +       adreno_check_and_reenable_stall(adreno_gpu);
+> > +
+> >         /*
+> >          * Toggle concurrent binning for pagetable switch and set the t=
+hread to
+> >          * BR since only it can execute the pagetable switch packets.
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/=
+msm/adreno/adreno_gpu.c
+> > index 1238f326597808eb28b4c6822cbd41a26e555eb9..bac586101dc0494f46b069a=
+8440a45825dfe9b5e 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > @@ -246,16 +246,53 @@ u64 adreno_private_address_space_size(struct msm_=
+gpu *gpu)
+> >         return SZ_4G;
+> >  }
+> >
+> > +void adreno_check_and_reenable_stall(struct adreno_gpu *adreno_gpu)
+> > +{
+> > +       struct msm_gpu *gpu =3D &adreno_gpu->base;
+> > +       unsigned long flags;
+> > +
+> > +       /*
+> > +        * Wait until the cooldown period has passed and we would actua=
+lly
+> > +        * collect a crashdump to re-enable stall-on-fault.
+> > +        */
+> > +       spin_lock_irqsave(&adreno_gpu->fault_stall_lock, flags);
+> > +       if (!adreno_gpu->stall_enabled &&
+> > +                       ktime_after(ktime_get(), adreno_gpu->stall_reen=
+able_time) &&
+> > +                       !READ_ONCE(gpu->crashstate)) {
+> > +               adreno_gpu->stall_enabled =3D true;
+> > +
+> > +               gpu->aspace->mmu->funcs->set_stall(gpu->aspace->mmu, tr=
+ue);
+> > +       }
+> > +       spin_unlock_irqrestore(&adreno_gpu->fault_stall_lock, flags);
+> > +}
+> > +
+> >  #define ARM_SMMU_FSR_TF                 BIT(1)
+> >  #define ARM_SMMU_FSR_PF                        BIT(3)
+> >  #define ARM_SMMU_FSR_EF                        BIT(4)
+> > +#define ARM_SMMU_FSR_SS                        BIT(30)
+> >
+> >  int adreno_fault_handler(struct msm_gpu *gpu, unsigned long iova, int =
+flags,
+> >                          struct adreno_smmu_fault_info *info, const cha=
+r *block,
+> >                          u32 scratch[4])
+> >  {
+> > +       struct adreno_gpu *adreno_gpu =3D to_adreno_gpu(gpu);
+> >         const char *type =3D "UNKNOWN";
+> > -       bool do_devcoredump =3D info && !READ_ONCE(gpu->crashstate);
+> > +       bool do_devcoredump =3D info && (info->fsr & ARM_SMMU_FSR_SS) &=
+&
+> > +               !READ_ONCE(gpu->crashstate);
+> > +       unsigned long irq_flags;
+> > +
+> > +       /*
+> > +        * In case there is a subsequent storm of pagefaults, disable
+> > +        * stall-on-fault for at least half a second.
+> > +        */
+> > +       spin_lock_irqsave(&adreno_gpu->fault_stall_lock, irq_flags);
+> > +       if (adreno_gpu->stall_enabled) {
+> > +               adreno_gpu->stall_enabled =3D false;
+> > +
+> > +               gpu->aspace->mmu->funcs->set_stall(gpu->aspace->mmu, fa=
+lse);
+> > +       }
+> > +       adreno_gpu->stall_reenable_time =3D ktime_add_ms(ktime_get(), 5=
+00);
+> > +       spin_unlock_irqrestore(&adreno_gpu->fault_stall_lock, irq_flags=
+);
+> >
+> >         /*
+> >          * If we aren't going to be resuming later from fault_worker, t=
+hen do
+> > @@ -1143,6 +1180,9 @@ int adreno_gpu_init(struct drm_device *drm, struc=
+t platform_device *pdev,
+> >                 adreno_gpu->info->inactive_period);
+> >         pm_runtime_use_autosuspend(dev);
+> >
+> > +       spin_lock_init(&adreno_gpu->fault_stall_lock);
+> > +       adreno_gpu->stall_enabled =3D true;
+> > +
+> >         return msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
+> >                         gpu_name, &adreno_gpu_config);
+> >  }
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/=
+msm/adreno/adreno_gpu.h
+> > index dcf454629ce037b2a8274a6699674ad754ce1f07..a528036b46216bd898f6d48=
+c5fb0555c4c4b053b 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > @@ -205,6 +205,28 @@ struct adreno_gpu {
+> >         /* firmware: */
+> >         const struct firmware *fw[ADRENO_FW_MAX];
+> >
+> > +       /**
+> > +        * fault_stall_lock:
+>
+> nit, @fault_stall_lock:  And for
+> fault_stall_reenable_time/stall_enabled, it wouldn't hurt to add
+> something along the lines of "Protected by @fault_stall_lock".  I've
+> been slowly trying to improve the comment docs over time, I have some
+> of that in my vmbind patchset.
+>
+> Anyways, with those nits addressed, r-b
+>
+> BR,
+> -R
+>
+> > +        *
+> > +        * Serialize changes to stall-on-fault state.
+> > +        */
+> > +       spinlock_t fault_stall_lock;
+> > +
+> > +       /**
+> > +        * fault_stall_reenable_time:
+> > +        *
+> > +        * if stall_enabled is false, when to reenable stall-on-fault.
+> > +        */
+> > +       ktime_t stall_reenable_time;
+> > +
+> > +       /**
+> > +        * stall_enabled:
+> > +        *
+> > +        * Whether stall-on-fault is currently enabled.
+> > +        */
+> > +       bool stall_enabled;
+> > +
+> > +
+> >         struct {
+> >                 /**
+> >                  * @rgb565_predicator: Unknown, introduced with A650 fa=
+mily,
+> > @@ -629,6 +651,8 @@ int adreno_fault_handler(struct msm_gpu *gpu, unsig=
+ned long iova, int flags,
+> >                          struct adreno_smmu_fault_info *info, const cha=
+r *block,
+> >                          u32 scratch[4]);
+> >
+> > +void adreno_check_and_reenable_stall(struct adreno_gpu *gpu);
+> > +
+> >  int adreno_read_speedbin(struct device *dev, u32 *speedbin);
+> >
+> >  /*
+> > diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_=
+iommu.c
+> > index 2a94e82316f95c5f9dcc37ef0a4664a29e3492b2..8d5380e6dcc217c7c209b51=
+527bf15748b3ada71 100644
+> > --- a/drivers/gpu/drm/msm/msm_iommu.c
+> > +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> > @@ -351,6 +351,14 @@ static void msm_iommu_resume_translation(struct ms=
+m_mmu *mmu)
+> >                 adreno_smmu->resume_translation(adreno_smmu->cookie, tr=
+ue);
+> >  }
+> >
+> > +static void msm_iommu_set_stall(struct msm_mmu *mmu, bool enable)
+> > +{
+> > +       struct adreno_smmu_priv *adreno_smmu =3D dev_get_drvdata(mmu->d=
+ev);
+> > +
+> > +       if (adreno_smmu->set_stall)
+> > +               adreno_smmu->set_stall(adreno_smmu->cookie, enable);
+> > +}
+> > +
+> >  static void msm_iommu_detach(struct msm_mmu *mmu)
+> >  {
+> >         struct msm_iommu *iommu =3D to_msm_iommu(mmu);
+> > @@ -399,6 +407,7 @@ static const struct msm_mmu_funcs funcs =3D {
+> >                 .unmap =3D msm_iommu_unmap,
+> >                 .destroy =3D msm_iommu_destroy,
+> >                 .resume_translation =3D msm_iommu_resume_translation,
+> > +               .set_stall =3D msm_iommu_set_stall,
+> >  };
+> >
+> >  struct msm_mmu *msm_iommu_new(struct device *dev, unsigned long quirks=
+)
+> > diff --git a/drivers/gpu/drm/msm/msm_mmu.h b/drivers/gpu/drm/msm/msm_mm=
+u.h
+> > index 88af4f490881f2a6789ae2d03e1c02d10046331a..2694a356a17904e7572b767=
+b16ed0cee806406cf 100644
+> > --- a/drivers/gpu/drm/msm/msm_mmu.h
+> > +++ b/drivers/gpu/drm/msm/msm_mmu.h
+> > @@ -16,6 +16,7 @@ struct msm_mmu_funcs {
+> >         int (*unmap)(struct msm_mmu *mmu, uint64_t iova, size_t len);
+> >         void (*destroy)(struct msm_mmu *mmu);
+> >         void (*resume_translation)(struct msm_mmu *mmu);
+> > +       void (*set_stall)(struct msm_mmu *mmu, bool enable);
+> >  };
+> >
+> >  enum msm_mmu_type {
+> >
+> > --
+> > 2.47.1
+> >
 
