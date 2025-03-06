@@ -1,87 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-50510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA48BA54B21
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:46:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97362A54B32
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:51:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F3F131703FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:46:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BDA933AF470
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:50:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0F181F5FD;
-	Thu,  6 Mar 2025 12:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F10211FAC45;
+	Thu,  6 Mar 2025 12:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AO/VPoA/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="icMrSTub"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE0117583
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 12:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FE31FBE85
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 12:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741265159; cv=none; b=i8s51kevrDaDcaNdEwVP2/gc/Rbh0iOnNwHYbGVNmT0Ex3nN7v+vOKb5RAv2RKXhmj8wqmvy16wyiHi9r+Ny0uI8Q+baXeFTPKArLYT5LBFRTKA4ZVVzaN5xUiDqUE4wa8gCqNfiyo9svsB1xks4KXR52bfNHD7rOAQx8Cp1nAQ=
+	t=1741265462; cv=none; b=YRU7LzGeIcpWJQmJ1snvxqneFUe58H0WHbN1hUiOBNiwLdOLJUgT1Ujaj6yy2od70ioe/UXIZ38cu33bz6nsZThBam3VGMFn7qCApX6NZxEKb913TTQ+edYew5eyIgotEudTRx7+42qbgoLbXipUVldKzQcfIoq3hm77I+3jmiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741265159; c=relaxed/simple;
-	bh=BsuZfBy0o27rEroxO2CuiDchs3Er752NKZpUyYkv714=;
+	s=arc-20240116; t=1741265462; c=relaxed/simple;
+	bh=njxf6y5pyhmeInfBHOslV7CsXmJ8ztcHfHOXm07MRa0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BSDnJ6nW9MVcgvBDZjssIuuhbNbw/N0bZIZIaU+Whakj0DLuiSOp6gy+I8DHPg4d9NbH3itzwU1aNEaywIUDijGR5VIDatMw587mtTaCFbeXk+qIoBf1Qtk+pJXyIaetLm0bMQF/5BOGXdOHcW352yHelRqIDPomknkoigbp2Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AO/VPoA/; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=PvttFd77KYZyczTF3Jm09mFbs3+K5vtjOhrefI3ibg9hxR3CqDnSRd+S3WwFbPOW2RWp7QrqlXTQVoe3FmpAodGxzRfyGghvGyszhJEHWptPUWSCYHb72z8chMLJxv7urilO84izmb0uGj+kKu838+kvaq1FTcR1Jy2PXCW5qek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=icMrSTub; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52645Eiu031234
-	for <linux-arm-msm@vger.kernel.org>; Thu, 6 Mar 2025 12:45:57 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52645Ejc031234
+	for <linux-arm-msm@vger.kernel.org>; Thu, 6 Mar 2025 12:51:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FK/RHL8Gonc2grMn8KNItFyJCXiEsAQ2Rp7C6pvjJfo=; b=AO/VPoA/n4MpLdaF
-	2W90/k/egkeQpg6kVjPmfdjnnvJ9rgyF+P/Br+kZ5/MBpWxjjt9EYbR5fbTj8aYN
-	gspxQxFntaXVOaj2a300Lt1JYBQwUa3hRBfBdRHwb7uDiLCM3nfVah46j7aVuTgk
-	WadBUa44+Wq0jtN/SGhuqsoD2ceKDb+g0WkkXcR2aHDW9lp/GOjPE0ME8ZAOTevI
-	yWsoQkGxfXVHujT0sZnWQb8sRd+2Kw/YvMGSzYpmHsbLcX2vkFq101KvCMDxkD1u
-	w6BoL+PR2wYUJNGk75TsZF/2XLjYVZIHABy+tcS0eZXxPu58FG4MvwZYdflXhoVt
-	X2EuXA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4574ce9en8-1
+	rR7talaNqtIpgG6BnMXQyYngWs9JqhRdQCma/K1hsFk=; b=icMrSTubB9SZAon0
+	2lJr/BDocNqY3ulT0ybde+gZuGMWe14o5JD3jNuQoj1Y736/zZVqbZoeKX46ulE/
+	wnvGi0zwiUxOnKPDqgX24Txszlk3XMnou9L51HOrmd5gznmkphiBKPCEFeKPmIEF
+	GKyAT9sGu2V+sBE0bKjzYY0xHdyJIFGqXWHTs0ugL7nNQ8ui6opf+V0sosJeCGVe
+	ER9Onww4ji8wKjL6+8vQUhKfpx4Y+LfzcnXUM4e694FYlvty5CvAdxRnyTgPgwF/
+	SOW02fceiYlagUiBQeDsb6QrxAR939R9ydBjSTrZxCsS0M1rhdce03WwlFMcqJHf
+	SXbQYA==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4574ce9f42-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 12:45:56 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c39555fafaso18435585a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 04:45:56 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 12:50:59 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c3c5833b58so18452785a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 04:50:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741265156; x=1741869956;
+        d=1e100.net; s=20230601; t=1741265459; x=1741870259;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FK/RHL8Gonc2grMn8KNItFyJCXiEsAQ2Rp7C6pvjJfo=;
-        b=kbWsRFNYwyLq1ssBuB6Bnnea1Fzs8gt7HSSfoCgAbL1it87uoUSg32a6h7CwXfmidA
-         D4t/r+V1Aup4xctH4C8Cax98gHf+gNIlyrjeEvqW+oy+V6GS6dR2mdyAfdJXiOD4xzYo
-         0/yZvSIToiX0hhdRWD1UgLcKxEEO+7Bi5fb1e7JA9bQTNi0oUtJw0pve3ZmCgUIbrcpv
-         VDqTASTEm/fxRA5rqS97R0P4pph4YXYBnpR4Z3X2JP1/sTwoSld0RJMRk5wZ0I67AOH4
-         6V5MHSvwIKI3pI0UkMPZ0aVqLoVWUnOTGMUwp2a21eDn4gY+eOkLpzDkCdbsHRNaML36
-         WrMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWDxwTcNCLJ94SXqkwiEjyaji0avr5+ZJKVAk42/fVP2zYo1npHAcGImRnfXbh8UhS/ETKpzjQK5kZt5eqU@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0QMocCZas1srpixGL7Xne+tC3TNDXZyMrbIbRLwq8x7n0VIRd
-	De9gulFp3KMhqjWgI3eFQhTBvaZ7eQKqFWzTqUmf8bonmAs4nhrSJbxpWUD+9rKWVExyiFwMEF5
-	mCpO/Blqbb4+s3vyx/NS2yJCHu70peOp6pyfRfjteTQ8+CSsqp5YXY8OX/Nu6beqb
-X-Gm-Gg: ASbGncsfDQ/2Kcaveqcu7hSLSW9oDob2is33GSdy+71kmdgZi3+pOLFUBU7r6HBjDZQ
-	oxPkm68GAJvRZwTQXLmWuX0at2Thn3OH0F7GlkFtzj9hiPfJmkWm7fjpYEg2u+rzAqQb/qKIPYt
-	SdPhXrweA1eCWFVM90F8h4bqH0In+2Fl7KAnLNC3AcUGWQSQv5hYh1Pxm+HTyQeaOxtgprtH9JR
-	wtIzuDUGZxFNxEQ3L1pTLELKRXBKhCu+pFnm04Hiaar29Q07NjURUKiIvZWnDbe15t7KIa1v3ZJ
-	ITaMbSXrdQNdnfiqBOQwdd3Zt0fY7+Hgc9zViRz8h3Qsu3/RoUCbu8S3IzL3pRJE36g5Tw==
-X-Received: by 2002:a05:620a:400a:b0:7c0:a898:92fd with SMTP id af79cd13be357-7c3d8ed6b93mr383224785a.13.1741265155831;
-        Thu, 06 Mar 2025 04:45:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGwnifr+rtFdEJ8n5ks+Pxlxph16AhZEdlNsHmeChu9nXmI4OJIKeebQYhCU0Lvokc2XaQP+A==
-X-Received: by 2002:a05:620a:400a:b0:7c0:a898:92fd with SMTP id af79cd13be357-7c3d8ed6b93mr383221885a.13.1741265155393;
-        Thu, 06 Mar 2025 04:45:55 -0800 (PST)
+        bh=rR7talaNqtIpgG6BnMXQyYngWs9JqhRdQCma/K1hsFk=;
+        b=o0mcKQfQztpbUhEF3F1L3csWL6Tj9aE/jLd9Yl2nY3p+CPGEkiXTFN6+31AEuNDRJG
+         gH6E1RtR8Zxy1b5iaxwFPD5CNJpLJeAmy6FabmmRIuXRjk44yqvP6htArALl5I1qtop6
+         3foxIj7OVQRvz4t976579JHKhypNCBIZ0lI/XFk4jyYKG8IE4iEtGdzdeMvMoYSLYEZY
+         /AA/0GhNCn+Jty8JSHyZYZcit9LjuFXFD6+LmD32tN52CxOl44zr69Qhw2EXvOMLHPD5
+         Z/1KukVcvzQG45+bjV221ySPl6Vlz47EbMPaXWHGBXoyCxIp+3w3OUbZaFLc+E09m3u8
+         JhbA==
+X-Gm-Message-State: AOJu0Yy4hFd++QQYFsnrj17bcuwenOERaYOqGVFFCFz65cVTDREaKlVR
+	9qFtOUAwe236KRF7l80dRO2zqkTB1WNtee06otaKicZ8Z3oUcFoNNcbKs00l/pvIOiAaWlvxkfP
+	f7hB84AMvDa8S6iTyLR7eKG3sZodgRhzXQjrOriyEjTtYt1+fM0eLGwvn/szTj+k3
+X-Gm-Gg: ASbGncuL7z8VNaFMnizKMlKYofaZV/CKaymJt08HKdaV2QEJ2VhpwxL8C/YK8wnxSqT
+	sEFdsDTQgiaqeiPYYVoZmjPS0B45ln9oIkiqBWQ1oddRZXqCaxCp1wTzvbtub0wOo6yuj3eo0rx
+	AHO8cOKevbuueULyhiHyzFN2FpVpMWVGUnxQa6svGWmDJVoZJ+ECvqlIxi1uq9BJKJZ00FdyuEQ
+	XQKmALUUG7HQbd0g7pQ3zU+FSrLsqKE2fNIYWmDbAHGtJTnFZ06E26/rwOro/s8BokgenF9j8iL
+	+UH5H9xYTPDEJp5Wqd76sBC2I7OlgB3MpY5stuLhCfcYcIfOO6CdBfUKAGQS3Y4945k8Mg==
+X-Received: by 2002:a05:620a:45a5:b0:7c3:bae4:2339 with SMTP id af79cd13be357-7c3d8eb1d1amr362886885a.11.1741265459258;
+        Thu, 06 Mar 2025 04:50:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFGFeZzV5Gmz2xjrjPxgVHagGLQpB8t4BoOY66hcYV5oNZhHazGLh/6he83HV2x8pZLW82bwQ==
+X-Received: by 2002:a05:620a:45a5:b0:7c3:bae4:2339 with SMTP id af79cd13be357-7c3d8eb1d1amr362885285a.11.1741265458827;
+        Thu, 06 Mar 2025 04:50:58 -0800 (PST)
 Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5498ae57a84sm169205e87.62.2025.03.06.04.45.52
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e5c745d5cfsm908598a12.19.2025.03.06.04.50.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Mar 2025 04:45:54 -0800 (PST)
-Message-ID: <1aa77e2e-6bb0-425c-9b5a-64092f8df9a5@oss.qualcomm.com>
-Date: Thu, 6 Mar 2025 13:45:50 +0100
+        Thu, 06 Mar 2025 04:50:58 -0800 (PST)
+Message-ID: <5e72992c-170c-48b9-8df4-2caf31c4ae44@oss.qualcomm.com>
+Date: Thu, 6 Mar 2025 13:50:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,34 +88,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] clk: qcom: common: Manage rpm, configure PLLs &
- AON clks in really probe
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH] arm64: dts: qcom: Add device tree for TUXEDO Elite 14
+ Gen1
+To: Georg Gottleuber <ggo@tuxedocomputers.com>,
+        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250306-videocc-pll-multi-pd-voting-v2-0-0cd00612bc0e@quicinc.com>
- <20250306-videocc-pll-multi-pd-voting-v2-3-0cd00612bc0e@quicinc.com>
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, wse@tuxedocomputers.com,
+        cs@tuxedocomputers.com
+References: <57589859-fec1-4875-9127-d1f99e40a827@tuxedocomputers.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250306-videocc-pll-multi-pd-voting-v2-3-0cd00612bc0e@quicinc.com>
+In-Reply-To: <57589859-fec1-4875-9127-d1f99e40a827@tuxedocomputers.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: EDyuZOAE0Db4ZzQJHIItP-_s5vY2Pwoc
-X-Proofpoint-GUID: EDyuZOAE0Db4ZzQJHIItP-_s5vY2Pwoc
-X-Authority-Analysis: v=2.4 cv=bNLsIO+Z c=1 sm=1 tr=0 ts=67c99904 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=yHIa6xKSslqa2ziMgBoA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: vsD_9yf__jj9wH8TwhFtS7gMc_mSZ3fO
+X-Proofpoint-GUID: vsD_9yf__jj9wH8TwhFtS7gMc_mSZ3fO
+X-Authority-Analysis: v=2.4 cv=bNLsIO+Z c=1 sm=1 tr=0 ts=67c99a34 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=yDUiu3_GAAAA:8 a=n7UT6Et6nPPvcfnAv1EA:9 a=QEXdDO2ut3YA:10 a=RVmHIydaz68A:10
+ a=DbJdjrQMpfET-33fQHBk:22 a=PEH46H7Ffwr30OY-TuGO:22 a=gafEeHOdjwYkg5oUpzAY:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-06_05,2025-03-06_01,2024-11-22_01
@@ -127,68 +117,110 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscor
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
  definitions=main-2503060097
 
-On 6.03.2025 9:55 AM, Jagadeesh Kona wrote:
-> Add support for runtime power management, PLL configuration and enabling
-> critical clocks in qcom_cc_really_probe() to commonize the clock
-> controller probe.
+On 6.03.2025 1:25 PM, Georg Gottleuber wrote:
+> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
+> Elite SoC (X1E78100).
 > 
-> The runtime power management is not required for all clock controllers,
-> hence handle the rpm based on use_rpm flag in clock controller descriptor.
-> Also the power domains need to be kept enabled during pll configuration,
-> hence attach all required power domains prior to calling get_sync() on the
-> device.
+> Working:
+> * Touchpad
+> * Keyboard
+> * eDP (no brightness control yet)
+
+in case your panel as a PWM backlight, you will need to set the PWM
+output pin function explicitly, see x1e80100-microsoft-romulus.dtsi
+
+> * NVMe
+> * USB Type-C port
+> * WiFi (WiFi 7 untested)
+> * GPU (software rendering)
 > 
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> ---
+> Not working:
+> * GPU (WIP: firmware loading but output is jerky)
+
+Please tell us more
+
+> * USB Type-A (WIP)
+> * Suspend with substantial energy saving
+> * Audio, Speakers, Microphones
+> * Camera
+> * Fingerprint Reader
+
+If it's connected to the multiport controller, you should be able to
+just enable it, like on the T14s, similarly to the Type-A port
 
 [...]
 
-> + * struct qcom_clk_cfg - To maintain list of clocks that needs to be
-> + *                       kept ON or misc clock register settings
-
-I have some reservations about this name, particularly since 'clk_cfg'
-has already been used in the msmbus/interconnect space..
-
-Perhaps qcom_clk_reg_settings?
-
-> + * @offset: address offset for clock register
-> + * @mask: bit mask to indicate the bits to update
+> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 798 ++++++++++++++++++
+>  2 files changed, 799 insertions(+)
+>  create mode 100644
+> arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 140b0b2abfb5..f0a9d677d957 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -298,3 +298,4 @@ dtb-$(CONFIG_ARCH_QCOM)     += x1e80100-lenovo-yoga-slim7x.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-microsoft-romulus13.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-microsoft-romulus15.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-qcp.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-tuxedo-elite-14-gen1.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+> new file mode 100644
+> index 000000000000..86bdec4a2dd8
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+> @@ -0,0 +1,798 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2025 TUXEDO Computers GmbH
 > + */
-> +struct qcom_clk_cfg {
-> +	unsigned int offset;
-> +	unsigned int mask;
-
-"u32"
-
-also, to expand it, we probably want "field" and "val" to replace the
-calls to regmap_update_bits in some drivers
-
-I think we may keep this /\ struct for things like:
-
-/* Enable clock gating for MDP clocks */
-regmap_update_bits(regmap, DISP_CC_MISC_CMD, 0x10, 0x10);
-
-while keeping a separate u32 array of branch clocks to call
-qcom_branch_set_clk_en() on - we would then use 3x less memory
-
-
-> +};
-
 > +
->  struct qcom_cc_desc {
->  	const struct regmap_config *config;
->  	struct clk_regmap **clks;
-> @@ -39,6 +50,11 @@ struct qcom_cc_desc {
->  	const struct qcom_icc_hws_data *icc_hws;
->  	size_t num_icc_hws;
->  	unsigned int icc_first_node_id;
-> +	struct qcom_clk_cfg *clks_cfg;
-> +	size_t num_clks_cfg;
-> +	struct clk_alpha_pll **plls;
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +
+> +#include "x1e80100.dtsi"
+> +#include "x1e80100-pmics.dtsi"
+> +
+> +/ {
+> +       model = "TUXEDO Elite 14 Gen1";
 
-Some ancient or "non-standard" SoCs have non-alpha PLLs, please rename
-this to something like alpha_plls
+Please use 8-wide tabs instead of spaces
 
+> +       compatible = "tuxedo,elite14gen1", "qcom,x1e80100";
+
+You'll need to define a new vendor in:
+
+Documentation/devicetree/bindings/vendor-prefixes.yaml
+
+[...]
+
+> +       vreg_edp_3p3: regulator-edp-3p3 {
+> +               compatible = "regulator-fixed";
+> +
+> +               regulator-name = "VREG_EDP_3P3";
+> +               regulator-min-microvolt = <3300000>;
+> +               regulator-max-microvolt = <3300000>;
+> +
+> +               // EDP_VDD_EN_GPIO54
+
+C-style (/* foo */) comments are preferred, but these ones can be
+removed, as they repeat what the code says
+
+[...]
+
+> +&gpu {
+> +       status = "okay";
+> +
+> +       zap-shader {
+> +               firmware-name = "qcom/a740_zap.mbn";
+
+Are the laptop's OEM key/security fuses not blown?
 
 Konrad
 
