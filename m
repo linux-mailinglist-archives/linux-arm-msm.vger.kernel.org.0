@@ -1,140 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-50487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F7DBA549BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:42:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7A74A549FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:50:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 126193B4730
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 11:40:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EF8DE169290
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 11:50:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E039420E6FF;
-	Thu,  6 Mar 2025 11:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 157F320C46A;
+	Thu,  6 Mar 2025 11:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Uo43b6+M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FP8MOTlt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0F320E32B;
-	Thu,  6 Mar 2025 11:34:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB44F20C02E;
+	Thu,  6 Mar 2025 11:49:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741260867; cv=none; b=sTU7LZqFvLl5PyiOLTsG4Snb5w6YzKz0m6crkXAgOVueQpevIzHP3c+crikEDSsaGwfKmGmtyHgpVEzVLwRCyAp40LZ62y1rZ9tb57tZ38YfR06nbLDKLcDclZFqDbZWmasml3g3AW1QQ1C8oOHsLyxnS73l4jBNpIETc8puSk4=
+	t=1741261773; cv=none; b=EZPpgxuWGFCQ9+ePkqPJUaf6HH2puDclzzd32jy6yFs99oG8PjiTNmBnehW23vObnXq1wMtoYxDtoWIPf/ES+lub/ED7B5IhX0Env2zrdfFNZ2aaZdY1YxUMyJdggfjFuHWUJyktOcSN694bStZ3zc/+5C9uLlCJfvp0wUJy+ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741260867; c=relaxed/simple;
-	bh=rwW+wVmO0GZtCL0AAvWT/a2oJMHmg0m4UxcUjLdVDvw=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SoZ3Tg+wYQ8KBXpV9kwVy/D2t2sTzNc6sVwJ5lEWsISs6wf8vnl9NA0Gy/TVIXeOi2FhDcwRsLQhulS/eCcC7QWgJ5ZHe6ygi6S/7wewGDFkZ00p5sZaMTnpThGLkgxIi6Dy44p7VejSXBoPvKr7TtRxeWYl6ykNQAflv2QOfEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Uo43b6+M; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5269VQQ8009868;
-	Thu, 6 Mar 2025 11:34:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	d0e97DjrXeAEuFqYxH5w5Wx+iR6d8fIH+0eHGbB8JBo=; b=Uo43b6+M2xkSaNg8
-	GD2J2lt+59gTnqpOCZFUo/7eoXRL4MjdRGKf9231hpBenAQnzNUeEwNlAZZGd2Jp
-	jdliWl2HjwvgFV+VrP9SwzY+GhpBIu7O+sw5WmwDaFugTGcezhcyAHHVehhH24EU
-	NLo4nDA/pFLmzLAAyc5LLZ8KU/ua0kGvy4FARK2V6aRMSQl4WxVj/ktHE7uYU6gj
-	Hg4aFAEJH6ugBgJDM0tTOvrff1EOQQYKAzvkyczz95IX0RR2GhMEM/6EH497mEye
-	30BPh4O2UYoRB/M2ao2Dvrm5bq6N3U9yY/rjNrSj2NQYEjdCLLghlzu7nu8BOKCp
-	1oqG6A==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6trucg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Mar 2025 11:34:23 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 526BYMgu021296
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Mar 2025 11:34:22 GMT
-Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 6 Mar 2025 03:34:19 -0800
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 3/3] arm64: dts: qcom: ipq9574: Remove eMMC node
-Date: Thu, 6 Mar 2025 17:03:57 +0530
-Message-ID: <20250306113357.126602-4-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250306113357.126602-1-quic_mdalam@quicinc.com>
-References: <20250306113357.126602-1-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1741261773; c=relaxed/simple;
+	bh=mV0euh285v75kNmGgabf/yMOj5wCPrSi9H0U89iCxAc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=LhodUZBiF1R38vIEOO3fdGVkOnutj8IhzMtbjpDml2uK3X1XhWkdKxoTRjR2l6hjRDT3vugLalcgzqULFjBnPYeb7FJ3ZVFvD9TYymULLI8a9gNFJGbTGpmV8STyYcFrWptN661ty14ROEw3gVyp1O15QVguWUw30+CZ4yL02Ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FP8MOTlt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEFBC4CEE0;
+	Thu,  6 Mar 2025 11:49:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741261771;
+	bh=mV0euh285v75kNmGgabf/yMOj5wCPrSi9H0U89iCxAc=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=FP8MOTltSChGzSWIIP/TRET8MsI3JgKJcfGqXFtVG+9sX/lg5J+A5MBLnUca0wyOF
+	 yBklM6TJ7SSMB1RS46d1FhV71Oezo3T0f5vPVXyzyRNnRfw12AfPXnEZThNHWrqpAp
+	 gbFsepCzt2aQYj6RUFXdioySZTZFRq6AicEr0bLYoFyjUPVvxRrCH7zPJDfv92hteF
+	 7UsZC/D7tbGU31NbF4YcMtXKTTXAvgDoEich/m1PjY717TeSCeKtqUjhMr7YXNR58s
+	 ielWYvCIvWjNGewbSwd+ciWevhff9SIPUdP7IcNR8gklB03BIHOON4t6Dz4Rf6MEN9
+	 QU5QJij+D6u1Q==
+Message-ID: <b3d7374e-b144-4b0a-96f8-0538f9cd1a39@kernel.org>
+Date: Thu, 6 Mar 2025 12:49:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=HZbuTjE8 c=1 sm=1 tr=0 ts=67c9883f cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=3crLPPiErI15JQRwp_kA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: sVErtzt5rj6WNVTLLH5L1yBndQzVj66D
-X-Proofpoint-ORIG-GUID: sVErtzt5rj6WNVTLLH5L1yBndQzVj66D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-06_05,2025-03-06_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0
- mlxlogscore=643 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503060087
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 4/7] arm64: dts: qcom: ipq9574: Reorder reg and
+ reg-names
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, bhelgaas@google.com,
+ lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
+ kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ p.zabel@pengutronix.de, quic_nsekar@quicinc.com,
+ dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
+References: <20250220094251.230936-1-quic_varada@quicinc.com>
+ <20250220094251.230936-5-quic_varada@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250220094251.230936-5-quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Remove eMMC node for rdp433, since rdp433
-default boot mode is norplusnand
+On 20/02/2025 10:42, Varadarajan Narayanan wrote:
+> The 'reg' & 'reg-names' constraints used in the bindings and dtsi are
+> different resulting in dt_bindings_check errors. Re-order the reg entries,
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
-Change in [v2]
+Why?
 
-* No change
+> fix the node names and move the nodes to maintain sort order to address the
 
-Change in [v1]
+Fixing (how?) node name looks like separate problem.
 
-* Added 'Reviewed-by: Konrad Dybcio'
-* For full change log see - https://lore.kernel.org/linux-arm-msm/20241120091507.1404368-9-quic_mdalam@quicinc.com/
 
- arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 12 ------------
- 1 file changed, 12 deletions(-)
+> following errors/warnings.
+> 
+> 	arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: pcie@20000000: reg-names:0: 'parf' was expected
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-index 165ebbb59511..fa7bb521e786 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-@@ -55,18 +55,6 @@ &pcie3 {
- 	status = "okay";
- };
- 
--&sdhc_1 {
--	pinctrl-0 = <&sdc_default_state>;
--	pinctrl-names = "default";
--	mmc-ddr-1_8v;
--	mmc-hs200-1_8v;
--	mmc-hs400-1_8v;
--	mmc-hs400-enhanced-strobe;
--	max-frequency = <384000000>;
--	bus-width = <8>;
--	status = "okay";
--};
--
- &tlmm {
- 
- 	pcie1_default: pcie1-default-state {
--- 
-2.34.1
+So this was added back in 2024 and never tested?
 
+> 	arch/arm64/boot/dts/qcom/ipq9574.dtsi:1045.24-1127.5: Warning (simple_bus_reg): /soc@0/pcie@20000000: simple-bus unit address format error, expected "88000"
+> 
+> Move the nodes to maintain sort order w.r.t address.
+> 
+
+I don't understand this commit msg and huge diff does not help. It's
+very difficult to spot the actual changes and since Qualcomm was never
+testing this in the past, I do not believe it is being tested now.
+
+Clearly explain what is the problem - *each of them*.
+
+Best regards,
+Krzysztof
 
