@@ -1,248 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-50476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E43AA54732
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 11:02:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F0E3BA54762
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 11:10:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C851A166A2B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 10:02:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4424171FA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 10:10:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3101F1F4188;
-	Thu,  6 Mar 2025 10:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA2842010F2;
+	Thu,  6 Mar 2025 10:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="S2xB2lWj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w++c08qH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394762E64A;
-	Thu,  6 Mar 2025 10:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDB21C84DF
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 10:10:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741255338; cv=none; b=lHfb543M/FkwLw+eeoLbA4zQKNJOAyKlPUO10WoME30K0cU685MFUH2vVNQDxLNIJ4WeznMZQRGNeGv/7SQA1yEDELL79+cxM+3s0okq9hFgHUBOta7vC1pFxfRN2lBes+YmCC62eNeZolpqQUBEZ+QGabV3wB7efvnW//Goa2o=
+	t=1741255840; cv=none; b=WUPVn0blvMomImksghlVREmzKUHI++3oPqGkf6Y+otYDuG1wAbcpQVvxAAJe/UrbZyF2u6D/yLqYjGKO4bQRyyypWD5e2gI+WFSiKRTQnpNB+Gp0LW4MR+1wVyw9dbJc98KxbsECnsMUw98p3YlUEowZrjwP+mYg6ICNYlxhZ+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741255338; c=relaxed/simple;
-	bh=4PhF8y6VGkokPsiYhWYkMDRA6AcFOvVZ20VX6LyDvh8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=jIT/UjvFzV1ZxMk2NYDTu4bZ95OojgsgJ2ePXQs63Gt54N1zfKlVCWx8RMuvavzUXeVzpKV9bProa3R7oPEQxwYvohGlG1+X7CwIu3t4f4tYe3R9PVnqlMxWIagQ3tG5/nciyC5yAdagpMbK2WThwtnuK1NdyuWnMOSlQdR7m8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=S2xB2lWj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5268stUI027093;
-	Thu, 6 Mar 2025 10:01:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GUiNQxR6oXFyrfw8pmpUcgdUr3UYT8uMhlX0EwErzwg=; b=S2xB2lWjBg2sjruf
-	Qioeo9dhbHS8bie7RPugvvpgnWm9GDmfsS78ExNm7PQ8wXuQ5E9WJA1YzLBXtaSg
-	iVBRqa0vKn2LMkafTk9O6AcuKP8XWXCvsrJwRZlHgC8cE1x+fJtJY3U1SUl2L6x1
-	XgRLjPi1wiPbfjnAcfsoPwUuVpm8/b6AUAv5AyOfn6DXQY//oBT7uklBk/Yzti+H
-	jj+e4cyJzDWUFfceXxsMVmm7qRwOPW4gQ9oz2qv9tekLQv50olhcOPqcR6/swP6h
-	Z+dSCngBj9RUBEj5xV/mRUkhl+2le8IX+QujkrIUHavcTiNK2eHM8/3XnjM7ZhwJ
-	iSWRew==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6trhph-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Mar 2025 10:01:58 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 526A1vdl007311
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Mar 2025 10:01:57 GMT
-Received: from [10.253.37.89] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Mar 2025
- 02:01:51 -0800
-Message-ID: <cffdd8e8-76bc-4424-8cdb-d48f5010686d@quicinc.com>
-Date: Thu, 6 Mar 2025 18:01:49 +0800
+	s=arc-20240116; t=1741255840; c=relaxed/simple;
+	bh=eYHRpoGMbEGwPMptizuEYfx9VxESUqNfPyr+BhppZYY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W3TH0/q9ELu0zICsGHTxKxZYzNP32v6mWJm4AyCb+zXR+a10aRKO+cknchF/UhAW8AMmCDNO2BtKhUIu5ssY06qOvSacxP70I5Euusoim6Hpa7V1lq72eLk9mYabvIEXHIR3MhiOO+mfA0jT1PfCU2DY86R3icWU4vAkrN6Khbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w++c08qH; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5498c742661so365150e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 02:10:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741255836; x=1741860636; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8lXiXH7m4bW7beAtDaeOppbANkLDTvV0BWddr1dN36Q=;
+        b=w++c08qHzu5asHISohwyZH16TnRlJQMrE5DyPs14ENnb7BJezhusMneceSxxZ5ppB3
+         bhSw+JIyj4055Tc8jpbKq4g3R/ytCZYWBhfINvpCHsqiOprHD7o2gngSpn8TvrogJZvu
+         pmHrlZfAzYFsB74k1u65q0DdpUVfr1RKFotOc9E1zR+1VpEFtMR89rdb6v1m1NK+TXOu
+         uicjB0Sqc6n1jYGajTUN2q02c0f5YO1+A2VmrQhYa0UL6bw6yKP+CRdJcuS1Ed1u3tzH
+         c/2CxJLBtIj3IgKjw+LsuBXxyZqZv8RCgto2nqqsOrufEZp2OWnBPiCiVBvKcyfs9RXv
+         Q/Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741255836; x=1741860636;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8lXiXH7m4bW7beAtDaeOppbANkLDTvV0BWddr1dN36Q=;
+        b=iV+ltl1JdS/2k7fx/WSgYRu8WRBf5g0p3jSc9NHeQm0lLxx0dVoWa08fzFMe9rM7zh
+         3pt9oPeFS0LPnr6WnvVuNX1bAZJ3YZtxEuS4S66LThzhlFOlLWIRAfchBEWyHMj2FjuO
+         cXcZS4HHqUA/imRTfJAL9af0J4AEj7xmh2nZwfdxj1rdj4ajHsFnM0K7wu7FHmd+b5vC
+         GGd1WGDwxjlpNE0aooGylNQyN0LN9CZ+6qqY/8YjTke6zEcXr2MYDeNh/6XAkwP/lpS9
+         Kdfmx50HAd8/Y8P9V7d44FxiLVD47+K4+DGHOs+uoc89EGbs7uaLl8dJJRPfdg8sg6H7
+         RaBg==
+X-Forwarded-Encrypted: i=1; AJvYcCVOXWKtc23hG4axeFTJj7GfODZlwdO/XCNPvuPZTLeLK7CBZ6Cxl2QD5Q1GP3KCaYNrCPi3bdajdGpI9NfY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmG2/YvNeN4h03u+/IXYFXrYIWAbZkdg2UV+hDGPFQTGgp+l7m
+	WCbmQkxPUjgNzkkpIThz23DNdpuGJ9+pdkovIXuOf2KO2Mueq6P/5RCjp6aahBc=
+X-Gm-Gg: ASbGncsyeniCynTw4I0F7CdlaQSR7jGaml6wKN8r1jzbVDkS9nxpyTFTNPsjX/D0J5Q
+	JzKU42FOiVU4pXT36qrwWBysuiurORrqdifspC2sjp0KG5/yUxQh0ZEdY1A7n7jDeqBM3RU0wva
+	z0DDSecwqL9lY2NkedXJ7wjG9ZK+/dkS/qycgMu76gNB4bLMntB3frgCMpXTVzwMLGATpow9Lat
+	livzLiLdx2KH7cY1ryoyUkRIh7A2Am8OEbJrRTSromQLi1R6i1MxlpioSrUR2iXOfavol5Dfi/e
+	wOsTdO0B1lfn3D+4XKRHQwNvDOY3yW4wGX3h2XF/2zzZgGDQkqBCD7W6JmEkSqlgtfEGRKYY4k2
+	+sLmPQbioHyKO5dylpuSO/9FO
+X-Google-Smtp-Source: AGHT+IEGoBCXiFknPijPVAnfPhY1JmrMAFB6C3192/jP8Nr//KDRez0P/W0L5K/UXtmr5uC8I7tOXQ==
+X-Received: by 2002:a05:6512:1094:b0:549:4e79:d4c0 with SMTP id 2adb3069b0e04-5497d383257mr2057776e87.53.1741255835620;
+        Thu, 06 Mar 2025 02:10:35 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5498ae580c5sm130034e87.70.2025.03.06.02.10.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Mar 2025 02:10:34 -0800 (PST)
+Date: Thu, 6 Mar 2025 12:10:31 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v2 1/8] dt-bindings: clock: qcom,sm8450-videocc: Add MXC
+ power domain
+Message-ID: <mboqw4on22m24njo22r3xajjkgmyobynv5qdx4yhbblz5lekw5@xd6xkhlrh62w>
+References: <20250306-videocc-pll-multi-pd-voting-v2-0-0cd00612bc0e@quicinc.com>
+ <20250306-videocc-pll-multi-pd-voting-v2-1-0cd00612bc0e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Jie Luo <quic_luoj@quicinc.com>
-Subject: Re: [PATCH net-next v3 04/14] net: ethernet: qualcomm: Initialize PPE
- buffer management for IPQ9574
-To: Andrew Lunn <andrew@lunn.ch>
-CC: Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Lei Wei <quic_leiwei@quicinc.com>,
-        Suruchi Agarwal
-	<quic_suruchia@quicinc.com>,
-        Pavithra R <quic_pavir@quicinc.com>,
-        "Simon
- Horman" <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Kees Cook
-	<kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        "Philipp
- Zabel" <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
-        <john@phrozen.org>
-References: <20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com>
- <20250209-qcom_ipq_ppe-v3-4-453ea18d3271@quicinc.com>
- <a79027ed-012c-4771-982c-b80b55ab0c8a@lunn.ch>
- <c592c262-5928-476f-ac2a-615c44d67277@quicinc.com>
- <33529292-00cd-4a0f-87e4-b8127ca722a4@lunn.ch>
-Content-Language: en-US
-In-Reply-To: <33529292-00cd-4a0f-87e4-b8127ca722a4@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=HZbuTjE8 c=1 sm=1 tr=0 ts=67c97296 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=P-IC7800AAAA:8 a=pGLkceISAAAA:8 a=-cV8Hw4QFi719GmBsEsA:9
- a=QEXdDO2ut3YA:10 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-GUID: ORV12Dt2uiUbTZnam6MxJqs5otzzHqIG
-X-Proofpoint-ORIG-GUID: ORV12Dt2uiUbTZnam6MxJqs5otzzHqIG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-06_04,2025-03-06_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503060074
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250306-videocc-pll-multi-pd-voting-v2-1-0cd00612bc0e@quicinc.com>
 
-
-
-On 2/20/2025 11:09 PM, Andrew Lunn wrote:
-> On Thu, Feb 20, 2025 at 10:38:03PM +0800, Jie Luo wrote:
->>
->>
->> On 2/11/2025 9:22 PM, Andrew Lunn wrote:
->>>> +	/* Configure BM flow control related threshold. */
->>>> +	PPE_BM_PORT_FC_SET_WEIGHT(bm_fc_val, port_cfg.weight);
->>>> +	PPE_BM_PORT_FC_SET_RESUME_OFFSET(bm_fc_val, port_cfg.resume_offset);
->>>> +	PPE_BM_PORT_FC_SET_RESUME_THRESHOLD(bm_fc_val, port_cfg.resume_ceil);
->>>> +	PPE_BM_PORT_FC_SET_DYNAMIC(bm_fc_val, port_cfg.dynamic);
->>>> +	PPE_BM_PORT_FC_SET_REACT_LIMIT(bm_fc_val, port_cfg.in_fly_buf);
->>>> +	PPE_BM_PORT_FC_SET_PRE_ALLOC(bm_fc_val, port_cfg.pre_alloc);
->>>
->>> ...
->>>
->>>> +#define PPE_BM_PORT_FC_CFG_TBL_ADDR		0x601000
->>>> +#define PPE_BM_PORT_FC_CFG_TBL_ENTRIES		15
->>>> +#define PPE_BM_PORT_FC_CFG_TBL_INC		0x10
->>>> +#define PPE_BM_PORT_FC_W0_REACT_LIMIT		GENMASK(8, 0)
->>>> +#define PPE_BM_PORT_FC_W0_RESUME_THRESHOLD	GENMASK(17, 9)
->>>> +#define PPE_BM_PORT_FC_W0_RESUME_OFFSET		GENMASK(28, 18)
->>>> +#define PPE_BM_PORT_FC_W0_CEILING_LOW		GENMASK(31, 29)
->>>> +#define PPE_BM_PORT_FC_W1_CEILING_HIGH		GENMASK(7, 0)
->>>> +#define PPE_BM_PORT_FC_W1_WEIGHT		GENMASK(10, 8)
->>>> +#define PPE_BM_PORT_FC_W1_DYNAMIC		BIT(11)
->>>> +#define PPE_BM_PORT_FC_W1_PRE_ALLOC		GENMASK(22, 12)
->>>> +
->>>> +#define PPE_BM_PORT_FC_SET_REACT_LIMIT(tbl_cfg, value)	\
->>>> +	u32p_replace_bits((u32 *)tbl_cfg, value, PPE_BM_PORT_FC_W0_REACT_LIMIT)
->>>> +#define PPE_BM_PORT_FC_SET_RESUME_THRESHOLD(tbl_cfg, value)	\
->>>> +	u32p_replace_bits((u32 *)tbl_cfg, value, PPE_BM_PORT_FC_W0_RESUME_THRESHOLD)
->>>
->>> Where is u32p_replace_bits()?
->>
->> u32p_replace_bits is defined by the macro __MAKE_OP(32) in the header
->> file "include/linux/bitfield.h".
+On Thu, Mar 06, 2025 at 02:25:33PM +0530, Jagadeesh Kona wrote:
+> To configure the video PLLs and enable the video GDSCs on SM8450,
+> SM8475, SM8550 and SM8650 platforms, the MXC rail must be ON along
+> with MMCX. Therefore, update the videocc bindings to include
+> the MXC power domain on these platforms.
 > 
-> Given it is pretty well hidden, and not documented, it makes me think
-> you should not be using it. The macros you are expected to use from
-> that file are all well documented.
-
-OK, understand.
-
+> Fixes: 1e910b2ba0ed ("dt-bindings: clock: qcom: Add SM8450 video clock controller")
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Acked-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 > 
->>> This cast does not look good.
->>
->> Yes, we can remove the cast.
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> index 62714fa54db82491a7a108f7f18a253d737f8d61..737efc4b46564c1e475b02873d2dc124329fb775 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> @@ -32,9 +32,11 @@ properties:
+>        - description: Video AHB clock from GCC
+>  
+>    power-domains:
+> -    maxItems: 1
+>      description:
+> -      MMCX power domain.
+> +      Power domains required for the clock controller to operate
+> +    items:
+> +      - description: MMCX power domain
+> +      - description: MXC power domain
+>  
+>    required-opps:
+>      maxItems: 1
+> @@ -72,7 +74,8 @@ examples:
+>        reg = <0x0aaf0000 0x10000>;
+>        clocks = <&rpmhcc RPMH_CXO_CLK>,
+>                 <&gcc GCC_VIDEO_AHB_CLK>;
+> -      power-domains = <&rpmhpd RPMHPD_MMCX>;
+> +      power-domains = <&rpmhpd RPMHPD_MMCX>,
+> +                      <&rpmhpd RPMHPD_MXC>;
+>        required-opps = <&rpmhpd_opp_low_svs>;
+
+As pointed out by Vladimir, you probably also need a second entry in
+required-opps.
+
+>        #clock-cells = <1>;
+>        #reset-cells = <1>;
 > 
-> To some extent, this is a symptom. Why is the cast there in the first
-> place? Cast suggest bad design, not thinking about types, thinking it
-> is actual O.K. to cast between types. Please look at all the casts you
-> have. Is it because of bad design? If so, please fix your types to
-> eliminate the casts.
-
-Sure, this cast is actually redundant, the type of value passed to this
-macro is already defined as the type u32. I will review and remove the
-remaining casts in the ppe_reg.h file.
-
+> -- 
+> 2.34.1
 > 
->>> And this does not look like anything any
->>> other driver does. I suspect you are not using FIELD_PREP() etc when
->>> you should.
->>>
->>> https://elixir.bootlin.com/linux/v6.14-rc2/source/include/linux/bitfield.h
->>>
->>> 	Andrew
->>
->> The PPE_BM_XXX macros defined here write to either of two different
->> 32bit words in the register table, and the actual word used (0 or 1)
->> is hidden within the macro. For example, the below macro.
->>
->> #define PPE_BM_PORT_FC_SET_CEILING_HIGH(tbl_cfg, value)	\
->> 	u32p_replace_bits((u32 *)(tbl_cfg) + 0x1, value,
->> 	PPE_BM_PORT_FC_W1_CEILING_HIGH)
->>
->> We could have used FIELD_PREP as well for this purpose. However using
->> u32p_replace_bits() seemed more convenient and cleaner in this case,
->> since with FIELD_PREP, we would have needed an assignment statement to
->> be defined in the macro implementation. We also noticed many other
->> drivers using u32_replace_bits(). Hope this is ok.
-> 
-> Please extend the set of FIELD_{GET,PREP} macros to cover your use
-> case. Document them to the level of the existing macros. Submit the
-> patch to:
-> 
-> Yury Norov <yury.norov@gmail.com> (maintainer:BITMAP API)
-> Rasmus Villemoes <linux@rasmusvillemoes.dk> (reviewer:BITMAP API)
-> etc
-> 
-> and see what they say about this.
-> 
-> 	Andrew
 
-Thanks for the suggestion. Just to clarify, we preferred
-u32p_replace_bits() over FIELD_PREP() because the former does
-a clear-and-set operation against a given mask, where as with
-FIELD_PREP(), we need to clear the bits first before we use the
-macro and then set it. Due to this, we preferred using
-u32_replace_bits() since it made the macro definitions to modify
-the registers simpler. Given this, would it be acceptable to
-document u32p_replace_bits() better, as it is already being used
-by other drivers as well?
-
-If you prefer to use FIELD_PREP() over u32p_replace_bits(), we
-can update the driver to change the macros to use FIELD_PREP().
-Please note that all our macros for register modifications
-operate only on 32bit values. so we do not have any necessity
-for casts in the code.
-
-Below is one example per my understanding, implemented for
-both cases - u32p_replace_bits() and FIELD_PREP:
-
-#define PPE_BM_PORT_FC_SET_WEIGHT(tbl_cfg, value) \
-       u32p_replace_bits(tbl_cfg + 0x1, value, PPE_BM_PORT_FC_W1_WEIGHT)
-		
-#define PPE_BM_PORT_FC_SET_WEIGHT(tbl_cfg, value) \
-do { \
-      *(tbl_cfg + 0x1) &= ~PPE_BM_PORT_FC_W1_WEIGHT; \
-      *(tbl_cfg + 0x1) |= FIELD_PREP(PPE_BM_PORT_FC_W1_WEIGHT, value); \
-} while (0)
-
+-- 
+With best wishes
+Dmitry
 
