@@ -1,245 +1,327 @@
-Return-Path: <linux-arm-msm+bounces-50454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A418FA544B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 09:24:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3ABC9A544CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 09:26:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E7E6317261E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 08:23:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C37317242C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 08:25:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 501FD207675;
-	Thu,  6 Mar 2025 08:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41DDA1FC11F;
+	Thu,  6 Mar 2025 08:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oVBIkaXx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UrQHgMRC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F80E1A238D
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 08:23:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431331C7000;
+	Thu,  6 Mar 2025 08:25:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741249389; cv=none; b=JqqMYRoyCSOpsBbTjdQyvNA4v1rZSTXIcbriNmX018x2boAHjucpYJS5TSvFDya0fohTgKMFsyG2zf9SQPge9uRD3ZiwpRgt5CIOgk8z/NluXbDkDH7ej+BLBhiDDCZeOVSPsZSS7zURXM7NJwwo3IWrm3o6A0fZEIH9OvPZqmI=
+	t=1741249547; cv=none; b=JRJs7/nyV4cdngj3T0mKxIjury1VtwGAuZJrgmhyOL68wQ77POYOgbJLuq/dXyD7DueRcj/zo0E9Cx9MX23VZkiPnMIS/NFbsDk2uCzypk/pBWyqkSYaIKWjz/+Mp9QpqWmB0XJqB2mtP18CXUbXKIH78ElPsPq1hOhbqcg9aB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741249389; c=relaxed/simple;
-	bh=TBM7ZdoAEJmWV4G+EtplAqbhqX+oEIuKc0qcEJTTXSs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=eOOf6geeI27UwHzFLypSt2i4ma9h1sMqs0+RlkNrIwd5RBhaTMYhTgkGJRNZuNlZXPVT1uydAqNH8v8eyxJ2+a3snAqqdABG1I27v/bviI/KLm+0278HJ4Y1OzIp50PcVqNtS1OguIGt1ab4CRpWiH2xEIx1PACVcufX6cyQXPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oVBIkaXx; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43bd45e4d91so2312435e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 00:23:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741249384; x=1741854184; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FGuGofdiBgeCaS66wbZZbCbyCtmGJE9XpjuRggbUJ/A=;
-        b=oVBIkaXx9oyiyv2b9+I+j38kslqoHppOYGgfBzuFCWpJl50cgcdXh1bVFet2lC8Mov
-         D+4j+jcsIT8CcBGJ7XbJ8PbpDap8Fqd9/fq9KxsBfhyRNk2EYL4bv8Uiq9GJcD5rgQb3
-         fyOzj/JbIt36rnFKZEPBPrMCQjAo9uET2488P86+9pDV23OT9YT79dLby3/uWdC6P7f9
-         j9r3EgA5c9S/G2t3k1weZFMU89QqDgINgTE9m4t/5IhxNjyela6bG2Odecm36xpcok2i
-         cPjuOjSqo4x4aE7x96210tGViPKqjZO/IYiiIE/9pmjaIMXuBtX3/UrcBvpNJiV3SbBe
-         zEMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741249384; x=1741854184;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=FGuGofdiBgeCaS66wbZZbCbyCtmGJE9XpjuRggbUJ/A=;
-        b=X1w/LwiM2Kd3HWnaAgkwCJR+KLQZLFAJ2RPdcC9pbfud5zrk+UaOzpOX5BTFNKVnGJ
-         AZFUl/tkP7KfOBUwZYGHsTuroDIQjAZzxiVV/bSVOfR6XHDsiE+9t9Lcxy1VJuW/DWOT
-         v2EBvq9gOA/AWn1PIdAAjvYZTg20RIp4i8Dthhga2jINT+rzzzg4rgIvqCH+Bqlc1NHb
-         ee58Bf9sB1zv8zfe3v22UEKFO7pHueKcx3xXz+Qt2kAx6Li3hwNNu5phCzXzdzYxi2Zr
-         N51KqK0PTrX40Q8RmlswXQnKVGZ87ymyW/vstIXZJTvGP9Fj9FnVOyNPOUY7RuZBG2g0
-         aTGw==
-X-Forwarded-Encrypted: i=1; AJvYcCWXlJKQjoEKzaSQOf5PrOvZxeg+mGYqU5VfYZ6yqiHx7rIVSHKmwE+D7cTGMSGWQ5PZaNgncPY/Kei2xaJf@vger.kernel.org
-X-Gm-Message-State: AOJu0YzChLCZU+cM85AyGV70fsMULHtJnpYZ+kqHeEIVCNHHTsVrICb6
-	Aq03F5v/lXY2UNtPPjDJmETHa3uG/vQwhCma3FbAaJTnZWWgLvdS0zugX2Bw7jE=
-X-Gm-Gg: ASbGnctkZ4DHUbYecf/Z6DgVuwL9WqAz+ptZM60w0soLSGGV5sna1njUMgOkqEKktWI
-	zDcgXf6u0R9TNKCwIgn2+SR5e0g8zaiAsj5YWX1T6Hnkyplk0akiFxJ/IF7ehdM3vrXge6Pkjkc
-	EYU9ognw7Z1dG4IA7oZDwBfueEj3szJ+3AGut2iH8UkDPsqyxB1UPpX4ODFf+Ti1fj87rgJtuTL
-	TRD2TOojBFoOLMfiEAbbZzZpA1mPJ6o/OuP/WskIIxFxRm7DexT1tF9PTI1j/RmM3mgLqRQAfbX
-	j8ns8rP9JIVB/1EOT5sWJLLqwSYZDRg9331bomOyU0zJ7wpiYJPcx8862g==
-X-Google-Smtp-Source: AGHT+IH151lwQVNoK7D/gsd6Nuf9nzMnhqbH1DqJBNBByko64LML2udj6wgGGTZX+oEUFfskKpkrrA==
-X-Received: by 2002:a7b:ca55:0:b0:43b:4829:8067 with SMTP id 5b1f17b1804b1-43bdb37ce80mr16864395e9.6.1741249384220;
-        Thu, 06 Mar 2025 00:23:04 -0800 (PST)
-Received: from [192.168.1.101] ([37.167.203.236])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bd42c6203sm42080905e9.24.2025.03.06.00.22.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Mar 2025 00:23:03 -0800 (PST)
-Message-ID: <ffff2d49-d90b-4512-a12e-cf7c4251b4a8@linaro.org>
-Date: Thu, 6 Mar 2025 09:22:45 +0100
+	s=arc-20240116; t=1741249547; c=relaxed/simple;
+	bh=3m56HwLijw9VVrjw2br8JTDtKj+ANzmMTldXyw0gsYk=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mx7niLJSwaHFZVF8u4wv9vjvfCIfT575v+lSf0Tp0m5iauRBwgeJAZS1n2Xlm1tCRrivcIQDBKCCRySRkHSFvqpf2LFdFkSffJkxtWtwerWDSHiyYAraWHbRpM3sYSHpex/YVYmTyAXPyynWbFB6GY0vPjIa1qqhyq3w9G1Y7P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UrQHgMRC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 525LqkgQ005689;
+	Thu, 6 Mar 2025 08:25:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2JlKo72XqbHp8TzRdd0Ae0uxQJj6y8EJ7hPwXkcSpFU=; b=UrQHgMRCt74Keza9
+	KmHIYYn/5Vk+QBwNvDLtjxYEHobX1TIlmecLRmFVn2KQxxsPCnF3TNkFsrDPV2uG
+	xazi0LHSkXX6reQJUO96gyN8X/rw2Z3NcYt8uOcdDkvc1J9CuQr2YSdEkK3tM7L7
+	nLYo6oRbSyvwdLrUITfUz41uTKKruWmeGBPVwqYYKLavuZj4ZD5jD76B2cqAN2E7
+	YOVVXxG3ljWXNFaSm692TKlI4jBEjohSfPcrGH4+24geP91H5XOJMm+XtV0YA0hU
+	4e5qKPYmeFgbAjKRyO5Jjx0xlFmgqHUwxEyRZQjvwNT0HfT87f9we+HEjwfsKLtb
+	Vnu1Fg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6tr8sx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Mar 2025 08:25:39 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5268Pccg009345
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Mar 2025 08:25:38 GMT
+Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 6 Mar 2025 00:25:32 -0800
+Date: Thu, 6 Mar 2025 13:55:23 +0530
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
+ Ride-r3
+Message-ID: <Z8lb889QrqluPXXl@hu-wasimn-hyd.qualcomm.com>
+References: <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
+ <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
+ <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
+ <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
+ <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
+ <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
+ <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
+ <Z8AWHiVu05s0RJws@hu-wasimn-hyd.qualcomm.com>
+ <a8991221-88b2-4a39-a51b-587c4cdeebe4@kernel.org>
+ <Z8laCxtHOdNm3rRu@hu-wasimn-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 3/7] media: platform: qcom/iris: add
- power_off_controller to vpu_ops
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250305-topic-sm8x50-iris-v10-v2-0-bd65a3fc099e@linaro.org>
- <20250305-topic-sm8x50-iris-v10-v2-3-bd65a3fc099e@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250305-topic-sm8x50-iris-v10-v2-3-bd65a3fc099e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z8laCxtHOdNm3rRu@hu-wasimn-hyd.qualcomm.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=HZbuTjE8 c=1 sm=1 tr=0 ts=67c95c03 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=I14zcgCu20LTj4TMwbAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: EzgHzsUYtzVMqX83vGv-_HoAWNSSY4_X
+X-Proofpoint-ORIG-GUID: EzgHzsUYtzVMqX83vGv-_HoAWNSSY4_X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-06_03,2025-03-06_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 mlxscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=964 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503060062
 
-On 05/03/2025 20:05, Neil Armstrong wrote:
-> In order to support the SM8650 iris33 hardware, we need to provide a
-> specific constoller power off sequences via the vpu_ops callbacks.
+On Thu, Mar 06, 2025 at 01:47:15PM +0530, Wasim Nazir wrote:
+> On Mon, Mar 03, 2025 at 08:46:55AM +0100, Krzysztof Kozlowski wrote:
+> > On 27/02/2025 08:37, Wasim Nazir wrote:
+> > > On Wed, Jan 15, 2025 at 09:35:34AM +0100, Krzysztof Kozlowski wrote:
+> > >> On 15/01/2025 06:48, Wasim Nazir wrote:
+> > >>>> The the SoC, I am asking about the board. Why each of them is for
+> > >>>> example r3?
+> > >>>>
+> > >>>> So this is not sufficient explanation, nothing about the board, and
+> > >>>> again just look Renesas and NXP.
+> > >>>>
+> > >>>
+> > >>> Hi Krzysztof,
+> > >>>
+> > >>> sa8775p(AUTO), qcs9100(IOT), qcs9075(IOT) are different SoCs based on
+> > >>> safety capabilities and memory map, serving different purpose.
+> > >>> Ride & Ride-r3 are different boards based on ethernet capabilities and
+> > >>> are compatible with all the SoCs mentioned.
+> > >>
+> > > 
+> > > Hi Krzysztof,
+> > > 
+> > >> Compatible? What does it mean for a board?
+> > >>
+> > > 
+> > > Ride board is based on multiple daughter cards (SOC-card, display,
+> > > camera, ethernet, pcie, sensor, etc.).
+> > > 
+> > > The SOC is not directly soldered to Ride board, instead SOC is soldered
+> > > on SIP (System in Package) card which can be mounted on SOC-daughter card of
+> > > Ride board.
+> > > 	- SoC => SIP-card => SOC-daughter-card (Ride)
+> > 
+> > 
+> > So basically pretty like other designs using SoM.
+> > 
+> > > 
+> > > Together with SIP cards and other daughter cards we are creating different
+> > > <soc>-Ride Variants with differences in memory map & thermal mitigations.
+> > > 
+> > > The SIP card consists of SOC, PMIC & DDR and it is pin compatible to the
+> > > SOC daughter card of <soc>-Ride board. Only SOC is changing accross SIP
+> > > cards, except an additional third party SIL-PMIC for SAIL, which is not
+> > > present in QCS9075 Ride.
+> > 
+> > Just like every SoM
+> > 
+> > > 
+> > > Other daughter cards remains same for <soc>-Ride variants, except
+> > > ethernet card which is different for <soc>-Ride rev3 variants.
+> > > 
+> > > So the Ride board (combination of daughter cards) is same across the SIP,
+> > > while SOC on SIP card is changing which can be sa8775p, qcs9100 or qcs9075.
+> > > 
+> > >> Third time: did you look how other vendors do it?
+> > >>
+> > > 
+> > > Yes, we have reviewed other vendors. However, please feel free to share
+> > > any specific reference you would like us to follow.
+> > > 
+> > > Here are few reference files we found from other vendors where similar
+> > > tasks are performed which includes code refactoring and HW modularity:
+> > >  - Freescale: fsl-ls208xa.dtsi, fsl-ls2088a.dtsi, fsl-ls2081a-rdb.dts
+> > 
+> > That's an unexpected choice - I would rather look at dozen of SoMs for
+> > iMX platforms.
+> > 
+> > >  - Renesas: white-hawk-common.dtsi, r8a779g0-white-hawk.dts
+> > >  - Rockchip: px30-engicam-common.dtsi, px30-engicam-ctouch2.dtsi,
+> > >    px30-engicam-px30-core-ctouch2.dts
+> > > 
+> > > In our case along with describing the HW, code refactoring is also done
+> > > which might be causing confusion, but we are ready for any inputs for
+> > > correction.
+> > 
+> > I don't understand why this was not properly described since beginning.
+> > You had the hardware in your hands and went with incomplete or even
+> > incorrect hardware description.
+> > 
+> > > 
+> > > Putting this pictorial diagram for updated DT structure depicting our HW.
+> > >  - qcs9xxx-module.dtsi specifying QCS9xxx based SIP card/module having
+> > >    SoC, PMICs, Memory-map updates.
+> > >  - qcom-ride-common.dtsi specifying ride daughter boards, here we are
+> > >    doing code refactoring also as this is common for all ride boards.
+> > >  - qcom-ride-ethernet-aqr115c.dtso specifying ethernet overlay board which
+> > >    uses 2.5G phy and can be overlayed to ride boards to get ride-r3.
+> > >    By default ride uses 1G phy.
+> > >  - qcs9075-iq-9075-evk.dts is the new name for RB8 as per new product
+> > >    name. We will be changing this in next patch series.
+> > > 
+> > > +-----------------------------------------------------------------------------------------------------------------------------------------------+
+> > > |                                                                                                                                               |
+> > > |                                                          sa8775p.dtsi                                                                         |
+> > > |                                                              |                                                                                |
+> > > |                                    +-------------------------+-----------------------+                                                        |
+> > > |                                    |                         |                       |                                                        |
+> > > |                                    v                         |                       v                                                        |
+> > > |                             qcs9075-module.dtsi              |                qcs9100-module.dtsi                                             |
+> > 
+> > So this is the SoM?
 > 
-> Add the callback, and use the current helper for currently supported
-> platforms.
+> Yes this is SoM.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   drivers/media/platform/qcom/iris/iris_vpu2.c       |  1 +
->   drivers/media/platform/qcom/iris/iris_vpu3.c       |  2 ++
->   drivers/media/platform/qcom/iris/iris_vpu_common.c | 14 ++++++++++----
->   drivers/media/platform/qcom/iris/iris_vpu_common.h |  2 ++
->   4 files changed, 15 insertions(+), 4 deletions(-)
+> > 
+> > > |                                    |                         |                       |                                                        |
+> > > |                                    v                         v                       v                                                        |
+> > > |                                  (IOT)                    (AUTO)                   (IOT)                                                      |
+> > > |                                    |                         |                       |                                                        |
+> > > |             +----------------------+                         |                       |                                                        |
+> > > |             |                      |                         |                       |                                                        |
+> > > |             |                      | +-------------------------+-----------------------+-------------------< qcom-ride-common.dtsi            |
+> > 
+> > Which piece of actual hardware is represented in qcom-ride-common?
+> > 
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu2.c b/drivers/media/platform/qcom/iris/iris_vpu2.c
-> index 8f502aed43ce2fa6a272a2ce14ff1ca54d3e63a2..7cf1bfc352d34b897451061b5c14fbe90276433d 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu2.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu2.c
-> @@ -34,5 +34,6 @@ static u64 iris_vpu2_calc_freq(struct iris_inst *inst, size_t data_size)
->   
->   const struct vpu_ops iris_vpu2_ops = {
->   	.power_off_hw = iris_vpu_power_off_hw,
-> +	.power_off_controller = iris_vpu_power_off_controller,
->   	.calc_freq = iris_vpu2_calc_freq,
->   };
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3.c b/drivers/media/platform/qcom/iris/iris_vpu3.c
-> index b484638e6105a69319232f667ee7ae95e3853698..95f362633c95b101ecfda6480c4c0b73416bd00c 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu3.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu3.c
-> @@ -117,6 +117,8 @@ static u64 iris_vpu3_calculate_frequency(struct iris_inst *inst, size_t data_siz
->   }
->   
->   const struct vpu_ops iris_vpu3_ops = {
-> +	.reset_controller = iris_vpu_reset_controller,
-
-Seems I sent the patches too fast, this is remnant of v1, it should disappear, I'll fix it in v3.
-
->   	.power_off_hw = iris_vpu3_power_off_hardware,
-> +	.power_off_controller = iris_vpu_power_off_controller,
->   	.calc_freq = iris_vpu3_calculate_frequency,
->   };
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
-> index d6ce92f3c7544e44dccca26bf6a4c95a720f9229..3b3e1ca1e42183561ee78c89f50946fd0cc3c3ab 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
-> @@ -251,7 +251,7 @@ static void iris_vpu_power_off_controller_disable(struct iris_core *core)
->   	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
->   }
->   
-> -static int iris_vpu_power_off_controller(struct iris_core *core)
-> +int iris_vpu_power_off_controller(struct iris_core *core)
->   {
->   	u32 val = 0;
->   	int ret;
-> @@ -284,23 +284,29 @@ void iris_vpu_power_off(struct iris_core *core)
->   {
->   	dev_pm_opp_set_rate(core->dev, 0);
->   	core->iris_platform_data->vpu_ops->power_off_hw(core);
-> -	iris_vpu_power_off_controller(core);
-> +	core->iris_platform_data->vpu_ops->power_off_controller(core);
->   	iris_unset_icc_bw(core);
->   
->   	if (!iris_vpu_watchdog(core, core->intr_status))
->   		disable_irq_nosync(core->irq);
->   }
->   
-> -static int iris_vpu_power_on_controller(struct iris_core *core)
-> +static int iris_vpu_reset_controller(struct iris_core *core)
->   {
->   	u32 rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
-> +
-> +	return reset_control_bulk_reset(rst_tbl_size, core->resets);
-> +}
-
-Same here, I'll remove this now useless iris_vpu_reset_controller() function.
-
-Neil
-
-> +
-> +static int iris_vpu_power_on_controller(struct iris_core *core)
-> +{
->   	int ret;
->   
->   	ret = iris_enable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
->   	if (ret)
->   		return ret;
->   
-> -	ret = reset_control_bulk_reset(rst_tbl_size, core->resets);
-> +	ret = iris_vpu_reset_controller(core);
->   	if (ret)
->   		goto err_disable_power;
->   
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.h b/drivers/media/platform/qcom/iris/iris_vpu_common.h
-> index 63fa1fa5a4989e48aebdb6c7619c140000c0b44c..f8965661c602f990d5a7057565f79df4112d097e 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.h
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.h
-> @@ -13,6 +13,7 @@ extern const struct vpu_ops iris_vpu3_ops;
->   
->   struct vpu_ops {
->   	void (*power_off_hw)(struct iris_core *core);
-> +	int (*power_off_controller)(struct iris_core *core);
->   	u64 (*calc_freq)(struct iris_inst *inst, size_t data_size);
->   };
->   
-> @@ -22,6 +23,7 @@ void iris_vpu_clear_interrupt(struct iris_core *core);
->   int iris_vpu_watchdog(struct iris_core *core, u32 intr_status);
->   int iris_vpu_prepare_pc(struct iris_core *core);
->   int iris_vpu_power_on(struct iris_core *core);
-> +int iris_vpu_power_off_controller(struct iris_core *core);
->   void iris_vpu_power_off_hw(struct iris_core *core);
->   void iris_vpu_power_off(struct iris_core *core);
->   
+> All daughter cards like SOC-card, display, camera, ethernet, pcie, sensor, etc.
+> 
+> > > |             |                      | |                       | |                     | |                                                      |
+> > > |             v                      v v                       v v                     v v                                                      |
+> > > |  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
+> > > |                                    |                         |                       |                                                        |
+> > > |                                    | +-------------------------+-----------------------+-------------------< qcom-ride-ethernet-aqr115c.dtso  |
+> > > |                                    | |                       | |                     | |                                                      |
+> > > |                                    v v                       v v                     v v                                                      |
+> > > |                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
+> > 
+> > I think I gave already few times that answer: No. You cannot reference
+> > from a module.c another .c file. You cannot reference DTS from DTS.
+> > 
+> > Strictly speaking you can, of course, but you must not. That's not how
+> > source code is done to be manageable and readable.
+> 
+> Ah the arrow is leading to confusion.
+> 
+> Actually we are not including dts here instead *.dtso file will be
+> overlayed to *-ride.dts to generate *-ride-r3.dts.
+> 
+> Below is the correct arrow sequence.
+> 
+> |  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
+> |                                    |                         |                       |                                                        |
+> |                                    +-------------------------+-----------------------+---------------------< qcom-ride-ethernet-aqr115c.dtso  |
+> |                                    |                         |                       |                                                        |
+> |                                    v                         v                       v                                                        |
+> |                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
+> 
+> > 
+> > > |                                                                                                                                               |
+> > > +-----------------------------------------------------------------------------------------------------------------------------------------------+
+> > > 
+> > >>>
+> > >>> With the combination of these 3 SoCs and 2 boards, we have 6 platforms,
+> > >>> all of which we need.
+> > >>> - sa8775p-ride.dts is auto grade Ride platform with safety feature.
+> > >>> - qcs9100-ride.dts is IOT grade Ride platform with safety feature.
+> > >>> - qcs9075-ride.dts is IOT grade Ride platform without safety feature.
+> > >>>
+> > >>> Since the Ride-r3 boards are essentially Ride boards with Ethernet
+> > >>> modifications, we can convert the Ride-r3 DTS to overlays.
+> > >> How one board can be with multiple SoCs? If it is soldered, it's close
+> > >> to impossible - that's just not the same board. If it is not soldered,
+> > >> why you are not explaining it? What is Ride board? What is there? What
+> > >> can go there? How it can be used in other SoCs? Or for which SoCs? Is
+> > >> there a datasheet available?
+> > >>
+> > > 
+> > > As our SoC is based on SIP card and SIP card is compatible with Ride
+> > > board, we could able to use same Ride board (which is combination of
+> > > multiple daughter cards) with multiple SIP cards.
+> > > These SIP cards can be of sa8775p, qcs9100 or qcs9075 SOC.
+> > 
+> > Describe properly the hardware - if you have a module or SIP if you
+> > decide not to use industry-standard naming (but why...), then describe
+> > it in DTSI.
+> 
+> We refer to it as ‘module’ in our datasheet, so I use the same term
+> here. Thanks for pointing it out; we can proceed with the SoM name.
+> 
+> Below is the updated diagram:
+> +-----------------------------------------------------------------------------------------------------------------------------------------------+
+> |                                                                                                                                               |
+> |                                                          sa8775p.dtsi                                                                         |
+> |                                                              |                                                                                |
+> |                                    +-------------------------+-----------------------+                                                        |
+> |                                    |                         |                       |                                                        |
+> |                                    v                         |                       v                                                        |
+> |                             qcs9075-som.dtsi                 |                qcs9100-som.dtsi                                                |
+> |                                    |                         |                       |                                                        |
+> |                                    v                         v                       v                                                        |
+> |                                  (IOT)                    (AUTO)                   (IOT)                                                      |
+> |                                    |                         |                       |                                                        |
+> |             +----------------------+                         |                       |                                                        |
+> |             |                      |                         |                       |                                                        |
+> |             |                      | +-------------------------+-----------------------+-----------------< sa8775p-ride-common.dtsi           |
+> |             |                      | |                       | |                     | |                                                      |
+> |             v                      v v                       v v                     v v                                                      |
+> |  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
+> |                                    |                         |                       |                                                        |
+> |                                    +-------------------------+-----------------------+-------------------< sa8775p-ride-ethernet-aqr115c.dtso |
+> |                                    |                         |                       |                                                        |
+> |                                    v                         v                       v                                                        |
+> |                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
+> |                                                                                                                                               |
+> +-----------------------------------------------------------------------------------------------------------------------------------------------+
 > 
 
+Updating typo: qcom-ride-* changed to sa8775p-ride-*.
+
+> > 
+> > Best regards,
+> > Krzysztof
+> 
+> Thanks & regards,
+> Wasim
 
