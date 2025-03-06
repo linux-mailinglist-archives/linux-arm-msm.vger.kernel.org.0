@@ -1,115 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-50513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E00DEA54B5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:59:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA401A54B72
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 14:05:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B360188D858
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:59:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5CF453B274F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:05:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 044FA209F55;
-	Thu,  6 Mar 2025 12:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 486EA20B80F;
+	Thu,  6 Mar 2025 13:05:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GEAE9Iht"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733F8204590;
-	Thu,  6 Mar 2025 12:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486A020C009;
+	Thu,  6 Mar 2025 13:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741265985; cv=none; b=F9eMxBR9W1QjHe+Iuhvc+bo+FWDqfPvx6C0clCczIqo7X7CB07tE4XQx0s7EnY5ab8Dp3MdVOMsnK0yPSHWq/yfz1xvDNqPE7ikS4mpyf7y7ffimkPa6HdCBd0o73qKPnGr/yISNkH3fB7s0XkvmkmSnnBSeqcnBdFF6hgTAb0A=
+	t=1741266303; cv=none; b=dQ9Dr5mXXBevRhpG3Cmwvmws3bsg6dMEpcAOFbJfbu+pfscFhAJWnGOIE8im+SrtmKEhn1WoUHobBWlyg2o3s6vR34AgpYaGD/X5NK0dj0UpQm6CIOcRnplEnumcbOlUj/zpW/AZrl48ZAyZthJnrWtwTG6wkTjYjWGCd6gkkvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741265985; c=relaxed/simple;
-	bh=xUm6f5Z+U5Dg9T+/xMzH7X6StiSVpIrgpbnfs1y8T/A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AVG5X2BgA4xQjZpseQ+wMtnWDkjCjim3tLsk2xqBCArU66l04Vc0UVjDYEuOusTTQpATkD1noRVZTry2+jb+aJKeZEirQ+vYj1A2McSAR5ktcpP09gg/JlVwCew6aV4wUsvBIZAtSK78jlr4mR7p9fc7K5Qt81RobcYf7GoFGTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-223785beedfso9295255ad.1;
-        Thu, 06 Mar 2025 04:59:44 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741265984; x=1741870784;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dXr7uDsRH7CN7dqPEAo/8hwLOM1h86DbnHP38hRdbbI=;
-        b=GEJ5jBx/JWWmouR9K6oELvOAjXw6sR6tSYxGGBIa8rmM14XG7oxhfd2HQ8r/WVwXv8
-         3D0aJfEQ+PftgX+GjVMmF1Xtr9D6foz4QbHOsFdeU1sJtDGP6MDtndcxseYdWfwXQZO8
-         cPcwGFt+T7oaYMOPXeIIomZFH5a7bbjcDkqXdD4ZZDgyEhBD3Z4WlVD12e+aFjv/RlyT
-         DA5j9aYu1ypTG8rEPRc2CZ7WKML2G+Dwn45NvD2m0JZI2xVcTEGcSXiN1w4S5s3fDVu8
-         RoUSPFlKLYlTNHxyF91qW5qLln3hJz7NFlfRP2VKQx5R3G2gehMiUQKh9+U5DF9ezwkB
-         uEyA==
-X-Forwarded-Encrypted: i=1; AJvYcCU+OJ1eBv+M/4RjUI9YvUQBNk555Du6pirbPrlxJu8l0PRwXc7swR/snFyusccGlRwp0+LyaAS+ie/W@vger.kernel.org, AJvYcCU9aAy63g/ByjXBubjC3tdKwIYzdaszxF5MmbPQFkG72yWFUQWZ8iHdQ4CSK62nWlAXTo9XbqgWbaDL@vger.kernel.org, AJvYcCUgEnmAWKkHxgwbl5AeZRNlOjzGk3GnRLBEy65roYe2e/6VqoZCoR+92TvL1tqkMjNdkg74sBbyMojgANqOpA==@vger.kernel.org, AJvYcCVEBeUY4+HLYSX4HSMkRRVBKVnsMgnx3laVok8A/vXm4L59ZxhPFp+VMsjS+Yo6xUd4cJBBnnfrjzhbbyrF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4Zt9sMvXJVLQ4jzCDkyr00E58+4vYo4cwSyc9XhqxSXGhPqRG
-	4S1nAjGMO4TLWSH17ej8WBKSXXnoBzoywcmgoiYaXw+NHQUO+7F8
-X-Gm-Gg: ASbGnctU6Drko2ovZCHGAk7JpUyX/NwTQBu9/lJzVulJ1qjlsQZmxJZfSDSan/q0P6n
-	q/pmPPIxzz9sw8J9xM/4FZ+szOwxxBf6WRY8CnktL2F2cSMHP2hFXa37+YrbX0FbG1sXNeRPsJ7
-	rANT6z1FXjqvdt1wlqDIXvgW0jMTVsJcz2QqxMunuAfQ9+OG0l6KtwJBqISSmntml6IdAAkW+Cu
-	T6ktqygauS5KKK3vECCZ9PM20xhZZNDCpPK1/DcZ/NrFLYzb68IXbBTsv89zZGdAausZ2X6PKhc
-	JssAMUoCnAEUD+3/aPaIXSYfSJ8saxtavfZK/0+dK9ShrUpO2annemlFqUIf2GUk/lhI4f4Ls+m
-	mVh0=
-X-Google-Smtp-Source: AGHT+IHHCa1Mc9CIwvi5u0s8WOcN8dtXSdGTpXdZKm7WGs3OoKGtYXz/T4gD/S03NyAlHNoX9UMNIA==
-X-Received: by 2002:a05:6a00:2e20:b0:736:3954:d78c with SMTP id d2e1a72fcca58-73682b737c4mr9780918b3a.6.1741265983562;
-        Thu, 06 Mar 2025 04:59:43 -0800 (PST)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-af2855c63besm894935a12.12.2025.03.06.04.59.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Mar 2025 04:59:43 -0800 (PST)
-Date: Thu, 6 Mar 2025 21:59:40 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, bhelgaas@google.com,
-	lpieralisi@kernel.org, manivannan.sadhasivam@linaro.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org,
-	konradybcio@kernel.org, p.zabel@pengutronix.de,
-	quic_nsekar@quicinc.com, dmitry.baryshkov@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org
-Subject: Re: [PATCH v11 0/7] Add PCIe support for Qualcomm IPQ5332
-Message-ID: <20250306125940.GC478887@rocinante>
-References: <20250220094251.230936-1-quic_varada@quicinc.com>
- <20250220144551.GB1777078@rocinante>
- <d399a2be-3010-43fc-9531-e4f3560ea6df@kernel.org>
+	s=arc-20240116; t=1741266303; c=relaxed/simple;
+	bh=YNELi245vPsmcaIKuPOO2R4iHmuof+ZAbfWgXuQSYgQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Av6KxZRvOBj5h2eWTPFch60hOZw4iRxSGV4oUaldFyUGTmTODeACXXeWkXlxtLCswOlitNHsRlTDzDjl61OTzCwnizHuGj7ZaKZXYqXvo8/win1SG3PwxR8908OCbjEBRKRDANPvMlAU7Dy+Y540zZozCC8UXWXeU385DsrzyWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GEAE9Iht; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1741266301; x=1772802301;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=YNELi245vPsmcaIKuPOO2R4iHmuof+ZAbfWgXuQSYgQ=;
+  b=GEAE9IhtIZU912xQwtXBXyqfQU8sHOgu4pcAbwv27XTUMYqSQLUmsw95
+   1S1RlscQE1GASv+HtJA510N5DzS3dkXMQy4iFyiR326Zka5CxpZJujtpA
+   ftPJvHoyoaqpuoI50T7tPSHv7q0EIUPYwbD9U1sVeg8wKa0ADXjcvyLuU
+   crW2mjBIXrF6CXE+XKtC0LMiDaRXjy7P9QZeN8rqTArgL6dQpq85kqGeM
+   v7f6XZ7WzSgZiATEcgKNYO+oKkVLBlsSfH9eTRb2FyeisZj506cpe9MWh
+   JZJ85l4NfeSL9YjiFE3a5xOwlHOSDRAqU3fDe74y+/tQOdSZxEbCB6Sdr
+   Q==;
+X-CSE-ConnectionGUID: E5d5eS7gTOGQmua/XHefYQ==
+X-CSE-MsgGUID: yv5XPPWES9SRZ7tCpQ7wPw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11365"; a="41447285"
+X-IronPort-AV: E=Sophos;i="6.14,226,1736841600"; 
+   d="scan'208";a="41447285"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2025 05:05:00 -0800
+X-CSE-ConnectionGUID: bwaNFyECQie78jsFcEQlRQ==
+X-CSE-MsgGUID: QkNFBrDxQFWlSj1RB07U9g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,226,1736841600"; 
+   d="scan'208";a="149800015"
+Received: from unknown (HELO localhost) ([10.237.66.160])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2025 05:04:55 -0800
+From: Jani Nikula <jani.nikula@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Lyude Paul
+ <lyude@redhat.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann
+ <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter
+ <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
+ <marijn.suijten@somainline.org>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH RFC v2 0/7] drm/display: dp: add new DPCD access functions
+In-Reply-To: <87a59ywda3.fsf@intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20250301-drm-rework-dpcd-access-v2-0-4d92602fc7cd@linaro.org>
+ <87a59ywda3.fsf@intel.com>
+Date: Thu, 06 Mar 2025 15:04:50 +0200
+Message-ID: <877c52wbrh.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d399a2be-3010-43fc-9531-e4f3560ea6df@kernel.org>
+Content-Type: text/plain
 
-Hello,
+On Thu, 06 Mar 2025, Jani Nikula <jani.nikula@linux.intel.com> wrote:
+> On Sat, 01 Mar 2025, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+>> Existing DPCD access functions return an error code or the number of
+>> bytes being read / write in case of partial access. However a lot of
+>> drivers either (incorrectly) ignore partial access or mishandle error
+>> codes. In other cases this results in a boilerplate code which compares
+>> returned value with the size.
+>>
+>> As suggested by Jani implement new set of DPCD access helpers, which
+>> ignore partial access, always return 0 or an error code. Reimplement
+>> existing helpers using the new functions to ensure backwards
+>> compatibility.
+>
+> I think that description is for earlier versions of the series, it's the
+> other way round now.
+>
+> Regardless, glanced through the series quickly, I like it, this is
+>
+> Acked-by: Jani Nikula <jani.nikula@intel.com>
 
-> >> Patch series adds support for enabling the PCIe controller and
-> >> UNIPHY found on Qualcomm IPQ5332 platform. PCIe0 is Gen3 X1 and
-> >> PCIe1 is Gen3 X2 are added.
-> > 
-> > Applied to dt-bindings, thank you!
-> I will send reverts for these. This patchset affects users without
-> mentioning it and without providing any rationale.
-> 
-> What's more, it introduces known to author warnings just to fix them
-> later...
+PS. If you need to send another round, please Cc: intel-gfx and intel-xe
+to run this through CI for both i915 and xe drivers. Thanks!
 
-The following commit:
+>
+>
+>>
+>> This series targets only the DRM helpers code. If the approach is found
+>> to be acceptable, each of the drivers should be converted on its own.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>> Changes in v2:
+>> - Reimplemented new helpers using old ones (Lyude)
+>> - Reworked the drm_dp_dpcd_read_link_status() patch (Lyude)
+>> - Dropped the dp-aux-dev patch (Jani)
+>> - Link to v1: https://lore.kernel.org/r/20250117-drm-rework-dpcd-access-v1-0-7fc020e04dbc@linaro.org
+>>
+>> ---
+>> Dmitry Baryshkov (7):
+>>       drm/display: dp: implement new access helpers
+>>       drm/display: dp: change drm_dp_dpcd_read_link_status() return value
+>>       drm/display: dp: use new DCPD access helpers
+>>       drm/display: dp-aux-dev: use new DCPD access helpers
+>>       drm/display: dp-cec: use new DCPD access helpers
+>>       drm/display: dp-mst-topology: use new DCPD access helpers
+>>       drm/display: dp-tunnel: use new DCPD access helpers
+>>
+>>  drivers/gpu/drm/amd/amdgpu/atombios_dp.c           |   8 +-
+>>  .../gpu/drm/bridge/cadence/cdns-mhdp8546-core.c    |   2 +-
+>>  drivers/gpu/drm/display/drm_dp_aux_dev.c           |  12 +-
+>>  drivers/gpu/drm/display/drm_dp_cec.c               |  37 ++-
+>>  drivers/gpu/drm/display/drm_dp_helper.c            | 307 +++++++++------------
+>>  drivers/gpu/drm/display/drm_dp_mst_topology.c      | 105 ++++---
+>>  drivers/gpu/drm/display/drm_dp_tunnel.c            |  20 +-
+>>  drivers/gpu/drm/hisilicon/hibmc/dp/dp_link.c       |   4 +-
+>>  drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  24 +-
+>>  drivers/gpu/drm/msm/dp/dp_link.c                   |  18 +-
+>>  drivers/gpu/drm/radeon/atombios_dp.c               |   8 +-
+>>  include/drm/display/drm_dp_helper.h                |  92 +++++-
+>>  12 files changed, 322 insertions(+), 315 deletions(-)
+>> ---
+>> base-commit: c0eb65494e59d9834af7cbad983629e9017b25a1
+>> change-id: 20241231-drm-rework-dpcd-access-b0fc2e47d613
+>>
+>> Best regards,
 
-  829aa3693f8d ("dt-bindings: PCI: qcom: Use SDX55 'reg' definition for IPQ9574")
-
-Should no longer be present.  However, we still carry the following commit:
-
-  f67d04b18337 ("dt-bindings: PCI: qcom: Document the IPQ5332 PCIe controller")
-
-Let me know if you want it to be removed, too.
-
-Thank you!
-
-	Krzysztof
+-- 
+Jani Nikula, Intel
 
