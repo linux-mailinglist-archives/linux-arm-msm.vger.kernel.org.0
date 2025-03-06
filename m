@@ -1,247 +1,428 @@
-Return-Path: <linux-arm-msm+bounces-50425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7330BA53F13
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 01:27:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 114F1A53F16
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 01:28:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F5DB3A4F72
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 00:27:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B9DE16FFF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 00:28:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6B18D299;
-	Thu,  6 Mar 2025 00:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E3FABA4A;
+	Thu,  6 Mar 2025 00:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gLEdmGpK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VkwwWBuf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494DCF9F8;
-	Thu,  6 Mar 2025 00:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B18B661
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 00:28:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741220846; cv=none; b=iAo+9YK5oQWXrb+RXecGgvsEb6UMHqhIsOvvvRL6a20c8tNI+KC/d9PoY56oS79sKdgrnWRvl9IYqv0rbSbUiWrP5X2P2Y8uT/hzrHE+141n9uzJLr3sKes5KS24Pjm5tUGY+3H4N/f4yhoH+HlbK+4o1rhi47wMSUCdl3tvdK8=
+	t=1741220897; cv=none; b=fAV6Gt1GGIkEEIoFWTybxonzVI/sFeuTJTePvzvcR6T9RauOooxhW7IITGMIHhsveq0Q259z5VCxe5P6z/gN0jGnvQ2LqCQMeIFt5W15e78avQDQqCFOf7wxEK+r43+N37UQqPPtLZsBBNge18SA6PKQo/BsxK2r/856KSUCTc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741220846; c=relaxed/simple;
-	bh=QFerc3MN+Vcg4N4CJd1sGKbxHJtzh0GIWoPMvNoGuiU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EToWyKJmEYKWq0kq3PUyxYjEAi/0oA0L+QCHivSvqLWVm64YLx/Evq7RRipFFNBV/nAXYwEaR6obNu19ShwJzFEUk50nIBhXNjmqH6p3iRSJFsVQ++w9c3Uzl394fw4+J9Mu7DOUF+kBpa40NUFT0F02bhje2aXWb5+svSyV0tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gLEdmGpK; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741220844; x=1772756844;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=QFerc3MN+Vcg4N4CJd1sGKbxHJtzh0GIWoPMvNoGuiU=;
-  b=gLEdmGpKVoWV4Ov3e6/juI0hmvwnvQHW5vS+q+2/PNCCJOg9263SuOzW
-   OSrYJnhOBnqH28YrGaCUifvCdav+Zn1VRjMA6NyblpjHnk/AkeGJHD3tH
-   DfYykncGGsvbdNJamTBhGptNG5RV6e4QPTGghYmSm9ybltO7+ShtruKoC
-   p6ERrCtXLC6zY7uTVe/GuS7XeWVeeLhOhIOCc9rK8bNR4maaTstsq+9tO
-   f2CG9xNRKHxGlTsHbSIqUcJkjE5UK0gJVPxdMCV0qnvnaUKi3xwkWHA57
-   vUY0CvMgnMYm3dLrzunxEPVdxF167/DIJlH0kbI6ZdRLsW06oV1/LSZ9M
-   w==;
-X-CSE-ConnectionGUID: /qcFzmZAQUOrQlzkiCop3g==
-X-CSE-MsgGUID: tB83c6HJT7Wny/z1vONKlQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="52850315"
-X-IronPort-AV: E=Sophos;i="6.14,224,1736841600"; 
-   d="scan'208";a="52850315"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2025 16:27:23 -0800
-X-CSE-ConnectionGUID: 0ryAj4sxQ/igPnw3Nkbr7Q==
-X-CSE-MsgGUID: tHucV7FcQ9iTV6bfg7HsOQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,224,1736841600"; 
-   d="scan'208";a="142078639"
-Received: from lkp-server02.sh.intel.com (HELO 76cde6cc1f07) ([10.239.97.151])
-  by fmviesa002.fm.intel.com with ESMTP; 05 Mar 2025 16:27:20 -0800
-Received: from kbuild by 76cde6cc1f07 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tpz54-000MLq-0N;
-	Thu, 06 Mar 2025 00:27:18 +0000
-Date: Thu, 6 Mar 2025 08:26:57 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sricharan R <quic_srichara@quicinc.com>, jassisinghbrar@gmail.com,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, andersson@kernel.org,
-	konradybcio@kernel.org, manivannan.sadhasivam@linaro.org,
-	dmitry.baryshkov@linaro.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev
-Subject: Re: [PATCH V3 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox
- driver
-Message-ID: <202503060748.jOvlkjJf-lkp@intel.com>
-References: <20250228045356.3527662-3-quic_srichara@quicinc.com>
+	s=arc-20240116; t=1741220897; c=relaxed/simple;
+	bh=l7IkmxhJKCqOpfwAPHGjlggNj4BTe7Zg69JAi3gfjF0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qHob1NGOdLz8PgN+DDN3KsQAE/r1qFEVN03Dbs4WT89GnwElEADmVVCracv//KlK5bMe/jxypYtF8k479X5wSZlCRQzY5RnltHtWbEqWSKBfWmTDzfLToE7B051XYV4CxTCktSNopotugDtJDpJqGufrbRgzIun+cGZY0/prCx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VkwwWBuf; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-39129fc51f8so77321f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 16:28:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741220891; x=1741825691; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7Pm97bU1p7cb7fMHRK51BDpV9RUcVY6lH9dKA/ipyBc=;
+        b=VkwwWBufD+gQch648V2iWu2toR7S8ha55CQaU6trwOv066u2RgLM2uQn3Y6AZwOv5M
+         oL7sC5ajSl2tqvy0EpaJo2zWrfPjW1jM3uf4pylwCgxNdQECLKph1hzBmVKJ2VYuCD5z
+         kaU4tokYhClrEr2L+WrdfvpeK5t5vTnDIaI4fNWpg16FCpO7oGQ7DX9CB/8LrtGdZiBY
+         W0ESNh34Xz/oVNhXjgEL4uiyVlRKsQFHI0boINaHY3Funu+lzja3D4FzEBX3iJguuw5y
+         ICzKGezauqg2csAw1YHTxRrEy+aRWP3UknOAUVJToxtLDFvaaTQinlWuAjGotl96D47Z
+         //hQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741220891; x=1741825691;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7Pm97bU1p7cb7fMHRK51BDpV9RUcVY6lH9dKA/ipyBc=;
+        b=EpoqDQYhqZ27TbvFHOzHL2DRpmAtrmDo+8wLSD1vfPzZBp8GoKp1LyPdl+J6g7J4hV
+         XDrH3PpNxYChRTWhY5kBD8Fxe0Oa8IbmTiYptA31psn7KiNky0pHROz4NxZz6/JjSdMT
+         1ODYtVdmbm83URmMEsrcwFGuWMwbPa8MTybz8rglR2BYO9bRQnL9kHN6QKmlgK8ebqD3
+         wb0h9s5A/mJZFkqbb7grc/kzTlpsBLtQGYzSLrFI4vArcYvYfA9zJNklXlpT4bnGshne
+         NoFjv92zzMn9GVqj7ivgmQTmy7inOyk0QGF4pMr49sMYwdE3EgSjgFQ8AwEjNRWJN2pg
+         3L9g==
+X-Forwarded-Encrypted: i=1; AJvYcCWd9xOf5p44AkjXh3WicHaCUxevBmVRjUDyk30rMIHBhosA5pxupUtNDxICE8/gJGnROTEI0TPsw/9ONp0g@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3E+mB8ilknMifSXUWz8SzSim2WKENSuBy89m5mnqFT96kp3Ug
+	5i0pXixxaIgkjHF2rnqlSxOwU0Jlok6Qtj7YL2d2ZrSm4MZlQTCfBr2MVToCHyQ=
+X-Gm-Gg: ASbGnctXrQeUCsEU4La5YcaCj44qrVVKphCkiDcjHisaS0vTbcfch9/TwbbQ/QnvP72
+	29qqeU6Qq/w5J+TevOL217VvQjaiNuleNSjb3rSPRI17TOAuYL6NaAfNMcPQRhJctO9JPGtJAIk
+	v/dBsMwxNWOjhRudhJpaKUt8YTw8/koDLu1r7suGsCMAj1HKb/QTd8c9hldf8SZWCyfWbM/tOVn
+	Z2E4CqDx+TudjjVtvr1+hP0Hau6RYomMnYaCCe9hdCS9Cx/LGCVKRSATDUqA/UeYbSR4jhiqWRC
+	J4tNSTvFlFWorZA1gRv7dLWJmvWnurdMe2pQCzNhVoArlrXBYuXqqgOHTkYmQxKN2/W07qBfnL7
+	8dIQs0h8ROA==
+X-Google-Smtp-Source: AGHT+IF+WL61BrLlHQNOlUcTe4ptGJeJWmfrP/sGQ0/N6uW9lVQZ3x3bRcpntHSbzuDXG0SHCEvaNQ==
+X-Received: by 2002:a5d:6da3:0:b0:391:2c67:7983 with SMTP id ffacd0b85a97d-3912c677ab7mr37532f8f.39.1741220891530;
+        Wed, 05 Mar 2025 16:28:11 -0800 (PST)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912bfdff57sm129939f8f.37.2025.03.05.16.28.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Mar 2025 16:28:10 -0800 (PST)
+Message-ID: <f4354a08-46e2-4bf5-9395-f9b861a9d7c8@linaro.org>
+Date: Thu, 6 Mar 2025 00:28:09 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250228045356.3527662-3-quic_srichara@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 02/12] media: iris: Add platform capabilities for HEVC
+ and VP9 decoders
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>, quic_vgarodia@quicinc.com,
+ quic_abhinavk@quicinc.com, mchehab@kernel.org
+Cc: hverkuil@xs4all.nl, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250305104335.3629945-1-quic_dikshita@quicinc.com>
+ <20250305104335.3629945-3-quic_dikshita@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250305104335.3629945-3-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Sricharan,
+On 05/03/2025 10:43, Dikshita Agarwal wrote:
+> Add platform capabilities for HEVC and VP9 codecs in decoder driver
+> with related hooks.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/iris/iris_ctrls.c | 28 ++++++-
+>   .../qcom/iris/iris_hfi_gen2_command.c         | 30 ++++++-
+>   .../qcom/iris/iris_hfi_gen2_defines.h         |  1 +
+>   .../qcom/iris/iris_hfi_gen2_response.c        | 36 ++++++++-
+>   .../platform/qcom/iris/iris_platform_common.h |  9 ++-
+>   .../platform/qcom/iris/iris_platform_sm8550.c | 80 ++++++++++++++++++-
+>   6 files changed, 170 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.c b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> index b690578256d5..fb2b818c7c5c 100644
+> --- a/drivers/media/platform/qcom/iris/iris_ctrls.c
+> +++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> @@ -20,9 +20,19 @@ static enum platform_inst_fw_cap_type iris_get_cap_id(u32 id)
+>   	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
+>   		return DEBLOCK;
+>   	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
+> -		return PROFILE;
+> +		return PROFILE_H264;
+> +	case V4L2_CID_MPEG_VIDEO_HEVC_PROFILE:
+> +		return PROFILE_HEVC;
+> +	case V4L2_CID_MPEG_VIDEO_VP9_PROFILE:
+> +		return PROFILE_VP9;
+>   	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
+> -		return LEVEL;
+> +		return LEVEL_H264;
+> +	case V4L2_CID_MPEG_VIDEO_HEVC_LEVEL:
+> +		return LEVEL_HEVC;
+> +	case V4L2_CID_MPEG_VIDEO_VP9_LEVEL:
+> +		return LEVEL_VP9;
+> +	case V4L2_CID_MPEG_VIDEO_HEVC_TIER:
+> +		return TIER;
+>   	default:
+>   		return INST_FW_CAP_MAX;
+>   	}
+> @@ -36,10 +46,20 @@ static u32 iris_get_v4l2_id(enum platform_inst_fw_cap_type cap_id)
+>   	switch (cap_id) {
+>   	case DEBLOCK:
+>   		return V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER;
+> -	case PROFILE:
+> +	case PROFILE_H264:
+>   		return V4L2_CID_MPEG_VIDEO_H264_PROFILE;
+> -	case LEVEL:
+> +	case PROFILE_HEVC:
+> +		return V4L2_CID_MPEG_VIDEO_HEVC_PROFILE;
+> +	case PROFILE_VP9:
+> +		return V4L2_CID_MPEG_VIDEO_VP9_PROFILE;
+> +	case LEVEL_H264:
+>   		return V4L2_CID_MPEG_VIDEO_H264_LEVEL;
+> +	case LEVEL_HEVC:
+> +		return V4L2_CID_MPEG_VIDEO_HEVC_LEVEL;
+> +	case LEVEL_VP9:
+> +		return V4L2_CID_MPEG_VIDEO_VP9_LEVEL;
+> +	case TIER:
+> +		return V4L2_CID_MPEG_VIDEO_HEVC_TIER;
+>   	default:
+>   		return 0;
+>   	}
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> index beaf3a051d7c..a3ebcda9a2ba 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> @@ -309,7 +309,20 @@ static int iris_hfi_gen2_set_profile(struct iris_inst *inst)
+>   {
+>   	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
+>   	u32 port = iris_hfi_gen2_get_port(V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
+> -	u32 profile = inst->fw_caps[PROFILE].value;
+> +	u32 profile;
+> +
+> +	switch (inst->codec) {
+> +	case V4L2_PIX_FMT_HEVC:
+> +		profile = inst->fw_caps[PROFILE_HEVC].value;
+> +		break;
+> +	case V4L2_PIX_FMT_VP9:
+> +		profile = inst->fw_caps[PROFILE_VP9].value;
+> +		break;
+> +	case V4L2_PIX_FMT_H264:
+> +	default:
+> +		profile = inst->fw_caps[PROFILE_H264].value;
+> +		break;
 
-kernel test robot noticed the following build warnings:
+Following up on my previous comment about returning a 0 default and 
+running with it instead of erroring it - you then treat default == 0 @ 
+inst->codec assigned in iris_hfi_gen[1|2]_sys_init as H264.
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on linus/master v6.14-rc5 next-20250305]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+In fact why have a default by the time you get this this point in the 
+code anyway ?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sricharan-R/dt-bindings-mailbox-Document-qcom-tmel-qmp/20250228-125707
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20250228045356.3527662-3-quic_srichara%40quicinc.com
-patch subject: [PATCH V3 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox driver
-config: hexagon-allyesconfig (https://download.01.org/0day-ci/archive/20250306/202503060748.jOvlkjJf-lkp@intel.com/config)
-compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250306/202503060748.jOvlkjJf-lkp@intel.com/reproduce)
+Just chuck out parameters which aren't expected as errors and then don't 
+bother with these defaults.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503060748.jOvlkjJf-lkp@intel.com/
+> +	}
+>   
+>   	inst_hfi_gen2->src_subcr_params.profile = profile;
+>   
+> @@ -326,7 +339,20 @@ static int iris_hfi_gen2_set_level(struct iris_inst *inst)
+>   {
+>   	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
+>   	u32 port = iris_hfi_gen2_get_port(V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
+> -	u32 level = inst->fw_caps[LEVEL].value;
+> +	u32 level;
+> +
+> +	switch (inst->codec) {
+> +	case V4L2_PIX_FMT_HEVC:
+> +		level = inst->fw_caps[LEVEL_HEVC].value;
+> +		break;
+> +	case V4L2_PIX_FMT_VP9:
+> +		level = inst->fw_caps[LEVEL_VP9].value;
+> +		break;
+> +	case V4L2_PIX_FMT_H264:
+> +	default:
+> +		level = inst->fw_caps[LEVEL_H264].value;
+> +		break;
+> +	}
+>   
+>   	inst_hfi_gen2->src_subcr_params.level = level;
+>   
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> index 2fcf7914b70f..48c507a1ec27 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> @@ -46,6 +46,7 @@
+>   #define HFI_PROP_CROP_OFFSETS			0x03000105
+>   #define HFI_PROP_PROFILE			0x03000107
+>   #define HFI_PROP_LEVEL				0x03000108
+> +#define HFI_PROP_TIER				0x03000109
+>   #define HFI_PROP_STAGE				0x0300010a
+>   #define HFI_PROP_PIPE				0x0300010b
+>   #define HFI_PROP_LUMA_CHROMA_BIT_DEPTH		0x0300010f
 
-All warnings (new ones prefixed by >>):
+These seem like - probably bitfields ?
 
->> drivers/mailbox/qcom-tmel-qmp.c:196:55: warning: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Wformat]
-     196 |                 dev_err(mdev->dev, "Unsupported packet size %ld\n", pkt->iov_len);
-         |                                                             ~~~     ^~~~~~~~~~~~
-         |                                                             %zu
-   include/linux/dev_printk.h:154:65: note: expanded from macro 'dev_err'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                                ~~~     ^~~~~~~~~~~
-   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ~~~    ^~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:406:22: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     406 |         msg_hdr->msg_type = TMEL_MSG_UID_MSG_TYPE(msg_uid);
-         |                             ^
-   include/linux/mailbox/tmelcom-qmp.h:16:34: note: expanded from macro 'TMEL_MSG_UID_MSG_TYPE'
-      16 | #define TMEL_MSG_UID_MSG_TYPE(v)        FIELD_GET(GENMASK(15, 8), v)
-         |                                         ^
-   drivers/mailbox/qcom-tmel-qmp.c:502:4: warning: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Wformat]
-     501 |                 dev_err(tdev->dev, "Invalid pkt.size received size: %ld, expected: %zu\n",
-         |                                                                     ~~~
-         |                                                                     %zu
-     502 |                         tdev->pkt.iov_len, sizeof(struct tmel_ipc_pkt));
-         |                         ^~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:154:65: note: expanded from macro 'dev_err'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                                ~~~     ^~~~~~~~~~~
-   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ~~~    ^~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:541:35: error: call to undeclared function 'FIELD_PREP_CONST'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     541 |         ret = tmel_process_request(tdev, TMEL_MSG_UID_SECBOOT_SEC_AUTH, msg,
-         |                                          ^
-   include/linux/mailbox/tmelcom-qmp.h:55:43: note: expanded from macro 'TMEL_MSG_UID_SECBOOT_SEC_AUTH'
-      55 | #define TMEL_MSG_UID_SECBOOT_SEC_AUTH       TMEL_MSG_UID_CREATE(TMEL_MSG_SECBOOT,\
-         |                                             ^
-   include/linux/mailbox/tmelcom-qmp.h:13:3: note: expanded from macro 'TMEL_MSG_UID_CREATE'
-      13 |         (FIELD_PREP_CONST((0xff << 8), msg_type) | FIELD_PREP_CONST(0xff, action_id))
-         |          ^
-   drivers/mailbox/qcom-tmel-qmp.c:572:35: error: call to undeclared function 'FIELD_PREP_CONST'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     572 |         ret = tmel_process_request(tdev, TMEL_MSG_UID_SECBOOT_SS_TEAR_DOWN,
-         |                                          ^
-   include/linux/mailbox/tmelcom-qmp.h:58:43: note: expanded from macro 'TMEL_MSG_UID_SECBOOT_SS_TEAR_DOWN'
-      58 | #define TMEL_MSG_UID_SECBOOT_SS_TEAR_DOWN       TMEL_MSG_UID_CREATE(TMEL_MSG_SECBOOT,\
-         |                                                 ^
-   include/linux/mailbox/tmelcom-qmp.h:13:3: note: expanded from macro 'TMEL_MSG_UID_CREATE'
-      13 |         (FIELD_PREP_CONST((0xff << 8), msg_type) | FIELD_PREP_CONST(0xff, action_id))
-         |          ^
-   drivers/mailbox/qcom-tmel-qmp.c:595:7: error: call to undeclared function 'FIELD_PREP_CONST'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     595 |         case TMEL_MSG_UID_SECBOOT_SEC_AUTH:
-         |              ^
-   include/linux/mailbox/tmelcom-qmp.h:55:43: note: expanded from macro 'TMEL_MSG_UID_SECBOOT_SEC_AUTH'
-      55 | #define TMEL_MSG_UID_SECBOOT_SEC_AUTH       TMEL_MSG_UID_CREATE(TMEL_MSG_SECBOOT,\
-         |                                             ^
-   include/linux/mailbox/tmelcom-qmp.h:13:3: note: expanded from macro 'TMEL_MSG_UID_CREATE'
-      13 |         (FIELD_PREP_CONST((0xff << 8), msg_type) | FIELD_PREP_CONST(0xff, action_id))
-         |          ^
-   drivers/mailbox/qcom-tmel-qmp.c:595:7: error: expression is not an integer constant expression
-     595 |         case TMEL_MSG_UID_SECBOOT_SEC_AUTH:
-         |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/mailbox/tmelcom-qmp.h:55:43: note: expanded from macro 'TMEL_MSG_UID_SECBOOT_SEC_AUTH'
-      55 | #define TMEL_MSG_UID_SECBOOT_SEC_AUTH       TMEL_MSG_UID_CREATE(TMEL_MSG_SECBOOT,\
-         |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      56 |                                             TMEL_ACTION_SECBOOT_SEC_AUTH)
-         |                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/mailbox/tmelcom-qmp.h:13:3: note: expanded from macro 'TMEL_MSG_UID_CREATE'
-      13 |         (FIELD_PREP_CONST((0xff << 8), msg_type) | FIELD_PREP_CONST(0xff, action_id))
-         |         ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:598:7: error: expression is not an integer constant expression
-     598 |         case TMEL_MSG_UID_SECBOOT_SS_TEAR_DOWN:
-         |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/mailbox/tmelcom-qmp.h:58:43: note: expanded from macro 'TMEL_MSG_UID_SECBOOT_SS_TEAR_DOWN'
-      58 | #define TMEL_MSG_UID_SECBOOT_SS_TEAR_DOWN       TMEL_MSG_UID_CREATE(TMEL_MSG_SECBOOT,\
-         |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      59 |                                                 TMEL_ACTION_SECBOOT_SS_TEAR_DOWN)
-         |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/mailbox/tmelcom-qmp.h:13:3: note: expanded from macro 'TMEL_MSG_UID_CREATE'
-      13 |         (FIELD_PREP_CONST((0xff << 8), msg_type) | FIELD_PREP_CONST(0xff, action_id))
-         |         ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   2 warnings and 6 errors generated.
+Could we get the bits in a follow on patch/series ?
 
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+> index b75a01641d5d..809bf0f238bd 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+> @@ -563,8 +563,22 @@ static void iris_hfi_gen2_read_input_subcr_params(struct iris_inst *inst)
+>   	inst->crop.width = pixmp_ip->width -
+>   		((subsc_params.crop_offsets[1] >> 16) & 0xFFFF) - inst->crop.left;
+>   
+> -	inst->fw_caps[PROFILE].value = subsc_params.profile;
+> -	inst->fw_caps[LEVEL].value = subsc_params.level;
+> +	switch (inst->codec) {
+> +	case V4L2_PIX_FMT_HEVC:
+> +		inst->fw_caps[PROFILE_HEVC].value = subsc_params.profile;
+> +		inst->fw_caps[LEVEL_HEVC].value = subsc_params.level;
+> +		break;
+> +	case V4L2_PIX_FMT_VP9:
+> +		inst->fw_caps[PROFILE_VP9].value = subsc_params.profile;
+> +		inst->fw_caps[LEVEL_VP9].value = subsc_params.level;
+> +		break;
+> +	case V4L2_PIX_FMT_H264:
+> +	default:
+> +		inst->fw_caps[PROFILE_H264].value = subsc_params.profile;
+> +		inst->fw_caps[LEVEL_H264].value = subsc_params.level;
+> +		break;
+> +	}
+> +
+>   	inst->fw_caps[POC].value = subsc_params.pic_order_cnt;
+>   
+>   	if (subsc_params.bit_depth != BIT_DEPTH_8 ||
+> @@ -791,8 +805,22 @@ static void iris_hfi_gen2_init_src_change_param(struct iris_inst *inst)
+>   					     full_range, video_format,
+>   					     video_signal_type_present_flag);
+>   
+> -	subsc_params->profile = inst->fw_caps[PROFILE].value;
+> -	subsc_params->level = inst->fw_caps[LEVEL].value;
+> +	switch (inst->codec) {
+> +	case V4L2_PIX_FMT_HEVC:
+> +		subsc_params->profile = inst->fw_caps[PROFILE_HEVC].value;
+> +		subsc_params->level = inst->fw_caps[LEVEL_HEVC].value;
+> +		break;
+> +	case V4L2_PIX_FMT_VP9:
+> +		subsc_params->profile = inst->fw_caps[PROFILE_VP9].value;
+> +		subsc_params->level = inst->fw_caps[LEVEL_VP9].value;
+> +		break;
+> +	case V4L2_PIX_FMT_H264:
+> +	default:
+> +		subsc_params->profile = inst->fw_caps[PROFILE_H264].value;
+> +		subsc_params->level = inst->fw_caps[LEVEL_H264].value;
+> +		break;
+> +	}
+> +
+>   	subsc_params->pic_order_cnt = inst->fw_caps[POC].value;
+>   	subsc_params->bit_depth = inst->fw_caps[BIT_DEPTH].value;
+>   	if (inst->fw_caps[CODED_FRAMES].value ==
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> index f6b15d2805fb..67204cddd44a 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> @@ -78,8 +78,12 @@ struct platform_inst_caps {
+>   };
+>   
+>   enum platform_inst_fw_cap_type {
+> -	PROFILE = 1,
+> -	LEVEL,
+> +	PROFILE_H264 = 1,
+> +	PROFILE_HEVC,
+> +	PROFILE_VP9,
+> +	LEVEL_H264,
+> +	LEVEL_HEVC,
+> +	LEVEL_VP9,
+>   	INPUT_BUF_HOST_MAX_COUNT,
+>   	STAGE,
+>   	PIPE,
+> @@ -88,6 +92,7 @@ enum platform_inst_fw_cap_type {
+>   	BIT_DEPTH,
+>   	RAP_FRAME,
+>   	DEBLOCK,
+> +	TIER,
+>   	INST_FW_CAP_MAX,
+>   };
+>   
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+> index 35d278996c43..29bc50785da5 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+> @@ -14,7 +14,7 @@
+>   
+>   static struct platform_inst_fw_cap inst_fw_cap_sm8550[] = {
+>   	{
+> -		.cap_id = PROFILE,
+> +		.cap_id = PROFILE_H264,
+>   		.min = V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE,
+>   		.max = V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH,
+>   		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE) |
+> @@ -28,7 +28,29 @@ static struct platform_inst_fw_cap inst_fw_cap_sm8550[] = {
+>   		.set = iris_set_u32_enum,
+>   	},
+>   	{
+> -		.cap_id = LEVEL,
+> +		.cap_id = PROFILE_HEVC,
+> +		.min = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
+> +		.max = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE,
+> +		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE),
+> +		.value = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
+> +		.hfi_id = HFI_PROP_PROFILE,
+> +		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+> +		.set = iris_set_u32_enum,
+> +	},
+> +	{
+> +		.cap_id = PROFILE_VP9,
+> +		.min = V4L2_MPEG_VIDEO_VP9_PROFILE_0,
+> +		.max = V4L2_MPEG_VIDEO_VP9_PROFILE_2,
+> +		.step_or_mask = BIT(V4L2_MPEG_VIDEO_VP9_PROFILE_0) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_PROFILE_2),
+> +		.value = V4L2_MPEG_VIDEO_VP9_PROFILE_0,
+> +		.hfi_id = HFI_PROP_PROFILE,
+> +		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+> +		.set = iris_set_u32_enum,
+> +	},
+> +	{
+> +		.cap_id = LEVEL_H264,
+>   		.min = V4L2_MPEG_VIDEO_H264_LEVEL_1_0,
+>   		.max = V4L2_MPEG_VIDEO_H264_LEVEL_6_2,
+>   		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_0) |
+> @@ -56,6 +78,60 @@ static struct platform_inst_fw_cap inst_fw_cap_sm8550[] = {
+>   		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+>   		.set = iris_set_u32_enum,
+>   	},
+> +	{
+> +		.cap_id = LEVEL_HEVC,
+> +		.min = V4L2_MPEG_VIDEO_HEVC_LEVEL_1,
+> +		.max = V4L2_MPEG_VIDEO_HEVC_LEVEL_6_2,
+> +		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_1) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_2) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_2_1) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_3) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_3_1) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_4) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_4_1) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_5) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_5_1) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_5_2) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_6) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_6_1) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_6_2),
+> +		.value = V4L2_MPEG_VIDEO_HEVC_LEVEL_6_1,
+> +		.hfi_id = HFI_PROP_LEVEL,
+> +		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+> +		.set = iris_set_u32_enum,
+> +	},
+> +	{
+> +		.cap_id = LEVEL_VP9,
+> +		.min = V4L2_MPEG_VIDEO_VP9_LEVEL_1_0,
+> +		.max = V4L2_MPEG_VIDEO_VP9_LEVEL_6_0,
+> +		.step_or_mask = BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_1_0) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_1_1) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_2_0) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_2_1) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_3_0) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_3_1) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_4_0) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_4_1) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_5_0) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_5_1) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_5_2) |
+> +				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_6_0),
+> +		.value = V4L2_MPEG_VIDEO_VP9_LEVEL_6_0,
+> +		.hfi_id = HFI_PROP_LEVEL,
+> +		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+> +		.set = iris_set_u32_enum,
+> +	},
+> +	{
+> +		.cap_id = TIER,
+> +		.min = V4L2_MPEG_VIDEO_HEVC_TIER_MAIN,
+> +		.max = V4L2_MPEG_VIDEO_HEVC_TIER_HIGH,
+> +		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_TIER_MAIN) |
+> +				BIT(V4L2_MPEG_VIDEO_HEVC_TIER_HIGH),
+> +		.value = V4L2_MPEG_VIDEO_HEVC_TIER_HIGH,
+> +		.hfi_id = HFI_PROP_TIER,
+> +		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+> +		.set = iris_set_u32_enum,
+> +	},
+>   	{
+>   		.cap_id = INPUT_BUF_HOST_MAX_COUNT,
+>   		.min = DEFAULT_MAX_HOST_BUF_COUNT,
 
-vim +196 drivers/mailbox/qcom-tmel-qmp.c
+Other than those nits
 
-   177	
-   178	/**
-   179	 * qmp_send_data() - Copy the data to the channel's mailbox and notify
-   180	 *		     remote subsystem of new data. This function will
-   181	 *		     return an error if the previous message sent has
-   182	 *		     not been read. Cannot Sleep.
-   183	 * @mdev: qmp_device to send the data to.
-   184	 * @data: Data to be sent to remote processor, should be in the format of
-   185	 *	  a kvec.
-   186	 *
-   187	 * Return: 0 on success or standard Linux error code.
-   188	 */
-   189	static int qmp_send_data(struct qmp_device *mdev, void *data)
-   190	{
-   191		struct kvec *pkt = (struct kvec *)data;
-   192		void __iomem *addr;
-   193		unsigned long flags;
-   194	
-   195		if (pkt->iov_len > QMP_MAX_PKT_SIZE) {
- > 196			dev_err(mdev->dev, "Unsupported packet size %ld\n", pkt->iov_len);
-   197			return -EINVAL;
-   198		}
-   199	
-   200		if (atomic_read(&mdev->tx_sent))
-   201			return -EAGAIN;
-   202	
-   203		dev_dbg(mdev->dev, "%s: mcore 0x%x ucore 0x%x", __func__,
-   204			mdev->mcore.val, mdev->ucore.val);
-   205	
-   206		addr = mdev->mcore_desc + QMP_CTRL_DATA_SIZE;
-   207		memcpy_toio(addr, pkt->iov_base, pkt->iov_len);
-   208	
-   209		mdev->mcore.bits.frag_size = pkt->iov_len;
-   210		mdev->mcore.bits.rem_frag_count = 0;
-   211	
-   212		dev_dbg(mdev->dev, "Copied buffer to mbox, sz: %d",
-   213			mdev->mcore.bits.frag_size);
-   214	
-   215		atomic_set(&mdev->tx_sent, 1);
-   216	
-   217		spin_lock_irqsave(&mdev->tx_lock, flags);
-   218		mdev->mcore.bits.tx = !(mdev->mcore.bits.tx);
-   219		qmp_send_irq(mdev);
-   220		spin_unlock_irqrestore(&mdev->tx_lock, flags);
-   221	
-   222		return 0;
-   223	}
-   224	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
