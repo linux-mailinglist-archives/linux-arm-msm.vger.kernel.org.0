@@ -1,107 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-50529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5046CA54F2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 16:33:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69721A54F78
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 16:48:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D870F3B47E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 15:31:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8BDCD3B04A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 15:48:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C386820F062;
-	Thu,  6 Mar 2025 15:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13F52148FF5;
+	Thu,  6 Mar 2025 15:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="fZezFYM7"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xTyzc5Up"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD68C20E6F6;
-	Thu,  6 Mar 2025 15:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7671624C8
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 15:48:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741274977; cv=none; b=IRHIIxnhHTSu4z+FUG1jnPL+DVjQ/+l8hBSPywd9glphIjDkRCWbkQ8G5a+S/7Mk8tJB2b+z6KSWsVnBfiByUe8t1BN4ZvywEhm7IIROE4YZ7K6krfQ1xn1r54Jki0kEDI+5b1GHr6pJL5bNYu9ArHZ94AU4TqorZ9xSrau2TEY=
+	t=1741276099; cv=none; b=JZNFTsBGEZINYJd09y6MHZA/g6qYnyMWw2FHxbVaQ1+nfU96MYH9q+7HeKRFWGxtGP/OY0JBhPI397qwnhK4ITHt285xu4fIpu04SRFVBBSFgrjjKrojUE9PWJbD6VVbIUWOQK3RrqOftwInKhmRKJ0Fbca11UMgw0/SMch5ihQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741274977; c=relaxed/simple;
-	bh=fOOQowHJHtW+gHqQRw+cobzO7tlDBCXQk58mod4OwP4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H8XHDjItxwBtyNG7qjOXWb9c/m+sKqC1WMdiuoxZio+iEGRqslPGQuiM5HidzP6EP+lLRbnrFegQKg65waUh8yJi+1/zDEAr/52f0ftO8Hwij3R5WDD/0Pcc9evkJAqhsdzkBxaC3fkHzrl5b3RRA3HAtYj9u0HS0J2Wq/8wHsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=fZezFYM7; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=+IzmAbgju3FDk0Ryltpo+ejh+hoS4Rf/7x9rJ3Yw0EU=; b=fZezFYM7Q7hsuSZ7fLNC1YsWMD
-	DMwJd4MIBQUfPVlx1hne+poqp2G3TNmrhsdZ10bbkAJkvrwOoaKZRJI6Frn1wp/XUr/I4vKrB3sgN
-	XPoJWax9YeByq6lz1rUci/uJ0sZ1jzmG+TQ3rdi1O35pli7N37Qp6ofYEqu27pc6pHGs=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tqDA0-002pzB-Ms; Thu, 06 Mar 2025 16:29:20 +0100
-Date: Thu, 6 Mar 2025 16:29:20 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Lei Wei <quic_leiwei@quicinc.com>,
-	Suruchi Agarwal <quic_suruchia@quicinc.com>,
-	Pavithra R <quic_pavir@quicinc.com>,
-	Simon Horman <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org,
-	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
-	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
-	john@phrozen.org
-Subject: Re: [PATCH net-next v3 04/14] net: ethernet: qualcomm: Initialize
- PPE buffer management for IPQ9574
-Message-ID: <74f89e1e-c440-42cb-9d8e-be213a3d83a4@lunn.ch>
-References: <20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com>
- <20250209-qcom_ipq_ppe-v3-4-453ea18d3271@quicinc.com>
- <a79027ed-012c-4771-982c-b80b55ab0c8a@lunn.ch>
- <c592c262-5928-476f-ac2a-615c44d67277@quicinc.com>
- <33529292-00cd-4a0f-87e4-b8127ca722a4@lunn.ch>
- <cffdd8e8-76bc-4424-8cdb-d48f5010686d@quicinc.com>
+	s=arc-20240116; t=1741276099; c=relaxed/simple;
+	bh=sVoNZXopYL7XJzNhGxf33zifIINRMsLYqPItqDsaZWw=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=A6M4qM75nTO4B0kZYrMFnW9KLxA7UkJBPq5koTS4nuA5fYEooLfrfs0/2/gEu4+s3tON2l/xj4atQY+Ekd0hxCPw9MJc6uYndG26fukw7oe23HK0ZI9inr0GVK32R6Zrv27bNoDKLE/C1gARf3AYL/Kpu4BugPKj0aDaD3ByPL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xTyzc5Up; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2ff581215f7so1522894a91.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 07:48:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1741276097; x=1741880897; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WN5n6yCvcOa+zM2USNjiOsagVXAB7Ffxj7AYdaUTQwM=;
+        b=xTyzc5UpGVNhFtnyK7H5YbSq+jqYuvkR3ynLI4dWF+YZBpqdHwyOZy5tDy6yU44/fE
+         BYp3eNn01C5kJFcutUvtJ2zs424XGHN56tG8QeIPg1+XvkdBP6kIVWpHaEH5Ta2qmJBr
+         fL0noPFCqkql9bJBp3GXQzvS5XmTU24isbKDMYiXjdpMsZhge10ViIPZrCS7T/P82Ywx
+         dDs3ui3zzqq0dDs/xQCA1ZIGI/v8ibKSG4ZPTrPXOmpw4uANo5mwsohCpknseQK7ZXle
+         usLon1f0qqEwsMnVTkSawoiOE71S0KvVNT5sWqJEEKefbr4PNdZOdXljH472EcQYtQkE
+         NEDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741276097; x=1741880897;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WN5n6yCvcOa+zM2USNjiOsagVXAB7Ffxj7AYdaUTQwM=;
+        b=fKWrAl4ydjzPhDsZdj2jCBwIavw0HV/eoB8o6eVwHPhVlBJjTuCdKJqugjCgsFooav
+         rDmEDwk9YKMoTe8OYQzuUBs2kTBAvHw7OlYv5WxLedXqz9E+Qr4M2LBi8z3zuFXdUWBW
+         ACuFwukapEEVpX/8F+K4w0JQuHZLWN3Fauj/kiIrO6Mny2J9jPWZ5LBAHkHa0XRNKGgG
+         uLUy0YqYgi/1C2ufNQU+Vqn8CXY4EyZix8A5z3te0BkOztFC4E4rYtb9gYdhaxWHyD5g
+         eceGN98BnZhqQqL8ZvV3wlF1Ia3KDZJmEwgqpFgRM8I6nYI2Qa6krivEYHV71fCgoe7M
+         nyJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXbqYypqUMWzyzh6DeV011qoHK00v9rAaskiey6vXG7aQm1APN/oRVZaAaq4G2ej7BUazcz5bzyTNTvrdUk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyvo8GTDnvDi9inm6IRG7rHX9gi6raUmnWADmj/HCDrbfapICuj
+	84lVrtIWxSl/MvGhiGTGZ9agULEZyGZyBmHzbuoQDmcIAPzh6xOwmA9Tj9NLc9OoRVw8KZ0nTxA
+	4cD5iSgdEDM9YKtGruR2XYg==
+X-Google-Smtp-Source: AGHT+IGIpKIz67HLCauppdWF07A7kBE16hQeQDJtBmIWPGn65BdGHarhO9hkIPwx1gqSyqaBuxIwDSrAUaXKDp4m4A==
+X-Received: from pjbqa14.prod.google.com ([2002:a17:90b:4fce:b0:2fa:1fac:2695])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:4a87:b0:2ff:682b:b759 with SMTP id 98e67ed59e1d1-2ff682bb96amr4351705a91.7.1741276096694;
+ Thu, 06 Mar 2025 07:48:16 -0800 (PST)
+Date: Thu, 06 Mar 2025 15:48:15 +0000
+In-Reply-To: <5c394c80-bb2b-4f9c-9b76-78b0696fa316@redhat.com> (message from
+ David Hildenbrand on Fri, 28 Feb 2025 18:33:30 +0100)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cffdd8e8-76bc-4424-8cdb-d48f5010686d@quicinc.com>
+Mime-Version: 1.0
+Message-ID: <diqzo6yetb28.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH v4 04/10] KVM: guest_memfd: Add KVM capability to check if
+ guest_memfd is shared
+From: Ackerley Tng <ackerleytng@google.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: tabba@google.com, peterx@redhat.com, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, 
+	yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, 
+	amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, 
+	mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
+	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-> Thanks for the suggestion. Just to clarify, we preferred
-> u32p_replace_bits() over FIELD_PREP() because the former does
-> a clear-and-set operation against a given mask, where as with
-> FIELD_PREP(), we need to clear the bits first before we use the
-> macro and then set it. Due to this, we preferred using
-> u32_replace_bits() since it made the macro definitions to modify
-> the registers simpler. Given this, would it be acceptable to
-> document u32p_replace_bits() better, as it is already being used
-> by other drivers as well?
+David Hildenbrand <david@redhat.com> writes:
 
-I suggest you submit a patch to those who maintain that file and see
-what they say.
+> On 28.02.25 18:22, Fuad Tabba wrote:
+>> Hi Peter,
+>> 
+>> On Fri, 28 Feb 2025 at 08:24, Peter Xu <peterx@redhat.com> wrote:
+>>>
+>>> On Tue, Feb 18, 2025 at 05:24:54PM +0000, Fuad Tabba wrote:
+>>>> Add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which indicates
+>>>> that the VM supports shared memory in guest_memfd, or that the
+>>>> host can create VMs that support shared memory. Supporting shared
+>>>> memory implies that memory can be mapped when shared with the
+>>>> host.
+>>>>
+>>>> Signed-off-by: Fuad Tabba <tabba@google.com>
+>>>> ---
+>>>>   include/uapi/linux/kvm.h | 1 +
+>>>>   virt/kvm/kvm_main.c      | 4 ++++
+>>>>   2 files changed, 5 insertions(+)
+>>>>
+>>>> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+>>>> index 45e6d8fca9b9..117937a895da 100644
+>>>> --- a/include/uapi/linux/kvm.h
+>>>> +++ b/include/uapi/linux/kvm.h
+>>>> @@ -929,6 +929,7 @@ struct kvm_enable_cap {
+>>>>   #define KVM_CAP_PRE_FAULT_MEMORY 236
+>>>>   #define KVM_CAP_X86_APIC_BUS_CYCLES_NS 237
+>>>>   #define KVM_CAP_X86_GUEST_MODE 238
+>>>> +#define KVM_CAP_GMEM_SHARED_MEM 239
+>>>
+>>> I think SHARED_MEM is ok.  Said that, to me the use case in this series is
+>>> more about "in-place" rather than "shared".
+>>>
+>>> In comparison, what I'm recently looking at is a "more" shared mode of
+>>> guest-memfd where it works almost like memfd.  So all pages will be shared
+>>> there.
+>>>
+>>> That helps me e.g. for the N:1 kvm binding issue I mentioned in another
+>>> email (in one of my relies in previous version), in which case I want to
+>>> enable gmemfd folios to be mapped more than once in a process.
+>>>
+>>> That'll work there as long as it's fully shared, because all things can be
+>>> registered in the old VA way, then there's no need to have N:1 restriction.
+>>> IOW, gmemfd will still rely on mmu notifier for tearing downs, and the
+>>> gmem->bindings will always be empty.
+>>>
+>>> So if this one would be called "in-place", then I'll have my use case as
+>>> "shared".
+>> 
+>> I understand what you mean. The naming here is to be consistent with
+>> the rest of the series. I don't really have a strong opinion. It means
+>> SHARED_IN_PLACE, but then that would be a mouthful. :)
+>
+> I'll note that Patrick is also driving it in "all shared" mode for his 
+> direct-map removal series IIRC.
+>
+> So we would have
+>
+> a) All private
+> b) Mixing of private and shared (incl conversion)
+> c) All shared
+>
+> "IN_PLACE" might be the wrong angle to look at it.
 
-But maybe also look at how others are using u32p_replace_bits() and
-should it be wrapped up in a macro? FIELD_MOD()? These macros do a lot
-of build time checking that you are not overflowing the type. It would
-be good to have that to catch bugs at build time, rather than years
-later at runtime.
+How about something like "supports_mmap" or "mmap_capable"?
 
-      Andrew
+So like
+
++ KVM_CAP_GMEM_MMAP
++ CONFIG_KVM_GMEM_MMAP_CAPABLE
++ kvm_arch_gmem_mmap_capable()
+
+I'm just trying to avoid the use of shared, which could already mean 
+
++ shared between processes
++ shared between guest and host
+
 
