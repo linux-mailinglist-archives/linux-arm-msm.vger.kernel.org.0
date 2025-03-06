@@ -1,159 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-50522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77921A54BF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 14:23:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA355A54C63
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 14:40:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF9AC188273A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:23:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 02E021703BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:40:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23A6320E010;
-	Thu,  6 Mar 2025 13:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D2620E6E4;
+	Thu,  6 Mar 2025 13:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FS1e4M4e"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p1N9mnaP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4CE20D510
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 13:23:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F3220E31B;
+	Thu,  6 Mar 2025 13:40:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741267396; cv=none; b=IBwgwtlhN8fHOCrsWlth+/i+Ox0mmWctaSoFVlpvExrwBlQpjgS8BmJ+2+yFQ47TJ6PPL+CFcIQ2KyX8721wBTacJz27VgNp/XxJyzQbHvUfH1mNUHlduilNjMZjtQUIhWyQaZ4gtGJRtnjZQzyItk1fMNEl0MhoigaRGKc9v6A=
+	t=1741268413; cv=none; b=adKplrLUPT8aXdXY22yb9kPBwnNZwA2gFqhOygyEU6HK1Xww5uC5WIzTvyR0yZH1gb5PIjoUI//Q95BOwmT11bYe5V/6W8ZMeMR5Pi9fSQSp5zPAnnk89qt5Oo/eTK5+HKTpAxyuVlDF2qDRSufkvrZeym1ju5gSv1FgEoNpaHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741267396; c=relaxed/simple;
-	bh=fULtRJnDI196ccxDyjA7d7FxqIAyuix7c/OGxmTYtNo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Muv58nc0UispgBPVyXybMRzHlZa+3ekVhNMSP6Id1prmhynGkJFRZF2XAtIgmpdLRipH9dg4E2k3kXuqmW1X5KK0ZxUS20y5/34Vcy/EZL3/bNhcB88o44nJxQB9LCpmdE+gUjp8gK5SZyoPTRrTYEw5TmMguoY+XA9bcGIEryk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FS1e4M4e; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5268XM7K029024
-	for <linux-arm-msm@vger.kernel.org>; Thu, 6 Mar 2025 13:23:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0DZEXLtvckg77OKbPWSinx9ePyO3OTpVuNl/L9SQffo=; b=FS1e4M4eG7fceDlI
-	M2ep1aDG6hXEqT93mvFWc/hMR4EkpJRCo8haa8A3OG63B5rUgFPikHGKWLuLWGjT
-	3EE+kElQAgVQwLI3NesIqga+K3oPwhhdHvCLDt5ei7TFsksSkNksMTzFr41IVI0m
-	T5/6oeGGRL+i5qPYVPjBd4sOVf3xUVvjibYcdMCNTkkMwCvdwKH6Rojk2tNNP0lF
-	aw0FafPaWBBNy+A8LW2cn6v3j9neWEcBjikxywcr+7Ydi4K8RCjsae9KHBJvd1Cf
-	uLAhSK3CgPVvgz2RmU3Jjj7eetvWV/Yh1xSu4lyz6rTOEpJE+X0oLFNJ1cbMBasF
-	4gDYVw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6ts53x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 13:23:13 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-223a2770b75so12754255ad.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 05:23:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741267393; x=1741872193;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0DZEXLtvckg77OKbPWSinx9ePyO3OTpVuNl/L9SQffo=;
-        b=EP5TYSkt0e9mFofbbYfXNk3cdUjGr3MrFpzgTffXhoOL1aZik9bHTaDji4vJHv64s9
-         fe/bKVctlsI3HzaHvGT6FUUII8JTHjJzKWxdNEGD/2d7wjCpZptIuqeWh18SRMw0epgY
-         Cr5Xx+ln63qO/F/kOkbqv587kWP+E6mgwAjUW3V0W5t1qa1kajBJQS/wYuYYCbuNK3j3
-         i+ki1pTYMH+KWv2V4CrW6j1GZgfqHrAj1LTD3AUFP7gVtsRMQKBCsDEmq0lIgKK632c9
-         suQcPDtO4Sd+zWTQpIRnFE/7R4qA4z8PevG+9foiYsJnofH5t4uqf8tWurDxtwJ2yDjq
-         OxRA==
-X-Forwarded-Encrypted: i=1; AJvYcCXBWl6JxMoSP48CDRtl+ksiO1o1yQ2W0Fs7c10aSE6EPjZK6+n0A/JWkGH4bhQUhU9+KT19mnij5YIfTPS9@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6sBFTN1g+mMJTOU0FNzf/WYTTfV+UoQc7bkWilp4YlzLymca9
-	dkmFxvmFKYqj1NUvKpqAii1TtMUDE0THek6sVdKnIXctJ31V8hAQGN3Aklo14ecWthllYPG0QpX
-	LF/0IMgyG1GA6jl111gvO+y0+nwotLGvDBgXLK2YnHF4gVdbpGpQy+lCD4Xiugfih
-X-Gm-Gg: ASbGncstC7k45HRr0jXAzG/LBJYka4IYDsYcNPZo1CCMfA3T69kZQN59dDYaufSVAhB
-	nPZbHgkxX1YTRHrUMQ5DOtZ39uJFXMPFTrHMRLk0BAz/rlhEjDhk7U1rjn3LrDwpk7QNf+kCj92
-	Y/U0Vg8koz0wJbw1OQE4OYTsfzCbWHt5lVq/oeKCq9RfGN4kbZETLPK9cWNNjZcB403q0zZtmpQ
-	vk3ln/+qihnHpwHm0p8CYIW4hYP3mCY/s3R3fy8vtkCofGtu2hpoidUQwLgn7J3IwXnkAsZKaVS
-	/x4/Q+Zq3Qg4bisWTFx+7NQbFsrWpbjvGRP8I9WjZ/a/cRNV0w==
-X-Received: by 2002:a17:902:fc4b:b0:224:3c6:7865 with SMTP id d9443c01a7336-22403c67a23mr67829985ad.3.1741267392856;
-        Thu, 06 Mar 2025 05:23:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHbYidSvuynVuK36jDbOsSSNftXONqK2eAyUE5lvUJs2SLMWYNYB1pVzMJ9GgmFNxu1gv7dAg==
-X-Received: by 2002:a17:902:fc4b:b0:224:3c6:7865 with SMTP id d9443c01a7336-22403c67a23mr67829575ad.3.1741267392487;
-        Thu, 06 Mar 2025 05:23:12 -0800 (PST)
-Received: from [192.168.100.7] ([175.101.107.52])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-224109dd5f8sm11798665ad.52.2025.03.06.05.23.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Mar 2025 05:23:12 -0800 (PST)
-Message-ID: <163cab94-3271-44ed-a211-300087f4bd83@oss.qualcomm.com>
-Date: Thu, 6 Mar 2025 18:53:06 +0530
+	s=arc-20240116; t=1741268413; c=relaxed/simple;
+	bh=2mSyakUOyo08l4OiCw4nRuD9nEYgVqyIBYFul/OR6iM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=strt0AmEl98w4PxLNbFuGVpVKLe/Lle6OeIiDUHhFVZ9e27BUMee7h4Zh0/XN6PAUopUcw/uaN8bTUIpF7nrTAMGQB7Czyj9OjLGv93hcXiNianzxQSPFOeH3Wacm3JocCm3A4baKkptDPffahE8vKWFa4pmn7dtWgbwrlnGPkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p1N9mnaP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48144C4CEE8;
+	Thu,  6 Mar 2025 13:40:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741268413;
+	bh=2mSyakUOyo08l4OiCw4nRuD9nEYgVqyIBYFul/OR6iM=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=p1N9mnaP340A/wWlypAiLFCrdWOF0xMeWFyAlmpSuDtd3GP4DMVjl+sCZNm0Zi+7P
+	 H7KhOV3UR4DCuASANAWLPrXGpm6QRYBoYHCJkS1m2IiGZNbQrLJR9YmLWrC+2gr81K
+	 JoJy0KjiCoNkCIFMzp5maxBn7tfZdMV6HkU8uzBx4CbPyIrydyyOD9L2Wfq0027PSp
+	 0DBNjjO/g9xSZI+hIP/o4RVKowA+vqskkJCh3TctS9VEC9693ffTajySV31CsSXzjd
+	 0eOWc5w9UYNeNlqMtsPMNAKi7ZgJY/uFYXGjEl6GroQcPH9eBp5Cv82/QEVrrsGJQb
+	 bibT+KI4vZ9zQ==
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5dccaaca646so1406148a12.0;
+        Thu, 06 Mar 2025 05:40:13 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVwJ5nTaBnaAmYt6MHRZmiV4ihsiTgfcmVaMHsW6MT0+30kNScAZFV2EVEjpELMsIZxSovCLxRE9aAKpl7YBw==@vger.kernel.org, AJvYcCWcNN4HagEaamwBN/ZiqBr6i5s8PtXZMGTZziSN9lH01SQCvLsv7xoDRMpN+eDnWm1XA1nnMckxAqUJAJXlZT11iXw=@vger.kernel.org, AJvYcCX9+ZUj63DxOWkzl+etzWBKOnqs7bOiv5We+GD7rZXus7Nl6hXXP1JYWfi1AoCRnIpXy0GrNvvJK/Vg@vger.kernel.org, AJvYcCXK8Ev7NffaQ+uO4RJ2sW0BB7HvbJ2cV7eIRM6FdOlKEBDQDh64qxRHTa3JG67m+Nq0Kcc+K/lXWSPkzonF@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZsS3UqxSmhpequgdhbf55I6vBesEDWfGELKtjbfxZXk7Jsjhj
+	UUQg4HefauFOgmOa9TvPAUU9YYFMzjmFIExbWJ7vMXISxlpvnhIKh7eviGvHU9qv6ou00WKgn0+
+	yWoerxhemxWDktjtzwodZeMykEg==
+X-Google-Smtp-Source: AGHT+IGj+xYZZsPz4jo/iFpv6TDQ/flAGSh5fwxEf3UPQtG9b2FsLgBktltZesQa3BHxfQan3/3TV66VU1r+mDDfBHM=
+X-Received: by 2002:a05:6402:5113:b0:5e4:d27a:d868 with SMTP id
+ 4fb4d7f45d1cf-5e5c1a6463bmr3852917a12.0.1741268411865; Thu, 06 Mar 2025
+ 05:40:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: (subset) [PATCH v3 0/3] Add support for USB controllers on QCS615
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org
-References: <20241224084621.4139021-1-krishna.kurapati@oss.qualcomm.com>
- <173505391861.950293.11120368190852109172.b4-ty@kernel.org>
- <anfqf3jvh7timbvbfqfidylb4iro47cdinbb2y64fdalbiszum@2s3n7axnxixb>
- <Z2sJK9g7hiHnPwYA@vaman>
- <i7gptvn2fitpqypycjhsyjnp63s2w5omx4jtpubylfc3hx3m5l@jbuin5uvxuoc>
- <Z2sOl9ltv0ug4d82@vaman>
- <318620fc-e174-4ef3-808a-69fe1d4e1df5@oss.qualcomm.com>
- <f607aa9b-018c-4df6-9921-725693353f65@oss.qualcomm.com>
- <CAA8EJpr48k_tHKk-uVpAH7TMcp0-V97x6ztdFrbv0Go0a6kD2g@mail.gmail.com>
- <Z683g5yuSu1Pi0pM@vaman>
-Content-Language: en-US
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-In-Reply-To: <Z683g5yuSu1Pi0pM@vaman>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=PMb1+eqC c=1 sm=1 tr=0 ts=67c9a1c1 cx=c_pps a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=x49Km1ku1+q3EoAjmEejnQ==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=W_DWO0qsI84jIeYb1FMA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: xosSpkzaSF8OmFTPujpEI6fpOK9cJhNU
-X-Proofpoint-GUID: xosSpkzaSF8OmFTPujpEI6fpOK9cJhNU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-06_05,2025-03-06_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=775
- phishscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
- mlxscore=0 adultscore=0 spamscore=0 suspectscore=0 impostorscore=0
- clxscore=1011 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503060101
+References: <20250306085849.32852-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20250306085849.32852-1-krzysztof.kozlowski@linaro.org>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 6 Mar 2025 07:39:59 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKODHZcrpqskA2aeK6EqGNx9aGNuPqGzhcZ_Nqiu+Ccww@mail.gmail.com>
+X-Gm-Features: AQ5f1Jqm2v42Q6wtTkhP_amcTxbY2Gmov9aAKcbCh_hPzmOQ2Z0TQ2BFM2Dah1A
+Message-ID: <CAL_JsqKODHZcrpqskA2aeK6EqGNx9aGNuPqGzhcZ_Nqiu+Ccww@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: memory-controllers: samsung,exynos4210-srom:
+ Enforce child props
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Mar 6, 2025 at 2:58=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> Samsung Exynos SROM peripheral properties were moved from the device
+> schema to separate "peripheral-props" schema for child node, but the
+> device schema does not reference the new one.
+>
+> Reference the peripheral-props schema so the child nodes will be
+> properly validated from the device schema.
+>
+> Fixes: 67bf606fcf18 ("dt-bindings: memory-controllers: samsung,exynos4210=
+-srom: Split out child node properties")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> ---
+>
+> Fix for Rob's tree.
+> ---
+>  .../devicetree/bindings/memory-controllers/exynos-srom.yaml      | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/memory-controllers/exynos-=
+srom.yaml b/Documentation/devicetree/bindings/memory-controllers/exynos-sro=
+m.yaml
+> index 2267c5107d60..1578514ec58d 100644
+> --- a/Documentation/devicetree/bindings/memory-controllers/exynos-srom.ya=
+ml
+> +++ b/Documentation/devicetree/bindings/memory-controllers/exynos-srom.ya=
+ml
+> @@ -38,6 +38,7 @@ properties:
+>  patternProperties:
+>    "^.*@[0-3],[a-f0-9]+$":
+>      type: object
+> +    $ref: mc-peripheral-props.yaml#
 
+Why do we need this? Any child node should have a schema which needs
+to include mc-peripheral-props.yaml if any properties from it can be
+used.
 
-On 2/14/2025 6:00 PM, Vinod Koul wrote:
-> On 23-01-25, 09:23, Dmitry Baryshkov wrote:
->> On Thu, 23 Jan 2025 at 09:00, Krishna Kurapati
->> <krishna.kurapati@oss.qualcomm.com> wrote:
-> 
->>>> As mentioned in the cover letter, the bindings of phy have been merged
->>>> from v1.
->>>
->>> Hi Vinod,
->>>
->>>    Can you help in taking in the patch-3. As mentioned in previous mail,
->>> the bindings are merged and present in linux-next.
-> 
-> Can you pls post it after rebasing
-> 
-
-Hi Vinod,
-
-  I see the patch-3 is applying cleanly on top of latest linux next. Do 
-you suggest sending a rebase or v3 is fine ?
-
-Regards,
-Krishna,
+Rob
 
