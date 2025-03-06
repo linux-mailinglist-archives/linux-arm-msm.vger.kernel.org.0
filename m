@@ -1,48 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-50524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A10A3A54C9A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 14:51:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28F23A54CAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 14:56:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CAB563AAD34
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:51:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 534F93AE935
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:56:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92A7974059;
-	Thu,  6 Mar 2025 13:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8126F1304BA;
+	Thu,  6 Mar 2025 13:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CY5IBsiF"
+	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="KlzG7U7s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613AD33FD;
-	Thu,  6 Mar 2025 13:51:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F2523A9;
+	Thu,  6 Mar 2025 13:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741269072; cv=none; b=lT4Su9z+snZZ4dnBNnuvQXB5+wF4na0T+ggF7AQW5xKZxhI1ibHiSkmmI4W7zXM8oldOGuXGiiB6vjsL9J7OHHLjeyBl3oguGBGq0Gw7m4nvpggV9kGJWYtvVYkoD1ZCxm2efST3uFS27ltXrxUB9Fai9QncctYSI2h73DmHmcg=
+	t=1741269376; cv=none; b=Y3pZZYTy3Mdq2ifqxu2vp1tKWH8LaLhIRcUoQdUHz698wKtQK0+2euMa4nae5Wlnll/yrGZlk43DI255SMVeELo89UAnrT8th66ddhBe5FwJxHVqsRqhSVkzciv0D1lNbh+f5dABLV0p4e/HENyAIPzDG0eJy3spSS3g95z4veM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741269072; c=relaxed/simple;
-	bh=MDHqWx3qK8RGM3fr6S9WaYEhaVQkVBdZ75ZCdRSLAdY=;
+	s=arc-20240116; t=1741269376; c=relaxed/simple;
+	bh=+Pimst16aPdCxGYqUpJuW6UMGnHrJPBhkR8LtjurZn0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kzHdMR7+Rkp6gSMy3SqsDaCwn0G2JoAR2V/ZhwP05qGU0L25eExyf6viF7xJU/U6E/8CH/30ZF3ynsRvi/+MTb5LnRILycG21KtDNjctCyZ5bigU1jNuj/AAA8J3Zf8luWLIj1RCU0LoMyWYmdSCoSnBBhnuFhUHPCP15bH67Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CY5IBsiF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3D6C4CEE4;
-	Thu,  6 Mar 2025 13:51:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741269071;
-	bh=MDHqWx3qK8RGM3fr6S9WaYEhaVQkVBdZ75ZCdRSLAdY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CY5IBsiFS9eBDNIWJ7sQjbryFpiM2GgSdUyXXiqGdWXk8uyLplvdlIkMSTgkEJfEl
-	 oIbo4qRtoLfrO/QJIs7+mdUyKWhMU7elEfrNasigeMs09OkxxC4Tj1zSL4PDsh7d15
-	 3B4MfCcLZgca4I+d7qvBH7bLyT6mG9aN7unQL7SEM+uejp2HsetY636RFHmAd+HUqz
-	 E1KfN4g9Mk3Ufe40wVwhVmVMRmaWmssNWvf9uajzHFaVM5dG6TUyDn2FVyoTDhXoTS
-	 dvk7Xnb1rGlGn9g64KmHOd22Kg3m+FJOxBVuDNQLlCR27sEGy0lLWtWVn/038Io9cB
-	 TeN3yHfWu+D6g==
-Message-ID: <ab483a68-40a8-4b44-ad73-d8a34bd32c69@kernel.org>
-Date: Thu, 6 Mar 2025 14:51:05 +0100
+	 In-Reply-To:Content-Type; b=dkDgZj4vhpV2dFI3t4mzs/MKbWA5aIpR4W88TK2cudSuw7OEt65XkRmD6j0vNb3u4A5pDJq4+s4rZh7ONE/49nPs4+pG1GmIuRXLuKaQzkFf7v5haF77qyFbwgXwequFZjP89RlhrDmzoHvGbWOIISNITtGgjDCgua5s6dlrHgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=KlzG7U7s; arc=none smtp.client-ip=157.90.84.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
+Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
+	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
+	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id A61292FC0048;
+	Thu,  6 Mar 2025 14:56:09 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
+	s=default; t=1741269370;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=7bQXDLdPVD7kCqCo4PQ87J+ynI5NxAEe/Nqs7CoZ62A=;
+	b=KlzG7U7snk/0gtQgGXFwiDkx1Z0tlRKxaigeNF7+c/LY/I4qeOOFP/t3Xha6GGVzGF9uYi
+	TzBCa15UxdWoQi5Jj8KUljJYif0ytUJho1MDGaNs4pEkrZIuCz0xP6TL9J5v9DeCQ7jmd0
+	V4b2bpGJiGd82ZJ+yayxWdvP9TX+p7Q=
+Authentication-Results: mail.tuxedocomputers.com;
+	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=g.gottleuber@tuxedocomputers.com
+Message-ID: <d98ad83e-6479-4453-bd1d-4f3703b0dad2@tuxedocomputers.com>
+Date: Thu, 6 Mar 2025 14:56:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,85 +56,124 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: memory-controllers:
- samsung,exynos4210-srom: Enforce child props
-To: Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, Alim Akhtar
- <alim.akhtar@samsung.com>, Bjorn Andersson <andersson@kernel.org>,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250306085849.32852-1-krzysztof.kozlowski@linaro.org>
- <CAL_JsqKODHZcrpqskA2aeK6EqGNx9aGNuPqGzhcZ_Nqiu+Ccww@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: Add device tree for TUXEDO Elite 14
+ Gen1
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Georg Gottleuber <ggo@tuxedocomputers.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Konrad Dybcio
+ <konrad.dybcio@oss.qualcomm.com>, wse@tuxedocomputers.com,
+ cs@tuxedocomputers.com
+References: <57589859-fec1-4875-9127-d1f99e40a827@tuxedocomputers.com>
+ <75c17309-3072-4321-ab15-69d60190f2f7@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <CAL_JsqKODHZcrpqskA2aeK6EqGNx9aGNuPqGzhcZ_Nqiu+Ccww@mail.gmail.com>
+From: Georg Gottleuber <g.gottleuber@tuxedocomputers.com>
+In-Reply-To: <75c17309-3072-4321-ab15-69d60190f2f7@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-On 06/03/2025 14:39, Rob Herring wrote:
-> Why do we need this? Any child node should have a schema which needs
-> to include mc-peripheral-props.yaml if any properties from it can be
-> used.
-
-From correctness point of view, you are right, we don't need it. However:
-
-1. Convention was so far to have in every controller. I think this also
-is easier to understand whenever one reads the bindings - clear
-documentation what children on this bus should look like.
-
-2. To clearly document from where samsung,srom-timing comes in the
-required block:
-
-https://web.git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git/tree/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml?h=dt/next#n50
-Otherwise for me it is a bit confusing to require a property which is
-nowhere here defined.
+Content-Transfer-Encoding: 8bit
 
 
-Best regards,
-Krzysztof
+
+Am 06.03.25 um 13:41 schrieb Krzysztof Kozlowski:
+...
+> 
+> Please run scripts/checkpatch.pl and fix reported warnings. After that,
+> run also `scripts/checkpatch.pl --strict` and (probably) fix more
+> warnings. Some warnings can be ignored, especially from --strict run,
+> but the code here looks like it needs a fix. Feel free to get in touch
+> if the warning is not clear.
+> 
+> It does not look like you tested the DTS against bindings. Please run
+> `make dtbs_check W=1` (see
+> Documentation/devicetree/bindings/writing-schema.rst or
+> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+> for instructions).
+> Maybe you need to update your dtschema and yamllint. Don't rely on
+> distro packages for dtschema and be sure you are using the latest
+> released dtschema.
+
+Thank you for the advice and the offer to answer further questions.
+Didn't know that dtb_check exists.
+
+> ...
+> 
+>> +
+>> +       eusb3_repeater: redriver@47 {
+>> +               compatible = "nxp,ptn3222";
+>> +               reg = <0x47>;
+>> +               #phy-cells = <0>;
+>> +
+>> +               vdd1v8-supply = <&vreg_l4b_1p8>;
+>> +               vdd3v3-supply = <&vreg_l13b_3p0>;
+>> +
+>> +               reset-gpios = <&tlmm 124 GPIO_ACTIVE_LOW>;
+>> +
+>> +               pinctrl-0 = <&eusb3_reset_n>;
+>> +               pinctrl-names = "default";
+> 
+> No graph? Isn't it needed?
+
+What do you mean by ‘no graph’?
+
+>> +       };
+>> +
+>> +       eusb5_repeater: redriver@43 {
+>> +               compatible = "nxp,ptn3222";
+>> +               reg = <0x43>;
+>> +               #phy-cells = <0>;
+>> +
+>> +               vdd1v8-supply = <&vreg_l4b_1p8>;
+>> +               vdd3v3-supply = <&vreg_l13b_3p0>;
+>> +
+>> +               reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
+>> +
+>> +               pinctrl-0 = <&eusb6_reset_n>;
+>> +               pinctrl-names = "default";
+>> +       };
+>> +
+>> +       eusb6_repeater: redriver@4f {
+>> +               compatible = "nxp,ptn3222";
+>> +               reg = <0x4f>;
+>> +               #phy-cells = <0>;
+>> +
+>> +               vdd1v8-supply = <&vreg_l4b_1p8>;
+>> +               vdd3v3-supply = <&vreg_l13b_3p0>;
+>> +
+>> +               reset-gpios = <&tlmm 111 GPIO_ACTIVE_LOW>;
+>> +
+>> +               pinctrl-0 = <&eusb6_reset_n>;
+>> +               pinctrl-names = "default";
+>> +       };
+>> +
+> 
+> Stray blank line
+
+Sorry. Will fix this.
+
+>> +};
+>> +
+>> +&mdss {
+>> +       status = "okay";
+>> +};
+>> +
+> 
+> 
+>> +
+>> +&usb_1_ss0_dwc3_hs {
+>> +       remote-endpoint = <&pmic_glink_ss0_hs_in>;
+>> +};
+>> +
+>> +&usb_1_ss0_qmpphy_out {
+>> +       remote-endpoint = <&pmic_glink_ss0_ss_in>;
+>> +};
+>> +
+> 
+> Here as well
+
+Same here.
+
+Regards,
+Georg
 
