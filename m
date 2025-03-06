@@ -1,185 +1,401 @@
-Return-Path: <linux-arm-msm+bounces-50423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4C6BA53EC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 01:02:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2815EA53F03
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 01:17:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE5D116B64A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 00:02:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EAF3A16B38A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 00:17:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89C7628E3F;
-	Thu,  6 Mar 2025 00:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F31E24C6E;
+	Thu,  6 Mar 2025 00:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RArCYBHJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hRns9hmp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DFB1F95A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 00:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A31224EA
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 00:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741219321; cv=none; b=a9+Pj5cI5VGnV6heWd0hoU+Rlc+50k84dJIor8H2y34npXyfCU1fntwIYFK0tsBhPQQxnm30DZswwnvS78jIr0ZMh6RA+iWkcZrX3y6NpVOkbmKtsFzYfo9yYJJ1ItcBlFgnIA7Or3JF+i5bz1JKLdmaefMywKrrCrspX9FEUrE=
+	t=1741220245; cv=none; b=gy3cmhuKjye+nMccoxTQ3EWBYBIJIVoOLoyMsfKMjJINFQ5djPsUWt7HAfNZaMvFXWdu8vHLbP0f7XKgkzWrRHtTQqvKxvlHtD/w+3Kxf2eldwWNyBi340ecCkLVFSc9rPTXJRQFDzWRol1JrVWpUlZFcIR7H6IX3sRFxmFRxVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741219321; c=relaxed/simple;
-	bh=qJemjvKpicpp1fb2vOExLOIaNYkqsEKWLsn7chUtgG0=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=Buv1PaSm9dY81z3ehVHmqlJZG8XsJ+73Gkt8/e8v7HAIqa+EY4Q4jjooQ58L/IOHDL2uqxSfUE5De0wF/dlgOdZWlflDSFaRt/69npBehve/fOvyqdHD2X21vHPbD1RJ4u2ntBXbT0lryXWWZZNtwIAyvBaBqQv9ns9NIEAOzMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RArCYBHJ; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-22380b74cfcso700295ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 16:01:59 -0800 (PST)
+	s=arc-20240116; t=1741220245; c=relaxed/simple;
+	bh=iis0dEbMvplE+HTqIDwr32u7CAgdtwromyyJ56mSjoU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UKLjtQC9erpqSEn15G70Y7/J7+9U343ZINiJwGbu41SrHnG1vC3mQCElulxXI1+hU6wESnViwu+0B7tM8E1DM4GocbjLfipF+almSE5AsYlxmytkLBFze1i7XMWU6jkMUomloVgrfUI05piuTs5siu6TOfMIfHT2v2ijZUe87ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hRns9hmp; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43bdc607c3fso108275e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 16:17:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1741219319; x=1741824119; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=56oJ12Bp4zx+P97DlMZ4Tn8DtYif33Fhe6HEZDkqc4g=;
-        b=RArCYBHJ9d/hR2hV1ZoL5oU38v+KezhgdtQb8mD7lUwe0svHH29e4x8GwegCIovWtV
-         dsQABuYDVj4G4FkluMEG9ExfVx7u6xNbaEfPpIJDGmvQ3T++oeO8WiynnV+q0l+ucCEG
-         3EnLH/Y9wQlxg2HtflKUjgcn61rgtDOWP9u+htDSIEvqvolEoJupMHG8gCPciJbOpJwV
-         CxaFcYJKgb7xqZDz0WS0A2k8PieR+ixs8zHeQWreIhnpzAhcL4T+r/la91Dq3UlQzVdn
-         NxcQ8/cjFa3yA1GoUD7xAw9iZLUGiUfDW1dEubo0rbGQMq2PxdenWONtVWe4gcgpsYX6
-         i5NA==
+        d=linaro.org; s=google; t=1741220241; x=1741825041; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EA7wBsRO7beEhIKo4sawZdyyjGbPCorOmTM4q6A6NcQ=;
+        b=hRns9hmpfO+jtjWATHPI7Kr6eP7g/AbcvGvtsJr/e4mHWErLUhLAUR9gcThT5bP0nO
+         /g/mZiFn4cXoAZI3FGZvuKeTy2FZJHXwTsdReHtmGBfhHVhIsFKwR/0O6ogZd5z9U/fh
+         IPxHZqt+Co0CglN27rgyx90irWforPNPjdGN9hbkwhlSwqMRNzmqKiPqE/vnYyuLD00M
+         86gEWc9QBRvCDXhartggvnE6G/MlRiCc8Z0263SCjat66utixDZMLpMakYnL6qNmHu+q
+         p6wq+ycas+qZiw+/Cugi2Q4sbdOftR0Qzcg3CTSYalTBjPELvz6zXYxAdAGknZR/t/Nr
+         3H4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741219319; x=1741824119;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+        d=1e100.net; s=20230601; t=1741220241; x=1741825041;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=56oJ12Bp4zx+P97DlMZ4Tn8DtYif33Fhe6HEZDkqc4g=;
-        b=YYVNCSo5zqsAkpAPcUM7u3127Bu1KfFwUDJxNiYcZ4lUNN3Rw1unrpy77CSyk+YFzZ
-         Q453F+iz63Aciceb6Cw3wNwRcmm+1NpYrkZ265vAPIZJkzFlQAnQG9bzHF3fPcCs0+9M
-         O6jJe3FM+57A1ZNNXoaRvxOsSnoitBU0NeBSi+2JQFp6FfLxIxuTH37hhCiAQmHSYVRN
-         1yd7tpU6VTOOJR+eMDoPtlF83kKgg2q4RwDiCzwWRU52Zq+berRP2mGv8W6BJe6BS2R0
-         F+2N4mpl/uvrBZ4ipUIfF7F4PgYuGePPRecS0Gzuq3r+7oDX8RqqTIziYCCs0qV9YNE0
-         aDJA==
-X-Forwarded-Encrypted: i=1; AJvYcCWJLf+q0ZsD/5u7tZlCs5MOdZBB2aBuyjj7Xu06gNdXLUfFZF3Q+Upmt33oW/7+jDUqMWD4fmVYtxxrxz7F@vger.kernel.org
-X-Gm-Message-State: AOJu0YzCNzhS3MkhgZuxqz0NW6EwVGBHsJ+b5O3Qf6W83xc3lKPeeEEo
-	2dkAtflKRrvrWB6aS/7tQaWaXER1nxLhtMH7iDsxEmsHwCjJQufgdpyv4MJMwnkImh8enRT305p
-	UqAL0bouFGw847TWpsiXIqw==
-X-Google-Smtp-Source: AGHT+IEjpOP/Wjl0soyGnkaTnhki4yqOQAJMvMYNKzU+1gICchyohzEwQvzUEmiM/rlr5qBvpAcs/G+6lcFLOH+FSQ==
-X-Received: from plbmq6.prod.google.com ([2002:a17:902:fd46:b0:220:ddee:5ee])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:d50a:b0:224:1001:6787 with SMTP id d9443c01a7336-22410016aaamr1718525ad.4.1741219319186;
- Wed, 05 Mar 2025 16:01:59 -0800 (PST)
-Date: Thu, 06 Mar 2025 00:01:57 +0000
-In-Reply-To: <20250303171013.3548775-4-tabba@google.com> (message from Fuad
- Tabba on Mon,  3 Mar 2025 17:10:07 +0000)
+        bh=EA7wBsRO7beEhIKo4sawZdyyjGbPCorOmTM4q6A6NcQ=;
+        b=q2lwHrpoPjkEbY7uSTpacpwcIpQBUPJSB23UK1KJ6QwOkWvIRsD48uG7uDoHJWgxjT
+         YCd8lXsoC3ue5GkuM4zW0DReTxzU3VxZj8RRVc6sE+Q9hczahbI3GQaHe2t4Wja4Tht9
+         JaDgh/oO1xDnrjVIV1F6hRbzGomannqInDTmOnT+KwEGW4DApJroCgdKSKF+e3gX6VbM
+         TZfSlEDMcsG38QYv53fAMjmgDFwj6LK4y4uOXqvB0omx+aOYO4WaSFYmEZ8BSyXxvdjL
+         KeyFHE/QLSut7ZWZEuq/gH5vEEpjZAZjEUwDZRwdfFrL2iAoiV4Xb6okPDiUSxqXVLJq
+         ZPog==
+X-Forwarded-Encrypted: i=1; AJvYcCUhewogWc9u/HSLkPLDLIYmCya04Q8d8iv8hoeNAirPQeEV86ukSozC4NTfoOZuXM8YSCfGKRXBgvGjZlCy@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzp1mSSw0q+aNb6a1R3Z7amf2h1LfyMBdFGBsPUYrliRpsBOV/6
+	J+q/MvidnnL7Y6GgxoUeXyHtkTYOnqVQbkz5qDT+jny7FPDlsT3YKpjwHVyFD1vUHj+ofhwzgEh
+	i
+X-Gm-Gg: ASbGncsuwy73Fcb16B/8HJ+YBWY/2aFqvqQCw7OZpepAW455ZPGNwwa04fBTBAM85Ge
+	Y2eORB9Hqqx5jK5saf+Jp9XyCT1vBR3AzHB2m6eFokG3MB9OmC4rgG2IRjLZj3Xv+ykpLS0KQ49
+	RW1TiDP0hWTdIFT3mbbZQMTiECk+tAN7xE0FjC8GjJr/gvJS98O8xAzPuz4pmZsauobkA5sZs1H
+	RvJ16Q1eePZpyjkgVShKZYMr4V2ULNNFROFCUxFK7RBn7v9K4HuID9RxU3lwCZPle8RKEATd2o7
+	1O3+Z5wqU1rsGST6VSdJdg3Is0nAw/iqqMKmvXzYo1vmPYDhym/aQCFsQxwgCFYKfKiFvW2TqXm
+	0ZmvlmPnVmw==
+X-Google-Smtp-Source: AGHT+IFfPBRmNhTCUcxaJc/eEaxtG35bLgc3+iJlmBUv3iOO6fux+pmE+RD4hrwQaCfUbaDmr+QE1w==
+X-Received: by 2002:a05:6000:2ac:b0:38d:da79:c27 with SMTP id ffacd0b85a97d-3911f725b24mr4225553f8f.2.1741220241070;
+        Wed, 05 Mar 2025 16:17:21 -0800 (PST)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bd42916a0sm32351655e9.9.2025.03.05.16.17.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Mar 2025 16:17:20 -0800 (PST)
+Message-ID: <505c9ca6-7c69-4642-b03e-7df23af20484@linaro.org>
+Date: Thu, 6 Mar 2025 00:17:19 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzr03bt4ay.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v5 3/9] KVM: guest_memfd: Allow host to map guest_memfd() pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 01/12] media: iris: Add HEVC and VP9 formats for
+ decoder
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>, quic_vgarodia@quicinc.com,
+ quic_abhinavk@quicinc.com, mchehab@kernel.org
+Cc: hverkuil@xs4all.nl, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250305104335.3629945-1-quic_dikshita@quicinc.com>
+ <20250305104335.3629945-2-quic_dikshita@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250305104335.3629945-2-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Fuad Tabba <tabba@google.com> writes:
-
-> <snip>
->
-> +static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
+On 05/03/2025 10:43, Dikshita Agarwal wrote:
+> Extend the decoder driver's supported formats to include HEVC (H.265)
+> and VP9. This change updates the format enumeration (VIDIOC_ENUM_FMT)
+> and allows setting these formats via VIDIOC_S_FMT.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>   .../qcom/iris/iris_hfi_gen1_command.c         | 18 ++++-
+>   .../qcom/iris/iris_hfi_gen1_defines.h         |  2 +
+>   .../qcom/iris/iris_hfi_gen2_command.c         | 16 ++++-
+>   .../qcom/iris/iris_hfi_gen2_defines.h         |  3 +
+>   .../media/platform/qcom/iris/iris_instance.h  |  2 +
+>   drivers/media/platform/qcom/iris/iris_vdec.c  | 69 +++++++++++++++++--
+>   drivers/media/platform/qcom/iris/iris_vdec.h  | 11 +++
+>   drivers/media/platform/qcom/iris/iris_vidc.c  |  3 -
+>   8 files changed, 113 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> index 64f887d9a17d..1e774b058ab9 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> @@ -26,6 +26,20 @@ static u32 iris_hfi_gen1_buf_type_from_driver(enum iris_buffer_type buffer_type)
+>   	}
+>   }
+>   
+> +static u32 iris_hfi_gen1_v4l2_to_codec_type(u32 pixfmt)
 > +{
-> +	struct inode *inode = file_inode(vmf->vma->vm_file);
-> +	struct folio *folio;
-> +	vm_fault_t ret = VM_FAULT_LOCKED;
-> +
-> +	filemap_invalidate_lock_shared(inode->i_mapping);
-> +
-> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> +	if (IS_ERR(folio)) {
-> +		switch (PTR_ERR(folio)) {
-> +		case -EAGAIN:
-> +			ret = VM_FAULT_RETRY;
-> +			break;
-> +		case -ENOMEM:
-> +			ret = VM_FAULT_OOM;
-> +			break;
-> +		default:
-> +			ret = VM_FAULT_SIGBUS;
-> +			break;
-> +		}
-> +		goto out_filemap;
+> +	switch (pixfmt) {
+> +	case V4L2_PIX_FMT_H264:
+> +		return HFI_VIDEO_CODEC_H264;
+> +	case V4L2_PIX_FMT_HEVC:
+> +		return HFI_VIDEO_CODEC_HEVC;
+> +	case V4L2_PIX_FMT_VP9:
+> +		return HFI_VIDEO_CODEC_VP9;
+> +	default:
+> +		return 0;
 > +	}
-> +
-> +	if (folio_test_hwpoison(folio)) {
-> +		ret = VM_FAULT_HWPOISON;
-> +		goto out_folio;
-> +	}
-> +
-> +	/* Must be called with folio lock held, i.e., after kvm_gmem_get_folio() */
-> +	if (!kvm_gmem_offset_is_shared(vmf->vma->vm_file, vmf->pgoff)) {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	/*
-> +	 * Only private folios are marked as "guestmem" so far, and we never
-> +	 * expect private folios at this point.
-> +	 */
 
-I think this is not quite accurate.
+Unknown is 0 here - perhaps it should be a define.
 
-Based on my understanding and kvm_gmem_handle_folio_put() in this other
-patch [1], only pages *in transition* from shared to private state are
-marked "guestmem", although it is true that no private folios or folios
-marked guestmem are expected here.
-
-> +	if (WARN_ON_ONCE(folio_test_guestmem(folio)))  {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	/* No support for huge pages. */
-> +	if (WARN_ON_ONCE(folio_test_large(folio))) {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	if (!folio_test_uptodate(folio)) {
-> +		clear_highpage(folio_page(folio, 0));
-> +		kvm_gmem_mark_prepared(folio);
-> +	}
-> +
-> +	vmf->page = folio_file_page(folio, vmf->pgoff);
-> +
-> +out_folio:
-> +	if (ret != VM_FAULT_LOCKED) {
-> +		folio_unlock(folio);
-> +		folio_put(folio);
-> +	}
-> +
-> +out_filemap:
-> +	filemap_invalidate_unlock_shared(inode->i_mapping);
-> +
-> +	return ret;
 > +}
->
-> <snip>
+> +
+>   static int iris_hfi_gen1_sys_init(struct iris_core *core)
+>   {
+>   	struct hfi_sys_init_pkt sys_init_pkt;
+> @@ -88,16 +102,18 @@ static int iris_hfi_gen1_sys_pc_prep(struct iris_core *core)
+>   static int iris_hfi_gen1_session_open(struct iris_inst *inst)
+>   {
+>   	struct hfi_session_open_pkt packet;
+> +	u32 codec;
+>   	int ret;
+>   
+>   	if (inst->state != IRIS_INST_DEINIT)
+>   		return -EALREADY;
+>   
+> +	codec = iris_hfi_gen1_v4l2_to_codec_type(inst->codec);
 
-[1] https://lore.kernel.org/all/20250117163001.2326672-7-tabba@google.com/
+
+You can return an error from this function - suggest better error 
+handling is
+
+if (!codec)
+	return -EINVAL; -ENO
+
+or some other error value that makes more sense to you.
+
+> +static u32 iris_hfi_gen2_v4l2_to_codec_type(struct iris_inst *inst)
+> +{
+> +	switch (inst->codec) {
+> +	case V4L2_PIX_FMT_H264:
+> +		return HFI_CODEC_DECODE_AVC;
+> +	case V4L2_PIX_FMT_HEVC:
+> +		return HFI_CODEC_DECODE_HEVC;
+> +	case V4L2_PIX_FMT_VP9:
+> +		return HFI_CODEC_DECODE_VP9;
+> +	default:
+> +		return 0;
+
+>   static int iris_hfi_gen2_session_set_codec(struct iris_inst *inst)
+>   {
+>   	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
+> -	u32 codec = HFI_CODEC_DECODE_AVC;
+> +	u32 codec = iris_hfi_gen2_v4l2_to_codec_type(inst);
+
+Same comment for gen2
+
+>   
+>   	iris_hfi_gen2_packet_session_property(inst,
+>   					      HFI_PROP_CODEC,
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> index 806f8bb7f505..2fcf7914b70f 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> @@ -104,6 +104,9 @@ enum hfi_color_format {
+>   enum hfi_codec_type {
+>   	HFI_CODEC_DECODE_AVC			= 1,
+>   	HFI_CODEC_ENCODE_AVC			= 2,
+> +	HFI_CODEC_DECODE_HEVC			= 3,
+> +	HFI_CODEC_ENCODE_HEVC			= 4,
+> +	HFI_CODEC_DECODE_VP9			= 5,
+>   };
+>   
+>   enum hfi_picture_type {
+> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
+> index caa3c6507006..d8f076936c2b 100644
+> --- a/drivers/media/platform/qcom/iris/iris_instance.h
+> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
+> @@ -42,6 +42,7 @@
+>    * @sequence_out: a sequence counter for output queue
+>    * @tss: timestamp metadata
+>    * @metadata_idx: index for metadata buffer
+> + * @codec: codec type
+>    */
+>   
+>   struct iris_inst {
+> @@ -72,6 +73,7 @@ struct iris_inst {
+>   	u32				sequence_out;
+>   	struct iris_ts_metadata		tss[VIDEO_MAX_FRAME];
+>   	u32				metadata_idx;
+> +	u32				codec;
+>   };
+>   
+>   #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
+> index 4143acedfc57..cdcfe71f5b96 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
+> @@ -32,6 +32,7 @@ int iris_vdec_inst_init(struct iris_inst *inst)
+>   	f->fmt.pix_mp.width = DEFAULT_WIDTH;
+>   	f->fmt.pix_mp.height = DEFAULT_HEIGHT;
+>   	f->fmt.pix_mp.pixelformat = V4L2_PIX_FMT_H264;
+> +	inst->codec = f->fmt.pix_mp.pixelformat;
+>   	f->fmt.pix_mp.num_planes = 1;
+>   	f->fmt.pix_mp.plane_fmt[0].bytesperline = 0;
+>   	f->fmt.pix_mp.plane_fmt[0].sizeimage = iris_get_buffer_size(inst, BUF_INPUT);
+> @@ -67,14 +68,67 @@ void iris_vdec_inst_deinit(struct iris_inst *inst)
+>   	kfree(inst->fmt_src);
+>   }
+>   
+> +static const struct iris_fmt iris_vdec_formats[] = {
+> +	[IRIS_FMT_H264] = {
+> +		.pixfmt = V4L2_PIX_FMT_H264,
+> +		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
+> +	},
+> +	[IRIS_FMT_HEVC] = {
+> +		.pixfmt = V4L2_PIX_FMT_HEVC,
+> +		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
+> +	},
+> +	[IRIS_FMT_VP9] = {
+> +		.pixfmt = V4L2_PIX_FMT_VP9,
+> +		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
+> +	},
+> +};
+> +
+> +static const struct iris_fmt *
+> +find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
+> +{
+> +	const struct iris_fmt *fmt = iris_vdec_formats;
+> +	unsigned int size = ARRAY_SIZE(iris_vdec_formats);
+> +	unsigned int i;
+
+Slightly neater as a reverse christmas tree.
+
+> +
+> +	for (i = 0; i < size; i++) {
+> +		if (fmt[i].pixfmt == pixfmt)
+> +			break;
+> +	}
+> +
+> +	if (i == size || fmt[i].type != type)
+> +		return NULL;
+> +
+> +	return &fmt[i];
+> +}
+> +
+> +static const struct iris_fmt *
+> +find_format_by_index(struct iris_inst *inst, u32 index, u32 type)
+> +{
+> +	const struct iris_fmt *fmt = iris_vdec_formats;
+> +	unsigned int size = ARRAY_SIZE(iris_vdec_formats);
+> +
+> +	if (index >= size || fmt[index].type != type)
+> +		return NULL;
+> +
+> +	return &fmt[index];
+> +}
+> +
+>   int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f)
+>   {
+> +	const struct iris_fmt *fmt;
+> +
+>   	switch (f->type) {
+>   	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+> -		f->pixelformat = V4L2_PIX_FMT_H264;
+> +		fmt = find_format_by_index(inst, f->index, f->type);
+> +		if (!fmt)
+> +			return -EINVAL;
+> +
+> +		f->pixelformat = fmt->pixfmt;
+>   		f->flags = V4L2_FMT_FLAG_COMPRESSED | V4L2_FMT_FLAG_DYN_RESOLUTION;
+>   		break;
+>   	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+> +		if (f->index)
+> +			return -EINVAL;
+>   		f->pixelformat = V4L2_PIX_FMT_NV12;
+>   		break;
+>   	default:
+> @@ -88,13 +142,15 @@ int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
+>   {
+>   	struct v4l2_pix_format_mplane *pixmp = &f->fmt.pix_mp;
+>   	struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
+> +	const struct iris_fmt *fmt;
+>   	struct v4l2_format *f_inst;
+>   	struct vb2_queue *src_q;
+>   
+>   	memset(pixmp->reserved, 0, sizeof(pixmp->reserved));
+> +	fmt = find_format(inst, pixmp->pixelformat, f->type);
+>   	switch (f->type) {
+>   	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+> -		if (f->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_H264) {
+> +		if (!fmt) {
+>   			f_inst = inst->fmt_src;
+>   			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
+>   			f->fmt.pix_mp.height = f_inst->fmt.pix_mp.height;
+> @@ -102,7 +158,7 @@ int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
+>   		}
+>   		break;
+>   	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+> -		if (f->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_NV12) {
+> +		if (!fmt) {
+>   			f_inst = inst->fmt_dst;
+>   			f->fmt.pix_mp.pixelformat = f_inst->fmt.pix_mp.pixelformat;
+>   			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
+> @@ -145,13 +201,14 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
+>   
+>   	switch (f->type) {
+>   	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+> -		if (f->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_H264)
+> +		if (!(find_format(inst, f->fmt.pix_mp.pixelformat, f->type)))
+>   			return -EINVAL;
+>   
+>   		fmt = inst->fmt_src;
+>   		fmt->type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
+> -
+> -		codec_align = DEFAULT_CODEC_ALIGNMENT;
+> +		fmt->fmt.pix_mp.pixelformat = f->fmt.pix_mp.pixelformat;
+> +		inst->codec = fmt->fmt.pix_mp.pixelformat;
+> +		codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
+
+For preference I'd choose a default assignment and then an if for 
+whatever you choose as non-default.
+
+codec_align = 16;
+if (inst->codec == V4L2_PIX_FMT_HEVC)
+	codec_align = 32;
+
+>   		fmt->fmt.pix_mp.width = ALIGN(f->fmt.pix_mp.width, codec_align);
+>   		fmt->fmt.pix_mp.height = ALIGN(f->fmt.pix_mp.height, codec_align);
+>   		fmt->fmt.pix_mp.num_planes = 1;
+> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.h b/drivers/media/platform/qcom/iris/iris_vdec.h
+> index b24932dc511a..cd7aab66dc7c 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vdec.h
+> +++ b/drivers/media/platform/qcom/iris/iris_vdec.h
+> @@ -8,6 +8,17 @@
+>   
+>   struct iris_inst;
+>   
+> +enum iris_fmt_type {
+> +	IRIS_FMT_H264,
+
+I persoanlly like to init enums = 0,
+
+
+> +	IRIS_FMT_HEVC,
+> +	IRIS_FMT_VP9,
+> +};
+> +
+> +struct iris_fmt {
+> +	u32 pixfmt;
+> +	u32 type;
+> +};
+> +
+>   int iris_vdec_inst_init(struct iris_inst *inst);
+>   void iris_vdec_inst_deinit(struct iris_inst *inst);
+>   int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
+> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
+> index ca0f4e310f77..6a6afa15b647 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+> @@ -249,9 +249,6 @@ static int iris_enum_fmt(struct file *filp, void *fh, struct v4l2_fmtdesc *f)
+>   {
+>   	struct iris_inst *inst = iris_get_inst(filp, NULL);
+>   
+> -	if (f->index)
+> -		return -EINVAL;
+> -
+>   	return iris_vdec_enum_fmt(inst, f);
+>   }
+>   
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
