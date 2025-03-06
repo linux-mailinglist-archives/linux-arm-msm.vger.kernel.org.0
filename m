@@ -1,913 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-50501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 290F8A54AA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:26:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37390A54AA8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:26:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5349D16B2D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:26:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6FA17188D92B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:26:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A251320C009;
-	Thu,  6 Mar 2025 12:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 718A420B21F;
+	Thu,  6 Mar 2025 12:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="aOPgWdGq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Fj1z+LRY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7411B20A5C6;
-	Thu,  6 Mar 2025 12:26:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B3E20B1EF;
+	Thu,  6 Mar 2025 12:26:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741263966; cv=none; b=RAAiAqNKRnPTDvHysU4XdlALIGW4TsWusHKCGjES3QvRbvtI1TKAAg5c2iqbiUIqzfACqxV5LcXl0xYj/wOC6Yl0qHS9+ONR1qFlVJa5t5ujmE30qNMk64sFQnMmCEGpIw4+nyYfT+ovh2b4nFmcTglLmRaKv9c/zJzFwy9W/8o=
+	t=1741263989; cv=none; b=QEvQE4hi+mEsKVw61HHBFESS1mnXKzKpVV5XBST/CcKUCHeOcOlL5HZrHdWuorxuOdj5sZaUpOFap+XBM3s92IEcFSIgfPZAa6aVOcR2dCEbD4Xpag81TZanRLJmsK5nFee5JZE5us/SYXTCgWZaUTTcsGJUs0R0vVWoemC/n18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741263966; c=relaxed/simple;
-	bh=9N40ebO3EvsMcCQLrs/9rbOc7R1iTl307EE2nYR5jzo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=uZRHsl5uDEkN5fuiO1S006a63hZEgm0G5095yvnMmNIvEjoyN9BumLQa3T0S3u+cPzBGD2x5CdiBKaWI4cSFL8+kgm0pcfwDqxBNlebrx0WM9uDMVyF924I93QxsLKyL/NVfIR5fvLanS25KYMreF4hXwc6UISGqZoCeG5hjTNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=aOPgWdGq; arc=none smtp.client-ip=157.90.84.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
-Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
-	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
-	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id 8A1BC2FC0048;
-	Thu,  6 Mar 2025 13:25:53 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
-	s=default; t=1741263953;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=dGCrCeDhVv9ixGTnWlj7a2vonzXKEPd8CqgGrmCkQrA=;
-	b=aOPgWdGqdx52Ceh772kCvTUmpgVL9/Rczl1YztNVw+p7uW82QXT4xrY4xdybOJCxUA25Dj
-	HF0OW6F0Dm5hMNIu1w6E15vp8XmkUAJkyf+nmDOyon2pS4AKX7Vw0yMN/f1yl3DK0Zzjfa
-	5fbW49bMUBcjUKhm2m1iwJf7n3oCrk8=
-Authentication-Results: mail.tuxedocomputers.com;
-	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=ggo@tuxedocomputers.com
-Message-ID: <57589859-fec1-4875-9127-d1f99e40a827@tuxedocomputers.com>
-Date: Thu, 6 Mar 2025 13:25:53 +0100
+	s=arc-20240116; t=1741263989; c=relaxed/simple;
+	bh=CHuk/ovAJ999aY5RbZIIhjbrC7uJTWSrGoI0q/DkZRA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Zdt7j67sf1nqWpQ1ZqEGq3h32P/PnwDDJIz7nPXvqoA83PIIktF+ktmlnl7WTqCNIQmcTVe3SUunN2s8IfJQQiU2kiIqBY4ImsFOj7F64nLhdMD6n+jia+msLCHrmYI/NwXc7hNFyY/sVegou6R55kRGwtyoIYUBpJ60PXIxqE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Fj1z+LRY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5269VQWM009868;
+	Thu, 6 Mar 2025 12:26:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3nnBvDL230kr1pJsTyGV8JlQ4a3iW1xhIU5tFQGUF+4=; b=Fj1z+LRYw5/Q8DtC
+	j7490h507Z3LwU0mUDbc1pG6P2p/AdZso4goNdoW4pbCG9y9aHdsLNKUi/CH7D0W
+	wZI4Ip1XDpsKCJGunyYR/Ra/IYyfhhS+AtCold5GQ659DTf4gA5v8nWJc5qyYZP2
+	iQop8VTpRY6vRaZKyijfKXlUqfa48KsGlxe5/w+8jbN7v10LRhvqPb/XmnryE8m+
+	s48/BB570vyRRQ5hTeAyhekHY7ZquH6DqQSjrF3XT77L+e4Zx+slSM9ZCIrXVYBS
+	A5rEJEPtUCWUSVa1HDjapjt0Tm2eNl9Fi9VcgNCfSU7RCmR8i4fBYNuYi0x87dCR
+	v1eFeA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 455p6ts0nc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Mar 2025 12:26:23 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 526CQMk0029425
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Mar 2025 12:26:22 GMT
+Received: from [10.50.63.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Mar 2025
+ 04:26:19 -0800
+Message-ID: <95c9ab98-cebd-2ec2-bdb2-2f63bedb3f86@quicinc.com>
+Date: Thu, 6 Mar 2025 17:56:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Georg Gottleuber <ggo@tuxedocomputers.com>
-Subject: [PATCH] arm64: dts: qcom: Add device tree for TUXEDO Elite 14 Gen1
-To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio
- <konrad.dybcio@oss.qualcomm.com>, Georg Gottleuber
- <ggo@tuxedocomputers.com>, wse@tuxedocomputers.com, cs@tuxedocomputers.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [RFC PATCH 04/12] media: iris: Add internal buffer calculation
+ for HEVC and VP9 decoders
 Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <quic_vgarodia@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <mchehab@kernel.org>
+CC: <hverkuil@xs4all.nl>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250305104335.3629945-1-quic_dikshita@quicinc.com>
+ <20250305104335.3629945-5-quic_dikshita@quicinc.com>
+ <ac44e16c-36af-471a-b47b-bb26ccd9f018@linaro.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <ac44e16c-36af-471a-b47b-bb26ccd9f018@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=HZbuTjE8 c=1 sm=1 tr=0 ts=67c9946f cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=1rF406xIJLHP53cuGdgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: j-Lw1dhPRhtHIhKdHhMM4m7aRlQwN1m7
+X-Proofpoint-ORIG-GUID: j-Lw1dhPRhtHIhKdHhMM4m7aRlQwN1m7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-06_05,2025-03-06_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 mlxscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503060094
 
-Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
-Elite SoC (X1E78100).
 
-Working:
-* Touchpad
-* Keyboard
-* eDP (no brightness control yet)
-* NVMe
-* USB Type-C port
-* WiFi (WiFi 7 untested)
-* GPU (software rendering)
 
-Not working:
-* GPU (WIP: firmware loading but output is jerky)
-* USB Type-A (WIP)
-* Suspend with substantial energy saving
-* Audio, Speakers, Microphones
-* Camera
-* Fingerprint Reader
+On 3/6/2025 6:35 AM, Bryan O'Donoghue wrote:
+> On 05/03/2025 10:43, Dikshita Agarwal wrote:
+>> Add internal buffer count and size calculations for HEVC and VP9
+>> decoders.
+>>
+>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> ---
+>>   .../media/platform/qcom/iris/iris_buffer.c    |   3 +
+>>   .../platform/qcom/iris/iris_vpu_buffer.c      | 397 +++++++++++++++++-
+>>   .../platform/qcom/iris/iris_vpu_buffer.h      |  46 +-
+>>   3 files changed, 432 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c
+>> b/drivers/media/platform/qcom/iris/iris_buffer.c
+>> index e5c5a564fcb8..8c9d5b7fe75c 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_buffer.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_buffer.c
+>> @@ -205,6 +205,9 @@ static u32 iris_bitstream_buffer_size(struct
+>> iris_inst *inst)
+>>       if (num_mbs > NUM_MBS_4K) {
+>>           div_factor = 4;
+>>           base_res_mbs = caps->max_mbpf;
+>> +    } else {
+>> +        if (inst->codec == V4L2_PIX_FMT_VP9)
+>> +            div_factor = 1;
+>>       }
+>>         /*
+>> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>> b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>> index dce25e410d80..13ee93356bcb 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>> @@ -31,6 +31,42 @@ static u32 hfi_buffer_bin_h264d(u32 frame_width, u32
+>> frame_height, u32 num_vpp_p
+>>       return size_h264d_hw_bin_buffer(n_aligned_w, n_aligned_h,
+>> num_vpp_pipes);
+>>   }
+>>   +static u32 size_h265d_hw_bin_buffer(u32 frame_width, u32 frame_height,
+>> u32 num_vpp_pipes)
+>> +{
+>> +    u32 product = frame_width * frame_height;
+>> +    u32 size_yuv, size_bin_hdr, size_bin_res;
+>> +
+>> +    size_yuv = (product <= BIN_BUFFER_THRESHOLD) ?
+>> +        ((BIN_BUFFER_THRESHOLD * 3) >> 1) : ((product * 3) >> 1);
+> 
+> When I read this code I have no way of knowing if it makes sense.
+> 
+> #define BIN_BUFFER_THRESHOLD        (1280 * 736)
+> 
+> ((BIN_BUFFER_THRESHOLD * 3) >> 1)
+> 
+> How/why is that correct ?
+> 
+Bin buffers are intermediate buffers which are used by different sub
+hardware blocks within video IP. The calculation of these buffers are
+hardware mandated. While we can't explain/justify every factor, these are
+based on hardware constraints and validated with firmware requirements,
+Software is just coding it up the way hardware specification defines it.
+>> +    size_bin_hdr = size_yuv * H265_CABAC_HDR_RATIO_HD_TOT;
+>> +    size_bin_res = size_yuv * H265_CABAC_RES_RATIO_HD_TOT;
+>> +    size_bin_hdr = ALIGN(size_bin_hdr / num_vpp_pipes, DMA_ALIGNMENT) *
+>> num_vpp_pipes;
+>> +    size_bin_res = ALIGN(size_bin_res / num_vpp_pipes, DMA_ALIGNMENT) *
+>> num_vpp_pipes;
+>> +
+>> +    return size_bin_hdr + size_bin_res;
+>> +}
+>> +
+>> +static u32 hfi_buffer_bin_vp9d(u32 frame_width, u32 frame_height, u32
+>> num_vpp_pipes)
+>> +{
+>> +    u32 _size_yuv = ALIGN(frame_width, 16) * ALIGN(frame_height, 16) * 3
+>> / 2;
+>> +    u32 _size = ALIGN(((max_t(u32, _size_yuv, ((BIN_BUFFER_THRESHOLD *
+>> 3) >> 1)) *
+>> +            VPX_DECODER_FRAME_BIN_HDR_BUDGET /
+>> VPX_DECODER_FRAME_BIN_DENOMINATOR *
+>> +            VPX_DECODER_FRAME_CONCURENCY_LVL) / num_vpp_pipes),
+>> DMA_ALIGNMENT) +
+>> +            ALIGN(((max_t(u32, _size_yuv, ((BIN_BUFFER_THRESHOLD * 3) >>
+>> 1)) *
+>> +            VPX_DECODER_FRAME_BIN_RES_BUDGET /
+>> VPX_DECODER_FRAME_BIN_DENOMINATOR *
+>> +            VPX_DECODER_FRAME_CONCURENCY_LVL) / num_vpp_pipes),
+>> DMA_ALIGNMENT);
+> 
+> The size_yuv I guess just about makes sense but the _size component here is
+> pretty hard to say whether or not this adds up.
+> 
+> Could you please add some comments to describe the calculations in these
+> complex size/alignment clauses.
+I believe the MACROS here defines the parameters used in calculation,
+beyond this, its again how internal buffers (used by hardware) are
+calculated by hardware and defined in the hardware specification.
 
-Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 798 ++++++++++++++++++
- 2 files changed, 799 insertions(+)
- create mode 100644
-arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 140b0b2abfb5..f0a9d677d957 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -298,3 +298,4 @@ dtb-$(CONFIG_ARCH_QCOM)     += x1e80100-lenovo-yoga-slim7x.dtb
- dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-microsoft-romulus13.dtb
- dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-microsoft-romulus15.dtb
- dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-qcp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-tuxedo-elite-14-gen1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-new file mode 100644
-index 000000000000..86bdec4a2dd8
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-@@ -0,0 +1,798 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2025 TUXEDO Computers GmbH
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+
-+#include "x1e80100.dtsi"
-+#include "x1e80100-pmics.dtsi"
-+
-+/ {
-+       model = "TUXEDO Elite 14 Gen1";
-+       compatible = "tuxedo,elite14gen1", "qcom,x1e80100";
-+
-+       aliases {
-+               serial0 = &uart21;
-+       };
-+
-+       chosen {
-+               stdout-path = "serial0:115200n8";
-+       };
-+
-+       gpio-keys {
-+               compatible = "gpio-keys";
-+
-+               pinctrl-0 = <&hall_int_n_default>;
-+               pinctrl-names = "default";
-+
-+               switch-lid {
-+                       gpios = <&tlmm 92 GPIO_ACTIVE_LOW>;
-+                       linux,input-type = <EV_SW>;
-+                       linux,code = <SW_LID>;
-+                       wakeup-source;
-+               };
-+       };
-+
-+       pmic-glink {
-+               compatible = "qcom,x1e80100-pmic-glink",
-+                            "qcom,sm8550-pmic-glink",
-+                            "qcom,pmic-glink";
-+               orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>;
-+               #address-cells = <1>;
-+               #size-cells = <0>;
-+
-+               /* Left-side rear port */
-+               connector@0 {
-+                       compatible = "usb-c-connector";
-+                       reg = <0>;
-+                       power-role = "dual";
-+                       data-role = "dual";
-+
-+                       ports {
-+                               #address-cells = <1>;
-+                               #size-cells = <0>;
-+
-+                               port@0 {
-+                                       reg = <0>;
-+
-+                                       pmic_glink_ss0_hs_in: endpoint {
-+                                               remote-endpoint = <&usb_1_ss0_dwc3_hs>;
-+                                       };
-+                               };
-+
-+                               port@1 {
-+                                       reg = <1>;
-+
-+                                       pmic_glink_ss0_ss_in: endpoint {
-+                                               remote-endpoint = <&usb_1_ss0_qmpphy_out>;
-+                                       };
-+                               };
-+                       };
-+               };
-+       };
-+
-+       reserved-memory {
-+               linux,cma {
-+                       compatible = "shared-dma-pool";
-+                       size = <0x0 0x8000000>;
-+                       reusable;
-+                       linux,cma-default;
-+               };
-+       };
-+
-+       vreg_edp_3p3: regulator-edp-3p3 {
-+               compatible = "regulator-fixed";
-+
-+               regulator-name = "VREG_EDP_3P3";
-+               regulator-min-microvolt = <3300000>;
-+               regulator-max-microvolt = <3300000>;
-+
-+               // EDP_VDD_EN_GPIO54
-+               gpio = <&tlmm 54 GPIO_ACTIVE_HIGH>;
-+               enable-active-high;
-+
-+               pinctrl-0 = <&edp_reg_en>;
-+               pinctrl-names = "default";
-+
-+               regulator-always-on;
-+               regulator-boot-on;
-+       };
-+
-+       vreg_nvme: regulator-nvme {
-+               compatible = "regulator-fixed";
-+
-+               regulator-name = "VREG_NVME_3P3";
-+               regulator-min-microvolt = <3300000>;
-+               regulator-max-microvolt = <3300000>;
-+
-+               // NVME_REG_EN_GPIO18
-+               gpio = <&tlmm 18 GPIO_ACTIVE_HIGH>;
-+               enable-active-high;
-+
-+               pinctrl-0 = <&nvme_reg_en>;
-+               pinctrl-names = "default";
-+               regulator-boot-on;
-+       };
-+
-+       vph_pwr: regulator-vph-pwr {
-+               compatible = "regulator-fixed";
-+
-+               regulator-name = "vph_pwr";
-+               regulator-min-microvolt = <3700000>;
-+               regulator-max-microvolt = <3700000>;
-+
-+               regulator-always-on;
-+               regulator-boot-on;
-+       };
-+};
-+
-+&apps_rsc {
-+       regulators-0 {
-+               compatible = "qcom,pm8550-rpmh-regulators";
-+               qcom,pmic-id = "b";
-+               vdd-bob1-supply = <&vph_pwr>;
-+               vdd-bob2-supply = <&vph_pwr>;
-+               vdd-l1-l4-l10-supply = <&vreg_s4c_1p8>;
-+               vdd-l2-l13-l14-supply = <&vreg_bob1>;
-+               vdd-l5-l16-supply = <&vreg_bob1>;
-+               vdd-l6-l7-supply = <&vreg_bob2>;
-+               vdd-l8-l9-supply = <&vreg_bob1>;
-+               vdd-l12-supply = <&vreg_s5j_1p2>;
-+               vdd-l15-supply = <&vreg_s4c_1p8>;
-+               vdd-l17-supply = <&vreg_bob2>;
-+
-+               vreg_bob1: bob1 {
-+                       regulator-name = "vreg_bob1";
-+                       regulator-min-microvolt = <3008000>;
-+                       regulator-max-microvolt = <3960000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_bob2: bob2 {
-+                       regulator-name = "vreg_bob2";
-+                       regulator-min-microvolt = <2504000>;
-+                       regulator-max-microvolt = <3008000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l2b_3p0: ldo2 {
-+                       regulator-name = "vreg_l2b_3p0";
-+                       regulator-min-microvolt = <3072000>;
-+                       regulator-max-microvolt = <3072000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l4b_1p8: ldo4 {
-+                       regulator-name = "vreg_l4b_1p8";
-+                       regulator-min-microvolt = <1800000>;
-+                       regulator-max-microvolt = <1800000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l6b_1p8: ldo6 {
-+                       regulator-name = "vreg_l6b_1p8";
-+                       regulator-min-microvolt = <1800000>;
-+                       regulator-max-microvolt = <2960000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l7b_2p8: ldo7 {
-+                       regulator-name = "vreg_l7b_2p8";
-+                       regulator-min-microvolt = <2800000>;
-+                       regulator-max-microvolt = <2800000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l8b_3p0: ldo8 {
-+                       regulator-name = "vreg_l8b_3p0";
-+                       regulator-min-microvolt = <3072000>;
-+                       regulator-max-microvolt = <3072000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l9b_2p9: ldo9 {
-+                       regulator-name = "vreg_l9b_2p9";
-+                       regulator-min-microvolt = <2960000>;
-+                       regulator-max-microvolt = <2960000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l10b_1p8: ldo10 {
-+                       regulator-name = "vreg_l10b_1p8";
-+                       regulator-min-microvolt = <1800000>;
-+                       regulator-max-microvolt = <1800000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l12b_1p2: ldo12 {
-+                       regulator-name = "vreg_l12b_1p2";
-+                       regulator-min-microvolt = <1200000>;
-+                       regulator-max-microvolt = <1200000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l13b_3p0: ldo13 {
-+                       regulator-name = "vreg_l13b_3p0";
-+                       regulator-min-microvolt = <3072000>;
-+                       regulator-max-microvolt = <3072000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l14b_3p0: ldo14 {
-+                       regulator-name = "vreg_l14b_3p0";
-+                       regulator-min-microvolt = <3072000>;
-+                       regulator-max-microvolt = <3072000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l15b_1p8: ldo15 {
-+                       regulator-name = "vreg_l15b_1p8";
-+                       regulator-min-microvolt = <1800000>;
-+                       regulator-max-microvolt = <1800000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l16b_2p8: ldo16 {
-+                       regulator-name = "vreg_l16b_2p8";
-+                       regulator-min-microvolt = <2800000>;
-+                       regulator-max-microvolt = <2800000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l17b_2p5: ldo17 {
-+                       regulator-name = "vreg_l17b_2p5";
-+                       regulator-min-microvolt = <2504000>;
-+                       regulator-max-microvolt = <2504000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+       };
-+
-+       regulators-1 {
-+               compatible = "qcom,pm8550ve-rpmh-regulators";
-+               qcom,pmic-id = "c";
-+
-+               vdd-l1-supply = <&vreg_s5j_1p2>;
-+               vdd-l2-supply = <&vreg_s1f_0p7>;
-+               vdd-l3-supply = <&vreg_s1f_0p7>;
-+               vdd-s4-supply = <&vph_pwr>;
-+
-+               vreg_s4c_1p8: smps4 {
-+                       regulator-name = "vreg_s4c_1p8";
-+                       regulator-min-microvolt = <1856000>;
-+                       regulator-max-microvolt = <2000000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l1c_1p2: ldo1 {
-+                       regulator-name = "vreg_l1c_1p2";
-+                       regulator-min-microvolt = <1200000>;
-+                       regulator-max-microvolt = <1200000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l2c_0p8: ldo2 {
-+                       regulator-name = "vreg_l2c_0p8";
-+                       regulator-min-microvolt = <880000>;
-+                       regulator-max-microvolt = <880000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l3c_0p9: ldo3 {
-+                       regulator-name = "vreg_l3c_0p9";
-+                       regulator-min-microvolt = <920000>;
-+                       regulator-max-microvolt = <920000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+       };
-+
-+       regulators-2 {
-+               compatible = "qcom,pmc8380-rpmh-regulators";
-+               qcom,pmic-id = "d";
-+
-+               vdd-l1-supply = <&vreg_s1f_0p7>;
-+               vdd-l2-supply = <&vreg_s1f_0p7>;
-+               vdd-l3-supply = <&vreg_s4c_1p8>;
-+               vdd-s1-supply = <&vph_pwr>;
-+
-+               vreg_l1d_0p8: ldo1 {
-+                       regulator-name = "vreg_l1d_0p8";
-+                       regulator-min-microvolt = <880000>;
-+                       regulator-max-microvolt = <880000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l2d_0p9: ldo2 {
-+                       regulator-name = "vreg_l2d_0p9";
-+                       regulator-min-microvolt = <912000>;
-+                       regulator-max-microvolt = <912000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l3d_1p8: ldo3 {
-+                       regulator-name = "vreg_l3d_1p8";
-+                       regulator-min-microvolt = <1800000>;
-+                       regulator-max-microvolt = <1800000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+       };
-+
-+       regulators-3 {
-+               compatible = "qcom,pmc8380-rpmh-regulators";
-+               qcom,pmic-id = "e";
-+
-+               vdd-l2-supply = <&vreg_s1f_0p7>;
-+               vdd-l3-supply = <&vreg_s5j_1p2>;
-+
-+               vreg_l2e_0p8: ldo2 {
-+                       regulator-name = "vreg_l2e_0p8";
-+                       regulator-min-microvolt = <880000>;
-+                       regulator-max-microvolt = <880000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l3e_1p2: ldo3 {
-+                       regulator-name = "vreg_l3e_1p2";
-+                       regulator-min-microvolt = <1200000>;
-+                       regulator-max-microvolt = <1200000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+       };
-+
-+       regulators-4 {
-+               compatible = "qcom,pmc8380-rpmh-regulators";
-+               qcom,pmic-id = "f";
-+
-+               vdd-l1-supply = <&vreg_s5j_1p2>;
-+               vdd-l2-supply = <&vreg_s5j_1p2>;
-+               vdd-l3-supply = <&vreg_s5j_1p2>;
-+               vdd-s1-supply = <&vph_pwr>;
-+
-+               vreg_s1f_0p7: smps1 {
-+                       regulator-name = "vreg_s1f_0p7";
-+                       regulator-min-microvolt = <700000>;
-+                       regulator-max-microvolt = <1100000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+       };
-+
-+       regulators-6 {
-+               compatible = "qcom,pm8550ve-rpmh-regulators";
-+               qcom,pmic-id = "i";
-+
-+               vdd-l1-supply = <&vreg_s4c_1p8>;
-+               vdd-l2-supply = <&vreg_s5j_1p2>;
-+               vdd-l3-supply = <&vreg_s1f_0p7>;
-+               vdd-s1-supply = <&vph_pwr>;
-+               vdd-s2-supply = <&vph_pwr>;
-+
-+               vreg_s1i_0p9: smps1 {
-+                       regulator-name = "vreg_s1i_0p9";
-+                       regulator-min-microvolt = <900000>;
-+                       regulator-max-microvolt = <920000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_s2i_1p0: smps2 {
-+                       regulator-name = "vreg_s2i_1p0";
-+                       regulator-min-microvolt = <1000000>;
-+                       regulator-max-microvolt = <1100000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l1i_1p8: ldo1 {
-+                       regulator-name = "vreg_l1i_1p8";
-+                       regulator-min-microvolt = <1800000>;
-+                       regulator-max-microvolt = <1800000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l2i_1p2: ldo2 {
-+                       regulator-name = "vreg_l2i_1p2";
-+                       regulator-min-microvolt = <1200000>;
-+                       regulator-max-microvolt = <1200000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l3i_0p8: ldo3 {
-+                       regulator-name = "vreg_l3i_0p8";
-+                       regulator-min-microvolt = <880000>;
-+                       regulator-max-microvolt = <880000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+       };
-+
-+       regulators-7 {
-+               compatible = "qcom,pm8550ve-rpmh-regulators";
-+               qcom,pmic-id = "j";
-+
-+               vdd-l1-supply = <&vreg_s1f_0p7>;
-+               vdd-l2-supply = <&vreg_s5j_1p2>;
-+               vdd-l3-supply = <&vreg_s1f_0p7>;
-+               vdd-s5-supply = <&vph_pwr>;
-+
-+               vreg_s5j_1p2: smps5 {
-+                       regulator-name = "vreg_s5j_1p2";
-+                       regulator-min-microvolt = <1256000>;
-+                       regulator-max-microvolt = <1304000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l1j_0p9: ldo1 {
-+                       regulator-name = "vreg_l1j_0p9";
-+                       regulator-min-microvolt = <912000>;
-+                       regulator-max-microvolt = <912000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l2j_1p2: ldo2 {
-+                       regulator-name = "vreg_l2j_1p2";
-+                       regulator-min-microvolt = <1256000>;
-+                       regulator-max-microvolt = <1256000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+
-+               vreg_l3j_0p8: ldo3 {
-+                       regulator-name = "vreg_l3j_0p8";
-+                       regulator-min-microvolt = <880000>;
-+                       regulator-max-microvolt = <880000>;
-+                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+               };
-+       };
-+};
-+
-+&gpu {
-+       status = "okay";
-+
-+       zap-shader {
-+               firmware-name = "qcom/a740_zap.mbn";
-+       };
-+};
-+
-+&i2c0 {
-+       clock-frequency = <400000>;
-+
-+       status = "okay";
-+
-+       touchpad@2c {
-+               compatible = "hid-over-i2c";
-+               reg = <0x2c>;
-+
-+               hid-descr-addr = <0x20>;
-+               interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
-+
-+               pinctrl-0 = <&tpad_default>;
-+               pinctrl-names = "default";
-+
-+               wakeup-source;
-+       };
-+
-+       keyboard@3a {
-+               compatible = "hid-over-i2c";
-+               reg = <0x3a>;
-+
-+               hid-descr-addr = <0x1>;
-+               interrupts-extended = <&tlmm 67 IRQ_TYPE_LEVEL_LOW>;
-+
-+               pinctrl-0 = <&kybd_default>;
-+               pinctrl-names = "default";
-+
-+               wakeup-source;
-+       };
-+};
-+
-+&i2c5 {
-+       clock-frequency = <400000>;
-+
-+       status = "okay";
-+
-+       eusb3_repeater: redriver@47 {
-+               compatible = "nxp,ptn3222";
-+               reg = <0x47>;
-+               #phy-cells = <0>;
-+
-+               vdd1v8-supply = <&vreg_l4b_1p8>;
-+               vdd3v3-supply = <&vreg_l13b_3p0>;
-+
-+               reset-gpios = <&tlmm 124 GPIO_ACTIVE_LOW>;
-+
-+               pinctrl-0 = <&eusb3_reset_n>;
-+               pinctrl-names = "default";
-+       };
-+
-+       eusb5_repeater: redriver@43 {
-+               compatible = "nxp,ptn3222";
-+               reg = <0x43>;
-+               #phy-cells = <0>;
-+
-+               vdd1v8-supply = <&vreg_l4b_1p8>;
-+               vdd3v3-supply = <&vreg_l13b_3p0>;
-+
-+               reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
-+
-+               pinctrl-0 = <&eusb6_reset_n>;
-+               pinctrl-names = "default";
-+       };
-+
-+       eusb6_repeater: redriver@4f {
-+               compatible = "nxp,ptn3222";
-+               reg = <0x4f>;
-+               #phy-cells = <0>;
-+
-+               vdd1v8-supply = <&vreg_l4b_1p8>;
-+               vdd3v3-supply = <&vreg_l13b_3p0>;
-+
-+               reset-gpios = <&tlmm 111 GPIO_ACTIVE_LOW>;
-+
-+               pinctrl-0 = <&eusb6_reset_n>;
-+               pinctrl-names = "default";
-+       };
-+
-+};
-+
-+&mdss {
-+       status = "okay";
-+};
-+
-+&mdss_dp3 {
-+       compatible = "qcom,x1e80100-dp";
-+       /delete-property/ #sound-dai-cells;
-+
-+       status = "okay";
-+
-+       aux-bus {
-+               panel {
-+                       compatible = "edp-panel";
-+                       power-supply = <&vreg_edp_3p3>;
-+
-+                       port {
-+                               edp_panel_in: endpoint {
-+                                       remote-endpoint = <&mdss_dp3_out>;
-+                               };
-+                       };
-+               };
-+       };
-+
-+       ports {
-+               port@1 {
-+                       reg = <1>;
-+
-+                       mdss_dp3_out: endpoint {
-+                               data-lanes = <0 1 2 3>;
-+                               link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+
-+                               remote-endpoint = <&edp_panel_in>;
-+                       };
-+               };
-+       };
-+};
-+
-+&mdss_dp3_phy {
-+       vdda-phy-supply = <&vreg_l3j_0p8>;
-+       vdda-pll-supply = <&vreg_l2j_1p2>;
-+
-+       status = "okay";
-+};
-+
-+&pcie4 {
-+       status = "okay";
-+};
-+
-+&pcie4_phy {
-+       vdda-phy-supply = <&vreg_l3j_0p8>;
-+       vdda-pll-supply = <&vreg_l3e_1p2>;
-+
-+       status = "okay";
-+};
-+
-+&pcie6a {
-+       perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
-+
-+       wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
-+
-+       vddpe-3v3-supply = <&vreg_nvme>;
-+
-+       pinctrl-0 = <&pcie6a_default>;
-+       pinctrl-names = "default";
-+
-+       status = "okay";
-+};
-+
-+&pcie6a_phy {
-+       vdda-phy-supply = <&vreg_l1d_0p8>;
-+       vdda-pll-supply = <&vreg_l2j_1p2>;
-+
-+       status = "okay";
-+};
-+
-+&qupv3_0 {
-+       status = "okay";
-+};
-+
-+&qupv3_1 {
-+       status = "okay";
-+};
-+
-+&qupv3_2 {
-+       status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+       firmware-name = "qcom/x1e80100/adsp.mbn",
-+                       "qcom/x1e80100/adsp_dtb.mbn";
-+
-+       status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+       firmware-name = "qcom/x1e80100/cdsp.mbn",
-+                       "qcom/x1e80100/cdsp_dtb.mbn";
-+
-+       status = "okay";
-+};
-+
-+&smb2360_0 {
-+       status = "okay";
-+};
-+
-+&smb2360_0_eusb2_repeater {
-+       vdd18-supply = <&vreg_l3d_1p8>;
-+       vdd3-supply = <&vreg_l2b_3p0>;
-+};
-+
-+&smb2360_1 {
-+       status = "okay";
-+};
-+
-+&tlmm {
-+       gpio-reserved-ranges = <28 4>, /* Unused */
-+                              <44 4>, /* SPI (TPM) */
-+                              <238 1>; /* UFS Reset */
-+
-+       kybd_default: kybd-default-state {
-+               pins = "gpio67";
-+               function = "gpio";
-+               bias-disable;
-+       };
-+
-+       edp_reg_en: edp-reg-en-state {
-+               pins = "gpio54";
-+               function = "gpio";
-+               drive-strength = <16>;
-+               bias-pull-up;
-+       };
-+
-+       nvme_reg_en: nvme-reg-en-state {
-+               pins = "gpio18";
-+               function = "gpio";
-+               drive-strength = <2>;
-+               bias-disable;
-+       };
-+
-+       hall_int_n_default: hall-int-n-state {
-+               pins = "gpio92";
-+               function = "gpio";
-+               bias-disable;
-+       };
-+
-+       eusb3_reset_n: eusb3-reset-n-state {
-+               pins = "gpio124";
-+               function = "gpio";
-+               drive-strength = <2>;
-+               bias-disable;
-+               output-low;
-+       };
-+
-+       eusb6_reset_n: eusb6-reset-n-state {
-+               pins = "gpio111";
-+               function = "gpio";
-+               drive-strength = <2>;
-+               bias-disable;
-+               output-low;
-+       };
-+
-+       eusb5_reset_n: eusb5-reset-n-state {
-+               pins = "gpio184";
-+               function = "gpio";
-+               drive-strength = <2>;
-+               bias-disable;
-+               output-low;
-+       };
-+
-+       pcie4_default: pcie4-default-state {
-+               perst-n-pins {
-+                       pins = "gpio146";
-+                       function = "gpio";
-+                       drive-strength = <2>;
-+                       bias-pull-down;
-+               };
-+
-+               clkreq-n-pins {
-+                       pins = "gpio147";
-+                       function = "pcie4_clk";
-+                       drive-strength = <2>;
-+                       bias-pull-up;
-+               };
-+
-+               wake-n-pins {
-+                       pins = "gpio148";
-+                       function = "gpio";
-+                       drive-strength = <2>;
-+                       bias-pull-up;
-+               };
-+       };
-+
-+       pcie6a_default: pcie6a-default-state {
-+               perst-n-pins {
-+                       pins = "gpio152";
-+                       function = "gpio";
-+                       drive-strength = <2>;
-+                       bias-pull-down;
-+               };
-+
-+               clkreq-n-pins {
-+                       pins = "gpio153";
-+                       function = "pcie6a_clk";
-+                       drive-strength = <2>;
-+                       bias-pull-up;
-+               };
-+
-+               wake-n-pins {
-+                       pins = "gpio154";
-+                       function = "gpio";
-+                       drive-strength = <2>;
-+                       bias-pull-up;
-+               };
-+       };
-+
-+       tpad_default: tpad-default-state {
-+               pins = "gpio3";
-+               function = "gpio";
-+               bias-disable;
-+       };
-+
-+       wcd_default: wcd-reset-n-active-state {
-+               pins = "gpio191";
-+               function = "gpio";
-+               drive-strength = <16>;
-+               bias-disable;
-+               output-low;
-+       };
-+};
-+
-+&usb_1_ss0_hsphy {
-+       vdd-supply = <&vreg_l3j_0p8>;
-+       vdda12-supply = <&vreg_l2j_1p2>;
-+
-+       phys = <&smb2360_0_eusb2_repeater>;
-+
-+       status = "okay";
-+};
-+
-+&usb_1_ss0_qmpphy {
-+       vdda-phy-supply = <&vreg_l2j_1p2>;
-+       vdda-pll-supply = <&vreg_l1j_0p9>;
-+
-+       status = "okay";
-+};
-+
-+&usb_1_ss0 {
-+       status = "okay";
-+};
-+
-+&usb_1_ss0_dwc3 {
-+       dr_mode = "host";
-+};
-+
-+&usb_1_ss0_dwc3_hs {
-+       remote-endpoint = <&pmic_glink_ss0_hs_in>;
-+};
-+
-+&usb_1_ss0_qmpphy_out {
-+       remote-endpoint = <&pmic_glink_ss0_ss_in>;
-+};
-+
--- 
-2.47.2
-
+Thanks,
+Dikshita
+> 
+> ---
+> bod
 
