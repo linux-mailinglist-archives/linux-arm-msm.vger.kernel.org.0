@@ -1,139 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-50519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55319A54BC1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 14:15:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 55DE1A54BCF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 14:17:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6FBD63B363E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:15:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CDF043B3B17
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:16:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04E1420E016;
-	Thu,  6 Mar 2025 13:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E68E20E01D;
+	Thu,  6 Mar 2025 13:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gdpkuISm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LDGW3yh7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2FB22331;
-	Thu,  6 Mar 2025 13:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633AC20E33B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 13:15:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741266921; cv=none; b=PJK0UqJFOmBswCoDDWFAYHtqAb0VZRkMdMWogP+cMN5Q7Q7YwFSrLMBlHWfmuHyhxpCrBMjO3K0Li1BDYaVAy6N7J9DHe4lNavRzq8EAaMA3mhBzR5+E451kbmWdYYlYwq1zjW6XoXwmOyE+3XWZnwSr0pQwDdVF/2/TlJCZXsQ=
+	t=1741266948; cv=none; b=TQ8BPqbzMBBEetUT4MEqFg0nX8QzHfoarUTkitXSRuLgsxELQ3HXNAucvPEAJh00u8paIkeOxHqFus/jU9wtRFck7Wp1Z6vgzJthbuvg1nXBibIHE6KKmt9ITLv7Kc9yTTt7xyxtbtw8qtD5cpGehpd2XpOdQKJXe6IByiciZIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741266921; c=relaxed/simple;
-	bh=6g9vsWTzXPTCxUAz6B0EW+KOIOdPOMJF7xnhnoJl8Ic=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HabNowdkTSSewu/KVw62Z2uIeIzzEW/2wzz5eN/rjtouCAfs8ieD5aAFYuTvBEZbqMtMG1oa7xNbHwQJSSPh1gjVcBT65cCPmE/z1xQE5k2va9b8CgYPv+wljR11HJv516ArwjEm3+UAnCfZP1Ws4FMKfIkWfMpyW43m93WM0oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gdpkuISm; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 526CrBmH031234;
-	Thu, 6 Mar 2025 13:15:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cUxhOdDBqjG8nS3JgsLPZmXLfIMs3zvTOkwCPFPDLuE=; b=gdpkuISmfC5CHF1j
-	g2yvlBnIN15zMstMh+VFDnQqndPu9ZyQ1e160n2N/RJUwp4y9O+G65Q9gOHT3IDx
-	lDZcYaGlf9/CDyWX/50hftcT3B/zOJHAeHkpkVeiLlyFEThXckR2ijojaCYYPD8N
-	S0j02FIUQcHn2aV88QzVgt6LOsD99Gec4GZedzfibE/tqQL6xkS7fiHKxxcnbdoY
-	kli9hGWYQy4eGpp3Q94ZIMIxaK0q9Vfntb43tzVcK7A2ALyN2KwROXQVUzW+AqHx
-	cHZyoTEniA0skc5fDWB/6WsrpGltsD0vlzO+gB9R8Xn5dSPiLqYPvHOMnkT0omFQ
-	y689Fg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4574ce9ht7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Mar 2025 13:15:13 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 526DFCq7002196
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Mar 2025 13:15:12 GMT
-Received: from [10.50.63.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Mar 2025
- 05:15:09 -0800
-Message-ID: <f4f7e2a7-6878-515d-c8c4-73cd424e78fc@quicinc.com>
-Date: Thu, 6 Mar 2025 18:45:06 +0530
+	s=arc-20240116; t=1741266948; c=relaxed/simple;
+	bh=iCLwruORYDxCtsWv+hcP88C3gvbW1fbzcoS5L/5ij9g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LN5UJH8eyYkTbVhrsbo2acwse7REdZ1aqTVx48eeSZVoX9d7bRMBKCEG2uWVAhp3Ll58pDR9+HYoJTmsHlxpk6MX1UYjG4zp48V+fgU+9Sap1p049Z12hVcvDszPsrRZnjS3knafX/08MHVjMxkSyut0vFC99L+syZ0SSzgIM6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LDGW3yh7; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-aaf900cc7fbso132392466b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 05:15:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741266944; x=1741871744; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=odFKhUpOD0oBGtCw0Lzrsic1VmySccICXYvC2207ePM=;
+        b=LDGW3yh7Szy45/wsV/IUGCy955wA2YdwhlkObqZXBdaFySMt+6CxeTpxiKstDcZCZI
+         AY3D+v9gSjK9h80eTPYUtwL9wLJUKC9/LFX0w/I6Zj7HO/1ia3R+Etrw4PCbBP0Bfm4c
+         +ymNGYklrLlgrqYXIaLJqwba2yFWTMaSfks0mUIDPLqgj/8t2nSt+Fr9bN01T0J5/3f6
+         g0dpGSF1Sc8BqUkmP2Fixw/mvwGixhdZmm7MJ9sQMGV/LITE3mCm5wBcTiJxMu3AsLUE
+         xu72cyYprwaDj5bAXMvh2QyzBEMEftvj3cWObJai4GBLchItmKjt2/2DMfUc5S/e6D2g
+         V1XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741266944; x=1741871744;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=odFKhUpOD0oBGtCw0Lzrsic1VmySccICXYvC2207ePM=;
+        b=kC6NmMPOy/qj/WcZCztuaKkBckr7twATUnUNRq6IHIPxKoiffRzmFKppcJUE8UnJAZ
+         QvYNUOCBduyJhU0dcVeT5U00kR1bD9gF0Qjic8RlGRblbB8/vApykgSPZM69e+AGNxDA
+         D0dSdpom/iiipBEGS/bD7vInCe1jclzdJRmsyf/T6iAHX7eg6q3xoO87wmo2o/Ur+NO7
+         8QpEchIdKt+Tp8rOGlElNQiQHdMDSNgYDDajgTPZOsg9gtpnJEBkyTUK0cwLLFwCS9ve
+         VIDVkDOqH+6elCS5gLQLgv9bF1jKmoOLXBeg0SkTuhrBlSmKrAeHsfgPdxGKefApr6t2
+         m8Vw==
+X-Forwarded-Encrypted: i=1; AJvYcCU6Vb0jvBgqu/Hg0D+XylsZ8E8uyKEOiqUsOseGTwaCFMaQdTdZXjMLUYALfK577bviaKcam3KssO4avqbz@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyt82sRsku52vf/ajymH7MOAdWj41Rs+Myk9r50MZBIl8rXAVdY
+	RYa9oLthhlOInlDXDMEpFK2OuXn2gJlYpK5TxYW3wht6z6EHxB9y0eFT3WdxiRVPbVTn0cc8Ws7
+	s
+X-Gm-Gg: ASbGncvnv+D9MqeLAyUn0BiMqmoG7kK4DVbeOuP/uuL6zSgIGWvGkreuW7ayWw1xkBj
+	Rt6RWK5zLeyXIKghvTuBQlbwvCIOWP4WI0UZrRQD/LQOxKyKdBxvhAXT6kjEC2yQVcebUTUFggt
+	28jUANBwWJspvWlQfRrstoxoNoPiVfmFWpH419jIxFUtAT3iP5r7S5sYUIpOK22iRmjoYrxk/1K
+	Atu4JbBVT7KcoFXWXumcjupob9i0GtOU/4mbCeO/eFlu5Ky4ACzhSJzUi+yMfFFtu3RV9Zv1eSu
+	yPpRBjU6UEMsSp2RnQ8O9VnBNSmo6TNbcFU7Jz3CqMqUONOcMLfc24LMGvGa+Ts=
+X-Google-Smtp-Source: AGHT+IHMPmbTge6zDjHa6859H1+k4sdDZ/gMAiX6FUPawQ8PGqqQPLxpyvCVwbjTBKNQwMK3CnzSHA==
+X-Received: by 2002:a17:907:72d6:b0:ac1:daba:c6c with SMTP id a640c23a62f3a-ac20d8bf12dmr589079966b.24.1741266944582;
+        Thu, 06 Mar 2025 05:15:44 -0800 (PST)
+Received: from [192.168.68.113] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ac2394fd578sm94632366b.81.2025.03.06.05.15.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Mar 2025 05:15:44 -0800 (PST)
+Message-ID: <9b4fd423-a463-4d50-a597-dbda532b6b61@linaro.org>
+Date: Thu, 6 Mar 2025 13:15:43 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 5/7] media: platform: qcom/iris: rename iris_vpu3 to
- iris_vpu3x
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/6] ASoC: q6apm: fix under runs and fragment sizes
+To: Caleb Connolly <caleb.connolly@linaro.org>, broonie@kernel.org
+Cc: perex@perex.cz, tiwai@suse.com, krzysztof.kozlowski@linaro.org,
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org,
+ johan+linaro@kernel.org
+References: <20250304105723.10579-1-srinivas.kandagatla@linaro.org>
+ <ea047098-2baf-456a-a57f-b698c0ce1b6e@linaro.org>
 Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250305-topic-sm8x50-iris-v10-v2-0-bd65a3fc099e@linaro.org>
- <20250305-topic-sm8x50-iris-v10-v2-5-bd65a3fc099e@linaro.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20250305-topic-sm8x50-iris-v10-v2-5-bd65a3fc099e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xaLxHz1dNr3lIMum4P1EJWOaxptfRYQY
-X-Proofpoint-GUID: xaLxHz1dNr3lIMum4P1EJWOaxptfRYQY
-X-Authority-Analysis: v=2.4 cv=bNLsIO+Z c=1 sm=1 tr=0 ts=67c99fe2 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=EFsFfAAxFMx2BpdI774A:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-06_05,2025-03-06_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=964
- suspectscore=0 spamscore=0 mlxscore=0 phishscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503060100
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <ea047098-2baf-456a-a57f-b698c0ce1b6e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
 
-On 3/6/2025 12:35 AM, Neil Armstrong wrote:
-> The vpu33 HW is very close to vpu3, and shares most of the
-> operations, so rename file to vpu3x since we'll handle all vpu3
-> variants in it.
+On 05/03/2025 22:17, Caleb Connolly wrote:
+> Hi Srini,
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/media/platform/qcom/iris/Makefile                      | 2 +-
->  drivers/media/platform/qcom/iris/{iris_vpu3.c => iris_vpu3x.c} | 0
->  2 files changed, 1 insertion(+), 1 deletion(-)
+> On 3/4/25 10:57, srinivas.kandagatla@linaro.org wrote:
+>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>
+>> On Qualcomm Audioreach setup, some of the audio artifacts are seen in
+>> both recording and playback. These patches fix issues by
+>> 1. Adjusting the fragment size that dsp can service.
+>> 2. schedule available playback buffers in time for dsp to not hit 
+>> under runs
+>> 3. remove some of the manual calculations done to get hardware pointer.
+>>
+>> With these patches, am able to see Audio quality improvements.
+>>
+>> Any testing would be appreciated.
 > 
-> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
-> index 35390534534e93f4617c1036a05ca0921567ba1d..473aaf655448180ade917e642289677fc1277f99 100644
-> --- a/drivers/media/platform/qcom/iris/Makefile
-> +++ b/drivers/media/platform/qcom/iris/Makefile
-> @@ -20,7 +20,7 @@ qcom-iris-objs += \
->               iris_vb2.o \
->               iris_vdec.o \
->               iris_vpu2.o \
-> -             iris_vpu3.o \
-> +             iris_vpu3x.o \
->               iris_vpu_buffer.o \
->               iris_vpu_common.o \
->  
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> similarity index 100%
-> rename from drivers/media/platform/qcom/iris/iris_vpu3.c
-> rename to drivers/media/platform/qcom/iris/iris_vpu3x.c
+> This totally breaks audio on SDM845, and often results in a hard-crash 
+> to crashdump mode on my OnePlus 6.
+
+Its not possible.. as SDM845 is Elite DSP architecture, all of these 
+patches changes are very specific to Audioreach DSP architecture.
+
+Could you please share the crash logs if you have any. It highly likely 
+that something else is triggering the hard-crash that you reported.
+
+thanks,
+Srini
 > 
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Unfortunately I can't get UART logs right now. But I imagine this is 
+> reproducible on RB3.
+> 
+> Kind regards,
+>>
+>> thanks,
+>> Srini
+>>
+>> Changes since v2:
+>>     - dropped patch which is causing regression with pluseaudio.
+>>     - setup period sizes only for capture path
+>>     - fix underruns/overruns in dsp pipelines.
+>>     - add fixes tag
+>>     - add patch to fix buffer alignment
+>>
+>> Changes since v1:
+>>     - added new patches to fix the fragment size, pointer
+>>       calculations
+>>     - updated to schedule only available buffers.
+>>
+>> Srinivas Kandagatla (6):
+>>    ASoC: q6apm-dai: schedule all available frames to avoid dsp under-runs
+>>    ASoC: q6apm: add q6apm_get_hw_pointer helper
+>>    ASoC: q6apm-dai: make use of q6apm_get_hw_pointer
+>>    ASoC: qdsp6: q6apm-dai: set correct period and buffer alignment.
+>>    ASoC: qdsp6: q6apm-dai: fix capture pipeline overruns.
+>>    ASoC: qdsp6: q6apm-dai: fix playback dsp pipeline underruns
+>>
+>>   sound/soc/qcom/qdsp6/q6apm-dai.c | 63 +++++++++++++++++---------------
+>>   sound/soc/qcom/qdsp6/q6apm.c     | 18 ++++++++-
+>>   sound/soc/qcom/qdsp6/q6apm.h     |  3 ++
+>>   3 files changed, 53 insertions(+), 31 deletions(-)
+>>
+> 
 
