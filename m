@@ -1,235 +1,323 @@
-Return-Path: <linux-arm-msm+bounces-50448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A96DBA54413
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 08:56:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12954A5447B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 09:18:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 108D23A5A1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 07:55:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C975163525
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 08:18:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAFB11EDA13;
-	Thu,  6 Mar 2025 07:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7E361C8625;
+	Thu,  6 Mar 2025 08:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j5MWJKJp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VmZbOQpa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFA31DD889;
-	Thu,  6 Mar 2025 07:55:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13471A238D;
+	Thu,  6 Mar 2025 08:17:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741247711; cv=none; b=rQo6F045Ex2QrqH3Ba0zkYNfXC6MwwVcc9ALYhPwPPAHfP/L2f6j8y+HWi6/QLrzRGkbKedwr1MuP08xVGYPMdXKpcfZ5hcsXdDqawIlb30eK3S1VpFo/hFj+4rQfk1LKRn7Qo5Tz2fFK7uGw0O7wKHe/YYM7QTD2P/EYSXNbbI=
+	t=1741249079; cv=none; b=LChvnv5SmpExIX0E0uXGN7YSk9e8tYFUqZW/XqyN6z0f853Z7z6YG0RSzPw06QrBBuVpBjdtlpjAfKfjXaDjCJQ7xoOgvqQqRkygRbepWtofu6TeV8ZFV1cVtQeNcEFaGopRI5j+THlFOo3b93Z1mBH0RfKBN0KLMst1FMIYu/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741247711; c=relaxed/simple;
-	bh=A0ylyEZSt4tfTskDEXOaB+s6R9eX48Oemn4l6IgDSD4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P60UzuRRxsU5Z79YeZ80PcIDe+lB2u5bro2axk1wGzwAtn7AHD4UVudveuSMnsv+ybtKn04lDvx1K0JqiFLOWt0hKNJ0XljV/hD6J1LJ1foDj+zIr4704gFeVD1O/xRBtRfJDiDyfsgO/L6b4xNWQpAxLMMP7s0gMZHy8VeETEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j5MWJKJp; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741247710; x=1772783710;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=A0ylyEZSt4tfTskDEXOaB+s6R9eX48Oemn4l6IgDSD4=;
-  b=j5MWJKJpOt4LTBGHNg0mqRV73KWK8dRJczy1BhdgUPJEeK8rGxMqC8Mz
-   C+3HHD/Di2CrYN6mxRpOCW+MXBdMngbJX1LfOE2eeCgbhfxDR2MAM8aDY
-   bLnOpEb/T81iJ7mhcL+MEMEfZotuxN4dw67BSCpl9UbkXmY105cu7vsk6
-   PaWhYAZQmv8p3cL91tVgvBiq+BhPRfXgJmSbBiunNAzu6rvJDJkNwrz5A
-   sr2L5KzUzWUfJpWaqLvXB3nxCkQcCbqwLcgYAYz5/auNt3MVbCQjzAHHa
-   07SKsACEs4l71ZEFXDjoOLQsNGpoatsNhPwTaXC+brrtuQ/8U4kT/Gbqw
-   Q==;
-X-CSE-ConnectionGUID: TbR+kV/UTEuVQ2gDjIY8ZQ==
-X-CSE-MsgGUID: 0l9j1kDyQO+QOUMVUCiH6g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="64691545"
-X-IronPort-AV: E=Sophos;i="6.14,225,1736841600"; 
-   d="scan'208";a="64691545"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2025 23:55:08 -0800
-X-CSE-ConnectionGUID: VDtXCk1RQbCJchYy/0U69w==
-X-CSE-MsgGUID: zt4KIOt6Tri4+kavlfbkMQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="156171827"
-Received: from lkp-server02.sh.intel.com (HELO 76cde6cc1f07) ([10.239.97.151])
-  by orviesa001.jf.intel.com with ESMTP; 05 Mar 2025 23:55:04 -0800
-Received: from kbuild by 76cde6cc1f07 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tq63q-000Mj8-1I;
-	Thu, 06 Mar 2025 07:54:38 +0000
-Date: Thu, 6 Mar 2025 15:53:38 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sricharan R <quic_srichara@quicinc.com>, jassisinghbrar@gmail.com,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, andersson@kernel.org,
-	konradybcio@kernel.org, manivannan.sadhasivam@linaro.org,
-	dmitry.baryshkov@linaro.org
-Cc: oe-kbuild-all@lists.linux.dev
-Subject: Re: [PATCH V3 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox
- driver
-Message-ID: <202503061517.ZTyZF7qx-lkp@intel.com>
-References: <20250228045356.3527662-3-quic_srichara@quicinc.com>
+	s=arc-20240116; t=1741249079; c=relaxed/simple;
+	bh=lXk0XH2YJ1Cojq/25A0cKMl1JwYrbN7gvvwsFr9LoWw=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XXHyyhanYoG+LFdXQJyE4wxzQMJhRwW0CibK5hALJGvkzcTSZS5cv2du32pVMgE+CvDQjqbkc8k4VQn9bzwualYZOVe2wvlEzPNk1/6RDx3ctSSKjQ3mLkcyUYr+/KGPhFi0UM1AnUDsgQeUHX6TopjzKQ7UbnUS09iFyXD341U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VmZbOQpa; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 525LGbZe020153;
+	Thu, 6 Mar 2025 08:17:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	pkIsVhDztLqIp+rD/dHwzy74oOWmICKQF6M4GRUOyxc=; b=VmZbOQpa0BZ74fF9
+	i0vWrKBkMTF12qcTn8JyMmSOvsN5BeUupe2jPlFrLnCwLLRhADqw5PjKscTXyXzC
+	DEiIp2+t1UtL3NgJ/0Xfudehe3MthzbLjxxIJrD8EDNsYI/eyEvp0cVuZVRGjkwB
+	7rKz+vEQ8uYVL9oSTdmljWO7UsXe9cGBFyZbJLabhhmRCVKKLH71Dd9C6W4D4viw
+	Pj2mtAtDSS7+zfLYbQHorSfArJ0rSzHOP6Lp0Gj4HE6XIhYLWI2OlWSzK+PkeaD6
+	g7snb2nv5K9dJ4nQZc0lOPrDD8Rf69b4IN9189RHe8aX/rP/+KTfIFf4azshieDY
+	kkYldA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 456xcuhe8y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Mar 2025 08:17:47 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5268HYsd027881
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Mar 2025 08:17:34 GMT
+Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 6 Mar 2025 00:17:26 -0800
+Date: Thu, 6 Mar 2025 13:47:15 +0530
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
+ Ride-r3
+Message-ID: <Z8laCxtHOdNm3rRu@hu-wasimn-hyd.qualcomm.com>
+References: <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
+ <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
+ <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
+ <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
+ <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
+ <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
+ <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
+ <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
+ <Z8AWHiVu05s0RJws@hu-wasimn-hyd.qualcomm.com>
+ <a8991221-88b2-4a39-a51b-587c4cdeebe4@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <20250228045356.3527662-3-quic_srichara@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a8991221-88b2-4a39-a51b-587c4cdeebe4@kernel.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7kEkqM_imddBGCFbBu-oHWq80mxMPMYf
+X-Proofpoint-GUID: 7kEkqM_imddBGCFbBu-oHWq80mxMPMYf
+X-Authority-Analysis: v=2.4 cv=eeXHf6EH c=1 sm=1 tr=0 ts=67c95a2b cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=5B4Ghw-gXjSuLfDcNkQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-06_03,2025-03-06_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=886 mlxscore=0
+ impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0 adultscore=0
+ priorityscore=1501 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503060062
 
-Hi Sricharan,
+On Mon, Mar 03, 2025 at 08:46:55AM +0100, Krzysztof Kozlowski wrote:
+> On 27/02/2025 08:37, Wasim Nazir wrote:
+> > On Wed, Jan 15, 2025 at 09:35:34AM +0100, Krzysztof Kozlowski wrote:
+> >> On 15/01/2025 06:48, Wasim Nazir wrote:
+> >>>> The the SoC, I am asking about the board. Why each of them is for
+> >>>> example r3?
+> >>>>
+> >>>> So this is not sufficient explanation, nothing about the board, and
+> >>>> again just look Renesas and NXP.
+> >>>>
+> >>>
+> >>> Hi Krzysztof,
+> >>>
+> >>> sa8775p(AUTO), qcs9100(IOT), qcs9075(IOT) are different SoCs based on
+> >>> safety capabilities and memory map, serving different purpose.
+> >>> Ride & Ride-r3 are different boards based on ethernet capabilities and
+> >>> are compatible with all the SoCs mentioned.
+> >>
+> > 
+> > Hi Krzysztof,
+> > 
+> >> Compatible? What does it mean for a board?
+> >>
+> > 
+> > Ride board is based on multiple daughter cards (SOC-card, display,
+> > camera, ethernet, pcie, sensor, etc.).
+> > 
+> > The SOC is not directly soldered to Ride board, instead SOC is soldered
+> > on SIP (System in Package) card which can be mounted on SOC-daughter card of
+> > Ride board.
+> > 	- SoC => SIP-card => SOC-daughter-card (Ride)
+> 
+> 
+> So basically pretty like other designs using SoM.
+> 
+> > 
+> > Together with SIP cards and other daughter cards we are creating different
+> > <soc>-Ride Variants with differences in memory map & thermal mitigations.
+> > 
+> > The SIP card consists of SOC, PMIC & DDR and it is pin compatible to the
+> > SOC daughter card of <soc>-Ride board. Only SOC is changing accross SIP
+> > cards, except an additional third party SIL-PMIC for SAIL, which is not
+> > present in QCS9075 Ride.
+> 
+> Just like every SoM
+> 
+> > 
+> > Other daughter cards remains same for <soc>-Ride variants, except
+> > ethernet card which is different for <soc>-Ride rev3 variants.
+> > 
+> > So the Ride board (combination of daughter cards) is same across the SIP,
+> > while SOC on SIP card is changing which can be sa8775p, qcs9100 or qcs9075.
+> > 
+> >> Third time: did you look how other vendors do it?
+> >>
+> > 
+> > Yes, we have reviewed other vendors. However, please feel free to share
+> > any specific reference you would like us to follow.
+> > 
+> > Here are few reference files we found from other vendors where similar
+> > tasks are performed which includes code refactoring and HW modularity:
+> >  - Freescale: fsl-ls208xa.dtsi, fsl-ls2088a.dtsi, fsl-ls2081a-rdb.dts
+> 
+> That's an unexpected choice - I would rather look at dozen of SoMs for
+> iMX platforms.
+> 
+> >  - Renesas: white-hawk-common.dtsi, r8a779g0-white-hawk.dts
+> >  - Rockchip: px30-engicam-common.dtsi, px30-engicam-ctouch2.dtsi,
+> >    px30-engicam-px30-core-ctouch2.dts
+> > 
+> > In our case along with describing the HW, code refactoring is also done
+> > which might be causing confusion, but we are ready for any inputs for
+> > correction.
+> 
+> I don't understand why this was not properly described since beginning.
+> You had the hardware in your hands and went with incomplete or even
+> incorrect hardware description.
+> 
+> > 
+> > Putting this pictorial diagram for updated DT structure depicting our HW.
+> >  - qcs9xxx-module.dtsi specifying QCS9xxx based SIP card/module having
+> >    SoC, PMICs, Memory-map updates.
+> >  - qcom-ride-common.dtsi specifying ride daughter boards, here we are
+> >    doing code refactoring also as this is common for all ride boards.
+> >  - qcom-ride-ethernet-aqr115c.dtso specifying ethernet overlay board which
+> >    uses 2.5G phy and can be overlayed to ride boards to get ride-r3.
+> >    By default ride uses 1G phy.
+> >  - qcs9075-iq-9075-evk.dts is the new name for RB8 as per new product
+> >    name. We will be changing this in next patch series.
+> > 
+> > +-----------------------------------------------------------------------------------------------------------------------------------------------+
+> > |                                                                                                                                               |
+> > |                                                          sa8775p.dtsi                                                                         |
+> > |                                                              |                                                                                |
+> > |                                    +-------------------------+-----------------------+                                                        |
+> > |                                    |                         |                       |                                                        |
+> > |                                    v                         |                       v                                                        |
+> > |                             qcs9075-module.dtsi              |                qcs9100-module.dtsi                                             |
+> 
+> So this is the SoM?
 
-kernel test robot noticed the following build warnings:
+Yes this is SoM.
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on linus/master v6.14-rc5 next-20250305]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> > |                                    |                         |                       |                                                        |
+> > |                                    v                         v                       v                                                        |
+> > |                                  (IOT)                    (AUTO)                   (IOT)                                                      |
+> > |                                    |                         |                       |                                                        |
+> > |             +----------------------+                         |                       |                                                        |
+> > |             |                      |                         |                       |                                                        |
+> > |             |                      | +-------------------------+-----------------------+-------------------< qcom-ride-common.dtsi            |
+> 
+> Which piece of actual hardware is represented in qcom-ride-common?
+> 
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sricharan-R/dt-bindings-mailbox-Document-qcom-tmel-qmp/20250228-125707
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20250228045356.3527662-3-quic_srichara%40quicinc.com
-patch subject: [PATCH V3 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox driver
-config: sh-allyesconfig (https://download.01.org/0day-ci/archive/20250306/202503061517.ZTyZF7qx-lkp@intel.com/config)
-compiler: sh4-linux-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250306/202503061517.ZTyZF7qx-lkp@intel.com/reproduce)
+All daughter cards like SOC-card, display, camera, ethernet, pcie, sensor, etc.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503061517.ZTyZF7qx-lkp@intel.com/
+> > |             |                      | |                       | |                     | |                                                      |
+> > |             v                      v v                       v v                     v v                                                      |
+> > |  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
+> > |                                    |                         |                       |                                                        |
+> > |                                    | +-------------------------+-----------------------+-------------------< qcom-ride-ethernet-aqr115c.dtso  |
+> > |                                    | |                       | |                     | |                                                      |
+> > |                                    v v                       v v                     v v                                                      |
+> > |                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
+> 
+> I think I gave already few times that answer: No. You cannot reference
+> from a module.c another .c file. You cannot reference DTS from DTS.
+> 
+> Strictly speaking you can, of course, but you must not. That's not how
+> source code is done to be manageable and readable.
 
-All warnings (new ones prefixed by >>):
+Ah the arrow is leading to confusion.
 
-   In file included from include/linux/device.h:15,
-                    from include/linux/dma-mapping.h:5,
-                    from drivers/mailbox/qcom-tmel-qmp.c:6:
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'qmp_send_data':
->> drivers/mailbox/qcom-tmel-qmp.c:196:36: warning: format '%ld' expects argument of type 'long int', but argument 3 has type 'size_t' {aka 'unsigned int'} [-Wformat=]
-     196 |                 dev_err(mdev->dev, "Unsupported packet size %ld\n", pkt->iov_len);
-         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:110:30: note: in definition of macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ^~~
-   include/linux/dev_printk.h:154:56: note: in expansion of macro 'dev_fmt'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                        ^~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:196:17: note: in expansion of macro 'dev_err'
-     196 |                 dev_err(mdev->dev, "Unsupported packet size %ld\n", pkt->iov_len);
-         |                 ^~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:196:63: note: format string is defined here
-     196 |                 dev_err(mdev->dev, "Unsupported packet size %ld\n", pkt->iov_len);
-         |                                                             ~~^
-         |                                                               |
-         |                                                               long int
-         |                                                             %d
-   In file included from drivers/mailbox/qcom-tmel-qmp.c:10:
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'tmel_prepare_msg':
-   include/linux/mailbox/tmelcom-qmp.h:16:41: error: implicit declaration of function 'FIELD_GET' [-Wimplicit-function-declaration]
-      16 | #define TMEL_MSG_UID_MSG_TYPE(v)        FIELD_GET(GENMASK(15, 8), v)
-         |                                         ^~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:406:29: note: in expansion of macro 'TMEL_MSG_UID_MSG_TYPE'
-     406 |         msg_hdr->msg_type = TMEL_MSG_UID_MSG_TYPE(msg_uid);
-         |                             ^~~~~~~~~~~~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'tmel_process_request':
-   drivers/mailbox/qcom-tmel-qmp.c:501:36: warning: format '%ld' expects argument of type 'long int', but argument 3 has type 'size_t' {aka 'unsigned int'} [-Wformat=]
-     501 |                 dev_err(tdev->dev, "Invalid pkt.size received size: %ld, expected: %zu\n",
-         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:110:30: note: in definition of macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ^~~
-   include/linux/dev_printk.h:154:56: note: in expansion of macro 'dev_fmt'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                        ^~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:501:17: note: in expansion of macro 'dev_err'
-     501 |                 dev_err(tdev->dev, "Invalid pkt.size received size: %ld, expected: %zu\n",
-         |                 ^~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:501:71: note: format string is defined here
-     501 |                 dev_err(tdev->dev, "Invalid pkt.size received size: %ld, expected: %zu\n",
-         |                                                                     ~~^
-         |                                                                       |
-         |                                                                       long int
-         |                                                                     %d
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'tmel_secboot_sec_auth':
-   include/linux/mailbox/tmelcom-qmp.h:13:10: error: implicit declaration of function 'FIELD_PREP_CONST' [-Wimplicit-function-declaration]
-      13 |         (FIELD_PREP_CONST((0xff << 8), msg_type) | FIELD_PREP_CONST(0xff, action_id))
-         |          ^~~~~~~~~~~~~~~~
-   include/linux/mailbox/tmelcom-qmp.h:55:45: note: in expansion of macro 'TMEL_MSG_UID_CREATE'
-      55 | #define TMEL_MSG_UID_SECBOOT_SEC_AUTH       TMEL_MSG_UID_CREATE(TMEL_MSG_SECBOOT,\
-         |                                             ^~~~~~~~~~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:541:42: note: in expansion of macro 'TMEL_MSG_UID_SECBOOT_SEC_AUTH'
-     541 |         ret = tmel_process_request(tdev, TMEL_MSG_UID_SECBOOT_SEC_AUTH, msg,
-         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'tmel_qmp_send_work':
-   drivers/mailbox/qcom-tmel-qmp.c:595:9: error: case label does not reduce to an integer constant
-     595 |         case TMEL_MSG_UID_SECBOOT_SEC_AUTH:
-         |         ^~~~
-   drivers/mailbox/qcom-tmel-qmp.c:598:9: error: case label does not reduce to an integer constant
-     598 |         case TMEL_MSG_UID_SECBOOT_SS_TEAR_DOWN:
-         |         ^~~~
+Actually we are not including dts here instead *.dtso file will be
+overlayed to *-ride.dts to generate *-ride-r3.dts.
 
+Below is the correct arrow sequence.
 
-vim +196 drivers/mailbox/qcom-tmel-qmp.c
+|  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
+|                                    |                         |                       |                                                        |
+|                                    +-------------------------+-----------------------+---------------------< qcom-ride-ethernet-aqr115c.dtso  |
+|                                    |                         |                       |                                                        |
+|                                    v                         v                       v                                                        |
+|                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
 
-   177	
-   178	/**
-   179	 * qmp_send_data() - Copy the data to the channel's mailbox and notify
-   180	 *		     remote subsystem of new data. This function will
-   181	 *		     return an error if the previous message sent has
-   182	 *		     not been read. Cannot Sleep.
-   183	 * @mdev: qmp_device to send the data to.
-   184	 * @data: Data to be sent to remote processor, should be in the format of
-   185	 *	  a kvec.
-   186	 *
-   187	 * Return: 0 on success or standard Linux error code.
-   188	 */
-   189	static int qmp_send_data(struct qmp_device *mdev, void *data)
-   190	{
-   191		struct kvec *pkt = (struct kvec *)data;
-   192		void __iomem *addr;
-   193		unsigned long flags;
-   194	
-   195		if (pkt->iov_len > QMP_MAX_PKT_SIZE) {
- > 196			dev_err(mdev->dev, "Unsupported packet size %ld\n", pkt->iov_len);
-   197			return -EINVAL;
-   198		}
-   199	
-   200		if (atomic_read(&mdev->tx_sent))
-   201			return -EAGAIN;
-   202	
-   203		dev_dbg(mdev->dev, "%s: mcore 0x%x ucore 0x%x", __func__,
-   204			mdev->mcore.val, mdev->ucore.val);
-   205	
-   206		addr = mdev->mcore_desc + QMP_CTRL_DATA_SIZE;
-   207		memcpy_toio(addr, pkt->iov_base, pkt->iov_len);
-   208	
-   209		mdev->mcore.bits.frag_size = pkt->iov_len;
-   210		mdev->mcore.bits.rem_frag_count = 0;
-   211	
-   212		dev_dbg(mdev->dev, "Copied buffer to mbox, sz: %d",
-   213			mdev->mcore.bits.frag_size);
-   214	
-   215		atomic_set(&mdev->tx_sent, 1);
-   216	
-   217		spin_lock_irqsave(&mdev->tx_lock, flags);
-   218		mdev->mcore.bits.tx = !(mdev->mcore.bits.tx);
-   219		qmp_send_irq(mdev);
-   220		spin_unlock_irqrestore(&mdev->tx_lock, flags);
-   221	
-   222		return 0;
-   223	}
-   224	
+> 
+> > |                                                                                                                                               |
+> > +-----------------------------------------------------------------------------------------------------------------------------------------------+
+> > 
+> >>>
+> >>> With the combination of these 3 SoCs and 2 boards, we have 6 platforms,
+> >>> all of which we need.
+> >>> - sa8775p-ride.dts is auto grade Ride platform with safety feature.
+> >>> - qcs9100-ride.dts is IOT grade Ride platform with safety feature.
+> >>> - qcs9075-ride.dts is IOT grade Ride platform without safety feature.
+> >>>
+> >>> Since the Ride-r3 boards are essentially Ride boards with Ethernet
+> >>> modifications, we can convert the Ride-r3 DTS to overlays.
+> >> How one board can be with multiple SoCs? If it is soldered, it's close
+> >> to impossible - that's just not the same board. If it is not soldered,
+> >> why you are not explaining it? What is Ride board? What is there? What
+> >> can go there? How it can be used in other SoCs? Or for which SoCs? Is
+> >> there a datasheet available?
+> >>
+> > 
+> > As our SoC is based on SIP card and SIP card is compatible with Ride
+> > board, we could able to use same Ride board (which is combination of
+> > multiple daughter cards) with multiple SIP cards.
+> > These SIP cards can be of sa8775p, qcs9100 or qcs9075 SOC.
+> 
+> Describe properly the hardware - if you have a module or SIP if you
+> decide not to use industry-standard naming (but why...), then describe
+> it in DTSI.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+We refer to it as ‘module’ in our datasheet, so I use the same term
+here. Thanks for pointing it out; we can proceed with the SoM name.
+
+Below is the updated diagram:
++-----------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                               |
+|                                                          sa8775p.dtsi                                                                         |
+|                                                              |                                                                                |
+|                                    +-------------------------+-----------------------+                                                        |
+|                                    |                         |                       |                                                        |
+|                                    v                         |                       v                                                        |
+|                             qcs9075-som.dtsi                 |                qcs9100-som.dtsi                                                |
+|                                    |                         |                       |                                                        |
+|                                    v                         v                       v                                                        |
+|                                  (IOT)                    (AUTO)                   (IOT)                                                      |
+|                                    |                         |                       |                                                        |
+|             +----------------------+                         |                       |                                                        |
+|             |                      |                         |                       |                                                        |
+|             |                      | +-------------------------+-----------------------+-------------------< qcom-ride-common.dtsi            |
+|             |                      | |                       | |                     | |                                                      |
+|             v                      v v                       v v                     v v                                                      |
+|  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
+|                                    |                         |                       |                                                        |
+|                                    +-------------------------+-----------------------+---------------------< qcom-ride-ethernet-aqr115c.dtso  |
+|                                    |                         |                       |                                                        |
+|                                    v                         v                       v                                                        |
+|                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
+|                                                                                                                                               |
++-----------------------------------------------------------------------------------------------------------------------------------------------+
+
+> 
+> Best regards,
+> Krzysztof
+
+Thanks & regards,
+Wasim
 
