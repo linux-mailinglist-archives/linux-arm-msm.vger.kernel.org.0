@@ -1,48 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-50527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CCF0A54CD4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 15:03:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30D86A54ED5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 16:22:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 525743AF47E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 14:03:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 53A6A17497A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 15:22:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BA8913C682;
-	Thu,  6 Mar 2025 14:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C707158520;
+	Thu,  6 Mar 2025 15:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h8WkNDUU"
+	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="dxnQCWqB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4CF13C9B8;
-	Thu,  6 Mar 2025 14:03:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7096B1624C8;
+	Thu,  6 Mar 2025 15:22:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741269823; cv=none; b=AIvFpss/8ZpugIh8KXGTh06w3RAOJYwvuAXuDMXk9MNWDg3uyLowZ4BrytFkasLlisnqvcX5EFZ8T5piwQ32f6sto0Jgm3gaq7vgU4SkwSdkcr+PfhBDIetZd6iJUPYGOsiPFlrRdCf071AU5JMg3Fdk1J+n/x/iC/XkI6nAeuw=
+	t=1741274551; cv=none; b=WLUJVcwWSv2Pqujkwo6pT9/Wy+9cvOrKC7YQOUb+Uqd2uhA3aiKuYjKlOqeFA1AAa5YnsL8lEOgbNyYxmg/vC0xANrgPIP37FZuvuPluYJVgB/w+3+++G2JEwjwWZyCYVqKWxTyg6THqCdgHx2wX8EY2fcCh+ggrPFAglNkFU08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741269823; c=relaxed/simple;
-	bh=SUWfRHt3+o6PkKiiZQSPnjQs4j0CrDv+922ALxaOa+Q=;
+	s=arc-20240116; t=1741274551; c=relaxed/simple;
+	bh=SPwTqU1FQuydEUYFS8l2kMBpEKRE4wRRl01iyIDM5mQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qyv4hWqQ7vaf6CSZoQ6OpAU7itkx2Z7p9s0nPhmYNMpSJvpwHHNxLO248ufe4sTfM8TNFuixpPxPAoDj90Jx08ept3dsROhI/o6RoCbC8NaMsN+t9h7qj/tyb6Q5LO9Yq/YGqbjTmLlCBu5x7xFPM6tECkPk0g91o6sMKirT/kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h8WkNDUU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049DCC4CEE0;
-	Thu,  6 Mar 2025 14:03:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741269821;
-	bh=SUWfRHt3+o6PkKiiZQSPnjQs4j0CrDv+922ALxaOa+Q=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=h8WkNDUUARmoKHf+FRC3jkp3D5bno9PkLfB5haf2THOPT4+UrEcvp1PJ/xyfla4Xp
-	 xXthPKmuWiPB+6EsJoMDoZVBTMemlAD9ndqi7DtdPz3/lT0INXoTXPp2gJwUh4RTOc
-	 DBW5+wjtrr1K6eAdr6Bb3FzvwH/EOyRdjpAYzpmvOwj98kQyIScuwCJj2uRlLSy4r4
-	 Pg6rlpzT7iZPnz7c6a48qDxxA9nCFBVuD/8mb35qdJ9G/+ZmlUyAHWrX7CCy1nFYus
-	 0guFGnkIEM2r5VglE+/KszkjdsuB6PBDHJ+mbQCJ+NojJFSKVqDrpok8Z4V3E7/oHO
-	 BoRfWYCZG5NoQ==
-Message-ID: <aa837beb-ef4e-43ec-b8fa-54a21df1202c@kernel.org>
-Date: Thu, 6 Mar 2025 15:03:32 +0100
+	 In-Reply-To:Content-Type; b=RXMEqgY/TqulrY1NBthONqQzOV1dP06R4QaWF+fYvl6YqihC0qfRZQeWngzZyzwOYKcGmjwFf2uAlaSXU+7Isizc/bpUZhuGWsPIXYqhAzD0kzZgYQf76wJUstT5kOB2H6LqeKGEVeA2s1JsUWLi7Oq8zpj6aSC+4oLIbvm8sjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=dxnQCWqB; arc=none smtp.client-ip=157.90.84.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
+Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
+	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
+	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id C96782FC0048;
+	Thu,  6 Mar 2025 16:22:24 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
+	s=default; t=1741274545;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Xi3cMLXECUOiOsPb3EvB2cc73af22xJrE8sr9a/N9is=;
+	b=dxnQCWqBc2gkM3N72XgL9j3bdEvSKu1LBfLXf6gwU5d8BuJkqKDcvCitHzg1RDmoBzIjRl
+	9tYb1TpSblY6Op92xhbdPZZhbQf+oxlQADUHaVOBKSZwLx4WIFgtfGkEzUCWZZXvJ5wOot
+	Sfsf744jbPzHDLPph0s8fZCAWIwnk0E=
+Authentication-Results: mail.tuxedocomputers.com;
+	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=g.gottleuber@tuxedocomputers.com
+Message-ID: <58d6c774-2976-43ef-aa04-b339df4b6ff1@tuxedocomputers.com>
+Date: Thu, 6 Mar 2025 16:22:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,91 +58,147 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: dts: qcom: Add device tree for TUXEDO Elite 14
  Gen1
-To: Georg Gottleuber <g.gottleuber@tuxedocomputers.com>,
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
  Georg Gottleuber <ggo@tuxedocomputers.com>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio
- <konrad.dybcio@oss.qualcomm.com>, wse@tuxedocomputers.com,
- cs@tuxedocomputers.com
+ linux-kernel@vger.kernel.org, wse@tuxedocomputers.com, cs@tuxedocomputers.com
 References: <57589859-fec1-4875-9127-d1f99e40a827@tuxedocomputers.com>
- <75c17309-3072-4321-ab15-69d60190f2f7@kernel.org>
- <d98ad83e-6479-4453-bd1d-4f3703b0dad2@tuxedocomputers.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <5e72992c-170c-48b9-8df4-2caf31c4ae44@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <d98ad83e-6479-4453-bd1d-4f3703b0dad2@tuxedocomputers.com>
+From: Georg Gottleuber <g.gottleuber@tuxedocomputers.com>
+In-Reply-To: <5e72992c-170c-48b9-8df4-2caf31c4ae44@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 06/03/2025 14:56, Georg Gottleuber wrote:
-> 
->> ...
+
+
+Am 06.03.25 um 13:50 schrieb Konrad Dybcio:
+> On 6.03.2025 1:25 PM, Georg Gottleuber wrote:
+>> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
+>> Elite SoC (X1E78100).
 >>
->>> +
->>> +       eusb3_repeater: redriver@47 {
->>> +               compatible = "nxp,ptn3222";
->>> +               reg = <0x47>;
->>> +               #phy-cells = <0>;
->>> +
->>> +               vdd1v8-supply = <&vreg_l4b_1p8>;
->>> +               vdd3v3-supply = <&vreg_l13b_3p0>;
->>> +
->>> +               reset-gpios = <&tlmm 124 GPIO_ACTIVE_LOW>;
->>> +
->>> +               pinctrl-0 = <&eusb3_reset_n>;
->>> +               pinctrl-names = "default";
->>
->> No graph? Isn't it needed?
+>> Working:
+>> * Touchpad
+>> * Keyboard
+>> * eDP (no brightness control yet)
 > 
-> What do you mean by ‘no graph’?
+> in case your panel as a PWM backlight, you will need to set the PWM
+> output pin function explicitly, see x1e80100-microsoft-romulus.dtsi
 
-ports connecting this within USB graph between controller and connector.
-Just like other devices with redriver.
+Thank you, will check this.
 
-Best regards,
-Krzysztof
+>> * NVMe
+>> * USB Type-C port
+>> * WiFi (WiFi 7 untested)
+>> * GPU (software rendering)
+>>
+>> Not working:
+>> * GPU (WIP: firmware loading but output is jerky)
+> 
+> Please tell us more
+
+Oh, this is already an older thing: with kernel 6.10 loading
+gen70500_gmu.bin and gen70500_sqe.fw leading to partly slow and
+stuttering video output. Sometimes it rendered black edges / borders to
+KDE menus. Surely I did something wrong.
+
+I have just tried to reproduce the same setup, but I couldn't get it to
+work just now. If you are interested, I can try it again with a
+new/current kernel. (which is preferred? linux? linux-next?)
+
+>> * USB Type-A (WIP)
+>> * Suspend with substantial energy saving
+>> * Audio, Speakers, Microphones
+>> * Camera
+>> * Fingerprint Reader
+> 
+> If it's connected to the multiport controller, you should be able to
+> just enable it, like on the T14s, similarly to the Type-A port
+
+sounds promising
+
+> [...]
+> 
+>> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>  .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 798 ++++++++++++++++++
+>>  2 files changed, 799 insertions(+)
+>>  create mode 100644
+>> arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 140b0b2abfb5..f0a9d677d957 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -298,3 +298,4 @@ dtb-$(CONFIG_ARCH_QCOM)     += x1e80100-lenovo-yoga-slim7x.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-microsoft-romulus13.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-microsoft-romulus15.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-qcp.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-tuxedo-elite-14-gen1.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+>> new file mode 100644
+>> index 000000000000..86bdec4a2dd8
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+>> @@ -0,0 +1,798 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + * Copyright (c) 2025 TUXEDO Computers GmbH
+>> + */
+>> +
+>> +/dts-v1/;
+>> +
+>> +#include <dt-bindings/gpio/gpio.h>
+>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>> +
+>> +#include "x1e80100.dtsi"
+>> +#include "x1e80100-pmics.dtsi"
+>> +
+>> +/ {
+>> +       model = "TUXEDO Elite 14 Gen1";
+> 
+> Please use 8-wide tabs instead of spaces
+
+Sorry.
+
+>> +       compatible = "tuxedo,elite14gen1", "qcom,x1e80100";
+> 
+> You'll need to define a new vendor in:
+> 
+> Documentation/devicetree/bindings/vendor-prefixes.yaml
+> 
+> [...]
+> 
+>> +       vreg_edp_3p3: regulator-edp-3p3 {
+>> +               compatible = "regulator-fixed";
+>> +
+>> +               regulator-name = "VREG_EDP_3P3";
+>> +               regulator-min-microvolt = <3300000>;
+>> +               regulator-max-microvolt = <3300000>;
+>> +
+>> +               // EDP_VDD_EN_GPIO54
+> 
+> C-style (/* foo */) comments are preferred, but these ones can be
+> removed, as they repeat what the code says
+
+I have overlooked this. Sorry.
+
+> [...]
+> 
+>> +&gpu {
+>> +       status = "okay";
+>> +
+>> +       zap-shader {
+>> +               firmware-name = "qcom/a740_zap.mbn";
+> 
+> Are the laptop's OEM key/security fuses not blown?
+
+I'm not sure. How can I verify this?
+
+Regards,
+Georg
 
