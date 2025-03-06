@@ -1,279 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-50575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9744FA55A22
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 23:49:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D26CEA55AED
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 00:33:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0C0F176D5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 22:49:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 113F3188D6DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 23:33:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5526E27C162;
-	Thu,  6 Mar 2025 22:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82A4B27CB33;
+	Thu,  6 Mar 2025 23:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MtriL+bc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A9FAyKy8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBA920408A;
-	Thu,  6 Mar 2025 22:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537E613D897;
+	Thu,  6 Mar 2025 23:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741301373; cv=none; b=HOQufoBu2eBC2QmeQq+n7lzwxQlFX1FG96e7lLG1VQh1PpT9giJa9E2s7yQbuHuDZNWTdGqw9AE2bp3X5MAJF6P5k973iW3SQH93Uq/tMQ5ncObRMKkB34CFy2kFm905imKspaNdf+4ivqvYJnhYY2NRekuAUnfxBSuylZU6Qhs=
+	t=1741304016; cv=none; b=IHrXtG/92mShk3HgyHAOaKcPuhCeU/NhNWXe2r3BJwM06v6ktGxfEMT5BiJZ68TZ4Fe66qiggYIx2egICdWGRtAJfnNqvoSTR6+0wH98VO8ajpbbq5XATtPHmMKxbyR9t+qXXb19stoxI7EQyAhiTNq489GiBkA/UBEIyeAoZPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741301373; c=relaxed/simple;
-	bh=F31jplX1dz5Voq7mOZmyNa0dNhzQcivqczVequ51Eg8=;
+	s=arc-20240116; t=1741304016; c=relaxed/simple;
+	bh=kCdbLq4MKXLwDRdTHw76PigGCWnhj7eKDSPYYqRZntY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FrZWcAZMwRfYGzJz5Z7vyQ8Pkn+48KI5itqVcS68teMcQVPfhs2y1vbpZmdAzJTUxxt7ofDbpwSRHcvB2tGrIfvJXLwCWhWAS0HPPl4rdV4OacMs5hI2na0ITh4CiIw0yHjBGLgBVOOfvsGI6diqT1u61NvlObdrFkTragoNelM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MtriL+bc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD56C4CEE0;
-	Thu,  6 Mar 2025 22:49:31 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=EgeOv4AnfZVU4ARZReYuu4S0G+z7luwKfTVezun+HDHHeGSH1vYNQ+wOES4U1HJuSlSaZAWUKCr3WCvhg8oRiLtkKg29DBEqENoyv5lJitvoN6+oLX6Vkq/MXYlJaHlDjh5CWLC/3If1jfZJosyLp67Iag6hHZApr5yYmQNxMUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A9FAyKy8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E9EFC4CEE5;
+	Thu,  6 Mar 2025 23:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741301372;
-	bh=F31jplX1dz5Voq7mOZmyNa0dNhzQcivqczVequ51Eg8=;
+	s=k20201202; t=1741304015;
+	bh=kCdbLq4MKXLwDRdTHw76PigGCWnhj7eKDSPYYqRZntY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MtriL+bcXgMkjAKnsj5DX9W3VXjSneBENt4CGeJWmwLCb6sZK3wpxaC+h4ypauugj
-	 xaNHMUqLgMke9r1+yIhAxWKPSCsDAmaAqutdhCEyN1hoiz52yaL1HEwmbIF8XSSezm
-	 qzY6pIl0Jdz0TEi4y4KDHQun5alpoybDNJtnEjzRJu0WZqMwDPinoCV94qXasGjV2C
-	 AUPtlshYg6wv5g7K74LOFWL9IE4rulKzcRpyubZr0TttWlxufXzYEI/SWll1oCyDLw
-	 Ho9hL6f4q6Q++oqWR+RloGf6M97przXu7XqOyW6fehfKivPDmrqE0WrFvLQEjJrTlD
-	 aJa+duUYSISbQ==
-Date: Thu, 6 Mar 2025 16:49:28 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Felipe Balbi <balbi@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	Saravana Kannan <saravanak@google.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.li@nxp.com>, 
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>, 
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 5/7] usb: dwc3: qcom: Snapshot driver for backwards
- compatibilty
-Message-ID: <o4n7p5b5zlgstmkn5hbvdqfe4tkhwidgvtqmcfwtr5yhrvix24@an7xdurug6mm>
-References: <20250226-dwc3-refactor-v4-0-4415e7111e49@oss.qualcomm.com>
- <20250226-dwc3-refactor-v4-5-4415e7111e49@oss.qualcomm.com>
- <20250304000527.ybxfdjx5xzypcals@synopsys.com>
- <20250304003913.bsn5sucnofq6d6jo@synopsys.com>
- <zr6qdi3gtjaj3gyalpspzej33q356bs5ynchcmtr73765gjel5@c5ijv7czkhqt>
- <20250305003148.mahxupphkaiizpbh@synopsys.com>
+	b=A9FAyKy8ohb1PeLj1EqmWd1zPedYvgckso3d73bNbfFKOExw3imTL95t3pTSiWZ9O
+	 Gw6RsY01zRa5tsmxukA1MTzSs3B4bFP58eyeqKRoT1Y8sfLRhxQaUpM83sZhBuVEzQ
+	 2QogVagOJ+ysSDFkXqeRtKLc7wArWKBU2z7tPbV+4AwIgXmhDl1neVPVO2YnyQg6ky
+	 VlqnQXopv9kiQQR5XVzarpjkkx36xWsLAO5kDarYQ7Yc74AdWgX4s7LJBc11gSM8qi
+	 areNCTtOUsOgSAKrRYxxHesMCrTswH27mP2gnO5+ad9yIOM7FU9ysSFIJoFOMsuazB
+	 Ada39tJXebrRA==
+Date: Fri, 7 Mar 2025 00:33:32 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>, Lee Jones <lee@kernel.org>, 
+	Pavel Machek <pavel@kernel.org>, Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>, 
+	Kamal Wadhwa <quic_kamalw@quicinc.com>, Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Johan Hovold <johan@kernel.org>, Sebastian Reichel <sre@kernel.org>, Pavel Machek <pavel@ucw.cz>, 
+	linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC] leds: rgb: leds-qcom-lpg: Compute PWM value based on
+ period instead
+Message-ID: <fnxx2tduww5m3ljs3g5po23ucr4qfytzipgspcf2udkusg7ys6@semr224oy56d>
+References: <20250303-leds-qcom-lpg-compute-pwm-value-using-period-v1-1-833e729e3da2@linaro.org>
+ <ylnkjxnukss7askv7ip5htrb4tyjzhpw7jim2se6rloleq5h6w@ngk7lbk26hxj>
+ <dbfb17df-90e2-4a7c-9921-9dff5e9382f4@kernel.org>
+ <ovnmhbzwwimil3opuv6e2ayyntlx7upxfkzm5qdfskx2x7hl7x@wmtul33ttow5>
+ <bdca9e9f-7e0d-4ca7-8e8b-f27ea8bb3b54@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="h3wax27yl7jges3z"
 Content-Disposition: inline
-In-Reply-To: <20250305003148.mahxupphkaiizpbh@synopsys.com>
-
-On Wed, Mar 05, 2025 at 12:31:49AM +0000, Thinh Nguyen wrote:
-> On Mon, Mar 03, 2025, Bjorn Andersson wrote:
-> > On Tue, Mar 04, 2025 at 12:39:12AM +0000, Thinh Nguyen wrote:
-> > > On Tue, Mar 04, 2025, Thinh Nguyen wrote:
-> > > > On Wed, Feb 26, 2025, Bjorn Andersson wrote:
-> > > > > In order to more tightly integrate the Qualcomm glue driver with the
-> > > > > dwc3 core the driver is redesigned to avoid splitting the implementation
-> > > > > using the driver model. But due to the strong coupling to the Devicetree
-> > > > > binding needs to be updated as well.
-> > > > > 
-> > > > > Various ways to provide backwards compatibility with existing Devicetree
-> > > > > blobs has been explored, but migrating the Devicetree information
-> > > > > between the old and the new binding is non-trivial.
-> > > > > 
-> > > > > For the vast majority of boards out there, the kernel and Devicetree are
-> > > > > generated and handled together, which in practice means that backwards
-> > > > > compatibility needs to be managed across about 1 kernel release.
-> > > > > 
-> > > > > For some though, such as the various Snapdragon laptops, the Devicetree
-> > > > > blobs live a life separate of the kernel. In each one of these, with the
-> > > > > continued extension of new features, it's recommended that users would
-> > > > > upgrade their Devicetree somewhat frequently.
-> > > > > 
-> > > > > With this in mind, simply carrying a snapshot/copy of the current driver
-> > > > > is simpler than creating and maintaining the migration code.
-> > > > > 
-> > > > > The driver is kept under the same Kconfig option, to ensure that Linux
-> > > > > distributions doesn't drop USB support on these platforms.
-> > > > > 
-> > > > > The driver, which is going to be refactored to handle the newly
-> > > > > introduced qcom,snps-dwc3 compatible, is updated to temporarily not
-> > > > > match against any compatible.
-> > > > > 
-> > > > > This driver should be removed after 2 LTS releases.
-> > > > > 
-> > > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> > > > > ---
-> > > > >  drivers/usb/dwc3/Makefile           |   1 +
-> > > > >  drivers/usb/dwc3/dwc3-qcom-legacy.c | 934 ++++++++++++++++++++++++++++++++++++
-> > > > >  drivers/usb/dwc3/dwc3-qcom.c        |   1 -
-> > > > >  3 files changed, 935 insertions(+), 1 deletion(-)
-> > > > > 
-> > > > 
-> > > > This is a bit concerning if there's no matching compatible string. ie.
-> > > > we don't have user for the new driver without downstream dependencies
-> > > > (or some workaround in the driver binding).
-> > > 
-> > > Ignore the comment above, I missed the "temporarily" in your log
-> > > above. However, the comment below still stands.
-> > > 
-> > > > 
-> > > > While I understand the intention, I'm afraid we may have to support and
-> > > > maintain this much longer than the proposed 2 LTS releases (as seen with
-> > > > anything tagged with "legacy" in the upstream kernel).
-> > 
-> > There are no products shipping today using dwc3-qcom where Devicetree is
-> > considered firmware. The primary audience for a longer transition is
-> > users of the various laptops with Qualcomm-chip in them. But given the
-> > rapid development in a variety of functional areas, these users will be
-> > highly compelled to update their DTBs within 2 years.
-> > 
-> > The other obvious user group is to make sure us upstream developers
-> > don't loose USB when things get out of sync.
-> > 
-> > 
-> > That said, if the model defined here is to be followed in other cases
-> > (or my other vendors) where Devicetree is treated as firmware, your
-> > concerns are valid - and it might be worth taking the cost of managing
-> > the live-migration code.
-> > 
-> > > > If possible, I'd
-> > > > prefer the complications of maintenance of the migration code be handled
-> > > > downstream.
-> > > > 
-> > 
-> > I'm sorry, but here it sounds like you're saying that you don't want any
-> > migration code upstream at all? This is not possible, as this will break
-> > USB for developers and users short term. We can of course discuss the 2
-> > LTS though, if you want a shorter life span for this migration.
-> > 
-> 
-> My first concern is now we have a legacy driver that should not be
-> continued to be developed while we also need to address any
-> regression/fixes found in the future from the legacy driver. While I
-> would encourage users to start migrating to the new driver, I won't
-> reject fixes to the legacy driver either. In the next 2 years+, my
-> other concern is that I'm not confident that we can easily remove the
-> legacy driver and the DTS then.
-> 
-
-The problem at hand is that the driver _needs_ a bunch of work.
-Role-switching only works sometimes, extcon is (for older platforms)
-duplicated in both glue and core - with the hope that each part does its
-thing in a suitable fashion, the layering violations can trigger
-NULL-pointer dereferences or use-after-free, PM runtime is marked
-forbidden...
-
-We've looked at these problems for a few years now, without coming up
-with any solution to address these issues within the current design.
-
-Following this refactor, we will be able to work on these improvements.
-For this to happen, I intend to transition all the
-arch/*/boot/dts/qcom/* platforms to the new binding as soon as possible.
+In-Reply-To: <bdca9e9f-7e0d-4ca7-8e8b-f27ea8bb3b54@kernel.org>
 
 
-Looking ahead, when we hit the point of deprecating the dwc3-qcom-legacy
-driver:
+--h3wax27yl7jges3z
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH RFC] leds: rgb: leds-qcom-lpg: Compute PWM value based on
+ period instead
+MIME-Version: 1.0
 
-The upstream-based product we have today do ship Devicetree in
-combination with the kernel, so they would upgrade both together and get
-the new driver.
+Hello Krzysztof,
 
-The other group would be kernel developers, enthusiasts, specific users
-who for some reason is upgrading their kernel but not their Devicetree.
-These users will want the new features and stability we're bringing.
+On Tue, Mar 04, 2025 at 05:30:40PM +0100, Krzysztof Kozlowski wrote:
+> On 04/03/2025 17:03, Uwe Kleine-K=F6nig wrote:
+> > On Tue, Mar 04, 2025 at 10:53:53AM +0100, Krzysztof Kozlowski wrote:
+> >> On 04/03/2025 07:24, Uwe Kleine-K=C3=B6nig wrote:
+> >>>> [...]
+> >>>> ---
+> >>>> base-commit: 0067a4b21c9ab441bbe6bf3635b3ddd21f6ca7c3
+> >>>
+> >>> My git repo doesn't know that commit. Given that you said your patch
+> >>> bases on that other series, this isn't surprising. Please use a publi=
+cly
+> >>> available commit as base parameter, otherwise you (and I) don't benef=
+it
+> >>> from the armada of build bots because they just silently fail to test=
+ in
+> >>
+> >> As you can easily see in the signature, this patchset was generated by
+> >> b4 and such tag was added automatically. No point in stripping it even
+> >> if it is not useful (life, happens).
+> >=20
+> > My request was not about stripping it, but making it useful. I don't
+> > know the b4 patch sending side, but git send-email has the capability to
+> > make it more useful in this scenario. I didn't check, but
+> > `b4 --edit-deps` which Abel mentioned sounds about right.
+> >=20
+> > The relevant documentation for the git side is the paragraph "BASE TREE
+> > INFORMATION" in git-format-patch(1).
+>=20
+> Useful how? The dependency is on the lists, so there is no base-commit
+> you would know.
 
-> Code can break, and that's not unexpected. If 2 LTS releases later and
-> we remove the dwc3-qcom-legacy, things can break then too. This may just
-> as be painful if we need fixes to the legacy driver due to some previous
-> regression. Also, I'm sure your team did a fair share of testing the new
-> driver right? Is there some major concern in the new driver that we
-> haven't addressed?
-> 
+Have you tried to understand the part of the manpage I pointed out? It
+seems to me "base-commit" has different semantics for us and only mine
+is aligned to git's (and consequently b4's) meaning.
+The correct base commit would have been
+cd3215bbcb9d4321def93fea6cfad4d5b42b9d1d.
 
-The new and old drivers are mostly identical at this point, and expected
-to diverge from here.
+> And regardless of edit-deps, that base-commit tag is standard from b4,
+> so what do you expect from all submitters even if this was not RFC?
 
-The one thing I have identified to differ is that the "legacy" driver
-supports 2 extcon handles in the glue, but this is not considered
-acceptable by the binding so I haven't found anyone actually exercising
-this code path - then again extcon and usb_role_switch is one of the
-things this enables us to clean up.
+I don't understand this question. I expect from submitters to pick a
+publicly known commit as base no matter if the series is an RFC or who's
+standard this is.
 
+> Always base on known commit?
 
-That said, while this model seems suitable for Qualcomm, due to the
-current state of things, I don't know if the same is true for Frank Li,
-perhaps NXP has a broader user base and need the migration logic.
+Yes please. The manpage isn't explicit about that but the above
+referenced commit has:
 
-> > 
-> > In my view, setting a flag date when the dwc3-qcom-legacy.c will be
-> > removed will provide upstream users a transition period, at a very low
-> > additional cost (934 lines of already tested code). If someone
-> > downstream after that flag date wants to retain support for qcom,dwc3
-> > they can just revert the removal of dwc3-qcom-legacy.c.
-> 
-> The same can be said that they can revert the update (or apply fixes)
-> should they found issue with the new change.
-> 
+    The base tree info consists of the "base commit", which is a well-known
+    commit that is part of the stable part of the project history everybody
+    else works off of, and zero or more "prerequisite patches", which are
+    well-known patches in flight that is not yet part of the "base commit"
+    that need to be applied on top of "base commit" in topological order
+    before the patches can be applied.
 
-We're changing the Devicetree binding, which gives us two problems:
-1) Devicetree source code and DWC3 driver code are merged through
-different trees.
+> But for most of the cases this is
+> irrelevant. I can have intermediate commit between linux-next tip and my
+> patch, thus base-commit will be bogus for you, but it does not matter
+> for the patch - it's based on linux-next.
 
-2) The compiled Devicetree (.dtb) and kernel image are in some cases
-separate software deliverables.
+I agree, linux-next is the base. So the respective tip of linux-next is
+the right thing to pass to git format-patch --base (independent of if
+it's called directly or through b4). Ideally you also drop the
+irrelevant intermediate patches to make the build bots test exactly the
+changes you suggest with your series. I would expect that this is the
+tree you actually tested, so it shouldn't be a big hurdle.
 
-So we absolutely need some migration mechanism to not just break USB for
-everyone for the coming 1-2 releases - at least.
+So summarizing we have: Iff you use --base with a non-public commit, it's
+useless and irrelevant. I fully agree. Our conclusion is different
+though. You accept it's useless (and even request from me that I do the
+same), and I asked the submitter to use --base as intended to make the
+resulting information usable.
 
-That said, the "2 LTS" is completely arbitrary. If you prefer to limit
-that, we can certainly have that discussion! E.g. I wouldn't argue
-against setting the flag-date by the end of this year.
+Best regards
+Uwe
 
-> > 
-> > The alternative is that I try to get the migration code suggested in v3
-> > to a state where it can be merged (right now it's 6x larger) and then
-> > keep investing indefinitely in making sure it's not bit-rotting
-> > (although Rob Herring did request a flag date of the migration code in
-> > v3 as well...).
-> > 
-> 
-> All that said, if you believe that this transition will be quite
-> disruptive without preserving the legacy driver/dts, then we will do so.
-> 
+--h3wax27yl7jges3z
+Content-Type: application/pgp-signature; name="signature.asc"
 
-We absolutely need a transition period, per above reasons. The length of
-it is an open question.
+-----BEGIN PGP SIGNATURE-----
 
-> Can I request that you make this snapshot as one of the first patches in
-> the series so reverts/git-blames can easily be traced?
-> 
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmfKMMcACgkQj4D7WH0S
+/k7Lygf/Wa8FyPopVUtLVV8RF+FamEmr7aP28fWYMpJ9idhxmdffTkrUmF7NiT4J
+0pFxztHcSNJ1a9jZ9SGJ8EPovbz3fhwrvo9bvsmKRVWOaqC+YdnysBEzPbehBroo
+YM7YnPZNLXy2Z/sgAh9a7w3A83gr+Uy86LfE8x6CQIuSM9byW50qgRZoDOIkmTuv
+IzenAuIx7nt9Q4GM6toaaenlm8E/eze4pM8Yo6p9emHXPfqyGnm0UOqM9pc0uuoq
+Lp5pjLpMjKOuaon2utLIGH10Yd2uM98v/ky3Iu0s9OrfjBMhmIJr/dFuWbHB+CwB
+qul6dih0nSTcXdrI/m9B2txhPsxPJA==
+=F+Te
+-----END PGP SIGNATURE-----
 
-Absolutely.
-
-> BR,
-> Thinh
-> 
-> Side question: for Snapdragon laptops, without the corresponding kernel
-> and DTS updates, don't things break easily?
-
-It certainly happens, but maintaining backwards compatibility is
-something we're striving for. As the Devicetree bindings mature, the
-easier this is though.
-
-One example where this is a problem will be clear here, that users
-attempting to boot today's kernel with tomorrows Devicetree blobs will
-not get USB - because today's kernel doesn't know how to make of the
-information in that description.
-
-This is true for any hardware or firmware interface though, so there's
-only so much one can do about that (and whatever that is, we're trying
-to do - for the sake of user friendliness).
-
-Regards,
-Bjorn
+--h3wax27yl7jges3z--
 
