@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-50556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F659A5547F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 19:14:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3FC6A554A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 19:18:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C493188970B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 18:14:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6FC7166330
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 18:14:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 237B326E63B;
-	Thu,  6 Mar 2025 18:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14DFD26E624;
+	Thu,  6 Mar 2025 18:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Efa3mE7g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nXwwQOj0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C4126B0B8;
-	Thu,  6 Mar 2025 18:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D707325D914;
+	Thu,  6 Mar 2025 18:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741284766; cv=none; b=O/0nca/xdCpHhMQ+cmDqbNPW1wCcINfNvRjcBWqHmA2mAT7Wjibu4bVmMxE039SSvmdYmiVlK2AEDuB8euQRaRpNi8UVBLRe2dTNyZfltlH/CsbNiKf3YBMnwjrbrCoV9ry0q+L6zLJJYYf57Xb1dh0W08FZHn8dx9+38u87VZI=
+	t=1741284776; cv=none; b=VHls71cFmpHSsl8XGOIfwMuYVFiJkvle8XlTcHyVtvfFJxY8+6i/kzFegIJh/NfiIW76XcEngscmR9WfaW5+0PlEKC4yU863QBSn98Ty5BwSMbOaySoN0nc+6X8HkcdDrU0rdZE8TufE+awNaUTaXO3o/+kVQeWiC6vHvdYTYPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741284766; c=relaxed/simple;
-	bh=lwAaODSSkqHKy+lcOcpuXU7amU02IOXnR3U8lDPLoNw=;
+	s=arc-20240116; t=1741284776; c=relaxed/simple;
+	bh=p6haZlLu98e1jcMK34i1CA53DE83QhpV9m8QW34BiYg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Hn6fOCJi85dGO6uiq8ZwdKpmcj52VNOpjRjWfiiGVbLaHA6aJMDOdPVtsqvgK9LD0nEN86WNeMD5nsj1g8HAGZpSGwzKX5yi3BZLJYVXQR3WKF0CcuOjQCyUiG47iDp7Zul4stiJsnkQ7zR6mxDpJBQZ7QE5A9gpZjS4mEPcVxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Efa3mE7g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66242C4CEE0;
-	Thu,  6 Mar 2025 18:12:36 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=a6HOkBaSMiYvfaPqs4wrIBeiaVwciDauXcJMArEk4TADc1ZENkV8bCFdQaH5O7dFp8rpVUc1aOckI5USl+bv184De7DyvxoPagXglVqzrywTqfNdyT5OiO+AZlSAZ27KTphctGIyhW4qbvpYbDCWz06jkdhbbKlHGgNJ8cKVwtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nXwwQOj0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B7DC4CEED;
+	Thu,  6 Mar 2025 18:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741284765;
-	bh=lwAaODSSkqHKy+lcOcpuXU7amU02IOXnR3U8lDPLoNw=;
+	s=k20201202; t=1741284775;
+	bh=p6haZlLu98e1jcMK34i1CA53DE83QhpV9m8QW34BiYg=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Efa3mE7ghQXjJ0ma7Gt3irJEbEpWwKw3KwCO6fALZm0W1ZsB49SR6nv3UYZjo0eQx
-	 ZYepuLtCdrq6EPkLdHB/ZiWDQB7zq1evj6fRfpz9HmO7UzIft/nTm3xSASd85u1gGY
-	 +m88ep3tjVdlBhMTFTx9fUr5kxBtmVNnPZdmGSk8PHjve1gIYPCK57On+998XAL46D
-	 kh8FfzoJy0SyXeOrO8WftRVVdDi180ovUH/MS9QB71uCKL83M1yEr9KK4M+PPP5xLv
-	 g9JwRMi183yO8urYavV007ARdyBEw752St2KvbtEubNYcvCqcOMdR8Yx0ako497BRW
-	 4rPccUCx3KoFw==
+	b=nXwwQOj0O4YJF7QOJlZUbl5y8cYKb5OkpS2wbSd+zNSQmNglW9AcT6WHiTgGDkF6I
+	 u+baUvRlsmAzqip43hhM6qDoeda42naqRyvMMmQrh1PywdQgeU+lEz4W6cVRAUHMNt
+	 DVntyqznHLiE6wk/eGPn8XoxTAx60PuOhcDX4NSfzTUY673qxsuMDfYyYiedLvNLe1
+	 vktJ4B48NFt5FzvMoI75vI8g2Sk6R4ecjztHwRd4J6np+XGS9WcOJz76K0wVm2wLRA
+	 NLkG744hLmvISn5bqqPSIOBr1LHMGuYdbP3yjj2d7/6rxz3ixXQwV5ANT3M3JXeQDP
+	 jSlIG8kK11VMw==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Thu, 06 Mar 2025 19:11:20 +0100
-Subject: [PATCH 08/11] arm64: dts: qcom: sc8180x: Rename AOSS_QMP to
- power-management
+Date: Thu, 06 Mar 2025 19:11:21 +0100
+Subject: [PATCH 09/11] arm64: dts: qcom: x1e80100-dell-xps13-9345: Drop
+ clock-names from PS8830
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250306-topic-dt_bindings_fixups-v1-8-0c84aceb0ef9@oss.qualcomm.com>
+Message-Id: <20250306-topic-dt_bindings_fixups-v1-9-0c84aceb0ef9@oss.qualcomm.com>
 References: <20250306-topic-dt_bindings_fixups-v1-0-0c84aceb0ef9@oss.qualcomm.com>
 In-Reply-To: <20250306-topic-dt_bindings_fixups-v1-0-0c84aceb0ef9@oss.qualcomm.com>
 To: Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
@@ -79,41 +79,44 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
  linux-usb@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1741284679; l=1128;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1741284679; l=1009;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=QcbLDu/JCvSajtmQcGni6Wyw36X/N/6SEY8kvKIxueo=;
- b=4UMnnCCJ66VxjcdU9W4oGDTTTiJxJZgM/3w/SYgUgaeFIQDHsbFLPpXhJNzOV14PaTm9QOzP+
- wKKurTO7DcrDGua94u3nrX6aH6aI40l4kTZX9LdeS6OBzHEXHw5tPtl
+ bh=wyc+zP4LYxR1G859qmmStxLp5kumhkuHTctJK/cg80E=;
+ b=4gOO3Egg1F+QXvTMndcT3Bzynhw7RsYmFCjV0qXTzGzSu3k3lF9aiJAbtbQonyZfvcKEyKrB3
+ dTNghBpAQ37BzB+o9Y4vgMW04PiKYB4mrF9C7Te0/8Kx+Z1bYYDTM9T
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-The node is currently named power-controller, which requires the device
-underneath is a power domain provider. Rename it to align with other
-SoCs and resolve this sort of warnings:
+The preemptively-merged node contains a property absent from the final
+bindings. Remove it.
 
-power-controller@c310000: '#power-domain-cells' is a required property
-
-Fixes: 8575f197b077 ("arm64: dts: qcom: Introduce the SC8180x platform")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 28693a3bfc7fefd883a7dee69a406235317c3047..f142eb63b8d7f443a8df2334cf3c205353762893 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -3524,7 +3524,7 @@ tsens1: thermal-sensor@c265000 {
- 			#thermal-sensor-cells = <1>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+index 124051334be072fce1351d12211eb61e154b3785..5d807fb34aee2dabf16fe32664ee05ea76532675 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+@@ -612,7 +612,6 @@ typec-mux@8 {
+ 		reg = <0x08>;
  
--		aoss_qmp: power-controller@c300000 {
-+		aoss_qmp: power-management@c300000 {
- 			compatible = "qcom,sc8180x-aoss-qmp", "qcom,aoss-qmp";
- 			reg = <0x0 0x0c300000 0x0 0x400>;
- 			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
+ 		clocks = <&rpmhcc RPMH_RF_CLK3>;
+-		clock-names = "xo";
+ 
+ 		vdd-supply = <&vreg_rtmr0_1p15>;
+ 		vdd33-supply = <&vreg_rtmr0_3p3>;
+@@ -676,7 +675,6 @@ typec-mux@8 {
+ 		reg = <0x8>;
+ 
+ 		clocks = <&rpmhcc RPMH_RF_CLK4>;
+-		clock-names = "xo";
+ 
+ 		vdd-supply = <&vreg_rtmr1_1p15>;
+ 		vdd33-supply = <&vreg_rtmr1_3p3>;
 
 -- 
 2.48.1
