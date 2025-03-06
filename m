@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-50474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91D05A54656
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 10:30:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60212A54658
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 10:30:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8313F3B0C3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 09:30:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E6097188804F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 09:30:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10ECF209692;
-	Thu,  6 Mar 2025 09:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62C2220A5CA;
+	Thu,  6 Mar 2025 09:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iP7wNjbT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fqs/3qdk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6BE20101A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 09:30:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891DF20101A
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 09:30:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741253429; cv=none; b=WAuaoOElzhTZmVfAM2oB9jNpuv8JZQI04JRm7Wken0fv6ErLG0Xp4LFWGJy0VKBI+JYQJVSyzoc/CHe+OpKYsnxfP0EvWO39QhUwPxjjYep2vb1dSjzqw5y08KWI4RKDNb0xANhWMIOMFN5AMnACBwNn9vZB3Ke4lkYTWKzzGjQ=
+	t=1741253431; cv=none; b=IhYV1IETxQt22MkSWS2mhYYDm/tgm0sYTl8EtNajao3cuPHiTwk24dbZuSbE+dTtm60N3HvftKWxcKvfgR9vBJ6UUhrVR/KBW//GP52mU9N4E8Euq72hjuCsjX8CtaTV9vM+5zxs75mmaWUcY2BgwcpNsA6pkPsH4Odz1obdtZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741253429; c=relaxed/simple;
-	bh=cqXcfoxrQZqouPmo5kRdsyVcRj6anRh2cDEyZOHNWnk=;
+	s=arc-20240116; t=1741253431; c=relaxed/simple;
+	bh=zL6BTmVJ/wyDlBdEEGs0+CfmrEMOo5PpQZDbnR0Qa8Y=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=FGxL+T8Av6rl8w4DcQSscKF5nbGCf9u8Ge/hIWOPaVovaz/gjbwBd+auLxBYO59+S2tnXSYEyqnBdKqhM8Yyg+dB5Hm8RhMRYnfyXzN4eWPK1ggJAjiffEDdh+J8+Dt6oAHUMb2DM+f0E9cZCwB0tIj0w5Qs7zeApdpDZ9Vwbb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iP7wNjbT; arc=none smtp.client-ip=209.85.221.51
+	 In-Reply-To:Content-Type; b=XpGRvJH0CqfrFbTD6Xek+OpH/9iEr2dHKs5G5/B37cXMS3Bwk19RykKDja1tHtCAthdYFmpjKcW34FDXQzThZGc2+O/zVrjhhCm9p1UC1OjMpvfJGoAIBYJpojAHdvni++aqAwdV77QFSJn2qua/nxFb1eqNJbf6st9N5LZi/E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fqs/3qdk; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-390e3b3d432so234955f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 01:30:26 -0800 (PST)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43948021a45so3517535e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 01:30:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741253425; x=1741858225; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1741253428; x=1741858228; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=z79m0LRwylL1TUcFIowHlysw5aOIkiMWOUVmjSLVUX0=;
-        b=iP7wNjbTvSf5plXzDCZLMEX3xma8EU9Pdm44e2rOdGwbxRgTSCDcnTjL77i73jcQA/
-         9wxGtG0dsTENF3A0yb/ukUZzg6Jr1Glu2+Ggt+edcuIsc933SPif7PKUC/vwWTNtu/v6
-         6Nk1NPeAFJnum/pQefzp3fH/suGU/GzzxYCAcMRDwAO5bK7VJE8mbDMdDFvCU38iOvlz
-         BW70MiuBoW3lfp+7cbl7nyHOxbT8cnUbcpKWhs3QdXH8UESNDEpiPclI6+AVN3usd6UY
-         VT4ot530DOCCompo42t2nMCMY9mCPA9jxaInjwAqj10otH3gyNF/1AJefjFUhW9UR0yJ
-         UJkQ==
+        bh=3ncB2tuQORatDJdRGujzDM4Ip4LmUwzu5C0be3bbhYo=;
+        b=Fqs/3qdkYKuaDvGGQfL9r0hiqaXWPrAKV5YEDMwIAOz2u0dZGs6V/HkPaSVf3gu5t9
+         JVm3/Ymo2jNWfG1JzLJgY9nRjHIPGQemhL03JL6tAJZWGMx4SS2e91KR9RdzoeK08gX2
+         QxuMUSM0ZPGALF/g/AxBZIWIVFfYx4aOlmtlNFDW2cKglIRWwvxPQ3jhjr9SHzizzhpx
+         XzbtEYtOBeRS92yVKh9LiNE3QPtGzAVk8+KKbHEqxeeJzLo6bm9S1IJh3uOBJUOG3aG1
+         vkrQj2MgRGyzSWox8dYef72Ty4zwOI4eX77+gpliR0pTvHoWo+KfDafNoz1kaN2q0L8l
+         1sgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741253425; x=1741858225;
+        d=1e100.net; s=20230601; t=1741253428; x=1741858228;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=z79m0LRwylL1TUcFIowHlysw5aOIkiMWOUVmjSLVUX0=;
-        b=LoxYlgaYs197+A/G7KRdC/fBFpQ0CadaVBEsRYgXxV34cVgFVsUXRWA7LhIgPgRCQ6
-         eMl5mupCrxC6f0d3VAdr6399zGObx4Es0IHVv72ec2lNoNVVCzWKm0dySUvufSN1EwdX
-         YNjWqHX6QDROpDOL1AeLx+/NCNciKVNMoj6F1bUPF1NW2s8m0Izn8MWBmjOq4dxK54Cx
-         lcuGYvwTQdvXSNVZc2s+IszZUMM1cuIT3Uz5eyGroyZDihQJoGAIGwHyrWJE9xeXrvdT
-         /40JBIhn8Yf+zhmXfSz55hCBKbUVoR73+wBlnJHOfvwg6C6yi+KagPp+Sj9k4Y1uHyhW
-         GDoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVok7E5yuToQWRGRckpxkkO/UM3r5H+wqUU1CXn7/FVIYHb7qrSzDT5SRFwupc+vKrxq5OjqSTcz85CWZPB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yze85GwNQiVReak5YQGM6Nz69r8brijzVxNs2wCQr3Vce+gN4hC
-	jB5HX8KRrlQ0S8/vYq1MdhGHfm66RqNx/LTKfSDBStcwoMbuLm11RH6BCLmH4UiSAD+PCMILcb1
-	C
-X-Gm-Gg: ASbGnctce90uAUCD1n/r+zqu+p3tOs9ebB2VPN2N08ip2k4PYrPug5fxDCsaNTY6ywt
-	cIIMh4MBO1SSWGFnurScYyaNz7nhRaVp/wbpL00Hj9QCH10nxkNyoO58oIjfpH7KiQ6FI/2JKUf
-	5mvPzDv+59ABF8auu0AOrQ3obr6N/D68/X1MlFG5KnzaNJ9g+LmPP60Au85VUFcvWDDxfFUdNAH
-	ixd28UnBHu1us/oLQGVMDfjsRR8VF0yPu3pG57yoVb4XWCugG3IeVSDDttChUKt5ntLKrKzjBwL
-	MFaeZH6OmsyRs1YHQoAmGMgXAS1BF86Cg8x/gw7ryX8dQbEtWI/TiS2E
-X-Google-Smtp-Source: AGHT+IGnpFmsJBY/qEamoUmfbMXLuOWckaWioHNi22rQde52T2IvnSzLx8zdUb49jRIT4IcdS2vy1A==
-X-Received: by 2002:a05:6000:1f88:b0:390:ed04:a676 with SMTP id ffacd0b85a97d-3911f7491a1mr4619791f8f.22.1741253425200;
-        Thu, 06 Mar 2025 01:30:25 -0800 (PST)
+        bh=3ncB2tuQORatDJdRGujzDM4Ip4LmUwzu5C0be3bbhYo=;
+        b=LbzjZVHhhqqVX6VtuCq6q/mky9O51dDbTuBtBddiDv9gCL/l1giFGmTT7yOJyQqg9I
+         4aksfyHhCC7cTrdX3vOGN/DCjaW3ZgmRU5nOCXtX89AWab4TtyAVP1ve3nmx4wZmlchs
+         6+0HL7V1EG/0BUR1xLOGipfwyKxIvvLiQwHVTN2dy0elgmyv7JIsPdKsd25StGvwen9n
+         81gRkVpk/0lzL4dEKYFX+Gq1QYA2+WBb/4G2elR4uruS9M8TSyEyO9TDxdwI80l4L/wV
+         iB1nIRQ2mWUiIfn2gQXiW/d3J2tWdjJGqJAcyDzfhotSEZVKzchJH4hJ4CxjkrX5Gi/Z
+         niog==
+X-Forwarded-Encrypted: i=1; AJvYcCXiWKC3tdrKX+gZJ6SHM4GZM4xP5tu7IysuSCbmIVZGYeqoXt9ntB/oxSASfSFLp9yhyWC0ZIuxIlKk0SWf@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAYXcUOM3qLOpPxfBGK5O+Wqn43iFjk6zZZaBCu7XTcXUXXbNp
+	JVap1dAJyVZdD+IoGt9E7L7NRXZYm2ZCNjovq4lp/c5hv84aLtASNNs2ga3KB+k=
+X-Gm-Gg: ASbGnctygTWnBLkq6gu345QmTjdkPCXfelQRSZ7dEdQZBeo35sB6TAcpBSuUVmjpP8l
+	SLQpPJJY/EUwnik5wBmsXVABP2eGwdBK0SraFySS26IcQTjDJ8PHDbpoFkXqzlI6G/iRn0kCpUp
+	f4EIR4ZvvSCTCbeiURmsTYrlRDZY6TV0T+BkzecIrnoamAZNM8kZVmtJkwJkHbbYHdjvKR3tXX2
+	wy5yhyxKM9R8lUzsXXUbPS6NPy59rH/B+Db9yBwO54P6g72wLPt2kHLpISgrpGt7PKDGmlvvYYz
+	Lvhc1t1XfUwAJSdZz3ifho1RC4j6xt4H5Mp20ZbJ8akSTk3H3svDlBu3
+X-Google-Smtp-Source: AGHT+IEyknlGy0vVxl7IFJZZCVesAcPmZtefHHgNNLbDgMorbZ9ZZYO+JvFG/OeIm1Ql1Pr2uoj2Wg==
+X-Received: by 2002:a05:600c:35c2:b0:439:8bc3:a698 with SMTP id 5b1f17b1804b1-43bd293f637mr53469645e9.6.1741253427697;
+        Thu, 06 Mar 2025 01:30:27 -0800 (PST)
 Received: from [192.168.1.101] ([37.167.199.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912c0e2b8bsm1440616f8f.64.2025.03.06.01.30.23
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912c0e2b8bsm1440616f8f.64.2025.03.06.01.30.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Mar 2025 01:30:24 -0800 (PST)
-Message-ID: <16130141-2cb0-4f28-b0ad-fee5be061dd3@linaro.org>
-Date: Thu, 6 Mar 2025 10:30:21 +0100
+        Thu, 06 Mar 2025 01:30:27 -0800 (PST)
+Message-ID: <3cb174c1-ef1f-4578-b5b0-b82366d02ebb@linaro.org>
+Date: Thu, 6 Mar 2025 10:30:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,14 +85,14 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] mailmap: remap all addresses to kernel.org alias
+Subject: Re: [PATCH 1/2] MAINTAINERS: use kernel.org alias
 To: Dmitry Baryshkov <lumag@kernel.org>, Rob Clark <robdclark@gmail.com>,
  Abhinav Kumar <quic_abhinavk@quicinc.com>,
  Marijn Suijten <marijn.suijten@somainline.org>
 Cc: freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250306-update-email-v1-0-9a231571e905@kernel.org>
- <20250306-update-email-v1-2-9a231571e905@kernel.org>
+ <20250306-update-email-v1-1-9a231571e905@kernel.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -120,38 +119,31 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20250306-update-email-v1-2-9a231571e905@kernel.org>
+In-Reply-To: <20250306-update-email-v1-1-9a231571e905@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 05/03/2025 23:44, Dmitry Baryshkov wrote:
-> Remap all historical and non-historical entries to my kernel.org email.
+> My Linaro email will stop working soon. Use @kernel.org email instead.
 > 
 > Signed-off-by: Dmitry Baryshkov <lumag@kernel.org>
 > ---
->   .mailmap | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
+>   MAINTAINERS | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/.mailmap b/.mailmap
-> index 01145c078838bf9348e8d0e5e48b7b0954248dc5..a5c80ef0b7800519f3124e0d85294f34d6b275ca 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -198,10 +198,11 @@ Dengcheng Zhu <dzhu@wavecomp.com> <dengcheng.zhu@imgtec.com>
->   Dengcheng Zhu <dzhu@wavecomp.com> <dengcheng.zhu@mips.com>
->   <dev.kurt@vandijck-laurijssen.be> <kurt.van.dijck@eia.be>
->   Dikshita Agarwal <quic_dikshita@quicinc.com> <dikshita@codeaurora.org>
-> -Dmitry Baryshkov <dbaryshkov@gmail.com>
-> -Dmitry Baryshkov <dbaryshkov@gmail.com> <[dbaryshkov@gmail.com]>
-> -Dmitry Baryshkov <dbaryshkov@gmail.com> <dmitry_baryshkov@mentor.com>
-> -Dmitry Baryshkov <dbaryshkov@gmail.com> <dmitry_eremin@mentor.com>
-> +Dmitry Baryshkov <lumag@kernel.org> <dbaryshkov@gmail.com>
-> +Dmitry Baryshkov <lumag@kernel.org> <[dbaryshkov@gmail.com]>
-> +Dmitry Baryshkov <lumag@kernel.org> <dmitry_baryshkov@mentor.com>
-> +Dmitry Baryshkov <lumag@kernel.org> <dmitry_eremin@mentor.com>
-> +Dmitry Baryshkov <lumag@kernel.org> <dmitry.baryshkov@linaro.org>
->   Dmitry Safonov <0x7f454c46@gmail.com> <dima@arista.com>
->   Dmitry Safonov <0x7f454c46@gmail.com> <d.safonov@partner.samsung.com>
->   Dmitry Safonov <0x7f454c46@gmail.com> <dsafonov@virtuozzo.com>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 29e1a423eee5bcf9df7938aaffe5bd3e2f6a2bbe..b3a67e278a839fa14d1329a249ecf4bbec00c26c 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -7459,7 +7459,7 @@ F:	include/uapi/drm/msm_drm.h
+>   DRM DRIVER for Qualcomm display hardware
+>   M:	Rob Clark <robdclark@gmail.com>
+>   M:	Abhinav Kumar <quic_abhinavk@quicinc.com>
+> -M:	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +M:	Dmitry Baryshkov <lumag@kernel.org>
+>   R:	Sean Paul <sean@poorly.run>
+>   R:	Marijn Suijten <marijn.suijten@somainline.org>
+>   L:	linux-arm-msm@vger.kernel.org
 > 
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
