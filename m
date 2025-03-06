@@ -1,148 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-50505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 228C0A54ABB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:32:18 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0C00A54ABD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:33:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 74CC1188D4D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:32:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2BAE17A53DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:32:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21C3138DD1;
-	Thu,  6 Mar 2025 12:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26E4420A5E7;
+	Thu,  6 Mar 2025 12:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MxsQ6FX8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VcoGXBbn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BAF13C67E;
-	Thu,  6 Mar 2025 12:32:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D19038DD1;
+	Thu,  6 Mar 2025 12:32:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741264335; cv=none; b=eDiirLh5/3pb7XXHDzfboebaKaN7XvoO1iXmbkDcV2Owi7XXhgZeJTTrPnjh/a/3cQ/1YDaceJqm05PiY35suJEpKYJXlCwtJga1+pMVko24Ctsq4X+VMl1oFumDhPHmM32lzbqSRiO9dUMAR06+WeYS5K4GnWOiwQO2KkkSvkE=
+	t=1741264381; cv=none; b=iEgotslVc7bx07mM4AIFnw5fLeKdfC+0A2txHFnoBv9FgPTUAWQ3DSXyFA8BEC8lBF0/9Vt7nVNMLj7E2fqWOk3SBlu8C+glFG8uDUIm1a7yfYOjfJ6D25OCGM/JaAgeGGFBBLbJhSTDTOetJh6vH5ckf8RQ5ChinEWD8RSV80Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741264335; c=relaxed/simple;
-	bh=oy4+bcRMMxQbh/qp4MXWjzg4Vg1yhmrjLtOiLO41T6c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RgHpus9HTMyCgGi3q7v93Gqydeaq0WbS3rk7QN+XolXPPL+q6bZ31K3epvpGIztEN4TEBHBmmx5hUDPvuVaylzV+FeFvt0YdCPw6nMYWzRn03ngW0vFhCsb2ZYRkPtrlOM30i3ZuMtH6UPocPqCBXuGE+gngSVy6d6WwCqiCjnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MxsQ6FX8; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741264333; x=1772800333;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=oy4+bcRMMxQbh/qp4MXWjzg4Vg1yhmrjLtOiLO41T6c=;
-  b=MxsQ6FX8iMSd/DaAc5j2BfOqXgnynMZhIQ1KroGFo9ieozGT/EZxBPXt
-   5YRyc/sNzG5vql6EzKhrFPiW0ZC5mBI31DhfXeiWkg77QHARzJ3zYZKFy
-   WANVc974pq2MPdZiC1N9Co2qWkS+Z/LOg3IJeG+gVRPf2s0CkfYx58Vlr
-   X55Q3bocigUzn0LS6A1+Tz8vSgidPrMtrY+Dszth7heQYiARj6LhQbcec
-   Vpj9lPOiqYfZ/wLoSre2fXHl/MW2kdVKjlA2aYgFN3aYt2TFNxP6PfvDS
-   5SWA7i69/pqgdQNkItjZBle6mOYul/WDBjfse3Aa0uRT0+lkGqJWMPzTn
-   g==;
-X-CSE-ConnectionGUID: wqwiyAw/Tse03AGyg34u4Q==
-X-CSE-MsgGUID: hfdOx84uS0qXl/82luPWUg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="59815054"
-X-IronPort-AV: E=Sophos;i="6.14,226,1736841600"; 
-   d="scan'208";a="59815054"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2025 04:32:12 -0800
-X-CSE-ConnectionGUID: YmCqY4ujQDa8dAipYWTt6Q==
-X-CSE-MsgGUID: CmcuiUPlQemGc3evzetPjg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,226,1736841600"; 
-   d="scan'208";a="149790584"
-Received: from unknown (HELO localhost) ([10.237.66.160])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2025 04:32:07 -0800
-From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Lyude Paul
- <lyude@redhat.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann
- <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter
- <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
- <marijn.suijten@somainline.org>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH RFC v2 0/7] drm/display: dp: add new DPCD access functions
-In-Reply-To: <20250301-drm-rework-dpcd-access-v2-0-4d92602fc7cd@linaro.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20250301-drm-rework-dpcd-access-v2-0-4d92602fc7cd@linaro.org>
-Date: Thu, 06 Mar 2025 14:32:04 +0200
-Message-ID: <87a59ywda3.fsf@intel.com>
+	s=arc-20240116; t=1741264381; c=relaxed/simple;
+	bh=QVeZ5GletvUdnT+/b5y2odd813HtDcAzt88hxqfsids=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CvagnkTKYaPRxyKJ+Xux8PSJalec+LSw9bWFXyDEozvPDrd26Lw9CAIG41YgGe6MSW0RPrL65/Fe2uspfFlG3eVEKHVOHzy0I+MGUnMQ8b5C0hzizeOF62IwJHVL66O6ZvL5as95jwVFc26u414Tx1cCCncmbzly03Rg+MPe9NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VcoGXBbn; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5266mXQ3030823;
+	Thu, 6 Mar 2025 12:32:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zJavz6JLrReC2fziH5lae7L+Imkq+YUyygM4Om1eXBo=; b=VcoGXBbnrjANr6t5
+	dWxH7eTwJdsPaVZQHcBnP2RiKlNcNuOOXFfOyefgpP0hczfGo6039pgpllbvBfJK
+	l5r6DXaaiXzQRfVbmN1rfhCo2WtFf7D8A16ApQYxPUbz49xhmaOOij9iBwfdgIQB
+	K0pUFjFRtUroJZ6TmhrlVySlCtGC3D4XoTPparkDBplfd2Jdec/zSxtFWMDhkebi
+	nC9/aoGQMds+Lon98BD1qlmEiOaJe/1Ma9tpe/AYJNPuH4AbDFHSikvakgZSlPwq
+	/k5X7DGdxVasTzdbub2iu4J4YISaeiXKx4pyOJQ+pBxg1T4hJsJSMZlXM2o31hrl
+	1s6AJw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 456uy0aq5n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Mar 2025 12:32:53 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 526CWr5F009869
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Mar 2025 12:32:53 GMT
+Received: from [10.50.63.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Mar 2025
+ 04:32:50 -0800
+Message-ID: <3d93b47b-4d68-8626-2b32-4840ea9925db@quicinc.com>
+Date: Thu, 6 Mar 2025 18:02:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [RFC PATCH 08/12] media: iris: Avoid updating frame size to
+ firmware during reconfig
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <quic_vgarodia@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <mchehab@kernel.org>
+CC: <hverkuil@xs4all.nl>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250305104335.3629945-1-quic_dikshita@quicinc.com>
+ <20250305104335.3629945-9-quic_dikshita@quicinc.com>
+ <39f566fc-9cc9-44be-9b14-7ced0607464f@linaro.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <39f566fc-9cc9-44be-9b14-7ced0607464f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=Pq5pbxM3 c=1 sm=1 tr=0 ts=67c995f5 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=Z7P0-oMRu0xCxirkbW8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: --YkU6TDJIAkryp86pAdcs4k8gpBGpdP
+X-Proofpoint-GUID: --YkU6TDJIAkryp86pAdcs4k8gpBGpdP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-06_05,2025-03-06_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 mlxscore=0 impostorscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0
+ mlxlogscore=999 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503060094
 
-On Sat, 01 Mar 2025, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> Existing DPCD access functions return an error code or the number of
-> bytes being read / write in case of partial access. However a lot of
-> drivers either (incorrectly) ignore partial access or mishandle error
-> codes. In other cases this results in a boilerplate code which compares
-> returned value with the size.
->
-> As suggested by Jani implement new set of DPCD access helpers, which
-> ignore partial access, always return 0 or an error code. Reimplement
-> existing helpers using the new functions to ensure backwards
-> compatibility.
-
-I think that description is for earlier versions of the series, it's the
-other way round now.
-
-Regardless, glanced through the series quickly, I like it, this is
-
-Acked-by: Jani Nikula <jani.nikula@intel.com>
 
 
->
-> This series targets only the DRM helpers code. If the approach is found
-> to be acceptable, each of the drivers should be converted on its own.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 3/6/2025 6:56 AM, Bryan O'Donoghue wrote:
+> On 05/03/2025 10:43, Dikshita Agarwal wrote:
+>> During the reconfig, firmware sends the resolution aligned by 8 byte,
+>> if driver set the same resoluton to firmware, it will be aligned to 16
+>> byte causing another sequence change which would be incorrect.
+> 
+> During reconfig the firmware sends the resolution aligned to 8 bytes. If
+> the driver sends the same resolution back to the firmware the resolution
+> will be aligned to 16 bytes not 8.
+> 
+> The alignment mismatch would then subsequently cause the firmware to send
+> another redundant sequence change.
+> 
+>> Fix this by not setting the updated resolution to firmware during
+>> reconfig.
+> 
+> Fix this by not setting the resolution property during reconfig.
+Ack.
+>>
+>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> ---
+>>   .../platform/qcom/iris/iris_hfi_gen1_command.c    | 15 ++++++++-------
+>>   .../platform/qcom/iris/iris_hfi_gen1_response.c   |  1 +
+>>   drivers/media/platform/qcom/iris/iris_instance.h  |  2 ++
+>>   drivers/media/platform/qcom/iris/iris_vdec.c      |  4 ++++
+>>   4 files changed, 15 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+>> b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+>> index a160ae915886..d5e81049d37e 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+>> @@ -562,14 +562,15 @@ static int iris_hfi_gen1_set_resolution(struct
+>> iris_inst *inst)
+>>       struct hfi_framesize fs;
+>>       int ret;
+>>   -    fs.buffer_type = HFI_BUFFER_INPUT;
+>> -    fs.width = inst->fmt_src->fmt.pix_mp.width;
+>> -    fs.height = inst->fmt_src->fmt.pix_mp.height;
+>> -
+>> -    ret = hfi_gen1_set_property(inst, ptype, &fs, sizeof(fs));
+>> -    if (ret)
+>> -        return ret;
+>> +    if (!inst->in_reconfig) {
+>> +        fs.buffer_type = HFI_BUFFER_INPUT;
+>> +        fs.width = inst->fmt_src->fmt.pix_mp.width;
+>> +        fs.height = inst->fmt_src->fmt.pix_mp.height;
+>>   +        ret = hfi_gen1_set_property(inst, ptype, &fs, sizeof(fs));
+>> +        if (ret)
+>> +            return ret;
+>> +    }
+>>       fs.buffer_type = HFI_BUFFER_OUTPUT2;
+>>       fs.width = inst->fmt_dst->fmt.pix_mp.width;
+>>       fs.height = inst->fmt_dst->fmt.pix_mp.height;
+>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+>> b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+>> index 91d95eed68aa..6576496fdbdf 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+>> @@ -155,6 +155,7 @@ static void iris_hfi_gen1_read_changed_params(struct
+>> iris_inst *inst,
+>>           inst->crop.height = event.height;
+>>       }
+>>   +    inst->in_reconfig = true;
+> 
+> This flag can be changed by iris_hfi_isr_handler() down the chain.
+> 
+> 
+>> @@ -453,6 +453,8 @@ static int iris_vdec_process_streamon_input(struct
+>> iris_inst *inst)
+>>       if (ret)
+>>           return ret;
+>>   +    inst->in_reconfig = false;
+>> +
+>>       return iris_inst_change_sub_state(inst, 0, set_sub_state);
+>>   }
+>>   @@ -544,6 +546,8 @@ static int iris_vdec_process_streamon_output(struct
+>> iris_inst *inst)
+>>       if (ret)
+>>           return ret;
+>>   +    inst->in_reconfig = false;
+>> +
+> 
+> Are these usages of the in_reconfig flag then thread-safe ?
+> 
+> i.e. are both iris_vdec_process_streamon_input() and
+> iris_vdec_process_streamon_output() guaranteed not to run @ the same time ?
+> 
+> I don't see any obvious locking here.
+> 
+Since reconfig handling is only relevant to capture port, the usage of
+in_reconfig flag in output port is unnecessary. I'll remove the redundant
+flag from output stream_on to simplify the code.
+
+Thanks,
+Dikshita
 > ---
-> Changes in v2:
-> - Reimplemented new helpers using old ones (Lyude)
-> - Reworked the drm_dp_dpcd_read_link_status() patch (Lyude)
-> - Dropped the dp-aux-dev patch (Jani)
-> - Link to v1: https://lore.kernel.org/r/20250117-drm-rework-dpcd-access-v1-0-7fc020e04dbc@linaro.org
->
-> ---
-> Dmitry Baryshkov (7):
->       drm/display: dp: implement new access helpers
->       drm/display: dp: change drm_dp_dpcd_read_link_status() return value
->       drm/display: dp: use new DCPD access helpers
->       drm/display: dp-aux-dev: use new DCPD access helpers
->       drm/display: dp-cec: use new DCPD access helpers
->       drm/display: dp-mst-topology: use new DCPD access helpers
->       drm/display: dp-tunnel: use new DCPD access helpers
->
->  drivers/gpu/drm/amd/amdgpu/atombios_dp.c           |   8 +-
->  .../gpu/drm/bridge/cadence/cdns-mhdp8546-core.c    |   2 +-
->  drivers/gpu/drm/display/drm_dp_aux_dev.c           |  12 +-
->  drivers/gpu/drm/display/drm_dp_cec.c               |  37 ++-
->  drivers/gpu/drm/display/drm_dp_helper.c            | 307 +++++++++------------
->  drivers/gpu/drm/display/drm_dp_mst_topology.c      | 105 ++++---
->  drivers/gpu/drm/display/drm_dp_tunnel.c            |  20 +-
->  drivers/gpu/drm/hisilicon/hibmc/dp/dp_link.c       |   4 +-
->  drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  24 +-
->  drivers/gpu/drm/msm/dp/dp_link.c                   |  18 +-
->  drivers/gpu/drm/radeon/atombios_dp.c               |   8 +-
->  include/drm/display/drm_dp_helper.h                |  92 +++++-
->  12 files changed, 322 insertions(+), 315 deletions(-)
-> ---
-> base-commit: c0eb65494e59d9834af7cbad983629e9017b25a1
-> change-id: 20241231-drm-rework-dpcd-access-b0fc2e47d613
->
-> Best regards,
-
--- 
-Jani Nikula, Intel
+> bod
 
