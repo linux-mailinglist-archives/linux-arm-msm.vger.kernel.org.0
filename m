@@ -1,88 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-50442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D27F1A542FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 07:45:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98586A54303
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 07:47:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C56E188D0BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 06:45:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 11A377A7977
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 06:46:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B35E51A2547;
-	Thu,  6 Mar 2025 06:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C75B433D1;
+	Thu,  6 Mar 2025 06:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zWRdOsAb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vppdhw8Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF091A23BD
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 06:45:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203905672
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 06:46:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741243503; cv=none; b=dwxTIP17M9U66Md9vKlL8ulerb7DiIDgXI6qxCr16l7u524fnCpAudwc4KIRfrxdlZxH+/pE3vpxteB7wPbCLEGuWyiWB33JitQWeRcUZGw/HCJy9XbkCpVWoRUWnGqi3aurU9WHrfSJqxylvUAa4fqFtFzvsiVLbV9b/F/70zA=
+	t=1741243618; cv=none; b=rXwaeH2h0sfuMadv28y5g/8O2CRCToL51b46zRJylJ7Cra90ZNfzeC3Yz17VAL1bha10pjlZ7pPI1VCf1RO2v2RCZxYVSBgLZ3gnX+a1A5ibglHWaWIHGoakgtVPEwMlQG7EtCnFnJPP821fydgPF+oxwZL/GL+AOUVlzWCAq20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741243503; c=relaxed/simple;
-	bh=y5E08rWlMslvB/K+XX3+OWFa9aCDHykKOGuGEwH0wPY=;
+	s=arc-20240116; t=1741243618; c=relaxed/simple;
+	bh=KpOy4pfpR4+rxn6tIFJkaSFhCJ2yW1+8lwBUy4Z33pE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FSU8jpCJWMwsEX6LRQqkAx1yZfhMI2KWwtdQrP/D70OiN+REL1jqeR80mly97/NJ3pQGZ7btSY51hZzPjj+RwDFrusmmDz1t+hLavJmU6fWCnyyDtMiNVJSRnHiETlOQwcjstJ4/XAJucb+DPP6a0Z+8fCe1p/xevI5O1efXayw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zWRdOsAb; arc=none smtp.client-ip=209.85.208.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=BNExfJ4P9kaE8VhYoCME/BTDkQozfqgYrfc5Lk9OwFQ1ehRrFTWxCOuMpHSx8h2tuMZ33pwZWbmE+C8MPD5zswBgxjM3phommRFPfpMCgME4tEwaovnc8r1U5lt8Mp7Ms3iuH64jsyZDBD7uicMqHgFcWAgURf9eshfkaQc2gvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vppdhw8Z; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-30bee1cb370so547541fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 22:45:01 -0800 (PST)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5493b5bc6e8so346779e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 22:46:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741243500; x=1741848300; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1741243614; x=1741848414; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vJcWTKFiNofQSBl8Y+/9Hv1NdwHNGxMC5GhCSRQfHSY=;
-        b=zWRdOsAbSpLP57bPSWoFMx0r+zQrQGiv5gboBIy9QBL4fZIKFGoeHIJASrjL6i9E/V
-         Xdt0nF8fERTaS0HUh//Z3i0fn1XkC8RIxL2s2sPDu8zU7dWb9fWx5TmnC9IHXUkED8VQ
-         bCFkKOgy0+T+Ed4xGlaVpo+bLc69zbp/IxcWPzb6vM5QbDlRCUQP3YKmumM04IctHTem
-         ar6wMqzqim7Q0jWFM5SKcRVZLY0uPnilGBF/CaidUVluPRNwjLM2GcLVa3WUahlCUWTu
-         K2yxPBaSG+2sBmHfUaFqJdJVHYQGS2qW4t2jssy1FhJmY88U+93DLVrnqn5beEaXpR21
-         wNxQ==
+        bh=aBJt5IiboHla6lV3Ran8Kn8NxsmqzqpO6sJDmhngbes=;
+        b=vppdhw8Zq/8+0izrBHKbLmALahRX69m2tI3OciVwmdm7Gd5vnnbqdqIllpkKiRCILY
+         EyjDAyE7Dsp61Jpgo9UuXFkrpRGNYddjnY+DGeWSZyHKsOAlb+rfaZvyl4N79Luf9fpb
+         i+4QKV9kjQz/1vXNqQtPn6ZPqobXqyNM6k4vxrl7mvZYrEoy8jPiYGToGxUuyaAxti8Y
+         sZMU+TElVdRbCVb4X6HWydRd3OB/H4XnhEMOOw9MVdv6JdU5MtotzKXeBHFpEojplVP5
+         WjBGw95iC5qIvI0uF7+DWD7O0QG9oPy0slEAe7tEjAouXCNIXxtrTC0GNCtED5HHmRhB
+         Jzng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741243500; x=1741848300;
+        d=1e100.net; s=20230601; t=1741243614; x=1741848414;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vJcWTKFiNofQSBl8Y+/9Hv1NdwHNGxMC5GhCSRQfHSY=;
-        b=OoesabKNVSiGj4pdMx06VQr7WHITVKzsQ8SFnIhPD3+w2Y6AYnHbX7RIOfm6MNxQJy
-         Knk9kW0QUnRNmxi43vEq2lz/8DYaCmpSzgHtH2WYY6Ik90pidyD8g1MSemaiZQigakIV
-         3aqYULmSv6ccAB/UL4A9HTXDzTWhRGA2TMnMGyHJXeMey2WeYd/dkvzhQhGhRh9f4AT/
-         I5iBEqQHV7jW6EEDE1+QluOGilftFZHd2AxqGyrbf3kRXqqT5gQEJTWRZmnQW2AHPcxc
-         YiA8tRILzWWCbFClbhGUdWQ7psAVdUWIjGSbvCypiGLUYHvje1VZiEDNdFfPs9qsm1nt
-         ihPw==
-X-Forwarded-Encrypted: i=1; AJvYcCXH8vZSkUgnq2OzyjGtiXvX/Ow/bTl0gm3unGgK4Ksh92jsiMXrpszaDHj9BpGGzix5DWTWQgu7V5JIZWif@vger.kernel.org
-X-Gm-Message-State: AOJu0YwcasdQy+7dubuHIzi9gVGsIBwFu7oW6OUJwgCADPx/EfvuvxI0
-	c4hTCnLEiB9S1/7oyh1PihgTOWanTw1TreAIUwHcp2N2aBCa7nobqaRdu+N5iUg=
-X-Gm-Gg: ASbGncswSeHSfjrJ0LHA661/gQfOtAz4MMMwHRiHGUNAc0UQlrUc+ysnSGidU7SbuKp
-	cURgV7mNMY6zF9HRPr+oj7iT+nNI5VPwYlTm2Q2SvrAlSpe+OdvSeUfk2ekSM5lB0OifuazIaYp
-	LFk7kEpGi1F/2YF00pzdmc9sqLUZWnqSORDGMP6c2Ledz0t/9O/hO0GUPg7mwnVCjFb9vR81BZg
-	YiEyqSp7cfKj94G4v5rwQzbWxZd5HKXeH8ADou7SA/BQIosU+pvgqXO5agl0dV78Yegoxr1zITU
-	YIyVV0m8sfWsM2t8U5Pe+QaXqGXicJr0oKsLIltYbfbVce6LowesghTqeEdTKY/wyd28uCLUVH4
-	rrLYAxRdypVUyczQGu4dBOEPc
-X-Google-Smtp-Source: AGHT+IGKZmSCFgA/R9sb1yzYNL1vBOalW8LPwb3ZSbsOkodGM8bD2zIilQTAga0vyIRSmk9t4Oethg==
-X-Received: by 2002:a05:651c:4cb:b0:30b:ee44:b692 with SMTP id 38308e7fff4ca-30bee44d138mr619121fa.33.1741243499788;
-        Wed, 05 Mar 2025 22:44:59 -0800 (PST)
+        bh=aBJt5IiboHla6lV3Ran8Kn8NxsmqzqpO6sJDmhngbes=;
+        b=Q4rEBvskIcNRC7nPQqZxGz+91v2bAVNq2xtA8hKC3Fx9eApafoRQ087AVOonaVvTGS
+         zj1Of92R0NxQsncx9es805F6HtLlsYM7zsLV/97dVOP1IRvTt3tGqZ02o4TD/Y/aRJ5U
+         +nDYEb6CkAyhV5WDyhTBaXL3TQMVLP6wbB+LcahsOZLgBw/iUd+d15hIocn6pSmTmZxo
+         sNMiw+sRMX0eYrizwgKvo5V76AZJePIQyC3eM/zQ5NzuHqmA62qxRcElRy+zcZzNC3LU
+         ch1Zmu3hKJxi0c1P8HYXCOy9V2vdFtV0jE0meHlXQpEQieYaCC7q1rDkdpmVsdBwipXt
+         TzUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWUPdzKQcgtrvsqG8j/kW6hOGJRSeQisLD274evmdKA1O78PZzvHwFtTJapQ8i4rf1XUI0nQXhJwv763q4Y@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws/NWb/leoE0msQ4d/xsqWl7/Rtpyni2acI9YgNWwBAO9iWWTq
+	rkc3G/v0N+4A1UCyDIftNUyxjndgMwxSYCaaVPJRuf4pe3GYVyRsGO4QhT0J4qI=
+X-Gm-Gg: ASbGnctUcGA/sv6onQEeE4wYOZfYyAixPiVorl8RwI4nQxSwdwYvUFaGmlYcJtJWSi7
+	qIqjadSyk7d+F5PtYejwf3SSsihulHqh2XU2y9aDt2N5Sepq2HG29iesgmVBM/PzyX5PgOE2Dlx
+	DjeLK2nm20/wAot2BddgDY6mxUJdxt5S4F/hS9KgptMSqEabWHFfy7rWhajBcB+2LH+UO0ajQZp
+	nTvLmFfw1clGDq+yPyC7JjQjlT52gdGphQaoNZY/BDslkj8Q84hYpeogYK15k3n6EjDRbTzsm8W
+	YduRDknoL7eUW5LsHe2G/iRKNDVFzhut0/AImw231k6X4PYhJLL0qxbsoLM81u9w3wYprvO+591
+	YsEEtTwbJQH3khC36ShfYRUH3
+X-Google-Smtp-Source: AGHT+IHw2m0vBIquj8s91nI2Oqzx4I4bD6M7fJN4tOBXcl0RZL/nJ12bNu4CSxcWu+sPaxEIuNgp6Q==
+X-Received: by 2002:a05:6512:b09:b0:545:c89:2bc9 with SMTP id 2adb3069b0e04-5497d38dbe7mr2421818e87.43.1741243613998;
+        Wed, 05 Mar 2025 22:46:53 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30be99c8319sm1034191fa.76.2025.03.05.22.44.57
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5498b0bd6e2sm80629e87.130.2025.03.05.22.46.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Mar 2025 22:44:58 -0800 (PST)
-Date: Thu, 6 Mar 2025 08:44:56 +0200
+        Wed, 05 Mar 2025 22:46:52 -0800 (PST)
+Date: Thu, 6 Mar 2025 08:46:50 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
 	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] drm/msm/dpu: Adjust CDM_MUX to support CWB PINGPONG
-Message-ID: <vjufkcrkungrwy7w4pxzsac57ilzk2dt3eeypzy6pna2z5ocxg@uf237ixu6kqq>
+Message-ID: <732vgwega4ok3tkbefyxixyfdonfenik5q5zhdxqot62aygavt@s2m3m7gzjgb7>
 References: <20250305-cdm-cwb-mux-fix-v1-1-16148ca6e4d2@quicinc.com>
+ <f3bfb118-f947-4b09-a368-42c5f0d1373b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,43 +92,52 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250305-cdm-cwb-mux-fix-v1-1-16148ca6e4d2@quicinc.com>
+In-Reply-To: <f3bfb118-f947-4b09-a368-42c5f0d1373b@quicinc.com>
 
-On Wed, Mar 05, 2025 at 07:16:51PM -0800, Jessica Zhang wrote:
-> Similar to WB_MUX, CDM_MUX also needs to be adjusted to support
-> dedicated CWB PINGPONGs
+On Wed, Mar 05, 2025 at 09:15:10PM -0800, Abhinav Kumar wrote:
 > 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c
-> index ae1534c49ae0..3f88c3641d4a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c
-> @@ -214,7 +214,9 @@ static void dpu_hw_cdm_bind_pingpong_blk(struct dpu_hw_cdm *ctx, const enum dpu_
->  	mux_cfg = DPU_REG_READ(c, CDM_MUX);
->  	mux_cfg &= ~0xf;
->  
-> -	if (pp)
-> +	if (pp >= PINGPONG_CWB_0)
-> +		mux_cfg |= 0xd;
+> On 3/5/2025 7:16 PM, Jessica Zhang wrote:
+> > Similar to WB_MUX, CDM_MUX also needs to be adjusted to support
+> > dedicated CWB PINGPONGs
+> > 
+> > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c | 4 +++-
+> >   1 file changed, 3 insertions(+), 1 deletion(-)
+> > 
+> 
+> Not exactly sure which fixes tag to use here, but
+> since this should have ideally been addressed together while adding the WB
+> mux programming to handle CWB, I am going with
+> 
+> Fixes: a31a610fd44b ("drm/msm/dpu: add CWB support to dpu_hw_wb")
 
-Shouldn't it be 0xb for PINGPONG_CWB_2 and 3?
+I don't think it needs Fixes tag. The patch is good to go on its own.
 
-> +	else if (pp)
->  		mux_cfg |= (pp - PINGPONG_0) & 0x7;
->  	else
->  		mux_cfg |= 0xf;
 > 
-> ---
-> base-commit: 6d3175a72cc07e90f81fb35841048a8a9b5134cb
-> change-id: 20250305-cdm-cwb-mux-fix-69ed5297d4f7
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
-> Best regards,
-> -- 
-> Jessica Zhang <quic_jesszhan@quicinc.com>
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c
+> > index ae1534c49ae0..3f88c3641d4a 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c
+> > @@ -214,7 +214,9 @@ static void dpu_hw_cdm_bind_pingpong_blk(struct dpu_hw_cdm *ctx, const enum dpu_
+> >   	mux_cfg = DPU_REG_READ(c, CDM_MUX);
+> >   	mux_cfg &= ~0xf;
+> > -	if (pp)
+> > +	if (pp >= PINGPONG_CWB_0)
+> > +		mux_cfg |= 0xd;
+> > +	else if (pp)
+> >   		mux_cfg |= (pp - PINGPONG_0) & 0x7;
+> >   	else
+> >   		mux_cfg |= 0xf;
+> > 
+> > ---
+> > base-commit: 6d3175a72cc07e90f81fb35841048a8a9b5134cb
+> > change-id: 20250305-cdm-cwb-mux-fix-69ed5297d4f7
+> > 
+> > Best regards,
 > 
 
 -- 
