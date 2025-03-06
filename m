@@ -1,160 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-50532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8D25A5503F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 17:10:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0010FA5519C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 17:44:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 142A37A7F45
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 16:09:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E5B37A897F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 16:41:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F330E211294;
-	Thu,  6 Mar 2025 16:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50B9723F273;
+	Thu,  6 Mar 2025 16:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VzjOYvhw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GDhT2atB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEA0211472
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 16:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D069232368
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 16:42:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741277397; cv=none; b=ud96aPfWqqkJaE2E0u+iYxmJrNQQLAforKATYXALVlae1wm+OARa5775270h0cZFChD7hfweagjErwkCe17/4aM73y5kQ/ic01utEBHfmQqlA9aiXgA81qviLQjwcrpogrJk+q6tXQwONbFEM6N2/ur6mPDr9+W0rKVLNUIoKSk=
+	t=1741279357; cv=none; b=Qh0yilDyYykF+icL092GfI+JF8/QrVpyp9OoIa/Wq9erSR0YfIwo7+FboLLYUOq/FlNA21GvZ/anGt3Afyt/U8iYlU0kK2hDfvL7xSkOBntUXP6D/EQ95OiZhZl7NvaYpDMMYxtnzPcPHfDAGAGFvEk9++TId/oocTABtn6A7nM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741277397; c=relaxed/simple;
-	bh=dSkSnGRSTg6/8HCqL1kZd6r14a9sf9T98LpqXDkluBw=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=lSRoUTnybYx9LkrJuHXLcK1bbtB+uT4/U6U1EwlFhjRnkvzgU9bMEXjNhFf/kgbEGVV+MnIs67Rzq7Dk4da0QfbkEiGTl5kFIZ/i5ys6ByFmdEqsI4nuAd5CScf57r6iagnpPyYPoqNY4QrYzL/ntyHYXYpSRo8kLTZd8NjVHM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VzjOYvhw; arc=none smtp.client-ip=209.85.216.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-2fec3e38c2dso2583934a91.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 08:09:56 -0800 (PST)
+	s=arc-20240116; t=1741279357; c=relaxed/simple;
+	bh=Htl3h7KeaL/zOb/ApH4x3HZDGgYnWqggjXrIEIkaUSg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M5uIOipxAEANDbEiMM9L2U3nHBRHhDrWYkB/OUH/SorEap+NkcRHbmrIzkKkfX17mTXT9p8WoQsQf1wDZDm9ZIUYI/bwisJDvkTp5MgviPBHVVo5ylnvFv6Ou3V6kT6thjpiqkbPAd/z5uKWzh5f3FEQKHq4m1TQXFZsD1r7QJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GDhT2atB; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5497e7bf2e0so999608e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 08:42:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1741277395; x=1741882195; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Hs/rNKptw4ZYO6spUUnJ/Zhn7gqoIyuxcR/DXY52zCs=;
-        b=VzjOYvhwSb6uAqJDgLIo/imMcae4YtF25vUnudowGVN0oWwO30CUzfJTxkBdEMBXjD
-         F7PyrGzjp1nwMF3G8zEWtTaYxTIE3RD11vnWw0X7W0+qsNNWTaGrGTcGRMOkO6CN3sh4
-         1VLMAE1F7NjlyBcqMipLAeYsxApJ5pfSpZb3mx6gPBivZ99LzzEnpPvPgaWUqvnYjwo8
-         TwMG1QhlGxOqqQSpm81rJ9D6Gg/upC1iegKY2U05dxKN7mPF1XZltpRF/mz9+isI8IHN
-         9DvJ2UTdbMgYu1tsHUNaG5GHDNSBvzCJI7hsEaim/FwhlMUCLMErrpyGK6iwI2dXTxrr
-         OW0Q==
+        d=linaro.org; s=google; t=1741279353; x=1741884153; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=k1TEoG6Bs4dGXKhJ2AGcoAN5xoNJpv8hc7dD8huvzUY=;
+        b=GDhT2atBG6Kv6jMSO94VxaAkl+XgQv2yXVSXAG41suLUS38zYtzdddMW3IZ95Dyxub
+         FvUQAx/kx6MM3LL6pLenc8Yp3JmMLz/PsrbQeMz5utB+rPjvNU/lKzIjMvS+V9RL8kE0
+         dCH/s56xypbPu4Xe97YXfCfnHpiRWDnQwf5FmrK2cO53+0x0ad9l2m62TyXPSrBpirh/
+         ktYg74bJTrqQVBr73pMswKJBYy/yQ+OVAGNQihSQc5+BgsrDNxnB/FdcsD6ALqGhvs+r
+         RRP5aQVVwzX+5sRZXyf16ueLtcEs/t8kTHY+bp+Frv6UgnRwHWjCWtP7gi7zHCXd9cbD
+         LQLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741277395; x=1741882195;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hs/rNKptw4ZYO6spUUnJ/Zhn7gqoIyuxcR/DXY52zCs=;
-        b=D1KIAzQaWs7XQIWSF5LD+S/hhZFhRPk/NP0D+wYo7zUEopRQG+eRK/0lxtJVkGem00
-         uov1lSPo9yEa7c4b2y5A/+R8byUaunyVNO5WM17P/jlO0F5KVZsaMMbXZtMTMIO4xTsP
-         DFk8DJW4XLTkPX1UeFdM/dHE6t44nmVThG76Yo/pP2cvnXjNmI06xKhtIHgN9MQlcKSs
-         N46ypgcu5wS5KGRsp9oGXzx5sMT/DAsMX+Ab2nF57pafLV0N2PPQDtoO7qyxYK1P3CZN
-         oDfu/Qv+SgkZmEjMP7QBpTeMq8F7BSue5J5ks2u2QGVmVUEvyeDwSjrx3hBp074Xqp5V
-         oGNg==
-X-Forwarded-Encrypted: i=1; AJvYcCWtSz6BCeCxEGZ4wd2nxZp8JJylUT2Q3Pp9hIHtKrhAm+CWGuiv2u1q6Oct1mctNoXuMIO72U7MhVWp4HXa@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywb5QByTEFLBGSVbZbOq2sAO2j67cAEQwGWqNQyqAnzV079yShs
-	Dlg5CBeha3+ymtHjb4pxdPorn+fTb54Y5jn7PJ08R4Ig+aZcuBOfsGm6hR3o3UuDma5LG8CtQJB
-	hDBbfTtCvpiyOCigGW9zpUg==
-X-Google-Smtp-Source: AGHT+IHZELEys14r7zs4SZgmd2W46MIv/QUbWyKYwMP6mPNo6vZ2zpUnDCZiIhuHsH03hVH88HWBYJTxZmQFNJNnRQ==
-X-Received: from pjbnd9.prod.google.com ([2002:a17:90b:4cc9:b0:2ef:9b30:69d3])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:38c4:b0:2ff:6a5f:9b39 with SMTP id 98e67ed59e1d1-2ff6a5f9ba4mr4264848a91.18.1741277395327;
- Thu, 06 Mar 2025 08:09:55 -0800 (PST)
-Date: Thu, 06 Mar 2025 16:09:54 +0000
-In-Reply-To: <20250303171013.3548775-5-tabba@google.com> (message from Fuad
- Tabba on Mon,  3 Mar 2025 17:10:08 +0000)
+        d=1e100.net; s=20230601; t=1741279353; x=1741884153;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k1TEoG6Bs4dGXKhJ2AGcoAN5xoNJpv8hc7dD8huvzUY=;
+        b=D3gXSUXww/H4v+1BVssMtg5tKrSUhlB+U+HE3zSxf2YHS7NumU95ko0dxAnZY8jqAw
+         /Q5edGoqifY11ElY1SW/aVUEPUmAY2QDp4BIo48UH8rtJVtR7KyOghKbPURLtTmh+a2i
+         73NiHtdaU/OIXl3mAoFL/gtBhLhFWteD3R2Q7k5GUqhXhsdZM2J+IUKDX+zAFiy0avPV
+         HSt7I87N0A+4WzpFwrQyrAxtSY9hNn1RJrb5v0hmf+J21+UvpXbR7d+SoxYv8PL/v9jx
+         ZWUlyzgsJK2MLDyKrrF01ioxq8HSq+8r6zbHyV4lrg0goC/TrajkJN/NDbWqagc42zjw
+         IdFg==
+X-Forwarded-Encrypted: i=1; AJvYcCVr/9fVBS8Uufd79J1iGLmrHFv9aGbRYcSSGKrlybc5eQfbCchNsZF40gCkYbu6JKTMC3CvgbfBhbLbTwqf@vger.kernel.org
+X-Gm-Message-State: AOJu0YzH5JotskjUm1XHl5wXZyxd4RCAe4uNdVMh5x4iwF8FYargNg6c
+	SNIEjEmWVGC8vHKC/TMa5YnLJr1zRFvkQTMQNyAZNtA4bQn3zfKbDV5D2lJimJw=
+X-Gm-Gg: ASbGncuSre9LZidPdlwCPCbVqbfVOz+92kkkldicjtWN5SSjHr2SVQ7NJunv4Y3xVt2
+	x7grFrme3XhIJ75k9KWuMvbLvObPzUDnXcHZoXa54A+uXIZQN9kCajbWlDP1kBeGN1w9+MwuQFH
+	G/dL3q6LMnK/bsQG35ioYn74LeIEiLdLENgJstjymoGcP3QKFriuX4KaR/uSdLVgsk4aKvaww8A
+	rzp6+eGQB7/poyQE0UCGE9vgbdUMZyZ0gCRxellj0uYnXFop58ia5tMLpg3YkPL2g9R9wZhYdaT
+	TJ0msTdmIDZihCh40tq+QjF5H8p2FMYDT5mVI9Rv6EF9U9OSK2D6D4QXar80/mzWvKYywU2puin
+	QyPeA9Mo0joHidlr6F+56g4EZ
+X-Google-Smtp-Source: AGHT+IE1wW9mQTVmacyoQdeIAvRVB50L7n4ewIxrLBTw9juMr8FpFISjO6I/fHqGbHPO6+88qFtLCw==
+X-Received: by 2002:a05:6512:33d1:b0:545:2efc:7458 with SMTP id 2adb3069b0e04-5497d377827mr2510465e87.39.1741279352687;
+        Thu, 06 Mar 2025 08:42:32 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5498b1bc204sm225871e87.176.2025.03.06.08.42.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Mar 2025 08:42:31 -0800 (PST)
+Date: Thu, 6 Mar 2025 18:42:28 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Lyude Paul <lyude@redhat.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH RFC v2 0/7] drm/display: dp: add new DPCD access functions
+Message-ID: <fdhegbtikit7n6ftql4cx4giikgt2vkue4jrasxfgkpxlgdbo3@vlcv63kz4j4r>
+References: <20250301-drm-rework-dpcd-access-v2-0-4d92602fc7cd@linaro.org>
+ <87a59ywda3.fsf@intel.com>
+ <877c52wbrh.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzldtita25.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v5 4/9] KVM: guest_memfd: Handle in-place shared memory as
- guest_memfd backed memory
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <877c52wbrh.fsf@intel.com>
 
-Fuad Tabba <tabba@google.com> writes:
+On Thu, Mar 06, 2025 at 03:04:50PM +0200, Jani Nikula wrote:
+> On Thu, 06 Mar 2025, Jani Nikula <jani.nikula@linux.intel.com> wrote:
+> > On Sat, 01 Mar 2025, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> >> Existing DPCD access functions return an error code or the number of
+> >> bytes being read / write in case of partial access. However a lot of
+> >> drivers either (incorrectly) ignore partial access or mishandle error
+> >> codes. In other cases this results in a boilerplate code which compares
+> >> returned value with the size.
+> >>
+> >> As suggested by Jani implement new set of DPCD access helpers, which
+> >> ignore partial access, always return 0 or an error code. Reimplement
+> >> existing helpers using the new functions to ensure backwards
+> >> compatibility.
+> >
+> > I think that description is for earlier versions of the series, it's the
+> > other way round now.
+> >
+> > Regardless, glanced through the series quickly, I like it, this is
+> >
+> > Acked-by: Jani Nikula <jani.nikula@intel.com>
+> 
+> PS. If you need to send another round, please Cc: intel-gfx and intel-xe
+> to run this through CI for both i915 and xe drivers. Thanks!
 
-> For VMs that allow sharing guest_memfd backed memory in-place,
-> handle that memory the same as "private" guest_memfd memory. This
-> means that faulting that memory in the host or in the guest will
-> go through the guest_memfd subsystem.
->
-> Note that the word "private" in the name of the function
-> kvm_mem_is_private() doesn't necessarily indicate that the memory
-> isn't shared, but is due to the history and evolution of
-> guest_memfd and the various names it has received. In effect,
-> this function is used to multiplex between the path of a normal
-> page fault and the path of a guest_memfd backed page fault.
->
+It might be a good idea to do that anyway. I'll send next iteration,
+fixing the cover letter and adding both MLs. I hope we can tolerate a
+bit of spam for the sake of getting the series a proper CI test.
 
-I think this explanation is a good summary, but this change seems to
-make KVM take pages via guest_memfd functions for more than just
-guest-private pages.
 
-This change picks the guest_memfd fault path as long as the memslot has
-an associated guest_memfd (kvm_slot_can_be_private()) and gmem was
-configured to kvm_arch_gmem_supports_shared_mem().
-
-For shared accesses, shouldn't KVM use the memslot's userspace_addr?
-It's still possibly the same mmap-ed guest_memfd inode, but via
-userspace_addr. And for special accesses from within KVM (e.g. clock),
-maybe some other changes are required inside KVM, or those could also
-use userspace_addr.
-
-You mentioned that pKVM doesn't use
-KVM_GENERIC_MEMORY_ATTRIBUTES/mem_attr_array, so perhaps the change
-required here is that kvm_mem_is_private() should be updated to
-kvm_slot_can_be_private() && whatever pKVM uses to determine if a gfn is
-private?
-
-So perhaps kvm_arch_gmem_supports_shared_mem() should be something like
-kvm_arch_gmem_use_guest_memfd(), where x86 would override that to use
-mem_attr_array if CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES is selected? 
-
->
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->  include/linux/kvm_host.h | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 2d025b8ee20e..296f1d284d55 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -2521,7 +2521,8 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
->  #else
->  static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
->  {
-> -	return false;
-> +	return kvm_arch_gmem_supports_shared_mem(kvm) &&
-> +	       kvm_slot_can_be_private(gfn_to_memslot(kvm, gfn));
->  }
->  #endif /* CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES */
+-- 
+With best wishes
+Dmitry
 
