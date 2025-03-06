@@ -1,208 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-50540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DD9FA55254
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 18:07:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA926A55260
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 18:08:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B5C19188CD9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 17:05:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEA841898E37
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 17:06:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE5022566F8;
-	Thu,  6 Mar 2025 17:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE51425A652;
+	Thu,  6 Mar 2025 17:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LpnL/EVa"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="WGgnc136"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from 004.mia.mailroute.net (004.mia.mailroute.net [199.89.3.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C03D23DE85
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 17:05:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8681256C68;
+	Thu,  6 Mar 2025 17:05:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741280709; cv=none; b=GntcfBeqDN716o2b9JNVGxe+zAmfHk2Er0z+G8rFYhq0f/M5WOIK+IVWD3glyb+CTP2yFocgYtBjqoWuvQ8AWzpYiqhj+z8CvPnJnYd+aJVdjoNDEFYpb0X3ERzaHiENxnu+L4SDQ90WVteTC27Ym4S/EGWahRVFaCoUbDbRuwA=
+	t=1741280736; cv=none; b=GuHV6gOjdeh6HvaFVHSlMZ3yv0vV/CDNU4sC0J0VmPDNWA7NcRoArv6RsE/x+vN29C9RqRGqrx1ihdn74kzQBZwh67ED/3EMJFw7Wbjyn0DVMkSutSIUdICdTygdyg+olkrvGpk+7pFlkWIhgXn4NbTQZpsr05nXomJHO5jY1F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741280709; c=relaxed/simple;
-	bh=0TbGvAi25znYdsV6DrzBbJgUWZR9FrTaPLtTPs8pfas=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=VwGdzvM3nhOGXC6BRkxkkVL7izSEhSaFnLwmaVe25h+CBMk8fv9xAWyZJAhCI5da6BLR2oxxdYR5JbXKhK5k0akmDPCG39iwA8XvZDA07Jvu5Z2So3vTY6l/D0eJWxySFzf8VIbSLsbmW80ArsQdx4IEz6ekWxUm26SF8MJfOCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LpnL/EVa; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-22326da4c8eso14263255ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 09:05:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1741280707; x=1741885507; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UBGGuWkfwJDEP8JICjorkuShOBnMiDySj/3tcxlcwyU=;
-        b=LpnL/EVaJVEf8QlrtG/yO0K7ZZWPQsS2w39bf48+mQRFbHQ02jzVAf8feAinGB6YzW
-         WncierV/EOsmTNOXxzI7Ssr6pkrN8aWDrVuCwgqycF7oyITbxdBml1ZjNfX3IaITO+ci
-         C+v/YJNpIt3vd5miQjkomk81zVvza87J8U2gZix+c8Mr43q6hHkQk+YYPvm7nqm4v8Ky
-         GOntMdsxdpKzvOHwNr5+WGBEu/x0PGDaLG5Ac3iYCR/Qf8OhzIVoT3l8IlTLFT5E8yfG
-         to6DZbtkiA6c2HdyD/f5lx9FGoGxwjq9Xe2LSsG9PhkoZ3m5CrkJQ+VI4pq5mkej8aMH
-         1AZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741280707; x=1741885507;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UBGGuWkfwJDEP8JICjorkuShOBnMiDySj/3tcxlcwyU=;
-        b=nroMqaawsd/gv5VYq4HO9WOclrZi3PTuAF94lOu8IFIEDSih1/TxbOkehcXG7IO3wp
-         F7c6lL2yOUarCID5wMCOgj4VD3C29Sxj8VZT5669ct0stxrIRIL6CZGMuu1i6lcZJwNm
-         q30JjjazkdMxll4Ml0wZyoa8GzFhRq3JUnyzU1KNtaJynrllhjGnmzgSlkmt1oD1T/Iq
-         VORTEjwuqkBXDKv0l0Xx1YURBITORlykWZ8TcL5Av/RwMh51OHHEmyIHUjLsSCAGeOrN
-         tx3T8POd4sNjujUQGnDimSWDKCwMm7TKEpWTf3CjlKy8EeVVf806bVRLgWI/mYYRFz5Z
-         wltw==
-X-Forwarded-Encrypted: i=1; AJvYcCXprDcwTY8V6u55+VUt2zwDtuaXmwMlLtaHMPSWL2vKFNCf78i+/6vIQhidyQlyPY6MZfFCW9GC6dovktKW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzhpITJaO9dgcv/tDT3r8aAlhwu4Z8Jm0OZ+kSJUqtwj/zKw9gM
-	eq/fFoxdwceonUyCzT+uQP84KG9ElTPgVMnk7hMc8+mJGIsUp+fPKQT9yLvX3Lh/mQYQvzTf9//
-	karwGRSolR4nvDaCcCmjgow==
-X-Google-Smtp-Source: AGHT+IFoOKAm2bACytw9HdRQCiXTJnTeA8yt2RPKHM32xjbYRVD4WpsCIaShzruZ4wuBnCGpIqUkT7Xl3oKqgVJ4eQ==
-X-Received: from pjbee4.prod.google.com ([2002:a17:90a:fc44:b0:2fc:2b96:2d4b])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:903:fa7:b0:223:44dc:3f36 with SMTP id d9443c01a7336-223f1d20e6amr134836815ad.43.1741280707329;
- Thu, 06 Mar 2025 09:05:07 -0800 (PST)
-Date: Thu, 06 Mar 2025 17:05:05 +0000
-In-Reply-To: <CA+EHjTzOGuCvN91WS76Bx1dBOQNxv+Tqz=gTc85bVvjCrF0hyA@mail.gmail.com>
- (message from Fuad Tabba on Thu, 6 Mar 2025 08:48:41 +0000)
+	s=arc-20240116; t=1741280736; c=relaxed/simple;
+	bh=3VfLqqlmovthJNuFMZVeB6EtRJFnUlkX4NOlEqhohiE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N4Qi/s8QEA0NqDNyJ4LRyeIxRO2ICbc16flvcDoRVooadvPAYNoVSLJl8hMeECvVrp/89cC0OP55DeHMIA5QU8LH30jg60BalVVO3cM61QnNBKUl/9X9Xa54IdHBltdof+0HqCj/08qSle7X40SGJ+J7duR9ecLf824p+ekpp5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=WGgnc136; arc=none smtp.client-ip=199.89.3.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 004.mia.mailroute.net (Postfix) with ESMTP id 4Z7wlp2t0dzm0ySG;
+	Thu,  6 Mar 2025 17:05:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1741280724; x=1743872725; bh=A24+KffKtFSUVrYAFQdKne2r
+	rxq+xDeCpRePORA+drE=; b=WGgnc1365z+z/MCkk3wq0Ptnoo4oI5To9+nUweQB
+	uUe2kjevacnrrWUS/2/oX04FmiJumMOt/HObNkMgiIAYFCuryhzOBSLoR+mfeMEm
+	caNirXHPxCGiZgOFMeNAayrqgZR+h3qBRdvUQtuBSQWMgzxXhCW4oG6vBJoYQ6zo
+	5C6pmgNc8gGIFA9T0ZWQyEZitEVFa7OQwWiX2W9WzyQmguaFMWYSzrU23C8LMqOu
+	1l1jilgsOJtICajy9zk/Obu+VkpJoxeRxBWSCjh4LtOs7OzeIJa71Jf0Of9d/jDd
+	1wQfLtSFeWe7Xl7BBghCPbug4DJtdUV5A/BnGt7biTXd+w==
+X-Virus-Scanned: by MailRoute
+Received: from 004.mia.mailroute.net ([127.0.0.1])
+ by localhost (004.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id wqlyNVe4qNmw; Thu,  6 Mar 2025 17:05:24 +0000 (UTC)
+Received: from [172.20.25.222] (unknown [192.80.0.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 004.mia.mailroute.net (Postfix) with ESMTPSA id 4Z7wld6Czxzm0yTc;
+	Thu,  6 Mar 2025 17:05:16 +0000 (UTC)
+Message-ID: <34aa5237-75fb-4cd1-9b90-f0a3f73753f8@acm.org>
+Date: Thu, 6 Mar 2025 09:05:15 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzikomt7i6.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v5 3/9] KVM: guest_memfd: Allow host to map guest_memfd() pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 3/3] scsi: ufs-qcom: Add support for testbus registers
+To: Manish Pandey <quic_mapa@quicinc.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_nitirawa@quicinc.com,
+ quic_cang@quicinc.com, quic_nguyenb@quicinc.com
+References: <20250305120355.16834-1-quic_mapa@quicinc.com>
+ <20250305120355.16834-4-quic_mapa@quicinc.com>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20250305120355.16834-4-quic_mapa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Fuad Tabba <tabba@google.com> writes:
+On 3/5/25 4:03 AM, Manish Pandey wrote:
+> This patch introduces support for dumping testbus registers,
+> enhancing the debugging capabilities for UFS-QCOM drivers.
+> 
+> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> ---
+>   drivers/ufs/host/ufs-qcom.c | 73 +++++++++++++++++++++++++++++++++++++
+>   1 file changed, 73 insertions(+)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 7daee416eb8b..c8f95519b580 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1566,6 +1566,75 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
+>   	return 0;
+>   }
+>   
+> +static void ufs_qcom_dump_testbus(struct ufs_hba *hba)
+> +{
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	u32 *testbus = NULL;
+> +	int i, j, nminor = 0, testbus_len = 0;
+> +	char *prefix;
 
-> Hi Ackerley,
->
-> On Thu, 6 Mar 2025 at 00:02, Ackerley Tng <ackerleytng@google.com> wrote:
->>
->> Fuad Tabba <tabba@google.com> writes:
->>
->> > <snip>
->> >
->> > +static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
->> > +{
->> > +     struct inode *inode = file_inode(vmf->vma->vm_file);
->> > +     struct folio *folio;
->> > +     vm_fault_t ret = VM_FAULT_LOCKED;
->> > +
->> > +     filemap_invalidate_lock_shared(inode->i_mapping);
->> > +
->> > +     folio = kvm_gmem_get_folio(inode, vmf->pgoff);
->> > +     if (IS_ERR(folio)) {
->> > +             switch (PTR_ERR(folio)) {
->> > +             case -EAGAIN:
->> > +                     ret = VM_FAULT_RETRY;
->> > +                     break;
->> > +             case -ENOMEM:
->> > +                     ret = VM_FAULT_OOM;
->> > +                     break;
->> > +             default:
->> > +                     ret = VM_FAULT_SIGBUS;
->> > +                     break;
->> > +             }
->> > +             goto out_filemap;
->> > +     }
->> > +
->> > +     if (folio_test_hwpoison(folio)) {
->> > +             ret = VM_FAULT_HWPOISON;
->> > +             goto out_folio;
->> > +     }
->> > +
->> > +     /* Must be called with folio lock held, i.e., after kvm_gmem_get_folio() */
->> > +     if (!kvm_gmem_offset_is_shared(vmf->vma->vm_file, vmf->pgoff)) {
->> > +             ret = VM_FAULT_SIGBUS;
->> > +             goto out_folio;
->> > +     }
->> > +
->> > +     /*
->> > +      * Only private folios are marked as "guestmem" so far, and we never
->> > +      * expect private folios at this point.
->> > +      */
->>
->> I think this is not quite accurate.
->>
->> Based on my understanding and kvm_gmem_handle_folio_put() in this other
->> patch [1], only pages *in transition* from shared to private state are
->> marked "guestmem", although it is true that no private folios or folios
->> marked guestmem are expected here.
->
-> Technically, pages in transition are private as far as the host is
-> concerned. This doesn't say that _all_ private pages are marked as
-> guestmem. It says that only private pages are marked as guestmem. It
-> could be private and _not_ be marked as guestmem :)
+Shouldn't the declarations be ordered from longest to shortest for new
+code?
 
-True, didn't think of it this way!
+Has it been considered to annotate the 'testbus' declaration with __free
+and to remove the kfree(testbus) call? See also <linux/cleanup.h>
 
->
-> I probably should rephrase something along the lines of, "no shared
-> folios would be marked as guestmem". How does that sound?
->
-> Thanks,
-> /fuad
->
+> +		switch (j) {
+> +		case TSTBUS_UAWM:
+> +			prefix = "TSTBUS_UAWM ";
+> +			break;
+> +		case TSTBUS_UARM:
+> +			prefix = "TSTBUS_UARM ";
+> +			break;
+> +		case TSTBUS_TXUC:
+> +			prefix = "TSTBUS_TXUC ";
+> +			break;
+> +		case TSTBUS_RXUC:
+> +			prefix = "TSTBUS_RXUC ";
+> +			break;
+> +		case TSTBUS_DFC:
+> +			prefix = "TSTBUS_DFC ";
+> +			break;
+> +		case TSTBUS_TRLUT:
+> +			prefix = "TSTBUS_TRLUT ";
+> +			break;
+> +		case TSTBUS_TMRLUT:
+> +			prefix = "TSTBUS_TMRLUT ";
+> +			break;
+> +		case TSTBUS_OCSC:
+> +			prefix = "TSTBUS_OCSC ";
+> +			break;
+> +		case TSTBUS_UTP_HCI:
+> +			prefix = "TSTBUS_UTP_HCI ";
+> +			break;
+> +		case TSTBUS_COMBINED:
+> +			prefix = "TSTBUS_COMBINED ";
+> +			break;
+> +		case TSTBUS_WRAPPER:
+> +			prefix = "TSTBUS_WRAPPER ";
+> +			break;
+> +		case TSTBUS_UNIPRO:
+> +			nminor = 256;
+> +			prefix = "TSTBUS_UNIPRO ";
+> +			break;
+> +		default:
+> +			break;
+> +		}
 
-Works for me, thank you! 
+Has it been considered to convert the above switch-statement into an
+array lookup?
 
->> > +     if (WARN_ON_ONCE(folio_test_guestmem(folio)))  {
->> > +             ret = VM_FAULT_SIGBUS;
->> > +             goto out_folio;
->> > +     }
->> > +
->> > +     /* No support for huge pages. */
->> > +     if (WARN_ON_ONCE(folio_test_large(folio))) {
->> > +             ret = VM_FAULT_SIGBUS;
->> > +             goto out_folio;
->> > +     }
->> > +
->> > +     if (!folio_test_uptodate(folio)) {
->> > +             clear_highpage(folio_page(folio, 0));
->> > +             kvm_gmem_mark_prepared(folio);
->> > +     }
->> > +
->> > +     vmf->page = folio_file_page(folio, vmf->pgoff);
->> > +
->> > +out_folio:
->> > +     if (ret != VM_FAULT_LOCKED) {
->> > +             folio_unlock(folio);
->> > +             folio_put(folio);
->> > +     }
->> > +
->> > +out_filemap:
->> > +     filemap_invalidate_unlock_shared(inode->i_mapping);
->> > +
->> > +     return ret;
->> > +}
->> >
->> > <snip>
->>
->> [1] https://lore.kernel.org/all/20250117163001.2326672-7-tabba@google.com/
+> @@ -1682,6 +1751,10 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
+>   			ufs_qcom_dump_mcq_hci_regs(hba);
+>   			usleep_range(1000, 1100);
+>   		}
+> +		ufshcd_dump_regs(hba, UFS_TEST_BUS, 4, "UFS_TEST_BUS ");
+> +		usleep_range(1000, 1100);
+> +		ufs_qcom_dump_testbus(hba);
+> +		usleep_range(1000, 1100);
+>   	}
+>   }
+
+Please add a comment that explains why the usleep_range() calls are
+present.
+
+Thanks,
+
+Bart.
+
+
 
