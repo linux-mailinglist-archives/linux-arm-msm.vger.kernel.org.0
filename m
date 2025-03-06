@@ -1,180 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-50436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7E22A54156
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 04:45:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68C16A5415E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 04:47:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 006D51892847
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 03:45:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9DDFF3AA3F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 03:47:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0EDF199948;
-	Thu,  6 Mar 2025 03:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C75C086330;
+	Thu,  6 Mar 2025 03:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MrjwQWM0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B4NHeXg+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6E5199238
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 03:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D8F192D86;
+	Thu,  6 Mar 2025 03:47:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741232708; cv=none; b=s8Ygswf9blUgwXIAGPLCjXXy+VGlNDjAlLOu8CTNaOG5ZwDkcbV20YFZI0I3smDjhwiJA24XSxg7qEYe1Jmuzz8VKpoaOFZaF/Fne8UyuD725VkdvPeWbIRu0fX0GoSl/cGB6pObt+OpAEqgp1qd7TZHhoy2FOfBf1MuYoGuNn4=
+	t=1741232829; cv=none; b=cVIlae5We8t8w7oLJEIQChcTZEf3itcCnRx7LWEkqz8kpO6c3jxYqzwcu18ThPEAZJMJPepP6X4l+kJX8RYGlRLPTwhWXQ7zo5uIruZ2IUw4bjYUQO/9Ce0JZ07oMGhgj4lS2k6XB/K+uAryv0PnGnpEDiqeLJbuqjlkqRx9udg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741232708; c=relaxed/simple;
-	bh=s8ihgNf+/lTzOH0KKqwJ/Y6ngXzFB3uo/jmic8WGk6c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T7W6s3CVmqXZWx2afp4dc7k5ZhzbJPYRbtXu+wpnO5qPWEqudwx1k1wBRvTe3Mxu2ISUXl/rnYakvDJOe0z1sxU1gofpNH1C7VUqb/WRyb6qRVhI7QxxWDP/pGePpz0jUiDkgfIRU0/GL2uP/WJkbSYapqz/Ktfd9Z3O5A9Ftb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MrjwQWM0; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-223594b3c6dso2262815ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Mar 2025 19:45:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741232706; x=1741837506; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=RR/3Sh2yGD8FYmZXDeG1gkp5RyyAVqAwHMabcS8vVWU=;
-        b=MrjwQWM0VX3Jkcruam4NVPBR16WsJoRYMa0CjdvL4UYun9QCTk2m4aqQPSRkj1+n2P
-         /knF4wCdb4mOK83r9Fap7jwKcjg+5V/qC0UZsSotPj78tcLSPRQ/e2SxzWdzqnz3YciC
-         lJhC/6+cEErpTC5tI3Cyx4X77zvJn16VB1dxDvnDECDLneeKc9gWwiP8KXNbkEzx07HO
-         i1BZ151IiHp15Kgmig0jY3ms1nXCJuYhfClKv3X5e7tnetOGJgviimem3UWco5JNIq/q
-         xRow5enu1vkgQRboZC2/8yhRipERSf+iy3fLz1FA2U6Guyd0tRFSO4GSeBxjzdOSHs/e
-         7aww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741232706; x=1741837506;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RR/3Sh2yGD8FYmZXDeG1gkp5RyyAVqAwHMabcS8vVWU=;
-        b=b4IkbpKSud2wRg1Pmp6jamk45NVeGQ1dAkGjS2Rweyv2gnWcfIhoYO8lWHqe1AR6d3
-         otygtIAf/P5PrEZ6reo+dBtO65gYcLkWqtHrLeM/tQzM0k9ir0RcPNa+saYHKaoQs3zX
-         8OjvVgk8S2C5jYxvflQP8lJovvd5QGytPdAFvEcXZdu/DVqoO3fPe85QwNe6Znrd8Uve
-         awWVlIUlYcQeosm0+Z2zmRjaYs80POob3RRxRSLblXiE2eoOp92dr04rKmwWE5CmkIpg
-         exsttlhfoI4oODXon2VRtKksS5NcvlY1AOAPMPRTC5plTqPHyY6u51CYlpRQqFedp6JJ
-         BWjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWK05DqqY+jW8GpTHbKJns4ia8xfBt6NyAY+dOaAr9jryCaoZVczKmk7ACwsldhUeuYd6xgdWw+cVZZe2kg@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVivQ86eY+ttpPZXY8iybvGgZ7tkN7FdicxVsv3qwaidjH8R/z
-	CtyxnAyJjCm4UeK2Qc/t5AwJoazprlBKIpCXG/YColaahJtDuUeK2isMZgGgvw==
-X-Gm-Gg: ASbGncvSU1qNgOmUQU2XQjlEG1j3sWXXZ5kwtL8BKnnWk0v39rnKDN5ygEYXaKCIG3B
-	mR44HaAX0MFyEcq2tesK5ZDFgaQtwdeD/P3zXowNR8xYIEDYGiaH7N9cEgWXQreEF0FRRZytvsF
-	URe/R7OYdVPpheYG7FjMl/SyUklnd5ftl8kbtFSgRXmjtYiWwAFXnZnquTkNV2clvDbtMJAIqjb
-	hj3fNN4A7pRB1sF+LidlIejQZTAgwi3HgFQYfGD4rHZmG8UfD9zdm//aJRE9NyljpeEOwiNSNtR
-	HZKhZHJCywsI7W1dVjOM1Gbe/VkK2QqI6Q7aSRZTrjLfPfCEw9+/wxg=
-X-Google-Smtp-Source: AGHT+IGKJttGqJWItASqbCKDIt2tzUlENZ2HliebcQ18gZfjLIkLG4+OaRrcXjLUk9Kxrd+AX1YZIg==
-X-Received: by 2002:a05:6a00:338d:b0:736:755b:8311 with SMTP id d2e1a72fcca58-73682c89e14mr8508343b3a.16.1741232706353;
-        Wed, 05 Mar 2025 19:45:06 -0800 (PST)
-Received: from thinkpad ([120.56.193.59])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73698206c6dsm243250b3a.9.2025.03.05.19.45.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Mar 2025 19:45:05 -0800 (PST)
-Date: Thu, 6 Mar 2025 09:14:59 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	quic_mrana@quicinc.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v7 3/4] PCI: dwc: Improve handling of PCIe lane
- configuration
-Message-ID: <20250306034459.uc4qlnsnxijotplo@thinkpad>
-References: <20250225-preset_v6-v7-0-a593f3ef3951@oss.qualcomm.com>
- <20250225-preset_v6-v7-3-a593f3ef3951@oss.qualcomm.com>
+	s=arc-20240116; t=1741232829; c=relaxed/simple;
+	bh=Bb8oYvMsyb1MoMikQsGV7URm/yedArJDFdQnakFnq+8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=Dr0YYpsFeMQ9CyOXt4MRXqD5A28xP/n+Hl/hjwkhvplVRMtjQyt9HlY/H/PHbE808OZ1UnL1DXDIrWwIss99b4JRIbiRvQ9xRNu3WuxzLcl3xJdXarSAwg7qsJPjpkzbBUdPCPTq9ARnJ5aevIoI/Pr5hkjlmuHGnJDLfnZ1UME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B4NHeXg+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 525IUROW030789;
+	Thu, 6 Mar 2025 03:46:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=1fsI6ZosQTUK3pdp27dEKl
+	AX/ATgdmaj398OKlradf4=; b=B4NHeXg++iW38k9BtrY+egoqaoYZoPvkVY8PXQ
+	4u3EX0ss7OS+SsvkCWYpvuidMdNQL7YE904LsMGYA067sI6GTpsjplq7baCXLNHg
+	FJvolOkS3IUA5X1hfpF7pG1dKhUpQOFrLqgxvPm/GjX+6+MoOb2sUTbc7IU605yF
+	LfTvjPVPF6KGtvhGgKOX61x8XaOhdeSY7H2qWuM/QgnEqvX68mu7kq2DN+0hNTFW
+	uKoKTwQEEvU79kIb3/FrC9MaqJPRzL4RICqXirUKEZ2LEpvr3AEcPZhB22irJQS9
+	563pBOZIDUAX3R91zJsIddmyiUkRqaUqdZWFjLHS9LOLvENg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 456uy097tt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Mar 2025 03:46:58 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5263kw0l025269
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Mar 2025 03:46:58 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 5 Mar 2025 19:46:57 -0800
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Date: Wed, 5 Mar 2025 19:46:44 -0800
+Subject: [PATCH] drm/msm/dpu: Clear perf params before calculating bw
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250225-preset_v6-v7-3-a593f3ef3951@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20250305-perf-calc-fix-v1-1-d57f356caf59@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAKMayWcC/x2MQQqAIBAAvyJ7bmFNJegr0UFstxaiQiEC6e9Jx
+ xmYqVA4KxcYTYXMtxY9jwa2M5C2eKyMujSGnvpAjgJenAVT3BOKPkiD9UN0It4StObK3PT/m+b
+ 3/QBXcJS7XwAAAA==
+X-Change-ID: 20250305-perf-calc-fix-07147a3ff410
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: Abhinav Kumar <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>,
+        "Jessica
+ Zhang" <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.15-dev-f0f05
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1741232817; l=1024;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=Bb8oYvMsyb1MoMikQsGV7URm/yedArJDFdQnakFnq+8=;
+ b=e6NVU0pXMd2LPp1NptS8jow2SEKMBDZ7yuQVL0IbVoHqHhROrKsCnQc7D4skbe3gBTOhJraHW
+ M475dQtDm+TBkvv93KVWP022JMSBhfYV7YRsBtIN+4tBrbNr1gwJDmp
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=Pq5pbxM3 c=1 sm=1 tr=0 ts=67c91ab2 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=IWXia-4O5xEfaagEqdUA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: vPSGRd6CAt6kEC4NZlibD8KM0H8_Ylj-
+X-Proofpoint-GUID: vPSGRd6CAt6kEC4NZlibD8KM0H8_Ylj-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-06_02,2025-03-05_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 mlxscore=0 impostorscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0
+ mlxlogscore=999 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503060024
 
-On Tue, Feb 25, 2025 at 05:15:06PM +0530, Krishna Chaitanya Chundru wrote:
-> Currently even if the number of lanes hardware supports is equal to
-> the number lanes provided in the devicetree, the driver is trying to
-> configure again the maximum number of lanes which is not needed.
-> 
-> Update number of lanes only when it is not equal to hardware capability.
-> 
+To prevent incorrect BW calculation, zero out dpu_core_perf_params
+before it is passed into dpu_core_perf_aggregate().
 
-'Update max link width only...'
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> And also if the num-lanes property is not present in the devicetree
-> update the num_lanes with the maximum hardware supports.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+index 7ff3405c68675..0fb5789c60d0d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+@@ -164,7 +164,7 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
+ 	u32 bw, threshold;
+ 	struct dpu_crtc_state *dpu_cstate;
+ 	struct dpu_kms *kms;
+-	struct dpu_core_perf_params perf;
++	struct dpu_core_perf_params perf = { 0 };
+ 
+ 	if (!crtc || !state) {
+ 		DPU_ERROR("invalid crtc\n");
 
-'...update 'pci->num_lanes' with the hardware supported maximum link width using
-the newly introduced dw_pcie_link_get_max_link_width() API.'
+---
+base-commit: 6d3175a72cc07e90f81fb35841048a8a9b5134cb
+change-id: 20250305-perf-calc-fix-07147a3ff410
 
-> 
-> Introduce dw_pcie_link_get_max_link_width() to get the maximum lane
-> width the hardware supports.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->  drivers/pci/controller/dwc/pcie-designware-host.c |  3 +++
->  drivers/pci/controller/dwc/pcie-designware.c      | 11 ++++++++++-
->  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
->  3 files changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index ffaded8f2df7..dd56cc02f4ef 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -504,6 +504,9 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->  
->  	dw_pcie_iatu_detect(pci);
->  
-> +	if (pci->num_lanes < 1)
-> +		pci->num_lanes = dw_pcie_link_get_max_link_width(pci);
-> +
->  	/*
->  	 * Allocate the resource for MSG TLP before programming the iATU
->  	 * outbound window in dw_pcie_setup_rc(). Since the allocation depends
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index 145e7f579072..9fc5916867b6 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -737,12 +737,21 @@ static void dw_pcie_link_set_max_speed(struct dw_pcie *pci)
->  
->  }
->  
-> +int dw_pcie_link_get_max_link_width(struct dw_pcie *pci)
-> +{
-> +	u8 cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +	u32 lnkcap = dw_pcie_readl_dbi(pci, cap + PCI_EXP_LNKCAP);
-> +
-> +	return FIELD_GET(PCI_EXP_LNKCAP_MLW, lnkcap);
-> +}
-> +
->  static void dw_pcie_link_set_max_link_width(struct dw_pcie *pci, u32 num_lanes)
->  {
-> +	int max_lanes = dw_pcie_link_get_max_link_width(pci);
->  	u32 lnkcap, lwsc, plc;
->  	u8 cap;
->  
-> -	if (!num_lanes)
-> +	if (max_lanes == num_lanes)
-
-This gives the assumption that the link width in PCIE_PORT_LINK_CONTROL and
-PCIE_LINK_WIDTH_SPEED_CONTROL registers are same as MLW. Is it really true as
-per the DWC spec?
-
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Jessica Zhang <quic_jesszhan@quicinc.com>
+
 
