@@ -1,198 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-50545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C80CA55374
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 18:50:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 157BDA5537C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 18:51:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 96F34177DD1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 17:50:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3254C1780A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 17:51:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1E0125B671;
-	Thu,  6 Mar 2025 17:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7DD225B67E;
+	Thu,  6 Mar 2025 17:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ABRF7DlS"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="EPOhhgxR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2063.outbound.protection.outlook.com [40.107.223.63])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B1525A638;
-	Thu,  6 Mar 2025 17:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741283454; cv=none; b=BfbW6LhOkkcqe4U3ljIHKb6pzWON1Bm4hQmfIiv0IB1EjLPAVXWGBv/Jgqls2QFPnURW9IplUGOVAnJV/Zs84R2khnGt/763mw3is+vJdIQKEJhkUFxEI/LLBVIp5eydakw51jCtsoSI16Az3ZpC4uclTHlBHWAn097soN1ZU1c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741283454; c=relaxed/simple;
-	bh=PbmD1kFv3+1BgQZMJaKX/JavH2z6eXzjqWH/xXgLcCM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KxCfdhSdsLkFaB87RnFdOzRc0/fKb9iCcqkFd4lpPoifvzCMannlXKNzuoOYka6L/wKQpFeXzuKaDrx3kaow9oEPAN6dHCIyFcn9k13/tsxNOMICF8tYUsUrsCRH2MYUJVYlY0sDQB42Ak5Dnri0MeFWtr2ZlkKNRD05h/Qd5Co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ABRF7DlS; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741283453; x=1772819453;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=PbmD1kFv3+1BgQZMJaKX/JavH2z6eXzjqWH/xXgLcCM=;
-  b=ABRF7DlSI8M+V8GByPAyfMnDe3e4XLPfEyeOE99U36NPijqzRUiP/pFw
-   cWA0uKPAR1yk/nK0IiE9hHKkwSTOCm2/8tHDTTWvvy4RPTXPp5sO/LObU
-   rbsFbEqc8NepvqeOH4FPFkHz7V5ha3Yj+DDOtVRacCJsYWEP1iBeooKrd
-   nCL58wrAePnrfZQ9Daf0OHDdeM6YiMcVZr7mCz9dBhzQVAc5/ZKMAAmPq
-   2gWP/BY/fikcNg1vYfM6NOC+Ml4kcRhVZMeuT3j/CEyevmfOTvx30vYTF
-   ACJPeE6vb8cIUtfgech1v89YQegPMCZih9aqj1zfoa5jIMA0Aic8JkbFN
-   g==;
-X-CSE-ConnectionGUID: 9c6FRcqJTE6b0Gl+YO6RQg==
-X-CSE-MsgGUID: +45iLMv+RrSwFou27kiu9w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11365"; a="42445680"
-X-IronPort-AV: E=Sophos;i="6.14,226,1736841600"; 
-   d="scan'208";a="42445680"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2025 09:50:52 -0800
-X-CSE-ConnectionGUID: egZ7sObHSZG31vCHuMPaag==
-X-CSE-MsgGUID: j2ujJPyGTFK5c7CMR2MRtA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,226,1736841600"; 
-   d="scan'208";a="119278140"
-Received: from lkp-server02.sh.intel.com (HELO 76cde6cc1f07) ([10.239.97.151])
-  by fmviesa008.fm.intel.com with ESMTP; 06 Mar 2025 09:50:49 -0800
-Received: from kbuild by 76cde6cc1f07 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tqFMs-000NOs-2E;
-	Thu, 06 Mar 2025 17:50:46 +0000
-Date: Fri, 7 Mar 2025 01:49:55 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sricharan R <quic_srichara@quicinc.com>, jassisinghbrar@gmail.com,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, andersson@kernel.org,
-	konradybcio@kernel.org, manivannan.sadhasivam@linaro.org,
-	dmitry.baryshkov@linaro.org
-Cc: oe-kbuild-all@lists.linux.dev
-Subject: Re: [PATCH V3 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox
- driver
-Message-ID: <202503070135.WJVIL67R-lkp@intel.com>
-References: <20250228045356.3527662-3-quic_srichara@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C121212D69
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 17:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.63
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1741283507; cv=fail; b=LSv5TwISLalRt62CxqJEnOpk3GZslwczKh6zBpAhzoco7hVi7bY38yYUzVwmhQAniNgyHdQXtk+HPmIJ5vbvCHGLkq+w0tsTqH7XaAUVitgubVD8INwqBkpHbhk8ZGEFCJb1Zqrzx30YwFGftYTuDT8reCYqQBC69dffXPGS5p4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1741283507; c=relaxed/simple;
+	bh=4N+rxhJCY4ynLss3FaO0S/lV2CZ97XOqQRCnWY4WbiE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ErVDXD4q1c8TABeeIbm2eJbZIAygTvWgHX95nZTYUeSZ8pGTFWMfqheeuP6q4GwwsGqM/JirMwqy4IDHmLKbvv63XnxHJ0WQVqHR5Rh2SNsDvgDOitrf9SYHKHFqNK/DB+r6PawdEQbhMdRN5wUAEBDQFSoT8U5EP7+/wcS8sKA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=EPOhhgxR; arc=fail smtp.client-ip=40.107.223.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ih6kqY5191M/tMI8ZaljCJ/XVq/Me3/30NCF3XcOaMI5fivHFBwdCG0hWbGCS1KV74b5KzsE/vcmVjLu6GdaJCRGFQ9diNOSZQojAXTD2K8aUf3U1aHOPauFbzHA+JYmOKsuIVj8yYFfww3VB2xJMMQGqnlRjnPNCXQwib4Iwec1kLr3FAPc84U3FRKzHk3DGCdVAOIfVv2wClb2XyXuO6149AF6pxXFp4kzn+bmhaHBioylwvwKl3qlyZnrZYHzL5iYloDaOklE13tl5eIyHikc98eDMMsbUz1TwNH09AMFEhYVfkP2185AIyYkW1ab24CI54D0GgFvkAgyitROAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FTzNLBZyyPL4eqhQwHQnPL0Qa7fGXBizscwHseLztYc=;
+ b=W8Lyu2TjqCaouNgNna1DruRxmhLv03AK3VMlm4xenGqsSkqa0HVQ23tGu//CaWzcysr6YdLnEn/hMl2RgEI9at/8DKizzf19/gijjnA8LV7ODtSxqHmZl4x/05qSH2QwbUyE1/l1hulIfGdx+SKPki4W0VkxRW6jZHBBqzIivL7hl1EARXuoa9DRymkEbrFxUMC0UUB+vKU3aBvt8xdLVzpCUCpmpnbU7uP2ZlRjDqc6VDGET0c9eisPk0BQV9JAF9lb2bEal4v5PnM50jxFEt1Y9FeWDs3L6hfY9UDnjZEHLDcHC6taDTyGzoLAnYq+7m1JwCjDa5eElMF1e8q5iA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=oss.qualcomm.com smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FTzNLBZyyPL4eqhQwHQnPL0Qa7fGXBizscwHseLztYc=;
+ b=EPOhhgxRfBJSEwoUJuBz7So1Lwhe9CQ27EbSArbdaY5hRa52c+BAmcZdT8XXPqyCTWTrFiJ2gX8dq3k7H0PqtOhZlFOF51NItSY2eOvjrPUNgN6hvOxlAjbEhsmdN8r0pGV/6vGCLX5MbKw143uGTvh1EVuIhQeHbNoGeLo2Y8s=
+Received: from BN9PR03CA0564.namprd03.prod.outlook.com (2603:10b6:408:138::29)
+ by MW4PR12MB5601.namprd12.prod.outlook.com (2603:10b6:303:168::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.19; Thu, 6 Mar
+ 2025 17:51:43 +0000
+Received: from BL6PEPF0001AB4B.namprd04.prod.outlook.com
+ (2603:10b6:408:138:cafe::48) by BN9PR03CA0564.outlook.office365.com
+ (2603:10b6:408:138::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8511.16 via Frontend Transport; Thu,
+ 6 Mar 2025 17:51:41 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL6PEPF0001AB4B.mail.protection.outlook.com (10.167.242.69) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8511.15 via Frontend Transport; Thu, 6 Mar 2025 17:51:41 +0000
+Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 6 Mar
+ 2025 11:51:40 -0600
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
+ (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 6 Mar
+ 2025 11:51:40 -0600
+Received: from [172.19.71.207] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
+ Transport; Thu, 6 Mar 2025 11:51:39 -0600
+Message-ID: <554638b5-314b-b0cc-5b91-2cc635f78f7d@amd.com>
+Date: Thu, 6 Mar 2025 09:51:39 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250228045356.3527662-3-quic_srichara@quicinc.com>
-
-Hi Sricharan,
-
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.14-rc5 next-20250306]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Sricharan-R/dt-bindings-mailbox-Document-qcom-tmel-qmp/20250228-125707
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20250228045356.3527662-3-quic_srichara%40quicinc.com
-patch subject: [PATCH V3 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox driver
-config: sh-allyesconfig (https://download.01.org/0day-ci/archive/20250307/202503070135.WJVIL67R-lkp@intel.com/config)
-compiler: sh4-linux-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250307/202503070135.WJVIL67R-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503070135.WJVIL67R-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from include/linux/device.h:15,
-                    from include/linux/dma-mapping.h:5,
-                    from drivers/mailbox/qcom-tmel-qmp.c:6:
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'qmp_send_data':
-   drivers/mailbox/qcom-tmel-qmp.c:196:36: warning: format '%ld' expects argument of type 'long int', but argument 3 has type 'size_t' {aka 'unsigned int'} [-Wformat=]
-     196 |                 dev_err(mdev->dev, "Unsupported packet size %ld\n", pkt->iov_len);
-         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:110:30: note: in definition of macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ^~~
-   include/linux/dev_printk.h:154:56: note: in expansion of macro 'dev_fmt'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                        ^~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:196:17: note: in expansion of macro 'dev_err'
-     196 |                 dev_err(mdev->dev, "Unsupported packet size %ld\n", pkt->iov_len);
-         |                 ^~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:196:63: note: format string is defined here
-     196 |                 dev_err(mdev->dev, "Unsupported packet size %ld\n", pkt->iov_len);
-         |                                                             ~~^
-         |                                                               |
-         |                                                               long int
-         |                                                             %d
-   In file included from drivers/mailbox/qcom-tmel-qmp.c:10:
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'tmel_prepare_msg':
->> include/linux/mailbox/tmelcom-qmp.h:16:41: error: implicit declaration of function 'FIELD_GET' [-Wimplicit-function-declaration]
-      16 | #define TMEL_MSG_UID_MSG_TYPE(v)        FIELD_GET(GENMASK(15, 8), v)
-         |                                         ^~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:406:29: note: in expansion of macro 'TMEL_MSG_UID_MSG_TYPE'
-     406 |         msg_hdr->msg_type = TMEL_MSG_UID_MSG_TYPE(msg_uid);
-         |                             ^~~~~~~~~~~~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'tmel_process_request':
-   drivers/mailbox/qcom-tmel-qmp.c:501:36: warning: format '%ld' expects argument of type 'long int', but argument 3 has type 'size_t' {aka 'unsigned int'} [-Wformat=]
-     501 |                 dev_err(tdev->dev, "Invalid pkt.size received size: %ld, expected: %zu\n",
-         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:110:30: note: in definition of macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ^~~
-   include/linux/dev_printk.h:154:56: note: in expansion of macro 'dev_fmt'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                        ^~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:501:17: note: in expansion of macro 'dev_err'
-     501 |                 dev_err(tdev->dev, "Invalid pkt.size received size: %ld, expected: %zu\n",
-         |                 ^~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:501:71: note: format string is defined here
-     501 |                 dev_err(tdev->dev, "Invalid pkt.size received size: %ld, expected: %zu\n",
-         |                                                                     ~~^
-         |                                                                       |
-         |                                                                       long int
-         |                                                                     %d
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'tmel_secboot_sec_auth':
->> include/linux/mailbox/tmelcom-qmp.h:13:10: error: implicit declaration of function 'FIELD_PREP_CONST' [-Wimplicit-function-declaration]
-      13 |         (FIELD_PREP_CONST((0xff << 8), msg_type) | FIELD_PREP_CONST(0xff, action_id))
-         |          ^~~~~~~~~~~~~~~~
-   include/linux/mailbox/tmelcom-qmp.h:55:45: note: in expansion of macro 'TMEL_MSG_UID_CREATE'
-      55 | #define TMEL_MSG_UID_SECBOOT_SEC_AUTH       TMEL_MSG_UID_CREATE(TMEL_MSG_SECBOOT,\
-         |                                             ^~~~~~~~~~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:541:42: note: in expansion of macro 'TMEL_MSG_UID_SECBOOT_SEC_AUTH'
-     541 |         ret = tmel_process_request(tdev, TMEL_MSG_UID_SECBOOT_SEC_AUTH, msg,
-         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c: In function 'tmel_qmp_send_work':
->> drivers/mailbox/qcom-tmel-qmp.c:595:9: error: case label does not reduce to an integer constant
-     595 |         case TMEL_MSG_UID_SECBOOT_SEC_AUTH:
-         |         ^~~~
-   drivers/mailbox/qcom-tmel-qmp.c:598:9: error: case label does not reduce to an integer constant
-     598 |         case TMEL_MSG_UID_SECBOOT_SS_TEAR_DOWN:
-         |         ^~~~
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] accel/qaic: Fix possible data corruption in BOs > 2G
+Content-Language: en-US
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>, <quic_carlv@quicinc.com>,
+	<quic_thanson@quicinc.com>
+CC: <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
+	<dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>, "Jeffrey
+ Hugo" <quic_jhugo@quicinc.com>
+References: <20250306171959.853466-1-jeff.hugo@oss.qualcomm.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
+In-Reply-To: <20250306171959.853466-1-jeff.hugo@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: None (SATLEXMB05.amd.com: lizhi.hou@amd.com does not designate
+ permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4B:EE_|MW4PR12MB5601:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7382f517-746f-42a9-42a4-08dd5cd78d1a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|1800799024|82310400026|376014|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?OHlRd0E4VTd5VXRKa0lZUk45K0FZS3o3WFM5TUNrWHNsM0d4OXN0L3VjRE16?=
+ =?utf-8?B?d3AyVmNhMjdtdGgveGJpMWhPdkFQYnZFSzczY2JBOUVLTHoyTjZRMUcwU25F?=
+ =?utf-8?B?NzNUVVdsV01kTk9zN0ZjZ1pPUWlTKzBLRHZjbERWd29xcEsyblZQcWZOell6?=
+ =?utf-8?B?L0Q2WWFvd2hJZk83QWhESyt3ZUxkWGx3OWJOSGZUUWdabldNQzZCY29aaGhI?=
+ =?utf-8?B?ei9FSERFbWVLK1BBWVpEYWsvbTdiOGxLRWVocFlEVWNWTFhmWHMwNDRrV0tG?=
+ =?utf-8?B?cVVVRnpKcTFHRXBDTnF1TUk3QmZxMC9aaTA5ZnErR0lxSVdNN0JTQ0hVeGxL?=
+ =?utf-8?B?NDI4THpuRzkwblpFZkE5Nnk5YVR5RlUxZ3ZxY0Fqc3Q5VlhBUEwwaDVtOEEz?=
+ =?utf-8?B?c1E1Q3Y3Z2FFWXZ3V1ZHVThhZm5PRWd1Mzh4cHY2SWVmelZydUhkQWFqZ1RR?=
+ =?utf-8?B?L0RlZnN6Q0FZZWZJcnZMZFNsc0tjdHU0VGtDbFJid3ExNytKbDZjbVJTWGNQ?=
+ =?utf-8?B?aE9uYWxxcEdkZTZtWTJBM3Nhb0ZBbHB6YWJzNzhzdXpLbU1QbGF3K3YyM29i?=
+ =?utf-8?B?My9UTjVtbzFPeHFGN29jVERaNDNYdW9zRmVzVjVVVUxYaEc5b25aMHQva1p2?=
+ =?utf-8?B?RGxwd2lzUzlyVFRUVExET3RNOC95MTIxczZJS3hCV1Z0ckZQS2xhV05Nd0Fj?=
+ =?utf-8?B?NU1hNVZXNmlsWGpaVVN3QlpRYng2eklUMHlZWlo1bjc3RTRlRVpQdUtOVllK?=
+ =?utf-8?B?cDRwRlRoWVNuVEh1SnFINnNMelpyeUt5MXNDTHVOVDYzUk5PSk5nSllFdE1k?=
+ =?utf-8?B?ZVRsWUxEY1FZaE44RVdwNytjZGJBSExSR0x2WTUyWG5xSzlEYzRmWXR4ZjlR?=
+ =?utf-8?B?bWREUzNSaXQ1NGdlLzl4cXBuQmZZSmxtZHM3eDVvd09zK0hDb09BaGdiZ1Rz?=
+ =?utf-8?B?bUVnSVhRUHdHSENhNmdHa2VzWG5BRzdpNXgra0FQeVQydHh0bE5RQlBSaUZO?=
+ =?utf-8?B?NUpWVXlzaHlXVFFoc21zdjRrUGFOaGNrN29UVjFrdnlhME5GUzdLUzlmYWpx?=
+ =?utf-8?B?TDROK0lkYlFYdUZUSGdjSVBaZWhqd0RDT1kwM1lMNVAvY2RlNEVrRDhQQXlu?=
+ =?utf-8?B?WHozclZ5aHFWVUM2UmR1TVo3blludU5BVXR6OGpvNk9MNTBSR1NsOE9tdXc5?=
+ =?utf-8?B?aEVEM2xMZ1hyTzR1WUJaaUtHZUZrWXcySmtkOTlFQ2E1cnN1VWVCNkVCTkpq?=
+ =?utf-8?B?Ykcwekx2V3ZiUnFUdEZvamE5MGhZeGQrVWdqWURHc2U3Mnc1ekpZd040U1l4?=
+ =?utf-8?B?T0hkYzdwemdneGNjVUhlWFlOZXdUTGN2dlkrYk5NMG1Zc0RUelMrT05sRUVR?=
+ =?utf-8?B?WXhXcjYxUy9rUksxYldSTnNrSzZLUzVPVWpTV3MwV3NvTlNxK0RLS28xTXFX?=
+ =?utf-8?B?T0UyTlRaZW9VSUFRYzRmMmhTQXdqOEUraWV0a3R3ZTNOTStZRExWeUxjV1d3?=
+ =?utf-8?B?WEpoeHNmZUVJKzFCellPV2pTZVlTYy83T0hUazcwT0N2aVY2QjJPcXE3d3pT?=
+ =?utf-8?B?MkN0N1dJcitTYlBka3JOTTlaWlZVWCtzWlI5bUMyQU02Zkc5SEhRUTVtVVZw?=
+ =?utf-8?B?RDZ6Si9jOFFzSk5pNi9lZ1JIQjZ6QjdMQ0RHOEMyRUh6VzNpS0ZWT2JSRjJK?=
+ =?utf-8?B?eUJJMVBHTGR0NDVORVNRazBlOElOd3BrcTRpWURYVnRla1BUMm0ycEM2N0hu?=
+ =?utf-8?B?OENRNHVFUURtcVBYckMzdk4rN2F2QVZncEJ0SEYwNjRBeTZnYU1rQ1NhVlNv?=
+ =?utf-8?B?eFl1V0F5UUtIcE5SczVQcGcwQXc3NUVqdzlBVjBrQUdERGYvZzRoUHBLV0U0?=
+ =?utf-8?B?d3VOTDRFUXljbmRVaVF1QTZhZTJFSjdzWndEZWFWNXVpOWg5UlM5a0NrZmFY?=
+ =?utf-8?B?dldhVHVFenh6K3lPRlEyQk5pdm5rYU9zaFZ0YTZFdmpobnFkWWVnR211Y0t0?=
+ =?utf-8?Q?BqK1JYDvTyQoqOCejdV/IXfZrNO4UE=3D?=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700013)(1800799024)(82310400026)(376014)(7053199007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2025 17:51:41.1042
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7382f517-746f-42a9-42a4-08dd5cd78d1a
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL6PEPF0001AB4B.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5601
 
 
-vim +/FIELD_GET +16 include/linux/mailbox/tmelcom-qmp.h
-
-     7	
-     8	/*
-     9	 * Macro used to define unique TMEL Message Identifier based on
-    10	 * message type and action identifier.
-    11	 */
-    12	#define TMEL_MSG_UID_CREATE(msg_type, action_id)	\
-  > 13		(FIELD_PREP_CONST((0xff << 8), msg_type) | FIELD_PREP_CONST(0xff, action_id))
-    14	
-    15	/** Helper macro to extract the messageType from TMEL_MSG_UID. */
-  > 16	#define TMEL_MSG_UID_MSG_TYPE(v)	FIELD_GET(GENMASK(15, 8), v)
-    17	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+On 3/6/25 09:19, Jeff Hugo wrote:
+> From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>
+> When slicing a BO, we need to iterate through the BO's sgt to find the
+> right pieces to construct the slice. Some of the data types chosen for
+> this process are incorrectly too small, and can overflow. This can
+> result in the incorrect slice construction, which can lead to data
+> corruption in workload execution.
+>
+> The device can only handle 32-bit sized transfers, and the scatterlist
+> struct only supports 32-bit buffer sizes, so our upper limit for an
+> individual transfer is an unsigned int. Using an int is incorrect due to
+> the reservation of the sign bit. Upgrade the length of a scatterlist
+> entry and the offsets into a scatterlist entry to unsigned int for a
+> correct representation.
+>
+> While each transfer may be limited to 32-bits, the overall BO may exceed
+> that size. For counting the total length of the BO, we need a type that
+> can represent the largest allocation possible on the system. That is the
+> definition of size_t, so use it.
+>
+> Fixes: ff13be830333 ("accel/qaic: Add datapath")
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+> ---
+>   drivers/accel/qaic/qaic_data.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+> index c20eb63750f5..ffcdf5738d09 100644
+> --- a/drivers/accel/qaic/qaic_data.c
+> +++ b/drivers/accel/qaic/qaic_data.c
+> @@ -172,9 +172,10 @@ static void free_slice(struct kref *kref)
+>   static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_table **sgt_out,
+>   					struct sg_table *sgt_in, u64 size, u64 offset)
+>   {
+> -	int total_len, len, nents, offf = 0, offl = 0;
+>   	struct scatterlist *sg, *sgn, *sgf, *sgl;
+> +	unsigned int len, nents, offf, offl;
+>   	struct sg_table *sgt;
+> +	size_t total_len;
+>   	int ret, j;
+>   
+>   	/* find out number of relevant nents needed for this mem */
+> @@ -182,6 +183,8 @@ static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_tabl
+>   	sgf = NULL;
+>   	sgl = NULL;
+>   	nents = 0;
+> +	offf = 0;
+> +	offl = 0;
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+>   
+>   	size = size ? size : PAGE_SIZE;
+>   	for_each_sgtable_dma_sg(sgt_in, sg, j) {
 
