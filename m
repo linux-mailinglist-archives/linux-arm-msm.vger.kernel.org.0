@@ -1,216 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-50546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 157BDA5537C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 18:51:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F327DA55436
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 19:11:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3254C1780A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 17:51:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 576BE7AB311
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 18:10:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7DD225B67E;
-	Thu,  6 Mar 2025 17:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29FC525D8FE;
+	Thu,  6 Mar 2025 18:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="EPOhhgxR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WTRZtH/s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2063.outbound.protection.outlook.com [40.107.223.63])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C121212D69
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 17:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.63
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741283507; cv=fail; b=LSv5TwISLalRt62CxqJEnOpk3GZslwczKh6zBpAhzoco7hVi7bY38yYUzVwmhQAniNgyHdQXtk+HPmIJ5vbvCHGLkq+w0tsTqH7XaAUVitgubVD8INwqBkpHbhk8ZGEFCJb1Zqrzx30YwFGftYTuDT8reCYqQBC69dffXPGS5p4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741283507; c=relaxed/simple;
-	bh=4N+rxhJCY4ynLss3FaO0S/lV2CZ97XOqQRCnWY4WbiE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ErVDXD4q1c8TABeeIbm2eJbZIAygTvWgHX95nZTYUeSZ8pGTFWMfqheeuP6q4GwwsGqM/JirMwqy4IDHmLKbvv63XnxHJ0WQVqHR5Rh2SNsDvgDOitrf9SYHKHFqNK/DB+r6PawdEQbhMdRN5wUAEBDQFSoT8U5EP7+/wcS8sKA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=EPOhhgxR; arc=fail smtp.client-ip=40.107.223.63
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ih6kqY5191M/tMI8ZaljCJ/XVq/Me3/30NCF3XcOaMI5fivHFBwdCG0hWbGCS1KV74b5KzsE/vcmVjLu6GdaJCRGFQ9diNOSZQojAXTD2K8aUf3U1aHOPauFbzHA+JYmOKsuIVj8yYFfww3VB2xJMMQGqnlRjnPNCXQwib4Iwec1kLr3FAPc84U3FRKzHk3DGCdVAOIfVv2wClb2XyXuO6149AF6pxXFp4kzn+bmhaHBioylwvwKl3qlyZnrZYHzL5iYloDaOklE13tl5eIyHikc98eDMMsbUz1TwNH09AMFEhYVfkP2185AIyYkW1ab24CI54D0GgFvkAgyitROAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FTzNLBZyyPL4eqhQwHQnPL0Qa7fGXBizscwHseLztYc=;
- b=W8Lyu2TjqCaouNgNna1DruRxmhLv03AK3VMlm4xenGqsSkqa0HVQ23tGu//CaWzcysr6YdLnEn/hMl2RgEI9at/8DKizzf19/gijjnA8LV7ODtSxqHmZl4x/05qSH2QwbUyE1/l1hulIfGdx+SKPki4W0VkxRW6jZHBBqzIivL7hl1EARXuoa9DRymkEbrFxUMC0UUB+vKU3aBvt8xdLVzpCUCpmpnbU7uP2ZlRjDqc6VDGET0c9eisPk0BQV9JAF9lb2bEal4v5PnM50jxFEt1Y9FeWDs3L6hfY9UDnjZEHLDcHC6taDTyGzoLAnYq+7m1JwCjDa5eElMF1e8q5iA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oss.qualcomm.com smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FTzNLBZyyPL4eqhQwHQnPL0Qa7fGXBizscwHseLztYc=;
- b=EPOhhgxRfBJSEwoUJuBz7So1Lwhe9CQ27EbSArbdaY5hRa52c+BAmcZdT8XXPqyCTWTrFiJ2gX8dq3k7H0PqtOhZlFOF51NItSY2eOvjrPUNgN6hvOxlAjbEhsmdN8r0pGV/6vGCLX5MbKw143uGTvh1EVuIhQeHbNoGeLo2Y8s=
-Received: from BN9PR03CA0564.namprd03.prod.outlook.com (2603:10b6:408:138::29)
- by MW4PR12MB5601.namprd12.prod.outlook.com (2603:10b6:303:168::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.19; Thu, 6 Mar
- 2025 17:51:43 +0000
-Received: from BL6PEPF0001AB4B.namprd04.prod.outlook.com
- (2603:10b6:408:138:cafe::48) by BN9PR03CA0564.outlook.office365.com
- (2603:10b6:408:138::29) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8511.16 via Frontend Transport; Thu,
- 6 Mar 2025 17:51:41 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BL6PEPF0001AB4B.mail.protection.outlook.com (10.167.242.69) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8511.15 via Frontend Transport; Thu, 6 Mar 2025 17:51:41 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 6 Mar
- 2025 11:51:40 -0600
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 6 Mar
- 2025 11:51:40 -0600
-Received: from [172.19.71.207] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
- Transport; Thu, 6 Mar 2025 11:51:39 -0600
-Message-ID: <554638b5-314b-b0cc-5b91-2cc635f78f7d@amd.com>
-Date: Thu, 6 Mar 2025 09:51:39 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F021F25A33B;
+	Thu,  6 Mar 2025 18:10:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1741284645; cv=none; b=A1jCIw5WKeN1H5gEdtvu9GujXyZESUqNB/q6RrC2xETYHd+IcNlLFdlHMEdkzIiT3a6Td4LfZmdp61BupCNFcvPkh60Kh3d/vXg7kjx3w5V7viCWNmVbPVySPCLMgQcDINJkS2HhfIK6izNc/YYJZvkQ2syXuxAba+G2EYuQJJg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1741284645; c=relaxed/simple;
+	bh=MmeueEhfG35aYPhedmw0XV3vfAg+i6SnMzy/C13nxeY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VO84hLquyTfpeBrgNp71kU+Varb6PxTHK+dw1RCK4jOqb+x0Maxj7+IdvyTkVXUd/dYlFm1FOFlPcQBlLxAt+oq5mmxgILRkEZ5LUBZ96zlMOEtUOfuDK2/hxjaYp9cSvj6pkttZtIfso1aeD7Cei+YkyeO9epKuBB6DQB9sIEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WTRZtH/s; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FF8C4CEE0;
+	Thu,  6 Mar 2025 18:10:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741284642;
+	bh=MmeueEhfG35aYPhedmw0XV3vfAg+i6SnMzy/C13nxeY=;
+	h=From:Date:Subject:To:Cc:From;
+	b=WTRZtH/sunMSvaH3dBZeXX9MR75vZei25pgxCfl80+2SJEy/vYzWOtDqbFcrjoL5O
+	 6f+EwhJJOOzFtVl4vc0wDKH1kPJNRT1ZSbR6wlwfFS+7fHn7Q2aLOtX//p8vtTiWHE
+	 M2WSzYPc+opjGpNIvdsJ7jAAWnLSAmaOqVgTYXyXw3u7ig6dWzKcApWASBnojsPefe
+	 l7oXvu5vU0gBts28l1Z18ZjVydxsSH7nGMWcf79EfwwnpcpFhsgcaMG2olbvX0daZI
+	 nkM9KHYrbzcDYpHvssJ4/4E8ggJzHyErxgVVw7wYAXzZCn38cutTDFQRIN5H6bJGbK
+	 89m3gywmQNEYQ==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Thu, 06 Mar 2025 19:10:28 +0100
+Subject: [PATCH] dt-bindings: usb: qcom,dwc3: Synchronize minItems for
+ interrupts and -names
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] accel/qaic: Fix possible data corruption in BOs > 2G
-Content-Language: en-US
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>, <quic_carlv@quicinc.com>,
-	<quic_thanson@quicinc.com>
-CC: <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
-	<dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>, "Jeffrey
- Hugo" <quic_jhugo@quicinc.com>
-References: <20250306171959.853466-1-jeff.hugo@oss.qualcomm.com>
-From: Lizhi Hou <lizhi.hou@amd.com>
-In-Reply-To: <20250306171959.853466-1-jeff.hugo@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: None (SATLEXMB05.amd.com: lizhi.hou@amd.com does not designate
- permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4B:EE_|MW4PR12MB5601:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7382f517-746f-42a9-42a4-08dd5cd78d1a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|1800799024|82310400026|376014|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?OHlRd0E4VTd5VXRKa0lZUk45K0FZS3o3WFM5TUNrWHNsM0d4OXN0L3VjRE16?=
- =?utf-8?B?d3AyVmNhMjdtdGgveGJpMWhPdkFQYnZFSzczY2JBOUVLTHoyTjZRMUcwU25F?=
- =?utf-8?B?NzNUVVdsV01kTk9zN0ZjZ1pPUWlTKzBLRHZjbERWd29xcEsyblZQcWZOell6?=
- =?utf-8?B?L0Q2WWFvd2hJZk83QWhESyt3ZUxkWGx3OWJOSGZUUWdabldNQzZCY29aaGhI?=
- =?utf-8?B?ei9FSERFbWVLK1BBWVpEYWsvbTdiOGxLRWVocFlEVWNWTFhmWHMwNDRrV0tG?=
- =?utf-8?B?cVVVRnpKcTFHRXBDTnF1TUk3QmZxMC9aaTA5ZnErR0lxSVdNN0JTQ0hVeGxL?=
- =?utf-8?B?NDI4THpuRzkwblpFZkE5Nnk5YVR5RlUxZ3ZxY0Fqc3Q5VlhBUEwwaDVtOEEz?=
- =?utf-8?B?c1E1Q3Y3Z2FFWXZ3V1ZHVThhZm5PRWd1Mzh4cHY2SWVmelZydUhkQWFqZ1RR?=
- =?utf-8?B?L0RlZnN6Q0FZZWZJcnZMZFNsc0tjdHU0VGtDbFJid3ExNytKbDZjbVJTWGNQ?=
- =?utf-8?B?aE9uYWxxcEdkZTZtWTJBM3Nhb0ZBbHB6YWJzNzhzdXpLbU1QbGF3K3YyM29i?=
- =?utf-8?B?My9UTjVtbzFPeHFGN29jVERaNDNYdW9zRmVzVjVVVUxYaEc5b25aMHQva1p2?=
- =?utf-8?B?RGxwd2lzUzlyVFRUVExET3RNOC95MTIxczZJS3hCV1Z0ckZQS2xhV05Nd0Fj?=
- =?utf-8?B?NU1hNVZXNmlsWGpaVVN3QlpRYng2eklUMHlZWlo1bjc3RTRlRVpQdUtOVllK?=
- =?utf-8?B?cDRwRlRoWVNuVEh1SnFINnNMelpyeUt5MXNDTHVOVDYzUk5PSk5nSllFdE1k?=
- =?utf-8?B?ZVRsWUxEY1FZaE44RVdwNytjZGJBSExSR0x2WTUyWG5xSzlEYzRmWXR4ZjlR?=
- =?utf-8?B?bWREUzNSaXQ1NGdlLzl4cXBuQmZZSmxtZHM3eDVvd09zK0hDb09BaGdiZ1Rz?=
- =?utf-8?B?bUVnSVhRUHdHSENhNmdHa2VzWG5BRzdpNXgra0FQeVQydHh0bE5RQlBSaUZO?=
- =?utf-8?B?NUpWVXlzaHlXVFFoc21zdjRrUGFOaGNrN29UVjFrdnlhME5GUzdLUzlmYWpx?=
- =?utf-8?B?TDROK0lkYlFYdUZUSGdjSVBaZWhqd0RDT1kwM1lMNVAvY2RlNEVrRDhQQXlu?=
- =?utf-8?B?WHozclZ5aHFWVUM2UmR1TVo3blludU5BVXR6OGpvNk9MNTBSR1NsOE9tdXc5?=
- =?utf-8?B?aEVEM2xMZ1hyTzR1WUJaaUtHZUZrWXcySmtkOTlFQ2E1cnN1VWVCNkVCTkpq?=
- =?utf-8?B?Ykcwekx2V3ZiUnFUdEZvamE5MGhZeGQrVWdqWURHc2U3Mnc1ekpZd040U1l4?=
- =?utf-8?B?T0hkYzdwemdneGNjVUhlWFlOZXdUTGN2dlkrYk5NMG1Zc0RUelMrT05sRUVR?=
- =?utf-8?B?WXhXcjYxUy9rUksxYldSTnNrSzZLUzVPVWpTV3MwV3NvTlNxK0RLS28xTXFX?=
- =?utf-8?B?T0UyTlRaZW9VSUFRYzRmMmhTQXdqOEUraWV0a3R3ZTNOTStZRExWeUxjV1d3?=
- =?utf-8?B?WEpoeHNmZUVJKzFCellPV2pTZVlTYy83T0hUazcwT0N2aVY2QjJPcXE3d3pT?=
- =?utf-8?B?MkN0N1dJcitTYlBka3JOTTlaWlZVWCtzWlI5bUMyQU02Zkc5SEhRUTVtVVZw?=
- =?utf-8?B?RDZ6Si9jOFFzSk5pNi9lZ1JIQjZ6QjdMQ0RHOEMyRUh6VzNpS0ZWT2JSRjJK?=
- =?utf-8?B?eUJJMVBHTGR0NDVORVNRazBlOElOd3BrcTRpWURYVnRla1BUMm0ycEM2N0hu?=
- =?utf-8?B?OENRNHVFUURtcVBYckMzdk4rN2F2QVZncEJ0SEYwNjRBeTZnYU1rQ1NhVlNv?=
- =?utf-8?B?eFl1V0F5UUtIcE5SczVQcGcwQXc3NUVqdzlBVjBrQUdERGYvZzRoUHBLV0U0?=
- =?utf-8?B?d3VOTDRFUXljbmRVaVF1QTZhZTJFSjdzWndEZWFWNXVpOWg5UlM5a0NrZmFY?=
- =?utf-8?B?dldhVHVFenh6K3lPRlEyQk5pdm5rYU9zaFZ0YTZFdmpobnFkWWVnR211Y0t0?=
- =?utf-8?Q?BqK1JYDvTyQoqOCejdV/IXfZrNO4UE=3D?=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700013)(1800799024)(82310400026)(376014)(7053199007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2025 17:51:41.1042
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7382f517-746f-42a9-42a4-08dd5cd78d1a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL6PEPF0001AB4B.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5601
+Message-Id: <20250306-topic-dt_bindings_fixes_usb-v1-1-e1e6a5bde871@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIABPlyWcC/x3M0QqDMAxA0V+RPC+QKeq2Xxmj2CZzeWlL40QQ/
+ 93i4+HC3cGkqBi8mh2KrGqaYsX91kD4TXEWVK6GltqeOhpwSVkD8uK8RtY4m/vqJub+5jEQsRc
+ eH2N4Qj3kIlesg/fnOE6Cc47TbQAAAA==
+X-Change-ID: 20250306-topic-dt_bindings_fixes_usb-c00dbed787c9
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1741284638; l=1440;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=XxDVcrBfp4ugTwbs0E1e9mI0LVJPlhX53QIFidEHR5w=;
+ b=W2am1+pvqkfC++LVWF5xtCF7DDe1tu8/9Xex66QZQKYazed58yFJp646GViP/l7ZRqpj15Ue8
+ buxlH3/cNeSDHywlMFRcHb887L1dXv/uIwPitsb9T8VBRgSuLwtkZvq
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-On 3/6/25 09:19, Jeff Hugo wrote:
-> From: Jeffrey Hugo <quic_jhugo@quicinc.com>
->
-> When slicing a BO, we need to iterate through the BO's sgt to find the
-> right pieces to construct the slice. Some of the data types chosen for
-> this process are incorrectly too small, and can overflow. This can
-> result in the incorrect slice construction, which can lead to data
-> corruption in workload execution.
->
-> The device can only handle 32-bit sized transfers, and the scatterlist
-> struct only supports 32-bit buffer sizes, so our upper limit for an
-> individual transfer is an unsigned int. Using an int is incorrect due to
-> the reservation of the sign bit. Upgrade the length of a scatterlist
-> entry and the offsets into a scatterlist entry to unsigned int for a
-> correct representation.
->
-> While each transfer may be limited to 32-bits, the overall BO may exceed
-> that size. For counting the total length of the BO, we need a type that
-> can represent the largest allocation possible on the system. That is the
-> definition of size_t, so use it.
->
-> Fixes: ff13be830333 ("accel/qaic: Add datapath")
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-> ---
->   drivers/accel/qaic/qaic_data.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-> index c20eb63750f5..ffcdf5738d09 100644
-> --- a/drivers/accel/qaic/qaic_data.c
-> +++ b/drivers/accel/qaic/qaic_data.c
-> @@ -172,9 +172,10 @@ static void free_slice(struct kref *kref)
->   static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_table **sgt_out,
->   					struct sg_table *sgt_in, u64 size, u64 offset)
->   {
-> -	int total_len, len, nents, offf = 0, offl = 0;
->   	struct scatterlist *sg, *sgn, *sgf, *sgl;
-> +	unsigned int len, nents, offf, offl;
->   	struct sg_table *sgt;
-> +	size_t total_len;
->   	int ret, j;
->   
->   	/* find out number of relevant nents needed for this mem */
-> @@ -182,6 +183,8 @@ static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_tabl
->   	sgf = NULL;
->   	sgl = NULL;
->   	nents = 0;
-> +	offf = 0;
-> +	offl = 0;
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
->   
->   	size = size ? size : PAGE_SIZE;
->   	for_each_sgtable_dma_sg(sgt_in, sg, j) {
+It makes sense that ARRAY_SIZE(prop) should == ARRAY_SIZE(prop-names),
+so allow that to happen with interrupts.
+
+Fixes bogus warnings such as:
+usb@c2f8800: interrupt-names: ['pwr_event', 'qusb2_phy', 'hs_phy_irq'] is too short
+
+Fixes: 7db25e95589e ("dt-bindings: usb: qcom,dwc3: Fix SDM660 clock description")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+index a2b3cf625e5b3962f3acfe93de02f3cae2b6123d..64137c1619a635a5a4f96fc49bd75c5fb757febb 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -404,6 +404,7 @@ allOf:
+           minItems: 2
+           maxItems: 3
+         interrupt-names:
++          minItems: 2
+           items:
+             - const: pwr_event
+             - const: qusb2_phy
+@@ -425,6 +426,7 @@ allOf:
+           minItems: 3
+           maxItems: 4
+         interrupt-names:
++          minItems: 3
+           items:
+             - const: pwr_event
+             - const: qusb2_phy
+
+---
+base-commit: 565351ae7e0cee80e9b5ed84452a5b13644ffc4d
+change-id: 20250306-topic-dt_bindings_fixes_usb-c00dbed787c9
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
