@@ -1,226 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-50511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97362A54B32
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:51:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14EDEA54B37
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 13:51:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BDA933AF470
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:50:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67E571891D07
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Mar 2025 12:52:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F10211FAC45;
-	Thu,  6 Mar 2025 12:51:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="icMrSTub"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B8DF1FCFE6;
+	Thu,  6 Mar 2025 12:51:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FE31FBE85
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Mar 2025 12:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2781F5FD;
+	Thu,  6 Mar 2025 12:51:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741265462; cv=none; b=YRU7LzGeIcpWJQmJ1snvxqneFUe58H0WHbN1hUiOBNiwLdOLJUgT1Ujaj6yy2od70ioe/UXIZ38cu33bz6nsZThBam3VGMFn7qCApX6NZxEKb913TTQ+edYew5eyIgotEudTRx7+42qbgoLbXipUVldKzQcfIoq3hm77I+3jmiM=
+	t=1741265511; cv=none; b=cwmvavMlWyzEN6zzrqmi+KdB87q6krbSYC51JgM+FvJjqDx0Ves7rxdIwNxh3ttJultk9R3peFhkyzhP4Rj1b4u+XVeKYtRbqOj789JfUe+FXbwYKHMVsk735oBw4QKi/NaiCv6BKZDfLZrFO0AGAQ554NE6xIAdaWGFvJHrzQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741265462; c=relaxed/simple;
-	bh=njxf6y5pyhmeInfBHOslV7CsXmJ8ztcHfHOXm07MRa0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PvttFd77KYZyczTF3Jm09mFbs3+K5vtjOhrefI3ibg9hxR3CqDnSRd+S3WwFbPOW2RWp7QrqlXTQVoe3FmpAodGxzRfyGghvGyszhJEHWptPUWSCYHb72z8chMLJxv7urilO84izmb0uGj+kKu838+kvaq1FTcR1Jy2PXCW5qek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=icMrSTub; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52645Ejc031234
-	for <linux-arm-msm@vger.kernel.org>; Thu, 6 Mar 2025 12:51:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rR7talaNqtIpgG6BnMXQyYngWs9JqhRdQCma/K1hsFk=; b=icMrSTubB9SZAon0
-	2lJr/BDocNqY3ulT0ybde+gZuGMWe14o5JD3jNuQoj1Y736/zZVqbZoeKX46ulE/
-	wnvGi0zwiUxOnKPDqgX24Txszlk3XMnou9L51HOrmd5gznmkphiBKPCEFeKPmIEF
-	GKyAT9sGu2V+sBE0bKjzYY0xHdyJIFGqXWHTs0ugL7nNQ8ui6opf+V0sosJeCGVe
-	ER9Onww4ji8wKjL6+8vQUhKfpx4Y+LfzcnXUM4e694FYlvty5CvAdxRnyTgPgwF/
-	SOW02fceiYlagUiBQeDsb6QrxAR939R9ydBjSTrZxCsS0M1rhdce03WwlFMcqJHf
-	SXbQYA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4574ce9f42-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 12:50:59 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c3c5833b58so18452785a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 04:50:59 -0800 (PST)
+	s=arc-20240116; t=1741265511; c=relaxed/simple;
+	bh=Zz0u44CTQSns6sJk7jghxEbeUrI7Oc+e6U/ixES3qVY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R1pKPfcB1LvcZRNQw/OYTLo8oBhyc6l3f/q8OA9/hSmO818LBl2D6QBRNW0mSNIXjrs9x5VnU4/+kR67GSSbHw773gjLqODE1NWEuSyMnW1RbwewGCV9uOMJXf4gptm5ukUp8qY/YD6XxsP6WkT0WmJ1GTL3c+G37yiQFI4Mso0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2234e4b079cso9182195ad.1;
+        Thu, 06 Mar 2025 04:51:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741265459; x=1741870259;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rR7talaNqtIpgG6BnMXQyYngWs9JqhRdQCma/K1hsFk=;
-        b=o0mcKQfQztpbUhEF3F1L3csWL6Tj9aE/jLd9Yl2nY3p+CPGEkiXTFN6+31AEuNDRJG
-         gH6E1RtR8Zxy1b5iaxwFPD5CNJpLJeAmy6FabmmRIuXRjk44yqvP6htArALl5I1qtop6
-         3foxIj7OVQRvz4t976579JHKhypNCBIZ0lI/XFk4jyYKG8IE4iEtGdzdeMvMoYSLYEZY
-         /AA/0GhNCn+Jty8JSHyZYZcit9LjuFXFD6+LmD32tN52CxOl44zr69Qhw2EXvOMLHPD5
-         Z/1KukVcvzQG45+bjV221ySPl6Vlz47EbMPaXWHGBXoyCxIp+3w3OUbZaFLc+E09m3u8
-         JhbA==
-X-Gm-Message-State: AOJu0Yy4hFd++QQYFsnrj17bcuwenOERaYOqGVFFCFz65cVTDREaKlVR
-	9qFtOUAwe236KRF7l80dRO2zqkTB1WNtee06otaKicZ8Z3oUcFoNNcbKs00l/pvIOiAaWlvxkfP
-	f7hB84AMvDa8S6iTyLR7eKG3sZodgRhzXQjrOriyEjTtYt1+fM0eLGwvn/szTj+k3
-X-Gm-Gg: ASbGncuL7z8VNaFMnizKMlKYofaZV/CKaymJt08HKdaV2QEJ2VhpwxL8C/YK8wnxSqT
-	sEFdsDTQgiaqeiPYYVoZmjPS0B45ln9oIkiqBWQ1oddRZXqCaxCp1wTzvbtub0wOo6yuj3eo0rx
-	AHO8cOKevbuueULyhiHyzFN2FpVpMWVGUnxQa6svGWmDJVoZJ+ECvqlIxi1uq9BJKJZ00FdyuEQ
-	XQKmALUUG7HQbd0g7pQ3zU+FSrLsqKE2fNIYWmDbAHGtJTnFZ06E26/rwOro/s8BokgenF9j8iL
-	+UH5H9xYTPDEJp5Wqd76sBC2I7OlgB3MpY5stuLhCfcYcIfOO6CdBfUKAGQS3Y4945k8Mg==
-X-Received: by 2002:a05:620a:45a5:b0:7c3:bae4:2339 with SMTP id af79cd13be357-7c3d8eb1d1amr362886885a.11.1741265459258;
-        Thu, 06 Mar 2025 04:50:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFGFeZzV5Gmz2xjrjPxgVHagGLQpB8t4BoOY66hcYV5oNZhHazGLh/6he83HV2x8pZLW82bwQ==
-X-Received: by 2002:a05:620a:45a5:b0:7c3:bae4:2339 with SMTP id af79cd13be357-7c3d8eb1d1amr362885285a.11.1741265458827;
-        Thu, 06 Mar 2025 04:50:58 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e5c745d5cfsm908598a12.19.2025.03.06.04.50.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Mar 2025 04:50:58 -0800 (PST)
-Message-ID: <5e72992c-170c-48b9-8df4-2caf31c4ae44@oss.qualcomm.com>
-Date: Thu, 6 Mar 2025 13:50:56 +0100
+        d=1e100.net; s=20230601; t=1741265509; x=1741870309;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H4cM1T3UuNpNu/U2G8pNowOEoTdTHEWvrKuxbrr/y/s=;
+        b=rrRzV8mztwuHf1pSFYbG6MMbfQslgMYCG7z91QLZD/5FzfW2Z/KdPbXo83inWxdEeD
+         2CbtdFqMF3RW1iQ5WHVMxrh9SfH1oR/0eDg/9Vs2yGExZ3jGuAIAE0mYLe/Z58ZHPYNR
+         Alx6+YurLKmW/T9fqR0Hb4sjVqEVFG2yF7cHGmjAAcUepMaeH129MqxdJ7rBpHYJ79cQ
+         PXc+7kn7lwdT4jg+jFI93zh6M0DmLrM/YirmoasEgES+RVgNwYhIlsL8KcO1y8jtUrba
+         FMmqVD5wgZMEfSAhXynaVst9XdEfeOBC54eflpyqYl+Es/Ah3vj3EGesKVtL0oIvhgNg
+         StVg==
+X-Forwarded-Encrypted: i=1; AJvYcCUnPFQ6e8KQDEPuG7EKXgu7LZImllZp2i5hMFP3xKPq4VMnK5O2di7GsEgsgRGNVroimPQf5hqxUH1c@vger.kernel.org, AJvYcCUvdZrbnkL0pC7fXbvmbfP4rohaLRwXXJ3uBXvinkw7HpNyIi7Yq7+6KuCdd8tF/W0SYPY9CxwWbHhSwwsr@vger.kernel.org, AJvYcCVRZWSn6v+yrdK8KLnkKNGuroESIHq1mrO4lPo6jK3Iv6PiyL4rvC0bT4xekI5nvlpsjiVSRV+xH9pc@vger.kernel.org, AJvYcCX5O6MsFO0aYONyv2hWKRX/3oJodOoNOeVxzN1zjQ+R4iBPG+N3ixJa3UI0JFe+oXSWPJLAd3t5r0V/Tchn5A==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlbJ2b7V4Dv/NCu6/qxj+r36yaJUHjnF1L1Y1/wYkmb4usWHRL
+	K3mhKbqkS3vORKOOnePFwUC0ACyGC6OJZEAs2H+ANJxZwjpRPydo
+X-Gm-Gg: ASbGncuk2ba+wD8gw5DYc3pinaN4ANs/nwLiOpm1AsjBlLipNGK+W8s5oACdTKhX71h
+	cgkFK/waH0KUt5qpuDK/U0DOlqXjUlJfvWweyth0N7MTi1Q6gsIJ8y1A9Olv0ylqxC13ieu2vAI
+	WWZCXWGGyN8ettWFOoXmZ3QgulPzTI8UXJjX2/MaPC30vfytlxeOYNtLsokcml1VxgOmzNEDAuR
+	fs+BooM2/+3IFhrQ2R7Oe7g4m4VLwz+kNLSnyRoiSdeC22K/Fh9Ke2DwK9hAxvnkBVWQJqp1lUP
+	MPLqhQXDrH2o9peQITlGTI0ioJy35YY3fg4vVOn9cw2fu996uqvHXbVerW42CbnKJGELsEeUatT
+	NN5c=
+X-Google-Smtp-Source: AGHT+IHlKKib+yNPGnND+D+ePJ/13KrkYSmXwFybdYM1CzCFTjspnrAFaPc8IvV3IWlpLQYFhO77rQ==
+X-Received: by 2002:a05:6a00:cc7:b0:736:5725:59b4 with SMTP id d2e1a72fcca58-73682b5a0b6mr11753649b3a.3.1741265509412;
+        Thu, 06 Mar 2025 04:51:49 -0800 (PST)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-736984f8611sm1272908b3a.98.2025.03.06.04.51.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Mar 2025 04:51:48 -0800 (PST)
+Date: Thu, 6 Mar 2025 21:51:47 +0900
+From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Varadarajan Narayanan <quic_varada@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2] dt-bindings: PCI: Revert "dt-bindings: PCI: qcom: Use
+ SDX55 'reg' definition for IPQ9574"
+Message-ID: <20250306125147.GB478887@rocinante>
+References: <20250306120359.200369-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Add device tree for TUXEDO Elite 14
- Gen1
-To: Georg Gottleuber <ggo@tuxedocomputers.com>,
-        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, wse@tuxedocomputers.com,
-        cs@tuxedocomputers.com
-References: <57589859-fec1-4875-9127-d1f99e40a827@tuxedocomputers.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <57589859-fec1-4875-9127-d1f99e40a827@tuxedocomputers.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: vsD_9yf__jj9wH8TwhFtS7gMc_mSZ3fO
-X-Proofpoint-GUID: vsD_9yf__jj9wH8TwhFtS7gMc_mSZ3fO
-X-Authority-Analysis: v=2.4 cv=bNLsIO+Z c=1 sm=1 tr=0 ts=67c99a34 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=yDUiu3_GAAAA:8 a=n7UT6Et6nPPvcfnAv1EA:9 a=QEXdDO2ut3YA:10 a=RVmHIydaz68A:10
- a=DbJdjrQMpfET-33fQHBk:22 a=PEH46H7Ffwr30OY-TuGO:22 a=gafEeHOdjwYkg5oUpzAY:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-06_05,2025-03-06_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
- suspectscore=0 spamscore=0 mlxscore=0 phishscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503060097
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250306120359.200369-1-krzysztof.kozlowski@linaro.org>
 
-On 6.03.2025 1:25 PM, Georg Gottleuber wrote:
-> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
-> Elite SoC (X1E78100).
+Hello,
+
+> Revert commit 829aa3693f8d ("dt-bindings: PCI: qcom: Use SDX55 'reg'
+> definition for IPQ9574") because it affected existing DTS (already
+> released), without any valid reason and without explanation.
 > 
-> Working:
-> * Touchpad
-> * Keyboard
-> * eDP (no brightness control yet)
-
-in case your panel as a PWM backlight, you will need to set the PWM
-output pin function explicitly, see x1e80100-microsoft-romulus.dtsi
-
-> * NVMe
-> * USB Type-C port
-> * WiFi (WiFi 7 untested)
-> * GPU (software rendering)
+> Reverted commit 829aa3693f8d ("dt-bindings: PCI: qcom: Use SDX55 'reg'
+> definition for IPQ9574") also introduces new warnings:
 > 
-> Not working:
-> * GPU (WIP: firmware loading but output is jerky)
+>   ipq9574-rdp449.dtb: pcie@10000000: reg-names:0: 'parf' was expected
 
-Please tell us more
+I removed the offending commit from the dt-bindings branch.
 
-> * USB Type-A (WIP)
-> * Suspend with substantial energy saving
-> * Audio, Speakers, Microphones
-> * Camera
-> * Fingerprint Reader
+The next branch will be updated in due course.
 
-If it's connected to the multiport controller, you should be able to
-just enable it, like on the T14s, similarly to the Type-A port
+Thank you!
 
-[...]
-
-> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 798 ++++++++++++++++++
->  2 files changed, 799 insertions(+)
->  create mode 100644
-> arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 140b0b2abfb5..f0a9d677d957 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -298,3 +298,4 @@ dtb-$(CONFIG_ARCH_QCOM)     += x1e80100-lenovo-yoga-slim7x.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-microsoft-romulus13.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-microsoft-romulus15.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-qcp.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-tuxedo-elite-14-gen1.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-> new file mode 100644
-> index 000000000000..86bdec4a2dd8
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-> @@ -0,0 +1,798 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2025 TUXEDO Computers GmbH
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +
-> +#include "x1e80100.dtsi"
-> +#include "x1e80100-pmics.dtsi"
-> +
-> +/ {
-> +       model = "TUXEDO Elite 14 Gen1";
-
-Please use 8-wide tabs instead of spaces
-
-> +       compatible = "tuxedo,elite14gen1", "qcom,x1e80100";
-
-You'll need to define a new vendor in:
-
-Documentation/devicetree/bindings/vendor-prefixes.yaml
-
-[...]
-
-> +       vreg_edp_3p3: regulator-edp-3p3 {
-> +               compatible = "regulator-fixed";
-> +
-> +               regulator-name = "VREG_EDP_3P3";
-> +               regulator-min-microvolt = <3300000>;
-> +               regulator-max-microvolt = <3300000>;
-> +
-> +               // EDP_VDD_EN_GPIO54
-
-C-style (/* foo */) comments are preferred, but these ones can be
-removed, as they repeat what the code says
-
-[...]
-
-> +&gpu {
-> +       status = "okay";
-> +
-> +       zap-shader {
-> +               firmware-name = "qcom/a740_zap.mbn";
-
-Are the laptop's OEM key/security fuses not blown?
-
-Konrad
+	Krzysztof
 
