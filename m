@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-50600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9ACFA56043
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 06:48:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4C49A5604A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 06:49:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB07C3B3C68
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 05:48:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F8B77A9524
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 05:48:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4D651922C6;
-	Fri,  7 Mar 2025 05:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B75991991BF;
+	Fri,  7 Mar 2025 05:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wA76UBfZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dhGbGqC3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1142342AB4
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Mar 2025 05:48:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06101990C3
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Mar 2025 05:48:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741326517; cv=none; b=B2AlmSdPHx3msL9znpeuv8aUtFYIfJN/DUnyvVr1ADujGXyTA4VrsQvbhP5soalaVH7viyrfhnzyGJ6rBJOFdJu7y/Dh2RPW2Eiu9/M1TRrAaeVr0+MJxJSeKtTKG5EK3ITKapEatAUyRmnUbfzXBOJWa4EFuaMT6jq2hubde2A=
+	t=1741326528; cv=none; b=X76u4wWd2BIsx2qhIEUI++eEaapi/du8buKrNQUqtLoHpRpYvWd4PQawqfRLd0MxyrHAwBGI6FAP+TEetFl5zg48mDuwqbvctE00FCcijFSRbKJFIESctnfDOeohBikUDBVJC/Yy05FC2Xu1IBUwIAiUYgOmK6dMF/6vNddZopo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741326517; c=relaxed/simple;
-	bh=f6dKyFo3BkLrXoBHgGJQ+69N8B1GLf2n1hpUnfgTQTk=;
+	s=arc-20240116; t=1741326528; c=relaxed/simple;
+	bh=cUQog4O11KaHxKElLDtsQfwV4T6XOOi7M0oP18SotLA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OQYZyE4OgFwCw38H2sxLoOF3+w+anBm5mvupiAW2vYEG3fqmjDg/879WNb4eTEWvHkrrAySsgmIsr+mlqdK6Y+VKlSgyyY9d9+YVXnavRH2E/3JzI2JCfBQYtD5BcjpcbEeC41ETgW8RuCcgzvfn9lSA4JJ2yfgqhGOwliqt/NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wA76UBfZ; arc=none smtp.client-ip=209.85.208.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=FTqYuJtcT0JbvUD/hOhez+IFKOllGUxRtkQyGSmoKaKOxJHoWW7KIyKHkDbnUrLPwxONSRxZAX9QP4Iv7SWzv3xDOTF+kEP87VQHopmS00GBaClzJWr/0awa9gau7v+EN6NPmhct+VSYiRVh/cy1os5zi2IK21Upi3rYW3WfIdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dhGbGqC3; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-30613802a59so15939401fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 21:48:35 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5495888f12eso1834304e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Mar 2025 21:48:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741326514; x=1741931314; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1741326525; x=1741931325; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xIUlPQiEEjx7lB+nUPvIprXpkiiTW4hGNlxewbBn0Vo=;
-        b=wA76UBfZpYjk3rMu1lPVCt20u3LkrLhjUqtW/0ulvv1aXaEyt4xK34uptr2jT+wNMF
-         XydQjwgtFbYhWqHGaGXns9j49UDtxlpCkYpOVFs0KHPmai0POchOfkAOdrgi4WDyw4zA
-         FIFutKWbUYv/XA++uzyM6Ho7K0LLuwk+gNTqVfCuHWSvEQd8mq+TiCwSKZ1bDnh9gl6v
-         2lV5gkdQXpqqKocIVfcfTfKe8cX+/HGHQnMATr0uprSfS8NgRPtP0aXt5jD7nfXPLC/o
-         tR8n0F+39fxZqYKjpvkv3kkLa9XBRotA2f1kp9LFpYRLk8TozZsJX8ZGdr56CL6LJU7a
-         0QnA==
+        bh=6ZbBg036E5VQfq22pHnXrnX07SBhbwakhgnYEPNM1oo=;
+        b=dhGbGqC3iKQ/vx7ENfbsVeGSIN1F3eTZttC+LgC6iEuKgIUeGX9rkG8h/IcSqz6jCS
+         CepFOGrF929GSVS1XEMhXbVmzPf3mb0bZSSb4/KJRlmH4vXZvDn9sCQO80QFDdesYhgb
+         RXPUZq01AbONbL5mocLwI7a8jv94qXrxMGPbSPdBebSegL/GoC7giYbNj+6rU08NYmiC
+         PSiTv3RT6xSi3LZVR/7pgdPp5su2ekVhzzp9ekuWYCCM1hEHPQafMIURr02iCfoMR4L0
+         Y5t08XACInPnBuifKvAbCsfGEP6AzSJ90mvIcHQXr8hawQx8/MGNsDDaOuT3pB7ZngxW
+         QmnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741326514; x=1741931314;
+        d=1e100.net; s=20230601; t=1741326525; x=1741931325;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xIUlPQiEEjx7lB+nUPvIprXpkiiTW4hGNlxewbBn0Vo=;
-        b=aLceWoS8tUEFGFshx/lU0oagRGeaeVjDjhxqO6+Mz55gf8huKinJl4DDwYX1dxRvAT
-         d/D2zpNuO0sbHDHdU9C3cUpQYPu+KEPfUC3d5qiTfQ1YB1lLdkvFxM4B6I7J1kTx/pN0
-         NpkR+fQ6rrEjUDnIzfvXQREv6APoWrAQTrPomhJoiOJA8Wm7UhCrGcXZcdkeZvALjZx6
-         NSZpv/vbzQfthDVElPPMpQ+ZvQaLsDgfpvSLsEFytybCnO432g1LzbchlBkKlsRvLQr8
-         FTypGjDBsi3TiKDso80sdjeLuCoki+3Vtu0kpY4FLiVVThRAzqRVgUtLxg1VHQUlxUc+
-         p5zQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWWWWE7getDWFtcnTUX3s3uFwOhm/3xCWEQZ0vXeBjcYveI1fgYOwNajwJr8GyWvUghyhxSa2/jZwUiTNHE@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7QbFFTKS6ZTnp8rJv2A7L2mPm72nYTK90UvfT0UhTxg6+YaFq
-	V/uQJyXlaTfDrky0UhHVmFwf2Lr+YZqARhLLxMO6jcr+2jlR4byVriDdRDXDTLk=
-X-Gm-Gg: ASbGncsAaLofJLzFrltdfT1zUfBrjYjQI2apFGr4P/hyPNg1hmtyUoK2RuigwpT9mDd
-	5GJsyvyNCtr92xVaLRmwprzZulRIpq6kRssq5AUIxPWjHPPab+cdsA3L+2IcDqzV4BGPoOcpWl1
-	Tg00gtVDOKwVznCMXeTzEHuuWvBJgfzA10RvuvvGNs8KDI2mx7dPC3A80ixaWiofY3qcQE2IMPx
-	ZDXe6dnRPxMkfYcsODy4xkP4X36twCq77AvRk4Vm1J5sO9sWdtVooBMyg32fDtmx6gHH3GNlCRC
-	QE+qh41zq32pMq3zvRaTdqX8gxHpTW1RaCfJvQi719HZ5Oww+IkKrFCxmKUs1oIsZPYFmBNXsNO
-	IPypuooe5jiWl3uefcEc2JM7Z
-X-Google-Smtp-Source: AGHT+IFLgCjDUK+ssfV3W8fYXWF3IcyBRSZKJMxl/h3Pqf22SL2LHsOB83+2OXk5a+mSVQE5lVC+4w==
-X-Received: by 2002:a05:651c:b2c:b0:300:2a29:d47c with SMTP id 38308e7fff4ca-30bf4606942mr5189011fa.24.1741326514230;
-        Thu, 06 Mar 2025 21:48:34 -0800 (PST)
+        bh=6ZbBg036E5VQfq22pHnXrnX07SBhbwakhgnYEPNM1oo=;
+        b=tj/bDZiJkXGO2gZTdQjgU5x1yykp1uT6ItTqehQ4htLsuoO1l9b4eIaB19N7SR/Gsl
+         m01+dxfymS38OVOQ7yjNrJZQzdgOC0fFp0ChwC4Kj/qGL5FszmggUaDUvsSJ6Mcp23j+
+         kgnujYfoP/7TXkc5pKI4HGUIKjwbj2sVITtet6zQRjBuqmMHpZ7W96Ig6oXjug/ZO5tJ
+         8u/9zNDrhmOGyE4YZ2jr782YLdtqttVwUhmvuvugDqrUWkcciD0+rY8SGdEjTyMlZTp3
+         aoGVOhxJ1TQ/5sYyXSUJRPJWaNQ8e6EP9ZihmEnnHf3FnZTTNX7Ik/KwJ5pJAQQoV2h5
+         Ne2g==
+X-Forwarded-Encrypted: i=1; AJvYcCUIPldgnWXmEc0feixtqdGg7+H9e7OmETQJd93zRFcylrnRhCF3sDjJ4PmDrOeRGNS+Egrkc4BbH78wKot2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7EJNxb9fJJyqW98P9N1RPnbystj+1SiczoNhbum0pg8zW0scZ
+	SS28L4X6akapGb0kLCHi4uH5/f/I0Aqk3/Y9n/GAQY4oZRP54nIF3yccFsmftQU=
+X-Gm-Gg: ASbGnct4z11RYgrptF3wudhP5YRx+XExJqPojAOp+9sTvzAVNICyxf6k6ikZTNEq6wf
+	pKPI8yyIAlD9mzZNS98VkV3kT3MBOqooU/0ELjkSd80lY0X4htE9Cp9nGBLNarOif7dGYGYvq6+
+	v6Rk4AuBPiYSNpMRazOekMMO8GNvi81j6Rg1vlVkh6vEOpiHWrGImQsZjmaIowe74UR6B8AQiIw
+	SJxcl/4VS5rX8ABmOpx6urgW4NmX/BujMJ4r8eZi+ol0QJ722mxu+UcefxwwA+iusxzjayLXEGw
+	ToBJGQS2mpaIXBiCD7irjOOJPDKI0tC6UZA1/Mv2paYJUGEd9rj0S9XiHcMwgkNBrMjvUMIhDK0
+	pIuYWRqOqqQE3Tez4v/n0ua6l
+X-Google-Smtp-Source: AGHT+IHcVDS5X+VsoNTfLbd5EGvMqQkC6bXB00OiXoktlobfZRVvgZG5xWYx/7vdkvXRicvu3Fer6Q==
+X-Received: by 2002:a05:6512:12c3:b0:545:17d:f96b with SMTP id 2adb3069b0e04-54990e5d38amr514102e87.14.1741326525147;
+        Thu, 06 Mar 2025 21:48:45 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30be9a07204sm4342721fa.114.2025.03.06.21.48.32
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5498ff85e23sm181305e87.225.2025.03.06.21.48.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Mar 2025 21:48:33 -0800 (PST)
-Date: Fri, 7 Mar 2025 07:48:31 +0200
+        Thu, 06 Mar 2025 21:48:43 -0800 (PST)
+Date: Fri, 7 Mar 2025 07:48:42 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Konrad Dybcio <konradybcio@kernel.org>
 Cc: Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
@@ -90,11 +90,11 @@ Cc: Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
 	linux-usb@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 06/11] arm64: dts: qcom: sdx75: Rename AOSS_QMP to
+Subject: Re: [PATCH 07/11] arm64: dts: qcom: qcs615: Rename AOSS_QMP to
  power-management
-Message-ID: <zmy54zmhuai5vip7fvdjkf5hr2tsnmmh6ts2labnh3amkg4s2l@6pjfprdfxn56>
+Message-ID: <f5xqdwj7v4zpwlpkshfnofth6u5pyu4tkzlmr23laspv7q3wmx@ebsugcqok66a>
 References: <20250306-topic-dt_bindings_fixups-v1-0-0c84aceb0ef9@oss.qualcomm.com>
- <20250306-topic-dt_bindings_fixups-v1-6-0c84aceb0ef9@oss.qualcomm.com>
+ <20250306-topic-dt_bindings_fixups-v1-7-0c84aceb0ef9@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,21 +103,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250306-topic-dt_bindings_fixups-v1-6-0c84aceb0ef9@oss.qualcomm.com>
+In-Reply-To: <20250306-topic-dt_bindings_fixups-v1-7-0c84aceb0ef9@oss.qualcomm.com>
 
-On Thu, Mar 06, 2025 at 07:11:18PM +0100, Konrad Dybcio wrote:
+On Thu, Mar 06, 2025 at 07:11:19PM +0100, Konrad Dybcio wrote:
 > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
 > The node is currently named power-controller, which requires the device
 > underneath is a power domain provider. Rename it to align with other
 > SoCs and resolve this sort of warnings:
 > 
-> power-controller@c310000: '#power-domain-cells' is a required property
+> power-controller@c300000: '#power-domain-cells' is a required property
 > 
-> Fixes: 91f767eb6938 ("arm64: dts: qcom: sdx75: Add AOSS node")
+> Fixes: 0775021783b5 ("arm64: dts: qcom: qcs615: add AOSS_QMP node")
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/sdx75.dtsi | 2 +-
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
