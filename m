@@ -1,106 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-50640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9D75A5690F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 14:38:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC3E3A56D07
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 17:03:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 711873AE6F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 13:37:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18C153B7118
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 16:02:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8203D21885D;
-	Fri,  7 Mar 2025 13:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B6B7221701;
+	Fri,  7 Mar 2025 16:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="irJauzcN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bb/UDfeo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7E521A45B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Mar 2025 13:37:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8B722156A;
+	Fri,  7 Mar 2025 16:01:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741354672; cv=none; b=VxwApX4RTpJ39s/WZyvrXJ2uDleMPxMh+tV8UoI6Qg4DUBAiUirOxeczGbc4ZUdAU+sqEAbEpOvJGKH4QG4uVGozKG+p+68zGTRl0PikgdTgbU1h0atUPe7cZEJZmq1IBRUoI9cjgSFScVmaF3S8hds8aLvoVWYBP8xRwJiX8lk=
+	t=1741363319; cv=none; b=OLzNbeXipJzckMqksGxX2aT4UiXjKrgmrzS2y4GSv7B8UvAj9vlsXt425zrvW5ORRQss9KUWf7ILyViQCqTJHbQ4YvAd8IpQXLfLWYhJy549PW1x7PRkIn+H3Pr/xNO2C2o1YMI7VaqJuejT0mZ2CH9jRbV+RmnH097pFKCs3/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741354672; c=relaxed/simple;
-	bh=yhAiG+qi3GeaVQhP5HW92YO4rjUq5KzIddSEtmQYAwo=;
+	s=arc-20240116; t=1741363319; c=relaxed/simple;
+	bh=sDYrqSLQwQmSZUEM2jqyh4n0GSf28H5kR5EpLD9dgx4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cMBa4NKDvjaiGlOrhg8yp+6ThZyp7rvsfTv3EZarTDK77uEsP339J8sdAQUNOL1Fd0zZjsceyXwFHr0wG1SawzkESyLS8XeXyGNO/UOq0Al05/XLlziQpQUFrV84ucwItEnI5dS3qE4VL7ho0eKJegbipfJHOr/JTFu04dU2r/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=irJauzcN; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5496301c6afso3194360e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Mar 2025 05:37:50 -0800 (PST)
+	 To:Cc:Content-Type; b=oo0ommlt7bXvqpX7RkCbnauW13654nSoXOl0NTxz/7tNZe4hdFT8ppitajuy524Fz4U0rCQVo3YYZuYRzls4h0r2gl6sKsKhAXPgTnL2Pszes0oRGzTgfsLi7nHrwE6QGHz1koq02GRZJp4yqyF//oWOlpUB+b5Tq0l6LI0F10s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bb/UDfeo; arc=none smtp.client-ip=209.85.166.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3cf880d90bdso6444665ab.3;
+        Fri, 07 Mar 2025 08:01:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1741354669; x=1741959469; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741363317; x=1741968117; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yhAiG+qi3GeaVQhP5HW92YO4rjUq5KzIddSEtmQYAwo=;
-        b=irJauzcNX9RDwDK9m+6GWPRDXgRBdNV8bbXKLyQZoDe2uDbJ2TF+W7sp047ao4GAOV
-         vEA0K+KD3zb/BnhJXXcQrFXHTI6nE9ht+9vhHBfoLTg7perJFZ7rCaqkKsUgVRJVG4Ar
-         VhvnLjqGmVZNL1By4jKht4tITJrB2X0q7NgBjPP8n0N6bqETEe0eDK8bb0wfwDzVsR7s
-         t1rCH4GmTFB+VDMhcYOpSi6zK/D5R4vwuw73GUN6biYbuSZ2eWfXe8PXbceQxMmTZxx8
-         kEs2icMEbbE3R8IXT46WkoUC/Z9T/Z8ZhQmydwhjlUI7PsWngT0xnNwN+547VQCNCfVK
-         H50w==
+        bh=XyzCZ6tPew94XfiS+4OSnxV4WHqqsy2FInPHfaV1vig=;
+        b=Bb/UDfeocA4lblPPDYJ2jysvMs9TxfQ5J3uj1zsEhr7e+gg9lZC0uu1O9l/C5DiHF6
+         e+Grm47Mw8NpOsjDpicp4oSvKabFu3ih8SB6awOHCxyt+/fXBODi8oFIVJSEUTvSif7U
+         jjPjPz8g2mC1deW4sc4ZFiMJg0YQ6iXwlBxnPJrKeIkMptd9f9HsRaLfAzsvsKrhPuTT
+         n0n7/nWgcDC6GlaCZLs8v9y+DLoiOd45yndj44REnl1o/OMdpyHi30/tddaEd3Br5iLv
+         y0WEcUYVXmYTkSTTMGK2EPR2PNFNDY/00KSdxTUnvKZ3xYVdMTn3A4+ssKXnt+6smTn5
+         fE5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741354669; x=1741959469;
+        d=1e100.net; s=20230601; t=1741363317; x=1741968117;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yhAiG+qi3GeaVQhP5HW92YO4rjUq5KzIddSEtmQYAwo=;
-        b=ZJNIOT4gRz1pGT6eykku4AsJyE8GgKOBLU4KRtGl7vVSZPomhmFAP7llYFKfTD7bBi
-         hs5DtHqEud8fqjwaBGFbJOtYQeDzxsTF1twqCAtX8N9J/pVdVjKqTfond988PGd7UToi
-         6pqnDOE0PpZhvp5N2Pdvk4P2ybcqzM/zAlFxQjBgG0b3tEgdfJsCUJZRGG5N4hMwopR1
-         X0A1Y9vyiXoGLsBjxaEpO+h5kzfMmHSvz7Zj4kZ3OnN7J4+ltKIU3qeyiJHhB5vLTuQQ
-         mA+pZFk9HlrNmqzwCdyIS5qIyf4LuMUHhkNvoN1CJGWeAm97rjwuSdPqCL8QCod9UFXr
-         jJ/A==
-X-Forwarded-Encrypted: i=1; AJvYcCVEj0/hpmhxgFNx7eIZ6neWEa1FVq6JvK6uSTIo2FomC2yBZJczN/CO/zZJrAzPrGr4QfOaGoHiM40JJHc6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzow9AB37QAlj+bhP8mLrCYPpAVQ5zBrG42WFdHwYMEJspFvvOx
-	/ln3vAE0zO3RQbVfqHY8FwWlhYAq9qAZPWd0jOTWWWf0POrFS8TOZ0T5UpMU/dfTL0COQUL2ePA
-	MFamk38cCUmDkZ/lFlWmq1SoZ9Ffot3/IIIiK0A==
-X-Gm-Gg: ASbGncvE1Sq/vI1zZSJ3mRdds2FqpJmanMWCkrx9rTR/f5eosFEEFtYJbPI35iI/e/I
-	xnFLVuRhUD47d9uqX5EdKxF24VGS3qnD+8Klv2DAmcaf7OGvaWokHSrDAh7xYms5wmq56vs7lK1
-	mOF4Y/hddv+AF/1OlICEdNCfCwFiVANxSxtUunQxt6G+Mtf4S0veM7q51e
-X-Google-Smtp-Source: AGHT+IGzkNoMHjmvOj1hQqXkv2F5z2g3i4Jr8kD59wAfvhlOi53g3cqwXoU/0aqTwNXIKKE8Ssj4pheG14cvE/77p9o=
-X-Received: by 2002:a05:6512:3048:b0:549:5769:6af6 with SMTP id
- 2adb3069b0e04-549903f6a2dmr1550533e87.9.1741354668560; Fri, 07 Mar 2025
- 05:37:48 -0800 (PST)
+        bh=XyzCZ6tPew94XfiS+4OSnxV4WHqqsy2FInPHfaV1vig=;
+        b=U4O0A2oXSxIyK5PqPg4Fp2IFt/xEtvFo3okYvTIeMiuyNY9DMrhLCaqBxs6VDBmeUj
+         KUGAC2X0iAMfGvmOehf445mxzccFPqBueEqCowhXKGkTLmlkWgWqTR16ADyoy2E1p71m
+         Gc/dWrfCv43wOfpRhwUJQZ8Zw7MxBBhjwe5GSv8hc/sf3vLYOoZZ67UszTU3rSK+xoo3
+         qn7SCbfEqosiklGmlEEVQtdaYdfYzUS1CoWI8JAfcGFjb5odAM1IIsOKdoKunmpj6GzW
+         yzejYkd/sKkZg7uqTHZz37ma3ID02bI1m6jJU6GNGJPc/Vr+b+igcWqfj25xh1K1uynJ
+         /mMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU/yf3w1qHT0l2bl4n/Ik8kepT/22iDG5fQsnpqNs32UirrQ70eCj4D0iiwRELYmm2Ig3tk6tidchQIorNr@vger.kernel.org, AJvYcCWTW7AGjMP5GT0U7FoYCJR6o6WCgeYs2p4yU3UYUtc8v+gbKAGFkclcv9ny20SworTVQ5cPBiNFfiUv2F+A@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx9DNJVg0lc32ieqNM4n+F1Dzf9VztwSBXadvOf76yERI0P4iKq
+	CXbThSXm7aYyWZpcJDWpa3ttfqjZPv4QCwwcBzqB3H9Hh6ZZ3Il8A3/3e55NciQdk6E8+rB4a7U
+	lZmE4CRwtaa4ukaAC1ojZGa9Mlyo=
+X-Gm-Gg: ASbGnctKG2CoJ8H+EEU4GRNRNInXp5Jqcb0kcSQkGUssifdHn87N2yPmFBwqB1vmfj6
+	8zOVZ015PjaK7xQibhAr5pnF1mDgouvOvxUVscaxq2UH1skK3TFa6CGCdlM2P+C+/g540/nv3vD
+	CHEyOuPwufM0PQ57L/0rXRC3MSgw==
+X-Google-Smtp-Source: AGHT+IEqkZPqqdSckRO+B/IhTs42SUAvVrOyCHyKIDGjAnzV0O98IKKaPcGzJ9vvbFiyM8RlpzW+Mc3ryp1hFh9MUp8=
+X-Received: by 2002:a05:6e02:1a0a:b0:3cf:f844:68eb with SMTP id
+ e9e14a558f8ab-3d4419712b4mr45334665ab.4.1741363317257; Fri, 07 Mar 2025
+ 08:01:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250115103004.3350561-1-quic_mdalam@quicinc.com> <20250115103004.3350561-4-quic_mdalam@quicinc.com>
-In-Reply-To: <20250115103004.3350561-4-quic_mdalam@quicinc.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 7 Mar 2025 14:37:37 +0100
-X-Gm-Features: AQ5f1JpFjLgvIBX6jbFKPzEzBuYS5kNiIudISoUHjkmPBU-Dykoze86uPUbnTss
-Message-ID: <CAMRc=Mc641VWZp_2cMxrvs2ErwwkE04903GZ8BzDAZg3+H19NQ@mail.gmail.com>
-Subject: Re: [PATCH v6 03/12] dmaengine: qcom: bam_dma: add bam_pipe_lock flag support
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: vkoul@kernel.org, corbet@lwn.net, thara.gopinath@gmail.com, 
-	herbert@gondor.apana.org.au, davem@davemloft.net, martin.petersen@oracle.com, 
-	enghua.yu@intel.com, u.kleine-koenig@baylibre.com, dmaengine@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	quic_utiwari@quicinc.com, quic_srichara@quicinc.com, quic_varada@quicinc.com
+References: <20250306-dpu-fix-docs-v1-0-e51b71e8ad84@kernel.org> <20250306-dpu-fix-docs-v1-1-e51b71e8ad84@kernel.org>
+In-Reply-To: <20250306-dpu-fix-docs-v1-1-e51b71e8ad84@kernel.org>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 7 Mar 2025 08:01:44 -0800
+X-Gm-Features: AQ5f1JqcVpnB0n6If-cKi8SOKwKukooOgmurcZp1EWDwVWSRGs12k5HWlnnV4MI
+Message-ID: <CAF6AEGv9ViJtvnYM-n-+oHY_Ky7KvBtng_2EOBDtyTL53SB_hA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm/dpu: correct dpu_crtc_check_mode_changed docs
+To: Dmitry Baryshkov <lumag@kernel.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 15, 2025 at 11:33=E2=80=AFAM Md Sadre Alam <quic_mdalam@quicinc=
-.com> wrote:
+On Thu, Mar 6, 2025 at 12:22=E2=80=AFAM Dmitry Baryshkov <lumag@kernel.org>=
+ wrote:
 >
-> BAM IP version 1.4.0 and above only supports this LOCK/UNLOCK
-> feature. So adding check for the same and setting bam_pipe_lock
-> based on BAM SW Version.
+> Correct commit 20972609d12c ("drm/msm/dpu: Require modeset if clone mode
+> status changes") and describe old_crtc_state and new_crtc_state params
+> instead of the single previously used parameter crtc_state.
 >
+> Fixes: 20972609d12c ("drm/msm/dpu: Require modeset if clone mode status c=
+hanges")
+> Signed-off-by: Dmitry Baryshkov <lumag@kernel.org>
 
-Why do we need to read it at run-time if we already know the version
-of the IP from the compatible?
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 
-Bartosz
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/m=
+sm/disp/dpu1/dpu_crtc.c
+> index b0a062d6fa3bf942ffd687a91bccac3aa4f06f02..536d15818ba24f8b11f24e3bd=
+9726d31c57ef531 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -1395,7 +1395,8 @@ static int dpu_crtc_assign_resources(struct drm_crt=
+c *crtc,
+>
+>  /**
+>   * dpu_crtc_check_mode_changed: check if full modeset is required
+> - * @crtc_state:        Corresponding CRTC state to be checked
+> + * @old_crtc_state:    Previous CRTC state
+> + * @new_crtc_state:    Corresponding CRTC state to be checked
+>   *
+>   * Check if the changes in the object properties demand full mode set.
+>   */
+>
+> --
+> 2.39.5
+>
 
