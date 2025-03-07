@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-50596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2394CA55FB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 05:56:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA3AAA55FB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 05:56:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F3953B4C14
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 04:56:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 26F5C16B0A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Mar 2025 04:56:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E13819D081;
-	Fri,  7 Mar 2025 04:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C74C9193425;
+	Fri,  7 Mar 2025 04:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gCqzSpnV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bbRLZx34"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4657119CD16;
-	Fri,  7 Mar 2025 04:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9908619FA93;
+	Fri,  7 Mar 2025 04:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741323373; cv=none; b=XBn4InhFwXQj99RP64MbaAlDoYvHCa6Vcy2Js4ssO7zCmKNzxg80cTb2i676W3KT5cOpolzggBuJPmTAICxJmTDfwW66Ypj/7AoQKZAtS32eP1SpfTKZaIPIJLmp2KN9C2e10JtBwou0tlnWBuOd3t288FYve/LzMMkmhCPhe8E=
+	t=1741323378; cv=none; b=AApNBVsRL6i57rrJ7d1R3Zyj+tvjJ7dWAWE4Fbx3dPrLofOGaB/gytcX7d5SR//nTVJQAwFTvQaNQY0B4NdlfYhYzel5PBSepf8JFr9yRsoX4t1yg44n2+M9sbG+Q806FeS/0XYnRXYL+DR5SvlK9A3mMo2wy0tXx4E/25KUjqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741323373; c=relaxed/simple;
-	bh=4xLy65/spHre+03tx2cdZR4rwWKdBdEO/nb63/hdqH0=;
+	s=arc-20240116; t=1741323378; c=relaxed/simple;
+	bh=tV4mWJwblSpLJntlE2PRqNsAKvm8a1dUCx4Mdb4I8MU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A8fvxt4on1xJxQEOqUiPGFVyH1hr7MXDiHjh6heYUw9ynhvCVss8BQVzcPuxIcPJbZ4fAMrl72ql0giX6NNWX4pVuB9Csa5HUQJuVDBlL8w/CvMRrSh+iWsjdoEX34m+CC308DKUwHcz2uj19wtCrAAydArRV8byfQofBNTOLBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gCqzSpnV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A67C4CEED;
-	Fri,  7 Mar 2025 04:56:08 +0000 (UTC)
+	 MIME-Version:Content-Type; b=hBKEkGUKKn0gAJc15NS5LUVIpCvS2LerprnrKaCY/EpwDYsr3WD9OWWYr9fq7S5YFAKOiT0BliQA2Y0gE76LEzPflygRbtfudAse7PkyjzBB92Q4fcm6gJ1aw1nUgis1bgZh6Xsxvo1h3bCU0R8fr0Fj2gXNrw80fm8e0f9e01M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bbRLZx34; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AF0C4CEE3;
+	Fri,  7 Mar 2025 04:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741323373;
-	bh=4xLy65/spHre+03tx2cdZR4rwWKdBdEO/nb63/hdqH0=;
+	s=k20201202; t=1741323378;
+	bh=tV4mWJwblSpLJntlE2PRqNsAKvm8a1dUCx4Mdb4I8MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCqzSpnV5l3TxpFJ8JWy1SFW2c7RaV/SQ26BWp2Uw5Lm8O50WuADCRku9vNICtt9L
-	 pV0jV/nFK29dhWVXD0FnHLx3jA1nTQs8s/Ix98hw7/Wp/iY+mIjbBu6ibFrTSxDiMI
-	 JZ44WduDtFYznFjWSZuakd2e/zlI6ypIWu0CoE3hdrVIbCCgAqi7sbH46CQqSI8Hw/
-	 0KnMivzo+PHxTjYi2xW6nhiux3wZlfrX6Fsyy9BsBN4TTiLnM+ahYvYN/kR7PU5qnq
-	 Gvo6RcvGECspyVkeNxsxgiW+LU74kP3//TsVuPC4nqKL+28daELOF1SfeePNfLnMu4
-	 B537fUGk8K2EA==
+	b=bbRLZx34r4Xf0RNuo80VlfRPkoXv+WC20f86SFLCzc4i/kS5Qe1fPQT+1d0PPA+Kc
+	 y6q8KmFCnR8O2yABDI/qNHcpx60926OZslQo4TWtXr7g6nCXPRwSjsOMB0b1WbBYg+
+	 216ykO8QUxeL+N/lQfzgRATl2DScBmaCUnZhWsqSUFeEwcHshIdf3pg5Oh0Eg617Gg
+	 oT/h+2TfWGoVKTJQLpM/lsk6Y7Zpg5TMcCuQXFkQskmRVLfMDVUSmg3cSTGs4U4VsM
+	 GwhWshL33dRTl6DV96gjL2EqIpAzIabbzUtW5Y4vv/MzHg6Pg5epay/sXZCxwK73vX
+	 nRKbI7pZSIxLQ==
 From: Dmitry Baryshkov <lumag@kernel.org>
-To: Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Maxime Ripard <mripard@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	David Airlie <airlied@gmail.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
 	Simona Vetter <simona@ffwll.ch>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: dri-devel@lists.freedesktop.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Mahadevan <quic_mahap@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 0/7] drm/msm: make use of the HDMI connector infrastructure
-Date: Fri,  7 Mar 2025 06:55:49 +0200
-Message-Id: <174132327776.1133698.4430380274517103098.b4-ty@linaro.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2] dt-bindings: display/msm: qcom,sa8775p-mdss: Add missing eDP phy
+Date: Fri,  7 Mar 2025 06:55:50 +0200
+Message-Id: <174132271320.1132259.1145484645607636085.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250226-bridge-hdmi-connector-v8-0-340af24b35cc@linaro.org>
-References: <20250226-bridge-hdmi-connector-v8-0-340af24b35cc@linaro.org>
+In-Reply-To: <20250221151311.138755-1-krzysztof.kozlowski@linaro.org>
+References: <20250221151311.138755-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,34 +80,20 @@ Content-Transfer-Encoding: 8bit
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
-On Wed, 26 Feb 2025 10:59:23 +0200, Dmitry Baryshkov wrote:
-> This patchset sits on top Maxime's HDMI connector patchset ([1]).
+On Fri, 21 Feb 2025 16:13:11 +0100, Krzysztof Kozlowski wrote:
+> The Qualcomm SA8775p MDSS display block comes with eDP phy, already used
+> in DTS and already documented in phy/qcom,edp-phy.yaml binding.  Add the
+> missing device node in the binding and extend example to silence
+> dtbs_check warnings like:
 > 
-> Currently this is an RFC exploring the interface between HDMI bridges
-> and HDMI connector code. This has been lightly verified on the Qualcomm
-> DB820c, which has native HDMI output. If this approach is considered to
-> be acceptable, I'll finish MSM HDMI bridge conversion (reworking the
-> Audio Infoframe code). Other bridges can follow the same approach (we
-> have lt9611 / lt9611uxc / adv7511 on Qualcomm hardware).
+>   sa8775p-ride.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('phy@aec2a00', 'phy@aec5a00' were unexpected)
 > 
 > [...]
 
 Applied, thanks!
 
-[1/7] drm/msm/hdmi: switch to atomic bridge callbacks
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/8ae7192e7a00
-[2/7] drm/msm/hdmi: program HDMI timings during atomic_pre_enable
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/d309bda67172
-[3/7] drm/msm/hdmi: make use of the drm_connector_hdmi framework
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/384d2b03d0a1
-[4/7] drm/msm/hdmi: get rid of hdmi_mode
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/d840a2162112
-[5/7] drm/msm/hdmi: update HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE definition
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/e92573638792
-[6/7] drm/msm/hdmi: also send the SPD and HDMI Vendor Specific InfoFrames
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/d7d57ecfcf52
-[7/7] drm/msm/hdmi: use DRM HDMI Audio framework
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/ea54cfac0f8c
+[1/1] dt-bindings: display/msm: qcom,sa8775p-mdss: Add missing eDP phy
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/d3169ce5251b
 
 Best regards,
 -- 
