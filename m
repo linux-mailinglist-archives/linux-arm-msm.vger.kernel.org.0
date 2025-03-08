@@ -1,88 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-50692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB7F0A57949
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 09:32:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 663E9A579C1
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 11:28:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3160B1707E1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 08:32:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5ABEA3B3A56
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 10:27:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D710C1A83E5;
-	Sat,  8 Mar 2025 08:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 114F21B043F;
+	Sat,  8 Mar 2025 10:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b="UD9yISUk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SlU0SfWP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7F71A317B;
-	Sat,  8 Mar 2025 08:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.6.53.87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D425AC133;
+	Sat,  8 Mar 2025 10:27:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741422747; cv=none; b=DApzgo7QHt709io2EJiiVTmOTZHeVeeDja4ZamEUea/R/Pn1utxAK1g1YrTm5m+irJoTjouQt5bYch2xn0di8XReKb3aTupkZA8a/CTRTSqqPKA4718DW69qFIj/zEPBN07sNRK4lOc8FNsvit//fM/2ooZLD+VlSIkm/aEYVgQ=
+	t=1741429676; cv=none; b=QN99m35liEbV3fm/roSiAosQlwBWLJysSZbA1ekVXJUn0rg51l0x8R1GydQHN4+RGdEodO6XH+UeKNlSjVCh+xHswVqhWpmYCRmhp37rrD4gbN9X/bHDVkE4LPpTAdSWcIs8La+3Ys47JmX956RXHfgd5OAOkMS2/7agOpPSIoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741422747; c=relaxed/simple;
-	bh=1UMfJLarVfNnAEQ3Uf796b6RsF2vGNpbCHQA71Avhbg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vC3xjP2RtrQVdGMnV5rpcKJaHH36qFvKQpqOGQ9Rhn64kGacr0q11szRqlhnSTGEZ71RzISrx319SkYPJCzSVc1eSFlMMqa37UfVUWaVPuOzwB4BsPlP86TNQZ28NS0h8n0qjwBmnifH+oMY1LvU5dAZjkm3+2nth6eG9tGtY6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b=UD9yISUk; arc=none smtp.client-ip=144.6.53.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hmeau.com;
-	s=formenos; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=/P3F2fhOzADjkWsQMCkbdv/62DvmIAbanNv+LSzfUpQ=; b=UD9yISUkAbyL/TW+rLkAgJRcSl
-	nvIYikifiKbHwtP/r9KxIUyJjl7d3WLIqKXs3ZrKc28z8IEs0KqWHxcbt20bGmi1XzWgpAfHszZkz
-	H6d7wM/FrE78bRK/GCS6ZJLG1VUi8yjjUP79stCk9Gm1yd5QKFcih2hXE79//a6uutDcGbauAz437
-	BFeluCiQD6O3BFPIWKVgejd180AbYRbKVOa2h4QM9mv7RY3wpQL428FSgeVoKAnIMUsBfEZHJRZsm
-	sVZy8uxCKmyDmwL3Rg42YNw2DQy7V7UTG4XgeixN7Yp/MRIRPdWwGqzXVJ8rwm6JxUWM70XezwFtK
-	c7FTWWJA==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
-	id 1tqpbS-004ofG-2l;
-	Sat, 08 Mar 2025 16:32:15 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Sat, 08 Mar 2025 16:32:14 +0800
-Date: Sat, 8 Mar 2025 16:32:14 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Abhinaba Rakshit <quic_arakshit@quicinc.com>
-Cc: "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: crypto: qcom,prng: document QCS615
-Message-ID: <Z8wAjlz4aQcFJkrF@gondor.apana.org.au>
-References: <20250228-enable-trng-for-qcs615-v2-0-017aa858576e@quicinc.com>
- <20250228-enable-trng-for-qcs615-v2-1-017aa858576e@quicinc.com>
+	s=arc-20240116; t=1741429676; c=relaxed/simple;
+	bh=PITZtdJg2uIAhqm1Sgq0C/a7piJ6sd/4BSSAg4EQ/HQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=oLVqkNQ5MX4Gxl3XkPKXO/fU4UyDO4s/U/04j2exNKXX2mHlTiLVEQDNrDcYL9DNR39SXrDMRFa9yU5+bpvPmfk9QMKIsS4BUGBkSrju5heMtIUNkoaIrvvgsHfuTYN0zB46BpPxS0stp3H0HJ+Ik06GcHzUI+S79ieaHX3kwcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SlU0SfWP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 37B44C4CEE0;
+	Sat,  8 Mar 2025 10:27:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741429675;
+	bh=PITZtdJg2uIAhqm1Sgq0C/a7piJ6sd/4BSSAg4EQ/HQ=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=SlU0SfWPjSx1xK/lUhKeYXlODnhynQsbLzzBZ7W+7g9W6VsQ9ccdLMwgro86p8sil
+	 4bpsdQ0KpeZg0TvxjDDXEzj/JTgL/0tStGgTyrBmo+M6qmwSy7BYlZNYSicQEikMzg
+	 Mp/P7lN6HqrFyEYh71q/GCkctLoy+MBkk+ujHysXoyqC6cZFNd+OCIXZnUvk0rn0Xg
+	 57mOsw2SxW4IaCxAbTVzz7nOhfdk8Hvuh6i3OjlQkrFOnYk5osijwb1mjjFS6EbGm+
+	 LWKmq+KBlukTt7lZabJqeDihNJXZRGXxYP0k5H2gd9gGE0JtmQG7Ut4zI5CmJe/Whe
+	 J0kFkU4ecULVA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1973EC282EC;
+	Sat,  8 Mar 2025 10:27:55 +0000 (UTC)
+From: Xilin Wu via B4 Relay <devnull+wuxilin123.gmail.com@kernel.org>
+Date: Sat, 08 Mar 2025 18:27:51 +0800
+Subject: [PATCH] arm64: dts: qcom: sm8250: Fix CPU7 opp table
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250228-enable-trng-for-qcs615-v2-1-017aa858576e@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250308-fix-sm8250-cpufreq-v1-1-8a0226721399@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAKYbzGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDYwML3bTMCt3iXAsgTze5oDStKLVQN8XS1NLEJMksxTDRWAmosaAoFag
+ KbGh0bG0tAADDTpNkAAAA
+X-Change-ID: 20250308-fix-sm8250-cpufreq-d95944b6d1a3
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Thara Gopinath <thara.gopinath@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Xilin Wu <wuxilin123@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1741429673; l=1086;
+ i=wuxilin123@gmail.com; s=20240424; h=from:subject:message-id;
+ bh=D9z9X3e5J8ftwp1wdYD55jK/Ci2H15jjh248DelqCdQ=;
+ b=n/PHBwcxilz316ny13BQE1y4sYxBxB+E1XcDU8ZpXttkORZqR1x5/1iFqaQrQGz9NKE1uu/6t
+ JxzlZ3NhRU/CLeR1T8p+Sb2zWFU4raSRtCwL0CSPOmL+K9DksCzJMA/
+X-Developer-Key: i=wuxilin123@gmail.com; a=ed25519;
+ pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
+X-Endpoint-Received: by B4 Relay for wuxilin123@gmail.com/20240424 with
+ auth_id=157
+X-Original-From: Xilin Wu <wuxilin123@gmail.com>
+Reply-To: wuxilin123@gmail.com
 
-On Fri, Feb 28, 2025 at 01:45:54AM +0530, Abhinaba Rakshit wrote:
-> Document QCS615 compatible for True Random Number Generator.
-> 
-> Signed-off-by: Abhinaba Rakshit <quic_arakshit@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
->  1 file changed, 1 insertion(+)
+From: Xilin Wu <wuxilin123@gmail.com>
 
-Patch applied.  Thanks.
+There is a typo in cpu7_opp9. Fix it to get rid of the following
+errors.
+
+[    0.198043] cpu cpu7: Voltage update failed freq=1747200
+[    0.198052] cpu cpu7: failed to update OPP for freq=1747200
+
+Fixes: 8e0e8016cb79 ("arm64: dts: qcom: sm8250: Add CPU opp tables")
+Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index c2937b4d9f180296733b6d7a7a16a088f1f96b76..68613ea7146c8882150f1b81dbc0f3384d3380ba 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -606,7 +606,7 @@ cpu7_opp8: opp-1632000000 {
+ 		};
+ 
+ 		cpu7_opp9: opp-1747200000 {
+-			opp-hz = /bits/ 64 <1708800000>;
++			opp-hz = /bits/ 64 <1747200000>;
+ 			opp-peak-kBps = <5412000 42393600>;
+ 		};
+ 
+
+---
+base-commit: 0a2f889128969dab41861b6e40111aa03dc57014
+change-id: 20250308-fix-sm8250-cpufreq-d95944b6d1a3
+
+Best regards,
 -- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+Xilin Wu <wuxilin123@gmail.com>
+
+
 
