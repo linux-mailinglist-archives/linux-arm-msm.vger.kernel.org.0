@@ -1,132 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-50660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18E48A5766D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 01:01:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9226AA57676
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 01:02:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AE7A97A83DF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 00:00:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 931CE3AFA7F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 00:02:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4945119D07C;
-	Sat,  8 Mar 2025 00:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BE7B6FBF;
+	Sat,  8 Mar 2025 00:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NkmBY1yi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tKXLMBNB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF973ECF
-	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Mar 2025 00:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F871137E;
+	Sat,  8 Mar 2025 00:01:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741392034; cv=none; b=VQvLpzD5rPxXfwIEXIXQkP5T1Qi++ROGlaHFsKIfNu2YOm9OQTxF122i6QZ3Z/XLFUUl0J719ZdMWXZD7Hiu5Wh8vCau9zuSZM4YGTeJ2w2cBxFFHmIhp4zWskuJx1fQw17d0dRC1IeZSgcZAaQxtQpNcKBL+TJ9EwYuputfP94=
+	t=1741392096; cv=none; b=FNFKxx0S7HA7HmIGOafTEkmJd5aagRzGyzSNVblI0I22JgdjbTG9JrQC8oVhCti1X855A7BWwQERh1dAXDoHUYaLqNiEB5siEN6sA1WvVeWrJRcQeBYtl/0Xm4hoSs1EEANvrIQA2/1EKJomP2hm5iZBr9eAOt1nGJapT5E6Tyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741392034; c=relaxed/simple;
-	bh=G24jByTcLB3gZ7lneK9yPWDVXemn8A7VmPesVcSmOBw=;
+	s=arc-20240116; t=1741392096; c=relaxed/simple;
+	bh=RxrYJHQ56oEI9BGDiBCfydVzW7XVfkyco8V5ApsDlQY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LUKZk9LJW7hG4+IJPMFeYzFKM466e8uRcpStZHB+tw3WubmJhi7klv3qEk3bbG6usuYHjmTByl4kSVQQWXxjZFhTGmXEuEQyT6ZS0DSWsgxIkEPTkiqxjteV2aVya/dwbQZwE6+ZQGlnS2M7HUU/jnKEnfNq1UNSasfl+GauY+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NkmBY1yi; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-30bf7d0c15eso11508021fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Mar 2025 16:00:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741392029; x=1741996829; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AEwMiLzCyICEunJ5u9SkRaghHLUa2TZbSRFS1CMQbNs=;
-        b=NkmBY1yiPzJxrCbEyvTRt6E0VuRa19ATlJfgiNbWVhmE9Jo3UIr/KtQClPwI5vO4rG
-         YPfZqsUq8kUPWqpBOzzIArxV9BToZ7nAvmvHu1im5SHmh9nWBIGDXQcslyjg6kI0MCDi
-         yLvSYMrDwht2DfoxRsjGGDemYP6bn+zbG/L7gaI4fsaNKC/b0yQX4t55IKzaPUcLikJN
-         BYZajfnba527eF/twvxEzD01z2oKFa5fpUtttxnBwnqtxAtgdpMRhLdFx4jfFwgVcAER
-         31BD2AXqr5AGjnTorSBL0/NYo0M3P4qWtoHLSgjc6nSxQvvYiC3uQUYC9MTleU9ZxfhR
-         YD9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741392029; x=1741996829;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AEwMiLzCyICEunJ5u9SkRaghHLUa2TZbSRFS1CMQbNs=;
-        b=c9k6sV0ujLWo3V4gfZKw3sDM2NaMQdj5Rh3ZOvunnasectkrKlgX27dnzhe+yyy/DV
-         T0ixmrv0aeBsjATW9aJO0SfnPqYsm5bELqTR6tUAgX8Tty5WC8s0Yrn16k514Qbbxzdv
-         AeajeJ6zZbfI+QCAC37qP3fjokFE4EQ33LvkygJGB36PKeOxCga0NXdT5tFYUb2qAmhA
-         bsHL3cmQfDlN9fQqwjRa46QOm/3DVa4mMBGPmcYsYraATtnhz85wOaNibBiMlC6p5htC
-         KCrJLp0h76mOe5yk7/wdlzTxDTvg6zMKCXocGsGCvSmQcUAoOmgbQlgmmOd1C6dHazin
-         oIKA==
-X-Forwarded-Encrypted: i=1; AJvYcCWSnRXf+6fwexSMgFFEVK3tDcVOzxXmXC5iot1t8JrZw7Vb7poR9UAmoY2mkjvmBoOoE9mDRqBgpw6hdZZU@vger.kernel.org
-X-Gm-Message-State: AOJu0YysRs0dceFGxodGf5GMm6ItNaUsBINuxyzf1ecNA7FfeU2uhnjR
-	EYyooqSUl22LYXLJK+Lj0KkY8sjnovUh3rTSzz+42na5CS6UuThkYE2UXTsqBI0=
-X-Gm-Gg: ASbGncstFbMyVIrjwytR0Ewjz/7ywVcSYcHfvaRnYbC31+lBslARoRjmc5WKDyZ3g97
-	g3hUn6IlUjE0UpjLiAPMKjq5cNFK6TSO4ONg7wqxhIkruzxil2qbHJsQJPj3QIa5DJ99UMU30Zx
-	ssS6+dLVky2vXgyNzJOHqSLf9IjUwFIq/8Atp39/2xJAIdT7D886sOdeOmByoyiH+WP0uOXQGkD
-	0J9NNU9r7nKUKUAhtgpQEYqZxxhxiveGZPaRl4ftpFG8fs/fPAb1v+fFDdpKxMKROrP8c3sDvUl
-	dLLRbg8fRK5SGEkvm1wiPJynscHGfB7nxU6GHzFAN2fojV34Isxqn2/hM0/kzDaDTId6Nu8Ig+Z
-	vuytr/RS9dnbWxtkoEjd4EHUN
-X-Google-Smtp-Source: AGHT+IHp+tbCuGTMiQOtkAJeNqJU+GLHRyHQrcNbiQ0L6CepcDGTgtUgqeherQpSU3yjAqkm/DxJgw==
-X-Received: by 2002:a2e:a78a:0:b0:30b:c3ce:ea38 with SMTP id 38308e7fff4ca-30bf43b45bcmr21229201fa.0.1741392028923;
-        Fri, 07 Mar 2025 16:00:28 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30be99c815fsm7131741fa.69.2025.03.07.16.00.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Mar 2025 16:00:27 -0800 (PST)
-Date: Sat, 8 Mar 2025 02:00:25 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Lyude Paul <lyude@redhat.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Jani Nikula <jani.nikula@linux.intel.com>, 
-	Alex Deucher <alexander.deucher@amd.com>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Xinliang Liu <xinliang.liu@linaro.org>, Tian Tao <tiantao6@hisilicon.com>, 
-	Xinwei Kong <kong.kongxinwei@hisilicon.com>, Sumit Semwal <sumit.semwal@linaro.org>, 
-	Yongqin Liu <yongqin.liu@linaro.org>, John Stultz <jstultz@google.com>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
-	amd-gfx@lists.freedesktop.org, Jani Nikula <jani.nikula@intel.com>
-Subject: Re: [PATCH RFC v3 4/7] drm/display: dp-aux-dev: use new DCPD access
- helpers
-Message-ID: <ytsczbxfokt4yz26w5zl2rxtuagrirdpi6uyxnt4itcllrowuk@wqqcgkr7b52k>
-References: <20250307-drm-rework-dpcd-access-v3-0-9044a3a868ee@linaro.org>
- <20250307-drm-rework-dpcd-access-v3-4-9044a3a868ee@linaro.org>
- <3284acdfa43fa62e7230355b4ed2e09ab75f326a.camel@redhat.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=IdnUiBv0DY5XOYgyvqL0q8PkSiPpJr0tfnYZPe2Z6dM/qM1VnQmdm2vhB69hYt+8uqcbgg9AjXNPzoKnm6Cjus2tWXPtcQycIofLlZN4KnHzxCCPAkUhFt0oRVEC7huJOKmso4q7T2zvf4OzkBgIGpBfDbQCqqlniMG6vDn0xiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tKXLMBNB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46537C4CED1;
+	Sat,  8 Mar 2025 00:01:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741392094;
+	bh=RxrYJHQ56oEI9BGDiBCfydVzW7XVfkyco8V5ApsDlQY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tKXLMBNBEG4l/WGTfeUKVbn4j3rdE8gJ6Ilcva4PJSJcslzXv6M6WfGCNgacYUXkn
+	 US65jmiBuIuulxzETgm01TOt7owT/UpNqIBEt5hGmKSmSfEqIe3oTs1ZPs+n0cEt/X
+	 +Iu1yfibj7iPQmzG69qyA845987YQTBDw9GtIJ88kmaZW02/57lSJVWzcBoR2r7nAe
+	 eeP3mRg8Ig5AajMqymimA2WHZycUViBklTfnUGeSXA3DXfbmilQX049h6Vr6eq5dGk
+	 n94JiTWskjViv4kLtGofrhuYO8HJOoRlaeByRmvFEc5si0HWdN2//l9MRk6uKl5+JV
+	 KZ401FLEJF/UA==
+Received: by venus (Postfix, from userid 1000)
+	id 3564A180B97; Sat, 08 Mar 2025 01:01:32 +0100 (CET)
+Date: Sat, 8 Mar 2025 01:01:31 +0100
+From: Sebastian Reichel <sre@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johan Hovold <johan@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC 1/2] arm64: dts: qcom: x1e78100-t14s: Add LCD variant with
+ backlight support
+Message-ID: <lolqokpczxdscvgj6xdfyxblmle3csgzje3fgo4itzspgmeriy@7zzx7hg2zfks>
+References: <20250306090503.724390-1-abel.vesa@linaro.org>
+ <20250306090503.724390-2-abel.vesa@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="y6zodhuo7ebbvgn4"
 Content-Disposition: inline
-In-Reply-To: <3284acdfa43fa62e7230355b4ed2e09ab75f326a.camel@redhat.com>
+In-Reply-To: <20250306090503.724390-2-abel.vesa@linaro.org>
 
-On Fri, Mar 07, 2025 at 05:53:38PM -0500, Lyude Paul wrote:
-> I thought we had agreed that drm_dp_aux_dev.c was one of the few places where
-> we wanted to keep using the old functions here?
 
-Hmm, I thought I dropped it.
+--y6zodhuo7ebbvgn4
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [RFC 1/2] arm64: dts: qcom: x1e78100-t14s: Add LCD variant with
+ backlight support
+MIME-Version: 1.0
 
-> 
-> On Fri, 2025-03-07 at 06:34 +0200, Dmitry Baryshkov wrote:
-> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > 
-> > Switch drm_dp_aux_dev.c to use new set of DPCD read / write helpers.
-> > 
-> > Acked-by: Jani Nikula <jani.nikula@intel.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/gpu/drm/display/drm_dp_aux_dev.c | 12 +++++-------
-> >  1 file changed, 5 insertions(+), 7 deletions(-)
-> > 
+Hi,
 
--- 
-With best wishes
-Dmitry
+On Thu, Mar 06, 2025 at 11:05:02AM +0200, Abel Vesa wrote:
+> Due to the fact that Lenovo Thinkpad T14s Gen6 is available with both
+> OLED and LCD, the backlight control differs HW-wise. For the LCD variant,
+> the panel's backlight is controlled via one of the PWMs provided by the
+> PMK8550 PMIC. For the OLED variant, the backlight is internal to the
+> panel and therefore it is not described in devicetree.
+>=20
+> For this reason, create a generic dtsi for the T14s by renaming the
+> existing dts. While at it, add a node name to panel and drop the enable
+> gpio and pinctrl properties from the panel node. Then add the LCD variant
+> dts file with the old name and describe all backlight related nodes.
+>=20
+> So the existing dts will now be used for LCD variant while for OLED new
+> dts will be added.
+>=20
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> [...]
+> +	backlight: backlight {
+> +		compatible =3D "pwm-backlight";
+> +		pwms =3D <&pmk8550_pwm 0 5000000>;
+
+I've tried this patch series together with the fix series [0], but
+without the duty cycle calculation change [1]. Instead I changed the
+period from 5000000 to 4266667. With that everything works as
+expected for me.
+
+[0] https://lore.kernel.org/all/20250305-leds-qcom-lpg-fix-max-pwm-on-hi-re=
+s-v4-0-bfe124a53a9f@linaro.org/
+[1] https://lore.kernel.org/all/20250303-leds-qcom-lpg-compute-pwm-value-us=
+ing-period-v1-1-833e729e3da2@linaro.org/
+
+Greetings,
+
+-- Sebastian
+
+--y6zodhuo7ebbvgn4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmfLiNAACgkQ2O7X88g7
++ppf3xAAlXHluicXnkOYso5FoMHezzKxZjWtgPdfvJrO1u9ofgYj2f/Ge6kgRMWP
+1bp5iE3MgKeVdlyx20FZ4fCi+ETG379ozRXgUQULpe3QdW23k/tCzPTZvB0zWnl3
+thkrUn6vJOFUEOIJR7d7J104eT04kvDXAUV+ift/Rvx46p2YrEwT57yktbylYpkt
+2LyX4RM+aHCc7Dux3Am9FZcmRciHUnWsxFt9ZGIzLOU6PiYeo1OIK2j07vvWxNYP
+ReRVZP3dy+HkXIp76BKpvf85Qp827KitUKrHLMTtq5vb/qpyDn00F9WuKgFpm8aw
+qseJhwgyDnSFKri6ZXkJzeIDJbzB/bYlqkJSFNr/n1j6NJuqVWhm+5bMcn0yeGTI
+sNFYKCeER0BrQeiOWXl8wSDR7CFE8WqYibiSkZ9Fuf1UVYF83+gHry9p7amX2u9o
+ArhpXakQtpQCFZqWsWqHyz3KtZdt2EaEVK2qpWCfV7aqmmERHDSYyMqMIDxz/kXR
+0QqJwLOniL/bxCwUjRyXMrQ0AZeDuAT208s7TCcLL1KWdir10MChg6jeRZ/qQ6zS
+Cr8fsFZKzOUwEC8mH6xvZDyJc6rUrn0kSNA9JnsaRleidenAg4r5eVWe05kPRdo3
+QyJuA9h2TPDK05AVHdq1qeA+4tf2BVy7CvAGoZVgIPZAdARbnHQ=
+=tLqZ
+-----END PGP SIGNATURE-----
+
+--y6zodhuo7ebbvgn4--
 
