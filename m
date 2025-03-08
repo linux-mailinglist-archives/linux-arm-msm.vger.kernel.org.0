@@ -1,50 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-50671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9FA6A57771
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 02:43:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 154F1A57778
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 02:43:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C889189AD28
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 01:43:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 458293B7059
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Mar 2025 01:43:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 669021527B4;
-	Sat,  8 Mar 2025 01:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF08B14885D;
+	Sat,  8 Mar 2025 01:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="otmK/skv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l8/Nx97T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348D71F95C;
-	Sat,  8 Mar 2025 01:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80739136349;
+	Sat,  8 Mar 2025 01:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741398173; cv=none; b=nep2ACE9DJXHbdwAks2MRc9EbFLWsgEV58XfIDysMdRVNryvY8D6/o+B16HlLHL5HDNB05eLhum9s0PsksV9hIOjvGy34+zPx80LkB6Xw/a2rSf/benZzOJ9z498Nf/zxpVhOZ/fSFNfZiI2PAHipqwN5RAxYGT0wtsTqeJqybQ=
+	t=1741398179; cv=none; b=RILHer1VQsVH22OSMmll4z74lvhLiqV2LbT0ODW1gShEc7kWTcpIGn+YxNOHGPkgt62L06dZgiOtdHDPmYyJW0OYgCaWajqUjUUVtPwf7Xckl8zXZBxsOrbhscZ5/mjjIK+ohnW00KI2BOvbZi4qG9nO/ZPkGOq02nPNKpTXPqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741398173; c=relaxed/simple;
-	bh=6dXzCoSGh5WzYwUYwwUtLNNchEHyZWMT9t7hB0b5vr4=;
+	s=arc-20240116; t=1741398179; c=relaxed/simple;
+	bh=PV/BKlcb99fExE08ZkCkosdQFjKdsLc78l3cWdHB+s8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DlG26y/7M6J0yXzrO3+YBQy/p7ZsOTdvCZTKKRihvdXEpz+jVlvCrR1I4X4oZbWZSsqXik34yo9mkzDzwkRN4w1+G9U2lg2ZtRdLxQwtTXXF1Z7ES3MWxK+8iK7sG39akB4Z/oSpDCy7IUgHyJeVAS11kDEhdqBt8tQj5gp66io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=otmK/skv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F5FC4CEE3;
-	Sat,  8 Mar 2025 01:42:47 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=CnEhI5MVZwqyboeergc58+HGNwZ+/l0N6AlxLEKFm8Kidki2dWQ55qb6Bo50SpipUqMoV+BdOJda/KMMmtXlVI8mAkcfNGejZZC4nw3BnCiX7EXElmIdpuoROeSBVxzmwjldoM/8cDSYlCLoyZ6nH4yk2fgoDc8fp3v1xSdboLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l8/Nx97T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F501C4CEE9;
+	Sat,  8 Mar 2025 01:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741398173;
-	bh=6dXzCoSGh5WzYwUYwwUtLNNchEHyZWMT9t7hB0b5vr4=;
+	s=k20201202; t=1741398179;
+	bh=PV/BKlcb99fExE08ZkCkosdQFjKdsLc78l3cWdHB+s8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=otmK/skvYd4It6dwexM+PP6cMHUGYuiOG/ZvaaH6IgAcYpp0YZhLN9tBuT4VaycYJ
-	 TBbaePxJGVqsAShMrXJTs95ghYOPjMXS84jFde6XZk85G92ei0JVJW7kUWrlyO9nQm
-	 XLVj3fR8jaPaBYJMLxxJ54N2hulUaEeR5AjmjL25waGrjgXAvn8UqA0/NpiafNb+q0
-	 4qTQP6fq7HR2T07l/1Ovcvi7pTcFgAP0/gMX70Yci7TDjiECiwZJlwgcL82T7Xwzy9
-	 eVBZlkcY/s/MuZl+uM+DXb96uanAmyeaL2syKBkIDrV+gSZuqnYq+6pFhkcKupLUKs
-	 W4i+aa8mQA72w==
+	b=l8/Nx97T06D8JJdyz/p7qMBZW+c3fY3bxOHxu5B7Hv8ypnTfbrIb1MG0pIMxSxiex
+	 axY4QjyPqlTbiheM0mNQuyyNPtE02lcOdylwsrfslhHPXnRKMC2kqjO+yCNyn9w1KH
+	 QhBJ5Mue+ImzhkspgfvtzR3c1rYmfA2tQE/2OiU9z4P1xppRmpMJJsQO16xfH5nbL3
+	 GKffPLuaCX57Qu4PcwFOmv3pySWxEUX9f3uepMfsRwmIt8npnqq8q7+2miCU4DCze6
+	 znAeA1SvQyXsVu7naNonHlNmseJbF18Jw6tZpK8E5/OaZzg+x+sWlbUmv61tZst/ar
+	 TwYY2JqUQCqoQ==
 From: Dmitry Baryshkov <lumag@kernel.org>
-Date: Sat, 08 Mar 2025 03:42:22 +0200
-Subject: [PATCH 04/10] dt-bindings: display/msm: qcom,sc7280-dpu: describe
- SAR2130P
+Date: Sat, 08 Mar 2025 03:42:23 +0200
+Subject: [PATCH 05/10] dt-bindings: display/msm: Add Qualcomm SAR2130P
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250308-sar2130p-display-v1-4-1d4c30f43822@linaro.org>
+Message-Id: <20250308-sar2130p-display-v1-5-1d4c30f43822@linaro.org>
 References: <20250308-sar2130p-display-v1-0-1d4c30f43822@linaro.org>
 In-Reply-To: <20250308-sar2130p-display-v1-0-1d4c30f43822@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -75,40 +74,482 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  linux-kernel@vger.kernel.org, iommu@lists.linux.dev, 
  linux-arm-kernel@lists.infradead.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=867;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14857;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=BgsqxgB1qUMlTQRoXlZNO7IqKII3A0xVwcx4U85mJbQ=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBny6B/tzXGWNrHLgibC5D4RA6kqoIdExjjOUNDv
- Q3y+8gwEZOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ8ugfwAKCRCLPIo+Aiko
- 1TNPB/wK27ofImLoecwSAl0GQlgmtsAUmandEjkKhP7SPeQWC8hGc4aiL3iEGtFtos/zRKKNy+n
- GaHAiemJXrOIPewLN2kJTVi+cM4iTsKIEHevghT4II/c72BsznQJynQe43TwydBoXNkrIC0pIWk
- DmhUNHawOYVD/uqcinBYAhInxvebRyA0iqBtaj/oLPFFpljVnctz5kSFqaIQ1Q/eTlzsGcuC+vF
- f+rZEzw5r7T+UALosZtcQH6j4AzX+RAmjEhJwzgys2uO3m9lXn3ONYZBsCN5pEhw7DtCGeJLO10
- ZowXuHHuEiHvpspk/sBbgR+yKgxT66mq5dxBmtFv4etNCU2K
+ bh=7qWr8Kfx0x7nHqmHDm+dX9GJY/vf7TEFJ9YKczCDZqw=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBny6B/WHXCpqScaLr3X3UYcP07+jS8IIsEN7WJw
+ REIGm1URKWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ8ugfwAKCRCLPIo+Aiko
+ 1S1pCACKp1Wou5/h5EFI6OeyFa2znPGgCgFtuJPfd4kXpfdo3QJFtQ7YK9Xh7sQrkFwe4NzZcHS
+ CaYttrKPURKPE9Jv1F09A06aEvuKCF+XafnBs8CU3PbLnN0mmUbYtLU+ldyXqJ9/VWGdl53ReYX
+ ZKc2UToI3UNofE7aLFz9TPU2qOvhmCUf3NHZ+BrGap7ZsYeukODEKN0mozYFA3rPPrP4+PSjQWh
+ 9OimlMz24fCxkMCGB2UTUk/I8gUbY2DMMjifmZyyIqp38FF7au40VVlt2ZJFq1pDEc+9nX8dIWT
+ 1LMAKK9rOVV8HCR52yn7SNQYHxAM4FAs9PoS7zvQ1xedY4u1
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Describe DPU controller present on Qualcomm SAR2130P platform.
+Describe the Mobile Display SubSystem (MDSS) device present on the
+Qualcomm SAR2130P platform. It looks pretty close to SM8550 on the
+system level. SAR2130P features two DSI hosts and single DisplayPort
+controller.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ .../bindings/display/msm/qcom,sar2130p-mdss.yaml   | 445 +++++++++++++++++++++
+ 1 file changed, 445 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml
-index 6902795b4e2c249c2b543c1c5350f739a30553f2..df9ec15ad6c3ca1f77bebaab19ffa3adb985733d 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml
-@@ -17,6 +17,7 @@ $ref: /schemas/display/msm/dpu-common.yaml#
- properties:
-   compatible:
-     enum:
-+      - qcom,sar2130p-dpu
-       - qcom,sc7280-dpu
-       - qcom,sc8280xp-dpu
-       - qcom,sm8350-dpu
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sar2130p-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sar2130p-mdss.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..0dbf6704c44dc6a752a22e83dc7a4f8c70665390
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/qcom,sar2130p-mdss.yaml
+@@ -0,0 +1,445 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/qcom,sar2130p-mdss.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SAR2130P Display MDSS
++
++maintainers:
++  - Dmitry Baryshkov <lumag@kernel.org>
++
++description:
++  SAR2310P MSM Mobile Display Subsystem(MDSS), which encapsulates sub-blocks like
++  DPU display controller, DSI and DP interfaces etc.
++
++$ref: /schemas/display/msm/mdss-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,sar2130p-mdss
++
++  clocks:
++    items:
++      - description: Display MDSS AHB
++      - description: Display AHB
++      - description: Display hf AXI
++      - description: Display core
++
++  iommus:
++    maxItems: 1
++
++  interconnects:
++    items:
++      - description: Interconnect path from mdp0 port to the data bus
++      - description: Interconnect path from CPU to the reg bus
++
++  interconnect-names:
++    items:
++      - const: mdp0-mem
++      - const: cpu-cfg
++
++patternProperties:
++  "^display-controller@[0-9a-f]+$":
++    type: object
++    additionalProperties: true
++
++    properties:
++      compatible:
++        const: qcom,sar2130p-dpu
++
++  "^displayport-controller@[0-9a-f]+$":
++    type: object
++    additionalProperties: true
++
++    properties:
++      compatible:
++        items:
++          - const: qcom,sar2130p-dp
++          - const: qcom,sm8350-dp
++
++  "^dsi@[0-9a-f]+$":
++    type: object
++    additionalProperties: true
++
++    properties:
++      compatible:
++        items:
++          - const: qcom,sar2130p-dsi-ctrl
++          - const: qcom,mdss-dsi-ctrl
++
++  "^phy@[0-9a-f]+$":
++    type: object
++    additionalProperties: true
++
++    properties:
++      compatible:
++        const: qcom,sar2130p-dsi-phy-5nm
++
++required:
++  - compatible
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/power/qcom,rpmhpd.h>
++    #include <dt-bindings/phy/phy-qcom-qmp.h>
++
++    display-subsystem@ae00000 {
++        compatible = "qcom,sar2130p-mdss";
++        reg = <0x0ae00000 0x1000>;
++        reg-names = "mdss";
++
++        interconnects = <&mmss_noc_master_mdp &mc_virt_slave_ebi1>,
++                        <&gem_noc_master_appss_proc &config_noc_slave_display_cfg>;
++        interconnect-names = "mdp0-mem", "cpu-cfg";
++
++        resets = <&dispcc_disp_cc_mdss_core_bcr>;
++
++        power-domains = <&dispcc_mdss_gdsc>;
++
++        clocks = <&dispcc_disp_cc_mdss_ahb_clk>,
++                 <&gcc_gcc_disp_ahb_clk>,
++                 <&gcc_gcc_disp_hf_axi_clk>,
++                 <&dispcc_disp_cc_mdss_mdp_clk>;
++        clock-names = "iface", "bus", "nrt_bus", "core";
++
++        interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++        interrupt-controller;
++        #interrupt-cells = <1>;
++
++        iommus = <&apps_smmu 0x1c00 0x2>;
++
++        #address-cells = <1>;
++        #size-cells = <1>;
++        ranges;
++
++        display-controller@ae01000 {
++            compatible = "qcom,sar2130p-dpu";
++            reg = <0x0ae01000 0x8f000>,
++                  <0x0aeb0000 0x2008>;
++            reg-names = "mdp", "vbif";
++
++            clocks = <&gcc_gcc_disp_ahb_clk>,
++                     <&gcc_gcc_disp_hf_axi_clk>,
++                     <&dispcc_disp_cc_mdss_ahb_clk>,
++                     <&dispcc_disp_cc_mdss_mdp_lut_clk>,
++                     <&dispcc_disp_cc_mdss_mdp_clk>,
++                     <&dispcc_disp_cc_mdss_vsync_clk>;
++            clock-names = "bus",
++                          "nrt_bus",
++                          "iface",
++                          "lut",
++                          "core",
++                          "vsync";
++
++            assigned-clocks = <&dispcc_disp_cc_mdss_vsync_clk>;
++            assigned-clock-rates = <19200000>;
++
++            operating-points-v2 = <&mdp_opp_table>;
++            power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++            interrupt-parent = <&mdss>;
++            interrupts = <0>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                port@0 {
++                    reg = <0>;
++
++                    dpu_intf0_out: endpoint {
++                        remote-endpoint = <&mdss_dp0_in>;
++                    };
++                };
++
++                port@1 {
++                    reg = <1>;
++
++                    dpu_intf1_out: endpoint {
++                        remote-endpoint = <&mdss_dsi0_in>;
++                    };
++                };
++
++                port@2 {
++                    reg = <2>;
++
++                    dpu_intf2_out: endpoint {
++                        remote-endpoint = <&mdss_dsi1_in>;
++                    };
++                };
++            };
++
++            mdp_opp_table: opp-table {
++                compatible = "operating-points-v2";
++
++                opp-200000000 {
++                    opp-hz = /bits/ 64 <200000000>;
++                    required-opps = <&rpmhpd_opp_low_svs>;
++                };
++
++                opp-325000000 {
++                    opp-hz = /bits/ 64 <325000000>;
++                    required-opps = <&rpmhpd_opp_svs>;
++                };
++
++                opp-375000000 {
++                    opp-hz = /bits/ 64 <375000000>;
++                    required-opps = <&rpmhpd_opp_svs_l1>;
++                };
++
++                opp-514000000 {
++                    opp-hz = /bits/ 64 <514000000>;
++                    required-opps = <&rpmhpd_opp_nom>;
++                };
++            };
++        };
++
++        displayport-controller@ae90000 {
++            compatible = "qcom,sar2130p-dp",
++                         "qcom,sm8350-dp";
++            reg = <0xae90000 0x200>,
++                  <0xae90200 0x200>,
++                  <0xae90400 0xc00>,
++                  <0xae91000 0x400>,
++                  <0xae91400 0x400>;
++
++            interrupt-parent = <&mdss>;
++            interrupts = <12>;
++            clocks = <&dispcc_disp_cc_mdss_ahb_clk>,
++                     <&dispcc_disp_cc_mdss_dptx0_aux_clk>,
++                     <&dispcc_disp_cc_mdss_dptx0_link_clk>,
++                     <&dispcc_disp_cc_mdss_dptx0_link_intf_clk>,
++                     <&dispcc_disp_cc_mdss_dptx0_pixel0_clk>;
++            clock-names = "core_iface",
++                          "core_aux",
++                          "ctrl_link",
++                          "ctrl_link_iface",
++                          "stream_pixel";
++
++            assigned-clocks = <&dispcc_disp_cc_mdss_dptx0_link_clk_src>,
++                              <&dispcc_disp_cc_mdss_dptx0_pixel0_clk_src>;
++            assigned-clock-parents = <&usb_dp_qmpphy_QMP_USB43DP_DP_LINK_CLK>,
++                                     <&usb_dp_qmpphy_QMP_USB43DP_DP_VCO_DIV_CLK>;
++
++            phys = <&usb_dp_qmpphy QMP_USB43DP_DP_PHY>;
++            phy-names = "dp";
++
++            #sound-dai-cells = <0>;
++
++            operating-points-v2 = <&dp_opp_table>;
++            power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                port@0 {
++                    reg = <0>;
++                    mdss_dp0_in: endpoint {
++                        remote-endpoint = <&dpu_intf0_out>;
++                    };
++                };
++
++                port@1 {
++                    reg = <1>;
++                    mdss_dp0_out: endpoint {
++                        remote-endpoint = <&usb_dp_qmpphy_dp_in>;
++                    };
++                };
++        };
++
++        dp_opp_table: opp-table {
++                compatible = "operating-points-v2";
++
++                opp-162000000 {
++                    opp-hz = /bits/ 64 <162000000>;
++                    required-opps = <&rpmhpd_opp_low_svs_d1>;
++                };
++
++                opp-270000000 {
++                    opp-hz = /bits/ 64 <270000000>;
++                    required-opps = <&rpmhpd_opp_low_svs>;
++                };
++
++                opp-540000000 {
++                    opp-hz = /bits/ 64 <540000000>;
++                    required-opps = <&rpmhpd_opp_svs_l1>;
++                };
++
++                opp-810000000 {
++                    opp-hz = /bits/ 64 <810000000>;
++                    required-opps = <&rpmhpd_opp_nom>;
++                };
++            };
++        };
++
++        dsi@ae94000 {
++            compatible = "qcom,sar2130p-dsi-ctrl",
++                         "qcom,mdss-dsi-ctrl";
++            reg = <0x0ae94000 0x400>;
++            reg-names = "dsi_ctrl";
++
++            interrupt-parent = <&mdss>;
++            interrupts = <4>;
++
++            clocks = <&dispcc_disp_cc_mdss_byte0_clk>,
++                     <&dispcc_disp_cc_mdss_byte0_intf_clk>,
++                     <&dispcc_disp_cc_mdss_pclk0_clk>,
++                     <&dispcc_disp_cc_mdss_esc0_clk>,
++                     <&dispcc_disp_cc_mdss_ahb_clk>,
++                     <&gcc_gcc_disp_hf_axi_clk>;
++            clock-names = "byte",
++                          "byte_intf",
++                          "pixel",
++                          "core",
++                          "iface",
++                          "bus";
++
++            assigned-clocks = <&dispcc_disp_cc_mdss_byte0_clk_src>,
++                              <&dispcc_disp_cc_mdss_pclk0_clk_src>;
++            assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
++
++            operating-points-v2 = <&dsi_opp_table>;
++            power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++            phys = <&mdss_dsi0_phy>;
++            phy-names = "dsi";
++
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                port@0 {
++                    reg = <0>;
++
++                    mdss_dsi0_in: endpoint {
++                        remote-endpoint = <&dpu_intf1_out>;
++                    };
++                };
++
++                port@1 {
++                    reg = <1>;
++
++                    mdss_dsi0_out: endpoint {
++                    };
++                };
++            };
++
++            dsi_opp_table: opp-table {
++                compatible = "operating-points-v2";
++
++                opp-187500000 {
++                    opp-hz = /bits/ 64 <187500000>;
++                    required-opps = <&rpmhpd_opp_low_svs>;
++                };
++
++                opp-300000000 {
++                    opp-hz = /bits/ 64 <300000000>;
++                    required-opps = <&rpmhpd_opp_svs>;
++                };
++
++                opp-358000000 {
++                    opp-hz = /bits/ 64 <358000000>;
++                    required-opps = <&rpmhpd_opp_svs_l1>;
++                };
++            };
++        };
++
++        mdss_dsi0_phy: phy@ae94400 {
++            compatible = "qcom,sar2130p-dsi-phy-5nm";
++            reg = <0x0ae95000 0x200>,
++                  <0x0ae95200 0x280>,
++                  <0x0ae95500 0x400>;
++            reg-names = "dsi_phy",
++                        "dsi_phy_lane",
++                        "dsi_pll";
++
++            #clock-cells = <1>;
++            #phy-cells = <0>;
++
++            clocks = <&dispcc_disp_cc_mdss_ahb_clk>,
++                     <&rpmhcc_rpmh_cxo_clk>;
++            clock-names = "iface", "ref";
++        };
++
++        dsi@ae96000 {
++            compatible = "qcom,sar2130p-dsi-ctrl",
++                         "qcom,mdss-dsi-ctrl";
++            reg = <0x0ae96000 0x400>;
++            reg-names = "dsi_ctrl";
++
++            interrupt-parent = <&mdss>;
++            interrupts = <5>;
++
++            clocks = <&dispcc_disp_cc_mdss_byte1_clk>,
++                     <&dispcc_disp_cc_mdss_byte1_intf_clk>,
++                     <&dispcc_disp_cc_mdss_pclk1_clk>,
++                     <&dispcc_disp_cc_mdss_esc1_clk>,
++                     <&dispcc_disp_cc_mdss_ahb_clk>,
++                     <&gcc_gcc_disp_hf_axi_clk>;
++            clock-names = "byte",
++                          "byte_intf",
++                          "pixel",
++                          "core",
++                          "iface",
++                          "bus";
++
++            assigned-clocks = <&dispcc_disp_cc_mdss_byte1_clk_src>,
++                              <&dispcc_disp_cc_mdss_pclk1_clk_src>;
++            assigned-clock-parents = <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>;
++
++            operating-points-v2 = <&dsi_opp_table>;
++            power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++            phys = <&mdss_dsi1_phy>;
++            phy-names = "dsi";
++
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                port@0 {
++                    reg = <0>;
++
++                    mdss_dsi1_in: endpoint {
++                        remote-endpoint = <&dpu_intf2_out>;
++                    };
++                };
++
++                port@1 {
++                    reg = <1>;
++
++                    mdss_dsi1_out: endpoint {
++                    };
++                };
++            };
++        };
++
++        mdss_dsi1_phy: phy@ae97000 {
++            compatible = "qcom,sar2130p-dsi-phy-5nm";
++            reg = <0x0ae97000 0x200>,
++                  <0x0ae97200 0x280>,
++                  <0x0ae97500 0x400>;
++            reg-names = "dsi_phy",
++                        "dsi_phy_lane",
++                        "dsi_pll";
++
++            #clock-cells = <1>;
++            #phy-cells = <0>;
++
++            clocks = <&dispcc_disp_cc_mdss_ahb_clk>,
++                     <&rpmhcc_rpmh_cxo_clk>;
++            clock-names = "iface", "ref";
++        };
++    };
++...
 
 -- 
 2.39.5
