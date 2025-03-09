@@ -1,189 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-50751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A0ECA58886
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 22:39:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D5B8A588A3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 22:52:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 250623AB119
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 21:39:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 225E63AC053
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 21:52:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C391521B185;
-	Sun,  9 Mar 2025 21:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA93421D5A8;
+	Sun,  9 Mar 2025 21:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="OOGlV582"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xdM81uMJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C464E18D63E;
-	Sun,  9 Mar 2025 21:39:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.177.23.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CBF219A74
+	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Mar 2025 21:52:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741556354; cv=none; b=ThzQicMxnTeMPDitFdw346b14nisFwfv1vUGQHsJ1g1mbnp/FI/2prquabdK/orsO9dIOHfBSDb21EqgYbidRZWDefdXhRQYd5zEzYiz9Lq+hWjEkkRo1PfCSBDlRGy1cmx8nZqtSdUigHSt8PDLY2NppGS+5RIi6OhwCpKOG9c=
+	t=1741557159; cv=none; b=E76g5kZFLkrAsqUecYnkZqv0u3rDtP+nr0gj5+ZUn+DCGcl0YtjPfxeKomdHMf1khHYphpcB2tTluRdMHQ9WfbDMhBTXXneeN6cy09FTnPcLoNbydlJFs8BnjrwocyyIi7FCfYvnlQ2es/H9WF7YzEduFUIAyZKV4xLGdBVYBvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741556354; c=relaxed/simple;
-	bh=Si40yYbjw5xkQi8h39UOyoDhXwGNFDHxZufNemknE74=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pGzCYyoSKqfdGKMrm6dpM/b90jJ6Gzrph5VCVTAm7sbKFecu+8EmB6U1C6E9kfCQwSKREPlY8PVuFM97VMMo6TDKwR43REILd3/WXn2pZ5uZLvJ9fxQzeIE4fDHb6qUmziL5EAxYlSVAiOIdS6TJH6N/x38DdsgHosiPm+d46UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=OOGlV582; arc=none smtp.client-ip=89.177.23.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id E6EF31657D6;
-	Sun,  9 Mar 2025 22:39:08 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1741556349;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=IJnxpoX5bM/Os4e/E/FGypenuAivDP6SD80QJnuEr8s=;
-	b=OOGlV582zsNMG+i71wjyceU/0B3pudejwI98JUg6+1XuNf86dC2dY188vNlR05lYF4hadb
-	EhTXzts+WWBZ6eMyGDmpR/S7YIApouPUGTaEZ86YtdCzcu8yt6Rm/D/FwzaugY1/pDyUtL
-	/BRI5K1cxLp/olWUA9pP8ovV5mzSV48=
-Message-ID: <c67defb5-f677-45e0-9316-cf0a60238393@ixit.cz>
-Date: Sun, 9 Mar 2025 22:39:08 +0100
+	s=arc-20240116; t=1741557159; c=relaxed/simple;
+	bh=znDduV8o5do63kBgnI87Al2XfPX6k0jTsz0vM1YT25o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JDfNSOh7quLxgNuoNBXC7Pp5GBAsTrbAYB6rmHAXjeSw0rY2n38IOgooynArfQzfcu4WUoAkkzkpvYZZ4VDycoqsl2owfl3d4o5pAML5ifgi6Xelez4t9X1fywskun89nfWrlhyRQGEDwntEFLx40lWdkJUqx4pxyA2YGFcbSeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xdM81uMJ; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6f4bc408e49so33152227b3.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Mar 2025 14:52:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741557157; x=1742161957; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=x2cXZ1H4OWYbGTrPh8vFke/8+4UNPAMB80eBPTb7iwg=;
+        b=xdM81uMJ8UUubdaE9BAReuxEUkQmJPSYLKm1g+r53p7I+R1wGOKzP8pwiSnVFV4q05
+         +9zMEcx1oKBxl07pIERLrYr5r+UYTW7K7SjYueE3iyOfbGPQop3wi7nulqmYyq0TozS1
+         m8bmhaWaHyfzkBlp4FhHfwpagWv7kFpQ4p3PpKnSCPwKIABQqXNfvZ0dvQ6G2oC3Fd2k
+         2+7gWwXMsSLo7U3xfCcek8hSsdaxGhZ1bvf9CiXC48hwd2TFU7RlunPgDP6I+6D9wQod
+         uSIG57P5J68a+AiS9GpXZkArPaqy/hXHZEB+4bNov+oj7o8UwMxtKYZbZguSWdDaBFpO
+         ziXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741557157; x=1742161957;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x2cXZ1H4OWYbGTrPh8vFke/8+4UNPAMB80eBPTb7iwg=;
+        b=vfGqDrkE5UQtEnzu+NlCmo4KKdy0s4qa+GnZkcHS7zu3cMvwu2sbC3pmMwqnjG340U
+         IK7F6KnJAVLifpq8ehSeq4cuI6bzJqydcd7qUi+/B0DrqlCSgG3VF5qT2CxLjZFDhog8
+         /92BtssQyvGjFzgTEgVCCGc4/p85EZGT/LeL+aMMnDOTSySZM2UU/QmtSldnfPx7Emsc
+         KM+6briM1SMc4Rv9vY8UG58OBHp55cEOuaRHT0lylz8iy4ChUO0lyZFO8p/h6eE1LK5X
+         1X+gIO137+soqwBwG6xOCMy8+D/DepvFctjm5SXNr/tNoNpfRbddb0pvOmaaCaO0JMiE
+         QtrA==
+X-Forwarded-Encrypted: i=1; AJvYcCXRtI242HtbqcgWPaIS8+czjQ4LieHj/wySHkNWmmjrlFh2hlYWlvIGqeZAn0BcuLr34KgEoZ7+EZ3G1Gre@vger.kernel.org
+X-Gm-Message-State: AOJu0YymbYdRAnVXd0+uA7qE7FLSVl+1ueeKcBgDhXBIlt/bWPF1XFwU
+	N/TSLdh1XRSoV9QutkI+LyKe7Xq/6OmOpUHNFOKozO1nV+CfSgW0njhg2GHwse3W6kIu4go3jHV
+	GSc1DuMly9Lhyol/bXX13iqfUIWn0JLpcWX4CrA==
+X-Gm-Gg: ASbGncscTRh7Q5JtTiYEn+3h71YhIHAHkEy7RxmeCshIVFRX1d6uJ0du8AoWMMkgbEG
+	rgwVVHasXmfsXRwjYxXXLZX9cipkuQB37LiK49pQ3oHJF+DHE4r9/I6z5cMoxcfRgGE327rEr1+
+	ICdDRRl6m1XPF4ERvlTRsdCpszt2OLlD7jj+3lu+KuzNxRt2xiiKHHZOk=
+X-Google-Smtp-Source: AGHT+IEwTe7+gG6re5FQDG7RY1yURSNJRkSyIZAU9lwF7FoyT/rEI0T3LIFPG8BM7OfSqpJwMlkh2/UTicN36O2msKk=
+X-Received: by 2002:a05:690c:6f12:b0:6fd:9f44:f3ab with SMTP id
+ 00721157ae682-6febf2f2438mr162990607b3.13.1741557157024; Sun, 09 Mar 2025
+ 14:52:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v3] ARM: dts: nexus4: Initial dts
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>,
- Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli"
- <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-hardening@vger.kernel.org, Ivan Belokobylskiy <belokobylskij@gmail.com>
 References: <20250309-lg-nexus4-mako-v3-1-1dc2807df296@ixit.cz>
  <l4lv22oi2ktubf7aveqxqtwb7zz7cfrzdayuxxgwdj46ygubfs@qpl6ut37taoe>
- <88da307c-0403-405d-8356-c8baeb18eaba@ixit.cz>
- <qu5w56bp5yurdgbhjpeiabn5pvpoov7xfyta5j7djnnrveak42@povbs5bddtsz>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <qu5w56bp5yurdgbhjpeiabn5pvpoov7xfyta5j7djnnrveak42@povbs5bddtsz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <88da307c-0403-405d-8356-c8baeb18eaba@ixit.cz> <qu5w56bp5yurdgbhjpeiabn5pvpoov7xfyta5j7djnnrveak42@povbs5bddtsz>
+ <c67defb5-f677-45e0-9316-cf0a60238393@ixit.cz>
+In-Reply-To: <c67defb5-f677-45e0-9316-cf0a60238393@ixit.cz>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sun, 9 Mar 2025 23:52:27 +0200
+X-Gm-Features: AQ5f1Jo8FnoegJUkwQU389SNer04ipCTPWac6KL_0tUVVQOS-Rp5nkRzvpEdsJ0
+Message-ID: <CAA8EJprdmS1dFem_7vud=QgZ2G27crYF2X3G4=QRS76c8EJvCA@mail.gmail.com>
+Subject: Re: [PATCH v3] ARM: dts: nexus4: Initial dts
+To: David Heidelberg <david@ixit.cz>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, Ivan Belokobylskiy <belokobylskij@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
+On Sun, 9 Mar 2025 at 23:39, David Heidelberg <david@ixit.cz> wrote:
+>
+>
+>
+> On 09/03/2025 10:36, Dmitry Baryshkov wrote:
+> > On Sun, Mar 09, 2025 at 10:17:29AM +0100, David Heidelberg wrote:
+> >> Hello Dmitry!
+> >>
+> >> Thank you for looking into it. See replies.
+> >>
+> >> On 09/03/2025 09:33, Dmitry Baryshkov wrote:
+> >>> On Sun, Mar 09, 2025 at 01:45:51AM +0100, David Heidelberg via B4 Relay wrote:
+> >>>> +
+> >>>> +&riva {
+> >>>> +  status = "okay";
+> >>>> +  pinctrl-names = "default";
+> >>>> +  pinctrl-0 = <&riva_wlan_pin_a>;
+> >>>
+> >>> Where is it defined? Also pinctrl-names should come after pinctrl-N.
+> >>
+> >> definition is kinda aside in qcom-apq8064-pins.dtsi .
+> >
+> > Ack, missed it.
+> >
+> >>
+> >> All other suggestions incorporated, if it's OK otherwise, let me send v2
+> >
+> > I think this also needs several supplies in the riva device itself and
+> > in the iris subdevice. See qcom-apq8064-sony-xperia-lagan-yuga.dts.
+> >
+>
+> I don't have the device in my hands, so if I figure out the regulators,
+> I'll not be able to test new WiFi setup. I would drop the WiFi node for
+> now, so at least the base regulators and eMMC gets and possible someone
+> with devices in his hand can push more functionality forward, if you
+> don't object.
+>
+> There is slowly forming some APQ8064/MSM8960 community, so I think there
+> will be updates, now I would just settle with minimum, so our downstream
+> changes will contain only small chunks to get upstreamed.
+>
+> Would you be ok with this approach?
 
+Yes, that sounds perfectly fine.
 
-On 09/03/2025 10:36, Dmitry Baryshkov wrote:
-> On Sun, Mar 09, 2025 at 10:17:29AM +0100, David Heidelberg wrote:
->> Hello Dmitry!
->>
->> Thank you for looking into it. See replies.
->>
->> On 09/03/2025 09:33, Dmitry Baryshkov wrote:
->>> On Sun, Mar 09, 2025 at 01:45:51AM +0100, David Heidelberg via B4 Relay wrote:
->>>> +
->>>> +&riva {
->>>> +	status = "okay";
->>>> +	pinctrl-names = "default";
->>>> +	pinctrl-0 = <&riva_wlan_pin_a>;
->>>
->>> Where is it defined? Also pinctrl-names should come after pinctrl-N.
->>
->> definition is kinda aside in qcom-apq8064-pins.dtsi .
-> 
-> Ack, missed it.
-> 
->>
->> All other suggestions incorporated, if it's OK otherwise, let me send v2
-> 
-> I think this also needs several supplies in the riva device itself and
-> in the iris subdevice. See qcom-apq8064-sony-xperia-lagan-yuga.dts.
-> 
+>
+> >>
+> >> Thank you
+> >> David
+> >>
+> >>>
+> >>>> +};
+> >>>>
+> >>>> ---
+> >>>> base-commit: 0a2f889128969dab41861b6e40111aa03dc57014
+> >>>> change-id: 20250309-lg-nexus4-mako-da0833885b26
+> >>>>
+> >>>> Best regards,
+> >>>> --
+> >>>> David Heidelberg <david@ixit.cz>
+> >>>>
+> >>>>
+> >>>
+> >>
+> >> --
+> >> David Heidelberg
+> >>
+> >
+>
+> --
+> David Heidelberg
+>
 
-I don't have the device in my hands, so if I figure out the regulators, 
-I'll not be able to test new WiFi setup. I would drop the WiFi node for 
-now, so at least the base regulators and eMMC gets and possible someone 
-with devices in his hand can push more functionality forward, if you 
-don't object.
-
-There is slowly forming some APQ8064/MSM8960 community, so I think there 
-will be updates, now I would just settle with minimum, so our downstream 
-changes will contain only small chunks to get upstreamed.
-
-Would you be ok with this approach?
-
->>
->> Thank you
->> David
->>
->>>
->>>> +};
->>>>
->>>> ---
->>>> base-commit: 0a2f889128969dab41861b6e40111aa03dc57014
->>>> change-id: 20250309-lg-nexus4-mako-da0833885b26
->>>>
->>>> Best regards,
->>>> -- 
->>>> David Heidelberg <david@ixit.cz>
->>>>
->>>>
->>>
->>
->> -- 
->> David Heidelberg
->>
-> 
 
 -- 
-David Heidelberg
-
+With best wishes
+Dmitry
 
