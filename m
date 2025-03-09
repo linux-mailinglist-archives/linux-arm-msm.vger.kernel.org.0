@@ -1,172 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-50752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D5B8A588A3
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 22:52:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89A31A588A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 22:55:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 225E63AC053
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 21:52:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 726893ABF9E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 21:55:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA93421D5A8;
-	Sun,  9 Mar 2025 21:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A9261EF368;
+	Sun,  9 Mar 2025 21:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xdM81uMJ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="C4SZu6jd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CBF219A74
-	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Mar 2025 21:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250551A3035;
+	Sun,  9 Mar 2025 21:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741557159; cv=none; b=E76g5kZFLkrAsqUecYnkZqv0u3rDtP+nr0gj5+ZUn+DCGcl0YtjPfxeKomdHMf1khHYphpcB2tTluRdMHQ9WfbDMhBTXXneeN6cy09FTnPcLoNbydlJFs8BnjrwocyyIi7FCfYvnlQ2es/H9WF7YzEduFUIAyZKV4xLGdBVYBvw=
+	t=1741557331; cv=none; b=jFuCfMSkfWyu9yaxzNWwFdmIuBvyJFc4A0eNy6nH/xI7T7GkiRjRLLjYlZUUhK+xnt+WgAN1oDJrsyyHnM5UlqwfTea89+inYHYu3yYfo8H2W3FPFRiQv/l8fG9KZb1RxJN14dPRd9iqyH8wK11/2zq/B3qpwdixoZBOCPHKbsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741557159; c=relaxed/simple;
-	bh=znDduV8o5do63kBgnI87Al2XfPX6k0jTsz0vM1YT25o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JDfNSOh7quLxgNuoNBXC7Pp5GBAsTrbAYB6rmHAXjeSw0rY2n38IOgooynArfQzfcu4WUoAkkzkpvYZZ4VDycoqsl2owfl3d4o5pAML5ifgi6Xelez4t9X1fywskun89nfWrlhyRQGEDwntEFLx40lWdkJUqx4pxyA2YGFcbSeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xdM81uMJ; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6f4bc408e49so33152227b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Mar 2025 14:52:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741557157; x=1742161957; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=x2cXZ1H4OWYbGTrPh8vFke/8+4UNPAMB80eBPTb7iwg=;
-        b=xdM81uMJ8UUubdaE9BAReuxEUkQmJPSYLKm1g+r53p7I+R1wGOKzP8pwiSnVFV4q05
-         +9zMEcx1oKBxl07pIERLrYr5r+UYTW7K7SjYueE3iyOfbGPQop3wi7nulqmYyq0TozS1
-         m8bmhaWaHyfzkBlp4FhHfwpagWv7kFpQ4p3PpKnSCPwKIABQqXNfvZ0dvQ6G2oC3Fd2k
-         2+7gWwXMsSLo7U3xfCcek8hSsdaxGhZ1bvf9CiXC48hwd2TFU7RlunPgDP6I+6D9wQod
-         uSIG57P5J68a+AiS9GpXZkArPaqy/hXHZEB+4bNov+oj7o8UwMxtKYZbZguSWdDaBFpO
-         ziXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741557157; x=1742161957;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=x2cXZ1H4OWYbGTrPh8vFke/8+4UNPAMB80eBPTb7iwg=;
-        b=vfGqDrkE5UQtEnzu+NlCmo4KKdy0s4qa+GnZkcHS7zu3cMvwu2sbC3pmMwqnjG340U
-         IK7F6KnJAVLifpq8ehSeq4cuI6bzJqydcd7qUi+/B0DrqlCSgG3VF5qT2CxLjZFDhog8
-         /92BtssQyvGjFzgTEgVCCGc4/p85EZGT/LeL+aMMnDOTSySZM2UU/QmtSldnfPx7Emsc
-         KM+6briM1SMc4Rv9vY8UG58OBHp55cEOuaRHT0lylz8iy4ChUO0lyZFO8p/h6eE1LK5X
-         1X+gIO137+soqwBwG6xOCMy8+D/DepvFctjm5SXNr/tNoNpfRbddb0pvOmaaCaO0JMiE
-         QtrA==
-X-Forwarded-Encrypted: i=1; AJvYcCXRtI242HtbqcgWPaIS8+czjQ4LieHj/wySHkNWmmjrlFh2hlYWlvIGqeZAn0BcuLr34KgEoZ7+EZ3G1Gre@vger.kernel.org
-X-Gm-Message-State: AOJu0YymbYdRAnVXd0+uA7qE7FLSVl+1ueeKcBgDhXBIlt/bWPF1XFwU
-	N/TSLdh1XRSoV9QutkI+LyKe7Xq/6OmOpUHNFOKozO1nV+CfSgW0njhg2GHwse3W6kIu4go3jHV
-	GSc1DuMly9Lhyol/bXX13iqfUIWn0JLpcWX4CrA==
-X-Gm-Gg: ASbGncscTRh7Q5JtTiYEn+3h71YhIHAHkEy7RxmeCshIVFRX1d6uJ0du8AoWMMkgbEG
-	rgwVVHasXmfsXRwjYxXXLZX9cipkuQB37LiK49pQ3oHJF+DHE4r9/I6z5cMoxcfRgGE327rEr1+
-	ICdDRRl6m1XPF4ERvlTRsdCpszt2OLlD7jj+3lu+KuzNxRt2xiiKHHZOk=
-X-Google-Smtp-Source: AGHT+IEwTe7+gG6re5FQDG7RY1yURSNJRkSyIZAU9lwF7FoyT/rEI0T3LIFPG8BM7OfSqpJwMlkh2/UTicN36O2msKk=
-X-Received: by 2002:a05:690c:6f12:b0:6fd:9f44:f3ab with SMTP id
- 00721157ae682-6febf2f2438mr162990607b3.13.1741557157024; Sun, 09 Mar 2025
- 14:52:37 -0700 (PDT)
+	s=arc-20240116; t=1741557331; c=relaxed/simple;
+	bh=XV4TFGJPOwdEuo+Uu6vVn9rLCbiRTLhhS72SB0Cnyxo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TNe0N3hALWQzCAHOA+F5pHizUDBb3VbyGLFFx1FRBY3168CyNL+axk/Ird45GxMLNlaXSZv1cBWr5mMpFwPp0ezpFi6UZrCeDXc0ihhaKcaqtqwms6CJH8ynDsNi9j0cm8O1aIAO8kGGhA7+fUNn6fkguN3HbaIY8nZDAPa7la0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=C4SZu6jd; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1741557330; x=1773093330;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=XV4TFGJPOwdEuo+Uu6vVn9rLCbiRTLhhS72SB0Cnyxo=;
+  b=C4SZu6jdPS5NRnpt8LsE7pK1Dy6x83hSAfD6WBfw2OpYIa7PHjw9l+e9
+   Zn6cUFMONT0bsZcj7QDfXDiyelK8Z2V00R3JlQgJps4CWJOaEtaY+gE13
+   Kr+5oOpKneSnbpS5EtCzWKcW9wIqS4IRhPf/UAXd8KTt/Xn0+a1rJRK9e
+   9F56+eg4510yRViHkxkTT89t5SRSpkGxgq0setekkYkk+xKV6mlBGtJGP
+   TRhg2neBDGJseJc/UmNKjVVGHVMWJjmvhDwdJQQrDR8aeJSE6gdLDWewA
+   KaJHyT/heXdr3j2GL/50w4bYNLC/OcPHAtAbBFZgMC0T96MpgZcp4dfbS
+   w==;
+X-CSE-ConnectionGUID: bSCjOhIvQ9ms8ovky+q4Vg==
+X-CSE-MsgGUID: N5MWhspTRrK6q9xh2kLz5A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11368"; a="42657013"
+X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; 
+   d="scan'208";a="42657013"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2025 14:55:30 -0700
+X-CSE-ConnectionGUID: KmuazXWsTQuQ/12EcYE7Ug==
+X-CSE-MsgGUID: dX7NmjAVR0eX9IkEFZMktA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; 
+   d="scan'208";a="119668697"
+Received: from lkp-server02.sh.intel.com (HELO a4747d147074) ([10.239.97.151])
+  by fmviesa006.fm.intel.com with ESMTP; 09 Mar 2025 14:55:24 -0700
+Received: from kbuild by a4747d147074 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1trOcD-0003VI-2o;
+	Sun, 09 Mar 2025 21:55:21 +0000
+Date: Mon, 10 Mar 2025 05:55:02 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dmitry Baryshkov <lumag@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?iso-8859-1?Q?Ma=EDra?= Canal <mcanal@igalia.com>,
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 4/4] drm: bridge: dw-hdmi: use new helper to get ACR
+ values
+Message-ID: <202503100501.SlwYOb9U-lkp@intel.com>
+References: <20250309-drm-hdmi-acr-v1-4-bb9c242f4d4b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250309-lg-nexus4-mako-v3-1-1dc2807df296@ixit.cz>
- <l4lv22oi2ktubf7aveqxqtwb7zz7cfrzdayuxxgwdj46ygubfs@qpl6ut37taoe>
- <88da307c-0403-405d-8356-c8baeb18eaba@ixit.cz> <qu5w56bp5yurdgbhjpeiabn5pvpoov7xfyta5j7djnnrveak42@povbs5bddtsz>
- <c67defb5-f677-45e0-9316-cf0a60238393@ixit.cz>
-In-Reply-To: <c67defb5-f677-45e0-9316-cf0a60238393@ixit.cz>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 9 Mar 2025 23:52:27 +0200
-X-Gm-Features: AQ5f1Jo8FnoegJUkwQU389SNer04ipCTPWac6KL_0tUVVQOS-Rp5nkRzvpEdsJ0
-Message-ID: <CAA8EJprdmS1dFem_7vud=QgZ2G27crYF2X3G4=QRS76c8EJvCA@mail.gmail.com>
-Subject: Re: [PATCH v3] ARM: dts: nexus4: Initial dts
-To: David Heidelberg <david@ixit.cz>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, Ivan Belokobylskiy <belokobylskij@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250309-drm-hdmi-acr-v1-4-bb9c242f4d4b@linaro.org>
 
-On Sun, 9 Mar 2025 at 23:39, David Heidelberg <david@ixit.cz> wrote:
->
->
->
-> On 09/03/2025 10:36, Dmitry Baryshkov wrote:
-> > On Sun, Mar 09, 2025 at 10:17:29AM +0100, David Heidelberg wrote:
-> >> Hello Dmitry!
-> >>
-> >> Thank you for looking into it. See replies.
-> >>
-> >> On 09/03/2025 09:33, Dmitry Baryshkov wrote:
-> >>> On Sun, Mar 09, 2025 at 01:45:51AM +0100, David Heidelberg via B4 Relay wrote:
-> >>>> +
-> >>>> +&riva {
-> >>>> +  status = "okay";
-> >>>> +  pinctrl-names = "default";
-> >>>> +  pinctrl-0 = <&riva_wlan_pin_a>;
-> >>>
-> >>> Where is it defined? Also pinctrl-names should come after pinctrl-N.
-> >>
-> >> definition is kinda aside in qcom-apq8064-pins.dtsi .
-> >
-> > Ack, missed it.
-> >
-> >>
-> >> All other suggestions incorporated, if it's OK otherwise, let me send v2
-> >
-> > I think this also needs several supplies in the riva device itself and
-> > in the iris subdevice. See qcom-apq8064-sony-xperia-lagan-yuga.dts.
-> >
->
-> I don't have the device in my hands, so if I figure out the regulators,
-> I'll not be able to test new WiFi setup. I would drop the WiFi node for
-> now, so at least the base regulators and eMMC gets and possible someone
-> with devices in his hand can push more functionality forward, if you
-> don't object.
->
-> There is slowly forming some APQ8064/MSM8960 community, so I think there
-> will be updates, now I would just settle with minimum, so our downstream
-> changes will contain only small chunks to get upstreamed.
->
-> Would you be ok with this approach?
+Hi Dmitry,
 
-Yes, that sounds perfectly fine.
+kernel test robot noticed the following build errors:
 
->
-> >>
-> >> Thank you
-> >> David
-> >>
-> >>>
-> >>>> +};
-> >>>>
-> >>>> ---
-> >>>> base-commit: 0a2f889128969dab41861b6e40111aa03dc57014
-> >>>> change-id: 20250309-lg-nexus4-mako-da0833885b26
-> >>>>
-> >>>> Best regards,
-> >>>> --
-> >>>> David Heidelberg <david@ixit.cz>
-> >>>>
-> >>>>
-> >>>
-> >>
-> >> --
-> >> David Heidelberg
-> >>
-> >
->
-> --
-> David Heidelberg
->
+[auto build test ERROR on 0a2f889128969dab41861b6e40111aa03dc57014]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-display-hdmi-provide-central-data-authority-for-ACR-params/20250309-161610
+base:   0a2f889128969dab41861b6e40111aa03dc57014
+patch link:    https://lore.kernel.org/r/20250309-drm-hdmi-acr-v1-4-bb9c242f4d4b%40linaro.org
+patch subject: [PATCH 4/4] drm: bridge: dw-hdmi: use new helper to get ACR values
+config: arm64-randconfig-002-20250310 (https://download.01.org/0day-ci/archive/20250310/202503100501.SlwYOb9U-lkp@intel.com/config)
+compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250310/202503100501.SlwYOb9U-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202503100501.SlwYOb9U-lkp@intel.com/
+
+All errors (new ones prefixed by >>, old ones prefixed by <<):
+
+>> ERROR: modpost: "drm_hdmi_acr_get_n_cts" [drivers/gpu/drm/bridge/synopsys/dw-hdmi.ko] undefined!
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
