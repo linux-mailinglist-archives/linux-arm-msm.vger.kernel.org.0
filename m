@@ -1,50 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-50734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 729B0A58183
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 09:14:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 006A1A58189
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 09:14:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE66618905B6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 08:14:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B19318900B7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 08:14:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ADBE19007E;
-	Sun,  9 Mar 2025 08:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3ED418CC15;
+	Sun,  9 Mar 2025 08:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VJOIn9if"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jx0IBP/o"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5224828DD0;
-	Sun,  9 Mar 2025 08:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6C328DD0;
+	Sun,  9 Mar 2025 08:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741508048; cv=none; b=BR/xm9DqXcJ/OUVPSaLQp6oa1wNOs1ILElDjbigySY8dtUFpwqGl8fwW6EuHc7zTj0n81Ixit51VUKsN04b3BI9gCfsqOdy8g9UbKNNU0KgTJBK54jh5VYwZS5/GZQ17Jem5zveJ9bOp3dTxsoBdFSK8r5rp0vjhavl6QoVX64g=
+	t=1741508052; cv=none; b=sW44dbeKGYJ/K8m0q+yDE0nvR9k0KvdygzaeU7l2GxgzNPRNUWg6MZ9RnKH8akLTAszX33enlmS5pkpg+FOhFkrIkQ2o9Zw5nuvKePhamon4jOD64hvGlHWHEj8WRX1d5g5mqdxRseoycVDOrZFadjSxd3puDzu0Yv/1Rt7mskg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741508048; c=relaxed/simple;
-	bh=53oqEdMve9KUjRbc06p98HomGfbvDNqcOd4avDOE3+4=;
+	s=arc-20240116; t=1741508052; c=relaxed/simple;
+	bh=Y7PNf56Wiy8usWt0XJSSy9g4zzDjcdLVUFxc4qN+JSU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=B5u+OOgqXD1N877adqnKGDguwOiYXFzf9n/X+58GyeaC+fZrWDuJd98b0teKihq/k2Sp5CAcrE81eoXjslA7+lNh3BIlXkEEUqY191y551uIPLHo7TF8nRfLVUwkTnJaxrNPwbOpCZWDdmtVs/Z2xU2hH2hFyWK/cXnTRe+jnB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VJOIn9if; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB33EC4CEEF;
-	Sun,  9 Mar 2025 08:14:03 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=rs6y4l8+jfYRxonsfjfGb4c7sOz+2kjnYz/ZYpmC+Q/Lk83D2Upybr+z0grgu3PQBNKW+pfTQ9o5ZplcUJ5MIECAtBgXaDZpLYpGQatGY95C8G80lUhIK9JIzcQIQW2MEn533AhTiy8OEP+71N5R8xvTvsHvNl2TKk2vbwNTv4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jx0IBP/o; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3783EC4CEEE;
+	Sun,  9 Mar 2025 08:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741508047;
-	bh=53oqEdMve9KUjRbc06p98HomGfbvDNqcOd4avDOE3+4=;
+	s=k20201202; t=1741508052;
+	bh=Y7PNf56Wiy8usWt0XJSSy9g4zzDjcdLVUFxc4qN+JSU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=VJOIn9ifCz+q6EmxTO1sobATldLALRSF0vY4ohDsPI94kVyijI7UFzJWhFLAIXZhv
-	 AXk4aVgfoqjGSprsQT3V6E9v74AXFgyLXnUuDdG5lwWiUDXc2n6aIzwbBX+zFxxVml
-	 BMiztwE3m83mRdtKAMSKPZumysd5FV9R7T5NaxyemyPmd4KvRvw+UfWQPXs8A9JgT0
-	 r8cqvsXdSEa6Mif64N50BQk53tqkxI7nU9d6IATRzeFeIEEpVTkvhWmjsldQm6AXVW
-	 8X97yeFLV4PMF6WuUUDvjMZOAVB2rD14PjvkciKTuH+OZ0uR2zIvQV3zPmdfZoZTLo
-	 dn89qSGtiNXaw==
+	b=Jx0IBP/oLb7j+4Pn2k702XiOEeIxxIkiOkhmF6hrNGshZ1CCzdB+mJJMmM8GHF5QV
+	 AAlNYMkMNTlw3jtsMT19Xmg8q5yrKZMwAyW9Op0/a6CIaPeSz9Wg2h+/eW1F0QcY2m
+	 vjnhZjE8AcsfitipuUfmSRYmGx3mZ0v5oVT2uBJegkToN4bALx5J5w4i2OfR6/7O8z
+	 jgkFUr5ME17CJLDA7TDVxsfpkaDxlq6hYINbZvWTnhSGZg8dY3zAqvBIb3lUu2xpDI
+	 EQtjArTGyvFHsHrP/EIk3sGhSPtlxI3cI0iV+fTvQnI3t++NOD3C+cDApbflx4BUIX
+	 +AuI3bWG6IXDQ==
 From: Dmitry Baryshkov <lumag@kernel.org>
-Date: Sun, 09 Mar 2025 10:13:56 +0200
-Subject: [PATCH 1/4] drm/display: hdmi: provide central data authority for
- ACR params
+Date: Sun, 09 Mar 2025 10:13:57 +0200
+Subject: [PATCH 2/4] drm/msm/hdmi: use new helper for ACR tables
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250309-drm-hdmi-acr-v1-1-bb9c242f4d4b@linaro.org>
+Message-Id: <20250309-drm-hdmi-acr-v1-2-bb9c242f4d4b@linaro.org>
 References: <20250309-drm-hdmi-acr-v1-0-bb9c242f4d4b@linaro.org>
 In-Reply-To: <20250309-drm-hdmi-acr-v1-0-bb9c242f4d4b@linaro.org>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
@@ -71,228 +70,210 @@ To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7197;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6537;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=e5rKHAIrRhvOrVwwZ/dNoJcMiCgbRsKK/fDPerK9GDc=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnzU3GKii0BMlGAcXjmIjpmJ9WmEUQN5FsjibnN
- RIwgY4AgtKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ81NxgAKCRCLPIo+Aiko
- 1QYeCACqHh/JLFPH1L+YS43WPNexSdsseKzSQ8+XiO1EEtqdwDZ0UUJslMxDRPAKNpppdxGIxAF
- UKWs33gKiV2qxGRrNx6nDO3m96KrADw5/jfQNUSjWjCvL455fVyYvaP1ysfQdyZTxOWWTk8YVPQ
- rLrItcF9gQnb6txpQmeV4GbKpmSUUx5ORsEyDXoAEZ4CKH5IjpCw9pjs56G3cPK6pn/PYddTrf/
- knIs3CGSVcbl5O3GUeo/p2Vsm2XC3Wc/Du0X/tDtBZ1LyDUTkMsrLH2yKTYTI4FODXoXiYAsCcQ
- jWlBbsD2MpLSR7+neB7aIDnd6kYuJLhM7MQSo7pA09REv7+t
+ bh=SUlsWfvGe/u7v0SEKetOa0wew4AKOLnsgQAjWExJs1E=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnzU3GIi/9QsNJXAvJTF/mNboznHA/d6Om/BFNg
+ 9I8g7XtO62JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ81NxgAKCRCLPIo+Aiko
+ 1bqnB/0SSbQnnMMCctc1vMJmtC8diGqPdcWflP9xr5wWzn185Q+Wi2Y6AMOSJEv6pvOKXG8XzEz
+ t3lmrUqbwV+251wy53ziUjKH5IuHmDhaFSvSR5Am75Zmw4g7FoZzabklG8G8cpVO6jJ1a2Cxqz7
+ ay18HdHfrg4URTiQaqFeYOF9ZdVTIyp1ayfwKFqTDXjPRMBpXNpRsI6fjATU+p28FqPPTvIvYRy
+ IQrIfK82OIcOwchVR0P+q8SE3MvBdhbAiX06OBPY3tDirYzTldimQa2thCJyq7vp3CZc1FRVKxV
+ 1GxhwAl1K6xpYOoZ/T7w0cC6MfApd+MegNz65RrWrgihQUiy
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-HDMI standard defines recommended N and CTS values for Audio Clock
-Regeneration. Currently each driver implements those, frequently in
-somewhat unique way. Provide a generic helper for getting those values
-to be used by the HDMI drivers.
-
-The helper is added to drm_hdmi_helper.c rather than drm_hdmi_audio.c
-since HDMI drivers can be using this helper function even without
-switching to DRM HDMI Audio helpers.
-
-Note: currently this only handles the values per HDMI 1.4b Section 7.2
-and HDMI 2.0 Section 9.2.1. Later the table can be expanded to
-accommodate for Deep Color TMDS char rates per HDMI 1.4 Appendix D
-and/or HDMI 2.0 / 2.1 Appendix C).
+Use new drm_hdmi_acr_get_n_cts() helper instead of hand-coding the
+tables. Instead of storing the rate 'index', store the audio sample rate
+in hdmi->audio.rate, removing the need for even more defines.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/display/drm_hdmi_helper.c | 164 ++++++++++++++++++++++++++++++
- include/drm/display/drm_hdmi_helper.h     |   6 ++
- 2 files changed, 170 insertions(+)
+ drivers/gpu/drm/msm/hdmi/hdmi_audio.c | 107 +++-------------------------------
+ 1 file changed, 9 insertions(+), 98 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_hdmi_helper.c b/drivers/gpu/drm/display/drm_hdmi_helper.c
-index 74dd4d01dd9bb2c9e69ec1c60b0056bd69417e8a..89d25571bfd21c56c6835821d2272a12c816a76e 100644
---- a/drivers/gpu/drm/display/drm_hdmi_helper.c
-+++ b/drivers/gpu/drm/display/drm_hdmi_helper.c
-@@ -256,3 +256,167 @@ drm_hdmi_compute_mode_clock(const struct drm_display_mode *mode,
- 	return DIV_ROUND_CLOSEST_ULL(clock * bpc, 8);
- }
- EXPORT_SYMBOL(drm_hdmi_compute_mode_clock);
-+
-+struct drm_hdmi_acr_n_cts_entry {
-+	unsigned int n;
-+	unsigned int cts;
-+};
-+
-+struct drm_hdmi_acr_data {
-+	unsigned long tmds_clock_khz;
-+	struct drm_hdmi_acr_n_cts_entry n_cts_32k,
-+					n_cts_44k1,
-+					n_cts_48k;
-+};
-+
-+static const struct drm_hdmi_acr_data hdmi_acr_n_cts[] = {
-+	{
-+		/* "Other" entry */
-+		.n_cts_32k =  { .n = 4096, },
-+		.n_cts_44k1 = { .n = 6272, },
-+		.n_cts_48k =  { .n = 6144, },
-+	}, {
-+		.tmds_clock_khz = 25175,
-+		.n_cts_32k =  { .n = 4576,  .cts = 28125, },
-+		.n_cts_44k1 = { .n = 7007,  .cts = 31250, },
-+		.n_cts_48k =  { .n = 6864,  .cts = 28125, },
-+	}, {
-+		.tmds_clock_khz = 25200,
-+		.n_cts_32k =  { .n = 4096,  .cts = 25200, },
-+		.n_cts_44k1 = { .n = 6272,  .cts = 28000, },
-+		.n_cts_48k =  { .n = 6144,  .cts = 25200, },
-+	}, {
-+		.tmds_clock_khz = 27000,
-+		.n_cts_32k =  { .n = 4096,  .cts = 27000, },
-+		.n_cts_44k1 = { .n = 6272,  .cts = 30000, },
-+		.n_cts_48k =  { .n = 6144,  .cts = 27000, },
-+	}, {
-+		.tmds_clock_khz = 27027,
-+		.n_cts_32k =  { .n = 4096,  .cts = 27027, },
-+		.n_cts_44k1 = { .n = 6272,  .cts = 30030, },
-+		.n_cts_48k =  { .n = 6144,  .cts = 27027, },
-+	}, {
-+		.tmds_clock_khz = 54000,
-+		.n_cts_32k =  { .n = 4096,  .cts = 54000, },
-+		.n_cts_44k1 = { .n = 6272,  .cts = 60000, },
-+		.n_cts_48k =  { .n = 6144,  .cts = 54000, },
-+	}, {
-+		.tmds_clock_khz = 54054,
-+		.n_cts_32k =  { .n = 4096,  .cts = 54054, },
-+		.n_cts_44k1 = { .n = 6272,  .cts = 60060, },
-+		.n_cts_48k =  { .n = 6144,  .cts = 54054, },
-+	}, {
-+		.tmds_clock_khz = 74176,
-+		.n_cts_32k =  { .n = 11648, .cts = 210937, }, /* and 210938 */
-+		.n_cts_44k1 = { .n = 17836, .cts = 234375, },
-+		.n_cts_48k =  { .n = 11648, .cts = 140625, },
-+	}, {
-+		.tmds_clock_khz = 74250,
-+		.n_cts_32k =  { .n = 4096,  .cts = 74250, },
-+		.n_cts_44k1 = { .n = 6272,  .cts = 82500, },
-+		.n_cts_48k =  { .n = 6144,  .cts = 74250, },
-+	}, {
-+		.tmds_clock_khz = 148352,
-+		.n_cts_32k =  { .n = 11648, .cts = 421875, },
-+		.n_cts_44k1 = { .n = 8918,  .cts = 234375, },
-+		.n_cts_48k =  { .n = 5824,  .cts = 140625, },
-+	}, {
-+		.tmds_clock_khz = 148500,
-+		.n_cts_32k =  { .n = 4096,  .cts = 148500, },
-+		.n_cts_44k1 = { .n = 6272,  .cts = 165000, },
-+		.n_cts_48k =  { .n = 6144,  .cts = 148500, },
-+	}, {
-+		.tmds_clock_khz = 296703,
-+		.n_cts_32k =  { .n = 5824,  .cts = 421875, },
-+		.n_cts_44k1 = { .n = 4459,  .cts = 234375, },
-+		.n_cts_48k =  { .n = 5824,  .cts = 281250, },
-+	}, {
-+		.tmds_clock_khz = 297000,
-+		.n_cts_32k =  { .n = 3072,  .cts = 222750, },
-+		.n_cts_44k1 = { .n = 4704,  .cts = 247500, },
-+		.n_cts_48k =  { .n = 5120,  .cts = 247500, },
-+	}, {
-+		.tmds_clock_khz = 593407,
-+		.n_cts_32k =  { .n = 5824,  .cts = 843750, },
-+		.n_cts_44k1 = { .n = 8918,  .cts = 937500, },
-+		.n_cts_48k =  { .n = 5824,  .cts = 562500, },
-+	}, {
-+		.tmds_clock_khz = 594000,
-+		.n_cts_32k =  { .n = 3072,  .cts = 445500, },
-+		.n_cts_44k1 = { .n = 9408,  .cts = 990000, },
-+		.n_cts_48k =  { .n = 6144,  .cts = 594000, },
-+	},
-+};
-+
-+static int drm_hdmi_acr_find_tmds_entry(unsigned long tmds_clock_khz)
-+{
-+	int i;
-+
-+	/* skip the "other" entry */
-+	for (i = 1; i < ARRAY_SIZE(hdmi_acr_n_cts); i++) {
-+		if (hdmi_acr_n_cts[i].tmds_clock_khz == tmds_clock_khz)
-+			return i;
-+	}
-+
-+	return 0;
-+}
-+
-+/**
-+ * drm_hdmi_acr_get_n_cts() - get N and CTS values for Audio Clock Regeneration
-+ *
-+ * @tmds_char_rate: TMDS clock (char rate) as used by the HDMI connector
-+ * @sample_rate: audio sample rate
-+ * @out_n: a pointer to write the N value
-+ * @out_cts: a pointer to write the CTS value
-+ *
-+ * Get the N and CTS values (either by calculating them or by returning data
-+ * from the tables. This follows the HDMI 1.4b Section 7.2 "Audio Sample Clock
-+ * Capture and Regeneration".
-+ */
-+void
-+drm_hdmi_acr_get_n_cts(unsigned long long tmds_char_rate,
-+		       unsigned int sample_rate,
-+		       unsigned int *out_n,
-+		       unsigned int *out_cts)
-+{
-+	/* be a bit more tolerant, especially for the 1.001 entries */
-+	unsigned long tmds_clock_khz = DIV_ROUND_CLOSEST_ULL(tmds_char_rate, 1000);
-+	const struct drm_hdmi_acr_n_cts_entry *entry;
-+	unsigned int n, cts, mult;
-+	int tmds_idx;
-+
-+	tmds_idx = drm_hdmi_acr_find_tmds_entry(tmds_clock_khz);
-+
-+	/*
-+	 * Don't change the order, 192 kHz is divisible by 48k and 32k, but it
-+	 * should use 48k entry.
-+	 */
-+	if (sample_rate % 48000 == 0) {
-+		entry = &hdmi_acr_n_cts[tmds_idx].n_cts_48k;
-+		mult = sample_rate / 48000;
-+	} else if (sample_rate % 44100 == 0) {
-+		entry = &hdmi_acr_n_cts[tmds_idx].n_cts_44k1;
-+		mult = sample_rate / 44100;
-+	} else if (sample_rate % 32000 == 0) {
-+		entry = &hdmi_acr_n_cts[tmds_idx].n_cts_32k;
-+		mult = sample_rate / 32000;
-+	} else {
-+		entry = NULL;
-+	}
-+
-+	if (entry) {
-+		n = entry->n * mult;
-+		cts = entry->cts;
-+	} else {
-+		/* Recommended optimal value, HDMI 1.4b, Section 7.2.1 */
-+		n = 128 * sample_rate / 1000;
-+		cts = 0;
-+	}
-+
-+	if (!cts)
-+		cts = DIV_ROUND_CLOSEST_ULL(tmds_char_rate * n,
-+					    128 * sample_rate);
-+
-+	*out_n = n;
-+	*out_cts = cts;
-+}
-diff --git a/include/drm/display/drm_hdmi_helper.h b/include/drm/display/drm_hdmi_helper.h
-index 57e3b18c15ec79636d89267aba0e88f434c5d4db..09145c9ee9fc0cd839242f2373b305940e06e157 100644
---- a/include/drm/display/drm_hdmi_helper.h
-+++ b/include/drm/display/drm_hdmi_helper.h
-@@ -28,4 +28,10 @@ unsigned long long
- drm_hdmi_compute_mode_clock(const struct drm_display_mode *mode,
- 			    unsigned int bpc, enum hdmi_colorspace fmt);
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_audio.c b/drivers/gpu/drm/msm/hdmi/hdmi_audio.c
+index 8bb975e82c17c1d77217128e9ddbd6a0575bb33d..b9ec14ef2c20ebfa03c30994eb2395f21b9502bb 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_audio.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_audio.c
+@@ -4,6 +4,7 @@
+  * Author: Rob Clark <robdclark@gmail.com>
+  */
  
-+void
-+drm_hdmi_acr_get_n_cts(unsigned long long tmds_char_rate,
-+		       unsigned int sample_rate,
-+		       unsigned int *out_n,
-+		       unsigned int *out_cts);
-+
- #endif
++#include <drm/display/drm_hdmi_helper.h>
+ #include <drm/display/drm_hdmi_state_helper.h>
+ 
+ #include <linux/hdmi.h>
+@@ -12,71 +13,9 @@
+ 
+ #include "hdmi.h"
+ 
+-/* Supported HDMI Audio sample rates */
+-#define MSM_HDMI_SAMPLE_RATE_32KHZ		0
+-#define MSM_HDMI_SAMPLE_RATE_44_1KHZ		1
+-#define MSM_HDMI_SAMPLE_RATE_48KHZ		2
+-#define MSM_HDMI_SAMPLE_RATE_88_2KHZ		3
+-#define MSM_HDMI_SAMPLE_RATE_96KHZ		4
+-#define MSM_HDMI_SAMPLE_RATE_176_4KHZ		5
+-#define MSM_HDMI_SAMPLE_RATE_192KHZ		6
+-#define MSM_HDMI_SAMPLE_RATE_MAX		7
+-
+-
+-struct hdmi_msm_audio_acr {
+-	uint32_t n;	/* N parameter for clock regeneration */
+-	uint32_t cts;	/* CTS parameter for clock regeneration */
+-};
+-
+-struct hdmi_msm_audio_arcs {
+-	unsigned long int pixclock;
+-	struct hdmi_msm_audio_acr lut[MSM_HDMI_SAMPLE_RATE_MAX];
+-};
+-
+-#define HDMI_MSM_AUDIO_ARCS(pclk, ...) { (1000 * (pclk)), __VA_ARGS__ }
+-
+-/* Audio constants lookup table for hdmi_msm_audio_acr_setup */
+-/* Valid Pixel-Clock rates: 25.2MHz, 27MHz, 27.03MHz, 74.25MHz, 148.5MHz */
+-static const struct hdmi_msm_audio_arcs acr_lut[] = {
+-	/*  25.200MHz  */
+-	HDMI_MSM_AUDIO_ARCS(25200, {
+-		{4096, 25200}, {6272, 28000}, {6144, 25200}, {12544, 28000},
+-		{12288, 25200}, {25088, 28000}, {24576, 25200} }),
+-	/*  27.000MHz  */
+-	HDMI_MSM_AUDIO_ARCS(27000, {
+-		{4096, 27000}, {6272, 30000}, {6144, 27000}, {12544, 30000},
+-		{12288, 27000}, {25088, 30000}, {24576, 27000} }),
+-	/*  27.027MHz */
+-	HDMI_MSM_AUDIO_ARCS(27030, {
+-		{4096, 27027}, {6272, 30030}, {6144, 27027}, {12544, 30030},
+-		{12288, 27027}, {25088, 30030}, {24576, 27027} }),
+-	/*  74.250MHz */
+-	HDMI_MSM_AUDIO_ARCS(74250, {
+-		{4096, 74250}, {6272, 82500}, {6144, 74250}, {12544, 82500},
+-		{12288, 74250}, {25088, 82500}, {24576, 74250} }),
+-	/* 148.500MHz */
+-	HDMI_MSM_AUDIO_ARCS(148500, {
+-		{4096, 148500}, {6272, 165000}, {6144, 148500}, {12544, 165000},
+-		{12288, 148500}, {25088, 165000}, {24576, 148500} }),
+-};
+-
+-static const struct hdmi_msm_audio_arcs *get_arcs(unsigned long int pixclock)
+-{
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(acr_lut); i++) {
+-		const struct hdmi_msm_audio_arcs *arcs = &acr_lut[i];
+-		if (arcs->pixclock == pixclock)
+-			return arcs;
+-	}
+-
+-	return NULL;
+-}
+-
+ int msm_hdmi_audio_update(struct hdmi *hdmi)
+ {
+ 	struct hdmi_audio *audio = &hdmi->audio;
+-	const struct hdmi_msm_audio_arcs *arcs = NULL;
+ 	bool enabled = audio->enabled;
+ 	uint32_t acr_pkt_ctrl, vbi_pkt_ctrl, aud_pkt_ctrl;
+ 	uint32_t audio_config;
+@@ -94,15 +33,6 @@ int msm_hdmi_audio_update(struct hdmi *hdmi)
+ 		enabled = false;
+ 	}
+ 
+-	if (enabled) {
+-		arcs = get_arcs(hdmi->pixclock);
+-		if (!arcs) {
+-			DBG("disabling audio: unsupported pixclock: %lu",
+-					hdmi->pixclock);
+-			enabled = false;
+-		}
+-	}
+-
+ 	/* Read first before writing */
+ 	acr_pkt_ctrl = hdmi_read(hdmi, REG_HDMI_ACR_PKT_CTRL);
+ 	vbi_pkt_ctrl = hdmi_read(hdmi, REG_HDMI_VBI_PKT_CTRL);
+@@ -116,15 +46,12 @@ int msm_hdmi_audio_update(struct hdmi *hdmi)
+ 		uint32_t n, cts, multiplier;
+ 		enum hdmi_acr_cts select;
+ 
+-		n   = arcs->lut[audio->rate].n;
+-		cts = arcs->lut[audio->rate].cts;
++		drm_hdmi_acr_get_n_cts(hdmi->pixclock, audio->rate, &n, &cts);
+ 
+-		if ((MSM_HDMI_SAMPLE_RATE_192KHZ == audio->rate) ||
+-				(MSM_HDMI_SAMPLE_RATE_176_4KHZ == audio->rate)) {
++		if (audio->rate == 192000 || audio->rate == 176400) {
+ 			multiplier = 4;
+ 			n >>= 2; /* divide N by 4 and use multiplier */
+-		} else if ((MSM_HDMI_SAMPLE_RATE_96KHZ == audio->rate) ||
+-				(MSM_HDMI_SAMPLE_RATE_88_2KHZ == audio->rate)) {
++		} else if (audio->rate == 96000 || audio->rate == 88200) {
+ 			multiplier = 2;
+ 			n >>= 1; /* divide N by 2 and use multiplier */
+ 		} else {
+@@ -137,13 +64,11 @@ int msm_hdmi_audio_update(struct hdmi *hdmi)
+ 		acr_pkt_ctrl |= HDMI_ACR_PKT_CTRL_AUDIO_PRIORITY;
+ 		acr_pkt_ctrl |= HDMI_ACR_PKT_CTRL_N_MULTIPLIER(multiplier);
+ 
+-		if ((MSM_HDMI_SAMPLE_RATE_48KHZ == audio->rate) ||
+-				(MSM_HDMI_SAMPLE_RATE_96KHZ == audio->rate) ||
+-				(MSM_HDMI_SAMPLE_RATE_192KHZ == audio->rate))
++		if (audio->rate == 48000 || audio->rate == 96000 ||
++		    audio->rate == 192000)
+ 			select = ACR_48;
+-		else if ((MSM_HDMI_SAMPLE_RATE_44_1KHZ == audio->rate) ||
+-				(MSM_HDMI_SAMPLE_RATE_88_2KHZ == audio->rate) ||
+-				(MSM_HDMI_SAMPLE_RATE_176_4KHZ == audio->rate))
++		else if (audio->rate == 44100 || audio->rate == 88200 ||
++			 audio->rate == 176400)
+ 			select = ACR_44;
+ 		else /* default to 32k */
+ 			select = ACR_32;
+@@ -204,7 +129,6 @@ int msm_hdmi_bridge_audio_prepare(struct drm_connector *connector,
+ {
+ 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+ 	struct hdmi *hdmi = hdmi_bridge->hdmi;
+-	unsigned int rate;
+ 	int ret;
+ 
+ 	drm_dbg_driver(bridge->dev, "%u Hz, %d bit, %d channels\n",
+@@ -214,25 +138,12 @@ int msm_hdmi_bridge_audio_prepare(struct drm_connector *connector,
+ 
+ 	switch (params->sample_rate) {
+ 	case 32000:
+-		rate = MSM_HDMI_SAMPLE_RATE_32KHZ;
+-		break;
+ 	case 44100:
+-		rate = MSM_HDMI_SAMPLE_RATE_44_1KHZ;
+-		break;
+ 	case 48000:
+-		rate = MSM_HDMI_SAMPLE_RATE_48KHZ;
+-		break;
+ 	case 88200:
+-		rate = MSM_HDMI_SAMPLE_RATE_88_2KHZ;
+-		break;
+ 	case 96000:
+-		rate = MSM_HDMI_SAMPLE_RATE_96KHZ;
+-		break;
+ 	case 176400:
+-		rate = MSM_HDMI_SAMPLE_RATE_176_4KHZ;
+-		break;
+ 	case 192000:
+-		rate = MSM_HDMI_SAMPLE_RATE_192KHZ;
+ 		break;
+ 	default:
+ 		drm_err(bridge->dev, "rate[%d] not supported!\n",
+@@ -245,7 +156,7 @@ int msm_hdmi_bridge_audio_prepare(struct drm_connector *connector,
+ 	if (ret)
+ 		return ret;
+ 
+-	hdmi->audio.rate = rate;
++	hdmi->audio.rate = params->sample_rate;
+ 	hdmi->audio.channels = params->cea.channels;
+ 	hdmi->audio.enabled = true;
+ 
 
 -- 
 2.39.5
