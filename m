@@ -1,139 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-50744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCBEFA582D9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 10:55:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32E31A582E1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 11:00:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 95ADB7A4E2F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 09:54:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6117216ADC7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 10:00:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4FB654918;
-	Sun,  9 Mar 2025 09:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D23718FC67;
+	Sun,  9 Mar 2025 10:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i5ZWXOxF"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="elGo6Ws9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABE42D78A;
-	Sun,  9 Mar 2025 09:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68F518A959;
+	Sun,  9 Mar 2025 10:00:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741514132; cv=none; b=npdoh2/RasPg6bq95XCEnKhB+eiKFgcoA5jMu2fLjJ3XCkF185ept9LqYUhb9LzuVBZj/gBS4KzH9h2isLFErRkudjGpg7EDBFONC61sk0BGjy2gVK175Ku6JN64jk2Dgf2ARw0P8brIB1hvk6slfioDI5jtNFBoTvm6JArwIkc=
+	t=1741514448; cv=none; b=bVyZxozejsRTCQ2hnnz1YLzSh51PgtZ0U1kVK4a84TJio8lLixBrTUCgABLNVMDkt+z33sS9jr9RSYG+qFirPlj0zpyW8Npur9Aq9dFPfYZsNJNmUDPulkPGFxoVoosBnn9xp20Whu4RjcFOY5Rfq38vkp4QowwcCIlRCLLnvvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741514132; c=relaxed/simple;
-	bh=CvXbtCAoJTdLfyTEWw2u3IH8iXW9jb/+ApAkyDmMQKk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=bsDKLHATIGhzWc2TnDHaAw90ubClbB3Gi3xpW5TbDThEDeCynwA1vy0LOlKlxO5gI2SEcS6qvLyo10D6C45zGy34vP0x/ikVIaL8mjTu6XijZwJpTFudcfixcmnmPDk9Fyg8bzXat5hSJfXw+oA3255nZAvkcgLDdVdamdA1N7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i5ZWXOxF; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-38f406e9f80so2475972f8f.2;
-        Sun, 09 Mar 2025 01:55:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741514129; x=1742118929; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8ZpuHav96lrk832Cicku4PQcIvGBzmRkHChNSbUFJB4=;
-        b=i5ZWXOxFN70zCN5iujYvkgJ2Kgvi+bHWO5rXfHe3fjolSLXChQtJt8RHDfmBz5qcMD
-         lOHhcDLhBkPju/8doqGzu26A8WjbXcvRhGateMDECQXTR0t6AxLQFPyX5kg2a3Adnyrs
-         7fvO1qS2BqJnkJiYH2T3qEGENev2lVu+25xeudftkS5cGTVZbQX7J8utPqUmWiClb8c/
-         YMqUKZ14F+2/v9XN8evGZUuTTJsru9X0X7IjUWhqgumaUc6EuYIoG+jaAKANz9VPd682
-         DSGlXFYa5vSy4oL5CTM/CHQrUg3nWgHYQWIYp9LsdkFWm08e2gA+H8nQQNPMW3QXVkhs
-         Qxtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741514129; x=1742118929;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8ZpuHav96lrk832Cicku4PQcIvGBzmRkHChNSbUFJB4=;
-        b=UcIE1+c/Cont+jpimY6ax1uVKwS6df3kvPrFRobHa10MEjYO4a06GjVjVPbORtdx7L
-         BlIadMM8gETB98t5Ud2vVxbiNRwOlWX5qFdnYN5xiSOx45aN5wNQ0mBQNST1AUyPzoiw
-         SUilPh2mr7eS9lHb5W4y6xKWmB9ruuIYcr6OpOpZGJvBebrN5oFKxlYrRdpr3DM9CpPW
-         C6pab66Z6BykPgxsDTvZi7X2RAZVdandx0E6bvCNn7XWxN4tShysJeWcGBzwRodntTwR
-         fKnv24AbcOuiwy2o37f+dSBefdtKhiY0Zx5xLvKrjvTWD8h5U0+Aqto7IKB9mmWQDmua
-         N6+A==
-X-Forwarded-Encrypted: i=1; AJvYcCWAFGsBUas1khKWiif1YWTYCcHeav+RPfuAWHO1gwivCXm90VEijmKZLJgDCjXkJDLoCt0vDFnjepj7Tbs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMM29EklMkMkPPdAOJp0qBZ3vQ2gOqikM7JosfvvOmyfwbumi1
-	IzXy6XyKKeYQk/rFTV6fhFbwFkbwGmNjUbq7Zzy9CffCWaUxSrDt
-X-Gm-Gg: ASbGnctY1Ekq9k+s066DlNYd1/q6Mza6MOgRpje5yepxOksY8yulMsxCaw8S/sRA/SE
-	cwaw4hzO6uzRzEmyNPJWTP7uo5HM539T6hK8ZzNCFNh2U8hDyw1gCPL0MPrADoNFpz/d4052CvE
-	XpSUB/t4TrzNHMMmxrwRM5x4gN/pROK/5MYYLeDSUxi5xfmA9qf4TZXm11XK0OEyGOUlFdNUHMW
-	ot/C+t/L3sxNmLL9NswgnsZPIx5+f6k8Rlst/pPzQjHt2jWxiKPaPneRI/hMfqKgSx37vSZvyp0
-	LxmoyreRaoA1CX9vN3ei+5DqCr8xwghKtlp5CQuDzOXAew==
-X-Google-Smtp-Source: AGHT+IHfI/VJZftDRqHYeb3Xwib26RWuigXJPjvLBRgin8Bg+mZushMIzjAxfzKYiLNvU6b4hTnErA==
-X-Received: by 2002:a5d:6d8a:0:b0:391:12a5:3cb3 with SMTP id ffacd0b85a97d-39132d2af8bmr6599086f8f.3.1741514129156;
-        Sun, 09 Mar 2025 01:55:29 -0800 (PST)
-Received: from qasdev.Home ([2a02:c7c:6696:8300:8afb:1194:b90e:9410])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912c0e2bb7sm11567926f8f.63.2025.03.09.01.55.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Mar 2025 01:55:27 -0800 (PST)
-From: Qasim Ijaz <qasdev00@gmail.com>
-To: robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	dmitry.baryshkov@linaro.org,
-	sean@poorly.run,
-	marijn.suijten@somainline.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	quic_jesszhan@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm/dpu: reorder pointer operations after sanity checks to avoid NULL deref 
-Date: Sun,  9 Mar 2025 09:55:25 +0000
-Message-Id: <20250309095525.7738-1-qasdev00@gmail.com>
-X-Mailer: git-send-email 2.39.5
+	s=arc-20240116; t=1741514448; c=relaxed/simple;
+	bh=vCfhMg9R938vwtMtzUz95fNbLj1gywbLqULeR9Dbivo=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=S6vy/2XGZwBGoixA91GO7tDiYW0AdVR1Y9RwyS6UEWeDrCo37T6qy1u1FhHQmlF9LXml5GQq9iEdfSONEiR1Va6DCbaMoFKN24xte63rDFMgN8cNHQ6c+KVctB/eZKsm4s+p1YuWZc3XPfPpDQOFwTmGtUK7Uv7SGz3vPaA4VBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=elGo6Ws9; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1741514418; x=1742119218; i=markus.elfring@web.de;
+	bh=vCfhMg9R938vwtMtzUz95fNbLj1gywbLqULeR9Dbivo=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=elGo6Ws9ayXNezVXbzFU1P6+TK+IFM6dpvOh9b5jalPctpWJ9IcbIO+hysAYCWyF
+	 RuheIrDVrFsfERcMWI/X266aHSU6TVQ4djCJBCFyu153LE30oAGfzdr0lrtAfEvsL
+	 i8utYPxGPei04BAerulpiCr9MGrrGgqhDybgpw8bKUBkWTOVrc0Mgb1ribvOZgedE
+	 WEzvre/b0x4piBi3Y7bRaa9JGZbHqYRxQXDQd+RLvCNoRUeGnMZAC7yoXaHgRW5qg
+	 4ki9rc1ZwVpEOhfOhqkrbrnF9uwdfzWDjogKHcbav6VIocn7Rz7v1SrngSdEjnzTE
+	 euiiczTx+T24Iz5Q7w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.93.26]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M1rTQ-1tp1b73epc-00AyRN; Sun, 09
+ Mar 2025 11:00:17 +0100
+Message-ID: <25e29571-6b96-49cc-aa72-e3040fde8004@web.de>
+Date: Sun, 9 Mar 2025 11:00:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+To: Qasim Ijaz <qasdev00@gmail.com>, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Simona Vetter <simona@ffwll.ch>
+References: <20250308144839.33849-1-qasdev00@gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: reorder pointer operations after sanity
+ checks to avoid NULL deref
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20250308144839.33849-1-qasdev00@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YRZtq9TUAoPm8rhJitIcG7Jcn8vs7jJjq1tg1yPZdkW1fQQ4qZe
+ hshYarNYkgB3BdK+5T60far+NFl+lUfNpIYE7aOE0EmW2Vlbl6fvNm6KI2BjmqoQ3eiT6E/
+ hivnCFA3UrTb1TeigR5VN18hIfQAUHddc321j5pgaVRx21SZHlD1tY2Qdz6d/lCi86f/p6w
+ qGObaDSAMTeuv5/Apxe4Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:YyKem+iWpWw=;wEYr0geeA4XIjjiHyWUhwJUnyak
+ orL4oNDTScVYJ0MHlfFGOn+UMUaBGPrbdh5MiqedNDhlPnJtqDfjmZWxsH/QNUHVP/TalvSCK
+ SpbLfkgws+CsbRVnnOITcbOFzDleQLgn266+EfeUnY2KRfvgGwsEsoQPaSb+aHAjiz0vaoEk5
+ 1h42TYq2PUaEZ3BCcmlGQZhTyHrpgDXRw4NT+eQuJTVFUHFHxMbDkT6u3H71U1Vqk1bcP5hu5
+ OGMm6rXu7jxSH2cClnUY4FF++RFcjGdYvK+JFezr29arOjt9Tt2GeKZWgE49KX1903X9XTENX
+ K+49iXvhAD6quCVUsZ9gCnfHdFxaF5yCjSodJ3+5Dz8uT1vcaJfgyf/zrcbqVT1SzycPWVClU
+ YXJLnbBhNwqCRiMfvqI61ykAFVmDLqpXWnl8P1pcthxh3BKPm7HfE1rR3CfRaRmo9wjNdfUQO
+ zizKe5oOnw7jkFY6qjIzeaJVIbu7lDe73gKHpI54RvgFV1QFq1eWa0BcCmbBbGs5xG5dAsrmc
+ mYg8TqOHXjOyBHnFjNwPv29Xur0a5KFxV9Xlsr0wGmHYBWxDE60nerL7KoRUREs7/5eyYIZ4S
+ maB1ugCoPDadvhyp0ReePb9OY+1A56dYQhNZdBiR6GbFWp2IEhOcojXwbbEhWW8k6eX0I8fPp
+ yAum1T7jz8OXW0xAHn2Y20QNkIH269RsFcE37sCmtg60dU9GgSrnFGazk6pBB18FheClXsNv4
+ 245Fa/28al+joCgu2CV/ZFTEILSiWYNVuthjf7886mnH5lcsSBSpJIqaIrw7Y3kcqLgoX++yM
+ eWbhG3q1Sl7sEnBzIX7QENlXex4HV8/Du23bSANWvyLE/NNG9yiIjmrg1VDIAJYECI0oF7eZi
+ Wm4M20s5wdIEC1/DIU1teaVDnXBU+I2yNz4+KMbuYWz2Mv3bw8EKGDebAM0RKhLeFgyQyXgtW
+ hEQEaRJ1R7uiKqEFK9nGpwLw5BjWeRWYNnwvsNp3JRoBlSWNbAcZYWr7ao5Org8cWVQLdrTSx
+ h4NERBcm+xVYbbtPfZ9s+dN9TU1wC+J8WQyrf51UdmTF/8hEfQsRqg9sggMKYR++RHpW7H4Tt
+ kKfnqx5VWI7CGwBn97huv6r+gmDN45HyW+GmDNVZ5TmoTxY0MKFucYMS/wHs3hhB5jS6lkBu/
+ lbPGnhNAXrs6GzSQ4+JZKvvHsKglDRiNRSmvEOS8ukkVhcHW9KjlnNk/rHLRWSwSsHnZknWsP
+ huTXTSGvG97r/sSVGl22J6uwS/Qtic7j5oYWTv7XgsfUfBEaqxYsDV8oo3FFllZX5O3VGfGzX
+ jpBo8oG/PLvqmw7nEKTdvS9K+DoDNlgVQp4hlsoE3phHUHweetzvoD/wZ2FiP0Wyc+Yco7rBa
+ mQW2faNoQ+rUQl3SvuePT6aCbVX51EDdNP/xTfAGB1ONbrztgXzZyKxtA9RRWqpGbszFae9U5
+ ffQOhKw==
 
-_dpu_encoder_trigger_start dereferences "struct dpu_encoder_phys *phys"
-before the sanity checks which can lead to a NULL pointer dereference if
-phys is NULL.
- 
-Fix this by reordering the dereference after the sanity checks.
- 
-Fixes: 8144d17a81d9 ("drm/msm/dpu: Skip trigger flush and start for CWB")
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
----
-v2:
-- Moved Signed-off tag below Fixes tag
-- Moved dpu_enc declaration to the top and initialisation below sanity checks
+=E2=80=A6
+> Fix this by reordering the dereference after the sanity checks.
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Another wording suggestion:
+Thus move the assignment of the variable =E2=80=9Cdpu_enc=E2=80=9D behind =
+a null pointer check.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 0eed93a4d056..0bd1f2bfaaff 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1667,7 +1667,7 @@ static void _dpu_encoder_trigger_flush(struct drm_encoder *drm_enc,
-  */
- static void _dpu_encoder_trigger_start(struct dpu_encoder_phys *phys)
- {
--	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(phys->parent);
-+	struct dpu_encoder_virt *dpu_enc;
- 
- 	if (!phys) {
- 		DPU_ERROR("invalid argument(s)\n");
-@@ -1678,6 +1678,8 @@ static void _dpu_encoder_trigger_start(struct dpu_encoder_phys *phys)
- 		DPU_ERROR("invalid pingpong hw\n");
- 		return;
- 	}
-+
-+	dpu_enc = to_dpu_encoder_virt(phys->parent);
- 
- 	if (phys->parent->encoder_type == DRM_MODE_ENCODER_VIRTUAL &&
- 	    dpu_enc->cwb_mask) {
--- 
-2.39.5
 
+Would an other summary phrase be nicer?
+
+Regards,
+Markus
 
