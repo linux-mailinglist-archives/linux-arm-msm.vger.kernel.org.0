@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-50795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D296A58F06
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 10:07:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD7EBA58F10
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 10:08:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1D5467A1A7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 09:06:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1963D16A52F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 09:08:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F6E2224258;
-	Mon, 10 Mar 2025 09:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A9EB224888;
+	Mon, 10 Mar 2025 09:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ROKa6JMy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sCFYU3c1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEAC224220;
-	Mon, 10 Mar 2025 09:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B25828DD0;
+	Mon, 10 Mar 2025 09:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741597652; cv=none; b=qWNOP4xGNbaPbgoy+Es71GWqBct8S9sJKms4iJvS1dDFfiDo61ikjEAmHGW/XXQ8rf2azoBNxfQxF6whTdRcwnFrGRGUziS2OBS7r3n4FTJ+oFfpOwuzR0Ih15Wux5ZAO+1rDBMaq+xDCQSug73jpn8XUg2snoXbRWAwKUQz3C4=
+	t=1741597709; cv=none; b=rQyqVJeaPHxonWOpI8hhOUuFNp1CjGX3M+EZWgwBxocESvFTVtZzCV42SuqJmB6AoldeGLeEcSYAO0w9OQG1N2BSqvvRY3AMasW8Dc/w51aJTmxtVCo46hEbwH+l0COdxaZaydiqp0qF8Rcdy+yPrRChcCaoj3EwvrncYSljpgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741597652; c=relaxed/simple;
-	bh=qqZhkPRwUpaoAjzdi9JHwcv9INAknt/YcI8iZPeoNfo=;
+	s=arc-20240116; t=1741597709; c=relaxed/simple;
+	bh=oikO8h1nTOFZbX/6PBbnHyP3rIFuP32fPuQIBMhkF3U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e3gNTUpjKFyfJ0Kzy0X1OJZfwBljONOpgApcBulRbtqS9bEbJGLsl808MvP6usEA8uPJUQIXRNBvtpoJgowJ22IL0W2qfus73Jp25A8TWDzIcNyf2FUpSk8ocT3vq4nf/w07PRPKwgnSZ9wZ8O/H3BSL0mh9AIVbpa24tUbhRDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ROKa6JMy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A548C4CEE5;
-	Mon, 10 Mar 2025 09:07:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=mbRNroLspop9DW4wuw0PfNLKY476JGdUfk9LoanLd373JwgDjrXZUeovNt5OTQ72LkOuMXZMM0fsAIyqtOhtj/pvttxDfa6HCzGWlCX74OrT4Dbsne4POTrqD82vi2QVjLvc7JbOc9gciphZT14adKNmaOWCQcOJoowzWLUC0R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sCFYU3c1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31D7C4CEE5;
+	Mon, 10 Mar 2025 09:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741597651;
-	bh=qqZhkPRwUpaoAjzdi9JHwcv9INAknt/YcI8iZPeoNfo=;
+	s=k20201202; t=1741597708;
+	bh=oikO8h1nTOFZbX/6PBbnHyP3rIFuP32fPuQIBMhkF3U=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ROKa6JMyCGoEK1zQZ+eBDyj+9hajyMmPMUo7p+ulN5c9OciTut+lyLieibDtMKm+k
-	 +34mUJ1+bQNND/80CkFxp1gNAq/0l/C3PdHkixjHL10WU3ncQXusTkGHL8HevDyAnP
-	 FwOwrUWavuWxXpyc6bT9o3YCBYxq/uab27I3jsoljb8MbJ73Kku/9GunWxIwtvxMUS
-	 41LXhWzVdBgyEWT2ciP6fbLx1jpsiil+14U9o/NXpmUJBkgfKOFj0tt23ngXDaJxCW
-	 xuiyLHB0GUMYNjYaaMc6uW1AtXs0MDLdPvxHhnxSAW1R8M/KbYdtVslWNivVVqFAuj
-	 SkB+EFV0WQQtg==
-Message-ID: <b724d9c1-cd73-4e4e-aed1-101049204c90@kernel.org>
-Date: Mon, 10 Mar 2025 10:07:20 +0100
+	b=sCFYU3c1HKIbUi+R2euxOeb9kAL88lod4P/ZItKzaa+6sXfG/vvo/he4Y/i22y7mT
+	 G74X50wnERgGiwFjZTUiqv3yBWd0WEuDw1kPud7YFDODRLPxbUyTXz+5s8PageQBzV
+	 gbZDUXFkLtmx5y300d1Wp0TQkeyeJve46/zOgSg4a7zhbrKL4UhVFyvV+zhILde5X5
+	 s8yB+PbUrTI8et2Ls+5L6ZtZVKhPxGEh5jOWO+kQqS3Uot3R9pBCgLBko/G/AHjXlr
+	 NhUofbY3N7docCwH+mT/N3TM7tfivQBwEzJcYkO0hfH2uC2fIGH6e2LyJhmFX65Q6X
+	 3ZQtebDAGiPVQ==
+Message-ID: <24d5b56f-5078-4128-be66-436b1755d4b7@kernel.org>
+Date: Mon, 10 Mar 2025 10:08:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] coresight: tmc: Introduce new APIs to get the RWP
- offset of ETR buffer
+Subject: Re: [PATCH v1 4/4] arm64: dts: qcom: sa8775p: Add interrupts to CTCU
+ device
 To: Jie Gan <quic_jiegan@quicinc.com>,
  Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
  <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
@@ -67,7 +67,7 @@ Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
  devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-stm32@st-md-mailman.stormreply.com
 References: <20250310090407.2069489-1-quic_jiegan@quicinc.com>
- <20250310090407.2069489-2-quic_jiegan@quicinc.com>
+ <20250310090407.2069489-5-quic_jiegan@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,33 +113,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250310090407.2069489-2-quic_jiegan@quicinc.com>
+In-Reply-To: <20250310090407.2069489-5-quic_jiegan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 10/03/2025 10:04, Jie Gan wrote:
-> +static long tmc_sg_get_rwp_offset(struct tmc_drvdata *drvdata)
-> +{
-> +	struct etr_buf *etr_buf = drvdata->sysfs_buf;
-> +	struct etr_sg_table *etr_table = etr_buf->private;
-> +	struct tmc_sg_table *table = etr_table->sg_table;
-> +	long w_offset;
-> +	u64 rwp;
-> +
-> +	rwp = tmc_read_rwp(drvdata);
-> +	w_offset = tmc_sg_get_data_page_offset(table, rwp);
-> +
-> +	return w_offset;
-> +}
-> +
-> +/*
-> + * Retrieve the offset to the write pointer of the ETR buffer based on whether
-> + * the memory mode is SG, flat or reserved.
-> + */
-> +long tmc_get_rwp_offset(struct tmc_drvdata *drvdata)
-
-You need kerneldoc for exports.
-
+> Add interrupts to enable byte-cntr function for TMC ETR devices.
+> 
+> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+> ---
+> Dependency:
+> prerequisite-message-id: 20250303032931.2500935-11-quic_jiegan@quicinc.com
+Which too generated such changelog? Why this cannot be lore link?
 
 Best regards,
 Krzysztof
