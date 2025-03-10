@@ -1,118 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-50839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26E00A5940F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 13:18:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83B7EA5940C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 13:18:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 209FD3A8092
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 12:18:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 37459188296B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 12:18:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5940222686B;
-	Mon, 10 Mar 2025 12:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78C6921D3E0;
+	Mon, 10 Mar 2025 12:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="ChXJnTat"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F1ci7D/E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2713846C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FAD14F11E;
 	Mon, 10 Mar 2025 12:18:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741609107; cv=none; b=i7rrE/aC893Mv2hEkI1RBwGNXslNiYoPSSRBLmsTSwVOWZg1HB5uQgbSgbn3dkrBQ9+zh5CKyI4+Sw6EIfbQYVfFPy52VEegU4VAprzSjXRqS+kPYvtcfxYOvp5y06K/3JsLiDbS/Md16yuLrXSZoo/JlRp5UBZJinX7fYNs+1M=
+	t=1741609105; cv=none; b=LtTj7qdy2DHNDVXvEGrZyXREhCWqy3/qSQKLZSq6l5+FU0JKYtiphJTMV5CGk/kP2Rk5tavL+qkHWqdFBRYh4waNZCylX75pbuYOtNKic73qFGLw9sBm3eO+p3YMjs+J1fc9epBvxTqNdA27VEZ3TC7kKy0SYDq3BiXsElntsWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741609107; c=relaxed/simple;
-	bh=7r2vPsDnpJH9TKpn2vKV8tqiwgp4F2qwtIfTAscYPSM=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=U5MnIJqNHeeK79FAq3obcWJT6v6Ati2B7ZcOD5bxxYH0EgQQb0N8Pm8uyFRGT/9tBTbXFZS6QI6AQ/Gt9Lv1cVXpG7+8xj1/coGN3rnMLXXv0Whmp+Fr/4qdFc2uW1nXvov3aMKcvb2QcA8BQyIf9BzsiXpNbjBRigVgxobfSnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=ChXJnTat; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1741609077; x=1742213877; i=markus.elfring@web.de;
-	bh=2tw3alwm60ny/fP6jFcsFJLqPkGHkgwJRPku5I/wZ4A=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=ChXJnTat4TVo2ThVOTmQaalnnS23CPXY0QcqtXHYCOe1wTxbD+4rZPEigkubEKEu
-	 t1PQ6lo24RKwEXGtgr0F2fLhH8M3TFwNptGuz1J6Uekv3FDlvJhwfyBddXCdetF7n
-	 KMNFkV3V5S8EY+7Rj9S96jbA1CBfVCcMQTNNP80y8XjN01+uiFV/9F15jYFUyOPmU
-	 Ryg55oczzSIZzvfD5NfSatc7DCzphnZ+0w7Ba4f7S4OnomYZphhR9VBYodw0z3VPA
-	 YtXvWrcJSu6T/zRj6RwDDkjQm53MO3zuf6q+ucNsd9m6KUyJxWDwszLkbeJIrHy2o
-	 J1F3KWNSmXhWyIXt4A==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([94.31.70.82]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MjgXH-1tOdFG3JhD-00okj6; Mon, 10
- Mar 2025 13:17:57 +0100
-Message-ID: <6f01f71b-284b-4841-bda9-a3934cb4efc8@web.de>
-Date: Mon, 10 Mar 2025 13:17:56 +0100
+	s=arc-20240116; t=1741609105; c=relaxed/simple;
+	bh=Ox13EHmxTz8ZZEEIfXWSE4kfoJqgIPeuM07MzxjfvFk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OPH7slp6spI0qJzmCqwSfladKM52JCuyFxrO6DDJibm/cJyTqToGTmG7WCC95h3wV+zZO83XKhKIVusZ5oRO0gpK6IsIRh1QQ2b6FRP/OH9RH3sXfbOoRMfZGG/4/50UsqvrTJ96belRWRJVohQ25t5F6uTXge5HLRtcM5Im2y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F1ci7D/E; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C7DC4CEEA;
+	Mon, 10 Mar 2025 12:18:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741609104;
+	bh=Ox13EHmxTz8ZZEEIfXWSE4kfoJqgIPeuM07MzxjfvFk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=F1ci7D/EJF+Tt6RhFp95mg6/iBzSc8913rXGx4pQY6vtAapJda3V/3yQZgqLO4XDS
+	 5rK+LL0WHavOfDR24m5uPpzn3aXK5NsqmOFZ4pmPU0SFyifVwZL4LnEmbWQxUo2sFY
+	 7OkwLXKKvyQnfrJGqGNTwwrQImSzTk0UzCw/grf08Tr5iAow5cBxRzOoaFYAo09DF8
+	 UQa1lR4eV6PT7duqQL1S3/vtgtcwy2jw5OfNWtokLBliNXoeklsTJaGDBZWlQYHlCs
+	 kJ5/AEiMAKlnSNZsmExDDq0qyZ+bCbz9hWHiNQjZ5M3m9xs2R3DAMWMsdF+VcAgney
+	 P4rczv2ZVjSrg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1trc5L-000000002Ns-1Keq;
+	Mon, 10 Mar 2025 13:18:20 +0100
+Date: Mon, 10 Mar 2025 13:18:19 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-crd: add support for
+ volume-up key
+Message-ID: <Z87Yi6IQEIhqu27O@hovoldconsulting.com>
+References: <20250307171036.7276-1-johan+linaro@kernel.org>
+ <2aac1aff-694f-41f6-8849-f1dfe802a1f4@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Qasim Ijaz <qasdev00@gmail.com>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Simona Vetter <simona@ffwll.ch>
-References: <20250309095525.7738-1-qasdev00@gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dpu: reorder pointer operations after sanity
- checks to avoid NULL deref
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20250309095525.7738-1-qasdev00@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lX4SIjOmammwLZH318S5lMgZQ2ZBxYPFrDIDt1pXOyV/U0uVq7E
- Z7zc04UG9WpoVUqiIP0mIXCzL/uLaCh8CoO9UGUUqkycLxpyqJ4qrBHI6dx1tFMs85B7KrP
- ttX8Mf3ItqtAVsxRB2C8ZV1eTemquESG2A5IGjkVe8UhJ5i06XkzMMvMpnbWPvZpTytTUfB
- y+lOk9lMq/HAJjlXtxjSg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:3LAlbRlWX8c=;aoZA2x/JnIUoXzfHy169i3CcSh4
- juaLuFj1kn4e/q6Pp+rwTzXzlsFblSZX2PRALGX2V8kmHKUMMu1kMszDvxF+/sK5JdKN0Hk7B
- Ov+ze3gM4c/08LaxNSSbZHdOAUrAER9lmqSyqN5cHHRUJGhVcoLcgTjHBX/fbSyWhDjimMCUc
- 4U2G8Dn7lujcMvRpwwr6GgI+k79Wclr/6swVcDb29n6eEeDYD7X/1ouVs4SOUe9Q/TvM9PdC+
- W0Ekg1rNXwH0ED+X3KKz2z3iJqbS0Yrpv/yXP6FNFPuNHTEYctSgaY7n/vosIYwEC/jZNfbYW
- c6EvzlUjYWyUmQDRIeNFzrmgSIyvzSnIsuKSxsMXfgoZ6EYdYpAxohJZBXkhs8lC+ql9nYiTn
- 0ZhT2jt2eUj1ZqxJAiwAF+TpIyZ7R5kYaj1mdVGkguc0sqVgjbnqsWV/tbgBFO1T8aZHnDlZc
- HgKr+tWrBKp2mt9F2nb2hHk0O5CsKwBXj4w0hthVA+Rx3lvZXdE5lCliQb87NfNqgNZxN8/o9
- d/VbxKsdZOUFQXniZM/24vajblAYg71TtP8kh/WDHh302rdVF0hi+DmVXotpFBcznolvVjHvA
- XOrbpmbULwbDLnh+PvNhQf2leBUgvG2aVeif/nHMMLBxh78pj/72SSTG6VCpivxV+cfZ1o1m8
- 0S/qeO52eI1nHga2FAlDQvtPqp2HAMreOZvxxfxBw/iYBVgZIlA39GjJRYB6DCTtAS9D5MbTm
- T/7AgNkRHkO0jJ2fJ/p880LF0NS6RyUPGYIWEpec3QkBuB1bwPmD0QnaxWi6OBxRJ4Q01PBYL
- 3ctoCjJhjvqrq8HhXGw9pt0W8q9x1xR+vaQ5WBYKJKqr8pc/1FgxxoMzcG9D+gV/HJ9QJ7IJL
- NLoYlcIU1YqsYu54Ne0eQcZAF/2JIdPAJa+XG2KLNZjErnwGeIIt2rM2JxeYdg3N3naI5/bC4
- r+Hgu518Gm1Z9A1tx5eNEukaDQWzTFJaidvE6MWDim7CPewLscvrXtRYe+h1euQfUGmM3U634
- iGdBWO2VxQMT0EdbKrg7XbjF2Bk8v8CBf2YYlsETkOHPXHrUWgb0XHdJK2himgkJV+gGUoAOF
- CkMCCDFPKaTVxEHf51laNOhAw9FtcZf4Vg8R3Ex9jYqjlFY1GTw11ZJ7kAiU2sQ+wYv7KW0GQ
- 3Q1bMq9Y21dFQT8JHTllbZiqWxVavYtvPKSHBSZDmVLXjr8mONg7/jKzqIEBDl+WNueJ5Wzmf
- Nc57GujbE6AtnAw2fS19QT3OZTZXFZadsnhYj9xGuBRKou97sMZ3TMSbwJN/99zSYYsntdbEw
- U6VXdYEECvF5/6QcmSKzJFmQHp49Wulrb8GEn1aoR1202E+ETXmUtM2NKvp2d/plnq1ZtYN/9
- 0FzQD7hvu6hNqkJR9sQrX5js1UKZRHTQxM+0zsspTttV69Rc/SDz6x/IEqR9QQxl3pVhMzz0L
- PaWLaVrjZJEeNRlZ8q/856xiIaxM=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2aac1aff-694f-41f6-8849-f1dfe802a1f4@oss.qualcomm.com>
 
-=E2=80=A6
-> Fix this by reordering the dereference after the sanity checks.
+On Sat, Mar 08, 2025 at 05:26:26PM +0100, Konrad Dybcio wrote:
+> On 7.03.2025 6:10 PM, Johan Hovold wrote:
+> > Add support for the keypad volume-up key on the debug extension board.
+> > 
+> > This is useful to have when testing PMIC interrupt handling, and the key
+> > can also be used to wake up from deep suspend states (CX shutdown).
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> I'm lukewarm about this since there is no "actual" button for that.
 
-Can another wording approach (like the following) be more appropriate?
+There is certainly a physical button on the debug board. And the UEFI
+firmware also supports it (e.g. it can be used in GRUB).
 
-  Thus move the assignment of the variable =E2=80=9Cdpu_enc=E2=80=9D behin=
-d =E2=80=A6
+> Does the power button not work here?
 
+For wake up, yes, but not for testing PMIC GPIO interrupts.
 
-Would an other summary phrase become nicer?
+> If systemd induces a shutdown, try setting
+> 
+> HandlePowerKey=ignore
+> 
+> in /etc/systemd/logind.conf
 
-Regards,
-Markus
+I'm aware of that, but the volume key can be used without updating user
+space (possibly also for CI testing if that signal can be controlled
+remotely like the power button).
+
+Johan
 
