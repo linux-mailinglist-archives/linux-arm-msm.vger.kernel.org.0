@@ -1,139 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-50842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25148A5965D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 14:31:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2678A59677
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 14:38:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 619C7164C15
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 13:31:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 582F03A6E84
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 13:38:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC1072206B2;
-	Mon, 10 Mar 2025 13:30:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N6gaNjDS"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EB332288F7;
+	Mon, 10 Mar 2025 13:38:28 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C22879C0;
-	Mon, 10 Mar 2025 13:30:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C5BA227BB9;
+	Mon, 10 Mar 2025 13:38:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741613456; cv=none; b=J95Q8QEhe/6CobVdGA9Od4YO3DmjDZCXk4rWnyO3e+a9VZNVnRrqQk0H493bdatwY76eb87uk6QFOlG2ynCAMswVTdbJVjzWZgdR3lTv1xAJ0aJc3jbe3WgcP3hNF56kEwDKBnYDuuSF87kDLC4hV7GJhnPJTVGQFrBSrP92nok=
+	t=1741613908; cv=none; b=bLcCKiclVMNqNGpcWXeeJlp/M/3hGoVw4GaUxBoWDL31aG0lNlCEHnCLwwo/8MUjyJBKAXbSdIILX0CQ3albsTz0Kcm+DkPKAdH9GHB/MIvta/yASOopCgfcNgIRQIvYxC5gawBg7loNRAHzuq981/mc6280HoC8BnyFBt4ROzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741613456; c=relaxed/simple;
-	bh=7DK+rBnIB6+gK5GprT7obsuYQKNEBuzPpYg+bZU61VM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NVFbtPCeseo39M2plLenNuJp51gEReGqhByzob4KVwYhX1fpXMia2Az9jTIwK/j2XzEIJcnnykD77Fsg2kKknb/Jrstvd9ZsYzIPmO8I0BiIjuRc7HrM+/wQRx2a9Xfq7Li1rF580a/GKCeIFiB5gyMEeyfK+5cRjKPnmVOHR/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N6gaNjDS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1705BC4CEFB;
-	Mon, 10 Mar 2025 13:30:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741613455;
-	bh=7DK+rBnIB6+gK5GprT7obsuYQKNEBuzPpYg+bZU61VM=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=N6gaNjDSopjXklq/smuCritonxIFRZcviors5Z6GWB5x2DpMe9pO4/a1jaWMwCMRO
-	 XKM0+fEzSCVucV5ScvQoQ4r3iOQZWQMoaLcQwNYuCYgYOPHTldegww1SII5Cau6QnD
-	 Ju03QmZ8EZu0/Et5J9/gLX9NlW2ViKuUxQAbeyiJOzIgHK/EPz0Rs0AsEuTpPIuBkf
-	 s7vhEeKFI5S7yvD9DwzksfDuNkTyjBrUjAYlCAPqeey+zdk2sx/hHA0zHc9pJZtbEU
-	 VDn34iKB3dun0ff6ieYvPwjaWIEv4a1r+crojlHQkLeNctJcxqWBGH9useMMIp3X/m
-	 2Nxnwt4X2GZBw==
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5e5dce099f4so5392814a12.1;
-        Mon, 10 Mar 2025 06:30:55 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVFS33wGMEfApjduNqsL36k3VblAj77AQG5Lqi2opsgeugaHEDEV6X5nErsz2XuPw/kHy7OFtemhR8pamikqg==@vger.kernel.org, AJvYcCVIY7lFMreqRSWLgJMkv6fIGRmD2tRmuBjSrtDmNsRoJYYlk5TTVLOBKiLieuH/zSKI0effgcuEgrht@vger.kernel.org, AJvYcCWIVQV9Z3MeFNp9KjD2eWT+RFVzQlEYsEwlRZIAJyolt/HjJthZu9zW/9Er/SHxfanVcwKccwm9T66w5uAD@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdCgEdcr/HTm5YwNccdMHN4bGecHRsqXTOG/lxZFSBYu44GWzX
-	1k9eqMz6du0pMcJ7GL+joPZrwiKLLaYrBm8JhUafamxb4XUF4a3jZFcfinliMbF+Fnm/UrL79yf
-	QtE2fCJ/IejpeeuDGzqNy0ywbow==
-X-Google-Smtp-Source: AGHT+IHQqQev9Mt/kBzD3p7JhI6eC5lr1d6ht0exKs8fcQ7bw7GOc5LSSjJJgeGQCo3IH1yYOPaQ4qbZnGMKJ40RyrI=
-X-Received: by 2002:a05:6402:4409:b0:5e7:110a:c55 with SMTP id
- 4fb4d7f45d1cf-5e7110a0c6dmr3695220a12.18.1741613453358; Mon, 10 Mar 2025
- 06:30:53 -0700 (PDT)
+	s=arc-20240116; t=1741613908; c=relaxed/simple;
+	bh=0Ax/+iGwbiSSSQQ+9gL+4cfvAsARamCLqmPyEjZFHOo=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sR2rHTxZ7UJSx3aMhlFDiTUoixyRjVlzGXSl/aq/ag4uetITj1XvPa8AlLb4MQhEu0rNJvAP5Z72iZ70w1MsPaT4S66h/3BuIROz9ta5XqjrUlNapoAE4VVuyYfkhamCLq/iXCb0llJr0fEGhiDhVjyBkMSyoyVbaO62lcFst1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D6784153B;
+	Mon, 10 Mar 2025 06:38:36 -0700 (PDT)
+Received: from donnerap.manchester.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1E9E63F673;
+	Mon, 10 Mar 2025 06:38:22 -0700 (PDT)
+Date: Mon, 10 Mar 2025 13:38:19 +0000
+From: Andre Przywara <andre.przywara@arm.com>
+To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, AngeloGioacchino Del Regno
+ <angelogioacchino.delregno@collabora.com>, Chen-Yu Tsai <wens@csie.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Jernej Skrabec
+ <jernej.skrabec@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>, Kevin
+ Hilman <khilman@baylibre.com>, linux-amlogic@lists.infradead.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org,
+ linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Matthias Brugger
+ <matthias.bgg@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Neil
+ Armstrong <neil.armstrong@linaro.org>, netdev@vger.kernel.org, Paolo Abeni
+ <pabeni@redhat.com>, Samuel Holland <samuel@sholland.org>, Vinod Koul
+ <vkoul@kernel.org>
+Subject: Re: [PATCH net-next 8/9] net: stmmac: sun8i: remove
+ of_get_phy_mode()
+Message-ID: <20250310133819.7c2204a6@donnerap.manchester.arm.com>
+In-Reply-To: <E1trbyA-005qYf-Hb@rmk-PC.armlinux.org.uk>
+References: <Z87WVk0NzMUyaxDj@shell.armlinux.org.uk>
+	<E1trbyA-005qYf-Hb@rmk-PC.armlinux.org.uk>
+Organization: ARM
+X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.32; aarch64-unknown-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250308-sar2130p-display-v1-0-1d4c30f43822@linaro.org>
- <20250308-sar2130p-display-v1-5-1d4c30f43822@linaro.org> <174140525677.1770282.3232695979994091275.robh@kernel.org>
- <nddxntwmiyurqew75gc6yoj2dcinhjqu36cdujhruqyrz62ry5@4e2y76ghmo4h>
-In-Reply-To: <nddxntwmiyurqew75gc6yoj2dcinhjqu36cdujhruqyrz62ry5@4e2y76ghmo4h>
-From: Rob Herring <robh@kernel.org>
-Date: Mon, 10 Mar 2025 08:30:41 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJ6iYm-8BF+4QwimAX69jmivpCNqKbD_AtWkKDtAn_Wgw@mail.gmail.com>
-X-Gm-Features: AQ5f1JqRkP_MsxtbTrRXJIVMatqOMN_D3NTt1ZS-seDKkCW2KxLIXoxniVXXOnU
-Message-ID: <CAL_JsqJ6iYm-8BF+4QwimAX69jmivpCNqKbD_AtWkKDtAn_Wgw@mail.gmail.com>
-Subject: Re: [PATCH 05/10] dt-bindings: display/msm: Add Qualcomm SAR2130P
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Conor Dooley <conor+dt@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, 
-	David Airlie <airlied@gmail.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, devicetree@vger.kernel.org, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Rob Clark <robdclark@gmail.com>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Simona Vetter <simona@ffwll.ch>, freedreno@lists.freedesktop.org, 
-	Bjorn Andersson <andersson@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, Jonathan Marek <jonathan@marek.ca>, Maxime Ripard <mripard@kernel.org>, 
-	iommu@lists.linux.dev, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
-	linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Fri, Mar 7, 2025 at 11:09=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Fri, Mar 07, 2025 at 09:40:56PM -0600, Rob Herring (Arm) wrote:
-> >
-> > On Sat, 08 Mar 2025 03:42:23 +0200, Dmitry Baryshkov wrote:
-> > > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >
-> > > Describe the Mobile Display SubSystem (MDSS) device present on the
-> > > Qualcomm SAR2130P platform. It looks pretty close to SM8550 on the
-> > > system level. SAR2130P features two DSI hosts and single DisplayPort
-> > > controller.
-> > >
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  .../bindings/display/msm/qcom,sar2130p-mdss.yaml   | 445 +++++++++++=
-++++++++++
-> > >  1 file changed, 445 insertions(+)
-> > >
-> >
-> > My bot found errors running 'make dt_binding_check' on your patch:
-> >
-> > yamllint warnings/errors:
-> >
-> > dtschema/dtc warnings/errors:
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings=
-/display/msm/qcom,sar2130p-mdss.example.dtb: dsi@ae94000: compatible: 'oneO=
-f' conditional failed, one must be fixed:
-> >       ['qcom,sar2130p-dsi-ctrl', 'qcom,mdss-dsi-ctrl'] is too long
-> >       'qcom,sar2130p-dsi-ctrl' is not one of ['qcom,apq8064-dsi-ctrl', =
-'qcom,msm8226-dsi-ctrl', 'qcom,msm8916-dsi-ctrl', 'qcom,msm8953-dsi-ctrl', =
-'qcom,msm8974-dsi-ctrl', 'qcom,msm8976-dsi-ctrl', 'qcom,msm8996-dsi-ctrl', =
-'qcom,msm8998-dsi-ctrl', 'qcom,qcm2290-dsi-ctrl', 'qcom,sc7180-dsi-ctrl', '=
-qcom,sc7280-dsi-ctrl', 'qcom,sdm660-dsi-ctrl', 'qcom,sdm670-dsi-ctrl', 'qco=
-m,sdm845-dsi-ctrl', 'qcom,sm6115-dsi-ctrl', 'qcom,sm6125-dsi-ctrl', 'qcom,s=
-m6150-dsi-ctrl', 'qcom,sm6350-dsi-ctrl', 'qcom,sm6375-dsi-ctrl', 'qcom,sm71=
-50-dsi-ctrl', 'qcom,sm8150-dsi-ctrl', 'qcom,sm8250-dsi-ctrl', 'qcom,sm8350-=
-dsi-ctrl', 'qcom,sm8450-dsi-ctrl', 'qcom,sm8550-dsi-ctrl', 'qcom,sm8650-dsi=
--ctrl']
-> >       'qcom,sar2130p-dsi-ctrl' is not one of ['qcom,dsi-ctrl-6g-qcm2290=
-', 'qcom,mdss-dsi-ctrl']
-> >       from schema $id: http://devicetree.org/schemas/display/msm/dsi-co=
-ntroller-main.yaml#
->
-> It looks like the patch 2 could not be applied and was skipped. Is the
-> bot parsing the dependencies from the cover letter?
+On Mon, 10 Mar 2025 12:10:54 +0000
+"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk> wrote:
 
-No, it's not that smart. I need to move it to using b4 though that has
-its own quirks when no dependencies are given.
+Hi,
 
-Rob
+> devm_stmmac_probe_config_dt() already gets the PHY mode from firmware,
+> which is stored in plat_dat->phy_interface. Therefore, we don't need to
+> get it in platform code.
+> 
+> sun8i was using of_get_phy_mode() to set plat_dat->mac_interface, which
+> defaults to plat_dat->phy_interface when the mac-mode DT property is
+> not present. As nothing in arch/*/boot/dts sets the mac-mode property,
+> it is highly likely that these two will be identical, and thus there
+> is no need for this glue driver to set plat_dat->mac_interface.
+
+Well, the current sun8i code wouldn't help anyway, because the driver
+would set mac_interface to the value of "phy-mode", not "mac-mode", which
+is strictly speaking a bug.
+But in any case this is indeed redundant, so:
+
+> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+
+Cheers,
+Andre
+
+> ---
+>  drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c | 8 +-------
+>  1 file changed, 1 insertion(+), 7 deletions(-)
+> 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+> index 4b7b2582a120..85723a78793a 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+> @@ -1155,11 +1155,10 @@ static int sun8i_dwmac_probe(struct platform_device *pdev)
+>  	struct stmmac_resources stmmac_res;
+>  	struct sunxi_priv_data *gmac;
+>  	struct device *dev = &pdev->dev;
+> -	phy_interface_t interface;
+> -	int ret;
+>  	struct stmmac_priv *priv;
+>  	struct net_device *ndev;
+>  	struct regmap *regmap;
+> +	int ret;
+>  
+>  	ret = stmmac_get_platform_resources(pdev, &stmmac_res);
+>  	if (ret)
+> @@ -1219,10 +1218,6 @@ static int sun8i_dwmac_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
+>  
+> -	ret = of_get_phy_mode(dev->of_node, &interface);
+> -	if (ret)
+> -		return -EINVAL;
+> -
+>  	plat_dat = devm_stmmac_probe_config_dt(pdev, stmmac_res.mac);
+>  	if (IS_ERR(plat_dat))
+>  		return PTR_ERR(plat_dat);
+> @@ -1230,7 +1225,6 @@ static int sun8i_dwmac_probe(struct platform_device *pdev)
+>  	/* platform data specifying hardware features and callbacks.
+>  	 * hardware features were copied from Allwinner drivers.
+>  	 */
+> -	plat_dat->mac_interface = interface;
+>  	plat_dat->rx_coe = STMMAC_RX_COE_TYPE2;
+>  	plat_dat->tx_coe = 1;
+>  	plat_dat->flags |= STMMAC_FLAG_HAS_SUN8I;
+
 
