@@ -1,91 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-50877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77D15A5A4E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 21:25:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C46CA5A50A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 21:36:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 306CF3A6E34
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 20:25:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A64C03ACE95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 20:35:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8A451DE3A8;
-	Mon, 10 Mar 2025 20:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3412A1DE8AB;
+	Mon, 10 Mar 2025 20:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xH+OswmP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cVqzcS0W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16823EC5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 20:25:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACC61DA0E1;
+	Mon, 10 Mar 2025 20:36:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741638339; cv=none; b=RCdYiEtumhy/lj58oxvhZZxpRWReUijGD4P9tqHltmzOolAZKvYjau/3RK7yY7JtBDZx3w0NvDcAEa4psEsqBfvdxMqolQtZvCDH603eBASntb0KI6gf4cAtv9TwtuLchPHZkqU8Pp44aC/GC6FoZmpDNlMUNlVVwUhfbVBThoU=
+	t=1741638965; cv=none; b=IzS4sA3pT9iuFGpMykjDe2Ygz60La3/JtwG9s6RotMQ7k2QJ8/9hz9GuSmUIvL4Off063gnREulpbtm2x/5v6qIyKiOZubzYxvc7Cfxa7UYxrX0kNbpzYQ/FqW540Q8nCfc1tMd8CF83wWG1tDuprtxendK9Bq9QEVCeCCVvjVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741638339; c=relaxed/simple;
-	bh=L9+uLSJLlnFoF8qnj42PdQx3Q5RYzcJ6a/f47QtrPHs=;
+	s=arc-20240116; t=1741638965; c=relaxed/simple;
+	bh=n/6h0Z82jvZ83HRGml+cdiqJusnQKh12WlsST6HByD4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rVBnvx0xdWXK4Cl8q3ihzE2f8Qa01ZDc4kxvmSCkK1pYuUVzAYIxrm6L/qmgDu4gHqB23FRf5v6tOd3lDXmSFSKOxe+rQPvz2Ra3ZYaUOoGej4jljQ6JF9i6bX14DQMlkPrv6lb4QindvobpPIjAFiAi0iLxq+920ZJOxVBJkb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xH+OswmP; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-30bf5d7d107so35566021fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 13:25:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741638335; x=1742243135; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dYNmRZYB/IDO1RurR4i6iqDD/1mktBUeW4kgdxDpZIw=;
-        b=xH+OswmP/CcgSiKX7NC5EIZKpFzqTMBvQKOua8bj2RCt/4KmiTK1Kj9rW64FBMSob6
-         RS382yhw5sZlzayoKWCCuOXdNJa4Gz8HJWPX1U3Pu6xDDmOAR8pp5nYOpZb2/YbZAnVs
-         crPuzbjdQRFMQ0eYUBe6G9YrnF18gMUtEOg1ex7ZoEGb8FK9lNWCiz4/dLijIU4UZr4/
-         xwQO7Yj/ldfq3hxzF5TiSuhtAePwdWzvWo1WnBK6RB81VbCohnmN7E7ntYZ/QZrt5nfH
-         hi7v4JHreheuI/szkNYb3NlbDXa1p0pXqM1GkzEmliccRQCsl05n5PyPQDXlgIkGzHjc
-         doYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741638335; x=1742243135;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dYNmRZYB/IDO1RurR4i6iqDD/1mktBUeW4kgdxDpZIw=;
-        b=w9vW4mhuc8XHxY3Rar5AFDT3DM78ZG78JJpwCCqfBRtwMEcV9CWgDcD5nmRmYY9R/q
-         7Vk0XfVQr8wlgThOAHpFVeneSTQXFPQzTkL0bQjhBU6Sk4Il/GuUgHOJEuvd8Elt/6eA
-         66NYtfDvOwBpBJZWeL2WRvjmXvPAvg9bODBRm0ywh/KGFK1ulp4wd0dq7WqjshowMNyf
-         B0DZwIeWbgZgqpagDvaTEPSuNInnlqIssW8HVzDCVjAakLnD1J05DS6VomLO0JNiEupV
-         gwnpur4NlBhdVFQ81JEt7U2HSJTvaObzo6ZoZjjb0VyzhpdLHd/i/sT5+gIKtwmV8pkO
-         DeYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVkgemi1F6xvVha7+MdsZes56woiH6NA5g4MdfeRtuvpoqgS3nQEfi2X4Q/QzV35Ldj7dX7C3fW0WJilq7L@vger.kernel.org
-X-Gm-Message-State: AOJu0YwTCb2Bax93YcQlM4+lJbt5AcdjPyrr2F0nG76oYazuAXOWJHpf
-	4oSp54/ZsN+4z3caifs177PU0zZNnJa6IeoL376+XAEMRMCt1wmvepcdxPKRv3M=
-X-Gm-Gg: ASbGnctHnMLil6dZVoulpobqpa0WHTPcN7asIg01hP+f44ADh2FAkTA9KTHoMSadZRo
-	F0U/U29pcpkJRN1vlesEvZOeAXTfGyPue8f0XYpl2iAG8RbuM7ti+xkYai+RNn1aQyAh3C+TXoL
-	TRA9edKWmg/GUT3hghWuw7MldlwxSvr6OB2n/O0o0ktdSAESM6FwR1aHK8SzC2Hoidm22UT+TsA
-	Vt/w+Bh4DFn1HQtmu3jQVpO32+YTsTMSe0cGfBhVFdfDxSb1Xxm7W9AD6EaY8NqL4Jon/PaRHe+
-	99VhsNAuYoFm//Au7dUHL23A64Ie60B8F/veQ3A+YnISdKNeWqKhedMRHHDvdA+Ck6YjoSOqI2g
-	ue8ADugxhaTCMpx9X8MNluUKL
-X-Google-Smtp-Source: AGHT+IEPVrqhzKdG85UY4VL7q1PeHiNjtgCxYCgNnkHHR37Br6Hv/tkjnMqe/JrlEqz3SvLMcEnR1A==
-X-Received: by 2002:a05:6512:b84:b0:545:f1d:6f2c with SMTP id 2adb3069b0e04-54990e5d4c2mr4659162e87.18.1741638335156;
-        Mon, 10 Mar 2025 13:25:35 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5498b0bcf77sm1556084e87.107.2025.03.10.13.25.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 13:25:33 -0700 (PDT)
-Date: Mon, 10 Mar 2025 22:25:31 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
-	manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
-	neil.armstrong@linaro.org, abel.vesa@linaro.org, quic_qianyu@quicinc.com, 
-	quic_krichai@quicinc.com, johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v4 6/8] arm64: dts: qcom: qcs8300: enable pcie0 interface
-Message-ID: <mxqrssteqfzp2llhp7exj7yoduv3h26qrxnsb7tobxkk7lxyeh@ywers6elgmwy>
-References: <20250310063103.3924525-1-quic_ziyuzhan@quicinc.com>
- <20250310063103.3924525-7-quic_ziyuzhan@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=fZHzicUZo7AaXqc9+nF6kd2HtNwNtrT08hu4GdEVyXFl4yWecyb8q9dJIURwbioxD4cKX5gtvZDIXhSyMHvwdShvax4ObxZvtwfaLmYVz3giQikfg0zT0KiFU0iePlS4k4/A9WcSk1fPuGVx60VXrb7uB3vM8H9pqMHe6Dy3qgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cVqzcS0W; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AF6C4CEE5;
+	Mon, 10 Mar 2025 20:36:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741638964;
+	bh=n/6h0Z82jvZ83HRGml+cdiqJusnQKh12WlsST6HByD4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cVqzcS0WzE689ZzKxkIMjMvAzkH1RcrRhNDakHt5i30SnK2JErbbLGES+UAptU7i7
+	 /ZdNYwSQxST8A82WoQDcPWIfGO6QvGyAso6ss1XnCWioKcvJK8omSQTiFUIUM7IB+J
+	 hwIUIVkf7MVKiM04QDUUVhXtewQaQBTtJvTt2LLQuNEmJ6b4ZyACe3DNX9XM4lqxye
+	 u5umQq5F8FO+uOHXHXSPy8qZwCz3CqJPBp6iZYoMkpaEJUaUnnTGMrvGWYYBXu8hog
+	 Ne6ix9Ej3rCJaTdVuCfPIxYZtHsfXrJ73a1UXg7l3D6oC/fdPYb/A5o0baKzqlAJaa
+	 sFZ5klgwfJOKg==
+Date: Tue, 11 Mar 2025 02:06:00 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: corbet@lwn.net, thara.gopinath@gmail.com, herbert@gondor.apana.org.au,
+	davem@davemloft.net, martin.petersen@oracle.com,
+	enghua.yu@intel.com, u.kleine-koenig@baylibre.com,
+	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, quic_utiwari@quicinc.com,
+	quic_srichara@quicinc.com, quic_varada@quicinc.com
+Subject: Re: [PATCH v6 02/12] dmaengine: add DMA_PREP_LOCK and
+ DMA_PREP_UNLOCK flag
+Message-ID: <Z89NMPF9TGmz9Js/@vaman>
+References: <20250115103004.3350561-1-quic_mdalam@quicinc.com>
+ <20250115103004.3350561-3-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,22 +64,115 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250310063103.3924525-7-quic_ziyuzhan@quicinc.com>
+In-Reply-To: <20250115103004.3350561-3-quic_mdalam@quicinc.com>
 
-On Mon, Mar 10, 2025 at 02:31:01PM +0800, Ziyue Zhang wrote:
-> Add configurations in devicetree for PCIe0, board related gpios,
-> PMIC regulators, etc.
+On 15-01-25, 15:59, Md Sadre Alam wrote:
+> Add lock and unlock flag support on command descriptor.
+> Once lock set in requester pipe, then the bam controller
+> will lock all others pipe and process the request only
+> from requester pipe. Unlocking only can be performed from
+> the same pipe.
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 40 +++++++++++++++++++++++
->  1 file changed, 40 insertions(+)
+> If DMA_PREP_LOCK flag passed in command descriptor then requester
+> of this transaction wanted to lock the BAM controller for this
+> transaction so BAM driver should set LOCK bit for the HW descriptor.
+> 
+> If DMA_PREP_UNLOCK flag passed in command descriptor then requester
+> of this transaction wanted to unlock the BAM controller.so BAM driver
+> should set UNLOCK bit for the HW descriptor.
+> 
+> BAM IP version 1.4.0 and above only supports this LOCK/UNLOCK
+> feature.
 
-NIT: patch subject mentions qcs8300 (SoC), while the patch enables PCIe
-on qcs8300-ride (board).
+Have you aligned internally b/w team at Qualcomm to have this as single
+approach for LOCK implementation. I would like to see ack from
+Mukesh/Bjorn before proceeding ahead with this
+
+> 
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
+> 
+> Change in [v6]
+> 
+> * Change "BAM" to "DAM"
+> 
+> Change in [v5]
+> 
+> * Added DMA_PREP_LOCK and DMA_PREP_UNLOCK flag support
+> 
+> Change in [v4]
+> 
+> * This patch was not included in v4
+> 
+> Change in [v3]
+> 
+> * This patch was not included in v3
+> 
+> Change in [v2]
+> 
+> * This patch was not included in v2
+>  
+> Change in [v1]
+> 
+> * This patch was not included in v1
+> 
+>  Documentation/driver-api/dmaengine/provider.rst | 15 +++++++++++++++
+>  include/linux/dmaengine.h                       |  6 ++++++
+>  2 files changed, 21 insertions(+)
+> 
+> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
+> index 3085f8b460fa..a032e55d0a4f 100644
+> --- a/Documentation/driver-api/dmaengine/provider.rst
+> +++ b/Documentation/driver-api/dmaengine/provider.rst
+> @@ -628,6 +628,21 @@ DMA_CTRL_REUSE
+>    - This flag is only supported if the channel reports the DMA_LOAD_EOT
+>      capability.
+>  
+> +- DMA_PREP_LOCK
+> +
+> +  - If set, the DMA will lock all other pipes not related to the current
+> +    pipe group, and keep handling the current pipe only.
+> +
+> +  - All pipes not within this group will be locked by this pipe upon lock
+> +    event.
+> +
+> +  - only pipes which are in the same group and relate to the same Environment
+> +    Execution(EE) will not be locked by a certain pipe.
+> +
+> +- DMA_PREP_UNLOCK
+> +
+> +  - If set, DMA will release all locked pipes
+> +
+>  General Design Notes
+>  ====================
+>  
+> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> index 346251bf1026..8ebd43a998a7 100644
+> --- a/include/linux/dmaengine.h
+> +++ b/include/linux/dmaengine.h
+> @@ -200,6 +200,10 @@ struct dma_vec {
+>   *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
+>   *  to never be processed and stay in the issued queue forever. The flag is
+>   *  ignored if the previous transaction is not a repeated transaction.
+> + *  @DMA_PREP_LOCK: tell the driver that there is a lock bit set on command
+> + *  descriptor.
+> + *  @DMA_PREP_UNLOCK: tell the driver that there is a un-lock bit set on command
+> + *  descriptor.
+>   */
+>  enum dma_ctrl_flags {
+>  	DMA_PREP_INTERRUPT = (1 << 0),
+> @@ -212,6 +216,8 @@ enum dma_ctrl_flags {
+>  	DMA_PREP_CMD = (1 << 7),
+>  	DMA_PREP_REPEAT = (1 << 8),
+>  	DMA_PREP_LOAD_EOT = (1 << 9),
+> +	DMA_PREP_LOCK = (1 << 10),
+> +	DMA_PREP_UNLOCK = (1 << 11),
+>  };
+>  
+>  /**
+> -- 
+> 2.34.1
 
 -- 
-With best wishes
-Dmitry
+~Vinod
 
