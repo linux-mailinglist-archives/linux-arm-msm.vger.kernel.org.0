@@ -1,54 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-50871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B6BFA5A3AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 20:11:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C7EFA5A3AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 20:14:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 344873A67E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 19:11:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E5AD17284C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 19:14:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 039881CAA60;
-	Mon, 10 Mar 2025 19:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93D1022D7AF;
+	Mon, 10 Mar 2025 19:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iK5eOERf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yi88lkeb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17A4199FBA;
-	Mon, 10 Mar 2025 19:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7074E18FDAB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 19:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741633904; cv=none; b=LfVp9dDZYFM1CfMr4rwJl80dlTz5XdekODF72nUVhsiq5p/vN0lJRDfU/Ty7B1UX6cSUm4E3x9rWD7jvPgNGg35OGLEq6nfaTF70NW/84yIW9T6JZbugVlwIugScjX+vyu/x4COZgjB9WwSWaSROjAtVRq8DM6g5+MSem5YI+yk=
+	t=1741634051; cv=none; b=MjyrjiEjOuua2pRQboGCP+h/YVFXowO4Fe6I0uArqO0VG4RV1Kr+/yMIi/jRmh7w4R5azqxTAfDdI5+Ruvc7SyA0hriHdk6Prr1exJq8XYRkCJxZWPRvlGO8RTfzA9G5hEmVBjdUMi92SzMHzshMRI1mJ/oCOHqQErB4bQRm+ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741633904; c=relaxed/simple;
-	bh=8Sff0TsgnZs3fX2n+0u/8tlu0wY9c+QMZDFeIB+Uf38=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZMdGDIDXPRwWl0FUiQhkOwJCJBuYBus8dtif/6GEEXq4/0qGjCNmGgoLi0Dc8CxR184QUyH3e65QWiyJ3Zp1HxGMpLET9SuwnBjws+38srJBfE24i659CVmZuFEledAkrghJA7+OOVPWw0BSpbxI6PkPjmBp4z/mUvIJMwgZPZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iK5eOERf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD10C4CEE5;
-	Mon, 10 Mar 2025 19:11:43 +0000 (UTC)
+	s=arc-20240116; t=1741634051; c=relaxed/simple;
+	bh=xQeemCsrfUF+jP/rsD1veh7JdHq+E8YcGMftlCccdmg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fCorVfkQg4muObtnlSynBzSP8SYA/zxg2SEBcywuPwkvqGQSlnCUlcWcrMkoQrWEDBRiM+7cg5FKx2PfiRxiW17oSI8wXCna1vuP40LIZCcbcZ3bxJ8JgNZrdAky59L8/qBBcFlYnpZxUnbGZJu8bu+fx9EDIWjjMXoVhdsDBS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yi88lkeb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD97C4CEE5;
+	Mon, 10 Mar 2025 19:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741633904;
-	bh=8Sff0TsgnZs3fX2n+0u/8tlu0wY9c+QMZDFeIB+Uf38=;
+	s=k20201202; t=1741634050;
+	bh=xQeemCsrfUF+jP/rsD1veh7JdHq+E8YcGMftlCccdmg=;
 	h=From:To:Cc:Subject:Date:From;
-	b=iK5eOERfs/lSapoXXibjJftUFpOXadzcXPs20ERHR3WtC3K8Q2vHYstozGZjhfEKt
-	 mVlQHV5X1zhpUHhhsWyvBukjEHVJlkw8nxMh0b8hcwGF3BYns4BwL1rJYmhm2Ky1nV
-	 JkCfLzv7SrFdpVXBNO49gDRBPA0lp9Uij3PHEzMf9SkIDbYnUdGaorRpzwOpTByQxa
-	 v/KS0tiMGyX9az053CwQj0yrum0S8V3hN5KpjfMofo2cIjhtsljlyyU2uSffKhufNS
-	 0HfmFANSYEqGBWhCGY7gl5uJh/POUEaNiW93F7orx1ORZmvtSoK8nlB/PeJxoLVKAA
-	 xpf8ACzboC+FQ==
+	b=Yi88lkebQIjrJiDYz7RgeYpBz1fH4NtfixP8nEee3ndJTluyve9Hm/vB3WOFUmmiC
+	 i2DcYZrmIGl1HMv8S/mYOXsFupNTmOixGBXVDp7HnkqJiyN0u9wpp7TK82tc9W3IFJ
+	 2U847Ap6yxYmZweDIwMDajso44Iahgnu50LCeIYp4jzkHGJ0pPfmqd3gW/DjbYRdU8
+	 ULwJXqwCIoZVFkKDoD6DUKIMKAds+zJyEOSePF0hGDzgGxk7jZqi/cdswQBi37I03i
+	 pq/dn1MDUxj6s80k98cyLUVRySlRztRHPlhGJ3G+qmWO2I+p/BHgynVdmq1Ud1+V2w
+	 lWCaJcELT+SGA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>,
-	linux-clk@vger.kernel.org
+To: arm@kernel.org,
+	soc@kernel.org
 Cc: linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [GIT PULL] Qualcomm clock fix for v6.14
-Date: Mon, 10 Mar 2025 14:11:41 -0500
-Message-ID: <20250310191142.1208155-1-andersson@kernel.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [GIT PULL] Qualcomm Arm64 Devicetree fixes for v6.14
+Date: Mon, 10 Mar 2025 14:14:08 -0500
+Message-ID: <20250310191409.1208520-1-andersson@kernel.org>
 X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -65,22 +66,22 @@ The following changes since commit 2014c95afecee3e76ca4a56956a936e23283f05b:
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-clk-fixes-for-6.14
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.14
 
-for you to fetch changes up to 787289a1d13d50ff4ce0f496947f8817ef3fdea9:
+for you to fetch changes up to f00db31d235946853fb430de8c6aa1295efc8353:
 
-  clk: qcom: dispcc-sm8750: Drop incorrect CLK_SET_RATE_PARENT on byte intf parent (2025-02-26 08:57:46 -0600)
-
-----------------------------------------------------------------
-Qualcomm clock fix for v6.14
-
-Avoid propagating rate changes for the MDSS byte intf clocks on SM8750,
-to avoid changing the already configured clocks.
+  Revert "arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu" (2025-02-25 09:52:52 -0600)
 
 ----------------------------------------------------------------
-Krzysztof Kozlowski (1):
-      clk: qcom: dispcc-sm8750: Drop incorrect CLK_SET_RATE_PARENT on byte intf parent
+Qualcomm Arm64 Devicetree fixes for v6.14
 
- drivers/clk/qcom/dispcc-sm8750.c | 2 --
- 1 file changed, 2 deletions(-)
+Revert the change to marking SDM845 SMMU dma-coherent, as this is
+reported not to be true.
+
+----------------------------------------------------------------
+Konrad Dybcio (1):
+      Revert "arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu"
+
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
