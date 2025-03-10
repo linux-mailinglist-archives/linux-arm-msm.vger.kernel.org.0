@@ -1,126 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-50864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE9C4A59AA0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 17:05:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C384A59B86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 17:51:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9874E3A7309
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 16:05:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BA4817A845E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 16:49:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AE5A22C327;
-	Mon, 10 Mar 2025 16:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FA09231A24;
+	Mon, 10 Mar 2025 16:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UFdLWwR6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gut4zvA9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB30522D4DE;
-	Mon, 10 Mar 2025 16:05:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A40231A22;
+	Mon, 10 Mar 2025 16:42:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741622751; cv=none; b=ZPrzYBx+6DKkeoaIculzp4KbGrzs4NZF27nNGYK4/fiJiQRzlbrQtNMLefQTTCaq+lGgDPRutw9ZbgywtbJC9nfid40oFN/iwQ+9wZtWJVdFChqgIl0+uX8UO2SfmpCauz80PClh2K2iATvUZPma/VoPbu0b49upE6v6pNYl8dc=
+	t=1741624920; cv=none; b=n2XqwbP1i6OH/iFGcaRff0v7Ca+AghmspeyJXSnxsoHbR1P97dRK4vv7XeWA31+oTw2rdZbOK2uOoGl89D2oQHK5BwSqcF4M35vbtgG9pOpYsPnF6ISGy8K/o3p/CG8D2oN757TKTW4QD09i7rVUpxIE0ChJW6Y0nfvRDFEUJMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741622751; c=relaxed/simple;
-	bh=1sBzCrcWxCos2ucPDzOy8rSIoDUK4uuBb9IVbzpXf6Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QqzcbANwYP6b4CgP1AhJQ0VzbVX+VXdmRTYln3T0ceK74Foe/LntN25CEPxYLyyNHC0SlnvFzJHqrLdFpbXweJqa4kDmdu/zxGTL5LVewcctz7VuENTUU289aN6CeXPobMJTnAxzKsy/cJPD1+TCQYSeyu/bwm5GcJk7oitga6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UFdLWwR6; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43bcc04d4fcso27034305e9.2;
-        Mon, 10 Mar 2025 09:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741622748; x=1742227548; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1sBzCrcWxCos2ucPDzOy8rSIoDUK4uuBb9IVbzpXf6Y=;
-        b=UFdLWwR69Mq7wYurBaUVZ8xlw6NHfRTsErBWOwwtDaaMqUvxrpwnAdQVRSQHmlZxvB
-         v7Fxd8ecCd1Skb8HM+T61KQXKZq9Mde4RH3qMYQTAcRUMvTshNvdA59Wvjr0pskQvErx
-         om3H7pg+HPlW00FpKVkekBte/se/RY/bLHZJmDZT0zSixBENkok9Ks+V+7EcC5Hkk/dM
-         12X0F+YOdBHnoljpxqN5Q16pFe9Ki2o3zsEELxL8pBY7SQBSgCblPc7IPXHvS99cbQwL
-         HRuXpM3FqMV3y1mdhMJc076LrIXbwF+0IuNcsspr+zk5SBOU5xvrDsR349uGGoIWXrEN
-         juSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741622748; x=1742227548;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1sBzCrcWxCos2ucPDzOy8rSIoDUK4uuBb9IVbzpXf6Y=;
-        b=V4sdUKgS3aYAmZR23Bqroi1Rh9H+ape/mxACA6whL9mmHpb6na9gZy2HY5efD+q0ce
-         YmXDhDQXlBmZrhh/4zRFbMtIXdvo7gaKaxIaMEJ3WL6XKXoYYinkZtPr1RmAr/nIKMSK
-         aJvSh5BNZaxDWRPqwj3FXNqKd+WnTrgmkNsHAP7szXZZS5tmthEPNRDsgOIOEC3iTxl+
-         6Va29htmdPb6OYY4Dc7rz6Wl5Wpx4QrkXz2JNoRKB2Z3pyc2SblQMGVsqrd/qCLKgM1b
-         O614JCW3kK4Rvwv0xcLKWTfT87QBO9c4vr/DpquG4l2clhX4FM6oqLev2B2v8avZGkhL
-         XgDw==
-X-Forwarded-Encrypted: i=1; AJvYcCVkyQ+z0mKyZyq5v68NodCvECPe4A6HuGAZ8XY3t9vp9RGeoiyHYkea7OHp6YhK10gaWNSkA+Ao/02hQMAD@vger.kernel.org, AJvYcCWLQLtAj8gazEyMeefryfot2oGtJZQmutX/N5SH7INYMSmOgufZyuU9jV4hksnxG+awg0IovCAk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8OVKDJfR4Dhb9oLcBd7viDwrQeQslYWnOWqTLzhYhemysyZfO
-	xzYEolG8smpUNPneL85bW4JJwERNiKgHchCqOez6YE2LXUaC5u4Z/vC46A==
-X-Gm-Gg: ASbGnctFF1Dbwwus7z3kGg6dDpZRDOoWd1FhOtECPZAmiUX4eet/up6qHWj8MZJwfQ3
-	JwaeLIxDnQxgMT++KKqVdlXj/iEBcyUatlWi4UpSDbxLkngO3YNJwXB+Lh1EF8NFyyqi21PJszq
-	Xpzzkf6mJnqw3yIckXFSHZRUp1gDm5fzCK58THW+RJkYrOHuc4vpWjik5AmUqY7dtQLcz3w9p96
-	79+o1GBnPfme7fPmLp7V5aZpR1wXiaRTNgsEZXdLXXGQEKPOy0WCNGUdyofi06pPpW7XG74R96O
-	uxkrT55UoAkX5ok8vQw/nVx/zmYzuIkhu8Yw/85pZmMM6kYstkPw2gAIYz15SSUeIg2r8Y5VlJE
-	eG9JT8MJ8dl4qCZmSs0iL
-X-Google-Smtp-Source: AGHT+IH1HHf+1OpwkvFsYArfklWxYPjgWRGPYO6MW19aTR4oUCtXkTsxgz2AKwy1itY/6jY/cI2jWA==
-X-Received: by 2002:a05:6000:410a:b0:391:4559:8761 with SMTP id ffacd0b85a97d-39145598929mr2906294f8f.36.1741622747749;
-        Mon, 10 Mar 2025 09:05:47 -0700 (PDT)
-Received: from jernej-laptop.localnet (86-58-6-171.dynamic.telemach.net. [86.58.6.171])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43cfa0723c9sm34686035e9.6.2025.03.10.09.05.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 09:05:47 -0700 (PDT)
-From: Jernej =?UTF-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
- "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Chen-Yu Tsai <wens@csie.org>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Jerome Brunet <jbrunet@baylibre.com>, Kevin Hilman <khilman@baylibre.com>,
- linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, netdev@vger.kernel.org,
- Paolo Abeni <pabeni@redhat.com>, Samuel Holland <samuel@sholland.org>,
- Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH net-next 9/9] net: stmmac: sunxi: remove of_get_phy_mode()
-Date: Mon, 10 Mar 2025 17:05:45 +0100
-Message-ID: <2774218.mvXUDI8C0e@jernej-laptop>
-In-Reply-To: <E1trbyF-005qYl-Lu@rmk-PC.armlinux.org.uk>
-References:
- <Z87WVk0NzMUyaxDj@shell.armlinux.org.uk>
- <E1trbyF-005qYl-Lu@rmk-PC.armlinux.org.uk>
+	s=arc-20240116; t=1741624920; c=relaxed/simple;
+	bh=AonGS/l9pN/Ns1XP5OZmwRVEfJkZ3sbj6I9acRs39sE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q50/nSn2zxdZLkVu1CoWEy35xpfB1OCNPu3CWJKYR82h6LDy+01CweaAIOdP3O2uOxiwBkadXNAftggazfxsbP+7hXJOPKS0yKDJLmJIxfH6HqSdDaEtMdQ3HcXSDDbxZYTXP+7tNWrC3SW0yiX099EUAnYK4xpHAM+bzRSZOBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gut4zvA9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A759CC4CEE5;
+	Mon, 10 Mar 2025 16:41:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741624920;
+	bh=AonGS/l9pN/Ns1XP5OZmwRVEfJkZ3sbj6I9acRs39sE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gut4zvA9kSCVVqb5oEIk8UB9IOhmL4oBHTFbGoJztp6Zqvb/DrD/Va8bPfj94dGwC
+	 ikHc7Eh8+LX8looTrA7reyhmYHHbJdEuhPR1H9QoyG28tfYDeyKy37medElaSpwPRu
+	 YJCkVJ/egYaHHU6+XQVehmImsNMchRh2RdUs8lJcKWr+EOrPc+udO/qXtYSaCARlHn
+	 14RAfMCjToz2fgO4f4I0b9o6xZ10Lyr0J2QSIpM6FM5o47pY2d0lkPV0qCEZsyycZP
+	 zJnC8XZ945L10nmbU+DpkCVRj1lPJzcj8oD0OPq8TiiuluI4Ddco+B4GQjzmZSd1Fp
+	 OXhceAqh5whUQ==
+Date: Mon, 10 Mar 2025 09:41:58 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, linux-fscrypt@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-block@vger.kernel.org,
+	linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH v12 0/4] Driver and fscrypt support for HW-wrapped inline
+ encryption keys
+Message-ID: <20250310164158.GA1701@sol.localdomain>
+References: <20250210202336.349924-1-ebiggers@kernel.org>
+ <CAMRc=Md0fsB7Yfx9Au1pXi+7Y_5DQf2z430c9R+tyS9e60-y5w@mail.gmail.com>
+ <20250302222336.GD2079@quark.localdomain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250302222336.GD2079@quark.localdomain>
 
-Dne ponedeljek, 10. marec 2025 ob 13:10:59 Srednjeevropski standardni =C4=
-=8Das je Russell King (Oracle) napisal(a):
-> devm_stmmac_probe_config_dt() already gets the PHY mode from firmware,
-> which is stored in plat_dat->phy_interface. Therefore, we don't need to
-> get it in platform code.
->=20
-> Set gmac->interface from plat_dat->phy_interface.
->=20
-> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+On Sun, Mar 02, 2025 at 02:23:36PM -0800, Eric Biggers wrote:
+> > > TBD whether these will land in 6.15 too, or wait until 6.16 when the
+> > > block patches that patches 2-4 depend on will have landed.
+> > >
+> > 
+> > Could Jens provide an immutable branch with these patches? I don't
+> > think there's a reason to delay it for another 3 months TBH.
+> 
+> They don't seem to be on an immutable branch, so I'll just wait until the next
+> cycle, rather than trying to do something weird where I rebase the fscrypt tree
+> onto the block tree and also include driver patches.  TBH, I've already been
+> waiting 5 years to land this, so an extra 9 weeks is not a big deal :-)
+> 
+> The first patch "soc: qcom: ice: make qcom_ice_program_key() take struct
+> blk_crypto_key" does not depend on the block ones though, and it could land in
+> 6.15.  Bjorn, would you like to take that patch through your tree to get it out
+> of the way?
 
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Bjorn, could you apply patch 1 to your tree?  Thanks!
 
-Best regards,
-Jernej
-
-
+- Eric
 
