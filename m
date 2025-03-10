@@ -1,177 +1,284 @@
-Return-Path: <linux-arm-msm+bounces-50811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A84BA591C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 11:50:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EFCAA591F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 11:54:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E0091886233
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 10:50:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93F581884A91
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 10:54:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B464022B8D5;
-	Mon, 10 Mar 2025 10:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 976EC226D13;
+	Mon, 10 Mar 2025 10:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j9W1OZnb"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HSGQICjU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05337228C9C;
-	Mon, 10 Mar 2025 10:47:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C149227563
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 10:51:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741603679; cv=none; b=NPgAVDtswl/6LCm3ErC5rdf66+dTuagu7PYvQNQKu5MB7qR3ev+HUCNaLDoZm9EguX5oKMNzKcnowunY+l1IYGba2vrQSBvHsLNemdjYORj55kYiM7Vce4JKJGwVPj+QRDzbkTtY1WwpcI6Sk7nyNLDU4sUydW+6Okg7VJIwMpM=
+	t=1741603877; cv=none; b=Lp4M9C5WsHi7YJ8iqs07fEC7WIHhkp2L+RlPvgyS4Hfsw0oFx0kfD62uAvjKXL897zFK4U9rU84HAlL/VfsY6Jv9DeKSFKZAOtN/dnGF5Fy3RkrK0vzh4iAV5AzxXz5YUGD0qtGIJP1mCpBmo6DMcqPWauYSi4I/N5riWzrv9Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741603679; c=relaxed/simple;
-	bh=ksn8IQPKpJzP0SAfN/0TA4qOZ0TZecOeK/E6ed415e0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZcvI6GgPPbSbvtHrFOTg0khciQ2ZPYHPRuC74/GPWkBdbqzu+b/kjgTgiyuXvGPMErTMzxq8eGDhkvY3DgMVo1zJyckGBj7gwQopQySlktg3ySOZUUVW7idImX6hGyVf9VUWAbvhtXJ/1lXxDVjhbrkooTRFapXD7O+EtKwffCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j9W1OZnb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52A9LfuR006483;
-	Mon, 10 Mar 2025 10:47:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=gb/rZDUC2eGqGowkMWPm+s
-	ZwIMzFCl2wQLIKc8hQF6k=; b=j9W1OZnb0LQTeUk9QiTFmKRk0Y5D7ieE/IiPi8
-	A27HwiefqpsbRAwdVMfeYhY7w51L1VFsOwFqfoXTLR1ZD/cGktKnfJfmIzQGPjS5
-	DvGlFLK0pcCT4Nfhtrisg1ktWvKUzopAMcftDlcPcgXhBD42P8JFTxbBTVLJdBM3
-	StJSsDo1owhw3kddytGcsy+Y/AJ2Kc+TGltIPoXtier3T8TLtFWekpGP9C76rkmH
-	zrjnqGefrOgHSPhx4iCDscfWoyhk8pB8YHoO03El7UZCU8lqs2hT30W7VTtEb0yp
-	baEnDeK6AQOxYAlnoGtgYd4hRDD+zc0V/kdJL8Baqg4lG3cQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458ewpmhte-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Mar 2025 10:47:55 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52AAlspp010108
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Mar 2025 10:47:54 GMT
-Received: from hu-mnagar-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 10 Mar 2025 03:47:51 -0700
-From: Manish Nagar <quic_mnagar@quicinc.com>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Krishna Kurapati
-	<krishna.kurapati@oss.qualcomm.com>
-Subject: [PATCH] arm64: dts: qcom: qcs8300-ride: Enable second USB controller on QCS8300 Ride
-Date: Mon, 10 Mar 2025 16:17:43 +0530
-Message-ID: <20250310104743.976265-1-quic_mnagar@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1741603877; c=relaxed/simple;
+	bh=5s3rawUIjr3yWblxOqJ18a21f4XARGwxCKHF/ItDOwk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aHGFOFO9DqMNpGAUkYJI6scHqLmOsCjReU1D3Fb05e9SJfEpldyEn8MpChQ4k99Yl3c3Sjau5uT87D2DHF+ODF9A7vfvQt3Eb3oeID3peF0pizJVi2gEaXgRh59EFjpKsfifMhYiIibLJ/WgjDFKVBQy2ec486Ix9V0JdZ9a3rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HSGQICjU; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-47681dba807so185501cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 03:51:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1741603874; x=1742208674; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GsgHhJNmkDq1O/YozvCptEjFHuaUcIYXqJY3xYqe+UM=;
+        b=HSGQICjUVDQbm+8s9ps/aMKdw1s9i5H0291WxJz87RXBwaskSVQfJV1ngcXjKwMYwy
+         tKJ6C9G+ibsMRvG7eNYSt644TRK4v7a31QXQpRwpxzwXARfv+pZrmGb2iIW3OdavQj+N
+         txgJqlAZDYW3OOwwp79/k+mBHhheLfFLjcnWGaV1VL1zj2MFu08vQ4gFWI7vpLs5VbgR
+         ADpoJMiLCa1/y5eHP2Yanc9h3pA+IawdMqIqlh1ICIhilaChyKqBZqytdSyTvlUQ7pLI
+         B2D6ImBeFCGZp8Y57rwmGTgMVMSzldJ06rEo2dAx+KCyAL8FHFZBlyWOoRR02rurWN3O
+         8AoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741603874; x=1742208674;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GsgHhJNmkDq1O/YozvCptEjFHuaUcIYXqJY3xYqe+UM=;
+        b=BvbSYiyVtgA9Z94sTWgcTUK5T7o3TOFPcxDk2HbB7dGyCpxodHkDqjixYjOq0r7kSJ
+         JHfQ2sTAlCg5Dm3C4SxfP8CLflWaA9Clxor2vsy2L/5BwZt6KW0xv4uh+mdqHjBn/4z2
+         7hjDMAYbE6x7ItUu9cqN9FmTBj+Z3U9DhwN2ifejim+NbDgR1dD6GwGMBdOPqftU8kJV
+         SqBjde/NePZUFiBHF837l/fbC4mpKHzNymByoERjXtkdZNXgtO+CfdSiaNATmPFsflVh
+         9CpyFmfpmmpcFmnZFtnKmIqa7d6TawMPZoUxFz7oNQDUuS1juJL1dDpxAztsR9Z3Qutf
+         Kotw==
+X-Forwarded-Encrypted: i=1; AJvYcCWdVGRNu/ECYA+0lZ3NPYQG5eJ9udmN2w0K0gPb/6cI3p5XzKtQmUnunaeeZlU/V61/Pmu9iGF+/jaZAlML@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxd38JOfwPr6Z4W5rAFL/diUARtSqgrCW6fCq/luEot1ooi4w4A
+	2X7SbjuZWYqwcMYHaialejCbtPGxQqG5EW3Rx0bF34o3bMfRWD8pPvHgE4oNXYPh8who6xF3jRT
+	iJwFuK5NTTIQa314UXHCh6WXrxi/KH5knGmti
+X-Gm-Gg: ASbGnctHVwQBFZQz08lE5zrHQizc5AT6Ure+gweDja9TrW34x80sviUyr+l2jBLDN7m
+	j691hqLnpU9J8mqhd1+Ym7uTdANtgSsg/qKrwbe8cIeQKOocueuCfgEixUAulxs5wkfDUk5HUSk
+	IaTqnywQV232yS694Z9Z5TaW+HqgtmEhrp0s4=
+X-Google-Smtp-Source: AGHT+IFjx4d1g1257vPbEG4Ss+rawxH74R9/yXbl+GoTTbybUHaqCakPJfsdpLytVxhx4SVCnvjiKG47fh4ne3E9FtY=
+X-Received: by 2002:a05:622a:2a0b:b0:471:eab0:ef21 with SMTP id
+ d75a77b69052e-47668a7e96fmr5778091cf.13.1741603874136; Mon, 10 Mar 2025
+ 03:51:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: asiVt0grXUnT1VyPq3sZm_1EZq5iVg3D
-X-Proofpoint-ORIG-GUID: asiVt0grXUnT1VyPq3sZm_1EZq5iVg3D
-X-Authority-Analysis: v=2.4 cv=C5sTyRP+ c=1 sm=1 tr=0 ts=67cec35b cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=0nCIlMqfeCQfA5XZMt8A:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-10_04,2025-03-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- adultscore=0 clxscore=1011 bulkscore=0 lowpriorityscore=0 malwarescore=0
- impostorscore=0 suspectscore=0 spamscore=0 priorityscore=1501
- mlxlogscore=939 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503100086
+References: <20250303171013.3548775-3-tabba@google.com> <diqzbjucu60l.fsf@ackerleytng-ctop.c.googlers.com>
+In-Reply-To: <diqzbjucu60l.fsf@ackerleytng-ctop.c.googlers.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Mon, 10 Mar 2025 10:50:37 +0000
+X-Gm-Features: AQ5f1Jrapxy-udzYyByq6fwLBA7bWnEYimb6j8q79RDN3N0_PrJEhUvOrrSfYks
+Message-ID: <CA+EHjTxhumDswVVosDtvMojk-MJbJT=V8Cxhhnw2GGUDL74Mmw@mail.gmail.com>
+Subject: Re: [PATCH v5 2/9] KVM: guest_memfd: Handle final folio_put() of
+ guest_memfd pages
+To: Ackerley Tng <ackerleytng@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 
-Enable secondary USB controller on QCS8300 Ride platform. Since it is a
-Type-A port, the dr_mode has been set to "host". The VBUS to connected
-peripherals is provided by TPS2559QWDRCTQ1 regulator connected to the
-port. The regulator has an enable pin controlled by PMM8650. Model it as
-fixed regulator and keep it Always-On at boot, since the regulator is
-GPIO controlled regulator.
+Hi Ackerley,
 
-Co-developed-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Signed-off-by: Manish Nagar <quic_mnagar@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 35 +++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+On Fri, 7 Mar 2025 at 17:04, Ackerley Tng <ackerleytng@google.com> wrote:
+>
+> Fuad Tabba <tabba@google.com> writes:
+>
+> > Before transitioning a guest_memfd folio to unshared, thereby
+> > disallowing access by the host and allowing the hypervisor to
+> > transition its view of the guest page as private, we need to be
+> > sure that the host doesn't have any references to the folio.
+> >
+> > This patch introduces a new type for guest_memfd folios, which
+> > isn't activated in this series but is here as a placeholder and
+> > to facilitate the code in the subsequent patch series. This will
+> > be used in the future to register a callback that informs the
+> > guest_memfd subsystem when the last reference is dropped,
+> > therefore knowing that the host doesn't have any remaining
+> > references.
+> >
+> > This patch also introduces the configuration option,
+> > KVM_GMEM_SHARED_MEM, which toggles support for mapping
+> > guest_memfd shared memory at the host.
+> >
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > Acked-by: Vlastimil Babka <vbabka@suse.cz>
+> > Acked-by: David Hildenbrand <david@redhat.com>
+> > ---
+> >  include/linux/kvm_host.h   |  7 +++++++
+> >  include/linux/page-flags.h | 16 ++++++++++++++++
+> >  mm/debug.c                 |  1 +
+> >  mm/swap.c                  |  9 +++++++++
+> >  virt/kvm/Kconfig           |  5 +++++
+> >  5 files changed, 38 insertions(+)
+> >
+> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> > index f34f4cfaa513..7788e3625f6d 100644
+> > --- a/include/linux/kvm_host.h
+> > +++ b/include/linux/kvm_host.h
+> > @@ -2571,4 +2571,11 @@ long kvm_arch_vcpu_pre_fault_memory(struct kvm_vcpu *vcpu,
+> >                                   struct kvm_pre_fault_memory *range);
+> >  #endif
+> >
+> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> > +static inline void kvm_gmem_handle_folio_put(struct folio *folio)
+> > +{
+> > +     WARN_ONCE(1, "A placeholder that shouldn't trigger. Work in progress.");
+> > +}
+> > +#endif
+> > +
+> >  #endif
+>
+> Following up with the discussion at the guest_memfd biweekly call on the
+> guestmem library, I think this folio_put() handler for guest_memfd could
+> be the first function that's refactored out into (placeholder name)
+> mm/guestmem.c.
+>
+> This folio_put() handler has to stay in memory even after KVM (as a
+> module) is unloaded from memory, and so it is a good candidate for the
+> first function in the guestmem library.
+>
+> Along those lines, CONFIG_KVM_GMEM_SHARED_MEM in this patch can be
+> renamed CONFIG_GUESTMEM, and CONFIG_GUESTMEM will guard the existence of
+> PGTY_guestmem.
+>
+> CONFIG_KVM_GMEM_SHARED_MEM can be introduced in the next patch of this
+> series, which could, in Kconfig, select CONFIG_GUESTMEM.
+>
+> > diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+> > index 6dc2494bd002..daeee9a38e4c 100644
+> > --- a/include/linux/page-flags.h
+> > +++ b/include/linux/page-flags.h
+> > @@ -933,6 +933,7 @@ enum pagetype {
+> >       PGTY_slab       = 0xf5,
+> >       PGTY_zsmalloc   = 0xf6,
+> >       PGTY_unaccepted = 0xf7,
+> > +     PGTY_guestmem   = 0xf8,
+> >
+> >       PGTY_mapcount_underflow = 0xff
+> >  };
+> > @@ -1082,6 +1083,21 @@ FOLIO_TYPE_OPS(hugetlb, hugetlb)
+> >  FOLIO_TEST_FLAG_FALSE(hugetlb)
+> >  #endif
+> >
+> > +/*
+> > + * guestmem folios are used to back VM memory as managed by guest_memfd. Once
+> > + * the last reference is put, instead of freeing these folios back to the page
+> > + * allocator, they are returned to guest_memfd.
+> > + *
+> > + * For now, guestmem will only be set on these folios as long as they  cannot be
+> > + * mapped to user space ("private state"), with the plan of always setting that
+> > + * type once typed folios can be mapped to user space cleanly.
+> > + */
+> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> > +FOLIO_TYPE_OPS(guestmem, guestmem)
+> > +#else
+> > +FOLIO_TEST_FLAG_FALSE(guestmem)
+> > +#endif
+> > +
+> >  PAGE_TYPE_OPS(Zsmalloc, zsmalloc, zsmalloc)
+> >
+> >  /*
+> > diff --git a/mm/debug.c b/mm/debug.c
+> > index 8d2acf432385..08bc42c6cba8 100644
+> > --- a/mm/debug.c
+> > +++ b/mm/debug.c
+> > @@ -56,6 +56,7 @@ static const char *page_type_names[] = {
+> >       DEF_PAGETYPE_NAME(table),
+> >       DEF_PAGETYPE_NAME(buddy),
+> >       DEF_PAGETYPE_NAME(unaccepted),
+> > +     DEF_PAGETYPE_NAME(guestmem),
+> >  };
+> >
+> >  static const char *page_type_name(unsigned int page_type)
+> > diff --git a/mm/swap.c b/mm/swap.c
+> > index 47bc1bb919cc..241880a46358 100644
+> > --- a/mm/swap.c
+> > +++ b/mm/swap.c
+> > @@ -38,6 +38,10 @@
+> >  #include <linux/local_lock.h>
+> >  #include <linux/buffer_head.h>
+> >
+> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> > +#include <linux/kvm_host.h>
+> > +#endif
+> > +
+> >  #include "internal.h"
+> >
+> >  #define CREATE_TRACE_POINTS
+> > @@ -101,6 +105,11 @@ static void free_typed_folio(struct folio *folio)
+> >       case PGTY_hugetlb:
+> >               free_huge_folio(folio);
+> >               return;
+> > +#endif
+> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> > +     case PGTY_guestmem:
+> > +             kvm_gmem_handle_folio_put(folio);
+> > +             return;
+> >  #endif
+> >       default:
+> >               WARN_ON_ONCE(1);
+> > diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
+> > index 54e959e7d68f..37f7734cb10f 100644
+> > --- a/virt/kvm/Kconfig
+> > +++ b/virt/kvm/Kconfig
+> > @@ -124,3 +124,8 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
+> >  config HAVE_KVM_ARCH_GMEM_INVALIDATE
+> >         bool
+> >         depends on KVM_PRIVATE_MEM
+> > +
+> > +config KVM_GMEM_SHARED_MEM
+> > +       select KVM_PRIVATE_MEM
+> > +       depends on !KVM_GENERIC_MEMORY_ATTRIBUTES
+>
+> Enforcing that KVM_GENERIC_MEMORY_ATTRIBUTES is not selected should not
+> be a strict requirement. Fuad explained in an offline chat that this is
+> just temporary.
+>
+> If we have CONFIG_GUESTMEM, then this question is moot, I think
+> CONFIG_GUESTMEM would just be independent of everything else; other
+> configs would depend on CONFIG_GUESTMEM.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index 916d4e6da922..7947e48f6a95 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -22,6 +22,16 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	regulator-usb2-vbus {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB2_VBUS";
-+		gpio = <&pmm8650au_1_gpios 7 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb2_en>;
-+		pinctrl-names = "default";
-+		enable-active-high;
-+		regulator-always-on;
-+	};
- };
- 
- &apps_rsc {
-@@ -286,6 +296,15 @@ queue3 {
- 	};
- };
- 
-+&pmm8650au_1_gpios {
-+	usb2_en: usb2-en-state {
-+		pins = "gpio7";
-+		function = "normal";
-+		output-enable;
-+		power-source = <0>;
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -355,6 +374,14 @@ &usb_1_hsphy {
- 	status = "okay";
- };
- 
-+&usb_2_hsphy {
-+	vdda-pll-supply = <&vreg_l7a>;
-+	vdda18-supply = <&vreg_l7c>;
-+	vdda33-supply = <&vreg_l9a>;
-+
-+	status = "okay";
-+};
-+
- &usb_qmpphy {
- 	vdda-phy-supply = <&vreg_l7a>;
- 	vdda-pll-supply = <&vreg_l5a>;
-@@ -369,3 +396,11 @@ &usb_1 {
- &usb_1_dwc3 {
- 	dr_mode = "peripheral";
- };
-+
-+&usb_2 {
-+	status = "okay";
-+};
-+
-+&usb_2_dwc3 {
-+	dr_mode = "host";
-+};
--- 
-2.25.1
+There are two things here. First of all, the unfortunate naming
+situation where PRIVATE could mean GUESTMEM, or private could mean not
+shared. I plan to tackle this aspect (i.e., the naming) in a separate
+patch series, since that will surely generate a lot of debate :)
 
+The other part is that, with shared memory in-place, the memory
+attributes are an orthogonal matter. The attributes are the userpace's
+view of what it expects the state of the memory to be, and are used to
+multiplex whether the memory being accessed is guest_memfd or the
+regular (i.e., most likely anonymous) memory used normally by KVM.
+
+This behavior however would be architecture, or even vm-type specific.
+
+Cheers,
+/fuad
+
+> > +       bool
 
