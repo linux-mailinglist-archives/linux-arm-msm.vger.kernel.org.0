@@ -1,97 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-50876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 571CDA5A4BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 21:20:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 77D15A5A4E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 21:25:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2FFE3A5EB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 20:19:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 306CF3A6E34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 20:25:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6F891E7648;
-	Mon, 10 Mar 2025 20:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8A451DE3A8;
+	Mon, 10 Mar 2025 20:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z7fDzV+G"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xH+OswmP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847511E5B75
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 20:18:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16823EC5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 20:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741637893; cv=none; b=JaHroKUmyna7p9ywmKUNSssjwnJCChNn+ICiKUCJkgzWr92iRlUi+J32OsZfVNg8M0abjI8g2WRUQ+Cu1y2B49dIl+KTBpPnCPd0lcO1jWaCC9xDwdLdT8ONcs1r2tUMkCqQ8nBV1MwhzwhnjoaPVeBAayDBczpbvhus35mIaHw=
+	t=1741638339; cv=none; b=RCdYiEtumhy/lj58oxvhZZxpRWReUijGD4P9tqHltmzOolAZKvYjau/3RK7yY7JtBDZx3w0NvDcAEa4psEsqBfvdxMqolQtZvCDH603eBASntb0KI6gf4cAtv9TwtuLchPHZkqU8Pp44aC/GC6FoZmpDNlMUNlVVwUhfbVBThoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741637893; c=relaxed/simple;
-	bh=EL25rNL51TXTvxkbPCKINtP+7+2cd264OtWDnAl9qwA=;
+	s=arc-20240116; t=1741638339; c=relaxed/simple;
+	bh=L9+uLSJLlnFoF8qnj42PdQx3Q5RYzcJ6a/f47QtrPHs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZbItjALRBMgQM8H/WHfQYRAYM1PP1lAYoxY2JtAJSfMFeEXnP9jDEwzFICyg1xAsBVp9bKeJAkNGR9ChF3Uunj+qL7vjq1UR8houi+2pgAqA6j7AmJGjQWi/E1YXNWHzdQg8SRR16LJnPV2KQ5xKTIv3zwc6mclgwBw0MCy+g64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z7fDzV+G; arc=none smtp.client-ip=209.85.208.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=rVBnvx0xdWXK4Cl8q3ihzE2f8Qa01ZDc4kxvmSCkK1pYuUVzAYIxrm6L/qmgDu4gHqB23FRf5v6tOd3lDXmSFSKOxe+rQPvz2Ra3ZYaUOoGej4jljQ6JF9i6bX14DQMlkPrv6lb4QindvobpPIjAFiAi0iLxq+920ZJOxVBJkb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xH+OswmP; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-30bfed67e08so27022881fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 13:18:10 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-30bf5d7d107so35566021fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 13:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741637888; x=1742242688; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1741638335; x=1742243135; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Na0+//dCirkAQ9ySuY1KKDPsWyMmAsRZj0GKZr2mXwM=;
-        b=z7fDzV+GgUCsalA5GHaGQUloUUrUk3VZ7Xodudvt6c9C7iZrZZpd0p2HFZxO2IAtq3
-         KkqcQ93M7irvtEC2L7GQHFXSWrz0d9IiDAYhs2TpR/DZps5F4y3RRnCnjvSBsWwZm7qx
-         lfLCMDWV1gq5j/yCAELSIAwi04ZCuhxyn5gScZuy0Lrd5MXcOlHVQ63yV3d8hvpPqQQu
-         FOhUJKoaNKNSujpyKe1BPgJnwVsG7x7HBFsofYv4CO9EFLGxc6ndLgdK+oTAoBLeDemW
-         gK5bVzsjXBL7kelIyENWfc4vF7Vrz9DM9rQXalpa7oGcqFmprfuvf8IJ/6ed/JkuUTk/
-         B28A==
+        bh=dYNmRZYB/IDO1RurR4i6iqDD/1mktBUeW4kgdxDpZIw=;
+        b=xH+OswmP/CcgSiKX7NC5EIZKpFzqTMBvQKOua8bj2RCt/4KmiTK1Kj9rW64FBMSob6
+         RS382yhw5sZlzayoKWCCuOXdNJa4Gz8HJWPX1U3Pu6xDDmOAR8pp5nYOpZb2/YbZAnVs
+         crPuzbjdQRFMQ0eYUBe6G9YrnF18gMUtEOg1ex7ZoEGb8FK9lNWCiz4/dLijIU4UZr4/
+         xwQO7Yj/ldfq3hxzF5TiSuhtAePwdWzvWo1WnBK6RB81VbCohnmN7E7ntYZ/QZrt5nfH
+         hi7v4JHreheuI/szkNYb3NlbDXa1p0pXqM1GkzEmliccRQCsl05n5PyPQDXlgIkGzHjc
+         doYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741637888; x=1742242688;
+        d=1e100.net; s=20230601; t=1741638335; x=1742243135;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Na0+//dCirkAQ9ySuY1KKDPsWyMmAsRZj0GKZr2mXwM=;
-        b=DyqdfgYo6eFrL2+7wYiUK8OXmh77GRb8B86dYgNzpffv8iKBdZPTfsWZx4sJIAqeJ5
-         I7XTGSmy+6R1hVWcXKB7dRSjLdKGvLkTeNAQjDXvL9jmoeg8QuPdEApVTwr6PtS/KCAy
-         CrY0XeUH1/vFBKIcaQXU9+K8PBSwbOslc8Z829VZNuYt6VmszywM78DInOCViHLS0u4u
-         xsXouLY/oii13dpbv+EqC/8x2BSQ4ujHCfYs8ourE8142oOU4uIAlRNUNr98wgkyVLnY
-         ajBQ6eqWum94ySukkEKRmUEhbZDm2gw0/OF+TSRpBneiR3pVPM0r9AcF+pk7qzM6Njrx
-         OONw==
-X-Forwarded-Encrypted: i=1; AJvYcCWBeLAeWE0I9d1gs4zIt4QuIAg/soJYK2WIC4VOmNLgCEHXIpdRYZeLg8gZhAeakNAtgP98yspfJHVK7a8o@vger.kernel.org
-X-Gm-Message-State: AOJu0YxpAszSC+AlS78GDrLU4z5ipG/TBLgRkq4UR4czkowzNK5D1/Xj
-	L4DoWS4EnaA5ucZ8J2XZXfatUubGguyPfuzGVfI6x9XYCTkHFItfSKZbz10ZxoWpyKrw4uOfrB2
-	c
-X-Gm-Gg: ASbGncuOJp8f5076AYalD5qubYo64YJYe1In+bNu/twHEHecgOSa18TVc0uj9Bp3MO3
-	hHPT7H9sdkkBdKKQjIvnIgeiJ2WaF1Op+fR4h+f8yrW/rn+/t4qAibpms3jKb/v7Lsh9Vm3qSGH
-	7ZSXfiAy+Nvy88LJEkhenVfMHwpetUpslIZWGVZkgTsfPaUVOns+R4/VHa6DoHBi5JDcfne1+ch
-	I2YooA4ennuiDrTQZs3LaUDKrZMyHP5b9Rstxpxoh++lZGeS990XuCBeJVN64N2DEG+TlkmVztA
-	9E+SpkOJHG2nkCI/XvZZhafk+bGY7FFPr2EGYSfLsxmN0tFq4ZX2MkGVkD9U27/PpqVUfvmjJ+J
-	P8vKe4mkVyzPj5hR4Id6+G8NQ
-X-Google-Smtp-Source: AGHT+IHcA7kOtf3sam4WAbu1ps2qyynLobUE0HG0axG5MF7JuYSDH5Zq3T6DIc7mWO7eWXCbFWGVLA==
-X-Received: by 2002:a05:651c:3c3:b0:30b:c569:4665 with SMTP id 38308e7fff4ca-30bf46468dcmr39513851fa.29.1741637888405;
-        Mon, 10 Mar 2025 13:18:08 -0700 (PDT)
+        bh=dYNmRZYB/IDO1RurR4i6iqDD/1mktBUeW4kgdxDpZIw=;
+        b=w9vW4mhuc8XHxY3Rar5AFDT3DM78ZG78JJpwCCqfBRtwMEcV9CWgDcD5nmRmYY9R/q
+         7Vk0XfVQr8wlgThOAHpFVeneSTQXFPQzTkL0bQjhBU6Sk4Il/GuUgHOJEuvd8Elt/6eA
+         66NYtfDvOwBpBJZWeL2WRvjmXvPAvg9bODBRm0ywh/KGFK1ulp4wd0dq7WqjshowMNyf
+         B0DZwIeWbgZgqpagDvaTEPSuNInnlqIssW8HVzDCVjAakLnD1J05DS6VomLO0JNiEupV
+         gwnpur4NlBhdVFQ81JEt7U2HSJTvaObzo6ZoZjjb0VyzhpdLHd/i/sT5+gIKtwmV8pkO
+         DeYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVkgemi1F6xvVha7+MdsZes56woiH6NA5g4MdfeRtuvpoqgS3nQEfi2X4Q/QzV35Ldj7dX7C3fW0WJilq7L@vger.kernel.org
+X-Gm-Message-State: AOJu0YwTCb2Bax93YcQlM4+lJbt5AcdjPyrr2F0nG76oYazuAXOWJHpf
+	4oSp54/ZsN+4z3caifs177PU0zZNnJa6IeoL376+XAEMRMCt1wmvepcdxPKRv3M=
+X-Gm-Gg: ASbGnctHnMLil6dZVoulpobqpa0WHTPcN7asIg01hP+f44ADh2FAkTA9KTHoMSadZRo
+	F0U/U29pcpkJRN1vlesEvZOeAXTfGyPue8f0XYpl2iAG8RbuM7ti+xkYai+RNn1aQyAh3C+TXoL
+	TRA9edKWmg/GUT3hghWuw7MldlwxSvr6OB2n/O0o0ktdSAESM6FwR1aHK8SzC2Hoidm22UT+TsA
+	Vt/w+Bh4DFn1HQtmu3jQVpO32+YTsTMSe0cGfBhVFdfDxSb1Xxm7W9AD6EaY8NqL4Jon/PaRHe+
+	99VhsNAuYoFm//Au7dUHL23A64Ie60B8F/veQ3A+YnISdKNeWqKhedMRHHDvdA+Ck6YjoSOqI2g
+	ue8ADugxhaTCMpx9X8MNluUKL
+X-Google-Smtp-Source: AGHT+IEPVrqhzKdG85UY4VL7q1PeHiNjtgCxYCgNnkHHR37Br6Hv/tkjnMqe/JrlEqz3SvLMcEnR1A==
+X-Received: by 2002:a05:6512:b84:b0:545:f1d:6f2c with SMTP id 2adb3069b0e04-54990e5d4c2mr4659162e87.18.1741638335156;
+        Mon, 10 Mar 2025 13:25:35 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30bef40f9cdsm16595941fa.48.2025.03.10.13.18.05
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5498b0bcf77sm1556084e87.107.2025.03.10.13.25.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 13:18:07 -0700 (PDT)
-Date: Mon, 10 Mar 2025 22:18:04 +0200
+        Mon, 10 Mar 2025 13:25:33 -0700 (PDT)
+Date: Mon, 10 Mar 2025 22:25:31 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 3/4] drm/vc4: use new helper to get ACR values
-Message-ID: <esgb42dyhpjixm62tfk2nfzdiygnfn4bcwq4zn7rhydmt4np2q@7v77p7kveb4e>
-References: <20250309-drm-hdmi-acr-v1-0-bb9c242f4d4b@linaro.org>
- <20250309-drm-hdmi-acr-v1-3-bb9c242f4d4b@linaro.org>
- <20250310-invisible-married-firefly-945c84@houat>
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
+	manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	neil.armstrong@linaro.org, abel.vesa@linaro.org, quic_qianyu@quicinc.com, 
+	quic_krichai@quicinc.com, johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-phy@lists.infradead.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v4 6/8] arm64: dts: qcom: qcs8300: enable pcie0 interface
+Message-ID: <mxqrssteqfzp2llhp7exj7yoduv3h26qrxnsb7tobxkk7lxyeh@ywers6elgmwy>
+References: <20250310063103.3924525-1-quic_ziyuzhan@quicinc.com>
+ <20250310063103.3924525-7-quic_ziyuzhan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,46 +94,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250310-invisible-married-firefly-945c84@houat>
+In-Reply-To: <20250310063103.3924525-7-quic_ziyuzhan@quicinc.com>
 
-On Mon, Mar 10, 2025 at 03:51:53PM +0100, Maxime Ripard wrote:
-> On Sun, Mar 09, 2025 at 10:13:58AM +0200, Dmitry Baryshkov wrote:
-> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > 
-> > Use drm_hdmi_acr_get_n_cts() helper instead of calculating N and CTS
-> > values in the VC4 driver.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/gpu/drm/vc4/vc4_hdmi.c | 10 +++-------
-> >  drivers/gpu/drm/vc4/vc4_hdmi.h |  7 +++++++
-> >  2 files changed, 10 insertions(+), 7 deletions(-)
-> > 
-
-> > diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.h b/drivers/gpu/drm/vc4/vc4_hdmi.h
-> > index e3d989ca302b72533c374dfa3fd0d5bd7fe64a82..0a775dbfe99d45521f3d0a2016555aefa81d7934 100644
-> > --- a/drivers/gpu/drm/vc4/vc4_hdmi.h
-> > +++ b/drivers/gpu/drm/vc4/vc4_hdmi.h
-> > @@ -211,6 +211,13 @@ struct vc4_hdmi {
-> >  	 * KMS hooks. Protected by @mutex.
-> >  	 */
-> >  	enum hdmi_colorspace output_format;
-> > +
-> > +	/**
-> > +	 * @tmds_char_rate: Copy of
-> > +	 * @drm_connector_state.hdmi.tmds_char_rate for use outside of
-> > +	 * KMS hooks. Protected by @mutex.
-> > +	 */
-> > +	unsigned long long tmds_char_rate;
-> >  };
+On Mon, Mar 10, 2025 at 02:31:01PM +0800, Ziyue Zhang wrote:
+> Add configurations in devicetree for PCIe0, board related gpios,
+> PMIC regulators, etc.
 > 
-> This should be in drm_connector_hdmi if it's useful
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 40 +++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
 
-That would mean bringing the state to a non-state structure on the
-framework level. Is it fine from your POV? Is it also fine to use
-drm_connector.mutex for protecting this? Or should we be using something
-like drm_connector_hdmi.infoframes.mutex (maybe after moving it from
-.infoframes to the top level)?
+NIT: patch subject mentions qcs8300 (SoC), while the patch enables PCIe
+on qcs8300-ride (board).
 
 -- 
 With best wishes
