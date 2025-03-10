@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-50833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0D5CA593F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 13:14:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 660E9A593E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 13:13:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 673431891799
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 12:12:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9BF4E16CF80
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 12:12:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0F1122A1CA;
-	Mon, 10 Mar 2025 12:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD25C22A4DC;
+	Mon, 10 Mar 2025 12:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="A4QTFwP9"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="Yc7lENZV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00597229B01;
-	Mon, 10 Mar 2025 12:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FC2229B01;
+	Mon, 10 Mar 2025 12:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741608681; cv=none; b=g6YBdQQi0o476Ju3Z2X+b9rgwN7ZIp+2O/uJm5fxm/yDpX1bd42X4ggGeLxxufK+TK5g65bXoYeWxD7uN+YcOwEVY+IladAQqGvqR3z081MFMCTCajgfNOkNqX8twh9Uu+dpMWh4AVhk0wPa2LACAnDXjpBpPlQbtbb3O5t7Z34=
+	t=1741608685; cv=none; b=Q2jNXCCLtGKlrALq9+8b3/1ROt4Pu4R2vy2Ib3wdB90VywipUjg1Lke1poWk9JusSy5VXfLDZD8fSK2v9rhDFovBf9JKA7rRGAo2CF+YB00xO+c3UAYuzAu1WeFrB+oZCo+bB24DUzT/x1ZpF2qiE3yMiGo5uTdkYzOelQ8YKRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741608681; c=relaxed/simple;
-	bh=sifMuQ53xcvkWDPW6065dut4WEu8cZqWd0ZhTKTh6Dg=;
+	s=arc-20240116; t=1741608685; c=relaxed/simple;
+	bh=jC+qUhQV6UPyrqce6N8uVM+CkW5dXSJ5LzFTfXYKpJQ=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=f4/mgQ9ao0if3g0pHg1WvKbpKIw8oIeN8T+tWaQW1g8jAtWHCObGD9wQFx5Y8jXh/T/D/0g9ilQBIUHfGy0V0wO+QgmdyK/SpaOdppIxtxQgMudM0Pi31bKWdqgQ+qK1m6g9wyXgbcHQnHdIDHv3k2V1cFbofHAOJXo5JDvdutY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=A4QTFwP9; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=R6zvVHAFC3P/RcLXmHXLPGl41ZYO+odhOZshrEFgr9wwKsLGWANTrUAVJYnDRfyvFropnic86gAKY7GMoJ2idYOoiEmOVpZJ2Kccf8mm7GQ9lDC1mcSJhLtXAXyPDirVp3eeeXFA1kELnw5hwHBsnXdDeoHp/YVrjmgWAU+q/Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=Yc7lENZV; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -37,21 +37,21 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ARCXnqS38tZ6SrvZyY4r4LsmND+qBD6vwra/0tog6Ok=; b=A4QTFwP92MvvwiC1CwF600PCv2
-	pKuDyEuS43X1T9u2nX1zkmEPe/IAk1zy/FiBCClxg/q5F+J5+cZSr3w49TGekynnqUZ4kk6QRhQtQ
-	EuZ/5HAwyvRRpGXtzWLgQ9ZTaZnvpKHlS4Rs3CkKAKB+OEIO4sIWOL/2QZEOHwtdcdybCzxyrC4Q2
-	eaeVYKeOgU1oimksoG2uoHyzniS+296SZSNylUWGQg9K/DVkMxcirnghCdqaH2YH6UzUs2e8rPwXF
-	ZN0ehYTDxAKEVWdYhHjRF/Yu+6Igix0GaqFM8QJchXFjfTanR7clqfryFDAgGwByM7jhHgEY98nUS
-	N5Rn86Gg==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:58196 helo=rmk-PC.armlinux.org.uk)
+	bh=/tMOKUpE4K7j5aG1WbP5NmysKsZDJ/sNkUlDJpXtB50=; b=Yc7lENZVcITLYBQexI8NRWwYxp
+	ERJSnpnipQz+6yKHNjsAxA1KRpxoSkXtJGJybt4EEonmCuynrNs06yF8HfazpXbmxaqTkUl3aW/95
+	SUFJvYHioO81IxrOhkoVoFyHEsU+Q2yXIAaW4tsWJ1/RF4C8mbMOk4m+gFa0To8D37jEAIKKLxZsQ
+	x/heoQsI2JM6XCXHmz+Dq2cK8Zgjac95u11VKr4fCstvxS9PlJfjP7PRZG81zPW8u+X9xVpad6msv
+	e7nrApQZsx4++f0Zy6DinOXuX9CHeUptX0g2WledN7aDoHCGUh8S08vCdH5tTZaQ6TXd0Iu8J1mze
+	TE8RTsww==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:46320 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1trbyG-0002ZB-2u;
-	Mon, 10 Mar 2025 12:11:01 +0000
+	id 1trbyM-0002ZT-18;
+	Mon, 10 Mar 2025 12:11:06 +0000
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.94.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1trbxv-005qYM-5m; Mon, 10 Mar 2025 12:10:39 +0000
+	id 1trby0-005qYS-AE; Mon, 10 Mar 2025 12:10:44 +0000
 In-Reply-To: <Z87WVk0NzMUyaxDj@shell.armlinux.org.uk>
 References: <Z87WVk0NzMUyaxDj@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -81,7 +81,7 @@ Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Samuel Holland <samuel@sholland.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next 5/9] net: stmmac: meson8b: remove of_get_phy_mode()
+Subject: [PATCH net-next 6/9] net: stmmac: rk: remove of_get_phy_mode()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,38 +91,34 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1trbxv-005qYM-5m@rmk-PC.armlinux.org.uk>
+Message-Id: <E1trby0-005qYS-AE@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Mon, 10 Mar 2025 12:10:39 +0000
+Date: Mon, 10 Mar 2025 12:10:44 +0000
 
 devm_stmmac_probe_config_dt() already gets the PHY mode from firmware,
 which is stored in plat_dat->phy_interface. Therefore, we don't need to
 get it in platform code.
 
-Set dwmac->phy_mode from plat_dat->phy_interface.
+Set bsp_priv->phy_iface from plat->phy_interface.
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
-index 9c2d62d133ad..a50782994b97 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
-@@ -417,11 +417,7 @@ static int meson8b_dwmac_probe(struct platform_device *pdev)
- 		return PTR_ERR(dwmac->regs);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+index 003fa5cf42c3..40e8197812e2 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+@@ -1749,7 +1749,7 @@ static struct rk_priv_data *rk_gmac_setup(struct platform_device *pdev,
+ 	if (!bsp_priv)
+ 		return ERR_PTR(-ENOMEM);
  
- 	dwmac->dev = &pdev->dev;
--	ret = of_get_phy_mode(pdev->dev.of_node, &dwmac->phy_mode);
--	if (ret) {
--		dev_err(&pdev->dev, "missing phy-mode property\n");
--		return ret;
--	}
-+	dwmac->phy_mode = plat_dat->phy_interface;
+-	of_get_phy_mode(dev->of_node, &bsp_priv->phy_iface);
++	bsp_priv->phy_iface = plat->phy_interface;
+ 	bsp_priv->ops = ops;
  
- 	/* use 2ns as fallback since this value was previously hardcoded */
- 	if (of_property_read_u32(pdev->dev.of_node, "amlogic,tx-delay-ns",
+ 	/* Some SoCs have multiple MAC controllers, which need
 -- 
 2.30.2
 
