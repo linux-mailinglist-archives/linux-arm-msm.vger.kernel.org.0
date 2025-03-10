@@ -1,169 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-50755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7426A58980
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 01:09:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EE5D3A58A2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 02:58:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F233169675
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 00:09:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29D701692E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 01:58:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 889E123A0;
-	Mon, 10 Mar 2025 00:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFAE215F330;
+	Mon, 10 Mar 2025 01:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="owXf03Nz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MkvJBEHt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF0481E;
-	Mon, 10 Mar 2025 00:09:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C825B33991;
+	Mon, 10 Mar 2025 01:58:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741565361; cv=none; b=JK0YzriVkFvddyfMG3zzceZxQ0kFnOgMOCiJfMuW4tjbFwF1YD7bN8dEdmxGlq61yamqZ/PuBOS0LEbTON5lOeaA4nAfrAITAje3XUN53Le5USSTrSkwbx0WgTRZ6AxSiUUA4vYLhlfwZZAgJkCj0lx6hs3TKMeKGlNpUyE2P0g=
+	t=1741571929; cv=none; b=OPo2rLVDvh7n6VW/Yv+KD7Ry1eSxGiYdTCq7E8gCmTbhzUxqnu9VA3zv0TRF/o3bVZZeOGBzIuhWAOtdPOS4uY+hbag/r11eo3/7Uhx7fWX6po9HenhfSM8vc+ZgML8vMxfZGm3iRzdaaSMFkkeAlU5C57HMJmG7jxq62/zx/lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741565361; c=relaxed/simple;
-	bh=xhdh8DfzjzkkyMzCsHq/3sp7L1dCisrxi/w6JvA65VM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nsw7jewiZxo5GiV7s8yiB5xKov6eOPElUtArAqttniZ1A8aoile2/5H8KNnoy4TBtB+svyoao0Mg55srFTHVJPluM2qKJfZgcTS1S9V1ins0MYpJ8q8HQtH/oqmV3IQwl0ZJ07yc2BeK8mFoij4PXLb0pfsvKM05cw7Ng8OYa84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=owXf03Nz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6BDC4CEED;
-	Mon, 10 Mar 2025 00:09:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741565360;
-	bh=xhdh8DfzjzkkyMzCsHq/3sp7L1dCisrxi/w6JvA65VM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=owXf03NzPRZYWvMX/ceVRzsVgnyp8t/wzqg4ZFNlPLtcyuhdBRRUcF7PBKAnp0RbF
-	 9U/xNMsyOgVBQ4YAks0VasLcRdX0kB94ZqbQTQyw+wNQbYgUxbizDnSQ54SxNGpYp8
-	 jixZe/4tBIyomISBimbNNVTz3nyOHY9fDpgLYvEz+g3Fl6lnR/lqFj8ifKnFDdUqNT
-	 MoYTXdX6/QPdO4F9ryrKGdl+EDNiNPobAvOQkw8cBt3AX7ClOCDiHHs/W5fEzoHAhH
-	 Z1UjD3/WetPQhAU8ZgQOSqk61+c0mUQM2wMhd3SF6hA0TREBSvkBU96PZm8Jv08aTf
-	 NpEe1/E4XOngQ==
-Received: by venus (Postfix, from userid 1000)
-	id 55276180B94; Mon, 10 Mar 2025 01:09:17 +0100 (CET)
-Date: Mon, 10 Mar 2025 01:09:17 +0100
-From: Sebastian Reichel <sre@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Johan Hovold <johan@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC 1/2] arm64: dts: qcom: x1e78100-t14s: Add LCD variant with
- backlight support
-Message-ID: <qh6bb2h6ntyy6cvcigvnfp6gurxcvryg44ybd3kf3y73wxl5ua@hk4wydp4tn45>
-References: <20250306090503.724390-1-abel.vesa@linaro.org>
- <20250306090503.724390-2-abel.vesa@linaro.org>
- <lolqokpczxdscvgj6xdfyxblmle3csgzje3fgo4itzspgmeriy@7zzx7hg2zfks>
- <Z81dODU91zDPo/H5@linaro.org>
+	s=arc-20240116; t=1741571929; c=relaxed/simple;
+	bh=6P/sYsBlPXI28YDPL6e6GYfTaKI9Syduhlo2Whk9kB4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=a07WP4u98tI1Y//QmqtVJJIE7s8cQAjUnV2QmLaCuDjEAlMRlwRkJIXxzuhYEjT15xEXVITrdJOaIHoV/gUvktkDJB3uIbUWJoRsABGUwoPS8YSir230Ad+zIfR+zvKrChKqZ/orXnvqvyBFsPPHWI8FTn9smvc5e8X8eKAISXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MkvJBEHt; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 529MiPoD030297;
+	Mon, 10 Mar 2025 01:58:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	7JC319lKqZ7+vrTPClXjMYMJqgypPY72vRxSw96Gvac=; b=MkvJBEHtlosz/Fgz
+	s73A1C4PIwDWz+v7MECqXuMe5OEtMnCKC1eNtmJun2lUt08LatyE/7KzKqSwt13r
+	dB0wsFUvj1V+ZhBIfJLLgV2rMT2ShJJhy+zjYYIUqQv6p41+WruIaueFWFaJSj8f
+	tASVv8hgdvavheNmO5zzYdDpkxQwrTErZ0Qq8nXCHcJ0BWTFOYUqNfkDO7kFA81P
+	N30m+QFmYlml91+N1TKd2uBf4a0ReU8mzA6Yk1Pe7eF4YVEPZ1hvtaQuamrQHbAc
+	GPumqVwQsA0nZbaPznhL3Zniacpyvxkt1jdgxKUmZrhMQmwT9DuwodhSbsFFJwQw
+	6ifUnA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458eyt34w7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Mar 2025 01:58:43 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52A1wgTY006829
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Mar 2025 01:58:42 GMT
+Received: from [10.216.28.75] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 9 Mar 2025
+ 18:58:36 -0700
+Message-ID: <f1dd5c1f-3bfb-427b-8e17-030776df38a1@quicinc.com>
+Date: Mon, 10 Mar 2025 07:28:33 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="j6wfhyh62rj4x5ws"
-Content-Disposition: inline
-In-Reply-To: <Z81dODU91zDPo/H5@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V9 4/7] interconnect: qcom: icc-rpmh: Add dynamic icc node
+ id support
+To: Mike Tipton <quic_mdtipton@quicinc.com>
+CC: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Odelu Kukatla <quic_okukatla@quicinc.com>,
+        "Jeff
+ Johnson" <jeff.johnson@oss.qualcomm.com>,
+        Jagadeesh Kona
+	<quic_jkona@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250227155213.404-1-quic_rlaggysh@quicinc.com>
+ <20250227155213.404-5-quic_rlaggysh@quicinc.com>
+ <20250307035357.GA7435@hu-mdtipton-lv.qualcomm.com>
+Content-Language: en-US
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+In-Reply-To: <20250307035357.GA7435@hu-mdtipton-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: RJrcnw5ojGXVqg8O4O9pz_BuYZHRkJWH
+X-Authority-Analysis: v=2.4 cv=CupFcm4D c=1 sm=1 tr=0 ts=67ce4753 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=sHi-3QDVYUbo2YnzGAgA:9 a=QEXdDO2ut3YA:10
+ a=mn1kVZPsorgl7L_8cYVa:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: RJrcnw5ojGXVqg8O4O9pz_BuYZHRkJWH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-10_01,2025-03-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ suspectscore=0 phishscore=0 adultscore=0 impostorscore=0 malwarescore=0
+ bulkscore=0 spamscore=0 mlxlogscore=999 lowpriorityscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503100014
 
 
---j6wfhyh62rj4x5ws
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [RFC 1/2] arm64: dts: qcom: x1e78100-t14s: Add LCD variant with
- backlight support
-MIME-Version: 1.0
 
-Hi,
+On 3/7/2025 9:23 AM, Mike Tipton wrote:
+> On Thu, Feb 27, 2025 at 03:52:10PM +0000, Raviteja Laggyshetty wrote:
+>> To facilitate dynamic node ID support, the driver now uses
+>> node pointers for links instead of static node IDs.
+>> Additionally, the default node ID is set to -1 to prompt
+>> the ICC framework for dynamic node ID allocation.
+>>
+>> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+>> ---
+>>  drivers/interconnect/qcom/icc-rpmh.c | 16 ++++++++++++++--
+>>  drivers/interconnect/qcom/icc-rpmh.h |  3 ++-
+>>  2 files changed, 16 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+>> index f2d63745be54..2e654917f535 100644
+>> --- a/drivers/interconnect/qcom/icc-rpmh.c
+>> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+>> @@ -285,13 +285,25 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+>>  			ret = PTR_ERR(node);
+>>  			goto err_remove_nodes;
+>>  		}
+>> +		qn->id = node->id;
+>>  
+>>  		node->name = qn->name;
+>>  		node->data = qn;
+>>  		icc_node_add(node, provider);
+>>  
+>> -		for (j = 0; j < qn->num_links; j++)
+>> -			icc_link_create(node, qn->links[j]);
+>> +		for (j = 0; j < qn->num_links; j++) {
+>> +			struct qcom_icc_node *qn_link_node = qn->link_nodes[j];
+>> +			struct icc_node *link_node;
+>> +
+>> +			if (qn_link_node) {
+>> +				link_node = icc_node_create(qn_link_node->id);
+>> +				qn_link_node->id = link_node->id;
+>> +				icc_link_create(node, qn_link_node->id);
+>> +			} else {
+>> +				/* backward compatibility for target using static IDs */
+>> +				icc_link_create(node, qn->links[j]);
+>> +			}
+>> +		}
+>>  
+>>  		data->nodes[i] = node;
+>>  	}
+>> diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+>> index 82344c734091..cf4aa69c707c 100644
+>> --- a/drivers/interconnect/qcom/icc-rpmh.h
+>> +++ b/drivers/interconnect/qcom/icc-rpmh.h
+>> @@ -95,7 +95,8 @@ struct qcom_icc_qosbox {
+>>  struct qcom_icc_node {
+>>  	const char *name;
+>>  	u16 links[MAX_LINKS];
+>> -	u16 id;
+>> +	struct qcom_icc_node *link_nodes[MAX_LINKS];
+> 
+> This is very inefficient. MAX_LINKS = 128, which means we're adding an
+> additional 1KB *per-node*. The vast majority of nodes don't come
+> anywhere close to this number of links, so this is almost entirely
+> unused and wasted space.
+> 
+> As an example: sa8775p has 193 nodes, so we're adding 193K to the driver
+> from this alone. The current driver size is 84K, and the size after this
+> change is 283K.
+> 
+> Instead of embedding this array with a hardcoded size, we could point to
+> an array that's sized for the number of links required by the node:
+> 
+>     - struct qcom_icc_node *link_nodes[MAX_LINKS];
+>     + struct qcom_icc_node **link_nodes;
+> 
+> Then when initializing the arrays, we could:
+> 
+>     - .link_nodes = { &qns_a1noc_snoc },
+>     + .link_nodes = (struct qcom_icc_node *[]) { &qns_a1noc_snoc },
+> 
+> And for handling compatiblity with older drivers, we'd check for
+> link_nodes != NULL instead of checking the array indices.
+> 
+> Doing it this way would reduce the new sa8775p size from 283K to 88K.
+> 
+> A similar argument could be made for qcom_icc_node::links, since that's
+> also hardcoded to MAX_LINKS. But it's not quite as bad since it's an
+> array of u16 rather than an array of pointers. Still, if we implemented
+> similar changes for qcom_icc_node::links, then we'd save almost 256B
+> per-node, which for sa8775p would reduce the size by roughly another
+> 50K. If we're ultimately planning on switching all the old drivers over
+> to link_nodes, then we could just wait and get rid of links entirely.
+> Regardless, optimizing links doesn't have to happen in this series, but
+> I don't want to further bloat the size from the addition of link_nodes.
+> 
 
-On Sun, Mar 09, 2025 at 11:19:52AM +0200, Abel Vesa wrote:
-> On 25-03-08 01:01:31, Sebastian Reichel wrote:
-> > Hi,
-> >=20
-> > On Thu, Mar 06, 2025 at 11:05:02AM +0200, Abel Vesa wrote:
-> > > Due to the fact that Lenovo Thinkpad T14s Gen6 is available with both
-> > > OLED and LCD, the backlight control differs HW-wise. For the LCD vari=
-ant,
-> > > the panel's backlight is controlled via one of the PWMs provided by t=
-he
-> > > PMK8550 PMIC. For the OLED variant, the backlight is internal to the
-> > > panel and therefore it is not described in devicetree.
-> > >=20
-> > > For this reason, create a generic dtsi for the T14s by renaming the
-> > > existing dts. While at it, add a node name to panel and drop the enab=
-le
-> > > gpio and pinctrl properties from the panel node. Then add the LCD var=
-iant
-> > > dts file with the old name and describe all backlight related nodes.
-> > >=20
-> > > So the existing dts will now be used for LCD variant while for OLED n=
-ew
-> > > dts will be added.
-> > >=20
-> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > ---
-> > > [...]
-> > > +	backlight: backlight {
-> > > +		compatible =3D "pwm-backlight";
-> > > +		pwms =3D <&pmk8550_pwm 0 5000000>;
-> >=20
-> > I've tried this patch series together with the fix series [0], but
-> > without the duty cycle calculation change [1]. Instead I changed the
-> > period from 5000000 to 4266667. With that everything works as
-> > expected for me.
-> >=20
-> > [0] https://lore.kernel.org/all/20250305-leds-qcom-lpg-fix-max-pwm-on-h=
-i-res-v4-0-bfe124a53a9f@linaro.org/
-> > [1] https://lore.kernel.org/all/20250303-leds-qcom-lpg-compute-pwm-valu=
-e-using-period-v1-1-833e729e3da2@linaro.org/
->=20
-> Yes, I forgot to squash in the correct period.
->=20
-> The period should actually be 4266537. This is because the max PWM value
-> is actually BIT(resolution) - 1.
+Ok Mike, I would make use of struct qcom_icc_node **link_nodes instead
+of *link_nodes[MAX_LINKS] in the next patch series, we can clean up the
+links[MAX_LINKS] as part of another patch series. This suggestion does
+help in reducing size of the driver.
 
-For the version with 4266537:
+>> +	int id;
+>>  	u16 num_links;
+>>  	u16 channels;
+>>  	u16 buswidth;
+>> -- 
+>> 2.43.0
+>>
+>>
 
-Tested-by: Sebastian Reichel <sre@kernel.org>
-
--- Sebastian
-
->=20
-> Will update in next version.
->=20
-> The [1] patch was basically NACKed by Uwe. It is not needed if we set
-> the period to 4266537 in DT.
->=20
-> >=20
-> > Greetings,
-> >=20
-> > -- Sebastian
->=20
->=20
-
---j6wfhyh62rj4x5ws
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmfOLakACgkQ2O7X88g7
-+pomfA//c6tWamks7e9QRfaDSQenMPScMxhqbQZjY+ppsNnrMMNNHx/CITtewZEW
-2eg5Ne6KXOTGxBUT64GA/aOQwRZztfaxwpjZ0g14SWB3Ev1WMrEFHthmpXXm15/j
-37pN7HZ0aD9fDHj1SDQziW4I1MyA3dIKWRVvJLd2gRybo2zcjW3HGkHYoVIoxJ3l
-IA+cyLgPdG5tPS2tlQQ/lIkyPtU2YIaLFqsCMtecm3BBDMHJVoV6oBhsilR+sNRu
-98XbyPRuEQ+Bt5/migLolPY8DyxMNHJalgKdYeba1LaY95GV77KebfqzuZx0bWPR
-eh15BKn9OdVjMoIAG7rCVTx0J9ZEeVCbMwaPYjEsrmZozx1p5SlrLQ8uHaoo8Opm
-wSu4eh2FlYx2i2mHynTS1PPH/x+K4u/tl59BVUTcFpGqjt9F7EvEJ0qbayYh1kWO
-u2BgY/BNVaXAbmxOapEfhPwYaOkOtO98WQImN2EkAbMEzZxQrJCcWyGIDPQWTXdq
-EzfT4yxM5usnFX35NBOabFsmWBcTu3htk4JPaql4ixJNjkpU2/nJomuZj7tIWnaD
-IznIjXdJPFNLMJ2w1aXCLj1ONXnBdq3pGfR8rYw1d4FxUDOnMTMEpSHNZfbIAMHd
-sp7m8ewzuPKd3+ClJADvhiKRA8vd8H4hT0UP8vEFGpnzApvKp8E=
-=L13G
------END PGP SIGNATURE-----
-
---j6wfhyh62rj4x5ws--
 
