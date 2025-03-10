@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-50783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DFEDA58D2B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 08:45:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2734AA58D99
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 09:05:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E5F23ABF36
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 07:44:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF4393A83D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 08:04:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8167221F1F;
-	Mon, 10 Mar 2025 07:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4411A22257C;
+	Mon, 10 Mar 2025 08:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ePnHMrmY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O+JhHgCm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08453221F24;
-	Mon, 10 Mar 2025 07:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F4884E1C;
+	Mon, 10 Mar 2025 08:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741592704; cv=none; b=sNfdzBPPzO9L78wbesW65abtuPtzOKNwpMF10K4A8jvYtQSr9/FSoo11hMsHNDkySwvJjs4akxGy9MYRSb6j+Fn4SbVS/vl6ws5qD6m65v2nBGzKP8s/6zS9sr7HHK1h7XX7Y70BylML9lyT/tcbWNUt0hEBfHx5WxpVhEZ4MvY=
+	t=1741593901; cv=none; b=UmIicC0pOtA6EDga3tQbBIo0fcecYp9DqlbkRZbjHEuLwB2QtSiy4/AIhWIq6dt64RtZ0RJ3pDm7cj/0de3R8AF+SGL5yjn2uPJpUX8b+HU+ODwX6+0BBD4e4+tJsFsevi7p9RGT11eA2p8M0zuLQm4R2Gww9prtDdOffiKv6UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741592704; c=relaxed/simple;
-	bh=i1ZR9sGKO7nVQ2pJs+9N75lDoKQYGSjRkjYZ3oqofx0=;
+	s=arc-20240116; t=1741593901; c=relaxed/simple;
+	bh=4mna9gx6YJNHD8io2U/X0fGSjiIJ8v0rGRez3OnksDw=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kPDnkGTZfBaDIdP+nBJRvtagKMXeI8ffB0eUnWFgkTYQAmfwMeSGJ+47u0jlxqayx0xOxpuyDJy6Q3nxLDvyKfPck+TkjeeHCxRDg/WxCtpR3S4vJsSUV4w8nGxR8Nk0AJsG0yQ1omLq/srZIutCnAPXVQg5x1cY8Jr3YEWxz9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ePnHMrmY; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=CjwF7oqiFm7v10VRhhjXD6BrV/n08ywwlC2rcijejJSOPXMkb19Gl4jQ+jOs7tX8BxnjmeZCJx0Z3uEy5kxlbU0MJ3sQI8eXiNXbFyuxdzgRSP5hGE/tEFb+Vv0PrZGSB3f4DG9g4JvbQDvxNUuGE7dCEM7FkJ27uAvxlfYQYvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O+JhHgCm; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 529MgpOc026525;
-	Mon, 10 Mar 2025 07:44:48 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 529LpadC006993;
+	Mon, 10 Mar 2025 08:04:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Kj+FcVSY+eBJxVSNZlJRNzZJ
-	m+ebTIDlOJzCtE3EAtM=; b=ePnHMrmY+dGNZTh/jYCIa6BvA8CPNu+5Tc2CSWC8
-	bM4E54AmLJAXC6pJLjwk9gR9PWiW0tmdWswWPdQnK2x4tqnOMRxeOrtBxiEc2hsw
-	4GJ7ZNK6VEKCfTKs7B+EDj+3IicOlrGmZklG8J+i8oLXev9J09+Ya7b5Tq9ASolB
-	uNZavBoLW4SXlWrfXRQQQw8AX5CgXPAV80DMM/v9Dtsqk6IXsj0o4LTw1XEjKY8e
-	GbJ/awRoxkb0NPasADPfjBPH5kk4Vxe07fZMcHAEwEglpSrQTDjQVKgKQfNo1cLb
-	GcdvHDr9s5QB7yXj4nhOHGEoohpGYUyvd2GZGkRXGIUSQQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458f2mbwxq-1
+	:references:subject:to; s=qcppdkim1; bh=cxXyU/CPeeLRRBEPGXldrDGG
+	Lm0McpIWpdorCRx1eXc=; b=O+JhHgCmruwm7qdKT+oHryqG3/JmAmyLJtLo/pV6
+	yaonT8eoEN8Azqf3gADtqOYzqrDpnBIUruauuSMRZILKuMz3kUsZ6h+gPjIGJUnG
+	/J/EzOL8u/0ji1xX7pKEQSpCz1JGeUhfF3JJG9jDtDuU41EVU0TnF6izA+53HTJF
+	Qq1FxcNwIeOXLVKfK0Dy1QIjXvCTr1bV0Uo8yodQlsxa3PeTdedJ+JhYjyoWyjg6
+	7KSXK54PttD5ju/A6nh64vKTN9CDd66VoYit2g6/Q8Bl4//KLHvMWvpX1srXSFNf
+	QFg7TiwV2ltywiioK0hg5kXqFjAS5rLaqb2eMtGmSCqejA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458eypbxsb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Mar 2025 07:44:47 +0000 (GMT)
+	Mon, 10 Mar 2025 08:04:39 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52A7ikPs025363
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52A84dwF009403
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Mar 2025 07:44:46 GMT
+	Mon, 10 Mar 2025 08:04:39 GMT
 Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 10 Mar 2025 00:44:09 -0700
-Date: Mon, 10 Mar 2025 13:14:05 +0530
+ 15.2.1544.9; Mon, 10 Mar 2025 01:04:33 -0700
+Date: Mon, 10 Mar 2025 13:34:30 +0530
 From: Varadarajan Narayanan <quic_varada@quicinc.com>
 To: Krzysztof Kozlowski <krzk@kernel.org>
 CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
@@ -65,16 +65,14 @@ CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
         <p.zabel@pengutronix.de>, <quic_nsekar@quicinc.com>,
         <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v11 3/7] dt-bindings: PCI: qcom: Use sdx55 reg
- description for ipq9574
-Message-ID: <Z86YReHsKeF165F6@hu-varada-blr.qualcomm.com>
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>
+Subject: Re: [PATCH v11 4/7] arm64: dts: qcom: ipq9574: Reorder reg and
+ reg-names
+Message-ID: <Z86dDutB1NnGTjRt@hu-varada-blr.qualcomm.com>
 References: <20250220094251.230936-1-quic_varada@quicinc.com>
- <20250220094251.230936-4-quic_varada@quicinc.com>
- <41b400fe-5e08-42c0-9bc6-a238d25d155a@kernel.org>
- <33bb1cb2-0c5e-402b-a5c6-9604b1dd8d99@kernel.org>
+ <20250220094251.230936-5-quic_varada@quicinc.com>
+ <b3d7374e-b144-4b0a-96f8-0538f9cd1a39@kernel.org>
+ <d21a6d94-d2bc-44fd-bf40-097bccc11930@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,95 +81,63 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <33bb1cb2-0c5e-402b-a5c6-9604b1dd8d99@kernel.org>
+In-Reply-To: <d21a6d94-d2bc-44fd-bf40-097bccc11930@kernel.org>
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 13Znxcki_patImFqJYtxtGVAtEB8lGJl
-X-Proofpoint-ORIG-GUID: 13Znxcki_patImFqJYtxtGVAtEB8lGJl
-X-Authority-Analysis: v=2.4 cv=ab+bnQot c=1 sm=1 tr=0 ts=67ce986f cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
- a=dj0ERmanKLZXDvYKl08A:9 a=CjuIK1q_8ugA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Authority-Analysis: v=2.4 cv=A9yWP7WG c=1 sm=1 tr=0 ts=67ce9d17 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=5j2EdkbW8jc13NUVTY0A:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: RrqEkNB2PdSXsQz5f1uve-Gotl7HL6Fb
+X-Proofpoint-GUID: RrqEkNB2PdSXsQz5f1uve-Gotl7HL6Fb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-10_03,2025-03-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=999 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- mlxscore=0 impostorscore=0 phishscore=0 clxscore=1015 spamscore=0
- adultscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=695
+ adultscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 impostorscore=0 spamscore=0
+ suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503100059
+ definitions=main-2503100062
 
-On Thu, Mar 06, 2025 at 01:06:13PM +0100, Krzysztof Kozlowski wrote:
-> On 06/03/2025 12:52, Krzysztof Kozlowski wrote:
+On Thu, Mar 06, 2025 at 12:56:02PM +0100, Krzysztof Kozlowski wrote:
+> On 06/03/2025 12:49, Krzysztof Kozlowski wrote:
 > > On 20/02/2025 10:42, Varadarajan Narayanan wrote:
-> >> All DT entries except "reg" is similar between ipq5332 and ipq9574. ipq9574
-> >> has 5 registers while ipq5332 has 6. MHI is the additional (i.e. sixth
-> >> entry). Since this matches with the sdx55's "reg" definition which allows
-> >> for 5 or 6 registers, combine ipq9574 with sdx55.
-> >>
-> >> This change is to prepare ipq9574 to be used as ipq5332's fallback
-> >> compatible.
-> >>
-> >> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >> The 'reg' & 'reg-names' constraints used in the bindings and dtsi are
+> >> different resulting in dt_bindings_check errors. Re-order the reg entries,
 > >
-> > Unreviewed.
-> >
-> >> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> >> ---
-> >> v8: Add 'Reviewed-by: Krzysztof Kozlowski'
-> >> ---
-> >>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >> index 7235d6554cfb..4b4927178abc 100644
-> >> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >> @@ -169,7 +169,6 @@ allOf:
-> >>              enum:
-> >>                - qcom,pcie-ipq6018
-> >>                - qcom,pcie-ipq8074-gen3
-> >> -              - qcom,pcie-ipq9574
-> >
-> > Why you did not explain that you are going to affect users of DTS?
-> >
-> > NAK
+> > Why?
 
-Sorry for not explicitly calling this out. I thought that would be seen from the
-following DTS related patches.
+Initially ipq9574 had 5 reg entries. ipq5332 has 6. To be able to use ipq9574 as
+fallback for ipq5332 had to add the sixth entry to ipq9574. Then it becomes
+similar to sdx55. Hence to avoid duplication, changed ipq9574 to use sdx55 reg
+definition. Because of this the erg entries' order changed.
 
-> I did not connect the dots, but I pointed out that you break users and
-> your DTS is wrong:
-> https://lore.kernel.org/all/f7551daa-cce5-47b3-873f-21b9c5026ed2@kernel.org/
+> >
+> >> fix the node names and move the nodes to maintain sort order to address the
+> >
+> > Fixing (how?) node name looks like separate problem.
+
+Because the reg entries order changed, the "parf" register became the first
+entry. This resulted in the address in pcie@xxx to not match with the first reg
+entry and this was changed. Since the nodes have to be located per address sort
+order, had to move the node to an appropriate slot per the address sort order.
+
+> >> following errors/warnings.
+> >>
+> >> 	arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: pcie@20000000: reg-names:0: 'parf' was expected
 >
-> so you should come back with questions to clarify what to do, not keep
-> pushing this incorrect patchset.
+> How can I reproduce this error?
 >
-> My bad, I should really have zero trust.
+> Isn't this error which you intentionally added and now you claim you
+> fix? In the same patchset?
+>
+> This really looks like breaking things just to call it "look, I fixed
+> something" two patches later in the same set.
 
-It looks like it is not possible to have ipq9574 as fallback (for ipq5332)
-without making changes to ipq9574 since the "reg" constraint is different
-between the two. And this in turn would break the ABI w.r.t. ipq9574.
-
-To overcome this, two approaches seem to be availabe
-
-	1. Document that ipq9574 is impacted and rework these patches to
-	   minimize the impact as much as possible
-
-		(or)
-
-	2. Handle ipq5332 as a separate compatible (without fallback) and reuse
-	   the constraints of sdx55 for "reg" and ipq9574 for the others (like
-	   clock etc.). This approach will also have to revert [1], as it
-	   assumes ipq9574 as fallback.
-
-Please advice which of the above would be appropriate. If there is a better 3rd
-alternative please let me know, will align with that approach.
+True. But had to do these to have ipq9574 as fallback compatible. Have asked for
+suggestions to handle this better. Will follow the approach that is acceptable
+to the community.
 
 Thanks
 Varada
-
-1 - https://web.git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/Documentation/devicetree/bindings/pci/qcom,pcie.yaml?id=f67d04b18337249b0faa5cab6223c0bb203f6333
 
