@@ -1,136 +1,336 @@
-Return-Path: <linux-arm-msm+bounces-50853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A52F8A597AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 15:35:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E68E5A597C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 15:37:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DD56F16D4F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 14:35:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 050E13ACF9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 14:37:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9664E22D4C3;
-	Mon, 10 Mar 2025 14:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCE3E22B581;
+	Mon, 10 Mar 2025 14:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IeenkXay"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dUuDFTUH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F7522A4D3;
-	Mon, 10 Mar 2025 14:35:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CE722D793
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 14:35:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741617315; cv=none; b=g0G/Xq7oxdm4fOA4Q+T5/bbSr4hpI+8VWDHKzpgGfO1dpw/D59VJezJ4dskQ7vNc9MgtG6lZsGIJVq2nZ21yGjlmAsQk1x8KWvthRrZijMBvQYo2VX1sF62EZ6pzh1xE8x3SR9D4+RnEhsH3mJP0sYCUbGt8YjMZ/aGW2i9atQ0=
+	t=1741617360; cv=none; b=kA8CbkbsLBHTGHwarlRtOdUvcANwKs6IH5L0wmGcxyihWvR4zJKvuy7n+v4xM1FNwFmQt67DxBPEKillvP7ecc9L+6KcLuZuLl/KTatAgB4T0CjzXRI+fL7XqtzYPLC1na6WzXm26utuN7cqRgXZ4qCii3tY8VWy/xw++cghma4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741617315; c=relaxed/simple;
-	bh=b08aAQ44suZ87Xe2zqcpVzFlmw5lKdQuzSMVWAV8bIc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LrSR8vZbbgHX9YIiIOUooPjy4ATHxyefQkmais4DK2YRFOCGyYKzglgm7D919iJr1tW2c8Tz4A8k0TsQk21rVI6c36AdZ+Apa+lpr4hpCdsWmtuFTxzBhxqrwa9qc0y7yK5cUpvOZCMs8bN2l+wS8vcyTvBzBpVR59bNomfZh3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IeenkXay; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356E3C4CEE5;
-	Mon, 10 Mar 2025 14:35:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741617314;
-	bh=b08aAQ44suZ87Xe2zqcpVzFlmw5lKdQuzSMVWAV8bIc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IeenkXaywcwgJ3PcYpQXiQN7NJUml07AKlh4VZWZbRNtMOXFaZzS7fG3/wUioP5fB
-	 VLEsndpZKBpP89LiSiwe53h+wkoreXmMHxSHx6FjCN+bMWuGtdzvzKFj7ZiI2znZq0
-	 VVoQjYvW9VaxgOOwRfpRrgnoQSA5BMftcMq7yCTEiRnzqH5/R3qUQy4ugQ+pl9Yp10
-	 kTjqnjWnjmS4H2oMJ0OCrAENsZ9NWBjmCtA1QpMIvnYjBsFOlFK11OB7p5E5buSEAo
-	 aTCHoiA56fmeKti7u31wf6FhUzjFyKiulUVW5Y24nNa1frcosvkXJGMwEi/zqURgie
-	 2+DxYkFeZlXLQ==
-Message-ID: <cfd2c51a-cf2a-45f1-a926-65388d2c3ed6@kernel.org>
-Date: Mon, 10 Mar 2025 15:35:08 +0100
+	s=arc-20240116; t=1741617360; c=relaxed/simple;
+	bh=YaZrkZq9SjPm93NH4XlqVy59Y8iTWRLkh3XxggtDex8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EN5AMuBvNUAwfyM+4w87p49zr4wBZqJg4//8HazGi8KhbjI0qZj3VWBruKl/EWwHeWKHaztDIJ586v/RmmdeZZYpit0wxGhd24KNaFA5QJKr4GH6iM7EQot7pfKrWZBW71rU+sYw+IY69Pfk9LZFUru28mJei5D8BY8nvMIcTV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dUuDFTUH; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-47666573242so537591cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 07:35:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1741617357; x=1742222157; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7AKenLNL6X3uS3482+fJgsjvOVmCWlfTmQs/079icwE=;
+        b=dUuDFTUHzUTjE9PlnZFUKZ+aMrBtPuHSNab/kmq9zQzoYxTHL251sZDIfgSNNyKuta
+         fQ47h6pQGYU44WXd0xAKqKe85q9wp5uxjfpzsRqpFOkTRVCYeX/h2stskrqmGO/HffwZ
+         cJEYUUnGxfijCVuMFhnoC+DOLJmxy5jUwNfr2HzyJ8MIF4uN5dsBe218OEl1wvLPKqzT
+         20NgV+wb/kJQtPiCXFFe5zJXibNdXe+Pl37jgS+13JbcH7Vi0c5kgEkm601zSvhvmrKr
+         1/j8dAKqqP+aszqJwnKTJaypCO2CRhyJwKmgFt4LJHL42HNpDXEN4fZY6vWSgXdWNx4F
+         PLig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741617357; x=1742222157;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7AKenLNL6X3uS3482+fJgsjvOVmCWlfTmQs/079icwE=;
+        b=wfN9DpMO/7QMwDcfATibj4HXEsOiHPkvtYtcVqTjGcAnnd+4IVJgpNXOxj+8fp4Use
+         1JvSeJ8D51D8I63jHxfpp+IXaVmUmRjuyHPetkOSV7RSrMr2gHn1tiB+s9FpAWIJQTJ4
+         nZ2n78HBNXboXl4CeUoh3pwQBJckcSPQJLjsdGLqhDhxvXaQeycDTk8z2IYWxPOTwItL
+         LgrGFfLuY1EVO4q4em3jxGChqBy7k6DsXuqQMzyqfjdVS264X48TSbVs5CSUkSCd2FiF
+         hN9+fOTcC5vA9ku/zbewXdmyWIFksB+Q4o6deDu2z+Y0iBJExf1diqk8E2ggt/V0uFsn
+         MCbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVF+35wGFe8/iATeDJzuCLPzQ2WAoy7dI4UnJztsj6B+DXj9Gc5kTm9k0O7l44ZuY1+mpKvD/qrWkKOgalg@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8prBH+aKA9d2qMuePGGSEFkAq7+C7hv6ow1OG/b/lhU4j1+vH
+	dPgMvtyU1TBRTbDADMSpnfP6pVgDOwyKpuDPa4KAwz7wufmkKF9B21c/Tw0chhWoIPO7nGdiS3Q
+	Y+ac3QRI8KCN9XmEq7L6sO3mvZKe2Yp39odVh
+X-Gm-Gg: ASbGnctfYMErXSgbk1By1dPLreUmO8LbG3NFzufLvcBdcBXZFvSM1b5IW7kGPt2hoQU
+	H+SAyN7sOw/UK1fU5M+mX2AJ1Hj+ybED7rNzIBrbd9C3R5zH+IQjMKku2Q+gjBqnfp9dKjyrq+q
+	o/NMa/LxbPw/4FvGiXGr2zUKB7
+X-Google-Smtp-Source: AGHT+IELZMNpcNZxVVAes7Yvp9RPwEJWQwjVaiVupyMZoRqV6OzxPFLq2P3Lxi7fF72RmxV48sWkd2v4B0yhqGQOW8g=
+X-Received: by 2002:a05:622a:2a0b:b0:471:eab0:ef21 with SMTP id
+ d75a77b69052e-47668a7e96fmr6596751cf.13.1741617357220; Mon, 10 Mar 2025
+ 07:35:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: x1e78100-t14s: Add LCD variant
- with backlight support
-To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Sebastian Reichel <sre@kernel.org>
-References: <20250310141504.3008517-1-abel.vesa@linaro.org>
- <20250310141504.3008517-3-abel.vesa@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250310141504.3008517-3-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250303171013.3548775-3-tabba@google.com> <diqzbjucu60l.fsf@ackerleytng-ctop.c.googlers.com>
+ <CA+EHjTxhumDswVVosDtvMojk-MJbJT=V8Cxhhnw2GGUDL74Mmw@mail.gmail.com> <diqz4j01t15e.fsf@ackerleytng-ctop.c.googlers.com>
+In-Reply-To: <diqz4j01t15e.fsf@ackerleytng-ctop.c.googlers.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Mon, 10 Mar 2025 14:35:20 +0000
+X-Gm-Features: AQ5f1JpC9TjXQKryWVG5dXX_lw6XajYPTX52e9zXWHfytK3c-PmScHapjuQ9jXI
+Message-ID: <CA+EHjTxH7JXpCGsOXA+ve6U8LVnmvY5QB0x00qKWPkpSKAowBg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/9] KVM: guest_memfd: Handle final folio_put() of
+ guest_memfd pages
+To: Ackerley Tng <ackerleytng@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 10/03/2025 15:15, Abel Vesa wrote:
-> Due to the fact that Lenovo Thinkpad T14s Gen6 is available with both
-> OLED and LCD, the backlight control differs HW-wise. For the LCD variant,
-> the panel's backlight is controlled via one of the PWMs provided by the
-> PMK8550 PMIC. For the OLED variant, the backlight is internal to the
-> panel and therefore it is not described in devicetree.
-> 
-> For this reason, create a generic dtsi for the T14s by renaming the
-> existing dts. While at it, add a node name to panel and drop the enable
-> gpio and pinctrl properties from the panel node. Then add the LCD variant
-> dts file with the old name and describe all backlight related nodes.
-> 
-> So the existing dts will now be used for LCD variant while for OLED new
-> dts will be added.
-> 
-> Tested-by: Sebastian Reichel <sre@kernel.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Hi Ackerley,
 
+On Mon, 10 Mar 2025 at 14:23, Ackerley Tng <ackerleytng@google.com> wrote:
+>
+> Fuad Tabba <tabba@google.com> writes:
+>
+> > Hi Ackerley,
+> >
+> > On Fri, 7 Mar 2025 at 17:04, Ackerley Tng <ackerleytng@google.com> wrote:
+> >>
+> >> Fuad Tabba <tabba@google.com> writes:
+> >>
+> >> > Before transitioning a guest_memfd folio to unshared, thereby
+> >> > disallowing access by the host and allowing the hypervisor to
+> >> > transition its view of the guest page as private, we need to be
+> >> > sure that the host doesn't have any references to the folio.
+> >> >
+> >> > This patch introduces a new type for guest_memfd folios, which
+> >> > isn't activated in this series but is here as a placeholder and
+> >> > to facilitate the code in the subsequent patch series. This will
+> >> > be used in the future to register a callback that informs the
+> >> > guest_memfd subsystem when the last reference is dropped,
+> >> > therefore knowing that the host doesn't have any remaining
+> >> > references.
+> >> >
+> >> > This patch also introduces the configuration option,
+> >> > KVM_GMEM_SHARED_MEM, which toggles support for mapping
+> >> > guest_memfd shared memory at the host.
+> >> >
+> >> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> >> > Acked-by: Vlastimil Babka <vbabka@suse.cz>
+> >> > Acked-by: David Hildenbrand <david@redhat.com>
+> >> > ---
+> >> >  include/linux/kvm_host.h   |  7 +++++++
+> >> >  include/linux/page-flags.h | 16 ++++++++++++++++
+> >> >  mm/debug.c                 |  1 +
+> >> >  mm/swap.c                  |  9 +++++++++
+> >> >  virt/kvm/Kconfig           |  5 +++++
+> >> >  5 files changed, 38 insertions(+)
+> >> >
+> >> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> >> > index f34f4cfaa513..7788e3625f6d 100644
+> >> > --- a/include/linux/kvm_host.h
+> >> > +++ b/include/linux/kvm_host.h
+> >> > @@ -2571,4 +2571,11 @@ long kvm_arch_vcpu_pre_fault_memory(struct kvm_vcpu *vcpu,
+> >> >                                   struct kvm_pre_fault_memory *range);
+> >> >  #endif
+> >> >
+> >> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> >> > +static inline void kvm_gmem_handle_folio_put(struct folio *folio)
+> >> > +{
+> >> > +     WARN_ONCE(1, "A placeholder that shouldn't trigger. Work in progress.");
+> >> > +}
+> >> > +#endif
+> >> > +
+> >> >  #endif
+> >>
+> >> Following up with the discussion at the guest_memfd biweekly call on the
+> >> guestmem library, I think this folio_put() handler for guest_memfd could
+> >> be the first function that's refactored out into (placeholder name)
+> >> mm/guestmem.c.
+> >>
+> >> This folio_put() handler has to stay in memory even after KVM (as a
+> >> module) is unloaded from memory, and so it is a good candidate for the
+> >> first function in the guestmem library.
+> >>
+> >> Along those lines, CONFIG_KVM_GMEM_SHARED_MEM in this patch can be
+> >> renamed CONFIG_GUESTMEM, and CONFIG_GUESTMEM will guard the existence of
+> >> PGTY_guestmem.
+> >>
+> >> CONFIG_KVM_GMEM_SHARED_MEM can be introduced in the next patch of this
+> >> series, which could, in Kconfig, select CONFIG_GUESTMEM.
+> >>
+> >> > diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+> >> > index 6dc2494bd002..daeee9a38e4c 100644
+> >> > --- a/include/linux/page-flags.h
+> >> > +++ b/include/linux/page-flags.h
+> >> > @@ -933,6 +933,7 @@ enum pagetype {
+> >> >       PGTY_slab       = 0xf5,
+> >> >       PGTY_zsmalloc   = 0xf6,
+> >> >       PGTY_unaccepted = 0xf7,
+> >> > +     PGTY_guestmem   = 0xf8,
+> >> >
+> >> >       PGTY_mapcount_underflow = 0xff
+> >> >  };
+> >> > @@ -1082,6 +1083,21 @@ FOLIO_TYPE_OPS(hugetlb, hugetlb)
+> >> >  FOLIO_TEST_FLAG_FALSE(hugetlb)
+> >> >  #endif
+> >> >
+> >> > +/*
+> >> > + * guestmem folios are used to back VM memory as managed by guest_memfd. Once
+> >> > + * the last reference is put, instead of freeing these folios back to the page
+> >> > + * allocator, they are returned to guest_memfd.
+> >> > + *
+> >> > + * For now, guestmem will only be set on these folios as long as they  cannot be
+> >> > + * mapped to user space ("private state"), with the plan of always setting that
+> >> > + * type once typed folios can be mapped to user space cleanly.
+> >> > + */
+> >> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> >> > +FOLIO_TYPE_OPS(guestmem, guestmem)
+> >> > +#else
+> >> > +FOLIO_TEST_FLAG_FALSE(guestmem)
+> >> > +#endif
+> >> > +
+> >> >  PAGE_TYPE_OPS(Zsmalloc, zsmalloc, zsmalloc)
+> >> >
+> >> >  /*
+> >> > diff --git a/mm/debug.c b/mm/debug.c
+> >> > index 8d2acf432385..08bc42c6cba8 100644
+> >> > --- a/mm/debug.c
+> >> > +++ b/mm/debug.c
+> >> > @@ -56,6 +56,7 @@ static const char *page_type_names[] = {
+> >> >       DEF_PAGETYPE_NAME(table),
+> >> >       DEF_PAGETYPE_NAME(buddy),
+> >> >       DEF_PAGETYPE_NAME(unaccepted),
+> >> > +     DEF_PAGETYPE_NAME(guestmem),
+> >> >  };
+> >> >
+> >> >  static const char *page_type_name(unsigned int page_type)
+> >> > diff --git a/mm/swap.c b/mm/swap.c
+> >> > index 47bc1bb919cc..241880a46358 100644
+> >> > --- a/mm/swap.c
+> >> > +++ b/mm/swap.c
+> >> > @@ -38,6 +38,10 @@
+> >> >  #include <linux/local_lock.h>
+> >> >  #include <linux/buffer_head.h>
+> >> >
+> >> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> >> > +#include <linux/kvm_host.h>
+> >> > +#endif
+> >> > +
+> >> >  #include "internal.h"
+> >> >
+> >> >  #define CREATE_TRACE_POINTS
+> >> > @@ -101,6 +105,11 @@ static void free_typed_folio(struct folio *folio)
+> >> >       case PGTY_hugetlb:
+> >> >               free_huge_folio(folio);
+> >> >               return;
+> >> > +#endif
+> >> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> >> > +     case PGTY_guestmem:
+> >> > +             kvm_gmem_handle_folio_put(folio);
+> >> > +             return;
+> >> >  #endif
+> >> >       default:
+> >> >               WARN_ON_ONCE(1);
+> >> > diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
+> >> > index 54e959e7d68f..37f7734cb10f 100644
+> >> > --- a/virt/kvm/Kconfig
+> >> > +++ b/virt/kvm/Kconfig
+> >> > @@ -124,3 +124,8 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
+> >> >  config HAVE_KVM_ARCH_GMEM_INVALIDATE
+> >> >         bool
+> >> >         depends on KVM_PRIVATE_MEM
+> >> > +
+> >> > +config KVM_GMEM_SHARED_MEM
+> >> > +       select KVM_PRIVATE_MEM
+> >> > +       depends on !KVM_GENERIC_MEMORY_ATTRIBUTES
+> >>
+> >> Enforcing that KVM_GENERIC_MEMORY_ATTRIBUTES is not selected should not
+> >> be a strict requirement. Fuad explained in an offline chat that this is
+> >> just temporary.
+> >>
+> >> If we have CONFIG_GUESTMEM, then this question is moot, I think
+> >> CONFIG_GUESTMEM would just be independent of everything else; other
+> >> configs would depend on CONFIG_GUESTMEM.
+> >
+> > There are two things here. First of all, the unfortunate naming
+> > situation where PRIVATE could mean GUESTMEM, or private could mean not
+> > shared. I plan to tackle this aspect (i.e., the naming) in a separate
+> > patch series, since that will surely generate a lot of debate :)
+> >
+>
+> Oops. By "depend on CONFIG_GUESTMEM" I meant "depend on the introduction
+> of the guestmem shim". I think this is a good time to introduce the shim
+> because the folio_put() callback needs to be in mm and not just in KVM,
+> which is a loadable module and hence can be removed from memory.
+>
+> If we do introduce the shim, the config flag CONFIG_KVM_GMEM_SHARED_MEM
+> will be replaced by CONFIG_GUESTMEM (or other name), and then the
+> question on depending on !KVM_GENERIC_MEMORY_ATTRIBUTES will be moot
+> since I think an mm config flag wouldn't place a constraint on a module
+> config flag?
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I see.
 
-Best regards,
-Krzysztof
+> When I wrote this, I thought that config flags are easily renamed since
+> they're an interface and are user-facing, but I realized config flag
+> renaming seems to be easily renamed based on this search [1].
+>
+> If we're going with renaming in a separate patch series, some mechanism
+> should be introduced here to handle the case where
+
+I'm not talking about renaming the contents of _this_ patch series. I
+was referring to existing tems such as, CONFIG_KVM_PRIVATE_MEM, which
+really enabled guestmemfd.
+
+> 1. Kernel (and KVM module) is compiled with KVM_GMEM_SHARED_MEM set
+> 2. KVM is unloaded
+> 3. folio_put() tries to call kvm_gmem_handle_folio_put()
+>
+> > The other part is that, with shared memory in-place, the memory
+> > attributes are an orthogonal matter. The attributes are the userpace's
+> > view of what it expects the state of the memory to be, and are used to
+> > multiplex whether the memory being accessed is guest_memfd or the
+> > regular (i.e., most likely anonymous) memory used normally by KVM.
+> >
+> > This behavior however would be architecture, or even vm-type specific.
+> >
+>
+> I agree it is orthogonal but I'm calling this out because "depends on
+> !KVM_GENERIC_MEMORY_ATTRIBUTES" means if I set
+> CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES, I can't use PGTY_guestmem since
+> CONFIG_KVM_GMEM_SHARED_MEM would get unset.
+
+I'll remove this dependence in the respin.
+
+Thanks,
+/fiad
+
+> I was trying to test this with a KVM_X86_SW_PROTECTED_VM, setting up for
+> using the ioctl to convert memory and hit this issue.
+>
+> > Cheers,
+> > /fuad
+> >
+> >> > +       bool
+>
+> [1] https://lore.kernel.org/all/?q=s%3Arename+dfn%3AKconfig+merged
 
