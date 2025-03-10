@@ -1,173 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-50845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C7AEA596DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 14:59:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3B04A59747
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 15:15:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD100169841
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 13:59:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD2393ABDBC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 14:15:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA82322A807;
-	Mon, 10 Mar 2025 13:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27454211C;
+	Mon, 10 Mar 2025 14:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UFi+vrQ5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y2S9Tz16"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E105F229B0D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 13:59:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF3B22C35D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 14:15:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741615159; cv=none; b=HPabF2uuekI6IDo7LWg9CawqK6msYi/AaSL0FSDdF+WzC9hdIwDOo8lTh+jKz2pgbrrVG0sxm+L1KFmepPhaxY1Ecaqs03ZwjBD30BOQXE7OMOipnkOKXT7K8fta2ujsQG6ZY48xWFxorYl2NhVqIhIPqopp76vSPL+ISXmM5lw=
+	t=1741616121; cv=none; b=uy02eGEQrVi/6JY0tIqgFQ6K5yAQdbym5h7zniOWdpGNGT/ooyUaJQVgL/Z6SttrChWKsR56w33I95GB0OF3Sh89YmBu25J8kkXORB7HZbcYNiP53z4mB/15xBRreE8xLarVWrKgouEsZp0HT1DgtaI3dc1DeSEG+Y//N1DCStc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741615159; c=relaxed/simple;
-	bh=syyxOaEHK6qGzYm1I/AmZ2tNzmZiQDHijlwgzKigXfw=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=sf5FdC1eWBbtkW+5aELh9ui3qQd0J9DQrTlfugGcyoPnkWXtLjiTVlL8ID4n/Gw3x4fD4CRYjXT51FM7dXpg3p/Jk/zJy2GXDlgcjKXDPQuCVuqDlc8zvx3ubw1zaK3dpOgSYSEoFpO0AkROs3zh9PKHIYFhkZ3FekL3h0tU5k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UFi+vrQ5; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1741616121; c=relaxed/simple;
+	bh=0cnSqb4EHHZH1jZBocUugKDbkHDTwqCmWiPGEzjYk3I=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=pNWDtzayiiAH/pal/JU9HeUSBw8M+nhoVj3EKraJ/WqHXYNmJObmgVn2W8bCDctWpIaZcI1xofRt9A+akCmu1MkaDMSyrvNUNhOpSkTNK3w+cfJSjgzHyiNLjM2tTpYolUkCw/vRg2uK2zao4doH5yAwxp8tvWE1Liy7C3hiv04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y2S9Tz16; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43cebe06e9eso10060375e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 06:59:17 -0700 (PDT)
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3914bc3e01aso535669f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Mar 2025 07:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741615156; x=1742219956; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ppfwn2QQfECUfr6VWbo/Er8VHdHAsKrXKFLiNhCsl+4=;
-        b=UFi+vrQ56vCYm6LL36CYxOObDLqY/uRCfsXVWn+xtiq16oh4VTupXZTOs1tsv7NC0t
-         B5mHyu0pgfaAryDaceG1yFayV9+wMUb03IL8bzW0hXpqyT+26t6jbqaCMWsV16X4Uw7V
-         EkqwbGlMCi4qVcUGHabb87Hw8FltiACPkrMeclscew7QDT/o4ZswBd5diAgnY3NA6ulD
-         UpgbG1KlHA4DUHLfyqSkVobq2kIJd0QGIzzvj65rNXmu98Qu5kCjp5ZHA7/kUOaIbcaE
-         Eb52YxDjW8hdPCarnmfUyIsVaW8ipqsdi11vHrQoisaqCg0E9DMbMY9EHzUqBG+E9QJM
-         H94w==
+        d=linaro.org; s=google; t=1741616116; x=1742220916; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oiOvI1jdSHYxDi7DOGuskPixkiPIYyxQOmAzG/sEzYk=;
+        b=y2S9Tz16E7Ok9SWlYeU+1GkjzYLpSj4xLpoL4ZJkTlJokLP8NpQvuaD0mN7u0nOWR9
+         7veEt7+suL8RjFXm7lJLZmxzcPBD9sQx2pI0ScJmhdq8UXy27ZXLNA/4mRVdBIUODcs+
+         op3TViYfzVRDVAob0pKjUnJdAT4RMg4n7tVpgh5mi7TPzy7mUlqWcuh2vSwBaxmm24G0
+         BpbcPc62HeIo9pY7nVr4N3ruuqKHAqBqcFYcZrBoifZmLgFwGztK2kbb11hh1cmRFjE/
+         MoDk8+ffCTA6dZXlnmMblUYaT8XHfJ/Tq8z6LlzAGCb5lGGoALUBONJGpfcDUCiHKwN1
+         2LLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741615156; x=1742219956;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ppfwn2QQfECUfr6VWbo/Er8VHdHAsKrXKFLiNhCsl+4=;
-        b=LdAOljErVxLtIhPhTsDe2C6YKecf2JZkNRBqv8DfbO8Zo8gSNjtfYTnrY4KasyERpe
-         dga+ZJgxlO5uQcTkpJKDGdYkc9F9TqhKvwOWE/sqdhUXN+ikyhb6hUorz1Aca9HnX+4s
-         KU/P+SPkDBZGX1npn0Im4B9J9na2NohjcsfjfVT6JBefiBCKHRfSrHYcLd6dQ87rLQ2R
-         6AGi+0I6cjL1EXtxWYarM3JBz8NiegwLjgrbJDiWs8ZSRWQ6wvaQIXTed/ZUvFKjeSvj
-         kV+Hru8oIpbWkIIbo4b4HtgM0Iq+XGfXEUBVGf06rlBiAV3/zj+wj30Pt1rp7xIZ/MOx
-         f3zA==
-X-Gm-Message-State: AOJu0YxPGyJpDqJJEnzLowguQFDr7NsM34d+UytVUBSXoOt7Kzju03ZZ
-	/xgeDr1Y1Td2e2nnCm5+44NIrO1Ck75vkKgtleMkW2LakpOTQ1OJAhFVsa3ZGSc=
-X-Gm-Gg: ASbGncs1YhBMRwaO4eUWpt7C3MMe1RcYHCGvQ0HGPhxDySRG2ne2V8V+4gBHuf/9gZM
-	7cIHlUIAr/r/PUh3iKLUNliEuan5zDeK082UC5aRNrat/BQvnKQ1gm7ZkMj0ikOa0mIOB74X8XW
-	Zn4uSuk0MjFMM6SE9xteEKqDqY++j9I5MJn5AocCnInrcG9I/3kGBdXbr8o47F6yW+BRcwKfgKm
-	9+v8Y7HaNJnkGI9EsY7z1IVA3/iwIYqRc4bL3Biw8iWEG7FxvwPg8KgatZj2ENQuZottYweM6pA
-	d7nwTvXrVAMLM0w+NuKa94ZHytMZSHWNYNCfegpbjnIm6UaRjg==
-X-Google-Smtp-Source: AGHT+IHhlPge1QdiXNWDLFdy1b+GATvLkusfheev4kJ9+6b7/X0g+edMS2rZmPk8kSvKobX3NbWCJA==
-X-Received: by 2002:a05:600c:4f0c:b0:43c:eeee:b706 with SMTP id 5b1f17b1804b1-43ceeeeb95amr31294145e9.24.1741615156074;
-        Mon, 10 Mar 2025 06:59:16 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-43bdd8c28f5sm145821965e9.9.2025.03.10.06.59.14
+        d=1e100.net; s=20230601; t=1741616116; x=1742220916;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oiOvI1jdSHYxDi7DOGuskPixkiPIYyxQOmAzG/sEzYk=;
+        b=pZbLOk7DT7wxZfXtCgvo7a0HtXBuF79fCNrf6Iim72193ii6I0DmcOf+PoJukcP3D7
+         +jYhgqs8kWVVDZXipC/wZZhoVolal4ww69fqk6X2gWMFGhsc/dtinuCUQmGecW1G6DWb
+         1qLil2lMnX7oOjOb/M+jW4Nk9vsNbPmG3/ktCnYu05z4/HFM7ZB95A4WyP8Ixh44Trgw
+         SxQxnyE141OCKMWRx/7Qjr5LtLW1NDA9QSHynfmyQG7eXp7XZcEPid9sqqKfuJhZB0Uc
+         JckFHH2U4LNOdShB+8F8zSml2ouPnGzissVsApUzc2DGH+UgpRz4SdCD01XBCnPrpgyw
+         jfxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXNZYrZN4UwYAK/7R+MDGyvms2iK3MwQM+UlEsPHzmFzzt9yPwsJ4KJWhToW0vGA6AcofAzipP7MBXmKHGT@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEaNwW3J060qKPvhCty7CV1Yf69XlEZF5VSMyaPL99gj7HGCgq
+	I4QzBqD6qkp8+bJmeRXFfD7U2AlZ31NfPqHhknSCNaaMPnVCBhGkS+R/N9UDdg0=
+X-Gm-Gg: ASbGncsn659CFbBp5o2uRb78B1Ovh+yjQlu+9+Sd/xZMhjEhFltoWxEV8Z9a8nGDf2H
+	wx2IqjCVGcRNqQqJh+krn0yIVyLo9EAHupCE5fVfBJb7R2rW7JUtPitlIe+Jm1BMbuGkVOUPr38
+	PlEjmolUczpqk5wUwAty5WURVr4IVkSfc8exjKEbpHUptU30NJYy90M/uT2Rl+lgo1BSrX9XWz5
+	9Q3x3UQ027v0veG4hBMSXjWgOn+gcvsynsxB3lfJliMVqdjpfCMZvTSU3zKmQOfwAvSASDc1Xg+
+	G2+eAppPrnvNJjKpg1KkBL3W9TctzPjHFB9j0YiOqYuYb2Lo9P2GoA==
+X-Google-Smtp-Source: AGHT+IHa45QnkYD1vqqthYS3xXFkFKfr9pmWfxHxp8awb40Um6CRd646Vsb+NIScIuubTXcOwu6+Lg==
+X-Received: by 2002:a05:6000:1a86:b0:38d:e48b:1787 with SMTP id ffacd0b85a97d-39132d1d1efmr8985888f8f.14.1741616116199;
+        Mon, 10 Mar 2025 07:15:16 -0700 (PDT)
+Received: from hackbox.lan ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bdd8da097sm149824545e9.17.2025.03.10.07.15.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 06:59:15 -0700 (PDT)
-Date: Mon, 10 Mar 2025 16:59:11 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [bug report] drm/msm/a6xx: Introduce GMU wrapper support
-Message-ID: <7129575c-28ce-48be-9c4d-201f8d6741fb@stanley.mountain>
+        Mon, 10 Mar 2025 07:15:15 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sebastian Reichel <sre@kernel.org>
+Subject: [PATCH v2 0/3] arm64: dts: qcom: x1e78100-t14s: Rework devicetree for LCD and OLED SKUs
+Date: Mon, 10 Mar 2025 16:15:01 +0200
+Message-Id: <20250310141504.3008517-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-Hello Konrad Dybcio,
+The Lenovo Thinkpad T14s Gen6 comes in different SKUs when it comes to
+panels. The only difference that is important is whether it is an OLED
+or an LCD. The way that backlight is handled in devicetree between OLED
+and LCD forces the need of two separate DTBs.
 
-Commit 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
-from Jun 16, 2023 (linux-next), leads to the following Smatch static
-checker warning:
+So create a common T14s dtsi that describes everything except the
+backlight handling, by renaming the existent dts to dtsi. Then make the
+legacy dts the LCD version, while adding a prepended oled dts. Both
+include the generic T14s dtsi.
 
-	drivers/gpu/drm/msm/adreno/a6xx_gmu.c:1844 a6xx_gmu_wrapper_init()
-	warn: 'gmu->cxpd' can also be NULL
+For the OLED version, I do not have HW to test it on, so OLED specific
+bits will come at a later stage. Still, add the OLED dts in order to set
+the stage for it.
 
-drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-    1790 int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
-    1791 {
-    1792         struct platform_device *pdev = of_find_device_by_node(node);
-    1793         struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
-    1794         int ret;
-    1795 
-    1796         if (!pdev)
-    1797                 return -ENODEV;
-    1798 
-    1799         gmu->dev = &pdev->dev;
-    1800 
-    1801         ret = of_dma_configure(gmu->dev, node, true);
-    1802         if (ret)
-    1803                 return ret;
-    1804 
-    1805         pm_runtime_enable(gmu->dev);
-    1806 
-    1807         /* Mark legacy for manual SPTPRAC control */
-    1808         gmu->legacy = true;
-    1809 
-    1810         /* Map the GMU registers */
-    1811         gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu");
-    1812         if (IS_ERR(gmu->mmio)) {
-    1813                 ret = PTR_ERR(gmu->mmio);
-    1814                 goto err_mmio;
-    1815         }
-    1816 
-    1817         gmu->cxpd = dev_pm_domain_attach_by_name(gmu->dev, "cx");
+Had to format it using "git format-patch" since b4 doesn't currently
+support -B when formatting the patch, and the renaming of the dts into
+dtsi (plus the panel properties being dropped) would've not been visible
+enough for reviewers.
 
-dev_pm_domain_attach_by_name() sure seemse like it can return NULL.
+Changes in v2:
+ - rebased on next-20250307
+ - Dropped the RFC, as it seems to be agreed upon already
+ - Added dt-bindings patch to document the new oled and lcd compatibles
+ - Added panel variant compatible strings to each dts and included the
+   the panel type into model string as well
+ - Changed backlight PWM period to 4266537 to match exact period the
+   PMIC can do.
+ - Link to v1 (RFC):
+   https://lore.kernel.org/r/20250306090503.724390-1-abel.vesa@linaro.org/
 
-    1818         if (IS_ERR(gmu->cxpd)) {
-    1819                 ret = PTR_ERR(gmu->cxpd);
-    1820                 goto err_mmio;
-    1821         }
-    1822 
-    1823         if (!device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME)) {
+Abel Vesa (3):
+  dt-bindings: arm: qcom: Document Lenovo ThinkPad T14s Gen 6 LCD and
+    OLED
+  arm64: dts: qcom: x1e78100-t14s: Add LCD variant with backlight
+    support
+  arm64: dts: qcom: x1e78100-t14s: Add OLED variant
 
-If it did then device_link_add() then this would fail
+ .../devicetree/bindings/arm/qcom.yaml         |    4 +-
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../x1e78100-lenovo-thinkpad-t14s-oled.dts    |   12 +
+ .../qcom/x1e78100-lenovo-thinkpad-t14s.dts    | 1194 +----------------
+ ...dts => x1e78100-lenovo-thinkpad-t14s.dtsi} |    6 +-
+ 5 files changed, 77 insertions(+), 1140 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts
+ rewrite arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts (98%)
+ copy arch/arm64/boot/dts/qcom/{x1e78100-lenovo-thinkpad-t14s.dts => x1e78100-lenovo-thinkpad-t14s.dtsi} (99%)
 
-    1824                 ret = -ENODEV;
-    1825                 goto detach_cxpd;
-    1826         }
-    1827 
-    1828         init_completion(&gmu->pd_gate);
-    1829         complete_all(&gmu->pd_gate);
-    1830         gmu->pd_nb.notifier_call = cxpd_notifier_cb;
-    1831 
-    1832         /* Get a link to the GX power domain to reset the GPU */
-    1833         gmu->gxpd = dev_pm_domain_attach_by_name(gmu->dev, "gx");
-    1834         if (IS_ERR(gmu->gxpd)) {
-    1835                 ret = PTR_ERR(gmu->gxpd);
-    1836                 goto err_mmio;
-    1837         }
-    1838 
-    1839         gmu->initialized = true;
-    1840 
-    1841         return 0;
-    1842 
-    1843 detach_cxpd:
---> 1844         dev_pm_domain_detach(gmu->cxpd, false);
-                                      ^^^^^^^^^
-And this would crash.
+-- 
+2.34.1
 
-    1845 
-    1846 err_mmio:
-    1847         iounmap(gmu->mmio);
-    1848 
-    1849         /* Drop reference taken in of_find_device_by_node */
-    1850         put_device(gmu->dev);
-    1851 
-    1852         return ret;
-    1853 }
-
-regards,
-dan carpenter
 
