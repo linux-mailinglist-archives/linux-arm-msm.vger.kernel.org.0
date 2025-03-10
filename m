@@ -1,127 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-50754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0DD2A5896C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 00:58:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7426A58980
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 01:09:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A54051889303
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Mar 2025 23:58:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F233169675
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 00:09:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C73C21ABAD;
-	Sun,  9 Mar 2025 23:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 889E123A0;
+	Mon, 10 Mar 2025 00:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BsseVtY1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="owXf03Nz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDE619D060;
-	Sun,  9 Mar 2025 23:58:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF0481E;
+	Mon, 10 Mar 2025 00:09:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741564709; cv=none; b=f2zNGQ3ipYKZ1Vlq9RCwQu1Uw25r/3qDG9D7TEISyM9L8nGaAtHfBtFO6Xs4sp5s3L7WfvI4EonNQ4HzPvS/zgQl+ZqmAydk9hbD54gkICvnnxLDEqtL0zzMuRHlSxHljPTHjV0mVy19eAlJof05nlo34lwrf6UzbzGnwzAzzI8=
+	t=1741565361; cv=none; b=JK0YzriVkFvddyfMG3zzceZxQ0kFnOgMOCiJfMuW4tjbFwF1YD7bN8dEdmxGlq61yamqZ/PuBOS0LEbTON5lOeaA4nAfrAITAje3XUN53Le5USSTrSkwbx0WgTRZ6AxSiUUA4vYLhlfwZZAgJkCj0lx6hs3TKMeKGlNpUyE2P0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741564709; c=relaxed/simple;
-	bh=3g/+jeRs5nhDAbqAZc0kAv6A5GCo+NTky5mMlZ8s5Zw=;
+	s=arc-20240116; t=1741565361; c=relaxed/simple;
+	bh=xhdh8DfzjzkkyMzCsHq/3sp7L1dCisrxi/w6JvA65VM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EUuF4FJqkTNCHyzJMwAaRe3GPop43j4yAMiq7QXrAdrReLL/nVejDzQuN/1LaprdGfCy+fHKs+2FLHblPSyvj7m9CHSNO7M4Vt1NO6n8MvK/i40cXtSkOXfgnIlB549SWtoZ+PT3U4/ncJbXEDYrDJCBGRHW3YGr7DFYRyxDnGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BsseVtY1; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741564706; x=1773100706;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3g/+jeRs5nhDAbqAZc0kAv6A5GCo+NTky5mMlZ8s5Zw=;
-  b=BsseVtY10nORnxgrRtAOVi7iYm6V2jCL5hFT3pJFx1XObJYYOR0Igh5v
-   0oC8YxciN3Va9+n9vrrXaMdmcDbrd/rZh61PPqwnzXINVI9ZJHVxclRix
-   ARc38pRv2bLfUTgmDMFiDFDJtnXMQhoOTZ5qwHJhMVp8Gln+thpGgn3vq
-   9jznR+U7p+Qd4SWTI9Qc/5xeTAGKSsvcjUrE1sPxwuXV7c4Z7tsTutg1s
-   Pygaqt2SQ76Gokxsg3CtiyLt3tHCVcoaDrK2G/aksE2EEF2kIqZ7Rcbik
-   +uRVRCzCS4Jugz4+YHCFpx1zrRnHPRbeQqD5X3eMznC39VVzse3utaSTe
-   g==;
-X-CSE-ConnectionGUID: CEaGGiEzQvqJJKc464NNiA==
-X-CSE-MsgGUID: Z7HyFwCEQT2qAz8WIJhnbw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11368"; a="52756896"
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; 
-   d="scan'208";a="52756896"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2025 16:58:25 -0700
-X-CSE-ConnectionGUID: AipAg9jNT0is5bFPMhYlNQ==
-X-CSE-MsgGUID: D/npFTWhRJGdziAE2u95Pw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; 
-   d="scan'208";a="124439273"
-Received: from lkp-server02.sh.intel.com (HELO a4747d147074) ([10.239.97.151])
-  by fmviesa005.fm.intel.com with ESMTP; 09 Mar 2025 16:58:19 -0700
-Received: from kbuild by a4747d147074 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1trQX8-0003ZI-02;
-	Sun, 09 Mar 2025 23:58:15 +0000
-Date: Mon, 10 Mar 2025 07:57:55 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dmitry Baryshkov <lumag@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	=?iso-8859-1?Q?Ma=EDra?= Canal <mcanal@igalia.com>,
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 2/4] drm/msm/hdmi: use new helper for ACR tables
-Message-ID: <202503100745.KWEAWjFD-lkp@intel.com>
-References: <20250309-drm-hdmi-acr-v1-2-bb9c242f4d4b@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=nsw7jewiZxo5GiV7s8yiB5xKov6eOPElUtArAqttniZ1A8aoile2/5H8KNnoy4TBtB+svyoao0Mg55srFTHVJPluM2qKJfZgcTS1S9V1ins0MYpJ8q8HQtH/oqmV3IQwl0ZJ07yc2BeK8mFoij4PXLb0pfsvKM05cw7Ng8OYa84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=owXf03Nz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6BDC4CEED;
+	Mon, 10 Mar 2025 00:09:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741565360;
+	bh=xhdh8DfzjzkkyMzCsHq/3sp7L1dCisrxi/w6JvA65VM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=owXf03NzPRZYWvMX/ceVRzsVgnyp8t/wzqg4ZFNlPLtcyuhdBRRUcF7PBKAnp0RbF
+	 9U/xNMsyOgVBQ4YAks0VasLcRdX0kB94ZqbQTQyw+wNQbYgUxbizDnSQ54SxNGpYp8
+	 jixZe/4tBIyomISBimbNNVTz3nyOHY9fDpgLYvEz+g3Fl6lnR/lqFj8ifKnFDdUqNT
+	 MoYTXdX6/QPdO4F9ryrKGdl+EDNiNPobAvOQkw8cBt3AX7ClOCDiHHs/W5fEzoHAhH
+	 Z1UjD3/WetPQhAU8ZgQOSqk61+c0mUQM2wMhd3SF6hA0TREBSvkBU96PZm8Jv08aTf
+	 NpEe1/E4XOngQ==
+Received: by venus (Postfix, from userid 1000)
+	id 55276180B94; Mon, 10 Mar 2025 01:09:17 +0100 (CET)
+Date: Mon, 10 Mar 2025 01:09:17 +0100
+From: Sebastian Reichel <sre@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johan Hovold <johan@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC 1/2] arm64: dts: qcom: x1e78100-t14s: Add LCD variant with
+ backlight support
+Message-ID: <qh6bb2h6ntyy6cvcigvnfp6gurxcvryg44ybd3kf3y73wxl5ua@hk4wydp4tn45>
+References: <20250306090503.724390-1-abel.vesa@linaro.org>
+ <20250306090503.724390-2-abel.vesa@linaro.org>
+ <lolqokpczxdscvgj6xdfyxblmle3csgzje3fgo4itzspgmeriy@7zzx7hg2zfks>
+ <Z81dODU91zDPo/H5@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="j6wfhyh62rj4x5ws"
 Content-Disposition: inline
-In-Reply-To: <20250309-drm-hdmi-acr-v1-2-bb9c242f4d4b@linaro.org>
+In-Reply-To: <Z81dODU91zDPo/H5@linaro.org>
 
-Hi Dmitry,
 
-kernel test robot noticed the following build errors:
+--j6wfhyh62rj4x5ws
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [RFC 1/2] arm64: dts: qcom: x1e78100-t14s: Add LCD variant with
+ backlight support
+MIME-Version: 1.0
 
-[auto build test ERROR on 0a2f889128969dab41861b6e40111aa03dc57014]
+Hi,
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-display-hdmi-provide-central-data-authority-for-ACR-params/20250309-161610
-base:   0a2f889128969dab41861b6e40111aa03dc57014
-patch link:    https://lore.kernel.org/r/20250309-drm-hdmi-acr-v1-2-bb9c242f4d4b%40linaro.org
-patch subject: [PATCH 2/4] drm/msm/hdmi: use new helper for ACR tables
-config: arm-randconfig-004-20250310 (https://download.01.org/0day-ci/archive/20250310/202503100745.KWEAWjFD-lkp@intel.com/config)
-compiler: clang version 21.0.0git (https://github.com/llvm/llvm-project e15545cad8297ec7555f26e5ae74a9f0511203e7)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250310/202503100745.KWEAWjFD-lkp@intel.com/reproduce)
+On Sun, Mar 09, 2025 at 11:19:52AM +0200, Abel Vesa wrote:
+> On 25-03-08 01:01:31, Sebastian Reichel wrote:
+> > Hi,
+> >=20
+> > On Thu, Mar 06, 2025 at 11:05:02AM +0200, Abel Vesa wrote:
+> > > Due to the fact that Lenovo Thinkpad T14s Gen6 is available with both
+> > > OLED and LCD, the backlight control differs HW-wise. For the LCD vari=
+ant,
+> > > the panel's backlight is controlled via one of the PWMs provided by t=
+he
+> > > PMK8550 PMIC. For the OLED variant, the backlight is internal to the
+> > > panel and therefore it is not described in devicetree.
+> > >=20
+> > > For this reason, create a generic dtsi for the T14s by renaming the
+> > > existing dts. While at it, add a node name to panel and drop the enab=
+le
+> > > gpio and pinctrl properties from the panel node. Then add the LCD var=
+iant
+> > > dts file with the old name and describe all backlight related nodes.
+> > >=20
+> > > So the existing dts will now be used for LCD variant while for OLED n=
+ew
+> > > dts will be added.
+> > >=20
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > ---
+> > > [...]
+> > > +	backlight: backlight {
+> > > +		compatible =3D "pwm-backlight";
+> > > +		pwms =3D <&pmk8550_pwm 0 5000000>;
+> >=20
+> > I've tried this patch series together with the fix series [0], but
+> > without the duty cycle calculation change [1]. Instead I changed the
+> > period from 5000000 to 4266667. With that everything works as
+> > expected for me.
+> >=20
+> > [0] https://lore.kernel.org/all/20250305-leds-qcom-lpg-fix-max-pwm-on-h=
+i-res-v4-0-bfe124a53a9f@linaro.org/
+> > [1] https://lore.kernel.org/all/20250303-leds-qcom-lpg-compute-pwm-valu=
+e-using-period-v1-1-833e729e3da2@linaro.org/
+>=20
+> Yes, I forgot to squash in the correct period.
+>=20
+> The period should actually be 4266537. This is because the max PWM value
+> is actually BIT(resolution) - 1.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503100745.KWEAWjFD-lkp@intel.com/
+For the version with 4266537:
 
-All errors (new ones prefixed by >>, old ones prefixed by <<):
+Tested-by: Sebastian Reichel <sre@kernel.org>
 
->> ERROR: modpost: "drm_hdmi_acr_get_n_cts" [drivers/gpu/drm/msm/msm.ko] undefined!
+-- Sebastian
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+>=20
+> Will update in next version.
+>=20
+> The [1] patch was basically NACKed by Uwe. It is not needed if we set
+> the period to 4266537 in DT.
+>=20
+> >=20
+> > Greetings,
+> >=20
+> > -- Sebastian
+>=20
+>=20
+
+--j6wfhyh62rj4x5ws
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmfOLakACgkQ2O7X88g7
++pomfA//c6tWamks7e9QRfaDSQenMPScMxhqbQZjY+ppsNnrMMNNHx/CITtewZEW
+2eg5Ne6KXOTGxBUT64GA/aOQwRZztfaxwpjZ0g14SWB3Ev1WMrEFHthmpXXm15/j
+37pN7HZ0aD9fDHj1SDQziW4I1MyA3dIKWRVvJLd2gRybo2zcjW3HGkHYoVIoxJ3l
+IA+cyLgPdG5tPS2tlQQ/lIkyPtU2YIaLFqsCMtecm3BBDMHJVoV6oBhsilR+sNRu
+98XbyPRuEQ+Bt5/migLolPY8DyxMNHJalgKdYeba1LaY95GV77KebfqzuZx0bWPR
+eh15BKn9OdVjMoIAG7rCVTx0J9ZEeVCbMwaPYjEsrmZozx1p5SlrLQ8uHaoo8Opm
+wSu4eh2FlYx2i2mHynTS1PPH/x+K4u/tl59BVUTcFpGqjt9F7EvEJ0qbayYh1kWO
+u2BgY/BNVaXAbmxOapEfhPwYaOkOtO98WQImN2EkAbMEzZxQrJCcWyGIDPQWTXdq
+EzfT4yxM5usnFX35NBOabFsmWBcTu3htk4JPaql4ixJNjkpU2/nJomuZj7tIWnaD
+IznIjXdJPFNLMJ2w1aXCLj1ONXnBdq3pGfR8rYw1d4FxUDOnMTMEpSHNZfbIAMHd
+sp7m8ewzuPKd3+ClJADvhiKRA8vd8H4hT0UP8vEFGpnzApvKp8E=
+=L13G
+-----END PGP SIGNATURE-----
+
+--j6wfhyh62rj4x5ws--
 
