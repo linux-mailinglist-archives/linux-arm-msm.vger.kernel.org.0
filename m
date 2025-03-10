@@ -1,115 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-50785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D150A58E0A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 09:23:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FFF7A58E3B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 09:35:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3DFEA3AC47D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 08:23:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2341A3AD211
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 08:35:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D521223311;
-	Mon, 10 Mar 2025 08:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A14722332E;
+	Mon, 10 Mar 2025 08:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M8T+aQzp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KwPF2jWA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED40213E93;
-	Mon, 10 Mar 2025 08:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684C12046BF;
+	Mon, 10 Mar 2025 08:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741595012; cv=none; b=NWQU7b1neTzUlsmeNqeNbx9z8JUjvJJsGJFi6a6QtzReSay/RrQJOE6z384E19M22ECyQ8aKEoH8NyV0fM79fWfN35dQAqQ3Rr6DnfXEtdpAOSlyJx1T7/n1C0EDe1w3OM8OVO+M9Ntm/Hw5q5BfZ6IP6wWu7JpXw1KEhPs8vjw=
+	t=1741595709; cv=none; b=cdIpQ9l9Q9NVdKmcXKxSyK+DQxAZl0A2mceHvAZM7kThjKtz3vgom/PgL0LppoUcSPK3jtOiJOv0YyAMgy/sq2cdOeCMJIEg3pfSPJ/hpXaY4rwt0jQkGbDA32KW2cHdupoqEX+XxcDrow5dDXd9b3IEJz3U/lGl6fLBGMWafiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741595012; c=relaxed/simple;
-	bh=6YS12As8AjAjGZ/NYR1OL7LWdlVVM8Ywxsw7OqaqjCw=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=LCgu1APZKAhsja1owIHH1mF/XJd3pg9+mkAnLJuukjfUzyG10fKH+3kCe7JsVhmrrrQFf+DKM3o+MM5hrlVWE70570AC8mjdWeCMp+12g767PrSPwdagFaP2nGl6Ui+YsVIvsBFb7SuUtWmTPrUW6+jI1QhbZW76H9Hxnfz4ezc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M8T+aQzp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82443C4CEE5;
-	Mon, 10 Mar 2025 08:23:30 +0000 (UTC)
+	s=arc-20240116; t=1741595709; c=relaxed/simple;
+	bh=FDc8n1PfVplUqR6TlrIzRSO+eMe/vmEGQ617VBj5ULM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X7jA1yjagv4F0TPcJd1H+HXb06OrdVCKzwXf1mjVpk82/gU25QWyRe+SgR8tKQB3E7ygWyo4Jp6edG3NELOgYcFPbWxABn+R6QzZ78NI5OjJ5ah+9HmbXP8cT801ugsEbK8UKY8SkXRUaetL4P2iBnOg0sjwVWwsqXmc9XxuG5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KwPF2jWA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CBBC4CEE5;
+	Mon, 10 Mar 2025 08:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741595010;
-	bh=6YS12As8AjAjGZ/NYR1OL7LWdlVVM8Ywxsw7OqaqjCw=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=M8T+aQzptkie1CRGdVDOBLsQKkwmiHQ7cqdLudZskVnXs6UfjBFtoBV/3o1LOXlRF
-	 3deQyAH8FPL+0DH3RnJfWbMiIkfUVyMrQTgx7+wAa4WTHpyoCUeI5cicmUq5UVYRTE
-	 HgJfqDe6B66Ar4pdnRt+Ix7Qcyj0YSvbBz2H1D6TbNSGoIZOpqD6TR551rv1YrkV0D
-	 nggLc84OktxwOKoB3s7p1xrm16gyu/nEumhk/920jINDpOmeI+ffKfrbQgc8kNVGKs
-	 llIqyVT8NzH/o4EgXxhdTqGeKZmkXxv61lmAWRcnNH6biWz2XJ4jL1QPZnanxCPROM
-	 v4zXQ7WhhoNgA==
-Date: Mon, 10 Mar 2025 03:23:29 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1741595708;
+	bh=FDc8n1PfVplUqR6TlrIzRSO+eMe/vmEGQ617VBj5ULM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KwPF2jWAZQad3jgjs9AggH945mKE24H04MeiEP9rxZ3fttzLqvBqQYIstb7g0EqiE
+	 fKZyYRMi+Yga/mq7FcNClkG0RtlYd6z0NzLdpCspseE37UzxsirOVtPcMoYZ+B4SM8
+	 rYA89edVwCKeKTLhmeSeavVQFBC4w/6Ft0YhjuG4pjLX2JcAK0AkyL1o16qsCffWJz
+	 XhDWDV95MbWRSrc9zfEUJCGDsaY6wqa4PZfPC8dkoL/b/VEPqkrsqrIJGeh7NhBtQE
+	 d2wvJ7VNHxHpWkVaON2ugCgIkLZmnAJ9Hub/Si1rB+D4iXOBE4dvSS9ue+3GgHpODZ
+	 bQG938Iv2QTgQ==
+Date: Mon, 10 Mar 2025 09:35:04 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, bhelgaas@google.com, 
+	lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org, 
+	andersson@kernel.org, konradybcio@kernel.org, dmitry.baryshkov@linaro.org, 
+	neil.armstrong@linaro.org, abel.vesa@linaro.org
+Cc: quic_qianyu@quicinc.com, quic_krichai@quicinc.com, 
+	johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v3 1/4] dt-bindings: PCI: qcom: Document the QCS615 PCIe
+ Controller
+Message-ID: <20250310-bronze-chameleon-of-karma-57cd1b@krzk-bin>
+References: <20250310065613.151598-1-quic_ziyuzhan@quicinc.com>
+ <20250310065613.151598-2-quic_ziyuzhan@quicinc.com>
+ <f679c5a0-5044-4cff-8c3b-5051b1b873f9@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-kernel@vger.kernel.org, abel.vesa@linaro.org, 
- linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, kw@linux.com, 
- johan+linaro@kernel.org, neil.armstrong@linaro.org, lpieralisi@kernel.org, 
- conor+dt@kernel.org, vkoul@kernel.org, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, kishon@kernel.org, andersson@kernel.org, 
- dmitry.baryshkov@linaro.org, konradybcio@kernel.org, 
- quic_krichai@quicinc.com, krzk+dt@kernel.org, bhelgaas@google.com, 
- manivannan.sadhasivam@linaro.org, quic_qianyu@quicinc.com
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-In-Reply-To: <20250310065613.151598-2-quic_ziyuzhan@quicinc.com>
-References: <20250310065613.151598-1-quic_ziyuzhan@quicinc.com>
- <20250310065613.151598-2-quic_ziyuzhan@quicinc.com>
-Message-Id: <174159500913.3380799.14221924313975247180.robh@kernel.org>
-Subject: Re: [PATCH v3 1/4] dt-bindings: PCI: qcom: Document the QCS615
- PCIe Controller
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f679c5a0-5044-4cff-8c3b-5051b1b873f9@kernel.org>
 
-
-On Mon, 10 Mar 2025 14:56:10 +0800, Ziyue Zhang wrote:
-> From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+On Mon, Mar 10, 2025 at 08:18:35AM +0100, Krzysztof Kozlowski wrote:
+> On 10/03/2025 07:56, Ziyue Zhang wrote:
+> > From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > 
+> > Add dedicated schema for the PCIe controllers found on QCS615.
+> > Due to qcs615's clock-names do not match any of the existing
+> > dt-bindings, a new compatible for qcs615 is needed.
+> > 
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> > ---
 > 
-> Add dedicated schema for the PCIe controllers found on QCS615.
-> Due to qcs615's clock-names do not match any of the existing
-> dt-bindings, a new compatible for qcs615 is needed.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-> ---
->  .../bindings/pci/qcom,qcs615-pcie.yaml        | 160 ++++++++++++++++++
->  1 file changed, 160 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pci/qcom,qcs615-pcie.yaml
-> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Sigh, this wasn't ever tested.
 
-yamllint warnings/errors:
+NAK
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/pci/qcom,qcs615-pcie.example.dts:58.35-36 syntax error
-FATAL ERROR: Unable to parse input tree
-make[2]: *** [scripts/Makefile.dtbs:131: Documentation/devicetree/bindings/pci/qcom,qcs615-pcie.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1511: dt_binding_check] Error 2
-make: *** [Makefile:251: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250310065613.151598-2-quic_ziyuzhan@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Best regards,
+Krzysztof
 
 
