@@ -1,120 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-50823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63863A593B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 13:10:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6E1CA593AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 13:10:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5AA0D161D80
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 12:10:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3E8BE7A5D6B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 12:09:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CB0D223714;
-	Mon, 10 Mar 2025 12:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04E70158D94;
+	Mon, 10 Mar 2025 12:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="FO2Ajppq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y96JWYN8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68733222593;
-	Mon, 10 Mar 2025 12:09:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B1322423E;
+	Mon, 10 Mar 2025 12:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741608561; cv=none; b=F/SDLURSS/MeMd+yXOHHOYK++BxJeILkJ5u+bguiX0OdJVgVfiFTTj++NNKT881XU3ir8TO9c8hSmeAORwJ60Xtzxxsq4WFJ+P/DBqkZusr7Z9Qolt0lINgXl35U4FhYR1YDaJpSRhbRzY+2LKoxypWgal1QH5byswbRLPtlqz4=
+	t=1741608586; cv=none; b=B+tAeMkmMn4PtbCs0Osv1jVZ3hJXkMG4YSKRtAKl4o2IL62efXJRhUpaxl1jvPtlrNkK7EJrIxb/z7asYBlKA/AfoJF8fWBRRD7LydPZ2Ym30Kmp6KIYVgQD7tmO6BqT2phwCCWslfH59JZ5vbFAoL3j8ly2CWlXzuJXVTcahLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741608561; c=relaxed/simple;
-	bh=Yjkpiv37hbhWQSOGX0HXhS8f6pIf5DV4hH8aBAMFWjQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=gNJLKJlscvSjJI8N3Y5QUdIhTqSAVFWEupVmdcwN/d12uIU9o/7CBQ7i02/YNDXdqTrK/yz0uTfCCot49CIj1FxmCWafOiNdmK7jfObwLYbTb6Ui7WesVKVg16+cmIIvCli0s1Xy3Y6GjfLEkp5jQAxBLZVumfBrsNnbtn2ipAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=FO2Ajppq; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=PqVBOCxsxyp7wajKPgMinDlSlaZeZV6g0DWdsy2a0XY=; b=FO2AjppqJGF5ifVgbYsiWDAgyW
-	IwfC5BRAdftqY9sbhjmf+MCfwuMrOOWTovki9FgpdbT2bLnlNmiz0LtHC68eHtgmam9Wy+vbVjPrL
-	3QfLr390Qbk4K1lziDcNf9StX1h5Uga4B3FfQdbIf8jBoVzjqb+d4/ilQW3EPl4onGnYF04G7CjzP
-	0ifaNoJ5/39nZYbt3L9NS3FoUhz20xmYGGZpZclGuYLr2+wlpoE+Uje6uyPNRlytqngG+BcrKsyAR
-	CdKvD+S0XX1WcQwOFelY6/QOD0LA8D4USDJSAxn/F1cAqNLnhxVMW2/HWWInM/3sY0vDH9FRPrZ6U
-	3VId71fg==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:48000)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1trbwK-0002XX-2w;
-	Mon, 10 Mar 2025 12:09:01 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1trbwE-0002Rn-1T;
-	Mon, 10 Mar 2025 12:08:54 +0000
-Date: Mon, 10 Mar 2025 12:08:54 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Samuel Holland <samuel@sholland.org>, Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next 0/9] net: stmmac: remove unnecessary
- of_get_phy_mode() calls
-Message-ID: <Z87WVk0NzMUyaxDj@shell.armlinux.org.uk>
+	s=arc-20240116; t=1741608586; c=relaxed/simple;
+	bh=ww3Eu/NZe1gPd9/SR83ncH625Q4WvNV25ldoR32BOyA=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DwUfR0Piyk7o+NdWKzBkWwnv5NsDFiU8UxkNKiMT8Qyx6ZpEyNRlkcj/hmi5xSK5299zvC2KE4S5pqWaqE63SvlVhRDLnDznWmq6Mv5tXQlr7IsdoPBaOHz9f6BBtH3y/CQnFm7WeI2U/WTxhOlKBbZRYL4EaC4/y/5RUBqu7AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y96JWYN8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52AA0R9D016566;
+	Mon, 10 Mar 2025 12:09:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=TKz3OR1pLumuAjoEZdvb6s
+	Q1Epml2YTOuj985ElE6k0=; b=Y96JWYN8HdtZoYPpYLlLpr9n1+QUrvnSTgBbsu
+	cHL6kzhxkrfwPviwx9/lRX2I2fg2g9RjHDOB3ORdG1GA+aLiaX/vr8Q5GSpjglL9
+	oR9uLk7IsvhE2ybaihwVO6pztNEZssluP+pmI3mnQsHSu3QmNDaPqT1+qH6H5Zpf
+	Drxo+D/VHFzBR4jyFpQv7Uq3jyWubTDVbnR+KowaRYBfXBao/W5o22oZPYhfO9js
+	p0t8jX91641WYMX+62DhPi2sFSSefdrDHoZAqSmOvd7KD1nseJ9OkR5qiQmKZZIY
+	Z7LWws2cy7FHO/0mzbG710yHDJk8xXDJlFEWaA/fFBqQpF4w==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458eypcpsk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Mar 2025 12:09:24 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52AC9OBi011386
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Mar 2025 12:09:24 GMT
+Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 10 Mar 2025 05:09:21 -0700
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: <manivannan.sadhasivam@linaro.org>, <miquel.raynal@bootlin.com>,
+        <richard@nod.at>, <vigneshr@ti.com>, <broonie@kernel.org>,
+        <bbrezillon@kernel.org>, <linux-mtd@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>
+Subject: [PATCH v3 0/4] QPIC v2 fixes for SDX75
+Date: Mon, 10 Mar 2025 17:39:02 +0530
+Message-ID: <20250310120906.1577292-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=A9yWP7WG c=1 sm=1 tr=0 ts=67ced674 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=xRkTYtAs_KQTFvTIrP4A:9
+X-Proofpoint-ORIG-GUID: NvRxWxIVbo-vMcsUNZlAAmvxQQ26N7Qq
+X-Proofpoint-GUID: NvRxWxIVbo-vMcsUNZlAAmvxQQ26N7Qq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-10_05,2025-03-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1011
+ priorityscore=1501 malwarescore=0 impostorscore=0 spamscore=0
+ suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503100096
 
-Hi,
+v3:
+ * Updated commit message
+ * updated qpic_v2 to qpic_version2
+ * Removed dev_cmd_reg_start = 0 in sdx55_nandc_props {}
+ * Added new patch to add nand_offset in spi_qpic_snand
+   driver
 
-This series removes unnecessary of_get_phy_mode() calls from the stmmac
-glue drivers. stmmac_probe_config_dt() / devm_stmmac_probe_config_dt()
-already gets the interface mode using device_get_phy_mode() and stores
-it in plat_dat->phy_interface.
+v2:
+ * Updated commit message
+ * Added stable kernel tag
+ * Added Fixes tag
+ * Renamed the variable from offset_from_qpic to nandc_offset
+ * Set buf_count to 512 in the parameter page read
+ * Replaced the buf_count value of 512 with the len in bytes 
 
-Therefore, glue drivers using of_get_phy_mode() are just duplicating
-the work that has already been done.
+v1:
+ * These patches will fix the following:
+ * 1) onfi param page read which was broken by exec_op() patch.
+ * 2) Fixed offset passed to BAM from QPIC base
 
-This series adjusts the glue drivers to remove their usage of
-of_get_phy_mode().
+Md Sadre Alam (4):
+  mtd: rawnand: qcom: Pass 18 bit offset from QPIC base address to BAM
+  mtd: rawnand: qcom: Fix last codeword read in
+    qcom_param_page_type_exec()
+  mtd: rawnand: qcom: Fix read len for onfi param page
+  spi: spi-qpic-snand: set nandc_offset for ipq9574
 
- drivers/net/ethernet/stmicro/stmmac/dwmac-anarion.c    | 18 ++++++++----------
- drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c    | 12 ++++--------
- drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c   |  8 +-------
- drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c    |  6 +-----
- .../net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    |  4 +---
- drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c         |  2 +-
- drivers/net/ethernet/stmicro/stmmac/dwmac-sti.c        | 12 ++++--------
- drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c      |  8 +-------
- drivers/net/ethernet/stmicro/stmmac/dwmac-sunxi.c      |  6 +-----
- 9 files changed, 22 insertions(+), 54 deletions(-)
+ drivers/mtd/nand/raw/qcom_nandc.c    | 18 +++++++++++++++---
+ drivers/spi/spi-qpic-snand.c         |  1 +
+ include/linux/mtd/nand-qpic-common.h |  3 ++-
+ 3 files changed, 18 insertions(+), 4 deletions(-)
 
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+2.34.1
+
 
