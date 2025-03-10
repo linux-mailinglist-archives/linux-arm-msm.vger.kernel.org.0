@@ -1,76 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-50880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79919A5A5BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 22:11:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 523FEA5A5BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 22:11:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 013041892B88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 21:11:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02EAA3AE970
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 21:11:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1EAC1DF739;
-	Mon, 10 Mar 2025 21:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91EDD1E0B62;
+	Mon, 10 Mar 2025 21:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JDOpvCfq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="USOs4R+Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8508BA3D;
-	Mon, 10 Mar 2025 21:11:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A258B1D6DBF;
+	Mon, 10 Mar 2025 21:11:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741641068; cv=none; b=pGTnjnmX7gytQHyFmjrxAmo3XTUXPkNwF/qch/+vWnFfugz54CenFW19W36keMP7PEKIbM916DV3XgB0H8ORU1eRCDvGKQq/egRdNhgTVSWMXVtoyrO/EqlWyU1EZDkLqprry9a0g1jAazSepxueeHceusmPOAcNMEBDnrZ7EWs=
+	t=1741641069; cv=none; b=SZKJIrBFiu1A59vSYgKuIGJ39pbP7DGb2EUQ83A7uiPoMykdX0J7Rvxsv79zrpgf58JyD/KmmpHd4aGedCGttc39eOVWnriz+pAsXyT3oxCwrWFmdnMEO5HA6+9aBfr23grt5pkUPYGmY1xzrMFqw7Fm0RT79rgxVl3Tmff2LKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741641068; c=relaxed/simple;
-	bh=b9vxx7zWqUAhhlQ33nLe3smTO7PR3kuPAH3TbTnBkEE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kfJyLKaMqXsGIRTJo4x2KcGnl77SgsqUzTcJTBaWOFpzrrDTorl1R7X59bRfCwLfJnaydsZ7+0mSrtOj22GgFLR9/iv2CDBBs1geFN0J4g4NFahkW0ChPYoJ2oHNoIpxuJC8xVl2cqZYpH+6bPIiiWfnJRbziMLaVcv8ycl9Umc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JDOpvCfq; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1741641069; c=relaxed/simple;
+	bh=MphNhFfzFAwzH3aCNupzI4NANUlzHHovNIwD3Cj0s8w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=uB7HDrJiPlzP6BaNGgabuKyoGazjbNDcbyoUP4DJwNaz+BfnGxcjomlOCo8Kj3gtu+wc/XKO33nlgDjXgY1oLGj1+ruCryd7k4rnAOhEvoZuftrYwt7GOEkd26YK96XYqM83U4u5HmLB1eY1hcQk0h3glGAOl+CpdyTM4PDr7ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=USOs4R+Z; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43cf848528aso12611705e9.2;
-        Mon, 10 Mar 2025 14:11:06 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43bcc04d4fcso29097205e9.2;
+        Mon, 10 Mar 2025 14:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741641065; x=1742245865; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xDGr+bd0+v4IvOiFmty2KtVI4kE9v+gI/XWZpKSUg9E=;
-        b=JDOpvCfqXdgLbc9twCFcldeAvLQKAhMXvsizzxh136FBPht2kSt8Har62J0wHIGshV
-         cuHMYuaaunw2XY2B8idwo4T+uIIZ1IaQ5ePcgMXWJMK/DPKSk4+aFJGACqHvjrkONFFT
-         qnS/7KqNlXab0UH91i38DxBL86p7c+5hxi0G3duZyFOAXGK9VvAac+Cyx4hl1tnEm9AZ
-         Zt+kT0NLwUQEECg+qY/QZ1O+d0FHwwEBOEZCoMVj0B1u8CuGViH/huiyK171lEiuPK5m
-         6ocTzyIz1LEGC+XvALt04QAc6xtEaa/wGFqSitRntqCpPf5p9gcUSNKwPLz9FxMHZ6S8
-         jKpg==
+        d=gmail.com; s=20230601; t=1741641066; x=1742245866; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3TzgCw575Otf9KfkSYbKwBAqhN/d/WSTjuKQ5VGt1/4=;
+        b=USOs4R+Zy07T/ELS8UAJ1GS0wWJxgrV/vySm5CixiJ1lo8rhh/7+r5FtjEraUr9TR+
+         wRzevPIt4PXBlR8GVsysH3O6izxwJC2j3FApkXjY2/Hbg/hFmeEXb758yDGIfmFdb6C8
+         s+s3SVu+azraoo75xGMnHDIYpaKjEAIrlzcsOH5uso6AthWdyTkliQUwG89bL4NZPQVA
+         wjhL2XSfl63ix2h06SkdNAmrQemvUviHjfCGrEKUnnMaSjl1D0VEf4/BOmTetzG35Eci
+         fjlrtqi+Rlc4lowpsKsDymN1hppZ7BMaYtgeeMw/25df5Bjm44EgzEFcYpi+54M3pJD+
+         9jEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741641065; x=1742245865;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xDGr+bd0+v4IvOiFmty2KtVI4kE9v+gI/XWZpKSUg9E=;
-        b=Vf074DwN3xwgQ32PCrH8WW3vGZ+U0iq7K1LZockPHtjOjWorwrM3JEIyGNxmBBXdeR
-         ZRduuET0CZKmDp2YeTUFx8pXeWUNqvJVeifbBaGoX5h0ijbm0fGUzRWIeLl7JTtWGVKf
-         sEoh7zFqmo5zWw/mrIILp3ILcJMsjsmbzO3RfjXs7uN6AmChhfUj2AJeptrR11Hme6Vc
-         m0GTfKPtm8J2yI1y9ltnSOeGkeqtGHJT0RKeQXibrqTCbjDexHKT/8SL5v2firpCwh6C
-         S7HmA1dtaXdPz94B7PULlsP6wlr7cHFWGLKDGNsYYybJJPgvSn9CvsojkKWQaIsUzcrj
-         Ul0g==
-X-Forwarded-Encrypted: i=1; AJvYcCW9rANtF2uRVcnTfgoluAuv1FyJ++LuB5EGeQxSAl51SJAFC2IMWEwSKGVErPQU70UjwnGHKKytncD2WOqO@vger.kernel.org, AJvYcCWoUh7H+E4yjP730xRC9FnxFi4Ao2Vv7Xm8pdBftbyz+KGXrU8gHByVKp2mRdliEftZKJ3vyR0pqW3Y3miw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4f//J6lmna3KChjqq9TjABklcs1wAopv97gWT/cT1MNbwN+uY
-	jMjjPilWbsuwAGfwNiVfRqAokFSICXU4xOWSrlpUM+JVReVD+2k=
-X-Gm-Gg: ASbGnctskuBTFGenZ5+ats1WQFC2zimN0ciWiUOiKNoFVBQdVMscfzvRT/V1c9stE8K
-	gS/0aJ5A2cXuDfSCNBSvv6Rz8pXKuEBRDT1vi1aovXKGnkPKb8vWz5IVpQU+lX+R1kcLqLHaHAs
-	zhzX6TB8G/sOPQ2/4fup/xTcCjzQ7Mq+ia8OSpqqw3srLZFsXNr93fw5rcrRq5XzxTqZcnG7R4t
-	Bj1NOCVKpYYdS2LutL6zvsDy+OysvmpPbE7E5H30UNbTnj2i5B7tSGt1RjznKBQnEZmyb/Nc3Eu
-	am174mDOBqwmBc12PxvZVLyA0Tan28hAgjKZ/5DkqE/5tOyGP9KxqgmN2Jaa3vyxDOUbYLppLfR
-	hAvzU6A==
-X-Google-Smtp-Source: AGHT+IEBiIQ1MbFvdWaPDPFgLiSRfkjBIX+VNXkv/hbTgdIWgEvtEnCjb21i0lAzwM5h6ATTR8/aYA==
-X-Received: by 2002:a05:600c:1d12:b0:43c:eec7:eab7 with SMTP id 5b1f17b1804b1-43d01bdd224mr20195455e9.11.1741641064571;
-        Mon, 10 Mar 2025 14:11:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741641066; x=1742245866;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3TzgCw575Otf9KfkSYbKwBAqhN/d/WSTjuKQ5VGt1/4=;
+        b=EKXP23meMlcT8BlCpSju4fB/xGk0XcXeHW6+DZzJurjGXasWJCwXe5pDT2dbfwhsFZ
+         n0a/EXXEmaAyycLtXNEV4Y2hvFTpENSG9aFJtfg89s3HOlMORy2E3aI4GAV/FAwx+QpA
+         ZKU42CkuqGvdEs6cDayNtNeQ3BPMzbdvyfhs+/IylYggVgRaOfLmVGerlkjkfwZdboBP
+         8fJx01m11CRfOpwDjVEI7oKGkIBherDTmteMUxmOffEoLst/GYhDJqdtji3c6QcJbXyw
+         P7SR9K7KaX5rIX9E/PrvM9pEqKD99w0YYQbvKhi6aBCE7dW92+3OwyS5E6QpXVHrOVwd
+         ly9g==
+X-Forwarded-Encrypted: i=1; AJvYcCVILZmQXUA/pOzXcGAFUaPanbo17VKaVr9w9l3hhpdTOJTCpu6xnYpTHc7t+eT6PX0c8bIvVViP4JboSZjT@vger.kernel.org, AJvYcCXhftKWjCeWqwu+klJsWkSN1RCcKcVqErqQqWZ6ijqaaibFgrAVHvniRCwRnBhR8fNeU1cC7U1xK2ogpd/x@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQE1nDhH3N12D3VydjmQQg5Dquv0POPINf2pvcqwdD7l6vZsop
+	L5xBuyfLQ+GcB4L0yg0zVkexnD0J+9k4wFtBQMqLjQT4Z0MXMik=
+X-Gm-Gg: ASbGncuO01vuWN9DrPfPMFo9y7t9sDgt24HumwcCB5Hg7ifCuvVRRz05D3J+KZxTfN4
+	bTqKlTV7Zt8dDwlbvrTqK/diF+WrNvuw8wXuAuciJUPcQnetTivNVUzXhhz7KpkeV+k0eUlyrYR
+	8tGcg61C3czWaamEyfCWDQQDfsQQaCIFaGI0zy9t99NsVZIhyag0jofnwhrZ8kF2M2nTJl+6RBp
+	qQ/3R/pncBUoBylG8RRCRSkL2q6NgX0xXICOHd/11PjC4g9D2No46uojwL01okXrqt89EBoiXXa
+	t+Zd9edFcZHT+d7t3sHG3SqasWnit8GskFvGXxoGTrUKnavYYTXE5lu4U7fp7Ym+8+WZ7OJ3ICz
+	HVkauCg==
+X-Google-Smtp-Source: AGHT+IFTUrPFzesY7S5XLhKv9h7x11RZW7LkIYqDI5b4pXvS38g73Wbp1S0P/EBF7w0Cm27fXcUEAA==
+X-Received: by 2002:a05:600c:511b:b0:43c:f61e:6ea8 with SMTP id 5b1f17b1804b1-43cf61e702fmr53627805e9.2.1741641065289;
+        Mon, 10 Mar 2025 14:11:05 -0700 (PDT)
 Received: from alex-x1e.lan (adsl-178-39-53-103.adslplus.ch. [178.39.53.103])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43cf595a771sm54980415e9.36.2025.03.10.14.11.03
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43cf595a771sm54980415e9.36.2025.03.10.14.11.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 14:11:04 -0700 (PDT)
+        Mon, 10 Mar 2025 14:11:05 -0700 (PDT)
 From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
@@ -87,10 +89,12 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	abel.vesa@linaro.org,
 	johan@kernel.org,
 	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Subject: [PATCH v1 0/2] drm/msm/dp: Introduce link training per-segment for LTTPRs
-Date: Mon, 10 Mar 2025 22:05:50 +0100
-Message-ID: <20250310211039.29843-1-alex.vinarskis@gmail.com>
+Subject: [PATCH v1 1/2] drm/msm/dp: Fix support of LTTPR handling
+Date: Mon, 10 Mar 2025 22:05:51 +0100
+Message-ID: <20250310211039.29843-2-alex.vinarskis@gmail.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250310211039.29843-1-alex.vinarskis@gmail.com>
+References: <20250310211039.29843-1-alex.vinarskis@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,84 +103,171 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Recently added Initial LTTPR support in msm/dp has configured LTTPR(s)
-to non-transparent mode to enable video output on X1E-based devices
-that come with LTTPR on the motherboards. However, video would not work
-if additional LTTPR(s) are present between sink and source, which is
-the case for USB Type-C docks (eg. Dell WD19TB/WD22TB4), and at least
-some universal Thunderbolt/USB Type-C monitors (eg. Dell U2725QE).
+Take into account LTTPR capabilities when selecting maximum allowed
+link rate, number of data lines. Initialize LTTPR before
+msm_dp_panel_read_sink_caps, as
+a) Link params computation need to take into account LTTPR's caps
+b) It appears DPTX shall (re)read DPRX caps after LTTPR detection
 
-First, take into account LTTPR capabilities when computing max link
-rate, number of lanes. Take into account previous discussion on the
-lists - exit early if reading DPCD caps failed. This also fixes
-"*ERROR* panel edid read failed" on some monitors which seems to be
-caused by msm_dp_panel_read_sink_caps running before LTTPR(s) are
-initialized.
+Return lttpr_count to prepare for per-segment link training.
 
-Finally, implement link training per-segment. Pass lttpr_count to all
-required helpers. This seems to also partially improve UI hanging when
-changing external display's link parameters (resolution, framerate):
-* Prior to this series, via direct USB Type-C to display connection,
-  attempt to change resolution or framerate hangs the UI, setting does
-  not stick. Some back and forth replugging finally sets desired
-  parameters.
-* With this series, via direct USB Type-C to display connection,
-  changing parameters works most of the time, without UI freezing. Via
-  docking station/multiple LTTPRs the setting works when increasing
-  bandwith (eg. change framerate from 60hz to 100hz), but in all other
-  cases the setting again does not stick.
+Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 31 +++++++++++++++++++----------
+ drivers/gpu/drm/msm/dp/dp_panel.c   | 30 +++++++++++++++++++---------
+ drivers/gpu/drm/msm/dp/dp_panel.h   |  2 ++
+ 3 files changed, 44 insertions(+), 19 deletions(-)
 
-These appear to be mainlink initialization related, as in all cases LT
-passes successfully.
-
-Test matrix:
-* Dell XPS 9345
-	* Left USB Type-C, Right USB Type-C
-	* Direct monitor connection, Dell WD19TB, Dell WD22TB4
-	* Dell AW3423DWF, Samsung LS24A600, dual Samsung LS24A600 (one
-	  monitor per USB Type-C connector)
-* Dell XPS 9345
-	* Left USB Type-C, Right USB Type-C
-	* Direct monitor connection
-	* Dell U2725QE (universal Thunderbolt/DP Alt mode, probes with
-	  LTTPR when in DP Alt mode)
-
-In both cases, "Thunderbot Support"/"USB4 PCIE Tunneling" was disabled
-in UEFI to force universal Thunderbolt/DP Alt mode devices to work in
-DP Alt mode.
-In both cases laptops had HBR3 patches applied [1], resulting in
-maximum successful link with 3440x1440@100hz and 4k@60hz respectively.
-When using WD22TB4/U2725QE, USB Type-C pin assigment D got enabled, and
-USB3.0 devices were working in parallel to video ouput.
-
-Known issues:
-* As mentioned above, mainlink parameters changing is not stable, but
-  appears to be unrelated to this series, and works better than before.
-* In a very particular combination of Dell XPS 9345 + Dell AW3423DWF at
-  max resolution, right USB Type-C connector does not always work:
-  following successful link training, mainlink is not starting. When
-  switching monitor to PIP/PBP mode, the issue is gone. I am unable to
-  reproduce this issue in any other combination of devices/modes, so
-  perhaps its an edge case of either the monitor (Dell AW3423DWF) or
-  the docking station (Dell WD19TB/WD22TB4) specifically.
-
-
-Due to lack of access to official DisplayPort specfication, changes
-were primarily inspired by/reverse engineered from Intel's i915 driver.
-
-[1] https://lore.kernel.org/all/20250226231436.16138-2-alex.vinarskis@gmail.com/
-
-Aleksandrs Vinarskis (2):
-  drm/msm/dp: Fix support of LTTPR handling
-  drm/msm/dp: Introduce link training per-segment for LTTPRs
-
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 136 +++++++++++++++++++---------
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |   2 +-
- drivers/gpu/drm/msm/dp/dp_display.c |  33 +++++--
- drivers/gpu/drm/msm/dp/dp_panel.c   |  30 ++++--
- drivers/gpu/drm/msm/dp/dp_panel.h   |   2 +
- 5 files changed, 141 insertions(+), 62 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index bbc47d86ae9e..2edbc6adfde5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -108,6 +108,8 @@ struct msm_dp_display_private {
+ 	struct msm_dp_event event_list[DP_EVENT_Q_MAX];
+ 	spinlock_t event_lock;
+ 
++	u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE];
++
+ 	bool wide_bus_supported;
+ 
+ 	struct msm_dp_audio *audio;
+@@ -367,17 +369,21 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
+ 	return 0;
+ }
+ 
+-static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp)
++static int msm_dp_display_lttpr_init(struct msm_dp_display_private *dp, u8 *dpcd)
+ {
+-	u8 lttpr_caps[DP_LTTPR_COMMON_CAP_SIZE];
+-	int rc;
++	int rc, lttpr_count;
+ 
+-	if (drm_dp_read_lttpr_common_caps(dp->aux, dp->panel->dpcd, lttpr_caps))
+-		return;
++	if (drm_dp_read_lttpr_common_caps(dp->aux, dpcd, dp->lttpr_common_caps))
++		return 0;
+ 
+-	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(lttpr_caps));
+-	if (rc)
+-		DRM_ERROR("failed to set LTTPRs transparency mode, rc=%d\n", rc);
++	lttpr_count = drm_dp_lttpr_count(dp->lttpr_common_caps);
++	rc = drm_dp_lttpr_init(dp->aux, lttpr_count);
++	if (rc) {
++		DRM_ERROR("fialed to set LTTPRs transparency mode, rc=%d\n", rc);
++		return 0;
++	}
++
++	return lttpr_count;
+ }
+ 
+ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
+@@ -385,12 +391,17 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
+ 	struct drm_connector *connector = dp->msm_dp_display.connector;
+ 	const struct drm_display_info *info = &connector->display_info;
+ 	int rc = 0;
++	u8 dpcd[DP_RECEIVER_CAP_SIZE];
+ 
+-	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
++	rc = drm_dp_read_dpcd_caps(dp->aux, dpcd);
+ 	if (rc)
+ 		goto end;
+ 
+-	msm_dp_display_lttpr_init(dp);
++	msm_dp_display_lttpr_init(dp, dpcd);
++
++	rc = msm_dp_panel_read_sink_caps(dp->panel, dp->lttpr_common_caps, connector);
++	if (rc)
++		goto end;
+ 
+ 	msm_dp_link_process_request(dp->link);
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 92415bf8aa16..f41b4cf7002e 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -45,9 +45,12 @@ static void msm_dp_panel_read_psr_cap(struct msm_dp_panel_private *panel)
+ 	}
+ }
+ 
+-static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel)
++static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel,
++				  const u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE])
+ {
+ 	int rc;
++	int max_sink_lanes, max_source_lanes, max_lttpr_lanes;
++	int max_sink_rate, max_source_rate, max_lttpr_rate;
+ 	struct msm_dp_panel_private *panel;
+ 	struct msm_dp_link_info *link_info;
+ 	u8 *dpcd, major, minor;
+@@ -64,16 +67,24 @@ static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel)
+ 	major = (link_info->revision >> 4) & 0x0f;
+ 	minor = link_info->revision & 0x0f;
+ 
+-	link_info->rate = drm_dp_max_link_rate(dpcd);
+-	link_info->num_lanes = drm_dp_max_lane_count(dpcd);
++	max_source_lanes = msm_dp_panel->max_dp_lanes;
++	max_source_rate = msm_dp_panel->max_dp_link_rate;
+ 
+-	/* Limit data lanes from data-lanes of endpoint property of dtsi */
+-	if (link_info->num_lanes > msm_dp_panel->max_dp_lanes)
+-		link_info->num_lanes = msm_dp_panel->max_dp_lanes;
++	max_sink_lanes = drm_dp_max_lane_count(dpcd);
++	max_sink_rate = drm_dp_max_link_rate(dpcd);
++
++	max_lttpr_lanes = drm_dp_lttpr_max_lane_count(lttpr_common_caps);
++	max_lttpr_rate = drm_dp_lttpr_max_link_rate(lttpr_common_caps);
+ 
++	if (max_lttpr_lanes)
++		max_sink_lanes = min(max_sink_lanes, max_lttpr_lanes);
++	if (max_lttpr_rate)
++		max_sink_rate = min(max_sink_rate, max_lttpr_rate);
++
++	/* Limit data lanes from data-lanes of endpoint property of dtsi */
++	link_info->num_lanes = min(max_sink_lanes, max_source_lanes);
+ 	/* Limit link rate from link-frequencies of endpoint property of dtsi */
+-	if (link_info->rate > msm_dp_panel->max_dp_link_rate)
+-		link_info->rate = msm_dp_panel->max_dp_link_rate;
++	link_info->rate = min(max_sink_rate, max_source_rate);
+ 
+ 	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
+ 	drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
+@@ -109,6 +120,7 @@ static u32 msm_dp_panel_get_supported_bpp(struct msm_dp_panel *msm_dp_panel,
+ }
+ 
+ int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
++	const u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE],
+ 	struct drm_connector *connector)
+ {
+ 	int rc, bw_code;
+@@ -125,7 +137,7 @@ int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
+ 	drm_dbg_dp(panel->drm_dev, "max_lanes=%d max_link_rate=%d\n",
+ 		msm_dp_panel->max_dp_lanes, msm_dp_panel->max_dp_link_rate);
+ 
+-	rc = msm_dp_panel_read_dpcd(msm_dp_panel);
++	rc = msm_dp_panel_read_dpcd(msm_dp_panel, lttpr_common_caps);
+ 	if (rc) {
+ 		DRM_ERROR("read dpcd failed %d\n", rc);
+ 		return rc;
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+index 4906f4f09f24..d89e17a9add5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.h
++++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+@@ -7,6 +7,7 @@
+ #define _DP_PANEL_H_
+ 
+ #include <drm/msm_drm.h>
++#include <drm/display/drm_dp_helper.h>
+ 
+ #include "dp_aux.h"
+ #include "dp_link.h"
+@@ -49,6 +50,7 @@ int msm_dp_panel_init_panel_info(struct msm_dp_panel *msm_dp_panel);
+ int msm_dp_panel_deinit(struct msm_dp_panel *msm_dp_panel);
+ int msm_dp_panel_timing_cfg(struct msm_dp_panel *msm_dp_panel);
+ int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
++		const u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE],
+ 		struct drm_connector *connector);
+ u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel, u32 mode_max_bpp,
+ 			u32 mode_pclk_khz);
 -- 
 2.45.2
 
