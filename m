@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-50781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2395A58CD5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 08:24:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0198FA58D15
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 08:40:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD2F8188D027
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 07:24:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBBB83AB176
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Mar 2025 07:40:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 672D21D7E3E;
-	Mon, 10 Mar 2025 07:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B169E221DB3;
+	Mon, 10 Mar 2025 07:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YMUUmsbK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MLLZEVEG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396A51B423B;
-	Mon, 10 Mar 2025 07:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0FF1D432D;
+	Mon, 10 Mar 2025 07:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741591403; cv=none; b=Ek0tF4VUIyHacHsX43gjrYTBlH8tx3/+XLh1KTHajH0K28V5bN0DTSLfLE89/uQ6E51Vl6nh6ObZIaBzhUmZTw5qCDnIeoSfQjX2Y3rhMYhwE1tzvcpC6YUKgNNHb//pPe/laWjB/ndMZ8i+BGWehzMEKd1hwcl49ly+0IZ44MU=
+	t=1741592428; cv=none; b=cJFRuQVZgN96jNlv70Joa1n9T3KnCkzUvzH54PtN9PVI41nvqpbOscMdkCj6SGi5YSBQ3cTDDKK1sSpvFavI2EdffXmhCb5v1i16Rr47CNp05bXbspad2x9qnzHGMpPsTrgltodF3DZW63BjDwgyn+lyXfd5WyFKOJOzmrnGOY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741591403; c=relaxed/simple;
-	bh=4ETkd0jFHLyp3RPMBWiubYsNSXRDodyaLu0wHY0y2XU=;
+	s=arc-20240116; t=1741592428; c=relaxed/simple;
+	bh=A1+vd1+iI7U2juLRNkQfIRGQ+caFncDP5Th5PCoA3dA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CVAyUxFoOlzchsS8zSSrkXVRFGEqHxAEYslB9zpuSs2K3nhbpGXoI1e5HEa4a7VbOXU0W3UAUmbDW4x9Q/uP/dJVd1aaE0gDtMLlnkdGYHAse/ctnNwlxPcQ/dlaOeMKYwP/60jx2DX9sMtPbjj4lKfKK2yVnMStIxae6n9lrN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YMUUmsbK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59CBC4CEE5;
-	Mon, 10 Mar 2025 07:23:21 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=IY1AOarcQL0VF8FjbQmVN/hcalQe5UYitnaTJveNIMStbKGJtTecWPkVy1AYn9I2wNkiS5nSwTBuyPLFiF/nR/jEUaPr7vT3ovU15ZiPW8f9eRDJ0bycxoe+uNgQ27VmTcQe6jCsruH/FO02eASlb4pkQ/NIWzHJxmTVezaFYlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MLLZEVEG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23303C4CEE5;
+	Mon, 10 Mar 2025 07:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741591402;
-	bh=4ETkd0jFHLyp3RPMBWiubYsNSXRDodyaLu0wHY0y2XU=;
+	s=k20201202; t=1741592428;
+	bh=A1+vd1+iI7U2juLRNkQfIRGQ+caFncDP5Th5PCoA3dA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YMUUmsbKMTpJIOzlDQphAuc2kpcQCU4fCSZ4fQtG+R+LQNt6YwQciN23OZgf0/itk
-	 ZHbKHvjGM45dX2MbZ32QNS/PwrHxj753MYl4pfeJmj8IG+zd21QH8uk7puO/mVUPw/
-	 d3vK3nq1DDBM6gRdMG2xVvD9ZnXQ2Hak9xP/rHOpyf7ZZPCVq7Hqw+ydmVGdjM56Ul
-	 ikLzRYbPfFZ8Iz2AeAtACS929d5fWzFnJTVmj1FqpnQbLhuoJ2I17qUPM4tIiCuM2Q
-	 ncunR/tRH4scVhXHG1p1hO46Jw3YcZptVCK5qVxeL7nteF7lj966YbXe+ntvpAneqj
-	 UWIIfKEDhKqqw==
-Date: Mon, 10 Mar 2025 08:23:18 +0100
+	b=MLLZEVEGzufs0VlS6qieY+pMhoUDMxcouSNcWPOVrGjQx1+BmVdccK1B31g4zgat+
+	 S9t+CMks5K+WhoLTpoMllIS9jxMDecewNqkeTry3J7MakMz75SFX8FcMghXi9kWwe2
+	 zasatPj38fuVJw5Y0DyKT93QDXjrJAsokH92ZYbWZKtJDWadI05auP+gsW0ntdETMp
+	 tUbEVpawx/nm2mYD23HNeUigHTu5sAsLfltu4Z5t2rYDgYfXK/RNWoDfOPB/E8pCx7
+	 lqUncZbsrTer3uvAWWEbtP0sXsfjpqQJ/RIejBYs++63rs2P/+NPR6I/rg9lTWSI8Y
+	 QJC0gyvxVCyHQ==
+Date: Mon, 10 Mar 2025 08:40:24 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Dmitry Baryshkov <lumag@kernel.org>
 Cc: Rob Clark <robdclark@gmail.com>, 
@@ -58,11 +58,10 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, iommu@lists.linux.dev, 
 	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 04/10] dt-bindings: display/msm: qcom,sc7280-dpu:
- describe SAR2130P
-Message-ID: <20250310-eccentric-rare-rook-e4fb60@krzk-bin>
+Subject: Re: [PATCH 05/10] dt-bindings: display/msm: Add Qualcomm SAR2130P
+Message-ID: <20250310-impressive-cherry-bullfrog-cbd8fd@krzk-bin>
 References: <20250308-sar2130p-display-v1-0-1d4c30f43822@linaro.org>
- <20250308-sar2130p-display-v1-4-1d4c30f43822@linaro.org>
+ <20250308-sar2130p-display-v1-5-1d4c30f43822@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,17 +70,63 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250308-sar2130p-display-v1-4-1d4c30f43822@linaro.org>
+In-Reply-To: <20250308-sar2130p-display-v1-5-1d4c30f43822@linaro.org>
 
-On Sat, Mar 08, 2025 at 03:42:22AM +0200, Dmitry Baryshkov wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Describe DPU controller present on Qualcomm SAR2130P platform.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml | 1 +
->  1 file changed, 1 insertion(+)
+On Sat, Mar 08, 2025 at 03:42:23AM +0200, Dmitry Baryshkov wrote:
+> +patternProperties:
+> +  "^display-controller@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true
+> +
+
+Drop blank line
+
+> +    properties:
+> +      compatible:
+> +        const: qcom,sar2130p-dpu
+> +
+> +  "^displayport-controller@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true
+> +
+
+Drop blank line
+
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - const: qcom,sar2130p-dp
+> +          - const: qcom,sm8350-dp
+> +
+> +  "^dsi@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true
+> +
+
+Drop blank line
+
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - const: qcom,sar2130p-dsi-ctrl
+> +          - const: qcom,mdss-dsi-ctrl
+
+Drop last compatible here and use contains (see v3 of my sm8750)
+
+> +
+> +  "^phy@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true
+> +
+
+Drop blank line
+
+> +    properties:
+> +      compatible:
+> +        const: qcom,sar2130p-dsi-phy-5nm
+> +
+> +required:
+> +  - compatible
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
