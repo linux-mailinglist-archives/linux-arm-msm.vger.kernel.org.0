@@ -1,162 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-51072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35971A5D259
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 23:13:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A94FDA5D29F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 23:37:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6A5CE16DA59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 22:13:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 068FE189E150
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 22:37:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FC35264FBF;
-	Tue, 11 Mar 2025 22:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A614264A70;
+	Tue, 11 Mar 2025 22:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D6CC4r+x"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OaWFK52a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D571E7C06;
-	Tue, 11 Mar 2025 22:13:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F0E265CA6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 22:36:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741731209; cv=none; b=d+ENXUU3YaP7vAJNOJ8UED0kRwNALxEE5yI51R15QWEwA/owHKeKmLjGGpHx0i0xjO6jSd3ljQ/n8aEPzhe52z/EZSOi1ZCy70ME7nvOSrAwhjpSt5Tpvi3+Xpvd6fE6oyaKnQ+7kQPM+Ca3qUZL9vLK/MmWJuvk6udl+/tbWMs=
+	t=1741732612; cv=none; b=Gvrx0Uz+YQ6+maoj6HEb+GVa4Zn4aACwpxkpzPwpdxh0JNFUYTaU5M1X+sTRIOMLUTeDt3Gsjz1YpinMYhlxsR0NLPjdKeye1X56b6PD7KzhUValEM3KhzDYndPNMIoY1y+uZhyuNBCnStWqXpmQkPtiTdaBv9whEjTtEK2RJAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741731209; c=relaxed/simple;
-	bh=3aGBcFcTaNaR79p8ePa1pCcF1TKKHFwBabPmxaAkhoE=;
+	s=arc-20240116; t=1741732612; c=relaxed/simple;
+	bh=stGKqEUr4q8JKAOwejt7cWzSSykKFgW9stzYakf8cZo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KGNoVzLVGbrYoQPfOBzv6vYMrAGut7BFyEuff/3dZrijYVDTsjQfrVFWe8akpMdQnkIjuXG55yOn9OcY+QpBTeuIBmxX9aTcPQzFUyhBynj0wmy7VOlKycRz2rySucdl7dc+2Ulb5gl5vtnYV1Dzz5+t248Y2FdK44ff8A1p1j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D6CC4r+x; arc=none smtp.client-ip=209.85.218.48
+	 To:Cc:Content-Type; b=QeOcmURZaTpylJqTRqeP48qpo8rrVOfN7r3NVkA7buqF2ux4xzF482wD0iPyRrrUxCj48tdowDwXOcwmYYfQZGGHzB/5+y1gTyPGQ2ujmyuocHhEneGcNqAFrx4rD9kEiAaCaBrZRGqS0Sp01w6f3gzMEwy36TM9xz2lBv2do2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OaWFK52a; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-abf3d64849dso703450866b.3;
-        Tue, 11 Mar 2025 15:13:27 -0700 (PDT)
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2ff6ce72844so1507240a91.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 15:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741731206; x=1742336006; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rjUc9bePqbTdDTZkTfNHhdZzvWN4QLUd87uz3URl6ag=;
-        b=D6CC4r+xzDIlgqPv4grzBXtonyzlAmJIoxU8qQ3jPwTMx5rKNdY3bc3cY9oiePXbx9
-         bt/KVQxxFJZ6HrB4lbhoEdoY5oe0lai5ddiAr7yowf2oYtufKFE3HRy5xRuu4ZKWKzFm
-         jwQbPSYvxlabHVWFKYHDcl6LIElX29MVl0BFrMcYb+VW9F7Evj8Y6L5uPS/kjPXaSgSs
-         mOqybz2i+nt1XL6iEvuIi88MHDPRzlN/BSDDp5nbeb0Rk9vxh4FTIkMswdm+HRuUVkyj
-         +QCl5hZYtJcEjnR5ATF3Aw9GjL/Dh7qgdyj9QEfuPae6GcOJA/1TXbzDnEM56mq8coxn
-         8spg==
+        d=gmail.com; s=20230601; t=1741732610; x=1742337410; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=75JlrEnI8tdqw5rkhyab++osfwTd4EpAvf26QJsRa+Q=;
+        b=OaWFK52a4drryiqTURgONdVihfcM5BDFSkdSYoEa8gpdLol/VCBtucat3mvk53w1HT
+         YJxNfzN3+3K4BGEcVY/iK8/gXOOcOUPfAROVL2+1e1+eybdqd5M3jxeboroDYWQcMrLh
+         alDLCzFZ1XHYLJSlXh2T5vCG9kvDYaPWs04Z3nGAmVF4exr+9iUiTEp9IhPP9qs4elyn
+         rWpwVHEtZdXh6vHI0PKYdDFQVHXzf2UYSeh65GsV8lwsIPdf4ZmmHa9hI0b9zOeIcg34
+         Kvyxi5FRiQ8dmv5MEv4BEUCVdP3MkuNfKI6Qe3wt/8MpoERvxUI9fzdkhdHAmGbH3H08
+         6T/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741731206; x=1742336006;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rjUc9bePqbTdDTZkTfNHhdZzvWN4QLUd87uz3URl6ag=;
-        b=qmFB33MGA9BfDcA0QeW/gFbRZDrbXwbfX38lvJPCQtYeTVFPu5EFPuZpt1LGZA8vF+
-         gqAKLlgsvoWAW4tltYQ1YDjTtJ0Lql03O/aHFJVLZW93EIPD6w6akBv/+0Ks4ZCYTjEh
-         mdvjXluGHfqTKagrMuo/jgdFCSfkG3XKvLsbvUuD3iMVSUDiRuT0mW1UjIgEwH2lpdfk
-         P3sSe663ZovSRdJQmBmtzNxxXl68isE20TRID5aDduOk7r2ZLgZVaHw5XS/cJuHkSqy9
-         B3IsOLUoZlaHtnJnucMzzWGwvMywCfhwvAymsNF+I4VoB2cr5RJh7I0P7CG7xgYdCzeT
-         RjXw==
-X-Forwarded-Encrypted: i=1; AJvYcCV9aUOcYCpNOsSJyBJS4g/qo/ecQ+foAHg+YPtce14KMLPRbK5PB9RA0r+ILY5D6o3FWlaYsxg5zh7T4Qkr@vger.kernel.org, AJvYcCVStD/EkVDQv6OTDWAj2Ljxi9+RqvlbR6UXFbuNhXpzs9ucvCWde0/QdSzjH4UsoaXV9Ji1H1kaSnYXxM0=@vger.kernel.org, AJvYcCWLWmMDjNrRXoBt2rtqhjwaRWvmIQGf2j/7Cke7HhCJ+viDMSQwOUJOZDp5RlX6wxeSqJA0sxh0Cplf@vger.kernel.org, AJvYcCX1hqpagB7+3wRdd15BvKcvLLlAPbgresPr0dl3qpkj+hTfHki92pHWY9v35gop9G8dOUpyKK0Eep0fNIv75g==@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywiz8ozVWAjaYxpQQfx1ayYjWnSnQMT93zavw6vJtQXr8NrMAlD
-	p543nMJKzwI5T518ufDq1kjPAm5guyidZlyA/pahL2ZMLkFNYo0o/1FunSCCgs71Jgc3G3GZVGI
-	BzGmy2ziwwJ4yqv8HJo4TBEX6TgDWvg==
-X-Gm-Gg: ASbGnctkdNJtYvrwp0QbG70PnUNrGviFxB09nE/Qk0xq3M14I9mMkvj96Peq+SL5YDZ
-	yc5WRQnBsQvbpeVD0eM0AZz3ps+wh79oEPc1cJ5Euf5CplUH8zjUBXnbzj6ZA+SKM61sVyKklmy
-	Fcgpi5Dd4gt8fVuNiRgHLiZaQD4InW8EGFuGK2mzaoK5+qBAV7gT9J11qr7g==
-X-Google-Smtp-Source: AGHT+IEnlCesq9Sm6fpV1dwPArArN/oTo2sRyqjMAyFXYP4HF57/9egXxxaFYA3J1rptFlnafWwJQQ7H/6zLNQVjros=
-X-Received: by 2002:a17:906:dc8a:b0:ac1:dc6d:af32 with SMTP id
- a640c23a62f3a-ac25269072cmr205164466b.27.1741731205522; Tue, 11 Mar 2025
- 15:13:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741732610; x=1742337410;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=75JlrEnI8tdqw5rkhyab++osfwTd4EpAvf26QJsRa+Q=;
+        b=HOQVPhtiKwaSPdowavQq7ajAgwzoUyEImAbjlsNLn3gDQSFgKrJVBQ6VQsZEIym8Fx
+         bvQLyyDiLn4FppTcMOTubkSBYOGj2F84xL6beb2TFhKAHPcU/JFtK2AVMc6U+t9g2YKd
+         L2lUsZRxInISahFvqO9JDSktZbd5+GaG6L9BD844UCgTGW0GFFyql4R7jrR5xuYRAaF4
+         rgAM9th/goyS8FDkDnq3n1BcLLczBkzSfl+Gtoc1BJR0Ky09kx4ycipE0rqpN1HCSe8P
+         5D/eNJjn65HwUN9iuaaCy9P3VIAPo+7MC/PcEZQ4tD45Z1EMCmfvPacrqRa0kujSBxwi
+         Fqkg==
+X-Forwarded-Encrypted: i=1; AJvYcCWAwar107+JviVzCGUUTNDXIjZLpydtd+OOV6pnxoWniPXWzV/jOxk/CJNAUJBbsfx1KRuATuw79DdNEXLq@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcMotByYkPixIVR0+cpmibVlkjB4BGFTM07VS+zVc73xHEGQF5
+	e2e7y4twTamoaPhp8E/0TZpSxJ+tpmbrQaDr73rfVEDnH9iKQe5NvmZSL/wtwzTsP8icvGq6MLw
+	uvyvSCLzcKD62Sp9XZhhyJaZNzTI=
+X-Gm-Gg: ASbGncuESvnhLvX7XQDSSb5nab5/OOL5SCvoiWLVkEm7CsKzk0g7mlgsTVTJZJI7JwZ
+	HT/eJwfg+8tYCM6Jhzp96hCRBgNPYaJcnnUeQY37ZH6flC6BPKQsqMk/HCRnnrrGnqqT0fOvx3J
+	tIws1WG3W9JIUqRki4sVDUTOZPZQ==
+X-Google-Smtp-Source: AGHT+IE2yP0Oqp5icApOYEeT5S9ryMzCphdSruIQb+pyZ1tL48mZ6lOK0AKajCd16hcESy+fMFtcVCe/Z6YypMdt4rI=
+X-Received: by 2002:a17:90b:4a81:b0:2ee:f59a:94d3 with SMTP id
+ 98e67ed59e1d1-300a2891c23mr8155406a91.0.1741732609220; Tue, 11 Mar 2025
+ 15:36:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
- <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com> <7yjj2eemvvvnsgv67d7tueid4h3n3onuou6ammx36am4qhfsal@xam3iamk4er3>
- <c0430086-675d-b58c-4ef9-1bd9ee51d3db@quicinc.com> <zssjkvxxv7kionartp6f3y2qh3d4i6gwnhwsrklsfad3t4fy3q@jkehbkx6wcyk>
- <203ea0bb-c53c-389e-db12-b41773c0ff5d@quicinc.com>
-In-Reply-To: <203ea0bb-c53c-389e-db12-b41773c0ff5d@quicinc.com>
-From: Dmitry Baryshkov <dbaryshkov@gmail.com>
-Date: Wed, 12 Mar 2025 00:13:14 +0200
-X-Gm-Features: AQ5f1JrSy91oYnYZTZryNqtuXvq7j4AA0a3FL9eIdiJigCbNEuF4Dql52zRWNxM
-Message-ID: <CALT56yP5mh4QjhOEHh0x2s_+BWWXH0fPM7r7YVvx+DEgWZ0MCw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] dt-bindings: media: qcom,sm8550-iris: update power
- domain name
-To: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
+ <20250304-msm-gpu-fault-fixes-next-v4-1-be14be37f4c3@gmail.com> <20250311180553.GB5216@willie-the-truck>
+In-Reply-To: <20250311180553.GB5216@willie-the-truck>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Tue, 11 Mar 2025 18:36:38 -0400
+X-Gm-Features: AQ5f1Jpps08fowB20qui8teO0kCK3_0sMgX__rQse3av3tUA4enIqUvNjCSXypk
+Message-ID: <CACu1E7GzCiO2b7AFJSDC+pN2VD9VaD2aYz_GGymM3-xAUqd__A@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] iommu/arm-smmu: Save additional information on
+ context fault
+To: Will Deacon <will@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>, 
+	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 11 Mar 2025 at 21:19, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
+On Tue, Mar 11, 2025 at 2:06=E2=80=AFPM Will Deacon <will@kernel.org> wrote=
+:
 >
+> On Tue, Mar 04, 2025 at 11:56:47AM -0500, Connor Abbott wrote:
+> > This will be used by drm/msm for GPU page faults, replacing the manual
+> > register reading it does.
+> >
+> > Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> > ---
+> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c |  4 ++--
+> >  drivers/iommu/arm/arm-smmu/arm-smmu.c            | 27 +++++++++++++---=
+--------
+> >  drivers/iommu/arm/arm-smmu/arm-smmu.h            |  5 ++++-
+> >  3 files changed, 21 insertions(+), 15 deletions(-)
+> >
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers=
+/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> > index 548783f3f8e89fd978367afa65c473002f66e2e7..ae4fdbbce6ba80440f53955=
+7a39866a932360d4e 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> > @@ -400,7 +400,7 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *=
+dev)
+> >
+> >       if (list_empty(&tbu_list)) {
+> >               ret =3D report_iommu_fault(&smmu_domain->domain, NULL, cf=
+i.iova,
+> > -                                      cfi.fsynr & ARM_SMMU_CB_FSYNR0_W=
+NR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+> > +                                      cfi.fsynr0 & ARM_SMMU_CB_FSYNR0_=
+WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+> >
+> >               if (ret =3D=3D -ENOSYS)
+> >                       arm_smmu_print_context_fault_info(smmu, idx, &cfi=
+);
+> > @@ -412,7 +412,7 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *=
+dev)
+> >       phys_soft =3D ops->iova_to_phys(ops, cfi.iova);
+> >
+> >       tmp =3D report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
+> > -                              cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOM=
+MU_FAULT_WRITE : IOMMU_FAULT_READ);
+> > +                              cfi.fsynr0 & ARM_SMMU_CB_FSYNR0_WNR ? IO=
+MMU_FAULT_WRITE : IOMMU_FAULT_READ);
+> >       if (!tmp || tmp =3D=3D -EBUSY) {
+> >               ret =3D IRQ_HANDLED;
+> >               resume =3D ARM_SMMU_RESUME_TERMINATE;
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/=
+arm-smmu/arm-smmu.c
+> > index ade4684c14c9b2724a71e2457288dbfaf7562c83..a9213e0f1579d1e3be0bfba=
+75eea1d5de23117de 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > @@ -409,9 +409,12 @@ void arm_smmu_read_context_fault_info(struct arm_s=
+mmu_device *smmu, int idx,
+> >                                     struct arm_smmu_context_fault_info =
+*cfi)
+> >  {
+> >       cfi->iova =3D arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
+> > +     cfi->ttbr0 =3D arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_TTBR0);
+> >       cfi->fsr =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
+> > -     cfi->fsynr =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
+> > +     cfi->fsynr0 =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
+> > +     cfi->fsynr1 =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR1);
 >
-> On 3/11/2025 9:05 PM, Dmitry Baryshkov wrote:
-> > On Tue, Mar 11, 2025 at 08:41:01PM +0530, Vikash Garodia wrote:
-> >>
-> >> On 3/11/2025 8:37 PM, Dmitry Baryshkov wrote:
-> >>> On Tue, Mar 11, 2025 at 05:33:53PM +0530, Vikash Garodia wrote:
-> >>>> Not all platforms has a collapsible mx, so use the more generic naming
-> >>>> of mx in the binding.
-> >>>
-> >>> I guess, it wasn't even tested...
-> >> Not sure what made you guess so, let me check why my binding checker did not
-> >> catch the bot reported warning.
-> >
-> > Obvious: you are changing the bindings in a non-backwards compatible
-> > way, but you are not changing the example in the same file (and
-> > obviously you are not changing the DTs), which means that this wasn't
-> > tested.
-> >
-> > Hint: you can use enum [mx, mxc] instead of const. That would make it
-> > backwards compatible.
-> Currently there are no user of this binding. Given that either of MX or MXC are
-> same connection to video hardware, just that one is collapsible, it would be
-> good to replace the existing element instead of enum.
+> We already have an implementation hook (->get_fault_info()) which the
+> qcom SMMU driver can override with qcom_adreno_smmu_get_fault_info().
+> That thing dumps these registers already so if we're moving that into
+> the core SMMU driver, let's get rid of the hook and move everybody over
+> rather than having it done in both places.
 
-This obviously should go to the commit message.
+As you probably saw, the next commit moves over
+qcom_adreno_smmu_get_fault_info() to use this. The current back door
+used by drm/msm to access these functions is specific to adreno_smmu
+and there isn't an equivalent interface to allow it to call a generic
+SMMU function so it isn't possible to move it entirely to the core. At
+least not without a bigger refactoring that isn't justified for this
+series that is just trying to fix things.
 
 >
-> Regards,
-> Vikash
-> >
-> >> Regards,
-> >> Vikash
-> >>>
-> >>>>
-> >>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> >>>> ---
-> >>>>  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 2 +-
-> >>>>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>>>
-> >>>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> >>>> index e424ea84c211f473a799481fd5463a16580187ed..440a0d7cdfe19a1ccedefc207d96b26eed5d6630 100644
-> >>>> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> >>>> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> >>>> @@ -28,7 +28,7 @@ properties:
-> >>>>      items:
-> >>>>        - const: venus
-> >>>>        - const: vcodec0
-> >>>> -      - const: mxc
-> >>>> +      - const: mx
-> >>>>        - const: mmcx
-> >>>>
-> >>>>    clocks:
-> >>>>
-> >>>> --
-> >>>> 2.34.1
-> >>>>
-> >>>
-> >
+> >       cfi->cbfrsynra =3D arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA=
+(idx));
+> > +     cfi->contextidr =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_CONTE=
+XTIDR);
+>
+> I think the CONTEXTIDR register is stage-1 only, so we shouldn't dump
+> it for stage-2 domains.
+>
+> Will
 
+Does it matter if we read the register though, as long as users are
+aware of this and don't use its value for anything?
 
-
--- 
-With best wishes
-Dmitry
+Connor
 
