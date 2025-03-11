@@ -1,105 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-50970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BA52A5C439
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 15:52:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C135A5C503
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:10:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 361623B0060
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 14:52:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADE483B2BBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 15:07:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B63525D20B;
-	Tue, 11 Mar 2025 14:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C05125E822;
+	Tue, 11 Mar 2025 15:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ar9pqhhv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nb7UEfiU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8CA1BB6BA;
-	Tue, 11 Mar 2025 14:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A1E25E801;
+	Tue, 11 Mar 2025 15:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741704771; cv=none; b=bl3D7cSTYmbIhwDg6p7+BPynfOcFfR3HeVTWdh4XwrZwYVZeDKaH4vI8GKAEuaNwR5a7fA55IAUtScKR8krZeE54C2P0bHSwYsriKicrbIqtXz5wmWI7x5I7bhlNpJ80fsT40MDLlE4GY6v7SwA+hIiPGGeZiXy8g+s8rsUN/Y4=
+	t=1741705650; cv=none; b=lUXMsg0M8yKi36968iYMThzBfk1Ia9E5QBWaXcSeicUKZBk9kMQT4UltCKD6jyVdVb9h73DSesoMXVAEm2OZKtbxdJSyCUTN6+Oefy2pSJAy4UzvSKC2SsVsYd5r6V9yHDEFQn113PQEC7mtT8I8n8E+c8yrVjnmgcpHgQemwYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741704771; c=relaxed/simple;
-	bh=yuPVk9WldAMtntYxp3zd8OUcJfojpeIHIzELiOdyLS4=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=N5MQhUXEpblE20iPCxNpULb/jM5OyJ95Ic/X7xlH1HtpKimMK+oaJkWr3VLOerTa6obWPhSjJQkr53htNj59oi81H5Zrs6vbFYEohWpoLVUnXSZ5GLTDb8eBcpFvfPuHv0Mx3us3BIH7NqvCb7k8Y+jOphMcYKr7Dj0JRktO3yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ar9pqhhv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCF1C4CEE9;
-	Tue, 11 Mar 2025 14:52:50 +0000 (UTC)
+	s=arc-20240116; t=1741705650; c=relaxed/simple;
+	bh=aRchE8PwF/duoza+GGDBrfQTpUq5j0xQPd9igaVd1Dw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=inqUkObdfSMZo06kUMjbeFHro7BhXrr7TO/3B6W3gp7MJn1Zntk657chb9JG7JhIARKmNLa/zXh41U39fvTUN0q93NuWXXuHXs8NhWHQ3Jjd3HvSbSfhz06ZXM80QPpnpxeuiAUlpbJJfoLXmd4E4qlTXiUWB0MLh+wpo9EdPrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nb7UEfiU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094E6C4CEE9;
+	Tue, 11 Mar 2025 15:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741704770;
-	bh=yuPVk9WldAMtntYxp3zd8OUcJfojpeIHIzELiOdyLS4=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=Ar9pqhhvcd7v1MMbdgBDPEcHDJJdVvA7FFumK4hO+UYQxAe0Z5oP8KGIec+JnrNnV
-	 YNWfyEyp8TbI6bgMkDkA3xu8XUHeH+LuLGPOG6418LLq7sYPIZJN0rsbodBU+hH8G1
-	 /qozxptgtc/qDDkKYIYpD4KVHsybKtVF2PrPwngJkNDQKLleE2ujbwoleglG5zXlPX
-	 TbHzK+3gVPP6xDyAx31GaIFhqMdbiUoFuftmLkpQ7YEzvLtrOmu1cHUsVHcZDvSI6F
-	 Jj0KhoxtLaTbNMOqOEOwHw0CxiBWxYl+yUZE2qZ0OPR8SeyCyA6M5e9CY2zJBVC3D2
-	 UrqYvgb58nWUg==
-Date: Tue, 11 Mar 2025 09:52:48 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1741705649;
+	bh=aRchE8PwF/duoza+GGDBrfQTpUq5j0xQPd9igaVd1Dw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nb7UEfiUf5d6PWuCgRPwXwVDji8sdBgGMWOts8UhDz7FPpD0Dl9oeS5I3+TY/EsBj
+	 fe26M6E7b9OIHilGtV3M+swrTXhYCY1UMEBwAdLoOo9WRx6Nrst+JDICeFtwAf+5kA
+	 lvNHmB4/JAnmnxFJU/1+H2XScHSJ1YvpeEdzWprNV8cIji0Xdxslbx3O8qUjsnpUmt
+	 3A3RmDm/40MP31QdR9YF+TdRhDl3HuLbJbd0BkW8mvoZWQKlC/jYHnbOA0rGj1Jtck
+	 4toXFdfdO9EAl4Y0Tvot89nPnG1X5kiqQqjoP25LKSSG4+vjl0hO4TL2D7Ikih3IrC
+	 3GGsOLL+9nPZQ==
+Date: Tue, 11 Mar 2025 17:07:24 +0200
+From: Dmitry Baryshkov <lumag@kernel.org>
+To: Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: media: qcom,sm8550-iris: update power
+ domain name
+Message-ID: <7yjj2eemvvvnsgv67d7tueid4h3n3onuou6ammx36am4qhfsal@xam3iamk4er3>
+References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
+ <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-media@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, devicetree@vger.kernel.org, 
- Dikshita Agarwal <quic_dikshita@quicinc.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com>
-References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
- <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com>
-Message-Id: <174170473449.3452573.11984106414323631593.robh@kernel.org>
-Subject: Re: [PATCH 1/4] dt-bindings: media: qcom,sm8550-iris: update power
- domain name
 
-
-On Tue, 11 Mar 2025 17:33:53 +0530, Vikash Garodia wrote:
+On Tue, Mar 11, 2025 at 05:33:53PM +0530, Vikash Garodia wrote:
 > Not all platforms has a collapsible mx, so use the more generic naming
 > of mx in the binding.
+
+I guess, it wasn't even tested...
+
 > 
 > Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 > ---
 >  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> index e424ea84c211f473a799481fd5463a16580187ed..440a0d7cdfe19a1ccedefc207d96b26eed5d6630 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> @@ -28,7 +28,7 @@ properties:
+>      items:
+>        - const: venus
+>        - const: vcodec0
+> -      - const: mxc
+> +      - const: mx
+>        - const: mmcx
+>  
+>    clocks:
+> 
+> -- 
+> 2.34.1
+> 
 
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sm8550-iris.example.dtb: video-codec@aa00000: power-domain-names:2: 'mx' was expected
-	from schema $id: http://devicetree.org/schemas/media/qcom,sm8550-iris.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+-- 
+With best wishes
+Dmitry
 
