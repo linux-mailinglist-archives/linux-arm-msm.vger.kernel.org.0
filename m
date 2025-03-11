@@ -1,407 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-51012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3E1EA5C9FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:00:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A443A5CA07
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:01:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 386C53A8A77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:00:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B8D83A618B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:00:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E78EC25F99D;
-	Tue, 11 Mar 2025 15:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF57D260364;
+	Tue, 11 Mar 2025 16:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iOUtArjQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uUpknmff"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC8D25F7AF;
-	Tue, 11 Mar 2025 15:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8194C25F79C;
+	Tue, 11 Mar 2025 16:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741708742; cv=none; b=fXkAkC7HgpFUhBsANP52tVHQaJxDzLkDyvPw9DTBAoVRMcypAfrUsMMnoPInJUgNrZVPEBs0HaI/qa3n6MnhvRZ5yGI9gpLjDwq9yAwA06dMb43Y1pz/Ykabn8FipnnoNwL54+Cy/BPPSZ4mO8813y+lZCJcT2IeF+9orsS3Oe8=
+	t=1741708801; cv=none; b=l6+K8XX5ztqu+JPa+5HqM+3DiexqTFaJGo6syj+L/N40qzZqvTAZ97APA3zPZ1bxRfjSxewurlNPq/41Y7epd3Ln9in4aoi8oqD2zpggAv0krS8xhrDwT4gOx3A2MkVtiFymWfUgZ3Qw+yEWgdcyT5ybD0Ac0EFVDGsmyVjbLgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741708742; c=relaxed/simple;
-	bh=ey0TvjtocjBIN/gJtaPZmGpboACR4kND9J0lHiP1218=;
+	s=arc-20240116; t=1741708801; c=relaxed/simple;
+	bh=frAwT789BAh4F89Qv4uDoVqmywdm58BDlCsir8WtQmY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iWrDS14Bwh9jawjcuGL+be97v37HALF3iJCsM7EB2PGDF1SIHkcb8ZoMcASrlZITY5xtjezi0TRe6L/dIrNo7NvcplT/D3DORBcZnUjZPHsgEfiOCBdlpsN76TQxVzew1dD18FW0C3XN8Ofb6M3qVaiotEHJaWuLqCDBV4a4uyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iOUtArjQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF56FC4CEEF;
-	Tue, 11 Mar 2025 15:59:01 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=FZc5yb4qck7NIF/QPI+f1TP4TYzmactsYD+lWJVUxHOXdxSNpaXCWlOTHCGj7XjxcKUkj+G3PDKXlbjlYZ6AQBe7JBzF++SsJbUi1zIYh9rKbpml4oADqt+5qImP6jImwoaBrbIluWzHl3HSffJMQOmFgQKTdd99BoojVzNO8Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uUpknmff; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39B7C4CEE9;
+	Tue, 11 Mar 2025 15:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741708742;
-	bh=ey0TvjtocjBIN/gJtaPZmGpboACR4kND9J0lHiP1218=;
+	s=k20201202; t=1741708800;
+	bh=frAwT789BAh4F89Qv4uDoVqmywdm58BDlCsir8WtQmY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iOUtArjQndy07Zy38L727Ruxnz/8ksN6kE/fkWAPM1AnImem1bckhuCZuqtVNgHT+
-	 oCnbFBqLL2z+qgFR0qHQRKpyn1CeVZB9FO6emRJ/g+TxHk8Ek28ZMoRs01mD6R6rHD
-	 5JM2nQEp1D358yHJ1HhjlMemDEJiQnL6f5ZpZavy6KyhbWedE9IkBbsQMKSvAsgfAn
-	 x1ncQA8Yq1P/cOZNzSL5jdPiPXVVOrS3vt6Q+GcEsNRu35XCwCQoZexUgssafeiQmj
-	 fsPeznnac04lfvhNU0/oNnOX+bxgn+Bw4wxKYq+VtYSsqj9gNMHWql2tU4570Jj4yl
-	 cIn9Rt43yHBQA==
-Date: Tue, 11 Mar 2025 16:58:59 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Dmitry Baryshkov <dbaryshkov@gmail.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Hermes Wu <Hermes.wu@ite.com.tw>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v5 1/2] drm/bridge: split HDMI Audio from
- DRM_BRIDGE_OP_HDMI
-Message-ID: <20250311-benevolent-goat-of-thunder-8e73bb@houat>
-References: <20250307-dp-hdmi-audio-v5-0-f3be215fdb78@linaro.org>
- <20250307-dp-hdmi-audio-v5-1-f3be215fdb78@linaro.org>
- <20250310-unnatural-puffin-of-revolution-59d726@houat>
- <CALT56yPKe8+tSyChAo6ypHR8EWUpqeJDNM6mcOBUnFwFE7rg4w@mail.gmail.com>
- <20250311-quizzical-warthog-of-leadership-53d224@houat>
- <nx67lft5x4ytsxsd4mpxfocig5dfaolsurlwqzvkrniwzv3huz@hmwucvqykaid>
+	b=uUpknmffSTA6HHE+IafTOGZOOGVoB+jEDYMG0FuJYdMnNsfHRJu26BrQYwbY1k4zd
+	 VKL35+v1HICOjsfNov8pO2+cYat9912p8htjSX+3GMLdxnPdiWZvK3Alnapfyn4T9v
+	 3nP6aqWJvyplYWgTgw/9jqXL52VGrEIfxp5RsV3TzwvlM4ypshmqr9QBQv0l5sZk4X
+	 xhvSKndUayuYpc1EVBxlldxmAFq8YfLiSRYQ6WasQYbBtWt6/t6bhFJG4j9KqRsd7+
+	 ZQISQ/gxL7BFzAnnNdHfayVrshDGBctsKyclFm0jy2iwRpvcYmERzrVU5k8cre6UwP
+	 K1ZQCjo/9dTMQ==
+Date: Tue, 11 Mar 2025 17:59:55 +0200
+From: Dmitry Baryshkov <lumag@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>, 
+	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
+	Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Md Sadre Alam <quic_mdalam@quicinc.com>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v7 1/8] dmaengine: add DMA_PREP_LOCK and DMA_PREP_UNLOCK
+ flag
+Message-ID: <ozcg3m3iwdprt4hnti473e4j6ixnwgggbdvsnxold32bigcv7i@koo3ww3wfw22>
+References: <20250311-qce-cmd-descr-v7-0-db613f5d9c9f@linaro.org>
+ <20250311-qce-cmd-descr-v7-1-db613f5d9c9f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pl6g7hvtmixanolq"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <nx67lft5x4ytsxsd4mpxfocig5dfaolsurlwqzvkrniwzv3huz@hmwucvqykaid>
+In-Reply-To: <20250311-qce-cmd-descr-v7-1-db613f5d9c9f@linaro.org>
 
+On Tue, Mar 11, 2025 at 10:25:32AM +0100, Bartosz Golaszewski wrote:
+> From: Md Sadre Alam <quic_mdalam@quicinc.com>
+> 
+> Add lock and unlock flags for the command descriptor. With the former set
+> in the requester pipe, the bam controller will lock all other pipes and
+> process the request only from requester pipe. Unlocking can only be
+> performed from the same pipe.
+> 
+> Setting the DMA_PREP_LOCK/DMA_PREP_UNLOCK flags in the command
+> descriptor means, the caller requests the BAM controller to be locked
+> for the duration of the transaction. In this case the BAM driver must
+> set the LOCK/UNLOCK bits in the HW descriptor respectively.
+> 
+> Only BAM IPs version 1.4.0 and above support the LOCK/UNLOCK feature.
 
---pl6g7hvtmixanolq
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v5 1/2] drm/bridge: split HDMI Audio from
- DRM_BRIDGE_OP_HDMI
-MIME-Version: 1.0
+You are describing behaviour (and even versions) of a particular DMA
+hardware (BAM) in the commit message for a generic flag. Please drop all
+of that. Generic code should be described in generic terms.
 
-On Tue, Mar 11, 2025 at 05:50:09PM +0200, Dmitry Baryshkov wrote:
-> On Tue, Mar 11, 2025 at 09:36:37AM +0100, Maxime Ripard wrote:
-> > On Mon, Mar 10, 2025 at 08:42:29PM +0200, Dmitry Baryshkov wrote:
-> > > On Mon, 10 Mar 2025 at 16:55, Maxime Ripard <mripard@kernel.org> wrot=
-e:
-> > > >
-> > > > Hi,
-> > > >
-> > > > On Fri, Mar 07, 2025 at 07:55:52AM +0200, Dmitry Baryshkov wrote:
-> > > > > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > >
-> > > > > As pointed out by Laurent, OP bits are supposed to describe opera=
-tions.
-> > > > > Split DRM_BRIDGE_OP_HDMI_AUDIO from DRM_BRIDGE_OP_HDMI instead of
-> > > > > overloading DRM_BRIDGE_OP_HDMI.
-> > > > >
-> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > ---
-> > > > >  drivers/gpu/drm/bridge/lontium-lt9611.c        |  2 +-
-> > > > >  drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c   |  1 +
-> > > > >  drivers/gpu/drm/display/drm_bridge_connector.c | 59 ++++++++++++=
-+++++---------
-> > > > >  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c         |  1 +
-> > > > >  include/drm/drm_bridge.h                       | 23 ++++++++--
-> > > > >  5 files changed, 61 insertions(+), 25 deletions(-)
-> > > > >
-> > > > > diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gp=
-u/drm/bridge/lontium-lt9611.c
-> > > > > index 026803034231f78c17f619dc04119bdd9b2b6679..3b93c17e25c18ae0d=
-13e9bb74553cf21dcc39f9d 100644
-> > > > > --- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-> > > > > +++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-> > > > > @@ -1130,7 +1130,7 @@ static int lt9611_probe(struct i2c_client *=
-client)
-> > > > >       lt9611->bridge.of_node =3D client->dev.of_node;
-> > > > >       lt9611->bridge.ops =3D DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP=
-_EDID |
-> > > > >                            DRM_BRIDGE_OP_HPD | DRM_BRIDGE_OP_MODE=
-S |
-> > > > > -                          DRM_BRIDGE_OP_HDMI;
-> > > > > +                          DRM_BRIDGE_OP_HDMI | DRM_BRIDGE_OP_HDM=
-I_AUDIO;
-> > > > >       lt9611->bridge.type =3D DRM_MODE_CONNECTOR_HDMIA;
-> > > > >       lt9611->bridge.vendor =3D "Lontium";
-> > > > >       lt9611->bridge.product =3D "LT9611";
-> > > > > diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c b/drive=
-rs/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
-> > > > > index 6166f197e37b552cb8a52b7b0d23ffc632f54557..5e5f8c2f95be1f5c4=
-633f1093b17a00f9425bb37 100644
-> > > > > --- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
-> > > > > +++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
-> > > > > @@ -1077,6 +1077,7 @@ struct dw_hdmi_qp *dw_hdmi_qp_bind(struct p=
-latform_device *pdev,
-> > > > >       hdmi->bridge.ops =3D DRM_BRIDGE_OP_DETECT |
-> > > > >                          DRM_BRIDGE_OP_EDID |
-> > > > >                          DRM_BRIDGE_OP_HDMI |
-> > > > > +                        DRM_BRIDGE_OP_HDMI_AUDIO |
-> > > > >                          DRM_BRIDGE_OP_HPD;
-> > > > >       hdmi->bridge.of_node =3D pdev->dev.of_node;
-> > > > >       hdmi->bridge.type =3D DRM_MODE_CONNECTOR_HDMIA;
-> > > > > diff --git a/drivers/gpu/drm/display/drm_bridge_connector.c b/dri=
-vers/gpu/drm/display/drm_bridge_connector.c
-> > > > > index 30c736fc0067e31a97db242e5b16ea8a5b4cf359..030f98d454608a631=
-54827c65d4822d378df3b4c 100644
-> > > > > --- a/drivers/gpu/drm/display/drm_bridge_connector.c
-> > > > > +++ b/drivers/gpu/drm/display/drm_bridge_connector.c
-> > > > > @@ -98,6 +98,13 @@ struct drm_bridge_connector {
-> > > > >        * HDMI connector infrastructure, if any (see &DRM_BRIDGE_O=
-P_HDMI).
-> > > > >        */
-> > > > >       struct drm_bridge *bridge_hdmi;
-> > > > > +     /**
-> > > > > +      * @bridge_hdmi_audio:
-> > > > > +      *
-> > > > > +      * The bridge in the chain that implements necessary suppor=
-t for the
-> > > > > +      * HDMI Audio infrastructure, if any (see &DRM_BRIDGE_OP_HD=
-MI_AUDIO).
-> > > > > +      */
-> > > > > +     struct drm_bridge *bridge_hdmi_audio;
-> > > > >  };
-> > > > >
-> > > > >  #define to_drm_bridge_connector(x) \
-> > > > > @@ -433,7 +440,7 @@ static int drm_bridge_connector_audio_startup=
-(struct drm_connector *connector)
-> > > > >               to_drm_bridge_connector(connector);
-> > > > >       struct drm_bridge *bridge;
-> > > > >
-> > > > > -     bridge =3D bridge_connector->bridge_hdmi;
-> > > > > +     bridge =3D bridge_connector->bridge_hdmi_audio;
-> > > > >       if (!bridge)
-> > > > >               return -EINVAL;
-> > > > >
-> > > > > @@ -451,7 +458,7 @@ static int drm_bridge_connector_audio_prepare=
-(struct drm_connector *connector,
-> > > > >               to_drm_bridge_connector(connector);
-> > > > >       struct drm_bridge *bridge;
-> > > > >
-> > > > > -     bridge =3D bridge_connector->bridge_hdmi;
-> > > > > +     bridge =3D bridge_connector->bridge_hdmi_audio;
-> > > > >       if (!bridge)
-> > > > >               return -EINVAL;
-> > > > >
-> > > > > @@ -464,7 +471,7 @@ static void drm_bridge_connector_audio_shutdo=
-wn(struct drm_connector *connector)
-> > > > >               to_drm_bridge_connector(connector);
-> > > > >       struct drm_bridge *bridge;
-> > > > >
-> > > > > -     bridge =3D bridge_connector->bridge_hdmi;
-> > > > > +     bridge =3D bridge_connector->bridge_hdmi_audio;
-> > > > >       if (!bridge)
-> > > > >               return;
-> > > > >
-> > > > > @@ -478,7 +485,7 @@ static int drm_bridge_connector_audio_mute_st=
-ream(struct drm_connector *connecto
-> > > > >               to_drm_bridge_connector(connector);
-> > > > >       struct drm_bridge *bridge;
-> > > > >
-> > > > > -     bridge =3D bridge_connector->bridge_hdmi;
-> > > > > +     bridge =3D bridge_connector->bridge_hdmi_audio;
-> > > > >       if (!bridge)
-> > > > >               return -EINVAL;
-> > > > >
-> > > > > @@ -576,6 +583,21 @@ struct drm_connector *drm_bridge_connector_i=
-nit(struct drm_device *drm,
-> > > > >                               max_bpc =3D bridge->max_bpc;
-> > > > >               }
-> > > > >
-> > > > > +             if (bridge->ops & DRM_BRIDGE_OP_HDMI_AUDIO) {
-> > > > > +                     if (bridge_connector->bridge_hdmi_audio)
-> > > > > +                             return ERR_PTR(-EBUSY);
-> > > > > +
-> > > > > +                     if (!bridge->hdmi_audio_max_i2s_playback_ch=
-annels &&
-> > > > > +                         !bridge->hdmi_audio_spdif_playback)
-> > > > > +                             return ERR_PTR(-EINVAL);
-> > > > > +
-> > > > > +                     if (!bridge->funcs->hdmi_audio_prepare ||
-> > > > > +                         !bridge->funcs->hdmi_audio_shutdown)
-> > > > > +                             return ERR_PTR(-EINVAL);
-> > > > > +
-> > > > > +                     bridge_connector->bridge_hdmi_audio =3D bri=
-dge;
-> > > > > +             }
-> > > > > +
-> > > > >               if (!drm_bridge_get_next_bridge(bridge))
-> > > > >                       connector_type =3D bridge->type;
-> > > > >
-> > > > > @@ -611,22 +633,6 @@ struct drm_connector *drm_bridge_connector_i=
-nit(struct drm_device *drm,
-> > > > >                                              max_bpc);
-> > > > >               if (ret)
-> > > > >                       return ERR_PTR(ret);
-> > > > > -
-> > > > > -             if (bridge->hdmi_audio_max_i2s_playback_channels ||
-> > > > > -                 bridge->hdmi_audio_spdif_playback) {
-> > > > > -                     if (!bridge->funcs->hdmi_audio_prepare ||
-> > > > > -                         !bridge->funcs->hdmi_audio_shutdown)
-> > > > > -                             return ERR_PTR(-EINVAL);
-> > > > > -
-> > > > > -                     ret =3D drm_connector_hdmi_audio_init(conne=
-ctor,
-> > > > > -                                                         bridge-=
->hdmi_audio_dev,
-> > > > > -                                                         &drm_br=
-idge_connector_hdmi_audio_funcs,
-> > > > > -                                                         bridge-=
->hdmi_audio_max_i2s_playback_channels,
-> > > > > -                                                         bridge-=
->hdmi_audio_spdif_playback,
-> > > > > -                                                         bridge-=
->hdmi_audio_dai_port);
-> > > > > -                     if (ret)
-> > > > > -                             return ERR_PTR(ret);
-> > > > > -             }
-> > > > >       } else {
-> > > > >               ret =3D drmm_connector_init(drm, connector,
-> > > > >                                         &drm_bridge_connector_fun=
-cs,
-> > > > > @@ -635,6 +641,19 @@ struct drm_connector *drm_bridge_connector_i=
-nit(struct drm_device *drm,
-> > > > >                       return ERR_PTR(ret);
-> > > > >       }
-> > > > >
-> > > > > +     if (bridge_connector->bridge_hdmi_audio) {
-> > > > > +             bridge =3D bridge_connector->bridge_hdmi_audio;
-> > > > > +
-> > > > > +             ret =3D drm_connector_hdmi_audio_init(connector,
-> > > > > +                                                 bridge->hdmi_au=
-dio_dev,
-> > > > > +                                                 &drm_bridge_con=
-nector_hdmi_audio_funcs,
-> > > > > +                                                 bridge->hdmi_au=
-dio_max_i2s_playback_channels,
-> > > > > +                                                 bridge->hdmi_au=
-dio_spdif_playback,
-> > > > > +                                                 bridge->hdmi_au=
-dio_dai_port);
-> > > > > +             if (ret)
-> > > > > +                     return ERR_PTR(ret);
-> > > > > +     }
-> > > > > +
-> > > > >       drm_connector_helper_add(connector, &drm_bridge_connector_h=
-elper_funcs);
-> > > > >
-> > > > >       if (bridge_connector->bridge_hpd)
-> > > > > diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu=
-/drm/msm/hdmi/hdmi_bridge.c
-> > > > > index 1456354c8af4bc7f655e8a47e958e9e0b99b7d29..ab6c8bc4a30b681f7=
-de8ca7031f833795d1f7d94 100644
-> > > > > --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> > > > > +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> > > > > @@ -515,6 +515,7 @@ int msm_hdmi_bridge_init(struct hdmi *hdmi)
-> > > > >       bridge->ops =3D DRM_BRIDGE_OP_HPD |
-> > > > >               DRM_BRIDGE_OP_DETECT |
-> > > > >               DRM_BRIDGE_OP_HDMI |
-> > > > > +             DRM_BRIDGE_OP_HDMI_AUDIO |
-> > > > >               DRM_BRIDGE_OP_EDID;
-> > > > >       bridge->hdmi_audio_max_i2s_playback_channels =3D 8;
-> > > > >       bridge->hdmi_audio_dev =3D &hdmi->pdev->dev;
-> > > > > diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-> > > > > index d4c75d59fa12be1bd7375ce3ea56415235781b28..dff8cf035b30d5c7e=
-00bfdf5d6e12802559823ba 100644
-> > > > > --- a/include/drm/drm_bridge.h
-> > > > > +++ b/include/drm/drm_bridge.h
-> > > > > @@ -693,8 +693,10 @@ struct drm_bridge_funcs {
-> > > > >       /**
-> > > > >        * @hdmi_audio_prepare:
-> > > > >        * Configures HDMI-encoder for audio stream. Can be called =
-multiple
-> > > > > -      * times for each setup. Mandatory if HDMI audio is enabled=
- in the
-> > > > > -      * bridge's configuration.
-> > > > > +      * times for each setup.
-> > > > > +      *
-> > > > > +      * This callback is optional but it must be implemented by =
-bridges that
-> > > > > +      * set the DRM_BRIDGE_OP_HDMI_AUDIO flag in their &drm_brid=
-ge->ops.
-> > > > >        *
-> > > > >        * Returns:
-> > > > >        * 0 on success, a negative error code otherwise
-> > > > > @@ -707,8 +709,10 @@ struct drm_bridge_funcs {
-> > > > >       /**
-> > > > >        * @hdmi_audio_shutdown:
-> > > > >        *
-> > > > > -      * Shut down the audio stream. Mandatory if HDMI audio is e=
-nabled in
-> > > > > -      * the bridge's configuration.
-> > > > > +      * Shut down the audio stream.
-> > > > > +      *
-> > > > > +      * This callback is optional but it must be implemented by =
-bridges that
-> > > > > +      * set the DRM_BRIDGE_OP_HDMI_AUDIO flag in their &drm_brid=
-ge->ops.
-> > > > >        *
-> > > > >        * Returns:
-> > > > >        * 0 on success, a negative error code otherwise
-> > > > > @@ -814,6 +818,17 @@ enum drm_bridge_ops {
-> > > > >        * drivers.
-> > > > >        */
-> > > > >       DRM_BRIDGE_OP_HDMI =3D BIT(4),
-> > > > > +     /**
-> > > > > +      * @DRM_BRIDGE_OP_HDMI_AUDIO: The bridge provides HDMI audi=
-o operations.
-> > > > > +      * Bridges that set this flag must implement the
-> > > > > +      * &drm_bridge_funcs->hdmi_audio_prepare and
-> > > > > +      * &drm_bridge_funcs->hdmi_audio_shutdown callbacks.
-> > > > > +      *
-> > > > > +      * Note: currently there can be at most one bridge in a cha=
-in that sets
-> > > > > +      * this bit. This is to simplify corresponding glue code in=
- connector
-> > > > > +      * drivers.
-> > > > > +      */
-> > > > > +     DRM_BRIDGE_OP_HDMI_AUDIO =3D BIT(5),
-> > > >
-> > > > We should make this conditional on HDMI being set. It doesn't make =
-sense
-> > > > to have OP_HDMI_AUDIO enabled when OP_HDMI isn't.
-> > >=20
-> > > It totally does.
-> >=20
-> > I'm sure it works properly. I meant on a conceptual level. In our
-> > codebase, as it is today, the HDMI audio support is part of the HDMI
-> > infrastructure, and thus implementing audio without the main part
-> > doesn't make sense. IIRC, the spec also mandates video support, but
-> > audio is optional.
->=20
-> I can imagine a HDMI bridge using OP_HDMI_AUDIO, but not OP_HDMI. For
-> example, lontium-lt9611uxc.c. It is a 'smart' chip, which handles nearly
-> everything on its own. I even don't know if there is a way to program
-> the InfoFrames, etc., so I'm very skeptical about setting OP_HDMI.
-> However at the same time, it would defeinitely benefit from using
-> OP_HDMI_AUDIO.
+> 
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> [Bartosz: reworked the commit message]
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  Documentation/driver-api/dmaengine/provider.rst | 15 +++++++++++++++
+>  include/linux/dmaengine.h                       |  6 ++++++
+>  2 files changed, 21 insertions(+)
+> 
+> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
+> index 3085f8b460fa..a032e55d0a4f 100644
+> --- a/Documentation/driver-api/dmaengine/provider.rst
+> +++ b/Documentation/driver-api/dmaengine/provider.rst
+> @@ -628,6 +628,21 @@ DMA_CTRL_REUSE
+>    - This flag is only supported if the channel reports the DMA_LOAD_EOT
+>      capability.
+>  
+> +- DMA_PREP_LOCK
+> +
+> +  - If set, the DMA will lock all other pipes not related to the current
+> +    pipe group, and keep handling the current pipe only.
+> +
+> +  - All pipes not within this group will be locked by this pipe upon lock
+> +    event.
+> +
+> +  - only pipes which are in the same group and relate to the same Environment
+> +    Execution(EE) will not be locked by a certain pipe.
+> +
+> +- DMA_PREP_UNLOCK
+> +
+> +  - If set, DMA will release all locked pipes
+> +
+>  General Design Notes
+>  ====================
+>  
+> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> index 346251bf1026..8ebd43a998a7 100644
+> --- a/include/linux/dmaengine.h
+> +++ b/include/linux/dmaengine.h
+> @@ -200,6 +200,10 @@ struct dma_vec {
+>   *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
+>   *  to never be processed and stay in the issued queue forever. The flag is
+>   *  ignored if the previous transaction is not a repeated transaction.
+> + *  @DMA_PREP_LOCK: tell the driver that there is a lock bit set on command
+> + *  descriptor.
+> + *  @DMA_PREP_UNLOCK: tell the driver that there is a un-lock bit set on command
+> + *  descriptor.
+>   */
+>  enum dma_ctrl_flags {
+>  	DMA_PREP_INTERRUPT = (1 << 0),
+> @@ -212,6 +216,8 @@ enum dma_ctrl_flags {
+>  	DMA_PREP_CMD = (1 << 7),
+>  	DMA_PREP_REPEAT = (1 << 8),
+>  	DMA_PREP_LOAD_EOT = (1 << 9),
+> +	DMA_PREP_LOCK = (1 << 10),
+> +	DMA_PREP_UNLOCK = (1 << 11),
+>  };
+>  
+>  /**
+> 
+> -- 
+> 2.45.2
+> 
 
-You're going to have the same argument for that chip for audio: if not
-be able to set the infoframe disqualifies, then there's audio infoframes
-too and thus it should be disqualified from OP_HDMI_AUDIO.
-
-I don't believe it's an issue though: if a driver doesn't want the
-infoframes for whatever reason, it's free to do so.
-
-It's also something I'd like to reevaluate when we actually have that
-problem to deal with. At the moment, it sounds like reducing the safety
-of the API for an hypothetical case.
-
-Maxime
-
---pl6g7hvtmixanolq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZ9BdwwAKCRDj7w1vZxhR
-xR/IAP9v2rXA6H+WNAN3pWG4eBzvmHPfv6A8dmEtShhwat2DXgEAhqR080GlXY6t
-2tKR+NI6rpcNiWdaNKEgeH77PIDjVwE=
-=3j/T
------END PGP SIGNATURE-----
-
---pl6g7hvtmixanolq--
+-- 
+With best wishes
+Dmitry
 
