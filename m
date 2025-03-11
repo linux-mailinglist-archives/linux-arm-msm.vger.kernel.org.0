@@ -1,241 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-51020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5DE8A5CAE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:32:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5572AA5CB22
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:50:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 185DA17889A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:32:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E9D31188D9AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:50:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A282D25F7A9;
-	Tue, 11 Mar 2025 16:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C93525CC65;
+	Tue, 11 Mar 2025 16:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K7Gao5kP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zMHsoaI/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC1A25C6F9;
-	Tue, 11 Mar 2025 16:32:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF211EB9E3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 16:50:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741710720; cv=none; b=tSofEbn0k7ohgVJ/Wptsz5bNVBPGjeUITbMBs1epVqpH5dGIgg/FKYWDIB4NpcONl/Uv6GgdQCjaHx5ybYgSqLVEETEj7AYbj7KyKLMJ6FtHuTUz3HUWsu6SrHw1lbCwit+hA/ShfFx4QFvmcLgOnDAAEjqnyoiJm8iFy2DR6SA=
+	t=1741711808; cv=none; b=pfpKMbxu4VLwx6KpimjEExptZL9pLRst0U98oQ9ul/KnTnOMkHA6Hpkag3RYoK0bXlcpMXeOEj4u65xVhE5Tm7m36D04sGYjIJmn3quNhskDjJJpbxme3vUd5azzqGCeeZK9H2SmqPLWNjTkgpbGKXGM4obIJdajhyv4FdbFHdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741710720; c=relaxed/simple;
-	bh=kli/27tDi+RYlPqX2bhJ2TuIz1lPgxcKET8b517wpPs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ew75n/+5mug6xL++uicplo4bNRyGJ5+2G7E7WoYGF241zoOecWMK7yYl6Wqv5ENVL1rwOlcSjGn9ydat9hukMdJZpra5hBmrI9NH/1VUrOnwaflEFAnY9AAkgqSFjNJ4vwUG+kR50BzLatb+upuxMUOI0r2D45jRQ3LaYJRpOLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K7Gao5kP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97FBC4CEE9;
-	Tue, 11 Mar 2025 16:31:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741710719;
-	bh=kli/27tDi+RYlPqX2bhJ2TuIz1lPgxcKET8b517wpPs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=K7Gao5kPaA2Z4H2TPZS1Ntt7tL+9AIYfDWmotpIX17gNI/61K9bGuQ+orPb0zA1Dv
-	 KWVz+OxIoVE4vTPBEn5GDhgrXZzzXpCz4GHsS4lcrI1skdxqjMwVtrYCvnhshs8UPK
-	 vNm6akE20cBs/KuAM2eZhE9sW2KTxUfTRO4FoynhMjoZeCxucaMLIn1j1FG5bmWZ+9
-	 E0nVETzp9hJy2TcNcrm20y8bBDCSUjskSgpOiGCkHx3CE+sTaqZXnSPkee15x1kdp1
-	 6zSMfkP7pNu1hQ7nCq4Lcq/eUo7TCkvl0IUhnzO3mC3+5dd+WFSgFsfhdn2+frn05U
-	 SoWzI8+3zj0Rg==
-Date: Tue, 11 Mar 2025 18:31:54 +0200
-From: Dmitry Baryshkov <lumag@kernel.org>
-To: david@ixit.cz
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, Ivan Belokobylskiy <belokobylskij@gmail.com>
-Subject: Re: [PATCH v4] ARM: dts: nexus4: Initial dts
-Message-ID: <6bgnui5ygiw5c6erf4mhtod4ww645ntgy267snhrf5efgetajy@kbi6aw23knqe>
-References: <20250311-lg-nexus4-mako-v4-1-3916c8ec7edb@ixit.cz>
+	s=arc-20240116; t=1741711808; c=relaxed/simple;
+	bh=BvZCDeJlwxu4WFta5J0ZRVMripoIkagvhPtRakkbRB0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jhZS7y3WDWkouJZHkWKoYby+H0VYlF4q12JzOC60GN/QC+I0BoGzjDWdihPh1e/ZBK/BxJ1ElPwsk+EwjTOGXB3xHXb4c/mlSHMBQAR52/GPFhr/yI4+KaI0dAM9quiV0pdEow/T7npuRIxBIwQYXCIYbcq2EVpGrPHrL8K5mKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zMHsoaI/; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-223a7065ff8so14354745ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 09:50:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741711806; x=1742316606; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=23iOwZdcqMnXiNfXwcY1/saA5o6I48TGQZAkJr6gmPk=;
+        b=zMHsoaI/HU0TZAezkp5lp2C6GsQS2hCq4RzqsAYjkVwJvIbTNrFlHKwxeXHphTIZov
+         EuMYhYTuRHNP8AJF6ZJmYJA6lF7enuwt/UpmvetYHUM8aJ6Q3XD1ESP7aHMiEORjQUY5
+         7/8LpKlGfxZ+/u8u9mAE7LTVVThmMQiDzdtssAJNCAYBq4EgU5/vz7eewNe9e+9nLfVo
+         ubcKLdhjPUuuq0aPLlO67yNKFvpGMxjiB0uKSayTq4V3xhDN8PBDRaHEO4Ns5wPKEDod
+         I++GJrDLYdzzU05yhOBlb9evfd7wgOm1HEQ82uAw/H+rD1vtGEQsML/9tfReapckQ9rY
+         WZZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741711806; x=1742316606;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=23iOwZdcqMnXiNfXwcY1/saA5o6I48TGQZAkJr6gmPk=;
+        b=tboaaWTj70zBgIh9nQP9ZDTEI5im+8GGrskY1pmTbK32Q/QPJWPUSkowY8RXLfXjs1
+         yzs7yi5qhQ0/MFhiO6ANtAD4CKs7a7Wxg8KGLOd9rSbyIcuPFkzevkJf8q/+RjHm0igN
+         0yp55siJM2r6vYAQ8pDKUrW+05ATEbIgpz14BuogqZDRIVmBS7vhxAtVNEsvXctu7HYl
+         OOuVPM8gJzYqFKKPX8ypsUhThtYL7DnkgAB3Xve9bSEzl5LA5kcJv+BuErSiNIc77PP9
+         gSi4DOeSt/Zvbxk5giJjwX3F8QqVvkRCB/JgZN++mKOj+yDcWKt7MFIJtD25XjBNlaid
+         jR8g==
+X-Forwarded-Encrypted: i=1; AJvYcCXbguYO8HAvbROQ1WHiiqK3lY9uKkvI9Anlvk27kxU++20cBxvKPLLi/ZzOU8myrCGOwT7nJ+NpHLtpLi63@vger.kernel.org
+X-Gm-Message-State: AOJu0YygwezTpShrB5PDMP9TrSHCk9omLpsk1ULm4L0gqZ9PujnGCJYl
+	26WNl2fmQ6/NDvbt0G585u14XRX0/Ugc/lyQXCW4ESCMkrlrHd/U75BsglW9AKQ8k/9B2V1NTS/
+	9Z6KhqL8lXu/1C/MHcWAOMYnYkP0sfECSBvEf0w==
+X-Gm-Gg: ASbGnctRwD4gY47UFnTCtNweX1/2m1n/MOM2hldZXa03Pac/jUmgPXgauRXKFHqlUNn
+	Zvyot0qhCbra2ec6SVvxbmk0OtPr3TYnwDA62BkB+6b0mkZWPCUU5SiCKJDeeGjFT5enyw2sG+w
+	wmX7oc2MpFlt7kfcNh7rEoMl3egojbHCUm9iFo6Ars0EIoQq70nPQ3yc+Gp9E=
+X-Google-Smtp-Source: AGHT+IGRlRimNoESSBKd69bPemttjguo2zF0mTvg+Kb5/5Fg9niMy5gNnw80TuZnQbl3lCDWzV9DtaMCXkkJcAmG5fQ=
+X-Received: by 2002:a05:6a21:2d08:b0:1f3:47d6:aa05 with SMTP id
+ adf61e73a8af0-1f5449336e0mr29284989637.0.1741711806206; Tue, 11 Mar 2025
+ 09:50:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250311-lg-nexus4-mako-v4-1-3916c8ec7edb@ixit.cz>
+References: <20250310090407.2069489-1-quic_jiegan@quicinc.com> <20250310090407.2069489-2-quic_jiegan@quicinc.com>
+In-Reply-To: <20250310090407.2069489-2-quic_jiegan@quicinc.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Tue, 11 Mar 2025 16:49:54 +0000
+X-Gm-Features: AQ5f1Jq4RzUPjRD0-Pf4PVjALFGSYlNPIsAlLKRkK0wLgCzuiv55sOjf36seIGA
+Message-ID: <CAJ9a7Vh7PmBBbvwnUETfCYrTSiXNzeiWpsz+XAGaUWt1Rq1aZw@mail.gmail.com>
+Subject: Re: [PATCH v1 1/4] coresight: tmc: Introduce new APIs to get the RWP
+ offset of ETR buffer
+To: Jie Gan <quic_jiegan@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Tingwei Zhang <quic_tingweiz@quicinc.com>, Jinlong Mao <quic_jinlmao@quicinc.com>, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Mar 11, 2025 at 05:10:02PM +0100, David Heidelberg via B4 Relay wrote:
-> From: Ivan Belokobylskiy <belokobylskij@gmail.com>
-> 
-> Add initial support for LG Nexus 4 (mako).
-> 
-> Features currently working: regulators, eMMC, and volume keys.
-> 
-> Signed-off-by: Ivan Belokobylskiy <belokobylskij@gmail.com>
-> Co-developed-by: David Heidelberg <david@ixit.cz>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+Hi,
+
+On Mon, 10 Mar 2025 at 09:04, Jie Gan <quic_jiegan@quicinc.com> wrote:
+>
+> The new functions calculate and return the offset to the write pointer of
+> the ETR buffer based on whether the memory mode is SG, flat or reserved.
+> The functions have the RWP offset can directly read data from ETR buffer,
+> enabling the transfer of data to any required location.
+>
+> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
 > ---
-> Changes in v4:
-> - Sorted regulators and added regulators compatible.
-> - Corrected pmic include and references.
-> - Moved &rpm outside of / node.
-> - Moved and simplify pm8921 keypad.
-> - Added chasis-type.
-> - Dropped incomplete WiFi node, will be provided in future
->   contributions.
-> - Link to v3: https://lore.kernel.org/r/20250309-lg-nexus4-mako-v3-1-1dc2807df296@ixit.cz
-> 
-> Changes in v3:
-> - rebased against next-20250307
-> - dropped backlight until driver gets converted to DT
-> 
-> Changes in v2:
-> - lge vendor doesn't exist anymore, rename to lg
-> - sdcc@ to mmc@ to comply with dt-schema
-> ---
->  arch/arm/boot/dts/qcom/Makefile                    |   1 +
->  .../boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts  | 344 +++++++++++++++++++++
->  2 files changed, 345 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-> index f06c6d425e91dd73c2b453d15543d95bd32383b9..0c1d116f6e84f76994aa8c8286350bdcd1657a42 100644
-> --- a/arch/arm/boot/dts/qcom/Makefile
-> +++ b/arch/arm/boot/dts/qcom/Makefile
-> @@ -12,6 +12,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
->  	qcom-apq8064-ifc6410.dtb \
->  	qcom-apq8064-sony-xperia-lagan-yuga.dtb \
->  	qcom-apq8064-asus-nexus7-flo.dtb \
-> +	qcom-apq8064-lg-nexus4-mako.dtb \
->  	qcom-apq8074-dragonboard.dtb \
->  	qcom-apq8084-ifc6540.dtb \
->  	qcom-apq8084-mtp.dtb \
-> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts b/arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..51edd661e4bd903a32445d15955585a194574f30
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts
-> @@ -0,0 +1,344 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/mfd/qcom-rpm.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>  .../hwtracing/coresight/coresight-tmc-etr.c   | 40 +++++++++++++++++++
+>  drivers/hwtracing/coresight/coresight-tmc.h   |  1 +
+>  2 files changed, 41 insertions(+)
+>
+> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> index eda7cdad0e2b..ec636ab1fd75 100644
+> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> @@ -267,6 +267,46 @@ void tmc_free_sg_table(struct tmc_sg_table *sg_table)
+>  }
+>  EXPORT_SYMBOL_GPL(tmc_free_sg_table);
+>
+> +static long tmc_flat_resrv_get_rwp_offset(struct tmc_drvdata *drvdata)
+> +{
+> +       dma_addr_t paddr = drvdata->sysfs_buf->hwaddr;
+> +       u64 rwp;
 > +
-> +#include "qcom-apq8064-v2.0.dtsi"
-> +#include "pm8821.dtsi"
-> +#include "pm8921.dtsi"
-> +
-> +/ {
-> +	model = "LG Nexus 4 (mako)";
-> +	compatible = "lg,nexus4-mako", "qcom,apq8064";
-> +	chassis-type = "handset";
-> +
-> +	aliases {
-> +		serial0 = &gsbi7_serial;
-> +		serial1 = &gsbi6_serial;
-> +		serial2 = &gsbi4_serial;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial2:115200n8";
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-> +
-> +		ramoops@88d00000{
-> +			compatible = "ramoops";
-> +			reg = <0x88d00000 0x100000>;
-> +			record-size = <0x20000>;
-> +			console-size = <0x20000>;
-> +			ftrace-size = <0x20000>;
-> +		};
-> +	};
-> +
-> +	battery_cell: battery-cell {
-> +		compatible = "simple-battery";
-> +		constant-charge-current-max-microamp = <900000>;
-> +		operating-range-celsius = <0 45>;
-> +	};
 
-Ideally this should also be sorted, although I don't feel like putting
-it before /chosen/.
+It is not valid to read RWP if the TMC is running. It must be in the
+stopped or disabled state - see the specifications for TMC /ETR
 
-> +};
-> +
-> +&rpm {
+It is likely that CSUNLOCK / CSLOCK are needed here too,  along with
+the spinlock that protects drvdata
 
-Please sort nodes alphabetically. &rpm definitely comes after &gsbi1.
+See the code in coresight_tmc_etr.c :-
 
-> +	regulators {
+e.g. in
 
-[...]
+tmc_update_etr_buffer()
 
-> +};
+...
+<take spinlock>
+...
+CS_UNLOCK(drvdata->base);
+tmc_flush_and_stop(drvdata); // this ensures tmc is stopped and
+flushed to memory - essential to ensure full formatted frame is in
+memory.
+tmc_sync_etr_buf(drvdata); // this function reads rwp.
+CS_LOCK(drvdata->base);
+<release spinlokc>
+
+This type of program flow is common to both sysfs and perf handling of
+TMC buffers.
+
+> +       rwp = tmc_read_rwp(drvdata);
+> +       return rwp - paddr;
+> +}
 > +
-> +&gsbi1 {
-> +	qcom,mode = <GSBI_PROT_I2C>;
+> +static long tmc_sg_get_rwp_offset(struct tmc_drvdata *drvdata)
+> +{
+> +       struct etr_buf *etr_buf = drvdata->sysfs_buf;
+> +       struct etr_sg_table *etr_table = etr_buf->private;
+> +       struct tmc_sg_table *table = etr_table->sg_table;
+> +       long w_offset;
+> +       u64 rwp;
 > +
-> +	status = "okay";
-> +};
+
+Same comments as above
+
+> +       rwp = tmc_read_rwp(drvdata);
+> +       w_offset = tmc_sg_get_data_page_offset(table, rwp);
 > +
-> +&gsbi1_i2c {
-> +	clock-frequency = <200000>;
+> +       return w_offset;
+> +}
 > +
-> +	status = "okay";
-> +};
+> +/*
+> + * Retrieve the offset to the write pointer of the ETR buffer based on whether
+> + * the memory mode is SG, flat or reserved.
+> + */
+> +long tmc_get_rwp_offset(struct tmc_drvdata *drvdata)
+> +{
+> +       struct etr_buf *etr_buf = drvdata->sysfs_buf;
 > +
-> +&gsbi4 {
-> +	qcom,mode = <GSBI_PROT_I2C_UART>;
+
+As this is an exported function, please ensure that the inputs are
+valid - check the pointers
+
+Code to ensure TMC is flushed and stopped could be inserted here.
+
+Regards
+
+Mike
+
+> +       if (etr_buf->mode == ETR_MODE_ETR_SG)
+> +               return tmc_sg_get_rwp_offset(drvdata);
+> +       else if (etr_buf->mode == ETR_MODE_FLAT || etr_buf->mode == ETR_MODE_RESRV)
+> +               return tmc_flat_resrv_get_rwp_offset(drvdata);
+> +       else
+> +               return -EINVAL;
+> +}
+> +EXPORT_SYMBOL_GPL(tmc_get_rwp_offset);
 > +
-> +	status = "okay";
-> +};
-> +
-> +&gsbi4_serial {
-> +	status = "okay";
-> +};
-> +
-> +&pm8821 {
-> +	interrupts-extended = <&tlmm_pinmux 76 IRQ_TYPE_LEVEL_LOW>;
-> +};
-> +
-> +&pm8921 {
-> +	interrupts-extended = <&tlmm_pinmux 74 IRQ_TYPE_LEVEL_LOW>;
-> +};
-> +
-> +&pm8921_keypad {
-> +	linux,keymap = <
-> +		MATRIX_KEY(0, 0, KEY_VOLUMEDOWN)
-> +		MATRIX_KEY(0, 1, KEY_VOLUMEUP)
-> +	>;
-> +
-> +	keypad,num-rows = <1>;
-> +	keypad,num-columns = <5>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +
-> +/* eMMC */
-> +&sdcc1 {
-> +	vmmc-supply = <&pm8921_l5>;
-> +	vqmmc-supply = <&pm8921_s4>;
-> +
-> +	status = "okay";
-> +};
-> 
-> ---
-> base-commit: 0a2f889128969dab41861b6e40111aa03dc57014
-> change-id: 20250309-lg-nexus4-mako-da0833885b26
-> 
-> Best regards,
-> -- 
-> David Heidelberg <david@ixit.cz>
-> 
-> 
+>  /*
+>   * Alloc pages for the table. Since this will be used by the device,
+>   * allocate the pages closer to the device (i.e, dev_to_node(dev)
+> diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
+> index b48bc9a01cc0..baedb4dcfc3f 100644
+> --- a/drivers/hwtracing/coresight/coresight-tmc.h
+> +++ b/drivers/hwtracing/coresight/coresight-tmc.h
+> @@ -442,5 +442,6 @@ void tmc_etr_remove_catu_ops(void);
+>  struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
+>                                    enum cs_mode mode, void *data);
+>  extern const struct attribute_group coresight_etr_group;
+> +long tmc_get_rwp_offset(struct tmc_drvdata *drvdata);
+>
+>  #endif
+> --
+> 2.34.1
+>
+
 
 -- 
-With best wishes
-Dmitry
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
