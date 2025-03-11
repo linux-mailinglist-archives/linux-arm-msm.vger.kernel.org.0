@@ -1,67 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-51019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3ECDFA5CAD4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:29:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5DE8A5CAE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:32:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15F28189BFB1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:29:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 185DA17889A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:32:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36A64260373;
-	Tue, 11 Mar 2025 16:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A282D25F7A9;
+	Tue, 11 Mar 2025 16:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DGihK8Rw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K7Gao5kP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F37326036F;
-	Tue, 11 Mar 2025 16:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC1A25C6F9;
+	Tue, 11 Mar 2025 16:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741710538; cv=none; b=XZDOfHR6yRcw37cDsj/FTr9mxBTYK0FjCuUMqKqSiB+40VqMEzU/ft5jD1+lNxj6E3wXZ3J294Rh5ttlj71BfhznhqX8CbTy/H2RJO5fIOWQuq5xnl9O8HHcaNcU9KMcpiHmaN3QsvJWTIL2HI9bridUn3ns8YFLeUuyH5+M8hc=
+	t=1741710720; cv=none; b=tSofEbn0k7ohgVJ/Wptsz5bNVBPGjeUITbMBs1epVqpH5dGIgg/FKYWDIB4NpcONl/Uv6GgdQCjaHx5ybYgSqLVEETEj7AYbj7KyKLMJ6FtHuTUz3HUWsu6SrHw1lbCwit+hA/ShfFx4QFvmcLgOnDAAEjqnyoiJm8iFy2DR6SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741710538; c=relaxed/simple;
-	bh=8OMFcL17uY6gRsTtXxJDcoNAW0nxjeHevA06z8Dqk8c=;
+	s=arc-20240116; t=1741710720; c=relaxed/simple;
+	bh=kli/27tDi+RYlPqX2bhJ2TuIz1lPgxcKET8b517wpPs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b9lYCrFfefnl5dp+J44m9IvvJpjOaXh1ZTO8qz04VZuh8pDlKSkkdh3H78n93GRyAkdNDRMNFqq/sm8qa/Vya/hrIoILy8eLM5Jj+R85Tz6XvXbuYu9AUVnIWSseD0LoRbMf/rFsTmi/RxB2HboeMOmmlsfqBOLuPeFIu3iy22A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DGihK8Rw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE5AC4CEE9;
-	Tue, 11 Mar 2025 16:28:52 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ew75n/+5mug6xL++uicplo4bNRyGJ5+2G7E7WoYGF241zoOecWMK7yYl6Wqv5ENVL1rwOlcSjGn9ydat9hukMdJZpra5hBmrI9NH/1VUrOnwaflEFAnY9AAkgqSFjNJ4vwUG+kR50BzLatb+upuxMUOI0r2D45jRQ3LaYJRpOLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K7Gao5kP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97FBC4CEE9;
+	Tue, 11 Mar 2025 16:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741710537;
-	bh=8OMFcL17uY6gRsTtXxJDcoNAW0nxjeHevA06z8Dqk8c=;
+	s=k20201202; t=1741710719;
+	bh=kli/27tDi+RYlPqX2bhJ2TuIz1lPgxcKET8b517wpPs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DGihK8RwnXcf3DnbbaIW/U/FdSBz92bwToI+TYJyMCBQPfDWDeKNjt1OK52W+W+x5
-	 9Wel/gkGxvsan8B5WywVcuX/uw/fOOzDF1ivuAxc+p6V1r0Ik+jxE/be3wJm+JmikA
-	 tB2l76Cj8LiTXcWVwUAPr024J3qDTybb034auXx1KqHXlnE/A4zo8z7XZy+zwwJrWf
-	 ow9nBgOUT3Mu94FZ/DJ4WErLdwpEUn/oRHgLLzU9wi9H8lghTRqOFLVco/zIlF9zOu
-	 lNnzLt/5axCkugPxNwGQIEXcHArQPZo98Zik5rg0Aw4GfXRYLhPTDe/Iyhu3wZ/3uZ
-	 D1kV980Lv+utg==
-Date: Tue, 11 Mar 2025 18:28:50 +0200
+	b=K7Gao5kPaA2Z4H2TPZS1Ntt7tL+9AIYfDWmotpIX17gNI/61K9bGuQ+orPb0zA1Dv
+	 KWVz+OxIoVE4vTPBEn5GDhgrXZzzXpCz4GHsS4lcrI1skdxqjMwVtrYCvnhshs8UPK
+	 vNm6akE20cBs/KuAM2eZhE9sW2KTxUfTRO4FoynhMjoZeCxucaMLIn1j1FG5bmWZ+9
+	 E0nVETzp9hJy2TcNcrm20y8bBDCSUjskSgpOiGCkHx3CE+sTaqZXnSPkee15x1kdp1
+	 6zSMfkP7pNu1hQ7nCq4Lcq/eUo7TCkvl0IUhnzO3mC3+5dd+WFSgFsfhdn2+frn05U
+	 SoWzI8+3zj0Rg==
+Date: Tue, 11 Mar 2025 18:31:54 +0200
 From: Dmitry Baryshkov <lumag@kernel.org>
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 3/4] drm/vc4: use new helper to get ACR values
-Message-ID: <wass63nz24l4h3umszsyptb5bnkny4h2wmnbeunjrdfhyacl4l@w6emq2ipt552>
-References: <20250309-drm-hdmi-acr-v1-0-bb9c242f4d4b@linaro.org>
- <20250309-drm-hdmi-acr-v1-3-bb9c242f4d4b@linaro.org>
- <20250310-invisible-married-firefly-945c84@houat>
- <esgb42dyhpjixm62tfk2nfzdiygnfn4bcwq4zn7rhydmt4np2q@7v77p7kveb4e>
- <20250311-intrepid-obedient-lizard-64ad2c@houat>
+To: david@ixit.cz
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, Ivan Belokobylskiy <belokobylskij@gmail.com>
+Subject: Re: [PATCH v4] ARM: dts: nexus4: Initial dts
+Message-ID: <6bgnui5ygiw5c6erf4mhtod4ww645ntgy267snhrf5efgetajy@kbi6aw23knqe>
+References: <20250311-lg-nexus4-mako-v4-1-3916c8ec7edb@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,70 +61,179 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250311-intrepid-obedient-lizard-64ad2c@houat>
+In-Reply-To: <20250311-lg-nexus4-mako-v4-1-3916c8ec7edb@ixit.cz>
 
-On Tue, Mar 11, 2025 at 09:07:10AM +0100, Maxime Ripard wrote:
-> On Mon, Mar 10, 2025 at 10:18:04PM +0200, Dmitry Baryshkov wrote:
-> > On Mon, Mar 10, 2025 at 03:51:53PM +0100, Maxime Ripard wrote:
-> > > On Sun, Mar 09, 2025 at 10:13:58AM +0200, Dmitry Baryshkov wrote:
-> > > > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > 
-> > > > Use drm_hdmi_acr_get_n_cts() helper instead of calculating N and CTS
-> > > > values in the VC4 driver.
-> > > > 
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >  drivers/gpu/drm/vc4/vc4_hdmi.c | 10 +++-------
-> > > >  drivers/gpu/drm/vc4/vc4_hdmi.h |  7 +++++++
-> > > >  2 files changed, 10 insertions(+), 7 deletions(-)
-> > > > 
-> > 
-> > > > diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.h b/drivers/gpu/drm/vc4/vc4_hdmi.h
-> > > > index e3d989ca302b72533c374dfa3fd0d5bd7fe64a82..0a775dbfe99d45521f3d0a2016555aefa81d7934 100644
-> > > > --- a/drivers/gpu/drm/vc4/vc4_hdmi.h
-> > > > +++ b/drivers/gpu/drm/vc4/vc4_hdmi.h
-> > > > @@ -211,6 +211,13 @@ struct vc4_hdmi {
-> > > >  	 * KMS hooks. Protected by @mutex.
-> > > >  	 */
-> > > >  	enum hdmi_colorspace output_format;
-> > > > +
-> > > > +	/**
-> > > > +	 * @tmds_char_rate: Copy of
-> > > > +	 * @drm_connector_state.hdmi.tmds_char_rate for use outside of
-> > > > +	 * KMS hooks. Protected by @mutex.
-> > > > +	 */
-> > > > +	unsigned long long tmds_char_rate;
-> > > >  };
-> > > 
-> > > This should be in drm_connector_hdmi if it's useful
-> > 
-> > That would mean bringing the state to a non-state structure on the
-> > framework level. Is it fine from your POV?
+On Tue, Mar 11, 2025 at 05:10:02PM +0100, David Heidelberg via B4 Relay wrote:
+> From: Ivan Belokobylskiy <belokobylskij@gmail.com>
 > 
-> Sorry, I'm changing my mind a little bit, but it's pretty much the same
-> case than for accessing the infoframes from debugfs: we want to get some
-> information stored in the state from outside of KMS.
+> Add initial support for LG Nexus 4 (mako).
 > 
-> What we did for the infoframes is that we're actually just taking the
-> connection_mutex from the DRM device and access the drm_connector->state
-> pointer.
+> Features currently working: regulators, eMMC, and volume keys.
 > 
-> I guess it would also work for ALSA?
+> Signed-off-by: Ivan Belokobylskiy <belokobylskij@gmail.com>
+> Co-developed-by: David Heidelberg <david@ixit.cz>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+> Changes in v4:
+> - Sorted regulators and added regulators compatible.
+> - Corrected pmic include and references.
+> - Moved &rpm outside of / node.
+> - Moved and simplify pm8921 keypad.
+> - Added chasis-type.
+> - Dropped incomplete WiFi node, will be provided in future
+>   contributions.
+> - Link to v3: https://lore.kernel.org/r/20250309-lg-nexus4-mako-v3-1-1dc2807df296@ixit.cz
+> 
+> Changes in v3:
+> - rebased against next-20250307
+> - dropped backlight until driver gets converted to DT
+> 
+> Changes in v2:
+> - lge vendor doesn't exist anymore, rename to lg
+> - sdcc@ to mmc@ to comply with dt-schema
+> ---
+>  arch/arm/boot/dts/qcom/Makefile                    |   1 +
+>  .../boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts  | 344 +++++++++++++++++++++
+>  2 files changed, 345 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
+> index f06c6d425e91dd73c2b453d15543d95bd32383b9..0c1d116f6e84f76994aa8c8286350bdcd1657a42 100644
+> --- a/arch/arm/boot/dts/qcom/Makefile
+> +++ b/arch/arm/boot/dts/qcom/Makefile
+> @@ -12,6 +12,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+>  	qcom-apq8064-ifc6410.dtb \
+>  	qcom-apq8064-sony-xperia-lagan-yuga.dtb \
+>  	qcom-apq8064-asus-nexus7-flo.dtb \
+> +	qcom-apq8064-lg-nexus4-mako.dtb \
+>  	qcom-apq8074-dragonboard.dtb \
+>  	qcom-apq8084-ifc6540.dtb \
+>  	qcom-apq8084-mtp.dtb \
+> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts b/arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..51edd661e4bd903a32445d15955585a194574f30
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts
+> @@ -0,0 +1,344 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/mfd/qcom-rpm.h>
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +
+> +#include "qcom-apq8064-v2.0.dtsi"
+> +#include "pm8821.dtsi"
+> +#include "pm8921.dtsi"
+> +
+> +/ {
+> +	model = "LG Nexus 4 (mako)";
+> +	compatible = "lg,nexus4-mako", "qcom,apq8064";
+> +	chassis-type = "handset";
+> +
+> +	aliases {
+> +		serial0 = &gsbi7_serial;
+> +		serial1 = &gsbi6_serial;
+> +		serial2 = &gsbi4_serial;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial2:115200n8";
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges;
+> +
+> +		ramoops@88d00000{
+> +			compatible = "ramoops";
+> +			reg = <0x88d00000 0x100000>;
+> +			record-size = <0x20000>;
+> +			console-size = <0x20000>;
+> +			ftrace-size = <0x20000>;
+> +		};
+> +	};
+> +
+> +	battery_cell: battery-cell {
+> +		compatible = "simple-battery";
+> +		constant-charge-current-max-microamp = <900000>;
+> +		operating-range-celsius = <0 45>;
+> +	};
 
-I'd really prefer to follow the drm_connector.infoframes.audio. It makes
-sense to group all ALSA-related functionality together. Maybe I should
-refactor it to:
+Ideally this should also be sorted, although I don't feel like putting
+it before /chosen/.
 
-struct drm_connector {
-    struct {
-	struct mutex lock;
-	struct drm_connector_hdmi_infoframe audio_infoframe;
-	unsigned long long tmds_char_rate;
-    } audio;
-};
+> +};
+> +
+> +&rpm {
 
-WDYT? If that doesn't sound appealing, I'll go the connetion_mutex and
-drm_connector_state way.
+Please sort nodes alphabetically. &rpm definitely comes after &gsbi1.
+
+> +	regulators {
+
+[...]
+
+> +};
+> +
+> +&gsbi1 {
+> +	qcom,mode = <GSBI_PROT_I2C>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&gsbi1_i2c {
+> +	clock-frequency = <200000>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&gsbi4 {
+> +	qcom,mode = <GSBI_PROT_I2C_UART>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&gsbi4_serial {
+> +	status = "okay";
+> +};
+> +
+> +&pm8821 {
+> +	interrupts-extended = <&tlmm_pinmux 76 IRQ_TYPE_LEVEL_LOW>;
+> +};
+> +
+> +&pm8921 {
+> +	interrupts-extended = <&tlmm_pinmux 74 IRQ_TYPE_LEVEL_LOW>;
+> +};
+> +
+> +&pm8921_keypad {
+> +	linux,keymap = <
+> +		MATRIX_KEY(0, 0, KEY_VOLUMEDOWN)
+> +		MATRIX_KEY(0, 1, KEY_VOLUMEUP)
+> +	>;
+> +
+> +	keypad,num-rows = <1>;
+> +	keypad,num-columns = <5>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +
+> +/* eMMC */
+> +&sdcc1 {
+> +	vmmc-supply = <&pm8921_l5>;
+> +	vqmmc-supply = <&pm8921_s4>;
+> +
+> +	status = "okay";
+> +};
+> 
+> ---
+> base-commit: 0a2f889128969dab41861b6e40111aa03dc57014
+> change-id: 20250309-lg-nexus4-mako-da0833885b26
+> 
+> Best regards,
+> -- 
+> David Heidelberg <david@ixit.cz>
+> 
+> 
 
 -- 
 With best wishes
