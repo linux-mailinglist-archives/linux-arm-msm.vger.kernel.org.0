@@ -1,48 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-50935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC57EA5BCC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 10:52:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38DB7A5BCCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 10:53:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7EA4618963D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:52:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F5C618963D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:53:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 870F922B5B1;
-	Tue, 11 Mar 2025 09:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2876E22DFAD;
+	Tue, 11 Mar 2025 09:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gmjr6g88"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z4Opequm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53525225776;
-	Tue, 11 Mar 2025 09:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5EF1DE4CC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 09:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741686756; cv=none; b=bnttCj4c1LgZBeWJ5WOnRksg86VBQtwl9vaslQTdtruqVcKRYI/xnFscF+lQfPKYCaN645dmd3J7SS4L7sxntXIDQQ5PF2om8ZMAvW6aFamKpHSlPK/EcbThHfF45Vedj73nsWF5frUvrIpRR/YqMP5H71xcdBSIt5REV2OhhP0=
+	t=1741686772; cv=none; b=g2OUgize0m3om49sZUFi/jWz6e8uz8T4uaF3zXD1tgwL8C6zhgpdobanKRV0z8gNTQJMmkJ/lCb6SLTS+u8r+RMXwIv+x808cQINjKsrCgIVT5FjiR3PNceqI8T9EHYCfn4YrGhGTSfSILlsIsBr+MFB4EGDnt8Fa4bQBjGqQeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741686756; c=relaxed/simple;
-	bh=pCyBHqU0zoiqSyN755vMT64wjgPcH6oB5zFBzmqyNGk=;
+	s=arc-20240116; t=1741686772; c=relaxed/simple;
+	bh=nLsNY9YPDYR69dHRTG9iGxlGFHroQoosjvtirmfC+Uw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UKZTDJIDrW+MITqc4GylRCphn4/fE4RDadPGQH0ylE7iJRggpKjYAhB2ycXp2CHYbyJ21ZsyrusJNkKubvwZc6C72lNXz2Uqo3SGbnZxqzIp55KgkBsoT1Kgcfjg29H7rnqfqzaTwqPMxDEqx7QG0op3sY0Jica+qiTtAYcGwv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gmjr6g88; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3188C4CEE9;
-	Tue, 11 Mar 2025 09:52:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741686755;
-	bh=pCyBHqU0zoiqSyN755vMT64wjgPcH6oB5zFBzmqyNGk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Gmjr6g88AKIwS64SeaJXYdnIc1W2nenQ8+vZZksdhsUyHjPTpnTy/6iXxWQVyiKdH
-	 vSjwadeZ5tdywFnU1WxuIoabRHc3EAz1ERtgy6Ps2xg6TTj3sXdLFnt6pOG0P9nW7W
-	 d+TcUZ8yo+OB6bS2NnLOfAfoO07oxsDd1ONw+ldYoNGEJRHk0etxwQXXM3lZ+cFuz/
-	 ya4B0rxaOLIb8S8nP9njodBefi1W3ebKc+HKozOzhMKL5RhmVtNks6SaHqscS6EYrq
-	 fL2ed6jW/1NDBNMLjDuf9Y10H7yFLhjZ+Ckxr1CZpehCgfgaZ2NS4IfsHBaLauWqg3
-	 sv1pTE9nPSb2g==
-Message-ID: <ff074197-8d2c-4f76-a4c1-8d91c8cdd821@kernel.org>
-Date: Tue, 11 Mar 2025 10:52:28 +0100
+	 In-Reply-To:Content-Type; b=A/Pl0yOOOdattbE1QXO5VPJ2cUflRfEqBE/Zk4ONzY4VHxBdZLxxZ+VDZqfkOEDdiMVn7+f+s2MC12HTyYv9UDApQzsAEFlFj/xhCkGyyjuKDeUYsmx6SK51S4fcoPDz6f9PimNkPUuuQiP8ISs8urlpug3QOgcQPzEuVGYL/VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z4Opequm; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5e614da8615so1450880a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 02:52:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741686768; x=1742291568; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2ZF/tv/hhztcLup0wsXkNgr0yQmTV2Wsbid/49FYr/I=;
+        b=z4OpequmYJIxTQH4QROctkwc/BCEgE039z20L0FIZr1A7WRRwTUFuV35fzckz55+TM
+         aszYvgHJwDg7YlNb211Xhk4XiSGZ1yqle5deojhz/e8sSwbL1JvyRA+vGv49lVgHSrzc
+         ElrkD5SkfKGFNS3W92i0TvhT1xH5suUK3SBjDfPZvbLaGqcFBbkvBRXVkcfCcDJMlwaI
+         LFk6MTeZlKq1DJAICdYdAKQZqutyUBWCTvlfZrzp+OFTgF44b4X1murhOBuDBpMQqPNQ
+         Zv+U3GYGcJp7TKV0iHRsQr9XS7e1VRUiJR2RiQfyFrFY4ZtakoUzEzzKYXh+LEz0rh7x
+         7eyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741686768; x=1742291568;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2ZF/tv/hhztcLup0wsXkNgr0yQmTV2Wsbid/49FYr/I=;
+        b=FW6OYed2BDQ23CoJXzUgaddIQ8/8Xm65atAM1IN8kxFxEsSxrCSelqdVcSJJJ5PjFF
+         VCM+JaiAo+hYP2cNv132broU/iqZ00StJB2X7MmnhQwez2oHCR65L357qxhj+hyHcoHq
+         Cs9WHZgx68FZyCCzIYMmNt50v+IQiM6Dq9is9+kfL/ANX+sA8t5qCQbKK5Ryd9wVWcLH
+         Pa978m0LMSSDfSMj9W9D07a9HX0t+H8U5CMCSI0DE2xSVHtOCYfYo/NXceRGumv07JR7
+         KVkENUNQsJ5Au04fT8eS82dy3C5yaCsqdR5AIEwcbDYBra8qN3mVsiJR2Iv3ndKaKw2t
+         Kx4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVd57pTybGpI20XneNz4Zeyk/kuJpflDSiE60EJvKwffevLO1mM0Ldx1B+Wz6eyVW0RI33HZ3MFFZb445Px@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3u7st5H1ubrRNzBdWNvRA0mWZIHUoAeHBAT/VRvgiOPcV71fI
+	NvqegdURDXa3Rq5oRKiWzCSQxCzwVxBc1ANBnDklQdmB86ynwCSkqp/QwTy+/aw=
+X-Gm-Gg: ASbGncudT95SqEHOYOtJzhMtzXebKxVd3nEl8NVBb5vLqMrGArESVTA8MI5gCtr1X/3
+	V/ayI2ZAxCEZ40S7z71g8ORYN4KqJlsTiBtR+SGIY1nZ0a0U2DgSEPxo3qq4ggjAqERB2LRvexi
+	16t+ofULCKmoPBLuhKsyKLr0JP/T+YT7+Aj0smGRtvEd8t1MIHdaihHmMBoarprGsxjGgLHSlYR
+	R1sR+C6Z2bGBOE9bqiR+iX0nqm1kagqfzuppU8yi1NO5nNg9kgevpvSe7TgvVSr4Npce3wjwE2x
+	SYPJdLX2LNjRQjO57e01r9cCsoAVm8cO32egmaydQx1B1HPWaYebWKQZBMzoXTFmCCpU1G4JSGC
+	mwosrxcKhnw==
+X-Google-Smtp-Source: AGHT+IG6wdrtlqlUK8ocfVYESFcp2EZz+04YizUsNmVH6H7aW+YxVtNC5WSrYqNq8D4ssmWWnCf6Kg==
+X-Received: by 2002:a05:6402:4313:b0:5e0:6332:9af0 with SMTP id 4fb4d7f45d1cf-5e7631ef0c0mr3354166a12.14.1741686767933;
+        Tue, 11 Mar 2025 02:52:47 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e5c74a7176sm7953213a12.35.2025.03.11.02.52.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Mar 2025 02:52:47 -0700 (PDT)
+Message-ID: <5a45fd25-74ed-46e3-b0e3-5adf92b5e9f7@linaro.org>
+Date: Tue, 11 Mar 2025 09:52:45 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,106 +82,91 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 3/7] dt-bindings: PCI: qcom: Use sdx55 reg description
- for ipq9574
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
- manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, p.zabel@pengutronix.de,
- quic_nsekar@quicinc.com, dmitry.baryshkov@linaro.org,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+Subject: Re: [PATCH v2 0/8] clk: qcom: Add support to attach multiple power
+ domains in cc probe
+To: Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org
-References: <20250220094251.230936-1-quic_varada@quicinc.com>
- <20250220094251.230936-4-quic_varada@quicinc.com>
- <41b400fe-5e08-42c0-9bc6-a238d25d155a@kernel.org>
- <33bb1cb2-0c5e-402b-a5c6-9604b1dd8d99@kernel.org>
- <Z86YReHsKeF165F6@hu-varada-blr.qualcomm.com>
- <84456c70-e933-469f-ac7a-7d899f85e777@linaro.org>
- <Z8/Dto1fZWvemiY5@hu-varada-blr.qualcomm.com>
- <01a7918b-dc4b-4ed3-8f74-bc59a9629ce9@kernel.org>
- <Z8/xTotUg+2GN2+G@hu-varada-blr.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <CMTYKKilQJYeHUYYKvlqnwv4Q2P-58Ic1v1ndS9HQ8Yhq2xpHuNThibFDjXDEQ1PyNbx__f9BVBr0peoTUdvPg==@protonmail.internalid>
+ <20250306-videocc-pll-multi-pd-voting-v2-0-0cd00612bc0e@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <Z8/xTotUg+2GN2+G@hu-varada-blr.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250306-videocc-pll-multi-pd-voting-v2-0-0cd00612bc0e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/03/2025 09:16, Varadarajan Narayanan wrote:
->> I don't understand what is duplication of something here.
+On 06/03/2025 08:55, Jagadeesh Kona wrote:
+> In some of the recent chipsets, PLLs require more than one power domain
+> to be kept ON to configure the PLL. But the current code doesn't enable
+> all the required power domains while configuring the PLLs, this leads
+> to functional issues due to suboptimal settings of PLLs.
 > 
-> By duplication, I meant the same set of reg-names (in different order).
+> To address this, add support for handling runtime power management,
+> configuring plls and enabling critical clocks from qcom_cc_really_probe.
+> The clock controller can specify PLLs, critical clocks, and runtime PM
+> requirements in the descriptor data. The code in qcom_cc_really_probe()
+> ensures all necessary power domains are enabled before configuring PLLs
+> or critical clocks.
 > 
->>> 	if (adding mhi to ipq9574 reg-names != duplication)
->>>
->>> 		/* Keep existing order */
->>>
->>> 		* Append "mhi" to ipq9574
->>
->> ipq9574 does not have mhi, does it?
+> This series updates SM8450 & SM8550 videocc drivers to handle rpm,
+> configure PLLs and enable critical clocks from within qcom_cc_really_probe()
+> using above support, so video PLLs are configured properly.
 > 
-> ipq9574 also has it.
+> This series fixes the below warning reported in SM8550 venus testing due
+> to video_cc_pll0 not properly getting configured during videocc probe
+> 
+> [   46.535132] Lucid PLL latch failed. Output may be unstable!
+> 
+> The patch adding support to configure the PLLs from common code is
+> picked from below series and updated it.
+> https://lore.kernel.org/all/20250113-support-pll-reconfigure-v1-0-1fae6bc1062d@quicinc.com/
+> 
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+> Changes in v2:
+>   - Added support to handle rpm, PLL configuration and enable critical
+>     clocks from qcom_cc_really_probe() in common code as per v1 commments
+>     from Bryan, Konrad and Dmitry
+>   - Added patches to configure PLLs from common code
+>   - Updated the SM8450, SM8550 videocc patches to use the newly
+>     added support to handle rpm, configure PLLs from common code
+>   - Split the DT change for each target separately as per
+>     Dmitry comments
+>   - Added R-By and A-By tags received on v1
+> - Link to v1: https://lore.kernel.org/r/20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com
+> 
+> ---
+> Jagadeesh Kona (7):
+>        dt-bindings: clock: qcom,sm8450-videocc: Add MXC power domain
+>        clk: qcom: common: Manage rpm, configure PLLs & AON clks in really probe
+>        clk: qcom: videocc-sm8450: Move PLL & clk configuration to really probe
+>        clk: qcom: videocc-sm8550: Move PLL & clk configuration to really probe
+>        arm64: dts: qcom: Add MXC power domain to videocc node on SM8450
+>        arm64: dts: qcom: Add MXC power domain to videocc node on SM8550
+>        arm64: dts: qcom: Add MXC power domain to videocc node on SM8650
+> 
+This list looks sparse.
 
-Current binding says no, so something is missing.
+- camcc is missing
+- x1e is missing
+- sm8650 and sm8750 and both also missing
 
-> 
->> If it has, it should be separate patch with its own explanation of the
->> hardware.
-> 
-> Will discard these patches from the patchset -
-> 
-> 	dt-bindings: PCI: qcom: Use sdx55 reg description for ipq9574 Varadarajan Narayanan
-> 	arm64: dts: qcom: ipq9574: Reorder reg and reg-names Varadarajan Narayanan
-> 
-> Will add mhi for ipq9574 and post the next version. Is that ok?
+If we are going in with the knife, lets cut once and make a 
+comprehensive change.
 
-Yes.
+Could you please add those platforms and clock controllers to your V3 to 
+save other people having to do the extra work.
 
-Best regards,
-Krzysztof
+---
+bod
 
