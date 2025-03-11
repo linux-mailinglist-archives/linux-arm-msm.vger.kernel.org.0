@@ -1,190 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-51063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3C02A5CF18
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 20:15:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E4C1A5CF26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 20:19:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B1A427A1848
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:14:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B07541898197
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:20:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54F36262809;
-	Tue, 11 Mar 2025 19:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19419263C88;
+	Tue, 11 Mar 2025 19:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kIrkeFel"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JmJ4pQPs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772E625B69B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 19:15:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D55B1F03F2;
+	Tue, 11 Mar 2025 19:19:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741720545; cv=none; b=FEMzpAcQ0+jRpzpo0XFrZvdbhL1qslcXrQfH4zYnRKJRQsmCmc95cmDbTru2yNgp539U71hYUJUjHnuqMbJvKfqUKvx3d5NdLLf5MtqC4+owuKQ9AzB1o3j7OvX7IuBLaOun45MQxI/c6Oe7T+TIf30AUPjN2NZhbmPudRa62z0=
+	t=1741720793; cv=none; b=XFiKiMnjadeEnXG8lfRzYqFHLfkxoar4gbyM4Sk8CXH6QbcZd0150SfkvL4nE6DPuaxn0iWh7hjP3GFIOVF5fafFqWCuZ1IAufU3wGXsXpBXwXd8pnNAtv42JBZmjArNpFnUG6MRUrB5syZSbDQeZeq3QkhYCCuSG728qJtEd7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741720545; c=relaxed/simple;
-	bh=krckIoN1Yt1X2R2aNMnVSqupWCPnV/MnderkXA9y9as=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s3Zui0asdkIfFdQWMFagejGqap84AY18tRSZvAcYC6tfTWojEcAoeV6YBMrp+Mq3hFJcYGt6eCEqEWHWftZw+N4PUvRJgT/ybKrXyKEupbooJZu1MwtDv9qL06l97tJDACNkiLq5zwdy/xglpgH3hf7ihCbNq1GOPxbg+AKgS/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kIrkeFel; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cf05f0c3eso19548195e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 12:15:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741720542; x=1742325342; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3D7DcqzXtXay65MOmV9DzhULAHuxDLESiJA/LkHgEnQ=;
-        b=kIrkeFelWNGVa7qyzF96Gg/uwCrlmB6bDPnXeiQjTBkioPTToBmID8pXQcAGoi81L0
-         8fPbdE6Se5YkfEHfVN2h0QBbHSKBXNErUr2GG3B24bSjD3TbzUBCsVi/fl5A/8tEVf9K
-         SNyj3LaClEEzsrydQK++OEa+J68zIGtjaPEJaprRKlHt/cylMp4kS7DtYQE9ArjWv8rW
-         SUvWcMpK5MxBVrP3ndOROO3zGgtBUK5Nz1hNF9VgC0AXsU7VI6h+IA3GVx2/bdupYzeR
-         3R/lY2ln2+t0T+6iSlLwEn+Uvk7jPKFXvLfCo8vnmZPBsCrk8WFyeWMBmHMUduYbwTdM
-         xIkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741720542; x=1742325342;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3D7DcqzXtXay65MOmV9DzhULAHuxDLESiJA/LkHgEnQ=;
-        b=RO+hDMwLIjJK3cFXWMqkYoO0ddoU3ZN3OcM3CF5g80vu4loA9YZBYAnnepjWJcYwq1
-         +lvm2FIwsD+rj8RQZ662qWcI3eA9AsjtZC+2qo1LYbJqNTtHoBH0usWKX3uHuaLQqLO5
-         gktP6jzzbpkuN/kb9iJNnZ1NNCddjyu14CJFNqjMI2s/7QCOpHoBNL6uGca2RhEcgl0c
-         ao5qqeKLx8VlHflxS2SuGOn4Dd/06hy9lQcW+5nVeRQPxaSO6tiVMCMBudDWTiqrLgMj
-         a2ofGAdBR1KC8tM1lTUtyJpsuU98v3gsupKu/1yIZNSK4gCQ0IoDn63rbH2eAmTfTpBa
-         mS0g==
-X-Forwarded-Encrypted: i=1; AJvYcCVefmjND+CYiLeo0zpJS9p891f8gY+qANDHec79H5hqJx+zv9MxI/ysUR56rExUNFFzMNBuckzkIbpnRiCN@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyAtGstpClpqtjZr97TjDU2znWkJjzDhtFNcgiXpzP1xmRnPKN
-	vCO68SZfqS82rCFQZxdLVfYiRLAKjX2xTkWmnPc/DoANh65SLd1GqjnvtMAZEn4bXVNazkzu+nT
-	EPvfwC3EGIl+Bk/j7VkN/2HdguUtHZjoarPqFAA==
-X-Gm-Gg: ASbGnctKwOapvGAkAZDmFi/rxncTF64puAclejS40Gwe1lji/hQaVDsiQrn+i/7EpLu
-	hsc9VnEHCjNMNycWCIQqQiOUTsQcLRy/RIoOZ9u98VaGYOVDFNLvsbt1d2I8aZuamKE2X6VlGUO
-	2tDgGsaIBpOVa58AgLGq8bk3YgL+0=
-X-Google-Smtp-Source: AGHT+IEKaY3f/jwf8rjJ6P4i1mXmye8xaJcsyi8fySc9Crm9HPFFdA+QVKIx8M9phSTEfNJutY9OZDhw/KDAR0n/sLc=
-X-Received: by 2002:a05:600c:4f0c:b0:43c:eec7:eabb with SMTP id
- 5b1f17b1804b1-43ceec7ee09mr102106865e9.8.1741720541648; Tue, 11 Mar 2025
- 12:15:41 -0700 (PDT)
+	s=arc-20240116; t=1741720793; c=relaxed/simple;
+	bh=2LCiy4lFtFm1TsLHV4lPWQ9w3NrS4s9HWA9Rz74dfj4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=KFDx0xuv0lX/wM8kb9MLep25yLI5H/RLRASBbg1dF4HWVT2jXwMLx1jwNLw0Ltt8F0x5YhuSsAlcdomf/Uy2QawEkQIN5iFVkYQIVG7yoeyA9OwndlgmVdMdeAv1p+d27x226yrxohS5S336Mg44FmyVuC+o5ojSfruvJMQHHbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JmJ4pQPs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BJ8ZHe017734;
+	Tue, 11 Mar 2025 19:19:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cOhWVdEMxYHFBSFUIiBHuYp/vQkdKu4vEMS65xaXcL8=; b=JmJ4pQPshJW651tO
+	UZvTCFtA2KHcr7OPjqnPp5JIctaSk3ezU/IG/TNQAbL7H/lgLb1juJcvLtV9eem3
+	TMjDLZuTTZt/5hWRZjBC3m3QGpADuoWdrwl+5FPskAyWQ8ViPKk0cA3fTESyF/l5
+	my/EGgV9lPBOPJionF18iH12CNcQgXhrypEsB1PfLxpa7xzhYZRuYabnFOXeBtj0
+	zzXjssSFqFsN09nx2gzQ43toz7mA2dGDCPHbbC1XpXKw+mmQAiCexVfGr4nw3t/f
+	RrBAr3GVQE0wnIZy5QNiAaQkyYBI6nQ+hUc4VMOs6DUeAemeBglV3VljQX3cBcPu
+	+b/nwg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2nr0up-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Mar 2025 19:19:47 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52BJJjLB005862
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Mar 2025 19:19:45 GMT
+Received: from [10.216.38.182] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Mar
+ 2025 12:19:41 -0700
+Message-ID: <203ea0bb-c53c-389e-db12-b41773c0ff5d@quicinc.com>
+Date: Wed, 12 Mar 2025 00:49:38 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
- <CACr-zFC=mPNeeHMp9XnSby+cMQaPWt_3s8iUiCN+EnVPeGad8Q@mail.gmail.com> <uljqxwfgl26txrfqvkvzzpj6qurgmwcbuot7gu2u6rwjaqgncb@jeuyi4mexjff>
-In-Reply-To: <uljqxwfgl26txrfqvkvzzpj6qurgmwcbuot7gu2u6rwjaqgncb@jeuyi4mexjff>
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Tue, 11 Mar 2025 20:15:31 +0100
-X-Gm-Features: AQ5f1JogDXTrmR57agoVvLVzDGF-kWOnB5039Wi_AANd56pvT-_X7Ug39zfiuvE
-Message-ID: <CACr-zFDSFizYmrVN-dV334n1kq17UB9k4FxrV20NNQCQMhzrwg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm interconnects as built-in
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 1/4] dt-bindings: media: qcom,sm8550-iris: update power
+ domain name
+Content-Language: en-US
 To: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
+CC: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
+ <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com>
+ <7yjj2eemvvvnsgv67d7tueid4h3n3onuou6ammx36am4qhfsal@xam3iamk4er3>
+ <c0430086-675d-b58c-4ef9-1bd9ee51d3db@quicinc.com>
+ <zssjkvxxv7kionartp6f3y2qh3d4i6gwnhwsrklsfad3t4fy3q@jkehbkx6wcyk>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <zssjkvxxv7kionartp6f3y2qh3d4i6gwnhwsrklsfad3t4fy3q@jkehbkx6wcyk>
 Content-Type: text/plain; charset="UTF-8"
-
-Hi Dmitry,
-
-On Tue, 11 Mar 2025 at 19:58, Dmitry Baryshkov <lumag@kernel.org> wrote:
->
-> On Tue, Mar 11, 2025 at 07:10:06PM +0100, Christopher Obbard wrote:
-> > I sent this patch to start the discussion, some things I found:
-> >
-> > 1) Some interconnects are missing from arm defconfig. Should they be =y too ?
->
-> No, unless those are required for the UART console.
-
-OK, that makes sense. FWIW the cryptic (to me, at least) commit log on
-https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6eee808134ecf1c1093ff1ddfc056dc5e469d0c3
-made me think that the interconnects should be built-in on all devices.
-
-Of course, the real problem here is RB3gen2 not actually finding the
-UFS/eMMC device due to no interconnect driver.
-Until now, I have been building that into the kernel. I will
-investigate instead shoving into the initrd (in both debian and
-fedora) which should solve my issue and render this patchset useless.
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HgxfAPyusGHWxAxQC0V6gT8J8q9kQRrL
+X-Authority-Analysis: v=2.4 cv=Q4XS452a c=1 sm=1 tr=0 ts=67d08cd3 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=Ve5_cTlWWX7DCNKN5mYA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: HgxfAPyusGHWxAxQC0V6gT8J8q9kQRrL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-11_05,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ lowpriorityscore=0 mlxscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503110125
 
 
-Thanks,
+On 3/11/2025 9:05 PM, Dmitry Baryshkov wrote:
+> On Tue, Mar 11, 2025 at 08:41:01PM +0530, Vikash Garodia wrote:
+>>
+>> On 3/11/2025 8:37 PM, Dmitry Baryshkov wrote:
+>>> On Tue, Mar 11, 2025 at 05:33:53PM +0530, Vikash Garodia wrote:
+>>>> Not all platforms has a collapsible mx, so use the more generic naming
+>>>> of mx in the binding.
+>>>
+>>> I guess, it wasn't even tested...
+>> Not sure what made you guess so, let me check why my binding checker did not
+>> catch the bot reported warning.
+> 
+> Obvious: you are changing the bindings in a non-backwards compatible
+> way, but you are not changing the example in the same file (and
+> obviously you are not changing the DTs), which means that this wasn't
+> tested.
+> 
+> Hint: you can use enum [mx, mxc] instead of const. That would make it
+> backwards compatible.
+Currently there are no user of this binding. Given that either of MX or MXC are
+same connection to video hardware, just that one is collapsible, it would be
+good to replace the existing element instead of enum.
 
-Chris
-
->
-> > $ grep CONFIG_INTERCONNECT_QCOM arch/arm/configs/qcom_defconfig
-> > CONFIG_INTERCONNECT_QCOM=y
-> > CONFIG_INTERCONNECT_QCOM_MSM8974=m
-> > CONFIG_INTERCONNECT_QCOM_SDX55=m
-> >
-> > 2) Some interconnects are missing from arm64 defconfig (which should
-> > probably be in there) (I have included just two examples):
->
-> I think `git log -S CONFIG_INTERCONNECT_QCOM
-> arch/arm64/configs/defconfig` will answer this question. The drivers are
-> enabled on the premises of being required for a particular device, not
-> because they exist in the Linux kernel.
->
-> > $ grep CONFIG_INTERCONNECT drivers/interconnect/qcom/Makefile
-> > obj-$(CONFIG_INTERCONNECT_QCOM_QCS615) += qnoc-qcs615.o
-> > obj-$(CONFIG_INTERCONNECT_QCOM_SM7150) += qnoc-sm7150.o
-> >
-> > I can handle these in follow-up or v2 of the patchset as follow-up
-> > commits, please let me know what you'd prefer.
-> >
-> > On Tue, 11 Mar 2025 at 19:03, Christopher Obbard
-> > <christopher.obbard@linaro.org> wrote:
-> > >
-> > > Currently some Qualcomm interconnect drivers are enabled
-> > > as modules which isn't overly useful since the interconnects
-> > > are required to be loaded during early boot.
-> > >
-> > > Loading the interconnects late (e.g. in initrd or as module)
-> > > can cause boot issues, such as slowdown or even not booting
-> > > at all (since the interconnect would be required for storage
-> > > devices).
-> > >
-> > > Be consistent and enable all of the Qualcomm interconnect
-> > > drivers as built-in to the kernel image.
-> > >
-> > > Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
-> > > ---
-> > >  arch/arm64/configs/defconfig | 6 +++---
-> > >  1 file changed, 3 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > > index 219ef05ee5a757c43a37ec9f8571ce9976354830..6582baee2ab02ecb2ff442c6e73aa6a23fee8d7f 100644
-> > > --- a/arch/arm64/configs/defconfig
-> > > +++ b/arch/arm64/configs/defconfig
-> > > @@ -1656,11 +1656,11 @@ CONFIG_INTERCONNECT_IMX8MN=m
-> > >  CONFIG_INTERCONNECT_IMX8MQ=m
-> > >  CONFIG_INTERCONNECT_IMX8MP=y
-> > >  CONFIG_INTERCONNECT_QCOM=y
-> > > -CONFIG_INTERCONNECT_QCOM_MSM8916=m
-> > > +CONFIG_INTERCONNECT_QCOM_MSM8916=y
-> > >  CONFIG_INTERCONNECT_QCOM_MSM8996=y
-> > > -CONFIG_INTERCONNECT_QCOM_OSM_L3=m
-> > > +CONFIG_INTERCONNECT_QCOM_OSM_L3=y
-> > >  CONFIG_INTERCONNECT_QCOM_QCM2290=y
-> > > -CONFIG_INTERCONNECT_QCOM_QCS404=m
-> > > +CONFIG_INTERCONNECT_QCOM_QCS404=y
-> > >  CONFIG_INTERCONNECT_QCOM_QCS615=y
-> > >  CONFIG_INTERCONNECT_QCOM_QCS8300=y
-> > >  CONFIG_INTERCONNECT_QCOM_QDU1000=y
-> > >
-> > > ---
-> > > base-commit: b098bcd8278b89cb3eb73fdb6e06dc49af75ad37
-> > > change-id: 20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-258fcc961b11
-> > >
-> > > Best regards,
-> > > --
-> > > Christopher Obbard <christopher.obbard@linaro.org>
-> > >
->
-> --
-> With best wishes
-> Dmitry
+Regards,
+Vikash
+> 
+>> Regards,
+>> Vikash
+>>>
+>>>>
+>>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>>>> ---
+>>>>  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 2 +-
+>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+>>>> index e424ea84c211f473a799481fd5463a16580187ed..440a0d7cdfe19a1ccedefc207d96b26eed5d6630 100644
+>>>> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+>>>> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+>>>> @@ -28,7 +28,7 @@ properties:
+>>>>      items:
+>>>>        - const: venus
+>>>>        - const: vcodec0
+>>>> -      - const: mxc
+>>>> +      - const: mx
+>>>>        - const: mmcx
+>>>>  
+>>>>    clocks:
+>>>>
+>>>> -- 
+>>>> 2.34.1
+>>>>
+>>>
+> 
 
