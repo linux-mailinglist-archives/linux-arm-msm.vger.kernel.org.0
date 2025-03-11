@@ -1,287 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-50907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E82DA5BA53
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:00:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95F82A5BA5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:02:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BBA81894471
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 07:59:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D9E147A1E02
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 08:01:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05F33222585;
-	Tue, 11 Mar 2025 07:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD09A221703;
+	Tue, 11 Mar 2025 08:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ocB6+Ne3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L1Ii6f0A"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25A4222572;
-	Tue, 11 Mar 2025 07:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2211EA7FD;
+	Tue, 11 Mar 2025 08:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741679988; cv=none; b=I6Cm/CeptN2KiWFXiAxVXkLS7E4awVP0500A3/3zNJ406Jh1Iz4HW/eCpnUpowzvTnRCrpBi31JU5mVOFrtKbus0J2FzqiNvNRokajWimad7DyZUGuSGBQ4ffdtF3T58TEnF9y35dFi8s1p3vTQbtdqYRB+Dbgq+ClxHaOj4gak=
+	t=1741680138; cv=none; b=AzTp0Ze9uuk6IPD/8g07BGnzoy5ZoWaIxNma5fTqXNTnZzY/NYbJ/6KaSiwEXXOv5jjDJzOip1x9VGMkRd0thyqfYQXs3R6a4ZDf/qvhE9Tr3xjQXwd2KGOT6tLIT3gZ1zwLncJ0J32+Vn9Q/QMNH3z6E46Wx+x9ugff32tpDPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741679988; c=relaxed/simple;
-	bh=AH+p4JW6F+z5XeodYcVKSYSZhEHmVRaoVWCiPMOXiw8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Py8uUGnCyCzqucssRuxz5VApT8DLRg1HjRBBzYh/Dl1fjKrY6DkJWLtRM0Oh/ULgAH/83JmUlCRx6Gdlj/mcztQvIJMJCff34hNTL+94LIrRGqfH9FYI1rXFUEmzJuQxpfwT+4lHXcqfDQVBEZOqjhBXQ25VkhU8bICL7gSrUhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ocB6+Ne3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0A4C4CEEA;
-	Tue, 11 Mar 2025 07:59:47 +0000 (UTC)
+	s=arc-20240116; t=1741680138; c=relaxed/simple;
+	bh=ER+SoneXM3aC53kwTjsYgrHGqM1EmcSSSqClcNpsios=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gUbEq5evEruGaafD0gv21riPI3reXCw8ZqNhwRLU1k3vXt1UAmVg0IkXjskT6kVL2u6EmkYzk2C/H5KAqiCt6UEOGaX6bgos9VrZ2ITaqQc1cTI5SXnoQNEPTOhdAnZ5kwIvKhWpmvgTrog4j5AntmTb10iO2nVfbeisenXZwfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L1Ii6f0A; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9BAC4CEE9;
+	Tue, 11 Mar 2025 08:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741679988;
-	bh=AH+p4JW6F+z5XeodYcVKSYSZhEHmVRaoVWCiPMOXiw8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ocB6+Ne3bwI510+KrvoPiNBTOEbeV0xxCJArmYfvnNV1F6GJhHmBiF6nYY6cgD21T
-	 qqDTrEyvlCKO7yoZSa2d5/G5l03sfbtQ0iMEcERXH3CNb9mnOPX5WWOVtBLmp7Jxtt
-	 7Ic+MaOEpw6OI0YEQwB5fi+iVZYVMepCgDhwcU8vyEA3i27Ij2HFPhiGcD1dBSgHNH
-	 5ANOcmSeLc0pW0RXlrf0hg/eXrATFVwYbE86AJGyYbEEelFJzKzT5bvPemZ9b4zC8k
-	 7bJGUqDdgY8HSvfOXMDm+C3+iP8GAZrTmltrg3SJMEF7s+q3aEh+H7r7fabXSSkiCd
-	 rrVTExHAzKPOQ==
-Date: Tue, 11 Mar 2025 08:59:45 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 1/4] drm/display: hdmi: provide central data authority
- for ACR params
-Message-ID: <20250311-bouncy-hissing-chupacabra-0dff3f@houat>
-References: <20250309-drm-hdmi-acr-v1-0-bb9c242f4d4b@linaro.org>
- <20250309-drm-hdmi-acr-v1-1-bb9c242f4d4b@linaro.org>
- <20250310-funny-malamute-of-promotion-bb759e@houat>
- <bensvtxc67i566qqcjketdlffyrwxcnydwarqyjau6b7ibcq4b@d6d4sbm3rubf>
+	s=k20201202; t=1741680134;
+	bh=ER+SoneXM3aC53kwTjsYgrHGqM1EmcSSSqClcNpsios=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=L1Ii6f0AYn5e94wJ6fY4sQ60vyv+Ve56Uvflq+oAUrLzFPD5ndP3C1i0zbDWVLBay
+	 DUSB2bZMaqvUBDC1Icgk3X1lrElTqnjUbhwmw7uiiNaJPjwmIV42bIDmKs6RJDEYLi
+	 MXRSYjh2JiZg1xEqC0loybvy11SrazORpc/Ruh6sDEkaePrkcetIL5WYE9da29O17k
+	 6vvL93mJM/lr1l9Ao9sDaj/zd7a7uXcPu8V/ti0UbwBkgJ0k2SyR+REmx9G3O2UunY
+	 4oQw3b5z6eE94rdwxjGg5iT9nPKWZV8xbcd5pMAYlS05vN0H1y80750gd8jsIs9kUV
+	 OmyPj3ORjNzAA==
+Message-ID: <e00a7061-5283-4809-b652-5f6c5e1e4496@kernel.org>
+Date: Tue, 11 Mar 2025 09:02:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sgxudawjzyo43qu5"
-Content-Disposition: inline
-In-Reply-To: <bensvtxc67i566qqcjketdlffyrwxcnydwarqyjau6b7ibcq4b@d6d4sbm3rubf>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
+ Ride-r3
+To: Wasim Nazir <quic_wasimn@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
+ <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
+ <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
+ <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
+ <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
+ <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
+ <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
+ <Z8AWHiVu05s0RJws@hu-wasimn-hyd.qualcomm.com>
+ <a8991221-88b2-4a39-a51b-587c4cdeebe4@kernel.org>
+ <Z8laCxtHOdNm3rRu@hu-wasimn-hyd.qualcomm.com>
+ <Z8lb889QrqluPXXl@hu-wasimn-hyd.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <Z8lb889QrqluPXXl@hu-wasimn-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+On 06/03/2025 09:25, Wasim Nazir wrote:
+>> +-----------------------------------------------------------------------------------------------------------------------------------------------+
+>> |                                                                                                                                               |
+>> |                                                          sa8775p.dtsi                                                                         |
+>> |                                                              |                                                                                |
+>> |                                    +-------------------------+-----------------------+                                                        |
+>> |                                    |                         |                       |                                                        |
+>> |                                    v                         |                       v                                                        |
+>> |                             qcs9075-som.dtsi                 |                qcs9100-som.dtsi                                                |
+>> |                                    |                         |                       |                                                        |
+>> |                                    v                         v                       v                                                        |
+>> |                                  (IOT)                    (AUTO)                   (IOT)                                                      |
+>> |                                    |                         |                       |                                                        |
+>> |             +----------------------+                         |                       |                                                        |
+>> |             |                      |                         |                       |                                                        |
+>> |             |                      | +-------------------------+-----------------------+-----------------< sa8775p-ride-common.dtsi           |
 
 
---sgxudawjzyo43qu5
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 1/4] drm/display: hdmi: provide central data authority
- for ACR params
-MIME-Version: 1.0
+There is no ride-common hardware. If there is, send us any proof of its
+existence. all your statements here show you want to create some
+structure because you like it. I don't think you get my questions. You
+painted diagram of DTS, not hardware.
 
-On Mon, Mar 10, 2025 at 10:14:52PM +0200, Dmitry Baryshkov wrote:
-> On Mon, Mar 10, 2025 at 03:46:33PM +0100, Maxime Ripard wrote:
-> > On Sun, Mar 09, 2025 at 10:13:56AM +0200, Dmitry Baryshkov wrote:
-> > > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >=20
-> > > HDMI standard defines recommended N and CTS values for Audio Clock
-> > > Regeneration. Currently each driver implements those, frequently in
-> > > somewhat unique way. Provide a generic helper for getting those values
-> > > to be used by the HDMI drivers.
-> > >=20
-> > > The helper is added to drm_hdmi_helper.c rather than drm_hdmi_audio.c
-> > > since HDMI drivers can be using this helper function even without
-> > > switching to DRM HDMI Audio helpers.
-> > >=20
-> > > Note: currently this only handles the values per HDMI 1.4b Section 7.2
-> > > and HDMI 2.0 Section 9.2.1. Later the table can be expanded to
-> > > accommodate for Deep Color TMDS char rates per HDMI 1.4 Appendix D
-> > > and/or HDMI 2.0 / 2.1 Appendix C).
-> > >=20
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  drivers/gpu/drm/display/drm_hdmi_helper.c | 164 ++++++++++++++++++++=
-++++++++++
-> > >  include/drm/display/drm_hdmi_helper.h     |   6 ++
-> > >  2 files changed, 170 insertions(+)
-> > >=20
-> > > diff --git a/drivers/gpu/drm/display/drm_hdmi_helper.c b/drivers/gpu/=
-drm/display/drm_hdmi_helper.c
-> > > index 74dd4d01dd9bb2c9e69ec1c60b0056bd69417e8a..89d25571bfd21c56c6835=
-821d2272a12c816a76e 100644
-> > > --- a/drivers/gpu/drm/display/drm_hdmi_helper.c
-> > > +++ b/drivers/gpu/drm/display/drm_hdmi_helper.c
-> > > @@ -256,3 +256,167 @@ drm_hdmi_compute_mode_clock(const struct drm_di=
-splay_mode *mode,
-> > >  	return DIV_ROUND_CLOSEST_ULL(clock * bpc, 8);
-> > >  }
-> > >  EXPORT_SYMBOL(drm_hdmi_compute_mode_clock);
-> > > +
-> > > +struct drm_hdmi_acr_n_cts_entry {
-> > > +	unsigned int n;
-> > > +	unsigned int cts;
-> > > +};
-> > > +
-> > > +struct drm_hdmi_acr_data {
-> > > +	unsigned long tmds_clock_khz;
-> > > +	struct drm_hdmi_acr_n_cts_entry n_cts_32k,
-> > > +					n_cts_44k1,
-> > > +					n_cts_48k;
-> > > +};
-> > > +
-> > > +static const struct drm_hdmi_acr_data hdmi_acr_n_cts[] =3D {
-> > > +	{
-> > > +		/* "Other" entry */
-> > > +		.n_cts_32k =3D  { .n =3D 4096, },
-> > > +		.n_cts_44k1 =3D { .n =3D 6272, },
-> > > +		.n_cts_48k =3D  { .n =3D 6144, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 25175,
-> > > +		.n_cts_32k =3D  { .n =3D 4576,  .cts =3D 28125, },
-> > > +		.n_cts_44k1 =3D { .n =3D 7007,  .cts =3D 31250, },
-> > > +		.n_cts_48k =3D  { .n =3D 6864,  .cts =3D 28125, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 25200,
-> > > +		.n_cts_32k =3D  { .n =3D 4096,  .cts =3D 25200, },
-> > > +		.n_cts_44k1 =3D { .n =3D 6272,  .cts =3D 28000, },
-> > > +		.n_cts_48k =3D  { .n =3D 6144,  .cts =3D 25200, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 27000,
-> > > +		.n_cts_32k =3D  { .n =3D 4096,  .cts =3D 27000, },
-> > > +		.n_cts_44k1 =3D { .n =3D 6272,  .cts =3D 30000, },
-> > > +		.n_cts_48k =3D  { .n =3D 6144,  .cts =3D 27000, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 27027,
-> > > +		.n_cts_32k =3D  { .n =3D 4096,  .cts =3D 27027, },
-> > > +		.n_cts_44k1 =3D { .n =3D 6272,  .cts =3D 30030, },
-> > > +		.n_cts_48k =3D  { .n =3D 6144,  .cts =3D 27027, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 54000,
-> > > +		.n_cts_32k =3D  { .n =3D 4096,  .cts =3D 54000, },
-> > > +		.n_cts_44k1 =3D { .n =3D 6272,  .cts =3D 60000, },
-> > > +		.n_cts_48k =3D  { .n =3D 6144,  .cts =3D 54000, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 54054,
-> > > +		.n_cts_32k =3D  { .n =3D 4096,  .cts =3D 54054, },
-> > > +		.n_cts_44k1 =3D { .n =3D 6272,  .cts =3D 60060, },
-> > > +		.n_cts_48k =3D  { .n =3D 6144,  .cts =3D 54054, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 74176,
-> > > +		.n_cts_32k =3D  { .n =3D 11648, .cts =3D 210937, }, /* and 210938 =
-*/
-> > > +		.n_cts_44k1 =3D { .n =3D 17836, .cts =3D 234375, },
-> > > +		.n_cts_48k =3D  { .n =3D 11648, .cts =3D 140625, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 74250,
-> > > +		.n_cts_32k =3D  { .n =3D 4096,  .cts =3D 74250, },
-> > > +		.n_cts_44k1 =3D { .n =3D 6272,  .cts =3D 82500, },
-> > > +		.n_cts_48k =3D  { .n =3D 6144,  .cts =3D 74250, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 148352,
-> > > +		.n_cts_32k =3D  { .n =3D 11648, .cts =3D 421875, },
-> > > +		.n_cts_44k1 =3D { .n =3D 8918,  .cts =3D 234375, },
-> > > +		.n_cts_48k =3D  { .n =3D 5824,  .cts =3D 140625, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 148500,
-> > > +		.n_cts_32k =3D  { .n =3D 4096,  .cts =3D 148500, },
-> > > +		.n_cts_44k1 =3D { .n =3D 6272,  .cts =3D 165000, },
-> > > +		.n_cts_48k =3D  { .n =3D 6144,  .cts =3D 148500, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 296703,
-> > > +		.n_cts_32k =3D  { .n =3D 5824,  .cts =3D 421875, },
-> > > +		.n_cts_44k1 =3D { .n =3D 4459,  .cts =3D 234375, },
-> > > +		.n_cts_48k =3D  { .n =3D 5824,  .cts =3D 281250, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 297000,
-> > > +		.n_cts_32k =3D  { .n =3D 3072,  .cts =3D 222750, },
-> > > +		.n_cts_44k1 =3D { .n =3D 4704,  .cts =3D 247500, },
-> > > +		.n_cts_48k =3D  { .n =3D 5120,  .cts =3D 247500, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 593407,
-> > > +		.n_cts_32k =3D  { .n =3D 5824,  .cts =3D 843750, },
-> > > +		.n_cts_44k1 =3D { .n =3D 8918,  .cts =3D 937500, },
-> > > +		.n_cts_48k =3D  { .n =3D 5824,  .cts =3D 562500, },
-> > > +	}, {
-> > > +		.tmds_clock_khz =3D 594000,
-> > > +		.n_cts_32k =3D  { .n =3D 3072,  .cts =3D 445500, },
-> > > +		.n_cts_44k1 =3D { .n =3D 9408,  .cts =3D 990000, },
-> > > +		.n_cts_48k =3D  { .n =3D 6144,  .cts =3D 594000, },
-> > > +	},
-> > > +};
-> > > +
-> > > +static int drm_hdmi_acr_find_tmds_entry(unsigned long tmds_clock_khz)
-> > > +{
-> > > +	int i;
-> > > +
-> > > +	/* skip the "other" entry */
-> > > +	for (i =3D 1; i < ARRAY_SIZE(hdmi_acr_n_cts); i++) {
-> > > +		if (hdmi_acr_n_cts[i].tmds_clock_khz =3D=3D tmds_clock_khz)
-> > > +			return i;
-> > > +	}
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > > +/**
-> > > + * drm_hdmi_acr_get_n_cts() - get N and CTS values for Audio Clock R=
-egeneration
-> > > + *
-> > > + * @tmds_char_rate: TMDS clock (char rate) as used by the HDMI conne=
-ctor
-> > > + * @sample_rate: audio sample rate
-> > > + * @out_n: a pointer to write the N value
-> > > + * @out_cts: a pointer to write the CTS value
-> > > + *
-> > > + * Get the N and CTS values (either by calculating them or by return=
-ing data
-> > > + * from the tables. This follows the HDMI 1.4b Section 7.2 "Audio Sa=
-mple Clock
-> > > + * Capture and Regeneration".
-> > > + */
-> >=20
-> > I think we need to make it clear that it's for L-PCM only (I think?),
-> > either through a format parameter or through the documentation.
->=20
-> Ack
->=20
-> >=20
-> > > +void
-> > > +drm_hdmi_acr_get_n_cts(unsigned long long tmds_char_rate,
-> > > +		       unsigned int sample_rate,
-> > > +		       unsigned int *out_n,
-> > > +		       unsigned int *out_cts)
-> >=20
-> > And we should probably take the connector (or EDID) to make sure the
-> > monitor can support the format and sample rates.
->=20
-> Interesting perspective, I'll give it a thought. I was really just
-> trying to get rid of the duplication.
->=20
-> I think that 'supported' parts should be implemented in the hdmi-codec
-> instead, parsing the ELD and updating hw constraints. WDYT?
+We talk about hardware. Not your DTS. Drop all DTSI, DTS, DTSO from here
+and show us the hardware.
 
-Basically, I want to make sure we cover section 7.3 of HDMI 1.4, ie,
-make sure we can't end up (or validate) in a situation that isn't
-allowed by the spec.
+I have been asking it for two months now and it is just waste of time to
+keep talking the same.
 
-If ALSA covers it already, then I guess it's fine, but we should
-document it and point to where it's dealt with.
 
-Maxime
+>> |             |                      | |                       | |                     | |                                                      |
+>> |             v                      v v                       v v                     v v                                                      |
+>> |  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
+>> |                                    |                         |                       |                                                        |
+>> |                                    +-------------------------+-----------------------+-------------------< sa8775p-ride-ethernet-aqr115c.dtso |
 
---sgxudawjzyo43qu5
-Content-Type: application/pgp-signature; name="signature.asc"
+How does "sa8775p-ride-ethernet-aqr115c" hardware look like?
 
------BEGIN PGP SIGNATURE-----
+>> |                                    |                         |                       |                                                        |
+>> |                                    v                         v                       v                                                        |
+>> |                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
+>> |                                                                                                                                               |
+>> +-----------------------------------------------------------------------------------------------------------------------------------------------+
+>>
+> 
+> Updating typo: qcom-ride-* changed to sa8775p-ride-*.
+> 
 
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZ8/tcAAKCRDj7w1vZxhR
-xYK1AP9/SASOIb6xDFXNFnI8SsF1/5V5/KTrCBMAV3hTDBsXZgD9FAEbhD7QHdf7
-Gow15VWygI2kgzc5wBGMNwZiESQlKgM=
-=xbRV
------END PGP SIGNATURE-----
-
---sgxudawjzyo43qu5--
+Best regards,
+Krzysztof
 
