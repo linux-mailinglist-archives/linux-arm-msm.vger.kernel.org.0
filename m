@@ -1,276 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-50904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7AF6DA5B9AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 08:22:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 035E4A5BA47
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 08:55:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E4EF3A2785
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 07:22:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 893ED18916C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 07:55:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 109D12206AB;
-	Tue, 11 Mar 2025 07:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 026DE1EE02A;
+	Tue, 11 Mar 2025 07:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jf88mcdk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wx5Q8A9D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E311F09AC
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 07:22:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C353E1386DA;
+	Tue, 11 Mar 2025 07:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741677738; cv=none; b=rXQLIZriVR2SPY4dQSTuoqsQVgnLK+x5HIUsm7a/5sMDrTTtqBPoqeW9joXVs9CuZ+ZBj3+cur5fTQH10EArUXwfQLpQDIQDtbbFPBeXL2qHjj6ucD1FwM6GsANb8lnXDcSqqMjFOEWPc3ysW3nx7y+2Etu48PPu5oLWAs756ns=
+	t=1741679705; cv=none; b=sXqD5dwB988qKq/cGx1gLOqqEc/ur+YkHpN6+EgCo6TbpPLyKAWxlI/3wL5S+oo54aI/GaxmdtzDdPLRKvglBO2kzYqX8ISRdfVI/kInnOLupO7Qs15oHuDyiJyZPftinlTWQHLCuXifTCeorEUqg06CKEQeBHdB5UONdOBIcdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741677738; c=relaxed/simple;
-	bh=A/zgvG4tcMyh5JCbd0v4U7uD9NDLhEQx/G76Rqzs7fM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N4rUweDNsKVY5GQSg+nqM1+VzITGEKruWMwCiAR+Vayl7Ylb9FyDY3BNz7clNXyJOCegCPL79CFf22zFrSCPQqER0FVdpE70zmL2AEhTXV5pvU+aeL7kkI776taTapr7F44mcna9l460vRDw15EUEX5ToJ4G6LXgharIGTPaUrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jf88mcdk; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43cf06eabdaso23571345e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 00:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741677734; x=1742282534; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=76PI8U0C3grhZ+WuGPDq/YmQnaoHPH4xWIdsOpqhIzo=;
-        b=jf88mcdkrXgaaDzlbYLnaBb4T4n2aVKnjvG1A9Uss/uCz+bqcS7+9dauNc11+qQHaW
-         2XUzGy1a6KUhZY8lK6M8nNL3T+9ZgZpobvT1HdWGbcMUoYphvFGstjh+i/a/oNRCnhIR
-         dVZ0CTH5ksdYY/CdxXGkYleJV8bkH+ycndSDLCSgD+sXXoeckzs9+Zii2ma/0lXYU6QQ
-         Ow0SC3uCDIEaAbDXjekoQtkpxikiknhUppUGsUGz7gG3aNT0pi/X8kmBjmge3fYEBWW8
-         lGIDnU1ahYP1f0sTi0DGLLNamJE6vFIQCVl2MCc3gkq47tydI/PjILTbJFvpgeohccUW
-         XpYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741677734; x=1742282534;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=76PI8U0C3grhZ+WuGPDq/YmQnaoHPH4xWIdsOpqhIzo=;
-        b=ICP9XLA7YI/QXXsIoPlILqB5jhbU/25LKM9HyHKBqY7xjW4tbBiwa6HmgCTWFccfBD
-         5pxLK63S2IFEiPRPD6gqriwPz2ywnuAq9KGyDPi77A1iiV4V9qwqnKn0a45JmuqMGIz5
-         CkZK7x12ROGRMU+5qfv4CtZII4+cophJ+3jBL7zaMDZqiMaOur7hfJbPVmsdVrvnRGcG
-         UMlLOqdn1ShCdNaBppl+VDX9a02ElbAxibSl0OOpTPmYPKEKfZjXOPlRs+Ss339xLrtE
-         LcxJGtKdOt9Dq0R4wpJF/xetbs8OrJINV5Rrxy8q6pGowZSVIMg1ZvgZaip8TPE/YJmK
-         BFJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVNTeWvkQvbM2QBx9P1rJ9+dUbGmZnI5qTq7MS8SKafUeGeHrnkucKV1V46d+I6CIr+XdFQdEy7/qgf2tNB@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMwf/65Np5ly2/P5M8zChYp0uncZT3LFKBdDZG2PAnvSbIYIEg
-	Xg6aklfm/P7l52dvq/OS077bIYG+6bLFACh5mocXN6ZkIuXl5ljnWtXTbCwL2KU=
-X-Gm-Gg: ASbGncsjZotS2UV/7rJ1RoKPMRBZ+5u+NNAoflbclZQEeA1TYjBWJ17SfbYV6sf+WpV
-	ohFSXPVdOZstt8cHTR7x/E+WR+JYmLiKjtf264GFkYytBPj2kYOHtTrQykO9Mlmn7w/9Fjwf3AT
-	ytaXokcHayt1IzVnEA1zEzMh6KWyYJdlA0TORmCUwhuujeuwljMAVeaWX4jnHI7MvnMMFrvmyXP
-	x42uwco4fUrB9lnOYJVIDW7KBbShySidXT4kUcXbmFvG2CdvUyyZI65fmvlB7VAajs4cliTi71k
-	xi7h1qJHqWNZ+WZdFpTILP/5Bem+0f6veH/whPBs7w==
-X-Google-Smtp-Source: AGHT+IHpxAncgrnL4ALrjetV1ziQLeJlcqXChyQIooItqRdevyNiOEaTJs5Dyo8WU/a2A84bNO/4SA==
-X-Received: by 2002:a05:6000:1564:b0:38d:d666:5457 with SMTP id ffacd0b85a97d-39132da24cfmr13958644f8f.42.1741677734190;
-        Tue, 11 Mar 2025 00:22:14 -0700 (PDT)
-Received: from linaro.org ([62.231.96.41])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912c0e1d67sm17233831f8f.74.2025.03.11.00.22.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Mar 2025 00:22:13 -0700 (PDT)
-Date: Tue, 11 Mar 2025 09:22:11 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	laurentiu.tudor1@dell.com, johan@kernel.org
-Subject: Re: [PATCH v1 1/2] drm/msm/dp: Fix support of LTTPR handling
-Message-ID: <Z8/ko76QAGPE46R/@linaro.org>
-References: <20250310211039.29843-1-alex.vinarskis@gmail.com>
- <20250310211039.29843-2-alex.vinarskis@gmail.com>
+	s=arc-20240116; t=1741679705; c=relaxed/simple;
+	bh=VUW7JbS09K3eHvnTUq5EVfSChPS6oMO+mH9yFSbdepM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iTLuuq43PoaRl83ZrdMAwXkqtlUElnOCmpOxRdqt3HimEZRQXlZlHv5qbluVcixOLc6KKH85nEpIgMSo59NNbfXeAQUgW0KG/BFOSzxGEX0ramkstFlf89LIrjZOvOAkEO8vGlhxfMJT6nUqUMuh8nw5WooifYuVKhONr4o5mXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wx5Q8A9D; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989A6C4CEE9;
+	Tue, 11 Mar 2025 07:54:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741679705;
+	bh=VUW7JbS09K3eHvnTUq5EVfSChPS6oMO+mH9yFSbdepM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Wx5Q8A9DQaH3NN0kUB4+ZcFK4gFdfG0u+FX0hWXIr+HuxZx42aMFO8JZsZ3QRm3Uj
+	 ImmFlilYR7CjZW1qucYXZoVMyzLLSyPOcRkFN30gfn5XFDXP0B0bBihCTpsCucB0q3
+	 leuzDdMyJVl7lRYH22GlFVKlpjz1BoXn2jneTMsT0Z//rTEz1M2NbeqvjaupmNGbly
+	 QBI/mUBhAB4cdKe7kwuuuwerkwRnALNEX2wRIM3vpa11W0YEq1TYHZ0KMg072M3ARW
+	 nJQN51eOTqKiKsIHumGChc/YF5Uvy1tm8fAHpK/lv5KyWiw7vodZU3d69u8iC3XrSw
+	 mURkGg3j8eAdQ==
+Message-ID: <01a7918b-dc4b-4ed3-8f74-bc59a9629ce9@kernel.org>
+Date: Tue, 11 Mar 2025 08:54:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250310211039.29843-2-alex.vinarskis@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 3/7] dt-bindings: PCI: qcom: Use sdx55 reg description
+ for ipq9574
+To: Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
+ manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, p.zabel@pengutronix.de,
+ quic_nsekar@quicinc.com, dmitry.baryshkov@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org
+References: <20250220094251.230936-1-quic_varada@quicinc.com>
+ <20250220094251.230936-4-quic_varada@quicinc.com>
+ <41b400fe-5e08-42c0-9bc6-a238d25d155a@kernel.org>
+ <33bb1cb2-0c5e-402b-a5c6-9604b1dd8d99@kernel.org>
+ <Z86YReHsKeF165F6@hu-varada-blr.qualcomm.com>
+ <84456c70-e933-469f-ac7a-7d899f85e777@linaro.org>
+ <Z8/Dto1fZWvemiY5@hu-varada-blr.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <Z8/Dto1fZWvemiY5@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 25-03-10 22:05:51, Aleksandrs Vinarskis wrote:
-> Take into account LTTPR capabilities when selecting maximum allowed
-> link rate, number of data lines. Initialize LTTPR before
-> msm_dp_panel_read_sink_caps, as
-> a) Link params computation need to take into account LTTPR's caps
-> b) It appears DPTX shall (re)read DPRX caps after LTTPR detection
+On 11/03/2025 06:01, Varadarajan Narayanan wrote:
+> On Mon, Mar 10, 2025 at 12:37:28PM +0100, Krzysztof Kozlowski wrote:
+>> On 10/03/2025 08:44, Varadarajan Narayanan wrote:
+>>> On Thu, Mar 06, 2025 at 01:06:13PM +0100, Krzysztof Kozlowski wrote:
+>>>> On 06/03/2025 12:52, Krzysztof Kozlowski wrote:
+>>>>> On 20/02/2025 10:42, Varadarajan Narayanan wrote:
+>>>>>> All DT entries except "reg" is similar between ipq5332 and ipq9574. ipq9574
+>>>>>> has 5 registers while ipq5332 has 6. MHI is the additional (i.e. sixth
+>>>>>> entry). Since this matches with the sdx55's "reg" definition which allows
+>>>>>> for 5 or 6 registers, combine ipq9574 with sdx55.
+>>>>>>
+>>>>>> This change is to prepare ipq9574 to be used as ipq5332's fallback
+>>>>>> compatible.
+>>>>>>
+>>>>>> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>>
+>>>>> Unreviewed.
+>>>>>
+>>>>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>>>>> ---
+>>>>>> v8: Add 'Reviewed-by: Krzysztof Kozlowski'
+>>>>>> ---
+>>>>>>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
+>>>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>>>>> index 7235d6554cfb..4b4927178abc 100644
+>>>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>>>>> @@ -169,7 +169,6 @@ allOf:
+>>>>>>              enum:
+>>>>>>                - qcom,pcie-ipq6018
+>>>>>>                - qcom,pcie-ipq8074-gen3
+>>>>>> -              - qcom,pcie-ipq9574
+>>>>>
+>>>>> Why you did not explain that you are going to affect users of DTS?
+>>>>>
+>>>>> NAK
+>>>
+>>> Sorry for not explicitly calling this out. I thought that would be seen from the
+>>> following DTS related patches.
+>>>
+>>>> I did not connect the dots, but I pointed out that you break users and
+>>>> your DTS is wrong:
+>>>> https://lore.kernel.org/all/f7551daa-cce5-47b3-873f-21b9c5026ed2@kernel.org/
+>>>>
+>>>> so you should come back with questions to clarify what to do, not keep
+>>>> pushing this incorrect patchset.
+>>>>
+>>>> My bad, I should really have zero trust.
+>>>
+>>> It looks like it is not possible to have ipq9574 as fallback (for ipq5332)
+>>> without making changes to ipq9574 since the "reg" constraint is different
+>>> between the two. And this in turn would break the ABI w.r.t. ipq9574.
+>>
+>> I don't get why this is not possible. You have one list for ipq9574 and
+>> existing compatible devices, and you add second list for new device.
+>>
+>> ... or you just keep existing order. Why you need to keep changing order
+>> every time you add new device?
 > 
-> Return lttpr_count to prepare for per-segment link training.
+> Presently, sdx55 and ipq9574 have the following reg/reg-names constraints.
 > 
-> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 31 +++++++++++++++++++----------
->  drivers/gpu/drm/msm/dp/dp_panel.c   | 30 +++++++++++++++++++---------
->  drivers/gpu/drm/msm/dp/dp_panel.h   |  2 ++
->  3 files changed, 44 insertions(+), 19 deletions(-)
+> 	compatible	| qcom,pcie-sdx55	| qcom,pcie-ipq9574
+> 	----------------+-----------------------+------------------
+>         reg	minItems| 5			| 5
+> 		maxItems| 6			| 5
+> 	----------------+-----------------------+------------------
+>         reg-names	|			|
+> 		minItems| 5			| 5
+> 	----------------+-----------------------+------------------
+> 		maxItems|			| 5 (6 for ipq5332)
+> 	----------------+-----------------------+------------------
+> 		items	|			|
+> 			| parf			| dbi
+> 			| dbi			| elbi
+> 			| elbi			| atu
+> 			| atu			| parf
+> 			| config		| config
+> 			| mhi			| (add mhi for ipq5332)
+> 	----------------+-----------------------+------------------
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index bbc47d86ae9e..2edbc6adfde5 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -108,6 +108,8 @@ struct msm_dp_display_private {
->  	struct msm_dp_event event_list[DP_EVENT_Q_MAX];
->  	spinlock_t event_lock;
->  
-> +	u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE];
-> +
->  	bool wide_bus_supported;
->  
->  	struct msm_dp_audio *audio;
-> @@ -367,17 +369,21 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
->  	return 0;
->  }
->  
-> -static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp)
-> +static int msm_dp_display_lttpr_init(struct msm_dp_display_private *dp, u8 *dpcd)
->  {
-> -	u8 lttpr_caps[DP_LTTPR_COMMON_CAP_SIZE];
-> -	int rc;
-> +	int rc, lttpr_count;
->  
-> -	if (drm_dp_read_lttpr_common_caps(dp->aux, dp->panel->dpcd, lttpr_caps))
-> -		return;
-> +	if (drm_dp_read_lttpr_common_caps(dp->aux, dpcd, dp->lttpr_common_caps))
-> +		return 0;
->  
-> -	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(lttpr_caps));
-> -	if (rc)
-> -		DRM_ERROR("failed to set LTTPRs transparency mode, rc=%d\n", rc);
-> +	lttpr_count = drm_dp_lttpr_count(dp->lttpr_common_caps);
-> +	rc = drm_dp_lttpr_init(dp->aux, lttpr_count);
-> +	if (rc) {
-> +		DRM_ERROR("fialed to set LTTPRs transparency mode, rc=%d\n", rc);
+> To make ipq9574 as fallback for ipq5332, have to add "mhi" to reg-names of
+> ipq9574. 
 
-Nitpick: failed
+only ipq5332 gets additional item, not ipq9574. Your sentence is not
+correct. You do not have to add mhi to ipq9574. Neither we, nor schema
+asked you to do this.
 
-With that fixed, LGTM:
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-
-> +		return 0;
-> +	}
-> +
-> +	return lttpr_count;
->  }
->  
->  static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
-> @@ -385,12 +391,17 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
->  	struct drm_connector *connector = dp->msm_dp_display.connector;
->  	const struct drm_display_info *info = &connector->display_info;
->  	int rc = 0;
-> +	u8 dpcd[DP_RECEIVER_CAP_SIZE];
->  
-> -	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
-> +	rc = drm_dp_read_dpcd_caps(dp->aux, dpcd);
->  	if (rc)
->  		goto end;
->  
-> -	msm_dp_display_lttpr_init(dp);
-> +	msm_dp_display_lttpr_init(dp, dpcd);
-> +
-> +	rc = msm_dp_panel_read_sink_caps(dp->panel, dp->lttpr_common_caps, connector);
-> +	if (rc)
-> +		goto end;
->  
->  	msm_dp_link_process_request(dp->link);
->  
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-> index 92415bf8aa16..f41b4cf7002e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> @@ -45,9 +45,12 @@ static void msm_dp_panel_read_psr_cap(struct msm_dp_panel_private *panel)
->  	}
->  }
->  
-> -static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel)
-> +static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel,
-> +				  const u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE])
->  {
->  	int rc;
-> +	int max_sink_lanes, max_source_lanes, max_lttpr_lanes;
-> +	int max_sink_rate, max_source_rate, max_lttpr_rate;
->  	struct msm_dp_panel_private *panel;
->  	struct msm_dp_link_info *link_info;
->  	u8 *dpcd, major, minor;
-> @@ -64,16 +67,24 @@ static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel)
->  	major = (link_info->revision >> 4) & 0x0f;
->  	minor = link_info->revision & 0x0f;
->  
-> -	link_info->rate = drm_dp_max_link_rate(dpcd);
-> -	link_info->num_lanes = drm_dp_max_lane_count(dpcd);
-> +	max_source_lanes = msm_dp_panel->max_dp_lanes;
-> +	max_source_rate = msm_dp_panel->max_dp_link_rate;
->  
-> -	/* Limit data lanes from data-lanes of endpoint property of dtsi */
-> -	if (link_info->num_lanes > msm_dp_panel->max_dp_lanes)
-> -		link_info->num_lanes = msm_dp_panel->max_dp_lanes;
-> +	max_sink_lanes = drm_dp_max_lane_count(dpcd);
-> +	max_sink_rate = drm_dp_max_link_rate(dpcd);
-> +
-> +	max_lttpr_lanes = drm_dp_lttpr_max_lane_count(lttpr_common_caps);
-> +	max_lttpr_rate = drm_dp_lttpr_max_link_rate(lttpr_common_caps);
->  
-> +	if (max_lttpr_lanes)
-> +		max_sink_lanes = min(max_sink_lanes, max_lttpr_lanes);
-> +	if (max_lttpr_rate)
-> +		max_sink_rate = min(max_sink_rate, max_lttpr_rate);
-> +
-> +	/* Limit data lanes from data-lanes of endpoint property of dtsi */
-> +	link_info->num_lanes = min(max_sink_lanes, max_source_lanes);
->  	/* Limit link rate from link-frequencies of endpoint property of dtsi */
-> -	if (link_info->rate > msm_dp_panel->max_dp_link_rate)
-> -		link_info->rate = msm_dp_panel->max_dp_link_rate;
-> +	link_info->rate = min(max_sink_rate, max_source_rate);
->  
->  	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
->  	drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
-> @@ -109,6 +120,7 @@ static u32 msm_dp_panel_get_supported_bpp(struct msm_dp_panel *msm_dp_panel,
->  }
->  
->  int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
-> +	const u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE],
->  	struct drm_connector *connector)
->  {
->  	int rc, bw_code;
-> @@ -125,7 +137,7 @@ int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
->  	drm_dbg_dp(panel->drm_dev, "max_lanes=%d max_link_rate=%d\n",
->  		msm_dp_panel->max_dp_lanes, msm_dp_panel->max_dp_link_rate);
->  
-> -	rc = msm_dp_panel_read_dpcd(msm_dp_panel);
-> +	rc = msm_dp_panel_read_dpcd(msm_dp_panel, lttpr_common_caps);
->  	if (rc) {
->  		DRM_ERROR("read dpcd failed %d\n", rc);
->  		return rc;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-> index 4906f4f09f24..d89e17a9add5 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-> @@ -7,6 +7,7 @@
->  #define _DP_PANEL_H_
->  
->  #include <drm/msm_drm.h>
-> +#include <drm/display/drm_dp_helper.h>
->  
->  #include "dp_aux.h"
->  #include "dp_link.h"
-> @@ -49,6 +50,7 @@ int msm_dp_panel_init_panel_info(struct msm_dp_panel *msm_dp_panel);
->  int msm_dp_panel_deinit(struct msm_dp_panel *msm_dp_panel);
->  int msm_dp_panel_timing_cfg(struct msm_dp_panel *msm_dp_panel);
->  int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
-> +		const u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE],
->  		struct drm_connector *connector);
->  u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel, u32 mode_max_bpp,
->  			u32 mode_pclk_khz);
-> -- 
-> 2.45.2
+> Once I add that, the sdx55 and ipq9574 is the same list but in
+> different order.
 > 
+
+You cannot change the order in existing devices.
+
+> If this would not be considered as duplication of the same constraint, then I
+> can club ipq5332 with ipq9574.
+> 
+> If this would be considered as duplication, then sdx55 and ipq9574 would have to
+> use the same reg-names list and sdx55 or ipq9574 reg-names order would change.
+> 
+>>> To overcome this, two approaches seem to be availabe
+>>>
+>>> 	1. Document that ipq9574 is impacted and rework these patches to
+>>> 	   minimize the impact as much as possible
+>>
+>> What impact? What is the reason to impact ipq9574? What is the actual issue?
+> 
+> By impact, I meant the change in the reg-names order as mentioned above (for
+> considered as duplication).
+
+Then you must eliminate the impact, not minimize it.
+
+> 
+>>> 		(or)
+>>>
+>>> 	2. Handle ipq5332 as a separate compatible (without fallback) and reuse
+>>> 	   the constraints of sdx55 for "reg" and ipq9574 for the others (like
+>>> 	   clock etc.). This approach will also have to revert [1], as it
+>>> 	   assumes ipq9574 as fallback.
+>>>
+>>> Please advice which of the above would be appropriate. If there is a better 3rd
+>>> alternative please let me know, will align with that approach.
+>>
+>> Keep existing order. Why every time we see new device, it comes up with
+>> a different order?
+> 
+> Will be able to do that based on the answer to 'duplication' question and how to
+> handle that.
+
+I don't understand what is duplication of something here.
+
+> 
+> 	if (adding mhi to ipq9574 reg-names != duplication)
+> 
+> 		/* Keep existing order */
+> 
+> 		* Append "mhi" to ipq9574
+
+ipq9574 does not have mhi, does it?
+
+If it has, it should be separate patch with its own explanation of the
+hardware.
+
+
+Best regards,
+Krzysztof
 
