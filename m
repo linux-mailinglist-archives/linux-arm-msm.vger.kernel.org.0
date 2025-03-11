@@ -1,154 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-51035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9CB9A5CD48
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:10:24 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90492A5CD5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:11:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4973E3A4932
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:10:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76E9A17CBBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:11:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C85EF262D05;
-	Tue, 11 Mar 2025 18:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85C83262D31;
+	Tue, 11 Mar 2025 18:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="At4YJ3V5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IA5jojoB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1842627E7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 18:10:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA75262D38
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 18:11:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741716620; cv=none; b=q88bhxlcW3CG+g8SNMM9gOaiA+cI2J+OXsLkmpw5+7zS98h5MBh3r4gnazNrBj3iqtygylxOlcDvv1qNfeSLlCF8Ryn7luX0JnItgQUASB6qlmp4m8rSjhIT4PV1ivhBKXV9K5UwoZg8znsHflIoyioyFjrycr6emByyX55aK84=
+	t=1741716686; cv=none; b=aNmgkoZbdg/gORzegGaDp3Ci5WU309wN56e7ARrqhhkUqQkjKKQ1jtFpnpInlZwIwEKSepgvBv03xd/YRsWb61mabu0W/DAQOD6q74eGC1YkLwAvItfwHW5NrgCxjYBui3BvT/VHCoyW67gCSo+6KYx+dkL5ya9fbXF721OM6LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741716620; c=relaxed/simple;
-	bh=coAzhB0hx7rYebe0dMRnAoaKwZDK9rhElFVz2wVG6jc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aXyUtPBZJj30Btuxy+pGf/At0MXx5i3O840VG2sSTkVUrPGB5NzPzs1bwmPVK0HY+Z5XId0nwtaFt8qcS+7q8eCfJ3nd5J3KeZn2pXogEvNmDWjujwXMMOGrqoRKW7injPIwgaltOMWkilgqqAD2UZI7m1JZ+RTFROIBWrDI5HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=At4YJ3V5; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1741716686; c=relaxed/simple;
+	bh=BRd7+HtTtvaBFcdTTNSbCQPKzTGFFg/AS6THF+DAXJw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=drD4YA4KWSsExi/ugnhKvkgwQgF08BW+mZ4zXSqglUG+fBR5aPsvQGQvu71H8hcyCr2D0Hcyi9TBrQlU9sehnSsyDVia5kAmrEChHeZcSiCEw0AnLcvOhhkbUs5UlTj/hKRzneQvFxrWSReg0khPjMhkTd5b+qu1QefOdT+SGS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IA5jojoB; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3913cf69784so3988959f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 11:10:18 -0700 (PDT)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-ab771575040so14964966b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 11:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741716617; x=1742321417; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7tecvAy+u2nTgNfC9RdDCsqyar8u41Y2yinoQJZWxPw=;
-        b=At4YJ3V51CeWCPyLfE0DJVp//Dep8xz9zqENUdX0gbpbeWvp1hGWhYmta56PGiu1d/
-         Q9rqu/Ld1nwCoUauIk9PM/AnWH6A2LXYvEOG6MHAQ0xbJ5dzjszKvbHq6+8y6WJs5pY4
-         C0APWZOoS5kLoYZEqpN1Ofwn1TOFHmbYf2SZYSjNk/AtIUarR06HCmxwRJ9+LBeabcBF
-         cvpi8LdZogC9/PGhF028kHFS8h9jtEVni7XIRiE9LQoFOJv5zbuMbojFzoWxfGJcw2rV
-         XkBHVY9ZOE/T7hPvHW1IjUxAu6syOsBi2DvXcR5qeo6z0pOkAB0/zz+fdQKuE+VHjMOx
-         xTlA==
+        d=linaro.org; s=google; t=1741716683; x=1742321483; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=imQlH5hLyEPyeFpcTG/nV9BIkwuBSyfjOhkAYwjO1MI=;
+        b=IA5jojoB7fcbxyJpLQ9DKynZhmXSr7okK0sFzTXiezwpDvYUv+LwIT9U1B/prnNhan
+         nqY2B7gF6qvo55Ra4izZ0u38iV18CQtOP5VL2ctyERrW0Q3Gbvj9AaujIHSGdir5OjSm
+         rJQZYnB1fU4Bw1fcWoBNR8iDdIR3stvXU4ZyewnzMd4A/yPAqZ830fB4xAIJzUH7L8dL
+         /pBcOn2xTOsm9fkEE1QDPLTaKEPJQAm3j9++nDwqmIlYZGOR2WBxuQ/S2RtkeJ9IZq/X
+         Rv0YeFd5sF86/d61k474QMxQ4RmtEUoRFpOs967i88nUzUmsqPdcakqb6eQ4gEZvdwY+
+         jcpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741716617; x=1742321417;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7tecvAy+u2nTgNfC9RdDCsqyar8u41Y2yinoQJZWxPw=;
-        b=v6wsRN2oWKrPg5sjb1uFo0VNxJVrmTDnj5i48a7yenUj7Js6ncnNBUp3bN+4FcKZvm
-         9Ly/QpOtATcllLNWT+bzXR9x5dGEkLiC6N+w2UWtMbiFl8p1hfhbw1G97DV46gSI0+rl
-         qJb5Pzqo1cVvAAshbWBvZLe848tJPTaT5YIO1oDZD2pmN1elRKEIyuKCFPuXpLsb1w2P
-         QKzEP5deSyRILNEU07wNqswBeqzYjjdWco9JQq5eFgSA4y1z6z3mAa/3kQyKJwm113i6
-         ZppZ5Oc+hTviJwkBWrZa1SjQNJuTTIqZt0cTXf8q45SKN22sdL289IufMtXRv9xonDs7
-         PAnA==
-X-Forwarded-Encrypted: i=1; AJvYcCXLqp4HjJadnYRRRQrfhZm7tVT8rZ/Cf2VW1rMeG5Bs9Mx49457Tkz6nr2n+PYkkjvgJBBEeEmGbdobKWsF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+otB6NyDIuN96ToK9AxUzudZMcX+8Vpto0kj5MBrGFFF22OBs
-	X9yZufjWP5x/fdsexNYUjZiWdKIlM/+Aqxjk5AiSXr8hKzYS09vaRsa2RxcRlXOKTctvHC5nM9Q
-	3VX6Fx4pzn2F0GcaOWwWw1vW2eCutCOElgNMfuw==
-X-Gm-Gg: ASbGncuNUPZYs22DX8rewzMtE8Nnom371e+ECHQzE78Ee14K/7G/2Bv8fx6n4cdFgSq
-	BuKRqxwcVf4jkHcesMu1Hq4QJDwtKeIlZXidXLSfBjNDGI09aPTFPyMh4eSVW5lqp5IJG8DSeci
-	JY0V+LyaTl/V3iO6I644XCOrZYsDc=
-X-Google-Smtp-Source: AGHT+IEoMIu2qa0ouzgu4WMGPB2l4x9tF1jT5ThBiiWJB8oICkXYch22N7BWvOSIBrMFeOfJO4XpxafHp8QkcQy5AgE=
-X-Received: by 2002:a05:6000:402a:b0:391:888:f534 with SMTP id
- ffacd0b85a97d-39132d39209mr19655289f8f.20.1741716617093; Tue, 11 Mar 2025
- 11:10:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741716683; x=1742321483;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=imQlH5hLyEPyeFpcTG/nV9BIkwuBSyfjOhkAYwjO1MI=;
+        b=Fg48KtxiOrGt9Pj/ygsky7OLl1ohQzaka8P/lL44f6NiwC6tTelSpft6JFWVspZMTA
+         oUOSLViyLHzkg4iyBz1MbRt68u+PlCwhxJfhjCScdT5y8u9uAiNkkeT4Ib83Oue+tiyA
+         RwwgPJoG6+nwJoaqhTbHu1lFb4yysvSfb9hUaaBxWPPzieJvVxzpxi3t5/ShD+TQhCCM
+         R1Ncq8GmbrZx8K8OTAlJinz5OgfFOSE22BbM7UcEzf6zqjGxhy+mlOuR/hzChTxrBmmE
+         rV26VTwip3Wiekygu5P0uoRD00vZGiVfg8yidSIBg3SHov7K1Qc1InZRySGymXnEZD+n
+         /IWA==
+X-Forwarded-Encrypted: i=1; AJvYcCX1zaCl0dXGPXbQ6RLDj90a5MpaWWOc2U2YbGuvhRG5p5OdXaD+DU+8BKpSxkwC9IYmAOEROqvvydPtQi8b@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXHr/sUTOK9ZVHRdaTIoyOoVs8FlSqomhpZGD61syUR/0DaXxQ
+	1fQmNtBRaPVg3WE/4gUstPJuBnXMQYrcz66fG8HaagVtkfHsIsKIpqkROosTMY0=
+X-Gm-Gg: ASbGncuNxs2N1pp40i6adC1X9CnC0RI/G9lPeO5Sca9LKvnxUlhcZnLtjYL7UBRDO1O
+	5eLG/JrGSXSnrEjVlFL61AYQPD2rHM3ZR0nhdnloKOkfWV2JSRYg5u8MA3aMlDBOyhygWsdfV0m
+	3plTX9ybfxXV3cDoH4SxluGicSN8ZCNhwWdpEDhd2pYb7G/Uxf07BmXZuQS3XgDHv96RepjOSHk
+	uXaWTvqnF7CQXBBLCwzN+QbzHjB8VZJqntGxlmWol6jio+hZ3sB2RzQSO55QcaV/GTTbeMUCpoy
+	8ZNqmOr5ZH9cCY9m4C+Bu4t3r0OPvcBPHNTcPkZYBxht84uOnl9qXPoEjc2yD0yTMtCr5N+YHwN
+	2GAGtXvKnMuMW0yRccUM3
+X-Google-Smtp-Source: AGHT+IERTZ3nFwIDF0pC/Jsa9/UMytNY/0RkyK1in1I6p0biiBCy+0RcM+HnsMyf2YSwOxxQbZ6xSQ==
+X-Received: by 2002:a17:907:2d0d:b0:abf:6e88:3a63 with SMTP id a640c23a62f3a-ac2ba4c7b97mr529724766b.9.1741716682967;
+        Tue, 11 Mar 2025 11:11:22 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac288ffe157sm509101066b.132.2025.03.11.11.11.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Mar 2025 11:11:22 -0700 (PDT)
+Message-ID: <b21b5f03-e328-4708-a854-1b3fa9c3dfa3@linaro.org>
+Date: Tue, 11 Mar 2025 18:11:21 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
-In-Reply-To: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Tue, 11 Mar 2025 19:10:06 +0100
-X-Gm-Features: AQ5f1Jog8mLk3h4VXg6PLgDM_85qkXGsgrKxdx2EG0uqVayo6r93gzulMiKOPb8
-Message-ID: <CACr-zFC=mPNeeHMp9XnSby+cMQaPWt_3s8iUiCN+EnVPeGad8Q@mail.gmail.com>
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm interconnects as built-in
-To: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/8] clk: qcom: Add support to attach multiple power
+ domains in cc probe
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <CMTYKKilQJYeHUYYKvlqnwv4Q2P-58Ic1v1ndS9HQ8Yhq2xpHuNThibFDjXDEQ1PyNbx__f9BVBr0peoTUdvPg==@protonmail.internalid>
+ <20250306-videocc-pll-multi-pd-voting-v2-0-0cd00612bc0e@quicinc.com>
+ <5a45fd25-74ed-46e3-b0e3-5adf92b5e9f7@linaro.org>
+ <46d4f090-3e31-414f-abfc-3d1018913c56@linaro.org>
+ <9e6fdcfe-3c6d-44c7-95a3-7652c0650bf4@linaro.org>
+ <caa00d62-b24d-4db7-9e12-170a10c073e3@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <caa00d62-b24d-4db7-9e12-170a10c073e3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I sent this patch to start the discussion, some things I found:
+On 11/03/2025 17:55, Vladimir Zapolskiy wrote:
+> 
+> I kindly ask to elaborate here.
+> 
+> This series does not touch CAMCC at all, and if the series touches CAMCC,
+> then it changes DT ABI, which is objected. Or is it for some reason
+> objected only for SM8550 and not for the other platforms? More information
+> is needed.
 
-1) Some interconnects are missing from arm defconfig. Should they be =y too ?
-$ grep CONFIG_INTERCONNECT_QCOM arch/arm/configs/qcom_defconfig
-CONFIG_INTERCONNECT_QCOM=y
-CONFIG_INTERCONNECT_QCOM_MSM8974=m
-CONFIG_INTERCONNECT_QCOM_SDX55=m
+No but it _should_ Vlad, that's the ask.
 
-2) Some interconnects are missing from arm64 defconfig (which should
-probably be in there) (I have included just two examples):
-$ grep CONFIG_INTERCONNECT drivers/interconnect/qcom/Makefile
-obj-$(CONFIG_INTERCONNECT_QCOM_QCS615) += qnoc-qcs615.o
-obj-$(CONFIG_INTERCONNECT_QCOM_SM7150) += qnoc-sm7150.o
+Both of these clock controllers will require this same change to be 
+implemented, that's what I'm asking Jagadeesh to do.
 
-I can handle these in follow-up or v2 of the patchset as follow-up
-commits, please let me know what you'd prefer.
+Certainly that's the case for x1e and asking Jagadeesh to also check 
+that for sm8650.
 
-On Tue, 11 Mar 2025 at 19:03, Christopher Obbard
-<christopher.obbard@linaro.org> wrote:
->
-> Currently some Qualcomm interconnect drivers are enabled
-> as modules which isn't overly useful since the interconnects
-> are required to be loaded during early boot.
->
-> Loading the interconnects late (e.g. in initrd or as module)
-> can cause boot issues, such as slowdown or even not booting
-> at all (since the interconnect would be required for storage
-> devices).
->
-> Be consistent and enable all of the Qualcomm interconnect
-> drivers as built-in to the kernel image.
->
-> Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
-> ---
->  arch/arm64/configs/defconfig | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 219ef05ee5a757c43a37ec9f8571ce9976354830..6582baee2ab02ecb2ff442c6e73aa6a23fee8d7f 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -1656,11 +1656,11 @@ CONFIG_INTERCONNECT_IMX8MN=m
->  CONFIG_INTERCONNECT_IMX8MQ=m
->  CONFIG_INTERCONNECT_IMX8MP=y
->  CONFIG_INTERCONNECT_QCOM=y
-> -CONFIG_INTERCONNECT_QCOM_MSM8916=m
-> +CONFIG_INTERCONNECT_QCOM_MSM8916=y
->  CONFIG_INTERCONNECT_QCOM_MSM8996=y
-> -CONFIG_INTERCONNECT_QCOM_OSM_L3=m
-> +CONFIG_INTERCONNECT_QCOM_OSM_L3=y
->  CONFIG_INTERCONNECT_QCOM_QCM2290=y
-> -CONFIG_INTERCONNECT_QCOM_QCS404=m
-> +CONFIG_INTERCONNECT_QCOM_QCS404=y
->  CONFIG_INTERCONNECT_QCOM_QCS615=y
->  CONFIG_INTERCONNECT_QCOM_QCS8300=y
->  CONFIG_INTERCONNECT_QCOM_QDU1000=y
->
-> ---
-> base-commit: b098bcd8278b89cb3eb73fdb6e06dc49af75ad37
-> change-id: 20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-258fcc961b11
->
-> Best regards,
-> --
-> Christopher Obbard <christopher.obbard@linaro.org>
->
+---
+bod
 
