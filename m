@@ -1,172 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-50908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95F82A5BA5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:02:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AA95A5BA77
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:07:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D9E147A1E02
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 08:01:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E15653AFA7A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 08:07:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD09A221703;
-	Tue, 11 Mar 2025 08:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9F9822257B;
+	Tue, 11 Mar 2025 08:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L1Ii6f0A"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U/h7PXgM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2211EA7FD;
-	Tue, 11 Mar 2025 08:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920242222C9;
+	Tue, 11 Mar 2025 08:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741680138; cv=none; b=AzTp0Ze9uuk6IPD/8g07BGnzoy5ZoWaIxNma5fTqXNTnZzY/NYbJ/6KaSiwEXXOv5jjDJzOip1x9VGMkRd0thyqfYQXs3R6a4ZDf/qvhE9Tr3xjQXwd2KGOT6tLIT3gZ1zwLncJ0J32+Vn9Q/QMNH3z6E46Wx+x9ugff32tpDPs=
+	t=1741680433; cv=none; b=ofGbGI1njfo2s20cB4qXUm90SkrTMu0xyLY28PHmiZQCOhGHkPQkn9x+XUS6djnuykDX5toV91vc3z7Vqj+rd6HWc3fFw5/fClgIh9zyqTrn+6qRPkqMFwFu+Hgv9HA5yE4xLfjDU8qgijPQTDDXivWom0xRiKvuqlB1v5w5Vp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741680138; c=relaxed/simple;
-	bh=ER+SoneXM3aC53kwTjsYgrHGqM1EmcSSSqClcNpsios=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gUbEq5evEruGaafD0gv21riPI3reXCw8ZqNhwRLU1k3vXt1UAmVg0IkXjskT6kVL2u6EmkYzk2C/H5KAqiCt6UEOGaX6bgos9VrZ2ITaqQc1cTI5SXnoQNEPTOhdAnZ5kwIvKhWpmvgTrog4j5AntmTb10iO2nVfbeisenXZwfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L1Ii6f0A; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9BAC4CEE9;
-	Tue, 11 Mar 2025 08:02:09 +0000 (UTC)
+	s=arc-20240116; t=1741680433; c=relaxed/simple;
+	bh=ZtI3BPfxkUxUFIHbmyl6XFRwlrtyk7qksexHnsdaz0s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IXSzs7dsbDG/gtrR3QjvgXh+ccIg8ZEaLxjJX2X3HHPW9pSM48hceygaJ/f5TJzojOBAo5uIb8HpQrbYcSkAtHhMnt3mlcIKjHHmrGMEu5rRE6mWfa4auGqQ80llARVU8hvXLYAOwLO8BUaaqvBz6baX5omGW6C9VoykcTgBkiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U/h7PXgM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951E6C4CEE9;
+	Tue, 11 Mar 2025 08:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741680134;
-	bh=ER+SoneXM3aC53kwTjsYgrHGqM1EmcSSSqClcNpsios=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=L1Ii6f0AYn5e94wJ6fY4sQ60vyv+Ve56Uvflq+oAUrLzFPD5ndP3C1i0zbDWVLBay
-	 DUSB2bZMaqvUBDC1Icgk3X1lrElTqnjUbhwmw7uiiNaJPjwmIV42bIDmKs6RJDEYLi
-	 MXRSYjh2JiZg1xEqC0loybvy11SrazORpc/Ruh6sDEkaePrkcetIL5WYE9da29O17k
-	 6vvL93mJM/lr1l9Ao9sDaj/zd7a7uXcPu8V/ti0UbwBkgJ0k2SyR+REmx9G3O2UunY
-	 4oQw3b5z6eE94rdwxjGg5iT9nPKWZV8xbcd5pMAYlS05vN0H1y80750gd8jsIs9kUV
-	 OmyPj3ORjNzAA==
-Message-ID: <e00a7061-5283-4809-b652-5f6c5e1e4496@kernel.org>
-Date: Tue, 11 Mar 2025 09:02:07 +0100
+	s=k20201202; t=1741680432;
+	bh=ZtI3BPfxkUxUFIHbmyl6XFRwlrtyk7qksexHnsdaz0s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=U/h7PXgMOSAGbndHGkKUKiEIJoiOTC00zUrB+InlOsaKJ9us1tQK8WaTVTYTX6/31
+	 rvpED6HJyNuGG1rl9XU0wQy0IalgnzmWgqSRL3jDkJnA7nRTUAah3ImRMrh8aVUYuI
+	 ZHDm5qFuFV85SFttR4Sxg82jSO18jmLS2XGUpP6lDWMfcsvpaN23VWwQ4rltpydqBZ
+	 R3WBSwkOGmMBQvBUx5PjSIbTIPo7UZogIzN9tmEHX2Tl0FDnHvZFNugr3Oinv/IHXJ
+	 r7zY67ZQrzN4yQZ6YvgEZg+GZ6EXm3JjtnoSGPg1my692rl9GFkVE/VWJBnPNIRCyP
+	 6clygOGhD9QZw==
+Date: Tue, 11 Mar 2025 09:07:10 +0100
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Dmitry Baryshkov <lumag@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 3/4] drm/vc4: use new helper to get ACR values
+Message-ID: <20250311-intrepid-obedient-lizard-64ad2c@houat>
+References: <20250309-drm-hdmi-acr-v1-0-bb9c242f4d4b@linaro.org>
+ <20250309-drm-hdmi-acr-v1-3-bb9c242f4d4b@linaro.org>
+ <20250310-invisible-married-firefly-945c84@houat>
+ <esgb42dyhpjixm62tfk2nfzdiygnfn4bcwq4zn7rhydmt4np2q@7v77p7kveb4e>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-To: Wasim Nazir <quic_wasimn@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
- <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
- <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
- <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
- <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
- <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
- <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
- <Z8AWHiVu05s0RJws@hu-wasimn-hyd.qualcomm.com>
- <a8991221-88b2-4a39-a51b-587c4cdeebe4@kernel.org>
- <Z8laCxtHOdNm3rRu@hu-wasimn-hyd.qualcomm.com>
- <Z8lb889QrqluPXXl@hu-wasimn-hyd.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <Z8lb889QrqluPXXl@hu-wasimn-hyd.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-On 06/03/2025 09:25, Wasim Nazir wrote:
->> +-----------------------------------------------------------------------------------------------------------------------------------------------+
->> |                                                                                                                                               |
->> |                                                          sa8775p.dtsi                                                                         |
->> |                                                              |                                                                                |
->> |                                    +-------------------------+-----------------------+                                                        |
->> |                                    |                         |                       |                                                        |
->> |                                    v                         |                       v                                                        |
->> |                             qcs9075-som.dtsi                 |                qcs9100-som.dtsi                                                |
->> |                                    |                         |                       |                                                        |
->> |                                    v                         v                       v                                                        |
->> |                                  (IOT)                    (AUTO)                   (IOT)                                                      |
->> |                                    |                         |                       |                                                        |
->> |             +----------------------+                         |                       |                                                        |
->> |             |                      |                         |                       |                                                        |
->> |             |                      | +-------------------------+-----------------------+-----------------< sa8775p-ride-common.dtsi           |
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dyye5w7y4dznz4ng"
+Content-Disposition: inline
+In-Reply-To: <esgb42dyhpjixm62tfk2nfzdiygnfn4bcwq4zn7rhydmt4np2q@7v77p7kveb4e>
 
 
-There is no ride-common hardware. If there is, send us any proof of its
-existence. all your statements here show you want to create some
-structure because you like it. I don't think you get my questions. You
-painted diagram of DTS, not hardware.
+--dyye5w7y4dznz4ng
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 3/4] drm/vc4: use new helper to get ACR values
+MIME-Version: 1.0
 
-We talk about hardware. Not your DTS. Drop all DTSI, DTS, DTSO from here
-and show us the hardware.
+On Mon, Mar 10, 2025 at 10:18:04PM +0200, Dmitry Baryshkov wrote:
+> On Mon, Mar 10, 2025 at 03:51:53PM +0100, Maxime Ripard wrote:
+> > On Sun, Mar 09, 2025 at 10:13:58AM +0200, Dmitry Baryshkov wrote:
+> > > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >=20
+> > > Use drm_hdmi_acr_get_n_cts() helper instead of calculating N and CTS
+> > > values in the VC4 driver.
+> > >=20
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  drivers/gpu/drm/vc4/vc4_hdmi.c | 10 +++-------
+> > >  drivers/gpu/drm/vc4/vc4_hdmi.h |  7 +++++++
+> > >  2 files changed, 10 insertions(+), 7 deletions(-)
+> > >=20
+>=20
+> > > diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.h b/drivers/gpu/drm/vc4/vc4=
+_hdmi.h
+> > > index e3d989ca302b72533c374dfa3fd0d5bd7fe64a82..0a775dbfe99d45521f3d0=
+a2016555aefa81d7934 100644
+> > > --- a/drivers/gpu/drm/vc4/vc4_hdmi.h
+> > > +++ b/drivers/gpu/drm/vc4/vc4_hdmi.h
+> > > @@ -211,6 +211,13 @@ struct vc4_hdmi {
+> > >  	 * KMS hooks. Protected by @mutex.
+> > >  	 */
+> > >  	enum hdmi_colorspace output_format;
+> > > +
+> > > +	/**
+> > > +	 * @tmds_char_rate: Copy of
+> > > +	 * @drm_connector_state.hdmi.tmds_char_rate for use outside of
+> > > +	 * KMS hooks. Protected by @mutex.
+> > > +	 */
+> > > +	unsigned long long tmds_char_rate;
+> > >  };
+> >=20
+> > This should be in drm_connector_hdmi if it's useful
+>=20
+> That would mean bringing the state to a non-state structure on the
+> framework level. Is it fine from your POV?
 
-I have been asking it for two months now and it is just waste of time to
-keep talking the same.
+Sorry, I'm changing my mind a little bit, but it's pretty much the same
+case than for accessing the infoframes from debugfs: we want to get some
+information stored in the state from outside of KMS.
 
+What we did for the infoframes is that we're actually just taking the
+connection_mutex from the DRM device and access the drm_connector->state
+pointer.
 
->> |             |                      | |                       | |                     | |                                                      |
->> |             v                      v v                       v v                     v v                                                      |
->> |  qcs9075-iq-9075-evk.dts     qcs9075-ride.dts         sa8775p-ride.dts         qcs9100-ride.dts                                               |
->> |                                    |                         |                       |                                                        |
->> |                                    +-------------------------+-----------------------+-------------------< sa8775p-ride-ethernet-aqr115c.dtso |
+I guess it would also work for ALSA?
 
-How does "sa8775p-ride-ethernet-aqr115c" hardware look like?
+Maxime
 
->> |                                    |                         |                       |                                                        |
->> |                                    v                         v                       v                                                        |
->> |                             qcs9075-ride-r3.dts      sa8775p-ride-r3.dts      qcs9100-ride-r3.dts                                             |
->> |                                                                                                                                               |
->> +-----------------------------------------------------------------------------------------------------------------------------------------------+
->>
-> 
-> Updating typo: qcom-ride-* changed to sa8775p-ride-*.
-> 
+--dyye5w7y4dznz4ng
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Best regards,
-Krzysztof
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZ8/vLQAKCRDj7w1vZxhR
+xUTYAQDyuqn5t5cMpn/5BQvLfTTmRbB8sQbVEyGnQO76VRXLEgD8DIkV+06Aq3Wk
+upcHhxdxp69/BSRmI5L12OmC4dqEywU=
+=V2Cq
+-----END PGP SIGNATURE-----
+
+--dyye5w7y4dznz4ng--
 
