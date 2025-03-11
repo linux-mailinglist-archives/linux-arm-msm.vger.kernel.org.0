@@ -1,131 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-51036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90492A5CD5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:11:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFE67A5CD66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:12:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76E9A17CBBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:11:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C910189F3CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:12:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85C83262D31;
-	Tue, 11 Mar 2025 18:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3779F263C6C;
+	Tue, 11 Mar 2025 18:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IA5jojoB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J9rsaALq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA75262D38
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 18:11:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E45C2638BA;
+	Tue, 11 Mar 2025 18:11:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741716686; cv=none; b=aNmgkoZbdg/gORzegGaDp3Ci5WU309wN56e7ARrqhhkUqQkjKKQ1jtFpnpInlZwIwEKSepgvBv03xd/YRsWb61mabu0W/DAQOD6q74eGC1YkLwAvItfwHW5NrgCxjYBui3BvT/VHCoyW67gCSo+6KYx+dkL5ya9fbXF721OM6LU=
+	t=1741716718; cv=none; b=rQ32Y5qzfO6ioH7lMdjcdippzr0qya9Hqjax3MfWQ3Npu5Q18PaZPt6K35BEt6yQz5xE1zdKUOPqUx4aSXKTFuIinXGD/u29OKQfj7Rn/MQhnc4EEiWGRDkxbSedAohC+OC5XO2T1LeyKlBU+2hmAADVtOgiMJtb4JZOCu2GY8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741716686; c=relaxed/simple;
-	bh=BRd7+HtTtvaBFcdTTNSbCQPKzTGFFg/AS6THF+DAXJw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=drD4YA4KWSsExi/ugnhKvkgwQgF08BW+mZ4zXSqglUG+fBR5aPsvQGQvu71H8hcyCr2D0Hcyi9TBrQlU9sehnSsyDVia5kAmrEChHeZcSiCEw0AnLcvOhhkbUs5UlTj/hKRzneQvFxrWSReg0khPjMhkTd5b+qu1QefOdT+SGS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IA5jojoB; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-ab771575040so14964966b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 11:11:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741716683; x=1742321483; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=imQlH5hLyEPyeFpcTG/nV9BIkwuBSyfjOhkAYwjO1MI=;
-        b=IA5jojoB7fcbxyJpLQ9DKynZhmXSr7okK0sFzTXiezwpDvYUv+LwIT9U1B/prnNhan
-         nqY2B7gF6qvo55Ra4izZ0u38iV18CQtOP5VL2ctyERrW0Q3Gbvj9AaujIHSGdir5OjSm
-         rJQZYnB1fU4Bw1fcWoBNR8iDdIR3stvXU4ZyewnzMd4A/yPAqZ830fB4xAIJzUH7L8dL
-         /pBcOn2xTOsm9fkEE1QDPLTaKEPJQAm3j9++nDwqmIlYZGOR2WBxuQ/S2RtkeJ9IZq/X
-         Rv0YeFd5sF86/d61k474QMxQ4RmtEUoRFpOs967i88nUzUmsqPdcakqb6eQ4gEZvdwY+
-         jcpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741716683; x=1742321483;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=imQlH5hLyEPyeFpcTG/nV9BIkwuBSyfjOhkAYwjO1MI=;
-        b=Fg48KtxiOrGt9Pj/ygsky7OLl1ohQzaka8P/lL44f6NiwC6tTelSpft6JFWVspZMTA
-         oUOSLViyLHzkg4iyBz1MbRt68u+PlCwhxJfhjCScdT5y8u9uAiNkkeT4Ib83Oue+tiyA
-         RwwgPJoG6+nwJoaqhTbHu1lFb4yysvSfb9hUaaBxWPPzieJvVxzpxi3t5/ShD+TQhCCM
-         R1Ncq8GmbrZx8K8OTAlJinz5OgfFOSE22BbM7UcEzf6zqjGxhy+mlOuR/hzChTxrBmmE
-         rV26VTwip3Wiekygu5P0uoRD00vZGiVfg8yidSIBg3SHov7K1Qc1InZRySGymXnEZD+n
-         /IWA==
-X-Forwarded-Encrypted: i=1; AJvYcCX1zaCl0dXGPXbQ6RLDj90a5MpaWWOc2U2YbGuvhRG5p5OdXaD+DU+8BKpSxkwC9IYmAOEROqvvydPtQi8b@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXHr/sUTOK9ZVHRdaTIoyOoVs8FlSqomhpZGD61syUR/0DaXxQ
-	1fQmNtBRaPVg3WE/4gUstPJuBnXMQYrcz66fG8HaagVtkfHsIsKIpqkROosTMY0=
-X-Gm-Gg: ASbGncuNxs2N1pp40i6adC1X9CnC0RI/G9lPeO5Sca9LKvnxUlhcZnLtjYL7UBRDO1O
-	5eLG/JrGSXSnrEjVlFL61AYQPD2rHM3ZR0nhdnloKOkfWV2JSRYg5u8MA3aMlDBOyhygWsdfV0m
-	3plTX9ybfxXV3cDoH4SxluGicSN8ZCNhwWdpEDhd2pYb7G/Uxf07BmXZuQS3XgDHv96RepjOSHk
-	uXaWTvqnF7CQXBBLCwzN+QbzHjB8VZJqntGxlmWol6jio+hZ3sB2RzQSO55QcaV/GTTbeMUCpoy
-	8ZNqmOr5ZH9cCY9m4C+Bu4t3r0OPvcBPHNTcPkZYBxht84uOnl9qXPoEjc2yD0yTMtCr5N+YHwN
-	2GAGtXvKnMuMW0yRccUM3
-X-Google-Smtp-Source: AGHT+IERTZ3nFwIDF0pC/Jsa9/UMytNY/0RkyK1in1I6p0biiBCy+0RcM+HnsMyf2YSwOxxQbZ6xSQ==
-X-Received: by 2002:a17:907:2d0d:b0:abf:6e88:3a63 with SMTP id a640c23a62f3a-ac2ba4c7b97mr529724766b.9.1741716682967;
-        Tue, 11 Mar 2025 11:11:22 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac288ffe157sm509101066b.132.2025.03.11.11.11.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Mar 2025 11:11:22 -0700 (PDT)
-Message-ID: <b21b5f03-e328-4708-a854-1b3fa9c3dfa3@linaro.org>
-Date: Tue, 11 Mar 2025 18:11:21 +0000
+	s=arc-20240116; t=1741716718; c=relaxed/simple;
+	bh=lU7fvyEx/byBpU2OPa/0abt93RzPvbli7uszSlFeqB4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PWnghW5+Yg68PTzpp/WP2m8CDqQl6d/gBL8+fhCgOG2E8KVu1Dj2pvp00S1XEDqNuG5M0wJ2ZLRBKbPwtxmgJekI4c/TVp1nVml7Y1rrGFpF05WipL5CoU0D6E0EiiHFdphdmPsGsU5Y13v67mYImpyHPMQLKUqVFWyWHjg1CDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J9rsaALq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C269C4CEE9;
+	Tue, 11 Mar 2025 18:11:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741716717;
+	bh=lU7fvyEx/byBpU2OPa/0abt93RzPvbli7uszSlFeqB4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=J9rsaALqeGfRdT/7Tbh3HFOYal+hAmgqpz9e90GwHYCCC5d1YgpLSiLF6T7jrAfcP
+	 2CRWzL+4AR+G50o+tj87tDolr4WqPvl4JRNfSFDbLXx2HMiczGkrDU6RznzKezFpcW
+	 7Od5Owt/QCnquBVFV8cDm2/zAPqNz8j+mp6NX3q07BpTuBkwvIcU32uEaLg62WUTsW
+	 W7BiiFetPLOupwmR8fEuJUBXnUZ4SFzDk3PH9a6ScRFw38XfnurQh1QEbizcmn5Vhe
+	 eXA6bIHut2Y3Vugdr8iy5GKpdwGzCUm9+s/cxujaojGTIbGr1Or0rWDYsBC2NB+bEZ
+	 TyuHIAK0twNIg==
+Date: Tue, 11 Mar 2025 18:11:52 +0000
+From: Will Deacon <will@kernel.org>
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 4/5] iommu/arm-smmu-qcom: Make set_stall work when the
+ device is on
+Message-ID: <20250311181151.GD5216@willie-the-truck>
+References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
+ <20250304-msm-gpu-fault-fixes-next-v4-4-be14be37f4c3@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/8] clk: qcom: Add support to attach multiple power
- domains in cc probe
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <CMTYKKilQJYeHUYYKvlqnwv4Q2P-58Ic1v1ndS9HQ8Yhq2xpHuNThibFDjXDEQ1PyNbx__f9BVBr0peoTUdvPg==@protonmail.internalid>
- <20250306-videocc-pll-multi-pd-voting-v2-0-0cd00612bc0e@quicinc.com>
- <5a45fd25-74ed-46e3-b0e3-5adf92b5e9f7@linaro.org>
- <46d4f090-3e31-414f-abfc-3d1018913c56@linaro.org>
- <9e6fdcfe-3c6d-44c7-95a3-7652c0650bf4@linaro.org>
- <caa00d62-b24d-4db7-9e12-170a10c073e3@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <caa00d62-b24d-4db7-9e12-170a10c073e3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250304-msm-gpu-fault-fixes-next-v4-4-be14be37f4c3@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On 11/03/2025 17:55, Vladimir Zapolskiy wrote:
+On Tue, Mar 04, 2025 at 11:56:50AM -0500, Connor Abbott wrote:
+> Up until now we have only called the set_stall callback during
+> initialization when the device is off. But we will soon start calling it
+> to temporarily disable stall-on-fault when the device is on, so handle
+> that by checking if the device is on and writing SCTLR.
 > 
-> I kindly ask to elaborate here.
+> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 30 +++++++++++++++++++++++++++---
+>  1 file changed, 27 insertions(+), 3 deletions(-)
 > 
-> This series does not touch CAMCC at all, and if the series touches CAMCC,
-> then it changes DT ABI, which is objected. Or is it for some reason
-> objected only for SM8550 and not for the other platforms? More information
-> is needed.
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index a428e53add08d451fb2152e3ab80e0fba936e214..d34a0d917013bb3d5a24b3ce72f48e3b38474da2 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -77,12 +77,36 @@ static void qcom_adreno_smmu_set_stall(const void *cookie, bool enabled)
+>  {
+>  	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+>  	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+> -	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu_domain->smmu);
+> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+> +	u32 mask = BIT(cfg->cbndx);
+> +	bool stall_changed = !!(qsmmu->stall_enabled & mask) != enabled;
+> +	unsigned long flags;
+>  
+>  	if (enabled)
+> -		qsmmu->stall_enabled |= BIT(cfg->cbndx);
+> +		qsmmu->stall_enabled |= mask;
+>  	else
+> -		qsmmu->stall_enabled &= ~BIT(cfg->cbndx);
+> +		qsmmu->stall_enabled &= ~mask;
+> +
+> +	/*
+> +	 * If the device is on and we changed the setting, update the register.
+> +	 */
+> +	if (stall_changed && pm_runtime_get_if_active(smmu->dev) > 0) {
+> +		spin_lock_irqsave(&smmu_domain->cb_lock, flags);
+> +
+> +		u32 reg = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
+> +
+> +		if (enabled)
+> +			reg |= ARM_SMMU_SCTLR_CFCFG;
+> +		else
+> +			reg &= ~ARM_SMMU_SCTLR_CFCFG;
+> +
+> +		arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, reg);
 
-No but it _should_ Vlad, that's the ask.
+Are you sure you don't need TLB invalidation for this to take effect? I
+think some fields in the SCTLR can be cached in the TLB but you'll need
+to check whether or not that applies to CFCFG.
 
-Both of these clock controllers will require this same change to be 
-implemented, that's what I'm asking Jagadeesh to do.
-
-Certainly that's the case for x1e and asking Jagadeesh to also check 
-that for sm8650.
-
----
-bod
+Will
 
