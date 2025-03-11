@@ -1,126 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-51026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AC7BA5CCA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:47:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2160A5CCC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:53:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8CA163B3CD7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:47:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B683189EE28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:53:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1925263884;
-	Tue, 11 Mar 2025 17:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98C3F25E47C;
+	Tue, 11 Mar 2025 17:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kv3vv+V7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kx3NZIpj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C774262D2C;
-	Tue, 11 Mar 2025 17:47:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2B11D5ADC;
+	Tue, 11 Mar 2025 17:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741715239; cv=none; b=tkshutNG/lTmtnLTZft8YcGUxxcs0Fg3w0JZKWEz7s/n8z1XcgLahu3M8liKSsvhjsRfYnhO9Bp/lwDm6BGIocPYOumtlbS/+i46DAivZFQHsR42PTXgKhp1MEoxf6xUCoqxqkhblSbnob1M0taUGuS3l7iExXdO9EOmmXFq3Qo=
+	t=1741715445; cv=none; b=eGcELU9barM16+AzOls1hzylAWDdVJFD2UYBhntAMXC3C0X+4wyENwX4wDqIN7XLsocc8lsbzpgHzDUyrXEmPntisi5v3q8gl10xplrWV0lCeTJVJPc1aUlkDFFQYt9QaOA99keSOQoOjsIUgFbbobee/lzb3P82sYBL0l1ylWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741715239; c=relaxed/simple;
-	bh=ller/jF40I2PeAHtTc9aN51gI+/jDyDYgF8J1WuNz14=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JJNRIoyPD/bRzhpmqMcrBWozc+0WvqIPMrwoVlPSXLNrh5gXsZumNqnV+EAvsDyCQkfjmFn+ta1AWZyhbYp/TiTX4YeW260w5l336To4ZkjZjOBTR1ttgqkBXkwjakAlMClPi+wS6Bp2QpqHAKaWj27h1KkxSnaAdbHRgaapYpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kv3vv+V7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BD0LAI029532;
-	Tue, 11 Mar 2025 17:47:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	m4bTi103PR1qOqcJp3CYevL2i5earH629nNCcbiv3jk=; b=Kv3vv+V7ea8lM/cg
-	XtIOGlQ9E44xDrI2zDZd0Vq+C9DM0lXM3B3Wd5Fk0IW+ivIk+Jyj5YtKYCjJ/LuY
-	jBXF38EUBveKKVHCLfk4hfo9uVZkXJpnSSu7dIAHytqvvUTUMq0RRfIp0N1e77Sx
-	e+7gGbuBfQBDif9hPfDy+X9epSQ7fAF68L8zPHO1fvb1WYBaZb8OMqK0Cl4IXILI
-	vVp4b0rMwqnQeOX4E3lwoo2QBkV73Das3txeK4p5bX/Y9MFNmPWj7qQx+4T8Ej5o
-	W67o4/d0WUglAdBAleoTTqxEhc6xuukArIKNLw4lxQHoSf0KfvZyQ8gVdfxRoK31
-	ZUjeag==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458f6ahk8g-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Mar 2025 17:47:14 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52BHlDmH020411
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Mar 2025 17:47:13 GMT
-Received: from [10.216.38.182] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Mar
- 2025 10:47:09 -0700
-Message-ID: <40d1a27e-aee9-bd68-a82b-a51ef8ccde05@quicinc.com>
-Date: Tue, 11 Mar 2025 23:17:06 +0530
+	s=arc-20240116; t=1741715445; c=relaxed/simple;
+	bh=kLDi5hF86QZHs0p/61H7Td0DURnQ7im8mU8C1Zlw5zc=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=DuzSIC+6N728ri5fpQUQUKtD5M+eTL0MAGioekQ3oS3+dEXG/epiV2lUB8kG7d1xb7ELdP+5nE70Q1r0AbKZ7Ic5lZ29cosVTerjrqbbq/4+j7EBNjyyIo0BcXtglMELA7shNdUNN6/od9glHKhnH5isD6PbFZYFkjgkHKJAxO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kx3NZIpj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B995C4CEE9;
+	Tue, 11 Mar 2025 17:50:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741715444;
+	bh=kLDi5hF86QZHs0p/61H7Td0DURnQ7im8mU8C1Zlw5zc=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=kx3NZIpjCvLI2hwgQQoYXNSbKXDaKKrlYc/uCkvVV7Au3BREVHUEsJCedXDxXcDQy
+	 qqBuUAmxNnlFWtF1UJCjNKqXSpCdqSbe1mJKLlMP9KNABs3NeJc1MUDm25QdgGLl4r
+	 dogi2SccbC44QbWPOC8V7MJVAaHDX+JP8AKIz/9nfGTzWMM43Go+7m20GhHEYrYjpZ
+	 0qoKTDlBOBKSuYTjK5262Dz20+vzBxL+HVq5fX5z6pjxmjMunPAO0L6NE+XLtCR2I/
+	 /px7Zu+XMgfpSrXVw4wHkMbR09nGaWFK/PgmqtMwRqb4uyWX1k9+nX9P8cvOv7LBT4
+	 n2Embdqv9zxKw==
+Message-ID: <899b71724428aaa16d424f54d5b1558b.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 1/4] dt-bindings: media: qcom,sm8550-iris: update power
- domain name
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
- <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com>
- <607f842d-07b5-4c1f-ad26-0fd34e6e605b@kernel.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <607f842d-07b5-4c1f-ad26-0fd34e6e605b@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=WsDRMcfv c=1 sm=1 tr=0 ts=67d07722 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=963PLJbrCG0W5q-lhu8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: hFBdlSlsYbkdhfF8fncfCc8hwWlkStJR
-X-Proofpoint-ORIG-GUID: hFBdlSlsYbkdhfF8fncfCc8hwWlkStJR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-11_05,2025-03-11_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 adultscore=0
- impostorscore=0 phishscore=0 mlxscore=0 mlxlogscore=774 clxscore=1015
- spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503110113
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20250310191142.1208155-1-andersson@kernel.org>
+References: <20250310191142.1208155-1-andersson@kernel.org>
+Subject: Re: [GIT PULL] Qualcomm clock fix for v6.14
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
+Date: Tue, 11 Mar 2025 10:50:42 -0700
+User-Agent: alot/0.12.dev8+g17a99a841c4b
 
+Quoting Bjorn Andersson (2025-03-10 12:11:41)
+>=20
+> The following changes since commit 2014c95afecee3e76ca4a56956a936e23283f0=
+5b:
+>=20
+>   Linux 6.14-rc1 (2025-02-02 15:39:26 -0800)
+>=20
+> are available in the Git repository at:
+>=20
+>   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
+m-clk-fixes-for-6.14
+>=20
+> for you to fetch changes up to 787289a1d13d50ff4ce0f496947f8817ef3fdea9:
+>=20
+>   clk: qcom: dispcc-sm8750: Drop incorrect CLK_SET_RATE_PARENT on byte in=
+tf parent (2025-02-26 08:57:46 -0600)
+>=20
+> ----------------------------------------------------------------
+> Qualcomm clock fix for v6.14
+>=20
+> Avoid propagating rate changes for the MDSS byte intf clocks on SM8750,
+> to avoid changing the already configured clocks.
 
-On 3/11/2025 11:03 PM, Krzysztof Kozlowski wrote:
-> On 11/03/2025 13:03, Vikash Garodia wrote:
->> Not all platforms has a collapsible mx, so use the more generic naming
->> of mx in the binding.
->>
-> 
-> No, neither tested, nor justified. Read the file. How many platforms do
-> you have there? One. Out of this one platform you claim not all of them
-> have MX collapsible, so you want MX?
-Let say we have one which is non-collapsible, what should be the way in that
-case to use the bindings which differ only in the MX/MXC part ?
-Regards,
-Vikash
-> 
-> Best regards,
-> Krzysztof
+I already picked this up to clk-fixes a couple weeks ago.
 
