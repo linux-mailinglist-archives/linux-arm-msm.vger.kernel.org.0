@@ -1,357 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-50900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4737A5B70F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 04:06:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80A1DA5B827
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 06:02:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 074041727B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 03:06:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E1FD3A897C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 05:02:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7F961E5702;
-	Tue, 11 Mar 2025 03:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAFDF1E5B83;
+	Tue, 11 Mar 2025 05:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r8VeaXYA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="A7crwZba"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757C01C5799;
-	Tue, 11 Mar 2025 03:06:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FC323DE;
+	Tue, 11 Mar 2025 05:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741662394; cv=none; b=H6WCuBtBZ1UvSyUPv2LdG+6sKA0B2IGaF14Tr2Bx/jyNM3KvuwQzYKSolmeu6abA+kJXMLh+E4feaT9F+mi0cmN4+szLyB1pHlSjHOQ8HI67PMSDi0EZYBDdMzHBqgZMFqzqPdS+Y8pcYyFOgkMZlgPUOREOQBfS7cGWLLeWNao=
+	t=1741669333; cv=none; b=jkdVXkdCnM3EdiBVvV/sVKPfnRxcMgDuV8jJXhZxEzyV0xknxkjHQnFrzPu7j5v3PTVE1X5bz9MhIQ/S1LKIKLy2eS75acU3iF/RW0XZg2RSI8QaPuisH+FrCP6XcZgIbayvNBaSo7zIF8d1W15hczAoKPbsyNawXCqPJMXtVHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741662394; c=relaxed/simple;
-	bh=/VHG/UzH6yfrfYxmgdHd7GsLck7vMHov9EsMAu7xAqc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D9RLkEVunRq1fATv1N2v/Zp08f5ndo/tg/HeGt8HcgVf0X1nB/Olju1Dz0QH+pFLg9k0RhJPDYYVxQIR5hPUZX6uNWQ7fYTRIC6ei/Tui34DsfL8pGQhofdQN9+ricQr6igNNMWqpyKR1yNHDolo5pNkJWi/zxwq02FXDK0wtig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r8VeaXYA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3258C4CEE5;
-	Tue, 11 Mar 2025 03:06:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741662393;
-	bh=/VHG/UzH6yfrfYxmgdHd7GsLck7vMHov9EsMAu7xAqc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=r8VeaXYA9b0utr3e8vMvh3XXvYVo20HzKZelHgwKbOZ4nerHAPumOG7jU36QRZMae
-	 a/F1P6btvvMyOPgoJMxpGFlAFdbg3qvlEtFdJgOQmWj2R/VJZnySkrwEywH6gNy0A0
-	 zehV8f/IuK/Nvh1jiGBeHAioWoDl1ubEodzO8j4R+2noNw/3ovvR8q74SzjF9v7Kup
-	 z3HZewFnPeRzAQImtRvnc/Y67773wxlXjEJAHGrAgKrBpWL5p2nW7HNa8MjGll2/+S
-	 Hcgu1RYdgTfsj8HvO3RLzi1UDaKdM74DT3dXty65VQEUivPq4XB43WYVfVFHzdlKfd
-	 Hvx1cF6PV0BrA==
-Date: Mon, 10 Mar 2025 22:06:31 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Felipe Balbi <balbi@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	Saravana Kannan <saravanak@google.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.li@nxp.com>, 
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>, 
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 5/7] usb: dwc3: qcom: Snapshot driver for backwards
- compatibilty
-Message-ID: <nccztzjoqokmyszvp2o7zvp33zztfucmhk2n65pacqrj4p7cwf@ahrt3bmciwea>
-References: <20250226-dwc3-refactor-v4-0-4415e7111e49@oss.qualcomm.com>
- <20250226-dwc3-refactor-v4-5-4415e7111e49@oss.qualcomm.com>
- <20250304000527.ybxfdjx5xzypcals@synopsys.com>
- <20250304003913.bsn5sucnofq6d6jo@synopsys.com>
- <zr6qdi3gtjaj3gyalpspzej33q356bs5ynchcmtr73765gjel5@c5ijv7czkhqt>
- <20250305003148.mahxupphkaiizpbh@synopsys.com>
- <o4n7p5b5zlgstmkn5hbvdqfe4tkhwidgvtqmcfwtr5yhrvix24@an7xdurug6mm>
- <20250307230022.w6fignlsmzcg6k4e@synopsys.com>
+	s=arc-20240116; t=1741669333; c=relaxed/simple;
+	bh=sqJMqM5+OToYcfBr2pcINBHfXc3cZ4EnD/+EFnGZKK8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WS/XjMIXSGd4tadiyxqfN68dYhOY6Lukb7TT040Bx9lVTk846i+ZquCPgBMxsFK1XLnrXPRoUMbGVY0tXx7+BWzAnEei4QysJ9arolW6NMMFn+ltGb/8YsOF67iDC5WGnbQ3lleFRt5KRpHfBfdIxXE7uyoP/1TrFuW8tZKPCNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=A7crwZba; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52AK2but027672;
+	Tue, 11 Mar 2025 05:01:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=U1IuSTyE2ejrpBKZ/VwAkEm4
+	TtNkqTU/BzvbXDulA1M=; b=A7crwZbaUfeIdfiOeUHsRu4D0oYNPDmD8x0CuV1n
+	cAUynhaaq+/xG8HGvXixrDIRSpYp0WX0w/AbRgPI72yNAEoFAXJPL4Jg7rj3FNAb
+	vWQfrwFINCppaY173hC5KzCd3mvwt66eZhV/2Q/ElBmSnwSuQ5tPu9VaLnaioin+
+	Y/XTb3HbGHKgLVV/h1qRDuXGAsYr6U9q8m0ZZPDAUBB9OBhcL/YN/HdNNiA2RugJ
+	E147X9vq0HZNTReXGgzhK7c9ZlB6EbGTKJlTJyXVObMo4+oNQLIAx2s9Fff+Bx5I
+	L3UNc6LfNl7184GRFhIjYVNcqXwu9JFgOawglxwzoI8dBQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458ex6y4um-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Mar 2025 05:01:52 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52B51qDT011806
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Mar 2025 05:01:52 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 10 Mar 2025 22:01:46 -0700
+Date: Tue, 11 Mar 2025 10:31:42 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC: Krzysztof Kozlowski <krzk@kernel.org>, <bhelgaas@google.com>,
+        <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <p.zabel@pengutronix.de>, <quic_nsekar@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>
+Subject: Re: [PATCH v11 3/7] dt-bindings: PCI: qcom: Use sdx55 reg
+ description for ipq9574
+Message-ID: <Z8/Dto1fZWvemiY5@hu-varada-blr.qualcomm.com>
+References: <20250220094251.230936-1-quic_varada@quicinc.com>
+ <20250220094251.230936-4-quic_varada@quicinc.com>
+ <41b400fe-5e08-42c0-9bc6-a238d25d155a@kernel.org>
+ <33bb1cb2-0c5e-402b-a5c6-9604b1dd8d99@kernel.org>
+ <Z86YReHsKeF165F6@hu-varada-blr.qualcomm.com>
+ <84456c70-e933-469f-ac7a-7d899f85e777@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20250307230022.w6fignlsmzcg6k4e@synopsys.com>
+In-Reply-To: <84456c70-e933-469f-ac7a-7d899f85e777@linaro.org>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=G8bmE8k5 c=1 sm=1 tr=0 ts=67cfc3c0 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
+ a=RtE8JzJKpnPQm6hGurwA:9 a=CjuIK1q_8ugA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: mK7SWkopM3DXc4majhHGrdDQQD-8hiRU
+X-Proofpoint-ORIG-GUID: mK7SWkopM3DXc4majhHGrdDQQD-8hiRU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-11_01,2025-03-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
+ malwarescore=0 mlxscore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503110032
 
-On Fri, Mar 07, 2025 at 11:00:32PM +0000, Thinh Nguyen wrote:
-> On Thu, Mar 06, 2025, Bjorn Andersson wrote:
-> > On Wed, Mar 05, 2025 at 12:31:49AM +0000, Thinh Nguyen wrote:
-> > > On Mon, Mar 03, 2025, Bjorn Andersson wrote:
-> > > > On Tue, Mar 04, 2025 at 12:39:12AM +0000, Thinh Nguyen wrote:
-> > > > > On Tue, Mar 04, 2025, Thinh Nguyen wrote:
-> > > > > > On Wed, Feb 26, 2025, Bjorn Andersson wrote:
-> > > > > > > In order to more tightly integrate the Qualcomm glue driver with the
-> > > > > > > dwc3 core the driver is redesigned to avoid splitting the implementation
-> > > > > > > using the driver model. But due to the strong coupling to the Devicetree
-> > > > > > > binding needs to be updated as well.
-> > > > > > > 
-> > > > > > > Various ways to provide backwards compatibility with existing Devicetree
-> > > > > > > blobs has been explored, but migrating the Devicetree information
-> > > > > > > between the old and the new binding is non-trivial.
-> > > > > > > 
-> > > > > > > For the vast majority of boards out there, the kernel and Devicetree are
-> > > > > > > generated and handled together, which in practice means that backwards
-> > > > > > > compatibility needs to be managed across about 1 kernel release.
-> > > > > > > 
-> > > > > > > For some though, such as the various Snapdragon laptops, the Devicetree
-> > > > > > > blobs live a life separate of the kernel. In each one of these, with the
-> > > > > > > continued extension of new features, it's recommended that users would
-> > > > > > > upgrade their Devicetree somewhat frequently.
-> > > > > > > 
-> > > > > > > With this in mind, simply carrying a snapshot/copy of the current driver
-> > > > > > > is simpler than creating and maintaining the migration code.
-> > > > > > > 
-> > > > > > > The driver is kept under the same Kconfig option, to ensure that Linux
-> > > > > > > distributions doesn't drop USB support on these platforms.
-> > > > > > > 
-> > > > > > > The driver, which is going to be refactored to handle the newly
-> > > > > > > introduced qcom,snps-dwc3 compatible, is updated to temporarily not
-> > > > > > > match against any compatible.
-> > > > > > > 
-> > > > > > > This driver should be removed after 2 LTS releases.
-> > > > > > > 
-> > > > > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> > > > > > > ---
-> > > > > > >  drivers/usb/dwc3/Makefile           |   1 +
-> > > > > > >  drivers/usb/dwc3/dwc3-qcom-legacy.c | 934 ++++++++++++++++++++++++++++++++++++
-> > > > > > >  drivers/usb/dwc3/dwc3-qcom.c        |   1 -
-> > > > > > >  3 files changed, 935 insertions(+), 1 deletion(-)
-> > > > > > > 
-> > > > > > 
-> > > > > > This is a bit concerning if there's no matching compatible string. ie.
-> > > > > > we don't have user for the new driver without downstream dependencies
-> > > > > > (or some workaround in the driver binding).
-> > > > > 
-> > > > > Ignore the comment above, I missed the "temporarily" in your log
-> > > > > above. However, the comment below still stands.
-> > > > > 
-> > > > > > 
-> > > > > > While I understand the intention, I'm afraid we may have to support and
-> > > > > > maintain this much longer than the proposed 2 LTS releases (as seen with
-> > > > > > anything tagged with "legacy" in the upstream kernel).
-> > > > 
-> > > > There are no products shipping today using dwc3-qcom where Devicetree is
-> > > > considered firmware. The primary audience for a longer transition is
-> > > > users of the various laptops with Qualcomm-chip in them. But given the
-> > > > rapid development in a variety of functional areas, these users will be
-> > > > highly compelled to update their DTBs within 2 years.
-> > > > 
-> > > > The other obvious user group is to make sure us upstream developers
-> > > > don't loose USB when things get out of sync.
-> > > > 
-> > > > 
-> > > > That said, if the model defined here is to be followed in other cases
-> > > > (or my other vendors) where Devicetree is treated as firmware, your
-> > > > concerns are valid - and it might be worth taking the cost of managing
-> > > > the live-migration code.
-> > > > 
-> > > > > > If possible, I'd
-> > > > > > prefer the complications of maintenance of the migration code be handled
-> > > > > > downstream.
-> > > > > > 
-> > > > 
-> > > > I'm sorry, but here it sounds like you're saying that you don't want any
-> > > > migration code upstream at all? This is not possible, as this will break
-> > > > USB for developers and users short term. We can of course discuss the 2
-> > > > LTS though, if you want a shorter life span for this migration.
-> > > > 
-> > > 
-> > > My first concern is now we have a legacy driver that should not be
-> > > continued to be developed while we also need to address any
-> > > regression/fixes found in the future from the legacy driver. While I
-> > > would encourage users to start migrating to the new driver, I won't
-> > > reject fixes to the legacy driver either. In the next 2 years+, my
-> > > other concern is that I'm not confident that we can easily remove the
-> > > legacy driver and the DTS then.
-> > > 
-> > 
-> > The problem at hand is that the driver _needs_ a bunch of work.
-> > Role-switching only works sometimes, extcon is (for older platforms)
-> > duplicated in both glue and core - with the hope that each part does its
-> > thing in a suitable fashion, the layering violations can trigger
-> > NULL-pointer dereferences or use-after-free, PM runtime is marked
-> > forbidden...
-> > 
-> > We've looked at these problems for a few years now, without coming up
-> > with any solution to address these issues within the current design.
-> 
-> That's understood, and that's the incentive for your work here.
-> 
-> > 
-> > Following this refactor, we will be able to work on these improvements.
-> > For this to happen, I intend to transition all the
-> > arch/*/boot/dts/qcom/* platforms to the new binding as soon as possible.
-> > 
-> > 
-> > Looking ahead, when we hit the point of deprecating the dwc3-qcom-legacy
-> > driver:
-> > 
-> > The upstream-based product we have today do ship Devicetree in
-> > combination with the kernel, so they would upgrade both together and get
-> > the new driver.
-> > 
-> > The other group would be kernel developers, enthusiasts, specific users
-> > who for some reason is upgrading their kernel but not their Devicetree.
-> > These users will want the new features and stability we're bringing.
-> > 
-> > > Code can break, and that's not unexpected. If 2 LTS releases later and
-> > > we remove the dwc3-qcom-legacy, things can break then too. This may just
-> > > as be painful if we need fixes to the legacy driver due to some previous
-> > > regression. Also, I'm sure your team did a fair share of testing the new
-> > > driver right? Is there some major concern in the new driver that we
-> > > haven't addressed?
-> > > 
-> > 
-> > The new and old drivers are mostly identical at this point, and expected
-> 
-> This was my expectation, that the new and old drivers are mostly
-> identical at this point. This is one of the reasons why I suggested to
-> directly switch to using the new driver at this point.
-> 
+On Mon, Mar 10, 2025 at 12:37:28PM +0100, Krzysztof Kozlowski wrote:
+> On 10/03/2025 08:44, Varadarajan Narayanan wrote:
+> > On Thu, Mar 06, 2025 at 01:06:13PM +0100, Krzysztof Kozlowski wrote:
+> >> On 06/03/2025 12:52, Krzysztof Kozlowski wrote:
+> >>> On 20/02/2025 10:42, Varadarajan Narayanan wrote:
+> >>>> All DT entries except "reg" is similar between ipq5332 and ipq9574. ipq9574
+> >>>> has 5 registers while ipq5332 has 6. MHI is the additional (i.e. sixth
+> >>>> entry). Since this matches with the sdx55's "reg" definition which allows
+> >>>> for 5 or 6 registers, combine ipq9574 with sdx55.
+> >>>>
+> >>>> This change is to prepare ipq9574 to be used as ipq5332's fallback
+> >>>> compatible.
+> >>>>
+> >>>> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>>
+> >>> Unreviewed.
+> >>>
+> >>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> >>>> ---
+> >>>> v8: Add 'Reviewed-by: Krzysztof Kozlowski'
+> >>>> ---
+> >>>>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
+> >>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>>
+> >>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> >>>> index 7235d6554cfb..4b4927178abc 100644
+> >>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> >>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> >>>> @@ -169,7 +169,6 @@ allOf:
+> >>>>              enum:
+> >>>>                - qcom,pcie-ipq6018
+> >>>>                - qcom,pcie-ipq8074-gen3
+> >>>> -              - qcom,pcie-ipq9574
+> >>>
+> >>> Why you did not explain that you are going to affect users of DTS?
+> >>>
+> >>> NAK
+> >
+> > Sorry for not explicitly calling this out. I thought that would be seen from the
+> > following DTS related patches.
+> >
+> >> I did not connect the dots, but I pointed out that you break users and
+> >> your DTS is wrong:
+> >> https://lore.kernel.org/all/f7551daa-cce5-47b3-873f-21b9c5026ed2@kernel.org/
+> >>
+> >> so you should come back with questions to clarify what to do, not keep
+> >> pushing this incorrect patchset.
+> >>
+> >> My bad, I should really have zero trust.
+> >
+> > It looks like it is not possible to have ipq9574 as fallback (for ipq5332)
+> > without making changes to ipq9574 since the "reg" constraint is different
+> > between the two. And this in turn would break the ABI w.r.t. ipq9574.
+>
+> I don't get why this is not possible. You have one list for ipq9574 and
+> existing compatible devices, and you add second list for new device.
+>
+> ... or you just keep existing order. Why you need to keep changing order
+> every time you add new device?
 
-I do suggest that we directly switch all targets to use the new
-implementation.
+Presently, sdx55 and ipq9574 have the following reg/reg-names constraints.
 
-But that switch happens in Devicetree blobs (.dtb files) that are:
-1) Entering the upstream kernel through a different maintainer
-2) In some cases managed as through a separate software delivery
-mechanism - so it's possible that users run v6.15 with a DTB from v6.13.
+	compatible	| qcom,pcie-sdx55	| qcom,pcie-ipq9574
+	----------------+-----------------------+------------------
+        reg	minItems| 5			| 5
+		maxItems| 6			| 5
+	----------------+-----------------------+------------------
+        reg-names	|			|
+		minItems| 5			| 5
+	----------------+-----------------------+------------------
+		maxItems|			| 5 (6 for ipq5332)
+	----------------+-----------------------+------------------
+		items	|			|
+			| parf			| dbi
+			| dbi			| elbi
+			| elbi			| atu
+			| atu			| parf
+			| config		| config
+			| mhi			| (add mhi for ipq5332)
+	----------------+-----------------------+------------------
 
-> > to diverge from here.
-> 
-> This is what I want to avoid.
-> 
+To make ipq9574 as fallback for ipq5332, have to add "mhi" to reg-names of
+ipq9574. Once I add that, the sdx55 and ipq9574 is the same list but in
+different order.
 
-Understood.
+If this would not be considered as duplication of the same constraint, then I
+can club ipq5332 with ipq9574.
 
-> > 
-> > The one thing I have identified to differ is that the "legacy" driver
-> > supports 2 extcon handles in the glue, but this is not considered
-> > acceptable by the binding so I haven't found anyone actually exercising
-> > this code path - then again extcon and usb_role_switch is one of the
-> > things this enables us to clean up.
-> > 
-> > 
-> > That said, while this model seems suitable for Qualcomm, due to the
-> > current state of things, I don't know if the same is true for Frank Li,
-> > perhaps NXP has a broader user base and need the migration logic.
-> > 
-> 
-> This was not expected. If the new driver doesn't support certain devices
-> with extcon, how can we expect to remove/deprecate the legacy driver
-> without dropping support to these devices.
-> 
+If this would be considered as duplication, then sdx55 and ipq9574 would have to
+use the same reg-names list and sdx55 or ipq9574 reg-names order would change.
 
-The opposite will be the case. The new driver will support extcon and
-usb_role_switch, while the legacy one can't support usb_role_switch. The
-layering violations can't be resolved in the old driver, so the issues
-stemming from this can't be fixed.
+> > To overcome this, two approaches seem to be availabe
+> >
+> > 	1. Document that ipq9574 is impacted and rework these patches to
+> > 	   minimize the impact as much as possible
+>
+> What impact? What is the reason to impact ipq9574? What is the actual issue?
 
-> > > > 
-> > > > In my view, setting a flag date when the dwc3-qcom-legacy.c will be
-> > > > removed will provide upstream users a transition period, at a very low
-> > > > additional cost (934 lines of already tested code). If someone
-> > > > downstream after that flag date wants to retain support for qcom,dwc3
-> > > > they can just revert the removal of dwc3-qcom-legacy.c.
-> > > 
-> > > The same can be said that they can revert the update (or apply fixes)
-> > > should they found issue with the new change.
-> > > 
-> > 
-> > We're changing the Devicetree binding, which gives us two problems:
-> > 1) Devicetree source code and DWC3 driver code are merged through
-> > different trees.
-> > 
-> > 2) The compiled Devicetree (.dtb) and kernel image are in some cases
-> > separate software deliverables.
-> > 
-> > So we absolutely need some migration mechanism to not just break USB for
-> > everyone for the coming 1-2 releases - at least.
-> > 
-> > That said, the "2 LTS" is completely arbitrary. If you prefer to limit
-> > that, we can certainly have that discussion! E.g. I wouldn't argue
-> > against setting the flag-date by the end of this year.
-> > 
-> 
-> I don't know enough about the timeline so suggest a different number.
-> 
+By impact, I meant the change in the reg-names order as mentioned above (for
+considered as duplication).
 
-If we pick this up soon, and then take one release to convert all the
-Devicetree source, we should be ready to drop the legacy implementation
-after next LTS, i.e. by the end of this year.
+> > 		(or)
+> >
+> > 	2. Handle ipq5332 as a separate compatible (without fallback) and reuse
+> > 	   the constraints of sdx55 for "reg" and ipq9574 for the others (like
+> > 	   clock etc.). This approach will also have to revert [1], as it
+> > 	   assumes ipq9574 as fallback.
+> >
+> > Please advice which of the above would be appropriate. If there is a better 3rd
+> > alternative please let me know, will align with that approach.
+>
+> Keep existing order. Why every time we see new device, it comes up with
+> a different order?
 
-> > > > 
-> > > > The alternative is that I try to get the migration code suggested in v3
-> > > > to a state where it can be merged (right now it's 6x larger) and then
-> > > > keep investing indefinitely in making sure it's not bit-rotting
-> > > > (although Rob Herring did request a flag date of the migration code in
-> > > > v3 as well...).
-> > > > 
-> > > 
-> > > All that said, if you believe that this transition will be quite
-> > > disruptive without preserving the legacy driver/dts, then we will do so.
-> > > 
-> > 
-> > We absolutely need a transition period, per above reasons. The length of
-> > it is an open question.
-> 
-> Ok, but before we merge the new driver, do we have any plan to support
-> devices that use extcon in the new driver?
-> 
-> (Apologies if I had missed this discussion prior.)
-> 
+Will be able to do that based on the answer to 'duplication' question and how to
+handle that.
 
-Yes, my intention is to transition all devices to the new binding asap -
-including pre-type-C ones that uses extcon.
+	if (adding mhi to ipq9574 reg-names != duplication)
 
-> > 
-> > > Can I request that you make this snapshot as one of the first patches in
-> > > the series so reverts/git-blames can easily be traced?
-> > > 
-> > 
-> > Absolutely.
-> 
-> Thanks.
-> 
-> > 
-> > > BR,
-> > > Thinh
-> > > 
-> > > Side question: for Snapdragon laptops, without the corresponding kernel
-> > > and DTS updates, don't things break easily?
-> > 
-> > It certainly happens, but maintaining backwards compatibility is
-> > something we're striving for. As the Devicetree bindings mature, the
-> > easier this is though.
-> > 
-> > One example where this is a problem will be clear here, that users
-> > attempting to boot today's kernel with tomorrows Devicetree blobs will
-> > not get USB - because today's kernel doesn't know how to make of the
-> > information in that description.
-> > 
-> > This is true for any hardware or firmware interface though, so there's
-> > only so much one can do about that (and whatever that is, we're trying
-> > to do - for the sake of user friendliness).
-> > 
-> 
-> Right, for those that migrate the DTS and kernel separately, breakage
-> should not come as a surprise. As you said, there's only so much we can
-> do. I would expect for them to also have certain protocol to handle this
-> when it happens.
-> 
+		/* Keep existing order */
 
-No, there isn't really a protocol, given that in the Devicetree
-community we give a promise to the users that such breakage shouldn't
-happen. (In the same way as you shouldn't have to update BIOS on your PC
-to boot a new version of Linux)
+		* Append "mhi" to ipq9574
+		* use ipq9574 reg-names order for ipq5332
 
-That said, I'm arguing in favor of such breakage, as the problem is
-limited (and we give a little bit of grace period) and the fact that
-the current implementation is a dead end.
+	else
+		* combine ipq9574 & sdx55 reg-names
 
-Regards,
-Bjorn
+		if (use sdx55 reg-names order)
 
-> BR,
-> Thinh
+			/* patchset v11 is using this approach */
+
+			* change ipq9574
+			* follow the same for ipq5332
+
+		else if (use ipq9574 order)
+
+			* change sdx55
+			* follow the same for ipq5332
+
+Please advice.
+
+Thanks
+Varada
 
