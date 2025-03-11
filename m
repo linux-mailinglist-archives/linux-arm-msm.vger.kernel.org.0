@@ -1,222 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-51021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5572AA5CB22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:50:12 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A685AA5CC15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:27:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E9D31188D9AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:50:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 336671898F93
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 17:27:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C93525CC65;
-	Tue, 11 Mar 2025 16:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC9CC2620D3;
+	Tue, 11 Mar 2025 17:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zMHsoaI/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VFGv5oWf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF211EB9E3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 16:50:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E45325D8EF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 17:26:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741711808; cv=none; b=pfpKMbxu4VLwx6KpimjEExptZL9pLRst0U98oQ9ul/KnTnOMkHA6Hpkag3RYoK0bXlcpMXeOEj4u65xVhE5Tm7m36D04sGYjIJmn3quNhskDjJJpbxme3vUd5azzqGCeeZK9H2SmqPLWNjTkgpbGKXGM4obIJdajhyv4FdbFHdo=
+	t=1741714021; cv=none; b=MAe8T+raOuosmEo+agAJxZJZXes+sLzWBNldt3I+K3jmM2tNG5C+h+gxCBq6wjbvIP0DZAcG1DMpo9dPZglF0/sSRUaK5yfJwOdKluRB3/QgI6fSiyZdi7/fmhgNrtos+z85vAzjAdMzrYrZlg2FVyvVseJ6ZHFAYwEhPBFZ4S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741711808; c=relaxed/simple;
-	bh=BvZCDeJlwxu4WFta5J0ZRVMripoIkagvhPtRakkbRB0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jhZS7y3WDWkouJZHkWKoYby+H0VYlF4q12JzOC60GN/QC+I0BoGzjDWdihPh1e/ZBK/BxJ1ElPwsk+EwjTOGXB3xHXb4c/mlSHMBQAR52/GPFhr/yI4+KaI0dAM9quiV0pdEow/T7npuRIxBIwQYXCIYbcq2EVpGrPHrL8K5mKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zMHsoaI/; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-223a7065ff8so14354745ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 09:50:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741711806; x=1742316606; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=23iOwZdcqMnXiNfXwcY1/saA5o6I48TGQZAkJr6gmPk=;
-        b=zMHsoaI/HU0TZAezkp5lp2C6GsQS2hCq4RzqsAYjkVwJvIbTNrFlHKwxeXHphTIZov
-         EuMYhYTuRHNP8AJF6ZJmYJA6lF7enuwt/UpmvetYHUM8aJ6Q3XD1ESP7aHMiEORjQUY5
-         7/8LpKlGfxZ+/u8u9mAE7LTVVThmMQiDzdtssAJNCAYBq4EgU5/vz7eewNe9e+9nLfVo
-         ubcKLdhjPUuuq0aPLlO67yNKFvpGMxjiB0uKSayTq4V3xhDN8PBDRaHEO4Ns5wPKEDod
-         I++GJrDLYdzzU05yhOBlb9evfd7wgOm1HEQ82uAw/H+rD1vtGEQsML/9tfReapckQ9rY
-         WZZw==
+	s=arc-20240116; t=1741714021; c=relaxed/simple;
+	bh=XTIRAgPmD28skDvfDwDGIOCVy8D0GYqUCBr9UNVDX0Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g+GhW1cwE5cNyz/AYccS7e7hfjn0z8CKEoDbzS0g1RHcWqXVtAo96oEEzG0QHHlWcBmtVDNUK06PHUmgwqBQI5hFsIf417fIgYQmAs+s/y7iATushrXa6+7hI5s3EE0JWn3cXMd5+DVWPtyf1xE9OlK88kg5L/cth/P2Xhazjmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VFGv5oWf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BFEZrB030761
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 17:26:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	modCKFlPbohmYS2UCFV6htda6LZj2dmGCzj/GUvT+OE=; b=VFGv5oWfJIvhnUAl
+	4zvjCI66xOiOuk/ivNSRQm07MmqeMg0RKuuir9Gfx20xH7YnLHvEXwKdjB7l+EQy
+	5NsrJ/bm1qYO8xpq+JUoMQ8NkLBCazzhYSuqr/PBP9Qh+a0mEujKayl+YCQ8fObq
+	eUcFtM4ScROXfzvsfotudNdFUz2xfGpda84fKGCdaxqVqBjXCvtJDXV4Z7ouliIf
+	0OFAuTyQeRoICh8vVWd5jx9kOv/CiR23vvcM+1NUMJZ7Hh7QQj4c0rRZWVeZkyT0
+	OeSROwoWmQ15OiU8VAfgksx8oeVbpLxsBRdzIYQyu4lC/Z7HEpH6AQ1l7kLDYorH
+	lfd0gw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458ewk9fer-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 17:26:58 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c54788bdf7so32088785a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 10:26:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741711806; x=1742316606;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=23iOwZdcqMnXiNfXwcY1/saA5o6I48TGQZAkJr6gmPk=;
-        b=tboaaWTj70zBgIh9nQP9ZDTEI5im+8GGrskY1pmTbK32Q/QPJWPUSkowY8RXLfXjs1
-         yzs7yi5qhQ0/MFhiO6ANtAD4CKs7a7Wxg8KGLOd9rSbyIcuPFkzevkJf8q/+RjHm0igN
-         0yp55siJM2r6vYAQ8pDKUrW+05ATEbIgpz14BuogqZDRIVmBS7vhxAtVNEsvXctu7HYl
-         OOuVPM8gJzYqFKKPX8ypsUhThtYL7DnkgAB3Xve9bSEzl5LA5kcJv+BuErSiNIc77PP9
-         gSi4DOeSt/Zvbxk5giJjwX3F8QqVvkRCB/JgZN++mKOj+yDcWKt7MFIJtD25XjBNlaid
-         jR8g==
-X-Forwarded-Encrypted: i=1; AJvYcCXbguYO8HAvbROQ1WHiiqK3lY9uKkvI9Anlvk27kxU++20cBxvKPLLi/ZzOU8myrCGOwT7nJ+NpHLtpLi63@vger.kernel.org
-X-Gm-Message-State: AOJu0YygwezTpShrB5PDMP9TrSHCk9omLpsk1ULm4L0gqZ9PujnGCJYl
-	26WNl2fmQ6/NDvbt0G585u14XRX0/Ugc/lyQXCW4ESCMkrlrHd/U75BsglW9AKQ8k/9B2V1NTS/
-	9Z6KhqL8lXu/1C/MHcWAOMYnYkP0sfECSBvEf0w==
-X-Gm-Gg: ASbGnctRwD4gY47UFnTCtNweX1/2m1n/MOM2hldZXa03Pac/jUmgPXgauRXKFHqlUNn
-	Zvyot0qhCbra2ec6SVvxbmk0OtPr3TYnwDA62BkB+6b0mkZWPCUU5SiCKJDeeGjFT5enyw2sG+w
-	wmX7oc2MpFlt7kfcNh7rEoMl3egojbHCUm9iFo6Ars0EIoQq70nPQ3yc+Gp9E=
-X-Google-Smtp-Source: AGHT+IGRlRimNoESSBKd69bPemttjguo2zF0mTvg+Kb5/5Fg9niMy5gNnw80TuZnQbl3lCDWzV9DtaMCXkkJcAmG5fQ=
-X-Received: by 2002:a05:6a21:2d08:b0:1f3:47d6:aa05 with SMTP id
- adf61e73a8af0-1f5449336e0mr29284989637.0.1741711806206; Tue, 11 Mar 2025
- 09:50:06 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741714018; x=1742318818;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=modCKFlPbohmYS2UCFV6htda6LZj2dmGCzj/GUvT+OE=;
+        b=EgTVI24lV0eEc2lRJvCKT8XXv5dw1soM7PVmR1ADqun8xotoiQJr/67Fxp2uHOz31g
+         9HIy9doUfq1Hv1VGrR+hLkdoyvPZcfj4JO1II8dFpbLwsDRVK5Vho7Eh5Dz1zNLnntzg
+         qDqw/cHV9kewYZMY3F8OtXYAdJwUTB/KnnOk+LbQxDaVzvt+DxEvvXQ0nB639eq9zzS1
+         wRXuBJZy0DeSZl0KgbFMRw2fzSG/+tv1coE9DmD16VdseI1lPdMw/kjA1lE4qQSXy3og
+         gQv0o/iGTB/If9mkQwurLIxbZsSbGjqSmvTo9yoGq9EFm5c+ZOKcYzXR9eSz8z6NecQS
+         Deog==
+X-Forwarded-Encrypted: i=1; AJvYcCWLvqv0IDvsfxqArHfz/uXZmMMZssRsD2kIqyt7KDx8fD9OIFiyGt3cyyE9OxKIAMv0E11U/B/+6yE1Vn6i@vger.kernel.org
+X-Gm-Message-State: AOJu0YzOVYoOapKhGQP5F1nvWA2cgV8yvKg1YmMyJVAyZjMHRABteNoL
+	aXlpLPZsjZS4WvaBRonZPXuuUa0RvVvc+PSQ31gfTMh2JnMpKPN/646MvMS1MhmsENyFMxX+DIk
+	Avn/YNeimsPQOnXt9KNQYRCaVWuuka/WThY5u0AxeqKIomeESd/o6Hw5xyqz2ojs4
+X-Gm-Gg: ASbGncuAHT1bxPU7Vm5IF+pUZ5slBTT+chrqjoZwIDJx1f5IDz/DocETaPvFyIzRcoA
+	mWKxmtvixLJPWDtjIZHUOTcQp3sZnNymxBXB7hs7pX6OqbXEEyX9kZb+IJ3t22UfCPlaNiN2OkZ
+	FlHwHYqXvRHSGUGYLSStjCwztaEYtuoCGSt6ioRjjPyUMLd9BJgVwPUKST8fgAzXJ7HZM+jGCx1
+	diJTvKfg3o3EeqOHr6q8aGCCm4c4qj5QDEMP9H6QECFzkYTGb5pLmHA6zqPw1A2tEUM1LOsfu4+
+	uyOJSGGF19L/wxFhaZm9VCYeSj1gokeXgHDm8ZKoIxZQA4h8yW0YyR2aJ14ukFG4DqzwPg==
+X-Received: by 2002:a05:620a:2989:b0:7c0:b588:992 with SMTP id af79cd13be357-7c55e883133mr250949885a.9.1741714018103;
+        Tue, 11 Mar 2025 10:26:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG4PwZSzygwJpbbK5qOQtPXbubl94YgeE3+YlE6YRMOV6fyG+MXaxjRZxgCRgDfKWP75HKduw==
+X-Received: by 2002:a05:620a:2989:b0:7c0:b588:992 with SMTP id af79cd13be357-7c55e883133mr250948085a.9.1741714017691;
+        Tue, 11 Mar 2025 10:26:57 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac291796eccsm453035566b.25.2025.03.11.10.26.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Mar 2025 10:26:56 -0700 (PDT)
+Message-ID: <f93baac4-7415-4d31-8000-74f42340a933@oss.qualcomm.com>
+Date: Tue, 11 Mar 2025 18:26:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250310090407.2069489-1-quic_jiegan@quicinc.com> <20250310090407.2069489-2-quic_jiegan@quicinc.com>
-In-Reply-To: <20250310090407.2069489-2-quic_jiegan@quicinc.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Tue, 11 Mar 2025 16:49:54 +0000
-X-Gm-Features: AQ5f1Jq4RzUPjRD0-Pf4PVjALFGSYlNPIsAlLKRkK0wLgCzuiv55sOjf36seIGA
-Message-ID: <CAJ9a7Vh7PmBBbvwnUETfCYrTSiXNzeiWpsz+XAGaUWt1Rq1aZw@mail.gmail.com>
-Subject: Re: [PATCH v1 1/4] coresight: tmc: Introduce new APIs to get the RWP
- offset of ETR buffer
-To: Jie Gan <quic_jiegan@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Tingwei Zhang <quic_tingweiz@quicinc.com>, Jinlong Mao <quic_jinlmao@quicinc.com>, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-crd: add support for volume-up
+ key
+To: Johan Hovold <johan@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250307171036.7276-1-johan+linaro@kernel.org>
+ <2aac1aff-694f-41f6-8849-f1dfe802a1f4@oss.qualcomm.com>
+ <Z87Yi6IQEIhqu27O@hovoldconsulting.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <Z87Yi6IQEIhqu27O@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Tr8chCXh c=1 sm=1 tr=0 ts=67d07262 cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=n2lFrQNbv3neQDgrPP4A:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: BCCIaIoiGfhvm9tzGVer2gWmnqCl_Tgs
+X-Proofpoint-ORIG-GUID: BCCIaIoiGfhvm9tzGVer2gWmnqCl_Tgs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-11_04,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 mlxlogscore=999 spamscore=0 lowpriorityscore=0
+ mlxscore=0 clxscore=1015 phishscore=0 malwarescore=0 impostorscore=0
+ bulkscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503110110
 
-Hi,
+On 3/10/25 1:18 PM, Johan Hovold wrote:
+> On Sat, Mar 08, 2025 at 05:26:26PM +0100, Konrad Dybcio wrote:
+>> On 7.03.2025 6:10 PM, Johan Hovold wrote:
+>>> Add support for the keypad volume-up key on the debug extension board.
+>>>
+>>> This is useful to have when testing PMIC interrupt handling, and the key
+>>> can also be used to wake up from deep suspend states (CX shutdown).
+>>>
+>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>
+>> I'm lukewarm about this since there is no "actual" button for that.
+> 
+> There is certainly a physical button on the debug board. And the UEFI
+> firmware also supports it (e.g. it can be used in GRUB).
+> 
+>> Does the power button not work here?
+> 
+> For wake up, yes, but not for testing PMIC GPIO interrupts.
+> 
+>> If systemd induces a shutdown, try setting
+>>
+>> HandlePowerKey=ignore
+>>
+>> in /etc/systemd/logind.conf
+> 
+> I'm aware of that, but the volume key can be used without updating user
+> space (possibly also for CI testing if that signal can be controlled
+> remotely like the power button).
 
-On Mon, 10 Mar 2025 at 09:04, Jie Gan <quic_jiegan@quicinc.com> wrote:
->
-> The new functions calculate and return the offset to the write pointer of
-> the ETR buffer based on whether the memory mode is SG, flat or reserved.
-> The functions have the RWP offset can directly read data from ETR buffer,
-> enabling the transfer of data to any required location.
->
-> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
-> ---
->  .../hwtracing/coresight/coresight-tmc-etr.c   | 40 +++++++++++++++++++
->  drivers/hwtracing/coresight/coresight-tmc.h   |  1 +
->  2 files changed, 41 insertions(+)
->
-> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> index eda7cdad0e2b..ec636ab1fd75 100644
-> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> @@ -267,6 +267,46 @@ void tmc_free_sg_table(struct tmc_sg_table *sg_table)
->  }
->  EXPORT_SYMBOL_GPL(tmc_free_sg_table);
->
-> +static long tmc_flat_resrv_get_rwp_offset(struct tmc_drvdata *drvdata)
-> +{
-> +       dma_addr_t paddr = drvdata->sysfs_buf->hwaddr;
-> +       u64 rwp;
-> +
+Alright, I see
 
-It is not valid to read RWP if the TMC is running. It must be in the
-stopped or disabled state - see the specifications for TMC /ETR
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-It is likely that CSUNLOCK / CSLOCK are needed here too,  along with
-the spinlock that protects drvdata
-
-See the code in coresight_tmc_etr.c :-
-
-e.g. in
-
-tmc_update_etr_buffer()
-
-...
-<take spinlock>
-...
-CS_UNLOCK(drvdata->base);
-tmc_flush_and_stop(drvdata); // this ensures tmc is stopped and
-flushed to memory - essential to ensure full formatted frame is in
-memory.
-tmc_sync_etr_buf(drvdata); // this function reads rwp.
-CS_LOCK(drvdata->base);
-<release spinlokc>
-
-This type of program flow is common to both sysfs and perf handling of
-TMC buffers.
-
-> +       rwp = tmc_read_rwp(drvdata);
-> +       return rwp - paddr;
-> +}
-> +
-> +static long tmc_sg_get_rwp_offset(struct tmc_drvdata *drvdata)
-> +{
-> +       struct etr_buf *etr_buf = drvdata->sysfs_buf;
-> +       struct etr_sg_table *etr_table = etr_buf->private;
-> +       struct tmc_sg_table *table = etr_table->sg_table;
-> +       long w_offset;
-> +       u64 rwp;
-> +
-
-Same comments as above
-
-> +       rwp = tmc_read_rwp(drvdata);
-> +       w_offset = tmc_sg_get_data_page_offset(table, rwp);
-> +
-> +       return w_offset;
-> +}
-> +
-> +/*
-> + * Retrieve the offset to the write pointer of the ETR buffer based on whether
-> + * the memory mode is SG, flat or reserved.
-> + */
-> +long tmc_get_rwp_offset(struct tmc_drvdata *drvdata)
-> +{
-> +       struct etr_buf *etr_buf = drvdata->sysfs_buf;
-> +
-
-As this is an exported function, please ensure that the inputs are
-valid - check the pointers
-
-Code to ensure TMC is flushed and stopped could be inserted here.
-
-Regards
-
-Mike
-
-> +       if (etr_buf->mode == ETR_MODE_ETR_SG)
-> +               return tmc_sg_get_rwp_offset(drvdata);
-> +       else if (etr_buf->mode == ETR_MODE_FLAT || etr_buf->mode == ETR_MODE_RESRV)
-> +               return tmc_flat_resrv_get_rwp_offset(drvdata);
-> +       else
-> +               return -EINVAL;
-> +}
-> +EXPORT_SYMBOL_GPL(tmc_get_rwp_offset);
-> +
->  /*
->   * Alloc pages for the table. Since this will be used by the device,
->   * allocate the pages closer to the device (i.e, dev_to_node(dev)
-> diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
-> index b48bc9a01cc0..baedb4dcfc3f 100644
-> --- a/drivers/hwtracing/coresight/coresight-tmc.h
-> +++ b/drivers/hwtracing/coresight/coresight-tmc.h
-> @@ -442,5 +442,6 @@ void tmc_etr_remove_catu_ops(void);
->  struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
->                                    enum cs_mode mode, void *data);
->  extern const struct attribute_group coresight_etr_group;
-> +long tmc_get_rwp_offset(struct tmc_drvdata *drvdata);
->
->  #endif
-> --
-> 2.34.1
->
-
-
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Konrad
 
