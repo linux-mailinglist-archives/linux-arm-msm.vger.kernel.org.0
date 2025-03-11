@@ -1,71 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-50948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60BD1A5BF9E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 12:47:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84D70A5BFA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 12:47:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0A38176A17
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 11:47:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C36C93AC5E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 11:47:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AEA324167A;
-	Tue, 11 Mar 2025 11:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F835255E3C;
+	Tue, 11 Mar 2025 11:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UPU7SL2Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QAjSqMl+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7961D514E;
-	Tue, 11 Mar 2025 11:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE12255E37;
+	Tue, 11 Mar 2025 11:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741693628; cv=none; b=kJiDDwVN0vBi/9Mh3nLssos46+VbhefOmcaJrrYpnF2uCke88p4mNBBo8UkT7V+XVKRxvhHALm5kPNLlVwPKSBmjcb4MorafrFkZ7CkkME1QNw57BR1gsdvTqu5KVqFe4z+bPgg/4gxQN7VZ/Ha4x0WASB3aMVsyG5te6SEl8fE=
+	t=1741693634; cv=none; b=gjo4WUqQ9RDtAJb+5gEAdNROBW2yEfnTce279JjAZognJ57SF+SJM0GgAhoS3i5W2KTtVtEwiUUrLQeKXEJ4hylczDvOuO+MLTW/ddPh/YNGKsJphTWp2v2xv9HIU+bCV7gXksMciOzYajTWJknpiX3H23kDkPQWA/32JmDwx50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741693628; c=relaxed/simple;
-	bh=yRXYXZ9rV06lyaY2T1O8v8n5tymGv/7bHYuzwvkdyUM=;
+	s=arc-20240116; t=1741693634; c=relaxed/simple;
+	bh=vKafTPWUZwnre114AfisoCJLv7ctbKCeoyZ23jWCfP4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=lDUQmaWu89XEv6x6Vd9oNoXnc0ap1xrm+c8+RqmXePxcrOwcg0cQIl4c9ssG4S0ofgTGnq4j4x9ZKDtuar3MfMnI3MpMLEuABErNOEw+L/AXZfL6K1DDKsraofhiy9hPtkQWARCX9TjsLL7t0msakL4pAUq7HMqOj4R/Ne+2hvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UPU7SL2Y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79ADFC4CEED;
-	Tue, 11 Mar 2025 11:47:00 +0000 (UTC)
+	 MIME-Version:Content-Type; b=R5AKcm7/gr9kPUO36oS55MxlYBt44x+gIxdlGSvwE9c2HZXLyo5kUr/hlGkySaVRaZPln7Qc5RdUsTxwOJUE6502faDOXZLcAmkt89VcM3Bra8oavEa+EHOoIoawG94U70Q0gAD8NgWseXv917VtCirZVFIE1X/OUdRyi6+18Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QAjSqMl+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A590C4CEE9;
+	Tue, 11 Mar 2025 11:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741693627;
-	bh=yRXYXZ9rV06lyaY2T1O8v8n5tymGv/7bHYuzwvkdyUM=;
+	s=k20201202; t=1741693633;
+	bh=vKafTPWUZwnre114AfisoCJLv7ctbKCeoyZ23jWCfP4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=UPU7SL2YxU2IXg0KW0RA96lOpuGU2yP7b9nBu990Wtx7QV1nktI6c9jkCjx8VII/y
-	 q0Feq0mpHXEgcnbsr2Aef8DasQSJuZZoKNNZh+HZFk/14QJgRr3BxDg/MAqh1lc8n7
-	 Ap46k9a6tsPn1458AnKmZhJEOdiUU499KHrtMRTllw/zIM7V6WD0/VxzwOBgpvoMl2
-	 SUSWkhoD6lMZO0DhR44V6ty4MXIg/FcWfrnLHWsO6XQ2Q5WYZPc/WBCctb/7WttMX/
-	 Pd5wIBZaxYWr4OW1RyzEAZcSe2pfb6TFJ7FHtMn7Qi8cEu6mxZKSFSDjpi9LoTxbw/
-	 IymDnNrxvAuqA==
+	b=QAjSqMl+Bocy4nrBZxi3De4ggP6nCKCuyti0A6sD7KTDHBXXaVnnU3oZ+2OyJFvPQ
+	 KD84WVjtZJ6s0+1lcPsO7dcRfu8BqlAQYglNvW4lJ1CIzWACXDF/R4JKx6RQnLs0qo
+	 kwRlgdSL1k75S+naDGcHqgALXK/obCIHLw2xFaNxuNGqCTxBzlHToBFseN+aUzfmSl
+	 rys6MHzRrxN5SSqM/tU47ZWN6dE1ijgaVwGc6qV/2xLnYSGu8tl5Q19PBTA151H1Ua
+	 ZKUi1WCTzt4GJdbO54KfuPLhwTfc2a58dG2YE+WXfMpxRjzLE9GRHSeX/oQ4DJrwSG
+	 GoMQWM2l3atDw==
 From: Vinod Koul <vkoul@kernel.org>
-To: Kishon Vijay Abraham I <kishon@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
- Bart Van Assche <bvanassche@acm.org>, 
- Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
- Trilok Soni <quic_tsoni@quicinc.com>, 
- Melody Olvera <quic_molvera@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Manish Pandey <quic_mapa@quicinc.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250310-sm8750_ufs_master-v2-0-0dfdd6823161@quicinc.com>
-References: <20250310-sm8750_ufs_master-v2-0-0dfdd6823161@quicinc.com>
-Subject: Re: (subset) [PATCH v2 0/6] Add UFS support for SM8750
-Message-Id: <174169362014.507381.5528834930288014855.b4-ty@kernel.org>
-Date: Tue, 11 Mar 2025 12:47:00 +0100
+To: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
+ manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
+ conor+dt@kernel.org, kishon@kernel.org, andersson@kernel.org, 
+ konradybcio@kernel.org, dmitry.baryshkov@linaro.org, 
+ neil.armstrong@linaro.org, abel.vesa@linaro.org, 
+ Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Cc: quic_qianyu@quicinc.com, quic_krichai@quicinc.com, 
+ johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
+In-Reply-To: <20250310063103.3924525-1-quic_ziyuzhan@quicinc.com>
+References: <20250310063103.3924525-1-quic_ziyuzhan@quicinc.com>
+Subject: Re: (subset) [PATCH v4 0/8] pci: qcom: Add QCS8300 PCIe support
+Message-Id: <174169362764.507381.11220476979416149386.b4-ty@kernel.org>
+Date: Tue, 11 Mar 2025 12:47:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,16 +68,28 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.2
 
 
-On Mon, 10 Mar 2025 14:12:28 -0700, Melody Olvera wrote:
-> Add UFS support for SM8750 SoCs.
+On Mon, 10 Mar 2025 14:30:55 +0800, Ziyue Zhang wrote:
+> This series adds document, phy, configs support for PCIe in QCS8300.
+> The series depend on the following devicetree.
 > 
+> PCIe SMMU:
+> https://lore.kernel.org/all/20250206-qcs8300-pcie-smmu-v1-1-8eee0e3585bc@quicinc.com/
+> 
+> Have follwing changes:
+> 	- Document the QMP PCIe PHY on the QCS8300 platform.
+> 	- Add dedicated schema for the PCIe controllers found on QCS8300.
+> 	- Add compatible for qcs8300 platform.
+> 	- Add configurations in devicetree for PCIe0, including registers, clocks, interrupts and phy setting sequence.
+> 	- Add configurations in devicetree for PCIe1, including registers, clocks, interrupts and phy setting sequence.
+> 
+> [...]
 
 Applied, thanks!
 
-[1/6] dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: document the SM8750 QMP UFS PHY
-      commit: 12185bc38f7667b1d895b2165a8a47335a4cf31b
-[2/6] phy: qcom-qmp-ufs: Add PHY Configuration support for sm8750
-      commit: b02cc9a176793b207e959701af1ec26222093b05
+[1/8] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the QCS8300 QMP PCIe PHY Gen4 x2
+      commit: e46e59b77a9e6f322ef1ad08a8874211f389cf47
+[2/8] phy: qcom-qmp-pcie: add dual lane PHY support for QCS8300
+      commit: ebf198f17b5ac967db6256f4083bbcbdcc2a3100
 
 Best regards,
 -- 
