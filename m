@@ -1,219 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-50902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 221A8A5B841
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 06:11:41 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F6CFA5B913
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 07:17:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 53F54170559
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 05:11:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A0B577A2EE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 06:15:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC1351E9B1A;
-	Tue, 11 Mar 2025 05:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2B67190072;
+	Tue, 11 Mar 2025 06:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jg0strsL"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o8xoj3wR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC451CA9C;
-	Tue, 11 Mar 2025 05:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DA820B22;
+	Tue, 11 Mar 2025 06:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741669895; cv=none; b=EBIL/eIznjQb9JG4RLHT96ie3h5GJtLo1EdqQjAg7UEmpXNw0KcR7VnakE82QY7Pm16C95HFOm88PBoSm8QZpLQDpx8AzOTS4BZNYEtYNWVBas3j2mS7BDibxZb5cYvG7oUU/825d/DIKnGuzfXVPN+pN4DsiT3/EneL7kdyCdY=
+	t=1741673813; cv=none; b=kzUJfLT+whQ+8dqWNvbME4fJGEjaa3yTQM89tzXyenJMLekKHPJDy6vClVqtGpxAI6kj3VzUSF4AA32oWOxPXGx3UsDXRarjQqZ3HwfAmuHYnOAJXaK8eX759cf7Ba8HQxPeYny57dL4ig2j2lQQ4C6tCYuz7E040M772+nmYKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741669895; c=relaxed/simple;
-	bh=Kxl8j5wpLxgE2DdLVXqlCpYNXctpkEDglr9Hc6XOEHQ=;
+	s=arc-20240116; t=1741673813; c=relaxed/simple;
+	bh=k/5Tg7LyN/7jDuAPLOSqYrB/029fVEk0sO1e1ygKico=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=t5OMOe4rsdebegVg0/KexrT2mtV4hJzw+AU9+fZkXQ+n4eWJTaq4YVrpPHawPdhE9xAkHrISDenYhJ210kVBs9QXUJItz5iW/816zpQsEpcrOsOvJ/UXICMjcCrx3hIq14mgk+C+vSaR2Ky/NZMNA7qASTBzp1v6DLfpPNO/7pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jg0strsL; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=hq4+mvgiJ5MmYnIfENfSw1CYSx6F/9L7hco0AT8YbTnRbt9AgHjHsToxv3ou3Br9dFqjRYuMsHv/TFY3FO/u2u4Te0DoV/JwWAypv+bm+p3BpQHfrrXyaey7NISQYE5WoxD4M1viP0f1IdsqrXUDGuogad/g6z8qLWs9+/Bx+24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o8xoj3wR; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52B19sJD007470;
-	Tue, 11 Mar 2025 05:11:22 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52AKjhn9006253;
+	Tue, 11 Mar 2025 06:16:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	d7xlSAngvWWJyjikNyPYTPL4YbXF3/24fPIj0EaQQ5g=; b=jg0strsLUkyQxlTk
-	ZjXG4yDiCKBv2wPpEdhFW65tdvxlyEeUI/IVl5CJpW2lHm6UWlyyvQEqdnUfhgy8
-	+ejLo4XmWt/IdFOcGneeHXcu2A9jF8xj9ZzuUN0IeK7SM5KRDw9tISDQCvw3uGxb
-	s3TL3twDy9CwwLEtVwYK0uaHhMTlSWWXCbPTjBRi9fWvUPQoGNOZEngZOrb9IP3i
-	WTvsNYawCwt2fMqvY2b5AIq/obzWujzKyHYLfhnkrDVJP4tOGCdJ2rwB0sLhU/B9
-	HbsPqgZii9asKtNfE43k3I8LYgyhpf6XnjXpxb6ASiWrMA38D/qlm4JjzgF+nJJJ
-	Fp9YhA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ab95ggs1-1
+	JHbVnjh4q9xB2LzjdS6wKi6kBiBzwQ1KsR99fp+DG5Q=; b=o8xoj3wRXkNGjHkd
+	m17NVXxJSmYebZ39uddwWFBFVLv7GC8TDVZ4ywuP/QbdtAM/LhcfsnLwgG6o8nz6
+	q4WtbRL9Jk9sPWwaUD+MdjKYce7WWHI0cult3UNBokRIGpZZXXS9WLH66+bvEHfA
+	yzdj7JWelO/OVKAiAoj0DblS6AzrWWKyRmT9D0db5LopDLxn3iVdAzoRi/Pj7fYm
+	kIo0Y1nNj8RJSLXvuHWWL1c6Vi43k/AGtlhSEWw/+XIv3jB5j0po6hRTE/e0Ud5R
+	AiPdvZmH942Qe0YOvsjCPtZoNcUCXoGmfL/of5UOVK7lvPDO3NtUJUZT7e0cADAt
+	GFjHpA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458f2mf92x-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Mar 2025 05:11:21 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52B5BLuK025078
+	Tue, 11 Mar 2025 06:16:21 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52B6GKfs015925
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Mar 2025 05:11:21 GMT
-Received: from [10.151.36.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 11 Mar 2025 06:16:20 GMT
+Received: from [10.216.23.206] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Mar
- 2025 22:11:16 -0700
-Message-ID: <775e7801-c84b-e8a4-032d-1c3b6cb6bf25@quicinc.com>
-Date: Tue, 11 Mar 2025 10:41:04 +0530
+ 2025 23:16:13 -0700
+Message-ID: <8d54a612-433e-4860-a843-294fe0d6db4e@quicinc.com>
+Date: Tue, 11 Mar 2025 11:46:11 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v6 02/12] dmaengine: add DMA_PREP_LOCK and DMA_PREP_UNLOCK
- flag
-To: Vinod Koul <vkoul@kernel.org>
-CC: <corbet@lwn.net>, <thara.gopinath@gmail.com>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <martin.petersen@oracle.com>, <enghua.yu@intel.com>,
-        <u.kleine-koenig@baylibre.com>, <dmaengine@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_utiwari@quicinc.com>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>
-References: <20250115103004.3350561-1-quic_mdalam@quicinc.com>
- <20250115103004.3350561-3-quic_mdalam@quicinc.com> <Z89NMPF9TGmz9Js/@vaman>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] Support for Adreno 623 GPU
+To: "Rob Herring (Arm)" <robh@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, Simona Vetter <simona@ffwll.ch>,
+        <linux-kernel@vger.kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+        "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>,
+        Jie Zhang <quic_jiezh@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        "Thomas
+ Zimmermann" <tzimmermann@suse.de>,
+        Maxime Ripard <mripard@kernel.org>, <freedreno@lists.freedesktop.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "David
+ Airlie" <airlied@gmail.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20250228-a623-gpu-support-v2-0-aea654ecc1d3@quicinc.com>
+ <174075232770.2756163.15128447349702656600.robh@kernel.org>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 Content-Language: en-US
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <Z89NMPF9TGmz9Js/@vaman>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+In-Reply-To: <174075232770.2756163.15128447349702656600.robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LxT-zZ1a_60qL6PEp8hQtGoVs5zRprSX
-X-Authority-Analysis: v=2.4 cv=fvgmZE4f c=1 sm=1 tr=0 ts=67cfc5f9 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=zkCprTptnbEQjy2woTsA:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: LxT-zZ1a_60qL6PEp8hQtGoVs5zRprSX
+X-Proofpoint-GUID: EFmODcM4L_YS48Fyr14FyKTDBWPkoAE0
+X-Proofpoint-ORIG-GUID: EFmODcM4L_YS48Fyr14FyKTDBWPkoAE0
+X-Authority-Analysis: v=2.4 cv=ab+bnQot c=1 sm=1 tr=0 ts=67cfd535 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=gEfo2CItAAAA:8
+ a=Qi1LLK4JJPgfJq4B5soA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=sptkURWiP4Gy88Gu7hUp:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-11_01,2025-03-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 spamscore=0 mlxlogscore=999
- suspectscore=0 phishscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
- definitions=main-2503110033
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=999 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ mlxscore=0 impostorscore=0 phishscore=0 clxscore=1015 spamscore=0
+ adultscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503110040
 
-
-
-On 3/11/2025 2:06 AM, Vinod Koul wrote:
-> On 15-01-25, 15:59, Md Sadre Alam wrote:
->> Add lock and unlock flag support on command descriptor.
->> Once lock set in requester pipe, then the bam controller
->> will lock all others pipe and process the request only
->> from requester pipe. Unlocking only can be performed from
->> the same pipe.
->>
->> If DMA_PREP_LOCK flag passed in command descriptor then requester
->> of this transaction wanted to lock the BAM controller for this
->> transaction so BAM driver should set LOCK bit for the HW descriptor.
->>
->> If DMA_PREP_UNLOCK flag passed in command descriptor then requester
->> of this transaction wanted to unlock the BAM controller.so BAM driver
->> should set UNLOCK bit for the HW descriptor.
->>
->> BAM IP version 1.4.0 and above only supports this LOCK/UNLOCK
->> feature.
+On 2/28/2025 7:53 PM, Rob Herring (Arm) wrote:
 > 
-> Have you aligned internally b/w team at Qualcomm to have this as single
-> approach for LOCK implementation. I would like to see ack from
-> Mukesh/Bjorn before proceeding ahead with this
-I have already discuss this internally with Mukesh and he has posted his 
-response here [1]
-[1] 
-https://lore.kernel.org/all/1566eafb-7286-4f27-922d-0bbaaab8120b@quicinc.com/
-> 
+> On Fri, 28 Feb 2025 01:37:48 +0530, Akhil P Oommen wrote:
+>> This series adds support for A623 GPU found in QCS8300 chipsets. This
+>> GPU IP is very similar to A621 GPU, except for the UBWC configuration
+>> and the GMU firmware.
 >>
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> Both DT patches are for Bjorn and rest of the patches for Rob Clark to
+>> pick up.
+>>
 >> ---
+>> Changes in v2:
+>> - Fix hwcg config (Konrad)
+>> - Split gpucc reg list patch (Rob)
+>> - Rebase on msm-next tip
+>> - Link to v1: https://lore.kernel.org/r/20250213-a623-gpu-support-v1-0-993c65c39fd2@quicinc.com
 >>
->> Change in [v6]
+>> ---
+>> Jie Zhang (6):
+>>       drm/msm/a6xx: Split out gpucc register block
+>>       drm/msm/a6xx: Fix gpucc register block for A621
+>>       drm/msm/a6xx: Add support for Adreno 623
+>>       dt-bindings: display/msm/gmu: Add Adreno 623 GMU
+>>       arm64: dts: qcom: qcs8300: Add gpu and gmu nodes
+>>       arm64: dts: qcom: qcs8300-ride: Enable Adreno 623 GPU
 >>
->> * Change "BAM" to "DAM"
+>>  .../devicetree/bindings/display/msm/gmu.yaml       |  1 +
+>>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts          |  8 ++
+>>  arch/arm64/boot/dts/qcom/qcs8300.dtsi              | 93 ++++++++++++++++++++++
+>>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c          | 29 +++++++
+>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  8 ++
+>>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        | 13 ++-
+>>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        | 17 ++++
+>>  drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  5 ++
+>>  8 files changed, 171 insertions(+), 3 deletions(-)
+>> ---
+>> base-commit: 89839e69f6154feecd79bd01171375225b0296e9
+>> change-id: 20250213-a623-gpu-support-f6698603fb85
+>> prerequisite-change-id: 20250131-b4-branch-gfx-smmu-b03261963064:v5
+>> prerequisite-patch-id: f8fd1a2020c940e595e58a8bd3c55d00d3d87271
+>> prerequisite-patch-id: 08a0540f75b0f95fd2018b38c9ed5c6f96433b4d
 >>
->> Change in [v5]
+>> Best regards,
+>> --
+>> Akhil P Oommen <quic_akhilpo@quicinc.com>
 >>
->> * Added DMA_PREP_LOCK and DMA_PREP_UNLOCK flag support
 >>
->> Change in [v4]
 >>
->> * This patch was not included in v4
->>
->> Change in [v3]
->>
->> * This patch was not included in v3
->>
->> Change in [v2]
->>
->> * This patch was not included in v2
->>   
->> Change in [v1]
->>
->> * This patch was not included in v1
->>
->>   Documentation/driver-api/dmaengine/provider.rst | 15 +++++++++++++++
->>   include/linux/dmaengine.h                       |  6 ++++++
->>   2 files changed, 21 insertions(+)
->>
->> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
->> index 3085f8b460fa..a032e55d0a4f 100644
->> --- a/Documentation/driver-api/dmaengine/provider.rst
->> +++ b/Documentation/driver-api/dmaengine/provider.rst
->> @@ -628,6 +628,21 @@ DMA_CTRL_REUSE
->>     - This flag is only supported if the channel reports the DMA_LOAD_EOT
->>       capability.
->>   
->> +- DMA_PREP_LOCK
->> +
->> +  - If set, the DMA will lock all other pipes not related to the current
->> +    pipe group, and keep handling the current pipe only.
->> +
->> +  - All pipes not within this group will be locked by this pipe upon lock
->> +    event.
->> +
->> +  - only pipes which are in the same group and relate to the same Environment
->> +    Execution(EE) will not be locked by a certain pipe.
->> +
->> +- DMA_PREP_UNLOCK
->> +
->> +  - If set, DMA will release all locked pipes
->> +
->>   General Design Notes
->>   ====================
->>   
->> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
->> index 346251bf1026..8ebd43a998a7 100644
->> --- a/include/linux/dmaengine.h
->> +++ b/include/linux/dmaengine.h
->> @@ -200,6 +200,10 @@ struct dma_vec {
->>    *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
->>    *  to never be processed and stay in the issued queue forever. The flag is
->>    *  ignored if the previous transaction is not a repeated transaction.
->> + *  @DMA_PREP_LOCK: tell the driver that there is a lock bit set on command
->> + *  descriptor.
->> + *  @DMA_PREP_UNLOCK: tell the driver that there is a un-lock bit set on command
->> + *  descriptor.
->>    */
->>   enum dma_ctrl_flags {
->>   	DMA_PREP_INTERRUPT = (1 << 0),
->> @@ -212,6 +216,8 @@ enum dma_ctrl_flags {
->>   	DMA_PREP_CMD = (1 << 7),
->>   	DMA_PREP_REPEAT = (1 << 8),
->>   	DMA_PREP_LOAD_EOT = (1 << 9),
->> +	DMA_PREP_LOCK = (1 << 10),
->> +	DMA_PREP_UNLOCK = (1 << 11),
->>   };
->>   
->>   /**
->> -- 
->> 2.34.1
 > 
+> 
+> My bot found new DTB warnings on the .dts files added or changed in this
+> series.
+> 
+> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+> are fixed by another series. Ultimately, it is up to the platform
+> maintainer whether these warnings are acceptable or not. No need to reply
+> unless the platform maintainer has comments.
+> 
+> If you already ran DT checks and didn't see these error(s), then
+> make sure dt-schema is up to date:
+> 
+>   pip3 install dtschema --upgrade
+> 
+> 
+> New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250228-a623-gpu-support-v2-0-aea654ecc1d3@quicinc.com:
+> 
+> arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:0: 'gcc_gpu_memnoc_gfx_clk' was expected
+> 	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+> arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:1: 'gcc_gpu_snoc_dvm_gfx_clk' was expected
+> 	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+> arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:2: 'gpu_cc_ahb_clk' was expected
+> 	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+> arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:3: 'gpu_cc_hlos1_vote_gpu_smmu_clk' was expected
+> 	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+> arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:4: 'gpu_cc_cx_gmu_clk' was expected
+> 	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+> arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: iommu@3da0000: clock-names:5: 'gpu_cc_hub_cx_int_clk' was expected
+> 	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+> 
+> 
+> 
+> 
+> 
+
+These warnings are for the smmu dt change which I marked as a
+dependency. Hopefully, the v6 revision from Pratyush will fix this.
+
+https://lore.kernel.org/linux-arm-kernel/20250310-b4-branch-gfx-smmu-v6-1-15c60b8abd99@quicinc.com/T/
+
+-Akhil.
 
