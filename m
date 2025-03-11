@@ -1,146 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-50913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89938A5BAC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:24:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4004CA5BAD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:28:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2763F3A578C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 08:24:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBA9018923F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 08:28:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3561C22422E;
-	Tue, 11 Mar 2025 08:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12E372248AC;
+	Tue, 11 Mar 2025 08:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="sRPUNWMS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fl9CboID"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524CC1C6F55
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 08:24:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCED22259D;
+	Tue, 11 Mar 2025 08:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741681464; cv=none; b=PAC8YRKRG1zGfQXKYAzQSWPa2w5ibRb2mRWSJzy2iRn/eCYJha5OJlKQniRLN258Xjguqy4gRB1dz2oJ8uoIIDpz54fC80TSg7+j2OT0wpWtFp+2TF67DQgBrUz066aQ/d9Zqnn7AwITfCeuQSb85cpC5ByGnw52cQcIgOMNOp4=
+	t=1741681709; cv=none; b=hlvu+UK2yi+SddJh0J3hRm/Qa6pmNEcD34IsBrtGrOMsgDmODOCrnqI4xjMFQzNkvjJ3O+aY2RcgJtLInrpDJFGYwSnjYAQCIiohBddOyelE0aJj/CaaIVYhICYWCxJ3tb9a+37iLuXs4CHPyuqIuprUvN82DoYqKuJwim6iNnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741681464; c=relaxed/simple;
-	bh=xu3zP1HoofD6juWhjBldyocKjaXNqT0I+Ivbyr36UBk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=PTjWZ1UebH6d7ccD9ZbvI3UYhVs327+PDMEhxVtVXrzZ0Uibe1WJSYZkbHZasFCtBVphxr+zlNduT4SVSYscKCh//kwW04aTk5J0wHUpiGBUHcyXuNQVJxcPsXbq94DqkFcO862tLNJqncS5X33jtTre3XVUGPUMOWGDUp9CJtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=sRPUNWMS; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-39127512371so2859153f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 01:24:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1741681460; x=1742286260; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MkuwlZJMUyuJz7nY/CVS9mePyWOIvMtEr4YIIpcR7vI=;
-        b=sRPUNWMSVCVA33WWr3T+aN6HEboHPmysl8eDIiLjY71lRrzl9PhVLh6+yEtIYeejjR
-         nsSsuNDNFAiic1lg12XPDRxEzsjI79f0/Qjg8KdzFdTkWz1AdJ0Qs9pJbRQIIt37zYGP
-         +ns/gnuwHufskOB+rINsa/DtIijImFioQubkppvCV7FvWwKdAE71YwzlJr8d9PRs3yMw
-         I3IMrPrw/68wkDm1vNfBnlEAzsoizbePairK6aB8wxZcXXcI2D+UnZ9wQ4ks1k2qeWLP
-         XOkOWreaBfvSu6ZH1BhzGQ/B45LXbhh7BqGDse8Oyc93qRHIAKFA2IukarzhsRSMip/9
-         JnGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741681460; x=1742286260;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MkuwlZJMUyuJz7nY/CVS9mePyWOIvMtEr4YIIpcR7vI=;
-        b=cAdgL83iNSQBI0nZ3XQRqcPfMf1GAQSwoQmXGop5k8Xh+pEc0qF9KMiEVMuBGRjnk1
-         4zuqwxHk41ek+OvJTRw27woSGuRiox/kbGKPdHBgvxhTRlUQ89jVEK9+tUEWYuE8FYvA
-         0gv9HYt/9ELCdDmVDT4Uwy7DXJjp1ud72AyQWSDk2KRBrZg8PM0MPC2YRlDNXggWDfMd
-         U+1Gv0r6FeNHLMFjW4oBbDiMl4eZ7M1dy1FMGeddBLcwU/tJnqfirMwuMpMpx4bRo4sC
-         JZHTZO0aAQpfBCB8e0R/5mmSiteA1Vafu+AqW8o+zdR12qtWnWzy6+MR4yKpFlTmQEWp
-         jZuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXY6dYYu+jWiby60GNKOrS3DZyYvPmPn+0Fpb2Tn3SQoRUQEGd2iAXGk1+QqMAdSzmZd9VrU9fU/kf2HBeI@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5Q2VNHgovLdaKN8R4tNXq8CHgkxfCp9+MeRPgvPlqx5g/BLJq
-	HOW7kMbKeKv6mPyv2S7LdOIqXRtmNqDAZg1ThP8VYIQJDJLQOs9+oXI7LBI4ZOHDUPO/Z8v9QTC
-	s
-X-Gm-Gg: ASbGncsJt2+TgAEGIRn/X/SmAFyGhqcQsybvCLBa6et+vxypp28yd4OvDd2uHpw8dqq
-	fu72I13Up6GaU7x5/4VhMjMc0Vban7IiXQwJxpduLubTU7hsoFutibKCvEfx/ifrZHcGj85hB9H
-	nydS87FtwmlwQ+Rqo4QddHujgJ4Q/kJ7qpNptNoVbYvVdwVgvwv2GYlMDX3pfNJGboIglIOOEE4
-	vpNnUbQe49ukkDZQ+jO9hpD5abEu8hxWIjBTkVATQQGNBnt3fc08ljVCvyrnw0X/R3eYrCdMLZQ
-	kmQLTvCmIpeJTzza415uGhRCgsYNI/svfpaGizQkyIMlgWKMbFvETAVNUbjYUwq++nyLg0Zp1sB
-	Nm1ncns51Aomqr3j+Qg==
-X-Google-Smtp-Source: AGHT+IGcMWouoW5czhBbn4yWMxCe7rFrkdK1wII/1naqJaluMq6AQhQYDYrv/8Bujg++Ac3Li9uWDQ==
-X-Received: by 2002:a05:6000:2a3:b0:390:efe7:20fa with SMTP id ffacd0b85a97d-3926c69b312mr3431264f8f.47.1741681460573;
-        Tue, 11 Mar 2025 01:24:20 -0700 (PDT)
-Received: from [100.64.0.4] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ceeb5995esm90826545e9.16.2025.03.11.01.24.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Mar 2025 01:24:20 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Tue, 11 Mar 2025 09:23:39 +0100
-Subject: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Add touchscreen
- node
+	s=arc-20240116; t=1741681709; c=relaxed/simple;
+	bh=7ZwpmjJZnpXO5LGEbzV1r/EFTliKGVJ1yxIMUn7Wtik=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RVIdmXfPUX9w1oObu6gXmhUaapz4ujaBBeEVr2WhBz1e3w0lNW1JOsJQj5lVJoRkDBe2mAgnnQ1Hh/1YaNXUJJ0Xfmq7/r6fEQjlIgPT4c3/EVOnF8TdO6Z3nNH4ZRaDfBfByeN2rvl5lzSXBd1EvyrmZ/UBPbgflaTXKkVVipQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fl9CboID; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43464C4CEEB;
+	Tue, 11 Mar 2025 08:28:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741681708;
+	bh=7ZwpmjJZnpXO5LGEbzV1r/EFTliKGVJ1yxIMUn7Wtik=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fl9CboIDc/cKyNQHJ2awS1S6wbFQGeZmp6w12zghNyj+TjyihMuXMKhWJHk7YhxUe
+	 EGYTz/gteoipus7eSqlmrhaSQxW+3SZH3MgnFjn3FIZP3oJCP6jCEE/P7gNlyLhytz
+	 IlPJWtWuCCoeJLJeoWOTiD2httqwg3jchVIGI01ZWAFWo5XgG3Ynv3BdFLA8sXkMGz
+	 ATZCqG5Ok7Sg7Q+zGtqB5ZgEIbPkWWDvAvCTYK3tbxj+8i35TDZ/CqiyeSej4o2jr+
+	 SEDvjM/RgkmQgOUzX920ZTfYnLBcaTCBpj995q7vezHkRjr4NHIL1djyYyd3GqQWmE
+	 fTqXZzslbriAw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1truyM-000000004Mn-2Dgn;
+	Tue, 11 Mar 2025 09:28:23 +0100
+Date: Tue, 11 Mar 2025 09:28:22 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	laurentiu.tudor1@dell.com, abel.vesa@linaro.org
+Subject: Re: [PATCH v1 2/2] drm/msm/dp: Introduce link training per-segment
+ for LTTPRs
+Message-ID: <Z8_0JuNTDpgani-d@hovoldconsulting.com>
+References: <20250310211039.29843-1-alex.vinarskis@gmail.com>
+ <20250310211039.29843-3-alex.vinarskis@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250311-fp5-touchscreen-v1-1-4d80ad3e4dfc@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAAvzz2cC/x3MQQqAIBBA0avErBNMK6irRAsbx5qNilYE4d2Tl
- m/x/wuZElOGuXkh0c2Zg6/o2gbwMH4nwbYalFSDVFILFwdxhguPjInIC8RxGmWne2s2qFVM5Pj
- 5j8taygcnJb1iYQAAAA==
-X-Change-ID: 20250203-fp5-touchscreen-cc6960134dab
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jens Reidel <adrian@mainlining.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250310211039.29843-3-alex.vinarskis@gmail.com>
 
-Add a node for the GT9897 touchscreen found on this smartphone connected
-via SPI.
+Hi Aleksandrs,
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-The series adding support for this chip (incl. dt-bindings) has been
-applied on 2025-03-10 to the input tree:
-https://web.git.kernel.org/pub/scm/linux/kernel/git/dtor/input.git/log/?h=next
----
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+Just a drive-by comment.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 356cee8aeba90e21c11f46df924ed180bfce3160..35ce9dfca6f092a88d8873673ff57b591e210b02 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -1069,7 +1069,18 @@ &sdhc_2 {
- &spi13 {
- 	status = "okay";
- 
--	/* Goodix touchscreen @ 0 */
-+	touchscreen@0 {
-+		compatible = "goodix,gt9897";
-+		reg = <0>;
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <81 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 105 GPIO_ACTIVE_LOW>;
-+		avdd-supply = <&vreg_l3c>;
-+		vddio-supply = <&vreg_l2c>;
-+		spi-max-frequency = <1000000>;
-+		touchscreen-size-x = <1224>;
-+		touchscreen-size-y = <2700>;
-+	};
- };
- 
- &tlmm {
+On Mon, Mar 10, 2025 at 10:05:52PM +0100, Aleksandrs Vinarskis wrote:
 
----
-base-commit: 93498f5ea4d0415cb5a95680224335651580cf08
-change-id: 20250203-fp5-touchscreen-cc6960134dab
+> @@ -1084,10 +1091,13 @@ static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
+>  }
+>  
+>  static bool msm_dp_ctrl_train_pattern_set(struct msm_dp_ctrl_private *ctrl,
+> -		u8 pattern)
+> +		u8 pattern, enum drm_dp_phy dp_phy)
+>  {
+>  	u8 buf;
+>  	int ret = 0;
+> +	int reg = dp_phy == DP_PHY_DPRX ?
+> +			    DP_TRAINING_PATTERN_SET :
+> +			    DP_TRAINING_PATTERN_SET_PHY_REPEATER(dp_phy);
 
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
+This is hardly readable; avoid using the ternary operator and split
+declaration from non-trivial initialisation.
 
+Johan
 
