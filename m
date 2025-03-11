@@ -1,160 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-51032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51A3EA5CD1B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:03:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 952ADA5CD2D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:06:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0C78D189EF26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:03:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5EDB8189CE70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:06:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA382262D23;
-	Tue, 11 Mar 2025 18:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6663326388F;
+	Tue, 11 Mar 2025 18:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TH2cX9i1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBp//bpj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1831D2627E8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 18:03:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F314263888;
+	Tue, 11 Mar 2025 18:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741716185; cv=none; b=EjqYaKDkKLdO8EuOaDWvJijCCmhjri5zZ6uqtnAIpDb142V1OJoWiQmB1C4XVuxjE5JDKMRNKOC3MrjIDgQ6ju59lJ7B24Y5iT8HQchFU13WRY+JPauQFxCzGKiB0nbxrLoAOFLZ5cm+jDf28xqiXWnH3xtjN+bv3kiqQqzUKJ0=
+	t=1741716360; cv=none; b=EvV9A3yU5XGSaljbjvt1xRIAYfg3A5kgZaYhgOcumk6zw162plLkd+n6INRTMIGhq+3djK2VtuzqTj/td6ofvBRILCUZ7DUDI42PCCAL92VPZtHHBG99wNBc9HFqtnA2AIgk+Zi+RPszuYjK8VuLpF+JKa4vjg1pdNw8bDZUL8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741716185; c=relaxed/simple;
-	bh=TSHmhqZwyLnRao31ZE/kuynrWIfbFM/u9czNvOIv9MM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=H94+9zhI5J5TCSMFuRjPCsTO9OO4su8i7O5Sw+BsYvezM9AsrUFo7uL/QTvSJQyyo3edeEJxHc/m0ApJK/38L1w6ciOFt3nEGZBR7wDgo6KUDp01xDilNyWJSQb9NsxGpdgEbYg+M96b64rQ4rugbmNprFdA7hcHE0TPEPPhnSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TH2cX9i1; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ab78e6edb99so878060666b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 11:03:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741716181; x=1742320981; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ccls6QlRwKxRURW2wbvi5fD6dk24Crfv3eaY7igy5w=;
-        b=TH2cX9i1X7qPGcCjitS15NQto7EzckVYHXsKtXY9mCSpeiTb0GzbM2doZGnOWkkJv9
-         QH5Cwvt3dKeFMQ4uhafRXi3Y2qFsxEoj4qnEa9VYD3lTTKUmq51EwIE5I3c/iuN2cnqR
-         V5LwrzBmW67kwkzCCyG9nUZZpYigbN9WFQI8bLGeQsjxAnBiZbWncJs2uGuZFt/h59nK
-         fphE14ihHswjXZhKhvwnk4qjCDI9N67pkB5YKP0jvn5I9OgkeFheB77dxddIk2j0fqI5
-         vaEJr+7Tglhl6TrWy2ga/3mvNxPDma86AmQ7B+RUJXebqltaXgTXsmh92TqFu4jgl1gx
-         BIkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741716181; x=1742320981;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0ccls6QlRwKxRURW2wbvi5fD6dk24Crfv3eaY7igy5w=;
-        b=h8T3oVZWjutocPa32v1kSh2u5ZEUkBO1xrChoD3+UlBiebj8NThDxYEuvv8rdzptaR
-         j9JcuZw1jxbzKpHLsszmRg45wtqEgmbcm4yM2d36L2I6XHvvFD92JdN00wZPDve+UTnQ
-         3bmW3kGfENGz7vD3WxgRFOAzeiCIgh9aLKlw697wnYCr2updq0KIvpjvXBO5uP1G14Bq
-         O39HmUsmftlVl7ZRga4B1WIs75t8nbWiFbEbI+jsXe63kBLY1B3PJkWKMK/LmZs1g/A5
-         H2kK2z3dM5W7eJzYuIbL9U4Au0k9hIRzmbSUkIP3S8h5On4+PRzVyI0bjd7Tv5aNO15O
-         s2Tg==
-X-Forwarded-Encrypted: i=1; AJvYcCXrvCXEf5Mo+l2k8eUnhKEyUG2kbQlcs7jDmZV1yMJRK2aSUw6qwaWgC7ED66aQEjMQwXfF9WwZsYnXD1JF@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQ29lnAKNoFuD5W3a0CMqfEjVjAHnDRiCT75IORTwy0SsdkyIa
-	J5KRrtUZsO34VfYVHXN+wRiTSqm/WQf+SjzLNfS+B070KS+CUaUUOxd47iROA48=
-X-Gm-Gg: ASbGncucizFzGMe0jDHSNZB/tvpsBY3DnTiD3KlAfTdOmAnqb0pfK+y+JjV2r2xbD0S
-	gwKEGZ4bFrYuYhhfq9CrLiIEP4melX+vnnSo9lqXY3Cb8fMb7Ef7xvy/BZFMFuV3KXgw8GHLxtF
-	2hTHRlngYQRZLnq1Cs6Uh1BqHZHDIFQfz3th6AWbwb0XdX93QiawyEhvTPZbrrtTcejHAHN1WNR
-	XxmLa+RizvfPsgE2Ozl08kjtrz0j+SgYVsSnszo5M+UrZRUlHeYRplfyz7pNWEHc/YM7BECWWKJ
-	5zUCMcXXiAlKw6exFPvUBD9boUjqq2QZ4GMQqWIFBBWPu0/VTev71Wo=
-X-Google-Smtp-Source: AGHT+IGnY0H7YzlXD8CZSfCox70QPKmTLZoV4lqMqMMxiyALS3HVvR/aMstzphLmsjj59KVicmXt3g==
-X-Received: by 2002:a17:907:1c24:b0:ac1:e1e1:1f30 with SMTP id a640c23a62f3a-ac252fa0c31mr2141888066b.38.1741716181234;
-        Tue, 11 Mar 2025 11:03:01 -0700 (PDT)
-Received: from localhost ([185.194.66.242])
-        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-ac2394894cbsm957805166b.70.2025.03.11.11.03.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Mar 2025 11:03:00 -0700 (PDT)
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Tue, 11 Mar 2025 19:02:56 +0100
-Subject: [PATCH] arm64: defconfig: Enable Qualcomm interconnects as
- built-in
+	s=arc-20240116; t=1741716360; c=relaxed/simple;
+	bh=2l2XhsUVNSUFOt0o115rgFxjPYd6cJC3mPPoy2QKMPM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rd3RMREoIDoc2l6x0i7WfviMqMiu2dSZDEELEU2IQUwkFlJk8Jgb0/vyEI3Txk2siuVrk4TRlHTDn45kxfzsy3VIk+5SDlLZXL1x0DYer0ZCaMh50fQG7mmDicRz4Be0+sFqLWCcpnSMPLBgl4GV4ykh6BVOwpK2jWp91DRfXMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tBp//bpj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7045AC4CEE9;
+	Tue, 11 Mar 2025 18:05:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741716359;
+	bh=2l2XhsUVNSUFOt0o115rgFxjPYd6cJC3mPPoy2QKMPM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tBp//bpjCPjkHJ3ILoEGKodCweFXovgnjhV4rgtptw6/m7Zzj+p53kp6VirBwPjci
+	 ViqhpM3WG8v8ETukGo+d+tkJ5+UZrx/2WI4/3npcj7S5hHyFjIpzNk5so1NwKI2SDA
+	 56aimhHxBxSfY5fPuF9w8Snvo0ygOn1CHugTZN37xPdvF0uWcL8uBhIu1U1FxIvheX
+	 KicV+Z5wY8TTNwCVT+LjSsl22yyuAooJZdrvCII5MOtMqC/SoUF0Fo/Y6YNvIWar96
+	 eTO5pXYPd84De8yIqwxuvOB7ohjcXX0sIUdmmxRgQEVGRobJGFII6Cc232+TCNhfyn
+	 aMc2Gsa+5e/KQ==
+Date: Tue, 11 Mar 2025 18:05:54 +0000
+From: Will Deacon <will@kernel.org>
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 1/5] iommu/arm-smmu: Save additional information on
+ context fault
+Message-ID: <20250311180553.GB5216@willie-the-truck>
+References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
+ <20250304-msm-gpu-fault-fixes-next-v4-1-be14be37f4c3@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAM960GcC/x2NQQrCMBAAv1L27EI3UlG/Ih6azaYu6KYmUQulf
- 2/wNnOZWaFIVilw7VbI8tWiyZrQoQN+jDYJamgOrndDfyTCn86YvB9zYHxzemGQyMmiTqhWJTc
- 24VrQf/RZ1dAN58h8OZEngpads0Rd/svbfdt2VwwgJIIAAAA=
-X-Change-ID: 20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-258fcc961b11
-To: Catalin Marinas <catalin.marinas@arm.com>, 
- Will Deacon <will@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Christopher Obbard <christopher.obbard@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1644;
- i=christopher.obbard@linaro.org; h=from:subject:message-id;
- bh=TSHmhqZwyLnRao31ZE/kuynrWIfbFM/u9czNvOIv9MM=;
- b=owEBbQKS/ZANAwAKAWNNxPBocEb4AcsmYgBn0HrQzl89Jaz1kNZJdzDGOQWcFYbCljywikz7i
- iJbfuU8tICJAjMEAAEKAB0WIQTxi9yLbCX5CqI9UXRjTcTwaHBG+AUCZ9B60AAKCRBjTcTwaHBG
- +DL6D/9IB7zq4cq3vY1Uw0waKJ/M8zCahI2LFsClUcFcgNnupikDLQ+SmcrOS6iYWqy/YcZQoD6
- VT3RQcN9OCgdeYSkAuhR6fXeN8GGJgiZXkSHWC/pn6M4exxHBGjRgn2i0cQqaMin+hW9G60fI5K
- L9aL0T/EP/MTgglpTKzhy+95WWh2JGR9hTXLfcSgen6fX/qiMIMsEKwtW24moUHMD9D4wb73+mY
- 4scWoq5pWJ+TuVdpaurhAxFfRwgOObeiDEsRR+pqqU6iom1pTmV5cA9CpNaRjhmUNGnTYB0uqV1
- iBhsy/R2yd8AsX+Jrz52OHGpqmxa/+jJPFc20S7Tpx/aVmvvzXo3JkF4Zhfc7a19JEW8smZjJ5n
- 3Scp8cnscwYBiVIYopZZ6HMjFsA0V5KXoOacBiqnXnw1CDHs48i2ZUoaF5R6OAkR2ueArZm8R8r
- kgGKM3zKTVdqsFWN7FAmx9x4aWY0omSWN+IY2TWvUOtA8NMJnFuKmFwu79SdpdKj84yxxZOKGKs
- 49HqauXRI+g6UCm0G60qdDwWUqHqX65zjMMOS3vMwVUjVd3dbDS2uEnQ60Zuw6UJyQr0gZ2wTCK
- Cl/4MRMdb0P3wqr0E6eL7aZGJJixWG+nDMMk9R0t89eRki5HOd73rNgzb56w97aUAhQoU0HljoI
- CT5uZJChxYybamg==
-X-Developer-Key: i=christopher.obbard@linaro.org; a=openpgp;
- fpr=F18BDC8B6C25F90AA23D5174634DC4F0687046F8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250304-msm-gpu-fault-fixes-next-v4-1-be14be37f4c3@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Currently some Qualcomm interconnect drivers are enabled
-as modules which isn't overly useful since the interconnects
-are required to be loaded during early boot.
+On Tue, Mar 04, 2025 at 11:56:47AM -0500, Connor Abbott wrote:
+> This will be used by drm/msm for GPU page faults, replacing the manual
+> register reading it does.
+> 
+> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c |  4 ++--
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c            | 27 +++++++++++++-----------
+>  drivers/iommu/arm/arm-smmu/arm-smmu.h            |  5 ++++-
+>  3 files changed, 21 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> index 548783f3f8e89fd978367afa65c473002f66e2e7..ae4fdbbce6ba80440f539557a39866a932360d4e 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> @@ -400,7 +400,7 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *dev)
+>  
+>  	if (list_empty(&tbu_list)) {
+>  		ret = report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
+> -					 cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+> +					 cfi.fsynr0 & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+>  
+>  		if (ret == -ENOSYS)
+>  			arm_smmu_print_context_fault_info(smmu, idx, &cfi);
+> @@ -412,7 +412,7 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *dev)
+>  	phys_soft = ops->iova_to_phys(ops, cfi.iova);
+>  
+>  	tmp = report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
+> -				 cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+> +				 cfi.fsynr0 & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+>  	if (!tmp || tmp == -EBUSY) {
+>  		ret = IRQ_HANDLED;
+>  		resume = ARM_SMMU_RESUME_TERMINATE;
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index ade4684c14c9b2724a71e2457288dbfaf7562c83..a9213e0f1579d1e3be0bfba75eea1d5de23117de 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -409,9 +409,12 @@ void arm_smmu_read_context_fault_info(struct arm_smmu_device *smmu, int idx,
+>  				      struct arm_smmu_context_fault_info *cfi)
+>  {
+>  	cfi->iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
+> +	cfi->ttbr0 = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_TTBR0);
+>  	cfi->fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
+> -	cfi->fsynr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
+> +	cfi->fsynr0 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
+> +	cfi->fsynr1 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR1);
 
-Loading the interconnects late (e.g. in initrd or as module)
-can cause boot issues, such as slowdown or even not booting
-at all (since the interconnect would be required for storage
-devices).
+We already have an implementation hook (->get_fault_info()) which the
+qcom SMMU driver can override with qcom_adreno_smmu_get_fault_info().
+That thing dumps these registers already so if we're moving that into
+the core SMMU driver, let's get rid of the hook and move everybody over
+rather than having it done in both places.
 
-Be consistent and enable all of the Qualcomm interconnect
-drivers as built-in to the kernel image.
+>  	cfi->cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
+> +	cfi->contextidr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_CONTEXTIDR);
 
-Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
----
- arch/arm64/configs/defconfig | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+I think the CONTEXTIDR register is stage-1 only, so we shouldn't dump
+it for stage-2 domains.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 219ef05ee5a757c43a37ec9f8571ce9976354830..6582baee2ab02ecb2ff442c6e73aa6a23fee8d7f 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1656,11 +1656,11 @@ CONFIG_INTERCONNECT_IMX8MN=m
- CONFIG_INTERCONNECT_IMX8MQ=m
- CONFIG_INTERCONNECT_IMX8MP=y
- CONFIG_INTERCONNECT_QCOM=y
--CONFIG_INTERCONNECT_QCOM_MSM8916=m
-+CONFIG_INTERCONNECT_QCOM_MSM8916=y
- CONFIG_INTERCONNECT_QCOM_MSM8996=y
--CONFIG_INTERCONNECT_QCOM_OSM_L3=m
-+CONFIG_INTERCONNECT_QCOM_OSM_L3=y
- CONFIG_INTERCONNECT_QCOM_QCM2290=y
--CONFIG_INTERCONNECT_QCOM_QCS404=m
-+CONFIG_INTERCONNECT_QCOM_QCS404=y
- CONFIG_INTERCONNECT_QCOM_QCS615=y
- CONFIG_INTERCONNECT_QCOM_QCS8300=y
- CONFIG_INTERCONNECT_QCOM_QDU1000=y
-
----
-base-commit: b098bcd8278b89cb3eb73fdb6e06dc49af75ad37
-change-id: 20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-258fcc961b11
-
-Best regards,
--- 
-Christopher Obbard <christopher.obbard@linaro.org>
-
+Will
 
