@@ -1,191 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-51073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A94FDA5D29F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 23:37:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B09CA5D32B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 00:35:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 068FE189E150
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 22:37:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF899189CB74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 23:35:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A614264A70;
-	Tue, 11 Mar 2025 22:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 951B9231A42;
+	Tue, 11 Mar 2025 23:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OaWFK52a"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mhHxR1iq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F0E265CA6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 22:36:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6EB1F4CB7;
+	Tue, 11 Mar 2025 23:35:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741732612; cv=none; b=Gvrx0Uz+YQ6+maoj6HEb+GVa4Zn4aACwpxkpzPwpdxh0JNFUYTaU5M1X+sTRIOMLUTeDt3Gsjz1YpinMYhlxsR0NLPjdKeye1X56b6PD7KzhUValEM3KhzDYndPNMIoY1y+uZhyuNBCnStWqXpmQkPtiTdaBv9whEjTtEK2RJAo=
+	t=1741736118; cv=none; b=CcdzuEKKk+Ob5skMfItc3l+rElAhD15KasUrpO0jMzKzglL3QJILH2UzKj/CHU2oW4TotrzXAzIod9si1MBy35qEQ5VbU2IQl5WOn6JzCAbLTSr7hgG+olgAKZEHbauVBL8ZcnleOskXnKdJwLfb9H4PjDX3O3ucyTrAg0M8oh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741732612; c=relaxed/simple;
-	bh=stGKqEUr4q8JKAOwejt7cWzSSykKFgW9stzYakf8cZo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QeOcmURZaTpylJqTRqeP48qpo8rrVOfN7r3NVkA7buqF2ux4xzF482wD0iPyRrrUxCj48tdowDwXOcwmYYfQZGGHzB/5+y1gTyPGQ2ujmyuocHhEneGcNqAFrx4rD9kEiAaCaBrZRGqS0Sp01w6f3gzMEwy36TM9xz2lBv2do2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OaWFK52a; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2ff6ce72844so1507240a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 15:36:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741732610; x=1742337410; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=75JlrEnI8tdqw5rkhyab++osfwTd4EpAvf26QJsRa+Q=;
-        b=OaWFK52a4drryiqTURgONdVihfcM5BDFSkdSYoEa8gpdLol/VCBtucat3mvk53w1HT
-         YJxNfzN3+3K4BGEcVY/iK8/gXOOcOUPfAROVL2+1e1+eybdqd5M3jxeboroDYWQcMrLh
-         alDLCzFZ1XHYLJSlXh2T5vCG9kvDYaPWs04Z3nGAmVF4exr+9iUiTEp9IhPP9qs4elyn
-         rWpwVHEtZdXh6vHI0PKYdDFQVHXzf2UYSeh65GsV8lwsIPdf4ZmmHa9hI0b9zOeIcg34
-         Kvyxi5FRiQ8dmv5MEv4BEUCVdP3MkuNfKI6Qe3wt/8MpoERvxUI9fzdkhdHAmGbH3H08
-         6T/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741732610; x=1742337410;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=75JlrEnI8tdqw5rkhyab++osfwTd4EpAvf26QJsRa+Q=;
-        b=HOQVPhtiKwaSPdowavQq7ajAgwzoUyEImAbjlsNLn3gDQSFgKrJVBQ6VQsZEIym8Fx
-         bvQLyyDiLn4FppTcMOTubkSBYOGj2F84xL6beb2TFhKAHPcU/JFtK2AVMc6U+t9g2YKd
-         L2lUsZRxInISahFvqO9JDSktZbd5+GaG6L9BD844UCgTGW0GFFyql4R7jrR5xuYRAaF4
-         rgAM9th/goyS8FDkDnq3n1BcLLczBkzSfl+Gtoc1BJR0Ky09kx4ycipE0rqpN1HCSe8P
-         5D/eNJjn65HwUN9iuaaCy9P3VIAPo+7MC/PcEZQ4tD45Z1EMCmfvPacrqRa0kujSBxwi
-         Fqkg==
-X-Forwarded-Encrypted: i=1; AJvYcCWAwar107+JviVzCGUUTNDXIjZLpydtd+OOV6pnxoWniPXWzV/jOxk/CJNAUJBbsfx1KRuATuw79DdNEXLq@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcMotByYkPixIVR0+cpmibVlkjB4BGFTM07VS+zVc73xHEGQF5
-	e2e7y4twTamoaPhp8E/0TZpSxJ+tpmbrQaDr73rfVEDnH9iKQe5NvmZSL/wtwzTsP8icvGq6MLw
-	uvyvSCLzcKD62Sp9XZhhyJaZNzTI=
-X-Gm-Gg: ASbGncuESvnhLvX7XQDSSb5nab5/OOL5SCvoiWLVkEm7CsKzk0g7mlgsTVTJZJI7JwZ
-	HT/eJwfg+8tYCM6Jhzp96hCRBgNPYaJcnnUeQY37ZH6flC6BPKQsqMk/HCRnnrrGnqqT0fOvx3J
-	tIws1WG3W9JIUqRki4sVDUTOZPZQ==
-X-Google-Smtp-Source: AGHT+IE2yP0Oqp5icApOYEeT5S9ryMzCphdSruIQb+pyZ1tL48mZ6lOK0AKajCd16hcESy+fMFtcVCe/Z6YypMdt4rI=
-X-Received: by 2002:a17:90b:4a81:b0:2ee:f59a:94d3 with SMTP id
- 98e67ed59e1d1-300a2891c23mr8155406a91.0.1741732609220; Tue, 11 Mar 2025
- 15:36:49 -0700 (PDT)
+	s=arc-20240116; t=1741736118; c=relaxed/simple;
+	bh=elqNsF85TWhSgJAwnZme8MoszZ89P0pZ9HDqIv+k/+4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vm6malm8hgPWZfukwmKKwqsAeyUr+zCwpnF4WiuqAmlxc+R+xHSuxLNXJHK4di4EsJOM5dSlS4df+59Ac/WtUBwFJHWCwXJMHpBueAtJiuq2qZNJwvphWOVQFYYzC83FnQD4dLt53kJt7NddZ5a/wsy4zaM2n4qarkv7Kt7ncUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mhHxR1iq; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1741736116; x=1773272116;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=elqNsF85TWhSgJAwnZme8MoszZ89P0pZ9HDqIv+k/+4=;
+  b=mhHxR1iqfiLk12Dol0zGoGQEnrgu9QP2GSd7z1+s2GG/qQYkdAw+C9Np
+   58CfDlVCDOYLnCRk4WeADTqjgHqaPlHwPKkUYlCjP0MBJYkdHaxwpkX6F
+   DaACXcEMROpKxLbOyAeNEE2gX3gyL5weQWr++5s6+gubCMw0KiZrU2WYC
+   /BvLFCfX1EIujrT+/xTNdeYM666FahgrqilJRZsegZykwZqjBbM2J3Aj1
+   ghEcTa50CjrigisO9ngpibNDr7Bsq45yF4APiKUGPLIjC9C1axW9n8mSo
+   /qCytKIsoS8jK+ZRaZpQS5Wigw30Hhn3/FbzDEo5ROpGdHHr4XKr/nmEa
+   g==;
+X-CSE-ConnectionGUID: slNoh0tISPS8LM6Y/GtICQ==
+X-CSE-MsgGUID: cDsWz8FuSQiMBr73Lbz4wQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11370"; a="54169624"
+X-IronPort-AV: E=Sophos;i="6.14,240,1736841600"; 
+   d="scan'208";a="54169624"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Mar 2025 16:35:15 -0700
+X-CSE-ConnectionGUID: CF1404RcSfuQSV8CuiITiw==
+X-CSE-MsgGUID: Jur65i+1S0GENA6ydQlL3A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,240,1736841600"; 
+   d="scan'208";a="125361340"
+Received: from lkp-server02.sh.intel.com (HELO a4747d147074) ([10.239.97.151])
+  by orviesa003.jf.intel.com with ESMTP; 11 Mar 2025 16:35:10 -0700
+Received: from kbuild by a4747d147074 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1ts97r-0007wm-1B;
+	Tue, 11 Mar 2025 23:35:07 +0000
+Date: Wed, 12 Mar 2025 07:35:01 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wens@csie.org>, Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	linux-amlogic@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-sunxi@lists.linux.dev,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>,
+	Samuel Holland <samuel@sholland.org>, Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH net-next 3/9] net: stmmac: remove of_get_phy_mode()
+Message-ID: <202503120741.lpX5066n-lkp@intel.com>
+References: <E1trbxk-005qYA-Up@rmk-PC.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
- <20250304-msm-gpu-fault-fixes-next-v4-1-be14be37f4c3@gmail.com> <20250311180553.GB5216@willie-the-truck>
-In-Reply-To: <20250311180553.GB5216@willie-the-truck>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 11 Mar 2025 18:36:38 -0400
-X-Gm-Features: AQ5f1Jpps08fowB20qui8teO0kCK3_0sMgX__rQse3av3tUA4enIqUvNjCSXypk
-Message-ID: <CACu1E7GzCiO2b7AFJSDC+pN2VD9VaD2aYz_GGymM3-xAUqd__A@mail.gmail.com>
-Subject: Re: [PATCH v4 1/5] iommu/arm-smmu: Save additional information on
- context fault
-To: Will Deacon <will@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <E1trbxk-005qYA-Up@rmk-PC.armlinux.org.uk>
 
-On Tue, Mar 11, 2025 at 2:06=E2=80=AFPM Will Deacon <will@kernel.org> wrote=
-:
->
-> On Tue, Mar 04, 2025 at 11:56:47AM -0500, Connor Abbott wrote:
-> > This will be used by drm/msm for GPU page faults, replacing the manual
-> > register reading it does.
-> >
-> > Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-> > ---
-> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c |  4 ++--
-> >  drivers/iommu/arm/arm-smmu/arm-smmu.c            | 27 +++++++++++++---=
---------
-> >  drivers/iommu/arm/arm-smmu/arm-smmu.h            |  5 ++++-
-> >  3 files changed, 21 insertions(+), 15 deletions(-)
-> >
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers=
-/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> > index 548783f3f8e89fd978367afa65c473002f66e2e7..ae4fdbbce6ba80440f53955=
-7a39866a932360d4e 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> > @@ -400,7 +400,7 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *=
-dev)
-> >
-> >       if (list_empty(&tbu_list)) {
-> >               ret =3D report_iommu_fault(&smmu_domain->domain, NULL, cf=
-i.iova,
-> > -                                      cfi.fsynr & ARM_SMMU_CB_FSYNR0_W=
-NR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> > +                                      cfi.fsynr0 & ARM_SMMU_CB_FSYNR0_=
-WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> >
-> >               if (ret =3D=3D -ENOSYS)
-> >                       arm_smmu_print_context_fault_info(smmu, idx, &cfi=
-);
-> > @@ -412,7 +412,7 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *=
-dev)
-> >       phys_soft =3D ops->iova_to_phys(ops, cfi.iova);
-> >
-> >       tmp =3D report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
-> > -                              cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOM=
-MU_FAULT_WRITE : IOMMU_FAULT_READ);
-> > +                              cfi.fsynr0 & ARM_SMMU_CB_FSYNR0_WNR ? IO=
-MMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> >       if (!tmp || tmp =3D=3D -EBUSY) {
-> >               ret =3D IRQ_HANDLED;
-> >               resume =3D ARM_SMMU_RESUME_TERMINATE;
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/=
-arm-smmu/arm-smmu.c
-> > index ade4684c14c9b2724a71e2457288dbfaf7562c83..a9213e0f1579d1e3be0bfba=
-75eea1d5de23117de 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > @@ -409,9 +409,12 @@ void arm_smmu_read_context_fault_info(struct arm_s=
-mmu_device *smmu, int idx,
-> >                                     struct arm_smmu_context_fault_info =
-*cfi)
-> >  {
-> >       cfi->iova =3D arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
-> > +     cfi->ttbr0 =3D arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_TTBR0);
-> >       cfi->fsr =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
-> > -     cfi->fsynr =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
-> > +     cfi->fsynr0 =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
-> > +     cfi->fsynr1 =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR1);
->
-> We already have an implementation hook (->get_fault_info()) which the
-> qcom SMMU driver can override with qcom_adreno_smmu_get_fault_info().
-> That thing dumps these registers already so if we're moving that into
-> the core SMMU driver, let's get rid of the hook and move everybody over
-> rather than having it done in both places.
+Hi Russell,
 
-As you probably saw, the next commit moves over
-qcom_adreno_smmu_get_fault_info() to use this. The current back door
-used by drm/msm to access these functions is specific to adreno_smmu
-and there isn't an equivalent interface to allow it to call a generic
-SMMU function so it isn't possible to move it entirely to the core. At
-least not without a bigger refactoring that isn't justified for this
-series that is just trying to fix things.
+kernel test robot noticed the following build warnings:
 
->
-> >       cfi->cbfrsynra =3D arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA=
-(idx));
-> > +     cfi->contextidr =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_CONTE=
-XTIDR);
->
-> I think the CONTEXTIDR register is stage-1 only, so we shouldn't dump
-> it for stage-2 domains.
->
-> Will
+[auto build test WARNING on net-next/main]
 
-Does it matter if we read the register though, as long as users are
-aware of this and don't use its value for anything?
+url:    https://github.com/intel-lab-lkp/linux/commits/Russell-King-Oracle/net-stmmac-qcom-ethqos-remove-of_get_phy_mode/20250311-001446
+base:   net-next/main
+patch link:    https://lore.kernel.org/r/E1trbxk-005qYA-Up%40rmk-PC.armlinux.org.uk
+patch subject: [PATCH net-next 3/9] net: stmmac: remove of_get_phy_mode()
+config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20250312/202503120741.lpX5066n-lkp@intel.com/config)
+compiler: clang version 19.1.7 (https://github.com/llvm/llvm-project cd708029e0b2869e80abe31ddb175f7c35361f90)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250312/202503120741.lpX5066n-lkp@intel.com/reproduce)
 
-Connor
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202503120741.lpX5066n-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   In file included from drivers/net/ethernet/stmicro/stmmac/dwmac-anarion.c:11:
+   In file included from include/linux/of_net.h:9:
+   In file included from include/linux/phy.h:16:
+   In file included from include/linux/ethtool.h:18:
+   In file included from include/linux/if_ether.h:19:
+   In file included from include/linux/skbuff.h:17:
+   In file included from include/linux/bvec.h:10:
+   In file included from include/linux/highmem.h:10:
+   In file included from include/linux/mm.h:2224:
+   include/linux/vmstat.h:504:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     504 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     505 |                            item];
+         |                            ~~~~
+   include/linux/vmstat.h:511:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     511 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     512 |                            NR_VM_NUMA_EVENT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/vmstat.h:524:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     524 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     525 |                            NR_VM_NUMA_EVENT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/net/ethernet/stmicro/stmmac/dwmac-anarion.c:94:4: warning: variable 'phy_mode' is uninitialized when used here [-Wuninitialized]
+      94 |                         phy_mode);
+         |                         ^~~~~~~~
+   include/linux/dev_printk.h:154:65: note: expanded from macro 'dev_err'
+     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                                                                        ^~~~~~~~~~~
+   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
+     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
+         |                                     ^~~~~~~~~~~
+   drivers/net/ethernet/stmicro/stmmac/dwmac-anarion.c:67:2: note: variable 'phy_mode' is declared here
+      67 |         phy_interface_t phy_mode;
+         |         ^
+   4 warnings generated.
+
+
+vim +/phy_mode +94 drivers/net/ethernet/stmicro/stmmac/dwmac-anarion.c
+
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   61  
+41b984be408c088 Russell King (Oracle  2025-03-10   62) static struct anarion_gmac *
+41b984be408c088 Russell King (Oracle  2025-03-10   63) anarion_config_dt(struct platform_device *pdev,
+41b984be408c088 Russell King (Oracle  2025-03-10   64) 		  struct plat_stmmacenet_data *plat_dat)
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   65  {
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   66  	struct anarion_gmac *gmac;
+0c65b2b90d13c1d Andrew Lunn           2019-11-04   67  	phy_interface_t phy_mode;
+0c65b2b90d13c1d Andrew Lunn           2019-11-04   68  	void __iomem *ctl_block;
+0c65b2b90d13c1d Andrew Lunn           2019-11-04   69  	int err;
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   70  
+ad124aa34e51439 YueHaibing            2019-08-21   71  	ctl_block = devm_platform_ioremap_resource(pdev, 1);
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   72  	if (IS_ERR(ctl_block)) {
+51fe084b17e795f Simon Horman          2023-04-06   73  		err = PTR_ERR(ctl_block);
+51fe084b17e795f Simon Horman          2023-04-06   74  		dev_err(&pdev->dev, "Cannot get reset region (%d)!\n", err);
+51fe084b17e795f Simon Horman          2023-04-06   75  		return ERR_PTR(err);
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   76  	}
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   77  
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   78  	gmac = devm_kzalloc(&pdev->dev, sizeof(*gmac), GFP_KERNEL);
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   79  	if (!gmac)
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   80  		return ERR_PTR(-ENOMEM);
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   81  
+9f12541d684b925 Simon Horman          2023-04-06   82  	gmac->ctl_block = ctl_block;
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   83  
+41b984be408c088 Russell King (Oracle  2025-03-10   84) 	switch (plat_dat->phy_interface) {
+df561f6688fef77 Gustavo A. R. Silva   2020-08-23   85  	case PHY_INTERFACE_MODE_RGMII:
+df561f6688fef77 Gustavo A. R. Silva   2020-08-23   86  		fallthrough;
+df561f6688fef77 Gustavo A. R. Silva   2020-08-23   87  	case PHY_INTERFACE_MODE_RGMII_ID:
+df561f6688fef77 Gustavo A. R. Silva   2020-08-23   88  	case PHY_INTERFACE_MODE_RGMII_RXID:
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   89  	case PHY_INTERFACE_MODE_RGMII_TXID:
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   90  		gmac->phy_intf_sel = GMAC_CONFIG_INTF_RGMII;
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   91  		break;
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   92  	default:
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   93  		dev_err(&pdev->dev, "Unsupported phy-mode (%d)\n",
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04  @94  			phy_mode);
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   95  		return ERR_PTR(-ENOTSUPP);
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   96  	}
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   97  
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   98  	return gmac;
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04   99  }
+2d1611aff3f22a5 Alexandru Gagniuc     2017-08-04  100  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
