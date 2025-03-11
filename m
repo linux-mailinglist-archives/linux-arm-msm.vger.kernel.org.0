@@ -1,171 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-51067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35C77A5D04A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 21:01:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC89DA5D050
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 21:03:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68D75168078
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 20:01:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0CED87A6C77
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 20:02:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CC0B2222DE;
-	Tue, 11 Mar 2025 20:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CBF222F169;
+	Tue, 11 Mar 2025 20:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f7iN3F9F"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SNWQIyCS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D161EDA20
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 20:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7884E25CC6B;
+	Tue, 11 Mar 2025 20:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741723273; cv=none; b=EmlwUUek9GGzZdVC0quUhSCpd1KqDTxk3EPtjabDORVE80sGU3C4HRarPtIiPqkmGyAyO4P1Ekeo1s+DMlvLXHaGlnohVsozRQ2vfT/+rrLU2oI9FDNyXDvxSVmfjBFQr55rssfLE5KosQvHxIZKmmA4cCvsH/9jvPNKHHvBNL8=
+	t=1741723424; cv=none; b=RmOYtK8LjMftOlNRyRlRFC/Ta6v3YxCnf+4blPfYQ217OCA+MRP3VeqDRshDlwoULRcXGMJoqQVd9jHfOQoG+hSs3q2FjjL15XrJg1T5Bwufp2sOVnHhIMJOmUKU6fp8RNqvf1zeQWbsdxD2KC5mY1/ngZZqk3g65GNJXOUdCZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741723273; c=relaxed/simple;
-	bh=xrKFuJ0SOVfh3Sa0BTqqoPTKaQUC9fHEUGC2Dq15QUA=;
+	s=arc-20240116; t=1741723424; c=relaxed/simple;
+	bh=/Y1uKhocepPEVr4gRndRQFJfp4PlO9xpVDQBkK0VWtc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f4j9ux6MfTOfTnaNV3oijjkAhSJfpp+kkcFnp+RWLffMpdZWTeeMlQU3EO6TNZfvGkP0H0kgjjAMBhrd6tjc4s3UgYsYhNmabJCf2kTEK0wmHsTz2IQAzWex1NVyQX2aG9lg4ojISBny0RXeVkZzXrdEyM4+x/z6i5nHfzGDkVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f7iN3F9F; arc=none smtp.client-ip=209.85.216.52
+	 To:Cc:Content-Type; b=TvH9pQcfNegcnIE0EFehoLqHyu5rwXjppPc3ihxDsSvTuwEv2o6JO8MUXm5xcmmA+riRoUdaJR8sjEpVgeHaawPmH68xP8lCXjLP3TKV6bxabusJsRYJOiBuT+v0knOBipmd9mAirgWDjRxRrFfvkzQo0QgmON2oqIi7HCzGhhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SNWQIyCS; arc=none smtp.client-ip=209.85.166.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2ff5544af03so1611572a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 13:01:11 -0700 (PDT)
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3cf82bd380bso47356825ab.0;
+        Tue, 11 Mar 2025 13:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741723271; x=1742328071; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741723421; x=1742328221; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=52OV000Ss02HywoZBmMaH6saPDX3ZD7R+9jkTkZmirw=;
-        b=f7iN3F9FXZdc/2xgxdLvLUXKlEuJkkZgtXdS4IcKqNV5qKJZc8ZuHsMTH9evEwiMOT
-         7gUYGvIX7JtkJqehIx/qQBGLQKDZRpqd6aFo587jfIuepH03d85kHUwKfg/k3A2tiiXc
-         ux7wfk/+53CExatbUa1F0XImQhhsTaKAJimfFCx/qkkwLUfFVBysx3iSyFaupVdSeBhD
-         EI8VSg9eL7cj9HzoRlL4kxAi40WT8FpZXpqXklSJxuz9n2BJF74iZyckJWVFDD+NoRmW
-         1XbCTbrwd2TyLj02BxLck1MG9S6tpme42VYouPTnvIRHpcHYfP4m/iB+qh0yjBOmEKoD
-         46JA==
+        bh=GW523EAS3Rk6Z2Gf4pN5+J61D3es3lTSy0uI9oNxP9Q=;
+        b=SNWQIyCSjqPx8dCgqabzxh+CoawTNkIF2jSmU564pdpmCepWoxNjvMOMA3VgphLXUv
+         8qUdlP1O75MLGv9T8jx5gQRvGUuwQ91ub1POjxLblVLMDItOA4B71TAtGrPnJ/s6FMpj
+         DfKsLG9PNCKpa3DM0bgkSCUx6YcXpFZUTWO/LePyPoqCRroRNF5wfm433kJ8mpQyYI3Z
+         iRPZ5oiBsqZO/19jDPdFAUsustT8n4Z4vuCxkcsH75F/90+7QwTcyoK+7D55lzgcq3iI
+         Yl7xeTGT00PvHDNm8BT0KXvFWBk0ViNMg6exQWedhzAN92MASeI+x6uhUlyDFQjDTP8E
+         3jbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741723271; x=1742328071;
+        d=1e100.net; s=20230601; t=1741723421; x=1742328221;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=52OV000Ss02HywoZBmMaH6saPDX3ZD7R+9jkTkZmirw=;
-        b=r8HjIQnZJBoa8ElBTFme5c0AQId6vTmYcfurXJVoP3gmcTDA81w7ffOAbH7EJEhsy4
-         IgEeCaBavsmkRdP+CqMHaS/zWh1ZzEvvARhEvkcCg1Bz+mIMOHMxmgIHZKpUgiAe5uAU
-         I+g2exzGD/8nGbpH4dJELtBpXglZhDEQhECyeAGk5tKCxXmwseTWBmH1UiZZuCgEIX0T
-         RfsRYfb4B+8D8JnuWxcnnYmjszVXQjpizNQl4P20/AMtH0i8HyAHZez4Zrdel/n4u2yF
-         qYenZR0h8IopistxKj0LOcqlxJQvO7wUlEZF4nPzwMjkaqwRH33nxhKWecPzsAPm1PnK
-         WJ0A==
-X-Forwarded-Encrypted: i=1; AJvYcCW0S3mZ9w6pqbcKBVNpyyqFo59ahkLaXRT4fAvz0PwFYv1U+HQtxx+gnihu4AI33pNf38Jyu0xs789r9xkM@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2CkuloX3wxSPdFvWslXiaf3ABrvdkYhqLrDNqbBQPp3nqtqec
-	0yqQQcjALBm17NC+6B7/rzb+PuhjLJ4OTcROmp/NctSdSM7MyPCogw/NwpRGd6S77irU9Lea6o7
-	S2uU5JWwXF2tGrptSvi4SEWLQ4W4UhNVE
-X-Gm-Gg: ASbGnct31pIT8AM2Ba2E607NzHSXp9fEAMl6bzeWJlBn6DZ5ztrJlt5TH8nGADf5d/C
-	6UERvxUR8DKOIHUMPNfpSKa1uD7p2JyvRbkPJCNSeGPBVHjEZox7P7P4StqU+vVmYFj4jsQlVRj
-	2qUcwfFQODZTbmnblMM4EdhOU6Zg==
-X-Google-Smtp-Source: AGHT+IEZes+rPRA7sKIj+77k/pMBCMpcY3PJgbIkDYPW+Vp6cHzjHEMWL9jx7sEj0huuFiLemUSLs1dnWAE9qx1ILMs=
-X-Received: by 2002:a05:6a00:3d01:b0:730:915c:b70 with SMTP id
- d2e1a72fcca58-736eb884cd6mr2575318b3a.0.1741723270852; Tue, 11 Mar 2025
- 13:01:10 -0700 (PDT)
+        bh=GW523EAS3Rk6Z2Gf4pN5+J61D3es3lTSy0uI9oNxP9Q=;
+        b=op6rUpLdC0AiL79IBUIcIPgjuvbmmamP6SUKN7qHDHk99jU/dI+YLJ7bnWh4FtWamq
+         o3kkLnzOw2DDwOsygIZDb8Ouek7ipekodrd2MY1Be9x45/GP6enXs8ypEHxnWeYe1BE+
+         5yhFyQrITjF0VRDdUSR+SRpX7rLFWtE4/pA5+qpYBzkuub7CS/XsGcqgUNXjtrnDoMJI
+         UDqmPWC0soLOk5iMXD6IH5JWrlrcyz7tQ5H74GRGizdAk0n136kZ6F3ceHLPKZHiReTu
+         nYxB5fS8JvngS80SOB9U2p+j84GjnBzzHvcMTdt3kKxbGgDCpdQCJJfHtgC14fPHIQee
+         Xx2A==
+X-Forwarded-Encrypted: i=1; AJvYcCUJhwH3YWke2Pt8VZASbCCwk/fojT5Fc2Tq4yYE7cXAVyQPFbuuQef1fF8kM/KOkiXSMiSmSG8rzxRHgTtp@vger.kernel.org, AJvYcCWf2aWYlYm7DLp0GKgjsNQCbaidwGw7PS2dvIwAP6Yx4GEeZfnNQavRqed9LLaX74p4yNZJpAbkSlDblgMO@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzb5V/Y3tKLmdONpVomZSD4iQtB2/jzO/SZyqJwGVXmnOhQ1Qtp
+	dQorStnmRwDIJTQppZaPxWMLK7DneRPj6YmWDKOICTpC2wMgWbN3m3CD8f+EUoehkK/oN2RW9Wu
+	/sO0DlefDI/Badm1rPXKUBmre+Wg=
+X-Gm-Gg: ASbGncs4KgnhHNV9M0JMlhD/G5tXyU2UuQeUBdPgpsNZomapYg7owmsR1ja5ee7gxBz
+	TnclCZnn86IaPRVt2efBJ3dDAmaY+BcDK7kNs2hWkyKMIv/wGoLDQG+solaZzpRPdiireSvgvAb
+	pLvniFcs2eeOhQFtrKZvR/oBQrdYzFvT3iWgba3KSd8027YgUOraaoLiaS
+X-Google-Smtp-Source: AGHT+IFYEIdqAXj57O99Zh2iip2gE6hYr3XolthP5tdHAJes3eWs+x8BQxcINUUI2peKOTGt7uFekvG8SKVQk3DUgs8=
+X-Received: by 2002:a05:6e02:174a:b0:3d3:e296:1c1c with SMTP id
+ e9e14a558f8ab-3d468921f95mr51075145ab.9.1741723421512; Tue, 11 Mar 2025
+ 13:03:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
- <20250304-msm-gpu-fault-fixes-next-v4-4-be14be37f4c3@gmail.com> <20250311181151.GD5216@willie-the-truck>
-In-Reply-To: <20250311181151.GD5216@willie-the-truck>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 11 Mar 2025 16:01:00 -0400
-X-Gm-Features: AQ5f1JoexqrwePJhk6DD8zjGJRAEALzPtqaGXwA5Wf6vdtHsWziKMQ-PaQeJdxI
-Message-ID: <CACu1E7Gg3WpQASADAdediRzFz2wEXAnfD7tg05XkiXZQp=X8fQ@mail.gmail.com>
-Subject: Re: [PATCH v4 4/5] iommu/arm-smmu-qcom: Make set_stall work when the
- device is on
+References: <20241212151402.159102-1-quic_bibekkum@quicinc.com>
+ <173625436399.258197.10961901698600591079.b4-ty@kernel.org> <20250311175528.GA5216@willie-the-truck>
+In-Reply-To: <20250311175528.GA5216@willie-the-truck>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 11 Mar 2025 13:03:29 -0700
+X-Gm-Features: AQ5f1JrHvI_RF7xvW5BrP_PBmrcW3VTWeSbeCSaeqxqwJS9gRSEMDCWlVX4sKfA
+Message-ID: <CAF6AEGvDyPtXN7Cn98BKsTM9GjUzy1sTEOsLiz-cdvaZ14qWyA@mail.gmail.com>
+Subject: Re: [PATCH v18 0/5] iommu/arm-smmu: introduction of ACTLR
+ implementation for Qualcomm SoCs
 To: Will Deacon <will@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+Cc: robin.murphy@arm.com, joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com, 
+	robh@kernel.org, krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, 
+	dmitry.baryshkov@linaro.org, Bibek Kumar Patro <quic_bibekkum@quicinc.com>, 
+	catalin.marinas@arm.com, kernel-team@android.com, iommu@lists.linux.dev, 
 	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	freedreno@lists.freedesktop.org
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 11, 2025 at 2:11=E2=80=AFPM Will Deacon <will@kernel.org> wrote=
-:
+On Tue, Mar 11, 2025 at 10:55=E2=80=AFAM Will Deacon <will@kernel.org> wrot=
+e:
 >
-> On Tue, Mar 04, 2025 at 11:56:50AM -0500, Connor Abbott wrote:
-> > Up until now we have only called the set_stall callback during
-> > initialization when the device is off. But we will soon start calling i=
-t
-> > to temporarily disable stall-on-fault when the device is on, so handle
-> > that by checking if the device is on and writing SCTLR.
+> On Tue, Jan 07, 2025 at 04:42:39PM +0000, Will Deacon wrote:
+> > On Thu, 12 Dec 2024 20:43:57 +0530, Bibek Kumar Patro wrote:
+> > > This patch series consist of six parts and covers the following:
+> > >
+> > > 1. Provide option to re-enable context caching to retain prefetcher
+> > >    settings during reset and runtime suspend.
+> > >
+> > > 2. Remove cfg inside qcom_smmu structure and replace it with single
+> > >    pointer to qcom_smmu_match_data avoiding replication of multiple
+> > >    members from same.
+> > >
+> > > [...]
 > >
-> > Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-> > ---
-> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 30 ++++++++++++++++++++++=
-+++++---
-> >  1 file changed, 27 insertions(+), 3 deletions(-)
+> > Applied to iommu (arm/smmu/updates), thanks!
 > >
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu=
-/arm/arm-smmu/arm-smmu-qcom.c
-> > index a428e53add08d451fb2152e3ab80e0fba936e214..d34a0d917013bb3d5a24b3c=
-e72f48e3b38474da2 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > @@ -77,12 +77,36 @@ static void qcom_adreno_smmu_set_stall(const void *=
-cookie, bool enabled)
-> >  {
-> >       struct arm_smmu_domain *smmu_domain =3D (void *)cookie;
-> >       struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
-> > -     struct qcom_smmu *qsmmu =3D to_qcom_smmu(smmu_domain->smmu);
-> > +     struct arm_smmu_device *smmu =3D smmu_domain->smmu;
-> > +     struct qcom_smmu *qsmmu =3D to_qcom_smmu(smmu);
-> > +     u32 mask =3D BIT(cfg->cbndx);
-> > +     bool stall_changed =3D !!(qsmmu->stall_enabled & mask) !=3D enabl=
-ed;
-> > +     unsigned long flags;
-> >
-> >       if (enabled)
-> > -             qsmmu->stall_enabled |=3D BIT(cfg->cbndx);
-> > +             qsmmu->stall_enabled |=3D mask;
-> >       else
-> > -             qsmmu->stall_enabled &=3D ~BIT(cfg->cbndx);
-> > +             qsmmu->stall_enabled &=3D ~mask;
-> > +
-> > +     /*
-> > +      * If the device is on and we changed the setting, update the reg=
-ister.
-> > +      */
-> > +     if (stall_changed && pm_runtime_get_if_active(smmu->dev) > 0) {
-> > +             spin_lock_irqsave(&smmu_domain->cb_lock, flags);
-> > +
-> > +             u32 reg =3D arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_C=
-B_SCTLR);
-> > +
-> > +             if (enabled)
-> > +                     reg |=3D ARM_SMMU_SCTLR_CFCFG;
-> > +             else
-> > +                     reg &=3D ~ARM_SMMU_SCTLR_CFCFG;
-> > +
-> > +             arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, re=
-g);
+> > [1/5] iommu/arm-smmu: Re-enable context caching in smmu reset operation
+> >       https://git.kernel.org/iommu/c/ef4144b1b47d
+> > [2/5] iommu/arm-smmu: Refactor qcom_smmu structure to include single po=
+inter
+> >       https://git.kernel.org/iommu/c/445d7a8ed90e
+> > [3/5] iommu/arm-smmu: Add support for PRR bit setup
+> >       https://git.kernel.org/iommu/c/7f2ef1bfc758
+> > [4/5] iommu/arm-smmu: Introduce ACTLR custom prefetcher settings
+> >       https://git.kernel.org/iommu/c/9fe18d825a58
+> > [5/5] iommu/arm-smmu: Add ACTLR data and support for qcom_smmu_500
+> >       https://git.kernel.org/iommu/c/3e35c3e725de
 >
-> Are you sure you don't need TLB invalidation for this to take effect? I
-> think some fields in the SCTLR can be cached in the TLB but you'll need
-> to check whether or not that applies to CFCFG.
->
-> Will
+> Hrm. I'm not seeing any user of the new ->set_prr*_() functions in
+> linux-next yet. Is there something under review, or should I revert this
+> for now?
 
-I think it should be fine because CFCFG only controls behavior when
-there's a context fault and there can't be TLB entries for entries
-that cause a context fault: "The architecture permits the caching of
-any translation table entry that has been returned from memory without
-a fault and that does not, as a result of that entry, cause a
-Translation Fault or an Access Flag fault."
+It is WIP, part of a larger patchset adding sparse binding support in
+drm/msm.  Please do not revert.
 
-Connor
+BR,
+-R
 
