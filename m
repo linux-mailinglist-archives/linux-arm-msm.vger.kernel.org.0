@@ -1,60 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-50947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40398A5BF99
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 12:47:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60BD1A5BF9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 12:47:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05DE4189877A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 11:47:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0A38176A17
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 11:47:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD9DE214A9A;
-	Tue, 11 Mar 2025 11:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AEA324167A;
+	Tue, 11 Mar 2025 11:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="onwm2Mwl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UPU7SL2Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F39C1D514E;
-	Tue, 11 Mar 2025 11:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7961D514E;
+	Tue, 11 Mar 2025 11:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741693620; cv=none; b=WlNsfPl6ECm9f4rKBZeYQzzglu9tm3+jwoqIvQ4CyB+pLnPjUJImYDdVnQI15zELqWsHmZ9jHQTctVb1cSWgZ42cN4cvJvDtz+ZleUy50AhiCVRa/8ynnTik6DGjphaM9PPapjycKr4x5+uR+jtk8qEMkQ97ETZiT9ABOXeupAc=
+	t=1741693628; cv=none; b=kJiDDwVN0vBi/9Mh3nLssos46+VbhefOmcaJrrYpnF2uCke88p4mNBBo8UkT7V+XVKRxvhHALm5kPNLlVwPKSBmjcb4MorafrFkZ7CkkME1QNw57BR1gsdvTqu5KVqFe4z+bPgg/4gxQN7VZ/Ha4x0WASB3aMVsyG5te6SEl8fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741693620; c=relaxed/simple;
-	bh=/WYDs73Nm1lb/GTeRLCUHgCKaixHsBgVcb+f13tuZ6g=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=t4Hb/h+ZToSgwtp6+L07PCG8+yDr3kK/BDtQpV4z67JrOFXBs27IZ8Grrthr6UcIcGbmSCwVapdlCigA8c75lllfHxxLzEHoh9wFVq5gDNXhj7kAmqC3N8Xmu6w6j2X+xvxFprrm//uNxJDWSsiaDxL/emIDcpZdnxBAbt5dZVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=onwm2Mwl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C368CC4CEE9;
-	Tue, 11 Mar 2025 11:46:54 +0000 (UTC)
+	s=arc-20240116; t=1741693628; c=relaxed/simple;
+	bh=yRXYXZ9rV06lyaY2T1O8v8n5tymGv/7bHYuzwvkdyUM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=lDUQmaWu89XEv6x6Vd9oNoXnc0ap1xrm+c8+RqmXePxcrOwcg0cQIl4c9ssG4S0ofgTGnq4j4x9ZKDtuar3MfMnI3MpMLEuABErNOEw+L/AXZfL6K1DDKsraofhiy9hPtkQWARCX9TjsLL7t0msakL4pAUq7HMqOj4R/Ne+2hvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UPU7SL2Y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79ADFC4CEED;
+	Tue, 11 Mar 2025 11:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741693619;
-	bh=/WYDs73Nm1lb/GTeRLCUHgCKaixHsBgVcb+f13tuZ6g=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=onwm2MwlnqeJgtZJd3NdhDoXu8Lz8tXY5d6n9aeq3UyWSGx3qH/u6OfBkrUcdXTgK
-	 38j94IriQR1emZT5Ouc2dFRGIgFhAFJIYTNxvcF1xeRCIUqpnFMVmcEnqG/vs5zigG
-	 ++2QAq1jOSfaOf/fYDxhQAkKPxm1AxmhROmYrdimYjj1tzM86YO81eayu3XkYqY7rc
-	 pwtF2LcNAixeNvQ95Aky13e65ZL5ggMatdvS1vxpwUOlpEo1XIth6yAm1Q88Oj3Qug
-	 paJugIGzVftncZc0rxild65Sdkwt8b+MSDkBjHLKvo+A3Qi4xVaB6wX5p1drvCYCjg
-	 MAmQrBm3kjRWw==
+	s=k20201202; t=1741693627;
+	bh=yRXYXZ9rV06lyaY2T1O8v8n5tymGv/7bHYuzwvkdyUM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=UPU7SL2YxU2IXg0KW0RA96lOpuGU2yP7b9nBu990Wtx7QV1nktI6c9jkCjx8VII/y
+	 q0Feq0mpHXEgcnbsr2Aef8DasQSJuZZoKNNZh+HZFk/14QJgRr3BxDg/MAqh1lc8n7
+	 Ap46k9a6tsPn1458AnKmZhJEOdiUU499KHrtMRTllw/zIM7V6WD0/VxzwOBgpvoMl2
+	 SUSWkhoD6lMZO0DhR44V6ty4MXIg/FcWfrnLHWsO6XQ2Q5WYZPc/WBCctb/7WttMX/
+	 Pd5wIBZaxYWr4OW1RyzEAZcSe2pfb6TFJ7FHtMn7Qi8cEu6mxZKSFSDjpi9LoTxbw/
+	 IymDnNrxvAuqA==
 From: Vinod Koul <vkoul@kernel.org>
-To: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
- manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
- conor+dt@kernel.org, kishon@kernel.org, andersson@kernel.org, 
- konradybcio@kernel.org, p.zabel@pengutronix.de, quic_nsekar@quicinc.com, 
- dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org, 
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
- Varadarajan Narayanan <quic_varada@quicinc.com>
-In-Reply-To: <20250220094251.230936-1-quic_varada@quicinc.com>
-References: <20250220094251.230936-1-quic_varada@quicinc.com>
-Subject: Re: (subset) [PATCH v11 0/7] Add PCIe support for Qualcomm IPQ5332
-Message-Id: <174169361442.507381.5728010780608923977.b4-ty@kernel.org>
-Date: Tue, 11 Mar 2025 12:46:54 +0100
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
+ Bart Van Assche <bvanassche@acm.org>, 
+ Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
+ Trilok Soni <quic_tsoni@quicinc.com>, 
+ Melody Olvera <quic_molvera@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Manish Pandey <quic_mapa@quicinc.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250310-sm8750_ufs_master-v2-0-0dfdd6823161@quicinc.com>
+References: <20250310-sm8750_ufs_master-v2-0-0dfdd6823161@quicinc.com>
+Subject: Re: (subset) [PATCH v2 0/6] Add UFS support for SM8750
+Message-Id: <174169362014.507381.5528834930288014855.b4-ty@kernel.org>
+Date: Tue, 11 Mar 2025 12:47:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,24 +77,16 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.2
 
 
-On Thu, 20 Feb 2025 15:12:44 +0530, Varadarajan Narayanan wrote:
-> Patch series adds support for enabling the PCIe controller and
-> UNIPHY found on Qualcomm IPQ5332 platform. PCIe0 is Gen3 X1 and
-> PCIe1 is Gen3 X2 are added.
+On Mon, 10 Mar 2025 14:12:28 -0700, Melody Olvera wrote:
+> Add UFS support for SM8750 SoCs.
 > 
-> This series combines [1] and [2]. [1] introduces IPQ5018 PCIe
-> support and [2] depends on [1] to introduce IPQ5332 PCIe support.
-> Since the community was interested in [2] (please see [3]), tried
-> to revive IPQ5332's PCIe support with v2 of this patch series.
-> 
-> [...]
 
 Applied, thanks!
 
-[1/7] dt-bindings: phy: qcom,uniphy-pcie: Document PCIe uniphy
-      commit: a2e934885c82912caf3f72b9511ef626f3619e3d
-[2/7] phy: qcom: Introduce PCIe UNIPHY 28LP driver
-      commit: 74badb8b0b146668cc6c03eb58e2a814f9463d02
+[1/6] dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: document the SM8750 QMP UFS PHY
+      commit: 12185bc38f7667b1d895b2165a8a47335a4cf31b
+[2/6] phy: qcom-qmp-ufs: Add PHY Configuration support for sm8750
+      commit: b02cc9a176793b207e959701af1ec26222093b05
 
 Best regards,
 -- 
