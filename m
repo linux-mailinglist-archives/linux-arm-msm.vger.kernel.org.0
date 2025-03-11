@@ -1,124 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-50973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDC77A5C63C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:23:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1400A5C7B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:38:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 522D21891BF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 15:19:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A683A3A53DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 15:32:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7875E25EF8F;
-	Tue, 11 Mar 2025 15:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C86F25F7A8;
+	Tue, 11 Mar 2025 15:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j/c2Ak8E"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nkiqKK4U"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B93825EF86;
-	Tue, 11 Mar 2025 15:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC3725B69D;
+	Tue, 11 Mar 2025 15:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706370; cv=none; b=YanUGlWqZzERx8IHW2cXxaShIExu2onyyR3/px7Ib7wXWuO98WxNw48vayzyqbmth+EmDld883rvXaB6FbjnAerNyVMKOIPRoENXzTneZYtBQXH0pCgFoO7ixp8mAoZHZqcwktPFAvZ53cVVOphgQlXYktgDsLsCjxhWER8ygvo=
+	t=1741707123; cv=none; b=p6k2uOo386zXTWVmPPPycgpZBAWlZY7Lae5C/rRkq5EfMuTmcAoq5IVku1OEwC5NFYwEQ6beHxwoahSCjYCgKKCqssaU8JlPUIfztqdp/c+Z0M2/ngF4ydH84L2UD+tH+GQ5XriqUtwb9xR1EQ6eUiLpdDOzdfRDh7zlftHc7b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706370; c=relaxed/simple;
-	bh=8TQJ58G3JmOK405NdUYMy5SH2CRLiCFBDczFSnWpytM=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=l66+LZIG5s9m2VhMAp0LVIWEWGcpd2liMWuSj8uzF1gO9EWm6Ic3bmbfRRLremH1nNA/FXsdx1Hhgs+rrfdLfJSUHe9K1jsTtwi2g3c7V8F20+VtM1vVEHQRMcDXUtKiYrn9ooiNg0C5lE8kPn1EZdAprrwHsPEZmV3kxmB9Z8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j/c2Ak8E; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF2BC4CEE9;
-	Tue, 11 Mar 2025 15:19:29 +0000 (UTC)
+	s=arc-20240116; t=1741707123; c=relaxed/simple;
+	bh=VtkaJ7L6XEIE9QnAL1+dX4kibxBnJwlPy8zVdc2LrHM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V/p8E6nDey7AfC1eNGkYO9G5DRrT4q33vAWrPVm4sX4F6cj4vO0vex39tm9G2xtjSEzy/xnBz2CLKrXqfkixJDIBGZ+TXgnvjvWxbrPb79YvKTH1NBdVeb8Rau0m4Ep/VFuWTPFnYrwgnSMdQy9EDe/piFaQwLSFvRPJ8gnIP5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nkiqKK4U; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2036AC4CEF3;
+	Tue, 11 Mar 2025 15:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741706370;
-	bh=8TQJ58G3JmOK405NdUYMy5SH2CRLiCFBDczFSnWpytM=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=j/c2Ak8EtBSDSGij0vVZrC4Y8/mWA4ETT6QCdwtgi6hPDQuTLpJfnqai6Nd9/7WKh
-	 DdTKMvB+tmSVp4p5bhhaSjIZh2KYy9QcZ7qTNe4SUE9ryH6eSQ5ru/q6P99KgtsgVf
-	 kmQ/DjEpa1iNobzmuBhBllWgZvQQT9rhcyKJeMmUiT06qRa0e+S3AqWmuKcngaJZ91
-	 g2yhqI+iMlloZClOy3rikx788P3LuPPhpfOL3gHL72hRrEjRr+aHELgGTGJfW/HVX7
-	 fXWxAIcYxUi6Cdf6cb5URjdLBVwQ02HOWlq1MnMEiXI7rKEJ4Yd2XUpIIAfYu2FCOy
-	 o04ZAzV9c4PpQ==
-Date: Tue, 11 Mar 2025 10:19:28 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1741707123;
+	bh=VtkaJ7L6XEIE9QnAL1+dX4kibxBnJwlPy8zVdc2LrHM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nkiqKK4UlgQ3bHIj+Fa2H3znDor0YOQfCHGZi4BE+Oy4tLZIQ5G21b63zkyyJT5v2
+	 LR3rdQKJ5nfiK3qFXAmVgYZ2PYDrJgp0fXL9hZXH7EWRf2jbhX7Tw52DiJ58vUg79V
+	 umwYYl+FJAeSJocInIfr2sAR/85pHgdSsJ9i1g82EaYjlbpqeZF89RMsk8nlNRpgna
+	 nIaTjGeBj4RcwafWQ1nIabLujNUz7oB7GxNqf1Cjl+dgll4SCKGrgSq/ePeF9eeMVl
+	 6Sk+x8fFpz01tRLt7bRnZkp3/0WYa/jNg+qWCgW7oD+7Sz+K6Hv9RQbzW1/ryIeHBz
+	 q/MDAV1qBbYYg==
+Date: Tue, 11 Mar 2025 17:31:57 +0200
+From: Dmitry Baryshkov <lumag@kernel.org>
+To: Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/4] dt-bindings: media: qcom,sm8550-iris: document
+ SA8775p IRIS accelerator
+Message-ID: <ngzl7q3fli3bpuo5gjvppfrsnmlw6viy26ieqwhpfokgue2uxm@whomn2h6h3a7>
+References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
+ <20250311-dtbinding-v1-2-5c807d33f7ae@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org
-To: Gabriel Gonzales <semfault@disroot.org>
-In-Reply-To: <20250311003353.8250-1-semfault@disroot.org>
-References: <20250308013019.10321-1-semfault@disroot.org>
- <20250311003353.8250-1-semfault@disroot.org>
-Message-Id: <174170613912.3566385.18130770029981386543.robh@kernel.org>
-Subject: Re: [PATCH v3 0/2] Add Xiaomi Redmi Note 8 support
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250311-dtbinding-v1-2-5c807d33f7ae@quicinc.com>
 
+On Tue, Mar 11, 2025 at 05:33:54PM +0530, Vikash Garodia wrote:
+> Document the IRIS video decoder and encoder accelerator found in the
+> SA8775P platform. SA8775P has collapsible MX compared to SM8550.
 
-On Tue, 11 Mar 2025 08:33:46 +0800, Gabriel Gonzales wrote:
-> This patchset introduces support for the Redmi Note 8 (codenamed ginkgo).
+How compatible is SA8775P to SM8550? Should it be using a fallback
+compatible?
+
+This kind of comes as a more generic question: is there anything like
+'IP version' or 'core version'? It would be really nice to determine the
+'baseline' SoCs and make other instances compatible with the baseline.
+
 > 
-> Changes in v2:
-> - Add missing cover letter
-> - Fix up commit message for schema
-> Changes in v3:
-> - Use qcom ids instead of hardcoded msm-id (and other changes suggested by Konrad)
-> - Switch up model properties and qcom properties position
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> Gabriel Gonzales (2):
->   dt-bindings: arm: qcom: Add Xiaomi Redmi Note 8
->   arm64: dts: qcom: sm6125: Initial support for xiaomi-ginkgo
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> index 440a0d7cdfe19a1ccedefc207d96b26eed5d6630..20ac596638ba33f49cce9e42d70d31a8aaa7c36e 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> @@ -19,7 +19,9 @@ allOf:
+>  
+>  properties:
+>    compatible:
+> -    const: qcom,sm8550-iris
+> +    enum:
+> +      - qcom,sm8550-iris
+> +      - qcom,sa8775p-iris
+>  
+>    power-domains:
+>      maxItems: 4
 > 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/sm6125-xiaomi-ginkgo.dts    | 295 ++++++++++++++++++
->  3 files changed, 297 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-> 
-> --
-> 2.48.1
-> 
-> 
+> -- 
+> 2.34.1
 > 
 
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250311003353.8250-1-semfault@disroot.org:
-
-arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dtb: /: qcom,msm-id:0: [394] is too short
-	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml#
-arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dtb: geniqup@4ac0000: #address-cells: 2 was expected
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml#
-arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dtb: geniqup@4ac0000: #size-cells: 2 was expected
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml#
-arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dtb: geniqup@4cc0000: #address-cells: 2 was expected
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml#
-arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dtb: geniqup@4cc0000: #size-cells: 2 was expected
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml#
-
-
-
-
-
+-- 
+With best wishes
+Dmitry
 
