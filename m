@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-50979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECA94A5C856
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:43:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 546A7A5C870
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 16:44:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C05CC1887E51
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 15:38:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A3EDA189FB8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 15:39:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9879225F782;
-	Tue, 11 Mar 2025 15:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA61625F7AA;
+	Tue, 11 Mar 2025 15:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OWZosL2g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XiLxVxfc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BED0255E37;
-	Tue, 11 Mar 2025 15:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC7025EFA0;
+	Tue, 11 Mar 2025 15:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707489; cv=none; b=LOt//dlhjOsy5L6FUbK3pkx4jdNzAkgX4RKjwAwQ0vdpUcvQAHTDP69k0td/4KSCoiMpl9cirA0L5E8xpbQIYTvmTRfrwLsfE3UVesPhxloDHW2TBhdJfY0fLDsfC0xqt41nzYvH1iYon+LJ0ypVH/aHDRGy2vTmcTGrb0bdEgM=
+	t=1741707526; cv=none; b=OSNyNIycvkMKBGfmOAkFGk0HQgrz+ZqIMpMvJYvWbdk0iFnQJONIiTNVpURV4ox56OSqOg6PvNMgY634DiGaYbxRrhSnG/NYif6ZgMeqqcn/NQdTYeX6oFPPwUOsyJ2UGmE2n0bqiHe8ZenLoTu1VkvjFbpOgQ4Sd3y04C7S6dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707489; c=relaxed/simple;
-	bh=PB9Mq++jsTAKdO+JKImimMFczZMMG9L2eYVvqsqLF1U=;
+	s=arc-20240116; t=1741707526; c=relaxed/simple;
+	bh=HtvJtW5x7rGS6E+g5R+r/WekMuPMy/9Qrk12gsnBDOM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a+5oqpPMJk18QjOnsVtkcxojSspQ3LZADbl32i18IWGsDHf0iSFMOzUbPrSXIjIjX9SpDOP1VLnHVbwlQaDo8FFO62Sh8qj+RAFA9I5vroL1VXHJGdu0P2dTYS2H2FV8HwKkAlUJhYOQpCOKsNdmcvpaTz9XDl9qIQR4a9dKQss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OWZosL2g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4B3C4CEF2;
-	Tue, 11 Mar 2025 15:38:03 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y1zGgyrAcXzDjA9sYe4gOQqlyoqgisM/L/mmb+Nyv99itn8bHvL5Srsvr79c76jhfe/nPUtUQylI9p64nE5nW0e2DoLk8mkKZqGgfvyta0aHgj+by44JGPzGw8p3gu1VVuQOdyI7Qve3ae0wusNKecIbHDo/1BwdNrvo2lUaYlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XiLxVxfc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1081BC4CEED;
+	Tue, 11 Mar 2025 15:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741707489;
-	bh=PB9Mq++jsTAKdO+JKImimMFczZMMG9L2eYVvqsqLF1U=;
+	s=k20201202; t=1741707526;
+	bh=HtvJtW5x7rGS6E+g5R+r/WekMuPMy/9Qrk12gsnBDOM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OWZosL2gqQoJj0wJFIRePLznic6yfmw+osPKfGWLt31F4uIFVAKUg1bTRtWXPuJ1r
-	 /8jfYw1pQ0GDxbQV1GPkt+58Z1OuR5OZURdm8RxRU1pjsV/6jSzQKTJ0cw7G7IAhz5
-	 C6eEipxFW3qUPYB7sloyt5KLyeN9ArotueVvxyqq177lH8w6M9Ik+zTq1JsIhfWHl6
-	 UEy+hcQTJcZkAvIRFnBARPD7g4MyxIAOYTnTJ8sNGJJCDOJxBZ8p93w2+PmkeT70pA
-	 +izv0B4cy3hivlCLtLMXYV7IcdLhc1i9i15cFWKXOjZ36A/HUENO6FlnrPjAaqNcHv
-	 2xINha2JgN8Jw==
-Date: Tue, 11 Mar 2025 17:38:01 +0200
+	b=XiLxVxfc8ZYpgdwW6Krrqaut3oeTvkHsT2M/mAk7G98IDnkfWbkn31VHNjDch5iBd
+	 OhtNDJskdC1WIbfjNfr10Mv1wrsVieMTWRzaxxyhSqtoKozGpvSAqZnotDAWj7BCQE
+	 y83SP8Z29JGyGtyvaxHfPBVFY4VVcBZQEwF57XY2u1WgA/RphqI9HC7CajarE5l9c1
+	 W9KscJVx2cTR8Nf6rKQO85kJulhC3DD5lwOsm4ebjciI79NtGi8tlTQeq5CVIZ3C2Q
+	 V3umsPccgm87OlyeQ2N/Ww3D6bM979sZIEtUFJE8ARzuaT+AuXVNjfiFujmEIpwF3W
+	 XhrDVeR5SwMxQ==
+Date: Tue, 11 Mar 2025 17:38:38 +0200
 From: Dmitry Baryshkov <lumag@kernel.org>
 To: Ayushi Makhija <quic_amakhija@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
@@ -53,10 +53,11 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
 	Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se, jernej.skrabec@gmail.com, 
 	quic_abhinavk@quicinc.com, quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com, 
 	quic_jesszhan@quicinc.com
-Subject: Re: [PATCH v2 05/10] drm/msm/dsi: add DSI support for SA8775P
-Message-ID: <hcfii7m4vevawchf2wzgzidgdimpsv2fpwvamj7f42vm4gzqpu@6irgcvfc3q7i>
+Subject: Re: [PATCH v2 06/10] arm64: dts: qcom: sa8775p: add Display Serial
+ Interface device nodes
+Message-ID: <h6a6evxcabqwoxejxsnl26zc3dzmxyp62p6em5rsrqmo4i4ovi@mlvha2qewtqu>
 References: <20250311122445.3597100-1-quic_amakhija@quicinc.com>
- <20250311122445.3597100-6-quic_amakhija@quicinc.com>
+ <20250311122445.3597100-7-quic_amakhija@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,16 +66,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250311122445.3597100-6-quic_amakhija@quicinc.com>
+In-Reply-To: <20250311122445.3597100-7-quic_amakhija@quicinc.com>
 
-On Tue, Mar 11, 2025 at 05:54:40PM +0530, Ayushi Makhija wrote:
-> Add DSI Controller v2.5.1 support for SA8775P SoC.
+On Tue, Mar 11, 2025 at 05:54:41PM +0530, Ayushi Makhija wrote:
+> Add device tree nodes for the DSI0 and DSI1 controllers
+> with their corresponding PHYs found on Qualcomm SA8775P SoC.
 > 
 > Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/dsi/dsi_cfg.c | 18 ++++++++++++++++++
->  drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
->  2 files changed, 19 insertions(+)
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 186 +++++++++++++++++++++++++-
+>  1 file changed, 185 insertions(+), 1 deletion(-)
 > 
 
 Reviewed-by: Dmitry Baryshkov <lumag@kernel.org>
