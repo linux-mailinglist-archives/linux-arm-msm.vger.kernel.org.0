@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-50968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27908A5C2E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 14:41:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E60BDA5C2EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 14:42:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D55F618956AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 13:42:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 406B97A3039
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 13:41:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9B731C5D7E;
-	Tue, 11 Mar 2025 13:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 663CE1CAA87;
+	Tue, 11 Mar 2025 13:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j+IL0ELQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CLkpjdpS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F363F1CAA7F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 13:41:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1161C5D77
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 13:42:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741700509; cv=none; b=tgPcNGXL5EkDGQNZjMYRQN+xh/eczRJG6rx4+JI0wrMxMayNeGkzmQ9kZROWTRWewd/hFY/8kzUQGqJsspeza4FALhJCsE5YaK9HPUlDk/gDunT0iyO1Mta0fpQ7Hgj6PRCR0+uJ4I9eFxre/gUNjFhfrW6o4+nbb/XLU/TIAYA=
+	t=1741700570; cv=none; b=ZtI1KqVyhcAz3qhf5lwH0iq0u5RqGV0t5bay39wFobzof3L+F8DFc/l8HkR4kQstlmmYMiwkROTzGC6fVhwrla6bii0rWAk74lQJsPNnt6/+qSXj7hntV38KcE3DI/ptYd+YhkNaPr6m47H/X9Ud/qDOr+UG08NsLdxrTve9jkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741700509; c=relaxed/simple;
-	bh=IBcbDWz+Jkvbt7LdP3cgmT2pR53Qjf6QGeKDZ6KkGtU=;
+	s=arc-20240116; t=1741700570; c=relaxed/simple;
+	bh=0GCrlN5KayRbpEQhJT2RkHo1RFpCIAplefLKyUYmVAw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ovUvejqQBqdrdh8YwEg+DQTrSVu6He3wyFBijQNdR6NgSGJCr7g5rC6Ij+52VbjiPmLLoSauWPx1/qM2/SzxtcBpqf5f/EDwovMIAkCeGMRIXXbfMuW+wmmM2gr9YxmH8i9lDDQePGaDDT2fynhFTdPq6YEgABYHCXriUXfmvCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j+IL0ELQ; arc=none smtp.client-ip=209.85.218.47
+	 In-Reply-To:Content-Type; b=P9wMR9gxwN7FyXE6cIMXL5tK9nB8BRDRWjUdVF9JUEM2/2IKz8yY5QrCtCSPnwyvQY2w5RNXloDwMOWjOlm8/mY/YDctFgXo2AhM0XSAbM2ut6NUPTyuUuFqncpE5PA1Vnq5B0DQ62DaqKCmDxqVMcH+cOR28jZdt6uLPjf8qmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CLkpjdpS; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ac2c7a367d9so10069166b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 06:41:47 -0700 (PDT)
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ab7e08f56a0so85704266b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 06:42:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741700506; x=1742305306; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1741700567; x=1742305367; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=HdKPWEjQ9MubZzHzANAR1B1dJk3X5c8iz/F2XLpQWFQ=;
-        b=j+IL0ELQz+e6KdzCMOname0dW/+KXcH9VnXXF+ZBjzkmBy89cu2hFPqf5Vt2DSEiJQ
-         ggjN7rfwaTthFuEqFiwwNrr5Sd94BG/jVx0zZC3DT4WEempwvyUyH6weMlhsE+O2Tdvo
-         DzqOfKn5hRKXVbSaCfYlH0eMajNLRgZDlGUrniF2t5A0SERp6mtSt7pDym48RsnrWu7K
-         useBiPCUpYrRo/U3QTzgR7c8dUiK0zJ9SKRZFJw6T3Zfpmrpr7jzVMtWZVhs08JhU75Q
-         pdneuKlin5ie62iRxP1ai69G+2D5QJKnEo7kH1jE8iLj42BtErLlmIzqj9EIDSkgZk3z
-         t+kA==
+        bh=OK/mNeXOS3BnFUBUb28LMgXW4oDwAfaEiFXsceleu8s=;
+        b=CLkpjdpSN23fhc+4xAZIImy0Df2meoaScFZ59u1Q7PwLFzOR+7Y3hyJTDZpbLjbKZ0
+         hyoin1eibtEAXMce2hQxxCsah3GNlz063VlitnbWS3XX9Ermu3SQ0HSAo5hw1yeUg2L9
+         jh8/YQFjepjK01w/GdOQpsCjGhs5XKxRfI7y+4BTNigmtAqFyZDRD06uyHmamswg0tv3
+         i8REnoSvv40ie+VoLULb3n9Vkjb3s1erDcDfT7LzgOo3DdZJ8OuoI61IbxmseEb8bhKk
+         NfwHK9YYbAh9CVrDBCQ3gIk4zueh5FCgsMVzkGk/7edTsIuDEinq1OINBNn/4sI3IZo4
+         aMug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741700506; x=1742305306;
+        d=1e100.net; s=20230601; t=1741700567; x=1742305367;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HdKPWEjQ9MubZzHzANAR1B1dJk3X5c8iz/F2XLpQWFQ=;
-        b=D9KKmLlz+jdchKqCPJplBVEOxwa8rqlVy5tONTyJ253P1KeHgrmxacWefT0cKVU9l1
-         1YEX4eIdGvb2DqikQhzArKEPp3khKL8ZBwvB2j9JiRlaxg+vsTWQhaGUkaKSN22b+9B5
-         0XVNB0zHnjsXuvQWliTZbkjshSdY06c6KMHjSq313A1Q3GRN7clf1VDqyGclM0eJwB3o
-         Zu07doDbP9LQWKMUK2AkUxhJSTJrGRrKE2vN04jyxa8/IhXPce5c4xMGiwmD1ye/5RYR
-         WOnMcppYYMaf/KP0KoUxrLKkft1PkBeMgkzb7KzY28kkxJ4ewdYbUbDzWqn7fnihrm8l
-         KSQg==
-X-Forwarded-Encrypted: i=1; AJvYcCVm+htvkXyRfwSMlgknjgvzxoenaUInjnkdkFnLkP6jxwInZaDrFikgA0g8QM+taUpNY/jgeHoTv7iD1nsd@vger.kernel.org
-X-Gm-Message-State: AOJu0YxvKUAA/dEYKjm+ywK+DzB8c84oCJXbl9atoRqRZCI1cFy5wzef
-	XJKtFI1dSDtsDcbfqUOFZiMfV7UGolCw6teDD2X560Sbdxbw8noJSVX5uS+VwOs=
-X-Gm-Gg: ASbGncup7fY763BNxZ8DQq5n3wQaXX9KO/iuq4ChstAUq6IuEqJTLyyj31EAQRSCF7N
-	p6jiYfxR/6cxw2nd4UY1InPtghFGNw5nYs1XBgLTeHjXkqs8L7k0WZnq0b2IdgDj7jC4eODYimM
-	ESFLVTwxRRChv6CqKJIbn6/jxjTSHnhK/w5XbC2IQg7RZ3CEjq4p2Uvffbnx42GJwltqjSdy3tz
-	bKnud7XKlus3oZE8NjcP939u07UfyPsH0o118LU4OobLBJSbVqkKBwxfvc6jTpOK2tOnDtpHSJm
-	NuOh3SVLiJolTFsXL6ynoksLQHFXUo5CsvzN5m6HJlPe3cBT/mE300uRRT8Pffo=
-X-Google-Smtp-Source: AGHT+IEqEAGnHplIQlC9/HTd3OQLI+WAu1AQWvDUyhIkVSadRnO3CylrdWWKlM5lhSqAt8Davw0wjg==
-X-Received: by 2002:a17:906:7311:b0:abf:6f87:6730 with SMTP id a640c23a62f3a-ac2b9de959fmr168044566b.5.1741700506149;
-        Tue, 11 Mar 2025 06:41:46 -0700 (PDT)
+        bh=OK/mNeXOS3BnFUBUb28LMgXW4oDwAfaEiFXsceleu8s=;
+        b=KnzEEfFD22r4a2sz5oBxO50gDS+edl1xE4MYMoi8wT+271vZnsoePuYUhNNzjZtsd0
+         mQFkpjhdqygO0IL1IrWSl4qNI5iqJU4+nMOsaxY1xGUK9VyQL9JKwBzeYZ0i27i+fbeE
+         VGuAejz4u9tH2iBwbuojYGf4sNfH7OjIotkiurc+SoG0w9BKIJ4nQ0vOmaAT3w9yR1Au
+         HdOYYOiTiQSfvp/UXdNHrsgZqvzhBLxcPnBrA38Y4nt5NkhaLSN9g/xXH9U4ffyEBeha
+         rITtX/IJO1Nm7B1BnILmgDw9hg4Um73A+5X60MTh9VksTWWYWznN3LMVehi5aBHf1251
+         Y9+w==
+X-Forwarded-Encrypted: i=1; AJvYcCVsulrN+hY65GRKJaULYC8J8+ATR+4dQeZKu7BOMvP6W7x3UYuE95YcEiodzl0HHFTEMKc84ib8dPUwuihw@vger.kernel.org
+X-Gm-Message-State: AOJu0YxB7MuEQG2pxZDH9ZlUN54FB7ZN1h7kgwynUkPgjvIMVejSvcqN
+	2MqRQBE4xg5U09LScgTU7AHrnp/NwgpoBAn9tNLq1GQf93Yb+kjBXDzD+61QKIU=
+X-Gm-Gg: ASbGncugmX9d39lI/q8qs9C7SBMJr7wIg2999963PBpAr+fOpoNN+rhQNdq9wVKIu46
+	l1kv2xkbkE6iUtbWSYAFrhr9OW7JOx2vRtp0gcHgKxtS/qwfj19YPoHX8Ns3L6deehkfXbZc30R
+	lnmonWF7AXRi11pSiulvS1/TqrSixaTScaLCekr/EY1eKF2eoS0kS5Z2ZnGt5FKC+VgXa//PLjx
+	PeEZF652KMvkRb+yIAJeWZDZv5b7WLbN0qTSeEQsNAHBy9yD8fx2Ce2ZIL3Mph8sW41XJ19AjcI
+	OPWvmhY7VsYC0aOYJ+klMVMTaej7fhad8CSSgF1pWuzMvKnDsLWqn4g7Nc8nrx0=
+X-Google-Smtp-Source: AGHT+IHtY6iWQCXAHAWxWQCwXcAH70yQ6uYRmE6uUNf099ZZ+4osiFbnrB1uJPfMgJq80ObdnKhGcw==
+X-Received: by 2002:a17:906:f5aa:b0:ac1:4da:3edd with SMTP id a640c23a62f3a-ac2b9db47ddmr183374666b.1.1741700566810;
+        Tue, 11 Mar 2025 06:42:46 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.198.86])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac239517802sm915329766b.86.2025.03.11.06.41.44
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac256654fa6sm773804766b.93.2025.03.11.06.42.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Mar 2025 06:41:45 -0700 (PDT)
-Message-ID: <5a88dc9e-3952-478e-840c-5d6dac1cd81d@linaro.org>
-Date: Tue, 11 Mar 2025 14:41:42 +0100
+        Tue, 11 Mar 2025 06:42:46 -0700 (PDT)
+Message-ID: <c7c72397-c7d3-426d-b971-35b1cd213775@linaro.org>
+Date: Tue, 11 Mar 2025 14:42:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +82,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 18/21] drm/msm/dpu: Implement 10-bit color alpha for
- v12.0 DPU
+Subject: Re: [PATCH v3 19/21] drm/msm/dpu: Implement CTL_PIPE_ACTIVE for v12.0
+ DPU
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
  <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
@@ -101,8 +101,8 @@ Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
  Srini Kandagatla <srinivas.kandagatla@linaro.org>,
  Rob Clark <robdclark@chromium.org>
 References: <20250221-b4-sm8750-display-v3-0-3ea95b1630ea@linaro.org>
- <20250221-b4-sm8750-display-v3-18-3ea95b1630ea@linaro.org>
- <4y2nj6qxbbp7etuweoyarcg7vpbyemparzclj7ulb46rxk7k3s@s6wjrjebuc3g>
+ <20250221-b4-sm8750-display-v3-19-3ea95b1630ea@linaro.org>
+ <5rlcxx7pcu32hz3r4qufqcq2jzk2z4g2ep7reecpm2kksttwyi@66p2u4nwfzx6>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -149,104 +149,25 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <4y2nj6qxbbp7etuweoyarcg7vpbyemparzclj7ulb46rxk7k3s@s6wjrjebuc3g>
+In-Reply-To: <5rlcxx7pcu32hz3r4qufqcq2jzk2z4g2ep7reecpm2kksttwyi@66p2u4nwfzx6>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21/02/2025 17:25, Dmitry Baryshkov wrote:
->> -static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
->> -		struct dpu_plane_state *pstate, const struct msm_format *format)
->> +static void _dpu_crtc_setup_blend_cfg(const struct dpu_hw_ctl *ctl,
->> +				      struct dpu_crtc_mixer *mixer,
->> +				      struct dpu_plane_state *pstate,
->> +				      const struct msm_format *format)
->>  {
->>  	struct dpu_hw_mixer *lm = mixer->hw_lm;
->>  	uint32_t blend_op;
->> -	uint32_t fg_alpha, bg_alpha;
->> +	uint32_t fg_alpha, bg_alpha, max_alpha;
->>  
->>  	fg_alpha = pstate->base.alpha >> 8;
->> -	bg_alpha = 0xff - fg_alpha;
->> +	if (ctl->mdss_ver->core_major_ver < 12)
->> +		max_alpha = 0xff;
->> +	else
->> +		max_alpha = 0x3ff;
+On 21/02/2025 17:26, Dmitry Baryshkov wrote:
+> Minot nit below
 > 
-> So, CTL is passed only to get struct dpu_mdss_version? It can either be
-> passed directly or fetched via dpu_kms->catalog->mdss_ver
-
-Ack.
-
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>> index 43a254cf57da571e2ec8aad38028477652f9283c..3e0bdd1100ebb0d302a852ceeaf8af86835e69a1 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>> @@ -40,6 +40,7 @@
+>>  #define   CTL_INTF_FLUSH                0x110
+>>  #define   CTL_CDM_FLUSH                0x114
+>>  #define   CTL_PERIPH_FLUSH              0x128
+>> +#define   CTL_PIPE_ACTIVE               0x12C
 > 
->> +	bg_alpha = max_alpha - fg_alpha;
->>  
->>  	/* default to opaque blending */
->>  	if (pstate->base.pixel_blend_mode == DRM_MODE_BLEND_PIXEL_NONE ||
->> @@ -337,7 +343,7 @@ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
->>  	} else if (pstate->base.pixel_blend_mode == DRM_MODE_BLEND_PREMULTI) {
->>  		blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
->>  			DPU_BLEND_BG_ALPHA_FG_PIXEL;
->> -		if (fg_alpha != 0xff) {
->> +		if (fg_alpha != max_alpha) {
->>  			bg_alpha = fg_alpha;
->>  			blend_op |= DPU_BLEND_BG_MOD_ALPHA |
->>  				    DPU_BLEND_BG_INV_MOD_ALPHA;
->> @@ -348,7 +354,7 @@ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
->>  		/* coverage blending */
->>  		blend_op = DPU_BLEND_FG_ALPHA_FG_PIXEL |
->>  			DPU_BLEND_BG_ALPHA_FG_PIXEL;
->> -		if (fg_alpha != 0xff) {
->> +		if (fg_alpha != max_alpha) {
->>  			bg_alpha = fg_alpha;
->>  			blend_op |= DPU_BLEND_FG_MOD_ALPHA |
->>  				    DPU_BLEND_FG_INV_MOD_ALPHA |
->> @@ -482,7 +488,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
->>  
->>  		/* blend config update */
->>  		for (lm_idx = 0; lm_idx < cstate->num_mixers; lm_idx++) {
->> -			_dpu_crtc_setup_blend_cfg(mixer + lm_idx, pstate, format);
->> +			_dpu_crtc_setup_blend_cfg(ctl, mixer + lm_idx, pstate, format);
->>  
->>  			if (bg_alpha_enable && !format->alpha_enable)
->>  				mixer[lm_idx].mixer_op_mode = 0;
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->> index 3bfb61cb83672dca4236bdbbbfb1e442223576d2..75bf3521b03c8e243ccfe1fc226aa71f23b296df 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->> @@ -19,12 +19,20 @@
->>  
->>  /* These register are offset to mixer base + stage base */
->>  #define LM_BLEND0_OP                     0x00
->> +
->> +/* <v12 DPU with offset to mixer base + stage base */
->>  #define LM_BLEND0_CONST_ALPHA            0x04
->>  #define LM_FG_COLOR_FILL_COLOR_0         0x08
->>  #define LM_FG_COLOR_FILL_COLOR_1         0x0C
-> 
-> lowercase hex
-
+> lowercase hex, please.
 Ack
-
-> 
->>  #define LM_FG_COLOR_FILL_SIZE            0x10
->>  #define LM_FG_COLOR_FILL_XY              0x14
->>  
->> +/* >= v12 DPU */
->> +#define LM_BORDER_COLOR_0_V12		0x1C
-> 
-> lowercase hex
-> 
->> +#define LM_BORDER_COLOR_1_V12		0x20
->> +
->> +/* >= v12 DPU with offset to mixer base + stage base */
->> +#define LM_BLEND0_CONST_ALPHA_V12	0x08
-> 
-> This doesn't seem to be aligned properly
-
-That's only patch view... because I used tabs. I think existing code
-uses spaces, so I will switch to spaces.
-
 
 Best regards,
 Krzysztof
