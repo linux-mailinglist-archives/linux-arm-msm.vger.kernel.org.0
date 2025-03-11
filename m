@@ -1,168 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-51064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E4C1A5CF26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 20:19:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48ACEA5CFA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 20:43:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B07541898197
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:20:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C6597A3CEA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:41:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19419263C88;
-	Tue, 11 Mar 2025 19:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 985B42641F5;
+	Tue, 11 Mar 2025 19:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JmJ4pQPs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkWW6cmK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D55B1F03F2;
-	Tue, 11 Mar 2025 19:19:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E64D263881
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 19:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741720793; cv=none; b=XFiKiMnjadeEnXG8lfRzYqFHLfkxoar4gbyM4Sk8CXH6QbcZd0150SfkvL4nE6DPuaxn0iWh7hjP3GFIOVF5fafFqWCuZ1IAufU3wGXsXpBXwXd8pnNAtv42JBZmjArNpFnUG6MRUrB5syZSbDQeZeq3QkhYCCuSG728qJtEd7k=
+	t=1741722173; cv=none; b=o/pTt+ENb/Z6dDGcHv8VdA2mgFkaNL6J2WG/LdXRVPT68MNfDZtHE3vJVi3l1w2MVKvZ+wPF+drZEh3GyAxxpTpyoLuMHpQAyGVkLjTR9PEqgkCWZ4ASF3Gltn8nZvE7O9849pw1LBL+K2KpxD0RhPuRzsjMcrICZmkecIdKvLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741720793; c=relaxed/simple;
-	bh=2LCiy4lFtFm1TsLHV4lPWQ9w3NrS4s9HWA9Rz74dfj4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KFDx0xuv0lX/wM8kb9MLep25yLI5H/RLRASBbg1dF4HWVT2jXwMLx1jwNLw0Ltt8F0x5YhuSsAlcdomf/Uy2QawEkQIN5iFVkYQIVG7yoeyA9OwndlgmVdMdeAv1p+d27x226yrxohS5S336Mg44FmyVuC+o5ojSfruvJMQHHbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JmJ4pQPs; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BJ8ZHe017734;
-	Tue, 11 Mar 2025 19:19:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cOhWVdEMxYHFBSFUIiBHuYp/vQkdKu4vEMS65xaXcL8=; b=JmJ4pQPshJW651tO
-	UZvTCFtA2KHcr7OPjqnPp5JIctaSk3ezU/IG/TNQAbL7H/lgLb1juJcvLtV9eem3
-	TMjDLZuTTZt/5hWRZjBC3m3QGpADuoWdrwl+5FPskAyWQ8ViPKk0cA3fTESyF/l5
-	my/EGgV9lPBOPJionF18iH12CNcQgXhrypEsB1PfLxpa7xzhYZRuYabnFOXeBtj0
-	zzXjssSFqFsN09nx2gzQ43toz7mA2dGDCPHbbC1XpXKw+mmQAiCexVfGr4nw3t/f
-	RrBAr3GVQE0wnIZy5QNiAaQkyYBI6nQ+hUc4VMOs6DUeAemeBglV3VljQX3cBcPu
-	+b/nwg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2nr0up-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Mar 2025 19:19:47 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52BJJjLB005862
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Mar 2025 19:19:45 GMT
-Received: from [10.216.38.182] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Mar
- 2025 12:19:41 -0700
-Message-ID: <203ea0bb-c53c-389e-db12-b41773c0ff5d@quicinc.com>
-Date: Wed, 12 Mar 2025 00:49:38 +0530
+	s=arc-20240116; t=1741722173; c=relaxed/simple;
+	bh=1KA72Lm2RCHKFh/p6H4nke2mfI5zVmemdmoVecWMp2g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GTFCuiO3YxQJaMeKK9b/+pjT1lw+bfr/GT/vA4TGtNKUOOrEGiwEtRUBLzdo6mytRVWFEicwhDXhLdSveLqyMwP14gIXAf2VnVIOX3sTBa1Vdo9YG42u5OmHd7P1H6gPsXKIAYcWU9gZk3VFmRJ7XW/gBOsnfzGiltVHgpZFpWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BkWW6cmK; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-301001bc6a8so331292a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 12:42:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741722171; x=1742326971; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8N/4+Bu0y09vjMihB3VFFSKzM9LtDAemE75jVPYGVnw=;
+        b=BkWW6cmKD24GlgziYP+QYLNJRGpEmAvPic7M+rEvltWKhfa0FwhqqNN8d3+VT0xyck
+         hfF0XJ4i1p5QqngMWAeGjyIuXDSKQ1695en6IvDNXWBMXhqoLVIc9wRCE3y9dvdVcdH4
+         e6Oj95Y/r8XFrjOtqO1dsD+t+z7+1oVFMw6d3irxZtYG9vdf0pg9oMcWav6YDMuxvMTy
+         xXx1W5kdL4iB0zUhFR3DJJAL6oBVZ17SXcAGbv0RGLV7u0kueXYEUn40x53Srd7bbKWM
+         KUMkESx/7bLxAZud3i0dBPIIPovtkQYqkE3kv5WZV5zxkNdsIMdMgiRHgFFU9UcfNBVZ
+         lXNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741722171; x=1742326971;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8N/4+Bu0y09vjMihB3VFFSKzM9LtDAemE75jVPYGVnw=;
+        b=Y5+MKqr2OHkbhzRIbaN4BJzz+OyqW30Fvwws1zYiH5ov7PIAscftaLDiVsPAq3JSgw
+         X5h6SJSnWlok1Z22wHE7ic7qnzImE81j6JLBDIRTAtzlxTpHYWxP8L893RIeZ5M0f6Q2
+         5F0HIXWsgQ7LYxoVQDdbrLH4pqReO/Fgz9cBUylGwqM1L+ZfkIovkNBaDShG/tLM0+Tc
+         u01XHUrmS8bpNsVPdT6yJx277OKsl0pkletsnYK5fXttxS2W90ASCg9CuiZAT9p4R5L9
+         nbqXetfrmbOb2JiAHDut24TJzpp+GoOc/vyDvsLCmKY2Dj4n9EqFhBx/7F1Z5hPdAJvO
+         JSdA==
+X-Forwarded-Encrypted: i=1; AJvYcCWAwy9jmTK3tHwd8sf6vKA6S1HO62aBG4yFDl0iyopF/noSRyhvRtLtwmTJOnEBN0RTDTrwaNM4tHNEIyv1@vger.kernel.org
+X-Gm-Message-State: AOJu0YwzJNh+LXG64j4myTPfkWMKiBQqibc+zoE/HOJRQ7iOQdHFkZBS
+	nuRyh7QtMDUMKWynMhhjpfUSdTsYPRjHcbl3e0Kse4P1bO7Eau/b6SXai9VdHXi/FFTK7qHEL1C
+	ntb1cwDf44Y9laKP6s2W0smJbhdU=
+X-Gm-Gg: ASbGncv8OE7fzCLHAkEnMSGPHiaFknjDmCchKUHjP2hTAaHpshhaAM/m/RoMynv9L12
+	X6mAvzIC3j1ecaKKKihTG84ac03IsCJgLTK1MVb+XpGbdkBTDCowPO5RYySxdIpxRc2teQLXUBC
+	k4RKkNEGfWAAjZDG0OP6Yr2NgC/PA2Q59yOOce
+X-Google-Smtp-Source: AGHT+IFUV+t76koSVwvfP0DiZwzaDgX4TU97m1RDJMgX9rF6Maeao/NZF5n1twVNajoiVfnFuWNdcIiFIJEURljqxUQ=
+X-Received: by 2002:a05:6a00:3e04:b0:730:9989:d2d4 with SMTP id
+ d2e1a72fcca58-736eba65be7mr2466708b3a.3.1741722171206; Tue, 11 Mar 2025
+ 12:42:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 1/4] dt-bindings: media: qcom,sm8550-iris: update power
- domain name
-Content-Language: en-US
-To: Dmitry Baryshkov <lumag@kernel.org>
-CC: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
- <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com>
- <7yjj2eemvvvnsgv67d7tueid4h3n3onuou6ammx36am4qhfsal@xam3iamk4er3>
- <c0430086-675d-b58c-4ef9-1bd9ee51d3db@quicinc.com>
- <zssjkvxxv7kionartp6f3y2qh3d4i6gwnhwsrklsfad3t4fy3q@jkehbkx6wcyk>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <zssjkvxxv7kionartp6f3y2qh3d4i6gwnhwsrklsfad3t4fy3q@jkehbkx6wcyk>
+References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
+ <20250304-msm-gpu-fault-fixes-next-v4-2-be14be37f4c3@gmail.com> <20250311180807.GC5216@willie-the-truck>
+In-Reply-To: <20250311180807.GC5216@willie-the-truck>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Tue, 11 Mar 2025 15:42:38 -0400
+X-Gm-Features: AQ5f1Jpiv6Ky6TiyCXBXNy8BjxnsE1wP6MKIErri1CZPIQdm5BNmyqGHT0u49Nw
+Message-ID: <CACu1E7Hw6vGbTQ7t-Hj3ziycZhPxtOGSDkt7o4fNUx91KDcXfg@mail.gmail.com>
+Subject: Re: [PATCH v4 2/5] iommu/arm-smmu-qcom: Don't read fault registers directly
+To: Will Deacon <will@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>, 
+	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HgxfAPyusGHWxAxQC0V6gT8J8q9kQRrL
-X-Authority-Analysis: v=2.4 cv=Q4XS452a c=1 sm=1 tr=0 ts=67d08cd3 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=Ve5_cTlWWX7DCNKN5mYA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: HgxfAPyusGHWxAxQC0V6gT8J8q9kQRrL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-11_05,2025-03-11_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
- lowpriorityscore=0 mlxscore=0 clxscore=1015 phishscore=0 malwarescore=0
- spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503110125
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Mar 11, 2025 at 2:08=E2=80=AFPM Will Deacon <will@kernel.org> wrote=
+:
+>
+> On Tue, Mar 04, 2025 at 11:56:48AM -0500, Connor Abbott wrote:
+> > In some cases drm/msm has to resume a stalled transaction directly in
+> > its fault handler. Experimentally this doesn't work on SMMU500 if the
+> > fault hasn't already been acknowledged by clearing FSR. Rather than
+> > trying to clear FSR in msm's fault handler and implementing a
+> > tricky handshake to avoid accidentally clearing FSR twice, we want to
+> > clear FSR before calling the fault handlers, but this means that the
+> > contents of registers can change underneath us in the fault handler and
+> > msm currently uses a private function to read the register contents for
+> > its own purposes in its fault handler, such as using the
+> > implementation-defined FSYNR1 to determine which block caused the fault=
+.
+> > Fix this by making msm use the register values already read by arm-smmu
+> > itself before clearing FSR rather than messing around with reading
+> > registers directly.
+> >
+> > Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> > ---
+> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 19 +++++++++----------
+> >  drivers/iommu/arm/arm-smmu/arm-smmu.c      | 14 +++++++-------
+> >  drivers/iommu/arm/arm-smmu/arm-smmu.h      | 21 +++++++++++----------
+> >  3 files changed, 27 insertions(+), 27 deletions(-)
+>
+> [...]
+>
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/=
+arm-smmu/arm-smmu.h
+> > index d3bc77dcd4d40f25bc70f3289616fb866649b022..411d807e0a7033833716635=
+efb3968a0bd3ff237 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> > @@ -373,6 +373,16 @@ enum arm_smmu_domain_stage {
+> >       ARM_SMMU_DOMAIN_NESTED,
+> >  };
+> >
+> > +struct arm_smmu_context_fault_info {
+> > +     unsigned long iova;
+> > +     u64 ttbr0;
+> > +     u32 fsr;
+> > +     u32 fsynr0;
+> > +     u32 fsynr1;
+> > +     u32 cbfrsynra;
+> > +     u32 contextidr;
+> > +};
+> > +
+> >  struct arm_smmu_domain {
+> >       struct arm_smmu_device          *smmu;
+> >       struct io_pgtable_ops           *pgtbl_ops;
+> > @@ -380,6 +390,7 @@ struct arm_smmu_domain {
+> >       const struct iommu_flush_ops    *flush_ops;
+> >       struct arm_smmu_cfg             cfg;
+> >       enum arm_smmu_domain_stage      stage;
+> > +     struct arm_smmu_context_fault_info cfi;
+>
+> Does this mean we have to serialise all faults for a given domain? That
+> can't be right...
+>
+> Will
 
-On 3/11/2025 9:05 PM, Dmitry Baryshkov wrote:
-> On Tue, Mar 11, 2025 at 08:41:01PM +0530, Vikash Garodia wrote:
->>
->> On 3/11/2025 8:37 PM, Dmitry Baryshkov wrote:
->>> On Tue, Mar 11, 2025 at 05:33:53PM +0530, Vikash Garodia wrote:
->>>> Not all platforms has a collapsible mx, so use the more generic naming
->>>> of mx in the binding.
->>>
->>> I guess, it wasn't even tested...
->> Not sure what made you guess so, let me check why my binding checker did not
->> catch the bot reported warning.
-> 
-> Obvious: you are changing the bindings in a non-backwards compatible
-> way, but you are not changing the example in the same file (and
-> obviously you are not changing the DTs), which means that this wasn't
-> tested.
-> 
-> Hint: you can use enum [mx, mxc] instead of const. That would make it
-> backwards compatible.
-Currently there are no user of this binding. Given that either of MX or MXC are
-same connection to video hardware, just that one is collapsible, it would be
-good to replace the existing element instead of enum.
+They are already serialized? There's only one of each register per
+context bank, so you can only have one context fault at a time per
+context bank, and AFAIK a context bank is 1:1 with a domain. Also this
+struct is only written and then read inside the context bank's
+interrupt handler, and you can only have one interrupt at a time, no?
 
-Regards,
-Vikash
-> 
->> Regards,
->> Vikash
->>>
->>>>
->>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>>> ---
->>>>  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 2 +-
->>>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
->>>> index e424ea84c211f473a799481fd5463a16580187ed..440a0d7cdfe19a1ccedefc207d96b26eed5d6630 100644
->>>> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
->>>> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
->>>> @@ -28,7 +28,7 @@ properties:
->>>>      items:
->>>>        - const: venus
->>>>        - const: vcodec0
->>>> -      - const: mxc
->>>> +      - const: mx
->>>>        - const: mmcx
->>>>  
->>>>    clocks:
->>>>
->>>> -- 
->>>> 2.34.1
->>>>
->>>
-> 
+Connor
 
