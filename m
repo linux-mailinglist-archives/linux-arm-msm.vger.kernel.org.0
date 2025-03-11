@@ -1,270 +1,503 @@
-Return-Path: <linux-arm-msm+bounces-50911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7445DA5BAA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:16:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EED7BA5BAB0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:20:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A5C7A163C0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 08:16:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7AB1918927FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 08:20:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEA641E7C11;
-	Tue, 11 Mar 2025 08:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A90C322423A;
+	Tue, 11 Mar 2025 08:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hzEMiy7/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UAHhs/5U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C093596F;
-	Tue, 11 Mar 2025 08:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE71E7C2B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 08:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741681007; cv=none; b=Sv0MPDGTBO+iIalaJlUgholoq/1RI0SEmFpAF9uFYiaJOg1wwirABZ9aXECWweI1qvFJJl1ulmQY5Ijmpd8GfN7+ylbH8h9/xtvLJIv+zLjHrA5Gj419L10GA+aiYVtq72AGYnEfO9L5+aX4pRVhyle0KVvJopX/LCedLh/qYnU=
+	t=1741681225; cv=none; b=G54oFTedI/gCK1Ozne0bUORwpo9xzvXKSj+duNKGedhH2el+xbpfRvbbCaW+XjM+8WQVjozjJlDgD3CtqzybY73sKh8bzHDZ+qan8wLti04j4PjL13CBZ10pI6zEAMLv+kg/wJWXaT5fngk71ODJXu/BI6cnDju4+62McOj4/cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741681007; c=relaxed/simple;
-	bh=ng5wyALW6ld67NJv7B8d70Oqs+nbYll75WwrO2/hVM0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ogmN/NEI47AzIKWFCqM/cjDCdMsKsqg35ZPHd8NXFCpz21Sxa/dWT7prvT3hznsXbiihq29ic8JLSczq+pfuYcE9vJR58gN94oV3qoAnLoiOyclznIipesci5H5hIVFX8Gkz2onyVV0OXSthQ+9yZJJqeKZdGFMTtK4EtB8/+bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hzEMiy7/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52B7olEa028020;
-	Tue, 11 Mar 2025 08:16:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=MMrcpnZoinmghZmI4i1BjUQH
-	1Z0qXqyC7ZdoR9tlrfE=; b=hzEMiy7/10ZQ7qFigHTz9CMpB7ojnOJ/n1YTlYSF
-	fUIXssS10DWjzlfs/btsvJEDrJC/bsIxko7/jsuvh7q2WovK1g4hI99F0iAfVgK8
-	8yR9VUcemYZ2rnZ0HpharVoo+TsrzHyRd5X5/fEjPGfDQXRbm7yBGdOEpx7yWN3Y
-	tRof+UJqLd8Bdn7obduB9ktQarAo805LDmu+CgCRAGRlMVCSaT4fSAl9UZi3MkAz
-	HlgAgwwLjOVz7BCtR1SPDpS1pdPjJeOuAFUAHzos9EN/c/uJ/af7k3BPx5PX48ah
-	VGpsFyGWNPYYzFHQQWmfx9h39jQ4QW2tvnu13FhqBQIdyQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ah5282nr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Mar 2025 08:16:25 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52B8GOsx032540
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Mar 2025 08:16:24 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 11 Mar 2025 01:16:17 -0700
-Date: Tue, 11 Mar 2025 13:46:14 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <p.zabel@pengutronix.de>, <quic_nsekar@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>
-Subject: Re: [PATCH v11 3/7] dt-bindings: PCI: qcom: Use sdx55 reg
- description for ipq9574
-Message-ID: <Z8/xTotUg+2GN2+G@hu-varada-blr.qualcomm.com>
-References: <20250220094251.230936-1-quic_varada@quicinc.com>
- <20250220094251.230936-4-quic_varada@quicinc.com>
- <41b400fe-5e08-42c0-9bc6-a238d25d155a@kernel.org>
- <33bb1cb2-0c5e-402b-a5c6-9604b1dd8d99@kernel.org>
- <Z86YReHsKeF165F6@hu-varada-blr.qualcomm.com>
- <84456c70-e933-469f-ac7a-7d899f85e777@linaro.org>
- <Z8/Dto1fZWvemiY5@hu-varada-blr.qualcomm.com>
- <01a7918b-dc4b-4ed3-8f74-bc59a9629ce9@kernel.org>
+	s=arc-20240116; t=1741681225; c=relaxed/simple;
+	bh=qpe/qHxDtSN44NJQpnHONWC7ecTQQ8UgN8o4ncagqVg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tR1W9y75MSXPI5isW0iWWQ9+OGyL9h7l6lm8pEo4453CJbE1REt3bCvZGoUauhVHGmiyJ/goy2daT1lB4FttBnXgNd3McfmAmKnMQ8g4ICMXqKXuZl42NgJew9/2DINHA3lN2KRbEj821ESoTKMeu0DA7RLAP0/TBosiy6YVNa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UAHhs/5U; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so30229045e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 01:20:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741681220; x=1742286020; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YZPGTU50Ws38AW0HjS/5KDAyC34WXW4R9Ltnw/jI+eM=;
+        b=UAHhs/5UjjaGgA45azt9XkoeKvNxX1Cosg3RJK1C24CNsxOBKl3nbfseM55dQJ9Y0W
+         IfeSyas3AlhA3ML8y/qtExLBn1gBZ+Li2Ke+PxbQxSf4qXuSVSJTsIomfc7wXPGWwK5y
+         U+YihO3G1NUryLjuBUI6yc+tKuLBBVFLja52UOx+p9oB1R1QLKRJkw41kmddBLN5eSpf
+         SZN+CDh/Lg42MW4FB/TEFTJxbAdW9gdTCQ0MVl+lBYFOv2qampe7oxSCshekFQWPeAUT
+         6OjL7VUXaubEfWKg/eM/DbjVuTrBEvKMLhyCTrQzn5xmwxk65VnKBskGFlbuHKOvEy/4
+         qApA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741681220; x=1742286020;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YZPGTU50Ws38AW0HjS/5KDAyC34WXW4R9Ltnw/jI+eM=;
+        b=rDV7XGaDKppLBwvONVZDuPraTbr84tLcpeQgrr5obi7ifg2eyVCyTWtz1oxRsC9vQJ
+         va+ki952DXeKhGZDyP0O2hhzm5GJvoAKZZFiJFtFRjXQJlK90044nzJoqEwah9dnhx/F
+         7rlhGXN1qaH38yrskUeJ9sl/SvDwSiDxo1LdvRxB7RpqubguMPg5jfZBEOPczrXxjf1l
+         YCw1vMa7x9EyNr3teXWimo08pKKpmX0fxpOJhrYTha1oPp4rdxmy/ezALOM91VdEVCQ3
+         PvOqB26rnSDAN0fM5S82LNE6TUNJFHdRNkwwHMkG/YVP8VUqwR4Ui1yALYsu4Afdny10
+         RC8A==
+X-Forwarded-Encrypted: i=1; AJvYcCXcmKOO9kVNMxUxm/4JxK5S48rAwTZ/YX/UGza+Tlnciq6LgE2CvMEjGvGryq8e9R3DSU9UCyAr66Zji55v@vger.kernel.org
+X-Gm-Message-State: AOJu0YwyBfwjY9x7WgLt/djYVk8d3iROvUX72NIUGFpQebJThmMNhb9y
+	WNepCHIgm0MyxPZsGMb61r7Cqxv5Az7C7sk5pwm3eGtyEFjB6gsZ+PnpT/tKsdU=
+X-Gm-Gg: ASbGncudlaZu/gU78hqpidhdIZqYlFQGX6cIjNXo1SxYi/uiTDfghaw/gFM1bb7I+ha
+	t2fEV0B1oWhAASO+0b6e10ykOoA2/GBMoOv7t9s1ZacLRq9a+JxZf5NOnXQhh9shQMOUJTrTh1l
+	CrsbJtZthoNWHLz6GgYxmVyIhXUahAtSznQjxqS9I8RwPWfai5x8jqZX592TXnEmkEK/z2/IOaV
+	/LG7+QTi67OilFdyYH4PEdxcWjxWW10ipl44TTFULxMweAJGYlGZEpnLnsjcX9SM9Nwm6CkWrjn
+	MtmRFdblRce/NklfMrX7yjanxLtsEcpbNzrDebVTldh6sQheRflL
+X-Google-Smtp-Source: AGHT+IF0T6uCuKPW4cmR1KWx5OtI4Jr0uqhH6tH+7c2IYER/0RP4xNsmD56xV4MalnbRwrGn21IQsg==
+X-Received: by 2002:a05:600c:3542:b0:43c:ec4c:25b4 with SMTP id 5b1f17b1804b1-43d01bdbc01mr39267425e9.10.1741681220315;
+        Tue, 11 Mar 2025 01:20:20 -0700 (PDT)
+Received: from linaro.org ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912bfb7ae4sm16893786f8f.5.2025.03.11.01.20.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Mar 2025 01:20:19 -0700 (PDT)
+Date: Tue, 11 Mar 2025 10:20:18 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	laurentiu.tudor1@dell.com, johan@kernel.org
+Subject: Re: [PATCH v1 2/2] drm/msm/dp: Introduce link training per-segment
+ for LTTPRs
+Message-ID: <Z8/yQsiaPtJHKBUl@linaro.org>
+References: <20250310211039.29843-1-alex.vinarskis@gmail.com>
+ <20250310211039.29843-3-alex.vinarskis@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <01a7918b-dc4b-4ed3-8f74-bc59a9629ce9@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hxN1VIELppKs3TXAf4Mcm4v-qBzweo7n
-X-Proofpoint-ORIG-GUID: hxN1VIELppKs3TXAf4Mcm4v-qBzweo7n
-X-Authority-Analysis: v=2.4 cv=DfTtqutW c=1 sm=1 tr=0 ts=67cff159 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
- a=_r5JOhWGjcopMknOANcA:9 a=CjuIK1q_8ugA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-11_01,2025-03-07_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- bulkscore=0 mlxlogscore=999 adultscore=0 impostorscore=0
- priorityscore=1501 clxscore=1015 mlxscore=0 suspectscore=0
- lowpriorityscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2503110055
+In-Reply-To: <20250310211039.29843-3-alex.vinarskis@gmail.com>
 
-On Tue, Mar 11, 2025 at 08:54:55AM +0100, Krzysztof Kozlowski wrote:
-> On 11/03/2025 06:01, Varadarajan Narayanan wrote:
-> > On Mon, Mar 10, 2025 at 12:37:28PM +0100, Krzysztof Kozlowski wrote:
-> >> On 10/03/2025 08:44, Varadarajan Narayanan wrote:
-> >>> On Thu, Mar 06, 2025 at 01:06:13PM +0100, Krzysztof Kozlowski wrote:
-> >>>> On 06/03/2025 12:52, Krzysztof Kozlowski wrote:
-> >>>>> On 20/02/2025 10:42, Varadarajan Narayanan wrote:
-> >>>>>> All DT entries except "reg" is similar between ipq5332 and ipq9574. ipq9574
-> >>>>>> has 5 registers while ipq5332 has 6. MHI is the additional (i.e. sixth
-> >>>>>> entry). Since this matches with the sdx55's "reg" definition which allows
-> >>>>>> for 5 or 6 registers, combine ipq9574 with sdx55.
-> >>>>>>
-> >>>>>> This change is to prepare ipq9574 to be used as ipq5332's fallback
-> >>>>>> compatible.
-> >>>>>>
-> >>>>>> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >>>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>>>>
-> >>>>> Unreviewed.
-> >>>>>
-> >>>>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> >>>>>> ---
-> >>>>>> v8: Add 'Reviewed-by: Krzysztof Kozlowski'
-> >>>>>> ---
-> >>>>>>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
-> >>>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>>>>>
-> >>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >>>>>> index 7235d6554cfb..4b4927178abc 100644
-> >>>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >>>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >>>>>> @@ -169,7 +169,6 @@ allOf:
-> >>>>>>              enum:
-> >>>>>>                - qcom,pcie-ipq6018
-> >>>>>>                - qcom,pcie-ipq8074-gen3
-> >>>>>> -              - qcom,pcie-ipq9574
-> >>>>>
-> >>>>> Why you did not explain that you are going to affect users of DTS?
-> >>>>>
-> >>>>> NAK
-> >>>
-> >>> Sorry for not explicitly calling this out. I thought that would be seen from the
-> >>> following DTS related patches.
-> >>>
-> >>>> I did not connect the dots, but I pointed out that you break users and
-> >>>> your DTS is wrong:
-> >>>> https://lore.kernel.org/all/f7551daa-cce5-47b3-873f-21b9c5026ed2@kernel.org/
-> >>>>
-> >>>> so you should come back with questions to clarify what to do, not keep
-> >>>> pushing this incorrect patchset.
-> >>>>
-> >>>> My bad, I should really have zero trust.
-> >>>
-> >>> It looks like it is not possible to have ipq9574 as fallback (for ipq5332)
-> >>> without making changes to ipq9574 since the "reg" constraint is different
-> >>> between the two. And this in turn would break the ABI w.r.t. ipq9574.
-> >>
-> >> I don't get why this is not possible. You have one list for ipq9574 and
-> >> existing compatible devices, and you add second list for new device.
-> >>
-> >> ... or you just keep existing order. Why you need to keep changing order
-> >> every time you add new device?
-> >
-> > Presently, sdx55 and ipq9574 have the following reg/reg-names constraints.
-> >
-> > 	compatible	| qcom,pcie-sdx55	| qcom,pcie-ipq9574
-> > 	----------------+-----------------------+------------------
-> >         reg	minItems| 5			| 5
-> > 		maxItems| 6			| 5
-> > 	----------------+-----------------------+------------------
-> >         reg-names	|			|
-> > 		minItems| 5			| 5
-> > 	----------------+-----------------------+------------------
-> > 		maxItems|			| 5 (6 for ipq5332)
-> > 	----------------+-----------------------+------------------
-> > 		items	|			|
-> > 			| parf			| dbi
-> > 			| dbi			| elbi
-> > 			| elbi			| atu
-> > 			| atu			| parf
-> > 			| config		| config
-> > 			| mhi			| (add mhi for ipq5332)
-> > 	----------------+-----------------------+------------------
-> >
-> > To make ipq9574 as fallback for ipq5332, have to add "mhi" to reg-names of
-> > ipq9574.
->
-> only ipq5332 gets additional item, not ipq9574. Your sentence is not
-> correct. You do not have to add mhi to ipq9574. Neither we, nor schema
-> asked you to do this.
->
->
-> > Once I add that, the sdx55 and ipq9574 is the same list but in
-> > different order.
-> >
->
-> You cannot change the order in existing devices.
+On 25-03-10 22:05:52, Aleksandrs Vinarskis wrote:
+> DisplayPort requires per-segment link training when LTTPR are switched
+> to non-transparent mode, starting with LTTPR closest to the source.
+> Only when each segment is trained individually, source can link train
+> to sink.
+> 
+> Implement per-segment link traning when LTTPR(s) are detected, to
+> support external docking stations. On higher level, changes are:
+> 
+> *  Pass phy being trained down to all required helpers
+> *  Run CR, EQ link training per phy
+> *  Set voltage swing, pre-emphasis levels per phy
+> 
+> This ensures successful link training both when connected directly to
+> the monitor (single LTTPR onboard most X1E laptops) and via the docking
+> station (at least two LTTPRs). This does not address/resolve underlying
+> mainlink initialization issues.
+> 
+> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
-Ok.
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
-> > If this would not be considered as duplication of the same constraint, then I
-> > can club ipq5332 with ipq9574.
-> >
-> > If this would be considered as duplication, then sdx55 and ipq9574 would have to
-> > use the same reg-names list and sdx55 or ipq9574 reg-names order would change.
-> >
-> >>> To overcome this, two approaches seem to be availabe
-> >>>
-> >>> 	1. Document that ipq9574 is impacted and rework these patches to
-> >>> 	   minimize the impact as much as possible
-> >>
-> >> What impact? What is the reason to impact ipq9574? What is the actual issue?
-> >
-> > By impact, I meant the change in the reg-names order as mentioned above (for
-> > considered as duplication).
->
-> Then you must eliminate the impact, not minimize it.
-
-Ok.
-
-> >>> 		(or)
-> >>>
-> >>> 	2. Handle ipq5332 as a separate compatible (without fallback) and reuse
-> >>> 	   the constraints of sdx55 for "reg" and ipq9574 for the others (like
-> >>> 	   clock etc.). This approach will also have to revert [1], as it
-> >>> 	   assumes ipq9574 as fallback.
-> >>>
-> >>> Please advice which of the above would be appropriate. If there is a better 3rd
-> >>> alternative please let me know, will align with that approach.
-> >>
-> >> Keep existing order. Why every time we see new device, it comes up with
-> >> a different order?
-> >
-> > Will be able to do that based on the answer to 'duplication' question and how to
-> > handle that.
->
-> I don't understand what is duplication of something here.
-
-By duplication, I meant the same set of reg-names (in different order).
-
-> > 	if (adding mhi to ipq9574 reg-names != duplication)
-> >
-> > 		/* Keep existing order */
-> >
-> > 		* Append "mhi" to ipq9574
->
-> ipq9574 does not have mhi, does it?
-
-ipq9574 also has it.
-
-> If it has, it should be separate patch with its own explanation of the
-> hardware.
-
-Will discard these patches from the patchset -
-
-	dt-bindings: PCI: qcom: Use sdx55 reg description for ipq9574 Varadarajan Narayanan
-	arm64: dts: qcom: ipq9574: Reorder reg and reg-names Varadarajan Narayanan
-
-Will add mhi for ipq9574 and post the next version. Is that ok?
-
-Thanks
-Varada
+> ---
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 136 +++++++++++++++++++---------
+>  drivers/gpu/drm/msm/dp/dp_ctrl.h    |   2 +-
+>  drivers/gpu/drm/msm/dp/dp_display.c |   4 +-
+>  3 files changed, 98 insertions(+), 44 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index d8633a596f8d..20f07ef46ef3 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -79,6 +79,8 @@ struct msm_dp_ctrl_private {
+>  	struct msm_dp_link *link;
+>  	struct msm_dp_catalog *catalog;
+>  
+> +	int *lttpr_count;
+> +
+>  	struct phy *phy;
+>  
+>  	unsigned int num_core_clks;
+> @@ -1034,7 +1036,8 @@ static int msm_dp_ctrl_set_vx_px(struct msm_dp_ctrl_private *ctrl,
+>  	return 0;
+>  }
+>  
+> -static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
+> +static int msm_dp_ctrl_update_phy_vx_px(struct msm_dp_ctrl_private *ctrl,
+> +					enum drm_dp_phy dp_phy)
+>  {
+>  	struct msm_dp_link *link = ctrl->link;
+>  	int ret = 0, lane, lane_cnt;
+> @@ -1075,8 +1078,12 @@ static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
+>  
+>  	drm_dbg_dp(ctrl->drm_dev, "sink: p|v=0x%x\n",
+>  			voltage_swing_level | pre_emphasis_level);
+> -	ret = drm_dp_dpcd_write(ctrl->aux, DP_TRAINING_LANE0_SET,
+> -					buf, lane_cnt);
+> +
+> +	int reg = dp_phy == DP_PHY_DPRX ?
+> +			    DP_TRAINING_LANE0_SET :
+> +			    DP_TRAINING_LANE0_SET_PHY_REPEATER(dp_phy);
+> +
+> +	ret = drm_dp_dpcd_write(ctrl->aux, reg, buf, lane_cnt);
+>  	if (ret == lane_cnt)
+>  		ret = 0;
+>  
+> @@ -1084,10 +1091,13 @@ static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
+>  }
+>  
+>  static bool msm_dp_ctrl_train_pattern_set(struct msm_dp_ctrl_private *ctrl,
+> -		u8 pattern)
+> +		u8 pattern, enum drm_dp_phy dp_phy)
+>  {
+>  	u8 buf;
+>  	int ret = 0;
+> +	int reg = dp_phy == DP_PHY_DPRX ?
+> +			    DP_TRAINING_PATTERN_SET :
+> +			    DP_TRAINING_PATTERN_SET_PHY_REPEATER(dp_phy);
+>  
+>  	drm_dbg_dp(ctrl->drm_dev, "sink: pattern=%x\n", pattern);
+>  
+> @@ -1096,7 +1106,7 @@ static bool msm_dp_ctrl_train_pattern_set(struct msm_dp_ctrl_private *ctrl,
+>  	if (pattern && pattern != DP_TRAINING_PATTERN_4)
+>  		buf |= DP_LINK_SCRAMBLING_DISABLE;
+>  
+> -	ret = drm_dp_dpcd_writeb(ctrl->aux, DP_TRAINING_PATTERN_SET, buf);
+> +	ret = drm_dp_dpcd_writeb(ctrl->aux, reg, buf);
+>  	return ret == 1;
+>  }
+>  
+> @@ -1115,12 +1125,16 @@ static int msm_dp_ctrl_read_link_status(struct msm_dp_ctrl_private *ctrl,
+>  }
+>  
+>  static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
+> -			int *training_step)
+> +			int *training_step, enum drm_dp_phy dp_phy)
+>  {
+> +	int delay_us;
+>  	int tries, old_v_level, ret = 0;
+>  	u8 link_status[DP_LINK_STATUS_SIZE];
+>  	int const maximum_retries = 4;
+>  
+> +	delay_us = drm_dp_read_clock_recovery_delay(ctrl->aux,
+> +		ctrl->panel->dpcd, dp_phy, false);
+> +
+>  	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+>  
+>  	*training_step = DP_TRAINING_1;
+> @@ -1129,18 +1143,19 @@ static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
+>  	if (ret)
+>  		return ret;
+>  	msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_1 |
+> -		DP_LINK_SCRAMBLING_DISABLE);
+> +		DP_LINK_SCRAMBLING_DISABLE, dp_phy);
+>  
+> -	ret = msm_dp_ctrl_update_vx_px(ctrl);
+> +	msm_dp_link_reset_phy_params_vx_px(ctrl->link);
+> +	ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
+>  	if (ret)
+>  		return ret;
+>  
+>  	tries = 0;
+>  	old_v_level = ctrl->link->phy_params.v_level;
+>  	for (tries = 0; tries < maximum_retries; tries++) {
+> -		drm_dp_link_train_clock_recovery_delay(ctrl->aux, ctrl->panel->dpcd);
+> +		fsleep(delay_us);
+>  
+> -		ret = msm_dp_ctrl_read_link_status(ctrl, link_status);
+> +		ret = drm_dp_dpcd_read_phy_link_status(ctrl->aux, dp_phy, link_status);
+>  		if (ret)
+>  			return ret;
+>  
+> @@ -1161,7 +1176,7 @@ static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
+>  		}
+>  
+>  		msm_dp_link_adjust_levels(ctrl->link, link_status);
+> -		ret = msm_dp_ctrl_update_vx_px(ctrl);
+> +		ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
+>  		if (ret)
+>  			return ret;
+>  	}
+> @@ -1213,21 +1228,31 @@ static int msm_dp_ctrl_link_lane_down_shift(struct msm_dp_ctrl_private *ctrl)
+>  	return 0;
+>  }
+>  
+> -static void msm_dp_ctrl_clear_training_pattern(struct msm_dp_ctrl_private *ctrl)
+> +static void msm_dp_ctrl_clear_training_pattern(struct msm_dp_ctrl_private *ctrl,
+> +					       enum drm_dp_phy dp_phy)
+>  {
+> -	msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_DISABLE);
+> -	drm_dp_link_train_channel_eq_delay(ctrl->aux, ctrl->panel->dpcd);
+> +	int delay_us;
+> +
+> +	msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_DISABLE, dp_phy);
+> +
+> +	delay_us = drm_dp_read_channel_eq_delay(ctrl->aux,
+> +		ctrl->panel->dpcd, dp_phy, false);
+> +	fsleep(delay_us);
+>  }
+>  
+>  static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+> -			int *training_step)
+> +			int *training_step, enum drm_dp_phy dp_phy)
+>  {
+> +	int delay_us;
+>  	int tries = 0, ret = 0;
+>  	u8 pattern;
+>  	u32 state_ctrl_bit;
+>  	int const maximum_retries = 5;
+>  	u8 link_status[DP_LINK_STATUS_SIZE];
+>  
+> +	delay_us = drm_dp_read_channel_eq_delay(ctrl->aux,
+> +		ctrl->panel->dpcd, dp_phy, false);
+> +
+>  	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+>  
+>  	*training_step = DP_TRAINING_2;
+> @@ -1247,12 +1272,12 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+>  	if (ret)
+>  		return ret;
+>  
+> -	msm_dp_ctrl_train_pattern_set(ctrl, pattern);
+> +	msm_dp_ctrl_train_pattern_set(ctrl, pattern, dp_phy);
+>  
+>  	for (tries = 0; tries <= maximum_retries; tries++) {
+> -		drm_dp_link_train_channel_eq_delay(ctrl->aux, ctrl->panel->dpcd);
+> +		fsleep(delay_us);
+>  
+> -		ret = msm_dp_ctrl_read_link_status(ctrl, link_status);
+> +		ret = drm_dp_dpcd_read_phy_link_status(ctrl->aux, dp_phy, link_status);
+>  		if (ret)
+>  			return ret;
+>  
+> @@ -1262,7 +1287,7 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+>  		}
+>  
+>  		msm_dp_link_adjust_levels(ctrl->link, link_status);
+> -		ret = msm_dp_ctrl_update_vx_px(ctrl);
+> +		ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
+>  		if (ret)
+>  			return ret;
+>  
+> @@ -1271,10 +1296,32 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+>  	return -ETIMEDOUT;
+>  }
+>  
+> +static int msm_dp_ctrl_link_train_1_2(struct msm_dp_ctrl_private *ctrl,
+> +				      int *training_step, enum drm_dp_phy dp_phy)
+> +{
+> +	int ret;
+> +
+> +	ret = msm_dp_ctrl_link_train_1(ctrl, training_step, dp_phy);
+> +	if (ret) {
+> +		DRM_ERROR("link training #1 on phy %d failed. ret=%d\n", dp_phy, ret);
+> +		return ret;
+> +	}
+> +	drm_dbg_dp(ctrl->drm_dev, "link training #1 on phy %d successful\n", dp_phy);
+> +
+> +	ret = msm_dp_ctrl_link_train_2(ctrl, training_step, dp_phy);
+> +	if (ret) {
+> +		DRM_ERROR("link training #2 on phy %d failed. ret=%d\n", dp_phy, ret);
+> +		return ret;
+> +	}
+> +	drm_dbg_dp(ctrl->drm_dev, "link training #2 on phy %d successful\n", dp_phy);
+> +
+> +	return 0;
+> +}
+> +
+>  static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
+>  			int *training_step)
+>  {
+> -	int ret = 0;
+> +	int ret = 0, i;
+>  	const u8 *dpcd = ctrl->panel->dpcd;
+>  	u8 encoding[] = { 0, DP_SET_ANSI_8B10B };
+>  	u8 assr;
+> @@ -1286,8 +1333,6 @@ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
+>  	link_info.rate = ctrl->link->link_params.rate;
+>  	link_info.capabilities = DP_LINK_CAP_ENHANCED_FRAMING;
+>  
+> -	msm_dp_link_reset_phy_params_vx_px(ctrl->link);
+> -
+>  	msm_dp_aux_link_configure(ctrl->aux, &link_info);
+>  
+>  	if (drm_dp_max_downspread(dpcd))
+> @@ -1302,23 +1347,29 @@ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
+>  				&assr, 1);
+>  	}
+>  
+> -	ret = msm_dp_ctrl_link_train_1(ctrl, training_step);
+> +	for (i = *ctrl->lttpr_count - 1; i >= 0; i--) {
+> +		enum drm_dp_phy dp_phy = DP_PHY_LTTPR(i);
+> +
+> +		ret = msm_dp_ctrl_link_train_1_2(ctrl, training_step, dp_phy);
+> +		msm_dp_ctrl_clear_training_pattern(ctrl, dp_phy);
+> +
+> +		if (ret)
+> +			break;
+> +	}
+> +
+>  	if (ret) {
+> -		DRM_ERROR("link training #1 failed. ret=%d\n", ret);
+> +		DRM_ERROR("link training of LTTPR(s) failed. ret=%d\n", ret);
+>  		goto end;
+>  	}
+>  
+> -	/* print success info as this is a result of user initiated action */
+> -	drm_dbg_dp(ctrl->drm_dev, "link training #1 successful\n");
+> -
+> -	ret = msm_dp_ctrl_link_train_2(ctrl, training_step);
+> +	ret = msm_dp_ctrl_link_train_1_2(ctrl, training_step, DP_PHY_DPRX);
+>  	if (ret) {
+> -		DRM_ERROR("link training #2 failed. ret=%d\n", ret);
+> +		DRM_ERROR("link training on sink failed. ret=%d\n", ret);
+>  		goto end;
+>  	}
+>  
+>  	/* print success info as this is a result of user initiated action */
+> -	drm_dbg_dp(ctrl->drm_dev, "link training #2 successful\n");
+> +	drm_dbg_dp(ctrl->drm_dev, "link training on sink successful\n");
+>  
+>  end:
+>  	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+> @@ -1636,7 +1687,7 @@ static int msm_dp_ctrl_link_maintenance(struct msm_dp_ctrl_private *ctrl)
+>  	if (ret)
+>  		goto end;
+>  
+> -	msm_dp_ctrl_clear_training_pattern(ctrl);
+> +	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
+>  
+>  	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
+>  
+> @@ -1660,7 +1711,7 @@ static bool msm_dp_ctrl_send_phy_test_pattern(struct msm_dp_ctrl_private *ctrl)
+>  		return false;
+>  	}
+>  	msm_dp_catalog_ctrl_send_phy_pattern(ctrl->catalog, pattern_requested);
+> -	msm_dp_ctrl_update_vx_px(ctrl);
+> +	msm_dp_ctrl_update_phy_vx_px(ctrl, DP_PHY_DPRX);
+>  	msm_dp_link_send_test_response(ctrl->link);
+>  
+>  	pattern_sent = msm_dp_catalog_ctrl_read_phy_pattern(ctrl->catalog);
+> @@ -1902,7 +1953,7 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
+>  			}
+>  
+>  			/* stop link training before start re training  */
+> -			msm_dp_ctrl_clear_training_pattern(ctrl);
+> +			msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
+>  		}
+>  
+>  		rc = msm_dp_ctrl_reinitialize_mainlink(ctrl);
+> @@ -1926,7 +1977,7 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
+>  		 * link training failed
+>  		 * end txing train pattern here
+>  		 */
+> -		msm_dp_ctrl_clear_training_pattern(ctrl);
+> +		msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
+>  
+>  		msm_dp_ctrl_deinitialize_mainlink(ctrl);
+>  		rc = -ECONNRESET;
+> @@ -1997,7 +2048,7 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
+>  		msm_dp_ctrl_link_retrain(ctrl);
+>  
+>  	/* stop txing train pattern to end link training */
+> -	msm_dp_ctrl_clear_training_pattern(ctrl);
+> +	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
+>  
+>  	/*
+>  	 * Set up transfer unit values and set controller state to send
+> @@ -2207,7 +2258,7 @@ static int msm_dp_ctrl_clk_init(struct msm_dp_ctrl *msm_dp_ctrl)
+>  
+>  struct msm_dp_ctrl *msm_dp_ctrl_get(struct device *dev, struct msm_dp_link *link,
+>  			struct msm_dp_panel *panel,	struct drm_dp_aux *aux,
+> -			struct msm_dp_catalog *catalog,
+> +			struct msm_dp_catalog *catalog, int *lttpr_count,
+>  			struct phy *phy)
+>  {
+>  	struct msm_dp_ctrl_private *ctrl;
+> @@ -2242,12 +2293,13 @@ struct msm_dp_ctrl *msm_dp_ctrl_get(struct device *dev, struct msm_dp_link *link
+>  	init_completion(&ctrl->video_comp);
+>  
+>  	/* in parameters */
+> -	ctrl->panel    = panel;
+> -	ctrl->aux      = aux;
+> -	ctrl->link     = link;
+> -	ctrl->catalog  = catalog;
+> -	ctrl->dev      = dev;
+> -	ctrl->phy      = phy;
+> +	ctrl->panel       = panel;
+> +	ctrl->aux         = aux;
+> +	ctrl->link        = link;
+> +	ctrl->catalog     = catalog;
+> +	ctrl->dev         = dev;
+> +	ctrl->phy         = phy;
+> +	ctrl->lttpr_count = lttpr_count;
+>  
+>  	ret = msm_dp_ctrl_clk_init(&ctrl->msm_dp_ctrl);
+>  	if (ret) {
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> index b7abfedbf574..3fb45b138b31 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> @@ -27,7 +27,7 @@ irqreturn_t msm_dp_ctrl_isr(struct msm_dp_ctrl *msm_dp_ctrl);
+>  void msm_dp_ctrl_handle_sink_request(struct msm_dp_ctrl *msm_dp_ctrl);
+>  struct msm_dp_ctrl *msm_dp_ctrl_get(struct device *dev, struct msm_dp_link *link,
+>  			struct msm_dp_panel *panel,	struct drm_dp_aux *aux,
+> -			struct msm_dp_catalog *catalog,
+> +			struct msm_dp_catalog *catalog, int *lttpr_count,
+>  			struct phy *phy);
+>  
+>  void msm_dp_ctrl_reset_irq_ctrl(struct msm_dp_ctrl *msm_dp_ctrl, bool enable);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 2edbc6adfde5..5fcc5951797b 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -108,6 +108,7 @@ struct msm_dp_display_private {
+>  	struct msm_dp_event event_list[DP_EVENT_Q_MAX];
+>  	spinlock_t event_lock;
+>  
+> +	int lttpr_count;
+>  	u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE];
+>  
+>  	bool wide_bus_supported;
+> @@ -397,7 +398,7 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
+>  	if (rc)
+>  		goto end;
+>  
+> -	msm_dp_display_lttpr_init(dp, dpcd);
+> +	dp->lttpr_count = msm_dp_display_lttpr_init(dp, dpcd);
+>  
+>  	rc = msm_dp_panel_read_sink_caps(dp->panel, dp->lttpr_common_caps, connector);
+>  	if (rc)
+> @@ -798,6 +799,7 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+>  
+>  	dp->ctrl = msm_dp_ctrl_get(dev, dp->link, dp->panel, dp->aux,
+>  			       dp->catalog,
+> +			       &dp->lttpr_count,
+>  			       phy);
+>  	if (IS_ERR(dp->ctrl)) {
+>  		rc = PTR_ERR(dp->ctrl);
+> -- 
+> 2.45.2
+> 
 
