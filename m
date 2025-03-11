@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-51033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 952ADA5CD2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:06:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F170A5CD3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:08:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5EDB8189CE70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:06:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 60058164C43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 18:08:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6663326388F;
-	Tue, 11 Mar 2025 18:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE2E92620F5;
+	Tue, 11 Mar 2025 18:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBp//bpj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AgR4rUzg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F314263888;
-	Tue, 11 Mar 2025 18:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750A1A5BA4;
+	Tue, 11 Mar 2025 18:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741716360; cv=none; b=EvV9A3yU5XGSaljbjvt1xRIAYfg3A5kgZaYhgOcumk6zw162plLkd+n6INRTMIGhq+3djK2VtuzqTj/td6ofvBRILCUZ7DUDI42PCCAL92VPZtHHBG99wNBc9HFqtnA2AIgk+Zi+RPszuYjK8VuLpF+JKa4vjg1pdNw8bDZUL8U=
+	t=1741716496; cv=none; b=aZIe7inOovkvbGpwzJHjDVPnEV1UqBv/rRl0d9j533E9EQVgcQXIv5nHrhXv8tmy0RrYE+aIe7mIsk4pkjyHQ9+WMKKGFDziJl7do7mx/zP2Z71QTNSFoq9P9a+oVssbJHuzEkdHQFNwVgmUMj+zK8uQ/iToTv8qU0I7ZWfZtP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741716360; c=relaxed/simple;
-	bh=2l2XhsUVNSUFOt0o115rgFxjPYd6cJC3mPPoy2QKMPM=;
+	s=arc-20240116; t=1741716496; c=relaxed/simple;
+	bh=etYsz2cyQgiE5xns0t3/s7Ls+X0fhLbE/rB4gyB3lcE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rd3RMREoIDoc2l6x0i7WfviMqMiu2dSZDEELEU2IQUwkFlJk8Jgb0/vyEI3Txk2siuVrk4TRlHTDn45kxfzsy3VIk+5SDlLZXL1x0DYer0ZCaMh50fQG7mmDicRz4Be0+sFqLWCcpnSMPLBgl4GV4ykh6BVOwpK2jWp91DRfXMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tBp//bpj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7045AC4CEE9;
-	Tue, 11 Mar 2025 18:05:57 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ixoHlMO6CaEpCllkIOb4FYkTFpPsau6nVnWEWbKCMPDjUA3se0VrysPbUNkNceLpoxSliP5/lEJljQaq8CGZYkehO5qDbMlhrGNlAR7TaNmMwY1DnGjZjrRX4mWdKyW+6QEdm/leqWzupCxZQ+4Bl6R2El2Tz9iriQSLZaR1xEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AgR4rUzg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F234FC4CEE9;
+	Tue, 11 Mar 2025 18:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741716359;
-	bh=2l2XhsUVNSUFOt0o115rgFxjPYd6cJC3mPPoy2QKMPM=;
+	s=k20201202; t=1741716494;
+	bh=etYsz2cyQgiE5xns0t3/s7Ls+X0fhLbE/rB4gyB3lcE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tBp//bpjCPjkHJ3ILoEGKodCweFXovgnjhV4rgtptw6/m7Zzj+p53kp6VirBwPjci
-	 ViqhpM3WG8v8ETukGo+d+tkJ5+UZrx/2WI4/3npcj7S5hHyFjIpzNk5so1NwKI2SDA
-	 56aimhHxBxSfY5fPuF9w8Snvo0ygOn1CHugTZN37xPdvF0uWcL8uBhIu1U1FxIvheX
-	 KicV+Z5wY8TTNwCVT+LjSsl22yyuAooJZdrvCII5MOtMqC/SoUF0Fo/Y6YNvIWar96
-	 eTO5pXYPd84De8yIqwxuvOB7ohjcXX0sIUdmmxRgQEVGRobJGFII6Cc232+TCNhfyn
-	 aMc2Gsa+5e/KQ==
-Date: Tue, 11 Mar 2025 18:05:54 +0000
+	b=AgR4rUzgd/9gtAJnSSxDj0ui8uRMjkM7iiqeBpRb+3xekGWBLH//FenNMJocNXovb
+	 e2Hs6lepS57k5SakJTPMdOHvw0WeSGHfY8mCsjGBHJMw5AS60LZWsjiV1r0I+M/ag3
+	 zjCQdNEp3+J4yq5dodMHN4l635t5LMb/uvlOg1oZ9hWSKqYofTIgNhMTvio69UXL3c
+	 pcE0JCVgRYkfWynuxPrXS5vt7LlueCZ0Szrnsid4JW5qITH5jkDmAJy3Gaeavc19yW
+	 OmMdvMnX3N7Hot1Rds09kwylnFMB9CyME7ub13Q0YFhO9FrlNpOsJQ3laoUWtOFLNU
+	 V/ePzW8XHQi5g==
+Date: Tue, 11 Mar 2025 18:08:08 +0000
 From: Will Deacon <will@kernel.org>
 To: Connor Abbott <cwabbott0@gmail.com>
 Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>,
@@ -53,11 +53,11 @@ Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>,
 	iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v4 1/5] iommu/arm-smmu: Save additional information on
- context fault
-Message-ID: <20250311180553.GB5216@willie-the-truck>
+Subject: Re: [PATCH v4 2/5] iommu/arm-smmu-qcom: Don't read fault registers
+ directly
+Message-ID: <20250311180807.GC5216@willie-the-truck>
 References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
- <20250304-msm-gpu-fault-fixes-next-v4-1-be14be37f4c3@gmail.com>
+ <20250304-msm-gpu-fault-fixes-next-v4-2-be14be37f4c3@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,67 +66,62 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250304-msm-gpu-fault-fixes-next-v4-1-be14be37f4c3@gmail.com>
+In-Reply-To: <20250304-msm-gpu-fault-fixes-next-v4-2-be14be37f4c3@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Tue, Mar 04, 2025 at 11:56:47AM -0500, Connor Abbott wrote:
-> This will be used by drm/msm for GPU page faults, replacing the manual
-> register reading it does.
+On Tue, Mar 04, 2025 at 11:56:48AM -0500, Connor Abbott wrote:
+> In some cases drm/msm has to resume a stalled transaction directly in
+> its fault handler. Experimentally this doesn't work on SMMU500 if the
+> fault hasn't already been acknowledged by clearing FSR. Rather than
+> trying to clear FSR in msm's fault handler and implementing a
+> tricky handshake to avoid accidentally clearing FSR twice, we want to
+> clear FSR before calling the fault handlers, but this means that the
+> contents of registers can change underneath us in the fault handler and
+> msm currently uses a private function to read the register contents for
+> its own purposes in its fault handler, such as using the
+> implementation-defined FSYNR1 to determine which block caused the fault.
+> Fix this by making msm use the register values already read by arm-smmu
+> itself before clearing FSR rather than messing around with reading
+> registers directly.
 > 
 > Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
 > ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c |  4 ++--
->  drivers/iommu/arm/arm-smmu/arm-smmu.c            | 27 +++++++++++++-----------
->  drivers/iommu/arm/arm-smmu/arm-smmu.h            |  5 ++++-
->  3 files changed, 21 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> index 548783f3f8e89fd978367afa65c473002f66e2e7..ae4fdbbce6ba80440f539557a39866a932360d4e 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> @@ -400,7 +400,7 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *dev)
->  
->  	if (list_empty(&tbu_list)) {
->  		ret = report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
-> -					 cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> +					 cfi.fsynr0 & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
->  
->  		if (ret == -ENOSYS)
->  			arm_smmu_print_context_fault_info(smmu, idx, &cfi);
-> @@ -412,7 +412,7 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *dev)
->  	phys_soft = ops->iova_to_phys(ops, cfi.iova);
->  
->  	tmp = report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
-> -				 cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> +				 cfi.fsynr0 & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
->  	if (!tmp || tmp == -EBUSY) {
->  		ret = IRQ_HANDLED;
->  		resume = ARM_SMMU_RESUME_TERMINATE;
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index ade4684c14c9b2724a71e2457288dbfaf7562c83..a9213e0f1579d1e3be0bfba75eea1d5de23117de 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -409,9 +409,12 @@ void arm_smmu_read_context_fault_info(struct arm_smmu_device *smmu, int idx,
->  				      struct arm_smmu_context_fault_info *cfi)
->  {
->  	cfi->iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
-> +	cfi->ttbr0 = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_TTBR0);
->  	cfi->fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
-> -	cfi->fsynr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
-> +	cfi->fsynr0 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
-> +	cfi->fsynr1 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR1);
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 19 +++++++++----------
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c      | 14 +++++++-------
+>  drivers/iommu/arm/arm-smmu/arm-smmu.h      | 21 +++++++++++----------
+>  3 files changed, 27 insertions(+), 27 deletions(-)
 
-We already have an implementation hook (->get_fault_info()) which the
-qcom SMMU driver can override with qcom_adreno_smmu_get_fault_info().
-That thing dumps these registers already so if we're moving that into
-the core SMMU driver, let's get rid of the hook and move everybody over
-rather than having it done in both places.
+[...]
 
->  	cfi->cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
-> +	cfi->contextidr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_CONTEXTIDR);
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> index d3bc77dcd4d40f25bc70f3289616fb866649b022..411d807e0a7033833716635efb3968a0bd3ff237 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> @@ -373,6 +373,16 @@ enum arm_smmu_domain_stage {
+>  	ARM_SMMU_DOMAIN_NESTED,
+>  };
+>  
+> +struct arm_smmu_context_fault_info {
+> +	unsigned long iova;
+> +	u64 ttbr0;
+> +	u32 fsr;
+> +	u32 fsynr0;
+> +	u32 fsynr1;
+> +	u32 cbfrsynra;
+> +	u32 contextidr;
+> +};
+> +
+>  struct arm_smmu_domain {
+>  	struct arm_smmu_device		*smmu;
+>  	struct io_pgtable_ops		*pgtbl_ops;
+> @@ -380,6 +390,7 @@ struct arm_smmu_domain {
+>  	const struct iommu_flush_ops	*flush_ops;
+>  	struct arm_smmu_cfg		cfg;
+>  	enum arm_smmu_domain_stage	stage;
+> +	struct arm_smmu_context_fault_info cfi;
 
-I think the CONTEXTIDR register is stage-1 only, so we shouldn't dump
-it for stage-2 domains.
+Does this mean we have to serialise all faults for a given domain? That
+can't be right...
 
 Will
 
