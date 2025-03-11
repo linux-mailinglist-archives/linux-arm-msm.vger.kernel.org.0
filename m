@@ -1,214 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-51061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 607D4A5CEE6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 20:08:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 160B3A5CEF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 20:09:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D942817ADE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:08:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7F661898555
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 19:09:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0851B267B6A;
-	Tue, 11 Mar 2025 19:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDCFB264A62;
+	Tue, 11 Mar 2025 19:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q78WTc06"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JBnUNgfm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFC9267AE6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 19:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDDE2641C2;
+	Tue, 11 Mar 2025 19:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741719803; cv=none; b=FMxV+rq9Q87ZwxnxSt5Y7HsXuoUc6ScnjUG+mkIC5j8LYyEDJ3sz/jNP3D2vYNjsFnsA96Xq9d2lzOG3Z6GayEMkQa52buit7dvh0p3zfZ9bIgOAQn41G9ljOdT7Iw27rb8Pyx+QL/MQH/7m7T1ZxnJ0eapq53P5o4D4Ik7i1ls=
+	t=1741720090; cv=none; b=Komp9NGweSD/BjbhgTVhDJkvZZDAjVCl5peCP/4vkbTD1McAu48K/Jl7dxT9F9emn3us4sL7IMIcgWu/8qPGXE2H/yrlMv6UCCOwMpaDboZqfZ3bm5igDOBXBjtALg46x5qBHLUzAK5wALTe1+HywmtxBPX4ekn1NbD6X+hy5fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741719803; c=relaxed/simple;
-	bh=npT/AUk70cBHCRbn81WnGX4UoVxSXbDYwaGyJuk3VME=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JQKzNjL2h9Llei4bkuIKfVI2+A1cFI8yYRCZUuUrNpVeyTIxvffD5ueQjbse3f2LKQ/WF2yxkylKaiDcQuOaov1H22CBnFC3DfNg5yOQ2olfkhQF7tnbQ6LVvZfQIOxZfdWXi3Uj2zhASVH3HYUuNOvsdId82uRc8QmIjg0m7ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Q78WTc06; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43938828d02so7230695e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 12:03:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741719797; x=1742324597; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a3bwniejdI/OPbevpLj33tIqt0/bau3qVCvVDzBOjOY=;
-        b=Q78WTc06BtDIRJBIrz56TFInQutAr8sOxmfngBXKRnY4o1JucE48YOZwN67GhdWc4w
-         wmtPCYJeMRmtqL5/f3U9KGNINU5xc/LFQ0L/UvcKgzoOfefZZuL9q/mqUp7Ht47+60M9
-         YboUd6XxR0ewdm5Jl3YTbDFn7UJO3yqMdnmJlJ0LImbNXqYbcZ0a/5jB45/6BPJb9Srx
-         uyxBa98ZRc0H2b5g03XdTQ0+Gmc7tViiaBJ342bTHC2T6z6yyy4eiua7n9xrHO8NsZZO
-         6Owt6VlTNoM6dqvWDBKITZGBG/DsCzrw3Emmhn2x8aAPJKbwIjmhGpr5qPNkJ+y7kJO6
-         BGMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741719797; x=1742324597;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a3bwniejdI/OPbevpLj33tIqt0/bau3qVCvVDzBOjOY=;
-        b=aM+nyJIE0EImo7vTBbc75Gca1eC+gLs/+7nMHJn58lhYBFLvVs0lI0vjW4P9XerJ71
-         QZz3YO5F9D3ImYBNLQ6I0vCNl2sNcFk3gwU5L/8cE63OFh4mbAy8WuB8+5tFUxWrBr9B
-         6OHRL6CvLxZLEmOQPPshNXw9x0P8SvaG/waLlgpqx0zPYAhNqQECVIH7kV3Z97nxwsWO
-         ifsgakVN4Z93ftSmzPL/ZbSCkrRadR3sxtVh6lx1VipNybr84jlHiireKwjLZ4K5S6AB
-         azlfAEmeH2IFfhlbKbZ8b97H234V5Bh1Fmc7fczG6Gn78431qnmTRgtWDB2B2XiPeIfd
-         bCpw==
-X-Gm-Message-State: AOJu0YywkZ5rbcUYfTWar12UjTJh5DvJRloU/PtRxbxr4M/7lpT0812D
-	3FqLPn1b9O4WVbjONoGH0cMwOq4vacTVdrC1qtpsadUv4aZkQGU1wpWwKUw6MIU=
-X-Gm-Gg: ASbGncv74ZqTcZAmnBH1dCBOMq4/DfphBYK4pvaJkychuij8uD4opFQG3p0GNK+0jjD
-	QLckzbyA5SkHIt2Tzp8qbWo49jxsfYOq/jNRHw+jcIvxgrrxxZLi+YVn88G+A0DzM3A1Bs/Gd/G
-	VQJ1StoRkMxzeSrYx6/lBgvSHeO7Z7MuofmWo9MeGeyFilanbiZOhVUH8+hU8CuBSpck4BYY0tD
-	nKM++nhyQPFgubL73jr50FdapiCpaX3ft1wc1jewWNTm+Kwc7XKGDxrCHXGZWNHwJM5CABv/h/m
-	evxAi7/S/MXTbOeZYbtj2l7WOMRNfv2suZ2jdL5VFJp0aAxTqTUNJTQn8pI=
-X-Google-Smtp-Source: AGHT+IHF8uLli3Mscw7Wz7pzlQgN98nmS03vxbjY+FMS38uVER5+D4/KmiqUOx0hRsjBec9IPhX0ew==
-X-Received: by 2002:a05:600c:1c9a:b0:43b:c228:1ee0 with SMTP id 5b1f17b1804b1-43d01c2abc9mr25985105e9.7.1741719797380;
-        Tue, 11 Mar 2025 12:03:17 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.198.86])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ce70d13b4sm127681155e9.38.2025.03.11.12.03.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Mar 2025 12:03:16 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Tue, 11 Mar 2025 20:02:09 +0100
-Subject: [PATCH v4 19/19] drm/msm/mdss: Add support for SM8750
+	s=arc-20240116; t=1741720090; c=relaxed/simple;
+	bh=xeRfUAD1jft9a1eCHnyKsJSSNEwpqQuywYP7E6aXL8w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dlh0YelimhWKhcXN5R+f7bK0CEPeG7jAqs/UhJjKX8AH1EINu+ydPwkfHcMYQaWVs+e5wbGXAW60P1S/b1By6u8hgoYbbO3yNhjEzv0TFNULCTSqIlHXRwo0HjMW9cBRoPUsTHJk0ImbhWtUdWHPQdddAL4U6cPUb/FNTbDtljE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JBnUNgfm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DB3C4CEE9;
+	Tue, 11 Mar 2025 19:08:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741720090;
+	bh=xeRfUAD1jft9a1eCHnyKsJSSNEwpqQuywYP7E6aXL8w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JBnUNgfmOjojfJTGUs1AUZ73VM/aPmDrhcsqHEU4HxcC4t1WOioQye7pi+Mu+G93l
+	 TmMoUl06bBaFGVE3TGxluVpDlzHF3885P1AjRuTyrid3sZ2pAAIgBT+0Kf9ndxs4lf
+	 GTPkVDFlHFXUh6hSRGKjWtoLWfur7+SAxvvSoDEUL77sLCZki20Faf53G4t58P/JgT
+	 /eU5qTBa1A94P2yA6y+1SsmQLygkdmy6RN9qkSZBSQgZJGlRRkahPNxkFQxH1hQWto
+	 A4wD56WDxvfHvE47nxeVIH4jPVdZ1gKhDKc8j6fb1ki9/4wg2phTsA3QeOw0cRxzPY
+	 UrPfKyf8R7WzQ==
+Date: Tue, 11 Mar 2025 21:08:04 +0200
+From: Dmitry Baryshkov <lumag@kernel.org>
+To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Odelu Kukatla <quic_okukatla@quicinc.com>, Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
+	Mike Tipton <mdtipton@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
+	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V9 4/7] interconnect: qcom: icc-rpmh: Add dynamic icc
+ node id support
+Message-ID: <pumodlsgqa43tq6c7hmk4eimf5u26dm3wvra2y27lmu3l6rhks@pjpnhp72pggo>
+References: <20250227155213.404-1-quic_rlaggysh@quicinc.com>
+ <20250227155213.404-5-quic_rlaggysh@quicinc.com>
+ <gxqjfabcqafqjzzwc3seadfuldqfxlfappsotjbhkbirvorcyd@mahdpv6klwn5>
+ <5278cb2e-6111-4e57-86b3-987f6f9eabf6@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250311-b4-sm8750-display-v4-19-da6b3e959c76@linaro.org>
-References: <20250311-b4-sm8750-display-v4-0-da6b3e959c76@linaro.org>
-In-Reply-To: <20250311-b4-sm8750-display-v4-0-da6b3e959c76@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krishna Manikandan <quic_mkrishn@quicinc.com>, 
- Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Dmitry Baryshkov <lumag@kernel.org>, Rob Clark <robdclark@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
- Rob Clark <robdclark@chromium.org>, Dmitry Baryshkov <lumag@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3191;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=npT/AUk70cBHCRbn81WnGX4UoVxSXbDYwaGyJuk3VME=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBn0Ii1yuO48mmFAfjVI5TUjpkb33aMMB6mobfjo
- UUveOoKZZCJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ9CItQAKCRDBN2bmhouD
- 17owD/9LjgAfcE9wntXboxUQq1wq53OyBXwxPik3FSCXq00B/qklbILV0ge/Szdeo9zTuS8y3DG
- knhGywWnB9nHdRoi+TPbAZBJs8cuw7tnj4TNMi3FYQd9cQySHGKHAE7ioVFYfYHEMGctY+Jt2nr
- 5lJrIhhz8dUXHl/FUI7jfDdrcg/L6pWAoEI+YideSmhj/cj7gs04qCP0jVZwnNEle8pUv/YPQeg
- KI72byD5UP8v7iIM1/PurcrImftuR4WoV+eNVAJwh7SaeCem6YbZIW8rZK2vfiNbtHEu+2G2Qc0
- rD8nmha0MhFUXguzZfTaaqFP0Bup6J84yfAoondQpmxp9zMu780/O5Q1/8rrl2boTiIVZw5rSwg
- bmHjqCnfBMtHi1PfdJhQagiDmbQwLR7fOgBaHvc2IPG2AqgLmB5lFQC2NeiWDhv9NY0HQKKOxLE
- PeGtM37TtdWZYYHppyE8o/vKWNFXJl622/lZPmfLlqBDeqSe0FDrb4sARfnpXdv1STDLqHXtYFb
- mAD80MXlqqvpo5/gO4ySYdZUluuS6zkd+/cq7EXE/h6W9H3oRVVV4abUnquCLbPfZMQITgvWlii
- alysPpRr0FTtk14vawx9/5uirQdtKn8irnP7UvKc6S/k0YG84FMg+E/ieo3N6NGBDiQ21fVOsiS
- bWBVJLuy1zrqZWw==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5278cb2e-6111-4e57-86b3-987f6f9eabf6@quicinc.com>
 
-Add support for the Qualcomm SM8750 platform.
+On Mon, Mar 10, 2025 at 07:54:15AM +0530, Raviteja Laggyshetty wrote:
+> 
+> 
+> On 2/27/2025 9:46 PM, Dmitry Baryshkov wrote:
+> > On Thu, Feb 27, 2025 at 03:52:10PM +0000, Raviteja Laggyshetty wrote:
+> >> To facilitate dynamic node ID support, the driver now uses
+> >> node pointers for links instead of static node IDs.
+> >> Additionally, the default node ID is set to -1 to prompt
+> >> the ICC framework for dynamic node ID allocation.
+> >>
+> >> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+> >> ---
+> >>  drivers/interconnect/qcom/icc-rpmh.c | 16 ++++++++++++++--
+> >>  drivers/interconnect/qcom/icc-rpmh.h |  3 ++-
+> >>  2 files changed, 16 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+> >> index f2d63745be54..2e654917f535 100644
+> >> --- a/drivers/interconnect/qcom/icc-rpmh.c
+> >> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+> >> @@ -285,13 +285,25 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+> >>  			ret = PTR_ERR(node);
+> >>  			goto err_remove_nodes;
+> >>  		}
+> >> +		qn->id = node->id;
+> >>  
+> >>  		node->name = qn->name;
+> >>  		node->data = qn;
+> >>  		icc_node_add(node, provider);
+> >>  
+> >> -		for (j = 0; j < qn->num_links; j++)
+> >> -			icc_link_create(node, qn->links[j]);
+> >> +		for (j = 0; j < qn->num_links; j++) {
+> >> +			struct qcom_icc_node *qn_link_node = qn->link_nodes[j];
+> >> +			struct icc_node *link_node;
+> >> +
+> >> +			if (qn_link_node) {
+> >> +				link_node = icc_node_create(qn_link_node->id);
+> >> +				qn_link_node->id = link_node->id;
+> >> +				icc_link_create(node, qn_link_node->id);
+> > 
+> > I really don't like the idea of reading the ->id back. I think in the
+> > last cycle I have already asked to add an API to link two nodes instead
+> > of linking a node and an ID. Is there an issue with such an API?
+> 
+> Yes, the link pointer may or may not be initialized during the link
+> creation as the link can belong to other provider which is yet to probe.
+> So, it is not possible to pass two node pointers as arguments for linking.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/gpu/drm/msm/msm_mdss.c | 33 +++++++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/msm_mdss.h |  1 +
- 2 files changed, 34 insertions(+)
+Obviously, this needs to be handled. e.g. by specifying external
+provider + ID from dt-bindings. Yes, it requires a thought on how to
+solve it properly. No, in my opinion, reading the ID back is not a
+viable option. Ideally after converting to dynamic IDs we should be able
+to declare the ID to be an internal detail, which is of no concern to
+ICC providers (or even drop it completely). Historically we have had
+several subsystems which were using single-list IDs. Most of them have
+migrated from using those IDs.
 
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index dcb49fd30402b80edd2cb5971f95a78eaad6081f..3f00eb6de3a9d2bee7637c6f516efff78b7d872b 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -222,6 +222,24 @@ static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
- 	}
- }
- 
-+static void msm_mdss_setup_ubwc_dec_50(struct msm_mdss *msm_mdss)
-+{
-+	const struct msm_mdss_data *data = msm_mdss->mdss_data;
-+	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
-+		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit);
-+
-+	if (data->ubwc_bank_spread)
-+		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
-+
-+	if (data->macrotile_mode)
-+		value |= MDSS_UBWC_STATIC_MACROTILE_MODE;
-+
-+	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
-+
-+	writel_relaxed(4, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
-+	writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
-+}
-+
- #define MDSS_HW_MAJ_MIN		\
- 	(MDSS_HW_VERSION_MAJOR__MASK | MDSS_HW_VERSION_MINOR__MASK)
- 
-@@ -339,6 +357,9 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
- 	case UBWC_4_3:
- 		msm_mdss_setup_ubwc_dec_40(msm_mdss);
- 		break;
-+	case UBWC_5_0:
-+		msm_mdss_setup_ubwc_dec_50(msm_mdss);
-+		break;
- 	default:
- 		dev_err(msm_mdss->dev, "Unsupported UBWC decoder version %x\n",
- 			msm_mdss->mdss_data->ubwc_dec_version);
-@@ -722,6 +743,17 @@ static const struct msm_mdss_data sm8550_data = {
- 	.reg_bus_bw = 57000,
- };
- 
-+static const struct msm_mdss_data sm8750_data = {
-+	.ubwc_enc_version = UBWC_5_0,
-+	.ubwc_dec_version = UBWC_5_0,
-+	.ubwc_swizzle = 6,
-+	.ubwc_bank_spread = true,
-+	/* TODO: highest_bank_bit = 2 for LP_DDR4 */
-+	.highest_bank_bit = 3,
-+	.macrotile_mode = true,
-+	.reg_bus_bw = 57000,
-+};
-+
- static const struct msm_mdss_data x1e80100_data = {
- 	.ubwc_enc_version = UBWC_4_0,
- 	.ubwc_dec_version = UBWC_4_3,
-@@ -756,6 +788,7 @@ static const struct of_device_id mdss_dt_match[] = {
- 	{ .compatible = "qcom,sm8450-mdss", .data = &sm8350_data },
- 	{ .compatible = "qcom,sm8550-mdss", .data = &sm8550_data },
- 	{ .compatible = "qcom,sm8650-mdss", .data = &sm8550_data},
-+	{ .compatible = "qcom,sm8750-mdss", .data = &sm8750_data},
- 	{ .compatible = "qcom,x1e80100-mdss", .data = &x1e80100_data},
- 	{}
- };
-diff --git a/drivers/gpu/drm/msm/msm_mdss.h b/drivers/gpu/drm/msm/msm_mdss.h
-index 14dc53704314558841ee1fe08d93309fd2233812..dd0160c6ba1a297cea5b87cd8b03895b2aa08213 100644
---- a/drivers/gpu/drm/msm/msm_mdss.h
-+++ b/drivers/gpu/drm/msm/msm_mdss.h
-@@ -22,6 +22,7 @@ struct msm_mdss_data {
- #define UBWC_3_0 0x30000000
- #define UBWC_4_0 0x40000000
- #define UBWC_4_3 0x40030000
-+#define UBWC_5_0 0x50000000
- 
- const struct msm_mdss_data *msm_mdss_get_mdss_data(struct device *dev);
- 
+> RPMh driver has multiple providers and during the creation of links,
+> nodes associated with other providers are created in the icc_link_create
+> API. When the actual provider to which the link belongs is probed, its
+> initialization/node creation is skipped by checking the ID. To ensure
+> proper tracking of node initialization and prevent re-initialization, it
+> is essential to read back and store the node’s ID in qnode.
+> 
+> 
+> > 
+> >> +			} else {
+> >> +				/* backward compatibility for target using static IDs */
+> >> +				icc_link_create(node, qn->links[j]);
+> >> +			}
+> >> +		}
+> >>  
+> >>  		data->nodes[i] = node;
+> >>  	}
+> >> diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+> >> index 82344c734091..cf4aa69c707c 100644
+> >> --- a/drivers/interconnect/qcom/icc-rpmh.h
+> >> +++ b/drivers/interconnect/qcom/icc-rpmh.h
+> >> @@ -95,7 +95,8 @@ struct qcom_icc_qosbox {
+> >>  struct qcom_icc_node {
+> >>  	const char *name;
+> >>  	u16 links[MAX_LINKS];
+> >> -	u16 id;
+> >> +	struct qcom_icc_node *link_nodes[MAX_LINKS];
+> >> +	int id;
+> >>  	u16 num_links;
+> >>  	u16 channels;
+> >>  	u16 buswidth;
+> >> -- 
+> >> 2.43.0
+> >>
+> > 
+> 
 
 -- 
-2.43.0
-
+With best wishes
+Dmitry
 
