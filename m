@@ -1,170 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-50933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-50934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F261A5BCA8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 10:49:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EA3FA5BCC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 10:52:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE5A616B1B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:49:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03AE63ABB91
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Mar 2025 09:52:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14D9B1CD205;
-	Tue, 11 Mar 2025 09:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E77922CBE9;
+	Tue, 11 Mar 2025 09:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="COiNW8d+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Cwzx5Hgb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25A91F09AB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 09:49:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF8022B5AB;
+	Tue, 11 Mar 2025 09:52:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741686563; cv=none; b=t5lCC3OTjLnIJaBNnDsnN0rXpuo1JkBjwfQWxMYl+J0Bs641ad4ngr1VjFsaYg8LylF9J6BoQ1PzGCkqhX977+5CmroOv2OY4ELhAsyqccd6VCuxWNL/my1U7s+udb8sp8p4Dp30oEgljM/DnGaSIvH/e33vKQZuyvNrJf2CIKs=
+	t=1741686724; cv=none; b=m0T4wXRhQhmF1EwfEoTS52wclWh4rpHf7Y92agGAYl0QYjLOTsDeGplS/iEPrHwijxqfDNaHYSnElqOucQRye1hcxnM0oyNjRzHWfhtxx8E4qiEizwuU6cZmFb79/3MSKEoCvTIFPq7QomSRDYXkR4fT8vOO83ngaf3idFJhPw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741686563; c=relaxed/simple;
-	bh=KV6VloN+Q45Gc0+a2tH993aFZT/8shI0EYvvt/qm3II=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W+Ptq+vcMPjGOBYq6ctJ3B65nuApyeBtftcdelcLO942WORTgh1I2zQRBHKfKtIIA0qoHL9OJiCwZRBG1Pp5s6bodTG4/PVj3RKnS7sr/DTmbkuvaqDsYy3H5L4SBWTTjxCkpJVYmj7TDRw5ikg80QN2HlR7KXIxEHhdQWC01us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=COiNW8d+; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ab78e6edb99so791008766b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Mar 2025 02:49:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741686559; x=1742291359; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GyMmo00MijQvv1nIo9XATusemS0AEgh5wL246DTX9fw=;
-        b=COiNW8d+IXRt4v4+eisTKawSg90sP+OEg1cN5/f+/8AUJQk9G8sOLQV1+csuymsrj/
-         tNCY6lIw8dUQS5xRt6PNRIJhq6b5vvzWsHjyjF6aoPCXsfNDfIRD9KGjqOACVK8mUkLQ
-         6fkHRc9nAZyi8dWLhGkFGj4kBKT2XibMnb5HBBAwZqd8mx7eneFCS/EkGM3gbmu0fPPq
-         C6uKTOD6umPUQ7izZnRME4jDTj4ubWmdISqTi8rwLAKzw3De3qpGdA8jh1I/iu/COtEB
-         cSBw3f/CIhqPIUfO/aanG5qYO81D/UXH3UOmSiB2bOYrra5UU0FG4MzjS0Ezae3Zy3ai
-         xp4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741686559; x=1742291359;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GyMmo00MijQvv1nIo9XATusemS0AEgh5wL246DTX9fw=;
-        b=bgVpehxF7p/xKv4Z/7zEcm5j0dTSX0cbJYXUdL0IuTtCfdY2cK71FVbn7VQmfaTA8v
-         HzKDVARmn1mO/ajaY8+3zbVi7Vjzx+8X0ELO6lRynoFv9JctgmEmP+2iZELFZlUdb9SA
-         y9PMKj1hJv9bLAj0HmVZVkBZIOsobWPCMl58ydsitdDY1/xuNBZ0o3N9RtMfZ9PbPGfA
-         91W7mK4Ka0H4J2TvVU47z1/8kRbzCKSAhLV5FkgxFOMGQ8Egj0D3PDKQcG43P3/smqXl
-         J/2a8J1i5YIEXlL41rSTBxOJ6e9z5maolqbUEskAY/bX/xz2CTp/bkMoPO6RI+ve/iOO
-         l4bw==
-X-Forwarded-Encrypted: i=1; AJvYcCVV5ndj2QB4HdiMBHaVGbCjOcF+K5E9F4DMkqwfOzZB4mnCp4qXySppFr7rqGXI6RgqI038Rp/GtNOK4WX9@vger.kernel.org
-X-Gm-Message-State: AOJu0YwlqAvDzmIZT1pH3xLjk7Y7x9Mc7w7NEXpDfxdF7t4OuWjo5ffz
-	x4xsctHvt4Fa0Hh6BZX9ArOubFbuOdyCVHcjUrjHe2gsE1qIkvqPIaQcMYbDF8c=
-X-Gm-Gg: ASbGncsZuw8yxuLoMOpyKG9sgxs/ne5IWB+c1QZvvB+QhjQrwxVp82bze4ubwe70wqz
-	ZGnnoAmRopideYeyE23P1g13zo96SFPKzWMJU7dXkQfRTqJcjWKvxw7934S10miZXuIOtX6Z2XQ
-	Doge5NMNeOuIPZPDjJhjiEovGOEpDs/RF3o8j3xKyDcZW8+9KaRasB2evUXrICjfV7UarpWKoHs
-	u0fWLBbKEhlhgwESf4/aQ1+ljC58TmxrKhd7KFHcxoNhsWMGyvBtANO4uDf4Wx4M+iu4hTzZXLg
-	czJchnDrRENYZi0bXsWxFFApCY8o+lnRkd+Hht+rif3mCkeHNBeaRUFIQ353rWanBGLnGXwZGkv
-	+CGZGcdsvOA==
-X-Google-Smtp-Source: AGHT+IHSU9UltopReIg2YEjALsfLf8gnqE6qARMGrK0Hc/6wePY9JUwYhUJuhkZKJ1tEBgXuDF7aVQ==
-X-Received: by 2002:a17:907:3d9e:b0:ac2:cae8:e153 with SMTP id a640c23a62f3a-ac2cae8e645mr70428566b.4.1741686559193;
-        Tue, 11 Mar 2025 02:49:19 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac23973af6fsm899839366b.100.2025.03.11.02.49.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Mar 2025 02:49:18 -0700 (PDT)
-Message-ID: <46b6dbf4-0d2d-4165-8657-7bd8a1329d61@linaro.org>
-Date: Tue, 11 Mar 2025 09:49:16 +0000
+	s=arc-20240116; t=1741686724; c=relaxed/simple;
+	bh=Pcre2SGq59+9b917Xz4fnsDLfIMcRjXdt3MWPcJLFk8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dGInIyCSXc83l7CrolfMmF5eZbWLHPJQlycQ9dmOZlDa/Emph6ypRVEW53czCPW+Ndq8PVG8jz8gUDMdq6mKS7r2ixJDZ+Nxy8/uzoJL7cvJdelSu2vbXq76E/BiUouYnpBganHmllugNq1UhrEix9HtGaOpdPreJPizVltEq+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Cwzx5Hgb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52B7jS3N022356;
+	Tue, 11 Mar 2025 09:51:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=WYyrqBzsKDbhcRh+8hUWT0zTAXYiX0agiFG
+	KGJwEqBg=; b=Cwzx5HgbuedHwOt4BOafY5IwBQGlOTnbaG/wiwEWQXW+0w0PyEb
+	u/nisvTAbZu3Z+co4djp76qKOEfyBfI4vrn7NeMQt8JfHBRr68eQEpxCalPl6muK
+	8ZLXhFaGVc5/aHoowm67WZayMGir+NAczhJdjepx8FI/BTc8bga/Yjxd2JAbNedQ
+	1kpSfPoNBvEG8jhCurJgDEJAFnuUbGoEyArxYFF1VnTwM/fZsTpIr5O4auLcOLOq
+	6tf4YiCT7vmFjqYdnkTHA21KR/zVitrp4n02/6nbqFrRSpfD5iZOVmPEShT4PUEz
+	ZH7DQBC3+U85KzRuw7/R6GaYasLaAaR+FrA==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 458eyug107-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Mar 2025 09:51:57 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 52B9mssd010608;
+	Tue, 11 Mar 2025 09:51:54 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 458yn3657g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Mar 2025 09:51:54 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52B9psPU012991;
+	Tue, 11 Mar 2025 09:51:54 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.246.180])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 52B9pr6d012990
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Mar 2025 09:51:54 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3944840)
+	id EFA3B5A9; Tue, 11 Mar 2025 15:21:52 +0530 (+0530)
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@quicinc.com,
+        Wasim Nazir <quic_wasimn@quicinc.com>
+Subject: [PATCH] pinctrl: qcom: sa8775p: Enable egpio function
+Date: Tue, 11 Mar 2025 15:21:51 +0530
+Message-ID: <20250311095151.1581239-1-quic_wasimn@quicinc.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] dt-bindings: clock: qcom,sm8450-videocc: Add MXC
- power domain
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20250306-videocc-pll-multi-pd-voting-v2-0-0cd00612bc0e@quicinc.com>
- <lpuuYz9cjRQ3qc_0ZqUQk6SgCgfQ-lSt77HDAxGxNN9oGAQqORCJR2-DVUNcGjyeCqn7QKuLsElBbNDRjGQ1IA==@protonmail.internalid>
- <20250306-videocc-pll-multi-pd-voting-v2-1-0cd00612bc0e@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250306-videocc-pll-multi-pd-voting-v2-1-0cd00612bc0e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=cbIormDM c=1 sm=1 tr=0 ts=67d007bd cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=O5wfUiJPRMtOadb7F1oA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: uhAz35iwqO1nHW4H3JbRvAXirCbvyBRB
+X-Proofpoint-GUID: uhAz35iwqO1nHW4H3JbRvAXirCbvyBRB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-11_01,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ impostorscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 adultscore=0 clxscore=1011 spamscore=0 mlxlogscore=988
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503110066
 
-On 06/03/2025 08:55, Jagadeesh Kona wrote:
-> To configure the video PLLs and enable the video GDSCs on SM8450,
-> SM8475, SM8550 and SM8650 platforms, the MXC rail must be ON along
-> with MMCX. Therefore, update the videocc bindings to include
-> the MXC power domain on these platforms.
-> 
-> Fixes: 1e910b2ba0ed ("dt-bindings: clock: qcom: Add SM8450 video clock controller")
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Acked-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
->   Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml | 9 ++++++---
->   1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> index 62714fa54db82491a7a108f7f18a253d737f8d61..737efc4b46564c1e475b02873d2dc124329fb775 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> @@ -32,9 +32,11 @@ properties:
->         - description: Video AHB clock from GCC
-> 
->     power-domains:
-> -    maxItems: 1
->       description:
-> -      MMCX power domain.
-> +      Power domains required for the clock controller to operate
-> +    items:
-> +      - description: MMCX power domain
-> +      - description: MXC power domain
-> 
->     required-opps:
->       maxItems: 1
-> @@ -72,7 +74,8 @@ examples:
->         reg = <0x0aaf0000 0x10000>;
->         clocks = <&rpmhcc RPMH_CXO_CLK>,
->                  <&gcc GCC_VIDEO_AHB_CLK>;
-> -      power-domains = <&rpmhpd RPMHPD_MMCX>;
-> +      power-domains = <&rpmhpd RPMHPD_MMCX>,
-> +                      <&rpmhpd RPMHPD_MXC>;
->         required-opps = <&rpmhpd_opp_low_svs>;
->         #clock-cells = <1>;
->         #reset-cells = <1>;
-> 
-> --
-> 2.34.1
-> 
-> 
+Egpio feature allows Island Domain IOs to be reused as TLMM GPIOs.
+sa8775p supports egpio feature for GPIOs ranging from 126 to 148.
 
-The ordering of these patches is a bit weird with this binding first and 
-then the rest of the bindings later.
-
-Also switched my linux-arm-msm email recently so only got the first 
-patch with my RB in my Linaro inbox.
-
-Suggest as standard practice when you get review feedback to CC previous 
-reviewers on all patches in subsequent series, especially if you are 
-picking up an RB on one of those patches.
-
-TL;DR please cc me on V3.
-
+Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
 ---
-bod
+ drivers/pinctrl/qcom/pinctrl-sa8775p.c | 56 +++++++++++++++-----------
+ 1 file changed, 33 insertions(+), 23 deletions(-)
+
+diff --git a/drivers/pinctrl/qcom/pinctrl-sa8775p.c b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
+index 8fdea25d8d67..e4a720eeee3b 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sa8775p.c
++++ b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
+@@ -467,6 +467,7 @@ enum sa8775p_functions {
+ 	msm_mux_edp2_lcd,
+ 	msm_mux_edp3_hot,
+ 	msm_mux_edp3_lcd,
++	msm_mux_egpio,
+ 	msm_mux_emac0_mcg0,
+ 	msm_mux_emac0_mcg1,
+ 	msm_mux_emac0_mcg2,
+@@ -744,6 +745,13 @@ static const char * const edp3_lcd_groups[] = {
+ 	"gpio49",
+ };
+
++static const char *const egpio_groups[] = {
++	"gpio126", "gpio127", "gpio128", "gpio129", "gpio130", "gpio131",
++	"gpio132", "gpio133", "gpio134", "gpio135", "gpio136", "gpio137",
++	"gpio138", "gpio139", "gpio140", "gpio141", "gpio142", "gpio143",
++	"gpio144", "gpio145", "gpio146", "gpio147", "gpio148",
++};
++
+ static const char * const emac0_mcg0_groups[] = {
+ 	"gpio12",
+ };
+@@ -1209,6 +1217,7 @@ static const struct pinfunction sa8775p_functions[] = {
+ 	MSM_PIN_FUNCTION(edp2_lcd),
+ 	MSM_PIN_FUNCTION(edp3_hot),
+ 	MSM_PIN_FUNCTION(edp3_lcd),
++	MSM_PIN_FUNCTION(egpio),
+ 	MSM_PIN_FUNCTION(emac0_mcg0),
+ 	MSM_PIN_FUNCTION(emac0_mcg1),
+ 	MSM_PIN_FUNCTION(emac0_mcg2),
+@@ -1454,29 +1463,29 @@ static const struct msm_pingroup sa8775p_groups[] = {
+ 	[123] = PINGROUP(123, hs2_mi2s, phase_flag, _, _, _, _, _, _, _),
+ 	[124] = PINGROUP(124, hs2_mi2s, phase_flag, _, _, _, _, _, _, _),
+ 	[125] = PINGROUP(125, hs2_mi2s, phase_flag, _, _, _, _, _, _, _),
+-	[126] = PINGROUP(126, _, _, _, _, _, _, _, _, _),
+-	[127] = PINGROUP(127, _, _, _, _, _, _, _, _, _),
+-	[128] = PINGROUP(128, _, _, _, _, _, _, _, _, _),
+-	[129] = PINGROUP(129, _, _, _, _, _, _, _, _, _),
+-	[130] = PINGROUP(130, _, _, _, _, _, _, _, _, _),
+-	[131] = PINGROUP(131, _, _, _, _, _, _, _, _, _),
+-	[132] = PINGROUP(132, _, _, _, _, _, _, _, _, _),
+-	[133] = PINGROUP(133, _, _, _, _, _, _, _, _, _),
+-	[134] = PINGROUP(134, _, _, _, _, _, _, _, _, _),
+-	[135] = PINGROUP(135, _, _, _, _, _, _, _, _, _),
+-	[136] = PINGROUP(136, _, _, _, _, _, _, _, _, _),
+-	[137] = PINGROUP(137, _, _, _, _, _, _, _, _, _),
+-	[138] = PINGROUP(138, _, _, _, _, _, _, _, _, _),
+-	[139] = PINGROUP(139, _, _, _, _, _, _, _, _, _),
+-	[140] = PINGROUP(140, _, _, _, _, _, _, _, _, _),
+-	[141] = PINGROUP(141, _, _, _, _, _, _, _, _, _),
+-	[142] = PINGROUP(142, _, _, _, _, _, _, _, _, _),
+-	[143] = PINGROUP(143, _, _, _, _, _, _, _, _, _),
+-	[144] = PINGROUP(144, dbg_out, _, _, _, _, _, _, _, _),
+-	[145] = PINGROUP(145, _, _, _, _, _, _, _, _, _),
+-	[146] = PINGROUP(146, _, _, _, _, _, _, _, _, _),
+-	[147] = PINGROUP(147, _, _, _, _, _, _, _, _, _),
+-	[148] = PINGROUP(148, _, _, _, _, _, _, _, _, _),
++	[126] = PINGROUP(126, _, _, _, _, _, _, _, _, egpio),
++	[127] = PINGROUP(127, _, _, _, _, _, _, _, _, egpio),
++	[128] = PINGROUP(128, _, _, _, _, _, _, _, _, egpio),
++	[129] = PINGROUP(129, _, _, _, _, _, _, _, _, egpio),
++	[130] = PINGROUP(130, _, _, _, _, _, _, _, _, egpio),
++	[131] = PINGROUP(131, _, _, _, _, _, _, _, _, egpio),
++	[132] = PINGROUP(132, _, _, _, _, _, _, _, _, egpio),
++	[133] = PINGROUP(133, _, _, _, _, _, _, _, _, egpio),
++	[134] = PINGROUP(134, _, _, _, _, _, _, _, _, egpio),
++	[135] = PINGROUP(135, _, _, _, _, _, _, _, _, egpio),
++	[136] = PINGROUP(136, _, _, _, _, _, _, _, _, egpio),
++	[137] = PINGROUP(137, _, _, _, _, _, _, _, _, egpio),
++	[138] = PINGROUP(138, _, _, _, _, _, _, _, _, egpio),
++	[139] = PINGROUP(139, _, _, _, _, _, _, _, _, egpio),
++	[140] = PINGROUP(140, _, _, _, _, _, _, _, _, egpio),
++	[141] = PINGROUP(141, _, _, _, _, _, _, _, _, egpio),
++	[142] = PINGROUP(142, _, _, _, _, _, _, _, _, egpio),
++	[143] = PINGROUP(143, _, _, _, _, _, _, _, _, egpio),
++	[144] = PINGROUP(144, dbg_out, _, _, _, _, _, _, _, egpio),
++	[145] = PINGROUP(145, _, _, _, _, _, _, _, _, egpio),
++	[146] = PINGROUP(146, _, _, _, _, _, _, _, _, egpio),
++	[147] = PINGROUP(147, _, _, _, _, _, _, _, _, egpio),
++	[148] = PINGROUP(148, _, _, _, _, _, _, _, _, egpio),
+ 	[149] = UFS_RESET(ufs_reset, 0x1a2000),
+ 	[150] = SDC_QDSD_PINGROUP(sdc1_rclk, 0x199000, 15, 0),
+ 	[151] = SDC_QDSD_PINGROUP(sdc1_clk, 0x199000, 13, 6),
+@@ -1511,6 +1520,7 @@ static const struct msm_pinctrl_soc_data sa8775p_pinctrl = {
+ 	.ngpios = 150,
+ 	.wakeirq_map = sa8775p_pdc_map,
+ 	.nwakeirq_map = ARRAY_SIZE(sa8775p_pdc_map),
++	.egpio_func = 9,
+ };
+
+ static int sa8775p_pinctrl_probe(struct platform_device *pdev)
+
+base-commit: 0a2f889128969dab41861b6e40111aa03dc57014
+--
+2.48.1
+
 
