@@ -1,133 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-51176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4232A5E338
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 18:58:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8244EA5E350
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 19:00:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE8D6178FCC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 17:58:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3585E1893461
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 18:00:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3FE0241C8B;
-	Wed, 12 Mar 2025 17:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EDC0258CFF;
+	Wed, 12 Mar 2025 17:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZHSpzQGT"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VMenEBkN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5597A20ED
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 17:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E491D5176
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 17:58:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741802308; cv=none; b=gpHppWl2aiySG783tUVOQ+dYleNBuI9MpbZqmISq6J8e5OzI5cLq3ewEG6kTvoRN2bEZOdx8MCsEd8xIFoMunR/8dLtZdNZ+1kv2U7Sllm5Q4ZOrMslTiDrdB+S3a46Ug4x7iddGtMQy5zadFdGC5ucYSHiY1aOMh/7nJsB1ve0=
+	t=1741802329; cv=none; b=U1kP7J+Hkj6yxkDE7/e/CiEmxxjyCy+Mg/JuTxLhX2i+WgiY/vMp63P0cTGPn9KhPutdR2xnRwAQ2+lWHybA09lDMkMgPpmFzPTtbJHs+zWSfM9+Vz5zTIOK8wrOSec0dww1RgZd/iQxBu83reZGENLT2XimyYl3uzfc6eZli2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741802308; c=relaxed/simple;
-	bh=uvYktSUDIlgIfm1VyG/fJfFUevPD/r1/YdI4XOAcXWs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=um55Z0QcXxS9J6o5vCCo9khfMsY6Ql1bnSqqwpaL1cM/l4p2gNznTSgVXH1wHV4qlKLcYsZ/y8cAz3i5pJ9HOppYef7TyvqWHK+JW2/zAWyWSCrDjgiwBUI2Kw2zSfNIu18yxz3aWYr+EGGTg63vDSUlSqNpqIxuVvRkVJhznjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZHSpzQGT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CAWtVY027346
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 17:58:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bcTeTYG1dmdjENwEPbzmb3bLZjrAYqSsiRBNKAV389s=; b=ZHSpzQGTqka+BmGZ
-	vT2pl60wzbrgSxjVyOXc65gNtrirPJolQOO7cBxM4R8fPuLQDUj8t3B2gjVj//DW
-	UWoOZTgcrNQzxlNmToRXkJ33wdCUM5lpc0wjKtqxyj/WLZQKfvCuMInHTXG2Bdf0
-	o7IJcoZduY/l17xV0QHw7g3F4l6ObO09EsF5iRFODk13sc2eTSgj86Lok5xAM4fL
-	xrx1BPVAXnlMkSWKnuLnbFc+f8GtyLc0pqfjqHbAHqr09l9j2yyxXScJAx+i3AVm
-	8TO5UhLnosEGtWsiqtU0+WekGH1J9ut2dFeNfmplvHmI9nqYrwucX/+S1ZiU+Uuy
-	pocRcA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2pu87r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 17:58:26 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-476786e50d9so117781cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 10:58:26 -0700 (PDT)
+	s=arc-20240116; t=1741802329; c=relaxed/simple;
+	bh=dBp330nwbC7q4iPH2IoIUZ3Q0GJxinDrCajbj2wj9s0=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=OvLN/XNrtzPWzVlJla6JLaI90eXgq/41/ERWjsE5SaILR6dGNZaROMfE5lBv5PSibWcuxhie1lmbuCxaW2IAp30YFkpYdp/ZZWqYSUXs/4RbEV2e77BYyffrsCVRw8faiwnuG0vFSng/IQzFAbG59VOi2lSz7XFfGBfYhsboIZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VMenEBkN; arc=none smtp.client-ip=209.85.128.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
+Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-43d025a52c2so402685e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 10:58:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1741802326; x=1742407126; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IlIj3TjUhtkedIPYTVHeRQbthVzaFoCCtbaBiaH1aMs=;
+        b=VMenEBkNgjG7/kRyc1xc2e8vAftptPXLVORUiTRFurTxFfUYQZmorBRSvN25uudUQy
+         g585dTGZOz/Lo2aDflADS5rS8YAJwyAMzptUjN7nw9foymv438eP1y+dgkEGt7tvGEmm
+         fsQgP/2l/0AFPQqu7PkvI5fbOy/X9r0g1X25i4akgDJjq9Q1ij8vKtvjxh06razNV8TI
+         Pi49jUkd7f4K8XDYsjrZ8dOX49YoQMflOZcFPfeJndWdDsO9UzDySd7SGFx7ZNeq47JZ
+         B4aVHH5vMOcJypUAEa6vD6UOiasGrn64Gh4Q0ZS797E84ulmvBYiSjCeX/pkubxJRUvM
+         7chA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741802305; x=1742407105;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bcTeTYG1dmdjENwEPbzmb3bLZjrAYqSsiRBNKAV389s=;
-        b=mnZv2382dscdVuKYPNH4VChW/d8c+i7BVmfN5TounSC88mB5WDPNLbM0UP/cdgN8GD
-         ZroUo/Bx8u6wFVxQF1UPG85WoiXWlm75dn2991+CT926ar/BAkIGLLp0D4RKWybEwLml
-         iGrv3GoFeuHBZ5znaYdCdMFnBQNcwpJb3fxXbHon+fiEHs9XnDiGUKk4gRdCK9dPmZIc
-         oTFatZ9Jyn/jQ5kbEaDY4xJzEJpmeoigNtQ73wDMU90QyFSPL2+S3B1af1ISdYRAiLyV
-         ub/bonSinFR1EqGDTbOUbGlbVBKkz6ROvgKberH4siOyG0ZjI/IraX7D6w1hb61n+ie/
-         7/Dw==
-X-Forwarded-Encrypted: i=1; AJvYcCUyLv9tFe5zB5HrvnDhtYYWIy0LKvK+OKKQSwUSauzo+LZlL3sEXBbiBdl9Uxu2GNlLa5LZIAh8HAFhQlk+@vger.kernel.org
-X-Gm-Message-State: AOJu0YzCdygQIGVCLlxD6UE4e7JCYLBc0wdzcRt4Zb3wZjDFx7FGxqA/
-	v5AcSICYaI5X4Hi8spvZxROPT3qOcbJT//B7YWnnJNHCAWmgDYEieOXNM5Aen6Fea73DODGIGDY
-	K2oAzDxyX5ih4pc9mIHur8/O8vV+luy2zWaJrkG2Ro0fMDEEKH052bdElxsL2bGTb
-X-Gm-Gg: ASbGnctmSS/LMCmNaz+WWSgIUTbEtaeCyA+weFJ/GVLn8wpNUOPMGZMYkSDuLm8mtkP
-	Kxit33RDL0eALrVNZE4pe6GuW5TrLJuMWAXAQgzh1t12ebRC751ck4TUBHRbPRGQelrRb6PXF3c
-	KkwpSCPN/eNG9f3+yLMG8U2N6ZZSjjo3YJCaBWE4d5IX6ejeU12cGG9TH7751iBnfeH7AhoiqN3
-	iBLXd/XeaAmliUWpceii7nVLhi9u30KoVt3gUVkwm27siD+xpPHRSP9kW0yE8X9BPSGRjd2ta42
-	JStbDPFxe6xZ/3i8gupP6Vu/e6oupkwgSfpLWznM+VduJb/HQAChX+KBNNewK+hVc6vh1A==
-X-Received: by 2002:a05:622a:188f:b0:471:ea1a:d9e with SMTP id d75a77b69052e-476996165cdmr49257161cf.12.1741802305132;
-        Wed, 12 Mar 2025 10:58:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGf+FgkDZ8oIXLKhFtYSMaoeFm9wkNACMQAgHhTtOGru/FQSONXO2zQ9boY9KqzBJU1UuHtiQ==
-X-Received: by 2002:a05:622a:188f:b0:471:ea1a:d9e with SMTP id d75a77b69052e-476996165cdmr49257041cf.12.1741802304743;
-        Wed, 12 Mar 2025 10:58:24 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac288ffe157sm656739966b.132.2025.03.12.10.58.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Mar 2025 10:58:24 -0700 (PDT)
-Message-ID: <59de5023-acf4-4f2d-b011-62ca96c597ed@oss.qualcomm.com>
-Date: Wed, 12 Mar 2025 18:58:22 +0100
+        d=1e100.net; s=20230601; t=1741802326; x=1742407126;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IlIj3TjUhtkedIPYTVHeRQbthVzaFoCCtbaBiaH1aMs=;
+        b=GQMNbJhEqgc32i3b0NRWLaE+ClRJ7GLN9qZOc2oAY4WaCSyGo5JtHNKVR3dqYVXPrP
+         hqd4tjcG2/rXlo6HTPPzITMrdszML16sCjRHfr1bA2821295CgdtGN3hQ0oqGdxgIEN9
+         KDqj9gm/B1jE9gCI8ZP0IOI90yHor5J2cVczUgvqypWc+m/TPvT1ZvcAZJCE9UDEnpY3
+         0Nexo2a49Z2+K8Vxi7uKaPTdoICBWWVfmJqYw5EAfMusTimIbdVEWd28rTuXo1f2zjMg
+         k0luGW8p9DrY6+JDzWB1wl3TaonkLwHEXDZOSJ0d/4O1XrzBAf4HAixbe3szg2CPDIM7
+         KaLg==
+X-Forwarded-Encrypted: i=1; AJvYcCXfGglD4ZflkLcPFxIQ/HbDRw/Y2HaLt1Yhmtq0nz6OTLV5Bf4evLvGc9cmXLFI6IbzzsW3c3q+0PikEtzp@vger.kernel.org
+X-Gm-Message-State: AOJu0YwnkYqbfH/hmq0whyC+hbK3eKeWQUR/LLoBE6fMYteFoIeu9HHZ
+	kKKu/gCPbMCRR038IqBGVXoMyRhJQ7j6xrL9tgq+/RGteROPUG40lt5GmBwv1LFym46u8ZEggg=
+	=
+X-Google-Smtp-Source: AGHT+IEjvTr2HYGSAjPDkNMw4G4npR8OoTHD1VZTAuD0hSm6xCoVT94NRgIvuCOHObtSUaBMEiPsUwonRg==
+X-Received: from wmqa16.prod.google.com ([2002:a05:600c:3490:b0:43c:fa2a:77d])
+ (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:1d09:b0:43c:efed:732b
+ with SMTP id 5b1f17b1804b1-43cefed78bcmr140968325e9.5.1741802326090; Wed, 12
+ Mar 2025 10:58:46 -0700 (PDT)
+Date: Wed, 12 Mar 2025 17:58:23 +0000
+In-Reply-To: <20250312175824.1809636-1-tabba@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: ipq5424: add reserved memory region
- for bootloader
-To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_varada@quicinc.com, quic_srichara@quicinc.com
-References: <20250312094948.3376126-1-quic_mmanikan@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250312094948.3376126-1-quic_mmanikan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=P506hjAu c=1 sm=1 tr=0 ts=67d1cb42 cx=c_pps a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=9vFMFxKz7TJhonvdC4kA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: Hrp_F9Zcyz3KbnhkpnWqsvRUphtCASej
-X-Proofpoint-ORIG-GUID: Hrp_F9Zcyz3KbnhkpnWqsvRUphtCASej
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-12_06,2025-03-11_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- mlxscore=0 spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- suspectscore=0 malwarescore=0 mlxlogscore=620 lowpriorityscore=0
- adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503120124
+Mime-Version: 1.0
+References: <20250312175824.1809636-1-tabba@google.com>
+X-Mailer: git-send-email 2.49.0.rc0.332.g42c0ae87b1-goog
+Message-ID: <20250312175824.1809636-11-tabba@google.com>
+Subject: [PATCH v6 10/10] KVM: guest_memfd: selftests: guest_memfd mmap() test
+ when mapping is allowed
+From: Fuad Tabba <tabba@google.com>
+To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 3/12/25 10:49 AM, Manikanta Mylavarapu wrote:
-> In IPQ5424, the bootloader collects the system RAM contents upon a crash
-> for post-morterm analysis. If we don't reserve the memory region used by
-> the bootloader, linux will consume it. Upon the next boot after a crash,
-> the bootloader will be loaded in the same region, which could lead to the
-> loss of some data. sometimes, we may miss out critical information.
-> Therefore, let's reserve the region used by the bootloader.
-> 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
+Expand the guest_memfd selftests to include testing mapping guest
+memory for VM types that support it.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Also, build the guest_memfd selftest for aarch64.
 
-Konrad
+Signed-off-by: Fuad Tabba <tabba@google.com>
+---
+ tools/testing/selftests/kvm/Makefile.kvm      |  1 +
+ .../testing/selftests/kvm/guest_memfd_test.c  | 75 +++++++++++++++++--
+ 2 files changed, 70 insertions(+), 6 deletions(-)
+
+diff --git a/tools/testing/selftests/kvm/Makefile.kvm b/tools/testing/selftests/kvm/Makefile.kvm
+index 4277b983cace..c9a3f30e28dd 100644
+--- a/tools/testing/selftests/kvm/Makefile.kvm
++++ b/tools/testing/selftests/kvm/Makefile.kvm
+@@ -160,6 +160,7 @@ TEST_GEN_PROGS_arm64 += coalesced_io_test
+ TEST_GEN_PROGS_arm64 += demand_paging_test
+ TEST_GEN_PROGS_arm64 += dirty_log_test
+ TEST_GEN_PROGS_arm64 += dirty_log_perf_test
++TEST_GEN_PROGS_arm64 += guest_memfd_test
+ TEST_GEN_PROGS_arm64 += guest_print_test
+ TEST_GEN_PROGS_arm64 += get-reg-list
+ TEST_GEN_PROGS_arm64 += kvm_create_max_vcpus
+diff --git a/tools/testing/selftests/kvm/guest_memfd_test.c b/tools/testing/selftests/kvm/guest_memfd_test.c
+index ce687f8d248f..38c501e49e0e 100644
+--- a/tools/testing/selftests/kvm/guest_memfd_test.c
++++ b/tools/testing/selftests/kvm/guest_memfd_test.c
+@@ -34,12 +34,48 @@ static void test_file_read_write(int fd)
+ 		    "pwrite on a guest_mem fd should fail");
+ }
+ 
+-static void test_mmap(int fd, size_t page_size)
++static void test_mmap_allowed(int fd, size_t total_size)
+ {
++	size_t page_size = getpagesize();
++	const char val = 0xaa;
++	char *mem;
++	int ret;
++	int i;
++
++	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
++	TEST_ASSERT(mem != MAP_FAILED, "mmaping() guest memory should pass.");
++
++	memset(mem, val, total_size);
++	for (i = 0; i < total_size; i++)
++		TEST_ASSERT_EQ(mem[i], val);
++
++	ret = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, 0,
++			page_size);
++	TEST_ASSERT(!ret, "fallocate the first page should succeed");
++
++	for (i = 0; i < page_size; i++)
++		TEST_ASSERT_EQ(mem[i], 0x00);
++	for (; i < total_size; i++)
++		TEST_ASSERT_EQ(mem[i], val);
++
++	memset(mem, val, total_size);
++	for (i = 0; i < total_size; i++)
++		TEST_ASSERT_EQ(mem[i], val);
++
++	ret = munmap(mem, total_size);
++	TEST_ASSERT(!ret, "munmap should succeed");
++}
++
++static void test_mmap_denied(int fd, size_t total_size)
++{
++	size_t page_size = getpagesize();
+ 	char *mem;
+ 
+ 	mem = mmap(NULL, page_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+ 	TEST_ASSERT_EQ(mem, MAP_FAILED);
++
++	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
++	TEST_ASSERT_EQ(mem, MAP_FAILED);
+ }
+ 
+ static void test_file_size(int fd, size_t page_size, size_t total_size)
+@@ -170,19 +206,27 @@ static void test_create_guest_memfd_multiple(struct kvm_vm *vm)
+ 	close(fd1);
+ }
+ 
+-int main(int argc, char *argv[])
++unsigned long get_shared_type(void)
+ {
+-	size_t page_size;
++#ifdef __x86_64__
++	return KVM_X86_SW_PROTECTED_VM;
++#endif
++	return 0;
++}
++
++void test_vm_type(unsigned long type, bool is_shared)
++{
++	struct kvm_vm *vm;
+ 	size_t total_size;
++	size_t page_size;
+ 	int fd;
+-	struct kvm_vm *vm;
+ 
+ 	TEST_REQUIRE(kvm_has_cap(KVM_CAP_GUEST_MEMFD));
+ 
+ 	page_size = getpagesize();
+ 	total_size = page_size * 4;
+ 
+-	vm = vm_create_barebones();
++	vm = vm_create_barebones_type(type);
+ 
+ 	test_create_guest_memfd_invalid(vm);
+ 	test_create_guest_memfd_multiple(vm);
+@@ -190,10 +234,29 @@ int main(int argc, char *argv[])
+ 	fd = vm_create_guest_memfd(vm, total_size, 0);
+ 
+ 	test_file_read_write(fd);
+-	test_mmap(fd, page_size);
++
++	if (is_shared)
++		test_mmap_allowed(fd, total_size);
++	else
++		test_mmap_denied(fd, total_size);
++
+ 	test_file_size(fd, page_size, total_size);
+ 	test_fallocate(fd, page_size, total_size);
+ 	test_invalid_punch_hole(fd, page_size, total_size);
+ 
+ 	close(fd);
++	kvm_vm_release(vm);
++}
++
++int main(int argc, char *argv[])
++{
++#ifndef __aarch64__
++	/* For now, arm64 only supports shared guest memory. */
++	test_vm_type(VM_TYPE_DEFAULT, false);
++#endif
++
++	if (kvm_has_cap(KVM_CAP_GMEM_SHARED_MEM))
++		test_vm_type(get_shared_type(), true);
++
++	return 0;
+ }
+-- 
+2.49.0.rc0.332.g42c0ae87b1-goog
+
 
