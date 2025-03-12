@@ -1,137 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-51152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17378A5DD26
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 13:56:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C2E0A5DD30
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 13:57:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 543F716EA43
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:56:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CCB80189B42C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:58:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D1C624293C;
-	Wed, 12 Mar 2025 12:56:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I2k8J8Dr"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7F3823F38F;
+	Wed, 12 Mar 2025 12:57:52 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3F27083C;
-	Wed, 12 Mar 2025 12:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 401C81E489
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 12:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741784161; cv=none; b=c8qa8z0uIdOCU09AlRylCZwj8+1sikHaEBuOOfQb9PKnguoOm48kH/ZRy1PzCkd+pw6OZQWXmBNNu9tnmw4Do+NpHaOmm/3SvGhC4OjsefzaJvDdU72z+vh5QDdBEam+YQNGqV3pWFrT4YcLfG6L/qQd65knW6uqMKinyplgdOA=
+	t=1741784272; cv=none; b=npjhsijwzAHP6i3M42O1LrxX4hERqG9RRwZ5WfpmXVoDuafqYNy/Ti9EdyOSGoj9HPbRPZtncz7Qg/WwisKJDmrORTQmUndF8T2Vim5q3GkM/2YfF8BUBTi9JbAqie+Ilo/LHQ2wFj2/vVVuDCMJjB8vGc6tmpz34VQ6UFA2j5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741784161; c=relaxed/simple;
-	bh=cXKHm/RurkmSioL7RFlQcp51mjKyU/pOdfMXfLFR+ss=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qDcRSKnnBcDITw0foje3b2e6Xghj0dQ4qTK8TdTV/sDA8Ci7vrNdM8bh3Kaj8GCDQf2VKBtrvo76mTGk1LOpOQ6cyhoxRLGiw+P0a+t+Un+e7GUwfKLcTnRgvZUUrhsagZpFBQiBc3cArc3eYlQd2jPkwPn1F6/tQv0Mssrwh9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I2k8J8Dr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CBDE05003523;
-	Wed, 12 Mar 2025 12:55:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Wx1Oq22ysa/s2ub9FhQ5ef7c03DnunFXLTLLRls0YU8=; b=I2k8J8DrzpljLjV9
-	/+p0KFsiWgFpDeI/4WLv04KF7MxpFBznZORi91+jjKSZGbrlWTcy9mKcqFNA7o/7
-	2Vdngkg6KU8wdK9wb6RYBJO+Y5yxD4LYQH/QhqRzKJaueoSqc/AipLWNu1H2L+L1
-	LvnSm0e9TQRI02htxGsN2V+JWUjhK/CvH3+Q8IY+N+8FfZUW6s777UGiSNNO5v0l
-	09yu/mIcpv5NpZq6qgSQldFdix+kbmj5lh817Ga/gNzAUNgrfGqLMtL4J+ZAazWq
-	eNrGOMR/LUTMM+FjwnO7yTNl0exBX/pbrcWvW9s8n30yBu1qrm3qy8OMcd8l8+MC
-	OuM+jA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45b96y88sj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Mar 2025 12:55:56 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52CCtu0n021430
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Mar 2025 12:55:56 GMT
-Received: from [10.216.38.182] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 12 Mar
- 2025 05:55:51 -0700
-Message-ID: <c6e601d1-28ff-2a24-0b98-e79006bd7a8e@quicinc.com>
-Date: Wed, 12 Mar 2025 18:25:48 +0530
+	s=arc-20240116; t=1741784272; c=relaxed/simple;
+	bh=a0DSQZwzQUvO3qyEXFj5fSrwt9Xs4IJKnKR0r0FGd+s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Azldorx9IBvL+zOArMMfQu9nvT5cRjF3JwEFhglEa2jvYU5zbI0xuhNGmIEVdGAOqWFUgkuZ1TdbCLquls0aKMLHwhpj8qwlaXg1NX/oT4UvJ5ohzivmPgHI1SBuLxdMbeyjZf6d30hV0ix8canPF8e+CvHAhUcjKXM+37rSiXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 50335152B;
+	Wed, 12 Mar 2025 05:58:00 -0700 (PDT)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 781983F694;
+	Wed, 12 Mar 2025 05:57:15 -0700 (PDT)
+Message-ID: <44d516b5-5e1f-4b50-b65c-0ed596639fd0@arm.com>
+Date: Wed, 12 Mar 2025 12:57:11 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 1/4] dt-bindings: media: qcom,sm8550-iris: update power
- domain name
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
- <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com>
- <607f842d-07b5-4c1f-ad26-0fd34e6e605b@kernel.org>
- <40d1a27e-aee9-bd68-a82b-a51ef8ccde05@quicinc.com>
- <85bd865b-71e7-40e1-9303-e970d338cb59@kernel.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <85bd865b-71e7-40e1-9303-e970d338cb59@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zeJWEIDs-dwcmYmAOJQehBnhTFz7VNsd
-X-Authority-Analysis: v=2.4 cv=I+llRMgg c=1 sm=1 tr=0 ts=67d1845c cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=QJSAq4TcFel--fmAFxcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: zeJWEIDs-dwcmYmAOJQehBnhTFz7VNsd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-12_05,2025-03-11_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=752
- lowpriorityscore=0 adultscore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 spamscore=0 malwarescore=0 mlxscore=0 suspectscore=0
- phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503120090
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/5] iommu/arm-smmu-qcom: Don't read fault registers
+ directly
+To: Rob Clark <robdclark@gmail.com>, Connor Abbott <cwabbott0@gmail.com>
+Cc: Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ freedreno@lists.freedesktop.org
+References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
+ <20250304-msm-gpu-fault-fixes-next-v4-2-be14be37f4c3@gmail.com>
+ <20250311180807.GC5216@willie-the-truck>
+ <CACu1E7Hw6vGbTQ7t-Hj3ziycZhPxtOGSDkt7o4fNUx91KDcXfg@mail.gmail.com>
+ <CAF6AEGs8PoZBpFesQ_DGcngn4X24wzFy=zn2mAUJepdibxoKog@mail.gmail.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <CAF6AEGs8PoZBpFesQ_DGcngn4X24wzFy=zn2mAUJepdibxoKog@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-On 3/12/2025 2:14 PM, Krzysztof Kozlowski wrote:
-> On 11/03/2025 18:47, Vikash Garodia wrote:
+On 11/03/2025 8:00 pm, Rob Clark wrote:
+> On Tue, Mar 11, 2025 at 12:42 PM Connor Abbott <cwabbott0@gmail.com> wrote:
 >>
->> On 3/11/2025 11:03 PM, Krzysztof Kozlowski wrote:
->>> On 11/03/2025 13:03, Vikash Garodia wrote:
->>>> Not all platforms has a collapsible mx, so use the more generic naming
->>>> of mx in the binding.
->>>>
+>> On Tue, Mar 11, 2025 at 2:08 PM Will Deacon <will@kernel.org> wrote:
 >>>
->>> No, neither tested, nor justified. Read the file. How many platforms do
->>> you have there? One. Out of this one platform you claim not all of them
->>> have MX collapsible, so you want MX?
->> Let say we have one which is non-collapsible, what should be the way in that
->> case to use the bindings which differ only in the MX/MXC part ?
+>>> On Tue, Mar 04, 2025 at 11:56:48AM -0500, Connor Abbott wrote:
+>>>> In some cases drm/msm has to resume a stalled transaction directly in
+>>>> its fault handler. Experimentally this doesn't work on SMMU500 if the
+>>>> fault hasn't already been acknowledged by clearing FSR. Rather than
+>>>> trying to clear FSR in msm's fault handler and implementing a
+>>>> tricky handshake to avoid accidentally clearing FSR twice, we want to
+>>>> clear FSR before calling the fault handlers, but this means that the
+>>>> contents of registers can change underneath us in the fault handler and
+>>>> msm currently uses a private function to read the register contents for
+>>>> its own purposes in its fault handler, such as using the
+>>>> implementation-defined FSYNR1 to determine which block caused the fault.
+>>>> Fix this by making msm use the register values already read by arm-smmu
+>>>> itself before clearing FSR rather than messing around with reading
+>>>> registers directly.
+>>>>
+>>>> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+>>>> ---
+>>>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 19 +++++++++----------
+>>>>   drivers/iommu/arm/arm-smmu/arm-smmu.c      | 14 +++++++-------
+>>>>   drivers/iommu/arm/arm-smmu/arm-smmu.h      | 21 +++++++++++----------
+>>>>   3 files changed, 27 insertions(+), 27 deletions(-)
+>>>
+>>> [...]
+>>>
+>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>>>> index d3bc77dcd4d40f25bc70f3289616fb866649b022..411d807e0a7033833716635efb3968a0bd3ff237 100644
+>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>>>> @@ -373,6 +373,16 @@ enum arm_smmu_domain_stage {
+>>>>        ARM_SMMU_DOMAIN_NESTED,
+>>>>   };
+>>>>
+>>>> +struct arm_smmu_context_fault_info {
+>>>> +     unsigned long iova;
+>>>> +     u64 ttbr0;
+>>>> +     u32 fsr;
+>>>> +     u32 fsynr0;
+>>>> +     u32 fsynr1;
+>>>> +     u32 cbfrsynra;
+>>>> +     u32 contextidr;
+>>>> +};
+>>>> +
+>>>>   struct arm_smmu_domain {
+>>>>        struct arm_smmu_device          *smmu;
+>>>>        struct io_pgtable_ops           *pgtbl_ops;
+>>>> @@ -380,6 +390,7 @@ struct arm_smmu_domain {
+>>>>        const struct iommu_flush_ops    *flush_ops;
+>>>>        struct arm_smmu_cfg             cfg;
+>>>>        enum arm_smmu_domain_stage      stage;
+>>>> +     struct arm_smmu_context_fault_info cfi;
+>>>
+>>> Does this mean we have to serialise all faults for a given domain? That
+>>> can't be right...
+>>>
+>>> Will
+>>
+>> They are already serialized? There's only one of each register per
+>> context bank, so you can only have one context fault at a time per
+>> context bank, and AFAIK a context bank is 1:1 with a domain. Also this
+>> struct is only written and then read inside the context bank's
+>> interrupt handler, and you can only have one interrupt at a time, no?
+>>
+>> Connor
 > 
+> And if it was a race condition with cfi getting overridden, it would
+> have already been an equivalent race condition currently when reading
+> the values from registers (ie. the register values could have changed
+> in the elapsed time)
 > 
-> I don't care about imaginary things. Send patches for real hardware. How
-> does collapsibility of the domain change the real hardware interface?
-It does not. I am now thinking to drop this patch altogether, and continue to
-use MXC as defined in bindings, irrespective of connection to hardware as MX or
-MXC. For ex SM8550/SA8775P have MXC, while QCS8300 have MX, but again, as you
-mentioned, these difference just alters some property in DT, binding can remain
-same.
-Regards,
-Vikash
+> So no additional serialization needed here.
+
+Agreed, the only subtlety is the other side of things is true as well - 
+i.e. cfi is only valid and stable between the IRQ being fired and 
+CBn_RESUME being written, so actually it *mustn't* be touched by 
+anything outside the fault handling path.
+
+Thanks,
+Robin.
 
