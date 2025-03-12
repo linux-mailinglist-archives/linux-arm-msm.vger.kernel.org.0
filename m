@@ -1,106 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-51100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A5C2A5D878
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:44:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 249E7A5D888
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:46:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B17FE189D458
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 08:44:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA103189FC40
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 08:45:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3062C2376FA;
-	Wed, 12 Mar 2025 08:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0A2223644A;
+	Wed, 12 Mar 2025 08:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JHmsYWCH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LB7dL4Jo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03662236445;
-	Wed, 12 Mar 2025 08:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09AD23643A;
+	Wed, 12 Mar 2025 08:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741769055; cv=none; b=eucAw5JxgKmbZKa54YlDHOQFUwmw6t1q/APp3pJfBNUKuJnMxX9HJMUUSx1+AvIR41T5iO7ZZvTycHHlQt9QMt8ybnlHfhZps/w3iTUWGs8Ye8RlNa6gbGLLU2sCWSQIPm+A5RRV0vcB74mKIxsboLJVDOYUKAcW2irPryflHLY=
+	t=1741769088; cv=none; b=Lv3Km3S7GoS8HYQ7u6/0XPV+hvh4ktUu8kmg6J7MqZjMbDxfWYj/X3T/KShlZKyHZ9RM6ltNMb7M0C/on9otsMwSEZTU8qijDcU9PQh92uapkzX1PucXwDKBzqLATUPdm43UlazBFF8HxoXG6RgljDr49/3aXgGBqwLqwxwBQvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741769055; c=relaxed/simple;
-	bh=90jj+F1PoWmDkHrasAfWGfMv1PJi2auNqpCIRetLGdM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c5xUCopZzOclKZtn4od92OxNmfdgOLR1GBS5nQPZfV05UAVJ7n6IH+69QLNPdfgGWmfWoygVyoMqXE16z4KMTvUJoP36p0YswvVEhw64mswpmMhvLKMsrqZUJ6sONKZ9B97+hMPZ68x0U/qfdL9QNWlbnZwHQaNzOYm3AxyfmrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JHmsYWCH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6A1C4CEED;
-	Wed, 12 Mar 2025 08:44:12 +0000 (UTC)
+	s=arc-20240116; t=1741769088; c=relaxed/simple;
+	bh=6lTzpLfydCLbFxtECio5+77GPtcrYg8BwHLHp8dQ60M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a0ao/KECJG3Rs8oZVo4QsIkOnbw3VK3ZO4NN8D5UGQaKM1dSzFEJoHBhVqkmfrrRnt4SldrExnmVwUdf8uDgAzplOF8hNnebRgb+HQ/j/3ZFolz0JEU32A+/j74pV6d7+q8nTG6nBV59EWLx1Gxe9Gl8cP8x6yv69Feu2mdgXcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LB7dL4Jo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CC8C4CEE3;
+	Wed, 12 Mar 2025 08:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741769054;
-	bh=90jj+F1PoWmDkHrasAfWGfMv1PJi2auNqpCIRetLGdM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JHmsYWCH20ivwHnzwwENo7L3r+EjwK4dZp/ZLdRGgej60MBYAkt9v7bGB2hqwjnxi
-	 ER/Wsr7SZc3QVrLQbRzD3CztAk3qOviT+4+chhrq9vJ5uLmCihcdmdmZHdU1Qy7FsR
-	 7feOyGXeGFo1eX7XgQ5vcdqn4amzn0WojhF3z47oR6dq3OSQeGgHdriSqTbYyPjGL1
-	 3kabv87vlyazujPXpPF3vyI7au0smv5CnOxWEkNH+B5nZ/WByztkQWRkFl7kKirkyD
-	 WlnKeCsdOAduV5VCMhiB1tPDbqSfNU/WooQP3QWPdc/7UYZ60DDJuF5LLDxVX5GcrO
-	 6FMS2a1OlNuhw==
-Date: Wed, 12 Mar 2025 10:44:10 +0200
-From: Dmitry Baryshkov <lumag@kernel.org>
-To: Pratyush Brahma <quic_pbrahma@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs8300: add the pcie smmu node
-Message-ID: <rj4jtqchuetrbtczbhvaa5hcp5olumwdbao3x4pulkxiqcq2ag@v6ftffk6bcc5>
-References: <20250206-qcs8300-pcie-smmu-v1-1-8eee0e3585bc@quicinc.com>
- <aau6kgdbsq5mu5h4kqggzgua26o7dwc6hbkpmtgcnqx5dqhlgd@qcm2xzr64fyg>
- <43450c5e-837c-4215-9bb4-69066b175832@quicinc.com>
+	s=k20201202; t=1741769088;
+	bh=6lTzpLfydCLbFxtECio5+77GPtcrYg8BwHLHp8dQ60M=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=LB7dL4JowHgps/f6KJIIercmqTR2AGrNvOQfK2nFmyRAQuAAa44HET1c+8ZbqOu+r
+	 FaqNvPwhxAL0U5RDJB8WKj2DwCoWLzHbMCNPUhwR2SBc1AkSw2shhPMYEGEKjySjTu
+	 5lrJsZtSbrO9tOh9aULyA+d80n0mSuEreOfnT55W30ct7vBjuAG4HBhUZ1GAxt0f77
+	 CkSLyV2flxbAQlmioyE5yTwEfChOt6DSe+EbsStuZrTe+y/d1fiET0kLob3aL/UUZP
+	 qzJsybFOBHxXTlYvuRyUMDo7CF1E1oB5LR4eU148wGyOdB9oNZeIiDSrlI3IFWF0nt
+	 0I66pNqBMiIuQ==
+Message-ID: <85bd865b-71e7-40e1-9303-e970d338cb59@kernel.org>
+Date: Wed, 12 Mar 2025 09:44:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <43450c5e-837c-4215-9bb4-69066b175832@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] dt-bindings: media: qcom,sm8550-iris: update power
+ domain name
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
+ <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com>
+ <607f842d-07b5-4c1f-ad26-0fd34e6e605b@kernel.org>
+ <40d1a27e-aee9-bd68-a82b-a51ef8ccde05@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <40d1a27e-aee9-bd68-a82b-a51ef8ccde05@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Mar 12, 2025 at 12:41:38PM +0530, Pratyush Brahma wrote:
+On 11/03/2025 18:47, Vikash Garodia wrote:
 > 
-> On 3/12/2025 12:23 PM, Dmitry Baryshkov wrote:
-> > On Thu, Feb 06, 2025 at 07:13:17PM +0530, Pratyush Brahma wrote:
-> > > Add the PCIe SMMU node to enable address translations
-> > > for pcie.
-> > > 
-> > > Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 75 +++++++++++++++++++++++++++++++++++
-> > >   1 file changed, 75 insertions(+)
-> > > 
-> > Reviewed-by: Dmitry Baryshkov <lumag@kernel.org>
-> > 
-> > Though I see a little benefit in having this SMMU node if it is not
-> > followed by the PCIe enablement.
-> 
-> Thanks for the review!
-> 
-> PCIe enablement changes for qcs8300 have been posted already [1] and [1]
-> needs
-> this patch as mentioned in [2].
+> On 3/11/2025 11:03 PM, Krzysztof Kozlowski wrote:
+>> On 11/03/2025 13:03, Vikash Garodia wrote:
+>>> Not all platforms has a collapsible mx, so use the more generic naming
+>>> of mx in the binding.
+>>>
+>>
+>> No, neither tested, nor justified. Read the file. How many platforms do
+>> you have there? One. Out of this one platform you claim not all of them
+>> have MX collapsible, so you want MX?
+> Let say we have one which is non-collapsible, what should be the way in that
+> case to use the bindings which differ only in the MX/MXC part ?
 
-Ack. In future please consider posting series in a logical way: if PCIe
-SMMU is only useful for PCIe and it is required for PCIe to work it
-makes much more sense to have it as a part of the PCIe enablement series
-rather than having it as a separate patch which can easily get lost.
 
-> 
-> [1] https://lore.kernel.org/lkml/20250310063103.3924525-8-quic_ziyuzhan@quicinc.com
-> [2] https://lore.kernel.org/lkml/20250310063103.3924525-1-quic_ziyuzhan@quicinc.com
-> 
-> -- 
-> Thanks and Regards
-> Pratyush Brahma
-> 
+I don't care about imaginary things. Send patches for real hardware. How
+does collapsibility of the domain change the real hardware interface?
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
