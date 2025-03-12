@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-51138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35E67A5DBDE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:46:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E3FEA5DBE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:48:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE1DE3AF716
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 11:45:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9ED053B526F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 11:47:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77B6123C8A2;
-	Wed, 12 Mar 2025 11:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9E3B23E35A;
+	Wed, 12 Mar 2025 11:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jTziJHhg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="slYiwfFl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B59E3D3B8;
-	Wed, 12 Mar 2025 11:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E35623237C;
+	Wed, 12 Mar 2025 11:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741779958; cv=none; b=k1XLUMrEc16AS83Iamo3vksnWno3m9qmlTeAEm9o4PDuJa/9wgdKw82K7uak2GEtL2RnRe72WBrHhplol/YnSl/yIHWGp4Kc840Mo+LLJxGj/7a9IBSoHq1yppIzBgeOtBSTfGoi1kZqzK8UYWR+RDcpPJdevb9YG9nV7/c4ZGM=
+	t=1741780087; cv=none; b=hisWpYeQrH03RYEYU3l5fqxlb6KLjrFKVSsZZav828EPojl/zGsSUJPOlyolnmx9i+zULhvSAUoyFMbL/WskX51V/7P8B3rMFFzyI3ColMu+lmrRb9ZFn+CsJc4qF3LNZv2aVEa7YHq1eQwZ8g+QGgXGUuV089s2s++oFnJuUzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741779958; c=relaxed/simple;
-	bh=AGRqmwUTIygKiqPKyMDl1Xfn64z9qv9+ODfA6XnE8TY=;
+	s=arc-20240116; t=1741780087; c=relaxed/simple;
+	bh=R8v6pS0pixsrHLGD3aftIutJXs5Es7Ccu+wDgrw5dfQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l4vhCYKCtEGNDZDf/TcPPUC1jzPCxbDsGv23BiUZz6bm/LxPeo4ilzA92Mlwp26CZzgMjrYovnyJLJLMpJWHp5/hb7JK2c2wg4St0wIwJ8KnpMfj557COC71u557URB/qEdBOUHW56/+2KsRdLvdMxTVt+CUUoDSREUuNcDJaWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jTziJHhg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E2FC4CEEE;
-	Wed, 12 Mar 2025 11:45:56 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=EYjgTWE3GzNtgc5b0wM6KCxmVKVusRDG5ysQFbjQC/3VcmJOqE42DoQ3f4sWuye5pwjB5NgA0eVEWyKprC+E0KHHExkED3XJQ+5avf7uAcaj4tnRSEWo6gBq5SOG3VXsC4IYtUTx/RgGzmFd1gWzcLL5bNWwe7RH7zYjmkw5VcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=slYiwfFl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED828C4CEE3;
+	Wed, 12 Mar 2025 11:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741779957;
-	bh=AGRqmwUTIygKiqPKyMDl1Xfn64z9qv9+ODfA6XnE8TY=;
+	s=k20201202; t=1741780087;
+	bh=R8v6pS0pixsrHLGD3aftIutJXs5Es7Ccu+wDgrw5dfQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jTziJHhgTLIits6Md7rklsxcwoC9511QKZbqrNdHamLJeb8xlvPSyzn5P7U3j4DFA
-	 4oZ7OpgqzERYsppkzvV3JIeNcwJE3+bhHmtnf0iqrR7O89CdJ/5qcyE0b425Q9hRXY
-	 H99+UB8CZWASWwCWItFuxNluGPeWJWlU86ru6bmXDmaTDbije+cPwtlsUkEYJHjwjq
-	 ngeFDD6nRaMxX+pf2eu/hgCOT0hhoW97KEiPIu7Hu22CD0deC+nkK7NTAmbK0uFbw9
-	 dFxeVuaBEmIUVN+lKMcB80K9iKEqp2+XbmjM9CbTYe9zgwQUcaPRPyXd6s33cGcg05
-	 ADtHScuiRjJ8g==
-Date: Wed, 12 Mar 2025 12:45:53 +0100
+	b=slYiwfFlETo+CSOzUJfEviQJA3id2tmJKLSvxzbMzg7HtHWPTHlVwz+LwX+GAWsCa
+	 xanbQiLQbbUIKSPUg/XZnlPtR1KZE8dDBmijAvmF2c+5REYDKdWVZFzNssdUTLJ040
+	 EjGuwT5BGAsHa+Ye/Lbgna9pDpkYewuCm4sJN5ZMsbt6JWXh37g43AHM4P95pH3T89
+	 QT4ZhxRODZzca56xRKeXQiDXENaoroZ0JGTuZU2sNMoGsbFQ0wkTvxKC+531zQ47Lk
+	 7c1n8hiTvqrg2dxnLAUX51w9PDk6uyj69r2dkH8mp/eMUtremxUvFPhnvxeJzT9fZo
+	 3aaVAnitvBnMg==
+Date: Wed, 12 Mar 2025 12:48:03 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Ayushi Makhija <quic_amakhija@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
@@ -53,11 +53,11 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
 	Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se, jernej.skrabec@gmail.com, 
 	quic_abhinavk@quicinc.com, quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com, 
 	quic_jesszhan@quicinc.com
-Subject: Re: [PATCH v2 03/10] dt-bindings: display: msm: document DSI
- controller and phy on SA8775P
-Message-ID: <20250312-calm-steadfast-cricket-fe9dd8@krzk-bin>
+Subject: Re: [PATCH v2 07/10] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
+ to DP bridge nodes
+Message-ID: <20250312-athletic-cockle-of-happiness-e88a3a@krzk-bin>
 References: <20250311122445.3597100-1-quic_amakhija@quicinc.com>
- <20250311122445.3597100-4-quic_amakhija@quicinc.com>
+ <20250311122445.3597100-8-quic_amakhija@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,45 +66,31 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250311122445.3597100-4-quic_amakhija@quicinc.com>
+In-Reply-To: <20250311122445.3597100-8-quic_amakhija@quicinc.com>
 
-On Tue, Mar 11, 2025 at 05:54:38PM +0530, Ayushi Makhija wrote:
-> Document DSI controller and phy on SA8775P platform.
+On Tue, Mar 11, 2025 at 05:54:42PM +0530, Ayushi Makhija wrote:
+> Add anx7625 DSI to DP bridge device nodes.
 > 
 > Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
 > ---
->  .../display/msm/qcom,sa8775p-mdss.yaml        | 188 ++++++++++++++++++
->  1 file changed, 188 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
-> index a90a8b3f1a9e..628ca68871f4 100644
-> --- a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
-> @@ -52,6 +52,26 @@ patternProperties:
->          items:
->            - const: qcom,sa8775p-dp
->  
-> +  "^dsi@[0-9a-f]+$":
-> +    type: object
-> +    additionalProperties: true
-> +
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 208 ++++++++++++++++++++-
+>  1 file changed, 207 insertions(+), 1 deletion(-)
+>
 
-Drop blank line
+So you just gave up after one comment? Context of every email should be
+trimmed, so if it is not trimmed means something is still there. I know
+there are reviewers who respond with huge unrelated context, but that's
+just disrespectful to our time and don't take it as normal.
 
-> +    properties:
-> +      compatible:
-> +        items:
+<form letter>
+This is a friendly reminder during the review process.
 
-contains
+It seems my or other reviewer's previous comments were not fully
+addressed. Maybe the feedback got lost between the quotes, maybe you
+just forgot to apply it. Please go back to the previous discussion and
+either implement all requested changes or keep discussing them.
 
-> +          - const: qcom,sa8775p-dsi-ctrl
-> +          - const: qcom,mdss-dsi-ctrl
-
-Drop fallback
-
-Same comments further
-
-Best regards,
-Krzysztof
+Thank you.
+</form letter>
 
 
