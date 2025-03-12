@@ -1,40 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-51188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C533BA5E35A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 19:01:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32081A5E36F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 19:05:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 13AAB17ADE6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 18:01:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0C673B75B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 18:05:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C581F8635C;
-	Wed, 12 Mar 2025 18:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59C8B7083C;
+	Wed, 12 Mar 2025 18:05:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P+Z5JO/t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 153AB1D54FE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 18:01:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CD82505A5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 18:05:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741802493; cv=none; b=Gap75hYu4ZgxuKgopJxb8FCiHXZKpBYYRGnQ/+AKujUOPdWBWDSTedjp9NPGlXE1V4S/aDI9Zq+vdVaNMjYcV64OO4/xjMbWA1PDthxfMOT+L7gtvsGNKhNhIozJfztwSjcIzdvrlGgCCuy1AZquQD9Sga6uS6jGvTYSbRuuzgg=
+	t=1741802741; cv=none; b=W/ynjf/NPUqG4OB9rzmsbPhifh6SAzwOUECINk0O63tRhOnuI6/8au3TyoD++nVGoEw0NHQeT4db76+Bff0Dn8aXYAijXSXZgeSaqGHvPzZJVpZfDElr5CmpuepFmvVPRLrj+21wJjJOP/Gc/DBCTxuPQ+LdO2TEEZSMLeqXAw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741802493; c=relaxed/simple;
-	bh=uRflT48LDo87dXTO3uCvWWt1Fp9+tNIQrODhVV9dMWo=;
+	s=arc-20240116; t=1741802741; c=relaxed/simple;
+	bh=ZnvtSvXYaZKgXRPi9veH142SzPQiahF6nTX9p/M+dJM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pRj52JiisuaBrYiTrPYoGDOcxA2WzC5gjm2w57LoEFBE5ktkBOekzKUFk5OHjFX9UQUPOSaAgDGpZ135GE5hR3F7GU4SpsJfbfnohVLh+CapaEzhx4MEaCjaYvhkCQCFQiKwl5XcZQ3Ph3r5Sy2H/Uu8L6ovwcqXOrwLrWfUpuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C93D41515;
-	Wed, 12 Mar 2025 11:01:39 -0700 (PDT)
-Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5FE553F5A1;
-	Wed, 12 Mar 2025 11:01:27 -0700 (PDT)
-Message-ID: <2d47815d-6bee-4d1f-8b60-854763794bf6@arm.com>
-Date: Wed, 12 Mar 2025 18:01:25 +0000
+	 In-Reply-To:Content-Type; b=LyAU4LGE+sW3gxsuu1+3Ywev8xu5LCqlvkqXIHLsoLefU0vUBiQobNYYdiYWxk8KzR0Qb4VqOjMjT7c1DT/HjEU8S0nPv6aVZrzxW8Ui2GAFo6JxBe/QroMuXuf/TiImxot9ET0qWL19AsrgwNyqqm5m9HKtFhV/jhcWDej6pW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P+Z5JO/t; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-54953b2c112so14802e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 11:05:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741802737; x=1742407537; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4JP/zrVSexM0psJNK4a87mL+zi9yaJ2cIxPsPxHNny4=;
+        b=P+Z5JO/tsgDgec+EVmgvNitfMfdnsvXASdqP5fIMs9lnDK7SrONlGShwoZdmv4HdbU
+         riZq1xoZ7SC0r+qr2LHPJr/2oGC2dLPGC+5iBDUDlK3x14EGEqqE71PSlZA4BbCotYxV
+         kMQWY8AvCfDbkaIdbs+di1yVpSasdnUsJMfz8y3U6PBSEWPjQ0NKMpFxiFBtFpJdMhLX
+         XW/H5vjJzxf3xjl17HWtIQWvOLbSn33YD0Qa4ff+gHqRHmDi1fHDIPCtwHpdk4lkoQIw
+         /a2V0P4XsdBx+bRfFhAcTmsuwlpSfco+YqxzSNVDup57egQtVqfUllKm7uDfPcMHKgfg
+         jTvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741802737; x=1742407537;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4JP/zrVSexM0psJNK4a87mL+zi9yaJ2cIxPsPxHNny4=;
+        b=m5UXaIfPqz+AxJItG0HozL8F7Fqr0xgP8sJHrMdyZir5HhBdIzlvR3UZopoefxa2pK
+         95d0khMn/uxLdCNE8RLkeMTZn4Y4GaDh2A4QjgfQN2dBIybjCqaL8h2P5euWSn8TAwSx
+         N5AFydOrRfHhMRFlJICnjIyEJtv8SiyrQtvzOBd5WDGJYkQhIq4NkBzpuTLaolPHYIew
+         YccYVKwlCQs09js28iUuBta6FkjJqYs3RhsqWHQAhntJ8/LMr2bEwNQiAbzBVCR3Hq/3
+         cQVJX9maB9GTxwIPHP9o7+IxAkcRtx79kLqU4tCml7Dqukmt252JJXtJ5+h9BGDNLfsU
+         hqTg==
+X-Forwarded-Encrypted: i=1; AJvYcCVqQ+hadmUq1FgfpQ/zCa7ABPN/bH6obr2pzFuT2sXHeslxU8jmHa41SpuNHsJiT0kU5YtI0D+Ue+govTy2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxkbATNz230x5KE1JYxcwuDVEc2JCjpLc/TcMa8KN8JqTVYEN/f
+	rkq1E/Tm+BWnA569GaZJahxG9v8OebmkeL3XqSu7bc5UU7+IIYiiF8sXxWh5ZTU=
+X-Gm-Gg: ASbGncsvLRteTgIuOWL6bh+9QBq6hA6IA8C7xzJD6lDufZg2+W9AgFQ3cGWr3ph/K9M
+	soYhxursDgT3/5YUF+dAy5/xZlIz/hh6GTeZ0xSwD+89L735F+WkcSsXpkwm5P+RFAV+gxT7MjR
+	B8DIlg7gKd2QCAL9JJdG9O2SrUV8URpiRB/BJ87n+Pa0mm1rppEOXTgrXPeZaOZ6Vj8VIiF6uz/
+	haIpWDY4WLgDiuG5nU9/qOD55Tarv1oezKX2y7KQ2CYsTW3a4bpQrz7/p+Ph2Wp3e/X5IzAUCni
+	+YRffpeaYBTjkMiEtPnuG0qy5T840VWadL8LtNms/hippLsIUl9eZm02I50hovLMXMlX0ouRXhH
+	kO36/pNskpuFXxsna
+X-Google-Smtp-Source: AGHT+IF9q4rX/bNC2ZItHt0EL8U3J8nNwY8dNosMDubIuSu9sUrRcC/KaIRJyrmIsSDmKBjdsU5nBQ==
+X-Received: by 2002:a05:6512:ba7:b0:549:8f26:ba08 with SMTP id 2adb3069b0e04-549ababf748mr1150913e87.5.1741802736571;
+        Wed, 12 Mar 2025 11:05:36 -0700 (PDT)
+Received: from [192.168.1.228] (74-111-126-194.sta.estpak.ee. [194.126.111.74])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5498ae4b6f9sm2177533e87.50.2025.03.12.11.05.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Mar 2025 11:05:35 -0700 (PDT)
+Message-ID: <ebe9d832-e414-4b67-b78e-f30a7c43a466@linaro.org>
+Date: Wed, 12 Mar 2025 20:05:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,104 +82,49 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/5] iommu/arm-smmu: Save additional information on
- context fault
-To: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>
-Cc: Connor Abbott <cwabbott0@gmail.com>, Joerg Roedel <joro@8bytes.org>,
- Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- freedreno@lists.freedesktop.org
-References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
- <20250304-msm-gpu-fault-fixes-next-v4-1-be14be37f4c3@gmail.com>
- <20250311180553.GB5216@willie-the-truck>
- <CACu1E7GzCiO2b7AFJSDC+pN2VD9VaD2aYz_GGymM3-xAUqd__A@mail.gmail.com>
- <20250312130525.GC6181@willie-the-truck>
- <CAF6AEGvqYithLFAKpfdkw35DEsUZ8rBt25-oWz3r=kaLt+RbQw@mail.gmail.com>
- <20250312164735.GA6561@willie-the-truck>
- <CAF6AEGskyoemQDrTXh=ewf61e-hVzWMjmqe=nX2J-65W5-M6Zw@mail.gmail.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <CAF6AEGskyoemQDrTXh=ewf61e-hVzWMjmqe=nX2J-65W5-M6Zw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] dt-bindings: media: Describe Qualcomm SM8650 CAMSS IP
+Content-Language: ru-RU
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-media@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+ linux-arm-msm@vger.kernel.org, Bryan O'Donoghue
+ <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+ devicetree@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>
+References: <20250312001132.1832655-1-vladimir.zapolskiy@linaro.org>
+ <20250312001132.1832655-2-vladimir.zapolskiy@linaro.org>
+ <174177914766.189343.17822607487336311201.robh@kernel.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <174177914766.189343.17822607487336311201.robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 12/03/2025 5:23 pm, Rob Clark wrote:
-> On Wed, Mar 12, 2025 at 9:47 AM Will Deacon <will@kernel.org> wrote:
->>
->> On Wed, Mar 12, 2025 at 07:59:52AM -0700, Rob Clark wrote:
->>> On Wed, Mar 12, 2025 at 6:05 AM Will Deacon <will@kernel.org> wrote:
->>>> On Tue, Mar 11, 2025 at 06:36:38PM -0400, Connor Abbott wrote:
->>>>> On Tue, Mar 11, 2025 at 2:06 PM Will Deacon <will@kernel.org> wrote:
->>>>>> On Tue, Mar 04, 2025 at 11:56:47AM -0500, Connor Abbott wrote:
->>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>>>>>> index ade4684c14c9b2724a71e2457288dbfaf7562c83..a9213e0f1579d1e3be0bfba75eea1d5de23117de 100644
->>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>>>>>> @@ -409,9 +409,12 @@ void arm_smmu_read_context_fault_info(struct arm_smmu_device *smmu, int idx,
->>>>>>>                                      struct arm_smmu_context_fault_info *cfi)
->>>>>>>   {
->>>>>>>        cfi->iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
->>>>>>> +     cfi->ttbr0 = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_TTBR0);
->>>>>>>        cfi->fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
->>>>>>> -     cfi->fsynr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
->>>>>>> +     cfi->fsynr0 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
->>>>>>> +     cfi->fsynr1 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR1);
->>>>>>
->>>>>> We already have an implementation hook (->get_fault_info()) which the
->>>>>> qcom SMMU driver can override with qcom_adreno_smmu_get_fault_info().
->>>>>> That thing dumps these registers already so if we're moving that into
->>>>>> the core SMMU driver, let's get rid of the hook and move everybody over
->>>>>> rather than having it done in both places.
->>>>>
->>>>> As you probably saw, the next commit moves over
->>>>> qcom_adreno_smmu_get_fault_info() to use this. The current back door
->>>>> used by drm/msm to access these functions is specific to adreno_smmu
->>>>> and there isn't an equivalent interface to allow it to call a generic
->>>>> SMMU function so it isn't possible to move it entirely to the core. At
->>>>> least not without a bigger refactoring that isn't justified for this
->>>>> series that is just trying to fix things.
->>>>
->>>> Ok :(
->>>>
->>>>>>>        cfi->cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
->>>>>>> +     cfi->contextidr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_CONTEXTIDR);
->>>>>>
->>>>>> I think the CONTEXTIDR register is stage-1 only, so we shouldn't dump
->>>>>> it for stage-2 domains.
->>>>>>
->>>>> Does it matter if we read the register though, as long as users are
->>>>> aware of this and don't use its value for anything?
->>>>
->>>> I think the contents are "UNKNOWN", so it could be hugely confusing even
->>>> if they just got logged someplace. Why is it difficult to avoid touching
->>>> it for stage-2?
->>>>
->>> Fwiw, we are only ever using stage-1
->>
->> Sure, but this is in arm-smmu.c which is used by other people and supports
->> both stages.
+On 3/12/25 13:33, Rob Herring (Arm) wrote:
 > 
-> Sure, but no one else is using this field in the fault-info.  So maybe
-> the addition of a comment in the struct would be enough if it isn't
-> going to cause an SError/etc to read it for S2 cb?
+> On Wed, 12 Mar 2025 02:11:30 +0200, Vladimir Zapolskiy wrote:
+>> Add device tree bindings for Qualcomm SM8650 camera subsystem.
+>>
+>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>>   .../bindings/media/qcom,sm8650-camss.yaml     | 389 ++++++++++++++++++
+>>   1 file changed, 389 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8650-camss.yaml
+>>
+> 
+> My bot found errors running 'make dt_binding_check' on your patch:
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sm8650-camss.yaml: properties:ports:properties: '^port@[0-5]$' does not match '^[#$a-zA-Z][a-zA-Z0-9#,+\\-._@]{0,63}$'
+> 	hint: Expected a valid DT property name
+> 	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+> 
 
-Any worthwhile comment isn't going to be significantly shorter or 
-clearer than 1 extra line of "if (smmu_domain->stage == 
-ARM_SMMU_DOMAIN_S1)"...
+I believe it's a false positive of a regexp unparsed by a regexp, and the warning can be ignored.
 
-TBH it's the Qualcomm register-middle-man firmware I'd be more worried 
-about than real hardware, given how touchy it can be even with register 
-accesses which *should* be well defined. But then I guess it also has 
-the habit of killing the system if anything other than the GPU dares 
-cause a fault in the first place, so maybe it OK?
-
-If anyone still uses Arm Fast Models SMMUv1/2 components it'll probably 
-squawk an annoying warning there too - ISTR I had at least one patch 
-motivated by that in the past.
-
-Thanks,
-Robin.
+--
+Best wishes,
+Vladimir
 
