@@ -1,141 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-51196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A329BA5E459
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 20:27:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42715A5E49F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 20:40:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9EAAE17BAA9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 19:27:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BAB4C3A9A33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 19:40:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13FCD259CB0;
-	Wed, 12 Mar 2025 19:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20D5A2586E2;
+	Wed, 12 Mar 2025 19:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lls1XP+V"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hK/BSX6B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAF523F369
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 19:27:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48376253B73
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 19:40:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741807659; cv=none; b=CfjqodgHHVTeNITr8QzfBewnSSNCorGAFxT/XpZuVx7f0nTQ5h9FhNHURJLh7yF/+nQh/FMCbp37/I4W1ChcVxHEywhJwTxRUkp8ElL1Cq/hXIKNKUF2d3bypltCDV1GL+w/IBWbkmVdkWMMxLRoQwfbp2aQbA6oTCnyjjbCxQ4=
+	t=1741808443; cv=none; b=XQZfBVmSHpaf1MEylnUXPTdk+Aa/DuoUwhDHeQOP+fiSVjzfiJYP4vVFms9G8wMUgP9SKp0IJUEY6Oqd6aHZujSaK1Wm7eQlJ2NeqSgO7rwdpwoO0n/v2soAbWd6isbWbPMoSYfhVB7Rhwyn0wwLVWp6EwFYahQBSeYP+yAG+Ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741807659; c=relaxed/simple;
-	bh=0jMuW75ONhCU98g91Ki0i+ClWIuHSukhvmLA5nKGMW8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ebdmaRyXB9M+XAWhPv2qGdFSjI3mU2CO8i1M78QLAJA2EJf4P7wdCoyKseG/6zwehwTEzbgxwaWtLfB1tqwY+IfquzFLvLHIAjA1rzr2mYO+q1OgFGseJFlefTXyrwr1H9J0is0jwJ/4eJ9fSZmWpCPJ/XhKghX3DywcQ0dTtU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lls1XP+V; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43938828d02so216885e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 12:27:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741807655; x=1742412455; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TthKowtkg3ZH4r2XBt7MSSpgewnQfw6r9pBf+S41jDs=;
-        b=lls1XP+VmNRIjPDnguDQR/l+7293rxNSZ6NwaT0ZGBQK3QojGx5SyZ4XFEGvatYNYV
-         lW4lN+7fkXTWORq2nyJiiy74QPGuvhK0NYteTmEstrlEV4XkOqOA9pFHfMqVMhwSlpCT
-         TgrgyDvRG5aAFXDJjlq4ZJ2vyXaAl+nLSOLEmd5z50vJGZtpgL7dGnFS1bKlJlfN4uyY
-         wTzfCGiPupmaNUmDJ4TpXKdcaXulSVCCMJ/Sv6lmZAG2e8Pk7c2kR3apJI/0RJtqE1pW
-         4FMQ5KxIkK5Tichwkb8ZSHRcBEmcMtf5cIKDLC1wDQhZglzSfIV5CaxRZxTFMDeW2m2H
-         MSAg==
+	s=arc-20240116; t=1741808443; c=relaxed/simple;
+	bh=chqaRTqy0/9wIACLkVCZlXVspE39+hFf13nQroISW9Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mpJN4LQoRjr2gbhyuu7hqhAnwwcObccMXQd4/I7Auq8kMoGIzdpmZ6Hr/weLUsoBZXK9niwASnqSx56/JbUbEQk3YNUh9PyYJ3QLrtjS+TKglsbhWVLPfsUwltG72vqu+ZIj6ZyfRvN3WU9l/ooQDQUu8snTe3QB6J315ibFkw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hK/BSX6B; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1741808440;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=chqaRTqy0/9wIACLkVCZlXVspE39+hFf13nQroISW9Q=;
+	b=hK/BSX6BZdUYHXzsOdv0KHVaydwqWuyfgz8hE7IBuHL7J5ZKc1SOTSuWxyrN3wrdwG99Qs
+	eDQJsoGUs0TRQZDL+m84ml62DWy/0ce1qbqDdgFYNdwvGx4Hck73PCO5NkRpPABVU0IRhC
+	4mhl5VNbCVNN9/eETspSN9QN66dacMg=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-27-0E94JXTWOcOVMmmDM3e3SA-1; Wed, 12 Mar 2025 15:40:38 -0400
+X-MC-Unique: 0E94JXTWOcOVMmmDM3e3SA-1
+X-Mimecast-MFC-AGG-ID: 0E94JXTWOcOVMmmDM3e3SA_1741808438
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c0c1025adbso31115185a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 12:40:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741807655; x=1742412455;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1741808438; x=1742413238;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TthKowtkg3ZH4r2XBt7MSSpgewnQfw6r9pBf+S41jDs=;
-        b=C2bVErMi6mABQlATA+jMQZYjfF/0LySQ/vlxNC0mwccHH8p5terckfgP1I1AA/WCm5
-         tvFtIatWcLoM87mxhIl5QnE7FOPKcYeeKa70dDPr/w5+tuGC31Fe6ImSgSotPqGZvdN2
-         r9p7UevvwxyqB9fmgLMZUZ7PXAkdeIVkN0EGZnZGtwHl06SxDYfaRhb/MvCApqOrljsr
-         Wc8RY3Y2cvWET1T/AQbL6n03nmQ4RKBIFkPM3k5SqQmYuPnQNqb5oJktEP/HU4yLIvvO
-         3rJCmV9vydDLbtA/wtFlIpDXb5qSPbGGFI0Z0z7p8d5ep2Xi5KeIgqtKJcDSgo3m/adU
-         Ircg==
-X-Forwarded-Encrypted: i=1; AJvYcCV1TEvdB8IjIhTsQTPcV/+vD8ARrPKJb86+iTyvgGGbOfG//Of0k+gUSi/SIWY9aXbfB545shKWv4FocJg6@vger.kernel.org
-X-Gm-Message-State: AOJu0YywEv0b5A/m7YZavzM3w3s48UgsjNfPBYiJuWodRmC22PiLIehy
-	IGUogDdK0ZgjuhMO3/taXkevmfZN3RyscXDB7167My1jFTRhzskdgMMALCePDX0=
-X-Gm-Gg: ASbGncurVB2wFaiHBC/0tExPdtXuLuX0oIfPNZamjtGmtf29kk8PwuHyrF86C+GFl2U
-	JxJLqrS2iUuBGYPzEt7m+3UaSnizkTCYXQx+eiJpeOVLw+j84Zm2L4JskQ9GSz27teU/2qmn7z3
-	Pvunimc8fZ0AJCF7nWgTptmHuotX+2bbm8dcS53GiObJdmdkQQNYh1S2H+C0FaPJpdSgRGQRwoj
-	aAJCBtzjqCredB18BKDNBsoGe8Bo0DDfzWWXDV8xQtqrr2KNB2gMWYAPAHRoOytGcIIQ+d8qmJS
-	mrioc3u7+0r8C3fx/JE4SYFcQ74BMbLG/TmhVMOPKbRC3GSFuWW+9yJpApw=
-X-Google-Smtp-Source: AGHT+IFNDMKyFlmL29BIYtE87ieQh9czS303C7tJdh4xet0OcI/TZLd5Tui0luLGPrsnPNEL65CGKA==
-X-Received: by 2002:a05:600c:45d3:b0:43b:cd07:92fb with SMTP id 5b1f17b1804b1-43d01c230famr37689245e9.6.1741807655471;
-        Wed, 12 Mar 2025 12:27:35 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.198.86])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d0a7903fbsm29331995e9.32.2025.03.12.12.27.34
+        bh=chqaRTqy0/9wIACLkVCZlXVspE39+hFf13nQroISW9Q=;
+        b=oHMuvxHLhpSNRTL+BqtKZ8wtGSOZPLqtnjfqxsQi53Zk9OqLcpNaTMBPhtbGY46HsE
+         hv5+2dnbKlN9C8xXfhG6AInmSd1q19ajJc/qvpNuwxRvpjIBonS2crZzlaV++vT1eyfF
+         Z8BfmUqs1R1igeNSaaZGXCpzEPaVdPh8E3CfIYLyca9EOyCsIjXsUOnGPuOgjMf9IjHm
+         DxdzdF5A0Sq1TCp5ggmXhnc9fK8IszfQ0DwWjdveskusVFUbzVqfXWDSKXvHa1sFVABi
+         lWBvmE320QdRgfddRs2xWINatgFu0BPXAh5wpGqmsqjS/U8pCgCNjU5S/dzu4/5/W3zT
+         EXmg==
+X-Forwarded-Encrypted: i=1; AJvYcCVPK9n1aJm/Qf7fw9rlpuQFcdadJoix31OKGhUMekrZvGdKJ7IzogbKdmFsIr9kj1PQW1jYkzUh6Mu9ZQ8N@vger.kernel.org
+X-Gm-Message-State: AOJu0YzToPPari+ThDPHQ5MMFkiyiKq/3+R68gBFr9cYp1RSRGiPIyXz
+	pACZ0ITwojXu95aZnMEDVvTiMQT/b4H6iwHhRGn7MBeSRWwLfJA+vMFNjf14BPRaud5JcEVjFRV
+	QgKehX4+ISIN2IMoU1FJfyjQ82P+CYs/WxiHT2adZiX5KLA+kgcc9FQLDZYGfG8o=
+X-Gm-Gg: ASbGncuGzo35m2uButXc82tEFqOCIp49NOBbZGvG7csJoff7e9YCfIMV6OZzXwgXRQZ
+	jz+4vw4gXWXhfCFTKsP1i9ap3/xTRfxcE/fQPaAUI3IooZwk2LUMupHDWmb0KANe3Nku3pn+pfp
+	fyqEGHmgQBu3ChAVz4HPehxzA330GxmQtiE+EcxTXq9F4qHvCf6VsAbPAiDxYtmVMPci0qpWYLB
+	nTRT7JCTD5Pyp3Fq3VtE+7VYnhHEjM8Hx6/UYZZx6mdgad3jEzIn0PH1b0OA3Fg0J4tl+tl8Swv
+	noN/UPUXR/4ACJOIihpRziMCYESDRBGn0VNkJI4=
+X-Received: by 2002:a05:620a:271c:b0:7c5:544e:2ccf with SMTP id af79cd13be357-7c5544e2e11mr1931051385a.57.1741808438027;
+        Wed, 12 Mar 2025 12:40:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFtjXSl18V3cVDW3uvVcF7AOwZPDm8P35ziMG/2MMADWgaMpNEr9E4j/T7ipIz220mu+4PBA==
+X-Received: by 2002:a05:620a:271c:b0:7c5:544e:2ccf with SMTP id af79cd13be357-7c5544e2e11mr1931048685a.57.1741808437783;
+        Wed, 12 Mar 2025 12:40:37 -0700 (PDT)
+Received: from x1 (c-98-219-206-88.hsd1.pa.comcast.net. [98.219.206.88])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c5568480d8sm476215785a.91.2025.03.12.12.40.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 12:27:34 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 12 Mar 2025 20:25:00 +0100
-Subject: [PATCH 2/2] ASoC: codecs: wsa884x: Correct VI sense channel mask
+        Wed, 12 Mar 2025 12:40:36 -0700 (PDT)
+Date: Wed, 12 Mar 2025 15:40:35 -0400
+From: Brian Masney <bmasney@redhat.com>
+To: Christopher Obbard <christopher.obbard@linaro.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm interconnects as
+ built-in
+Message-ID: <Z9HjMyjzE9XlqrEj@x1>
+References: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
+ <CACr-zFC=mPNeeHMp9XnSby+cMQaPWt_3s8iUiCN+EnVPeGad8Q@mail.gmail.com>
+ <uljqxwfgl26txrfqvkvzzpj6qurgmwcbuot7gu2u6rwjaqgncb@jeuyi4mexjff>
+ <CACr-zFDSFizYmrVN-dV334n1kq17UB9k4FxrV20NNQCQMhzrwg@mail.gmail.com>
+ <92dd35a2-d1cc-4f2b-b3a8-5752ec33b0d3@kernel.org>
+ <CACr-zFCYWEFPO8yExp_8hOQdVtC9Zwu1ZOZNksSeyyS6Ht0e9A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250312-asoc-wsa88xx-visense-v1-2-9ca705881122@linaro.org>
-References: <20250312-asoc-wsa88xx-visense-v1-0-9ca705881122@linaro.org>
-In-Reply-To: <20250312-asoc-wsa88xx-visense-v1-0-9ca705881122@linaro.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=927;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=0jMuW75ONhCU98g91Ki0i+ClWIuHSukhvmLA5nKGMW8=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBn0eAiJDEepXFTas2u1NQUyIbL1KrfsyTe1AbbJ
- BJGAwCF3QGJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ9HgIgAKCRDBN2bmhouD
- 18a9EACUxXs1HSjzqKRbbCdN6UK1qvRXdWXEgeIyqupA9qLJe+njP4BVQYtWDbV621t7vHeM3H+
- M+WI9phdIiJcd4i3XJhqUdohjQBaCspx2XpW9sDgNCQ6yzNJccs2menIEKqh6J0tNT8VnWE/S+3
- HnR8AtuRZxdY1pW657ElyIOt4hzJfMgvpkPdncgkGWzD6svhQnqjVc5jXtIf5RN7Ui4FIsKY/2w
- Odqm5o/0OcVhMjjZLBc7ta8DIZyK8ylht+eZAeEkJlgVfv4J2wCSlPW0iOKsFrKqScx7zno/JhQ
- LTjN6KQLx2d8YXjKre2sx99d1BAvgwrPYfvIdSl8mNiHgmjMAWF82DqL28LLJPUJuKlrxyr3LON
- W/u0l9QJ7CZkd7/8Mpi7OSpXOSkBfUGqCwWDEIvjVs2N+rcE743MkktRsvC4IC8w5d+a5oOvNOF
- 643walrryb/jloxLJXbPLDYh8NtREUZ0qSh14hMYp7jsjRGZQnC39Om1vCfNEC/MtexYTqeDSSq
- QlBoaNYrednRKM6JNA9o9iquHt+jhIBpCATNSueM9BiQEdSnkY3sxOGpLK0m0uJBRd97re33L54
- RZb08QN8lTFjZ513gHzT8cZa86b7rDy9LBYZvU6cwtVmEce/LdArnWaH4jLPPKlK1eChaHag2ud
- WNF3QUWcC82MoJA==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACr-zFCYWEFPO8yExp_8hOQdVtC9Zwu1ZOZNksSeyyS6Ht0e9A@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 
-VI sense port on WSA883x speaker takes only one channel, so use 0x1 as
-channel mask.  This fixes garbage being recorded by the speaker when
-testing the VI sense feedback path.
+Hi Christopher,
 
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- sound/soc/codecs/wsa884x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, Mar 12, 2025 at 12:10:56PM +0100, Christopher Obbard wrote:
+> For reference, I am working on updating initramfs generation tools in
+> Debian/Fedora to include the required interconnect modules. Currently
+> the interconnect drivers are built as modules in these distros, but
+> are not included in the initrd. That is where my confusion initially
+> stemmed from.
 
-diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
-index 560a2c04b695535c42bb59b17aa8a671247adf95..18b0ee8f15a55aea370350e31cc3939625fb37a2 100644
---- a/sound/soc/codecs/wsa884x.c
-+++ b/sound/soc/codecs/wsa884x.c
-@@ -891,7 +891,7 @@ static const struct sdw_port_config wsa884x_pconfig[WSA884X_MAX_SWR_PORTS] = {
- 	},
- 	[WSA884X_PORT_VISENSE] = {
- 		.num = WSA884X_PORT_VISENSE + 1,
--		.ch_mask = 0x3,
-+		.ch_mask = 0x1,
- 	},
- 	[WSA884X_PORT_CPS] = {
- 		.num = WSA884X_PORT_CPS + 1,
+From a Fedora and centos-stream-9/10 perspective, we have dracut
+updated so that the interconnect modules are included in the initramfs
+by default.
 
--- 
-2.43.0
+https://github.com/dracutdevs/dracut/blob/master/modules.d/90kernel-modules/module-setup.sh#L74
+
+Let me know if you are seeing a specific issue with the initramfs on
+Fedora and I can help you.
+
+We also configured all of the QC pinctrl drivers to be modules in
+Fedora, and this causes a large number of probe deferrals on boot up.
+One of the boots I measured was about a half second:
+
+https://lore.kernel.org/linux-embedded/Z6J3WpeJKIKENC81@x13s/
+
+Everything eventually loads and works as expected though. The upstream
+defconfig configures most of the pinctrl drivers to be built in for
+Qualcomm.
+
+Brian
 
 
