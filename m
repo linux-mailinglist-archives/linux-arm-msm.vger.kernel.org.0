@@ -1,178 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-51202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF95AA5E65C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 22:17:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38A7FA5E662
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 22:18:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ECE987AB893
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 21:16:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A99173AA9FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 21:18:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 632B71EBFE3;
-	Wed, 12 Mar 2025 21:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 096541EE00F;
+	Wed, 12 Mar 2025 21:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="le1zkwAD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZSdpyhc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736B61EE7DC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 21:17:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05831EF091
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 21:18:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741814222; cv=none; b=tVDlPK3oeI7S3747PZz+frCrHc/qTtGsUrQLWebAWfOOAiFO0oI9DHZEIEA7en2yeO5ikfTfuM8fQMEuM66h2t2raXUCB348c9LNmG9o6aLK7nPo1FUj9A/nxh7q+ByFa2hsSZ0x6mamCbmRTFd/jSzAxFe0Aeh5Lw+aHVCBLPA=
+	t=1741814314; cv=none; b=E3FUaBtu5D3Ods+mIFXGFa9PWn2QgN2YLX9cQb0H1G7GnoIPHA63cnsZaWOtyoIT+zAojV3psHFuisxnVA065ht9bQoZSiFXhsP20mUSK8AigGYptCYj/Q+eLU/KFDFrfQBhsOwqiR8CIwGYqGqoeT0rWANYH3wpQFWj97XYADY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741814222; c=relaxed/simple;
-	bh=wPzK4zBNUgtZDWoviPcVV3sisFQVwXRO4Clib2QCtvA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kRgvBn/jXy6N/0rNDdo9nsFeApLQ2r9MfhkQP5tIj7ubUbdVfocoEODkQzOf8qCKR69fbOShtMHL++hb8RgFmY6JJQGnun6Vb8TCRssen4Mslvc9mKsyeFXOm0ANjAxoUNJH7klHjdKzUwAdDrEWBR8S0PPHyxa158mybvjsPa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=le1zkwAD; arc=none smtp.client-ip=209.85.219.47
+	s=arc-20240116; t=1741814314; c=relaxed/simple;
+	bh=ZRK1QnXjKXmwtDsvZ8yDGFinnbLW9DNcB1m9v5f4NfM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EZyEkEqHD0e4btXev11G8witBZEVBGPAUnVX9rEs4zJiHnkruZn4eEwJOkz12BIb7wXBthXdPk8bwJ20jU8fJNULoi3QUIexzg1nzuP8ioc8MlowMb1MdUPxQ/uOaTJjDBX/T0u65JIZvUFcdsIvoIUYAk8RZmffPJDX8aYAN9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZSdpyhc; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6e8ec399427so2631676d6.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 14:17:00 -0700 (PDT)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ac29fd22163so47467266b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 14:18:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741814219; x=1742419019; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XxDKgr5VuN6noi0Wfhw4cTV3jZ9TmVruadjdpxToKRg=;
-        b=le1zkwADDKWP8OkSlyweV1riHXhsqubTrAKSkyLsEdjZ4DnE15BzGDS7V+2V8kuqXy
-         esE2va7uYx3tRx4urUfkVsY5iuBuThpcPO567tEL4GdtNp2BBsTsPvoIQfOs0aoARwfz
-         FM/C+GBxe98A24/YWhFb3QFE/SdllVH8oeqtzNKv8MX1/RSZDwb1gPfVFyCrn2T8wftL
-         swrOV1xrmKeUbRe2GuJqwcD0VeiQYJsHqvYz25RTK4Clj3aO4imISdr222eXJus+0Yov
-         a1zW/QAhw1uivmWdvgHA8oBa6ixrEKnB/vuXySYayNiid2QNpDMUXchkgMdXPn2KY6tA
-         r9qQ==
+        d=linaro.org; s=google; t=1741814311; x=1742419111; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gAAaCcWnu1E/LRXYBdsReUtTWQq4VO+o7nDriwfTZMA=;
+        b=PZSdpyhcx9baOD6p13Y8JPBzfj7ODwsrjfhtnNPCz2kEveMmpXe2m/0I8gENluL+hM
+         TEz3P+uVjY8NLIM+P75nO9HkVyf7qX2ikx4yFVF5Z9GddSurC7rqLxboCwJuSOHEMelf
+         nX0W/TuTR8iNDPAu0LibXAvq+1mHjtK+dL27kK6n7XT4LRghU2PYQqs7plZ0DSeljZ40
+         jq6CwIFJJ9aheKfvtl/KS7JUifI5A1O7QVbMN9WotBGKy2fG+uDKpYs/J1eJYk46Ibm9
+         hAwmnKK9RUG9WU8ZcmAoOxXTbLMCZl0jaV1V728MFtgyAMWmEsKPLAGWNbhtCz/JiApQ
+         Y4Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741814219; x=1742419019;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XxDKgr5VuN6noi0Wfhw4cTV3jZ9TmVruadjdpxToKRg=;
-        b=evq8Q+STl50f8CQfaH/0wBfo48Ju6QcnPVFXv/r+uDoVSuPFpyQYijBrmyvG9SiA6c
-         FRu/phoKLjesM84rFhHXz+VkRr2wHyLLK/k5sWQZwdcnNzY348NQkT/dZMPkX1L9ws13
-         eguKDtbx8aLY5UQ0FeVeS+oYOiOAcnJMBVlr5v14GNv+ctLYb/uufOl5L0wcGVjmGf0z
-         ozPQf9wHve99JmIV+hFxRAenSkIcSDVdp5/c72RJQHA7polRQcuFkjdvMXU+3nhYn3KB
-         dxXWmIvcZR1VwgnIUOP293sKxHdGyC9W+T0DeoQmK9x/mgWaEqu/I1Mdm+dhkMlhS6jh
-         pCyw==
-X-Forwarded-Encrypted: i=1; AJvYcCXtDV70P7Co0F5UTwBmYNNKNQvulNKStZk/7qlYNhzfmD6FZi0AX6KwWOFffvVwYcoL1MAC71yT9q0OeRgR@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjbsxTVvJdRO66XHfyflnwxt24yaMnfdyWrL+AnCRev5vdFWcS
-	oovGcr6U6adjDCI3noU3VphjOGfhgGj3E6piRCsQTONz60SI2cFgmD73qv+AuuenqvZHIBee4zX
-	d3PGbwJaHxlMeA4hIXO43UHHHUbWGVMXP3Xc+jQ==
-X-Gm-Gg: ASbGnctlVbOSfekQND2ektXT5ncjxjIy2w+LcvNNMltWc5iiyO1lndAE2nx9q+yy+3E
-	AG/3U13TvwAMuwVs90p0xT78INJQysDQHu9lYPoqBVaI46Fa9rChS5HlZQDzI10nFF9fVb1x5bs
-	Wa+K3s4hBpj2gjC1YbOxFcBdwPjg==
-X-Google-Smtp-Source: AGHT+IE8URVhSLvPJIFsnTX7Z5pSwgsdAxYcwLbP1+O/xS7LPEmPA9PmITKDBxz3rcylfz6xQGMlbZxbKqtozlnBWHY=
-X-Received: by 2002:ad4:5b84:0:b0:6e6:698f:cafd with SMTP id
- 6a1803df08f44-6e900681c65mr390346036d6.37.1741814219178; Wed, 12 Mar 2025
- 14:16:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741814311; x=1742419111;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gAAaCcWnu1E/LRXYBdsReUtTWQq4VO+o7nDriwfTZMA=;
+        b=t32yRmGq3LpRqudNHeDRGf73sOwovNNb4CeB4590zeoMNZYzLY29jKYrYvov4g+FHT
+         uphYwfrhLyDOEZAHgyBu8iKylTDbE9oOeS/3QB5coDaQk6ib1NfNnwTReNO14ExLrxUP
+         d/DFre0qcM0nngB1HShcKJOe5ARw8RgbXjukjASDINVO+zUaYTy7KxFKhprbg3ls8RP0
+         ChL7OiJWQN6AzIgKQqVGNRPPuWf5hzS1GSDRmUxAP5TfRiqCzPJjlXCpnGxCLzGZvc/T
+         ILQL8sjoAuhat6ZlkPdbEqfDywwwcQV5W1hH+GLHmr5V08hOolnulPWV6gtmdF5uqL5z
+         /ytQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV6i2DjeaYqnTK/1hB64zBec7p0739zr92qk6L0NbKTxaqNdTt2ltUgKHwc1UGsDMYVMwgRNveBn8LLtNWz@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxwjf4XlxtfM6C/6J7Wwzh0NEZHzzQ95G4SEg3k7BoppnzOvjmN
+	n4RrQRAxkt5LmLIsqiBGqClO4tZCnuOc8sHo5ix1uR/R6eEyuDM26YBXnNW+n78=
+X-Gm-Gg: ASbGncuYBwHPmSi7HFWAODGI3NAgFtzTflX4fdgVrnegIVUoaM/65qTK6TNUWdnCMFh
+	+5KnN52AnTkISDMjIdh//l8OrbLO949ZMCGAsJEpDajd8/JHN7eALS3NgqLEJitsuMwm/7EGwuS
+	fbvjuEzDzVMfEbiKbabRgyK/x3dgucn3FjEhp5It/nBusUkUDOJ7DRf71K4jLfIb2iP/r/kWbrT
+	3swz1CXNWQ8B8sdq2/kAuZ6NHBlbr00fqyGiCIV3JdtcDwGaOZsT/TIzxxU6SG1q88Irht5XiwD
+	Uzn99VDwYcCzjCKAymqdmADBzuvEpEGhAatbRVzn56KfiB1/PLE5+CVtkROFxZ6d4bNrLEXTsy2
+	sjwkUEECaSD1md8JlywSW911bGX3OvkBjKb0wz8M44iGLuHo3W8tdh0AMfKQg2cGkXIV4YiN0D2
+	Z50giO33HnMDQxj1k4prAMRzI/z2bQQyo=
+X-Google-Smtp-Source: AGHT+IGhFP/qkL3DgglwZ5MvHJdcpcSeJ8ki8DIky3RR3GH88+4MNn/psSZ2uCJxfybLvhHcJQ+E+A==
+X-Received: by 2002:a17:907:cf46:b0:ac2:a42a:999b with SMTP id a640c23a62f3a-ac2a42a9e35mr1789666366b.52.1741814310999;
+        Wed, 12 Mar 2025 14:18:30 -0700 (PDT)
+Received: from ?IPV6:2001:1c06:2302:5600:7555:cca3:bbc4:648b? (2001-1c06-2302-5600-7555-cca3-bbc4-648b.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:7555:cca3:bbc4:648b])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac25ab328b6sm939324866b.124.2025.03.12.14.18.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Mar 2025 14:18:30 -0700 (PDT)
+Message-ID: <0b1a0db4-35b7-4098-8539-cd73cb396635@linaro.org>
+Date: Wed, 12 Mar 2025 21:18:29 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250311234109.136510-1-alex.vinarskis@gmail.com>
-In-Reply-To: <20250311234109.136510-1-alex.vinarskis@gmail.com>
-From: Stefan Schmidt <stefan.schmidt@linaro.org>
-Date: Wed, 12 Mar 2025 22:16:48 +0100
-X-Gm-Features: AQ5f1JpPzCg_wcL5Oq5TpalUho1WYNfDBRHd08R0PtwUoX5vs0HUJe7LYQzHVM0
-Message-ID: <CAEvtbusre2PUwNiD42d-xTCVf4dV0npN-5UxxwrjriVOsbj0Fg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] drm/msm/dp: Introduce link training per-segment
- for LTTPRs
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, laurentiu.tudor1@dell.com, abel.vesa@linaro.org, 
-	johan@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8650: Add description of MCLK
+ pins
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250312001132.1832655-1-vladimir.zapolskiy@linaro.org>
+ <20250312001132.1832655-4-vladimir.zapolskiy@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250312001132.1832655-4-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello Aleksandrs,
+On 12/03/2025 00:11, Vladimir Zapolskiy wrote:
+> Add fixed MCLK pin descriptions for all pins with such supported
+> function.
+> 
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 144 +++++++++++++++++++++++++++
+>   1 file changed, 144 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index bf5e238a93c3..526ef2ae8ac8 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -5792,6 +5792,150 @@ tlmm: pinctrl@f100000 {
+>   
+>   			wakeup-parent = <&pdc>;
+>   
+> +			cam0_default: cam0-default-state {
+> +				mclk-pins {
+> +					pins = "gpio100";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+> +			cam0_sleep: cam0-sleep-state {
+> +				mclk-pins {
+> +					pins = "gpio100";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			cam1_default: cam1-default-state {
+> +				mclk-pins {
+> +					pins = "gpio101";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+> +			cam1_sleep: cam1-sleep-state {
+> +				mclk-pins {
+> +					pins = "gpio101";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			cam2_default: cam2-default-state {
+> +				mclk-pins {
+> +					pins = "gpio102";
+> +					function = "cam_aon_mclk2";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+> +			cam2_sleep: cam2-sleep-state {
+> +				mclk-pins {
+> +					pins = "gpio102";
+> +					function = "cam_aon_mclk2";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			cam3_default: cam3-default-state {
+> +				mclk-pins {
+> +					pins = "gpio103";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+> +			cam3_sleep: cam3-sleep-state {
+> +				mclk-pins {
+> +					pins = "gpio103";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			cam4_default: cam4-default-state {
+> +				mclk-pins {
+> +					pins = "gpio104";
+> +					function = "cam_aon_mclk4";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+> +			cam4_sleep: cam4-sleep-state {
+> +				mclk-pins {
+> +					pins = "gpio104";
+> +					function = "cam_aon_mclk4";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			cam5_default: cam5-default-state {
+> +				mclk-pins {
+> +					pins = "gpio105";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+> +			cam5_sleep: cam5-sleep-state {
+> +				mclk-pins {
+> +					pins = "gpio105";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			cam6_default: cam6-default-state {
+> +				mclk-pins {
+> +					pins = "gpio108";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+> +			cam6_sleep: cam6-sleep-state {
+> +				mclk-pins {
+> +					pins = "gpio108";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			cam7_default: cam7-default-state {
+> +				mclk-pins {
+> +					pins = "gpio106";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +			};
+> +
+> +			cam7_sleep: cam7-sleep-state {
+> +				mclk-pins {
+> +					pins = "gpio106";
+> +					function = "cam_mclk";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+>   			cci0_0_default: cci0-0-default-state {
+>   				sda-pins {
+>   					pins = "gpio113";
 
-On Wed, 12 Mar 2025 at 00:41, Aleksandrs Vinarskis
-<alex.vinarskis@gmail.com> wrote:
->
-> Recently added Initial LTTPR support in msm/dp has configured LTTPR(s)
-> to non-transparent mode to enable video output on X1E-based devices
-> that come with LTTPR on the motherboards. However, video would not work
-> if additional LTTPR(s) are present between sink and source, which is
-> the case for USB Type-C docks (eg. Dell WD19TB/WD22TB4), and at least
-> some universal Thunderbolt/USB Type-C monitors (eg. Dell U2725QE).
->
-> First, take into account LTTPR capabilities when computing max link
-> rate, number of lanes. Take into account previous discussion on the
-> lists - exit early if reading DPCD caps failed. This also fixes
-> "*ERROR* panel edid read failed" on some monitors which seems to be
-> caused by msm_dp_panel_read_sink_caps running before LTTPR(s) are
-> initialized.
->
-> Finally, implement link training per-segment. Pass lttpr_count to all
-> required helpers.
-> This seems to also partially improve UI (Wayland) hanging when
-> changing external display's link parameters (resolution, framerate):
-> * Prior to this series, via direct USB Type-C to display connection,
->   attempt to change resolution or framerate hangs the UI, setting does
->   not stick. Some back and forth replugging finally sets desired
->   parameters.
-> * With this series, via direct USB Type-C to display connection,
->   changing parameters works most of the time, without UI freezing. Via
->   docking station/multiple LTTPRs the setting again does not stick.
-> * On Xorg changing link paramaters works in all combinations.
->
-> These appear to be mainlink initialization related, as in all cases LT
-> passes successfully.
->
-> Test matrix:
-> * Dell XPS 9345, Ubuntu 24.10, Gnome 47, Wayland
->         * Left USB Type-C, Right USB Type-C
->         * Direct monitor connection, Dell WD19TB, Dell WD22TB4, USB
->           Type-C to HDMI dongle, USB Type-C to DP dongle
->         * Dell AW3423DWF, Samsung LS24A600, dual Samsung LS24A600 (one
->           monitor per USB Type-C connector)
-> * Dell XPS 9345, Ubuntu 24.10, Gnome 47, Wayland
->         * Left USB Type-C, Right USB Type-C
->         * Direct monitor connection
->         * Samsung S34BG85 (USB Type-C), Dell U2725QE (universal
->           Thunderbolt/USB Type-C, probes with an LTTPR when in USB
->           Type-C/DP Alt mode)
-
-You can  add the following:
-* Dell XPS 9345, Debian trixie/sid, Gnome 48, Wayland
-        * Left USB Type-C, Right USB Type-C
-        * Dell WD15 Dock with DisplayPort connected
-        * Dell HD22Q dock with HDMI connected
-        * USB Type-C to HDMI dongle
-        * Dell U3417W
-
-> In both cases, "Thunderbot Support"/"USB4 PCIE Tunneling" was disabled
-> in UEFI to force universal Thunderbolt/USB Type-C devices to work in
-> DP Alt mode.
-> In both cases laptops had HBR3 patches applied [1], resulting in
-> maximum successful link at 3440x1440@100hz and 4k@60hz respectively.
-> When using Dell WD22TB4/U2725QE, USB Type-C pin assigment D got enabled
-> and USB3.0 devices were working in parallel to video ouput.
->
-> Known issues:
-> * As mentioned above, it appears that on Gnome+Wayland framerate and
->   resolution parameter adjustment is not stable.
-
-I can confirm this on Gnome 48 + Wayland as well. Sometimes the resolution
-change from gnome settings gets stuck and does not apply. It normally works
-here around every third try or so when using a dock.
-
-> Due to lack of access to the official DisplayPort specfication, changes
-> were primarily inspired by/reverse engineered from Intel's i915 driver.
->
-> [1] https://lore.kernel.org/all/20250226231436.16138-2-alex.vinarskis@gmail.com/
->
-> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-
-Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org>
-
-regards
-Stefan Schmidt
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
