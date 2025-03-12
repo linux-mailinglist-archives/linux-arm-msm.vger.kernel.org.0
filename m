@@ -1,246 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-51187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8244EA5E350
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 19:00:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C533BA5E35A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 19:01:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3585E1893461
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 18:00:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 13AAB17ADE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 18:01:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EDC0258CFF;
-	Wed, 12 Mar 2025 17:58:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VMenEBkN"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C581F8635C;
+	Wed, 12 Mar 2025 18:01:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E491D5176
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 17:58:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 153AB1D54FE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 18:01:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741802329; cv=none; b=U1kP7J+Hkj6yxkDE7/e/CiEmxxjyCy+Mg/JuTxLhX2i+WgiY/vMp63P0cTGPn9KhPutdR2xnRwAQ2+lWHybA09lDMkMgPpmFzPTtbJHs+zWSfM9+Vz5zTIOK8wrOSec0dww1RgZd/iQxBu83reZGENLT2XimyYl3uzfc6eZli2Q=
+	t=1741802493; cv=none; b=Gap75hYu4ZgxuKgopJxb8FCiHXZKpBYYRGnQ/+AKujUOPdWBWDSTedjp9NPGlXE1V4S/aDI9Zq+vdVaNMjYcV64OO4/xjMbWA1PDthxfMOT+L7gtvsGNKhNhIozJfztwSjcIzdvrlGgCCuy1AZquQD9Sga6uS6jGvTYSbRuuzgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741802329; c=relaxed/simple;
-	bh=dBp330nwbC7q4iPH2IoIUZ3Q0GJxinDrCajbj2wj9s0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=OvLN/XNrtzPWzVlJla6JLaI90eXgq/41/ERWjsE5SaILR6dGNZaROMfE5lBv5PSibWcuxhie1lmbuCxaW2IAp30YFkpYdp/ZZWqYSUXs/4RbEV2e77BYyffrsCVRw8faiwnuG0vFSng/IQzFAbG59VOi2lSz7XFfGBfYhsboIZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VMenEBkN; arc=none smtp.client-ip=209.85.128.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-43d025a52c2so402685e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 10:58:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1741802326; x=1742407126; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IlIj3TjUhtkedIPYTVHeRQbthVzaFoCCtbaBiaH1aMs=;
-        b=VMenEBkNgjG7/kRyc1xc2e8vAftptPXLVORUiTRFurTxFfUYQZmorBRSvN25uudUQy
-         g585dTGZOz/Lo2aDflADS5rS8YAJwyAMzptUjN7nw9foymv438eP1y+dgkEGt7tvGEmm
-         fsQgP/2l/0AFPQqu7PkvI5fbOy/X9r0g1X25i4akgDJjq9Q1ij8vKtvjxh06razNV8TI
-         Pi49jUkd7f4K8XDYsjrZ8dOX49YoQMflOZcFPfeJndWdDsO9UzDySd7SGFx7ZNeq47JZ
-         B4aVHH5vMOcJypUAEa6vD6UOiasGrn64Gh4Q0ZS797E84ulmvBYiSjCeX/pkubxJRUvM
-         7chA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741802326; x=1742407126;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IlIj3TjUhtkedIPYTVHeRQbthVzaFoCCtbaBiaH1aMs=;
-        b=GQMNbJhEqgc32i3b0NRWLaE+ClRJ7GLN9qZOc2oAY4WaCSyGo5JtHNKVR3dqYVXPrP
-         hqd4tjcG2/rXlo6HTPPzITMrdszML16sCjRHfr1bA2821295CgdtGN3hQ0oqGdxgIEN9
-         KDqj9gm/B1jE9gCI8ZP0IOI90yHor5J2cVczUgvqypWc+m/TPvT1ZvcAZJCE9UDEnpY3
-         0Nexo2a49Z2+K8Vxi7uKaPTdoICBWWVfmJqYw5EAfMusTimIbdVEWd28rTuXo1f2zjMg
-         k0luGW8p9DrY6+JDzWB1wl3TaonkLwHEXDZOSJ0d/4O1XrzBAf4HAixbe3szg2CPDIM7
-         KaLg==
-X-Forwarded-Encrypted: i=1; AJvYcCXfGglD4ZflkLcPFxIQ/HbDRw/Y2HaLt1Yhmtq0nz6OTLV5Bf4evLvGc9cmXLFI6IbzzsW3c3q+0PikEtzp@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnkYqbfH/hmq0whyC+hbK3eKeWQUR/LLoBE6fMYteFoIeu9HHZ
-	kKKu/gCPbMCRR038IqBGVXoMyRhJQ7j6xrL9tgq+/RGteROPUG40lt5GmBwv1LFym46u8ZEggg=
-	=
-X-Google-Smtp-Source: AGHT+IEjvTr2HYGSAjPDkNMw4G4npR8OoTHD1VZTAuD0hSm6xCoVT94NRgIvuCOHObtSUaBMEiPsUwonRg==
-X-Received: from wmqa16.prod.google.com ([2002:a05:600c:3490:b0:43c:fa2a:77d])
- (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:1d09:b0:43c:efed:732b
- with SMTP id 5b1f17b1804b1-43cefed78bcmr140968325e9.5.1741802326090; Wed, 12
- Mar 2025 10:58:46 -0700 (PDT)
-Date: Wed, 12 Mar 2025 17:58:23 +0000
-In-Reply-To: <20250312175824.1809636-1-tabba@google.com>
+	s=arc-20240116; t=1741802493; c=relaxed/simple;
+	bh=uRflT48LDo87dXTO3uCvWWt1Fp9+tNIQrODhVV9dMWo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pRj52JiisuaBrYiTrPYoGDOcxA2WzC5gjm2w57LoEFBE5ktkBOekzKUFk5OHjFX9UQUPOSaAgDGpZ135GE5hR3F7GU4SpsJfbfnohVLh+CapaEzhx4MEaCjaYvhkCQCFQiKwl5XcZQ3Ph3r5Sy2H/Uu8L6ovwcqXOrwLrWfUpuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C93D41515;
+	Wed, 12 Mar 2025 11:01:39 -0700 (PDT)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5FE553F5A1;
+	Wed, 12 Mar 2025 11:01:27 -0700 (PDT)
+Message-ID: <2d47815d-6bee-4d1f-8b60-854763794bf6@arm.com>
+Date: Wed, 12 Mar 2025 18:01:25 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250312175824.1809636-1-tabba@google.com>
-X-Mailer: git-send-email 2.49.0.rc0.332.g42c0ae87b1-goog
-Message-ID: <20250312175824.1809636-11-tabba@google.com>
-Subject: [PATCH v6 10/10] KVM: guest_memfd: selftests: guest_memfd mmap() test
- when mapping is allowed
-From: Fuad Tabba <tabba@google.com>
-To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/5] iommu/arm-smmu: Save additional information on
+ context fault
+To: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>
+Cc: Connor Abbott <cwabbott0@gmail.com>, Joerg Roedel <joro@8bytes.org>,
+ Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ freedreno@lists.freedesktop.org
+References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
+ <20250304-msm-gpu-fault-fixes-next-v4-1-be14be37f4c3@gmail.com>
+ <20250311180553.GB5216@willie-the-truck>
+ <CACu1E7GzCiO2b7AFJSDC+pN2VD9VaD2aYz_GGymM3-xAUqd__A@mail.gmail.com>
+ <20250312130525.GC6181@willie-the-truck>
+ <CAF6AEGvqYithLFAKpfdkw35DEsUZ8rBt25-oWz3r=kaLt+RbQw@mail.gmail.com>
+ <20250312164735.GA6561@willie-the-truck>
+ <CAF6AEGskyoemQDrTXh=ewf61e-hVzWMjmqe=nX2J-65W5-M6Zw@mail.gmail.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <CAF6AEGskyoemQDrTXh=ewf61e-hVzWMjmqe=nX2J-65W5-M6Zw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Expand the guest_memfd selftests to include testing mapping guest
-memory for VM types that support it.
+On 12/03/2025 5:23 pm, Rob Clark wrote:
+> On Wed, Mar 12, 2025 at 9:47 AM Will Deacon <will@kernel.org> wrote:
+>>
+>> On Wed, Mar 12, 2025 at 07:59:52AM -0700, Rob Clark wrote:
+>>> On Wed, Mar 12, 2025 at 6:05 AM Will Deacon <will@kernel.org> wrote:
+>>>> On Tue, Mar 11, 2025 at 06:36:38PM -0400, Connor Abbott wrote:
+>>>>> On Tue, Mar 11, 2025 at 2:06 PM Will Deacon <will@kernel.org> wrote:
+>>>>>> On Tue, Mar 04, 2025 at 11:56:47AM -0500, Connor Abbott wrote:
+>>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>>>>>> index ade4684c14c9b2724a71e2457288dbfaf7562c83..a9213e0f1579d1e3be0bfba75eea1d5de23117de 100644
+>>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>>>>>> @@ -409,9 +409,12 @@ void arm_smmu_read_context_fault_info(struct arm_smmu_device *smmu, int idx,
+>>>>>>>                                      struct arm_smmu_context_fault_info *cfi)
+>>>>>>>   {
+>>>>>>>        cfi->iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
+>>>>>>> +     cfi->ttbr0 = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_TTBR0);
+>>>>>>>        cfi->fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
+>>>>>>> -     cfi->fsynr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
+>>>>>>> +     cfi->fsynr0 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
+>>>>>>> +     cfi->fsynr1 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR1);
+>>>>>>
+>>>>>> We already have an implementation hook (->get_fault_info()) which the
+>>>>>> qcom SMMU driver can override with qcom_adreno_smmu_get_fault_info().
+>>>>>> That thing dumps these registers already so if we're moving that into
+>>>>>> the core SMMU driver, let's get rid of the hook and move everybody over
+>>>>>> rather than having it done in both places.
+>>>>>
+>>>>> As you probably saw, the next commit moves over
+>>>>> qcom_adreno_smmu_get_fault_info() to use this. The current back door
+>>>>> used by drm/msm to access these functions is specific to adreno_smmu
+>>>>> and there isn't an equivalent interface to allow it to call a generic
+>>>>> SMMU function so it isn't possible to move it entirely to the core. At
+>>>>> least not without a bigger refactoring that isn't justified for this
+>>>>> series that is just trying to fix things.
+>>>>
+>>>> Ok :(
+>>>>
+>>>>>>>        cfi->cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
+>>>>>>> +     cfi->contextidr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_CONTEXTIDR);
+>>>>>>
+>>>>>> I think the CONTEXTIDR register is stage-1 only, so we shouldn't dump
+>>>>>> it for stage-2 domains.
+>>>>>>
+>>>>> Does it matter if we read the register though, as long as users are
+>>>>> aware of this and don't use its value for anything?
+>>>>
+>>>> I think the contents are "UNKNOWN", so it could be hugely confusing even
+>>>> if they just got logged someplace. Why is it difficult to avoid touching
+>>>> it for stage-2?
+>>>>
+>>> Fwiw, we are only ever using stage-1
+>>
+>> Sure, but this is in arm-smmu.c which is used by other people and supports
+>> both stages.
+> 
+> Sure, but no one else is using this field in the fault-info.  So maybe
+> the addition of a comment in the struct would be enough if it isn't
+> going to cause an SError/etc to read it for S2 cb?
 
-Also, build the guest_memfd selftest for aarch64.
+Any worthwhile comment isn't going to be significantly shorter or 
+clearer than 1 extra line of "if (smmu_domain->stage == 
+ARM_SMMU_DOMAIN_S1)"...
 
-Signed-off-by: Fuad Tabba <tabba@google.com>
----
- tools/testing/selftests/kvm/Makefile.kvm      |  1 +
- .../testing/selftests/kvm/guest_memfd_test.c  | 75 +++++++++++++++++--
- 2 files changed, 70 insertions(+), 6 deletions(-)
+TBH it's the Qualcomm register-middle-man firmware I'd be more worried 
+about than real hardware, given how touchy it can be even with register 
+accesses which *should* be well defined. But then I guess it also has 
+the habit of killing the system if anything other than the GPU dares 
+cause a fault in the first place, so maybe it OK?
 
-diff --git a/tools/testing/selftests/kvm/Makefile.kvm b/tools/testing/selftests/kvm/Makefile.kvm
-index 4277b983cace..c9a3f30e28dd 100644
---- a/tools/testing/selftests/kvm/Makefile.kvm
-+++ b/tools/testing/selftests/kvm/Makefile.kvm
-@@ -160,6 +160,7 @@ TEST_GEN_PROGS_arm64 += coalesced_io_test
- TEST_GEN_PROGS_arm64 += demand_paging_test
- TEST_GEN_PROGS_arm64 += dirty_log_test
- TEST_GEN_PROGS_arm64 += dirty_log_perf_test
-+TEST_GEN_PROGS_arm64 += guest_memfd_test
- TEST_GEN_PROGS_arm64 += guest_print_test
- TEST_GEN_PROGS_arm64 += get-reg-list
- TEST_GEN_PROGS_arm64 += kvm_create_max_vcpus
-diff --git a/tools/testing/selftests/kvm/guest_memfd_test.c b/tools/testing/selftests/kvm/guest_memfd_test.c
-index ce687f8d248f..38c501e49e0e 100644
---- a/tools/testing/selftests/kvm/guest_memfd_test.c
-+++ b/tools/testing/selftests/kvm/guest_memfd_test.c
-@@ -34,12 +34,48 @@ static void test_file_read_write(int fd)
- 		    "pwrite on a guest_mem fd should fail");
- }
- 
--static void test_mmap(int fd, size_t page_size)
-+static void test_mmap_allowed(int fd, size_t total_size)
- {
-+	size_t page_size = getpagesize();
-+	const char val = 0xaa;
-+	char *mem;
-+	int ret;
-+	int i;
-+
-+	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-+	TEST_ASSERT(mem != MAP_FAILED, "mmaping() guest memory should pass.");
-+
-+	memset(mem, val, total_size);
-+	for (i = 0; i < total_size; i++)
-+		TEST_ASSERT_EQ(mem[i], val);
-+
-+	ret = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, 0,
-+			page_size);
-+	TEST_ASSERT(!ret, "fallocate the first page should succeed");
-+
-+	for (i = 0; i < page_size; i++)
-+		TEST_ASSERT_EQ(mem[i], 0x00);
-+	for (; i < total_size; i++)
-+		TEST_ASSERT_EQ(mem[i], val);
-+
-+	memset(mem, val, total_size);
-+	for (i = 0; i < total_size; i++)
-+		TEST_ASSERT_EQ(mem[i], val);
-+
-+	ret = munmap(mem, total_size);
-+	TEST_ASSERT(!ret, "munmap should succeed");
-+}
-+
-+static void test_mmap_denied(int fd, size_t total_size)
-+{
-+	size_t page_size = getpagesize();
- 	char *mem;
- 
- 	mem = mmap(NULL, page_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
- 	TEST_ASSERT_EQ(mem, MAP_FAILED);
-+
-+	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-+	TEST_ASSERT_EQ(mem, MAP_FAILED);
- }
- 
- static void test_file_size(int fd, size_t page_size, size_t total_size)
-@@ -170,19 +206,27 @@ static void test_create_guest_memfd_multiple(struct kvm_vm *vm)
- 	close(fd1);
- }
- 
--int main(int argc, char *argv[])
-+unsigned long get_shared_type(void)
- {
--	size_t page_size;
-+#ifdef __x86_64__
-+	return KVM_X86_SW_PROTECTED_VM;
-+#endif
-+	return 0;
-+}
-+
-+void test_vm_type(unsigned long type, bool is_shared)
-+{
-+	struct kvm_vm *vm;
- 	size_t total_size;
-+	size_t page_size;
- 	int fd;
--	struct kvm_vm *vm;
- 
- 	TEST_REQUIRE(kvm_has_cap(KVM_CAP_GUEST_MEMFD));
- 
- 	page_size = getpagesize();
- 	total_size = page_size * 4;
- 
--	vm = vm_create_barebones();
-+	vm = vm_create_barebones_type(type);
- 
- 	test_create_guest_memfd_invalid(vm);
- 	test_create_guest_memfd_multiple(vm);
-@@ -190,10 +234,29 @@ int main(int argc, char *argv[])
- 	fd = vm_create_guest_memfd(vm, total_size, 0);
- 
- 	test_file_read_write(fd);
--	test_mmap(fd, page_size);
-+
-+	if (is_shared)
-+		test_mmap_allowed(fd, total_size);
-+	else
-+		test_mmap_denied(fd, total_size);
-+
- 	test_file_size(fd, page_size, total_size);
- 	test_fallocate(fd, page_size, total_size);
- 	test_invalid_punch_hole(fd, page_size, total_size);
- 
- 	close(fd);
-+	kvm_vm_release(vm);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+#ifndef __aarch64__
-+	/* For now, arm64 only supports shared guest memory. */
-+	test_vm_type(VM_TYPE_DEFAULT, false);
-+#endif
-+
-+	if (kvm_has_cap(KVM_CAP_GMEM_SHARED_MEM))
-+		test_vm_type(get_shared_type(), true);
-+
-+	return 0;
- }
--- 
-2.49.0.rc0.332.g42c0ae87b1-goog
+If anyone still uses Arm Fast Models SMMUv1/2 components it'll probably 
+squawk an annoying warning there too - ISTR I had at least one patch 
+motivated by that in the past.
 
+Thanks,
+Robin.
 
