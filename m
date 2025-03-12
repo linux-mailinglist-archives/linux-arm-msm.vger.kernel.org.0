@@ -1,161 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-51106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B4EFA5D8A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:51:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C989EA5D8AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:54:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2AA11189E9EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 08:51:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 584533B5184
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 08:54:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B9E123644D;
-	Wed, 12 Mar 2025 08:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66402236434;
+	Wed, 12 Mar 2025 08:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bKysH/zP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ws8A+zst"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936232F43;
-	Wed, 12 Mar 2025 08:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4931B6CF1;
+	Wed, 12 Mar 2025 08:54:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741769490; cv=none; b=XynmTUJYz5+7JegGX8E1sfMhYB7zNVvTYYuL5V/6IP9e0JYX7Uq0SKR4XAj+7C6fndmj+e0d/vdlUXehD5HYdGQy5a4v7MqXXkk7moWmrdr4ml4x6gn9p5ujltbsfC+Jj74FkuZI0gA/MnRpWdJjTbyEWVk4U596L6pwyOE2KOQ=
+	t=1741769662; cv=none; b=mH90edmIzMRhj8aJz/PXbv4PsgqwSSpsvfDUk99E7+mJhW606DLBcmnbXH8M7hHXmYsBxl3zVaIJ9tNM5ov/JrVCI3sdNNNwu0TwaRbFuO2gdF+pY+OdQh/VdGkIh7WbjSv74j6HaOMEdKSNBhIwnVx6cXL/r6RY+5sgBppL3NY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741769490; c=relaxed/simple;
-	bh=0WusSgF6UoqNfncLGyqKa+GtRSZUqJNmN16FJPHLGT4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aitVYVatyYlxZs/XeaooKZAB3s9jArKcvx7tq0yvvZmdfQ57Uwuw23Dg7jfc50wZuBnLFZX4enDqcvMs/vc9k3AzNl3SKqc4kbM/cnLZrWAmUy2jgVskWpZAkHp0fChpktzRedcRUe4US2rVNUzj/ifsVn26WewGC2/jBwFXUwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bKysH/zP; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5e64700a38cso6021065a12.1;
-        Wed, 12 Mar 2025 01:51:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741769487; x=1742374287; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KkefSmKAZpDVmv4h4B/Mr4vzOBIOtFod54B0n69vXSA=;
-        b=bKysH/zP4tyOvp+sNEprUfpn+LIFj1af33OhKZUUkaMuN1XSoIC3hxwnBRL8uB+r5h
-         6GOVKoiKy9a2zK2LfTjfd/7fi/vhT5bmMtRB/ERy+p/irgcOuANSBjhqHu6FsjDI5P47
-         X8dqhyPIhnsAeCZa4Z6mhYigM/tsh+gYqI7UmMNzmhs9LdXDh87onuSddYRicoVfBZeA
-         hlBGkdVswtSiIlA6kwT5CzAw4GusTzN59OmOyesYO5M8ayphP72udZMdiYN9qcjn6sc7
-         druS9oo02aIXMWbzxIrxKl885Uls3p192lri46988H8RZCIs4GRSe6J9zG/JQaeS+LA8
-         aeew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741769487; x=1742374287;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KkefSmKAZpDVmv4h4B/Mr4vzOBIOtFod54B0n69vXSA=;
-        b=Nw4lN3MbDfd1C/BlhSyeurfovYV2ZqZJlea67vuBACdlsX9uIechwNfX4THo3uIqlw
-         SQDvkOyDXfbsGV6cubxBF7Y9Am/ivsubiTQRgpuVA6w+1Wv0yVpdhisixn3aXW2oxtcX
-         QTBIRsSm97TST8GPwaPORQV7DokaJtmmzmoD2NcrdQzUtWGXYrWPEMoL6D4GBuIg5JGZ
-         uIIJ/DiYoU0YqjmJSPV2mo+xwgHEKjs/6mV7fthWidQNba6KrAQ9m4Hv0IpAv/4IUIgO
-         gNNv19AM9rRLNT0ysvDg3tZ3NfwK9ytx/DkhmbsWjfT4nkLaCGh/tXyDfQ54pcAIbb7C
-         S4vg==
-X-Forwarded-Encrypted: i=1; AJvYcCVPDCShBgWYq+u6qHlKObnk0UR3WCFyZt51GgPw4/EhmpqFCFzpJQbWPuzsSbWJBhm8fBvtoUVh/ZcRjjVL@vger.kernel.org, AJvYcCWB6+gG2Ri44G/+76Hcn8GW4w/of1VG7tsXJFsXTXEOpezcurvpdAd4UNuindzo8ec0kpNDfBiOuRrwehM=@vger.kernel.org, AJvYcCX9LhDJDEOhteelqz1dSx5+gL5eTkKsTgrbwgugq9Eu+5ETrQ7OV8yFtGBsN8EsVS9dS1xrAP2Dup2z@vger.kernel.org, AJvYcCXhYfYTR6eL8aipy9hNyDKRCtWg/dgxFOX8+kMZd6Nd6QIOlFwt6i3cuo9ofSy569lU9wlslDz0OGbOl10dNg==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8y1L5kCsQOVWjaac4xqTML4qcgVsxTA13N5hyTpOnIWzrp5AY
-	huP8ds1SLAmshIgeLG1AjLJsGf4vPWWXAA4J1he8u3JIWaNMri9tzoV0oukcgOgfNWZW6fXDZPH
-	iXXmHCB9wUs9zGdgtORYDQJici2o=
-X-Gm-Gg: ASbGncuf+GD6k1fSM3/uvYW0W1NIy+6uQhznD1cbA2U9tX/DzFxrBpQ4FNNHJK1kH1h
-	/H+G+IBTcXwWivFV3yJU9lmpCEGj0S3PeN94ZnepYpm0IRZigz+zDmrTxaNYeeGTMI0NFFMxf4g
-	rVC5ThXpu1G+r+3SPsUx3SGI3eDYweR3ohJcC8kmkd3NfzXbd43Y+nrZSU
-X-Google-Smtp-Source: AGHT+IEJQ8fdeQ9d70lO4G/UxvcFqQHQIPNvhviIhjFhYj6qjJv/LiKn+PbE8+0BLQx+rkv0M714ORuEsQJ2Pb2LzKA=
-X-Received: by 2002:a17:907:6094:b0:ac2:fa32:f3 with SMTP id
- a640c23a62f3a-ac2fa320448mr91399966b.52.1741769486501; Wed, 12 Mar 2025
- 01:51:26 -0700 (PDT)
+	s=arc-20240116; t=1741769662; c=relaxed/simple;
+	bh=gQhN7Hr3nbhPllXSvQmrPLWgABwRjqGa9uqjBI+Vp4k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bvtLH1eRvigHYADyuvolgW0lQTnhwz8SXp90FGGYPA25aF5UeUFRVWERrDGAg7mIv4X570PGT5iLRJEekbLvYHwmSf5m8y5RDtqyKTAqOiufVsvwxSFtCeYjyGi3tUmQqR4QgTekTuI6HLB+Y6FjaLx8X7gWKKbhx4AdD06XX58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ws8A+zst; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB07C4CEE3;
+	Wed, 12 Mar 2025 08:54:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741769661;
+	bh=gQhN7Hr3nbhPllXSvQmrPLWgABwRjqGa9uqjBI+Vp4k=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Ws8A+zstO7pSzIr1S9dLXx98LZW7LYwPb0lYa6xhKMd9iJz2pz06cwNE+VyqyHtYL
+	 TArZJKBFymv7k9JihguGY/2KSaLpMySulezupU8pVDVudxyV0Rk/YJPswkjFLqBG2+
+	 yDcI34vPUpRYtj3ekMbSgBhque0YmbF5BC1lXJVmkRRMA36c5OXiYmnXMRIeniO2NZ
+	 Z/OWMFOQb6Bh1vgiIKyOEL7f0AqWfUVfu7IOy59PA5Vt2ZzSUuoGSViTIrT1LY4bQr
+	 EebXxiMcs/3KiVIrkT5/dh2K34Z1W3LpJpobqXKLsjYbFzT2enK4K+H1tT/6WX55Zp
+	 lGCXyiFYi4CuA==
+Message-ID: <78f6091c-1630-48c2-93e6-71f2cdbe63c5@kernel.org>
+Date: Wed, 12 Mar 2025 09:54:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
- <20250311-dtbinding-v1-2-5c807d33f7ae@quicinc.com> <ngzl7q3fli3bpuo5gjvppfrsnmlw6viy26ieqwhpfokgue2uxm@whomn2h6h3a7>
- <5e4838e5-b5f1-7107-78b8-cfd9d5620e2e@quicinc.com>
-In-Reply-To: <5e4838e5-b5f1-7107-78b8-cfd9d5620e2e@quicinc.com>
-From: Dmitry Baryshkov <dbaryshkov@gmail.com>
-Date: Wed, 12 Mar 2025 10:51:15 +0200
-X-Gm-Features: AQ5f1JqD-q2In0Z0Gelh-qkf9mGFnL61QwXY0ttZ9xE-w2UVrnfiNP36gq7RGmw
-Message-ID: <CALT56yN-UsUGTT2BTXNg3n_-LHJqksueJmPtZJ-uYpQj03sG4A@mail.gmail.com>
-Subject: Re: [PATCH 2/4] dt-bindings: media: qcom,sm8550-iris: document
- SA8775p IRIS accelerator
-To: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm interconnects as
+ built-in
+To: Christopher Obbard <christopher.obbard@linaro.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 12 Mar 2025 at 10:07, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
->
->
-> On 3/11/2025 9:01 PM, Dmitry Baryshkov wrote:
-> > On Tue, Mar 11, 2025 at 05:33:54PM +0530, Vikash Garodia wrote:
-> >> Document the IRIS video decoder and encoder accelerator found in the
-> >> SA8775P platform. SA8775P has collapsible MX compared to SM8550.
-> >
-> > How compatible is SA8775P to SM8550? Should it be using a fallback
-> > compatible?
-> They are quite compatible. At the moment i do not see any reason for not using
-> fallback compatible. Later, if we want to distinguish the associated platform
-> data for SA8775P and SM8550, the compatible can be made independent and use it
-> in driver to associate with its own platform data ?
-
-It is already independent, even if you have a fallback. Nothing stops
-you from using platform-specific compat at any point in the future,
-you don't even have to change schema for that.
-
-> >
-> > This kind of comes as a more generic question: is there anything like
-> > 'IP version' or 'core version'? It would be really nice to determine the
-> > 'baseline' SoCs and make other instances compatible with the baseline.
-> It would be helpful if you can elaborate more on this with some drivers
-> following it (if any) ?
-
-iMX platforms have a lot of examples, see any of the device trees.
-Another perfect example is the Qualcomm SMMU, where we stopped adding
-new compats to the driver, because all implementations are declared
-compatible with "qcom,smmu-500' and "arm,smmu-500".
-
->
-> Regards,
-> Vikash
-> >>
-> >> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> >> ---
-> >>  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 4 +++-
-> >>  1 file changed, 3 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> >> index 440a0d7cdfe19a1ccedefc207d96b26eed5d6630..20ac596638ba33f49cce9e42d70d31a8aaa7c36e 100644
-> >> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> >> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> >> @@ -19,7 +19,9 @@ allOf:
-> >>
-> >>  properties:
-> >>    compatible:
-> >> -    const: qcom,sm8550-iris
-> >> +    enum:
-> >> +      - qcom,sm8550-iris
-> >> +      - qcom,sa8775p-iris
-> >>
-> >>    power-domains:
-> >>      maxItems: 4
-> >>
-> >> --
-> >> 2.34.1
-> >>
-> >
+On 11/03/2025 19:02, Christopher Obbard wrote:
+> Currently some Qualcomm interconnect drivers are enabled
+> as modules which isn't overly useful since the interconnects
+> are required to be loaded during early boot.
+> 
+> Loading the interconnects late (e.g. in initrd or as module)
+> can cause boot issues, such as slowdown or even not booting
+> at all (since the interconnect would be required for storage
+> devices).
+> 
+> Be consistent and enable all of the Qualcomm interconnect
+> drivers as built-in to the kernel image.
 
 
+I don't agree. If you want consistency, fix booting process and make
+everything module. We switch them to builtin on exception, so come with
+reasoning for given exceptions instead of making exceptions the new normal.
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
