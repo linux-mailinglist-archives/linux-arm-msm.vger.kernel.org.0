@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-51107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C989EA5D8AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:54:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87D84A5D8B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:56:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 584533B5184
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 08:54:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B99C316A98D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 08:56:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66402236434;
-	Wed, 12 Mar 2025 08:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66D9E236434;
+	Wed, 12 Mar 2025 08:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ws8A+zst"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KZUEleAx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4931B6CF1;
-	Wed, 12 Mar 2025 08:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D17F1B6CF1;
+	Wed, 12 Mar 2025 08:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741769662; cv=none; b=mH90edmIzMRhj8aJz/PXbv4PsgqwSSpsvfDUk99E7+mJhW606DLBcmnbXH8M7hHXmYsBxl3zVaIJ9tNM5ov/JrVCI3sdNNNwu0TwaRbFuO2gdF+pY+OdQh/VdGkIh7WbjSv74j6HaOMEdKSNBhIwnVx6cXL/r6RY+5sgBppL3NY=
+	t=1741769773; cv=none; b=oeLZxJIeTO/5OCglonxIp7keIea07vgVEAd2Lb+DQRIiYQ1rfiT7W3uPxZOh74FCrPG6vfuv8YD9StSyaiftMwigwGGtYxOmIBzr8kintnkIpgzi1mzG7cu9Ue10TOFrO6ILY1GM381Cf1A7nqFsTo5amYwvnAXrjGULS+fGHIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741769662; c=relaxed/simple;
-	bh=gQhN7Hr3nbhPllXSvQmrPLWgABwRjqGa9uqjBI+Vp4k=;
+	s=arc-20240116; t=1741769773; c=relaxed/simple;
+	bh=LmnGfr4A2yhKeP7d08aiWdsxGlR86C/jlD7yONGw+/s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bvtLH1eRvigHYADyuvolgW0lQTnhwz8SXp90FGGYPA25aF5UeUFRVWERrDGAg7mIv4X570PGT5iLRJEekbLvYHwmSf5m8y5RDtqyKTAqOiufVsvwxSFtCeYjyGi3tUmQqR4QgTekTuI6HLB+Y6FjaLx8X7gWKKbhx4AdD06XX58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ws8A+zst; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB07C4CEE3;
-	Wed, 12 Mar 2025 08:54:17 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=JvU2BvmxwUO28WnSN60/K6LeRCA3xJUlLHrvI1A8eKtjykAOiyx9CgGf1HPIV6M+ssdY7aOO3yD5pDsF2ols+k5ThN5OKbZZaMlV/DR6Gso7mRzOy82qb9nDArNfUlBZPEzpfPAcgDZAwyrJppq0/hw0dOilfaYiQVOe1v4/y04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KZUEleAx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E4DC4CEE3;
+	Wed, 12 Mar 2025 08:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741769661;
-	bh=gQhN7Hr3nbhPllXSvQmrPLWgABwRjqGa9uqjBI+Vp4k=;
+	s=k20201202; t=1741769772;
+	bh=LmnGfr4A2yhKeP7d08aiWdsxGlR86C/jlD7yONGw+/s=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Ws8A+zstO7pSzIr1S9dLXx98LZW7LYwPb0lYa6xhKMd9iJz2pz06cwNE+VyqyHtYL
-	 TArZJKBFymv7k9JihguGY/2KSaLpMySulezupU8pVDVudxyV0Rk/YJPswkjFLqBG2+
-	 yDcI34vPUpRYtj3ekMbSgBhque0YmbF5BC1lXJVmkRRMA36c5OXiYmnXMRIeniO2NZ
-	 Z/OWMFOQb6Bh1vgiIKyOEL7f0AqWfUVfu7IOy59PA5Vt2ZzSUuoGSViTIrT1LY4bQr
-	 EebXxiMcs/3KiVIrkT5/dh2K34Z1W3LpJpobqXKLsjYbFzT2enK4K+H1tT/6WX55Zp
-	 lGCXyiFYi4CuA==
-Message-ID: <78f6091c-1630-48c2-93e6-71f2cdbe63c5@kernel.org>
-Date: Wed, 12 Mar 2025 09:54:14 +0100
+	b=KZUEleAx3GHAMj556oApgRX37fm9ieIA+qDVJ93dsxeNjECX7OmebjTAluc5ETyMr
+	 f362X7sJavRszttPkV2G5njt27OmpTejka77Dhc0OvA51bDZ05MuCAJIgRvBH/Zgsw
+	 AcCzsyIblG3BpqR/J3kfw0XE9W1U8nCSJbNF8iQMw8kmCCL+o5ZuZ6k87T9e1cz1hD
+	 L7Lo/OcLHnUNDsuOdCDPP5n3CaDVly27D1DfJyJ54+eiKrz+2ofFGSvHJXWrLua67K
+	 kf6IVN+6QeymJhaXqiU63fq/fqpGJOztj/J+Y9W80UoE6E95Q8mVp60CBDEDdWj2+S
+	 meZJ6dbnpfXXA==
+Message-ID: <92dd35a2-d1cc-4f2b-b3a8-5752ec33b0d3@kernel.org>
+Date: Wed, 12 Mar 2025 09:56:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,12 +53,16 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm interconnects as
  built-in
 To: Christopher Obbard <christopher.obbard@linaro.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Dmitry Baryshkov <lumag@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
 References: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
+ <CACr-zFC=mPNeeHMp9XnSby+cMQaPWt_3s8iUiCN+EnVPeGad8Q@mail.gmail.com>
+ <uljqxwfgl26txrfqvkvzzpj6qurgmwcbuot7gu2u6rwjaqgncb@jeuyi4mexjff>
+ <CACr-zFDSFizYmrVN-dV334n1kq17UB9k4FxrV20NNQCQMhzrwg@mail.gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,27 +108,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
+In-Reply-To: <CACr-zFDSFizYmrVN-dV334n1kq17UB9k4FxrV20NNQCQMhzrwg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/03/2025 19:02, Christopher Obbard wrote:
-> Currently some Qualcomm interconnect drivers are enabled
-> as modules which isn't overly useful since the interconnects
-> are required to be loaded during early boot.
+On 11/03/2025 20:15, Christopher Obbard wrote:
+> Hi Dmitry,
 > 
-> Loading the interconnects late (e.g. in initrd or as module)
-> can cause boot issues, such as slowdown or even not booting
-> at all (since the interconnect would be required for storage
-> devices).
+> On Tue, 11 Mar 2025 at 19:58, Dmitry Baryshkov <lumag@kernel.org> wrote:
+>>
+>> On Tue, Mar 11, 2025 at 07:10:06PM +0100, Christopher Obbard wrote:
+>>> I sent this patch to start the discussion, some things I found:
+>>>
+>>> 1) Some interconnects are missing from arm defconfig. Should they be =y too ?
+>>
+>> No, unless those are required for the UART console.
 > 
-> Be consistent and enable all of the Qualcomm interconnect
-> drivers as built-in to the kernel image.
+> OK, that makes sense. FWIW the cryptic (to me, at least) commit log on
+> https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6eee808134ecf1c1093ff1ddfc056dc5e469d0c3
+> made me think that the interconnects should be built-in on all devices.
+> 
+> Of course, the real problem here is RB3gen2 not actually finding the
+> UFS/eMMC device due to no interconnect driver.
+> Until now, I have been building that into the kernel. I will
+> investigate instead shoving into the initrd (in both debian and
+> fedora) which should solve my issue and render this patchset useless.
 
+For Qualcomm platforms you are expected to always have initramfs, thus
+you will have the modules for UFS/eMMC mounts. I don't understand the
+problem which you were trying to solve.
 
-I don't agree. If you want consistency, fix booting process and make
-everything module. We switch them to builtin on exception, so come with
-reasoning for given exceptions instead of making exceptions the new normal.
+The interconnects were built in *only* because of need for serial
+console. Only.
 
 Best regards,
 Krzysztof
