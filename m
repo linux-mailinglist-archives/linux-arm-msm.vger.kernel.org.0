@@ -1,126 +1,304 @@
-Return-Path: <linux-arm-msm+bounces-51124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9328BA5D9DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 10:50:08 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F85FA5D9DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 10:51:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E1501897788
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:50:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 192BB3A5A45
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:50:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BA3423BD0F;
-	Wed, 12 Mar 2025 09:50:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="W9dF3Z/2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69DD123BFA3;
+	Wed, 12 Mar 2025 09:50:57 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9989222E402;
-	Wed, 12 Mar 2025 09:50:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66EF1236A73;
+	Wed, 12 Mar 2025 09:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741773005; cv=none; b=WdekgeFO97mAMj888twyho65yzyVvDHK04jLcZ3b5oNeN4cinPU27MurkDmToQmzqwSynxbgWl5fuZRhCFKdA1CIA5fojELNd74xoFCGZmni/XCV56nkXWcLpATqZtlVUZOHR8/ESVugaIWSKfA+/9PnN8T0UMhbnsx7BlEf72Q=
+	t=1741773057; cv=none; b=Wg5hM4uWuPro45He14guu/pgVinJckcfeBu56QVYPw6L/MLQRvCbtwuJCwOBA08LJS/JQkWgkdcur7qRxjK+6C8DDz0jcUei+FN8U+KdPowdgfweggKoLyJF1AiezgqFhMccfca59yg7sS4DJ0ZUbSnqGlO5dtZK0XpA6vtKFWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741773005; c=relaxed/simple;
-	bh=MI8AoERqihUYmL4TjIkwjFUKRnq/VTLzWRTXWKupLf0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lR7gJ4fbxJC732w1w+bt3dW73HvuduxUQROZ63pUqSJ4OkboJiqesSsMuaSsOZPiBk3KvMNeEgcD5Za2saSDkEhoiBudn4tAsOUKF9WxCoNwUwHrgn9DwmcqCuG+/oxaRW8TzDZ/1HIMdP41BwToRJQ0qjxInjz7XJt6SMbOi+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=W9dF3Z/2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BMHA0R013950;
-	Wed, 12 Mar 2025 09:50:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=kgideWmWyJcC3sljKVJ0uN
-	4O1r1uSFuIk7vp+zHSawA=; b=W9dF3Z/2CoMGkkmK6GZHztRN6Gv+0Im67Flox2
-	Va25gqsMipJOkmP8HyVGNdgvTcnCXNZo4WnbEH7Ca5RkTh555gc2n5zNtxcOOuFd
-	ADmIxMbkzVZm7MzSzyYA7naMA71JTwjtMHwl+iVdOAHLxXHNSB2s4xsqvCnpXXR8
-	62Hjljp5zTSoQICgA8F7grgDEiYuW+DHUh1foB3kTd8cU7NGcuvXlKj+QlXrnR3h
-	frqj8RuTVubwkUI9do8/qy845oyeIQg70pCkAueL0P9DaCOz0t+VXraIRLjc9zRM
-	aqCqybJdIBE6sO5cW5zcOxfKlj0P7P+eQQX/Vr/61OHdxomw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2p1wry-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Mar 2025 09:50:01 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52C9o1Nc009451
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Mar 2025 09:50:01 GMT
-Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 12 Mar 2025 02:49:57 -0700
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
-Subject: [PATCH v1] arm64: dts: qcom: ipq5424: add reserved memory region for bootloader
-Date: Wed, 12 Mar 2025 15:19:48 +0530
-Message-ID: <20250312094948.3376126-1-quic_mmanikan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1741773057; c=relaxed/simple;
+	bh=cPaifqjn+79emxa4flNc0qkuWrozQrP5tn9MQpqTWl8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d+WspqazwcgIkYF7MAs0H79MNl4UgowNFWxUWG2JhPkoGYf3AjA6HXQzmn4cuCbQp2qPRxXEWjFNnAuRbi/Ei/AoPpi1N8OgTqZxuXZ1dQGBKfCHoMt6rSe0aY4wh/WfLKqKovzH4F5b0WmFrkGwKG0OHeLsgBRIpqeOMBJABco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com; spf=none smtp.mailfrom=foss.arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=foss.arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 47C97152B;
+	Wed, 12 Mar 2025 02:51:05 -0700 (PDT)
+Received: from bogus (e133711.arm.com [10.1.196.55])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D4E443F5A1;
+	Wed, 12 Mar 2025 02:50:51 -0700 (PDT)
+Date: Wed, 12 Mar 2025 09:50:49 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Jacky Bai <ping.bai@nxp.com>
+Cc: <rafael@kernel.org>, <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>,
+	<tiny.windzz@gmail.com>, <wens@csie.org>,
+	<jernej.skrabec@gmail.com>, <samuel@sholland.org>,
+	<matthias.bgg@gmail.com>, <angelogioacchino.delregno@collabora.com>,
+	<linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>,
+	<linux-sunxi@lists.linux.dev>, <linux-mediatek@lists.infradead.org>,
+	<imx@lists.linux.dev>
+Subject: Re: [PATCH v2] cpufreq: Init cpufreq only for present CPUs
+Message-ID: <Z9FY-Uu-7R9eWEQ7@bogus>
+References: <20250312092127.357316-1-ping.bai@nxp.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=ePkTjGp1 c=1 sm=1 tr=0 ts=67d158c9 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=XM-gT74EAUeGg6Fp4qoA:9 a=JrUbwKUKoRM7SNILlDhP:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Gw2olqtuWYpcGzeNARle7bQZYszV-az8
-X-Proofpoint-GUID: Gw2olqtuWYpcGzeNARle7bQZYszV-az8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-12_03,2025-03-11_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=544 phishscore=0
- mlxscore=0 malwarescore=0 suspectscore=0 impostorscore=0 bulkscore=0
- clxscore=1015 lowpriorityscore=0 spamscore=0 priorityscore=1501
- adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503120066
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250312092127.357316-1-ping.bai@nxp.com>
 
-In IPQ5424, the bootloader collects the system RAM contents upon a crash
-for post-morterm analysis. If we don't reserve the memory region used by
-the bootloader, linux will consume it. Upon the next boot after a crash,
-the bootloader will be loaded in the same region, which could lead to the
-loss of some data. sometimes, we may miss out critical information.
-Therefore, let's reserve the region used by the bootloader.
+On Wed, Mar 12, 2025 at 05:21:27PM +0800, Jacky Bai wrote:
+> for_each_possible_cpu() is currently used to initialize cpufreq
+> in below cpufreq drivers:
+>   drivers/cpufreq/cpufreq-dt.c
+>   drivers/cpufreq/mediatek-cpufreq-hw.c
+>   drivers/cpufreq/mediatek-cpufreq.c
+>   drivers/cpufreq/qcom-cpufreq-nvmem.c
+>   drivers/cpufreq/sun50i-cpufreq-nvmem.c
+>
 
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5424.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+Just drop this list, totally redundant as diffstat must give that anyways.
+You have already made it stale as it doesn't match the diffstat.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-index 7a7ad700a382..cd1acf3898ac 100644
---- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-@@ -132,6 +132,11 @@ reserved-memory {
- 		#size-cells = <2>;
- 		ranges;
- 
-+		bootloader@8a200000 {
-+			reg = <0x0 0x8a200000 0x0 0x400000>;
-+			no-map;
-+		};
-+
- 		tz@8a600000 {
- 			reg = <0x0 0x8a600000 0x0 0x200000>;
- 			no-map;
+With that fixed:
 
-base-commit: 0a2f889128969dab41861b6e40111aa03dc57014
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+
+> However, in cpu_dev_register_generic(), for_each_present_cpu()
+> is used to register CPU devices which means the CPU devices are
+> only registered for present CPUs and not all possible CPUs.
+> 
+> With nosmp or maxcpus=0, only the boot CPU is present, lead
+> to the cpufreq probe failure or defer probe due to no cpu device
+> available for not present CPUs.
+> 
+> Change for_each_possible_cpu() to for_each_present_cpu() in the
+> above cpufreq drivers to ensure it only registers cpufreq for
+> CPUs that are actually present.
+> 
+> Fixes: b0c69e1214bc ("drivers: base: Use present CPUs in GENERIC_CPU_DEVICES")
+> Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+> ---
+>  - v2 changes:
+>   - Add changes for armada-8k-cpufreq, mvebu-cpfureq, qcome-cpufreq-hw,
+>     scmi-cpufreq, scpi-cpufreq, virtual-cpufreq.
+> ---
+>  drivers/cpufreq/armada-8k-cpufreq.c    | 2 +-
+>  drivers/cpufreq/cpufreq-dt.c           | 2 +-
+>  drivers/cpufreq/mediatek-cpufreq-hw.c  | 2 +-
+>  drivers/cpufreq/mediatek-cpufreq.c     | 2 +-
+>  drivers/cpufreq/mvebu-cpufreq.c        | 2 +-
+>  drivers/cpufreq/qcom-cpufreq-hw.c      | 2 +-
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c   | 8 ++++----
+>  drivers/cpufreq/scmi-cpufreq.c         | 2 +-
+>  drivers/cpufreq/scpi-cpufreq.c         | 2 +-
+>  drivers/cpufreq/sun50i-cpufreq-nvmem.c | 6 +++---
+>  drivers/cpufreq/virtual-cpufreq.c      | 2 +-
+>  11 files changed, 16 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/armada-8k-cpufreq.c b/drivers/cpufreq/armada-8k-cpufreq.c
+> index 7a979db81f09..5a3545bd0d8d 100644
+> --- a/drivers/cpufreq/armada-8k-cpufreq.c
+> +++ b/drivers/cpufreq/armada-8k-cpufreq.c
+> @@ -47,7 +47,7 @@ static void __init armada_8k_get_sharing_cpus(struct clk *cur_clk,
+>  {
+>  	int cpu;
+>  
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		struct device *cpu_dev;
+>  		struct clk *clk;
+>  
+> diff --git a/drivers/cpufreq/cpufreq-dt.c b/drivers/cpufreq/cpufreq-dt.c
+> index 778916f89a51..e80dd982a3e2 100644
+> --- a/drivers/cpufreq/cpufreq-dt.c
+> +++ b/drivers/cpufreq/cpufreq-dt.c
+> @@ -283,7 +283,7 @@ static int dt_cpufreq_probe(struct platform_device *pdev)
+>  	int ret, cpu;
+>  
+>  	/* Request resources early so we can return in case of -EPROBE_DEFER */
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		ret = dt_cpufreq_early_init(&pdev->dev, cpu);
+>  		if (ret)
+>  			goto err;
+> diff --git a/drivers/cpufreq/mediatek-cpufreq-hw.c b/drivers/cpufreq/mediatek-cpufreq-hw.c
+> index aa209f5527dc..74f1b4c796e4 100644
+> --- a/drivers/cpufreq/mediatek-cpufreq-hw.c
+> +++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
+> @@ -303,7 +303,7 @@ static int mtk_cpufreq_hw_driver_probe(struct platform_device *pdev)
+>  	struct regulator *cpu_reg;
+>  
+>  	/* Make sure that all CPU supplies are available before proceeding. */
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		cpu_dev = get_cpu_device(cpu);
+>  		if (!cpu_dev)
+>  			return dev_err_probe(&pdev->dev, -EPROBE_DEFER,
+> diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
+> index 2656b88db378..f3f02c4b6888 100644
+> --- a/drivers/cpufreq/mediatek-cpufreq.c
+> +++ b/drivers/cpufreq/mediatek-cpufreq.c
+> @@ -631,7 +631,7 @@ static int mtk_cpufreq_probe(struct platform_device *pdev)
+>  		return dev_err_probe(&pdev->dev, -ENODEV,
+>  				     "failed to get mtk cpufreq platform data\n");
+>  
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		info = mtk_cpu_dvfs_info_lookup(cpu);
+>  		if (info)
+>  			continue;
+> diff --git a/drivers/cpufreq/mvebu-cpufreq.c b/drivers/cpufreq/mvebu-cpufreq.c
+> index 7f3cfe668f30..2aad4c04673c 100644
+> --- a/drivers/cpufreq/mvebu-cpufreq.c
+> +++ b/drivers/cpufreq/mvebu-cpufreq.c
+> @@ -56,7 +56,7 @@ static int __init armada_xp_pmsu_cpufreq_init(void)
+>  	 * it), and registers the clock notifier that will take care
+>  	 * of doing the PMSU part of a frequency transition.
+>  	 */
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		struct device *cpu_dev;
+>  		struct clk *clk;
+>  		int ret;
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 4b3b3dbc7d38..8422704a3b10 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -306,7 +306,7 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
+>  	struct of_phandle_args args;
+>  	int cpu, ret;
+>  
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		cpu_np = of_cpu_device_node_get(cpu);
+>  		if (!cpu_np)
+>  			continue;
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> index 3a8ed723a23e..54f8117103c8 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -489,7 +489,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+>  		nvmem_cell_put(speedbin_nvmem);
+>  	}
+>  
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		struct dev_pm_opp_config config = {
+>  			.supported_hw = NULL,
+>  		};
+> @@ -543,7 +543,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+>  	dev_err(cpu_dev, "Failed to register platform device\n");
+>  
+>  free_opp:
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		dev_pm_domain_detach_list(drv->cpus[cpu].pd_list);
+>  		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+>  	}
+> @@ -557,7 +557,7 @@ static void qcom_cpufreq_remove(struct platform_device *pdev)
+>  
+>  	platform_device_unregister(cpufreq_dt_pdev);
+>  
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		dev_pm_domain_detach_list(drv->cpus[cpu].pd_list);
+>  		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+>  	}
+> @@ -568,7 +568,7 @@ static int qcom_cpufreq_suspend(struct device *dev)
+>  	struct qcom_cpufreq_drv *drv = dev_get_drvdata(dev);
+>  	unsigned int cpu;
+>  
+> -	for_each_possible_cpu(cpu)
+> +	for_each_present_cpu(cpu)
+>  		qcom_cpufreq_suspend_pd_devs(drv, cpu);
+>  
+>  	return 0;
+> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+> index ff2897789797..c310aeebc8f3 100644
+> --- a/drivers/cpufreq/scmi-cpufreq.c
+> +++ b/drivers/cpufreq/scmi-cpufreq.c
+> @@ -104,7 +104,7 @@ scmi_get_sharing_cpus(struct device *cpu_dev, int domain,
+>  	int cpu, tdomain;
+>  	struct device *tcpu_dev;
+>  
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		if (cpu == cpu_dev->id)
+>  			continue;
+>  
+> diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
+> index 048dc43a9997..17cda84f00df 100644
+> --- a/drivers/cpufreq/scpi-cpufreq.c
+> +++ b/drivers/cpufreq/scpi-cpufreq.c
+> @@ -65,7 +65,7 @@ scpi_get_sharing_cpus(struct device *cpu_dev, struct cpumask *cpumask)
+>  	if (domain < 0)
+>  		return domain;
+>  
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		if (cpu == cpu_dev->id)
+>  			continue;
+>  
+> diff --git a/drivers/cpufreq/sun50i-cpufreq-nvmem.c b/drivers/cpufreq/sun50i-cpufreq-nvmem.c
+> index 17d6a149f580..47d6840b3489 100644
+> --- a/drivers/cpufreq/sun50i-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/sun50i-cpufreq-nvmem.c
+> @@ -262,7 +262,7 @@ static int sun50i_cpufreq_nvmem_probe(struct platform_device *pdev)
+>  	snprintf(name, sizeof(name), "speed%d", speed);
+>  	config.prop_name = name;
+>  
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		struct device *cpu_dev = get_cpu_device(cpu);
+>  
+>  		if (!cpu_dev) {
+> @@ -288,7 +288,7 @@ static int sun50i_cpufreq_nvmem_probe(struct platform_device *pdev)
+>  	pr_err("Failed to register platform device\n");
+>  
+>  free_opp:
+> -	for_each_possible_cpu(cpu)
+> +	for_each_present_cpu(cpu)
+>  		dev_pm_opp_clear_config(opp_tokens[cpu]);
+>  	kfree(opp_tokens);
+>  
+> @@ -302,7 +302,7 @@ static void sun50i_cpufreq_nvmem_remove(struct platform_device *pdev)
+>  
+>  	platform_device_unregister(cpufreq_dt_pdev);
+>  
+> -	for_each_possible_cpu(cpu)
+> +	for_each_present_cpu(cpu)
+>  		dev_pm_opp_clear_config(opp_tokens[cpu]);
+>  
+>  	kfree(opp_tokens);
+> diff --git a/drivers/cpufreq/virtual-cpufreq.c b/drivers/cpufreq/virtual-cpufreq.c
+> index 45becb92aa4a..7dd1b0c263c7 100644
+> --- a/drivers/cpufreq/virtual-cpufreq.c
+> +++ b/drivers/cpufreq/virtual-cpufreq.c
+> @@ -138,7 +138,7 @@ static int virt_cpufreq_get_sharing_cpus(struct cpufreq_policy *policy)
+>  	cur_perf_domain = readl_relaxed(base + policy->cpu *
+>  					PER_CPU_OFFSET + REG_PERF_DOMAIN_OFFSET);
+>  
+> -	for_each_possible_cpu(cpu) {
+> +	for_each_present_cpu(cpu) {
+>  		cpu_dev = get_cpu_device(cpu);
+>  		if (!cpu_dev)
+>  			continue;
+> -- 
+> 2.34.1
+> 
+
 -- 
-2.34.1
-
+Regards,
+Sudeep
 
