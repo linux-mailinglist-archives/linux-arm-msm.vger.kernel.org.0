@@ -1,81 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-51203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38A7FA5E662
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 22:18:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39E28A5E839
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 00:17:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A99173AA9FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 21:18:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 27F177A4ECF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 23:16:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 096541EE00F;
-	Wed, 12 Mar 2025 21:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF3161F153D;
+	Wed, 12 Mar 2025 23:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZSdpyhc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ChrNTiDY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05831EF091
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 21:18:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17CA1EE7A5;
+	Wed, 12 Mar 2025 23:17:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741814314; cv=none; b=E3FUaBtu5D3Ods+mIFXGFa9PWn2QgN2YLX9cQb0H1G7GnoIPHA63cnsZaWOtyoIT+zAojV3psHFuisxnVA065ht9bQoZSiFXhsP20mUSK8AigGYptCYj/Q+eLU/KFDFrfQBhsOwqiR8CIwGYqGqoeT0rWANYH3wpQFWj97XYADY=
+	t=1741821453; cv=none; b=anWoRJuHgb/HgFeuJiF6hVCD1q1W4cr/ukCQVSWEzrYZym9vegQiEIRL7MnLm2HadlGBCX9NyDaEL3Ysf84t3qUOhEpx8EwHtOyO4hiGWHyABUhUjqytEFTgmVkcMODaIGeUKoAkyFfWq5ig7dfz4IVHOL/z0vP0zsBZdGJxolY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741814314; c=relaxed/simple;
-	bh=ZRK1QnXjKXmwtDsvZ8yDGFinnbLW9DNcB1m9v5f4NfM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EZyEkEqHD0e4btXev11G8witBZEVBGPAUnVX9rEs4zJiHnkruZn4eEwJOkz12BIb7wXBthXdPk8bwJ20jU8fJNULoi3QUIexzg1nzuP8ioc8MlowMb1MdUPxQ/uOaTJjDBX/T0u65JIZvUFcdsIvoIUYAk8RZmffPJDX8aYAN9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZSdpyhc; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ac29fd22163so47467266b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 14:18:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741814311; x=1742419111; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gAAaCcWnu1E/LRXYBdsReUtTWQq4VO+o7nDriwfTZMA=;
-        b=PZSdpyhcx9baOD6p13Y8JPBzfj7ODwsrjfhtnNPCz2kEveMmpXe2m/0I8gENluL+hM
-         TEz3P+uVjY8NLIM+P75nO9HkVyf7qX2ikx4yFVF5Z9GddSurC7rqLxboCwJuSOHEMelf
-         nX0W/TuTR8iNDPAu0LibXAvq+1mHjtK+dL27kK6n7XT4LRghU2PYQqs7plZ0DSeljZ40
-         jq6CwIFJJ9aheKfvtl/KS7JUifI5A1O7QVbMN9WotBGKy2fG+uDKpYs/J1eJYk46Ibm9
-         hAwmnKK9RUG9WU8ZcmAoOxXTbLMCZl0jaV1V728MFtgyAMWmEsKPLAGWNbhtCz/JiApQ
-         Y4Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741814311; x=1742419111;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gAAaCcWnu1E/LRXYBdsReUtTWQq4VO+o7nDriwfTZMA=;
-        b=t32yRmGq3LpRqudNHeDRGf73sOwovNNb4CeB4590zeoMNZYzLY29jKYrYvov4g+FHT
-         uphYwfrhLyDOEZAHgyBu8iKylTDbE9oOeS/3QB5coDaQk6ib1NfNnwTReNO14ExLrxUP
-         d/DFre0qcM0nngB1HShcKJOe5ARw8RgbXjukjASDINVO+zUaYTy7KxFKhprbg3ls8RP0
-         ChL7OiJWQN6AzIgKQqVGNRPPuWf5hzS1GSDRmUxAP5TfRiqCzPJjlXCpnGxCLzGZvc/T
-         ILQL8sjoAuhat6ZlkPdbEqfDywwwcQV5W1hH+GLHmr5V08hOolnulPWV6gtmdF5uqL5z
-         /ytQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV6i2DjeaYqnTK/1hB64zBec7p0739zr92qk6L0NbKTxaqNdTt2ltUgKHwc1UGsDMYVMwgRNveBn8LLtNWz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxwjf4XlxtfM6C/6J7Wwzh0NEZHzzQ95G4SEg3k7BoppnzOvjmN
-	n4RrQRAxkt5LmLIsqiBGqClO4tZCnuOc8sHo5ix1uR/R6eEyuDM26YBXnNW+n78=
-X-Gm-Gg: ASbGncuYBwHPmSi7HFWAODGI3NAgFtzTflX4fdgVrnegIVUoaM/65qTK6TNUWdnCMFh
-	+5KnN52AnTkISDMjIdh//l8OrbLO949ZMCGAsJEpDajd8/JHN7eALS3NgqLEJitsuMwm/7EGwuS
-	fbvjuEzDzVMfEbiKbabRgyK/x3dgucn3FjEhp5It/nBusUkUDOJ7DRf71K4jLfIb2iP/r/kWbrT
-	3swz1CXNWQ8B8sdq2/kAuZ6NHBlbr00fqyGiCIV3JdtcDwGaOZsT/TIzxxU6SG1q88Irht5XiwD
-	Uzn99VDwYcCzjCKAymqdmADBzuvEpEGhAatbRVzn56KfiB1/PLE5+CVtkROFxZ6d4bNrLEXTsy2
-	sjwkUEECaSD1md8JlywSW911bGX3OvkBjKb0wz8M44iGLuHo3W8tdh0AMfKQg2cGkXIV4YiN0D2
-	Z50giO33HnMDQxj1k4prAMRzI/z2bQQyo=
-X-Google-Smtp-Source: AGHT+IGhFP/qkL3DgglwZ5MvHJdcpcSeJ8ki8DIky3RR3GH88+4MNn/psSZ2uCJxfybLvhHcJQ+E+A==
-X-Received: by 2002:a17:907:cf46:b0:ac2:a42a:999b with SMTP id a640c23a62f3a-ac2a42a9e35mr1789666366b.52.1741814310999;
-        Wed, 12 Mar 2025 14:18:30 -0700 (PDT)
-Received: from ?IPV6:2001:1c06:2302:5600:7555:cca3:bbc4:648b? (2001-1c06-2302-5600-7555-cca3-bbc4-648b.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:7555:cca3:bbc4:648b])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac25ab328b6sm939324866b.124.2025.03.12.14.18.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Mar 2025 14:18:30 -0700 (PDT)
-Message-ID: <0b1a0db4-35b7-4098-8539-cd73cb396635@linaro.org>
-Date: Wed, 12 Mar 2025 21:18:29 +0000
+	s=arc-20240116; t=1741821453; c=relaxed/simple;
+	bh=02EX/DMIDDWf9CWuaXFpleHjT8LOS9O+SlqdOnu+alw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HR3iW8kFuQE2VlP9VE+s09qsXHwjKaNyDuzBKiUEqEq7qjA4ndBYlJjRTZemJmThb+4z+EC/7m9uGMU89KRM5vt9sfDPFiwTmC2JJpxbhiNdn++BCQoWR6HnZHKjlBPTyJUs9JRNzprQwHXkngIV102tKpWEHf/OkObd/siuYCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ChrNTiDY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CAKruW008924;
+	Wed, 12 Mar 2025 23:17:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YxUIuMuJ8heLhO7n/roAvP6nMwwqgMTF3z65WOJS+lE=; b=ChrNTiDYUmKKJ9k9
+	hCg7bnLOrdkfpkLnzpcBOu5c23KEXV6ZtlDTPJAm7VBVXmSXfYrlOeP5axy78QEK
+	z4FvrlFZavYX+cN4j3T8v4LrGZv9t2aWdVRLgbxYubwM5gayeIWfAd7HMX03KLin
+	REYq3AiPN53E1FXrJL11U1ItwJPIpjTPiSYGob/+tME0y2tDcs7QWYjcKeYt6dLv
+	TywjcyDAAusMShc/0n483ZSLr0tBbYT/DelahZ/MGmUcw6MR3nWCiE5qWIpBMp6k
+	/Ek4EmNQZlompprZgCIgKAIsua9bB2+8KVfSoH9aFgQfVImby64n4/SLxJ3TP0lM
+	8YZIfA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2rbvkv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Mar 2025 23:17:13 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52CNHC01030751
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Mar 2025 23:17:12 GMT
+Received: from [10.110.30.156] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 12 Mar
+ 2025 16:17:11 -0700
+Message-ID: <9d30efc3-3315-4ff5-8eb0-c50bccc0a725@quicinc.com>
+Date: Wed, 12 Mar 2025 16:17:07 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,188 +65,155 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8650: Add description of MCLK
- pins
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20250312001132.1832655-1-vladimir.zapolskiy@linaro.org>
- <20250312001132.1832655-4-vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v35 00/31] Introduce QC USB SND audio offloading support
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+CC: Greg KH <gregkh@linuxfoundation.org>, <srinivas.kandagatla@linaro.org>,
+        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
+        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
+        <lgirdwood@gmail.com>, <tiwai@suse.com>, <krzk+dt@kernel.org>,
+        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
+        <robh@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>
+References: <20250219004754.497985-1-quic_wcheng@quicinc.com>
+ <Z7W_Vz_kVDjIcp5N@linaro.org>
+ <82ce69a3-d248-494f-6ddb-098f392c78a0@quicinc.com>
+ <Z8a4WYq4GqWBVNyX@linaro.org>
+ <ee5cb6bc-963a-4e31-8ac4-07120fb9ff70@quicinc.com>
+ <Z8ikt2K0uekU2dVZ@linaro.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250312001132.1832655-4-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <Z8ikt2K0uekU2dVZ@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=D6NHKuRj c=1 sm=1 tr=0 ts=67d215f9 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=qC_FGOx9AAAA:8 a=HTecfl5s7U67J0CcF8QA:9 a=QEXdDO2ut3YA:10
+ a=fsdK_YakeE02zTmptMdW:22
+X-Proofpoint-GUID: SH3MPeN7uBXWUDXli7heUJQlcykyMSVV
+X-Proofpoint-ORIG-GUID: SH3MPeN7uBXWUDXli7heUJQlcykyMSVV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-12_06,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
+ adultscore=0 malwarescore=0 mlxlogscore=999 clxscore=1015 impostorscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503120166
 
-On 12/03/2025 00:11, Vladimir Zapolskiy wrote:
-> Add fixed MCLK pin descriptions for all pins with such supported
-> function.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8650.dtsi | 144 +++++++++++++++++++++++++++
->   1 file changed, 144 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index bf5e238a93c3..526ef2ae8ac8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -5792,6 +5792,150 @@ tlmm: pinctrl@f100000 {
->   
->   			wakeup-parent = <&pdc>;
->   
-> +			cam0_default: cam0-default-state {
-> +				mclk-pins {
-> +					pins = "gpio100";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam0_sleep: cam0-sleep-state {
-> +				mclk-pins {
-> +					pins = "gpio100";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cam1_default: cam1-default-state {
-> +				mclk-pins {
-> +					pins = "gpio101";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam1_sleep: cam1-sleep-state {
-> +				mclk-pins {
-> +					pins = "gpio101";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cam2_default: cam2-default-state {
-> +				mclk-pins {
-> +					pins = "gpio102";
-> +					function = "cam_aon_mclk2";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam2_sleep: cam2-sleep-state {
-> +				mclk-pins {
-> +					pins = "gpio102";
-> +					function = "cam_aon_mclk2";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cam3_default: cam3-default-state {
-> +				mclk-pins {
-> +					pins = "gpio103";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam3_sleep: cam3-sleep-state {
-> +				mclk-pins {
-> +					pins = "gpio103";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cam4_default: cam4-default-state {
-> +				mclk-pins {
-> +					pins = "gpio104";
-> +					function = "cam_aon_mclk4";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam4_sleep: cam4-sleep-state {
-> +				mclk-pins {
-> +					pins = "gpio104";
-> +					function = "cam_aon_mclk4";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cam5_default: cam5-default-state {
-> +				mclk-pins {
-> +					pins = "gpio105";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam5_sleep: cam5-sleep-state {
-> +				mclk-pins {
-> +					pins = "gpio105";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cam6_default: cam6-default-state {
-> +				mclk-pins {
-> +					pins = "gpio108";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam6_sleep: cam6-sleep-state {
-> +				mclk-pins {
-> +					pins = "gpio108";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cam7_default: cam7-default-state {
-> +				mclk-pins {
-> +					pins = "gpio106";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam7_sleep: cam7-sleep-state {
-> +				mclk-pins {
-> +					pins = "gpio106";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
->   			cci0_0_default: cci0-0-default-state {
->   				sda-pins {
->   					pins = "gpio113";
+Hi Stephan,
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+On 3/5/2025 11:23 AM, Stephan Gerhold wrote:
+> On Tue, Mar 04, 2025 at 02:46:28PM -0800, Wesley Cheng wrote:
+>> On 3/4/2025 12:22 AM, Stephan Gerhold wrote:
+>>> On Mon, Mar 03, 2025 at 06:39:52PM -0800, Wesley Cheng wrote:
+>>>> On 2/19/2025 3:24 AM, Stephan Gerhold wrote:
+>>>>> On Tue, Feb 18, 2025 at 04:47:23PM -0800, Wesley Cheng wrote:
+>>>>>> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
+>>>>>>
+>>>>>> Several Qualcomm based chipsets can support USB audio offloading to a
+>>>>>> dedicated audio DSP, which can take over issuing transfers to the USB
+>>>>>> host controller.  The intention is to reduce the load on the main
+>>>>>> processors in the SoC, and allow them to be placed into lower power modes.
+>>>>>> There are several parts to this design:
+>>>>>>   1. Adding ASoC binding layer
+>>>>>>   2. Create a USB backend for Q6DSP
+>>>>>>   3. Introduce XHCI interrupter support
+>>>>>>   4. Create vendor ops for the USB SND driver
+>>>>>>
+>>>>>>       USB                          |            ASoC
+>>>>>> --------------------------------------------------------------------
+>>>>>>                                    |  _________________________
+>>>>>>                                    | |sm8250 platform card     |
+>>>>>>                                    | |_________________________|
+>>>>>>                                    |         |           |
+>>>>>>                                    |      ___V____   ____V____
+>>>>>>                                    |     |Q6USB   | |Q6AFE    |
+>>>>>> |     |"codec" | |"cpu"    |
+>>>>>>                                    |     |________| |_________|
+>>>>>>                                    |         ^  ^        ^
+>>>>>>                                    |         |  |________|
+>>>>>>                                    |      ___V____    |
+>>>>>>                                    |     |SOC-USB |   |
+>>>>>>    ________       ________               |        |   |
+>>>>>>   |USB SND |<--->|QC offld|<------------>|________|   |
+>>>>>>   |(card.c)|     |        |<----------                |
+>>>>>>   |________|     |________|___     | |                |
+>>>>>>       ^               ^       |    | |    ____________V_________
+>>>>>>       |               |       |    | |   |APR/GLINK             |
+>>>>>>    __ V_______________V_____  |    | |   |______________________|
+>>>>>>   |USB SND (endpoint.c)     | |    | |              ^
+>>>>>>   |_________________________| |    | |              |
+>>>>>>               ^               |    | |   ___________V___________
+>>>>>>               |               |    | |->|audio DSP              |
+>>>>>>    ___________V_____________  |    |    |_______________________|
+>>>>>>   |XHCI HCD                 |<-    |
+>>>>>>   |_________________________|      |
+>>>>>>
+>>>>>
+>>>>> As I noted on v34 [1], this version is still missing instructions and
+>>>>> changes needed for testing this series. The device tree changes don't
+>>>>> need to be part of the same series, but there should be at least a link
+>>>>> provided to give other people the chance to provide Tested-by tags.
+>>>>>
+>>>>> IMO we shouldn't merge this series without those instructions, otherwise
+>>>>> we risk that this just ends up being dead code that no one can use.
+>>>>>
+>>>>> Can you please share the device tree changes for a board upstream and
+>>>>> any other changes needed to be able to test this series? E.g. for
+>>>>> sm8250-mtp.dts, based on the examples in your cover letter.
+>>>>>
+>>>>
+>>>> To clarify I'm testing this on sm8350 in recent times, but utilizing sm8250
+>>>> definitions for the ASoC platform card, as the platform sound card is more
+>>>> or less the same between the two SoCs.  Back
+>>>> when I started this series, sm8350 was missing a bunch of dependent
+>>>> components, such as aDSP not being loaded, and missing platform sound card
+>>>> definition, so I had to define and enable those on my own, which required a
+>>>> slew of new DT nodes, hence why it wasn't as straight forward to include
+>>>> the DT definitions yet for sm8350.  Not thinking that this series would
+>>>> take as long as it did, I was planning on separating out the DT changes in
+>>>> a different series to enable offloading for the devices I have tested with.
+>>>> (sm8150, sm8250 and sm8350)
+>>>>
+>>>> There's still a pretty big chunk of dependencies missing from sm8350, so
+>>>> those would also be handled in the follow up DT submission.  For now, its a
+>>>> much bigger hurdle to get the main/functional changes in, and that was
+>>>> taking a significant amount of time from my end to manage.
+>>>>
+>>>> If you want, I can give you the changes I have offline to enable this for
+>>>> sm8350, since I haven't spent time formatting/prepping the changes for
+>>>> submission yet.
+>>>>
+>>>
+>>> Can you push it to a public branch somewhere (e.g. on CodeLinaro)? I was
+>>> talking to some people from the community about testing this on some of
+>>> the smartphones we have in upstream, so it wouldn't help if I just have
+>>> the changes privately.
+>>
+>> Which CLO project/branch did you want me to push it to?  Sorry, I haven't
+>> worked too much with the CLO open branches.  I have an account though.
+>>
+> 
+> Any project/branch is fine for me, I suggested CLO only because I
+> assumed you already have an account there.
+> 
+> You should be able to create a personal project and push it there. You
+> could also use the fork button on
+> https://git.codelinaro.org/linaro/linux/kernel/torvalds/linux to avoid
+> having to push the full history yourself. It should result in a project
+> similar to mine: https://git.codelinaro.org/stephan.gerhold/linux
+> 
+
+Can you access the following branch?
+https://git.codelinaro.org/clo/linux-kernel/kernel-qcom/-/commits/usb_audio_offload/?ref_type=heads
+
+Should have the DT change I'm using to verify.
+
+Thanks
+Wesley Cheng
 
