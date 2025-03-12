@@ -1,113 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-51095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D59FA5D759
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 08:34:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C81DBA5D7D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:07:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3A4D67A9B89
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 07:33:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82A6C16F629
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 08:07:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 556261EFFA6;
-	Wed, 12 Mar 2025 07:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF156230BC9;
+	Wed, 12 Mar 2025 08:07:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mpr83yjd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C841EFF93;
-	Wed, 12 Mar 2025 07:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1439422E40A;
+	Wed, 12 Mar 2025 08:07:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741764872; cv=none; b=UAedVKtnYQ7Z9IIDTyBOo39vdugLXyMXU/iEHZ0ef4CUiEDZCyT4/fvG+X7hbx5c5470KG26BMC2KrIhOb5rb9U93eOoJ91kUuxleVcfEDgd0QkwZa23LOxX9k9B1cdPKbqB1kdaOeGUqZD1SDA1txe3+IaL3/rlxFhHXBpsunQ=
+	t=1741766856; cv=none; b=qINyHxpHXYSl/vrdN3bqA/wXs0qHB7wfy/gDSLhDOyUPsYrmx/z/dmd1C+M1uem5ZgWA5Yoli84Jxk4XxuN2Wf5ENuU2jWtnoaBm6oBkWO1inn8QIphBEtXpb+pI6FIPysjOVn+yGwMAA33nOVzvMYWhJbI/XmfkQ9MNAEXbtHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741764872; c=relaxed/simple;
-	bh=OLTuU8F2AI5YTT87vjxQRcxdax0NuEjM2Mk6iK3m5K4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=pbYW7dRXf+joO4P274GpBShN4USMgr6ZnKDIh/0QpgzJmBEFKytwH5R0tyErE5pkSP7dAWUaC4gjQqMPp4Fz/FCSBeHSuYw3cnWlQhl7GFwgmhnAQI5ywUYEMlwbFK4nCqMV8MPyKfrjV5LXsb3eHJovaSDiDcWG6exqx+5RTPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost (unknown [124.16.138.129])
-	by APP-01 (Coremail) with SMTP id qwCowACXn9P9ONFn+Px8FA--.64272S2;
-	Wed, 12 Mar 2025 15:34:21 +0800 (CST)
-From: Chen Ni <nichen@iscas.ac.cn>
-To: jeff.hugo@oss.qualcomm.com,
-	quic_carlv@quicinc.com,
-	ogabbay@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Cc: Chen Ni <nichen@iscas.ac.cn>
-Subject: [PATCH] accel/qaic: Remove redundant 'flush_workqueue()' calls
-Date: Wed, 12 Mar 2025 15:34:04 +0800
-Message-Id: <20250312073404.1429992-1-nichen@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1741766856; c=relaxed/simple;
+	bh=X7WI9FTJ+ijs6Zp6BzrOyWw76KMqwJUF8T3ieWwiKg0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QmB7Cy0m4YQLpOYa+H9wRcUwWw1CT7NQBcyULQhU5Xq7esZnOH9LDW9zxVcw1wDPoNMXV1CXPoBc/n+zElSkzwTs4TX7u2yl38CD2lhPfSgKCoyEQ1tlWCWvF6XMXrADWckoptSQmtzHa/6nUs75xvdpkGdrYenNEv3jMmQashw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mpr83yjd; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BMHfA5009124;
+	Wed, 12 Mar 2025 08:07:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZmmnY2Vy5rJd5WK2YpvniHAGkdEady0IcPFK0XyvC8A=; b=mpr83yjd1JQBJ0uT
+	8BnQGmN7MNMCynPwB8zkURCI4mLFe/G5sNRmmKNI/DPBc9hlGbwwPNsqTSql6iV1
+	T0DNNv5N1bwjFBj8a1asqURMVYuVSCvilqmIfUar1DdxFhjM903980Gha541NA5a
+	8LBsm6d+KkEFSyoZEo65bUSTTJs7k/op0DJMJWxHYNS71PaY852wXaJNWrtcqQ4L
+	vT5asaVAOKL0fL6IMAXtwZdEK6M8p/8lcod5pTHN/46OftNgpizqB7+We9pEgYAd
+	GVOQdC7gwvhP8Z2IKjQ7l8wsY+fDE+nMvoUgZ8VTPuIyWRLB6qda5YQZiORaVTtZ
+	mj4xbg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2r9k50-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Mar 2025 08:07:25 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52C87OUp026380
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Mar 2025 08:07:24 GMT
+Received: from [10.216.38.182] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 12 Mar
+ 2025 01:07:19 -0700
+Message-ID: <5e4838e5-b5f1-7107-78b8-cfd9d5620e2e@quicinc.com>
+Date: Wed, 12 Mar 2025 13:37:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowACXn9P9ONFn+Px8FA--.64272S2
-X-Coremail-Antispam: 1UD129KBjvJXoWrKF1xZFy7tr1DuryrtFyxZrb_yoW8Jryfpa
-	95AF4rtrs3Jr4DC390kw4UWFyfuan0kFy7XrWIg34av3Z8Jr98X3W5KFW7tr95CF93Jr4q
-	kF4Yy39ava4UKF7anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvG14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
-	6r4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
-	CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
-	2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v26r4UJVWxJr1lOx8S6xCaFVCjc4AY6r
-	1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AK
-	xVWUAVWUtwCY02Avz4vE14v_GF4l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr
-	0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY
-	17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcV
-	C0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY
-	6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa
-	73UjIFyTuYvjfUYl1vDUUUU
-X-CM-SenderInfo: xqlfxv3q6l2u1dvotugofq/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 2/4] dt-bindings: media: qcom,sm8550-iris: document
+ SA8775p IRIS accelerator
+Content-Language: en-US
+To: Dmitry Baryshkov <lumag@kernel.org>
+CC: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
+ <20250311-dtbinding-v1-2-5c807d33f7ae@quicinc.com>
+ <ngzl7q3fli3bpuo5gjvppfrsnmlw6viy26ieqwhpfokgue2uxm@whomn2h6h3a7>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <ngzl7q3fli3bpuo5gjvppfrsnmlw6viy26ieqwhpfokgue2uxm@whomn2h6h3a7>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=D6NHKuRj c=1 sm=1 tr=0 ts=67d140bd cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=aMrZHK2ZkiMzTJC1X3MA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: jrP0J6cxO7BTmUO2dEJefqrV3_IC65S4
+X-Proofpoint-ORIG-GUID: jrP0J6cxO7BTmUO2dEJefqrV3_IC65S4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-12_03,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
+ adultscore=0 malwarescore=0 mlxlogscore=999 clxscore=1015 impostorscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503120053
 
-'destroy_workqueue()' already drains the queue before destroying it, so
-there is no need to flush it explicitly.
 
-Remove the redundant 'flush_workqueue()' calls.
+On 3/11/2025 9:01 PM, Dmitry Baryshkov wrote:
+> On Tue, Mar 11, 2025 at 05:33:54PM +0530, Vikash Garodia wrote:
+>> Document the IRIS video decoder and encoder accelerator found in the
+>> SA8775P platform. SA8775P has collapsible MX compared to SM8550.
+> 
+> How compatible is SA8775P to SM8550? Should it be using a fallback
+> compatible?
+They are quite compatible. At the moment i do not see any reason for not using
+fallback compatible. Later, if we want to distinguish the associated platform
+data for SA8775P and SM8550, the compatible can be made independent and use it
+in driver to associate with its own platform data ?
+> 
+> This kind of comes as a more generic question: is there anything like
+> 'IP version' or 'core version'? It would be really nice to determine the
+> 'baseline' SoCs and make other instances compatible with the baseline.
+It would be helpful if you can elaborate more on this with some drivers
+following it (if any) ?
 
-This was generated with coccinelle:
-
-@@
-expression E;
-@@
-- flush_workqueue(E);
-  destroy_workqueue(E);
-
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
----
- drivers/accel/qaic/qaic_debugfs.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/drivers/accel/qaic/qaic_debugfs.c b/drivers/accel/qaic/qaic_debugfs.c
-index ba0cf2f94732..a991b8198dc4 100644
---- a/drivers/accel/qaic/qaic_debugfs.c
-+++ b/drivers/accel/qaic/qaic_debugfs.c
-@@ -240,7 +240,6 @@ static int qaic_bootlog_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_d
- mhi_unprepare:
- 	mhi_unprepare_from_transfer(mhi_dev);
- destroy_workqueue:
--	flush_workqueue(qdev->bootlog_wq);
- 	destroy_workqueue(qdev->bootlog_wq);
- out:
- 	return ret;
-@@ -253,7 +252,6 @@ static void qaic_bootlog_mhi_remove(struct mhi_device *mhi_dev)
- 	qdev = dev_get_drvdata(&mhi_dev->dev);
- 
- 	mhi_unprepare_from_transfer(qdev->bootlog_ch);
--	flush_workqueue(qdev->bootlog_wq);
- 	destroy_workqueue(qdev->bootlog_wq);
- 	qdev->bootlog_ch = NULL;
- }
--- 
-2.25.1
-
+Regards,
+Vikash
+>>
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> ---
+>>  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+>> index 440a0d7cdfe19a1ccedefc207d96b26eed5d6630..20ac596638ba33f49cce9e42d70d31a8aaa7c36e 100644
+>> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+>> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+>> @@ -19,7 +19,9 @@ allOf:
+>>  
+>>  properties:
+>>    compatible:
+>> -    const: qcom,sm8550-iris
+>> +    enum:
+>> +      - qcom,sm8550-iris
+>> +      - qcom,sa8775p-iris
+>>  
+>>    power-domains:
+>>      maxItems: 4
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
