@@ -1,187 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-51130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2485A5DB08
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:03:53 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56258A5DB12
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:09:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D00577A88CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 11:02:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFBF03B8563
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 11:08:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FC3C23C8D5;
-	Wed, 12 Mar 2025 11:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E6F923E355;
+	Wed, 12 Mar 2025 11:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IOEZDBCW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="El9+EmJE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6051A22F3B0;
-	Wed, 12 Mar 2025 11:03:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5086423E23D;
+	Wed, 12 Mar 2025 11:08:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741777428; cv=none; b=ltCZMQG/ca1mBrlSzZi+7seFBjgNBluktaXmHVX56qm7X9nHdEaseSrhziDUI4UhtMZDY5kh5Qfq73bKt2Cizok/6lHnCPqJSGRJFAELg7unKIoL8TFCg4cBbMjpJT8A1lyTQDj2p6rctu+D7sDFcWQfZnqAOWSmXwBHP8PDVqc=
+	t=1741777741; cv=none; b=LmmOXRMZQr6eUywJ90NyDU0yw0pFJRPgTGwiUIQHOl4ZHe4UPuP9PL0Xfoksdv3w0jLVSWIR5/TKrgZAStuGMfhJFS+wzDY+lxwUMiOTQilqlYo0J03zEgNXiFWCB0O2b6Sq1z4/4a7lfLGk4HmMxDLfWfK9KilKCLBxZZHWZ/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741777428; c=relaxed/simple;
-	bh=7BGHVu8buHkE4R833HEw2gUiMEXqKOFjigGb4Dl6k4Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AYy4SW864tNhS2RLnAxRaAxJXcEuzDfATU1dNu2tVTdZk01PvtGBn6w2rSnsQVpUABU19MtkQjYTYE0nc82ryb087wOonkm+cE+UFCFlq8PcS7zqFuw+kCNEn5XjviVGtNg2I0exDKPzwglBqHNw8LMZiMKmZEW1mF9kBjwHcxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IOEZDBCW; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5e6f4b3ebe5so6206327a12.0;
-        Wed, 12 Mar 2025 04:03:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741777425; x=1742382225; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zTeV+0I3vnNHKkFv3a7WhNa9KvVKcxl8h2avxfzw1dA=;
-        b=IOEZDBCW7mSr0c46ZKdldS6xfbaQGGpS36Pb7LEm6C2ODSC4QOoFuT6fQC9fk3irv+
-         QWN5HIdKSlwKSOnPVwPoQGwYCrauwUHFNEIE4zvvXgx7cjfztJGgQK9SfxWz1gxbcIe3
-         mXrdqZhfg9p3PNaPzKVSD4G5Im5T6Oj397t142WSC6qnNGwgWd5ekd+CMkWN2Ht2Ifo9
-         UCbgza2/VDQHCbLFrp7gskYYSOl24LV72PcUEEw/ii5oIRedO8DJ4ZsfbgZYFjERPO30
-         e/8Lh/eX+50MxDS9fOFFnmLcL4ymtjjM27kdwZTnNw7rN9JdQ2Gc8V9hHPmevusxcEma
-         SXGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741777425; x=1742382225;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zTeV+0I3vnNHKkFv3a7WhNa9KvVKcxl8h2avxfzw1dA=;
-        b=jtqz7noEa17ma1pd1pexC6nk347JCNC9R7bFyDtPSZ9ZY55JIZ9KTzJzDHjiVe9Y8k
-         bD7beKTA79KhWFD7MFqR+OINoww0TAmf4GOe1DITdVfSK3pLMfpfbCc+s3LaPUp5mudA
-         xxncLqULI7JKDZZx7vJEqUQjQMxF14ZNsCrgoNs3njzpZlf+uaEgVu8YTvFuvPj2HnTj
-         fP5ws5CgbNBzAdv3tm2u8GEedT17Uvwb3Y5/C1Sx91MzkSmtisAIf+h5/AVmoNK+WlHf
-         rO91EC3OCemzQ/GyN0dWZbO6lKaPQiXZbg2qjrRdJyS8IRZ5CYbkDWHXphFZFMotaJUP
-         tWyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVpHWcxq+5b9933S7xf5VlYP16TTznti7kyBqFYSVO2WtQ1a/mpjeA79L+10yQePhvQYW9+oPjjIy/jJLQ3@vger.kernel.org, AJvYcCXU1z17Ur1JsKQzYfW8cowOaNswkXCbUh+50VMAq3PAaUzqJVW4vP+TcPiKr4FCkK2VEgFWx9BDTaiH@vger.kernel.org, AJvYcCXvIxv+Tca4R6kcpcIkbF5vrHMzcH/pyn51R5we2Uevvd2Il5F+38iTaf35Iyk0HNVky+yq8CzALXqSy+mJtQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUn3j7NzXZnpaY7eIiEi5XpVnd/Nm5Hxu5CP3dIvyqBEXgv5Rs
-	Ey8+vjts5ur3SZ1NgBavmF4g16Fi295se6N9YM0sWbNA9PFCnBki7dKhX5ohbQ/uce/WcgCnurd
-	ZDMq8csSsiPL9+Ip4U+G93uQG03o=
-X-Gm-Gg: ASbGncsPcKoP4GniHVC8WqNB7BZb1KQHG9TsYQhDNHdEd1zbv+qqitdQjvPu6vYIgRF
-	+CqdyrWDRM0w6xovCcDfySKvo4xFERNxe+qGZ1yCemC6KvYQbL8psvI/AV9NVW5T68WrPoVdPCe
-	5DjK7LF8OWKipAWfTJRqwEooY6gS8loLOyM3zFpcjF3oNaxOrZHIEv/1+qD2HAjFDmAsk=
-X-Google-Smtp-Source: AGHT+IFyHmRAQm91BYyBBXLOIkRea83M5cMTQa4BEO+uSdKcNofT32n0rJIAV2xBRKTdpv+ovpKL1xoJuhMVvzl4xgY=
-X-Received: by 2002:a17:907:82a0:b0:ac2:b3b3:9f1c with SMTP id
- a640c23a62f3a-ac2b3b3a186mr1028408966b.10.1741777424265; Wed, 12 Mar 2025
- 04:03:44 -0700 (PDT)
+	s=arc-20240116; t=1741777741; c=relaxed/simple;
+	bh=Ol88tGjQk2fHY5OIHsfsrf/9VqBV/CmCkQ8iDSCl8Vg=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=Q8+K4xkG9GsRs4ZnvKV/k395MG8Rgd4vNyLb7Cnpr3qj0Uvo/9lFhDHBpeGwpwVqmPOHClaiN+mWZvc17jQtkxkCnaA6O+uuxcne/H2YOT1b/JWWNFcN88T+GXVR3Ud8Xl5Z9KBZ4PFsg75odsMsgaX984CvKQpRXdXV1diWzW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=El9+EmJE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CAAf9h018494;
+	Wed, 12 Mar 2025 11:08:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YfTTSFIhmiy4elkuZVQ+KVYofiIlI+u5oaVMrWj83uw=; b=El9+EmJEsmFCtpSV
+	lg4AAnFmzxsglScqtUPOZFCtmGIHHgCyLuXlkWE8ua6zQzcR6dbBZnP7N13V1sPC
+	CVs+ryxH++sABCLyTFZj7TX6oLfg2h/x38KjGEDxrtCTxFoxNa4lwGFGDeLrzFZF
+	p582BqK30ZuHgbw2PsCKYUoTXHnM9kbpc2W14MDnpXqg7uMn4JYSz3h3Dpeh6U0k
+	el7Z8VxxBBJBPLB6EPcMR4VBtKCx9IxSH1GT7CtSxxHszBI9lZHIUV42eY3gK7lL
+	yKcDs4okP1PeyvKUeA35o26Xh30Xblo6ScBHZcx4KJceYh7EOQGC8Y7iBaa7Ks3i
+	7Ima9Q==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au50a4s7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Mar 2025 11:08:54 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52CB8rfD032440
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Mar 2025 11:08:53 GMT
+Received: from [10.216.15.23] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 12 Mar
+ 2025 04:08:46 -0700
+Message-ID: <18c65add-2d98-4b4d-a098-2a257bd1856b@quicinc.com>
+Date: Wed, 12 Mar 2025 16:38:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250311122445.3597100-1-quic_amakhija@quicinc.com>
- <20250311122445.3597100-10-quic_amakhija@quicinc.com> <6gdd6p3ca6w2gb2nbl6ydw4j7y2j5eflelbwntpc6ljztjuwzt@dqwafrtod5m5>
- <da9f80e6-bb4e-4568-aa2c-d70383b12e3a@quicinc.com>
-In-Reply-To: <da9f80e6-bb4e-4568-aa2c-d70383b12e3a@quicinc.com>
-From: Dmitry Baryshkov <dbaryshkov@gmail.com>
-Date: Wed, 12 Mar 2025 13:03:33 +0200
-X-Gm-Features: AQ5f1JrVPD0uoisr8Y0JnYXx8B23G9S5C4qXGU3l30zo3ipSTDnyL45hL0sz214
-Message-ID: <CALT56yP+UDF1YeotceqOevr_NTeGjDVw92NwtPDgRK6GvvkyHw@mail.gmail.com>
-Subject: Re: [PATCH v2 09/10] drm/bridge: anx7625: update bridge_ops and sink
- detect logic
-To: Ayushi Makhija <quic_amakhija@quicinc.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, robdclark@gmail.com, 
-	dmitry.baryshkov@linaro.org, sean@poorly.run, marijn.suijten@somainline.org, 
-	andersson@kernel.org, robh@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org, 
-	konradybcio@kernel.org, conor+dt@kernel.org, andrzej.hajda@intel.com, 
-	neil.armstrong@linaro.org, rfoss@kernel.org, 
-	Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se, jernej.skrabec@gmail.com, 
-	quic_abhinavk@quicinc.com, quic_rajeevny@quicinc.com, 
-	quic_vproddut@quicinc.com, quic_jesszhan@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: "Nirmesh Kumar Singh (Temp)" <quic_nkumarsi@quicinc.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: Add industrial mezzanine support for
+ qcs6490-rb3gen2
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <kernel@quicinc.com>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_akdwived@quicinc.com>, <quic_uchheda@quicinc.com>
+References: <20250122101424.1810844-1-quic_nkumarsi@quicinc.com>
+ <f4xffmfwkwrenulklmwzjjmdfdhcf5cwundyfen54e2codrmlj@htzjpvk5vopp>
+ <2acb758f-c1ff-426d-a363-befb8f97323f@quicinc.com>
+ <q4fyimr2wydbwb7x6mhzip2wsixifhd4okxe3noqxzn366oq7i@nkecmifs2y4f>
+Content-Language: en-US
+In-Reply-To: <q4fyimr2wydbwb7x6mhzip2wsixifhd4okxe3noqxzn366oq7i@nkecmifs2y4f>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WDGCpRszho-scuM6suC5D_WRbnM1IMQP
+X-Proofpoint-ORIG-GUID: WDGCpRszho-scuM6suC5D_WRbnM1IMQP
+X-Authority-Analysis: v=2.4 cv=a4ow9VSF c=1 sm=1 tr=0 ts=67d16b46 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=pdpMw43Hk2bYUvsZUcoA:9
+ a=QEXdDO2ut3YA:10 a=RVmHIydaz68A:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-12_04,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ clxscore=1015 spamscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 bulkscore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503120077
 
-On Wed, 12 Mar 2025 at 11:47, Ayushi Makhija <quic_amakhija@quicinc.com> wrote:
+
+On 1/23/2025 4:48 PM, Dmitry Baryshkov wrote:
+> On Thu, Jan 23, 2025 at 04:35:34PM +0530, Nirmesh Kumar Singh (Temp) wrote:
+>> On 1/23/2025 12:16 AM, Dmitry Baryshkov wrote:
+>>> On Wed, Jan 22, 2025 at 03:44:24PM +0530, Nirmesh Kumar Singh wrote:
+>>>> Add DTS support for Qualcomm qcs6490-rb3gen2 industrial mezzanine board.
+>>>>
+>>>> Signed-off-by: Sahil Chandna <quic_chandna@quicinc.com>
+>>>> Signed-off-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
+>>>>
+>>>> ---
+>>>> Changes in v3:
+>>>> - Fixed tpm pinctrl node label.
+>>>> - Addressed comments by Dmitry.
+>>> Which ones? Pleas be more specific in changelogs.
+>> Ack
+>>>> - Improved indentation/formatting.
+>>>> - Link to V2: https://lore.kernel.org/all/20250102190155.2593453-1-quic_nkumarsi@quicinc.com/
+>>>>
+>>>> Changes in V2:
+>>>> - Addressed comment by Konrad.
+>>>> - Validated dts bindings with dtb_checks suggested by Krzysztof.
+>>>> - Improved indentation/formatting.
+>>>> - Fixed bug encountered during testing.
+>>>> - Added dtb entry in makefile.
+>>>> - Link to V1: https://lore.kernel.org/all/20241206065156.2573-1-quic_chandna@quicinc.com/
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/Makefile             |  4 +++
+>>>>    .../qcs6490-rb3gen2-industrial-mezzanine.dtso | 35 +++++++++++++++++++
+>>>>    2 files changed, 39 insertions(+)
+>>>>    create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>>> index 6ca8db4b8afe..16ac008c58d2 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>>> @@ -111,6 +111,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
+>>>> +
+>>>> +qcs6490-rb3gen2-industrial-mezzanine-dtbs	:= qcs6490-rb3gen2.dtb qcs6490-rb3gen2-industrial-mezzanine.dtbo
+>>>> +
+>>>> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-industrial-mezzanine.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
+>>>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+>>>> new file mode 100644
+>>>> index 000000000000..1498f32bd069
+>>>> --- /dev/null
+>>>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+>>>> @@ -0,0 +1,35 @@
+>>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>>> +/*
+>>>> + * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
+>>>> +*/
+>>>> +
+>>>> +/dts-v1/;
+>>>> +/plugin/;
+>>>> +#include <dt-bindings/clock/qcom,gcc-sc7280.h>
+>>>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>>>> +
+>>>> +&pm7250b_gpios {
+>>>> +	tpm_spi_reset: tpm-spi-reset-state {
+>>>> +		pins = "gpio5";
+>>>> +		function = "normal";
+>>>> +		power-source = <1>;
+>>>> +		output-high;
+>>>> +		input-disable;
+>>>> +		bias-pull-up;
+>>>> +		qcom,drive-strength = <3>;
+>>>> +	};
+>>>> +};
+>>>> +
+>>>> +&spi11 {
+>>>> +	#address-cells = <1>;
+>>>> +	#size-cells = <0>;
+>>>> +	status = "okay";
+>>>> +
+>>>> +	st33htpm0: tpm@0 {
+>>>> +		compatible = "st,st33htpm-spi", "tcg,tpm_tis-spi";
+>>>> +		reg = <0>;
+>>>> +		spi-max-frequency = <20000000>;
+>>>> +		pinctrl-names = "default";
+>>>> +		pinctrl-0 = <&tpm_spi_reset>;
+>>> Missing reset-gpios property. Otherwise there is no point in specifying
+>>> the pinctrl.
+>> The community previously rejected the GPIO reset function in the TPM driver
+>> (tpm_tis_core.c). You can refer to the discussion [1].
+>>
+>>  From what I understand from the discussion in the patch, this decision was
+>> made to prevent software from executing an incorrect reset sequence, which
+>> could potentially reset the PCR banks of TPM chip.
+>>
+>> However, a pinctrl node is necessary to ensure the PMIC GPIO is in the
+>> correct state as required by the TPM chip.
+> No, pinctrl is not a replacement for GPIO calls. Please don't force GPIO
+> levels using pinctrl.
 >
-> On 3/11/2025 9:11 PM, Dmitry Baryshkov wrote:
-> > On Tue, Mar 11, 2025 at 05:54:44PM +0530, Ayushi Makhija wrote:
-> >> The anx7625_link_bridge() checks if a device is not a panel
-> >> bridge and add DRM_BRIDGE_OP_HPD and DRM_BRIDGE_OP_DETECT to
-> >> the bridge operations. However, on port 1 of the anx7625
-> >> bridge, any device added is always treated as a panel
-> >> bridge, preventing connector_detect function from being
-> >> called. To resolve this, instead of just checking if it is a
-> >> panel bridge, verify the type of panel bridge
-> >> whether it is a DisplayPort or eDP panel. If the panel
-> >> bridge is not of the eDP type, add DRM_BRIDGE_OP_HPD and
-> >> DRM_BRIDGE_OP_DETECT to the bridge operations.
-> >
-> > Are/were there any devices using anx7625, eDP panel _and_ not using the
-> > AUX bus? It would be better to use the precence of the 'aux' node to
-> > determine whether it is an eDP or a DP configuration.
-> >
-> >>
-> >> In the anx7625_sink_detect(), the device is checked to see
-> >> if it is a panel bridge, and it always sends a "connected"
-> >> status to the connector. When adding the DP port on port 1 of the
-> >> anx7625, it incorrectly treats it as a panel bridge and sends an
-> >> always "connected" status. Instead of checking the status on the
-> >> panel bridge, it's better to check the hpd_status for connectors
-> >> like DisplayPort. This way, it verifies the hpd_status variable
-> >> before sending the status to the connector.
-> >>
-> >> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-> >> ---
-> >>  drivers/gpu/drm/bridge/analogix/anx7625.c | 10 ++++------
-> >>  1 file changed, 4 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> >> index 764da1c1dc11..ad99ad19653f 100644
-> >> --- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-> >> +++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> >> @@ -1814,9 +1814,6 @@ static enum drm_connector_status anx7625_sink_detect(struct anx7625_data *ctx)
-> >>
-> >>      DRM_DEV_DEBUG_DRIVER(dev, "sink detect\n");
-> >>
-> >> -    if (ctx->pdata.panel_bridge)
-> >> -            return connector_status_connected;
-> >> -
-> >>      return ctx->hpd_status ? connector_status_connected :
-> >>                                   connector_status_disconnected;
-> >>  }
-> >> @@ -2608,9 +2605,10 @@ static int anx7625_link_bridge(struct drm_dp_aux *aux)
-> >>      platform->bridge.of_node = dev->of_node;
-> >>      if (!anx7625_of_panel_on_aux_bus(dev))
-> >>              platform->bridge.ops |= DRM_BRIDGE_OP_EDID;
-> >> -    if (!platform->pdata.panel_bridge)
-> >> -            platform->bridge.ops |= DRM_BRIDGE_OP_HPD |
-> >> -                                    DRM_BRIDGE_OP_DETECT;
-> >> +    if (!platform->pdata.panel_bridge ||
-> >> +        platform->pdata.panel_bridge->type != DRM_MODE_CONNECTOR_eDP) {
-> >> +            platform->bridge.ops |= DRM_BRIDGE_OP_HPD | DRM_BRIDGE_OP_DETECT;
-> >> +    }
+> Also, at least tpm-common.yaml defines reset-gpios. So declaring a GPIO
+> using that property is a proper course of actions.
 >
-> Hi Dmitry,
->
-> Thanks, for the review.
->
-> Yes, it is better to check the presence of the 'aux' node for eDP or DP configuration.
-> Will change it in next patch.
->
-> -       if (!platform->pdata.panel_bridge)
-> -               platform->bridge.ops |= DRM_BRIDGE_OP_HPD |
-> -                                       DRM_BRIDGE_OP_DETECT;
-> +       if (!platform->pdata.panel_bridge || !anx7625_of_panel_on_aux_bus(dev)) {
+> The discussion clearly stated: if the GPIO is under software control,
+> then it should be clear that PCRs do not work in such a system. Please
+> consider implementing that suggestion.
 
-This is incorrect, if I'm not mistaken, please doublecheck it. I'd
-suggest following msm_dp_display_get_connector_type() (feel free to
-extract that to a helper function).
+Thanks for the inputs! We re-worked our H/W to make the default GPIO 
+state to high
 
+which is required for this chip to work properly. I will re-send patch 
+removing the pinctrl
 
-> +               platform->bridge.ops |= DRM_BRIDGE_OP_HPD | DRM_BRIDGE_OP_DETECT;
-> +       }
->
-> Thanks,
-> Ayushi
+nodes, as it is not required with the re-worked H/W.
 
-
-
--- 
-With best wishes
-Dmitry
+>> [1] https://lore.kernel.org/lkml/20220407111849.5676-1-LinoSanfilippo@gmx.de/T/#m726d477dbce48c9e345e245f93d60f0aaa6f0994
+>>
+>> Thanks,
+>>
+>> Nirmesh
+>>
+>>>> +	};
+>>>> +};
+>>>> -- 
+>>>> 2.34.1
+>>>>
 
