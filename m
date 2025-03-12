@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-51114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F36F2A5D930
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 10:21:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB95AA5D932
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 10:21:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AD923B9078
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:20:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2F3E57A7A9E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 09:20:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AA3C23906B;
-	Wed, 12 Mar 2025 09:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF7DB23A997;
+	Wed, 12 Mar 2025 09:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="jBcSywxC"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="q+sOhdSq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA10323A9A2;
-	Wed, 12 Mar 2025 09:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E340238161;
+	Wed, 12 Mar 2025 09:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741771265; cv=none; b=WZwngebx8FLK/YmZnb5fd59kPjtS/E0xparAjB8vxfn0CS3rbmx+YdD1JoFnJ49YzyRPBaIwoKiRFWAflQN6VK7wBjn9fCjzjErZcLgBukqhuUHVZxJ/NUTfDR9ln+gyvk82u8JPtx8uyjsxVK4ZW7iq6JCmFbF9cmxrE+6ojTA=
+	t=1741771272; cv=none; b=Gl6dgfDRZZsR/Y6LJrgsjh+y/r11S/jQm6TtWpGpSnL6yvh4pDFHH6PQtLGXLvKJw17jEoxStfhGwihtg7l2vARNzs/i1s76CpuIfC664Q8Q4+ezEktr9vydUFCQoqus8jEc8woIUs/FIWPVH1mrwKGiysvEbL7u7wk6vpV//hI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741771265; c=relaxed/simple;
-	bh=dOZssBvmyupLhzaL5/4B+4uI6v7cl02DJv/MRpZ8BAw=;
+	s=arc-20240116; t=1741771272; c=relaxed/simple;
+	bh=aRXhXU6rwAlky36Z6GVgyGOh4ejDjIgKq6C2DO9zDrc=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=nZRyjzt7nQKeWNKqX1mUQZnqG8PgESiMT43GNex7QTE+LJTH8cGnP+DZNzGwvxw3XaesxvnIsXa3lmGNCV/hei07rFCWxqgWoMRtdzmd9JtGe2LMCVaqGtJ6uEjrXIu3TgPvcifD4DDh0sEFhnMmZMb72MzW7FUBEG15507kgCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=jBcSywxC; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=BpEPRbPQXl75HLbaUDr1VDQ3KGBg4f1Ed1qWYsp73vF91+7UM6nmQmlqIfYNv5639XmLdN5QkqE1BEC/WqCt6FJuzEV4rgKIjgxKFWy8vTUA2BnpOlazyz7RzeT2efptYyu7yNjddf5FF9GEC8NepZVXtyPEpTjIlm6bD7nfli4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=q+sOhdSq; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -37,21 +37,21 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=KNEx5jzwPvwr7ykDlaOKF6gqglD3Hpy85JFTNBLEoE0=; b=jBcSywxCqB/W8XhBRI64/ZCifq
-	/E7pDVm/9rG1Cpvnsgantc1dpBTFBrWYn3ANxeT+QhpW3qyMw+ctpcXtIF1aDkpX8gXwYFuKeebog
-	aK1XXzHiGeKOmoRb4BE5E7U+lvdjSGi9A/c0liJgX5EuUdjTE6Vd6f5udnpRI/wtW9YYYe8S24816
-	L9WeRPGM/qhUADHV1ZypzvrjURk3Mc6bJjWvHtWQZ+aZbd+redGf6rTAKIn11JmZPUVjSXB1q1hbe
-	uZXWmn4FX/0xOmB09NukpAYNIKBaY1W4RZBLubRe7xcjRRqUyk1zsn7V7CK6dVYZ7RnIYTp4qo9QW
-	y+/SYyGQ==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:39526 helo=rmk-PC.armlinux.org.uk)
+	bh=4S96UeyUjDKZ2gcPjL0631o3GuvsA+cY/IBcIb/qND4=; b=q+sOhdSqLe/dpNAUW0J4VXJK0a
+	3eXL/CVXt+wVgP9INLP7RhJUCzKtpJYrBdsVhV4BhPPYHsXnvJrwFW/hu9hc2Yoe379yvPDBof1vu
+	WZ1hYJwu8W8bhj+UXSG9qrS+E91+6HPa1B7oJHYtQ5dTm88H5hKEVuhTxBlNCotKZVASouBhBi6R4
+	uQR7au1BAQchwdhFVPcHFLy6Bhp9SjJzfvYvyOPiO1muPb1E0tUjKYRuEEMyLogR91IAyYwarRtIj
+	/4nHWx5AOHHgttnor5cMNVg2r1iY+x51BZIqgIA9FE4beWUglHxxWgNpmxMpLM81TvNWrwM02UYP2
+	y+R4LExA==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:39538 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1tsIGi-0005BT-2O;
-	Wed, 12 Mar 2025 09:20:52 +0000
+	id 1tsIGn-0005Bo-2S;
+	Wed, 12 Mar 2025 09:20:57 +0000
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.94.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1tsIGN-005uzZ-NG; Wed, 12 Mar 2025 09:20:31 +0000
+	id 1tsIGS-005uzf-QE; Wed, 12 Mar 2025 09:20:36 +0000
 In-Reply-To: <Z9FQjQZb0IMaQJ9H@shell.armlinux.org.uk>
 References: <Z9FQjQZb0IMaQJ9H@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -81,7 +81,7 @@ Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Samuel Holland <samuel@sholland.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next v2 2/9] net: stmmac: mediatek: remove
+Subject: [PATCH net-next v2 3/9] net: stmmac: anarion: remove
  of_get_phy_mode()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -92,56 +92,82 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1tsIGN-005uzZ-NG@rmk-PC.armlinux.org.uk>
+Message-Id: <E1tsIGS-005uzf-QE@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Wed, 12 Mar 2025 09:20:31 +0000
+Date: Wed, 12 Mar 2025 09:20:36 +0000
 
 devm_stmmac_probe_config_dt() already gets the PHY mode from firmware,
 which is stored in plat_dat->phy_interface. Therefore, we don't need to
 get it in platform code.
 
-Initialise priv_plat->phy_mode from plat->phy_interface
-inmediatek_dwmac_common_data().
+Rearrange the initialisation order so we can pass plat_dat into
+anarion_config_dt(), thereby providing plat_dat->phy_interface as
+necessary there.
 
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ .../ethernet/stmicro/stmmac/dwmac-anarion.c   | 21 ++++++++-----------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
-index c9636832a570..d178d5ddc7c7 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
-@@ -456,7 +456,6 @@ static int mediatek_dwmac_config_dt(struct mediatek_dwmac_plat_data *plat)
- {
- 	struct mac_delay_struct *mac_delay = &plat->mac_delay;
- 	u32 tx_delay_ps, rx_delay_ps;
--	int err;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-anarion.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-anarion.c
+index ef99ef3f1ab4..37fe7c288878 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-anarion.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-anarion.c
+@@ -59,10 +59,11 @@ static void anarion_gmac_exit(struct platform_device *pdev, void *priv)
+ 	gmac_write_reg(gmac, GMAC_RESET_CONTROL_REG, 1);
+ }
  
- 	plat->peri_regmap = syscon_regmap_lookup_by_phandle(plat->np, "mediatek,pericfg");
- 	if (IS_ERR(plat->peri_regmap)) {
-@@ -464,12 +463,6 @@ static int mediatek_dwmac_config_dt(struct mediatek_dwmac_plat_data *plat)
- 		return PTR_ERR(plat->peri_regmap);
+-static struct anarion_gmac *anarion_config_dt(struct platform_device *pdev)
++static struct anarion_gmac *
++anarion_config_dt(struct platform_device *pdev,
++		  struct plat_stmmacenet_data *plat_dat)
+ {
+ 	struct anarion_gmac *gmac;
+-	phy_interface_t phy_mode;
+ 	void __iomem *ctl_block;
+ 	int err;
+ 
+@@ -79,11 +80,7 @@ static struct anarion_gmac *anarion_config_dt(struct platform_device *pdev)
+ 
+ 	gmac->ctl_block = ctl_block;
+ 
+-	err = of_get_phy_mode(pdev->dev.of_node, &phy_mode);
+-	if (err)
+-		return ERR_PTR(err);
+-
+-	switch (phy_mode) {
++	switch (plat_dat->phy_interface) {
+ 	case PHY_INTERFACE_MODE_RGMII:
+ 		fallthrough;
+ 	case PHY_INTERFACE_MODE_RGMII_ID:
+@@ -93,7 +90,7 @@ static struct anarion_gmac *anarion_config_dt(struct platform_device *pdev)
+ 		break;
+ 	default:
+ 		dev_err(&pdev->dev, "Unsupported phy-mode (%d)\n",
+-			phy_mode);
++			plat_dat->phy_interface);
+ 		return ERR_PTR(-ENOTSUPP);
  	}
  
--	err = of_get_phy_mode(plat->np, &plat->phy_mode);
--	if (err) {
--		dev_err(plat->dev, "not find phy-mode\n");
--		return err;
--	}
--
- 	if (!of_property_read_u32(plat->np, "mediatek,tx-delay-ps", &tx_delay_ps)) {
- 		if (tx_delay_ps < plat->variant->tx_delay_max) {
- 			mac_delay->tx_delay = tx_delay_ps;
-@@ -587,6 +580,7 @@ static int mediatek_dwmac_common_data(struct platform_device *pdev,
- {
- 	int i;
+@@ -111,14 +108,14 @@ static int anarion_dwmac_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
  
-+	priv_plat->phy_mode = plat->phy_interface;
- 	plat->mac_interface = priv_plat->phy_mode;
- 	if (priv_plat->mac_wol)
- 		plat->flags &= ~STMMAC_FLAG_USE_PHY_WOL;
+-	gmac = anarion_config_dt(pdev);
+-	if (IS_ERR(gmac))
+-		return PTR_ERR(gmac);
+-
+ 	plat_dat = devm_stmmac_probe_config_dt(pdev, stmmac_res.mac);
+ 	if (IS_ERR(plat_dat))
+ 		return PTR_ERR(plat_dat);
+ 
++	gmac = anarion_config_dt(pdev, plat_dat);
++	if (IS_ERR(gmac))
++		return PTR_ERR(gmac);
++
+ 	plat_dat->init = anarion_gmac_init;
+ 	plat_dat->exit = anarion_gmac_exit;
+ 	anarion_gmac_init(pdev, gmac);
 -- 
 2.30.2
 
