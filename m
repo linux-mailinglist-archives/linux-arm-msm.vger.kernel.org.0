@@ -1,203 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-51162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E484FA5DDCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 14:19:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDDC0A5DDD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 14:22:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 24B971628D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 13:19:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61EF33A665E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 13:22:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C6AA23F38F;
-	Wed, 12 Mar 2025 13:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68BAB24291B;
+	Wed, 12 Mar 2025 13:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CvEuz8kA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zy1eqKe6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0331EB18C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 13:19:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C35D23FC40
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 13:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741785587; cv=none; b=GIIVvkFvpvoyDmznmC9xiLZzgGKuy2AS6usJE1rL2MHI9y7QEwcoahUVOE6DjOMVH+M7puXFdhMUF46Eh/+3KsFPhXhyv7GxqYbTZHbKdJGklvUaiPXKsPF4vFKjSY6qsjQx1a+yBXQUxJwwBQTEg6kpaSrLMoSyaEA7eLq2z6I=
+	t=1741785743; cv=none; b=PiwZvV94VsNGzxgn9joc5lACcl6EnCAKBRytOdJ8XO2FyvBCzim1dPqtSZQLXID2PEoUovhRsGmlMvLCR9H692PLjPdVMHjsTrOa1XPgGx0aNMblaFneapnUm7XtpjQtvnJFNQkVN2X7oJRkHZbdYhPWUS7zEPmGleJPz5TXp/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741785587; c=relaxed/simple;
-	bh=bOvM3Rb1c7XkWvdeF62rAy/ws7BeWUWiDQbJ7997piQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=EMsqRCJYFo6wtp7ueP4JI/LvoRH5shln6TWMyhJTp+ASXbHUw6N2I2bsn94/dWNXxJPJfIKpNftrg6RuDso8iMOw5AffRKu9/kSDp8c8+UP9yFQG4yDRGUlEXBBRzfpQyDvkvJRfgqVMANoOiwt6n2bGXbKdErWtRkC+C5hONsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CvEuz8kA; arc=none smtp.client-ip=209.85.208.53
+	s=arc-20240116; t=1741785743; c=relaxed/simple;
+	bh=9Hewtiu8JjbwogqT63eypvNEbvZAQwy6h+Jz1+bRl5k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NsxYujNjaiDBB9lBEF9dclRjlgAMFAQq3ZeF29kSYWrHRw2BwAC5MMVRwX2xxwu0K/wl29S0EgDcd+vGqWauPAPgxoA9oT6z+z3oPA2lSEHbj1NFGapjyryY4+aDv2ZDrRTFzpIagypR6uZNtEJmHIgVk6xpGdW7diYCwTMvS4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zy1eqKe6; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e6c18e2c7dso7017368a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 06:19:45 -0700 (PDT)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-224019ad9edso148685755ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 06:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741785584; x=1742390384; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TwOPRwvTyGZCimlRP4ylKx/o2Mk7nBeIZKavoovqttg=;
-        b=CvEuz8kASDgLAhMlcNIZMcz83jTRpDqAAzgyoZtyngJe7Pew3c1NrRJ6Lz75WJacq/
-         kwwabH2gSE0p3CbmR+zTwkLKdLDdcc8DXb/dLJ3dCCV7w4gvm8welOy8vIKsGANsJabH
-         M1xSXX1xXHeq8+iP/SbUhGg4pK97xTd7wbzfFi8UIp8l7nRXnYI8ghUf7TYVIzGTpSwM
-         TSBws/Xk2AM4d+/LTUJU6wl1c07y2NEnEVyhujFuXH9dRPqRI9eiiYLb4lTN7Z5JDpLW
-         8tR86DSunSOjagMRgyMp9k8bWLE+MhVDeYCDhihbqaWoKbTe8H17ig4A+a8iXUv3t7Mi
-         g/oQ==
+        d=linaro.org; s=google; t=1741785741; x=1742390541; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=s27ne428wojOwsBAshie2tilJzFTOz/pVe8QIl0k2F0=;
+        b=Zy1eqKe6vL3238nzqEhyniWfhzISzfYYXRTJ6Qdz7yAoaDs/Ld86gvOGJD11I7d8s3
+         ADAB40PZhvjD6zCyOl4TZGmRRfbOQIt3swFB+lDGeYus1vMJIOnljRmpJHp82Qh2D/G3
+         TpNHzb2bpkLw14n72Vpp/gZunFdMNA9qBfVSZgyaGTz0cw3vvTQSWFBSTIVZtlW2Vxv/
+         QBVS1dIJoUxLds15QUAxhhR+GG7Y9JzPyf3fUNmsHGjfSWmcGgc/Sgzw32ZRRAHrczhe
+         WndA5e90KQTdFHkV6deBqcWC0UJyzPd6cgKoUE4xX+Ap2zieowwNLpcIU9RQq/ZxwRjC
+         Evjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741785584; x=1742390384;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1741785741; x=1742390541;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TwOPRwvTyGZCimlRP4ylKx/o2Mk7nBeIZKavoovqttg=;
-        b=Bfb1ggIzEhv/BI00Lp6grFBGxTJ2J+WK9zR42BbIYEaxp+pV+nygEy+D07p7yHImtG
-         at0gUYqKiBFogppUKBADmp+ohaSZY/YCzLofwCxJaEkDsgW6XG7De8Egrvm/J5zRGi1s
-         WCzbPcwXhkVGDTuVuv0J5oIXh/7CEGR8/nKDYtmjvlnmBRhrcYj/HqKD0zSk3DZUnVl0
-         zPVoVT5PbV3Iz+JUiSRbmZeVPx2I6K+cIq/C8XqCZOIk9QI0OPGPreh2Yca2FUUalVdL
-         aBYhKgQtAhYrAs1wLaWm1lh6KoMOjxEDYW1SPm1JvCAsgnk67ws0k4cbpi7Gojcn+pom
-         9+Xg==
-X-Forwarded-Encrypted: i=1; AJvYcCXO3UlLAq6X9T4IP+1oNup5eUGuqn7uXEDWzz5cdJ0Fcqh4cAeaRLJaXbnvs5feaVJh304Jj7VrK4oWFVAQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YyoXpERmIeptpEZX7/Np/grBulrb7zB/R24DGzbWLIVeivf21xo
-	l77TbCIBgFrbfNkMrLZa/vWDDpoVN+3IvR1sPeH0VT83ZLih1Lxf856WRnPhA6k=
-X-Gm-Gg: ASbGnctl2EfQxtM0of39Vic71HjXa+nG4itWWlsLEr+Yxn9BWyBoVKOPVKZwl54STrf
-	lUIqX5C9y7n9R+V1/6cQdFM6N8Qpj/kyUT4rV4jI3BJAUDusNWlhoo17YvFCJGKV4Gu1IAyLXWf
-	fo7qItanT7cZGEDTq/Z9F57eOZRIBdyPT0j2gxsadTzI0D1HNleHwhthSZJthA5XZA8XrhbhzFX
-	ry52zVtZuRyyc4uWKh/IjQra6tbaxt47vH1dTAWe0+T6URoS/o7pLoHfxBc9xrFVNwWQFsKjY0Y
-	lk0SU/dCw4AOugrTiJ4QuFYvWkre49IdjjQs5mSIHjSujqQeZzN8qIhFuko=
-X-Google-Smtp-Source: AGHT+IFzsh4BD3ATv/xGrDU3lT987ULOwDI2KQNLC/6p9B+kW/K648uP7PICWdPatgLjkwI5X/NRIw==
-X-Received: by 2002:a17:907:9490:b0:ab7:9df1:e562 with SMTP id a640c23a62f3a-ac252fe7196mr2436981766b.48.1741785583831;
-        Wed, 12 Mar 2025 06:19:43 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:f2c4:b081:2e8a:cec5])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac2773e8641sm735182466b.165.2025.03.12.06.19.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 06:19:43 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Wed, 12 Mar 2025 14:19:27 +0100
-Subject: [PATCH] pinctrl: qcom: Clear latched interrupt status when
- changing IRQ type
+        bh=s27ne428wojOwsBAshie2tilJzFTOz/pVe8QIl0k2F0=;
+        b=CpO2Lmw7nOwO2q+OfoqT+b8ACVwBWWdDu6xiPAhqumybuo+NOPCgja3rGW+XeaX8n5
+         EbksBEfkBO/S8oL48wKiJytcRhIzYmw7FFTry8/9wKBF88EZUSJfbL6j27eIMxW+nk6m
+         OO3ALLMHPRl03tL0lOWw0235O/ruG7f3yeLuPs4b/HqvpbJ45dqLLhfihqfxOMv4HG8a
+         Ve7iqshJAg1dT4xVaaqakUJzdbgvdrTRLoxLAmW5AAnh2uMqcp0wB5vCkQZFGJMWl8af
+         zddeUAyLVHpMVoT/VFkxO5vESdkbW0BAcOKYajnjlmIDIuHlsB7s9UiHl4XiTSCHok3n
+         4fbw==
+X-Forwarded-Encrypted: i=1; AJvYcCV/CrOfaUqWdqZJnE/vz03d4JXxV2L+t4fmxCwa77v5HiKPPTaANjwAtT98enp6nmDS3ywXQYRoeKPAjKJU@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5jKtI0IeA/w+rSnyokajmaE6MT5EtPnKzz//1uEyzEwCWvLwB
+	T8euyhMdoECfVoOJ2lZfmCIoO7AlweEs8bzhaxvy/mvSuSoAmZwhN1oJ9KvEg0iQHeKmTCwHAJN
+	XHUwz4hTYh1RgXLLOMVKBXWsHl/J0h2FZIqQMLw==
+X-Gm-Gg: ASbGncvxqk34wNcKuM7iPNqAqVolMLPSAWb0TgxtTc2X3XyC2ZCphipogPHINuDLwCp
+	blZZWdUQ4L2tB7+MDjS2zx41lcFCMwT0KmGFyqfovRKoQ70PNBOwsGT7QEqeHf5MzfUTg46zGb+
+	JA+Sjeb9pdkghBW0IKZvgAwlEfRwEFyFw4FsR+eA==
+X-Google-Smtp-Source: AGHT+IGmt/3UktMaOMFJgApftv3nZ067gpwV3LHvs4wr2QCvCVRTWlevRuRQpnJ3GdbEdKToZ/jiLjTzfEOKYcYZ6Lk=
+X-Received: by 2002:a05:6a00:987:b0:736:4830:68a6 with SMTP id
+ d2e1a72fcca58-736aa9b3cb0mr30689940b3a.4.1741785740656; Wed, 12 Mar 2025
+ 06:22:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250312-pinctrl-msm-type-latch-v1-1-ce87c561d3d7@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAN6J0WcC/x3MQQqAIBBA0avErBtQo8KuEi1EpxooE5UoorsnL
- d/i/wcSRaYEQ/VApJMTH75A1hXY1fiFkF0xKKFa0UiJgb3NccM97ZjvQLiZbFfshNaGHPVOKyh
- xiDTz9Y/H6X0/npgpj2gAAAA=
-X-Change-ID: 20250311-pinctrl-msm-type-latch-6099aede7d92
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Douglas Anderson <dianders@chromium.org>, 
- Maulik Shah <quic_mkshah@quicinc.com>, Stephen Boyd <swboyd@chromium.org>, 
- linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
- Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
+References: <20250310090407.2069489-1-quic_jiegan@quicinc.com>
+In-Reply-To: <20250310090407.2069489-1-quic_jiegan@quicinc.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Wed, 12 Mar 2025 13:22:09 +0000
+X-Gm-Features: AQ5f1JoVaTUjPnEeh2tsJVsCs5mqAeippvAwDr6IKbNgE69l9whq43Fk1D-kCtg
+Message-ID: <CAJ9a7Vj=Ni_o94u1B+oouv0GD5DVmST=N31-hsN=SPSbaoqO_Q@mail.gmail.com>
+Subject: Re: [PATCH v1 0/4] coresight: ctcu: Enable byte-cntr function for TMC ETR
+To: Jie Gan <quic_jiegan@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Tingwei Zhang <quic_tingweiz@quicinc.com>, Jinlong Mao <quic_jinlmao@quicinc.com>, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
+Content-Type: text/plain; charset="UTF-8"
 
-When submitting the TLMM test driver, Bjorn reported that some of the test
-cases are failing for GPIOs that not are backed by PDC (i.e. "non-wakeup"
-GPIOs that are handled directly in pinctrl-msm). Basically, lingering
-latched interrupt state is still being delivered at IRQ request time, e.g.:
+Hi,
 
-  ok 1 tlmm_test_silent_rising
-  tlmm_test_silent_falling: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
-  Expected atomic_read(&priv->intr_count) == 0, but
-      atomic_read(&priv->intr_count) == 1 (0x1)
-  not ok 2 tlmm_test_silent_falling
-  tlmm_test_silent_low: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
-  Expected atomic_read(&priv->intr_count) == 0, but
-      atomic_read(&priv->intr_count) == 1 (0x1)
-  not ok 3 tlmm_test_silent_low
-  ok 4 tlmm_test_silent_high
+On Mon, 10 Mar 2025 at 09:05, Jie Gan <quic_jiegan@quicinc.com> wrote:
+>
+> From: Jie Gan <jie.gan@oss.qualcomm.com>
+>
+> The byte-cntr function provided by the CTCU device is used to transfer data
+> from the ETR buffer to the userspace. An interrupt is tiggered if the data
+> size exceeds the threshold set in the BYTECNTRVAL register. The interrupt
+> handler counts the number of triggered interruptions and the read function
+> will read the data from the ETR buffer if the IRQ count is greater than 0.
+> Each successful read process will decrement the IRQ count by 1.
+>
+> The byte cntr function will start when the device node is opened for reading,
+> and the IRQ count will reset when the byte cntr function has stopped. When
+> the file node is opened, the w_offset of the ETR buffer will be read and
+> stored in byte_cntr_data, serving as the original r_offset (indicating
+> where reading starts) for the byte counter function.
+>
+> The work queue for the read operation will wake up once when ETR is stopped,
+> ensuring that the remaining data in the ETR buffer has been flushed based on
+> the w_offset read at the time of stopping.
+>
+> The following shell commands write threshold to BYTECNTRVAL registers.
+>
+> Only enable byte-cntr for ETR0:
+> echo 0x10000 > /sys/devices/platform/soc@0/4001000.ctcu/ctcu0/byte_cntr_val
+>
+> Enable byte-cntr for both ETR0 and ETR1(support both hex and decimal values):
+> echo 0x10000 4096 > /sys/devices/platform/soc@0/4001000.ctcu/ctcu0/byte_cntr_val
+>
+> Setting the BYTECNTRVAL registers to 0 disables the byte-cntr function.
+> Disable byte-cntr for ETR0:
+> echo 0 > /sys/devices/platform/soc@0/4001000.ctcu/ctcu0/byte_cntr_val
+>
+> Disable byte-cntr for both ETR0 and ETR1:
+> echo 0 0 > /sys/devices/platform/soc@0/4001000.ctcu/ctcu0/byte_cntr_val
+>
+> There is a minimum threshold to prevent generating too many interrupts.
+> The minimum threshold is 4096 bytes. The write process will fail if user try
+> to set the BYTECNTRVAL registers to a value less than 4096 bytes(except
+> for 0).
+>
+> Finally, the user can read data from the ETR buffer through the byte-cntr file
+> nodes located under /dev, for example reads data from the ETR0 buffer:
+> cat /dev/byte-cntr0
+>
+> Way to enable and start byte-cntr for ETR0:
+> echo 0x10000 > /sys/devices/platform/soc@0/4001000.ctcu/ctcu0/byte_cntr_val
+> echo 1 > /sys/bus/coresight/devices/tmc_etr0/enable_sink
+> echo 1 > /sys/bus/coresight/devices/etm0/enable_source
+> cat /dev/byte-cntr0
+>
 
-Whether to report interrupts that came in while the IRQ was unclaimed
-doesn't seem to be well-defined in the Linux IRQ API. However, looking
-closer at these specific cases, we're actually reporting events that do not
-match the interrupt type requested by the driver:
+There is a significant issue with attempting to drain an ETR buffer
+while it is live in the way you appear to be doing.
 
- 1. After "ok 1 tlmm_test_silent_rising", the GPIO is in low state and
-    configured for IRQF_TRIGGER_RISING.
+You have no way of knowing if the TMC hardware write pointer wraps and
+overtakes the point where you are currently reading. This could cause
+data corruption as TMC writes as you are reading, or contention for
+the buffer that affects the TMC write.
 
- 2. (a) In preparation for "tlmm_test_silent_falling", the GPIO is switched
-        to high state. The rising interrupt gets latched.
-    (b) The GPIO is re-configured for IRQF_TRIGGER_FALLING, but the latched
-        interrupt isn't cleared.
-    (c) The IRQ handler is called for the latched interrupt, but there
-        wasn't any falling edge.
+Even if those two events do not occur, then the trace capture sequence
+is corrupted.
 
- 3. (a) For "tlmm_test_silent_low", the GPIO remains in high state.
-    (b) The GPIO is re-configured for IRQF_TRIGGER_LOW. This seems to
-        result in a phantom interrupt that gets latched.
-    (c) The IRQ handler is called for the latched interrupt, but the GPIO
-        isn't in low state.
+Take a simple example - suppose we split the buffer into 4 blocks of
+trace, which are filled by the ETR
 
- 4. (a) For "tlmm_test_silent_high", the GPIO is switched to low state.
-    (b) This doesn't result in a latched interrupt, because RAW_STATUS_EN
-        was cleared when masking the level-triggered interrupt.
+buffer = 1, 2, 3, 4
 
-Fix this by clearing the interrupt state whenever making any changes to the
-interrupt configuration. This includes previously disabled interrupts, but
-also any changes to interrupt polarity or detection type.
+Now you suppose you have read 1 & 2 into your userspace buffer / file.
 
-With this change, all 16 test cases are now passing for the non-wakeup
-GPIOs in the TLMM.
+file = 1, 2
 
-Cc: stable@vger.kernel.org
-Fixes: cf9d052aa600 ("pinctrl: qcom: Don't clear pending interrupts when enabling")
-Reported-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Closes: https://lore.kernel.org/r/20250227-tlmm-test-v1-1-d18877b4a5db@oss.qualcomm.com/
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-msm.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+If there is now some system event that prevents your userspace code
+from running for a while, then it is possible that the ETR continues,
+wraps and the buffer is now
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 47daa47153c970190b0d469dc8d245b3cbeace5e..82f0cc43bbf4f4d24f078af2d0a515d3a03b961a 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1045,8 +1045,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 	const struct msm_pingroup *g;
- 	u32 intr_target_mask = GENMASK(2, 0);
- 	unsigned long flags;
--	bool was_enabled;
--	u32 val;
-+	u32 val, oldval;
- 
- 	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
- 		set_bit(d->hwirq, pctrl->dual_edge_irqs);
-@@ -1108,8 +1107,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 	 * internal circuitry of TLMM, toggling the RAW_STATUS
- 	 * could cause the INTR_STATUS to be set for EDGE interrupts.
- 	 */
--	val = msm_readl_intr_cfg(pctrl, g);
--	was_enabled = val & BIT(g->intr_raw_status_bit);
-+	val = oldval = msm_readl_intr_cfg(pctrl, g);
- 	val |= BIT(g->intr_raw_status_bit);
- 	if (g->intr_detection_width == 2) {
- 		val &= ~(3 << g->intr_detection_bit);
-@@ -1162,9 +1160,11 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 	/*
- 	 * The first time we set RAW_STATUS_EN it could trigger an interrupt.
- 	 * Clear the interrupt.  This is safe because we have
--	 * IRQCHIP_SET_TYPE_MASKED.
-+	 * IRQCHIP_SET_TYPE_MASKED. When changing the interrupt type, we could
-+	 * also still have a non-matching interrupt latched, so clear whenever
-+	 * making changes to the interrupt configuration.
- 	 */
--	if (!was_enabled)
-+	if (val != oldval)
- 		msm_ack_intr_status(pctrl, g);
- 
- 	if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
+buffer = 5, 6, 7, 4
 
----
-base-commit: e058c5f49ceff38bf1579a679a5ca20842718579
-change-id: 20250311-pinctrl-msm-type-latch-6099aede7d92
+Your next two reads will be 7, 4
 
-Best regards,
+file = 1, 2, 7, 4
+
+This trace is now corrupt and will cause decode errors. There is no
+way for the decoder to determine that the interface between blocks 2 &
+7 is not correct. If you are fortunate then this issue will cause an
+actual explicit decode error, if you are less fortunate then decode
+will continue but in fact be inaccurate, with no obvious way to detect
+the inaccuracy.
+
+We encountered this problem early in the development of the perf data
+collection. Even though perf was stopping the trace to copy the
+hardware buffer, it would concatenate unrelated trace blocks into the
+perf userspace buffer, which initially caused decoding errors. This is
+now mitigated in perf by marking boundaries and recording indexes of
+the boundaries, so the tool can reset the decoder at the start of non
+contiguous blocks.
+
+If you do not stop the TMC when draining the ETR buffer, you have no
+way of determining if this has occurred.
+
+Clearly using large buffers, split into smaller blocks can mitigate
+the possibility of a wrap in this way - but never eliminate it,
+especially given the extreme rate that trace data can be generated.
+
+Regards
+
+Mike
+
+
+> Jie Gan (4):
+>   coresight: tmc: Introduce new APIs to get the RWP offset of ETR buffer
+>   dt-bindings: arm: Add an interrupt property for Coresight CTCU
+>   coresight: ctcu: Enable byte-cntr for TMC ETR devices
+>   arm64: dts: qcom: sa8775p: Add interrupts to CTCU device
+>
+>  .../bindings/arm/qcom,coresight-ctcu.yaml     |  17 +
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |   5 +
+>  drivers/hwtracing/coresight/Makefile          |   2 +-
+>  .../coresight/coresight-ctcu-byte-cntr.c      | 339 ++++++++++++++++++
+>  .../hwtracing/coresight/coresight-ctcu-core.c |  96 ++++-
+>  drivers/hwtracing/coresight/coresight-ctcu.h  |  59 ++-
+>  .../hwtracing/coresight/coresight-tmc-etr.c   |  45 ++-
+>  drivers/hwtracing/coresight/coresight-tmc.h   |   3 +
+>  8 files changed, 556 insertions(+), 10 deletions(-)
+>  create mode 100644 drivers/hwtracing/coresight/coresight-ctcu-byte-cntr.c
+>
+> --
+> 2.34.1
+>
+
+
 -- 
-Stephan Gerhold <stephan.gerhold@linaro.org>
-
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
