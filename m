@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-51161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82FCAA5DDB5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 14:16:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E484FA5DDCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 14:19:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 843BA168287
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 13:16:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 24B971628D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 13:19:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7386024EF9A;
-	Wed, 12 Mar 2025 13:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C6AA23F38F;
+	Wed, 12 Mar 2025 13:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JyeQ9ipD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CvEuz8kA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A784924A052
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 13:14:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0331EB18C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 13:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741785275; cv=none; b=mkSMMCkyZJchX+Tdb2tv1xpEFoayQTUlnWo6xPkp8ROde8io1Xhdjyr4rWekpqjyLWjgbQy0aXa1YiPUqowIX7VvX5hbDiTAF09MswbsCjHpBLkbeofI6JBrwQbRrzzVQrYUm2XoA1z4Wryb/pSYV49F7JcEESmvM0Ekl39RmGs=
+	t=1741785587; cv=none; b=GIIVvkFvpvoyDmznmC9xiLZzgGKuy2AS6usJE1rL2MHI9y7QEwcoahUVOE6DjOMVH+M7puXFdhMUF46Eh/+3KsFPhXhyv7GxqYbTZHbKdJGklvUaiPXKsPF4vFKjSY6qsjQx1a+yBXQUxJwwBQTEg6kpaSrLMoSyaEA7eLq2z6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741785275; c=relaxed/simple;
-	bh=nVhLu0AiCCxQH/soBCHuVFIETyl7UMc6C9vhLI8S8To=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uZTKQvbPEwpgUTYPeSOwISFGa9k2NX59LwHMnU2+IVv1lc7GYi3aYgRYttkV+tjcFU8SXXIPRQF7gMzXizMnOO3apubHG94VHD75GWMB6BwBPdGA1huV2LHoXc0Afsl9C/gwE6VnCsjpdWU3NNtj7hjF93NgFMy9DLgq3ew65Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JyeQ9ipD; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1741785587; c=relaxed/simple;
+	bh=bOvM3Rb1c7XkWvdeF62rAy/ws7BeWUWiDQbJ7997piQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=EMsqRCJYFo6wtp7ueP4JI/LvoRH5shln6TWMyhJTp+ASXbHUw6N2I2bsn94/dWNXxJPJfIKpNftrg6RuDso8iMOw5AffRKu9/kSDp8c8+UP9yFQG4yDRGUlEXBBRzfpQyDvkvJRfgqVMANoOiwt6n2bGXbKdErWtRkC+C5hONsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CvEuz8kA; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43ce4e47a85so5168855e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 06:14:32 -0700 (PDT)
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e6c18e2c7dso7017368a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 06:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741785271; x=1742390071; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DjLNng74rhxdSjD2x2QVGFVe11P7mYgAEe28w7w2n8s=;
-        b=JyeQ9ipD/n6d0mbr+URAaqyLKLaN0x0XiEE5JF4/crS90y49JlhjVayJsx23mJuNN/
-         YfZFBq7tSNRY/2hp4b+sXoQKmsuyAkG4gX/d3x2CxIumuzJtZ4KPrP43/5BgZD/pgji2
-         +azQ+AmbriK2cWxoEW0zECuKkzWVSA9dLNmnRPzleGVs7cIsx1Cgw6UzrE6bu/feoMhw
-         0FJtK7xD5aEmvyMngS7CptnFkSsdNJ5U/CAzwOi8BGA2rH42O75tRmiiV4010bO68M+1
-         8YlI+S4NWZqWwE2gSw4DE1md7ppzWluSfdIY0DmSbFgMleLQOQe4mdpmg712MoCxu0Hm
-         8YvQ==
+        d=linaro.org; s=google; t=1741785584; x=1742390384; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TwOPRwvTyGZCimlRP4ylKx/o2Mk7nBeIZKavoovqttg=;
+        b=CvEuz8kASDgLAhMlcNIZMcz83jTRpDqAAzgyoZtyngJe7Pew3c1NrRJ6Lz75WJacq/
+         kwwabH2gSE0p3CbmR+zTwkLKdLDdcc8DXb/dLJ3dCCV7w4gvm8welOy8vIKsGANsJabH
+         M1xSXX1xXHeq8+iP/SbUhGg4pK97xTd7wbzfFi8UIp8l7nRXnYI8ghUf7TYVIzGTpSwM
+         TSBws/Xk2AM4d+/LTUJU6wl1c07y2NEnEVyhujFuXH9dRPqRI9eiiYLb4lTN7Z5JDpLW
+         8tR86DSunSOjagMRgyMp9k8bWLE+MhVDeYCDhihbqaWoKbTe8H17ig4A+a8iXUv3t7Mi
+         g/oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741785271; x=1742390071;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DjLNng74rhxdSjD2x2QVGFVe11P7mYgAEe28w7w2n8s=;
-        b=h2d/8RRKPt31aX/GVXKYMt24el65gOyo2yMc6tWdXOIJrQwJPdxNTOc3P+aoWD7C1Q
-         XKhWAw5eOAKB6KYOSv460/mQnHCBZwxCqLaBGtKVk2387hSjxAAUH5xbUTfm+fL/lB3b
-         eXLOOpUsHdbA8eafcr6ykqRc5czAhB0U80gjZ2NZsz4+wqmi7sylOpUNOyNeRZkSC/Y0
-         Qd3QeHZ+NKbNy6PeZEygjEtiQxTrmWSgWtH2OB4/WGxhHjTal9Irlq3Uu0z08dczEy18
-         C+Ri8Ea/0Dg+TkrN5Ztc0lH+EG6gZw6khb/ogXFGv6jNbY7quU/mZpHMy+t4/M7OIEIl
-         /lOg==
-X-Gm-Message-State: AOJu0YwmL9WMNzUHGuJ8OxvIJVmkbBLe+uozft0aFy1pu5Zw9+Vn5OeH
-	UBeAiGc0k+Vac157T8p8BIwrlFI3vUbd4sVD3TF8ZQ6op7tPzhVcm3ZUDkND4DY=
-X-Gm-Gg: ASbGncvL6e7wA5HeRsGXq1dqtsHxbhJYeTiwnMzADtg05zipfHI5MVVYtFR+awKJrcv
-	EgKxKs878qLDbSXjtXQShV+PML9XBoWwLmGkq2mB4UibkWD6jO6kWpmnHZbd2jm47ZYIj1yQng4
-	3rY8Lrx1Gp6GhRLiIGL2/SMwhiAsZtNT8HAGPJfHfYJkiqxpqfqBYKQAzGVrjwDu0C0OGIcrkuG
-	E7prsSOqTnvnLuDq/GtLAbdYBIIeML52SoMKStgrRx7KGxbfrTdOXZdztjA1MqO07D82S6sk7qK
-	CLbYoteVomPKHHk8nSIosThNtwS0h89HNdNnnH7vE/fflc0nGcuaaBFC4yZOAlvqpOvnDw==
-X-Google-Smtp-Source: AGHT+IFcSsyLGNx3jAp/L9UhztSEsOPv+d8/sK/Tt11tO+NPvboilTmw+z2ZYcBHFz91ri7g18BT2Q==
-X-Received: by 2002:a05:600c:3b13:b0:439:9595:c8f4 with SMTP id 5b1f17b1804b1-43d01b8532bmr32868255e9.0.1741785270948;
-        Wed, 12 Mar 2025 06:14:30 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.198.86])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d0a8c5cb4sm20966745e9.25.2025.03.12.06.14.29
+        d=1e100.net; s=20230601; t=1741785584; x=1742390384;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TwOPRwvTyGZCimlRP4ylKx/o2Mk7nBeIZKavoovqttg=;
+        b=Bfb1ggIzEhv/BI00Lp6grFBGxTJ2J+WK9zR42BbIYEaxp+pV+nygEy+D07p7yHImtG
+         at0gUYqKiBFogppUKBADmp+ohaSZY/YCzLofwCxJaEkDsgW6XG7De8Egrvm/J5zRGi1s
+         WCzbPcwXhkVGDTuVuv0J5oIXh/7CEGR8/nKDYtmjvlnmBRhrcYj/HqKD0zSk3DZUnVl0
+         zPVoVT5PbV3Iz+JUiSRbmZeVPx2I6K+cIq/C8XqCZOIk9QI0OPGPreh2Yca2FUUalVdL
+         aBYhKgQtAhYrAs1wLaWm1lh6KoMOjxEDYW1SPm1JvCAsgnk67ws0k4cbpi7Gojcn+pom
+         9+Xg==
+X-Forwarded-Encrypted: i=1; AJvYcCXO3UlLAq6X9T4IP+1oNup5eUGuqn7uXEDWzz5cdJ0Fcqh4cAeaRLJaXbnvs5feaVJh304Jj7VrK4oWFVAQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoXpERmIeptpEZX7/Np/grBulrb7zB/R24DGzbWLIVeivf21xo
+	l77TbCIBgFrbfNkMrLZa/vWDDpoVN+3IvR1sPeH0VT83ZLih1Lxf856WRnPhA6k=
+X-Gm-Gg: ASbGnctl2EfQxtM0of39Vic71HjXa+nG4itWWlsLEr+Yxn9BWyBoVKOPVKZwl54STrf
+	lUIqX5C9y7n9R+V1/6cQdFM6N8Qpj/kyUT4rV4jI3BJAUDusNWlhoo17YvFCJGKV4Gu1IAyLXWf
+	fo7qItanT7cZGEDTq/Z9F57eOZRIBdyPT0j2gxsadTzI0D1HNleHwhthSZJthA5XZA8XrhbhzFX
+	ry52zVtZuRyyc4uWKh/IjQra6tbaxt47vH1dTAWe0+T6URoS/o7pLoHfxBc9xrFVNwWQFsKjY0Y
+	lk0SU/dCw4AOugrTiJ4QuFYvWkre49IdjjQs5mSIHjSujqQeZzN8qIhFuko=
+X-Google-Smtp-Source: AGHT+IFzsh4BD3ATv/xGrDU3lT987ULOwDI2KQNLC/6p9B+kW/K648uP7PICWdPatgLjkwI5X/NRIw==
+X-Received: by 2002:a17:907:9490:b0:ab7:9df1:e562 with SMTP id a640c23a62f3a-ac252fe7196mr2436981766b.48.1741785583831;
+        Wed, 12 Mar 2025 06:19:43 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:f2c4:b081:2e8a:cec5])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac2773e8641sm735182466b.165.2025.03.12.06.19.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 06:14:30 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 12 Mar 2025 14:13:59 +0100
-Subject: [PATCH v4 3/3] arm64: dts: qcom: sm8750-qrd: Enable CDSP
+        Wed, 12 Mar 2025 06:19:43 -0700 (PDT)
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+Date: Wed, 12 Mar 2025 14:19:27 +0100
+Subject: [PATCH] pinctrl: qcom: Clear latched interrupt status when
+ changing IRQ type
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,67 +82,122 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250312-b4-sm8750-cdsp-v4-3-4925d607cea6@linaro.org>
-References: <20250312-b4-sm8750-cdsp-v4-0-4925d607cea6@linaro.org>
-In-Reply-To: <20250312-b4-sm8750-cdsp-v4-0-4925d607cea6@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Dmitry Baryshkov <lumag@kernel.org>
+Message-Id: <20250312-pinctrl-msm-type-latch-v1-1-ce87c561d3d7@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAN6J0WcC/x3MQQqAIBBA0avErBtQo8KuEi1EpxooE5UoorsnL
+ d/i/wcSRaYEQ/VApJMTH75A1hXY1fiFkF0xKKFa0UiJgb3NccM97ZjvQLiZbFfshNaGHPVOKyh
+ xiDTz9Y/H6X0/npgpj2gAAAA=
+X-Change-ID: 20250311-pinctrl-msm-type-latch-6099aede7d92
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+ Douglas Anderson <dianders@chromium.org>, 
+ Maulik Shah <quic_mkshah@quicinc.com>, Stephen Boyd <swboyd@chromium.org>, 
+ linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
+ Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=884;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=nVhLu0AiCCxQH/soBCHuVFIETyl7UMc6C9vhLI8S8To=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBn0YilSFV4+rZ5EaoK/opYGJVAgzDMv7iJQ7lLG
- jidQ3zCxSyJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ9GIpQAKCRDBN2bmhouD
- 1+x7D/9jN0Ca6DwYjWyH0D5qLQb8Tkj7YuS6mOCPfgVelRiCelTICvyk1vJ7ytQ375n/ORFovgk
- rs7aEcTk7xOWiJyQmtapXkm1I8xvBjJHImz1YVbDa6RTte/713sk+2fRpC2IIgkX+OTgX2BZqGc
- yKztVdQNrkdo27pf2tpI7U+JWQAxlnu8003du56bdP8OSLKvruKQGcXH+AW0wWJwFYhUgMEuGnd
- u4keliH3NlL9RRGBVpywU2zYJ4oVkcT5KObo+PPOUQjrz5B7hoayGMhxVczhzEvwFQT94vb4BXc
- 5QK0OujZLE2u1F78bSn3eLvC27D5xh7VB41P3u5oXMo3QiF8OZW5oqH48TZ5Iw97o4QDORezVSq
- Fi1QMl3CCLLNXAk1PQbWI/Xd7JwpE7RfKqqsEZfe+4OGCfRF1QBACYt3cj7jiLEgFDjVvDIoTbj
- NWHKqYCL0yrl9xYTxCDlsIshQmEsi7KgfF7RNHYoT0Bju4a3e7VUdC1tFFLOJOaE+dmOYjPGH20
- JgFPzjG8hrFPTA63tV6+Btl+Pd9xMfNnkYFVxNmoICErcNdnXdHLO8XiIqXyLJjS+Ff/C+UZXMs
- nzqI/cpnJZdV/sikSY9qHqIHRpgzWMDbrMh3jvpTMdy1NlMuBb02ay5Emix8nrwQF0DAey9mwIm
- EsMa1tFPkTmRN/A==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Enable the CDSP on QRD8750 board.
+When submitting the TLMM test driver, Bjorn reported that some of the test
+cases are failing for GPIOs that not are backed by PDC (i.e. "non-wakeup"
+GPIOs that are handled directly in pinctrl-msm). Basically, lingering
+latched interrupt state is still being delivered at IRQ request time, e.g.:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+  ok 1 tlmm_test_silent_rising
+  tlmm_test_silent_falling: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
+  Expected atomic_read(&priv->intr_count) == 0, but
+      atomic_read(&priv->intr_count) == 1 (0x1)
+  not ok 2 tlmm_test_silent_falling
+  tlmm_test_silent_low: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
+  Expected atomic_read(&priv->intr_count) == 0, but
+      atomic_read(&priv->intr_count) == 1 (0x1)
+  not ok 3 tlmm_test_silent_low
+  ok 4 tlmm_test_silent_high
+
+Whether to report interrupts that came in while the IRQ was unclaimed
+doesn't seem to be well-defined in the Linux IRQ API. However, looking
+closer at these specific cases, we're actually reporting events that do not
+match the interrupt type requested by the driver:
+
+ 1. After "ok 1 tlmm_test_silent_rising", the GPIO is in low state and
+    configured for IRQF_TRIGGER_RISING.
+
+ 2. (a) In preparation for "tlmm_test_silent_falling", the GPIO is switched
+        to high state. The rising interrupt gets latched.
+    (b) The GPIO is re-configured for IRQF_TRIGGER_FALLING, but the latched
+        interrupt isn't cleared.
+    (c) The IRQ handler is called for the latched interrupt, but there
+        wasn't any falling edge.
+
+ 3. (a) For "tlmm_test_silent_low", the GPIO remains in high state.
+    (b) The GPIO is re-configured for IRQF_TRIGGER_LOW. This seems to
+        result in a phantom interrupt that gets latched.
+    (c) The IRQ handler is called for the latched interrupt, but the GPIO
+        isn't in low state.
+
+ 4. (a) For "tlmm_test_silent_high", the GPIO is switched to low state.
+    (b) This doesn't result in a latched interrupt, because RAW_STATUS_EN
+        was cleared when masking the level-triggered interrupt.
+
+Fix this by clearing the interrupt state whenever making any changes to the
+interrupt configuration. This includes previously disabled interrupts, but
+also any changes to interrupt polarity or detection type.
+
+With this change, all 16 test cases are now passing for the non-wakeup
+GPIOs in the TLMM.
+
+Cc: stable@vger.kernel.org
+Fixes: cf9d052aa600 ("pinctrl: qcom: Don't clear pending interrupts when enabling")
+Reported-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Closes: https://lore.kernel.org/r/20250227-tlmm-test-v1-1-d18877b4a5db@oss.qualcomm.com/
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
+ drivers/pinctrl/qcom/pinctrl-msm.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-Not tested on QRD hardware.
----
- arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-index 341774bb042ff88af8acf49c2f0ef14f9994dfc9..7f1d5d4e5b2813c59ea9dba2c57bee824f967481 100644
---- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-@@ -789,6 +789,13 @@ &remoteproc_adsp {
- 	status = "okay";
- };
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 47daa47153c970190b0d469dc8d245b3cbeace5e..82f0cc43bbf4f4d24f078af2d0a515d3a03b961a 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1045,8 +1045,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	const struct msm_pingroup *g;
+ 	u32 intr_target_mask = GENMASK(2, 0);
+ 	unsigned long flags;
+-	bool was_enabled;
+-	u32 val;
++	u32 val, oldval;
  
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/sm8750/cdsp.mbn",
-+			"qcom/sm8750/cdsp_dtb.mbn";
-+
-+	status = "okay";
-+};
-+
- &tlmm {
- 	/* reserved for secure world */
- 	gpio-reserved-ranges = <36 4>, <74 1>;
+ 	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
+ 		set_bit(d->hwirq, pctrl->dual_edge_irqs);
+@@ -1108,8 +1107,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	 * internal circuitry of TLMM, toggling the RAW_STATUS
+ 	 * could cause the INTR_STATUS to be set for EDGE interrupts.
+ 	 */
+-	val = msm_readl_intr_cfg(pctrl, g);
+-	was_enabled = val & BIT(g->intr_raw_status_bit);
++	val = oldval = msm_readl_intr_cfg(pctrl, g);
+ 	val |= BIT(g->intr_raw_status_bit);
+ 	if (g->intr_detection_width == 2) {
+ 		val &= ~(3 << g->intr_detection_bit);
+@@ -1162,9 +1160,11 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	/*
+ 	 * The first time we set RAW_STATUS_EN it could trigger an interrupt.
+ 	 * Clear the interrupt.  This is safe because we have
+-	 * IRQCHIP_SET_TYPE_MASKED.
++	 * IRQCHIP_SET_TYPE_MASKED. When changing the interrupt type, we could
++	 * also still have a non-matching interrupt latched, so clear whenever
++	 * making changes to the interrupt configuration.
+ 	 */
+-	if (!was_enabled)
++	if (val != oldval)
+ 		msm_ack_intr_status(pctrl, g);
+ 
+ 	if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
 
+---
+base-commit: e058c5f49ceff38bf1579a679a5ca20842718579
+change-id: 20250311-pinctrl-msm-type-latch-6099aede7d92
+
+Best regards,
 -- 
-2.43.0
+Stephan Gerhold <stephan.gerhold@linaro.org>
 
 
