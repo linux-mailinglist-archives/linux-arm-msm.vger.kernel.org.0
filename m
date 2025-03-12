@@ -1,299 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-51151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB025A5DD21
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 13:55:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17378A5DD26
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 13:56:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B0FCE7A6BBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:53:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 543F716EA43
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:56:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 299F824293B;
-	Wed, 12 Mar 2025 12:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D1C624293C;
+	Wed, 12 Mar 2025 12:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="abIqVSFX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I2k8J8Dr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B46B241CB6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 12:54:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3F27083C;
+	Wed, 12 Mar 2025 12:55:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741784095; cv=none; b=aBANTuk2odbkCg0kN1PE8cdHN2R3JFinA/8uDJcaRWNuSEK6HLOURX2JNOK607EgCdxw6KzHp2V3O4zfAi70aOUTQ3Fu4bXX3zQW64EwgNQIDywG4OxyZJeMl1AhaeS6XbqnBW6e8aE8sdvAQx6WeOsjCtSV9lRIf6eYvFtfAl8=
+	t=1741784161; cv=none; b=c8qa8z0uIdOCU09AlRylCZwj8+1sikHaEBuOOfQb9PKnguoOm48kH/ZRy1PzCkd+pw6OZQWXmBNNu9tnmw4Do+NpHaOmm/3SvGhC4OjsefzaJvDdU72z+vh5QDdBEam+YQNGqV3pWFrT4YcLfG6L/qQd65knW6uqMKinyplgdOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741784095; c=relaxed/simple;
-	bh=V1MjBxHePlfd7OLavw5mLEK5UEgp+wteGLzbglgAMlA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H972iECA50ODJxEbJxBKObsfQ0G+WNy/7nnR2zSBe7Jp3x+JrfPkvTMAbUpf1+9Rjy01Rhh+ITNg4WcfTIuhlod09PFrHferby4bUr535B9XLaR4xnJm1EMtFu5/Zj0DKAmWIXr/hLq3109PcoSYC9x9f6BvTkndhPRe63xWI4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=abIqVSFX; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22548a28d0cso43707865ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Mar 2025 05:54:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741784093; x=1742388893; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=P41L4c+Opb1IQnEi9LDyI8HBaw91mzMN/9HEGsnySy8=;
-        b=abIqVSFXD2SL83szo8/TjIP8+hTuz5O5fbhAVUHqiKyZMLPal0mtAz2/ZBlzZbZYGZ
-         M60ZsuhLoemKVeab5RAFO9xVrroWJVuixXgFAeVXHvdrTP5e85xfXWoWtHUty6A0Qe86
-         9uwbHJb0tgEYDJ+orcjNyAMtMgg/5DLna8Tvx+izWj58S0vs0XVKPdCvQ0zWC1wJVm9/
-         1FxHgAi4wmVOKxVgk2ODwm6LItFIrlH/PNtdpNm4WI3JU3xkmpLujhDJp+I3UtfriuU8
-         wUC5HJ1vHMtIS7iAP0pMje9UYOQNe4RqHlhmzKtEW4A20WDUklq+kqDQ0+PDctMwFmq2
-         ullg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741784093; x=1742388893;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P41L4c+Opb1IQnEi9LDyI8HBaw91mzMN/9HEGsnySy8=;
-        b=FiDeXaJ4Xf3Cw2wGcEd92/A95E1oL5QXuPyRe1c04kn4vmluPwuaD/BNiF4jBFAem7
-         hLHHaUNOzxOadjrZ4/laI8F+hJ6Mkd0SjSZW2A7A6UZ55sfjYcS7bHMWdyyBi4pIJveB
-         T0mGqZ50csy+iETJzaz4RhJ4Qqkq3Hb8ViyCR2AsrC+95KWeEB7MkgUQfW1JZo8Mw5EW
-         eQc3wfLICY+/BkA6Coxvw3dat7CJXSDhui0OiUss8LO59hIOt9S07d5K6YqevHZGMy6+
-         0JZR+yee81tuOUnT4/qQ9iHr11S5LC8HJM4cwbqQHauotsFIQVlhT7ux3lDWV1UTtP0f
-         EpVg==
-X-Forwarded-Encrypted: i=1; AJvYcCUhFgQ90WJKxPsXuLys9iIi3iZqNNsY2vYax8G4BsgX8IvIy7WfKYQGFFp6u+47zHv+M342hwO/wuwFSUd/@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxo86QQKF/SWQom4BaHVL0oyzwvnTdCOI4j9ZsSh1OYCAU/cdB8
-	nnHaqAiOdbIrpn5oItw5w1hR5rlmCvn4FByXpwUmEiMfkgpGy4/TG3r/i7rcTY91/y4YLvmyLwL
-	dMvGZYPWPB846L5vHmHau9Cf2lDkBKpDjtNYb9Q==
-X-Gm-Gg: ASbGnctXZ2yTuiyYFOy54bUfGieVsHr+E3odhhgEEnCj2NhvRbyeEb1fguZoqOGN2xw
-	K2sn8QOHKkaF2ptykVfwu0zNAfqD2rAXElBdHBtysotVWRXwbLk61j4A5cD5lIjtiVi1rr96jT9
-	gMPFh5PjOE02FKuIsZAVHMySsfPVo=
-X-Google-Smtp-Source: AGHT+IEmvzgsrnWJ3LS9iuiefnI5/Y1q51JDiJPKEl1YavKMn2nS0Mp6TQ/OYLWI5gnSPzE5ELMRM9TgS5WSMkJCuv0=
-X-Received: by 2002:a05:6a00:194b:b0:736:5e6f:295b with SMTP id
- d2e1a72fcca58-736aaa5d6c4mr32299739b3a.12.1741784092687; Wed, 12 Mar 2025
- 05:54:52 -0700 (PDT)
+	s=arc-20240116; t=1741784161; c=relaxed/simple;
+	bh=cXKHm/RurkmSioL7RFlQcp51mjKyU/pOdfMXfLFR+ss=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qDcRSKnnBcDITw0foje3b2e6Xghj0dQ4qTK8TdTV/sDA8Ci7vrNdM8bh3Kaj8GCDQf2VKBtrvo76mTGk1LOpOQ6cyhoxRLGiw+P0a+t+Un+e7GUwfKLcTnRgvZUUrhsagZpFBQiBc3cArc3eYlQd2jPkwPn1F6/tQv0Mssrwh9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I2k8J8Dr; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CBDE05003523;
+	Wed, 12 Mar 2025 12:55:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Wx1Oq22ysa/s2ub9FhQ5ef7c03DnunFXLTLLRls0YU8=; b=I2k8J8DrzpljLjV9
+	/+p0KFsiWgFpDeI/4WLv04KF7MxpFBznZORi91+jjKSZGbrlWTcy9mKcqFNA7o/7
+	2Vdngkg6KU8wdK9wb6RYBJO+Y5yxD4LYQH/QhqRzKJaueoSqc/AipLWNu1H2L+L1
+	LvnSm0e9TQRI02htxGsN2V+JWUjhK/CvH3+Q8IY+N+8FfZUW6s777UGiSNNO5v0l
+	09yu/mIcpv5NpZq6qgSQldFdix+kbmj5lh817Ga/gNzAUNgrfGqLMtL4J+ZAazWq
+	eNrGOMR/LUTMM+FjwnO7yTNl0exBX/pbrcWvW9s8n30yBu1qrm3qy8OMcd8l8+MC
+	OuM+jA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45b96y88sj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Mar 2025 12:55:56 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52CCtu0n021430
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Mar 2025 12:55:56 GMT
+Received: from [10.216.38.182] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 12 Mar
+ 2025 05:55:51 -0700
+Message-ID: <c6e601d1-28ff-2a24-0b98-e79006bd7a8e@quicinc.com>
+Date: Wed, 12 Mar 2025 18:25:48 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250310090407.2069489-1-quic_jiegan@quicinc.com>
- <20250310090407.2069489-2-quic_jiegan@quicinc.com> <CAJ9a7Vh7PmBBbvwnUETfCYrTSiXNzeiWpsz+XAGaUWt1Rq1aZw@mail.gmail.com>
- <cef984d5-f369-4892-b970-a71285c2ebc5@quicinc.com>
-In-Reply-To: <cef984d5-f369-4892-b970-a71285c2ebc5@quicinc.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Wed, 12 Mar 2025 12:54:41 +0000
-X-Gm-Features: AQ5f1JrjHjNAhBmSqhZ9QdvfeDjrNBtawx-M2q_IwgCWoudUHO1tG95UqLFNpqQ
-Message-ID: <CAJ9a7VhDD3813LtH_5AYyM-2mhCNP+vRmqXn4RWqg5F8FEe-Mg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/4] coresight: tmc: Introduce new APIs to get the RWP
- offset of ETR buffer
-To: Jie Gan <quic_jiegan@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Tingwei Zhang <quic_tingweiz@quicinc.com>, Jinlong Mao <quic_jinlmao@quicinc.com>, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 1/4] dt-bindings: media: qcom,sm8550-iris: update power
+ domain name
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Dikshita Agarwal
+	<quic_dikshita@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
+ <20250311-dtbinding-v1-1-5c807d33f7ae@quicinc.com>
+ <607f842d-07b5-4c1f-ad26-0fd34e6e605b@kernel.org>
+ <40d1a27e-aee9-bd68-a82b-a51ef8ccde05@quicinc.com>
+ <85bd865b-71e7-40e1-9303-e970d338cb59@kernel.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <85bd865b-71e7-40e1-9303-e970d338cb59@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-
-Hi Jie,
-
-On Wed, 12 Mar 2025 at 01:21, Jie Gan <quic_jiegan@quicinc.com> wrote:
->
->
->
-> On 3/12/2025 12:49 AM, Mike Leach wrote:
-> > Hi,
-> >
-> > On Mon, 10 Mar 2025 at 09:04, Jie Gan <quic_jiegan@quicinc.com> wrote:
-> >>
-> >> The new functions calculate and return the offset to the write pointer of
-> >> the ETR buffer based on whether the memory mode is SG, flat or reserved.
-> >> The functions have the RWP offset can directly read data from ETR buffer,
-> >> enabling the transfer of data to any required location.
-> >>
-> >> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
-> >> ---
-> >>   .../hwtracing/coresight/coresight-tmc-etr.c   | 40 +++++++++++++++++++
-> >>   drivers/hwtracing/coresight/coresight-tmc.h   |  1 +
-> >>   2 files changed, 41 insertions(+)
-> >>
-> >> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> >> index eda7cdad0e2b..ec636ab1fd75 100644
-> >> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> >> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> >> @@ -267,6 +267,46 @@ void tmc_free_sg_table(struct tmc_sg_table *sg_table)
-> >>   }
-> >>   EXPORT_SYMBOL_GPL(tmc_free_sg_table);
-> >>
-> >> +static long tmc_flat_resrv_get_rwp_offset(struct tmc_drvdata *drvdata)
-> >> +{
-> >> +       dma_addr_t paddr = drvdata->sysfs_buf->hwaddr;
-> >> +       u64 rwp;
-> >> +
-> >
-> > It is not valid to read RWP if the TMC is running. It must be in the
-> > stopped or disabled state - see the specifications for TMC /ETR
-> >
-> > It is likely that CSUNLOCK / CSLOCK are needed here too,  along with
-> > the spinlock that protects drvdata
-> >
-> > See the code in coresight_tmc_etr.c :-
-> >
-> > e.g. in
-> >
-> > tmc_update_etr_buffer()
-> >
-> > ...
-> > <take spinlock>
-> > ...
-> > CS_UNLOCK(drvdata->base);
-> > tmc_flush_and_stop(drvdata); // this ensures tmc is stopped and
-> > flushed to memory - essential to ensure full formatted frame is in
-> > memory.
-> > tmc_sync_etr_buf(drvdata); // this function reads rwp.
-> > CS_LOCK(drvdata->base);
-> > <release spinlokc>
-> >
-> > This type of program flow is common to both sysfs and perf handling of
-> > TMC buffers.
->
-> Hi Mike,
->
-> I am fully understood your point here.
->
-> The function is designed this way to read the w_offset (which may not be
-> entirely accurate because the etr buffer is not synced) when the
-
-Why would you ever base memory access on a pointer that is not
-entirely accurate?
-
-The manuals for TMC/ETR all state that reads to both RWP and RRP when
-the ETR is running return unknown values. These cannot be used to
-access the buffer, or determine how much of the buffer has been used
-on a running ETR.
-
-The ETR specification specifically states that it is not permitted to
-read the buffer data while the ETR is running, when configured in
-circular buffer mode - which is the mode used in the TMC-ETR linux
-drivers.
-
-Reading the buffer while ETR is running is only permitted if
-configured in Software FIFO mode 2 - were the ETR will stop on full
-and stall incoming trace until some data is read out, signalled to the
-ETR via the RURP.
-
-I also note that you are reading back the etr_buf data without doing
-any dma_sync operations that the perf and sysfs methods in the driver
-do, after stopping the tmc.
-
-> byte-cntr devnode is opened, aiming to reduce the length of redundant
-> trace data. In this case, we cannot ensure the TMC is stopped or
-> disabled.
-
-The specification requires that you must ensure the TMC is stopped to
-read these registers.
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zeJWEIDs-dwcmYmAOJQehBnhTFz7VNsd
+X-Authority-Analysis: v=2.4 cv=I+llRMgg c=1 sm=1 tr=0 ts=67d1845c cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=QJSAq4TcFel--fmAFxcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: zeJWEIDs-dwcmYmAOJQehBnhTFz7VNsd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-12_05,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=752
+ lowpriorityscore=0 adultscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 mlxscore=0 suspectscore=0
+ phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503120090
 
 
->The byte-cntr only requires an offset to know where it can
-> start before the expected trace data gets into ETR buffer.
->
-> The w_offset is also read when the byte-cntr function stops, which
-> occurs after the TMC is disabled.
->
-> Maybe this is not a good idea and I should read r_offset upon open?
-> The primary goal for byte-cntr is trying to transfer useful trace data
-> from the ETR buffer to the userspace, if we start from r_offset, a large
-> number of redundant trace data which the user does not expect will be
-> transferred simultaneously.
->
->
-
-It is difficult to justify adding code to a driver that does not
-correspond to the specification of the hardware device.
-
-Regards
-
-Mike
-
-> >
-> >> +       rwp = tmc_read_rwp(drvdata);
-> >> +       return rwp - paddr;
-> >> +}
-> >> +
-> >> +static long tmc_sg_get_rwp_offset(struct tmc_drvdata *drvdata)
-> >> +{
-> >> +       struct etr_buf *etr_buf = drvdata->sysfs_buf;
-> >> +       struct etr_sg_table *etr_table = etr_buf->private;
-> >> +       struct tmc_sg_table *table = etr_table->sg_table;
-> >> +       long w_offset;
-> >> +       u64 rwp;
-> >> +
-> >
-> > Same comments as above
-> >
-> >> +       rwp = tmc_read_rwp(drvdata);
-> >> +       w_offset = tmc_sg_get_data_page_offset(table, rwp);
-> >> +
-> >> +       return w_offset;
-> >> +}
-> >> +
-> >> +/*
-> >> + * Retrieve the offset to the write pointer of the ETR buffer based on whether
-> >> + * the memory mode is SG, flat or reserved.
-> >> + */
-> >> +long tmc_get_rwp_offset(struct tmc_drvdata *drvdata)
-> >> +{
-> >> +       struct etr_buf *etr_buf = drvdata->sysfs_buf;
-> >> +
-> >
-> > As this is an exported function, please ensure that the inputs are
-> > valid - check the pointers
->
-> Sure, will do.
->
-> Thanks,
-> Jie
->
-> >
-> > Code to ensure TMC is flushed and stopped could be inserted here.
-> >
-> > Regards
-> >
-> > Mike
-> >
-> >> +       if (etr_buf->mode == ETR_MODE_ETR_SG)
-> >> +               return tmc_sg_get_rwp_offset(drvdata);
-> >> +       else if (etr_buf->mode == ETR_MODE_FLAT || etr_buf->mode == ETR_MODE_RESRV)
-> >> +               return tmc_flat_resrv_get_rwp_offset(drvdata);
-> >> +       else
-> >> +               return -EINVAL;
-> >> +}
-> >> +EXPORT_SYMBOL_GPL(tmc_get_rwp_offset);
-> >> +
-> >>   /*
-> >>    * Alloc pages for the table. Since this will be used by the device,
-> >>    * allocate the pages closer to the device (i.e, dev_to_node(dev)
-> >> diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
-> >> index b48bc9a01cc0..baedb4dcfc3f 100644
-> >> --- a/drivers/hwtracing/coresight/coresight-tmc.h
-> >> +++ b/drivers/hwtracing/coresight/coresight-tmc.h
-> >> @@ -442,5 +442,6 @@ void tmc_etr_remove_catu_ops(void);
-> >>   struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
-> >>                                     enum cs_mode mode, void *data);
-> >>   extern const struct attribute_group coresight_etr_group;
-> >> +long tmc_get_rwp_offset(struct tmc_drvdata *drvdata);
-> >>
-> >>   #endif
-> >> --
-> >> 2.34.1
-> >>
-> >
-> >
->
-
-
---
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+On 3/12/2025 2:14 PM, Krzysztof Kozlowski wrote:
+> On 11/03/2025 18:47, Vikash Garodia wrote:
+>>
+>> On 3/11/2025 11:03 PM, Krzysztof Kozlowski wrote:
+>>> On 11/03/2025 13:03, Vikash Garodia wrote:
+>>>> Not all platforms has a collapsible mx, so use the more generic naming
+>>>> of mx in the binding.
+>>>>
+>>>
+>>> No, neither tested, nor justified. Read the file. How many platforms do
+>>> you have there? One. Out of this one platform you claim not all of them
+>>> have MX collapsible, so you want MX?
+>> Let say we have one which is non-collapsible, what should be the way in that
+>> case to use the bindings which differ only in the MX/MXC part ?
+> 
+> 
+> I don't care about imaginary things. Send patches for real hardware. How
+> does collapsibility of the domain change the real hardware interface?
+It does not. I am now thinking to drop this patch altogether, and continue to
+use MXC as defined in bindings, irrespective of connection to hardware as MX or
+MXC. For ex SM8550/SA8775P have MXC, while QCS8300 have MX, but again, as you
+mentioned, these difference just alters some property in DT, binding can remain
+same.
+Regards,
+Vikash
 
