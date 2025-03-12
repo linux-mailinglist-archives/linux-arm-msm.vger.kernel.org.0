@@ -1,63 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-51139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E3FEA5DBE6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:48:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2463A5DBEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 12:49:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9ED053B526F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 11:47:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02E6D7AA549
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Mar 2025 11:48:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9E3B23E35A;
-	Wed, 12 Mar 2025 11:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E626F23F384;
+	Wed, 12 Mar 2025 11:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="slYiwfFl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VjLu+e8M"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E35623237C;
-	Wed, 12 Mar 2025 11:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B699723F36C;
+	Wed, 12 Mar 2025 11:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741780087; cv=none; b=hisWpYeQrH03RYEYU3l5fqxlb6KLjrFKVSsZZav828EPojl/zGsSUJPOlyolnmx9i+zULhvSAUoyFMbL/WskX51V/7P8B3rMFFzyI3ColMu+lmrRb9ZFn+CsJc4qF3LNZv2aVEa7YHq1eQwZ8g+QGgXGUuV089s2s++oFnJuUzk=
+	t=1741780147; cv=none; b=Tr1OdfF58/X5TnXeDngbEFiSWHAoQRPtTlZ76w2p+dN0X5sYqfxgpqckNCSs9vFRPdx1dMbIlrd/AbaqSGvRPRIE/fjVAizZnh8X1BqFHD8Cy3yq+QBP7XwTB9IvfccxDN2WXTrOFD1XfOLSguUf1C3DM4447EBtF8kgoqMXgYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741780087; c=relaxed/simple;
-	bh=R8v6pS0pixsrHLGD3aftIutJXs5Es7Ccu+wDgrw5dfQ=;
+	s=arc-20240116; t=1741780147; c=relaxed/simple;
+	bh=hA8uC2cjJb0U97llAnvWr6pOTnn8TvnzZT+mShCaG3Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EYjgTWE3GzNtgc5b0wM6KCxmVKVusRDG5ysQFbjQC/3VcmJOqE42DoQ3f4sWuye5pwjB5NgA0eVEWyKprC+E0KHHExkED3XJQ+5avf7uAcaj4tnRSEWo6gBq5SOG3VXsC4IYtUTx/RgGzmFd1gWzcLL5bNWwe7RH7zYjmkw5VcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=slYiwfFl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED828C4CEE3;
-	Wed, 12 Mar 2025 11:48:05 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=DdWsgc6LQ+4BYcmU5Om/qprdTplHUl81TldQAwJlzkuT7C1CySUEwYosWhsEbar12Fvutqi/4M1DL4RNxyjYte+RerynNj6hZUVMK5v/sKxStvgu1mZRF7Gr3KZBiasv+ECV+9I/OEJrBogWyy+bsoKvDH225ThSjU9FBA5k6vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VjLu+e8M; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B291C4CEE3;
+	Wed, 12 Mar 2025 11:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741780087;
-	bh=R8v6pS0pixsrHLGD3aftIutJXs5Es7Ccu+wDgrw5dfQ=;
+	s=k20201202; t=1741780147;
+	bh=hA8uC2cjJb0U97llAnvWr6pOTnn8TvnzZT+mShCaG3Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=slYiwfFlETo+CSOzUJfEviQJA3id2tmJKLSvxzbMzg7HtHWPTHlVwz+LwX+GAWsCa
-	 xanbQiLQbbUIKSPUg/XZnlPtR1KZE8dDBmijAvmF2c+5REYDKdWVZFzNssdUTLJ040
-	 EjGuwT5BGAsHa+Ye/Lbgna9pDpkYewuCm4sJN5ZMsbt6JWXh37g43AHM4P95pH3T89
-	 QT4ZhxRODZzca56xRKeXQiDXENaoroZ0JGTuZU2sNMoGsbFQ0wkTvxKC+531zQ47Lk
-	 7c1n8hiTvqrg2dxnLAUX51w9PDk6uyj69r2dkH8mp/eMUtremxUvFPhnvxeJzT9fZo
-	 3aaVAnitvBnMg==
-Date: Wed, 12 Mar 2025 12:48:03 +0100
+	b=VjLu+e8MHXavbfvAAc4y/dHPiHfv0YeLBx94u/vXlVgEXR1K0KQk8xbEZ09fnuKN6
+	 Ba96Z0XF5GFDmObl1RvSns45F7tqQpdu33kib1trh4GCAJMjp/Y8koqndUE+JegVbN
+	 lF3mtTFwlfI2Q5Ka0dRezXH55qDS3xtve15wEDgKjS6sjA01jaWjLiE+vAnGPNgzPg
+	 2YzyiWIPjR+7RwJbGxhSrK0lvwF/Eqf2nOgry+O5dxWULJlTbqcsyfxqh5dVV5KTnX
+	 FrNRA2jt/ix7eYsPSO1pqQYSFhmZs//zZb3HzXKP2yQSIbH1aIsA9e2L27m82/K/w5
+	 bXE8aYiloFNjw==
+Date: Wed, 12 Mar 2025 12:49:03 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ayushi Makhija <quic_amakhija@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	robdclark@gmail.com, dmitry.baryshkov@linaro.org, sean@poorly.run, 
-	marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org, robh+dt@kernel.org, 
-	krzk+dt@kernel.org, konradybcio@kernel.org, conor+dt@kernel.org, 
-	andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org, 
-	Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se, jernej.skrabec@gmail.com, 
-	quic_abhinavk@quicinc.com, quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com, 
-	quic_jesszhan@quicinc.com
-Subject: Re: [PATCH v2 07/10] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
- to DP bridge nodes
-Message-ID: <20250312-athletic-cockle-of-happiness-e88a3a@krzk-bin>
-References: <20250311122445.3597100-1-quic_amakhija@quicinc.com>
- <20250311122445.3597100-8-quic_amakhija@quicinc.com>
+To: Wasim Nazir <quic_wasimn@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add egpio function
+ for sa8775p
+Message-ID: <20250312-masterful-adept-squirrel-ff44c6@krzk-bin>
+References: <20250312072509.3247885-1-quic_wasimn@quicinc.com>
+ <20250312072509.3247885-2-quic_wasimn@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,31 +62,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250311122445.3597100-8-quic_amakhija@quicinc.com>
+In-Reply-To: <20250312072509.3247885-2-quic_wasimn@quicinc.com>
 
-On Tue, Mar 11, 2025 at 05:54:42PM +0530, Ayushi Makhija wrote:
-> Add anx7625 DSI to DP bridge device nodes.
+On Wed, Mar 12, 2025 at 12:55:08PM +0530, Wasim Nazir wrote:
+> Add egpio function for TLMM pinctrl on sa8775p platform.
 > 
-> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 208 ++++++++++++++++++++-
->  1 file changed, 207 insertions(+), 1 deletion(-)
->
+>  .../devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml          | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-So you just gave up after one comment? Context of every email should be
-trimmed, so if it is not trimmed means something is still there. I know
-there are reviewers who respond with huge unrelated context, but that's
-just disrespectful to our time and don't take it as normal.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-<form letter>
-This is a friendly reminder during the review process.
-
-It seems my or other reviewer's previous comments were not fully
-addressed. Maybe the feedback got lost between the quotes, maybe you
-just forgot to apply it. Please go back to the previous discussion and
-either implement all requested changes or keep discussing them.
-
-Thank you.
-</form letter>
+Best regards,
+Krzysztof
 
 
