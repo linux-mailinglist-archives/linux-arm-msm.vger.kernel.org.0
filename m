@@ -1,167 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-51302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 219FDA5F7DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 15:22:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70EC8A5F865
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 15:33:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B89E4200ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 14:22:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D226819C4DD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 14:33:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE835267B95;
-	Thu, 13 Mar 2025 14:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B773726A0EC;
+	Thu, 13 Mar 2025 14:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GQVqXQYJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ju7BUlzC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB75267B87;
-	Thu, 13 Mar 2025 14:21:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FCD26A0E0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 14:30:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741875717; cv=none; b=HZWtxqK6KxBxX8OqaE4eb1rhHgeA1T0Nn6TFMwlJInTNvqYticab5gFZzOwm0awuAPHM/3i9cnR1StVids+HxB9kDmqO9VYGpbGBc+DQGfNsmbDJQR4D/BSDxRdXZcd8hMvNZP8NT4C5yWRvMfcID2X6U9ucgEpvZ24QhWM9ncs=
+	t=1741876243; cv=none; b=mstRgA1M3HjJ4hxLzR0K4HuIsnjadCNVHAi1JzjBn5a40oYJ58zjSpTvAv4WRSbXbodql1DMFNoQaxS/UIcnQ/yADOH+0nr1D+GVfSbSLpQ2ydM2Br23bfx+o3fIIVsp8MliGZmJsfNYPSxZSqIE9up5ABfe2upvQtg9eGZ4Luk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741875717; c=relaxed/simple;
-	bh=FZGBmGms+TGXeGz/gxxLPrKHWPZfjyc+sRwOk3cnf5k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iGkzY8VkncWCq78x6NPzXQqSP3fMV8awfrM/7x4muxho3h0HhaG+AaXyQmq9fH4JUlb2ftH5Km6yewIBzXXEM8p+v/S+HZ4FQBYXxSbx4VzwwLurtps/CTHFwV5jsRP8rxOvk62+oGRV7fV/ucKX9pRCHDIKXZ9RE/m0cN7s+BI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GQVqXQYJ; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741875715; x=1773411715;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=FZGBmGms+TGXeGz/gxxLPrKHWPZfjyc+sRwOk3cnf5k=;
-  b=GQVqXQYJFkHrXZkAFcxaIit5/8iKRPe8J0NTLs90N/o2PzSsxkQc1fz0
-   vqm+n+MEjFjyT3qqG/6Ur/vicw+Jj72McEeYQ2onXkZzLX6T+dQLAWL+2
-   lcyMRqJmyxA1KL2DoBCTWVFGEY4BiVYlziLBumsIVozSSHNUTclqSsxFA
-   vos03ulK86xPbocXv1J60uoX5QvuoD/G7lGgtAkQlWlQorvB69s/0Cgg3
-   wweScKgwi0B4K1cQRCygzzsucWoh7HXmxVDDWdI4B0A2MKA+td9myORkh
-   VF97aYQavFNinb1VYVTGfJDHwzTRAlosOYcVESoiCk4pA6+tYP+Mkhv/x
-   g==;
-X-CSE-ConnectionGUID: dtWZuvOsQgS9rkLTOOEvWg==
-X-CSE-MsgGUID: Gz5Fkh1DQD6v8Jps4HoXtQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11372"; a="43173179"
-X-IronPort-AV: E=Sophos;i="6.14,244,1736841600"; 
-   d="scan'208";a="43173179"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2025 07:21:55 -0700
-X-CSE-ConnectionGUID: rgVzKyghTUuLgBgj3SL2mA==
-X-CSE-MsgGUID: JQFdTckuTfCVIMwnKqXgYQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,244,1736841600"; 
-   d="scan'208";a="126026799"
-Received: from lkp-server02.sh.intel.com (HELO a4747d147074) ([10.239.97.151])
-  by orviesa004.jf.intel.com with ESMTP; 13 Mar 2025 07:21:47 -0700
-Received: from kbuild by a4747d147074 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tsjRQ-0009Vj-3D;
-	Thu, 13 Mar 2025 14:21:44 +0000
-Date: Thu, 13 Mar 2025 22:20:46 +0800
-From: kernel test robot <lkp@intel.com>
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
-	xiaoyao.li@intel.com, yilun.xu@intel.com,
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com,
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net,
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com,
-	wei.w.wang@intel.com
-Subject: Re: [PATCH v6 09/10] KVM: arm64: Enable mapping guest_memfd in arm64
-Message-ID: <202503132205.Ajz52k8I-lkp@intel.com>
-References: <20250312175824.1809636-10-tabba@google.com>
+	s=arc-20240116; t=1741876243; c=relaxed/simple;
+	bh=kzt33hJsTa85KuEVyT53fPaWcVDArcEY6RG1XvTBeAc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dtixm2nvP8AhP2Ug2Rfx7lKosvWm/yd1I7M6ap5HOJhNJoViux4kcb1Gm+x77q3Rsbb8UT2NezTXBF6csZfO2rphkStD/SuirsRq8ST8FaFnnSlOk0KRBSJzVDukh4HQayJMonnbUdNXXUzpyTFVrep15+DrVxc7v6HZUEsdBzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ju7BUlzC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52DASbD4008916
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 14:30:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	JHUDmC4PTSFYAcWgaACKX1N5/pWQOKndXgV5ZuGvDLc=; b=ju7BUlzCln+YLfMy
+	kdWXxUplQuGwkchYliq91VG/zEC2L20ojpqBGdIC36R6pUF3od3KUsdXY5vyKDSj
+	QtDeTHqzqpAh7/qyWGnMbPnUyg9iYvIL9KVT5njNA4IVHul4nuR0vGEHDrMYnIIM
+	WdoqiHIIjl/Yrv1iYl5CWZAlF//x1PmnAC2WX8n6ZHHvE6qQ2/meMkZ7rjeW83Gh
+	mybOs+DSAlmlOjbMVxoloQoGO5V7OJgAmTMzD25rVCkyIzvlXur9Jdw8qX73mDY9
+	64i6WXRPuuNeeprpab06KNhC4TWIeYh74ebIhTRLYoXhLz1D7KsHMxcZbDfRESNG
+	TccUjg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2re4w2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 14:30:40 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e8fd4ef023so3085026d6.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 07:30:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741876239; x=1742481039;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JHUDmC4PTSFYAcWgaACKX1N5/pWQOKndXgV5ZuGvDLc=;
+        b=lUkLXIQ5YOq+ME6o8QP9nXFIRBwytJ3yi23V6RGNMLpGyt/s2o4WwlwQpHiuYEyeeQ
+         jt1EgDouNtnZU9g6qEHBHYDppYRKUHwmgjlAhCGo9rKRhZ3szeTnOSuLrCkBar1gcGuz
+         V74mHLqfVec+K5S29v+2khhGgLUQKYoomcNDUtLnbwIPiqqDVXLUtwgwmMNFzEHBY6eF
+         ieDYPIqZEXaedSYLQYGpU0uKNj9Vky5rOBYXeZ3CHbolMNXBLLst2noNs01HDVzHLxGY
+         wADqS1kSHF5uqAgEpD0f8POvmlOPm3+Y2klqaPBd3WF0fcuO9/MN7BIZiVjiSZv/zFyg
+         Ubog==
+X-Gm-Message-State: AOJu0YxvP6aRRgL48IVGgRQey7Uu24HSYIaSLoNfD4x8F/rcgUbom72x
+	lsDADyR/2zUlG6Dj4vwbzDK5DyeHZVa20ipaQ5jfo/+xq2I/cVRj7GjW+FPbo71fyR3deGPPLT+
+	FODZpd6jvLQptKdY8nEm6SVlumnyylQBCjgbdzkGL3x/khCNULeDeCm/2zyiKrK6P
+X-Gm-Gg: ASbGncuXpTxKqUBbfgF4orN6hK/o/02zsNgNt+nKb6kM5TBZL692mOCy7o29JAWuZXQ
+	L0NP6tSCMaAiXD6eyEn0A9QvaIxXlhjfStESvinHObeqWSaglYo2n5QddWHnwRCTttmnrZItv6x
+	rK21wfZM6RiIoAiU53Zy6hP8WAksdv5qq8/afiQkMiVWltRSQGqyjoQ+bX3ZAXL4VefeokYWWA4
+	k53TEzWqxz5cMOc06yb4xQL1jGrE/HxxE1bQ4Ey4yCiizHtsrCMmJ7i6jPagw+WC7ggSPKNv5aC
+	44VfrbNUsdRzLgcvlaTcFZzHdaMrAXNYQ8+v7ES7cvUzDA37t2ZXsFzu08FAMO9skB8c+g==
+X-Received: by 2002:a05:620a:40d1:b0:7c5:6fee:1634 with SMTP id af79cd13be357-7c56fee175emr285585185a.3.1741876239685;
+        Thu, 13 Mar 2025 07:30:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGew7PamKyiAcrPgUIZlCIP2W0SkL4/r8o51tM8nCHDl5YMpcw4o7WNySRMHlagbq/nm3aG7w==
+X-Received: by 2002:a05:620a:40d1:b0:7c5:6fee:1634 with SMTP id af79cd13be357-7c56fee175emr285583085a.3.1741876239273;
+        Thu, 13 Mar 2025 07:30:39 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3149cf25csm85386166b.113.2025.03.13.07.30.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Mar 2025 07:30:38 -0700 (PDT)
+Message-ID: <07957f72-ce7e-41f7-8ea8-5839a33f04a3@oss.qualcomm.com>
+Date: Thu, 13 Mar 2025 15:30:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250312175824.1809636-10-tabba@google.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] Enable QPIC BAM and QPIC NAND support for SDX75
+To: Kaushal Kumar <quic_kaushalk@quicinc.com>, vkoul@kernel.org,
+        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        manivannan.sadhasivam@linaro.org, miquel.raynal@bootlin.com,
+        richard@nod.at, vigneshr@ti.com, andersson@kernel.org,
+        konradybcio@kernel.org, agross@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mtd@lists.infradead.org
+References: <20250313130918.4238-1-quic_kaushalk@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250313130918.4238-1-quic_kaushalk@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=D6NHKuRj c=1 sm=1 tr=0 ts=67d2ec10 cx=c_pps a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=puiEX6dKtv1lSrn3j0sA:9 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: -SgeqIKHJsjuYeAi77Vy0dnoiHrL3Z6L
+X-Proofpoint-ORIG-GUID: -SgeqIKHJsjuYeAi77Vy0dnoiHrL3Z6L
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-13_06,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
+ adultscore=0 malwarescore=0 mlxlogscore=737 clxscore=1015 impostorscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503130113
 
-Hi Fuad,
+On 3/13/25 2:09 PM, Kaushal Kumar wrote:
+> Hello,
+> 
+> This series adds and enables devicetree nodes for QPIC BAM
+> and QPIC NAND for Qualcomm SDX75 platform.
+> 
+> This patch series depends on the below patches:
+> https://lore.kernel.org/linux-spi/20250310120906.1577292-5-quic_mdalam@quicinc.com/T/
+> 
+> Kaushal Kumar (6):
+>   dt-bindings: mtd: qcom,nandc: Document the SDX75 NAND
+>   dt-bindings: dma: qcom,bam: Document dma-coherent property
+>   ARM: dts: qcom: sdx75: Add QPIC BAM support
+>   ARM: dts: qcom: sdx75: Add QPIC NAND support
+>   ARM: dts: qcom: sdx75-idp: Enable QPIC BAM support
+>   ARM: dts: qcom: sdx75-idp: Enable QPIC NAND support
 
-kernel test robot noticed the following build errors:
+subjects: sdx75 is arm64 and the prefix in that dir is:
 
-[auto build test ERROR on 80e54e84911a923c40d7bee33a34c1b4be148d7a]
+arm64: dts: qcom: <soc/board>: foo
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Fuad-Tabba/mm-Consolidate-freeing-of-typed-folios-on-final-folio_put/20250313-020010
-base:   80e54e84911a923c40d7bee33a34c1b4be148d7a
-patch link:    https://lore.kernel.org/r/20250312175824.1809636-10-tabba%40google.com
-patch subject: [PATCH v6 09/10] KVM: arm64: Enable mapping guest_memfd in arm64
-config: arm64-allnoconfig (https://download.01.org/0day-ci/archive/20250313/202503132205.Ajz52k8I-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250313/202503132205.Ajz52k8I-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503132205.Ajz52k8I-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from arch/arm64/kernel/asm-offsets.c:15:
->> include/linux/kvm_host.h:725:20: error: redefinition of 'kvm_arch_has_private_mem'
-     725 | static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
-         |                    ^~~~~~~~~~~~~~~~~~~~~~~~
-   In file included from include/linux/kvm_host.h:45:
-   arch/arm64/include/asm/kvm_host.h:1546:20: note: previous definition of 'kvm_arch_has_private_mem' with type 'bool(struct kvm *)' {aka '_Bool(struct kvm *)'}
-    1546 | static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
-         |                    ^~~~~~~~~~~~~~~~~~~~~~~~
->> include/linux/kvm_host.h:736:20: error: redefinition of 'kvm_arch_gmem_supports_shared_mem'
-     736 | static inline bool kvm_arch_gmem_supports_shared_mem(struct kvm *kvm)
-         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   arch/arm64/include/asm/kvm_host.h:1551:20: note: previous definition of 'kvm_arch_gmem_supports_shared_mem' with type 'bool(struct kvm *)' {aka '_Bool(struct kvm *)'}
-    1551 | static inline bool kvm_arch_gmem_supports_shared_mem(struct kvm *kvm)
-         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   make[3]: *** [scripts/Makefile.build:102: arch/arm64/kernel/asm-offsets.s] Error 1
-   make[3]: Target 'prepare' not remade because of errors.
-   make[2]: *** [Makefile:1269: prepare0] Error 2
-   make[2]: Target 'prepare' not remade because of errors.
-   make[1]: *** [Makefile:251: __sub-make] Error 2
-   make[1]: Target 'prepare' not remade because of errors.
-   make: *** [Makefile:251: __sub-make] Error 2
-   make: Target 'prepare' not remade because of errors.
-
-
-vim +/kvm_arch_has_private_mem +725 include/linux/kvm_host.h
-
-f481b069e674378 Paolo Bonzini       2015-05-17  719  
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  720  /*
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  721   * Arch code must define kvm_arch_has_private_mem if support for private memory
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  722   * is enabled.
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  723   */
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  724  #if !defined(kvm_arch_has_private_mem) && !IS_ENABLED(CONFIG_KVM_PRIVATE_MEM)
-a7800aa80ea4d53 Sean Christopherson 2023-11-13 @725  static inline bool kvm_arch_has_private_mem(struct kvm *kvm)
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  726  {
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  727  	return false;
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  728  }
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  729  #endif
-a7800aa80ea4d53 Sean Christopherson 2023-11-13  730  
-a765e4ca28eb657 Fuad Tabba          2025-03-12  731  /*
-a765e4ca28eb657 Fuad Tabba          2025-03-12  732   * Arch code must define kvm_arch_gmem_supports_shared_mem if support for
-a765e4ca28eb657 Fuad Tabba          2025-03-12  733   * private memory is enabled and it supports in-place shared/private conversion.
-a765e4ca28eb657 Fuad Tabba          2025-03-12  734   */
-a765e4ca28eb657 Fuad Tabba          2025-03-12  735  #if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM)
-a765e4ca28eb657 Fuad Tabba          2025-03-12 @736  static inline bool kvm_arch_gmem_supports_shared_mem(struct kvm *kvm)
-a765e4ca28eb657 Fuad Tabba          2025-03-12  737  {
-a765e4ca28eb657 Fuad Tabba          2025-03-12  738  	return false;
-a765e4ca28eb657 Fuad Tabba          2025-03-12  739  }
-a765e4ca28eb657 Fuad Tabba          2025-03-12  740  #endif
-a765e4ca28eb657 Fuad Tabba          2025-03-12  741  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Konrad
 
