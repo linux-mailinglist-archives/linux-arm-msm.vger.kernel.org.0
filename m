@@ -1,189 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-51315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4D83A5FDBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 18:28:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2583FA5FDE0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 18:35:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4151A3BFDB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 17:28:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7547E19C553E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 17:35:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2B0D1632C7;
-	Thu, 13 Mar 2025 17:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 649EE1C860A;
+	Thu, 13 Mar 2025 17:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQ2DxQ6s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IaB2WuN2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE45158868;
-	Thu, 13 Mar 2025 17:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561901714D0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 17:34:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741886910; cv=none; b=b0NpawxaFzeeIa/f4Bq11NEGTP5lB04LmPS8hwV7yz8g0qBi9tC0moc/p5Kxdnhk8Cq1vVsrB7cJM3aFDCGiuHb8llGK7rv51+4vr/BGALQPOtFPVBBjz9ad3pKPEa9ED4jm6C05ts3ZNokQP5VzJQ4/kUK7JR0hDoMFx1hcTog=
+	t=1741887301; cv=none; b=NdQtPEuGl0NuJb5APdTfLu+xOjtqZFI9hailEVnaQAaK/i/PlwqkHgc3mEUrHZz+bd92tRhXEck8tJjMYg9CYQtyGiW5jAtiU5SWpsb5GWWS6ffJ/KlI1Q8xpTSEQepY3K+ZH1215DTEfGGJzXIQh/ssZGfBUk8pkAce5NFPk8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741886910; c=relaxed/simple;
-	bh=ysZJy/pStSvMTNKpMrLF6jzCLOYDpj1uIdVrASzzEoY=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=f3d7SyDKBtFlqB6a+fvCPFbMtkxPxbZhlBIoroAxyAhToYf4/FMIaoijH90AMVSvW+oWtIJIa3u0ezu1oqStTNARE3Zvznsfc190v3/4oryb4dq6+K2P62adLsxiQfX6aUBS3jLdxeINub1KgUYEZXGE9Rnn0ldBrKgALsaRMVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQ2DxQ6s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20167C4CEDD;
-	Thu, 13 Mar 2025 17:28:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741886910;
-	bh=ysZJy/pStSvMTNKpMrLF6jzCLOYDpj1uIdVrASzzEoY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=dQ2DxQ6sIpOoITZl4zyHIxnBnbZyOGDZNCdr6pjx83cxo7HKyABB0MY5WSzJPQMiy
-	 3ol/5oSMjL14PA0/ckuboggAjr77NDLlyW/cF4PCSVOSERWtWivHsQYmquJI5Reogs
-	 HM7bSJ5Xii3T05scdfAqplAxvpe8MfMcdZoOUm1paIPCyvWEzJO3msis1SJCp4K1cu
-	 ccxcBkbSQ0hqb0svtmMvC8pQ8gomopQTsJ6IY3MkcJ50NnDR9gbOoogZ29hSAaGpyo
-	 C7Z1Z+K13kh2VAUFqfC76Fp9gcjIaawMMPBmhHRhM7iyhlimU3im7nE91MoZikvLpk
-	 ZsUdRxHkoL0iA==
-Date: Thu, 13 Mar 2025 12:28:28 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	mhi@lists.linux.dev, linux-wireless@vger.kernel.org,
-	ath11k@lists.infradead.org, quic_pyarlaga@quicinc.com,
-	quic_vbadigan@quicinc.com, quic_vpernami@quicinc.com,
-	quic_mrana@quicinc.com,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Miaoqing Pan <quic_miaoqing@quicinc.com>
-Subject: Re: [PATCH v2 10/10] wifi: ath11k: add support for MHI bandwidth
- scaling
-Message-ID: <20250313172828.GA740705@bhelgaas>
+	s=arc-20240116; t=1741887301; c=relaxed/simple;
+	bh=teNW5gIZaqNNqnPivdYVGhV0iuN3q+s0pOAIQRfvUdI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FBiP+5IYp7ZBNTAhLj7gWpZ1PLBzDMvAUsjfjcFVjfva3EEQ9+BMEtES+FbJtXNSUKRDOe+uija/f7FABvb9SL2U8VbXk5+177P15gD4chzIi5AvKXVPGU//B2e49Hlki37vDiSsZmYJL9g4MXpP4sPIxQBid9loCfDtuus7DNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IaB2WuN2; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso8187425e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 10:34:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741887298; x=1742492098; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oXkYzz2Ho7HoWYUA45E8jVGK6oEmHJXqvRS4IbzYytA=;
+        b=IaB2WuN2w7gYjcHt1Uwp/c0H3IvM4cm2xe9st2dygFqSTtb8QhJfAaoI4J5/TzekFD
+         8yyo8Gx4O7veB5CKFARZ1cppceVT3zLRZgWEwkAs/vT7sfLq5SKH+wKslk+bxGewCx7M
+         tFmFfB2LA9ujzxcCdQbS/wJuGWs1GL4cetnngLE/BVrdZ6T0tqjSar9DQCHhdFDHH5xE
+         Jv3t7J/7bCs36+OchcNEOnn0LJFw2sJsW/AK4Lhf9CK7aOf0HBVicIxlqxwyL6Q0LNCu
+         bT1UnNAxQ9omQ4NKBlzSaLU/sp/JuD749GEOsa5czywnrJvc/ksKqieZcbiwf4zHP0z6
+         3gOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741887298; x=1742492098;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oXkYzz2Ho7HoWYUA45E8jVGK6oEmHJXqvRS4IbzYytA=;
+        b=Yx+p1AuyIvk2e5MPTCuYLE4Ii8wIK+idp1siofdiEGyuBtPtu1lXdX9NCQr5LiFzo0
+         i1ijQ9k/V5PGcFk0pKidRQCRU5I4ivmx1Xc5R0VlcEU16hIEo1L2zzwSVmJv/dbd9JWH
+         5ylE31zpYLmI4uejAR0rLCmmpJ1urBQhQqc5DzZkum0EirfdMghxwG2nI27JM6LJc1PZ
+         K4HF3WyEKxIWHX5y6pwseWPu04arvwaZjg+g/G9FsvIewNRIMdvMlJGu+0Bhgpy9bs1G
+         Dr9dAPpn5pVVy2ZUkl4KMo18Y7uUE4s7REU7zlgMgFuHUI8iVRb0rTBdGCH2Olk1TM2p
+         W5Mw==
+X-Forwarded-Encrypted: i=1; AJvYcCVfRY4OjVr8DAMETGZ/BPG+f8XFBRXJ1nzcNKqVQ8/ZNDFgpT/9Sralatjz43EOqicjOpi0u+/TjCyyxy8I@vger.kernel.org
+X-Gm-Message-State: AOJu0YynZMteqRI9a+H96SiFIeYYhj3AouMRmF5me+tYV+O1JV8aHFFR
+	QE05HE4bn3lqtJ8+kzsBYjMgMH4XqHHUPC2k/dYatNOWugTMDI8+PHfbohWlzeUb7uMdN7/gJEB
+	BYvUU535oGcfrCu3be+geI6DovndMKy8xbecyBA==
+X-Gm-Gg: ASbGnctkiGP3k4Hc/b9hF+dSeGQEOPKOiCbwJZuh8yr8ooIuEeNuQ9504crwkfHBD93
+	nR/j0sWqHsXxHSBumdh/FzW86Ms0yVhk6xOsyQFkBgUuiCNDLFfUBh6UbByqrr4UqI8EqhoNcaG
+	AY4zVOH6QjXjvC1VktB/xe4qMcFiuvyMAhW9pomA8ujnH5c7bbUJjuyVVwV/MkILNup1GAog==
+X-Google-Smtp-Source: AGHT+IE1c9T0TY/pjJhjtchTkkrxDWqZJglz/azIkv2TkxGPgH3NolVO9vmQFRaJtQOUi7YI3c4g7vzs00zqUmzqNzw=
+X-Received: by 2002:a5d:5989:0:b0:38d:cf33:31d6 with SMTP id
+ ffacd0b85a97d-39263b006c5mr11690959f8f.3.1741887297667; Thu, 13 Mar 2025
+ 10:34:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250313-mhi_bw_up-v2-10-869ca32170bf@oss.qualcomm.com>
+References: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
+ <CACr-zFC=mPNeeHMp9XnSby+cMQaPWt_3s8iUiCN+EnVPeGad8Q@mail.gmail.com>
+ <uljqxwfgl26txrfqvkvzzpj6qurgmwcbuot7gu2u6rwjaqgncb@jeuyi4mexjff>
+ <CACr-zFDSFizYmrVN-dV334n1kq17UB9k4FxrV20NNQCQMhzrwg@mail.gmail.com>
+ <92dd35a2-d1cc-4f2b-b3a8-5752ec33b0d3@kernel.org> <CACr-zFCYWEFPO8yExp_8hOQdVtC9Zwu1ZOZNksSeyyS6Ht0e9A@mail.gmail.com>
+ <Z9HjMyjzE9XlqrEj@x1>
+In-Reply-To: <Z9HjMyjzE9XlqrEj@x1>
+From: Christopher Obbard <christopher.obbard@linaro.org>
+Date: Thu, 13 Mar 2025 17:34:46 +0000
+X-Gm-Features: AQ5f1JrDO9V43KtazVC9qZW1Wz_qdtZmiVsFJZOGkGi6dHNCT7HLwGuh8qsdaME
+Message-ID: <CACr-zFAHGcQtwSz0EF0kt7_PUXxwi3GZY2BmAVedbLjh3+4LhA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm interconnects as built-in
+To: Brian Masney <bmasney@redhat.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Mar 13, 2025 at 05:10:17PM +0530, Krishna Chaitanya Chundru wrote:
-> From: Miaoqing Pan <quic_miaoqing@quicinc.com>
-> 
-> Add support for MHI bandwidth scaling, which will reduce power consumption
-> if WLAN operates with lower bandwidth. This feature is only enabled for
-> QCA6390.
+Hi Brian,
 
-What is the event that initiates bandwidth scaling or reduces power
-consumption?  Is there any kind of user interface like a sysfs knob
-an administrator can use?
+On Wed, 12 Mar 2025 at 19:40, Brian Masney <bmasney@redhat.com> wrote:
+>
+> Hi Christopher,
+>
+> On Wed, Mar 12, 2025 at 12:10:56PM +0100, Christopher Obbard wrote:
+> > For reference, I am working on updating initramfs generation tools in
+> > Debian/Fedora to include the required interconnect modules. Currently
+> > the interconnect drivers are built as modules in these distros, but
+> > are not included in the initrd. That is where my confusion initially
+> > stemmed from.
+>
+> From a Fedora and centos-stream-9/10 perspective, we have dracut
+> updated so that the interconnect modules are included in the initramfs
+> by default.
+>
+> https://github.com/dracutdevs/dracut/blob/master/modules.d/90kernel-modules/module-setup.sh#L74
+>
+> Let me know if you are seeing a specific issue with the initramfs on
+> Fedora and I can help you.
 
-Does this happen based on ath11k usage?  Battery or thermal status?  
+Awesome, turns out I am wrong and the interconnect drivers are in fact
+present in the latest nightly Fedora 42 image I am testing:
 
-I guess reducing power consumption or reducing heat is probably the
-driving factor since we would always use max performance if power and
-heat were not issues?
+$ lsinitramfs initramfs-6.14.0-0.rc3.29.fc42.aarch64.img  | grep interconnect
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx-interconnect.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx8mm-interconnect.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx8mn-interconnect.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx8mp-interconnect.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx8mq-interconnect.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/icc-osm-l3.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/icc-smd-rpm.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-msm8916.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-msm8953.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-msm8996.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-qcm2290.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sa8775p.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sc7280.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sc8180x.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sc8280xp.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sdm845.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sdx75.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sm6115.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sm8150.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sm8250.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sm8450.ko.xz
+usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-x1e80100.ko.xz
 
-Some hints here would be useful.
 
-> Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-04546-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
-> Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
-> ---
->  drivers/net/wireless/ath/ath11k/mhi.c | 41 +++++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
-> 
-> diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
-> index 6e45f464a429..74769c0993ae 100644
-> --- a/drivers/net/wireless/ath/ath11k/mhi.c
-> +++ b/drivers/net/wireless/ath/ath11k/mhi.c
-> @@ -20,6 +20,7 @@
->  #define MHI_TIMEOUT_DEFAULT_MS	20000
->  #define RDDM_DUMP_SIZE	0x420000
->  #define MHI_CB_INVALID	0xff
-> +#define MHI_BW_SCALE_CHAN_DB 126
->  
->  static const struct mhi_channel_config ath11k_mhi_channels_qca6390[] = {
->  	{
-> @@ -73,6 +74,17 @@ static struct mhi_event_config ath11k_mhi_events_qca6390[] = {
->  		.client_managed = false,
->  		.offload_channel = false,
->  	},
-> +	{
-> +		.num_elements = 8,
-> +		.irq_moderation_ms = 0,
-> +		.irq = 1,
-> +		.mode = MHI_DB_BRST_DISABLE,
-> +		.data_type = MHI_ER_BW_SCALE,
-> +		.priority = 2,
-> +		.hardware_event = false,
-> +		.client_managed = false,
-> +		.offload_channel = false,
-> +	},
->  };
->  
->  static const struct mhi_controller_config ath11k_mhi_config_qca6390 = {
-> @@ -313,6 +325,33 @@ static void ath11k_mhi_op_write_reg(struct mhi_controller *mhi_cntrl,
->  	writel(val, addr);
->  }
->  
-> +static int ath11k_mhi_op_get_misc_doorbell(struct mhi_controller *mhi_cntrl,
-> +					   enum mhi_er_data_type type)
-> +{
-> +	if (type == MHI_ER_BW_SCALE)
-> +		return MHI_BW_SCALE_CHAN_DB;
-> +
-> +	return -EINVAL;
-> +}
-> +
-> +static int ath11k_mhi_op_bw_scale(struct mhi_controller *mhi_cntrl,
-> +				  struct mhi_link_info *link_info)
-> +{
-> +	enum pci_bus_speed speed = pci_lnkctl2_bus_speed(link_info->target_link_speed);
-> +	struct ath11k_base *ab = dev_get_drvdata(mhi_cntrl->cntrl_dev);
-> +	struct pci_dev *pci_dev = to_pci_dev(ab->dev);
-> +	struct pci_dev *pdev;
-> +
-> +	if (!pci_dev)
-> +		return -EINVAL;
-> +
-> +	pdev = pci_upstream_bridge(pci_dev);
-> +	if (!pdev)
-> +		return -ENODEV;
-> +
-> +	return pcie_set_target_speed(pdev, speed, true);
 
-Seems kind of unfortunate that:
+Thanks,
 
-  1) The endpoint driver needs to be involved here, even though it
-  does nothing that is endpoint-specific, and
-
-  2) The endpoint driver twiddles something in *another* device (the
-  upstream bridge).  There's a potential locking issue here and
-  potential conflict with any other devices that may be below that
-  bridge.
-
-> +}
-> +
->  static int ath11k_mhi_read_addr_from_dt(struct mhi_controller *mhi_ctrl)
->  {
->  	struct device_node *np;
-> @@ -389,6 +428,8 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
->  	mhi_ctrl->status_cb = ath11k_mhi_op_status_cb;
->  	mhi_ctrl->read_reg = ath11k_mhi_op_read_reg;
->  	mhi_ctrl->write_reg = ath11k_mhi_op_write_reg;
-> +	mhi_ctrl->bw_scale = ath11k_mhi_op_bw_scale;
-> +	mhi_ctrl->get_misc_doorbell = ath11k_mhi_op_get_misc_doorbell;
->  
->  	switch (ab->hw_rev) {
->  	case ATH11K_HW_QCN9074_HW10:
-> 
-> -- 
-> 2.34.1
-> 
+Chris
 
