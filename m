@@ -1,343 +1,448 @@
-Return-Path: <linux-arm-msm+bounces-51206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A67DBA5E96F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 02:33:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51EAAA5E972
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 02:34:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E91A18982BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 01:33:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 838FC168539
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 01:34:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 744BB1C6BE;
-	Thu, 13 Mar 2025 01:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 392C81C2BD;
+	Thu, 13 Mar 2025 01:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nSXbwnDb"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="HiWyTrc+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11013023.outbound.protection.outlook.com [52.101.67.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDE95223;
-	Thu, 13 Mar 2025 01:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741829580; cv=none; b=oX5X0pjoQl1xIGNnOp82+62Fs1RMzUhQmocZXppVliLYkrfE1jS0FlSPQoJi1rPlSE5X8E6ArUGze1jSl6jE/Rz9DnTnuujdZ03w/7xbf/zouFrIHiPz0dp30x8REYtmGKHw94MTCutKAEzZlXhaYXhr36TfcErAbBds3phDhzg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741829580; c=relaxed/simple;
-	bh=8MsDECNhD8vbjfpqmnlc7TmVA/WC33SvbE1RXJA5MuA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qDA8oIQtYpwm2oKkszHuQv5eOoekSiifLxMTalP/MqbpXPeve/qylkulZQg6O0/DGbP2ZIkjOhR3vcQdm1oBVgAeK+Zk2Coh0dXqPxmV7QDfa0EWrJ5KdPymXM6+fqJSFkRmlAOWnJjR7IxIsK2Ocr6jq/NPD2/aOHH7B01H5fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nSXbwnDb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CMGaIk023865;
-	Thu, 13 Mar 2025 01:32:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jN2qV43lzjZsukbYe7DDtzj/nw01O2ZFlq6+ZGc1jY0=; b=nSXbwnDbgJFhkBSw
-	o4I0fUR8FL+llJBJ8AoeH1sxyiPaqyPJ2Q7fnbnp20hujpHtzqdDH3i4L0wLWVVj
-	+xFcSE4pLad7/Y6nX3Dd19b/xP1aCoe00Ei55UGquq1IiN+1iajXeWST3xklnjzV
-	sLGoYlcGitRj3WXCIqPcseqbsAAtv31UislIwEN63704dBSEnt6XT6gx/BTxun1N
-	W2paZeKdq/usCg9LD/U5UrZFC8D7n4A4YT+62nrYSeKG51qaET7NwdCXD3HgpG4Z
-	R2PpKcGwpcTYNvTxifEJOtxv+C5+9BQCONhC5dIjEbm8eOGV+T9OImR51we4qny9
-	o3zgNw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2mm50e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Mar 2025 01:32:22 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52D1WL6M032557
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Mar 2025 01:32:21 GMT
-Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 12 Mar
- 2025 18:32:16 -0700
-Message-ID: <51aab2c3-2219-454f-93b1-5820a9c2ced1@quicinc.com>
-Date: Thu, 13 Mar 2025 09:32:14 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F288C1E;
+	Thu, 13 Mar 2025 01:34:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.67.23
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1741829691; cv=fail; b=nIXQYQliwjUj4/5ayp/esv2NE+l0dKGXxYvhLYX17mM+W6ussC3466KHeuGX2i6RfOvx+g/6DAwXSo40wkbqrtAtfQRZb/xxomonNbQj1z8Y//fZDTpaAoxrNLG8nKEVRKZBJwBpa5/buwmvdvscn/uMPcCmP9Q5V0n1v/Uf1H4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1741829691; c=relaxed/simple;
+	bh=avaQj1Fv+k6TSlEPVjOSBhDPDfCtiRTwohJYHIPtDRE=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=skKg/3iRceEGpB1QTMdlr/6PaEjriCWvJnDBNxbuiWCVUWino4HqjhgSLz9+wuTQagouZ5yjYoAinbyx7sVdBjG5OryhmNbn5OLrU7nR/4f2ueBoxzGWztAQKH+oe+JjqLisZulq8ZL+XFjyS115jx8yyW0B5XWnspwfzYTFAIM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=HiWyTrc+; arc=fail smtp.client-ip=52.101.67.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=UeuyyOjj/aYI3Xd0ddjd9+8siD3DEB7H4PLgV5u1D58IlBi7qHQZ1iLT83lAbBtNQW+bgUjPx2lTIcHTBJA9Qm2LrHWYh75KciCPVLK4iyR16WDGGK+nLyrIxn9vP35mvIUb9RDM/nWwAomtd0u4rpJSdAgahKgwHNr0PHFhSZUC4n6Ln+XYvt91y5wWoGfSYBGf+YyUlW6eP3pVADO3LIVzwWoUi+jqWG4x4GX+WPQ511W49SEvdeIq+/XHHRI4qog71FEH/VUBqsMi9yICF+jQTSGFqQXzBewK7x6cw5jyaH8rFuKMg1v1Uqut84obSqoU6R5fFhGmy2PzGvFUMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nIxWB1oFpJU0PvcGNXpylEjB/3ILykawA6bOyDDlQdg=;
+ b=IV6aE63YDsTeAdwnDzWDrZxTvIipCnCquo6LArx24kUAo349x4yLgXwxwe8BHrwUbjXSsDJivwrt5+n1DfmToLUqGV/P6A/2/p8H39Gg6+IHMhzwYkJt9Q+d1x0UkGkNZGWlzvO9BjjjIOu1IuOymiR5aLEUW4MNUYILFOTQr/H5gxWza+Dq/J3619A8MmHEQbc3xyxFDdNJOh9eNS4i5kIAMcCCU+YBRLqEtQe+/QHISivB9lUM23DRMqA2Bi1tYpiQH63jzhl/ET12Acu1iEU3HWBaS7YQqRi+IrofRIasOUjyq9fXfxfXEIhiEHebVz0plngZzkBsUjDFK7rl5A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nIxWB1oFpJU0PvcGNXpylEjB/3ILykawA6bOyDDlQdg=;
+ b=HiWyTrc+UOAz/NEm1ryewvWQJaKWgxBbUOEHCIZu5w3H7xfgnsmcGBsodrrfNZ4EtRkEEnOV/UDp/M9mGA3UnkOuCvSE67nLEHAHCAO/ila/MAYdg2+204y+W2Wk/DwpBoAxrxc14QzB9va3cpTvWafssyhogqCQDR+SdftgsC8zIJcwKLEo9n61PXvQNY8QhnW0PfmakUQDXhH3DhjFZRDVNQfudQUAUDTOUeY8E9YOd4vewPGjBzKrqwrx0LrkbxQu/jeh5f2tHobNsAJqYcwohPDhfHeB6aTqgc4OyVaF5Zo2pnZNdV+K2eDLSc/aJpQ8xSIXmlNgesMPmc1GQg==
+Received: from AS8PR04MB8642.eurprd04.prod.outlook.com (2603:10a6:20b:429::24)
+ by AM9PR04MB8969.eurprd04.prod.outlook.com (2603:10a6:20b:408::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.27; Thu, 13 Mar
+ 2025 01:34:45 +0000
+Received: from AS8PR04MB8642.eurprd04.prod.outlook.com
+ ([fe80::50d3:c32a:2a83:34bb]) by AS8PR04MB8642.eurprd04.prod.outlook.com
+ ([fe80::50d3:c32a:2a83:34bb%7]) with mapi id 15.20.8511.026; Thu, 13 Mar 2025
+ 01:34:45 +0000
+From: Jacky Bai <ping.bai@nxp.com>
+To: Sudeep Holla <sudeep.holla@arm.com>
+CC: "rafael@kernel.org" <rafael@kernel.org>, "viresh.kumar@linaro.org"
+	<viresh.kumar@linaro.org>, "ilia.lin@kernel.org" <ilia.lin@kernel.org>,
+	"tiny.windzz@gmail.com" <tiny.windzz@gmail.com>, "wens@csie.org"
+	<wens@csie.org>, "jernej.skrabec@gmail.com" <jernej.skrabec@gmail.com>,
+	"samuel@sholland.org" <samuel@sholland.org>, "matthias.bgg@gmail.com"
+	<matthias.bgg@gmail.com>, "angelogioacchino.delregno@collabora.com"
+	<angelogioacchino.delregno@collabora.com>, "linux-pm@vger.kernel.org"
+	<linux-pm@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-sunxi@lists.linux.dev"
+	<linux-sunxi@lists.linux.dev>, "linux-mediatek@lists.infradead.org"
+	<linux-mediatek@lists.infradead.org>, "imx@lists.linux.dev"
+	<imx@lists.linux.dev>
+Subject: RE: [PATCH v2] cpufreq: Init cpufreq only for present CPUs
+Thread-Topic: [PATCH v2] cpufreq: Init cpufreq only for present CPUs
+Thread-Index: AQHbky/0KSeUltDKz0CFnAfJF8SBRLNvQheAgAEHiyA=
+Date: Thu, 13 Mar 2025 01:34:45 +0000
+Message-ID:
+ <AS8PR04MB86424CF1B1006B70025FCB4C87D32@AS8PR04MB8642.eurprd04.prod.outlook.com>
+References: <20250312092127.357316-1-ping.bai@nxp.com>
+ <Z9FY-Uu-7R9eWEQ7@bogus>
+In-Reply-To: <Z9FY-Uu-7R9eWEQ7@bogus>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8PR04MB8642:EE_|AM9PR04MB8969:EE_
+x-ms-office365-filtering-correlation-id: 242e5f7d-3279-4a88-1d4e-08dd61cf3c81
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|7416014|366016|1800799024|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?FcA4dYJtQATqBGWADsleeA1QWQVxn6fP1OeZYhmxaaQBVnLR4qUb13qTfjRy?=
+ =?us-ascii?Q?medskK0ytRGCA7ajRoJFaO2H2VhVD8jMlZBVNASViO+vTFjjaKHRJlf/6D+8?=
+ =?us-ascii?Q?ijPuKLOZV9AKS+wjLwWQH46H77B9Ob92WgDsOhP5ijvVVJgzU/Ydxq6BdHOa?=
+ =?us-ascii?Q?Dd8UXwM39vnKpNE7yrO5lICJHFYjWBbTVWMHrg6NYg4qShMSLS339RQlNs98?=
+ =?us-ascii?Q?86NKvz2KiPIkzzj5B0viGSyhTpVfwO8AYZC2M1VH1cVUBRP1fUHQV5e05KJX?=
+ =?us-ascii?Q?Hez4xHb+qckfU4wK/7rQqX/GOsNCDb/OME9hOIBCL56E9oH9CRUiTxVl2/Ps?=
+ =?us-ascii?Q?ntkcdFstHknWEARhsDJfzUDfxKRXwp4bpbC8ZMdaBgVMP+B7vnciXhi9Cp1J?=
+ =?us-ascii?Q?pr2fGleHSKuFJ812C5ZdJQ2v7qiVPQCoazCp7p++DprOrmDwrJUmQjB4mnC8?=
+ =?us-ascii?Q?iNAvPTEmdtK4IAbhSBLzaooKXmvibrmU0xg2r35LGpgNTomiY6GFxr6H+s7z?=
+ =?us-ascii?Q?MxdVE2pjT0xvb0auqF1zhc4dMwXgY7cR4oIMUd6Xb4vHaEWlbfcOpDCsBo4n?=
+ =?us-ascii?Q?y32seoufwywi3U65QYTlOm0IxNCCav/g46rcJkOWreqOaP+4CXIOPwsZaIwJ?=
+ =?us-ascii?Q?eUIvJiLrA/G8/YpapHS3ecauvgYoNIq8KWPbg55XlMtNR+kbAXOwajgV5iwo?=
+ =?us-ascii?Q?ZMnNh6YB4JjLv7VbevKf80EMpBMf5zruO8rRG0k2x77QodO5xOGoqnCgiigq?=
+ =?us-ascii?Q?EKxOQkwrmpXujg4fIP8qqA/c6PpeldvZMxPXZGjJeIl1iHMsE19dvHBTo7oW?=
+ =?us-ascii?Q?gFaGzWk8pGkHdqE+83P1b/JEFVmeciTBHIneAlmf4ghWGl86WOc77rxth1+g?=
+ =?us-ascii?Q?XJ+vfN4QgS31iCuvj8Kti+vpmFBZ0wEpCTX9JGOFreTi+Zia4z00WabZ6Cwg?=
+ =?us-ascii?Q?okuMUs7t1V5ULHJC1XBgrLXIfYa9nusll04pbnzF41OEdWVnFciqgLVsUzEB?=
+ =?us-ascii?Q?K7AjyYD9dzCCQA0+3ZfPgAWWHsu/C33pOlGo/rsOa9PV2FMkULjSyY2QnoNp?=
+ =?us-ascii?Q?F06KuXRWL3wXR0jJ0JlTNxIacyuD20mpU8uJw0tfggq+7zRbxEVH6vHBz2m7?=
+ =?us-ascii?Q?iJu6qnmrnFKmuaEIdDl9fgOMAoMGTeHNbM7yUcuO3dsAenDLxfws9ykD8qZC?=
+ =?us-ascii?Q?uFz9vMkOeYD37NaqejyqzAZBt7MuENTs4kChehlBzC3d1bxngIM9WuLDwlHR?=
+ =?us-ascii?Q?Xe6K5aYtTmr8wltX+YPtaIsTkTD3geeA0fzoos2tVVloQgYQM6kqgRQiu7Jj?=
+ =?us-ascii?Q?a5icAVPQJWSYKW1XkyT0MsizU+BGBtmfvw7X/aoZ9lcY5zk931msBCqOBDHt?=
+ =?us-ascii?Q?Uff2bTh8kuDqBgCwADHHiPiWUZul+a5+JfGJq/rfSMa6cyPY2COa9EvZLWlQ?=
+ =?us-ascii?Q?vLiA56XHLFGdBjvwQ+pIf2p1j5nE1sNI?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8642.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?EWgx1i8NKfgo+DLHzM0FUPkTtgfujHqVKQlmuPxxetLqMSp7SOXy1jEGbqvi?=
+ =?us-ascii?Q?dHCMQcQCbIDtLxQfcQJmAYsaOLhgE8x8mKw7jABw1Voohv3FimCnDuX9LZAp?=
+ =?us-ascii?Q?Hl7G+bnmTjyvTW8/+HNq8ptBrORsWhzW7ovpQtgldgBlrf1xADKDDuHeHit0?=
+ =?us-ascii?Q?ybtToMp7dY/EjcbTSgKd29NVVCG/SwFn4IZgHG1j7LCUET4XqoWkOlX3yV6i?=
+ =?us-ascii?Q?b8Q10r8UDPvQIuN+6to5UUEpOEG+5+WLk+rwhbE3vCuK7SSpA2fFpEG3vBqr?=
+ =?us-ascii?Q?I3INWKglnjololM9+BBYEjDGqOye8ciQHIJx93HnhSUHqpUjGAtV5sTpXy57?=
+ =?us-ascii?Q?hMQpRbg6csx2Cq46efYPyMXRAXYDQEF29sDc6+csVdWva87l6iMcGCViPxYQ?=
+ =?us-ascii?Q?uMTL20QPDFTlELkQKuu+vQ28TXiRdya/bR/SzrlyzLEhj6k0wQPiXaI3qIUx?=
+ =?us-ascii?Q?Q4vg9wmnATkoSCjwjs/kMn5eMfVD+RMZmWIv313n2rZXZxJUCFp8TDz++UOH?=
+ =?us-ascii?Q?aIPt7a+N8s7tK06qW4joIWm037cAmfka5tR+IM4CR6wMBmcHOyTg8nZXhVxg?=
+ =?us-ascii?Q?DQX59dCVnlSutch9fY4YeTHxiN39f2iVovJipB73kUuPq+2hRwKSIFM7hZlk?=
+ =?us-ascii?Q?FWxLaj/lPc737TjFEPEbaYGdncf1vYO17GmDKAcFx5CBNwg/bfqmqpSe3AdX?=
+ =?us-ascii?Q?XNPSmzTivTENhbl6OCGqSEc6pe4jg1UVedqBn7/QDg/V9b996j+V8OVzLgJv?=
+ =?us-ascii?Q?yU9l2JjSpYBITsLpJd+13lHJRfE/AYDKdC7Pl5/cQYTeLMAeXT2GUBPiu+T8?=
+ =?us-ascii?Q?UutnxAk+WnBXMFJLH1M3f7JxygdUqQDILyX7pQbdEYoU78Vo+46i8jL1bhko?=
+ =?us-ascii?Q?wlro3w3Js7gi2UKTTHOyRKI+NvMxa7zMiiWBj90hBI56MSc1tXFTotwHUndA?=
+ =?us-ascii?Q?cu7PVSxbdDaZ9EVJuRntu9IfZNyfIzn4tX7dPDbBUX/VHUZu+SEYFVfaJp0l?=
+ =?us-ascii?Q?1WiIrRmR7YRxhy1Vzbq1q6ci7P0KVxSlC/5ij08RtVBHcDRYWzn9Oj9sHWrD?=
+ =?us-ascii?Q?o0WFUWGWyJTbJi0j0zGQjCNMgwN1A0g5OVpZr/i0u1aaQI7oERjSppYLFUdT?=
+ =?us-ascii?Q?P1XaSCnQj1dHqEGrLVBTxmh99AmJJsh//yN4tnSGWwnCLrlAaBGvlm+88nG5?=
+ =?us-ascii?Q?XBax5AqrfAFUQeisZNW+sWXmg4BNVgxJAfVNL/HfloDgW5IU1qKkFMB80aAQ?=
+ =?us-ascii?Q?Rjl4Zjeq269DeEpV0G3fcBQMGOW7sNfPosOZzGUdQ267mo15vGvjGaNSrCna?=
+ =?us-ascii?Q?TazfWNnk8eQ8xuQPlTrI3h6WuDi0eJgGeX9rRJL0Hr7eP17+itSNtLui74VF?=
+ =?us-ascii?Q?vwfqrZ4EIevdsIyYRmdtU8DPiaJUZVj5aM/0TP6I1x/CBjSZp4pSEUhvBWkX?=
+ =?us-ascii?Q?TDN54dlKsOprPHrQaSZdYnfzhf4oe9J9Wx/Yzh3qY/KEoyKV3jgC7PJns2sO?=
+ =?us-ascii?Q?TLT3g/KnijQ46gtEFe8OGiAx6le6PshfnFSu29lv7/52Ab8Dx3gnZkSi2wLq?=
+ =?us-ascii?Q?kzD/sOGfDFOs7WrdhZc=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] coresight: tmc: Introduce new APIs to get the RWP
- offset of ETR buffer
-To: Mike Leach <mike.leach@linaro.org>
-CC: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        James Clark
-	<james.clark@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-References: <20250310090407.2069489-1-quic_jiegan@quicinc.com>
- <20250310090407.2069489-2-quic_jiegan@quicinc.com>
- <CAJ9a7Vh7PmBBbvwnUETfCYrTSiXNzeiWpsz+XAGaUWt1Rq1aZw@mail.gmail.com>
- <cef984d5-f369-4892-b970-a71285c2ebc5@quicinc.com>
- <CAJ9a7VhDD3813LtH_5AYyM-2mhCNP+vRmqXn4RWqg5F8FEe-Mg@mail.gmail.com>
-Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <CAJ9a7VhDD3813LtH_5AYyM-2mhCNP+vRmqXn4RWqg5F8FEe-Mg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RA-IN6iOG2SlSoI-qxq2UU325fK7wnyE
-X-Authority-Analysis: v=2.4 cv=aKnwqa9m c=1 sm=1 tr=0 ts=67d235b6 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=lQ6WigISvc1pitc9guYA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: RA-IN6iOG2SlSoI-qxq2UU325fK7wnyE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-13_01,2025-03-11_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=714 clxscore=1015
- adultscore=0 malwarescore=0 priorityscore=1501 phishscore=0 spamscore=0
- bulkscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0 suspectscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503130011
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8642.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 242e5f7d-3279-4a88-1d4e-08dd61cf3c81
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Mar 2025 01:34:45.7510
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: YFIBMJEZ2ffQtYGAyQhpX7TXQPfFt3Fgo33bgn8Vh6JcIh43/JZyKMn1fLa0l4+JqZKj9nxq4Yx2hSMPQqjWRA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8969
 
+> Subject: Re: [PATCH v2] cpufreq: Init cpufreq only for present CPUs
+>=20
+> On Wed, Mar 12, 2025 at 05:21:27PM +0800, Jacky Bai wrote:
+> > for_each_possible_cpu() is currently used to initialize cpufreq in
+> > below cpufreq drivers:
+> >   drivers/cpufreq/cpufreq-dt.c
+> >   drivers/cpufreq/mediatek-cpufreq-hw.c
+> >   drivers/cpufreq/mediatek-cpufreq.c
+> >   drivers/cpufreq/qcom-cpufreq-nvmem.c
+> >   drivers/cpufreq/sun50i-cpufreq-nvmem.c
+> >
+>=20
+> Just drop this list, totally redundant as diffstat must give that anyways=
+.
+> You have already made it stale as it doesn't match the diffstat.
+>=20
 
+Ok, will drop this in v3.
 
-On 3/12/2025 8:54 PM, Mike Leach wrote:
-> Hi Jie,
-> 
-> On Wed, 12 Mar 2025 at 01:21, Jie Gan <quic_jiegan@quicinc.com> wrote:
->>
->>
->>
->> On 3/12/2025 12:49 AM, Mike Leach wrote:
->>> Hi,
->>>
->>> On Mon, 10 Mar 2025 at 09:04, Jie Gan <quic_jiegan@quicinc.com> wrote:
->>>>
->>>> The new functions calculate and return the offset to the write pointer of
->>>> the ETR buffer based on whether the memory mode is SG, flat or reserved.
->>>> The functions have the RWP offset can directly read data from ETR buffer,
->>>> enabling the transfer of data to any required location.
->>>>
->>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->>>> ---
->>>>    .../hwtracing/coresight/coresight-tmc-etr.c   | 40 +++++++++++++++++++
->>>>    drivers/hwtracing/coresight/coresight-tmc.h   |  1 +
->>>>    2 files changed, 41 insertions(+)
->>>>
->>>> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
->>>> index eda7cdad0e2b..ec636ab1fd75 100644
->>>> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
->>>> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
->>>> @@ -267,6 +267,46 @@ void tmc_free_sg_table(struct tmc_sg_table *sg_table)
->>>>    }
->>>>    EXPORT_SYMBOL_GPL(tmc_free_sg_table);
->>>>
->>>> +static long tmc_flat_resrv_get_rwp_offset(struct tmc_drvdata *drvdata)
->>>> +{
->>>> +       dma_addr_t paddr = drvdata->sysfs_buf->hwaddr;
->>>> +       u64 rwp;
->>>> +
->>>
->>> It is not valid to read RWP if the TMC is running. It must be in the
->>> stopped or disabled state - see the specifications for TMC /ETR
->>>
->>> It is likely that CSUNLOCK / CSLOCK are needed here too,  along with
->>> the spinlock that protects drvdata
->>>
->>> See the code in coresight_tmc_etr.c :-
->>>
->>> e.g. in
->>>
->>> tmc_update_etr_buffer()
->>>
->>> ...
->>> <take spinlock>
->>> ...
->>> CS_UNLOCK(drvdata->base);
->>> tmc_flush_and_stop(drvdata); // this ensures tmc is stopped and
->>> flushed to memory - essential to ensure full formatted frame is in
->>> memory.
->>> tmc_sync_etr_buf(drvdata); // this function reads rwp.
->>> CS_LOCK(drvdata->base);
->>> <release spinlokc>
->>>
->>> This type of program flow is common to both sysfs and perf handling of
->>> TMC buffers.
->>
->> Hi Mike,
->>
->> I am fully understood your point here.
->>
->> The function is designed this way to read the w_offset (which may not be
->> entirely accurate because the etr buffer is not synced) when the
-> 
-> Why would you ever base memory access on a pointer that is not
-> entirely accurate?
-> 
-> The manuals for TMC/ETR all state that reads to both RWP and RRP when
-> the ETR is running return unknown values. These cannot be used to
-> access the buffer, or determine how much of the buffer has been used
-> on a running ETR.
-> 
-> The ETR specification specifically states that it is not permitted to
-> read the buffer data while the ETR is running, when configured in
-> circular buffer mode - which is the mode used in the TMC-ETR linux
-> drivers.
-> 
-> Reading the buffer while ETR is running is only permitted if
-> configured in Software FIFO mode 2 - were the ETR will stop on full
-> and stall incoming trace until some data is read out, signalled to the
-> ETR via the RURP.
-> 
-
-Hi Mike,
-
-I appreciate for your patient explanation.
-
-I was wrong about read data from etr_buffer. I must follow the 
-specification to design a method to reading buffer while ETR is running.
-
-How about the following method:
-
-1. The byte-cntr interrupt handler will count the IRQ triggered number 
-when byte-cntr file node is opened.
-2. Read the buffer after the ETR is stopped(full or stopped manually) 
-according to the counted number. we got the etr->offset, etr->size and 
-the counted number, so we can calculate the offset where starts to read.
-3. Restart the ETR to keep counting the number of IRQ triggers.
-
-Thanks,
-Jie
-
-> I also note that you are reading back the etr_buf data without doing
-> any dma_sync operations that the perf and sysfs methods in the driver
-> do, after stopping the tmc.
-> 
->> byte-cntr devnode is opened, aiming to reduce the length of redundant
->> trace data. In this case, we cannot ensure the TMC is stopped or
->> disabled.
-> 
-> The specification requires that you must ensure the TMC is stopped to
-> read these registers.
-> 
-> 
->> The byte-cntr only requires an offset to know where it can
->> start before the expected trace data gets into ETR buffer.
->>
->> The w_offset is also read when the byte-cntr function stops, which
->> occurs after the TMC is disabled.
->>
->> Maybe this is not a good idea and I should read r_offset upon open?
->> The primary goal for byte-cntr is trying to transfer useful trace data
->> from the ETR buffer to the userspace, if we start from r_offset, a large
->> number of redundant trace data which the user does not expect will be
->> transferred simultaneously.
->>
->>
-> 
-> It is difficult to justify adding code to a driver that does not
-> correspond to the specification of the hardware device.
-> 
-> Regards
-> 
-> Mike
-> 
->>>
->>>> +       rwp = tmc_read_rwp(drvdata);
->>>> +       return rwp - paddr;
->>>> +}
->>>> +
->>>> +static long tmc_sg_get_rwp_offset(struct tmc_drvdata *drvdata)
->>>> +{
->>>> +       struct etr_buf *etr_buf = drvdata->sysfs_buf;
->>>> +       struct etr_sg_table *etr_table = etr_buf->private;
->>>> +       struct tmc_sg_table *table = etr_table->sg_table;
->>>> +       long w_offset;
->>>> +       u64 rwp;
->>>> +
->>>
->>> Same comments as above
->>>
->>>> +       rwp = tmc_read_rwp(drvdata);
->>>> +       w_offset = tmc_sg_get_data_page_offset(table, rwp);
->>>> +
->>>> +       return w_offset;
->>>> +}
->>>> +
->>>> +/*
->>>> + * Retrieve the offset to the write pointer of the ETR buffer based on whether
->>>> + * the memory mode is SG, flat or reserved.
->>>> + */
->>>> +long tmc_get_rwp_offset(struct tmc_drvdata *drvdata)
->>>> +{
->>>> +       struct etr_buf *etr_buf = drvdata->sysfs_buf;
->>>> +
->>>
->>> As this is an exported function, please ensure that the inputs are
->>> valid - check the pointers
->>
->> Sure, will do.
->>
->> Thanks,
->> Jie
->>
->>>
->>> Code to ensure TMC is flushed and stopped could be inserted here.
->>>
->>> Regards
->>>
->>> Mike
->>>
->>>> +       if (etr_buf->mode == ETR_MODE_ETR_SG)
->>>> +               return tmc_sg_get_rwp_offset(drvdata);
->>>> +       else if (etr_buf->mode == ETR_MODE_FLAT || etr_buf->mode == ETR_MODE_RESRV)
->>>> +               return tmc_flat_resrv_get_rwp_offset(drvdata);
->>>> +       else
->>>> +               return -EINVAL;
->>>> +}
->>>> +EXPORT_SYMBOL_GPL(tmc_get_rwp_offset);
->>>> +
->>>>    /*
->>>>     * Alloc pages for the table. Since this will be used by the device,
->>>>     * allocate the pages closer to the device (i.e, dev_to_node(dev)
->>>> diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
->>>> index b48bc9a01cc0..baedb4dcfc3f 100644
->>>> --- a/drivers/hwtracing/coresight/coresight-tmc.h
->>>> +++ b/drivers/hwtracing/coresight/coresight-tmc.h
->>>> @@ -442,5 +442,6 @@ void tmc_etr_remove_catu_ops(void);
->>>>    struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
->>>>                                      enum cs_mode mode, void *data);
->>>>    extern const struct attribute_group coresight_etr_group;
->>>> +long tmc_get_rwp_offset(struct tmc_drvdata *drvdata);
->>>>
->>>>    #endif
->>>> --
->>>> 2.34.1
->>>>
->>>
->>>
->>
-> 
-> 
+BR
+> With that fixed:
+>=20
+> Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+>=20
+> > However, in cpu_dev_register_generic(), for_each_present_cpu() is used
+> > to register CPU devices which means the CPU devices are only
+> > registered for present CPUs and not all possible CPUs.
+> >
+> > With nosmp or maxcpus=3D0, only the boot CPU is present, lead to the
+> > cpufreq probe failure or defer probe due to no cpu device available
+> > for not present CPUs.
+> >
+> > Change for_each_possible_cpu() to for_each_present_cpu() in the above
+> > cpufreq drivers to ensure it only registers cpufreq for CPUs that are
+> > actually present.
+> >
+> > Fixes: b0c69e1214bc ("drivers: base: Use present CPUs in
+> > GENERIC_CPU_DEVICES")
+> > Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+> > ---
+> >  - v2 changes:
+> >   - Add changes for armada-8k-cpufreq, mvebu-cpfureq, qcome-cpufreq-hw,
+> >     scmi-cpufreq, scpi-cpufreq, virtual-cpufreq.
+> > ---
+> >  drivers/cpufreq/armada-8k-cpufreq.c    | 2 +-
+> >  drivers/cpufreq/cpufreq-dt.c           | 2 +-
+> >  drivers/cpufreq/mediatek-cpufreq-hw.c  | 2 +-
+> >  drivers/cpufreq/mediatek-cpufreq.c     | 2 +-
+> >  drivers/cpufreq/mvebu-cpufreq.c        | 2 +-
+> >  drivers/cpufreq/qcom-cpufreq-hw.c      | 2 +-
+> >  drivers/cpufreq/qcom-cpufreq-nvmem.c   | 8 ++++----
+> >  drivers/cpufreq/scmi-cpufreq.c         | 2 +-
+> >  drivers/cpufreq/scpi-cpufreq.c         | 2 +-
+> >  drivers/cpufreq/sun50i-cpufreq-nvmem.c | 6 +++---
+> >  drivers/cpufreq/virtual-cpufreq.c      | 2 +-
+> >  11 files changed, 16 insertions(+), 16 deletions(-)
+> >
+> > diff --git a/drivers/cpufreq/armada-8k-cpufreq.c
+> > b/drivers/cpufreq/armada-8k-cpufreq.c
+> > index 7a979db81f09..5a3545bd0d8d 100644
+> > --- a/drivers/cpufreq/armada-8k-cpufreq.c
+> > +++ b/drivers/cpufreq/armada-8k-cpufreq.c
+> > @@ -47,7 +47,7 @@ static void __init armada_8k_get_sharing_cpus(struct
+> > clk *cur_clk,  {
+> >  	int cpu;
+> >
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		struct device *cpu_dev;
+> >  		struct clk *clk;
+> >
+> > diff --git a/drivers/cpufreq/cpufreq-dt.c
+> > b/drivers/cpufreq/cpufreq-dt.c index 778916f89a51..e80dd982a3e2 100644
+> > --- a/drivers/cpufreq/cpufreq-dt.c
+> > +++ b/drivers/cpufreq/cpufreq-dt.c
+> > @@ -283,7 +283,7 @@ static int dt_cpufreq_probe(struct platform_device
+> *pdev)
+> >  	int ret, cpu;
+> >
+> >  	/* Request resources early so we can return in case of -EPROBE_DEFER =
+*/
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		ret =3D dt_cpufreq_early_init(&pdev->dev, cpu);
+> >  		if (ret)
+> >  			goto err;
+> > diff --git a/drivers/cpufreq/mediatek-cpufreq-hw.c
+> > b/drivers/cpufreq/mediatek-cpufreq-hw.c
+> > index aa209f5527dc..74f1b4c796e4 100644
+> > --- a/drivers/cpufreq/mediatek-cpufreq-hw.c
+> > +++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
+> > @@ -303,7 +303,7 @@ static int mtk_cpufreq_hw_driver_probe(struct
+> platform_device *pdev)
+> >  	struct regulator *cpu_reg;
+> >
+> >  	/* Make sure that all CPU supplies are available before proceeding. *=
+/
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		cpu_dev =3D get_cpu_device(cpu);
+> >  		if (!cpu_dev)
+> >  			return dev_err_probe(&pdev->dev, -EPROBE_DEFER, diff --git
+> > a/drivers/cpufreq/mediatek-cpufreq.c
+> > b/drivers/cpufreq/mediatek-cpufreq.c
+> > index 2656b88db378..f3f02c4b6888 100644
+> > --- a/drivers/cpufreq/mediatek-cpufreq.c
+> > +++ b/drivers/cpufreq/mediatek-cpufreq.c
+> > @@ -631,7 +631,7 @@ static int mtk_cpufreq_probe(struct platform_device
+> *pdev)
+> >  		return dev_err_probe(&pdev->dev, -ENODEV,
+> >  				     "failed to get mtk cpufreq platform data\n");
+> >
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		info =3D mtk_cpu_dvfs_info_lookup(cpu);
+> >  		if (info)
+> >  			continue;
+> > diff --git a/drivers/cpufreq/mvebu-cpufreq.c
+> > b/drivers/cpufreq/mvebu-cpufreq.c index 7f3cfe668f30..2aad4c04673c
+> > 100644
+> > --- a/drivers/cpufreq/mvebu-cpufreq.c
+> > +++ b/drivers/cpufreq/mvebu-cpufreq.c
+> > @@ -56,7 +56,7 @@ static int __init armada_xp_pmsu_cpufreq_init(void)
+> >  	 * it), and registers the clock notifier that will take care
+> >  	 * of doing the PMSU part of a frequency transition.
+> >  	 */
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		struct device *cpu_dev;
+> >  		struct clk *clk;
+> >  		int ret;
+> > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c
+> > b/drivers/cpufreq/qcom-cpufreq-hw.c
+> > index 4b3b3dbc7d38..8422704a3b10 100644
+> > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> > @@ -306,7 +306,7 @@ static void qcom_get_related_cpus(int index, struct
+> cpumask *m)
+> >  	struct of_phandle_args args;
+> >  	int cpu, ret;
+> >
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		cpu_np =3D of_cpu_device_node_get(cpu);
+> >  		if (!cpu_np)
+> >  			continue;
+> > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > index 3a8ed723a23e..54f8117103c8 100644
+> > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > @@ -489,7 +489,7 @@ static int qcom_cpufreq_probe(struct
+> platform_device *pdev)
+> >  		nvmem_cell_put(speedbin_nvmem);
+> >  	}
+> >
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		struct dev_pm_opp_config config =3D {
+> >  			.supported_hw =3D NULL,
+> >  		};
+> > @@ -543,7 +543,7 @@ static int qcom_cpufreq_probe(struct
+> platform_device *pdev)
+> >  	dev_err(cpu_dev, "Failed to register platform device\n");
+> >
+> >  free_opp:
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		dev_pm_domain_detach_list(drv->cpus[cpu].pd_list);
+> >  		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+> >  	}
+> > @@ -557,7 +557,7 @@ static void qcom_cpufreq_remove(struct
+> > platform_device *pdev)
+> >
+> >  	platform_device_unregister(cpufreq_dt_pdev);
+> >
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		dev_pm_domain_detach_list(drv->cpus[cpu].pd_list);
+> >  		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+> >  	}
+> > @@ -568,7 +568,7 @@ static int qcom_cpufreq_suspend(struct device *dev)
+> >  	struct qcom_cpufreq_drv *drv =3D dev_get_drvdata(dev);
+> >  	unsigned int cpu;
+> >
+> > -	for_each_possible_cpu(cpu)
+> > +	for_each_present_cpu(cpu)
+> >  		qcom_cpufreq_suspend_pd_devs(drv, cpu);
+> >
+> >  	return 0;
+> > diff --git a/drivers/cpufreq/scmi-cpufreq.c
+> > b/drivers/cpufreq/scmi-cpufreq.c index ff2897789797..c310aeebc8f3
+> > 100644
+> > --- a/drivers/cpufreq/scmi-cpufreq.c
+> > +++ b/drivers/cpufreq/scmi-cpufreq.c
+> > @@ -104,7 +104,7 @@ scmi_get_sharing_cpus(struct device *cpu_dev, int
+> domain,
+> >  	int cpu, tdomain;
+> >  	struct device *tcpu_dev;
+> >
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		if (cpu =3D=3D cpu_dev->id)
+> >  			continue;
+> >
+> > diff --git a/drivers/cpufreq/scpi-cpufreq.c
+> > b/drivers/cpufreq/scpi-cpufreq.c index 048dc43a9997..17cda84f00df
+> > 100644
+> > --- a/drivers/cpufreq/scpi-cpufreq.c
+> > +++ b/drivers/cpufreq/scpi-cpufreq.c
+> > @@ -65,7 +65,7 @@ scpi_get_sharing_cpus(struct device *cpu_dev, struct
+> cpumask *cpumask)
+> >  	if (domain < 0)
+> >  		return domain;
+> >
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		if (cpu =3D=3D cpu_dev->id)
+> >  			continue;
+> >
+> > diff --git a/drivers/cpufreq/sun50i-cpufreq-nvmem.c
+> > b/drivers/cpufreq/sun50i-cpufreq-nvmem.c
+> > index 17d6a149f580..47d6840b3489 100644
+> > --- a/drivers/cpufreq/sun50i-cpufreq-nvmem.c
+> > +++ b/drivers/cpufreq/sun50i-cpufreq-nvmem.c
+> > @@ -262,7 +262,7 @@ static int sun50i_cpufreq_nvmem_probe(struct
+> platform_device *pdev)
+> >  	snprintf(name, sizeof(name), "speed%d", speed);
+> >  	config.prop_name =3D name;
+> >
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		struct device *cpu_dev =3D get_cpu_device(cpu);
+> >
+> >  		if (!cpu_dev) {
+> > @@ -288,7 +288,7 @@ static int sun50i_cpufreq_nvmem_probe(struct
+> platform_device *pdev)
+> >  	pr_err("Failed to register platform device\n");
+> >
+> >  free_opp:
+> > -	for_each_possible_cpu(cpu)
+> > +	for_each_present_cpu(cpu)
+> >  		dev_pm_opp_clear_config(opp_tokens[cpu]);
+> >  	kfree(opp_tokens);
+> >
+> > @@ -302,7 +302,7 @@ static void sun50i_cpufreq_nvmem_remove(struct
+> > platform_device *pdev)
+> >
+> >  	platform_device_unregister(cpufreq_dt_pdev);
+> >
+> > -	for_each_possible_cpu(cpu)
+> > +	for_each_present_cpu(cpu)
+> >  		dev_pm_opp_clear_config(opp_tokens[cpu]);
+> >
+> >  	kfree(opp_tokens);
+> > diff --git a/drivers/cpufreq/virtual-cpufreq.c
+> > b/drivers/cpufreq/virtual-cpufreq.c
+> > index 45becb92aa4a..7dd1b0c263c7 100644
+> > --- a/drivers/cpufreq/virtual-cpufreq.c
+> > +++ b/drivers/cpufreq/virtual-cpufreq.c
+> > @@ -138,7 +138,7 @@ static int virt_cpufreq_get_sharing_cpus(struct
+> cpufreq_policy *policy)
+> >  	cur_perf_domain =3D readl_relaxed(base + policy->cpu *
+> >  					PER_CPU_OFFSET + REG_PERF_DOMAIN_OFFSET);
+> >
+> > -	for_each_possible_cpu(cpu) {
+> > +	for_each_present_cpu(cpu) {
+> >  		cpu_dev =3D get_cpu_device(cpu);
+> >  		if (!cpu_dev)
+> >  			continue;
+> > --
+> > 2.34.1
+> >
+>=20
 > --
-> Mike Leach
-> Principal Engineer, ARM Ltd.
-> Manchester Design Centre. UK
-
+> Regards,
+> Sudeep
 
