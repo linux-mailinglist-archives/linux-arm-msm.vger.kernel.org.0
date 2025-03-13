@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-51287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 469BFA5F389
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 12:58:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 88354A5F3EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 13:12:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F25C3189DBFD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 11:58:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F9FA19C3499
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 12:12:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89CDA266591;
-	Thu, 13 Mar 2025 11:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7938267711;
+	Thu, 13 Mar 2025 12:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TLqsh3jt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KjZHgtMQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE90B1FAC4F;
-	Thu, 13 Mar 2025 11:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26252676E4;
+	Thu, 13 Mar 2025 12:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741867076; cv=none; b=mDbNYUJXXHlthvQlBxP77dDqUgoqXnTii9ma8rwQwO/roVQiqsBmmgLzJrn6pg6BxFgQ1j2hji6spOWdgpMiijAt5e9fczqqVLGVanT5YZ0VdkbvNwy5530NbwZ2YKtnJBVd2zu8EIP0nQ4HaosRrxJ0ep2byZc6Z35Fd0EKg6c=
+	t=1741867844; cv=none; b=WnS9h5bnL9iPvgarxVwU5DGbPc0o8mz10U51CvuA6Ot8HpmmBKeocGxE3pAqUqbbhoA4i/7JxB/BmCQwpht4M2yGa7PaL0LrYV3VhkXTHIkvAWIDZX/ueSGcDkn8gtAE7awm/h58hNnZMmisUES0+Hedfq1R09kpeQEnUMQcM5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741867076; c=relaxed/simple;
-	bh=VaZGpDHXocsmDGsVUFDMwOt40aVSLOI7VseTZBWQkWs=;
+	s=arc-20240116; t=1741867844; c=relaxed/simple;
+	bh=9egwuzH1xL76Hz6x87GbA/aHFSCxZ6dXs4aookVRQdw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bs7Ycfk74IxySyEhatIns40KQyJM3NcgucSaQ2xP76R7sDKmGPQW64ypAiHHIfhh9DLWE9KAbMVeIj8SwHZzHXOyJ7JFvUuNLxroNZ2S45LEF05Rns4fAcNB//nBBGHbIC0Fbc7CvidF+laknJK54hcYT94OGP+BU2L1Njvh8VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TLqsh3jt; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=P2z+wKmW2yYCNOMf6xBT7whBv1GhoGIHXHgayuoishc9Cu9ZXkEBYwJi+MhIsSrGWkK36+v4Yna5FR48Q9RBmfUbaw30d75q6do+fDuKyxK+9Qukz8kIfYe3O1Tdzux0YhDIjlOtlY/r6bU7/Cx1BtruNAMoxoZLqZpW5lsZj+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KjZHgtMQ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52DAj7Au031333;
-	Thu, 13 Mar 2025 11:57:49 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52D7CAmG019811;
+	Thu, 13 Mar 2025 12:10:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7tD6dwPDuG5atjXLy17A7KJWot+nURvVIM+MNsUqmK0=; b=TLqsh3jtGtvFmzTV
-	3yW0dUMVrAtCaMzmLYzXy0PO9imv1s4CfNX7bwxygLAQXmDJSifGgbbRRSFcVu3l
-	P8Ih87r7tHu+rX2nDFFrRbeXsMTB6UaQAnZKP54C8Sb17wE2+JYKcD6OGntOYpBM
-	i9rUcS4yC3pAqQpqCkBYN8dVIi5nChmjDcHg00YV0OWBzHUeCAaCe5gjfU0DOt2K
-	yKGlMb7i5E2lUJVnxj7jSURGZ+83uOSpmIjoitu7e04+cvKdJFq3WvYxtEDl7MEr
-	4JO+b7lAggitLw/CpAqSaJKxDQ+MsAY9tJeXtBPG4AufdmS7Oa0LKIyfJRCopPok
-	jkfkJA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2qnrpj-1
+	c7UkRMW05zKg8RDl3mwjjPVBN91r1eiT1QbA7lGZtpA=; b=KjZHgtMQ4FccHN6q
+	cMJ3mkAz/0+eZDAqqFbNquykWNWZuzhDQizsUJPq8sYxzG491d8EBzV0ERnLi+su
+	NZmYf7bDVGjmZGEuZJDP1zathfnmDkP8rcZKXd7Dhd2XVjf2ae2XcH6ApMpT3WG6
+	4vsJUHnK9SKQMQM6FNFTOT3Eruu5bkZWT57lNprYHUPYKHweH5xzVrot+5ayFw6X
+	YYMpRra51u4o5iMe9hpHVPPXlCCjw9zHoKuuvuOTLXNrKYmJ8YbKD9qfqNb+nipL
+	JJ7Gno+rBp66gmXmomgyZrV9lVpo9QbWnPIIFbLi8gFLRN41gERlIsSrEPqVNQ92
+	0wvrzg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45bts0gu45-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Mar 2025 11:57:49 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52DBvmiF028615
+	Thu, 13 Mar 2025 12:10:18 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52DCAHEO015684
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Mar 2025 11:57:48 GMT
-Received: from [10.217.216.178] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 13 Mar 2025 12:10:17 GMT
+Received: from [10.204.66.137] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 13 Mar
- 2025 04:57:44 -0700
-Message-ID: <d64c0776-0b12-42d3-aed3-4e6a13487f51@quicinc.com>
-Date: Thu, 13 Mar 2025 17:27:40 +0530
+ 2025 05:10:10 -0700
+Message-ID: <d64bf3b3-7c4d-490e-8bd7-1ad889aa7472@quicinc.com>
+Date: Thu, 13 Mar 2025 17:40:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,120 +65,182 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550: Additionally manage MXC
- power domain in camcc
-To: Luca Weiss <luca.weiss@fairphone.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Jagadeesh Kona
-	<quic_jkona@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-References: <20250303225521.1780611-1-vladimir.zapolskiy@linaro.org>
- <20250303225521.1780611-3-vladimir.zapolskiy@linaro.org>
- <dbxvzgqs5slrl5edqunal3wplg5jiszqv46dr4nzgowwlhkhxa@qwtfq7nfjwfo>
- <3210a484-b9c3-4399-bee1-9f5bbc90034c@linaro.org>
- <CAA8EJprP9Z181VDCT=xfyrBipzgiB0tfb8M_XZ4H=yOrvEnB0w@mail.gmail.com>
- <f41061a2-cf45-4588-8df7-22270c936ee2@quicinc.com>
- <D8EZ47Z557OX.37FDVYA5AHET0@fairphone.com>
+Subject: Re: [PATCH v2 07/10] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
+ to DP bridge nodes
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
+        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <andersson@kernel.org>,
+        <robh@kernel.org>, <robh+dt@kernel.org>, <krzk+dt@kernel.org>,
+        <konradybcio@kernel.org>, <conor+dt@kernel.org>,
+        <andrzej.hajda@intel.com>, <neil.armstrong@linaro.org>,
+        <rfoss@kernel.org>, <Laurent.pinchart@ideasonboard.com>,
+        <jonas@kwiboo.se>, <jernej.skrabec@gmail.com>,
+        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
+        <quic_vproddut@quicinc.com>, <quic_jesszhan@quicinc.com>
+References: <20250311122445.3597100-1-quic_amakhija@quicinc.com>
+ <20250311122445.3597100-8-quic_amakhija@quicinc.com>
+ <20250312-athletic-cockle-of-happiness-e88a3a@krzk-bin>
 Content-Language: en-US
-From: Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <D8EZ47Z557OX.37FDVYA5AHET0@fairphone.com>
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+In-Reply-To: <20250312-athletic-cockle-of-happiness-e88a3a@krzk-bin>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KIMEmnqJHATUj4x8LX3ybJ73x5S5LXyH
-X-Proofpoint-GUID: KIMEmnqJHATUj4x8LX3ybJ73x5S5LXyH
-X-Authority-Analysis: v=2.4 cv=TIhFS0la c=1 sm=1 tr=0 ts=67d2c83d cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
- a=EzFUx7Xx5Uxcnu-jchQA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 6BtJ98pGmkmWzLj0xA-sndcThuicNPoa
+X-Authority-Analysis: v=2.4 cv=DNSP4zNb c=1 sm=1 tr=0 ts=67d2cb2a cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=UXIAUNObAAAA:8 a=COk6AnOGAAAA:8 a=2y1opo3hKBB_uxp-C3oA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bFq2RbqkfqsA:10 a=a1s67YnXd6TbAZZNj1wK:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: 6BtJ98pGmkmWzLj0xA-sndcThuicNPoa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-13_05,2025-03-11_02,2024-11-22_01
+ definitions=2025-03-13_06,2025-03-11_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=595 mlxscore=0 clxscore=1011 bulkscore=0
- malwarescore=0 suspectscore=0 spamscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ clxscore=1015 phishscore=0 malwarescore=0 mlxlogscore=999
+ priorityscore=1501 mlxscore=0 spamscore=0 bulkscore=0 impostorscore=0
+ suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503130094
+ definitions=main-2503130095
+
+On 3/12/2025 5:18 PM, Krzysztof Kozlowski wrote:
+> On Tue, Mar 11, 2025 at 05:54:42PM +0530, Ayushi Makhija wrote:
+>> Add anx7625 DSI to DP bridge device nodes.
+>>
+>> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 208 ++++++++++++++++++++-
+>>  1 file changed, 207 insertions(+), 1 deletion(-)
+>>
+> 
+> So you just gave up after one comment? Context of every email should be
+> trimmed, so if it is not trimmed means something is still there. I know
+> there are reviewers who respond with huge unrelated context, but that's
+> just disrespectful to our time and don't take it as normal.
+> 
+> <form letter>
+> This is a friendly reminder during the review process.
+> 
+> It seems my or other reviewer's previous comments were not fully
+> addressed. Maybe the feedback got lost between the quotes, maybe you
+> just forgot to apply it. Please go back to the previous discussion and
+> either implement all requested changes or keep discussing them.
+> 
+> Thank you.
+> </form letter>
+> 
+
+Hi Krzysztof,
+
+Thanks, for the review.
+
+I apologize for any confusion or oversight regarding the recent review comments.
+Thank you for your patience and understanding. I value your time and feedback and will work to improve the review process.
+
+Below are the comments on the patch 7 and patch 8 of the version 1 of the series, that I have addressed in version 2 of patch 7 of the series.
+Let me know, If I did some mistake or if you have any other suggestions.
+
+Comments from Konard:
+
+comment 1
+
+> -	pinctrl-0 = <&qup_i2c18_default>;
+> +	pinctrl-0 = <&qup_i2c18_default>,
+> +			<&io_expander_intr_active>,
+> +			<&io_expander_reset_active>;
+
+Please align the '<'s
+
+comment 2
+
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <98 IRQ_TYPE_EDGE_BOTH>;
+
+use interrupts-extended, here and below
+
+These above two comments were from the konard in patch 7 in version 1 of the series.
+I have addressed both the above comments in the version 2 of patch 7 of the series.
 
 
 
-On 3/13/2025 1:22 PM, Luca Weiss wrote:
-> Hi Taniya,
-> 
-> On Thu Mar 13, 2025 at 5:39 AM CET, Taniya Das wrote:
->>
->>
->> On 3/4/2025 2:10 PM, Dmitry Baryshkov wrote:
->>> On Tue, 4 Mar 2025 at 09:37, Vladimir Zapolskiy
->>> <vladimir.zapolskiy@linaro.org> wrote:
->>>>
->>>> On 3/4/25 01:53, Dmitry Baryshkov wrote:
->>>>> On Tue, Mar 04, 2025 at 12:55:21AM +0200, Vladimir Zapolskiy wrote:
->>>>>> SM8550 Camera Clock Controller shall enable both MXC and MMCX power
->>>>>> domains.
->>>>>
->>>>> Are those really required to access the registers of the cammcc? Or is
->>>>> one of those (MXC?) required to setup PLLs? Also, is this applicable
->>>>> only to sm8550 or to other similar clock controllers?
->>>>
->>>> Due to the described problem I experience a fatal CPU stall on SM8550-QRD,
->>>> not on any SM8450 or SM8650 powered board for instance, however it does
->>>> not exclude an option that the problem has to be fixed for other clock
->>>> controllers, but it's Qualcomm to confirm any other touched platforms,
->>>
->>> Please work with Taniya to identify used power domains.
->>>
->>
->> CAMCC requires both MMCX and MXC to be functional.
-> 
-> Could you check whether any clock controllers on SM6350/SM7225 (Bitra)
-> need multiple power domains, or in general which clock controller uses
-> which power domain.
-> 
-> That SoC has camcc, dispcc, gcc, gpucc, npucc and videocc.
-> 
-> That'd be highly appreciated since I've been hitting weird issues there
-> that could be explained by some missing power domains.
-> 
+Comments from Krzysztof:
 
-Hi Luca,
+comment 1
 
-The targets you mentioned does not have any have multiple rail
-dependency, but could you share the weird issues with respect to clock
-controller I can take a look.
+> +
+> +		dsi0_int_pin: gpio2_cfg {
+No underscores, see DTS coding style.
 
-> Regards
-> Luca
-> 
->>
->>>> for instance x1e80100-camcc has it resolved right at the beginning.
->>>>
->>>> To my understanding here 'required-opps' shall also be generalized, so
->>>> the done copy from x1e80100-camcc was improper, and the latter dt-binding
->>>> should be fixed.
->>>
->>> Yes
->>>
->>
->> required-opps is not mandatory for MXC as we ensure that MxC would never
->> hit retention.
->>
->> https://lore.kernel.org/r/20240625-avoid_mxc_retention-v2-1-af9c2f549a5f@quicinc.com
->>
->>
->>>
->>>
-> 
+I have corrected the above comment in the version 2 of patch 7 of the series.
 
+comment 2
+
+> +
+> +			anx_bridge_1: anx7625@58 {
+
+Node names should be generic. See also an explanation and list of
+examples (not exhaustive) in DT specification:
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+
+In this I have changed the node name as anx_bridge1 : anx7625@58.
+Let me know, if I did some mistake or you have any other suggestion over the node name.
+
+I have took the reference from below:
+linux/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi at 629c635eafbaf18260c8083360745c71674640d2 · torvalds/linux · GitHub
+
+comment 3
+
+> +				enable-gpios = <&io_expander 1 0>;
+> +				reset-gpios = <&io_expander 0 0>;
+Use proper defines.
+
+For this above comment,  I have changed above lines into below lines in patch 7 of version 2 of the series.
+
+> +				enable-gpios = <&io_expander 1 GPIO_ACTIVE_HIGH>;
+> +				reset-gpios = <&io_expander 0 GPIO_ACTIVE_HIGH>;
+
+comment 4
+
+> +
+> +			anx_bridge_2: anx7625@58 {
+
+Node names should be generic. See also an explanation and list of
+examples (not exhaustive) in DT specification:
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+
+In this I have changed the node name as anx_bridge2 : anx7625@58.
+Let me know, if I did some mistake or you have any other suggestion over the node name.
+
+I have took the reference from below:
+linux/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi at 629c635eafbaf18260c8083360745c71674640d2 · torvalds/linux · GitHub
+
+comment 5
+
+And as Rob's bot pointed out: insufficient testing. :(
+Please be 100% sure everything is tested before you post new version.
+You shouldn't use reviewers for the job of tools, that's quite waste of
+our time.
+
+Fixed the  above warning from DT checker against DT binding in patch 7 of version 2 of the series.
+
+
+Comments from Dmitry:
+
+comment 1
+
+Missing dp-connector devices. Please add them together with the bridges. 
+
+comment 2
+
+Please squash into the previous patch. It doesn't make a lot of sense separately.
+
+These both above commented from Dmitry I have addressed in the version 2 of patch 7 of the series.
+I have squash patch 8 into patch 7 of version 1 into patch 7 of version 2 of the series.
+
+
+Thanks,
+Ayushi
 
