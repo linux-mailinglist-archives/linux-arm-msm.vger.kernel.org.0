@@ -1,58 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-51331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 145E9A6050C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 00:06:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7F66A6052F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 00:17:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 49B1417E78B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 23:06:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8E8F19C38E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 23:17:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E91A41F76D3;
-	Thu, 13 Mar 2025 23:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D66F1F8733;
+	Thu, 13 Mar 2025 23:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JsAZIMeS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RrkrBhnB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52C018DB0B;
-	Thu, 13 Mar 2025 23:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7691F4E21;
+	Thu, 13 Mar 2025 23:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741907208; cv=none; b=o7RvKkVMOpkH0OD1TuvL6cvJIf3IPlcbDTo7ovdywxauyTgzpq4/Dcqa/Ttbr2HUvIVb/OJ3GEQAJIZ4i6ZxHwAkOWGq+qwHRzDkiaEyttM4i6n2CKmmj9OX/9YFPvS008/rtAZpGeWRhIzDn+PFKbN70oKLUOgu1alpE0AsB9A=
+	t=1741907851; cv=none; b=IJd55PViuCIYl9WRNh5qp3CT3Tl0i/xGn3qFtysH9e7wE4YaLWUDScAPXXTVxsNsza1hm9p44h7ou+4cAdkjkjDAoZJKauS6uHH6XxID9+UlVF3fKDfAjBPG+hOsvlYvvOCL+oD7E1KLHnFoMAx5SCP+Vzyo/DiOSo9dQxNx3Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741907208; c=relaxed/simple;
-	bh=0UAgLw6E5fMxghBPUcUr1YC5wDKAXkzRKCvdfBrEOek=;
+	s=arc-20240116; t=1741907851; c=relaxed/simple;
+	bh=gI6Vkk5pCHvVr9ev1OnfwJmpTV6cEVLcUS5gCw6YFIM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=duOAElX2MTIXLeDUPdTICukBjDHJNy3WE0LRbg2KewdQheX+Sb/pBilUSrpvoLLGmD8UPFij0oWeGsAclXGM2rR6AxGWcun4q9vC+A1om/rJBfxM7NjD9ZAfaa9Y7767z2UI83Q7wmX57anZD/xDb0Pf9Q8dW8LxoqO1i6rIyjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JsAZIMeS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C70AC4CEDD;
-	Thu, 13 Mar 2025 23:06:47 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=hIecijh0/JnrxorBjvu4UXhTO+5e2nI6Ml3rpe0tx5iljAvtYsy+fznoNRhKA7tYHJKknsPv7BTX89K1USp17mCrR57KlRVRY1eqEYsmulPZgdkRD8ludKq3gjYF2RX99pjSYfQ2egKk0Kzji3lCP8/mu3vPcz0PkKVsIV8uwRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RrkrBhnB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13932C4CEE5;
+	Thu, 13 Mar 2025 23:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741907208;
-	bh=0UAgLw6E5fMxghBPUcUr1YC5wDKAXkzRKCvdfBrEOek=;
+	s=k20201202; t=1741907850;
+	bh=gI6Vkk5pCHvVr9ev1OnfwJmpTV6cEVLcUS5gCw6YFIM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JsAZIMeSVGH0xxnfm6a7NU3amHURgBKewUUqNu1qMyXa446UZnn/Vzg7IZdXEX76u
-	 b/pDggX2dzAk3Gzr7actRGVnbUC/eqpy9M6toa1fA2nSiODlwxVxB+Mvv1sP8UZ//X
-	 +5QIIiMJ/8kVL4cZBqXdPobuafnVQoQlY4cQrpiYcy4H9eJJups5TzGPhoxvMuaNnm
-	 kl5O1TKLdmkY3SqHergV/5svibmF1fcVKjGKM4xoOpfy6bQAWczQotzzRoN2blbwjH
-	 gIqRDj1shL8Tjc/NUbENFCdrp3bJKf9pap2y9YHLvMNTcrDj7SgAgJPEM9dUGYpzfo
-	 Xd1hAyU5HFXjg==
-Date: Thu, 13 Mar 2025 18:06:45 -0500
+	b=RrkrBhnBy64+OjE/MXzY1f53GutfxRbGgBOvbSBx8/8+f1Xk+9hzlFoIVChNlyT6r
+	 buipkBH+b50As29cs96OvHLlE6MlHe/qFDS6fgZx5GuZY6MYlclmVIxFvRByw7Ssrt
+	 xMonJLgCO64j8jRA85B1IWLXcdayvm8vqv2a2xOsGmsGaWrxBuuRKKXDlFlZj2Ao+b
+	 g0bAKkX0TAur49zYccU4w6W8Htx6RCtoJZk0MeyICYSOBpSP/yVXZsbpKjOnYQCDAJ
+	 wD66Dlp6NP9Q6GXeyyXLfQg5cUZM3a4talLaB4CtTSpYEqTcLDSi3x/cfqqr8MMt9g
+	 Y524CVpN6PxnQ==
+Date: Thu, 13 Mar 2025 18:17:27 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+To: Taniya Das <quic_tdas@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Johan Hovold <johan@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Sebastian Reichel <sre@kernel.org>
-Subject: Re: [PATCH v2 0/3] arm64: dts: qcom: x1e78100-t14s: Rework
- devicetree for LCD and OLED SKUs
-Message-ID: <t7jqjgkvnu2lynwchyermonuhcrh7ixgw6g65o6ag2lkgi6dwi@rd3vv3j5paws>
-References: <20250310141504.3008517-1-abel.vesa@linaro.org>
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v6 06/10] dt-bindings: clock: Add Qualcomm QCS615
+ Graphics clock controller
+Message-ID: <5tt4wli2yodoet2l6r7ksq3o743nmi75hfksakqaxre3gmyr2a@zdotamju5ndp>
+References: <20250313-qcs615-v5-mm-cc-v6-0-ebf4b9a5e916@quicinc.com>
+ <20250313-qcs615-v5-mm-cc-v6-6-ebf4b9a5e916@quicinc.com>
+ <20250313-graceful-jackdaw-of-opportunity-62996d@krzk-bin>
+ <d1814cd9-5c73-4ac5-a4ed-4cc2aae410d0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,64 +66,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250310141504.3008517-1-abel.vesa@linaro.org>
+In-Reply-To: <d1814cd9-5c73-4ac5-a4ed-4cc2aae410d0@quicinc.com>
 
-On Mon, Mar 10, 2025 at 04:15:01PM +0200, Abel Vesa wrote:
-> The Lenovo Thinkpad T14s Gen6 comes in different SKUs when it comes to
-> panels. The only difference that is important is whether it is an OLED
-> or an LCD. The way that backlight is handled in devicetree between OLED
-> and LCD forces the need of two separate DTBs.
+On Thu, Mar 13, 2025 at 02:18:57PM +0530, Taniya Das wrote:
 > 
-> So create a common T14s dtsi that describes everything except the
-> backlight handling, by renaming the existent dts to dtsi. Then make the
-> legacy dts the LCD version, while adding a prepended oled dts. Both
-> include the generic T14s dtsi.
 > 
-> For the OLED version, I do not have HW to test it on, so OLED specific
-> bits will come at a later stage. Still, add the OLED dts in order to set
-> the stage for it.
+> On 3/13/2025 1:54 PM, Krzysztof Kozlowski wrote:
+> > On Thu, Mar 13, 2025 at 12:29:43PM +0530, Taniya Das wrote:
+> >  +
+> >> +  '#reset-cells':
+> >> +    const: 1
+> >> +
+> >> +  '#power-domain-cells':
+> >> +    const: 1
+> >> +
+> >> +required:
+> >> +  - compatible
+> >> +  - reg
+> >> +  - clocks
+> >> +  - '#clock-cells'
+> >> +  - '#reset-cells'
+> >> +  - '#power-domain-cells'
+> >> +
+> > 
+> > I don't get why this binding is different than others and you do not
+> > reference qcom,gcc.yaml? Is it not applicable here? Other gpucc do
+> > reference.
+> > 
 > 
-> Had to format it using "git format-patch" since b4 doesn't currently
-> support -B when formatting the patch, and the renaming of the dts into
-> dtsi (plus the panel properties being dropped) would've not been visible
-> enough for reviewers.
+> Yes, I will fix them and resend.
 > 
-> Changes in v2:
->  - rebased on next-20250307
 
-Sorry, but as requested I seem to have picked the DP enablement (at
-least) since then. Can you please have another rebase?
+What is it that you will fix and resend? This patch or all other cases?
+
+Please stop just throwing stuff at the list and until something sticks,
+talk with the people who review your patches.
 
 Regards,
 Bjorn
 
->  - Dropped the RFC, as it seems to be agreed upon already
->  - Added dt-bindings patch to document the new oled and lcd compatibles
->  - Added panel variant compatible strings to each dts and included the
->    the panel type into model string as well
->  - Changed backlight PWM period to 4266537 to match exact period the
->    PMIC can do.
->  - Link to v1 (RFC):
->    https://lore.kernel.org/r/20250306090503.724390-1-abel.vesa@linaro.org/
-> 
-> Abel Vesa (3):
->   dt-bindings: arm: qcom: Document Lenovo ThinkPad T14s Gen 6 LCD and
->     OLED
->   arm64: dts: qcom: x1e78100-t14s: Add LCD variant with backlight
->     support
->   arm64: dts: qcom: x1e78100-t14s: Add OLED variant
-> 
->  .../devicetree/bindings/arm/qcom.yaml         |    4 +-
->  arch/arm64/boot/dts/qcom/Makefile             |    1 +
->  .../x1e78100-lenovo-thinkpad-t14s-oled.dts    |   12 +
->  .../qcom/x1e78100-lenovo-thinkpad-t14s.dts    | 1194 +----------------
->  ...dts => x1e78100-lenovo-thinkpad-t14s.dtsi} |    6 +-
->  5 files changed, 77 insertions(+), 1140 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts
->  rewrite arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts (98%)
->  copy arch/arm64/boot/dts/qcom/{x1e78100-lenovo-thinkpad-t14s.dts => x1e78100-lenovo-thinkpad-t14s.dtsi} (99%)
-> 
-> -- 
-> 2.34.1
+> > 
+> > Best regards,
+> > Krzysztof
+> > 
 > 
 
