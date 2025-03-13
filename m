@@ -1,132 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-51297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9A47A5F5AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 14:15:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A820A5F5A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 14:14:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1FF8F7AED07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 13:10:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FAB8881471
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 13:12:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7F85267F71;
-	Thu, 13 Mar 2025 13:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1408526771E;
+	Thu, 13 Mar 2025 13:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="A1lY/bp3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ivTQH25/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1939A267F62;
-	Thu, 13 Mar 2025 13:10:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26731754B;
+	Thu, 13 Mar 2025 13:11:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741871441; cv=none; b=k0Sn511yeCbmpCSw2Z6fo31K5DCRw2ZjVwWPu6mt7aVGwWrZg32eKQIpaTJJV6r0o4jOKqib0GaEy4gxrULCRnnhSg23ZYOV7bTsgXh3ndunFQVvl9KkNXfuAks5vCBR7w5CYUMr37GDorbhD/Cj4JG7LmWuMaDWOYqmENQ+aks=
+	t=1741871515; cv=none; b=aexollZ2XLe8wWImZp4ISM7SKKR7+7AyD/MI1opMHqdnJpeGReneBy5YbJ9Vvbqqv+iBFxGrrQd513hImEXdAhIm12UlWkKduUDsmtqmGhKCeB2YVG47c5Bz2iUqwJzc3B1pXqk2U//JjAURGlpiIACD9X78jGmWmGJtpLnJJFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741871441; c=relaxed/simple;
-	bh=nPb4nLuhrNdUOOcqQFRX6ORpTIL4N/e2hsjOi4hON1s=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G1gbiwxZo/BqHEg1YwBbUNiC/vnA4BD48LI2K36UpKU4EgEBgqOKf6KP1xdFshG0Hne/Mp8g1UrtKiOgWLhxXv0stoKC8f4IcFShM3rZxFR7T8h1eMfuAd1LUoQBXtXHrHrT6bWEJgksvH5tAgd6JbJNvuaztnjBnGnRhTCgwWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=A1lY/bp3; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52D9h2L7032388;
-	Thu, 13 Mar 2025 13:10:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=gPmU8hfw3OjyuvFw4C76f+C+
-	TOsZTG9SChvM5SPpV2w=; b=A1lY/bp3xGMoTU9yayLjaHySeYDc/1rF10xSw6lK
-	qzAJ26mq8XplTh7kRVbvjrvjlvuvevpIPLP8ipxTBYXXA4O4Chqb1yC3C7Th8kHJ
-	8fEtK8lEYqxMM6ULgzRSLq5mrSEzGGA5+NvSFoudflHuTPzc2yeKP1v+QNRQLDFl
-	lgbXe3Dld2EVtgu75CXDD8oe4VRQ1KQR30ASVUATQQB1ry3tbn1Ia4qJbX/Yu77e
-	jFNhoob/ewQJCkvQAUXyFFE/QNhG9t3ROQ1BDLPwNYsrbHbUxG88VAfN00J3prUQ
-	X5pLLhe/Kj+lJd+XZQ6uRcYZZPYwtrNNoM1T0u9KcTYIFQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2qnxtk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Mar 2025 13:10:30 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52DDATwW021905
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Mar 2025 13:10:29 GMT
-Received: from hu-kaushalk-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 13 Mar 2025 06:10:24 -0700
-From: Kaushal Kumar <quic_kaushalk@quicinc.com>
-To: <vkoul@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <manivannan.sadhasivam@linaro.org>,
-        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>, <agross@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>,
-        Kaushal Kumar <quic_kaushalk@quicinc.com>
-Subject: [PATCH 6/6] ARM: dts: qcom: sdx75-idp: Enable QPIC NAND support
-Date: Thu, 13 Mar 2025 18:39:18 +0530
-Message-ID: <20250313130918.4238-7-quic_kaushalk@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250313130918.4238-1-quic_kaushalk@quicinc.com>
-References: <20250313130918.4238-1-quic_kaushalk@quicinc.com>
+	s=arc-20240116; t=1741871515; c=relaxed/simple;
+	bh=7i8lFQHEUpDr08x6KdoFcD/Thz3PnkKOQjF8h2Byw3M=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=H3kkqPVkxQRj5Cwxxqb6o651jowc4poMx/k9KbA/QG5wTpKIfaOg4lTt+EJlYSroHVO2Tr3R7PTdEg1Mh2B4A3VSyJJzM0Ld2STWj+Oy6+Xuvc87ruKjCe7OVbCPsAyK7CD+cDr79v4yY4CerX2Vu6lQGoRvLsY2ENxXojCzf+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ivTQH25/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AA7C4CEDD;
+	Thu, 13 Mar 2025 13:11:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741871514;
+	bh=7i8lFQHEUpDr08x6KdoFcD/Thz3PnkKOQjF8h2Byw3M=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=ivTQH25/HXRvQ4owiM3+ef8YXwFdiaiUJZ9gzd4GQ9VD58DxR6538nmYeitCWuwDs
+	 PN4FNiRGRcvma+coJfos67eI7jiYPAwpEh+LhsGLQhj65FmM9Ccr0wuKbC3dM8jWjg
+	 PMaxDoHGKxS3lfgibLLSFUKtI4ebCPvQWpfeTQCjw8ETLFraosc0eHGmpONaemW59G
+	 pQIGdjBUDiJ8lMwTCZo8jJGMHiXr1fdNQvxEDvjhBJvkTPEA6AvaFMdeZb8FcLLVom
+	 8GNPKPYwiOrsB8zTuSxrosdZSh0Cqo5OFtaChfsvNNRa7K19VjcTSyxOJ7rZt80jfQ
+	 lhXZRqH34i2BA==
+From: Lee Jones <lee@kernel.org>
+To: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, 
+ Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>, 
+ Abel Vesa <abel.vesa@linaro.org>
+Cc: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Kamal Wadhwa <quic_kamalw@quicinc.com>, 
+ Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, 
+ Sebastian Reichel <sre@kernel.org>, Pavel Machek <pavel@ucw.cz>, 
+ linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ stable@vger.kernel.org
+In-Reply-To: <20250305-leds-qcom-lpg-fix-max-pwm-on-hi-res-v4-0-bfe124a53a9f@linaro.org>
+References: <20250305-leds-qcom-lpg-fix-max-pwm-on-hi-res-v4-0-bfe124a53a9f@linaro.org>
+Subject: Re: [PATCH v4 0/3] leds: rgb: leds-qcom-lpg: PWM fixes
+Message-Id: <174187151094.3638901.18192450967481384067.b4-ty@kernel.org>
+Date: Thu, 13 Mar 2025 13:11:50 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: kAzWUQ7QUhUQOr98MbqwUrjzKeOOPO2G
-X-Proofpoint-GUID: kAzWUQ7QUhUQOr98MbqwUrjzKeOOPO2G
-X-Authority-Analysis: v=2.4 cv=TIhFS0la c=1 sm=1 tr=0 ts=67d2d947 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=FJNihrFfxRNLkEo54-QA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-13_06,2025-03-11_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=771 mlxscore=0 clxscore=1015 bulkscore=0
- malwarescore=0 suspectscore=0 spamscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503130103
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev-510f9
 
-Enable QPIC NAND devicetree node for Qualcomm SDX75-IDP board.
+On Wed, 05 Mar 2025 15:09:03 +0200, Abel Vesa wrote:
+> The PWM allow configuring the PWM resolution from 8 bits PWM
+> values up to 15 bits values, for the Hi-Res PWMs, and then either
+> 6-bit or 9-bit for the normal PWMs. The current implementation loops
+> through all possible resolutions (PWM sizes), for the PWM subtype, on top
+> of the already existing process of determining the prediv, exponent and
+> refclk.
+> 
+> [...]
 
-Signed-off-by: Kaushal Kumar <quic_kaushalk@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sdx75-idp.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Applied, thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/sdx75-idp.dts b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-index 26f7e38b8a6e..06cacec3461f 100644
---- a/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-@@ -282,6 +282,20 @@
- 	status = "okay";
- };
- 
-+&qpic_nand {
-+	status = "okay";
-+
-+	nand@0 {
-+		reg = <0>;
-+
-+		nand-ecc-strength = <8>;
-+		nand-ecc-step-size = <512>;
-+		nand-bus-width = <8>;
-+		/* efs2 partition is secured */
-+		secure-regions = /bits/ 64 <0x680000 0xb00000>;
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
--- 
-2.17.1
+[1/3] leds: rgb: leds-qcom-lpg: Fix pwm resolution max for normal PWMs
+      commit: d3fd20cecf7fcdada938429ad525daf5b2217a7a
+[2/3] leds: rgb: leds-qcom-lpg: Fix pwm resolution max for Hi-Res PWMs
+      commit: 638fc32c056aa62c7add071205de6acc479ee37d
+[3/3] leds: rgb: leds-qcom-lpg: Fix calculation of best period Hi-Res PWMs
+      commit: 227fc065ae9e707af9c7d346458f43fd25cf310a
+
+--
+Lee Jones [李琼斯]
 
 
