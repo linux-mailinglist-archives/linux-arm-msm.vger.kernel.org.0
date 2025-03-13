@@ -1,153 +1,339 @@
-Return-Path: <linux-arm-msm+bounces-51316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2583FA5FDE0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 18:35:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1748AA601D6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 21:04:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7547E19C553E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 17:35:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 445E7178C9F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 20:04:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 649EE1C860A;
-	Thu, 13 Mar 2025 17:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E45D1DDA1B;
+	Thu, 13 Mar 2025 20:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IaB2WuN2"
+	dkim=pass (2048-bit key) header.d=dell.com header.i=@dell.com header.b="KmG50+MF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-00154904.pphosted.com (mx0b-00154904.pphosted.com [148.163.137.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561901714D0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 17:34:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741887301; cv=none; b=NdQtPEuGl0NuJb5APdTfLu+xOjtqZFI9hailEVnaQAaK/i/PlwqkHgc3mEUrHZz+bd92tRhXEck8tJjMYg9CYQtyGiW5jAtiU5SWpsb5GWWS6ffJ/KlI1Q8xpTSEQepY3K+ZH1215DTEfGGJzXIQh/ssZGfBUk8pkAce5NFPk8c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741887301; c=relaxed/simple;
-	bh=teNW5gIZaqNNqnPivdYVGhV0iuN3q+s0pOAIQRfvUdI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FBiP+5IYp7ZBNTAhLj7gWpZ1PLBzDMvAUsjfjcFVjfva3EEQ9+BMEtES+FbJtXNSUKRDOe+uija/f7FABvb9SL2U8VbXk5+177P15gD4chzIi5AvKXVPGU//B2e49Hlki37vDiSsZmYJL9g4MXpP4sPIxQBid9loCfDtuus7DNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IaB2WuN2; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso8187425e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 10:34:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741887298; x=1742492098; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oXkYzz2Ho7HoWYUA45E8jVGK6oEmHJXqvRS4IbzYytA=;
-        b=IaB2WuN2w7gYjcHt1Uwp/c0H3IvM4cm2xe9st2dygFqSTtb8QhJfAaoI4J5/TzekFD
-         8yyo8Gx4O7veB5CKFARZ1cppceVT3zLRZgWEwkAs/vT7sfLq5SKH+wKslk+bxGewCx7M
-         tFmFfB2LA9ujzxcCdQbS/wJuGWs1GL4cetnngLE/BVrdZ6T0tqjSar9DQCHhdFDHH5xE
-         Jv3t7J/7bCs36+OchcNEOnn0LJFw2sJsW/AK4Lhf9CK7aOf0HBVicIxlqxwyL6Q0LNCu
-         bT1UnNAxQ9omQ4NKBlzSaLU/sp/JuD749GEOsa5czywnrJvc/ksKqieZcbiwf4zHP0z6
-         3gOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741887298; x=1742492098;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oXkYzz2Ho7HoWYUA45E8jVGK6oEmHJXqvRS4IbzYytA=;
-        b=Yx+p1AuyIvk2e5MPTCuYLE4Ii8wIK+idp1siofdiEGyuBtPtu1lXdX9NCQr5LiFzo0
-         i1ijQ9k/V5PGcFk0pKidRQCRU5I4ivmx1Xc5R0VlcEU16hIEo1L2zzwSVmJv/dbd9JWH
-         5ylE31zpYLmI4uejAR0rLCmmpJ1urBQhQqc5DzZkum0EirfdMghxwG2nI27JM6LJc1PZ
-         K4HF3WyEKxIWHX5y6pwseWPu04arvwaZjg+g/G9FsvIewNRIMdvMlJGu+0Bhgpy9bs1G
-         Dr9dAPpn5pVVy2ZUkl4KMo18Y7uUE4s7REU7zlgMgFuHUI8iVRb0rTBdGCH2Olk1TM2p
-         W5Mw==
-X-Forwarded-Encrypted: i=1; AJvYcCVfRY4OjVr8DAMETGZ/BPG+f8XFBRXJ1nzcNKqVQ8/ZNDFgpT/9Sralatjz43EOqicjOpi0u+/TjCyyxy8I@vger.kernel.org
-X-Gm-Message-State: AOJu0YynZMteqRI9a+H96SiFIeYYhj3AouMRmF5me+tYV+O1JV8aHFFR
-	QE05HE4bn3lqtJ8+kzsBYjMgMH4XqHHUPC2k/dYatNOWugTMDI8+PHfbohWlzeUb7uMdN7/gJEB
-	BYvUU535oGcfrCu3be+geI6DovndMKy8xbecyBA==
-X-Gm-Gg: ASbGnctkiGP3k4Hc/b9hF+dSeGQEOPKOiCbwJZuh8yr8ooIuEeNuQ9504crwkfHBD93
-	nR/j0sWqHsXxHSBumdh/FzW86Ms0yVhk6xOsyQFkBgUuiCNDLFfUBh6UbByqrr4UqI8EqhoNcaG
-	AY4zVOH6QjXjvC1VktB/xe4qMcFiuvyMAhW9pomA8ujnH5c7bbUJjuyVVwV/MkILNup1GAog==
-X-Google-Smtp-Source: AGHT+IE1c9T0TY/pjJhjtchTkkrxDWqZJglz/azIkv2TkxGPgH3NolVO9vmQFRaJtQOUi7YI3c4g7vzs00zqUmzqNzw=
-X-Received: by 2002:a5d:5989:0:b0:38d:cf33:31d6 with SMTP id
- ffacd0b85a97d-39263b006c5mr11690959f8f.3.1741887297667; Thu, 13 Mar 2025
- 10:34:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984B4149C64;
+	Thu, 13 Mar 2025 20:04:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.137.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1741896277; cv=fail; b=uSwXuTyRMyIS3y0Od5607aa5zNkBuHD05HUpxabpFb81E8H88aftrf1FNBF4qhakAzPtwAlU+3HXLCTUp6+kjgBlr08iMiGyVJE/pU0Nf9UO+a295bZnpSh0f/+uDneWyV8rVAZ4HQLscuOBAPBRbTDDVadS/cYAIb0U9iMHjiU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1741896277; c=relaxed/simple;
+	bh=XcOsMmPx/5KNJ2rz0YXfZLNZfnzMjFHPlbt/EgGWB7k=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=KC05NWxxi1TsUSrxqABQ6oJUncwsjQXkazGpgorhZh9P1fvtSqwzZN6Dc43Rz20YBMvA0FrwoUmVv2t65B/Qt4/8uzuRy+b5zx8QM9Kf95yhfzfW/pVnqL+sq87pxyNeAK3iYIaDEZBokITAqP7JoB+zQ3xxOTarv75F0+rCNkc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dell.com; spf=pass smtp.mailfrom=dell.com; dkim=pass (2048-bit key) header.d=dell.com header.i=@dell.com header.b=KmG50+MF; arc=fail smtp.client-ip=148.163.137.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dell.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dell.com
+Received: from pps.filterd (m0170394.ppops.net [127.0.0.1])
+	by mx0b-00154904.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52DFpmxA018559;
+	Thu, 13 Mar 2025 12:34:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=smtpout1; bh=h
+	Ljub6PoD3/IHa+flUhTkrbH6y3HLdm6Ln4miE+NA34=; b=KmG50+MF9wkbYQnea
+	Z9J5Ea6ZgP78VoTS9tX3Ei/3JSEk16RyW04iDFAfoVg7gX6h4JV/ZYWbYExDxvqb
+	nEK0W26PRYU1d7uxf5DnhN9RrdkHMy+bOO/EQcYvSe1pFVnSW2AVfriDO0QKWbVo
+	e4m3S0SpCss+FlW1Shc+6frdebQa0IYh+rGMpJnWGk8QNgU4VlyDhmADgf7nAwYq
+	2sN89hgFEShj58efhFfLJbX/jI1PEhk7qJaLWhuJmp86a+4v1Y/XNsO0Id+jdJdV
+	86xY8zcs4QLNLYqSRQHHaY1FvC452N5CWMqkACyS1CwMDoO1e06swIWKimRkwLDe
+	pdPhQ==
+Received: from mx0a-00154901.pphosted.com (mx0a-00154901.pphosted.com [67.231.149.39])
+	by mx0b-00154904.pphosted.com (PPS) with ESMTPS id 45au44jcwf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Mar 2025 12:34:20 -0400 (EDT)
+Received: from pps.filterd (m0142693.ppops.net [127.0.0.1])
+	by mx0a-00154901.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52DFbEMQ028129;
+	Thu, 13 Mar 2025 12:34:19 -0400
+Received: from nam10-bn7-obe.outbound.protection.outlook.com (mail-bn7nam10lp2047.outbound.protection.outlook.com [104.47.70.47])
+	by mx0a-00154901.pphosted.com (PPS) with ESMTPS id 45c25j0xbv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 13 Mar 2025 12:34:18 -0400 (EDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=o4ogS7GC68ApMXfwqkctvQxks/9wVcoQYNuE5Nl3Y3d+QVXnpx4OecBnXgTCoON6OZtcbDVri3QYZfPKBNpFUdLE48PoKsiTtqMmGnFfR8oL8BpqOzyzd7zHuSErrxNIDZcmTUdKf/hAi3yO8zVBMX03J9kxoyQV9+fwoYWVSTAxBBrf8KH9sb4GffzUM6a06PXnKOqzNyYRf/nvThy1EDlr7kPTOesfL1WTKR+Q6jN3z6OqHcbU+finw0KO9a0K4bvoOb16bx8RGq398X0rSC+hwPCwBML6MhG6CHQHgjwQ7ZbVjNO2vks5nCqTnMXB8amZOq9cYq9lsJ/m+RFQjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hLjub6PoD3/IHa+flUhTkrbH6y3HLdm6Ln4miE+NA34=;
+ b=a69IsIY/2xlwhQACZfNhQ2BMSYgRYGh8duc3HVfnfME2zpC9VA6joVA+LSEagcT9dPlioYTOjNweFT3jVgbT+pxMFDAxHfp509ms+6IVsZP3nkVod/vEmEvBrBeY0YY0x4Cf9CroDyPjSyogbEwkis3aulLoOE3oKhxcqK9560xDHFYNbGKRc0I99d2was4DjO6UW5I2elcLwL73bIzpqyOJFgnXoewtGxMOOYrstyfmHsOFQ/NihR8YW/EQ547y0SnlNlEAe0UG2W3FzqB/elBWBrd/20DLUT/kWM6nGpi8zoE4oKuHszVj6lGQgUsiWbS+HJmfPUq4LBS9TVpNjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=dell.com; dmarc=pass action=none header.from=dell.com;
+ dkim=pass header.d=dell.com; arc=none
+Received: from CY5PR19MB6147.namprd19.prod.outlook.com (2603:10b6:930:c::14)
+ by DM6PR19MB4106.namprd19.prod.outlook.com (2603:10b6:5:24e::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.28; Thu, 13 Mar
+ 2025 16:34:14 +0000
+Received: from CY5PR19MB6147.namprd19.prod.outlook.com
+ ([fe80::d390:13bd:b078:f743]) by CY5PR19MB6147.namprd19.prod.outlook.com
+ ([fe80::d390:13bd:b078:f743%7]) with mapi id 15.20.8511.026; Thu, 13 Mar 2025
+ 16:34:14 +0000
+From: "Tudor, Laurentiu" <Laurentiu.Tudor1@dell.com>
+To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "dri-devel@lists.freedesktop.org"
+	<dri-devel@lists.freedesktop.org>,
+        "freedreno@lists.freedesktop.org"
+	<freedreno@lists.freedesktop.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>
+CC: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>,
+        "abel.vesa@linaro.org" <abel.vesa@linaro.org>,
+        "johan@kernel.org" <johan@kernel.org>
+Subject: RE: [PATCH v2 0/2] drm/msm/dp: Introduce link training per-segment
+ for LTTPRs
+Thread-Topic: [PATCH v2 0/2] drm/msm/dp: Introduce link training per-segment
+ for LTTPRs
+Thread-Index: AQHbkt8aD0iZ7dHIsUSDlD3K/YJUJ7NxROqg
+Date: Thu, 13 Mar 2025 16:34:14 +0000
+Message-ID:
+ <CY5PR19MB6147B4E21D67D2E2A1913E6FBAD32@CY5PR19MB6147.namprd19.prod.outlook.com>
+References: <20250311234109.136510-1-alex.vinarskis@gmail.com>
+In-Reply-To: <20250311234109.136510-1-alex.vinarskis@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_ActionId=dde3064c-cb63-4bf2-8ff7-9ab61fd45b6c;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_ContentBits=0;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_Enabled=true;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_Method=Privileged;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_Name=Public
+ No Visual
+ Label;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_SetDate=2025-03-13T16:34:00Z;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_SiteId=945c199a-83a2-4e80-9f8c-5a91be5752dd;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_Tag=10,
+ 0, 1, 1;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CY5PR19MB6147:EE_|DM6PR19MB4106:EE_
+x-ms-office365-filtering-correlation-id: b6aee14b-6694-4983-5938-08dd624ce43f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|10070799003|366016|7416014|1800799024|376014|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?ySJ+kgjjYNZvzT6l5Q4dKJv5AjzuEHRMz1A5cycGIjdxyHvLMVYYswHV4P3P?=
+ =?us-ascii?Q?NH00DOa+SlnO78cE8H3aEToO6VTk4+n8qVGuoXjs80ZcA25otJE1Hd4neNBw?=
+ =?us-ascii?Q?vIMceLxNmokJ1zUjkUvQ9ByUhgc/JCuZq6m/t8jEwjlJdHzww2csdgHkbQDw?=
+ =?us-ascii?Q?QvlS4NzyvWgGj3TE2ATv8WYEAnry/pzZVM068FWwyQ1gxkR3UFPi9kG9A9sk?=
+ =?us-ascii?Q?BwllRuk3mgfzXP1tsk25pcS8lYY0NE7op9aEIH+BD0pVwDZpDSLfbGHquIqp?=
+ =?us-ascii?Q?vxYVDJfvUag7LBlK4f+D9Cdq00mFN8EBIZvwg02DP6plwqxC39OhVuNr95iM?=
+ =?us-ascii?Q?XA0YfAg+l1Pe1Bn0XrKhumnNcHKT5Zq1fEzTdwKa36WWz0oj/uKVyvC6L+i9?=
+ =?us-ascii?Q?hW6YvgMXSjubP58GNp9H6EtabYreqNJ93pJGQQJi/3VQUzZXOO8hVBc31wrZ?=
+ =?us-ascii?Q?8E6VYnoshgPFliltHpbokvaBYB9iK/4VItdzOTmO9ynjYMZs7Sh/Aez4xDnr?=
+ =?us-ascii?Q?aziGOXQly2/Ssn/Z0+9NemardZEaj5lzjl/L7IVzf2aejeUUWSLXf2eAe4Q5?=
+ =?us-ascii?Q?EbdU6aWHeXBiwyPwSWfmTu8yR8VEDzfWzKBUjZ3HjO8u1gj7pXkJfGz8F9II?=
+ =?us-ascii?Q?9BYryRL40fRWC0Bt39ZaQpc9nLT/V8U9TAyIU8aXlHtST36IkmRwuu4Dq1AK?=
+ =?us-ascii?Q?TSDffglKW9bLtMa04mhFj40xKTA+JekAU0Rc4aGtCBZySu2eaBkd8f5RIZFv?=
+ =?us-ascii?Q?xOLzf0+Bojg1nS6u0jq3A6W+TO2o+JsYggRfAD4KGfoXoA5pGWWoSwdzAkRa?=
+ =?us-ascii?Q?+jpag0e1ar6LLtJqNWr0d98iDDKNrDWyCkOTz9KH1MUY1JkSzrgq0V4Y3bvO?=
+ =?us-ascii?Q?FYlbdl+Q3+C7AtxLvDlzo+Zo0QaSJ4UNEJBFm0nc60u0Sv3DlB9IojiLZNJf?=
+ =?us-ascii?Q?fb0/RjFxKfUWcrK8Dkl2UhRuyUa7VFdpQGgA7BWrxKZIOjlt6i8LG6Ek09uR?=
+ =?us-ascii?Q?H1rtKrm9K2ntogb07wlFczZA/YnQ+N3TQKr6xheWL3lS8siJ4C4WRQ6OA5bW?=
+ =?us-ascii?Q?l5VhngxWU4s+lJb3QhZutooxB1Id+q83jZxtdjiznrhfjcyRKd41KVKZQ6va?=
+ =?us-ascii?Q?AGpXZ828QlzMwLdhXhEDI1jBZkmqKUm1X5UOP/mS4zxlX6BebA/RIQCmhIen?=
+ =?us-ascii?Q?1SPqg+ExBya+Y1Jjw55QMXUKzDKP3Cx6W2LTY57rqXDhMzX9Isbc1U/oYwP5?=
+ =?us-ascii?Q?PI7L1hnk1CaMuodIons6E8Nc16eDCQtRlTyy3EdrkKtMzkpjxspQEZKnG4Ou?=
+ =?us-ascii?Q?e7LxX1K3S5Ax0r0BxwX7L/hpASPo8AhU0rqlBoxQP7gxSC4H56FRTq/9Hfp3?=
+ =?us-ascii?Q?yV/sL3K6h9/cqvjS8CjuJxGli9xR3Da2ZkG1r2rxzMOvXQsdGg=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR19MB6147.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(366016)(7416014)(1800799024)(376014)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?qvGFCLBdj9CIbW5vBbN1Lz2fPadLyRnqYXlkMbtZrMTEtAuKJenMh3p028i4?=
+ =?us-ascii?Q?G1T/MiOTrZbQMz762G63fZi5ixRZA1yvWcThp/26B7gbLgQ213HsSdYvteSJ?=
+ =?us-ascii?Q?mXd6M4DHLGcBtwjRQU6uQVWfhXQHLyIG+vXUapnn82vc282vlXlf958Buln1?=
+ =?us-ascii?Q?wBKMmFrlzDWPf1FaDThk14flbB6S544idPMePLulds57ICXAxHYKn8U77v1v?=
+ =?us-ascii?Q?H1fh27FOccaqTUEbzBPeBtvBdKVLOrZhx2GjkYdzMABz7Ar2ffHnDRP+uPl4?=
+ =?us-ascii?Q?pO1X2aOhDVtl5z/v0twbdElhy4R+oLDm7fnyRhEXfKYjwWOe7iIAPa1KoQsY?=
+ =?us-ascii?Q?ztUFyMehQLXF1HTi+kCo+nsZJM5W4VXZF/Y7BUru3XnZwU5s0A2O3n1vNdmQ?=
+ =?us-ascii?Q?7Ludp67MNm/5/OnCJCQtBByFzHucnwD92QAMUWuANso1dwDzC2drZYfD2bHu?=
+ =?us-ascii?Q?d1Hmni/ilHFVMsM3WIppv+t8KkcOEBatNzA6bXnH50O/ILeOEoBtDGsHCYHH?=
+ =?us-ascii?Q?R2ToyaXmLODV2HZnjntohs6fSPgFPKcMa2mpXqQ5tmMAKYr2hsZBgOCUyi3N?=
+ =?us-ascii?Q?ps7kvsHJf/ESJV2p0AUGc0H/v6D/GEnWoqCnBldpD346Z84YqX4ZE4FtlnW9?=
+ =?us-ascii?Q?e5p3sXIuW3mf9ikn9ohaf+Fuh3TLrtUkk07U22SWui+661aBx3qFgxzXMqEY?=
+ =?us-ascii?Q?iU/MP13JK9wh+Rxxj+oZ3UEs1LMD3yrS2eXCeCcyM5WmkxBOjzynd8wqKHwP?=
+ =?us-ascii?Q?bRqfj5ywrxt+llHUFwi3rU2JxJnqfd6wA1rWhwfEJi6IVUwVcUrNeNQgFWIb?=
+ =?us-ascii?Q?UNtqzrO+ipD97Z1E+hN5bLNt4y9GOxD1PhxCsHIz3bpVMF0Myd/UuKHrzNiu?=
+ =?us-ascii?Q?oZ7opXjrkW6mLpLrXfaKc5gqhjtAa22o/+/0bw8tbxFKrhDKEm57FIWT3mHj?=
+ =?us-ascii?Q?JX8WmXJvaBesJgPq7Uqoh8m0VHI2W0kMzB4xRnIxESVUFj2EYRnZTd/tdqko?=
+ =?us-ascii?Q?OqMQ7RyWZo9WH09+PZFzZqXMUsml585l0CdsuD4NQVgikq7xHOg1cCJJBb0P?=
+ =?us-ascii?Q?N6LM5EBlJw72F6K97CUTM3IoSY20tPEaTR059m3mLN8IpSi4kr1w1NCyuUOZ?=
+ =?us-ascii?Q?JqwN3CgwPYopDCWq6tPFGWCfcjGnLO3D1EAgwUh5Nhhoi/xPbyh4VuA/nufQ?=
+ =?us-ascii?Q?mQZ4G3m1FILazIh7/SAKlahSfa4NKz3X8b3mZ/l0kBgHl9dmHPovcVX4hdfH?=
+ =?us-ascii?Q?EpLXU8VHneHN1XXLsXq2fbZHbSImq2SHmwOFWL6+hSx+vMEIlfxe0Z6TYXPX?=
+ =?us-ascii?Q?O82WJssMZJKzBy1ySXpEZnromCdA35bhv94kkLCkYjnVjTJqGGtiCvf0zZIN?=
+ =?us-ascii?Q?0lgPjv1AlyomTXNtMJEhsEYlERzlnRD98c1QHWQACNFueJNJRZYwbOY8s5wR?=
+ =?us-ascii?Q?yuA/kkRB7abXJZ5q0dnDGEkQKZ2B4dSxKw1M+od5gKb87Yjm2DfaSL9sgncY?=
+ =?us-ascii?Q?DeB8gvvtffbQ1EznciUbcF09FQBA8zPQzv2a4G4dskIRFAMr+5VIF5K6nF5f?=
+ =?us-ascii?Q?4GpvEHSUJzRrFIXzQPYtbXjH9pAIXKjy7/RQOfUTDIULdGkYejazowE6fO+b?=
+ =?us-ascii?Q?tgfI98/F+QqLFvAj/9yxr32ThN4eqR4iM7i1V5eZOYWQXd1enNhEw2TpfXF6?=
+ =?us-ascii?Q?5dqCTw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org>
- <CACr-zFC=mPNeeHMp9XnSby+cMQaPWt_3s8iUiCN+EnVPeGad8Q@mail.gmail.com>
- <uljqxwfgl26txrfqvkvzzpj6qurgmwcbuot7gu2u6rwjaqgncb@jeuyi4mexjff>
- <CACr-zFDSFizYmrVN-dV334n1kq17UB9k4FxrV20NNQCQMhzrwg@mail.gmail.com>
- <92dd35a2-d1cc-4f2b-b3a8-5752ec33b0d3@kernel.org> <CACr-zFCYWEFPO8yExp_8hOQdVtC9Zwu1ZOZNksSeyyS6Ht0e9A@mail.gmail.com>
- <Z9HjMyjzE9XlqrEj@x1>
-In-Reply-To: <Z9HjMyjzE9XlqrEj@x1>
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Thu, 13 Mar 2025 17:34:46 +0000
-X-Gm-Features: AQ5f1JrDO9V43KtazVC9qZW1Wz_qdtZmiVsFJZOGkGi6dHNCT7HLwGuh8qsdaME
-Message-ID: <CACr-zFAHGcQtwSz0EF0kt7_PUXxwi3GZY2BmAVedbLjh3+4LhA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm interconnects as built-in
-To: Brian Masney <bmasney@redhat.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-Hi Brian,
-
-On Wed, 12 Mar 2025 at 19:40, Brian Masney <bmasney@redhat.com> wrote:
->
-> Hi Christopher,
->
-> On Wed, Mar 12, 2025 at 12:10:56PM +0100, Christopher Obbard wrote:
-> > For reference, I am working on updating initramfs generation tools in
-> > Debian/Fedora to include the required interconnect modules. Currently
-> > the interconnect drivers are built as modules in these distros, but
-> > are not included in the initrd. That is where my confusion initially
-> > stemmed from.
->
-> From a Fedora and centos-stream-9/10 perspective, we have dracut
-> updated so that the interconnect modules are included in the initramfs
-> by default.
->
-> https://github.com/dracutdevs/dracut/blob/master/modules.d/90kernel-modules/module-setup.sh#L74
->
-> Let me know if you are seeing a specific issue with the initramfs on
-> Fedora and I can help you.
-
-Awesome, turns out I am wrong and the interconnect drivers are in fact
-present in the latest nightly Fedora 42 image I am testing:
-
-$ lsinitramfs initramfs-6.14.0-0.rc3.29.fc42.aarch64.img  | grep interconnect
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx-interconnect.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx8mm-interconnect.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx8mn-interconnect.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx8mp-interconnect.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/imx/imx8mq-interconnect.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/icc-osm-l3.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/icc-smd-rpm.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-msm8916.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-msm8953.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-msm8996.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-qcm2290.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sa8775p.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sc7280.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sc8180x.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sc8280xp.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sdm845.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sdx75.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sm6115.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sm8150.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sm8250.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-sm8450.ko.xz
-usr/lib/modules/6.14.0-0.rc3.29.fc42.aarch64/kernel/drivers/interconnect/qcom/qnoc-x1e80100.ko.xz
+X-OriginatorOrg: Dell.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CY5PR19MB6147.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b6aee14b-6694-4983-5938-08dd624ce43f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Mar 2025 16:34:14.2364
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 945c199a-83a2-4e80-9f8c-5a91be5752dd
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xh8Yd0e8HIIDDJbD+wLMOMQ2nA3zxwx6BGXQp2qcamDdG1TMQgzycENl7Z0YvfKrdFLze1lekmoeUAzICBAcBfGjOGenjW6RwRlDhtsFJ2o=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR19MB4106
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-13_07,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ mlxscore=0 priorityscore=1501 impostorscore=0 malwarescore=0 phishscore=0
+ mlxlogscore=999 clxscore=1011 lowpriorityscore=0 spamscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503130128
+X-Proofpoint-ORIG-GUID: vVVMmBlG1iDmkPzHodrG-d2J6lYv7Neb
+X-Proofpoint-GUID: vVVMmBlG1iDmkPzHodrG-d2J6lYv7Neb
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1011 priorityscore=1501
+ spamscore=0 adultscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0
+ phishscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503130128
 
 
 
-Thanks,
+> -----Original Message-----
+> From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> Sent: Wednesday, March 12, 2025 1:38 AM
+> Subject: [PATCH v2 0/2] drm/msm/dp: Introduce link training per-segment f=
+or
+> LTTPRs
+>=20
+> Recently added Initial LTTPR support in msm/dp has configured LTTPR(s) to
+> non-transparent mode to enable video output on X1E-based devices that com=
+e
+> with LTTPR on the motherboards. However, video would not work if addition=
+al
+> LTTPR(s) are present between sink and source, which is the case for USB T=
+ype-C
+> docks (eg. Dell WD19TB/WD22TB4), and at least some universal
+> Thunderbolt/USB Type-C monitors (eg. Dell U2725QE).
+>=20
+> First, take into account LTTPR capabilities when computing max link rate,
+> number of lanes. Take into account previous discussion on the lists - exi=
+t early if
+> reading DPCD caps failed. This also fixes
+> "*ERROR* panel edid read failed" on some monitors which seems to be cause=
+d
+> by msm_dp_panel_read_sink_caps running before LTTPR(s) are initialized.
+>=20
+> Finally, implement link training per-segment. Pass lttpr_count to all req=
+uired
+> helpers.
+> This seems to also partially improve UI (Wayland) hanging when changing
+> external display's link parameters (resolution, framerate):
+> * Prior to this series, via direct USB Type-C to display connection,
+>   attempt to change resolution or framerate hangs the UI, setting does
+>   not stick. Some back and forth replugging finally sets desired
+>   parameters.
+> * With this series, via direct USB Type-C to display connection,
+>   changing parameters works most of the time, without UI freezing. Via
+>   docking station/multiple LTTPRs the setting again does not stick.
+> * On Xorg changing link paramaters works in all combinations.
+>=20
+> These appear to be mainlink initialization related, as in all cases LT pa=
+sses
+> successfully.
+>=20
+> Test matrix:
+> * Dell XPS 9345, Ubuntu 24.10, Gnome 47, Wayland
+> 	* Left USB Type-C, Right USB Type-C
+> 	* Direct monitor connection, Dell WD19TB, Dell WD22TB4, USB
+>           Type-C to HDMI dongle, USB Type-C to DP dongle
+> 	* Dell AW3423DWF, Samsung LS24A600, dual Samsung LS24A600 (one
+> 	  monitor per USB Type-C connector)
+> * Dell XPS 9345, Ubuntu 24.10, Gnome 47, Wayland
+> 	* Left USB Type-C, Right USB Type-C
+> 	* Direct monitor connection
+> 	* Samsung S34BG85 (USB Type-C), Dell U2725QE (universal
+>           Thunderbolt/USB Type-C, probes with an LTTPR when in USB
+>           Type-C/DP Alt mode)
+>=20
+> In both cases, "Thunderbot Support"/"USB4 PCIE Tunneling" was disabled in
+> UEFI to force universal Thunderbolt/USB Type-C devices to work in DP Alt
+> mode.
+> In both cases laptops had HBR3 patches applied [1], resulting in maximum
+> successful link at 3440x1440@100hz and 4k@60hz respectively.
+> When using Dell WD22TB4/U2725QE, USB Type-C pin assigment D got enabled
+> and USB3.0 devices were working in parallel to video ouput.
+>=20
+> Known issues:
+> * As mentioned above, it appears that on Gnome+Wayland framerate and
+>   resolution parameter adjustment is not stable.
+>=20
+> Due to lack of access to the official DisplayPort specfication, changes w=
+ere
+> primarily inspired by/reverse engineered from Intel's i915 driver.
+>=20
+> [1]
+> https://urldefense.com/v3/__https://lore.kernel.org/all/20250226231436.16=
+1
+> 38-2-
+> alex.vinarskis@gmail.com/__;!!LpKI!hlok7KSBKQntrFMYAFr0mFGIjXmlwtqOD
+> mQuO_6YwQ1pNJWCY9KqVJjzRZFzLv9fDgYOinq0MkYpccsMJFtXiQWvlNs2$ [lo
+> re[.]kernel[.]org]
+>=20
+> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
-Chris
+Tested-by: Laurentiu Tudor <Laurentiu.Tudor1@dell.com>
+
+---
+Thanks & Best Regards, Laurentiu
+
+> ---
+>=20
+> Changes in v2:
+> - Picked up Abel's R-b tags
+> - Fixed typo as per Abel, fixed readability as per Johan
+> - Updated cover and commit message on mailink issue which appears to be
+>   specific to Gnome+Wayland. No problems on Xorg.
+> - Link to v1:
+> https://urldefense.com/v3/__https://lore.kernel.org/all/20250310211039.29=
+8
+> 43-1-
+> alex.vinarskis@gmail.com/__;!!LpKI!hlok7KSBKQntrFMYAFr0mFGIjXmlwtqOD
+> mQuO_6YwQ1pNJWCY9KqVJjzRZFzLv9fDgYOinq0MkYpccsMJFtXiW5uR0d1$ [l
+> ore[.]kernel[.]org]
+>=20
+> ---
+>=20
+> Aleksandrs Vinarskis (2):
+>   drm/msm/dp: Fix support of LTTPR handling
+>   drm/msm/dp: Introduce link training per-segment for LTTPRs
+>=20
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 137 +++++++++++++++++++---------
+>  drivers/gpu/drm/msm/dp/dp_ctrl.h    |   2 +-
+>  drivers/gpu/drm/msm/dp/dp_display.c |  31 +++++--
+>  drivers/gpu/drm/msm/dp/dp_panel.c   |  30 ++++--
+>  drivers/gpu/drm/msm/dp/dp_panel.h   |   2 +
+>  5 files changed, 141 insertions(+), 61 deletions(-)
+>=20
+> --
+> 2.45.2
+
 
