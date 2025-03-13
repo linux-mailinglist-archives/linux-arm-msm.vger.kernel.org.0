@@ -1,136 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-51243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B76A1A5EC93
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 08:14:48 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEACCA5ECF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 08:26:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F44C3B1656
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 07:14:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F21F416A82A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 07:26:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC4AF1FBE8D;
-	Thu, 13 Mar 2025 07:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB1E9225390;
+	Thu, 13 Mar 2025 07:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Byrqtcio"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L7bJrknu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0211311CBA;
-	Thu, 13 Mar 2025 07:14:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD5622422E;
+	Thu, 13 Mar 2025 07:26:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741850083; cv=none; b=CKtchcgWYGs/9d1lRQaSDBKPVw06TWCYIQzsbl+pEeGvSSGOdvF1OTw0kgoAC61j0MSpwGfsqtgy2AzebA/76P8J9eOt/mSYFof77HaY6psmB6W1Sd/8pajYz9VNUS8BuDS9LD8e2wKEyU3zA3j+eWLewjFzTDIHGeeYtAC63D0=
+	t=1741850775; cv=none; b=sEsXhviiNWWdCyRSnVVvrCEqAC53WPqXxD0llew/tWQ085FKv6UQFJCOBnRKMjEmf+6wyqmOg2T1cSs3ClhdNJIwEshGALAiA4fC2VqBksCuk046p6rxxP0AIXQgnewR29ZGoijVa7OyyKrHugFv9A87l1k8PNrwVxurfWOiDiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741850083; c=relaxed/simple;
-	bh=AA3wc9zdl0kkbDlVw+PnQnheQDJomaH659tQOEHWOiw=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LXfJYcqgq00aelvGGOtSf1j0IASw6pw3YcflYkBMmbDf6ofXo8Kvmp4QEQFBRI9KE5O4AT2lzAoCP+xJ3Cs+RUTVYZAWx4aJVvQkfdubyJ50OjY6mWFJFdPkHhYiLxrY/bG6yQxozDx41AFSi0HuTbY8iPxJ+ubifNvglbf+WoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Byrqtcio; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CLqBBI030363;
-	Thu, 13 Mar 2025 07:14:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=w6x/XEaXiIoaWPYyh3thpv
-	g3FCZaH5N/R+CIcszQqCc=; b=Byrqtcio3OZKpgXsTP7+urksRgD2b5ky8bjXHe
-	ZjCm7d0nsNGjmwzZeU+RS1Dx9I/wiM2KXSGCxeuLyuNKc7Y/PB07SDIj+6ZG8p5w
-	FZxTUsixg4wjqCzzom27xwsLOazDuwv3qpUGRacoCcENzbXTkz0ZUbCHAlQBbtMW
-	kTH7TxwbEKRYwGrHz1/tvSjTZ/hfVojkavbgW89wnSDkS59YP9WyasdphggzzLsm
-	3HiV4Gzxm7ccYsnrQaIQKaoq8pAH2KRjLn9aMbIL1LF91CFuB+V93MCubbXtqw/3
-	LAcwnApLL2dmzUgkOSQay6zJEWf4e2U7ElCMfR+td377jrgg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2qmyqf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Mar 2025 07:14:38 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52D7EbJE020928
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Mar 2025 07:14:37 GMT
-Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 13 Mar 2025 00:14:32 -0700
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_varada@quicinc.com>
-Subject: [PATCH v1] arm64: dts: qcom: ipq9574: fix the msi interrupt numbers of pcie3
-Date: Thu, 13 Mar 2025 12:44:22 +0530
-Message-ID: <20250313071422.510-1-quic_mmanikan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1741850775; c=relaxed/simple;
+	bh=sZaq7o/FrpqVjIEe2is9ecGfi7yAHQfNu4BMeutjnUA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZK29GIXIBG+oOjqLp5t+phVsJMo9AbMaXm7Ebwkba7bY9PDtLrvPEtvjf8t5oFYBW7OoIm9/x1VClbSuft8pKoD9qyWtBi4GeRkbH51qYEJ+x3NE2g3TyYV6MPUejigjBJa7FXIIFKZkEU3AzDBD3jFeA5IRM4MKdZ64sQ4lPXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L7bJrknu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E000FC4CEDD;
+	Thu, 13 Mar 2025 07:26:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741850775;
+	bh=sZaq7o/FrpqVjIEe2is9ecGfi7yAHQfNu4BMeutjnUA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=L7bJrknuOulkADbDANAb1ME695KpQChnFbM7j9iQgSv0EEag5Z6kv81WC6aIzmaeL
+	 wCSQxy0J18O1ZKQwc75e+MI0qVDZK3QPPXk3yqwb4tdl5ftTMeBuoB6g2h2JSuYh1j
+	 sox9yBpJ3tqgXGwzqarl84Nwvb7mdfTfCo2vPralbrNmvNMvFYq3nzB2mi9pd4j7Kh
+	 YDlZH+NqZ5/betd1xN3Xl4Cm0MGA2xSYclMvE9fP4lxS3SCT0xKD8fbCvQ8nOzXwF5
+	 H5eCnJ+y/OFJohYQPhNeheGrJJyvsm7yBSHYMMN27pwL/tEo3AlHg+cSxPXBY/h571
+	 avmc5ecpmx2mA==
+Date: Thu, 13 Mar 2025 09:26:09 +0200
+From: Dmitry Baryshkov <lumag@kernel.org>
+To: Taniya Das <quic_tdas@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-clk@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550: Additionally manage MXC
+ power domain in camcc
+Message-ID: <eoqqz5hyyq6ej5uo6phijbeu5qafbpfxlnreyzzcyfw23pl2yq@ftxnasc6sr2t>
+References: <20250303225521.1780611-1-vladimir.zapolskiy@linaro.org>
+ <20250303225521.1780611-3-vladimir.zapolskiy@linaro.org>
+ <dbxvzgqs5slrl5edqunal3wplg5jiszqv46dr4nzgowwlhkhxa@qwtfq7nfjwfo>
+ <3210a484-b9c3-4399-bee1-9f5bbc90034c@linaro.org>
+ <CAA8EJprP9Z181VDCT=xfyrBipzgiB0tfb8M_XZ4H=yOrvEnB0w@mail.gmail.com>
+ <f41061a2-cf45-4588-8df7-22270c936ee2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wbem_To_Z97Xi9Hb1vYiMlVrMxKAgFwd
-X-Proofpoint-GUID: wbem_To_Z97Xi9Hb1vYiMlVrMxKAgFwd
-X-Authority-Analysis: v=2.4 cv=TIhFS0la c=1 sm=1 tr=0 ts=67d285de cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=LWL4QMDN_NG5SejmV0sA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-13_03,2025-03-11_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=488 mlxscore=0 clxscore=1015 bulkscore=0
- malwarescore=0 suspectscore=0 spamscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503130056
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f41061a2-cf45-4588-8df7-22270c936ee2@quicinc.com>
 
-The MSI interrupt numbers of the PCIe3 controller are incorrect. Due
-to this, the functional bring up of the QDSP6 processor on the PCIe
-endpoint has failed. Correct the MSI interrupt numbers to properly
-bring up the QDSP6 processor on the PCIe endpoint.
+On Thu, Mar 13, 2025 at 10:09:05AM +0530, Taniya Das wrote:
+> 
+> 
+> On 3/4/2025 2:10 PM, Dmitry Baryshkov wrote:
+> > On Tue, 4 Mar 2025 at 09:37, Vladimir Zapolskiy
+> > <vladimir.zapolskiy@linaro.org> wrote:
+> >>
+> >> On 3/4/25 01:53, Dmitry Baryshkov wrote:
+> >>> On Tue, Mar 04, 2025 at 12:55:21AM +0200, Vladimir Zapolskiy wrote:
+> >>>> SM8550 Camera Clock Controller shall enable both MXC and MMCX power
+> >>>> domains.
+> >>>
+> >>> Are those really required to access the registers of the cammcc? Or is
+> >>> one of those (MXC?) required to setup PLLs? Also, is this applicable
+> >>> only to sm8550 or to other similar clock controllers?
+> >>
+> >> Due to the described problem I experience a fatal CPU stall on SM8550-QRD,
+> >> not on any SM8450 or SM8650 powered board for instance, however it does
+> >> not exclude an option that the problem has to be fixed for other clock
+> >> controllers, but it's Qualcomm to confirm any other touched platforms,
+> > 
+> > Please work with Taniya to identify used power domains.
+> > 
+> 
+> CAMCC requires both MMCX and MXC to be functional.
+> 
+> >> for instance x1e80100-camcc has it resolved right at the beginning.
+> >>
+> >> To my understanding here 'required-opps' shall also be generalized, so
+> >> the done copy from x1e80100-camcc was improper, and the latter dt-binding
+> >> should be fixed.
+> > 
+> > Yes
+> > 
+> 
+> required-opps is not mandatory for MXC as we ensure that MxC would never
+> hit retention.
+> 
+> https://lore.kernel.org/r/20240625-avoid_mxc_retention-v2-1-af9c2f549a5f@quicinc.com
 
-Fixes: d80c7fbfa908 ("arm64: dts: qcom: ipq9574: Add PCIe PHYs and controller nodes")
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Yes. And the code in genpd_set_required_opp() tolerates not seting the
+extra opps. However I'd certainly suggest not doing that (I think
+passing <0> should work). Having different number of items in
+power-domains and required-opps makes it harder to read the DT.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index cac58352182e..692c52a87bd1 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -972,14 +972,14 @@ pcie3: pcie@18000000 {
- 			ranges = <0x01000000 0x0 0x00000000 0x18200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x18300000 0x18300000 0x0 0x7d00000>;
- 
--			interrupts = <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 494 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 495 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi0",
- 					  "msi1",
- 					  "msi2",
-
-base-commit: eea255893718268e1ab852fb52f70c613d109b99
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
