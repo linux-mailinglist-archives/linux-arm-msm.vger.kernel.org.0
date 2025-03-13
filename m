@@ -1,96 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-51290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7A69A5F50E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 13:59:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCD20A5F585
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 14:11:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2311178BC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 12:59:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 111747A850A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Mar 2025 13:09:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFA7A2676E1;
-	Thu, 13 Mar 2025 12:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD1E82661BE;
+	Thu, 13 Mar 2025 13:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m49Xp00X"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hCMZwiXi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B232F266590;
-	Thu, 13 Mar 2025 12:59:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453D824E010;
+	Thu, 13 Mar 2025 13:10:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741870765; cv=none; b=Wc0L6wym5t2NB6a1x9rZ71boBRlZ9icMarTgJNQlY3Jjdx4DcFGa69KfJdJ4tC1/KAQx8TfCwnrf5Ylv3wxT3rvVFb8Z0C0AeXsMLaxy6fmczYN7/b7nA56helObQ3xSxvn8bcrQuYCfA3r+zoP4g6m+kvUVgNzSBPsovrO5DCk=
+	t=1741871419; cv=none; b=tFWXh8nHImmwi3Nuldx0JvBvk+B+VMWHOKAvmPftRjn4DaIIYmLGZc2bfOdRVq2tQhD8NnXV3PaFQiGvtmyQtBgJssGVv3P4BfzaDz3npX6KoUDRNcPijQ8Z3kQlFi9MH8V4wjZ5vgTii5r3Nwjt/hbeKO0GVSQOcOLEupEoQ5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741870765; c=relaxed/simple;
-	bh=o1JokyjlqWN8gJ/eoZQUlSigREd9jnHfkinY7XpmE+M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DF7je9gIXzFRG74cxLtNsVSA/LkmsPQV8VjdzhQJ2OXg/Xmf86EEsXfGI/NWac4KyZLcBvJD5XVyeGJPD0XMJtPdtEtyvGvEuNs5Nd19W1C2abcjpJyJKEHA3hCUb8kYpGeYTFak0WxP9fnyMIdUntCBzW1E9/fkkGwuCGYZORU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m49Xp00X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71668C4CEDD;
-	Thu, 13 Mar 2025 12:59:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741870765;
-	bh=o1JokyjlqWN8gJ/eoZQUlSigREd9jnHfkinY7XpmE+M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=m49Xp00XfLAITcQER8VcGT7UtdqnNpSa1iL3rBZcQfRBl4OU9q69SQCwjLgBUE2Q4
-	 gXm5/MBUy1x5igul64eQjyxQ4oiK36VPOECUmdurnIepNmPPbqKtKJCdsTuxkNAJXf
-	 5mhYVJdv+N0Xuk/XywDFy0wYSPyIIQEM7p2qZdOfHIs6bIJ54NrWNpjDqVloX9PZ9V
-	 ZNVvxaUvFUsenAoPFLkyqWPNZUY/mzxXOA+6cqVO/uZcyYYR3mo6DLSvpyGY6Vl/j+
-	 +YMT4tfKsVdj2Q5BD8Xlw9QcuxM02TjC5j1ovy8Hw7N2EL0h398eLZp5lZhOoVJWZU
-	 B8qqSZkPyLB8g==
-Date: Thu, 13 Mar 2025 12:59:20 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: manivannan.sadhasivam@linaro.org, miquel.raynal@bootlin.com,
-	richard@nod.at, vigneshr@ti.com, bbrezillon@kernel.org,
-	linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] spi: spi-qpic-snand: set nandc_offset for ipq9574
-Message-ID: <ac5673a7-d573-42ca-8535-254e2c1083aa@sirena.org.uk>
-References: <20250310120906.1577292-1-quic_mdalam@quicinc.com>
- <20250310120906.1577292-5-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1741871419; c=relaxed/simple;
+	bh=8NU4juysYoyJsQFa23j+XL72HurJpW8Ab/z9JtI2o5k=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cZk1KOvuiYM1mnLAuGdinBbnkzZbQzIRlYtiOiodkpD1EQyovLk+XjvHHaA41Gqmm5v5HPT3f7vb9I6Nj3H3dICcArNVZZCZx/YUBQEmBdZncR8jyvPqVz7zrCH93OtVDAO2RJ6nX63vB/J0qQPlqI+yH2+XidiD10UF9Bw03MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hCMZwiXi; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52D9A5Y0018566;
+	Thu, 13 Mar 2025 13:10:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=dHR26g87SbgpvNBDmfouMw6szuPW3LIbyRevxJX9tiQ=; b=hC
+	MZwiXit0hzNmqIyYCGpwHKQJ4/oU0lZUAtp+mIQagRDVatDkhGU2iMCO3wOTUQBg
+	UYjNDXRBTCxUuycpNo4dx7DF83PZW/AV0vhKbqUsgx/gGDAWAapt4T9dUIyCVdyc
+	RBAgjp05nFBOkRtv3pAClsoXt+B8WsTuOPe6o/qSZ5m0dB3LcU11ZhX+fd2vyv9F
+	VxDLtZVVp0wImtRuwpj7/tEn1PSSaTh6WyruiZUmzgGUBWWeRYXpzryoUZ76CVyl
+	1pe+QB6vqw/MGGHt5YSmaK08124U7Q6Jr8WIdKgVvsAgvGO/ZafEUqoCF1UwRl/X
+	WkMftIo4jk/7mtodO3/Q==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2nx03a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Mar 2025 13:09:59 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52DD9wF3013047
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Mar 2025 13:09:58 GMT
+Received: from hu-kaushalk-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 13 Mar 2025 06:09:53 -0700
+From: Kaushal Kumar <quic_kaushalk@quicinc.com>
+To: <vkoul@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <agross@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mtd@lists.infradead.org>,
+        Kaushal Kumar <quic_kaushalk@quicinc.com>
+Subject: [PATCH 0/6] Enable QPIC BAM and QPIC NAND support for SDX75
+Date: Thu, 13 Mar 2025 18:39:12 +0530
+Message-ID: <20250313130918.4238-1-quic_kaushalk@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DLVPIcV9y3hPcH44"
-Content-Disposition: inline
-In-Reply-To: <20250310120906.1577292-5-quic_mdalam@quicinc.com>
-X-Cookie: A beer delayed is a beer denied.
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: dBTtC-SNAllfZqoCWnsaaI4RjB4BGiEL
+X-Authority-Analysis: v=2.4 cv=Q4XS452a c=1 sm=1 tr=0 ts=67d2d928 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=IoVFHHhwEPMUAHoi-2YA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: dBTtC-SNAllfZqoCWnsaaI4RjB4BGiEL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-13_06,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=657 adultscore=0
+ lowpriorityscore=0 mlxscore=0 clxscore=1011 phishscore=0 malwarescore=0
+ spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503130103
 
+Hello,
 
---DLVPIcV9y3hPcH44
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This series adds and enables devicetree nodes for QPIC BAM
+and QPIC NAND for Qualcomm SDX75 platform.
 
-On Mon, Mar 10, 2025 at 05:39:06PM +0530, Md Sadre Alam wrote:
-> The BAM block expects NAND register addresses to be computed based on
-> the NAND register offset from QPIC base. This value is 0x30000 for
-> ipq9574. Update the 'nandc_offset' value in the qcom_nandc_props
-> appropriately.
+This patch series depends on the below patches:
+https://lore.kernel.org/linux-spi/20250310120906.1577292-5-quic_mdalam@quicinc.com/T/
 
-Acked-by: Mark Brown <broonie@kernel.org>
+Kaushal Kumar (6):
+  dt-bindings: mtd: qcom,nandc: Document the SDX75 NAND
+  dt-bindings: dma: qcom,bam: Document dma-coherent property
+  ARM: dts: qcom: sdx75: Add QPIC BAM support
+  ARM: dts: qcom: sdx75: Add QPIC NAND support
+  ARM: dts: qcom: sdx75-idp: Enable QPIC BAM support
+  ARM: dts: qcom: sdx75-idp: Enable QPIC NAND support
 
---DLVPIcV9y3hPcH44
-Content-Type: application/pgp-signature; name="signature.asc"
+ .../devicetree/bindings/dma/qcom,bam-dma.yaml |  2 +
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   | 23 ++++++++---
+ arch/arm64/boot/dts/qcom/sdx75-idp.dts        | 18 +++++++++
+ arch/arm64/boot/dts/qcom/sdx75.dtsi           | 38 +++++++++++++++++++
+ 4 files changed, 75 insertions(+), 6 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+--
+2.17.1
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmfS1qcACgkQJNaLcl1U
-h9AZQAf7B6HWMHCl2lowKK3SbhxOes8At7H7cGoilgVUlhRLpGHnkHSjYEJ1FlTG
-QDGuOYVraIvxayTbRQNnxBDDAaGWWD4JYR/ukvFPL3CbN5+pyAuOKM1R2TsLwafC
-TidjQjxxD1Azv9+NwPaJYn9wTcwis7D/ENNLUqW7H9edkdxCmKIEYPQ0jtOIq4hI
-UnEtYy1FJN6ADYZeDJXLQZKyZY7steggwFKzz5HBekgS7Z2ILo3sFAfAVqb3C6p7
-qdf4X1H1fs+QuSAPJa1k632ZKMiPHy95hGkJssPyz/ft2zBuUbjQJbaDvt/GQAhk
-6Ha6C1g0bN2cV/ts0mfZaO2q2ld3BA==
-=pp4l
------END PGP SIGNATURE-----
-
---DLVPIcV9y3hPcH44--
 
