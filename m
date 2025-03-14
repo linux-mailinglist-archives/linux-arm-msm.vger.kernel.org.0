@@ -1,207 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-51372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36B21A60A6F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 08:53:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD9FEA60A9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 08:58:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80F223AF7E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 07:53:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B95D03BE85F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 07:57:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BB90155759;
-	Fri, 14 Mar 2025 07:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5324818CBEC;
+	Fri, 14 Mar 2025 07:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tRnLHyCO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Io4iEEbG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B698632B;
-	Fri, 14 Mar 2025 07:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228018632B;
+	Fri, 14 Mar 2025 07:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741938817; cv=none; b=M4dTbncikVHDY3jyZBFCmSEgCy1gEdANLBOAj1RLgn0IR7DhFqhCC1Wcb2qg0qa3xwpjBGQ4UaMl2hozr3mCTSwiDZ3D6cX/9ttKi6xuk029e1R+NfyS+klCEHplVlnoPt7NSKspbpFQJTYrMAKLnpe1rlRuMjZ4N9kZdXkr3lM=
+	t=1741939074; cv=none; b=TcYy5alAhNLvWHQy6rx0apDjoPb71LU1bG0D1cy8fowzeJNDt/G9PC6F/aAqBQSmFBn5W0T1VdjVni8wg1Bi05ePbWxKrScuntmcdSRXZYI1eq/py4Xq0QX3ngO1vCzU0lIgKkT9dVyYIwrNp9Oca6XY7+Bw1GrTjBSeSdBYRmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741938817; c=relaxed/simple;
-	bh=E57EmoFkwByfZ3+/wk75Rb5J/TWgAJzeL4fRLvNge9c=;
+	s=arc-20240116; t=1741939074; c=relaxed/simple;
+	bh=kLmVLSVYE5l3QJYFELjSs2DqsuxPPf5s9sQcfNt7eAk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aVFZhRxE6ePdtgJhcU6srjg+i3j1bPgaapvywCcH3RY6Q/gl5n3We+kVeuftu6KWdfy72QPjct7G+7ut/p7gWuzVShjx7W+x9JsGqhzmhtwj+H82gGKRDcbm2c5LJiqtJrR06UNYxJDuXe9b/qUBU+Pdsz70U3xMujmwAZtgDR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tRnLHyCO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71238C4CEE3;
-	Fri, 14 Mar 2025 07:53:36 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=kxa443IOZqHJ7XshCVCcVs4t0f4JRbXPIejqfvhsJY7RMLl9AQDMzsdV5sShxXT3sCLewPFfFTXHwepEnHvt6G5ml2xTvRr5Jd4EBC+nQswvXFzt+dBnQGGpbLhMFAI2dno05yDNaXb4uR1l3O2IoJjBRRY9QOXD0WTEJxIqOmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Io4iEEbG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16E7C4CEE3;
+	Fri, 14 Mar 2025 07:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741938816;
-	bh=E57EmoFkwByfZ3+/wk75Rb5J/TWgAJzeL4fRLvNge9c=;
+	s=k20201202; t=1741939073;
+	bh=kLmVLSVYE5l3QJYFELjSs2DqsuxPPf5s9sQcfNt7eAk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tRnLHyCONL3aSgwFtn9Jn12yhwLumtCwhA8LxyNyZYzC/R8lRNO953v11ZhB52yMY
-	 /w7eIwJtYVN0l7Oq/woKCtE62elLarU+ihZL+oHJ96Exq8CdcJLhOqN9fY8d1aaBav
-	 AfE3jD+IxMB3T59byaiJQ4DTb/9bx+nPm7GlhD63IRoii0UBYLfbeqBia4dz2sxNYj
-	 MpL7xCZwt49Si4UOpBezHTTseH0SmJZDWDI3pBRvjP8wmohHyr8wIuNJvvajx3hVbj
-	 1+UST4Xfo+ELRmDTQgVXjm+wqIx20hsFhEZiESS7OsBg5No0SY6NltnqL5KBe7r2ZF
-	 rOTK4kJuk0MHQ==
-Date: Fri, 14 Mar 2025 08:53:34 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Dmitry Baryshkov <dbaryshkov@gmail.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Hermes Wu <Hermes.wu@ite.com.tw>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v5 2/2] drm/msm/dp: reuse generic HDMI codec
- implementation
-Message-ID: <20250314-stereotyped-cerise-hare-cafb0e@houat>
-References: <20250307-dp-hdmi-audio-v5-0-f3be215fdb78@linaro.org>
- <20250307-dp-hdmi-audio-v5-2-f3be215fdb78@linaro.org>
- <20250310-daft-bittern-of-foundation-67c657@houat>
- <CALT56yMSs7K_0b5YtkCW5Ypyt9Hu_YLkitFFJwTtBkwUJk-NHA@mail.gmail.com>
- <20250311-vivid-almond-elk-83fda5@houat>
- <ecw5wdvkf2iqwxvigze374q3lb3esqbokv43mkblbnpfmudutu@e75i4lqhuux7>
+	b=Io4iEEbGYXxvd6eRGU4X19Vx0Q1/Y7eauxv65W9Ixi/Mysh60rIUlGxzMKYUQgCFu
+	 g5qyDOIJJ5r4q3j6Gx3XuLzXYADzppcIkP4FPZJ5p77BKFy+PXY66PfqpI+9Kf0Wfo
+	 hIb6EMmMtqOWPJNsmd+Dv5x2NTGi5YyO/zkNeULflCZSr0VY7FhkFvvrm627XEk6rS
+	 Du2uo6/uH3BO8kBgjrCThMMr6Qduj+LmqHuipjBjJeYWX/a8NjiyJGQ5CWaDGgvl0z
+	 ii2IICkI2hLw/caelcqp7xoAZ0JBdYMxqigr0y4SDBpsfytXXt9PULW36d66DxhC4N
+	 wtMwr4qcoPRlg==
+Date: Fri, 14 Mar 2025 08:57:50 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
+	manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	andersson@kernel.org, konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v13 1/4] dt-bindings: PCI: qcom: Add MHI registers for
+ IPQ9574
+Message-ID: <20250314-resolute-slim-waxbill-eaa9ee@krzk-bin>
+References: <20250313080600.1719505-1-quic_varada@quicinc.com>
+ <20250313080600.1719505-2-quic_varada@quicinc.com>
+ <1c88f01b-4414-4f02-91ed-572a9261543a@kernel.org>
+ <Z9LGti0cdg9Sj6xa@hu-varada-blr.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="nv7qm2xacwdttobt"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ecw5wdvkf2iqwxvigze374q3lb3esqbokv43mkblbnpfmudutu@e75i4lqhuux7>
+In-Reply-To: <Z9LGti0cdg9Sj6xa@hu-varada-blr.qualcomm.com>
+
+On Thu, Mar 13, 2025 at 05:21:18PM +0530, Varadarajan Narayanan wrote:
+> On Thu, Mar 13, 2025 at 12:01:54PM +0100, Krzysztof Kozlowski wrote:
+> > On 13/03/2025 09:05, Varadarajan Narayanan wrote:
+> > > Append the MHI register range to IPQ9574. This is an optional range used
+> >
+> > Same question, you still did not answer - does hardware have this range?
+> > Which hardware has it?
+> 
+> Yes. All three (ipq6018, ipq8074, ipq9574) have this range.
 
 
---nv7qm2xacwdttobt
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v5 2/2] drm/msm/dp: reuse generic HDMI codec
- implementation
-MIME-Version: 1.0
+Then explain in the commit msg that you complete the hardware
+description for these SoCs.
 
-On Tue, Mar 11, 2025 at 05:58:19PM +0200, Dmitry Baryshkov wrote:
-> On Tue, Mar 11, 2025 at 09:41:13AM +0100, Maxime Ripard wrote:
-> > Hi,
-> >=20
-> > On Mon, Mar 10, 2025 at 08:53:24PM +0200, Dmitry Baryshkov wrote:
-> > > On Mon, 10 Mar 2025 at 17:08, Maxime Ripard <mripard@kernel.org> wrot=
-e:
-> > > >
-> > > > On Fri, Mar 07, 2025 at 07:55:53AM +0200, Dmitry Baryshkov wrote:
-> > > > > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > >
-> > > > > The MSM DisplayPort driver implements several HDMI codec functions
-> > > > > in the driver, e.g. it manually manages HDMI codec device registr=
-ation,
-> > > > > returning ELD and plugged_cb support. In order to reduce code
-> > > > > duplication reuse drm_hdmi_audio_* helpers and drm_bridge_connect=
-or
-> > > > > integration.
-> > > > >
-> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > ---
-> > > > >  drivers/gpu/drm/msm/Kconfig         |   1 +
-> > > > >  drivers/gpu/drm/msm/dp/dp_audio.c   | 131 ++++------------------=
---------------
-> > > > >  drivers/gpu/drm/msm/dp/dp_audio.h   |  27 ++------
-> > > > >  drivers/gpu/drm/msm/dp/dp_display.c |  28 ++------
-> > > > >  drivers/gpu/drm/msm/dp/dp_display.h |   6 --
-> > > > >  drivers/gpu/drm/msm/dp/dp_drm.c     |   8 +++
-> > > > >  6 files changed, 31 insertions(+), 170 deletions(-)
-> > > > >
->=20
-> [...]
->=20
-> > > > >
-> > > > >  static int msm_edp_bridge_atomic_check(struct drm_bridge *drm_br=
-idge,
-> > > > > @@ -320,9 +324,13 @@ int msm_dp_bridge_init(struct msm_dp *msm_dp=
-_display, struct drm_device *dev,
-> > > > >        */
-> > > > >       if (!msm_dp_display->is_edp) {
-> > > > >               bridge->ops =3D
-> > > > > +                     DRM_BRIDGE_OP_HDMI_AUDIO |
-> > > > >                       DRM_BRIDGE_OP_DETECT |
-> > > > >                       DRM_BRIDGE_OP_HPD |
-> > > > >                       DRM_BRIDGE_OP_MODES;
-> > > > > +             bridge->hdmi_audio_dev =3D &msm_dp_display->pdev->d=
-ev;
-> > > > > +             bridge->hdmi_audio_max_i2s_playback_channels =3D 8;
-> > > > > +             bridge->hdmi_audio_dai_port =3D -1;
-> > > > >       }
-> > > >
-> > > > I think I'd prefer the toggle to be OP_DP_AUDIO, even if the
-> > > > implementation is exactly the same. That way, we'll be able to cond=
-ition
-> > > > it to the DP support when that arrives, and we have the latitude to
-> > > > rework it to accomodate some DP subtleties without affecting the dr=
-ivers
-> > > > later on.
-> > >=20
-> > > I don't think that there is a point in having OP_DP_AUDIO. There is
-> > > not so much difference in the driver. Also currently OP_HDMI_AUDIO
-> > > follows existing approach (which was pointed out by Laurent) - that
-> > > OP_foo should guard a particular set of callbacks. From this
-> > > perspective, OP_HDMI_AUDIO is fine - it guards usage of
-> > > hdmi_audio_foo(). OP_DP_AUDIO would duplicate that.
-> >=20
-> > HDMI and DP are two competing standards, with different governing
-> > bodies. I don't think either have claimed that they will strictly adhere
-> > to what the other is doing, and I don't have the will to cross-check
-> > every given audio feature in both HDMI and DP right now.
->=20
-> Hmm. Currently (or before the first hdmi_audio patchset) everybody has
-> been plumbing hdmi-codec directly from the driver (even for DP audio).
 
-We also didn't have an infrastructure for that before, so it's to be
-expected.
+Best regards,
+Krzysztof
 
-> > However, I think we should really have the flexibility to deal with that
-> > situation if it happens, and without having to do any major refactoring.
-> > That means providing an API that is consistent to the drivers, and
-> > provides what the driver needs. Here, it needs DP audio support, not
-> > HDMI's.
->=20
-> Would OP_HDMI_CODEC be a better name for the OP? (we can rename the
-> existing callbacks to be hdmi_codec instead of hdmi_audio too).
-
-As said on your first patch, there's more to it than just the codec, so
-no, the current name is fine to me.
-
-> > How we plumb it is an implementation detail, and I do agree we can use
-> > the same functions under the hood right now. But the driver is a DP
-> > driver, it wants DP infrastructure and DP audio support.
->=20
-> Would OP_DP_AUDIO require a different set of callbacks on the bridge
-> level?
-
-Yes.
-
-> I don't want to end up with too much of duplication. Maybe we
-> should the cdns bridges which implement both HDMI and DP functionality
-> IIRC.
-
-We can (and we should) take the same prototype for both though, so
-drivers that have the same implementation can provide the same
-implementation to both.
-
-Maxime
-
---nv7qm2xacwdttobt
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZ9PgfQAKCRAnX84Zoj2+
-dlg0AX0TLk3raLgdYI+leZ/c22M1sG07wy1DwoF9VD0O7TWGByRbduojj7cpippQ
-V/umvOUBegI5QjgCoTNWCpiYr1txJAAYhEf5VBHroBDcxS1WnXtvCSiXNQ/aI6fO
-3KIjq3U07A==
-=FdgA
------END PGP SIGNATURE-----
-
---nv7qm2xacwdttobt--
 
