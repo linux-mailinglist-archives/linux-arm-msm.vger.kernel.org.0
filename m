@@ -1,179 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-51463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DB5FA6198F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 19:35:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE6BFA619B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 19:42:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B815419C237B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 18:35:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 153253BBCFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 18:42:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFD23204C38;
-	Fri, 14 Mar 2025 18:35:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iSyp237W"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14208204582;
+	Fri, 14 Mar 2025 18:42:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5DF43169;
-	Fri, 14 Mar 2025 18:35:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDB943169;
+	Fri, 14 Mar 2025 18:42:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741977308; cv=none; b=OFnDqG8sSxa9UrXukjbcJXCwQ2o16IznqRraBgWNcbPSgO0gAf9NboZBC+xiarXGhY9J2HunvnfSjWVz8zrNbRoEYilmsmLlQ4uPi/kgVK25nQvpTz/GBJFUMW3zUR/btilccI/ISCAsPPeF01hOI2I+6rq3Id/7w7drYqKPLAM=
+	t=1741977769; cv=none; b=onOP48xb9DFwTP0gdiLNkis+DxpKH+SKIk6nujL+ZgAg3lEbDw6n9hxS/ls4Ap3Pr5qw+qwhvc1f1evB45aJufo86rzdv75nV0UeuIkkv7hXObpTmFy0H8qBzYtoAK9KfYjfLzvFNb2AvHX8XtZhBMaCj2AUWT6J46706HFzJH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741977308; c=relaxed/simple;
-	bh=VScq2fw2bpujBQWsv35LjmBtGERbWvzezXJcennzOYo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=E4apguiCMR5meuc5TJW4Qi0AAssYe7/YnP3hbY9JBe0lAZ43fkaXyGdkcCDyyeJhth/ZZdi1g+gfHoxhGMqD5vD1uYddxH7j4YTxbg9ztR6a4oT1Sw4saKqXtsxb5bP+CrhiJHDRA64JMZWjd+Dmc6yXyu+zsZNsmWW34pF22ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iSyp237W; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2239aa5da08so49626245ad.3;
-        Fri, 14 Mar 2025 11:35:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741977306; x=1742582106; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KOGfE1bp0apHOUPvuww94GVOY0/BGeOxjq/fkDzIXwE=;
-        b=iSyp237W2HYZAQHGpBFwpWU2WAs9NkSfN7cOFZrwKGRZwQ7k/UPTE+48904tM18qEK
-         NXKbo59ZqVELcdjBAEGavIXg2EmftULio/RbzI4wxAyFWZ2ockF/2l4AR/XIqqDO+9V8
-         aNj9M7MEZeli1lRUsYVu/VOY0htov4Xczk1Q/vupiCNlTj44myNFNUKmX42jMqmO5tr+
-         PM2Y/sTmUuwIhVEupHQzOmoBNvSAY8eiCaNiFoWQIMu57Bi2C3nHRYhRLTooOM/pOknc
-         3E+BQPoNIYBBt/SE9YuDHXhA6DYr2TuV3UK+l7gQsLEO7iomXctUGkM8adKBJ+0KBOT7
-         5b6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741977306; x=1742582106;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KOGfE1bp0apHOUPvuww94GVOY0/BGeOxjq/fkDzIXwE=;
-        b=YbOc3MQMFakQI5yta/f3JhwIjIk5ZPpVxuKzkS1K5YYbNW5H6SlbWG+YDfIDd7gwHe
-         P/hHbHahm3Lxb9nHJmoCbv3N4IW+vP01SFNvj4sZHcojHocrGMbfk1Hx1tYU+wRKM5ZN
-         a8OGbgpZoGAQmS6e6PJmpgooztXySh7qMncgS/PGtvG35j9LgFhKPMA90fy4hRQ68MRu
-         Loa7IuGbx+vxVMm9E7qduO+sA68pRRUmf4iNhuriBDyOCQNCNrvu+7+FDP5POFQa8i+Q
-         l+73nG3JC8qrRsr1BoyX/Utli8wCscno91F9MRg2gZEP+q3FWGFuQWYSAZWl3Hg3DgGT
-         U5eA==
-X-Forwarded-Encrypted: i=1; AJvYcCVIEYaQa8q9Zq9Vb+tVTGZQJn6hjUxOXNnfG3hubvt17io/W79fnRHAwvKYYuz/NEv4/iW8UZPjQIdeE/w=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0Xg/xyD71LZ2tNZgopV91CVbMvjFzeaClxNcN7yI+LA/zWn9Q
-	wnGOQFLiRu5VlFY98JiGS5q6MeARIhJCPbh6OehtebqYKh91KCa1
-X-Gm-Gg: ASbGncvZ+DPrhVXowSTtKFhiBgISpI0ZxPsCYK7PgIsih7nRfbEBasmeDclVubATDdL
-	fd8bcKNStTcdK9jY7Fat3wr3ZCQIP3B0DWaJTlHC8+zQxyMtHAoEF1LXof6gllWO7u0AQ7MoANm
-	IWxiK7PU6REHjf3dS6cU7EjzVe4kf+JUWO+cGLmQGkkV+q6adhb/rEOAylnoW5VVTj5NOpbd1bY
-	T4aB9GZVwZdhxK0ssULFYzpW1W453QSvuBbcKn+d/bM8nYNwow0dnMwow0ADeEc3BmOyIHfY2Wf
-	ESARvAq1o1eMIzNTalNcfMj7f2/b0MAM+YrCw5U5tBjHlH/5xvkV80Q+IeUpGcCNzZ5nliSrNAu
-	sqYUyBdIvaHsc8NNSvsk=
-X-Google-Smtp-Source: AGHT+IGyHLOiEcz0CUx+B5T1oc0d5NEOsRtR01l/PJbeEXJcQ7LU9JwYgvAyRbB0tUWON/7rymzn8Q==
-X-Received: by 2002:a05:6a21:6d97:b0:1f3:37c4:5005 with SMTP id adf61e73a8af0-1f5c12d7458mr5644246637.33.1741977306172;
-        Fri, 14 Mar 2025 11:35:06 -0700 (PDT)
-Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af56ea9489esm3071103a12.65.2025.03.14.11.35.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Mar 2025 11:35:05 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Rob Clark <robdclark@chromium.org>,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Jordan Crouse <jordan@cosmicpenguin.net>,
-	Jonathan Marek <jonathan@marek.ca>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2] drm/msm/a6xx+: Don't let IB_SIZE overflow
-Date: Fri, 14 Mar 2025 11:34:54 -0700
-Message-ID: <20250314183455.120824-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.48.1
+	s=arc-20240116; t=1741977769; c=relaxed/simple;
+	bh=hk9CCr3sOTtD0kIUmhrmm0S170xFggZnujxU0PbujIw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BlIfWrC4barvvMQI7fWosFyGLGtJmgoApaANxI7Yi1mAtCf/SWDE+f/lxNMHoWY/fYIeZ5tG0IAIOSGF/w8+ulU8W06xlpaxImoxAX29jGcp7FwJqpazF5kT/wYfyV/GX3sAbc6KGfadLCZDFKO6PkEHEFh4T0/dXx36v75urFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2259FC4CEE3;
+	Fri, 14 Mar 2025 18:42:44 +0000 (UTC)
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Douglas Anderson <dianders@chromium.org>
+Cc: Roxana Bradescu <roxabee@google.com>,
+	Julius Werner <jwerner@chromium.org>,
+	bjorn.andersson@oss.qualcomm.com,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Scott Bauer <sbauer@quicinc.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	James Morse <james.morse@arm.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 0/5] arm64: errata: Rework Spectre BHB mitigations to not assume "safe"
+Date: Fri, 14 Mar 2025 18:42:42 +0000
+Message-Id: <174197748983.735859.13306599472795958808.b4-ty@arm.com>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250107200715.422172-1-dianders@chromium.org>
+References: <20250107200715.422172-1-dianders@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+On Tue, 07 Jan 2025 12:05:57 -0800, Douglas Anderson wrote:
+> Recently I realized that a device with some Qualcomm Kryo 4xx cores
+> reported in `lscpu` that it was _not_ vulnerable to Spectre BHB. This
+> seemed unlikely to me.
+> 
+> I wrote up a patch series to attempt (with a lot of guesswork) to add
+> Qualcomm cores to the tables governing how the Spectre BHB mitigation
+> worked.
+> 
+> [...]
 
-IB_SIZE is only b0..b19.  Starting with a6xx gen3, additional fields
-were added above the IB_SIZE.  Accidentially setting them can cause
-badness.  Fix this by properly defining the CP_INDIRECT_BUFFER packet
-and using the generated builder macro to ensure unintended bits are not
-set.
+Applied to arm64 (for-next/spectre-bhb-assume-vulnerable), thanks!
 
-v2: add missing type attribute for IB_BASE
+As per Will's suggestion at the end of last year:
 
-Reported-by: Connor Abbott <cwabbott0@gmail.com>
-Fixes: a83366ef19ea ("drm/msm/a6xx: add A640/A650 to gpulist")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
-Backport notes, prior to commit ae22a94997b8 ("drm/msm: import A2xx-A4xx
-XML display registers database"), just open code, ie:
+https://lore.kernel.org/r/20241219175128.GA25477@willie-the-truck/
 
-   OUT_RING(ring, submit->cmd[i].size & 0xfffff);
+Doug has reworked the code to assume vulnerable by default. James did
+suggest some splitting of patch 2 but given that Doug doesn't have time
+for a respin I decided to queue the patches. If anyone has a strong
+opinion, please let me know (and reworking the series is welcomed).
 
-Prior to commit af66706accdf ("drm/msm/a6xx: Add skeleton A7xx
-support"), a7xx_submit() did not exist so that hunk can be dropped.
+[1/5] arm64: errata: Add QCOM_KRYO_4XX_GOLD to the spectre_bhb_k24_list
+      https://git.kernel.org/arm64/c/ed1ce841245d
+[2/5] arm64: errata: Assume that unknown CPUs _are_ vulnerable to Spectre BHB
+      https://git.kernel.org/arm64/c/e403e8538359
+[3/5] arm64: errata: Add KRYO 2XX/3XX/4XX silver cores to Spectre BHB safe list
+      https://git.kernel.org/arm64/c/0c9fc6e652cd
+[4/5] arm64: cputype: Add MIDR_CORTEX_A76AE
+      https://git.kernel.org/arm64/c/a9b5bd81b294
+[5/5] arm64: errata: Add newer ARM cores to the spectre_bhb_loop_affected() lists
+      https://git.kernel.org/arm64/c/a5951389e58d
 
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c               | 8 ++++----
- drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml | 7 +++++++
- 2 files changed, 11 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index d3978cfa3f20..ea52b7d0b212 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -245,10 +245,10 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
--			OUT_PKT7(ring, CP_INDIRECT_BUFFER_PFE, 3);
-+			OUT_PKT7(ring, CP_INDIRECT_BUFFER, 3);
- 			OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
- 			OUT_RING(ring, upper_32_bits(submit->cmd[i].iova));
--			OUT_RING(ring, submit->cmd[i].size);
-+			OUT_RING(ring, A5XX_CP_INDIRECT_BUFFER_3_IB_SIZE(submit->cmd[i].size));
- 			ibs++;
- 			break;
- 		}
-@@ -382,10 +382,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
--			OUT_PKT7(ring, CP_INDIRECT_BUFFER_PFE, 3);
-+			OUT_PKT7(ring, CP_INDIRECT_BUFFER, 3);
- 			OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
- 			OUT_RING(ring, upper_32_bits(submit->cmd[i].iova));
--			OUT_RING(ring, submit->cmd[i].size);
-+			OUT_RING(ring, A5XX_CP_INDIRECT_BUFFER_3_IB_SIZE(submit->cmd[i].size));
- 			ibs++;
- 			break;
- 		}
-diff --git a/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml b/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-index 55a35182858c..a71bc6f16cbf 100644
---- a/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-+++ b/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-@@ -2259,5 +2259,12 @@ opcode: CP_LOAD_STATE4 (30) (4 dwords)
- 	</reg32>
- </domain>
- 
-+<domain name="CP_INDIRECT_BUFFER" width="32" varset="chip" prefix="chip" variants="A5XX-">
-+	<reg64 offset="0" name="IB_BASE" type="address"/>
-+	<reg32 offset="3" name="3">
-+		<bitfield name="IB_SIZE" low="0" high="19"/>
-+	</reg32>
-+</domain>
-+
- </database>
- 
 -- 
-2.48.1
+Catalin
 
 
