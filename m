@@ -1,86 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-51338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AA56A6084F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 06:29:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC77CA60877
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 06:47:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E62513B8C4B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 05:29:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AED93BE1FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 05:47:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B611513C67C;
-	Fri, 14 Mar 2025 05:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC3D115696E;
+	Fri, 14 Mar 2025 05:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GJqH4Lhq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vr8cQSng"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF7B133987
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 05:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8DE15199B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 05:46:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741930161; cv=none; b=GXi6frUqO2DC8PWSKoQuiUjWZVOuG2eTj0RYUEjy0LNXYFD41XRFiF4Zxc1MdSB7slD3dMahb1+L33X09u7LzgKWZbS5G/eVPBmXZXiARZp+sUpBGFuCjKu4gBNoZ1cBQ2E6ePHLmVNR81yni3zZGwp3cNZaTdWtoIZAcTMs9rE=
+	t=1741931218; cv=none; b=PZBcOzZxhMPJK0SHkMe82zyqbNIptRW9a1BmWxHcrFr5VCmT2hvgTikK6Kb8Gh0HKM4Gpb5nynEtgoPdi3yjNkxsi1n5PWmsAByw9nWi71Ix2I/S/FnZv2qOjMzXvaHwXcuAxi8SpCVkbSPOb7SNLt3XEkuEUL/vRECYCnuuKyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741930161; c=relaxed/simple;
-	bh=lvjF/vf/1FBTD6ODcwiNR8r2K6BYFh4q0H9Wc+Rrg+s=;
+	s=arc-20240116; t=1741931218; c=relaxed/simple;
+	bh=ul3R7jtmfTkNR91cB1ZQcsKkdbKIhRpe8N6UWTr2pBs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N3M7P+gO34z3Rcw/XUn2YAE1GyqYAkthX5A5qFyzPyM8iY3E88NK6JDvJKvM7Jlm4Y+JaxjXej7aUReq5/+w/3B1fFFVTbP9uPFAZ8IxAbc2/DXek8wj2OrLHYdA9EF8a3kPRc28uNEg6gNJwMizrQaQJdra10D/0o9xlp2dxLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GJqH4Lhq; arc=none smtp.client-ip=209.85.214.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=ViAy2wQROPyTvQ5WUX4vlTeXDDqyiFdRPACe4Cr4r8R6nXxBdOLGQsEfbPiJhLjCFeKOkgDKyuSeZfPcZf0vjUvlWGVUduXWcLcuL6U8m73WUHxJ/tw3bDtw0r9IWZe5o5Joiw+wziPx5GXEYCd/e/RMbE0Olt87+Iv+tbwyVr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vr8cQSng; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-22401f4d35aso34855825ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 22:29:19 -0700 (PDT)
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-225e3002dffso2554775ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 22:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741930159; x=1742534959; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1741931216; x=1742536016; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=wudfzgqNI4CJt3CbrvIHvc2N1xk0CBifbAoX/xv8R04=;
-        b=GJqH4LhqzeD1b5YeVIHWQv4UiRtdTmD2oyr6UG5iNA4nBeEfVBIkaus6YpNOa0+fxe
-         fCEVJZeW2Kca15g2fDYantir9Mj7YmOPmXqCS4pljf5vnVMEfPAL/9gNSfQXO12hg0Xq
-         eK9CyyOxAjx3Z9zwAPuBz3Syeoc9RgRKsV+6+E7EVSOOfPdxf+0MfsyleGehsQp8FDHg
-         oXXYu9mRiG3fhhbKOk22IKFp/ikkuk/F+82/luJNJXZe1djvUCCpM4qW3wGheike1cFf
-         pDk5WHhoXz6c37sSg5jET789XHjy8EcYDaeSbtGBQFPGmKZyJKiSkE5ZUkZ4LFM9AFrL
-         oaLQ==
+        bh=elfAuMJHoolYmn57P5hXk5/lLKgLrVuStnKmq4AdqUY=;
+        b=Vr8cQSngOGdBcDhzijv1sblvOREWN6TxYdQhjWWKcIkjGhWwP6bi2xEZ+ibAyU+31e
+         G4TJ4oYIsg+c5uB/PmlSFSaE/hmWEQWt5ha5qnjrZIkTCI7w/pHr/9hvccxLANbmAkAd
+         dxxUxXjMTSlh6xtS2LArS9Lod8I2Bec23/PWulfUT3mOosDtpEYE98llxRxoSZ7OwYB0
+         tSNwnTtWe4t/JsSnSN0SkfPs+RrAt7n1QI7fRPQNXaZb1U3Ertv+/pgwL8zedFBcEVgv
+         HUPkn4HzerpKOm770utb6PS71ZCKcGGJZxToeGl+tUDkxXEEIn1S2/tFKEc9MGcQ/Bln
+         v5OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741930159; x=1742534959;
+        d=1e100.net; s=20230601; t=1741931216; x=1742536016;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wudfzgqNI4CJt3CbrvIHvc2N1xk0CBifbAoX/xv8R04=;
-        b=GQhJIwS3Mme/yGNoitgAtl/fXq0cYsaS29BzfxG7RI//bepyPo3aShMAXzcLdA6H6S
-         ZGkGmJM/FToqctu+9o6mvN6DFBUc5W1+yFNRuqZvOwB++w1sku4UzMW319/Dpzk89Ngy
-         nnMg2xWKXl+3xMAYO4SQAa6NrjQ+61AfMrcXKqAIJMEbN+B5qq7Q5rnLjrLyU7bjvICs
-         ay11qvaaTnL2K69gvbIbkUhnpEAAcAsZ0qui5erEsd2Kjjdr/oQUxO08WoC51MgXFUQr
-         LAslAkWScjqKtEuJkh+XpTHFg7xmc0DU6fHFRr3F238lhYxskvrkjopyHOzSLpAwcVjF
-         r8RA==
-X-Forwarded-Encrypted: i=1; AJvYcCWF+bJWc1k5G24ic1/o8fCV3vIXIGv7pC5KsEQCkm7HzF+d1J2pwJx2S+hH/8fHqOJPtB8x7zabwcIAwUe2@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxfs3JuVXyW2b2IcPkCmHQMDrDlVaQ1NYxLYzZKnsqnafYdTLkV
-	HCx2JR6TmQhLeuhVPSW9M7eiQoIzmCE7Xz0C9tn/Hs0CaN/W4GFzdxlpTDlhNw==
-X-Gm-Gg: ASbGncvHTRH61A/HMgz/5+OiMB7yz2pw5d6D8goqyjlJApP6UC+qKIx3JL126hts1DP
-	RFZI8qo/4HjRv+PAFJ7ALILoORxKzsJkLq/3EnQeQG8fgnDP/SJPsIfVCBsc347iIO/JoLkv020
-	9MpdodUutE61ctMqzK3BmF6FGviDFe4qwdL7/aRC6mxac5CZljg8jrAA8P6STmijinWn0Ilt2kP
-	zLUewbOyxrCetZqpFTR7JQQnvsnDgY3zKuCOtZsyf2Yt4cqA4G3pzjNCrImNQzMa8ZX6HRu6REf
-	wS7U6zyXK0JCVQ/o+4hljciK4EqmntLZQzxb5xQZN1g0TBFXOE1FxKbf
-X-Google-Smtp-Source: AGHT+IF2bF7u4qDFET7S0Tsn8pwPaHXxvjGNkAhrRsneRWS2Axy2BzcWWUnNDpSPcUtooKe5diBoig==
-X-Received: by 2002:a17:903:22c1:b0:224:2524:3047 with SMTP id d9443c01a7336-225e0a6b2damr19184565ad.26.1741930159071;
-        Thu, 13 Mar 2025 22:29:19 -0700 (PDT)
+        bh=elfAuMJHoolYmn57P5hXk5/lLKgLrVuStnKmq4AdqUY=;
+        b=uTLlL4xOfsHZYLuaJ+Ex/l2Qx5VoiWHivrsWqy9j6/2EfAmgLJyKl76YBj5I/2RfXC
+         hPXcLldfNfqLvHUQyuAa5HIiUWNUoQai1Bxm9a29U/H8Q6/pGqbe7rbBK+G1ExuC9RMw
+         FygAt/Ootgwy91ZEMGOQqOAIfpOgi1h3zrTT6lS+dNZmbtVLknIPKE5hCiFGNHjA6H3m
+         moJqIUDa1X0eMIdBaSSSE5POboe+gfh+BEIteLQZs/DPix/LL+rblC5LBVoFuSPfmRMQ
+         QPJ6BHc9mOKTqP3Il8pvxKBaDTaoN/8WpVIg6wCc40+Jqna3Nvdt1XHQveSe27i9kkKG
+         f1qA==
+X-Forwarded-Encrypted: i=1; AJvYcCVRxd8d3ndrqD1xD7s16IQcCrXpQ2wlG/rVzrO9eNZGzK7D+K8IIPH2nIVrJR7h9ncCLg72+DvKpKIbVZir@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyda3zcZjruC1lsSjum+yUczwhZZk3/U0epojCYY5p4rJtqy2it
+	iPn9KsEyX2vui35L9yaDzemdJdlI1YsRz43qkQsLjJjVgIJC8btAU5By3i7Jxg==
+X-Gm-Gg: ASbGncuQFmw0bOxghVZO4xuBwJaK++6HcEpf397DaX452h49ChdvGEIjF29BDj517Wa
+	0wtWvc5/xJFGdOJ0y+BEB/nxigyVeNGVvKyDjmGAibB55XnyPG+gaqVamkx4MDKO/UoVvNHWTOT
+	Sq0TLfuv+wzNuipri+Y29iw+qAQ7FwPhwOOjq4qMz8icrGN8zM3td7VZQ6rUmX9/rF64f5ewNcy
+	vP/xQ78O2Ni7FqLDrJnHcUjbRz+T8sX1iXN+v2+tv5ALSX7EtqmLAvWujVkNcc/tamDNmlzFZZk
+	NriLsp7IPupyOsqGXdh+WJpT/g2W1s6G1JV9RYW2fWO5U/YPjpQKrOHLgqNz1emrSKY=
+X-Google-Smtp-Source: AGHT+IEDHDcE2nsWay4x5212Q9dwE5Pu/hfncAbR9VQ1eoCkuWaU2M1xG6urqjKX6m2kNZqO1jWOKQ==
+X-Received: by 2002:a17:903:3c66:b0:223:325c:89f6 with SMTP id d9443c01a7336-225e0a22b7amr22117525ad.10.1741931216173;
+        Thu, 13 Mar 2025 22:46:56 -0700 (PDT)
 Received: from thinkpad ([120.56.195.144])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6ba70d2sm22561515ad.136.2025.03.13.22.29.16
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c68a874csm22761075ad.98.2025.03.13.22.46.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 22:29:18 -0700 (PDT)
-Date: Fri, 14 Mar 2025 10:59:14 +0530
+        Thu, 13 Mar 2025 22:46:55 -0700 (PDT)
+Date: Fri, 14 Mar 2025 11:16:51 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
 Cc: quic_carlv@quicinc.com, quic_thanson@quicinc.com, mhi@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
 	Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: Re: [PATCH] bus: mhi: host: Fix race between unprepare and queue_buf
-Message-ID: <20250314052914.azbfimrtaes24n2n@thinkpad>
-References: <20250306172913.856982-1-jeff.hugo@oss.qualcomm.com>
+Subject: Re: [PATCH] bus: mhi: host: Address conflict between power_up and
+ syserr
+Message-ID: <20250314054651.iu6t3q3o5za2zrjs@thinkpad>
+References: <20250306173226.857335-1-jeff.hugo@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,84 +91,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250306172913.856982-1-jeff.hugo@oss.qualcomm.com>
+In-Reply-To: <20250306173226.857335-1-jeff.hugo@oss.qualcomm.com>
 
-On Thu, Mar 06, 2025 at 10:29:13AM -0700, Jeff Hugo wrote:
+On Thu, Mar 06, 2025 at 10:32:26AM -0700, Jeff Hugo wrote:
 > From: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > 
-> A client driver may use mhi_unprepare_from_transfer() to quiesce
-> incoming data during the client driver's tear down. The client driver
-> might also be processing data at the same time, resulting in a call to
-> mhi_queue_buf() which will invoke mhi_gen_tre(). If mhi_gen_tre() runs
-> after mhi_unprepare_from_transfer() has torn down the channel, a panic
-> will occur due to an invalid dereference leading to a page fault.
+> mhi_async_power_up() enables IRQs, at which point we can receive a syserr
+> notification from the device.  The syserr notification queues a work item
+> that cannot execute until the pm_mutex is released.
 > 
-> This occurs because mhi_gen_tre() does not verify the channel state
-> after locking it. Fix this by having mhi_gen_tre() confirm the channel
-> state is valid, or return error to avoid accessing deinitialized data.
+> If we receive a syserr notification at the right time during
+> mhi_async_power_up(), we will fail to initialize the device.
 > 
-> Fixes: b89b6a863dd5 ("bus: mhi: host: Add spinlock to protect WP access when queueing TREs")
+> The syserr work item will be pending.  If mhi_async_power_up() detects the
+> syserr, it will handle it.  If the device is in PBL, then the PBL state
+> transition event will be queued, resulting in a work item after the
+> pending syserr work item.  Once mhi_async_power_up() releases the pm_mutex
+> the syserr work item can run.  It will blindly attempt to reset the MHI
+> state machine, which is the recovery action for syserr.  PBL/SBL are not
+> interrupt driven and will ignore the MHI Reset unless syserr is actively
+> advertised.  This will cause the syserr work item to timeout waiting for
+> Reset to be cleared, and will leave the host state in syserr processing.
+> The PBL transition work item will then run, and immediately fail because
+> syserr processing is not a valid state for PBL transition.
+> 
+> This leaves the device uninitialized.
+> 
+> This issue has a fairly unique signature in the kernel log:
+> 
+> [  909.803598] mhi mhi3: Requested to power ON
+> [  909.803775] Qualcomm Cloud AI 100 0000:36:00.0: Fatal error received from device.  Attempting to recover
+> [  909.803945] mhi mhi3: Power on setup success
+> [  911.808444] mhi mhi3: Device failed to exit MHI Reset state
+> [  911.808448] mhi mhi3: Device MHI is not in valid state
+> 
+> We cannot remove the syserr handling from mhi_async_power_up() because the
+> device may be in the syserr state, but we missed the notification as the
+> irq was fired before irqs were enabled.  We also can't queue the syserr
+> work item from mhi_async_power_up() if syserr is detected because that may
+> result in a duplicate work item, and cause the same issue since the
+> duplicate item will blindly issue MHI Reset even if syserr is no longer
+> active.
+> 
+> Instead, add a check in the syserr work item to make sure that the device
+> is in the syserr state if the device is in the PBL or SBL EEs.
+> 
+
+Don't we need a Fixes tag?
+
 > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+> ---
+>  drivers/bus/mhi/host/pm.c | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index 11c0e751f223..3dff0f932726 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -602,6 +602,7 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
+>  	struct mhi_cmd *mhi_cmd;
+>  	struct mhi_event_ctxt *er_ctxt;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	bool reset_device = false;
+>  	int ret, i;
+>  
+>  	dev_dbg(dev, "Transitioning from PM state: %s to: %s\n",
+> @@ -630,8 +631,23 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
+>  	/* Wake up threads waiting for state transition */
+>  	wake_up_all(&mhi_cntrl->state_event);
+>  
+> -	/* Trigger MHI RESET so that the device will not access host memory */
+> +	/*
+> +	 * Trigger MHI RESET so that the device will not access host memory.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Move this comment before 'if (reset_device)'.
+
+> +	 * If the device is in PBL or SBL, it will only respond to RESET if
+> +	 * the device is in SYSERR state.  SYSERR might already be cleared
+> +	 * at this point.
+> +	 */
+>  	if (MHI_REG_ACCESS_VALID(prev_state)) {
+> +		enum mhi_state cur_statemachine_state = mhi_get_mhi_state(mhi_cntrl);
+
+s/cur_statemachine_state/cur_state
 
 - Mani
-
-> ---
->  drivers/bus/mhi/host/main.c | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 4de75674f193..aa8a0ef697c7 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -1207,11 +1207,16 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->  	struct mhi_ring_element *mhi_tre;
->  	struct mhi_buf_info *buf_info;
->  	int eot, eob, chain, bei;
-> -	int ret;
-> +	int ret = 0;
->  
->  	/* Protect accesses for reading and incrementing WP */
->  	write_lock_bh(&mhi_chan->lock);
->  
-> +	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
-> +		ret = -ENODEV;
-> +		goto out;
-> +	}
-> +
->  	buf_ring = &mhi_chan->buf_ring;
->  	tre_ring = &mhi_chan->tre_ring;
->  
-> @@ -1229,10 +1234,8 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->  
->  	if (!info->pre_mapped) {
->  		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
-> -		if (ret) {
-> -			write_unlock_bh(&mhi_chan->lock);
-> -			return ret;
-> -		}
-> +		if (ret)
-> +			goto out;
->  	}
->  
->  	eob = !!(flags & MHI_EOB);
-> @@ -1250,9 +1253,10 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->  	mhi_add_ring_element(mhi_cntrl, tre_ring);
->  	mhi_add_ring_element(mhi_cntrl, buf_ring);
->  
-> +out:
->  	write_unlock_bh(&mhi_chan->lock);
->  
-> -	return 0;
-> +	return ret;
->  }
->  
->  int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> -- 
-> 2.34.1
-> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
