@@ -1,62 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-51496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 876E1A61BC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:07:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EA5AAA61BC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:08:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC563460117
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:07:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B0234601F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:08:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CDE2214A8F;
-	Fri, 14 Mar 2025 20:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 540C621519F;
+	Fri, 14 Mar 2025 20:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H4I5x32D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MmCTow+N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53442205AB7;
-	Fri, 14 Mar 2025 20:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D1A21518D;
+	Fri, 14 Mar 2025 20:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741982517; cv=none; b=n7xQD18GMXNbjcA4swEr9NxaStq2s08ajpIJBketpUgGMJwG/TT8SlAHoPwJJiEzPbHsB/Hb2NuFM63BIXROOvXgqtiaAdv8vzFqhgBe04N4AXgFEVZmd0r2vgWEz5oxqL8Q9JrpjCjkQsRY3h9csDhItDlnPj9lgRXLK7jwJVE=
+	t=1741982519; cv=none; b=TRbAvgOThe+QP9DDgsNxPh0kvJn/IHrIjMXXUPunw5uQTs3oiA77lVsA2cI57WIBB6mPE+gUMk/GFyCHbINfwX9Ct1XbJLW7OpudC/ILSypAg/Bpy4LBUybCEUSizJtMcFztMQg0nfRli0ayusPecywhLsq6XwAByVfj0a+V5hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741982517; c=relaxed/simple;
-	bh=NLw3Zn0lcvoa9dN3+/Tshr6K0OnuCUML/T3BRrtCbxE=;
+	s=arc-20240116; t=1741982519; c=relaxed/simple;
+	bh=A9V0VS8Cr0Q0yklfmaDADu6APo8cQyUHgG87FTbpc9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oQnAfHDaUlG+zAJ3/TyjmFnXhTIkQGnigwxTA7pWYXlnXrAiUHG1JeTssjY7Umzm153KAcZHZx7AMSr5D/Mtp6v7QaBbJ4MOflMX1O9yHQf3IiFlxJnhMTkfPQnL2XwGDjtrZEmRW6k1sMlv82QfONB/rIiG12voTcjTBklmiz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H4I5x32D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76238C4CEE9;
-	Fri, 14 Mar 2025 20:01:56 +0000 (UTC)
+	 MIME-Version:Content-Type; b=mQlNn5H6lkN9XBBkMR/CBLUlkETDGROEflXgCbKnTVKQFa+KBMvHZCDYas5z4kZShUybqN2/RqjkHF9tPqYK5Cqv6ZPYpjL/oIThexv+qEk7uK+nbllcI8VpKY7DA+lC6T2y2X9ZSeDdL5m94tTM9UvokXKvIGDGwOnS2slWDAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MmCTow+N; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DE5C4CEEC;
+	Fri, 14 Mar 2025 20:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741982517;
-	bh=NLw3Zn0lcvoa9dN3+/Tshr6K0OnuCUML/T3BRrtCbxE=;
+	s=k20201202; t=1741982518;
+	bh=A9V0VS8Cr0Q0yklfmaDADu6APo8cQyUHgG87FTbpc9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4I5x32DkYfXUoCqlJgVElsbexW8up2dtNe73o6vnLCD8ey0XJibrLcpZq9xd9d+8
-	 oCrgSryxBD5Nkxtfcuidwheuz4GcDzvX8xyB8tvh7fMahnRsgFOcbUUHImYCIrM6U4
-	 X0QVPDsme5J72/m7R0ZmRNW6lNc7KJMFr2sGiI7yMMP22zJqHLndrUQT/xhdfP4ZHm
-	 LLSvO/9Ke/qdqLxUmsuyS0XgzIhu4wPlk/tfwEe+nIA5whilfiWm8FnXGrDHs82/mD
-	 zZ5LgIzJ8kX0Nly3/CBEQt5LJDb6jpP4Dk94eflqCbdKOWNxOQIiKy8B2xXLnoNO6+
-	 xDof17v19CBYA==
+	b=MmCTow+NrHPEDZWEK+zs2sCvyv7sx5bsP3cI3N7oPDeurHZwl2kLaa4DRqKVrH2qh
+	 k1hWdq0vyTFxLi4G/u8yRz3sYYTHAvxUtT22fc3ZoIwWu/Uvst35NPl8rL2/bzoIWW
+	 o1EYgN/K9VxxWRrnDK5BV10tX152f+MnoVKYx13mG1PwO2ecWvQnZfplIwS0j99OoB
+	 ZtYL/TdZ/SsBqLAsHJVCwIQLpC7qIZZ1h2OgctZ0FJrIMoZOO0Cq0r/esN5G23h1Lf
+	 GHN990lyMyLI1KBjENLeuc7sT7canNTDilFtQcpTRP/NCaBX9QY2WaiLl0estNulh6
+	 I08Epf/Wz4lrg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
 	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Manish Nagar <quic_mnagar@quicinc.com>
-Cc: linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
+	Vinod Koul <vkoul@kernel.org>,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Melody Olvera <quic_molvera@quicinc.com>
+Cc: linux-crypto@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs8300-ride: Enable second USB controller on QCS8300 Ride
-Date: Fri, 14 Mar 2025 15:01:10 -0500
-Message-ID: <174198247897.1604753.4791864107731175321.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Subject: Re: (subset) [PATCH 0/6] arm64: dts: qcom: sm8750: Introduce crypto support for SM8750
+Date: Fri, 14 Mar 2025 15:01:11 -0500
+Message-ID: <174198247865.1604753.12834678540752631538.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250310104743.976265-1-quic_mnagar@quicinc.com>
-References: <20250310104743.976265-1-quic_mnagar@quicinc.com>
+In-Reply-To: <20250113-sm8750_crypto_master-v1-0-d8e265729848@quicinc.com>
+References: <20250113-sm8750_crypto_master-v1-0-d8e265729848@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,20 +74,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 10 Mar 2025 16:17:43 +0530, Manish Nagar wrote:
-> Enable secondary USB controller on QCS8300 Ride platform. Since it is a
-> Type-A port, the dr_mode has been set to "host". The VBUS to connected
-> peripherals is provided by TPS2559QWDRCTQ1 regulator connected to the
-> port. The regulator has an enable pin controlled by PMM8650. Model it as
-> fixed regulator and keep it Always-On at boot, since the regulator is
-> GPIO controlled regulator.
+On Mon, 13 Jan 2025 13:16:20 -0800, Melody Olvera wrote:
+> Document and describe the crypto engines and random number generators
+> on the SM8750 SoC.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: qcs8300-ride: Enable second USB controller on QCS8300 Ride
-      commit: 64f8541e7a2c5e91498f297bce89a88ab9a34fd3
+[2/6] arm64: dts: qcom: sm8750: Add QCrypto nodes
+      commit: eeb0f3e4ea67cb1c2dd7cacfef218bfa0ae56970
+[4/6] arm64: dts: qcom: sm8750: Add TRNG nodes
+      commit: 9f9dcac2f85e6a0641a4a4f7f3b2c35a984ed4cc
+[6/6] arm64: dts: qcom: sm8750: Add ICE nodes
+      commit: b1dac789c650a20a54d5089b23fbb800fb289b8b
 
 Best regards,
 -- 
