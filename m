@@ -1,64 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-51505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 889B6A61BEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:10:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFC12A61BF4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:10:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ADD7E166540
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:09:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 923757AE855
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:09:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7925222CBC1;
-	Fri, 14 Mar 2025 20:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1774A22F3AB;
+	Fri, 14 Mar 2025 20:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BgxoKlIr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gBuR3Dw1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED55205E01;
-	Fri, 14 Mar 2025 20:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC7F22E40F;
+	Fri, 14 Mar 2025 20:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741982527; cv=none; b=YpLzFMS9XpoZ9RNyRu04OrIaFbkH9q3aziyq+FhbooaDIyTmKYULBwoZGX1p9hMXExaHUwkdM2z4yVgUR9ZtD0yxsibbLhtATdRC2WSlHtfTg+i9TpmMGCmGSXWPWsBIJWIS7AxHpKvT1abgVB9KVZXRSm7c83lq9YmxXUizXTc=
+	t=1741982528; cv=none; b=fhEJUtAtQE6UguGfu1mPQHOCPPrFhTHdI/HeG0gpqB7PBrn51Kb9n6g85R4GHccFUrR/sApyaxB6Oa707mJuPIFwQeXN0lsuvwlGqUQv0m1yRs9dUmAL0sHLwb3f4NUF6wVejWDxMQW/JTkwx9oF7tB0kHydS73p9bs9OIyVgjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741982527; c=relaxed/simple;
-	bh=L6vgfaLSzlfsSEVvfVqh3IC1CrjNDcTCsQfYaobv8v0=;
+	s=arc-20240116; t=1741982528; c=relaxed/simple;
+	bh=1noOD8bUEBFW4A9ly0qfYxIGnvsqDOBrrUmrgt/x26k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O225TVabDmQbvhCzs4jF455+7a4xeNLYdz7aq1oBChKTrMIXxQYS6FYG0sWkmGppC/O61aVF4cOkb2cZiGUyiv4iO+x2WlTHPdmBLE9u5eBvSy/2ofQXdI7CsOKy8NpVDMjrN80IPtJcXPEY4Kkz6V7bb20lEwCgJdLCRLsfRaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BgxoKlIr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564E9C4CEED;
-	Fri, 14 Mar 2025 20:02:06 +0000 (UTC)
+	 MIME-Version:Content-Type; b=aUwFtYgy/ITlFOQBHRdl40/ApUVpAuArp62iZOlB+rinV3Uj1D0A2kWQoOlXFHNMD4niVwtBhjzbBmYOseYRodpEtmuH6UZtW22b259wkD/btVo+NqBUmEFvsxl9cdlalzLJDB9K20s+AgQ9O/ogbnhvG3yAlFNlyf2bFztagzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gBuR3Dw1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65503C4CEEF;
+	Fri, 14 Mar 2025 20:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741982527;
-	bh=L6vgfaLSzlfsSEVvfVqh3IC1CrjNDcTCsQfYaobv8v0=;
+	s=k20201202; t=1741982528;
+	bh=1noOD8bUEBFW4A9ly0qfYxIGnvsqDOBrrUmrgt/x26k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BgxoKlIrU0NvtWZisal07mJXtjnkoyGpSZJn0sEaMwTbqAg8gj0curHiYpj9IAusG
-	 k6b0EjbXs5kjrWbydV79AkfMWHYhUDILH4UD3Ch3OYCCmL6fNm+/JrMD9Z+dIT0MTG
-	 9kiEaXzqNWoZeEyxRsrEEMuTGHsQziWEIuF4jrJlWIbH7e9DdnHuPR/aSmLYHUgHpb
-	 6aQYcJVwgTLkaEL5HdfWUqAsnUyQI4KxAWKFlC4m9tx+wf4OFtSYyKsYiQJDxaxGyQ
-	 RPbPVbNtOj6zpU5Q4Q4zPkwwcaLF0tCihRbnObZt9qJww3fqsre258Ql/Qc3uMplcc
-	 9AFE1/nXHgKBQ==
+	b=gBuR3Dw1/3JHWgpS2gra5lXKcvXBvXdg99lrGhUUzvMQRCoqbrTJSBmiIgY02Ai7U
+	 1YAzWU4Jt914QEcbu4jTbiQovnRhUzKXguoiXqvC2iSzS23Es2PaqeUCTm+s5P9PB1
+	 MpZNxavtK/+ao1Lax56I7aIv5eo6yj4Jx2RhArQnLLt2YSWRvLmieGsAdWznQ2DmuJ
+	 okv8FyUMcoLwOjyxCeaA2/UUqU/YVNXFmCKYiIUMLU9Bns0Hj/9vHTmYrR66f/9125
+	 BgKcwkRWuLEgWh87vpmOD5spaofHzP5mAN8gmG6ZtnIKhs6LIVqUyTNQDrild2eEzW
+	 9ntJEDQtUxH4A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Vinod Koul <vkoul@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Stephan Gerhold <stephan.gerhold@linaro.org>
 Cc: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Andy Gross <agross@kernel.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
+	Anusha Rao <quic_anusha@quicinc.com>,
+	Md Sadre Alam <quic_mdalam@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
+	dmaengine@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH 0/2] arm64: dts: qcom: Drop duplicate DMIC supplies for X13S/CRD
-Date: Fri, 14 Mar 2025 15:01:19 -0500
-Message-ID: <174198247901.1604753.17679563363343872759.b4-ty@kernel.org>
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: Re: (subset) [PATCH 0/8] dmaengine: qcom: bam_dma: Fix DT error handling for num-channels/ees
+Date: Fri, 14 Mar 2025 15:01:20 -0500
+Message-ID: <174198247869.1604753.6993934195072852246.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20241203-x1e80100-va-mic-bias-v1-0-0dfd4d9b492c@linaro.org>
-References: <20241203-x1e80100-va-mic-bias-v1-0-0dfd4d9b492c@linaro.org>
+In-Reply-To: <20250212-bam-dma-fixes-v1-0-f560889e65d8@linaro.org>
+References: <20250212-bam-dma-fixes-v1-0-f560889e65d8@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,19 +75,33 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 03 Dec 2024 18:44:01 +0100, Stephan Gerhold wrote:
-> Drop the duplicated MIC BIAS supplies in "audio-routing" for the ThinkPad
-> X13S and the X1E80100. "MIC BIASn" and "VA MIC BIASn" are mutually
-> exclusive, only one of them can be active at the same time.
+On Wed, 12 Feb 2025 18:03:46 +0100, Stephan Gerhold wrote:
+> num-channels and qcom,num-ees are required for BAM nodes without clock,
+> because the driver cannot ensure the hardware is powered on when trying to
+> obtain the information from the hardware registers. Specifying the node
+> without these properties is unsafe and has caused early boot crashes for
+> other SoCs before [1, 2].
 > 
+> The bam_dma driver has always printed an error to the kernel log in these
+> situations, but that was not enough to prevent people from upstreaming
+> patches without the required properties.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: sc8280xp-x13s: Drop duplicate DMIC supplies
-      commit: a2e617f4e6981aa514a569e927f90b0d39bb31b2
-[2/2] arm64: dts: qcom: x1e80100-crd: Drop duplicate DMIC supplies
-      commit: b49e37de8e70bc433b526a9f4382f72b7ac6492e
+[1/8] arm64: dts: qcom: sm8350: Reenable crypto & cryptobam
+      commit: 75eefd474469abf95aa9ef6da8161d69f86b98b4
+[2/8] arm64: dts: qcom: sm8450: Add missing properties for cryptobam
+      commit: 0fe6357229cb15a64b6413c62f1c3d4de68ce55f
+[3/8] arm64: dts: qcom: sm8550: Add missing properties for cryptobam
+      commit: 663cd2cad36da23cf1a3db7868fce9f1a19b2d61
+[4/8] arm64: dts: qcom: sm8650: Add missing properties for cryptobam
+      commit: 38b88722bce07b6a5927f45fbf7a9a85e834572c
+[5/8] arm64: dts: qcom: sa8775p: Add missing properties for cryptobam
+      commit: a2517331f11bd22cded60e791a8818cec3e7597a
+[6/8] arm64: dts: qcom: ipq9574: Add missing properties for cryptobam
+      commit: b4cd966edb2deb5c75fe356191422e127445b830
 
 Best regards,
 -- 
