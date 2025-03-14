@@ -1,218 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-51514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C655A620B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 23:42:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32354A621D6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Mar 2025 00:36:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F10031B63304
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 22:42:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0501C19C60ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 23:36:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0BEB1C860B;
-	Fri, 14 Mar 2025 22:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B54FF1F427D;
+	Fri, 14 Mar 2025 23:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="K86bMvDD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ggi3jSm6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746BA1547E2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 22:42:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B9FA32
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 23:35:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741992162; cv=none; b=qgRrMgJmT01gthEcC1M0vMQUTF1Ybjqd52tMEq+FvW24VC3Xad1JOp7dFUKAXIlHU+IC8/kvbM0jtdcTKudWDStGn19gqKvjtSqJXcSGf1XFIy57LBSDLT2QBY001h2RkmcMHomnvGa5F36VZoQzceJ9JWJMENhCu74VQG5Ndr4=
+	t=1741995361; cv=none; b=Wbl4ya44G2VWtD688YVKXK0pD4FIFvSnHgMk6IZSvc6PAB7WHCWYNuMY9N03ZN3iQw8hik4wNxvxK+3NnBOEHtIzg7UF/k7RTZwgHqLsNaEgPCS/003uTlmmjElrcgRFKM2DojqZaCIHHcofxK4gvgIj98QTsg8bbDBTUoQhuFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741992162; c=relaxed/simple;
-	bh=82coecyezSvgbMXY4DGUcnROgEkGpydTprp+i/sXDLs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=i2lK7OakYN9g4HRxksJzNd3q9M0y6X1nh0L5+e+Ez180BJokcIgoIYkO6PNYNPpmrSmwTf3GfHvt3UAOF5m4MPiQZPtrODOxx55w89pxpqpigK9vT2+viSGVqzZpClQu70GIt65CN1iJO6PMIRSwFkn9MBdZzOrCsv0N2WaPSR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=K86bMvDD; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52ELNUZb027801
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 22:42:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kIwDE800oX8SYV9AWJVrX+Iz/rjOe6oMe8ZrMZYcGfc=; b=K86bMvDDz1zXZtfU
-	Y1nKZIuYX1m5faULFMakMSkkST3FLllY8Y4nV4vaMG4SWtBQedcbavML+YbgbNH4
-	hP3bieS7xbJI3aGFWDUYQS/l+r0NOSU6rBXnOYGlNyeETQWoJ0e6aTJvuHkCgMUH
-	qTnMtkbsWAawyAXj8zzW+Qzg6cblYasLc0mzLgmoUVIHsTWZaAcsSHGepzPBApjk
-	jCdi8lsCPm1Lc7LySzLwCRCAlASr6+/086ipzmX5twhTOQHEGss/teqfH0AnGPXu
-	6DHUM+3DTlg87P0ODM54ceQN33aZeYoH4eAl90rUp8c0I7vwBwC08xY9DOtN1/G3
-	JzcDlQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45c6733q1c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 22:42:35 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-476786e50d9so6695961cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 15:42:35 -0700 (PDT)
+	s=arc-20240116; t=1741995361; c=relaxed/simple;
+	bh=C/l3fwk/2T0plTPVIQKDbZjyKbA76umLFn/1EqjQG84=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RPy2DXoBuzQ3kd2mKeMAYu7MFReRc6puGj4V56jSqmK6Oprmcr6IuEDYJ46j9hj1WVraYNsBCfOWVWN2WufzHcaw7uofvWrDnGjKs/jOGb7D9nl45gOq8nA8++86wEollRfNpp/EOiHYMLWqcmC8FuZMKZuVtsV4EmzYD/VrxIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ggi3jSm6; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ac298c8fa50so496469566b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 16:35:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741995357; x=1742600157; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fU4Tve6fIfWn/FXi4hgJFogbldzonVfrEBFp+mMLKs4=;
+        b=ggi3jSm6ppn5g0A+t1gUKsScjhIVINT6wolsAWtIXmb9N55RKP6vxCuaG3muOt6uMy
+         8S8Xu8mnd2pc+dvU8uXyUutS6/IdIRG9A9ANv38GjL3mS1Rx1i87J2GFY5zZk3xHjPhD
+         bm1Fa/qW/+p3WRXE032ZMf1ajALPXGchoFYU+pgXJQ38K4yxBEUoal/enITLJLIgyMrO
+         ztm29bu7WALiPkZ/UibnT4MSc1OQ06M4rpDv+d34JyDvVz6tJBiua28STdhKWEvzU3zd
+         +qhJY7dSDrGbQ3bhbLBxQ7NqMZ40Ly42ckWKkafdHQaGoEjWAoAL3dI5Q0Galb55TXqr
+         Kx3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741992154; x=1742596954;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kIwDE800oX8SYV9AWJVrX+Iz/rjOe6oMe8ZrMZYcGfc=;
-        b=SBiahGloViUoz6vkAi6I/WCATavHNQN1594JSSEGS7FWPxTAjNnK+NjZPR+Vv6m08p
-         RKqdye1AmdsnqGMKaxhVr4s+5unt9y2KbzkNF4CHjTTYXpGkECsiyMS7DrqdCQTcdv7X
-         LoQ2uxFoA/kkpgkbvsK1DnF5VU4HeQ2clPVky8XmSsXX7eEvzLIgHc5+W9yXYpQjvKO2
-         Y4/iYYRZETFvwwk2HNzofo0rXwY3tACLhkCcyYUZrDfpbdiO+w3xUnNFCYd6iQedmVal
-         zkZoC3swygVfG/XiXWc5djn53yVzTnwz+2MIVZqgdfGqJaDjYxvMKBsFEbrUw+QvWJzt
-         0LFg==
-X-Forwarded-Encrypted: i=1; AJvYcCUdRpnF98BJfGV6GNnnUiiiIWB3AymXVGBS2BkV42ahS/nQCgQhU3oobQ7G5xM4vAftAq5Zsug6a0/w4unD@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAWL/xT2nT/pU+OZshxM6fiNGHDVQrlUaoE+S0y62/DX6JwOEu
-	FRcngaP/gzM45sOHC96DknQ7vBhfmKBA0UdMdLv4h7enwqpDHQTMCNEfye0KXhXj08cAydYeoY6
-	ca71TqMsnqhCf0vudXH7b+jlk6Y587XF8v7LlqT+ht0/jzLv88mhm9ed8o5J3fj/r
-X-Gm-Gg: ASbGncs041d9C5egrIaKgp0/DoSbg9WhifAuL8AKwbprtS/BCvWWbGT+4e2JsN5jNnY
-	2FSqaWTd74DYTGs5kPdRbXEdqRNcGxthXnRVY6JWYfUxe41Ks+zPnCHqf89rewA2Nzz+fudDTyt
-	pZbp/wAjTwmH8xyXk0b4iyAu/eiHMjNFYEr5zm8yEXK4KTEeROFXiDnBxpSxTO0mONYeYFFAoyM
-	peTGJxbQ5U+n6UxxB9vWNyLsiZmerkWyOzDhJ22bg3Cjwjm5t8gaGA+/QgrI7vXih3KVaFw6t9P
-	xq3dcFWc0ckXSXAeKV1+nIeQJDoRqI8I1yb+aqa4mAxzX11K68jyorvLCEYiS9LbunmLdA==
-X-Received: by 2002:a05:620a:31a4:b0:7c3:c814:591d with SMTP id af79cd13be357-7c57c795580mr195582085a.1.1741992154030;
-        Fri, 14 Mar 2025 15:42:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8g9fIKijnYR1RXDYNW9bZ5XeEGfn0A87clOCpiGK6J3Egz2X0NW4LerMPqQE+/r79PX8g/w==
-X-Received: by 2002:a05:620a:31a4:b0:7c3:c814:591d with SMTP id af79cd13be357-7c57c795580mr195580685a.1.1741992153588;
-        Fri, 14 Mar 2025 15:42:33 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac314a49d33sm284366866b.141.2025.03.14.15.42.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Mar 2025 15:42:33 -0700 (PDT)
-Message-ID: <15ce904b-fd68-447c-aecd-ba7d1d32be0e@oss.qualcomm.com>
-Date: Fri, 14 Mar 2025 23:42:30 +0100
+        d=1e100.net; s=20230601; t=1741995357; x=1742600157;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fU4Tve6fIfWn/FXi4hgJFogbldzonVfrEBFp+mMLKs4=;
+        b=g5VhfEWBPepaL5T9mT9ooQ5ZPUjVCWJmuvVNvAne53b6tnpqKPtsqUK1Tmwm2yBJw4
+         ewM7gErBzrqN6n2TJSc3m9Ar6tpS1BBUPKRTjZmI2kVJIzLFrunARE5536tNvk1A7Pq2
+         LwdLOf7YYmnPLPNmt1cQelSgqlfPvpEsg1lMP9v4w4/0CiTtKx5hEjV1Th5e84yu/WGv
+         aQnmTsREKENNCI7Rh/k4IkxcdWYhAjDprIj8ro3nQyn1iQZtsi4h2/swvbrkI4SY5+wh
+         WloRUzCxfyG817hhp6KIIraeSLgOm2VyG4aHUiTMCR+EWjnx00RA5irwi8XRFGXo5wwr
+         6Tzw==
+X-Forwarded-Encrypted: i=1; AJvYcCVyWVlDyASBAmdYEyprPQPSsnJhUj+zY1qTNOpBkDpWip36wo2XG3xdONpP5/HLIA9ZLYDm+YxG+bFTNv3e@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZQF/MVYz0wfRPANMjJ2yTkUD4kWsRw1V+gLUJPRSq3bt4JdXv
+	UMNoJ4GqdXf23NlHBlWPMjsZ/Z1+mb0wOCEerzrWYBVilR8RRnDcba90me9hVwPmZ/vTPrepbr9
+	MJF1EWQ==
+X-Gm-Gg: ASbGncsssm/mr6XulD36TJOJEav8CHjhGQrFp4LSIOTcFkEZfuHI3y2zi/esdyxMoff
+	lm7PumwjBbCzJsQABlEXY4recv1mkk9Pl/LnvSv2lwxho10jFyoFJ1pCAU7TXqbNX6NgPEDQXWZ
+	GhIETmxYG0Nz9umSn68nGC2+W8O+p6rvb8gXCCum3hdPQKYJugeB4708yxDQoy0vMbwQ7rblVBi
+	z73fAWCUg4l7dngs9Miyt1j49xKpdEvEBKud4oFfGQ8ieM5PKURu7ajjgu5ufzyMH1nhknWL+HQ
+	jlzMx/i4E55CktEd7tmviQk1n0+Ngi8FoOShHqOOKIhJyZ0ZJWzajDIIb2nQ17xaTcpDtgR0Nyi
+	3U/IGGxNrD+Vh0YQy5g7EPLgpVbDs7ZcVIRXy1ZSn2Tihqh8N9IHHCQuYgOi4R7v/Rgwa
+X-Google-Smtp-Source: AGHT+IFz2539BrqrnDsiyhonqAHwWCIzmZcKWydj6iT5Z90xZtFLC3SyFassxSw3CH+m/pkZCYk6hA==
+X-Received: by 2002:a17:907:c0d:b0:abf:5aa6:eb9f with SMTP id a640c23a62f3a-ac3304ec11emr409550766b.55.1741995357162;
+        Fri, 14 Mar 2025 16:35:57 -0700 (PDT)
+Received: from [192.168.178.107] (2001-1c06-2302-5600-7555-cca3-bbc4-648b.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:7555:cca3:bbc4:648b])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3146aeadbsm284246966b.29.2025.03.14.16.35.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Mar 2025 16:35:56 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 0/7] media: qcom: camss: Add X1 Elite support
+Date: Fri, 14 Mar 2025 23:35:53 +0000
+Message-Id: <20250314-b4-media-comitters-next-25-03-13-x1e80100-camss-driver-v2-0-d163d66fcc0d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/2] phy: qcom: qmp-pcie: Add PCIe PHY no_csr reset
- support
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc: "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>, kishon@kernel.org,
-        p.zabel@pengutronix.de, dmitry.baryshkov@linaro.org,
-        abel.vesa@linaro.org, quic_qianyu@quicinc.com,
-        neil.armstrong@linaro.org, quic_devipriy@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20250226103600.1923047-1-quic_wenbyao@quicinc.com>
- <e556e3c9-93ee-494a-be35-9353dc5718e4@quicinc.com> <Z89Ek8Y7TRSgTuMg@vaman>
- <20250314145407.5uuw7ucrdhca4z5i@thinkpad>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250314145407.5uuw7ucrdhca4z5i@thinkpad>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=a5Iw9VSF c=1 sm=1 tr=0 ts=67d4b0db cx=c_pps a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=CgR8CRIgTN9bnSrjgiYA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: pgHLA_MaRb-gYsA8Yr5tMUfPWJ7n5U-q
-X-Proofpoint-ORIG-GUID: pgHLA_MaRb-gYsA8Yr5tMUfPWJ7n5U-q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-14_09,2025-03-14_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 clxscore=1015 spamscore=0 mlxscore=0 adultscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503140175
+X-B4-Tracking: v=1; b=H4sIAFm91GcC/x2NSQrDMAwAvxJ0rsBLnC5fKT24ttrqYKdIJhhC/
+ l7T48Aws4OSMCncph2ENlZe6wB3miB9Yn0Tch4MzrhgvPX4nLFQ5ohpLdwaiWKl3tAFNB6H0C1
+ djDUGUyyqmIU3EswuuTkvy9leA4z4V+jF/T++P47jB1IYuXmIAAAA
+X-Change-ID: 20250313-b4-media-comitters-next-25-03-13-x1e80100-camss-driver-d2c24d667195
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+X-Mailer: b4 0.14.2
 
-On 3/14/25 3:54 PM, Manivannan Sadhasivam wrote:
-> On Tue, Mar 11, 2025 at 01:29:15AM +0530, Vinod Koul wrote:
->> On 10-03-25, 16:58, Wenbin Yao (Consultant) wrote:
->>> On 2/26/2025 6:35 PM, Wenbin Yao wrote:
->>>> The series aims to skip phy register programming and drive PCIe PHY with
->>>> register setting programmed in bootloader by simply toggling no_csr reset,
->>>> which once togglled, PHY hardware will be reset while PHY registers are
->>>> retained.
->>>>
->>>> First, determine whether PHY setting can be skipped by checking
->>>> QPHY_START_CTRL register and the existence of nocsr reset. If it is
->>>> programmed and no_csr reset is supported, do no_csr reset and skip BCR
->>>> reset which will reset entire PHY.
->>>>
->>>> This series also remove has_nocsr_reset flag in qmp_phy_cfg structure and
->>>> decide whether the PHY supports nocsr reset by checking the existence of
->>>> nocsr reset in device tree.
->>>>
->>>> The series are tested on X1E80100-QCP and HDK8550.
->>>>
->>>> The commit messages of this patchset have been modified based on comments
->>>> and suggestions.
->>>>
->>>> Changes in v5:
->>>> - Add a check whether the init sequences are exist if the PHY needs to be
->>>>    initialized to Patch 2/2.
->>>> - Link to v4: https://lore.kernel.org/all/20250220102253.755116-1-quic_wenbyao@quicinc.com/
->>>>
->>>> Changes in v4:
->>>> - Add Philipp's Reviewed-by tag to Patch 1/2.
->>>> - Use PHY instead of phy in comments in Patch 2/2.
->>>> - Use "if (qmp->nocsr_reset)" instead of "if (!qmp->nocsr_reset)" in
->>>>    function qmp_pcie_exit for readability in Patch 2/2.
->>>> - Use goto statements in function qmp_pcie_power_on and qmp_pcie_power_off
->>>>    for readability in Patch 2/2.
->>>> - Refine the comment of why not checking qmp->skip_init when reset PHY in
->>>>    function qmp_pcie_power_off in Patch 2/2.
->>>> - Link to v3: https://lore.kernel.org/all/20250214104539.281846-1-quic_wenbyao@quicinc.com/
->>>>
->>>> Changes in v3:
->>>> - Replace devm_reset_control_get_exclusive with
->>>>    devm_reset_control_get_optional_exclusive when get phy_nocsr reset
->>>>    control in Patch 1/2.
->>>> - Do not ignore -EINVAL when get phy_nocsr reset control in Patch 1/2.
->>>> - Replace phy_initialized with skip_init in struct qmp_pcie in Patch 2/2.
->>>> - Add a comment to why not check qmp->skip_init in function
->>>>    qmp_pcie_power_off in Patch 2/2.
->>>> - Link to v2: https://lore.kernel.org/all/20250211094231.1813558-1-quic_wenbyao@quicinc.com/
->>>>
->>>> Changes in v2:
->>>> - Add Abel's and Manivannan's Reviewed-by tag to Patch 1/2.
->>>> - Refine commit msg of Patch 2/2.
->>>> - Link to v1: https://lore.kernel.org/all/20250121094140.4006801-1-quic_wenbyao@quicinc.com/
->>>>
->>>> Konrad Dybcio (1):
->>>>    phy: qcom: pcie: Determine has_nocsr_reset dynamically
->>>>
->>>> Qiang Yu (1):
->>>>    phy: qcom: qmp-pcie: Add PHY register retention support
->>>>
->>>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 86 +++++++++++++++++-------
->>>>   1 file changed, 63 insertions(+), 23 deletions(-)
->>>>
->>>>
->>>> base-commit: bcf2acd8f64b0a5783deeeb5fd70c6163ec5acd7
->>>
->>> Hi, do you have any futher comments?
->>
->> Patches lgtm, It would be great if this was tested by someone as well...
->> Abel, Stephan, Neil can you folks test this and provide T-B
->>
-> 
-> I tested the previous version and it worked well on X1P40100-CRD. Will give this
-> version a go and give my tag.
-> 
->> I am also concerned about bootloader assumptions esp if the Qcom boot
->> chain is skipped
+v2:
+- Applies RB as indicated - Vlad
+- Latest declared year 2025 in added files - Vlad
+- CSID680:
+-   Moved CSID_CSI2_RX_IRQ_CLEAR - Vlad
+-   Defined GENMASK for various missed bitfields - Vlad
+-   CSID_CSI2_RX_CAPTURE_CTRL used as name - Vlad
+-   u32 val, variable declartion order, 4 + n - Vlad
+- VFE680:
+-   I left the DEBUG register defintion as these
+    are used in a debugfs series and I'm generally
+    in favour of maximising information disemination in patches
+    including comments, defines, register lists and bitfields.
+-   Defined ENABLE bit - Vlad
+- CSIPHY3ph @ 4nm:
+-   Retained SKEW_CAL I think we should import SKEW_CAL but
+    do as downstream has done and provide the ability to select
+    the skew, probably from a DTS flag.
+-   Removed duplicate writes. I tested, and its fine to do so.
+- Supply rails
+-   Currently defining just the one set of supply rails.
 
-If any major part of this boot chain is skipped, much of the platform will
-unfortunately not behave as expected by the kernel today, anyway. While I
-personally enjoy hacking on such things, holding back hw support because of
-theoretical issues is not going to help here, especially since the tables
-can be trivially added at a later point, if ever needed, without requiring
-DT changes.
+Previous: https://lore.kernel.org/all/20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-0-44c62a0edcd2@linaro.org
+Depends: https://lore.kernel.org/all/20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-0-edcb2cfc3122@linaro.org
 
-> In that case, someone should add the PHY init sequence to the driver. That's why
-> I wanted to have the check in place to avoid silently failing PHY
-> initialization. Right now, the driver will error out if there is no init
-> sequence available.
+v1:
+This series adds X Elite support to CAMSS.
 
-IIUC we internally settled on not sending the sequences for X1P4, since
-the PHYs are initialized as expected.
+This drop includes support for
 
-Konrad
+4 x CSIPHY in DPHY mode 2 phase 5 GB 4 lane
+3 x CSI Decoder CSID
+2 x CSID Lite
+2 x Image Front End - IFE
+2 x IFE Lite
+
+Dependencies:
+
+link: https://lore.kernel.org/all/20250113043133.1387162-1-quic_depengs@quicinc.com/
+link: https://lore.kernel.org/all/20250119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v4-0-c2964504131c@linaro.org
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (7):
+      media: qcom: camss: Add an id property to struct resources
+      media: qcom: camss: Use the CSIPHY id property to find clock names
+      media: qcom: camss: Add CSID 680 support
+      media: qcom: camss: Add VFE680 support
+      media: qcom: camss: Add support for 3ph CSIPHY write settle delay
+      media: qcom: camss: csiphy-3ph: Add 4nm CSIPHY 2ph 5Gbps DPHY v2.1.2 init sequence
+      media: qcom: camss: Add x1e80100 specific support
+
+ drivers/media/platform/qcom/camss/Makefile         |   2 +
+ drivers/media/platform/qcom/camss/camss-csid-680.c | 422 +++++++++++++++++++++
+ drivers/media/platform/qcom/camss/camss-csid.h     |   1 +
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 131 ++++++-
+ drivers/media/platform/qcom/camss/camss-csiphy.c   |  28 +-
+ drivers/media/platform/qcom/camss/camss-csiphy.h   |   1 +
+ drivers/media/platform/qcom/camss/camss-vfe-680.c  | 244 ++++++++++++
+ drivers/media/platform/qcom/camss/camss-vfe.c      |   2 +
+ drivers/media/platform/qcom/camss/camss-vfe.h      |   1 +
+ drivers/media/platform/qcom/camss/camss.c          | 350 ++++++++++++++++-
+ drivers/media/platform/qcom/camss/camss.h          |   1 +
+ 11 files changed, 1166 insertions(+), 17 deletions(-)
+---
+base-commit: f2151613e040973c868d28c8b00885dfab69eb75
+change-id: 20250313-b4-media-comitters-next-25-03-13-x1e80100-camss-driver-d2c24d667195
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
