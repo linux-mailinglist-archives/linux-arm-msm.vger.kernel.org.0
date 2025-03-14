@@ -1,90 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-51354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6307EA608BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 07:01:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6198FA608C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 07:09:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2B50A7ACEF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 06:00:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9710F17B301
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 06:09:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F88918B460;
-	Fri, 14 Mar 2025 06:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BBB613B58D;
+	Fri, 14 Mar 2025 06:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F9ZB6mEM"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KR17KZ1j"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4B118A6B7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 06:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26F12F3B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 06:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741932021; cv=none; b=rPK9I0UiVrX0UfQ38SFw9pdEdlU/qDLqJNjW788bnHWTJIFdfw6LmgvsBRa7QD6utdTC4FUxcS75+crrNPWBT7++SSaTDyBPGdvf4DcBjvtWySOhCPBdtbcrhhHJav/sT6dt3S54rnGaGN2xTsa9ffTZCKVrmrgUc4UIgavVpzA=
+	t=1741932559; cv=none; b=hKfcWvS32HpkjMm6ocpjK0AYOmj4Q1qnb0DsjAu5BFJhQ4jQGCsEnqzEt2nuvQx7n5mK0ecei4jKlUaC4dmbEtNhw15VBQUcnGmltg0PPFZj7QVM5jedaYpwc+L70ZKSRU25mNlaEIfQ13zvztp1IF/KED21ohESk6xXZwX3xMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741932021; c=relaxed/simple;
-	bh=KL01593/zSX4Xb5hwQBCHJDAckIJ37QdEuF5jXeWgJ8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ICG2fL3WDp4dizFZXd/IqYPyiP461tb7Z3mzDR27GEVTsgQFaVdt+7EQnX5V/6jojqcpLYaEA1cQF3RI/JgaPDKX3nzSnOIGceH2sR2Ph3lWwmZxKd1VicilByAA63/JCr/Ce3z4WGxEKR52uJYD+SAoEmVA9Zxd5dZdRu/fgmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F9ZB6mEM; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1741932559; c=relaxed/simple;
+	bh=JcgEM0xedYxu5bYof0Ovcu0EaEeskIX5tXdtwYapZDI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=k+yOM2IKC8ooHDma49742+cD8o9p1PdNwitcW5nXOpVW/VlSWCqQS+4ne4yL8ZbYV1gfD1haSPOFMHxefGGjPaId/8Stc5xpm1uVrDjUvLx0Tas4nsfTpXn5IuLJR62OjV3nVD6c1dSdc98kg5m9zNz8VqwtocZteR1x+IXFKjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KR17KZ1j; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52DGek3U019821
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 06:00:19 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52DGbeBE019732
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 06:09:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YD6Z7HGd6RWZSqIPuwEoc3ezQjdyPxL3+GL3fga18Fk=; b=F9ZB6mEMvQNwJykH
-	MrOciWlfhPF8gc6CrJXLfBq6ksxP5I8HK9A04+R9PUhWfPJwCVv8BL0flzdy29AI
-	eMEcparMp0Y8s3nwWzXN2Qz/07jcVo9fw40wbZ79dkOHIpPJXZKBLwh0EPiDKdkB
-	mF7Gagr/+b3kLvLCU9PcpLZkLyNrIwovXGZN2QhD9SZj71u/ABBGyJst4jmag2kg
-	Gs/9yzmzKr3kq5EeXX0YuHMn2IU4FEJlmWQAqpbweVhZHwKeKCIFBhCtLU/b+mWI
-	/NiV+EIbFm87IQZvcBnmfGw09vKbyX2bP7W7iXYV840EQmKLmwa34xMDrEED99SE
-	siG8LA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45bts0k8q4-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=aPJH6AMt3R+0o42l1hNuer
+	OXIrFuPaoPXNlRFcEX02M=; b=KR17KZ1jGpoMMw+0ZRHfo83sMMfmCxecGflW5R
+	aoSc+1xcAPkgZ193ocpHsQy/3zlSQe/xP+KvW4Op2x9ZNkxbQIa4nCMwkLmxokEG
+	IegdU5EJumfyzxOM8TiUDr/99yhI63v8l2xXv6Ewb5+UU/1XRfxM5YZK+zT2VpXX
+	8nXboHXvmhC5z9MnHEiz2bMHYW78GP8i2icmHURyon8ZyoXMwtcgR4vj21ys3acy
+	U38YZD/MFLsi5T8XE4cqaQa10pXSTgFWxo4dUH4Sigc7EyZ27dBHHfUDjReG5P9y
+	Ybre4wHP/mS3ml7fxqVVxwtpyu8mIGcXtqiC804lGOurNvgg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45bts0k9cw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 06:00:18 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6e9083404b7so38379446d6.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 23:00:18 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 06:09:16 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c0b7ee195bso307309985a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Mar 2025 23:09:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741932017; x=1742536817;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YD6Z7HGd6RWZSqIPuwEoc3ezQjdyPxL3+GL3fga18Fk=;
-        b=rZM1sEuRsAlzNZkkDFnqSODE+DS8CX+JrG7livZwOFo81NaDRgu2EmzGHFQ4WMIxpu
-         HHtkd4gGFPbZuiRceWEqnUFlUyLm0fTNHg6W0rKf1LNjvuZS/w8bcpC7e4y08KahFmA8
-         qdwR8175KxdUdkSO9S1MyfgJ+wBjSjpliUa4KVWdwT67uzmpF5TXDmwDor8pfYre98tH
-         NKKSGvXu/SwbGZhpOJNbqalpoosZKOqLKXh7Rj1aDliDA809mm2OQpkA/q5++1dTmqys
-         bPehODBKTHpA92aofDTfgKyhahgrU0HrdzZfc7Qxax6/smiuAkJJDt7mqB2dbROr4a2k
-         +k9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXsVor+FCan11NocdV5uexot+nB1MIsTBIvdi1umYCpCn5A3cRFsMUcY6mH8RCgdo/3vAU9bv2cgbFOdPdi@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOTHIjesZChH9atcvxeOCvPgYp4nYqIo1s8y4pJYRcm9k1dvFi
-	8tvJQTyiVAyg6sIhB9mt2icuBZfu00l2MzdQawwQwJBBuTdwVB4/n0cbfW0BF+FrOE78Mi/W19o
-	QkUWk8wA6Cttn3c2fqPdz+rIwlS1qAU8Q6Qr4paRLQMW8L6Bs+nj/4X6jK3fTg2Vr
-X-Gm-Gg: ASbGncvf6LGH1zPPzngGh5WavG76e3kLn0oGp0zllqR3JJD3I2VmPcPMA3Xt3YxQxCj
-	cBSSxiUh91vJeh9Bc+Gnmw6WTDPLCFBwyD0Y5rqZR2LU5dg1ZgyKgY2pvOAlV81uXvBY4pPFZuE
-	z7bId7d9l9Dp+32GMFfeNPtc3hZPYy6bmqA1tho5q3R6WMvJp4DyFgluEsDQu9pROSYP1hZM5NC
-	v6AfpNyg2m/M5xOPY97ktvfyC75RoAjSzyq8qrim3pT9l8OZj2xIpmBt8uD2xN6smvtdXdCsUkM
-	0tctFbOy5G76eA2BjsoTEdyQBlXHUReC2ZEJ7HjY3Xrh5Jq+d11CcObMSRb22KMkOf18uwFYatL
-	Z8FGeMJHAmoHcWlhZIkFcvYb1Qg7i
-X-Received: by 2002:a05:6214:27e5:b0:6e6:6c39:cb71 with SMTP id 6a1803df08f44-6eaeab0fbbfmr16506616d6.45.1741932017345;
-        Thu, 13 Mar 2025 23:00:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELJcylmUiJ4JEURtcZ0pb2cGp+YTibCxqJbDGjU39ccIquuLoPHTNuJjmGgKfn3GK+0NkRrQ==
-X-Received: by 2002:a05:6214:27e5:b0:6e6:6c39:cb71 with SMTP id 6a1803df08f44-6eaeab0fbbfmr16506016d6.45.1741932016982;
-        Thu, 13 Mar 2025 23:00:16 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741932556; x=1742537356;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aPJH6AMt3R+0o42l1hNuerOXIrFuPaoPXNlRFcEX02M=;
+        b=pYNehSLFPuuDSzgl9NDDGQkR2ILhT/brIQ+rAtqW1tL4mXL4NEArNoetn9ERAc/a3Y
+         hnHdARIs5jaQV/5u7/4DzmigX/HaVQM194X3P3bGO+WwKeDk6paaJIrabzaKdZT8wTjb
+         sn6PT8g8697O37iWSnur1dO2/PqOmH2EOIDSqpTHeI8+ZINsdq9FAvowHKZgtErC5Gyh
+         3ZHH1idt4wY9ag7/t2wCjtJSD9dCESemJ/0uoCBJFgsEKh7xG4TPUIPmTFBCf797TFsi
+         YB/podlosUtWyV+YbRxhqeNsX+Tb4M59FPLcn5wuTIRRZKXK8qgF/1Vu52qTyZ7VERfP
+         SG5w==
+X-Gm-Message-State: AOJu0Yz1kJmAoYZW01eWGe1RNx6F2YUEUEsRDR53bDJYEBObfGoNAsKF
+	qQmeIdqFv+Jt8da+TuIKScchMssYsfhmMMiCpAOvIWfqONRyZPwNBLN/eyF1fi1YCxJ5Yz0KTZF
+	mxOeY+Jl+AKJi4EMHhEHbQQahqH42QnMbPVp9NNZsanUyjqYpJAaXMFplnqJjGMO3
+X-Gm-Gg: ASbGncvJPsG7T5BjYz63FEd7C3CqLxjLiiWk4gRdLd6X6Jqn2w96W9aV+2x3Je0kKcM
+	WF2+4p0RKx7hAoCieH8AxakwLqb5W2Xvp3K28AtvId6uf0ywVQhrhzomLdLsojXHnaZ05Kketoa
+	ypkwQr+NhaAPWusnPzLltehrFqEvQThW8/CQgo8nuvpE7q6j/8In9ItXRnzakzfXETnqOJ0BlCy
+	fLLfT1qZWJCF/Dr3RZobGRCCzM2bvF0DmC4SaHoztrAjsC2gQqOu9U/TvZLfMlDqTg9iBlHMZh/
+	GFNGlzT0VypWiiTU6q4aS+oOjUlS0j2l3lc+toh5I43JOe8NTbxvZcBKeHUiiL9J7cQDJ9LlyZB
+	urmfloAPw1wIKHM5QBCaUhTiDkNND
+X-Received: by 2002:a05:620a:4387:b0:7c0:c469:d651 with SMTP id af79cd13be357-7c57c8f2fafmr153254285a.57.1741932555838;
+        Thu, 13 Mar 2025 23:09:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGU2fdH1nYknRxmyE0Pv1gs73Y7wtDiY6qmVkZjEOFWyyh/E2KJTtu6R4id2U1COR7/iYgZsw==
+X-Received: by 2002:a05:620a:4387:b0:7c0:c469:d651 with SMTP id af79cd13be357-7c57c8f2fafmr153249585a.57.1741932555466;
+        Thu, 13 Mar 2025 23:09:15 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549ba88332dsm416136e87.181.2025.03.13.23.00.13
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549ba864fc9sm416071e87.140.2025.03.13.23.09.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 23:00:14 -0700 (PDT)
+        Thu, 13 Mar 2025 23:09:13 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 14 Mar 2025 07:59:47 +0200
-Subject: [PATCH RFC v4 6/6] drm/display: dp-tunnel: use new DCPD access
- helpers
+Subject: [PATCH v2 00/10] drm/msm: add support for SAR2130P
+Date: Fri, 14 Mar 2025 08:09:04 +0200
+Message-Id: <20250314-sar2130p-display-v2-0-31fa4502a850@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,54 +90,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250314-drm-rework-dpcd-access-v4-6-e86ef6fc6d76@oss.qualcomm.com>
-References: <20250314-drm-rework-dpcd-access-v4-0-e86ef6fc6d76@oss.qualcomm.com>
-In-Reply-To: <20250314-drm-rework-dpcd-access-v4-0-e86ef6fc6d76@oss.qualcomm.com>
-To: Lyude Paul <lyude@redhat.com>,
+X-B4-Tracking: v=1; b=H4sIAADI02cC/3WOTQ6CMBCFr0JmbXXaojGuvIdhUWCKk0iL00o0h
+ LuLsHb5vby/CRIJU4JLMYHQyIljWMDsCmjuLnSkuF0YDJojWjyr5MRoi4NqOQ0P91E1nlD7xlN
+ tEZbYIOT5vVbeqo2Fnq+lOW8i1C6RamLfc74Ugd750LuUSeBnv3PKUT7roVGv/v/bo1aodFs2F
+ n1pz8ZcHxycxH2UDqp5nr/LdYw04AAAAA==
+X-Change-ID: 20250308-sar2130p-display-b0601fcfeb30
+To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
         Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Bjorn Andersson <andersson@kernel.org>,
         Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Yongqin Liu <yongqin.liu@linaro.org>, John Stultz <jstultz@google.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jani Nikula <jani.nikula@intel.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4082;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2518;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=AezDpTs9i2rYRC6AeDwZvqAV87zlWZZG2GdTd51PPFs=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBn08XZFN6uPDdiX1R7XmfB1vXISASqSFYGN569O
- I6KV6qdI3WJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ9PF2QAKCRCLPIo+Aiko
- 1eM5B/9jhOE9nI9V6mDRKubJu0/SPcbZoi/lHs71XyG/da3UMGC32Qt16u66xFuLg4inRbB79MC
- lZllWHwPgl1Q5/YeMrd7mbZ4SMoiH9evqV5y0/FTvifqU6zwgcpJ6ZCMWGixnm3Ezlb0aiz5nI9
- XYnzCZ3lNXvh8AkwMZMgXNfGOA71gEm/MhhXwmgqXHN48nVlgfkYc1J84RrrNot9sLmiQgfQHzR
- F4KZYvVt5YGhuR97yx5BeXuJOeT2S6L6rAfmV5RybP6JJdi6id/B10zo5H3f/e3tm+QFyIddeuv
- fYEScrVe2IVsan3JCnn6Al2YeCZugz0rJLJveu4Idywf2rlt
+ bh=JcgEM0xedYxu5bYof0Ovcu0EaEeskIX5tXdtwYapZDI=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBn08gGsPRmM7wX4zdSQvNqp8Q+K5YNl0IUjqldp
+ 1a8iYn/lUyJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ9PIBgAKCRCLPIo+Aiko
+ 1fvtCACoM5/p8j/jiu1MRW5fm7gny1R4+IwOUzJ3uIj1j5bnsUYdAGdgeJdtDhX24RsqIWpk1U+
+ Me5C1z+Bp953zcjJx8/lOJFsjdZV5hOAqQjeNkTeFgFpMtT0fyAzzL1jycxmXWGy9XgIB/Z/bMd
+ soyL74eqB6Dad2frQ+7rs3SJNZZhQt+Aab4+RrTpmpSp8EeiC5nndVMn8ZJrGiZvcha6hoxI8Do
+ +FHJP7cgHGqFPBSNasJ3TQl0pxVqosTAgBKBNU1Ec0UtmUwVpy1BvjmZov7f3jBB3Gc/Ur00VSF
+ Q9ws5Dmd1JPROErmBHfToVHVPPUHi5O2BWiIFOFdqco7LRcd
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-ORIG-GUID: ibOIc5-PKZtrYekELvSth-di93gBTBkU
-X-Authority-Analysis: v=2.4 cv=DNSP4zNb c=1 sm=1 tr=0 ts=67d3c5f2 cx=c_pps a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8 a=VzZmvmfVK_LU_xpdqU4A:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: ibOIc5-PKZtrYekELvSth-di93gBTBkU
+X-Proofpoint-ORIG-GUID: h-6CXWUF95sXfKWVpka-W6tGwGPzt-Se
+X-Authority-Analysis: v=2.4 cv=DNSP4zNb c=1 sm=1 tr=0 ts=67d3c80c cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=qnNoV65vq9fCYBTq3NIA:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: h-6CXWUF95sXfKWVpka-W6tGwGPzt-Se
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-14_02,2025-03-13_01,2024-11-22_01
@@ -149,113 +142,59 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowprio
  priorityscore=1501 mlxscore=0 spamscore=0 bulkscore=0 impostorscore=0
  suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503140045
+ definitions=main-2503140047
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Add support for the Mobile Display SubSystem (MDSS) device present on
+the Qualcomm SAR2130P platform. The MDSS device is similar to SM8550, it
+features two MIPI DSI controllers, two MIPI DSI PHYs and one DisplayPort
+controller.
 
-Switch drm_dp_tunnel.c to use new set of DPCD read / write helpers.
+Note, due to the technical limitations DP controller wasn't completely
+evaluated.
 
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/gpu/drm/display/drm_dp_tunnel.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Changes in v2:
+- In MDSS schema switched from list items to contains: (Krzyztof)
+- In MDSS schema dropped extra empty lines (Krzysztof)
+- Fixed .ubwc_bank_spread in msm_mdss. (LKP)
+- Link to v1: https://lore.kernel.org/r/20250308-sar2130p-display-v1-0-1d4c30f43822@linaro.org
 
-diff --git a/drivers/gpu/drm/display/drm_dp_tunnel.c b/drivers/gpu/drm/display/drm_dp_tunnel.c
-index 90fe07a89260e21e78f2db7f57a90602be921a11..076edf1610480275c62395334ab0536befa42f15 100644
---- a/drivers/gpu/drm/display/drm_dp_tunnel.c
-+++ b/drivers/gpu/drm/display/drm_dp_tunnel.c
-@@ -222,7 +222,7 @@ static int read_tunnel_regs(struct drm_dp_aux *aux, struct drm_dp_tunnel_regs *r
- 	while ((len = next_reg_area(&offset))) {
- 		int address = DP_TUNNELING_BASE + offset;
- 
--		if (drm_dp_dpcd_read(aux, address, tunnel_reg_ptr(regs, address), len) < 0)
-+		if (drm_dp_dpcd_read_data(aux, address, tunnel_reg_ptr(regs, address), len) < 0)
- 			return -EIO;
- 
- 		offset += len;
-@@ -913,7 +913,7 @@ static int set_bw_alloc_mode(struct drm_dp_tunnel *tunnel, bool enable)
- 	u8 mask = DP_DISPLAY_DRIVER_BW_ALLOCATION_MODE_ENABLE | DP_UNMASK_BW_ALLOCATION_IRQ;
- 	u8 val;
- 
--	if (drm_dp_dpcd_readb(tunnel->aux, DP_DPTX_BW_ALLOCATION_MODE_CONTROL, &val) < 0)
-+	if (drm_dp_dpcd_read_byte(tunnel->aux, DP_DPTX_BW_ALLOCATION_MODE_CONTROL, &val) < 0)
- 		goto out_err;
- 
- 	if (enable)
-@@ -921,7 +921,7 @@ static int set_bw_alloc_mode(struct drm_dp_tunnel *tunnel, bool enable)
- 	else
- 		val &= ~mask;
- 
--	if (drm_dp_dpcd_writeb(tunnel->aux, DP_DPTX_BW_ALLOCATION_MODE_CONTROL, val) < 0)
-+	if (drm_dp_dpcd_write_byte(tunnel->aux, DP_DPTX_BW_ALLOCATION_MODE_CONTROL, val) < 0)
- 		goto out_err;
- 
- 	tunnel->bw_alloc_enabled = enable;
-@@ -1039,7 +1039,7 @@ static int clear_bw_req_state(struct drm_dp_aux *aux)
- {
- 	u8 bw_req_mask = DP_BW_REQUEST_SUCCEEDED | DP_BW_REQUEST_FAILED;
- 
--	if (drm_dp_dpcd_writeb(aux, DP_TUNNELING_STATUS, bw_req_mask) < 0)
-+	if (drm_dp_dpcd_write_byte(aux, DP_TUNNELING_STATUS, bw_req_mask) < 0)
- 		return -EIO;
- 
- 	return 0;
-@@ -1052,7 +1052,7 @@ static int bw_req_complete(struct drm_dp_aux *aux, bool *status_changed)
- 	u8 val;
- 	int err;
- 
--	if (drm_dp_dpcd_readb(aux, DP_TUNNELING_STATUS, &val) < 0)
-+	if (drm_dp_dpcd_read_byte(aux, DP_TUNNELING_STATUS, &val) < 0)
- 		return -EIO;
- 
- 	*status_changed = val & status_change_mask;
-@@ -1095,7 +1095,7 @@ static int allocate_tunnel_bw(struct drm_dp_tunnel *tunnel, int bw)
- 	if (err)
- 		goto out;
- 
--	if (drm_dp_dpcd_writeb(tunnel->aux, DP_REQUEST_BW, request_bw) < 0) {
-+	if (drm_dp_dpcd_write_byte(tunnel->aux, DP_REQUEST_BW, request_bw) < 0) {
- 		err = -EIO;
- 		goto out;
- 	}
-@@ -1196,13 +1196,13 @@ static int check_and_clear_status_change(struct drm_dp_tunnel *tunnel)
- 	u8 mask = DP_BW_ALLOCATION_CAPABILITY_CHANGED | DP_ESTIMATED_BW_CHANGED;
- 	u8 val;
- 
--	if (drm_dp_dpcd_readb(tunnel->aux, DP_TUNNELING_STATUS, &val) < 0)
-+	if (drm_dp_dpcd_read_byte(tunnel->aux, DP_TUNNELING_STATUS, &val) < 0)
- 		goto out_err;
- 
- 	val &= mask;
- 
- 	if (val) {
--		if (drm_dp_dpcd_writeb(tunnel->aux, DP_TUNNELING_STATUS, val) < 0)
-+		if (drm_dp_dpcd_write_byte(tunnel->aux, DP_TUNNELING_STATUS, val) < 0)
- 			goto out_err;
- 
- 		return 1;
-@@ -1215,7 +1215,7 @@ static int check_and_clear_status_change(struct drm_dp_tunnel *tunnel)
- 	 * Check for estimated BW changes explicitly to account for lost
- 	 * BW change notifications.
- 	 */
--	if (drm_dp_dpcd_readb(tunnel->aux, DP_ESTIMATED_BW, &val) < 0)
-+	if (drm_dp_dpcd_read_byte(tunnel->aux, DP_ESTIMATED_BW, &val) < 0)
- 		goto out_err;
- 
- 	if (val * tunnel->bw_granularity != tunnel->estimated_bw)
-@@ -1300,7 +1300,7 @@ int drm_dp_tunnel_handle_irq(struct drm_dp_tunnel_mgr *mgr, struct drm_dp_aux *a
- {
- 	u8 val;
- 
--	if (drm_dp_dpcd_readb(aux, DP_TUNNELING_STATUS, &val) < 0)
-+	if (drm_dp_dpcd_read_byte(aux, DP_TUNNELING_STATUS, &val) < 0)
- 		return -EIO;
- 
- 	if (val & (DP_BW_REQUEST_SUCCEEDED | DP_BW_REQUEST_FAILED))
+---
+Dmitry Baryshkov (10):
+      dt-bindings: display/msm: dp-controller: describe SAR2130P
+      dt-bindings: display/msm: dsi-controller-main: describe SAR2130P
+      dt-bindings: display/msm: dsi-phy-7nm: describe SAR2130P
+      dt-bindings: display/msm: qcom,sc7280-dpu: describe SAR2130P
+      dt-bindings: display/msm: Add Qualcomm SAR2130P
+      drm/msm/mdss: add SAR2130P device configuration
+      drm/msm/dsi/phy: add configuration for SAR2130P
+      drm/msm/dpu: add catalog entry for SAR2130P
+      iommu/arm-smmu-qcom: Add SAR2130P MDSS compatible
+      arm64: dts: qcom: sar2130p: add display nodes
 
+ .../bindings/display/msm/dp-controller.yaml        |   1 +
+ .../bindings/display/msm/dsi-controller-main.yaml  |   2 +
+ .../bindings/display/msm/dsi-phy-7nm.yaml          |   1 +
+ .../bindings/display/msm/qcom,sar2130p-mdss.yaml   | 439 +++++++++++++++++++++
+ .../bindings/display/msm/qcom,sc7280-dpu.yaml      |   1 +
+ arch/arm64/boot/dts/qcom/sar2130p.dtsi             | 394 ++++++++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h   | 434 ++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |  23 ++
+ drivers/gpu/drm/msm/msm_mdss.c                     |  11 +
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c         |   1 +
+ 15 files changed, 1313 insertions(+), 1 deletion(-)
+---
+base-commit: 613af589b566093ce7388bf3202fca70d742c166
+change-id: 20250308-sar2130p-display-b0601fcfeb30
+
+Best regards,
 -- 
-2.39.5
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 
