@@ -1,65 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-51471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5078A61B58
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:02:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE9C4A61B5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:02:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14E99421018
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:02:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE13619C6197
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:02:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5265205E16;
-	Fri, 14 Mar 2025 20:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 791E62063CA;
+	Fri, 14 Mar 2025 20:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AXZZuGAV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jp22/KZJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97382205E0D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D46C2063C2;
 	Fri, 14 Mar 2025 20:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741982489; cv=none; b=USleHlwrV3BbUHGeW5zVzU30tJa3F5jjEJ7Xi3ca8o/JdtHzhzNUi7ZAObRn/VzLzA4wVt4SEa0NMpmHizSeWVxcxNVXh9PVzIe0Dom8lgV64H1yy3Ps66kuoDT6RdLnsPr+2alwrlvEkiT4gnzQACYbjAJBjmWsKk5DlpI1vvM=
+	t=1741982490; cv=none; b=XealilwZ9ulH/6F5XO0aIrxb5URDSYPjgF1/OJzEYafMk21uzSYtOt+7Tw30hP48GWrWL8AH9qC+qUldYINxNeUKrQpf2c226IiqVU59MWURZCu8ipsr97+X7GpPdNCeiKGNg9n6Mm7Hp3y5VhRdhE4d1uTsDLk319bk77rn/MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741982489; c=relaxed/simple;
-	bh=uI7supORXJIUgf0wIYyGk/4SAOuPMkmRVUwHoI62pPY=;
+	s=arc-20240116; t=1741982490; c=relaxed/simple;
+	bh=56Y8WP4lJH2ArMkkBIQX60sbylVZzcXorl6dWgzw6T0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RtOaHDwz9HIKWhlXpxSvh5fKlosnDvKsRXGOcKKAn+3bBc23ydcFJvbK91SgO7i4nTwhJeOpRaF//QwviD+tqsUa48SbrzAwBmozjx7WVm8VeaHmKmEGDhWsanvAkqGvi2gb+op9R3LOoPch+tDsyEBxzrHGYoJJcC089WgutBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXZZuGAV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE30C4CEEF;
-	Fri, 14 Mar 2025 20:01:27 +0000 (UTC)
+	 MIME-Version:Content-Type; b=SqP0DwCsGe91iPvexrzGeLWYzELXw1RjPGRtLY/2+Ae+GWB8/Tul/tQ5fMxfwChVZ+DaL03SA3CD82Zx/epj73RUA9ttf7uZHRq+xKnXFfdKWeWAr33Vz7cu2QEc0/rFxfGBS93WwWhlTknAK9hn8o7Gq4XKJNGbjQkgy9qzMDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jp22/KZJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAAFC4CEED;
+	Fri, 14 Mar 2025 20:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1741982489;
-	bh=uI7supORXJIUgf0wIYyGk/4SAOuPMkmRVUwHoI62pPY=;
+	bh=56Y8WP4lJH2ArMkkBIQX60sbylVZzcXorl6dWgzw6T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXZZuGAV+63TnyvMLKqbBkxR7QFHcIMCKzDxMvheN25H1SvOD3ZkEMlTfe8zt856U
-	 5RCmk6f9wcJLyLtQlgyHMdcMoMQ8L5nISx2mUbClI6D8JaDaqnVdfAKG2hbSznpt/P
-	 C4PN5z/xsyrbiO6kS4RGqIDF3KysrZ7WbtzPGIpPuYlpZR7bVsQa851HA9F40dHRGO
-	 M7Tognac9Tj50+OL7mSpf7BxDIecwkZoPpZfeAseiwn9wOT04qOJ4RFafD+sV7dGl/
-	 uWbJRs6OqxpQ+EnzQoEXrFUS+eYUiiADdgqkpxH66O5/LfMN5GKgiwsjd8lpRoXwNX
-	 U3eDSumtrhzDg==
+	b=jp22/KZJOO5vqMsS+q7+NQnpQ5VA/m1lYnArc9JZ8BpozZX+03q6MlGazdlejJj6u
+	 h8hvZQh9kcV5+HS+0rppEBlwAamap3DwIU2l23c3nnnUbMrFpQPsaMi1wviLkrLPSs
+	 tH51P7gf2Mw4AmuXYrwmNUwyCUW02owvcPSYjSErVmAndyq0QqeNQYPuwD2SPF+kRU
+	 XU6dWBAREcisdvOTdNm7aoyWXWsZNZg3XW3vNy27hWG7J7kdbFuLmw0p8JLoQdaCh3
+	 7aNMvMngnpTz5l4epWcZWG7e6FHgb1JGEat6d4kxKy/WknL1xyJnAZ/sCYuZ+SliBK
+	 cWXu31G0uzJWA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
-	Pavel Machek <pavel@kernel.org>,
-	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+To: Michael.Srba@seznam.cz,
+	konradybcio@kernel.org,
+	jeffrey.l.hugo@gmail.com,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-leds@vger.kernel.org,
-	Daniil Titov <daniilt971@gmail.com>
-Subject: Re: (subset) [PATCH v2 0/3] Add PM8937 PWM and display backlight for Redmi 5A
-Date: Fri, 14 Mar 2025 15:00:45 -0500
-Message-ID: <174198247871.1604753.9818860093094603350.b4-ty@kernel.org>
+	kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH 0/2] bus: qcom-ssc-block-bus: Fix some error handling paths
+Date: Fri, 14 Mar 2025 15:00:46 -0500
+Message-ID: <174198247884.1604753.16019573557353029968.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250213-pm8937-pwm-v2-0-49ea59801a33@mainlining.org>
-References: <20250213-pm8937-pwm-v2-0-49ea59801a33@mainlining.org>
+In-Reply-To: <cover.1740932040.git.christophe.jaillet@wanadoo.fr>
+References: <cover.1740932040.git.christophe.jaillet@wanadoo.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,18 +65,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 13 Feb 2025 20:54:46 +0100, Barnabás Czémán wrote:
-> This patch series add pwm node for pm8937 and enables
-> pwm backlight for Redmi 5A.
+On Sun, 02 Mar 2025 17:21:33 +0100, Christophe JAILLET wrote:
+> Patch 1 should be straight forward. It removes some ioumap() from
+> resources allocated with devm_ioremap_resource().
+> 
+> Patch 2 is more speculative. It releases some resources in the error
+> handling path of the probe, as done in the .remove() function.
 > 
 > 
+> [...]
 
 Applied, thanks!
 
-[2/3] arm64: dts: qcom: pm8937: Add LPG PWM driver
-      commit: b18c1aa6404303888ab924f149135835d223f4e8
-[3/3] arm64: dts: qcom: msm8917-xiaomi-riva: Add display backlight
-      commit: 5b74065e6c2482507435cdf7c4d0aab1830b9676
+[1/2] bus: qcom-ssc-block-bus: Remove some duplicated iounmap() calls
+      commit: a9ac4ba7dcace2b3b91e7b87bf0ba97c47edd94f
+[2/2] bus: qcom-ssc-block-bus: Fix the error handling path of qcom_ssc_block_bus_probe()
+      commit: f41658cd081ad7697796b3dacd9a717a57919268
 
 Best regards,
 -- 
