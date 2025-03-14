@@ -1,132 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-51422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C44EA613B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 15:34:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CF6FA61415
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 15:50:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5F810173AE4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 14:34:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2064A3B6F94
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 14:50:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BEBA202F83;
-	Fri, 14 Mar 2025 14:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 800372010EF;
+	Fri, 14 Mar 2025 14:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rzc3tv3K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mksSY5yo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAC7202C4E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 14:33:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC42200112
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 14:50:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741962812; cv=none; b=Q3ZsMUm5nwCvoSV2p6oN6lbitNW1GaTO4SQFK8Pz/ExR8CaJngVLm7icRjn4fjtgbJpg+XiKjtiLEsBAQQdSrgLqZS5ZgXnWnVikrcZZ7bGffsNt96Op7ACorOFDLsKUtQyBFUNJaRK7xJ4oz5PSjgkWL/G/QYPKVC9rjn+QCnM=
+	t=1741963844; cv=none; b=RLHQy0VUCybzQmj7YmZYSEIFKSmL2wXPiLpb3QrzGyhxt/zEBPVHySPlDdi9UnNcvOm23cFw/4whqwW4z7eC5JxIsurgQ1hMmW5OkFeIbFt2bqHSiJ5DWnt7S1Qfk7cJMxsVs5zGY7J/ZEnRWc4BUr/YSvT7s5LRwXzJEnnyUPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741962812; c=relaxed/simple;
-	bh=49SQFDPVrfSgd5vzQ59y3EoTLS1r9SAAvEbV2EPsJ2Q=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UlgSzZ2t5I7wbO86O+MpJyo2iPmwZNFxp9JMJC6WIkam9MmhTxZ4z4KW2a15S4Zog6d4yutQH656Q+SollnBRvvbpvqmOt+B9lzxlM73932XwnAoc4f/G5ijAqra4Kraim0tYkO+I/hrTjxe/wRtu42+pXFOJOw2BmcmW0DnDLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rzc3tv3K; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1741963844; c=relaxed/simple;
+	bh=maO4VrlOA5Crgv/3qBCu9Kk+oUeartKpyLArd51qh7A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S2Be4AT6hi/kGx+JsMyebGRjFrrbxZJj4M8BmWRsVRgBA95IsivyvsRKkaolt+K4Czxcbav6oPASfeaaILFAk9lhyOfJKRtnMc3pOlZXh2/vjBTdjRwOlZ3T6K5TfCkKJEwBABhHFOv7W8fgy/bbVY/VVJTc3NbTKNRqzJQzz1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mksSY5yo; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43bb6b0b898so20800275e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 07:33:30 -0700 (PDT)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-224341bbc1dso44597445ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Mar 2025 07:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741962809; x=1742567609; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BmrpnnLM0D4kCXujXrwrPhEB5OgiMQcaOkuo+01fN7M=;
-        b=rzc3tv3Kd0ou7jNF7JWL+FlHnqVTYsD4DERINfn7Y7TPYu81vwaJ4gydWITQiL8Let
-         pvI0/ihYKeViKibewSdmS37Vvsjtxx2lapsfoqUi+Cd6gMLPL5UAT5ZXPSarezmuvstH
-         CI+8+/GuUsL4yoQr5PlpSsS8mZl0d06+9H+LfE0ikYeqYihUMqFxwa6LcYRnJ1x+Ss6x
-         lQHNTWHP88aGohRijSwAPe5DZETw8BbeTpaDrI3icP9nziG5+AVwN68J2yJBrHPWuzUK
-         iQsEsnmjLVVPMzok406CjcHssduRztpP9eUp+D2AA6ap6ZpsRvMkKmKVqVoZiF+vzj4I
-         4/bA==
+        d=linaro.org; s=google; t=1741963841; x=1742568641; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7OrItOGYSNYN0heMZXm9O2Sd5YIsOC/lcspBLUrGTOo=;
+        b=mksSY5yoJH4Tcp4rWXEzbFSEBM9Uco3ucM3ETh8xpcnQEugnJiob/Wz45hlEhsFZWn
+         Hvew+7z4nw75/MOVQmuK3iOQsrNs7Odc3ZeF+BP197vSuU5gZfUWje0L+AHED5x0vyJP
+         z2qHOEU5E8iRnhom4XZwPINW2qk6qrm/HPShoEYJpSe6nVgVAwxoXbfoz83tpF78rNCh
+         IjLq7Gzvhy/VJHJkDXWNUkpBXCZ/OHIgqYwy5aQqSw/iLVdKFao3pr7gz4D2qLH6m56e
+         pzj1wqaVN3jduVNJJ0bwh+omPAQZffjlzAa6o1C+s+pvP2r8IoN+rDfV5ayYA1wloSiU
+         z2yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741962809; x=1742567609;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BmrpnnLM0D4kCXujXrwrPhEB5OgiMQcaOkuo+01fN7M=;
-        b=MViQeCAT8bpB2teW6U61Ss5c73Vyffr0Wv2pLniu20okkIgCxDz+Bq68aPIey+BXis
-         j2yrSbTSg1g0ZSUChFVceaSelxwNyQ7p05o1eRe6pbeGgO98zyXfGD+nJ9JAysXjCfhY
-         QBLjzA9BpE9yslpDI84FzhT0Ep6cpw5hXgPif03uXYYvvBMDU6hq9wrLY9Bb5zN0Fygl
-         /rbJpbaZPXwyV5AxBs0gC3SKsrBP3Ud01ECGReGNKBRZeHvU2ypjORUDzZcH9mGMp1wU
-         C6mJCS5gvVNeoxHVLqcYVACH7vsS/4foxEV2dEAecRM16+Fzi8xsiYzw45EJsRSvsMfq
-         yGXw==
-X-Forwarded-Encrypted: i=1; AJvYcCV7x9OIPn9TudYulUifEYkbFn8ATDQglc2KedqyUrrXwIA9bSWz1QHCuAiiGBlftoTdBnKhEs0LjSU2clEp@vger.kernel.org
-X-Gm-Message-State: AOJu0YynkqsVOR/evGM422fLnSu/z04l3GJS691Aqc/p+HoDL09efXt8
-	c/NqWAqWr2A9Yn9a9pMfm3BsIFzIxuTQwORZVT4PiWbAubb3gY4Jte5HH4OgR9k=
-X-Gm-Gg: ASbGncsbUL63bmqCq/o4XJgt2HRTSCX9S41vBzYaB3v9fw1aAh74IATWrsFwwd/QAiW
-	EZntKti9K0s6k3qaTThXx5f/MStYnzBdqByHELRJgFtrQLAGvnWdv0LwIQibEuNo/BUvDA6SPlK
-	4TmCfhAGsi7z/gsYm7A7X2URWbbkYJpxdfFxOScjbNiBHoMhdbD2Iwot9qXTp1pcEo/SnO3Srwk
-	/Ms46T0S5it8bslp+j5EFMiwaDa+FA1YATWN2unLhIHVDJMSLgD23g9lZbuko8hA7loK1THb3LB
-	pYYO/mg7YE+LlXGMuMc81FWFbkeRX/K1vXKoGd1Fiywd2Qk0yWDjFj4p2iRqd5csXp5gmA==
-X-Google-Smtp-Source: AGHT+IHv9cZ7VMEGzbxjDU272hTTPtgC2UDh1G+FUstyJcGJxM6GpRj97dHRlcSdi5ciiW0phluAww==
-X-Received: by 2002:a5d:64a1:0:b0:390:e8e4:7e3e with SMTP id ffacd0b85a97d-3971cd573fbmr3738351f8f.6.1741962809334;
-        Fri, 14 Mar 2025 07:33:29 -0700 (PDT)
-Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c82c2690sm5699168f8f.25.2025.03.14.07.33.28
+        d=1e100.net; s=20230601; t=1741963841; x=1742568641;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7OrItOGYSNYN0heMZXm9O2Sd5YIsOC/lcspBLUrGTOo=;
+        b=ZllyWuehU9tQmaVf/gjI2Y8XEbGVL/wGGAndSEksQSv1yM6afee5sJuKvXJaTiMFu7
+         bcmEjakwhL1/W8WBOSj+0uVaTeUlr2pbqdG+D3Gi3aXn98R49+A9U25FCNQxR/Xoj26k
+         5QfOrV2MVOkbfR9wczirAHbF66xv+DB2MOjCndC8gAD0xSGtrxginrhgyFOF9b3/nx3Z
+         Vz2q9KHQO77kuZ5b8fwF5BYzpgi+z5caHs71JgsDb8E9DwWLjXLvUKuxY8sOe7nPK/Ew
+         52r9gvoMGS5Zq6QR/RZ7EcqqFxerPkrFqexiACVFlwEY3LVcnZbpjqtyOi0JATBUAtM7
+         b6JQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXrdb8a+WPTlmUuD4gTEVIBZlPhpmVhceCMSHVmjA31Zj9oVwi6c5cNX4RPVdg980nSSzD/3w3vwF+9t2h9@vger.kernel.org
+X-Gm-Message-State: AOJu0YwceLb7d2/b0CED5DpsiWitZvbSSoToNWE0cfMjg+iMjDLgCoAk
+	JFwxLni8pXT4ZKCf9OckzFaKZOgDzrTZ6YdzEdMbJ7CClUN5Dp37GqsMM2qPtw==
+X-Gm-Gg: ASbGncvITvFzZg2zHS7ZnbIUlkChE66ZmncT/Gc7tXqZTOTp5FI04cjxzH2zwK/6ZLm
+	ahL/TmgNw9EY6l/SUEAVXOgnXN7fsYv54F2SC51RcpuzcZ3e1kPI2vShMKGIaHGTL6Dhx0fZT5c
+	sRGKFAzyK5fJMBm2S8QtyOkvCBnouUAzzfIwBLceUQCrG4Pr7/Rry5Z0CdvDSk1CmKkJ19bVOGZ
+	wg6+L8sX7jYxkPLwKLz3Qut+4oFcbblFDTbF0NnQLUFYTAHZ+KYCCkU9iKhW5l18wupzdVAPFc0
+	FGDrtxI5T6mgXQ3o665gw4okQtMNlucWskUUkwy2z0V0JsGffRnmrC9l
+X-Google-Smtp-Source: AGHT+IHmY97xSOZQboXnoTB4b5k6xHHuACGBmQ9IazWwAK8CRME94eJLpOCS80qaR25WQuoGvR2UGA==
+X-Received: by 2002:a17:903:98b:b0:21f:4c8b:c4de with SMTP id d9443c01a7336-225e0aeeabemr39677735ad.42.1741963840675;
+        Fri, 14 Mar 2025 07:50:40 -0700 (PDT)
+Received: from thinkpad ([120.56.195.144])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6ba734esm29357815ad.141.2025.03.14.07.50.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Mar 2025 07:33:28 -0700 (PDT)
-From: srinivas.kandagatla@linaro.org
-To: broonie@kernel.org
-Cc: perex@perex.cz,
-	tiwai@suse.com,
-	krzysztof.kozlowski@linaro.org,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	dmitry.baryshkov@linaro.org,
-	johan+linaro@kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v4 5/5] ASoC: qdsp6: q6apm-dai: fix capture pipeline overruns.
-Date: Fri, 14 Mar 2025 14:32:20 +0000
-Message-Id: <20250314143220.6215-6-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250314143220.6215-1-srinivas.kandagatla@linaro.org>
-References: <20250314143220.6215-1-srinivas.kandagatla@linaro.org>
+        Fri, 14 Mar 2025 07:50:40 -0700 (PDT)
+Date: Fri, 14 Mar 2025 20:20:35 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Wenbin Yao <quic_wenbyao@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, p.zabel@pengutronix.de,
+	dmitry.baryshkov@linaro.org, abel.vesa@linaro.org,
+	quic_qianyu@quicinc.com, neil.armstrong@linaro.org,
+	quic_devipriy@quicinc.com, konrad.dybcio@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 2/2] phy: qcom: qmp-pcie: Add PHY register retention
+ support
+Message-ID: <20250314145035.h3nybvvko3ew37wl@thinkpad>
+References: <20250226103600.1923047-1-quic_wenbyao@quicinc.com>
+ <20250226103600.1923047-3-quic_wenbyao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250226103600.1923047-3-quic_wenbyao@quicinc.com>
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Wed, Feb 26, 2025 at 06:36:00PM +0800, Wenbin Yao wrote:
+> From: Qiang Yu <quic_qianyu@quicinc.com>
+> 
+> Some QCOM PCIe PHYs support no_csr reset. Unlike BCR reset which resets the
+> whole PHY (hardware and register), no_csr reset only resets PHY hardware
+> but retains register values, which means PHY setting can be skipped during
+> PHY init if PCIe link is enabled in booltloader and only no_csr is toggled
+> after that.
+> 
+> Hence, determine whether the PHY has been enabled in bootloader by
+> verifying QPHY_START_CTRL register. If it's programmed and no_csr reset is
+> available, skip BCR reset and PHY register setting to establish the PCIe
+> link with bootloader - programmed PHY settings.
+> 
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
 
-Period sizes less than 6k for capture path triggers overruns in the
-dsp capture pipeline.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Change the period size and number of periods to value which DSP is happy with.
+One nit below.
 
-Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- sound/soc/qcom/qdsp6/q6apm-dai.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 69 ++++++++++++++++++++----
+>  1 file changed, 59 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index 219266125cf2..c3642d1807e4 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -2805,6 +2805,7 @@ struct qmp_pcie {
+>  
+>  	const struct qmp_phy_cfg *cfg;
+>  	bool tcsr_4ln_config;
+> +	bool skip_init;
+>  
+>  	void __iomem *serdes;
+>  	void __iomem *pcs;
+> @@ -3976,18 +3977,38 @@ static int qmp_pcie_init(struct phy *phy)
+>  {
+>  	struct qmp_pcie *qmp = phy_get_drvdata(phy);
+>  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> +	void __iomem *pcs = qmp->pcs;
+> +	bool phy_initialized = !!(readl(pcs + cfg->regs[QPHY_START_CTRL]));
+>  	int ret;
+>  
+> +	qmp->skip_init = qmp->nocsr_reset && phy_initialized;
+> +	/*
+> +	 * We need to check the existence of init sequences in two cases:
+> +	 * 1. The PHY doesn't support no_csr reset.
+> +	 * 2. The PHY supports no_csr reset but isn't initialized by bootloader.
+> +	 * As we can't skip init in these two cases.
+> +	 */
+> +	if (!qmp->skip_init && !cfg->tbls.serdes_num) {
+> +		dev_err(qmp->dev, "no init sequences are available\n");
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-index a636f9280645..292cab61831c 100644
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -24,8 +24,8 @@
- #define PLAYBACK_MIN_PERIOD_SIZE	128
- #define CAPTURE_MIN_NUM_PERIODS		2
- #define CAPTURE_MAX_NUM_PERIODS		8
--#define CAPTURE_MAX_PERIOD_SIZE		4096
--#define CAPTURE_MIN_PERIOD_SIZE		320
-+#define CAPTURE_MAX_PERIOD_SIZE		65536
-+#define CAPTURE_MIN_PERIOD_SIZE		6144
- #define BUFFER_BYTES_MAX (PLAYBACK_MAX_NUM_PERIODS * PLAYBACK_MAX_PERIOD_SIZE)
- #define BUFFER_BYTES_MIN (PLAYBACK_MIN_NUM_PERIODS * PLAYBACK_MIN_PERIOD_SIZE)
- #define COMPR_PLAYBACK_MAX_FRAGMENT_SIZE (128 * 1024)
+"Init sequence not available\n"
+
+> +		return -EINVAL;
+
+-ENODATA
+
+- Mani
+
 -- 
-2.39.2
-
+மணிவண்ணன் சதாசிவம்
 
