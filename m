@@ -1,52 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-51384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3CBBA60C64
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 09:59:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB300A60C72
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 09:59:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 374F73A860B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 08:59:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2D2B517E02C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 08:59:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86B2F1DD0D4;
-	Fri, 14 Mar 2025 08:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0755E1DF975;
+	Fri, 14 Mar 2025 08:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="V2efJ7/f"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="OY+18yQ6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB00CA4B;
-	Fri, 14 Mar 2025 08:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16151DE4D3;
+	Fri, 14 Mar 2025 08:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741942754; cv=none; b=gwuGlGiL5DlgAXXZNeue2gvxXaoFx5wZ0Qonzwn/woKWuLk3TyygTvg9dy3QW+td/Tsw4UynsuNV3ul85WmqQZ8+Jc/gZ3h/fJpQ+sCIIavB2lt0uTCmyw+7AhSDRj9/Eoq4wV5ZifOl/lf+97fWBNJRKjpS0vrN32FUl6huU+M=
+	t=1741942758; cv=none; b=KTxn216ciBo2dZKUez/50y3x1IeUn2cLJDgugwH8nLCSMwHC3ohf5B+Gpeyb64aicxGps5WjNZZ0+xzHkqB/897MZ1wrVt/WLMzAVzN/nwgXHhH1T5syb8ILSC1tVe14C2VJHHRMCi2VVk4BKqEJQkiy0P1XR3rsPx3en1xJ/aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741942754; c=relaxed/simple;
-	bh=im+7eMeBUvMZK5Oih1Sdrmafx3HxHI3s8rS8+2FrRsI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=X0+U1dwBNwfeb7X3mfPTZxVNOU5To3z9jQtsFwv6OUoTcHIzvS/TxE+E3qrTBc6leOCryccK1vJlUqoPQh4NGyCrePrVeScBd9rrUkjBun6seO3sc9EDnzLAw/zJ3rmEQt5Y0SJB3BJEj96U4npNzAJTNCROj8Ul+L7WYkvaZW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=V2efJ7/f; arc=none smtp.client-ip=148.251.105.195
+	s=arc-20240116; t=1741942758; c=relaxed/simple;
+	bh=9M1RZ/DD0i+gUEemPhapH+23EBW3a0JrHM9d9TkSbik=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GrLXO9KK64xSRiDfgiI+HjAZhUkbB67QVKIe+2GmSbpOZb01bECJhE2VNrXcWF1O9xQ+GNBufQp5cAtiNsNQlMKrrkJc9WN3uT5TK+tUuenfImJbmryYgNbYU3SDbRuEGEKAVZ3qbrJtwHWdhr2v+UZLNwUrmsaBCipxkuoCmqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=OY+18yQ6; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1741942750;
-	bh=im+7eMeBUvMZK5Oih1Sdrmafx3HxHI3s8rS8+2FrRsI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=V2efJ7/faLqbjg4QqJB+KxtSF80rtVeo7I3qwnD/gRrAcMeBvYqHzthod4M5IvwKi
-	 c8UEDD0X+IzuWuYhX5e6htMeNNg/lXYbLSUKLNiGIdY/4727guhdFOztosU8HDI0Of
-	 He1rWyV+zDNBK8JawM0IKOJG67Vg1lfxEMfr0uIVlQAHg+5b8MKGaesbIpitgOGc6O
-	 k5BpZXzJowIOX36jse+HRJGOlmUyQMT2+C1GyRYO54P5p5NNiHR52NQaWXGLVJR/Pr
-	 r8NmnbgiGno2pWtxK5Kz3Vrbg15C2thVqHTjyHdfVKgEDY5S2T5E4iFt4PrBXIj06w
-	 s2ZMyJfz2WAAQ==
+	s=mail; t=1741942754;
+	bh=9M1RZ/DD0i+gUEemPhapH+23EBW3a0JrHM9d9TkSbik=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=OY+18yQ6sPY7La4UWGkugPbiZGm33GYvFTkP3hniYZ9Qpm1tASx2b4bR7VcM7XCFa
+	 lZFZXrio9bwmDqTncv8IchQl7FAwoWAlyJ4oAtiDVMI1TKMMcyLRFKVKK6qeOzl78k
+	 9oDnCjMAg+Qh/4FEG+8WYgVtjZ3XZz37rcWNJx0cELtc5NpaqmKAUUpcd7dfhIuiCH
+	 GApaJmS3NmrIcRbUBxPYDhqcSMsJpdTgsycJT42af6Xk921VJP1Z5rM6RLNFeajWRs
+	 uuZwi9NQ5jSxFgiq73c2w+5uBIdazjriTI/lS7QcsJ5zxmiGm8YG2DG0NyFXD8K8r9
+	 aMEOni6Tk62CA==
 Received: from debian.. (unknown [103.163.65.90])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: vignesh)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id D5CB117E0ABD;
-	Fri, 14 Mar 2025 09:59:06 +0100 (CET)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 13A6417E0B12;
+	Fri, 14 Mar 2025 09:59:10 +0100 (CET)
 From: Vignesh Raman <vignesh.raman@collabora.com>
 To: dri-devel@lists.freedesktop.org
 Cc: daniels@collabora.com,
@@ -69,10 +70,12 @@ Cc: daniels@collabora.com,
 	intel-gfx@lists.freedesktop.org,
 	virtualization@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v1 0/3] drm/ci: uprev mesa, IGT
-Date: Fri, 14 Mar 2025 14:28:49 +0530
-Message-ID: <20250314085858.39328-1-vignesh.raman@collabora.com>
+Subject: [PATCH v1 1/3] drm/ci: uprev mesa
+Date: Fri, 14 Mar 2025 14:28:50 +0530
+Message-ID: <20250314085858.39328-2-vignesh.raman@collabora.com>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250314085858.39328-1-vignesh.raman@collabora.com>
+References: <20250314085858.39328-1-vignesh.raman@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,89 +84,254 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Uprev mesa to fix lava-test-case argument parsing. LAVA recently fixed
-parameter parsing in `lava-test-case` [1], eliminating the need for
-repeated quotes in arguments.
+LAVA was recently patched [1] with a fix on how parameters are parsed in
+`lava-test-case`, so we don't need to repeat quotes to send the
+arguments properly to it. Uprev mesa to fix this issue.
 
-Uprev IGT to the latest version. Also update expectation files.
+[1] https://gitlab.com/lava/lava/-/commit/18c9cf79
 
-The mediatek display driver fails to probe on mt8173-elm-hana and
-mt8183-kukui-jacuzzi-juniper-sku16 in v6.14-rc4 due to missing PHY
-configurations. Enable PHY drivers for MediaTek platforms:
+Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+---
+ drivers/gpu/drm/ci/build.sh       | 16 ++++++++--------
+ drivers/gpu/drm/ci/build.yml      |  8 ++++++++
+ drivers/gpu/drm/ci/container.yml  | 24 +++++++++++++++++++++++
+ drivers/gpu/drm/ci/gitlab-ci.yml  | 32 ++++++++++++++++++++++++++++++-
+ drivers/gpu/drm/ci/image-tags.yml |  4 +++-
+ drivers/gpu/drm/ci/lava-submit.sh |  3 ++-
+ drivers/gpu/drm/ci/test.yml       |  2 +-
+ 7 files changed, 77 insertions(+), 12 deletions(-)
 
-[1] https://gitlab.com/lava/lava/-/commit/18c9cf79  
-
-Testing:
-MR pipeline for drm/ci changes: https://gitlab.freedesktop.org/vigneshraman/linux/-/merge_requests/13
-MR pipeline for kernel changes: https://gitlab.freedesktop.org/vigneshraman/linux/-/merge_requests/14
-Scheduled pipeline: https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1384221
-Branch pipeline:
-https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1384158 (with lockdep patches after rebase with latest drm-misc-next)
-https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1383492 (without lockdep patches)
-
-Vignesh Raman (3):
-  drm/ci: uprev mesa
-  drm/ci: uprev IGT
-  drm/ci: arm64.config: mediatek: enable PHY drivers
-
- drivers/gpu/drm/ci/arm64.config               |   2 +
- drivers/gpu/drm/ci/build.sh                   |  16 +-
- drivers/gpu/drm/ci/build.yml                  |   8 +
- drivers/gpu/drm/ci/container.yml              |  24 ++
- drivers/gpu/drm/ci/gitlab-ci.yml              |  34 +-
- drivers/gpu/drm/ci/image-tags.yml             |   4 +-
- drivers/gpu/drm/ci/lava-submit.sh             |   3 +-
- drivers/gpu/drm/ci/test.yml                   |   2 +-
- .../gpu/drm/ci/xfails/amdgpu-stoney-fails.txt |   8 +-
- .../gpu/drm/ci/xfails/amdgpu-stoney-skips.txt |   1 +
- drivers/gpu/drm/ci/xfails/i915-amly-fails.txt |  23 +-
- drivers/gpu/drm/ci/xfails/i915-amly-skips.txt |   1 +
- drivers/gpu/drm/ci/xfails/i915-apl-fails.txt  |   8 +-
- drivers/gpu/drm/ci/xfails/i915-apl-skips.txt  |   1 +
- drivers/gpu/drm/ci/xfails/i915-cml-fails.txt  |  20 +-
- drivers/gpu/drm/ci/xfails/i915-cml-skips.txt  |   2 +-
- drivers/gpu/drm/ci/xfails/i915-glk-fails.txt  |  32 +-
- drivers/gpu/drm/ci/xfails/i915-glk-skips.txt  |   1 +
- drivers/gpu/drm/ci/xfails/i915-jsl-fails.txt  |  13 +-
- drivers/gpu/drm/ci/xfails/i915-jsl-skips.txt  |   1 +
- drivers/gpu/drm/ci/xfails/i915-kbl-fails.txt  |   5 -
- drivers/gpu/drm/ci/xfails/i915-kbl-skips.txt  |   1 +
- drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt  |   9 +-
- drivers/gpu/drm/ci/xfails/i915-tgl-skips.txt  |   1 +
- drivers/gpu/drm/ci/xfails/i915-whl-fails.txt  |  22 +-
- drivers/gpu/drm/ci/xfails/i915-whl-skips.txt  |   1 +
- .../drm/ci/xfails/mediatek-mt8173-fails.txt   |  20 ++
- .../drm/ci/xfails/mediatek-mt8173-flakes.txt  |   7 +
- .../drm/ci/xfails/mediatek-mt8173-skips.txt   |   1 +
- .../drm/ci/xfails/mediatek-mt8183-fails.txt   |  28 +-
- .../drm/ci/xfails/mediatek-mt8183-flakes.txt  |  21 ++
- .../drm/ci/xfails/mediatek-mt8183-skips.txt   |   1 +
- .../gpu/drm/ci/xfails/meson-g12b-skips.txt    |   1 +
- .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   |   4 -
- .../gpu/drm/ci/xfails/msm-apq8016-skips.txt   |   1 +
- .../gpu/drm/ci/xfails/msm-apq8096-skips.txt   |   1 +
- .../msm-sc7180-trogdor-kingoftown-flakes.txt  |   7 +
- .../msm-sc7180-trogdor-kingoftown-skips.txt   |   4 +
- ...m-sc7180-trogdor-lazor-limozeen-flakes.txt |   7 +
- ...sm-sc7180-trogdor-lazor-limozeen-skips.txt |   1 +
- .../gpu/drm/ci/xfails/msm-sdm845-flakes.txt   |   7 +
- .../gpu/drm/ci/xfails/msm-sdm845-skips.txt    | 313 ++++++++++++++++++
- .../drm/ci/xfails/msm-sm8350-hdk-skips.txt    |   1 +
- .../gpu/drm/ci/xfails/panfrost-g12b-skips.txt |   1 +
- .../drm/ci/xfails/panfrost-mt8183-skips.txt   |   1 +
- .../drm/ci/xfails/panfrost-rk3288-skips.txt   |   1 +
- .../drm/ci/xfails/panfrost-rk3399-skips.txt   |   1 +
- .../drm/ci/xfails/rockchip-rk3288-fails.txt   |   1 -
- .../drm/ci/xfails/rockchip-rk3288-skips.txt   |   1 +
- .../drm/ci/xfails/rockchip-rk3399-fails.txt   |   2 +-
- .../drm/ci/xfails/rockchip-rk3399-flakes.txt  |  30 +-
- .../drm/ci/xfails/rockchip-rk3399-skips.txt   |   1 +
- .../drm/ci/xfails/virtio_gpu-none-fails.txt   |   1 +
- .../drm/ci/xfails/virtio_gpu-none-skips.txt   |   1 +
- .../gpu/drm/ci/xfails/vkms-none-flakes.txt    |  28 ++
- drivers/gpu/drm/ci/xfails/vkms-none-skips.txt |   2 +
- 56 files changed, 633 insertions(+), 106 deletions(-)
-
+diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
+index 19fe01257ab9..284873e94d8d 100644
+--- a/drivers/gpu/drm/ci/build.sh
++++ b/drivers/gpu/drm/ci/build.sh
+@@ -98,14 +98,14 @@ done
+ 
+ make ${KERNEL_IMAGE_NAME}
+ 
+-mkdir -p /lava-files/
++mkdir -p /kernel/
+ for image in ${KERNEL_IMAGE_NAME}; do
+-    cp arch/${KERNEL_ARCH}/boot/${image} /lava-files/.
++    cp arch/${KERNEL_ARCH}/boot/${image} /kernel/.
+ done
+ 
+ if [[ -n ${DEVICE_TREES} ]]; then
+     make dtbs
+-    cp ${DEVICE_TREES} /lava-files/.
++    cp ${DEVICE_TREES} /kernel/.
+ fi
+ 
+ make modules
+@@ -121,11 +121,11 @@ if [[ ${DEBIAN_ARCH} = "arm64" ]]; then
+         -d arch/arm64/boot/Image.lzma \
+         -C lzma\
+         -b arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dtb \
+-        /lava-files/cheza-kernel
++        /kernel/cheza-kernel
+     KERNEL_IMAGE_NAME+=" cheza-kernel"
+ 
+     # Make a gzipped copy of the Image for db410c.
+-    gzip -k /lava-files/Image
++    gzip -k /kernel/Image
+     KERNEL_IMAGE_NAME+=" Image.gz"
+ fi
+ 
+@@ -139,7 +139,7 @@ cp -rfv drivers/gpu/drm/ci/* install/.
+ . .gitlab-ci/container/container_post_build.sh
+ 
+ if [[ "$UPLOAD_TO_MINIO" = "1" ]]; then
+-    xz -7 -c -T${FDO_CI_CONCURRENT:-4} vmlinux > /lava-files/vmlinux.xz
++    xz -7 -c -T${FDO_CI_CONCURRENT:-4} vmlinux > /kernel/vmlinux.xz
+     FILES_TO_UPLOAD="$KERNEL_IMAGE_NAME vmlinux.xz"
+ 
+     if [[ -n $DEVICE_TREES ]]; then
+@@ -148,7 +148,7 @@ if [[ "$UPLOAD_TO_MINIO" = "1" ]]; then
+ 
+     ls -l "${S3_JWT_FILE}"
+     for f in $FILES_TO_UPLOAD; do
+-        ci-fairy s3cp --token-file "${S3_JWT_FILE}" /lava-files/$f \
++        ci-fairy s3cp --token-file "${S3_JWT_FILE}" /kernel/$f \
+                 https://${PIPELINE_ARTIFACTS_BASE}/${DEBIAN_ARCH}/$f
+     done
+ 
+@@ -165,7 +165,7 @@ ln -s common artifacts/install/ci-common
+ cp .config artifacts/${CI_JOB_NAME}_config
+ 
+ for image in ${KERNEL_IMAGE_NAME}; do
+-    cp /lava-files/$image artifacts/install/.
++    cp /kernel/$image artifacts/install/.
+ done
+ 
+ tar -C artifacts -cf artifacts/install.tar install
+diff --git a/drivers/gpu/drm/ci/build.yml b/drivers/gpu/drm/ci/build.yml
+index 6c0dc10b547c..8eb56ebcf4aa 100644
+--- a/drivers/gpu/drm/ci/build.yml
++++ b/drivers/gpu/drm/ci/build.yml
+@@ -143,6 +143,10 @@ debian-arm64-release:
+   rules:
+     - when: never
+ 
++debian-arm64-ubsan:
++  rules:
++    - when: never
++
+ debian-build-testing:
+   rules:
+     - when: never
+@@ -183,6 +187,10 @@ debian-testing-msan:
+   rules:
+     - when: never
+ 
++debian-testing-ubsan:
++  rules:
++    - when: never
++
+ debian-vulkan:
+   rules:
+     - when: never
+diff --git a/drivers/gpu/drm/ci/container.yml b/drivers/gpu/drm/ci/container.yml
+index 07dc13ff865d..56c95c2f91ae 100644
+--- a/drivers/gpu/drm/ci/container.yml
++++ b/drivers/gpu/drm/ci/container.yml
+@@ -24,6 +24,18 @@ alpine/x86_64_build:
+   rules:
+     - when: never
+ 
++debian/arm32_test-base:
++  rules:
++    - when: never
++
++debian/arm32_test-gl:
++  rules:
++    - when: never
++
++debian/arm32_test-vk:
++  rules:
++    - when: never
++
+ debian/arm64_test-gl:
+   rules:
+     - when: never
+@@ -32,6 +44,10 @@ debian/arm64_test-vk:
+   rules:
+     - when: never
+ 
++debian/baremetal_arm32_test:
++  rules:
++    - when: never
++
+ debian/ppc64el_build:
+   rules:
+     - when: never
+@@ -40,6 +56,14 @@ debian/s390x_build:
+   rules:
+     - when: never
+ 
++debian/x86_32_build:
++  rules:
++    - when: never
++
++debian/x86_64_test-android:
++  rules:
++    - when: never
++
+ debian/x86_64_test-vk:
+   rules:
+     - when: never
+diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
+index b06b9e7d3d09..55b540c4cf92 100644
+--- a/drivers/gpu/drm/ci/gitlab-ci.yml
++++ b/drivers/gpu/drm/ci/gitlab-ci.yml
+@@ -1,6 +1,6 @@
+ variables:
+   DRM_CI_PROJECT_PATH: &drm-ci-project-path mesa/mesa
+-  DRM_CI_COMMIT_SHA: &drm-ci-commit-sha 7d3062470f3ccc6cb40540e772e902c7e2248024
++  DRM_CI_COMMIT_SHA: &drm-ci-commit-sha 82ab58f6c6f94fa80ca7e1615146f08356e3ba69
+ 
+   UPSTREAM_REPO: https://gitlab.freedesktop.org/drm/kernel.git
+   TARGET_BRANCH: drm-next
+@@ -187,6 +187,36 @@ stages:
+     - when: manual
+ 
+ 
++# Repeat of the above but with `when: on_success` replaced with
++# `when: delayed` + `start_in:`, for build-only jobs.
++# Note: make sure the branches in this list are the same as in
++# `.container+build-rules` above.
++.build-only-delayed-rules:
++  rules:
++    - !reference [.common-rules, rules]
++    # Run when re-enabling a disabled farm, but not when disabling it
++    - !reference [.disable-farm-mr-rules, rules]
++    # Never run immediately after merging, as we just ran everything
++    - !reference [.never-post-merge-rules, rules]
++    # Build everything in merge pipelines
++    - if: *is-merge-attempt
++      when: delayed
++      start_in: &build-delay 5 minutes
++    # Same as above, but for pre-merge pipelines
++    - if: *is-pre-merge
++      when: manual
++    # Build everything after someone bypassed the CI
++    - if: *is-direct-push
++      when: manual
++    # Build everything in scheduled pipelines
++    - if: *is-scheduled-pipeline
++      when: delayed
++      start_in: *build-delay
++    # Allow building everything in fork pipelines, but build nothing unless
++    # manually triggered
++    - when: manual
++
++
+ .ci-deqp-artifacts:
+   artifacts:
+     name: "${CI_PROJECT_NAME}_${CI_JOB_NAME}"
+diff --git a/drivers/gpu/drm/ci/image-tags.yml b/drivers/gpu/drm/ci/image-tags.yml
+index 20049f3626b2..c04ba0e69935 100644
+--- a/drivers/gpu/drm/ci/image-tags.yml
++++ b/drivers/gpu/drm/ci/image-tags.yml
+@@ -1,5 +1,5 @@
+ variables:
+-   CONTAINER_TAG: "20250204-mesa-uprev"
++   CONTAINER_TAG: "20250307-mesa-uprev"
+    DEBIAN_X86_64_BUILD_BASE_IMAGE: "debian/x86_64_build-base"
+    DEBIAN_BASE_TAG: "${CONTAINER_TAG}"
+ 
+@@ -20,3 +20,5 @@ variables:
+    DEBIAN_PYUTILS_TAG: "${CONTAINER_TAG}"
+ 
+    ALPINE_X86_64_LAVA_SSH_TAG: "${CONTAINER_TAG}"
++
++   CONDITIONAL_BUILD_ANGLE_TAG: fec96cc945650c5fe9f7188cabe80d8a
+diff --git a/drivers/gpu/drm/ci/lava-submit.sh b/drivers/gpu/drm/ci/lava-submit.sh
+index 6e5ac51e8c0a..f22720359b33 100755
+--- a/drivers/gpu/drm/ci/lava-submit.sh
++++ b/drivers/gpu/drm/ci/lava-submit.sh
+@@ -48,7 +48,8 @@ ROOTFS_URL="$(get_path_to_artifact lava-rootfs.tar.zst)"
+ rm -rf results
+ mkdir -p results/job-rootfs-overlay/
+ 
+-artifacts/ci-common/generate-env.sh > results/job-rootfs-overlay/set-job-env-vars.sh
++artifacts/ci-common/export-gitlab-job-env-for-dut.sh \
++    > results/job-rootfs-overlay/set-job-env-vars.sh
+ cp artifacts/ci-common/init-*.sh results/job-rootfs-overlay/
+ cp "$SCRIPTS_DIR"/setup-test-env.sh results/job-rootfs-overlay/
+ 
+diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+index dbc4ff50d8ff..84a25f0e783b 100644
+--- a/drivers/gpu/drm/ci/test.yml
++++ b/drivers/gpu/drm/ci/test.yml
+@@ -112,7 +112,7 @@
+     - kvm
+   script:
+     - ln -sf $CI_PROJECT_DIR/install /install
+-    - mv install/bzImage /lava-files/bzImage
++    - mv install/bzImage /kernel/bzImage
+     - mkdir -p /lib/modules
+     - install/crosvm-runner.sh install/igt_runner.sh
+   needs:
 -- 
 2.47.2
 
