@@ -1,310 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-51403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED2A6A60FC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 12:19:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B24D2A610A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 13:10:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2CD4D16D78A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 11:19:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E5F0716C74F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 12:10:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 578C91F5420;
-	Fri, 14 Mar 2025 11:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F28541FDA9D;
+	Fri, 14 Mar 2025 12:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mjjMhDN6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pHH5H6Kl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257312AF1D;
-	Fri, 14 Mar 2025 11:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9AD42AA6;
+	Fri, 14 Mar 2025 12:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741951184; cv=none; b=R1fbdTDFsNUi4BRhmjO9Z6gSQMqsOIRhlQqAf9BSjkmxuwCqbui9YL+ThXSuhcrEUPlt6pQON6PJp3XwZWqaytu6d8YPXQwLHk6wcIei7cV8ID26ww59JFmwLLTDb4BItuEYGfTr3xj0QA2UWXXS0Yk/SGZvDzMCDf1Q+eT0/lM=
+	t=1741954214; cv=none; b=Pr5beSWVUkXiocHuzV7LixgUu4Z4jWfbOyyqloSgzvanTVcg4Yt/FqcWJj1LwVrRVVD5Kd27THUZ95HK6mRrkyUutpFLMHLRfo3gFil1lo/+TJeNZM8CcvZLzatrxI2Tq0/kUDgtvLoo714Eh0xqBXfI1RGXxOsPXmoXZOCG16w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741951184; c=relaxed/simple;
-	bh=oqVgxdpTP6G2PaiGKfQC4A75YZyp+n3zWNLGzhZi3Ok=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W5fipDCd1D1ga5SlQ+K52O71lge2QlwQE30dyV/SOHHtooIu7xYfBHM2XYbpEstipwpcBJ3o578u7J3hvbr7+jFHheC0Gz9uTkzZzL49M/dezahc7+92UF92Byb2qOGz/VaZJiLAFf4R+O4bXZRFLLS7IZHn94oQOrVfa4ezya4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mjjMhDN6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C6BC4CEE9;
-	Fri, 14 Mar 2025 11:19:34 +0000 (UTC)
+	s=arc-20240116; t=1741954214; c=relaxed/simple;
+	bh=4sCTvJLapBwOpm0X55LwtP7Vlc9maH/J2LHqPEcDS24=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JKvhp3JVHV9Y4eoydpueO1NH75W5UwFnVzxo5BSZFJ6U5Fw302+UTPv46+CIT9AyviUySLH0zDmOKT6cw87x6PGekoRNqsKT2ocHTPYmgyVFU2oqiHd2OGhKQI/w2SZkZyjPpulss46cKITwaBlzQtf+KzwmcgscFb2oobhTFEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pHH5H6Kl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30717C4CEE3;
+	Fri, 14 Mar 2025 12:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741951183;
-	bh=oqVgxdpTP6G2PaiGKfQC4A75YZyp+n3zWNLGzhZi3Ok=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mjjMhDN6TgO6LGNUdqHBc4gzpfwcgKKS0B58OrCbfyJQMPpXv5ytGjdGwIdnFkB/J
-	 f1zPN4QTih0sP9PEytu5yT3wL2hKPfTosDCTUaEaZ10Y9Vh9WW32Y2xUqva2Sb5oF9
-	 KkdiNSLOoiiN5gXEJHzJEy7oWr8SmzETnbusOqHG/ljSsMhXeyHwc3ImmAh0Im0BjF
-	 VF1NJulcguYsWchdK5C4fDd82G3u+CXXwGNxFbjx5+uQAfYmncHo8cxA/Wafmi3gFF
-	 Md8P90ysNU7Dfb+mm0ije8hK0pWr0i93VwfwPv0fmUnk2dnf87LZ/BYKu2sNwCItCp
-	 3hsJvf4YkeqDg==
-Date: Fri, 14 Mar 2025 12:19:31 +0100
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, cros-qcom-dts-watchers@chromium.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Melody Olvera <quic_molvera@quicinc.com>,
-	Shivendra Pratap <quic_spratap@quicinc.com>,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Stephen Boyd <swboyd@chromium.org>, linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, Elliot Berman <elliotb317@gmail.com>,
-	Elliot Berman <elliot.berman@oss.qualcomm.com>
-Subject: Re: [PATCH v9 2/5] firmware: psci: Read and use vendor reset types
-Message-ID: <Z9QQw6BcE7IXzu+r@lpieralisi>
-References: <20250303-arm-psci-system_reset2-vendor-reboots-v9-0-b2cf4a20feda@oss.qualcomm.com>
- <20250303-arm-psci-system_reset2-vendor-reboots-v9-2-b2cf4a20feda@oss.qualcomm.com>
+	s=k20201202; t=1741954214;
+	bh=4sCTvJLapBwOpm0X55LwtP7Vlc9maH/J2LHqPEcDS24=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=pHH5H6KlvZ6hh0Ou3st6+7EcjoBJMA3lm8HX72Lot+dm5yWxVTN9ckGvYAk3LY0YM
+	 0LFVdcdJb3slSEJDObbQ05dHzkA28c0Y9zPflsSk6lahQLAq8IZIgr4Z9nnddo/WDM
+	 +P4XsRZE0WDj3q1s/srfi/mew55jlBfMUVaQIOwGcMm+szt/akXQYCopC/+ra34rzb
+	 s4nHaKPSLDwBHcNqu8s9lQuFZxnfjb4oTVY2/0mAq3/OWfvNJ1dQtNdcWMmtj4QXPJ
+	 BMqoXBqzNv2KaI8flP/CgDc2tYVuXsnUqqhsUq1AXX05JcleFQjyockQCzXygSH3Gk
+	 V7ar9IhzScikg==
+Message-ID: <886439ee-8f56-413f-9a32-1347fe5ac1d9@kernel.org>
+Date: Fri, 14 Mar 2025 13:10:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250303-arm-psci-system_reset2-vendor-reboots-v9-2-b2cf4a20feda@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/6] arm64: dts: qcom: ipq5018: Add PCIe related nodes
+To: George Moussalem <george.moussalem@outlook.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+ andersson@kernel.org, bhelgaas@google.com, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, lumag@kernel.org, kishon@kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, kw@linux.com,
+ lpieralisi@kernel.org, manivannan.sadhasivam@linaro.org,
+ p.zabel@pengutronix.de, quic_nsekar@quicinc.com, robh@kernel.org,
+ robimarko@gmail.com, vkoul@kernel.org, quic_srichara@quicinc.com
+References: <DS7PR19MB8883F2538AA7D047E13C102B9DD22@DS7PR19MB8883.namprd19.prod.outlook.com>
+ <20250314055644.32705-1-george.moussalem@outlook.com>
+ <DS7PR19MB888366F3BFE6262375217FA69DD22@DS7PR19MB8883.namprd19.prod.outlook.com>
+ <20250314-perfect-free-oarfish-b153be@krzk-bin>
+ <DS7PR19MB8883946B587724F649CA55309DD22@DS7PR19MB8883.namprd19.prod.outlook.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <DS7PR19MB8883946B587724F649CA55309DD22@DS7PR19MB8883.namprd19.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 03, 2025 at 01:08:31PM -0800, Elliot Berman wrote:
-> From: Elliot Berman <elliot.berman@oss.qualcomm.com>
+On 14/03/2025 09:50, George Moussalem wrote:
+>> Anyway, your patchset cannot be even applied due to broken threading.
+>>
+>> We keep pointing to issues in your toolset since more than a week.
+>> Sending is so trivial that I do not understand why you keep it having
+>> broken:
+>>
+>> `b4 send`
+>> or
+>> `git format-patch -v4 --cover-letter -6 && git send-email ./v4-*`
+>>
+>> NAK
 > 
-> SoC vendors have different types of resets and are controlled through
-> various registers. For instance, Qualcomm chipsets can reboot to a
-> "download mode" that allows a RAM dump to be collected. Another example
-> is they also support writing a cookie that can be read by bootloader
-> during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
-> vendor reset types to be implemented without requiring drivers for every
-> register/cookie.
+> Not disagreeing, but I'm not sure why it still breaks.
 > 
-> Add support in PSCI to statically map reboot mode commands from
-> userspace to a vendor reset and cookie value using the device tree.
+> The git send-email command is exactly what I used before but I found out 
+> it's not an issue in the toolset itself. Outlook.com SMTP servers 
+> replace the original 'Message-ID' header with their own. That is what 
+> causes threading to break. As a workaround, I first send the cover 
 
-I have managed to discuss a little bit this patchset over the last
-few days and I think we have defined a plan going forward.
+They replace it only in the first message. Why the rest of the emails
+are not replaced? Looking at this thread:
+https://lore.kernel.org/all/TYZPR01MB555632DC209AA69996309B58C9C92@TYZPR01MB5556.apcprd01.prod.exchangelabs.com/
 
-A point that was raised is:
+All of them look like replaced.
 
-https://man7.org/linux/man-pages/man2/reboot.2.html
+> letter, lookup the Message-ID value and then send the actual patches 
+> using 'git send-email --in-reply-to=<Message-ID>'. I do see them 
+> threaded in my mail client (Thunderbird) and in:
+> https://lore.kernel.org/all/DS7PR19MB8883F2538AA7D047E13C102B9DD22@DS7PR19MB8883.namprd19.prod.outlook.com/#r
 
-LINUX_REBOOT_CMD_RESTART2 *arg command, what is it supposed to
-represent ?
+Yeah, but not in b4.
 
-Is it the mode the system should reboot into OR it is the
-actual command to be issued (which is what this patchset
-implements) ?
-
-LINUX_REBOOT_CMD_RESTART "..a default restart..."
-
-It is unclear what "default" means. We wonder whether the
-reboot_mode variable was introduced to _define_ that "default".
-
-So, in short, my aim is trying to decouple reboot_mode from the
-LINUX_REBOOT_CMD_RESTART2 *arg command.
-
-I believe that adding a sysfs interface to reboot-mode driver
-infrastructure would be useful, so that the commands would
-be exposed to userspace and userspace can set the *arg command
-specifically to issue a given reset/mode.
-
-I wonder why this is not already in place for eg syscon-reboot-mode
-resets, how does user space issue a command in those systems if the
-available commands aren't exposed to userspace ?
-
-Is there a kernel entity exposing those "modes" to userspace, somehow ?
-
-> A separate initcall is needed to parse the devicetree, instead of using
-> psci_dt_init because mm isn't sufficiently set up to allocate memory.
 > 
-> Reboot mode framework is close but doesn't quite fit with the
-> design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
-> be solved but doesn't seem reasonable in sum:
->  1. reboot mode registers against the reboot_notifier_list, which is too
->     early to call SYSTEM_RESET2. PSCI would need to remember the reset
->     type from the reboot-mode framework callback and use it
->     psci_sys_reset.
->  2. reboot mode assumes only one cookie/parameter is described in the
->     device tree. SYSTEM_RESET2 uses 2: one for the type and one for
->     cookie.
+> If this doesn't work, I may need to switch to a different email address.
 
-This can be changed and I think it should, so that the reboot modes
-are exposed to user space and PSCI can use that.
+I recommend using b4 relay:
+https://b4.docs.kernel.org/en/latest/contributor/send.html
 
->  3. psci cpuidle driver already registers a driver against the
->     arm,psci-1.0 compatible. Refactoring would be needed to have both a
->     cpuidle and reboot-mode driver.
-> 
-> Signed-off-by: Elliot Berman <elliot.berman@oss.qualcomm.com>
-> ---
->  drivers/firmware/psci/psci.c | 105 +++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 105 insertions(+)
-> 
-> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-> index a1ebbe9b73b136218e9d9f9b8daa7756b3ab2fbe..6f8c47deaec0225f26704e1f3bcad52603127a85 100644
-> --- a/drivers/firmware/psci/psci.c
-> +++ b/drivers/firmware/psci/psci.c
-> @@ -80,6 +80,14 @@ static u32 psci_cpu_suspend_feature;
->  static bool psci_system_reset2_supported;
->  static bool psci_system_off2_hibernate_supported;
->  
-> +struct psci_reset_param {
-> +	const char *mode;
-> +	u32 reset_type;
-> +	u32 cookie;
-> +};
-> +static struct psci_reset_param *psci_reset_params __ro_after_init;
-> +static size_t num_psci_reset_params __ro_after_init;
-> +
->  static inline bool psci_has_ext_power_state(void)
->  {
->  	return psci_cpu_suspend_feature &
-> @@ -306,9 +314,39 @@ static int get_set_conduit_method(const struct device_node *np)
->  	return 0;
->  }
->  
-> +static int psci_vendor_system_reset2(const char *cmd)
-> +{
-> +	unsigned long ret;
-> +	size_t i;
-> +
-> +	for (i = 0; i < num_psci_reset_params; i++) {
-> +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
-> +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
-> +					     psci_reset_params[i].reset_type,
-> +					     psci_reset_params[i].cookie, 0);
-> +			/*
-> +			 * if vendor reset fails, log it and fall back to
-> +			 * architecture reset types
 
-That's not what the code does.
-
-> +			 */
-> +			pr_err("failed to perform reset \"%s\": %ld\n", cmd,
-> +			       (long)ret);
-> +			return 0;
-> +		}
-> +	}
-> +
-> +	return -ENOENT;
-> +}
-> +
->  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
->  			  void *data)
->  {
-> +	/*
-> +	 * try to do the vendor system_reset2
-> +	 * If there wasn't a matching command, fall back to architectural resets
-> +	 */
-> +	if (data && !psci_vendor_system_reset2(data))
-> +		return NOTIFY_DONE;
-> +
->  	if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
->  	    psci_system_reset2_supported) {
->  		/*
-> @@ -795,6 +833,73 @@ static const struct of_device_id psci_of_match[] __initconst = {
->  	{},
->  };
->  
-> +#define REBOOT_PREFIX "mode-"
-> +
-> +static int __init psci_init_system_reset2_modes(void)
-> +{
-> +	const size_t len = strlen(REBOOT_PREFIX);
-> +	struct psci_reset_param *param;
-> +	struct device_node *psci_np __free(device_node) = NULL;
-> +	struct device_node *np __free(device_node) = NULL;
-> +	struct property *prop;
-> +	size_t count = 0;
-> +	u32 magic[2];
-> +	int num;
-> +
-> +	if (!psci_system_reset2_supported)
-> +		return 0;
-> +
-> +	psci_np = of_find_matching_node(NULL, psci_of_match);
-> +	if (!psci_np)
-> +		return 0;
-> +
-> +	np = of_find_node_by_name(psci_np, "reset-types");
-> +	if (!np)
-> +		return 0;
-
-Related to my initial question above. If LINUX_REBOOT_CMD_RESTART2 *arg command,
-is the actual reset to be issued, should we add a default mode "cold"
-and, if SYSTEM_RESET2 is supported, a "warm" reset mode too ?
-
-It all boils down to what *arg represents - adding "cold" and "warm"
-modes would remove the dependency on reboot_mode for resets issued
-through LINUX_REBOOT_CMD_RESTART2, the question is whether this
-is the correct thing to do.
-
-Comments very welcome.
-
-Thanks,
-Lorenzo
-
-> +
-> +	for_each_property_of_node(np, prop) {
-> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
-> +			continue;
-> +		num = of_property_count_u32_elems(np, prop->name);
-> +		if (num != 1 && num != 2)
-> +			continue;
-> +
-> +		count++;
-> +	}
-> +
-> +	param = psci_reset_params =
-> +		kcalloc(count, sizeof(*psci_reset_params), GFP_KERNEL);
-> +	if (!psci_reset_params)
-> +		return -ENOMEM;
-> +
-> +	for_each_property_of_node(np, prop) {
-> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
-> +			continue;
-> +
-> +		num = of_property_read_variable_u32_array(np, prop->name, magic,
-> +							  1, ARRAY_SIZE(magic));
-> +		if (num < 0) {
-> +			pr_warn("Failed to parse vendor reboot mode %s\n",
-> +				param->mode);
-> +			kfree_const(param->mode);
-> +			continue;
-> +		}
-> +
-> +		param->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
-> +		if (!param->mode)
-> +			continue;
-> +
-> +		/* Force reset type to be in vendor space */
-> +		param->reset_type = PSCI_1_1_RESET_TYPE_VENDOR_START | magic[0];
-> +		param->cookie = num > 1 ? magic[1] : 0;
-> +		param++;
-> +		num_psci_reset_params++;
-> +	}
-> +
-> +	return 0;
-> +}
-> +arch_initcall(psci_init_system_reset2_modes);
-> +
->  int __init psci_dt_init(void)
->  {
->  	struct device_node *np;
-> 
-> -- 
-> 2.34.1
-> 
+Best regards,
+Krzysztof
 
