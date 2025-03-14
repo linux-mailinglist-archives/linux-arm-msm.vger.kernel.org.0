@@ -1,60 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-51472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE9C4A61B5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:02:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E641CA61B62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:02:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE13619C6197
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:02:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E7B48812B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:02:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 791E62063CA;
-	Fri, 14 Mar 2025 20:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9852E2066C1;
+	Fri, 14 Mar 2025 20:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jp22/KZJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gVrVvpAr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D46C2063C2;
-	Fri, 14 Mar 2025 20:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690A72063FA;
+	Fri, 14 Mar 2025 20:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741982490; cv=none; b=XealilwZ9ulH/6F5XO0aIrxb5URDSYPjgF1/OJzEYafMk21uzSYtOt+7Tw30hP48GWrWL8AH9qC+qUldYINxNeUKrQpf2c226IiqVU59MWURZCu8ipsr97+X7GpPdNCeiKGNg9n6Mm7Hp3y5VhRdhE4d1uTsDLk319bk77rn/MM=
+	t=1741982491; cv=none; b=MkEER68X6BMZ51927H79ndHINxnNzSpqAnTl4hJXGobtkCjJOs5ASX/bVRCd80es8xQ/lAqI513QkTW5iQF8DvU4O2rIvFJqBCwCvidm2gHfhqppIxcsxqpQtjHkvJaPpC66xM3pZ/HGHcBdiBU+EnwCDl4GN05k+h+27rKbNeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741982490; c=relaxed/simple;
-	bh=56Y8WP4lJH2ArMkkBIQX60sbylVZzcXorl6dWgzw6T0=;
+	s=arc-20240116; t=1741982491; c=relaxed/simple;
+	bh=yBcbi92N8Un3wkagtNiodogc3Ps9K9BkSvgzoW2LSws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SqP0DwCsGe91iPvexrzGeLWYzELXw1RjPGRtLY/2+Ae+GWB8/Tul/tQ5fMxfwChVZ+DaL03SA3CD82Zx/epj73RUA9ttf7uZHRq+xKnXFfdKWeWAr33Vz7cu2QEc0/rFxfGBS93WwWhlTknAK9hn8o7Gq4XKJNGbjQkgy9qzMDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jp22/KZJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAAFC4CEED;
-	Fri, 14 Mar 2025 20:01:29 +0000 (UTC)
+	 MIME-Version:Content-Type; b=jKeAHVr/0WpPHMAN1lWqXkqnarYPUG250AMrNq8o2jl5BYEzbI8IhABpvIxyL5d2hYgiwmcDLPv2eMgov/qDm99h3sAT5GQs7N2sb3VqJb9NmRcTzTMGE/+t+wvBAMzKGrhB8TSTTfYwkgCaCJWqzxzaqmXjTYGVHWJB3g6Q2+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gVrVvpAr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12481C4CEEE;
+	Fri, 14 Mar 2025 20:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741982489;
-	bh=56Y8WP4lJH2ArMkkBIQX60sbylVZzcXorl6dWgzw6T0=;
+	s=k20201202; t=1741982491;
+	bh=yBcbi92N8Un3wkagtNiodogc3Ps9K9BkSvgzoW2LSws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jp22/KZJOO5vqMsS+q7+NQnpQ5VA/m1lYnArc9JZ8BpozZX+03q6MlGazdlejJj6u
-	 h8hvZQh9kcV5+HS+0rppEBlwAamap3DwIU2l23c3nnnUbMrFpQPsaMi1wviLkrLPSs
-	 tH51P7gf2Mw4AmuXYrwmNUwyCUW02owvcPSYjSErVmAndyq0QqeNQYPuwD2SPF+kRU
-	 XU6dWBAREcisdvOTdNm7aoyWXWsZNZg3XW3vNy27hWG7J7kdbFuLmw0p8JLoQdaCh3
-	 7aNMvMngnpTz5l4epWcZWG7e6FHgb1JGEat6d4kxKy/WknL1xyJnAZ/sCYuZ+SliBK
-	 cWXu31G0uzJWA==
+	b=gVrVvpAr6rgojgh8yqmS8SF1/aCob7wg2/jdTL7LP2aApGl+g/ktZktN6ApD324aW
+	 ZlRsOzu+/JuOJY1wiIJa/D3i5f/SP2mPnkFCQQpFMeRWyksQ/n4TQHDfP+hcIJMTS9
+	 o8CDDDwW3NN8dGhUsb970oPUJ2R/+/IjbHozUDRfrMwH87ODEvuGM/yCfMvr2+9SU+
+	 heJUf7iQrQm5jsLhOJfxqS/C05kZdjgez6Vpnf5YJKsjVFKE8rpvWLha+65czRJx1r
+	 uMhJ5CZTV0aFqghGVp+RzF1L3G6ZUh1T0tXzBFIBsK19FpvNrqMapcA7yL4rW/k8DH
+	 1qm6IYbm8Ffgg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael.Srba@seznam.cz,
-	konradybcio@kernel.org,
-	jeffrey.l.hugo@gmail.com,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH 0/2] bus: qcom-ssc-block-bus: Fix some error handling paths
-Date: Fri, 14 Mar 2025 15:00:46 -0500
-Message-ID: <174198247884.1604753.16019573557353029968.b4-ty@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v3 0/8] PCI: qcom-ep: add support for using the EP on SAR2130P and SM8450
+Date: Fri, 14 Mar 2025 15:00:47 -0500
+Message-ID: <174198247877.1604753.6637295484438228617.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1740932040.git.christophe.jaillet@wanadoo.fr>
-References: <cover.1740932040.git.christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20250221-sar2130p-pci-v3-0-61a0fdfb75b4@linaro.org>
+References: <20250221-sar2130p-pci-v3-0-61a0fdfb75b4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,22 +74,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sun, 02 Mar 2025 17:21:33 +0100, Christophe JAILLET wrote:
-> Patch 1 should be straight forward. It removes some ioumap() from
-> resources allocated with devm_ioremap_resource().
-> 
-> Patch 2 is more speculative. It releases some resources in the error
-> handling path of the probe, as done in the .remove() function.
+On Fri, 21 Feb 2025 17:51:58 +0200, Dmitry Baryshkov wrote:
+> Update the incomplete SM8450 support and bring in SAR2130P support for
+> the PCIe1 controller to be used in EP mode.
 > 
 > 
-> [...]
 
 Applied, thanks!
 
-[1/2] bus: qcom-ssc-block-bus: Remove some duplicated iounmap() calls
-      commit: a9ac4ba7dcace2b3b91e7b87bf0ba97c47edd94f
-[2/2] bus: qcom-ssc-block-bus: Fix the error handling path of qcom_ssc_block_bus_probe()
-      commit: f41658cd081ad7697796b3dacd9a717a57919268
+[7/8] arm64: dts: qcom: sar2130p: add PCIe EP device nodes
+      commit: 84247db00a5c4f9b6fbf23cc46979508ddd8d855
+[8/8] arm64: dts: qcom: sm8450: add PCIe EP device nodes
+      commit: bffe01a9b4bbccd07a1fe2bd78c3795004b56645
 
 Best regards,
 -- 
