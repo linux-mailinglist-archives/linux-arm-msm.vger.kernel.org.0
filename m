@@ -1,58 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-51470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03883A61B55
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:01:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5078A61B58
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 21:02:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0406519C062B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:02:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14E99421018
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Mar 2025 20:02:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FC08205AB1;
-	Fri, 14 Mar 2025 20:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5265205E16;
+	Fri, 14 Mar 2025 20:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cTEKHzLK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AXZZuGAV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DAE205AA1;
-	Fri, 14 Mar 2025 20:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97382205E0D;
+	Fri, 14 Mar 2025 20:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741982488; cv=none; b=khh4m+I//eqid8WgzF2Fs0oM1aZXYd7dSTBweeoBZDdhX4gr4MSAYWm8fECT7jwt217XSDDOpQpfCFqJfMZK7syPxCRLy13Gr3LwnPp7YtNeC7x/ibFHW8+7C6iiL1wOSrttF/samsHY1T/d9EOMKj7cOydManD3glGbsSboaQw=
+	t=1741982489; cv=none; b=USleHlwrV3BbUHGeW5zVzU30tJa3F5jjEJ7Xi3ca8o/JdtHzhzNUi7ZAObRn/VzLzA4wVt4SEa0NMpmHizSeWVxcxNVXh9PVzIe0Dom8lgV64H1yy3Ps66kuoDT6RdLnsPr+2alwrlvEkiT4gnzQACYbjAJBjmWsKk5DlpI1vvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741982488; c=relaxed/simple;
-	bh=wGOWOvoLXWHYgFTckSDmRuZ0qM5Q1ixwYdqgaTDs9I4=;
+	s=arc-20240116; t=1741982489; c=relaxed/simple;
+	bh=uI7supORXJIUgf0wIYyGk/4SAOuPMkmRVUwHoI62pPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FNcirYrSJBtv/HWCsDss1nvmWTizQv6KNEW6MFwj2SiY35dUm9jdb6dq/BhlSTavFUy0bNfjAnT2D1I3qBYd+2qbR+/DDOWw82wTQd4XUA2wtkM9LGzlvDxxs2DcxTCyuFE4Cfzs2hiCicmyzSedSapkHKFmFOJ3abe1MiR7bDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cTEKHzLK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7F8C4CEE3;
+	 MIME-Version:Content-Type; b=RtOaHDwz9HIKWhlXpxSvh5fKlosnDvKsRXGOcKKAn+3bBc23ydcFJvbK91SgO7i4nTwhJeOpRaF//QwviD+tqsUa48SbrzAwBmozjx7WVm8VeaHmKmEGDhWsanvAkqGvi2gb+op9R3LOoPch+tDsyEBxzrHGYoJJcC089WgutBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXZZuGAV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE30C4CEEF;
 	Fri, 14 Mar 2025 20:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741982487;
-	bh=wGOWOvoLXWHYgFTckSDmRuZ0qM5Q1ixwYdqgaTDs9I4=;
+	s=k20201202; t=1741982489;
+	bh=uI7supORXJIUgf0wIYyGk/4SAOuPMkmRVUwHoI62pPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cTEKHzLK/+YWQUgcRIAdW9sNyH4eP27RRGxKqVUaMaV7CNHC0asUGmBGzrwoPFi50
-	 Moj8q99Fc4ea0HGrfRlN3GRBui9SbwhtTEUL5m9yp5GoXW9cC7xd+3xIUvqjX2Wcgl
-	 5qH9JfdzOgyJqRHP9JeLYHvCsyRyn6xMiayBNiqlnGtaBhbHGC8ZrKf71nuWNX0lSq
-	 Xopwgge3gN61m3qL/TDbXz97mGixaekI+kQ8z4smR2DGO0nOf7+cqpIqfSn1dn9qka
-	 bter85gSk0EquDYZZTYuO99Sf9ooagPVnC9YT5+fRUTVUktEdqsT/4/j3gUZ1DoGEf
-	 iDQQWXmK/Ai6A==
+	b=AXZZuGAV+63TnyvMLKqbBkxR7QFHcIMCKzDxMvheN25H1SvOD3ZkEMlTfe8zt856U
+	 5RCmk6f9wcJLyLtQlgyHMdcMoMQ8L5nISx2mUbClI6D8JaDaqnVdfAKG2hbSznpt/P
+	 C4PN5z/xsyrbiO6kS4RGqIDF3KysrZ7WbtzPGIpPuYlpZR7bVsQa851HA9F40dHRGO
+	 M7Tognac9Tj50+OL7mSpf7BxDIecwkZoPpZfeAseiwn9wOT04qOJ4RFafD+sV7dGl/
+	 uWbJRs6OqxpQ+EnzQoEXrFUS+eYUiiADdgqkpxH66O5/LfMN5GKgiwsjd8lpRoXwNX
+	 U3eDSumtrhzDg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-arm-msm@vger.kernel.org,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Pavel Machek <pavel@kernel.org>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH] soc: qcom: pd-mapper: Add support for SDM630/636
-Date: Fri, 14 Mar 2025 15:00:44 -0500
-Message-ID: <174198247874.1604753.3783987991393111151.b4-ty@kernel.org>
+	linux-leds@vger.kernel.org,
+	Daniil Titov <daniilt971@gmail.com>
+Subject: Re: (subset) [PATCH v2 0/3] Add PM8937 PWM and display backlight for Redmi 5A
+Date: Fri, 14 Mar 2025 15:00:45 -0500
+Message-ID: <174198247871.1604753.9818860093094603350.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250217050251.298163-1-alexeymin@postmarketos.org>
-References: <20250217050251.298163-1-alexeymin@postmarketos.org>
+In-Reply-To: <20250213-pm8937-pwm-v2-0-49ea59801a33@mainlining.org>
+References: <20250213-pm8937-pwm-v2-0-49ea59801a33@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,18 +70,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 17 Feb 2025 08:02:50 +0300, Alexey Minnekhanov wrote:
-> Add missing compatibles and pdm_domain_data for SDM630 and SDM636.
-> 
-> Unlike their older brother (SDM660) these two cut down SoCs lack CDSP.
-> Other protection domains are the same as the ones for SDM660.
+On Thu, 13 Feb 2025 20:54:46 +0100, Barnabás Czémán wrote:
+> This patch series add pwm node for pm8937 and enables
+> pwm backlight for Redmi 5A.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] soc: qcom: pd-mapper: Add support for SDM630/636
-      commit: d4471b988582db2689692c81a577ce0421b60256
+[2/3] arm64: dts: qcom: pm8937: Add LPG PWM driver
+      commit: b18c1aa6404303888ab924f149135835d223f4e8
+[3/3] arm64: dts: qcom: msm8917-xiaomi-riva: Add display backlight
+      commit: 5b74065e6c2482507435cdf7c4d0aab1830b9676
 
 Best regards,
 -- 
