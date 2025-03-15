@@ -1,53 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-51537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72D3FA62F10
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Mar 2025 16:26:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 28703A62F14
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Mar 2025 16:26:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6BF06189A37C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Mar 2025 15:26:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D5B95189A6A7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Mar 2025 15:26:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B32422040B2;
-	Sat, 15 Mar 2025 15:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAC54204681;
+	Sat, 15 Mar 2025 15:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="YkWVBihr"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="ZzJSpGeu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1889019049B;
-	Sat, 15 Mar 2025 15:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F9B1F63E1;
+	Sat, 15 Mar 2025 15:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742052383; cv=none; b=OVlduvrRouskGejzPyk5EWmkh0/se9RxH63HuYU2IQvhNGgUgFTMG1NQdYkMTw3WyTP4rT8YKdT7oRRZj9JoHuVpMK08KY8EXDylcn0rKibUvuJySxZeF7jMaxqbmoSFTih/rguHRzMmn0CEuuU/KrkcOOzamfEqoo073zKrFKk=
+	t=1742052384; cv=none; b=afYVntT6HJ5dcjkvwrtHKh1x+aSiXXLzPC8YW6fKn87waOjshpJzF/PTqIDZMY6Rk3zuTDJDaOeTGxsn7JNrmOEsPNOhnKkkAOfyUi7vvedea1wRJD+TQF1oKEmAUWAplT6vapS73hh7U/wWZlEXyjpv1i2Jfl8BoCO/L36ndR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742052383; c=relaxed/simple;
-	bh=ZRgihp2HxWgGaHTKbjNjtRc3dPDXREH7xMWjqg3t3ZE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=B3dU0/HsPwrd6F+N0cvXB4WIpDLEUfQ0+PxhbdTs1W5Lm48BXJMDZ3DeC2F/hY3VlA/4LAtWBOfgqPGWyAoDTleMFjq9h2fHxR9uT7+6Dc1ZDD19pzTB3ZD8abDm7qOpRdTU1IwSM3FnTFuJZx3TMVuJG5sCKZvPYYwGVBaYdMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=YkWVBihr; arc=none smtp.client-ip=5.75.144.95
+	s=arc-20240116; t=1742052384; c=relaxed/simple;
+	bh=+lG6fRaARBY+IH3B1Uzh2Vdd9mRKlHFu3mGxsIfI4yE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=OPh/nrydcFqQoBYkhaH/rJbAzjBSEw7+5xBe20ldIzye+6o7C0FYZx6COjTZ0odmzX451xt4dKoHbaUeQECJAP7T2/3j9QMwMMflMrMScZci/aj4BsMmpms/DUTNa7jEnhu31KNMhAlmZRsuwBPwgDTeW0JACKCgiCW+CohVoKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=ZzJSpGeu; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Received: from [192.168.183.162] (254C339A.nat.pool.telekom.hu [37.76.51.154])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 57F93BBAC0;
-	Sat, 15 Mar 2025 15:26:19 +0000 (UTC)
+	by mail.mainlining.org (Postfix) with ESMTPSA id 689CFBBAF0;
+	Sat, 15 Mar 2025 15:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1742052380;
+	s=psm; t=1742052381;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=ZeQm8+FhNPyVRvUsK+uCissE24j6EUlv1M8Ckqr5ApM=;
-	b=YkWVBihrX76DGQJbcyQ0T7/hCbmwXyMncvuiPEMhmfRBCFgdSO611zDsFtRTN/acbIpCYy
-	Jbzqj5owaA0jmc410iTdGX0hLgUbKQd38V2Q//W9yb1+iIcqOcM8JFO/W4/PEzGWTqeS89
-	QaxGlH6IG3cDDHnSFR5hL9gf3AIifbNEqzxJkMTErwwu3KlDE1C/OHL/H7D+NJHyvm0J73
-	j2BIsUbkT19iXVqr5BsevwD5wIKW0P8/mOPt2xJ6bnUFGSUyFgvYcg4HDqtqcE0pNbipJ1
-	9+jb4F+9GOxOTBKSTrqWkG10s4ksDY9Ls++pGRU+42QlRpmnFA6DReUt/0I+rg==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dotTYATufY76WkE1os667Hn1wurWpAs6DYOLXuaR8gE=;
+	b=ZzJSpGeuUlkHXAbT3Pc3zjUmGhM4xzkWRXXFBVJYK61qylUNYKu+lqH2sHUE9jNwqRkGp1
+	+dkdfZv5kAyV5XR+IZVcLepIydaLkdzmjZUENn8aed3LYQLDmoD5y2ZzesWVi3KRjuOlYN
+	eNozEWWaiMu8GPGSPLRWYMGiBGuwU0azKZTwas5DaNXC7ICL6QJb0YxYcCcbc1vJMSFaP6
+	mpT9ktCOrHI7Ty6aag4s9PW31yCrnGnRbRu9GHsi0QlsTFiVoy6k09r5Y0FvavLxithy1C
+	lFtC6nVwdE3bokExYg2k6gxtKliZ9wCTz/3Iwk5W9YwIZKJWbDsQZs46uhpNdQ==
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Subject: [PATCH 0/2] SDM660/MSM8953 Fix video core clock status stuck
-Date: Sat, 15 Mar 2025 16:26:16 +0100
-Message-Id: <20250315-clock-fix-v1-0-2efdc4920dda@mainlining.org>
+Date: Sat, 15 Mar 2025 16:26:17 +0100
+Subject: [PATCH 1/2] clk: qcom: mmcc-sdm660: fix stuck video_subcore0 clock
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,10 +57,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIABic1WcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDY0NT3eSc/ORs3bTMCt1E0zRzo5Qk00QTQzMloPqColSgMNis6NjaWgC
- MfpPAWwAAAA==
-X-Change-ID: 20250315-clock-fix-a5f72db5a416
+Message-Id: <20250315-clock-fix-v1-1-2efdc4920dda@mainlining.org>
+References: <20250315-clock-fix-v1-0-2efdc4920dda@mainlining.org>
+In-Reply-To: <20250315-clock-fix-v1-0-2efdc4920dda@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, Martin Botka <martin.botka@somainline.org>, 
@@ -70,37 +70,42 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Vladimir Lypak <junak.pub@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
  linux-kernel@vger.kernel.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Vladimir Lypak <vladimir.lypak@gmail.com>
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1742052379; l=668;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1742052379; l=1039;
  i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=ZRgihp2HxWgGaHTKbjNjtRc3dPDXREH7xMWjqg3t3ZE=;
- b=qLgPYhswUqpxBiMzO5Z0f5/z1nbziZGimgI74fVwXoGmCGrZ7MT+WR43+BKe21XyCkak+imBk
- MCdVgMo3MTUD6MqGSRWyG2GS10jblK8h2GJSMU6rvO5e2EeYfemx+Wt
+ bh=+lG6fRaARBY+IH3B1Uzh2Vdd9mRKlHFu3mGxsIfI4yE=;
+ b=NkjArYy+0nyR1tQjBFbO87TyECc5OE7qlzyTeK9z2aNUPe3f7E5jlrCpoA8GCGxQdgPfajrGB
+ HUVpi9YWwpvB1ZQYAthNQwOmpCF2Ca5oy4hn7qqoPaPTIxVArzu4TMr
 X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
  pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-On SDM660 and MSM8953 video_subcore0 and venus0_core0 clocks are stuck
-at off. This patch series fixes them.
+This clock can't be enable with VENUS_CORE0 GDSC turned off. But that
+GDSC is under HW control so it can be turned off at any moment.
+Instead of checking the dependent clock we can just vote for it to
+enable later when GDSC gets turned on.
 
+Fixes: 5db3ae8b33de6 ("clk: qcom: Add SDM660 Multimedia Clock Controller (MMCC) driver")
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
-Barnabás Czémán (1):
-      clk: qcom: mmcc-sdm660: fix stuck video_subcore0 clock
-
-Vladimir Lypak (1):
-      clk: qcom: gcc-msm8953: fix stuck venus0_core0 clock
-
- drivers/clk/qcom/gcc-msm8953.c | 2 +-
  drivers/clk/qcom/mmcc-sdm660.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
----
-base-commit: da920b7df701770e006928053672147075587fb2
-change-id: 20250315-clock-fix-a5f72db5a416
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Best regards,
+diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
+index e5bdcc75a36ed24a8c72d1fd6ee57083a7f5c499..e69fc65b13da2b519af413137353693473ee258a 100644
+--- a/drivers/clk/qcom/mmcc-sdm660.c
++++ b/drivers/clk/qcom/mmcc-sdm660.c
+@@ -2540,7 +2540,7 @@ static struct clk_branch video_core_clk = {
+ 
+ static struct clk_branch video_subcore0_clk = {
+ 	.halt_reg = 0x1048,
+-	.halt_check = BRANCH_HALT,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x1048,
+ 		.enable_mask = BIT(0),
+
 -- 
-Barnabás Czémán <barnabas.czeman@mainlining.org>
+2.48.1
 
 
