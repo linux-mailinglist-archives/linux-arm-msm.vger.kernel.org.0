@@ -1,183 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-51529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1FF0A62DD9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Mar 2025 15:05:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B5EDA62E95
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Mar 2025 15:58:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 70D4A7AABB6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Mar 2025 14:04:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8A2C189B5DB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Mar 2025 14:58:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CFED202C48;
-	Sat, 15 Mar 2025 14:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF0E9202F9A;
+	Sat, 15 Mar 2025 14:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Hgx++xQL"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="fnlhe2CB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784291FA85A
-	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Mar 2025 14:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C536B1FFC55;
+	Sat, 15 Mar 2025 14:58:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742047505; cv=none; b=ShHMFFMKXAj4fWeM1zZzacdwrY+S7Hpo+UCEGRFUpBU6Sv6KPrCCqrClSqplMrVdnroOdPA+QJePHtcTm4a73f0A0tom2ItGiHbPxcj4PWNiPt6Kgszoi0OjSxekxvUxRUyb8lOL4LB9XNs6MUO04ZzVGdezMmYBr0RUVP0H2BQ=
+	t=1742050697; cv=none; b=i2/5vqPrJSRaXZKpkX+9UrHlng5E9LzVvfD4xNMPGCx0qBfAp7DY5APjwg8Tl5sAF7e1FVNiZtb6p4PW22KbRxI7UACvlTbpWf+wtNvtgCiSSeiKS3g8h3lxDaJ/I/d/8801O2YX4Yek3gOY2MZt2nP74Isu46UZNsITb/TRSVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742047505; c=relaxed/simple;
-	bh=YfnsnyLlpurE1a++zCcgvEc6AWvYcBKTlVAoyEBchJk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IKJ66KdPeXC5yCoXevTI61TyZEaAixiYztyxgOKT6qtwBE8GXIm1Y9gFHp0CDpThIQJYk/GE7pvTh95aBqgIZiJcgGYdUzlvrACqiscQpgCGFyzFI/wRzbhmJxmU9FyTZnOYEBR8WRXBOtyewHauj/2hOJR99FvC9MjdNjw2vuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Hgx++xQL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52F4Bskc023591
-	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Mar 2025 14:05:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UUAncCVozCVnivHbsq+9DBQDI1K0/A8x8y1E+4sWtHU=; b=Hgx++xQL8Di2wary
-	8uMa2bK6aDp58xjjYHyFnzRsi08SDWn1E26qtnnzdRcrHyzBmPU/NAK2hmgeW2JD
-	6vWmu3oKSQEEH1YJlwWA7Ja0pwHk1laVYs/3SK9LCOA3ziEVSPZWVX1EEMBe/vY7
-	AJDtnCKYIYojLs3w5Pf9Dw86MJ91/kWHaK/yqXGTfIIlWf0RfYC0SAjIu37xlNhZ
-	psR7FartVqZtzV0pxQ8qlyJMVKlEpYeGUtE1g2LkLUE3setUYv9tfDTUqqkI7Xnf
-	F9WJy9lHT30QKX+QssXQL+2G6mv2bS/kMSpRoOCM9LHBWyi2EJSOwIvwkdTCp55f
-	5zVBfQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45d2ah8qfv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Mar 2025 14:05:02 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c55ac3a1d9so25053185a.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Mar 2025 07:05:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742047501; x=1742652301;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UUAncCVozCVnivHbsq+9DBQDI1K0/A8x8y1E+4sWtHU=;
-        b=sS/mcW9qpfOY4KuyTMLgrRb2AHRc1qC4J0q7/LZ4ocbo5zZ45OElX4AdaObK3hbzoR
-         snKiiJNSFVyPlPAEc2MjGjMEc0227bmuJEJCWqZepNOHetUhdh+i34TkZCj6fcyjxsAv
-         toIsIsSfwsvL7Jwmjaw4bu2ERSdad3oNRNeXuXInXxhIZll14BPn51zMlvXK6bqUoXUC
-         v/f21hBpxq+XXUR6z/QfsUd9lOnXm+MTds5LJtUTbMhgHOGXDDRrOY6F78tMlEW5oP4G
-         Hnrj2FPws2YkRu9bi8HNBZaIQpXbVPFVGS/n0nBAHAZCc/su4LWQTJFE5pIkyl1e2KyI
-         Rg8Q==
-X-Gm-Message-State: AOJu0YwOCwuiufECmYb653pQpu29RTN3acXO0dVCK5gdR4xtbiFHJSfY
-	beUyvOoSeGOFwfJRPG1CMc/GlutJGyrpcdxdadz/D9nr4muSgUwtj+DURbLVFFcEvTx0cDMNhWo
-	8MbHgd23BG8SupuhQzF65sxm7OwO7z7LEcaL1SSvAjVizDb/pmYX3YP2CSA7J+8OE
-X-Gm-Gg: ASbGncu4/T5TuDOSb27g/6hufZ1jTXHUcqNWnwA3RqHa38pOtC+B2L49KahgCShQzxi
-	P/mD5MBoqGgZRQ3UqzRrH+RN9x/4G9kVpxuZX4b/4fG+Nz7WahTFxCFsRzm1C9yeKY3cbpTOuKy
-	XXpe2mkTksFNi682IhuNPI5NiyD0gp8a6Mlz042Fwq4lt/k2EfQ5XC7X5tjbShM2HaF1Hvb6tMM
-	5LBRpE3w9lJ3yTfrMBDVK0MUAIs5ebwLldb/bz9+3HDEAhspmkjsDnLgPO/nU4kjJui+pYcLwBo
-	G7DVlNsFHAIE3EURJ2wfwfUvr/4ZP+7cThRBu63WOwMaF0DRDgPAb7sr1gOwl82oTkDALQ==
-X-Received: by 2002:a05:620a:2416:b0:7c0:c024:d5 with SMTP id af79cd13be357-7c57c80ef86mr336345185a.8.1742047501240;
-        Sat, 15 Mar 2025 07:05:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFTRd1Ia2aDyV8PsrPTlCP6muG2Qdkuvkpuw2KdrP05cGmco0YbeElKaqwrAOB48+digijbtA==
-X-Received: by 2002:a05:620a:2416:b0:7c0:c024:d5 with SMTP id af79cd13be357-7c57c80ef86mr336343185a.8.1742047500879;
-        Sat, 15 Mar 2025 07:05:00 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30c3f0ea756sm9418031fa.35.2025.03.15.07.04.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Mar 2025 07:05:00 -0700 (PDT)
-Message-ID: <6a652ced-1226-4ff3-8b26-9fb78b075ce2@oss.qualcomm.com>
-Date: Sat, 15 Mar 2025 15:04:56 +0100
+	s=arc-20240116; t=1742050697; c=relaxed/simple;
+	bh=9nYzGQvmx6WFgfbqPRmrGyA1FvxrIDEuq6WTjGtHIBE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=R8sOiGVZuWPYF6Lnla3dGqYUwmSN/fItJWmORECBFmAMEQxcrYu9gitON3Zug7eqoE8QhBIQVl5MHb2wOQFnatho/pl7853rD3jQxUyWjqkIjK3FbyIHiI01JTEPUzvKtEUVGCxkvJFlWqfZjkp4VRWDZbBJ6DCHWIaPuoWihEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=fnlhe2CB; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from [192.168.183.162] (254C339A.nat.pool.telekom.hu [37.76.51.154])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 2311EBBAC0;
+	Sat, 15 Mar 2025 14:58:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1742050687;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=FmVx/4AyGD/aMwlNSJd9Y627FtpqEeVAICF+Holg0IU=;
+	b=fnlhe2CBIIfxzBLBDbt3DeYxtaaa9Y18Du5dMDU1Ihuj65nOiJWEqwNq0Gzkx4GYOFc1Ut
+	IZZBBYpeOqn7C0OQRjuiYFfABij97cmMDWYkND9DFW1MX2pUCuTYnfwmB4icMSQUu9i06d
+	YtZwRLZiFD6zuN1x838hKWg/V1OnqBbs9ieU0wfyxblAo8yMIEx9iiJF4PmrkEKB2BQedX
+	Ym+jdsVwZ+1lQzwiEKj0IpCGGiBTCJRyNOreQFe8Fo8WTynkNUYUaI/KBsVkclqqcKC6LT
+	+qnRo1sYoowii16qub41zcNXhXvNebSoWbNFDB7c86jn76RswifhmEccFxQiBQ==
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Subject: [PATCH v4 0/6] Initial support of MSM8937 and Xiaomi Redmi 3S
+Date: Sat, 15 Mar 2025 15:57:34 +0100
+Message-Id: <20250315-msm8937-v4-0-1f132e870a49@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8775p: add support for video node
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
- <20250311-dtbinding-v1-3-5c807d33f7ae@quicinc.com>
- <3ec71075-b1ef-4366-b595-80fe41cd1e13@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <3ec71075-b1ef-4366-b595-80fe41cd1e13@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: sNJquAiVFsC-f9xM3v7oJRoBsFKsqet2
-X-Proofpoint-GUID: sNJquAiVFsC-f9xM3v7oJRoBsFKsqet2
-X-Authority-Analysis: v=2.4 cv=R7kDGcRX c=1 sm=1 tr=0 ts=67d5890e cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=L28Ds1LcoDUPICagkq0A:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-15_05,2025-03-14_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- impostorscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999 mlxscore=0
- adultscore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503150100
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAF6V1WcC/23MQQ6CMBCF4auYrq1pp0jBlfcwLqAdYBIppjWNh
+ nB3C4lCoss3me8fWUBPGNhpNzKPkQINLo1sv2Omq1yLnGzaDAQcBUjB+9AXpdIcoMBGWKPQlCx
+ 93z029FxKl2vaHYXH4F9LOMr5+mnIbyNKLri2oNHmutGiOPcVuRs5cu1h8C2bQxE2GNSKIeG6L
+ HU65gqt+ovVFmcrVgnbymojCzDG1D94mqY3ApD/bB0BAAA=
+X-Change-ID: 20250210-msm8937-228ef0dc3ec9
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
+ =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
+ Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
+ Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Dmitry Baryshkov <lumag@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, iommu@lists.linux.dev, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ linux@mainlining.org, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
+ Daniil Titov <daniilt971@gmail.com>, Adam Skladowski <a39.skl@gmail.com>, 
+ Dang Huynh <danct12@riseup.net>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1742050684; l=2644;
+ i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
+ bh=9nYzGQvmx6WFgfbqPRmrGyA1FvxrIDEuq6WTjGtHIBE=;
+ b=sM5mQ+PXxva7V8jC6E7KlV8VS02TfuWk836AaRTgvfi10SrkvBAz8iGZBunm6IJ8fCv+BXLjq
+ s8ibCMaPiPyCbCPGrCS6Y6vPrX+ETPOgD6/3eYjJve/2BjjHhkXE0Hw
+X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
+ pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-On 3/15/25 2:43 PM, Konrad Dybcio wrote:
-> On 3/11/25 1:03 PM, Vikash Garodia wrote:
->> Video node enables video on Qualcomm SA8775P platform.
->>
->> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 67 +++++++++++++++++++++++++++++++++++
->>  1 file changed, 67 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->> index 3394ae2d13003417a15e64c9e47833725ec779e6..09db8e2eb578f1cada0f4a15e3f844dc097bd46d 100644
->> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->> @@ -10,6 +10,7 @@
->>  #include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
->>  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
->>  #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
->> +#include <dt-bindings/clock/qcom,sa8775p-videocc.h>
->>  #include <dt-bindings/dma/qcom-gpi.h>
->>  #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
->>  #include <dt-bindings/mailbox/qcom-ipcc.h>
->> @@ -3783,6 +3784,72 @@ llcc: system-cache-controller@9200000 {
->>  			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
->>  		};
->>  
->> +		iris: video-codec@aa00000 {
->> +			compatible = "qcom,sa8775p-iris";
->> +
->> +			reg = <0 0x0aa00000 0 0xf0000>;
->> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +			power-domains = <&videocc VIDEO_CC_MVS0C_GDSC>,
->> +					<&videocc VIDEO_CC_MVS0_GDSC>,
->> +					<&rpmhpd SA8775P_MXC>,
->> +					<&rpmhpd SA8775P_MMCX>;
->> +			power-domain-names = "venus",
->> +					     "vcodec0",
->> +					     "mx",
->> +					     "mmcx";
->> +			operating-points-v2 = <&iris_opp_table>;
->> +
->> +			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
->> +				 <&videocc VIDEO_CC_MVS0C_CLK>,
->> +				 <&videocc VIDEO_CC_MVS0_CLK>;
->> +			clock-names = "iface",
->> +				      "core",
->> +				      "vcodec0_core";
->> +
->> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
->> +					&config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ALWAYS>,
-> 
-> This path should use QCOM_ICC_TAG_ACTIVE_ONLY on both endpoints
+This patch series add initial support for MSM8937 SoC
+and Xiaomi Redmi 3S (land).
 
-Please also align the &s
+The series is extending the MSM8917 gcc and pinctrl drivers
+because they are sibling SoCs.
+MSM8937 have 4 more A53 cores and have one more dsi port then
+MSM8917.
+It implements little-big architecture and uses Adreno 505.
 
-Konrad
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+---
+Changes in v4:
+- Add missing rpmcc include for qcom,gcc-msm8937 dtbinding exmaple.
+- msm8937: add missing space after s9-p1@230
+- msm8937-xiaomi-land: replace LED_FUNCTION_INDICATOR to LED_FUNCTION_STATUS
+- Remove applied patches
+- Link to v3: https://lore.kernel.org/r/20250224-msm8937-v3-0-dad7c182cccb@mainlining.org
+
+Changes in v3:
+- Fix qcom,gcc-msm8937 dtbinding example 
+- Link to v2: https://lore.kernel.org/r/20250223-msm8937-v2-0-b99722363ed3@mainlining.org
+
+Changes in v2:
+- drop applied patches
+- drop gcc schema commits infavor of a new schema for gcc-msm8937
+- document always on clock for adreno 505/506/510
+- msm8937:
+  - set cache size
+  - rename cpu labels
+  - fix style issues addressed by review
+- msm8937-xiaom-land:
+  - remove unused serial0 alias
+  - remove regulator-always-on from pm8937_l6
+  - add blue indicator led for aw2013
+- Link to v1: https://lore.kernel.org/r/20250211-msm8937-v1-0-7d27ed67f708@mainlining.org
+
+---
+Adam Skladowski (1):
+      dt-bindings: drm/msm/gpu: Document AON clock for A505/A506/A510
+
+Barnabás Czémán (3):
+      dt-bindings: clock: qcom: Add MSM8937 Global Clock Controller
+      dt-bindings: arm: qcom: Add Xiaomi Redmi 3S
+      arm64: dts: qcom: Add Xiaomi Redmi 3S
+
+Dang Huynh (1):
+      arm64: dts: qcom: Add initial support for MSM8937
+
+Daniil Titov (1):
+      clk: qcom: gcc: Add support for Global Clock controller found on MSM8937
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    7 +
+ .../bindings/clock/qcom,gcc-msm8937.yaml           |   75 +
+ .../devicetree/bindings/display/msm/gpu.yaml       |    6 +-
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dts   |  408 ++++
+ arch/arm64/boot/dts/qcom/msm8937.dtsi              | 2149 ++++++++++++++++++++
+ drivers/clk/qcom/Kconfig                           |    6 +-
+ drivers/clk/qcom/gcc-msm8917.c                     |  617 +++++-
+ include/dt-bindings/clock/qcom,gcc-msm8917.h       |   17 +
+ 9 files changed, 3277 insertions(+), 9 deletions(-)
+---
+base-commit: da920b7df701770e006928053672147075587fb2
+change-id: 20250210-msm8937-228ef0dc3ec9
+
+Best regards,
+-- 
+Barnabás Czémán <barnabas.czeman@mainlining.org>
+
 
