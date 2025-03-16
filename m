@@ -1,80 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-51547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C64C8A636B3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Mar 2025 18:12:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1785A636BF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Mar 2025 18:19:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF0D63AAB48
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Mar 2025 17:12:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1AD4E16B144
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Mar 2025 17:19:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BCCD1C8602;
-	Sun, 16 Mar 2025 17:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F12AD1A5BB1;
+	Sun, 16 Mar 2025 17:19:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B3igTbET"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6221F2AD02;
-	Sun, 16 Mar 2025 17:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C694414293;
+	Sun, 16 Mar 2025 17:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742145162; cv=none; b=iqoefsx5hC7x7eby64CQRie/6TTqtRdGMDeDAUq2d0Th/cuQLyg6j+rTxTGdI/JCv75CaMsOjlrOUHsBwwxyRs5p7AO8lHapYCtMJkDsucNHnsM20PSeHazAGOicJ/8tdHfQG4hjd9EOi1elg58bdsJZdRe/dYOSk8K+UoeuOLA=
+	t=1742145595; cv=none; b=N3+hWXvkEBpQschSY4f6XEto6knMLGHtT5dneFxLuweBDxbmhhJXmDQ+4tOzq6x0GfQjAJ85QspvtjYCBmrBBn2KHqXrowyFNMKCmnIu6dMDYI2pw9VfGGi8u6muJJbqXisYcJnBY/+O74LKd5Zx7nhhRFqy09oi0+mhfR4st3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742145162; c=relaxed/simple;
-	bh=vKQLzrgpNSv2P0kbjJiXpY6KLGJYZqUtSuZD/PghHU4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cw5byJpkYQCeijk9iTX2cn0L9+CbrXYM864Y5+uOMjmtz4Bg/8SYUXh4WhwgOAtTq4Vt4Rj2BNutTUMVL3pIaO1gPvcWzEIjQFkP58g8UdH9UHNSJrUWQWF8Pr4EWzBvkR0R/84K06AonkSw+zyqfGzZ+BZq9a32Kj0MQ5yVp4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06851C4CEDD;
-	Sun, 16 Mar 2025 17:12:40 +0000 (UTC)
-Date: Sun, 16 Mar 2025 18:12:37 +0100
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH v6 1/5] dt-bindings: clock: qcom,x1e80100-camcc: Fix the
- list of required-opps
-Message-ID: <20250316-carrot-skylark-of-priority-c59ed7@krzk-bin>
-References: <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-0-edcb2cfc3122@linaro.org>
- <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-1-edcb2cfc3122@linaro.org>
+	s=arc-20240116; t=1742145595; c=relaxed/simple;
+	bh=aU5p9VZBVUIRGQ24zw6cC9rVZr9NfS1kV/DgNW+x3HY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=QUJEfWkIK63LOHVFUqLz12JsvhfW3S+INoVGaMvYp363GZ1HzhFBHsphzuGkYTrUJFxFkLS+Srpl/NkMCydykPKlIqIDnmDAbVsevJTEr99XaS/iiHWacMsZ8SL9bPVy+n9lxEhsD0dFUgTS8SPttp5I7sr6Z+JjS0DCRZc2+Tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B3igTbET; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742FBC4CEDD;
+	Sun, 16 Mar 2025 17:19:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742145595;
+	bh=aU5p9VZBVUIRGQ24zw6cC9rVZr9NfS1kV/DgNW+x3HY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=B3igTbEThuXfTKHdtACi9Er7XRwtqGPSEv09Eik8p7cCkQqzWHvwW8hlHYuKa+311
+	 XBCN6pjCWUBebeW48wIcnsCi9L/eHAl7v0sKSin7m/3Us+uVr0R0/1/6eRHDURetQS
+	 7kODqzoJhq/A4W/w/zNcoV32O88VawC2MbiUusn9koTS7tlc/MeKptNUxQBcI/RY54
+	 BJFJ8EtvrdQSHmgziMmpNQMod2aA1F7eN3O7UpgZztJAmyME8AlGmz80uIMEe/ZTPz
+	 O3YCeDl6nFL8x3z/mmM5TSXqn3CBEIyZ7m0bysLs+UgINDBlCppPCcwa3YeBb/hTeY
+	 UX90o/5tX7hOw==
+From: Vinod Koul <vkoul@kernel.org>
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Nitheesh Sekar <quic_nsekar@quicinc.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Arnd Bergmann <arnd@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, 
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20250314154915.4074980-1-arnd@kernel.org>
+References: <20250314154915.4074980-1-arnd@kernel.org>
+Subject: Re: [PATCH] phy: qcom: uniphy-28lp: add COMMON_CLK dependency
+Message-Id: <174214559205.644495.6951036619496371457.b4-ty@kernel.org>
+Date: Sun, 16 Mar 2025 22:49:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-1-edcb2cfc3122@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.2
 
-On Fri, Mar 14, 2025 at 01:13:59PM +0000, Bryan O'Donoghue wrote:
-> From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> 
-> The switch to multiple power domains implies that the required-opps
-> property shall be updated accordingly, a record in one property
-> corresponds to a record in another one.
-> 
-> [bod] Adding the opp to the yaml is not an ABI break since we currently
-> have no upstream implementation of this yet.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Fri, 14 Mar 2025 16:49:10 +0100, Arnd Bergmann wrote:
+> In configurations without CONFIG_COMMON_CLK, the driver fails to build:
+> 
+> aarch64-linux-ld: drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.o: in function `qcom_uniphy_pcie_probe':
+> phy-qcom-uniphy-pcie-28lp.c:(.text+0x200): undefined reference to `__clk_hw_register_fixed_rate'
+> aarch64-linux-ld: phy-qcom-uniphy-pcie-28lp.c:(.text+0x238): undefined reference to `of_clk_hw_simple_get'
+> phy-qcom-uniphy-pcie-28lp.c:(.text+0x238): dangerous relocation: unsupported relocation
+> aarch64-linux-ld: phy-qcom-uniphy-pcie-28lp.c:(.text+0x240): undefined reference to `of_clk_hw_simple_get'
+> aarch64-linux-ld: phy-qcom-uniphy-pcie-28lp.c:(.text+0x248): undefined reference to `devm_of_clk_add_hw_provider'
+> 
+> [...]
+
+Applied, thanks!
+
+[1/1] phy: qcom: uniphy-28lp: add COMMON_CLK dependency
+      commit: be8f23cebdb9546beb30ad15ff59130b66c8f2ac
 
 Best regards,
-Krzysztof
+-- 
+~Vinod
+
 
 
