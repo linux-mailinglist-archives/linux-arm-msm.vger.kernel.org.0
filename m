@@ -1,124 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-51618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95E08A650C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 14:23:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15A67A65153
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 14:37:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5AE571897686
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 13:23:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 266161888B2A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 13:35:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B69523E33B;
-	Mon, 17 Mar 2025 13:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3DDB24166B;
+	Mon, 17 Mar 2025 13:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OOtwng8s"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="DQssZf42"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C03D23C8CE;
-	Mon, 17 Mar 2025 13:23:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64C4156230;
+	Mon, 17 Mar 2025 13:34:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742217803; cv=none; b=rz//FNLv1Y3pJ9D5CwetNCZeF/oZjzDa9knYgU/j5uGY541MjzVKlktj1TnQ1dpKFwVCzaS9YVZpw95MLiWyX1sk9xqRo8NqXriLNCdmVH7ySHGNt2mz8/ZBhXsOEznKely7b5rkZbw0GHttWolcYC52IZmdDqG8uwkPeR1uKr4=
+	t=1742218487; cv=none; b=OGKzYf4yjf3ktF7Cg6HvoQ/mxKPWpaRc9/IYEmsAKjbDAV0juwh8x5zR92+V/CP1MqUyiqF51DB785oKLL3SjH0ZrkbTCp0gNbY+0PivMxh22FVIUFOOvC47SY3JNMU4jovQobpu9Iu5f3BbREQhn+fiD1HYL3TiREdsJgjnipg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742217803; c=relaxed/simple;
-	bh=BpyEdD917DTKrssNtjyvHazyp1gxLX2BMxDRS4uuMT8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=nuiXbkQqIUY9NnYWiZaIqwQupPRyiIxAL8o8J4kA2I2yDtOWMeU53qAtuUPzyOUBB+9aFgHsaOf3wuEZySgXATlcr09ncAPbesF7foUWiZ5l8FZnHZVTrsj5IzZ+nO9Btd2rjuWNbX5x+X3L9xhVNt5QUf+gptkDQ73Zbpi7Kg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OOtwng8s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59904C4CEE9;
-	Mon, 17 Mar 2025 13:23:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742217803;
-	bh=BpyEdD917DTKrssNtjyvHazyp1gxLX2BMxDRS4uuMT8=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=OOtwng8s80n8AiNj2LAhGke8+KaiNxKdafKlsHRhPYzXc+QVQc5TVmKrElCFg/zWa
-	 H9DyMFazp2LZtcLlXjiztpdMKQV4u+JAWOtiNT8aRMOrhLihU7HaBwYbcVRW5NxrOw
-	 GPjkAqFHZzePBAMTXtfDNBe/doWXtsAUYEViaLjvVludR0Po1Rv5NvUYVWt2xnUXUd
-	 fSW4lHdACvaNx/twmdZH8cMs8LSxqGeeckSi/RpB90/NBy11BxL/hQzPKPhd587ajt
-	 WCYJTENFFL/TJKFkYjfRlGz+phfYrG7qcrh0Thpc9IH0D60LGwRH5IYy5HJSMhKdag
-	 1FxV+9hsgUswA==
-Message-ID: <78e580bd-420c-4e5e-9383-7919c422ab58@kernel.org>
-Date: Mon, 17 Mar 2025 14:23:15 +0100
+	s=arc-20240116; t=1742218487; c=relaxed/simple;
+	bh=CgszdGGeicl8iIr17lfG9jPPwh40ujTfjKZ3ZY6yZvQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g51j6yvOLJbMv0DpE1m97UIFy+RoJLQQNZ8g6pHnPiBE2rE2yrZAq6N5iDCi9YE7lwrZvDqjqG4of4urypQPe29DtsjGLjQiAxkGo8QzG0j2KS/c73MmniZVKoOybpzq9pJZ5MeVsbjbs0iSM3Zl/C5Enzas23iFlzye41QFiqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=DQssZf42; arc=none smtp.client-ip=217.70.183.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id EE8D9443EE;
+	Mon, 17 Mar 2025 13:34:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1742218483;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=p089Kuapj5i1IJvwDJhMGH1sE+tEgq9pwXD682PKXmE=;
+	b=DQssZf42rNNnb0k6b/qOWY+9eSOCtnoOA+mK0Aaxe0aRB6lc8SBYVe2RZe8CtSp2uxEiID
+	SjI6taDZn1UGTrlrp8b2w2ka+evxeNSi1rGDMN31JSg3y58w3cpObfjQpuW48jvBD4GbAz
+	UFeM6Lk5PBSbnoZshfRIAy5eXhq2jJkfysqQowb5wgwOrrYi7R9IvVcWN9XLZWIF1JvG2G
+	END9hBUYkjpR3di6C6lwva7EkmTRTXxMAHkJvttmyVxT3OJA4Skw9JZvx2t1VnBR++vN5k
+	r5KPkk3CtOsidzazo1X5UrKtqml5DZq9jDn+lDDe1dblx7sjoAYWRcPovpoVLw==
+Date: Mon, 17 Mar 2025 14:34:42 +0100
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-rtc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] rtc: pm8xxx: switch to devm_device_init_wakeup
+Message-ID: <20250317133442c86d4728@mail.local>
+References: <20250317111312.1518349-1-alexandre.belloni@bootlin.com>
+ <Z9gOT5WBaGkBZjl9@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 1/4] dt-bindings: PCI: qcom: Add MHI registers for
- IPQ9574
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, bhelgaas@google.com,
- lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250317100029.881286-1-quic_varada@quicinc.com>
- <20250317100029.881286-2-quic_varada@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250317100029.881286-2-quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z9gOT5WBaGkBZjl9@hovoldconsulting.com>
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufeelieehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeetlhgvgigrnhgurhgvuceuvghllhhonhhiuceorghlvgigrghnughrvgdrsggvlhhlohhnihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeeiudeuteehhfekgeejveefhfeiudejuefhgfeljefgjeegkeeujeeugfehgefgnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtudemvgdtrgemvdgumeeifeejtdemjeekvgdtmegttdgvkeemvdektdeimeekrggtieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgdtrgemvdgumeeifeejtdemjeekvgdtmegttdgvkeemvdektdeimeekrggtiedphhgvlhhopehlohgtrghlhhhoshhtpdhmrghilhhfrhhomheprghlvgigrghnughrvgdrsggvlhhlohhnihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohephedprhgtphhtthhopehjohhhrghnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnodhlihhnrghroheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqm
+ hhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhrthgtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-GND-Sasl: alexandre.belloni@bootlin.com
 
-On 17/03/2025 11:00, Varadarajan Narayanan wrote:
-> The MHI range is present in ipq5332, ipq6018, ipq8074 and ipq9574.
-> Append the MHI register range and complete the hardware description
-> for the above SoCs.
+On 17/03/2025 12:58:07+0100, Johan Hovold wrote:
+> On Mon, Mar 17, 2025 at 12:13:11PM +0100, alexandre.belloni@bootlin.com wrote:
+> > From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> > 
+> > Switch to devm_device_init_wakeup to avoid a possible memory leak as wakeup
+> > is never disabled.
 > 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> You should probably mention that this was due to a bad merge. The
+> no-alarm patch moved the previous call to device_init_wakeup() into the
+> conditional, but you had switched it to use devres so we ended up with
+> two calls when you applied the patch.
+> 
+> Unless you want to and can rebase your tree.
+> 
+> > Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> > ---
+> >  drivers/rtc/rtc-pm8xxx.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
+> > index c6241a0c26e9..70cbac76147b 100644
+> > --- a/drivers/rtc/rtc-pm8xxx.c
+> > +++ b/drivers/rtc/rtc-pm8xxx.c
+> > @@ -647,7 +647,7 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+> >  		if (rc)
+> >  			return rc;
+> >  
+> > -		device_init_wakeup(&pdev->dev, true);
+> > +		devm_device_init_wakeup(&pdev->dev);
+> 
+> So you need to remove the call to devm_device_init_wakeup() above as
+> well (after platform_set_drvdata()) which the no-alarm patch moved here.
+> 
+> With that fixed:
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
+Right, I fixed my merge instead, thanks!
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> >  	} else {
+> >  		clear_bit(RTC_FEATURE_ALARM, rtc_dd->rtc->features);
+> >  	}
+> 
+> Johan
+> 
 
-Best regards,
-Krzysztof
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
