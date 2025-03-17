@@ -1,198 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-51589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A998A646B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 10:10:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78637A646DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 10:18:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0551518948E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 09:10:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 469063B2FF3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 09:17:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F22F21C175;
-	Mon, 17 Mar 2025 09:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B53B21B9F6;
+	Mon, 17 Mar 2025 09:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RX6VarsU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eedTo345"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F5E21A45E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:09:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B275130A7D;
+	Mon, 17 Mar 2025 09:17:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742202592; cv=none; b=o6LdapWX9pfp9+z+Jd7VX7LM4lhjSWKsAXUJ+6ZWSf/GUKTOZ7ZIs6keHvIYwdAgJcuo/scPsPKc2UTOrRiRuaQLoT4Da0dEyrwHEcTZ+oUpgEfMe0rLuwt9b1hJ0VuY/osL7HYt6pMT0aSZ6bdXGdn/alwzWObwSYZRqQ1Z3iU=
+	t=1742203070; cv=none; b=DKX1aVBWAIlh76qfW2tSm0/2AU0B/XlV6OG6ORGWydtosySaT4yqtu+91nqevEjNTeJybfYftL6JIeOn3Al0CbqWAPdWXGe7PpM+nSX8/H8jtiMilf3Sb5kj+WrMioS44KjT6YbxuuIlX0WaAHH0kZMbMg7lGDplLwjVTHJ83CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742202592; c=relaxed/simple;
-	bh=/6+sTkr6a3ceKu/fxq9OWBAkUr2gpzahEt538B5Vjlg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t4HI3+0ISQQjGwuQEryH1EPULodoMCXrjcvrqMDAjR/lYbk9CO5AkmM3BdQXAPQEADMJoopYl7XawwgTAdSjr98Q/ble/20S/xS2iaGfxew9NZfGDmD1wfZZKlgSsTrloVQxQ2sMDoxFsWJ0zzW21Tb6bhSR/YFU3WvPb6/OSpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RX6VarsU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52GNiqmt011603
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:09:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ahQItqeoUmWIKu5Zx43vnqgKrtzrhBRX2qch9IykP+M=; b=RX6VarsUXJVJCoJM
-	QA8l/3hkOpysMUyo19acn8fHjbnucwFU9HghBirLGNs1UjHKG83DcWn9oLbbhiwc
-	Us7olQDYJGKFnoaydGAGIZjO1FzbPCdK1Sa9poZn3YRlgMCqFVIfWZIVWTQ7Nodb
-	cUluH6cauFZpEBZ9XNj97rmUy7kYZsImy5jSmfiO+/OsaD6Yj4X8zF46HxLx9lQ6
-	TY3YwgAy1Nt1l7gjvHWan7bPFkWeAO+GBI7669M3o834GP0IKK/2jKBfmBgZUDPf
-	Z3x78yiD9mBrjZm+0mhStittj3aJPxGWy9iSfW0A5agHqWqPkmSXnEWo3uAlun53
-	R8MXFQ==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45d1r142n0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:09:49 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-224364f2492so65340365ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 02:09:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742202588; x=1742807388;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ahQItqeoUmWIKu5Zx43vnqgKrtzrhBRX2qch9IykP+M=;
-        b=GrPWriX5TY6u9zNc3GBOdceqoa0BulZo4LOvSOaN4F7Jep9en5V6UUSHihetvfpcRU
-         t96YSl38CNreFEb808uXypVCj1/24v/MqJheEq5VpGeIGfXdUfaQG9p8/m3GHeTGxBlX
-         oj3gCSLaF00lamGEOinRXhdzNWfzBkE0P1f81D2qc+FZtDYgY2Dliy1MG4KVGIHmo7tV
-         eTMdUbnRRmcCUIJ/CaPksyWdXSe/LU2pJkpAIAc+OeyxHmjvNcRJQ4jrtMyYfYNKq1rN
-         13/82mJDHRV4Z3HY+fYN5byEqpMOZCYaRXzApZzCLDRi7Ar9zD6a8PVbqbUzCAfxMJMp
-         N+9g==
-X-Forwarded-Encrypted: i=1; AJvYcCW0SppHgDCAfudJ4BdTL5RpRpnmYAgNs/aX/d9YYxEyiPbnxRQ1yWbF9qlubd2Soeu4i4VyMyC8VQrQPiq2@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMa+ymsZ7lvvxkf2x/N/eYTRlnWVJkXea9j5c1ibGmHVj3fV2b
-	wSFQosRRs2cOAYztqx3nWMcXUs9e87mTMhcEUnWsQPtpZL15rSBtZkbkLB2o1ix4EqIv0VqvC8l
-	j4tQS9jjWjAYC+pJzcZF1sudazbY8oIcBtU/6snlm9mkJZ94jzfr6oDL32XU3L8np
-X-Gm-Gg: ASbGncvnKBesbtJvT31cANNeWAgeebsBOmD9oDfG+yjvWOuqQ+5UUVsdskOpA1z4re8
-	naJt7z1+0B9mdkZtM1X04hJV5naHr2Msjh1RRcw48mL0E5qrD0yWujOhr6jAVagEkqou9B37tU0
-	DbmEXgzWflXclhqTctlcI3Tm00IE4qxR0d/wrVe1h2JXBf36bsGxnTtTl9PnVNVv/mfVt/Z0gX9
-	PFoR/AEDwFLl2Ok/Bmlm3OKjN3f9/JvPYaGXxQdxzS3H0MPgiLhtXK8BOJvtbuG8+2Y4DItgv+n
-	OtHCo3/34Gwsb23jKzBZr6A+WEP3oeqIw7W/FiOWPXqM1Q==
-X-Received: by 2002:a17:902:e545:b0:224:2384:5b40 with SMTP id d9443c01a7336-225e0aa0c3fmr153573615ad.24.1742202588258;
-        Mon, 17 Mar 2025 02:09:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF60BAHI99rtN5h8BxymtxkXdeGrP8liOg0J2LI+ZV9QRYEQpFc2bN8hoL4jPWB33wsovgGXg==
-X-Received: by 2002:a17:902:e545:b0:224:2384:5b40 with SMTP id d9443c01a7336-225e0aa0c3fmr153573275ad.24.1742202587815;
-        Mon, 17 Mar 2025 02:09:47 -0700 (PDT)
-Received: from [10.92.192.202] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bd5ae4sm70180935ad.229.2025.03.17.02.09.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Mar 2025 02:09:47 -0700 (PDT)
-Message-ID: <75bd4685-a6ea-4852-f41f-fd4437383774@oss.qualcomm.com>
-Date: Mon, 17 Mar 2025 14:39:41 +0530
+	s=arc-20240116; t=1742203070; c=relaxed/simple;
+	bh=C2lOHjL4PYNa3dMu5IqZyg4fIoUD4zdvKW2CVrc01GQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R5QeTay9y/IIHRA0tEgu3hRKtWmcsip8XJCeVMhY/sYpQB6xIT9+/jQbz8ik0AEEuM22hv0S3E03ZVIto5MoS4e4hi0RmdlS482U8o5NwyvjVUktFan5D57PsAsRKC5SLa0nSCpcHl8G2zQSN4vaFlDhxVLNCU1EcWMgzPl72FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eedTo345; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D3FC4CEE3;
+	Mon, 17 Mar 2025 09:17:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742203069;
+	bh=C2lOHjL4PYNa3dMu5IqZyg4fIoUD4zdvKW2CVrc01GQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eedTo345fnkHS0qGxBrQ+6/7yc2f4Lwchy2L/9NfPq0rjnbPlNDm95uoX20SdEm/o
+	 YzuwoVFEMxFUG4I+3w059H172FvscGP45E1oxFgGfxH7KjbIHkCFFjXKYMr/+HdEop
+	 k4kdXGjfgJfP5i957SF4mo2PitqfRk9CdiYV5HzYAu1C5X1drgtMlur+esR0wTFtxi
+	 x/ONi8SIi1VFyAt06cJapA60603S+ngsc18R3Pe0fRRHTnZYCoohP+S7WQufjQ3l23
+	 L/I4cj1f7OT2YND6Cjmazylp5RlmFL39wKyOFtFRB9Wk34Lk7NXkiZ27+pnwlk52QE
+	 o+nR7QAOl9WuQ==
+Date: Mon, 17 Mar 2025 10:17:46 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Stephan Gerhold <stephan@gerhold.net>, Otto =?utf-8?Q?Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
+	Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Dmitry Baryshkov <lumag@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, iommu@lists.linux.dev, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org, 
+	~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org
+Subject: Re: [PATCH v4 1/6] dt-bindings: clock: qcom: Add MSM8937 Global
+ Clock Controller
+Message-ID: <20250317-hot-obedient-sturgeon-394cb8@krzk-bin>
+References: <20250315-msm8937-v4-0-1f132e870a49@mainlining.org>
+ <20250315-msm8937-v4-1-1f132e870a49@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v4 01/10] dt-bindings: PCI: Add binding for Toshiba TC956x
- PCIe switch
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: "Rob Herring (Arm)" <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84s?=
- =?UTF-8?Q?ki?= <kw@linux.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        chaitanya chundru <quic_krichai@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-kernel@vger.kernel.org,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Konrad Dybcio <konradybcio@kernel.org>, quic_vbadigan@quicnic.com,
-        jorge.ramirez@oss.qualcomm.com, cros-qcom-dts-watchers@chromium.org,
-        linux-pci@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, amitk@kernel.org,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>, dmitry.baryshkov@linaro.org
-References: <20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com>
- <20250225-qps615_v4_1-v4-1-e08633a7bdf8@oss.qualcomm.com>
- <174048982895.1892984.13694169241426640158.robh@kernel.org>
- <f718ae90-237c-634a-111d-05f2f0240db9@oss.qualcomm.com>
- <20250313055657.ddrzqo2edx46az7b@thinkpad>
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20250313055657.ddrzqo2edx46az7b@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=LuaSymdc c=1 sm=1 tr=0 ts=67d7e6dd cx=c_pps a=IZJwPbhc+fLeJZngyXXI0A==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=VwQbUJbxAAAA:8 a=zHEVz4YWXsmZ1JJS7FsA:9
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: DM7aDCuEvlzLlGgaxIZiALapH7o6bydD
-X-Proofpoint-ORIG-GUID: DM7aDCuEvlzLlGgaxIZiALapH7o6bydD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-17_03,2025-03-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- mlxscore=0 suspectscore=0 priorityscore=1501 phishscore=0 adultscore=0
- clxscore=1015 lowpriorityscore=0 spamscore=0 mlxlogscore=956
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503170067
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20250315-msm8937-v4-1-1f132e870a49@mainlining.org>
 
+On Sat, Mar 15, 2025 at 03:57:35PM +0100, Barnab=C3=A1s Cz=C3=A9m=C3=A1n wr=
+ote:
+> Add device tree bindings for the global clock controller on Qualcomm
+> MSM8937 platform.
+>=20
+> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <barnabas.czeman@mainlining=
+=2Eorg>
+> ---
+>  .../bindings/clock/qcom,gcc-msm8937.yaml           | 75 ++++++++++++++++=
+++++++
+>  include/dt-bindings/clock/qcom,gcc-msm8917.h       | 17 +++++
+>  2 files changed, 92 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8937.yam=
+l b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8937.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..3c3f6756048e195671f542b3a=
+6cd09057558eafa
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8937.yaml
+> @@ -0,0 +1,75 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-msm8937.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller on MSM8937
+> +
+> +maintainers:
+> +  - Barnabas Czeman <barnabas.czeman@mainlining.org>
+> +
+> +description: |
+> +  Qualcomm global clock control module provides the clocks, resets and p=
+ower
+> +  domains on MSM8937.
 
+This is exactly like msm8953, so why it cannot be there?
 
-On 3/13/2025 11:26 AM, Manivannan Sadhasivam wrote:
-> On Fri, Feb 28, 2025 at 04:26:23AM +0530, Krishna Chaitanya Chundru wrote:
->>
->>
->> On 2/25/2025 6:53 PM, Rob Herring (Arm) wrote:
->>>
->>> On Tue, 25 Feb 2025 15:03:58 +0530, Krishna Chaitanya Chundru wrote:
->>>> From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>>>
->>>> Add a device tree binding for the Toshiba TC956x PCIe switch, which
->>>> provides an Ethernet MAC integrated to the 3rd downstream port and two
->>>> downstream PCIe ports.
->>>>
->>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>>> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
->>>> ---
->>>>    .../devicetree/bindings/pci/toshiba,tc956x.yaml    | 178 +++++++++++++++++++++
->>>>    1 file changed, 178 insertions(+)
->>>>
->>>
->>> My bot found errors running 'make dt_binding_check' on your patch:
->>>
->>> yamllint warnings/errors:
->>>
->>> dtschema/dtc warnings/errors:
->>> Warning: Duplicate compatible "pciclass,0604" found in schemas matching "$id":
->>> 	http://devicetree.org/schemas/pci/toshiba,tc956x.yaml#
->>> 	http://devicetree.org/schemas/pci/pci-pci-bridge.yaml#
->> Hi Rob,
->>
->> As we want to refernce pci-pci-bridge.yaml which is expecting compatible
->> as "pciclass,0604", we modified the compatible as "pci1179,0623",
->> "pciclass,0604". Now adding pciclass0604 is giving this warning. can you
->> suggest correct way to represent this.
->>
-> 
-> I think the PCI-PCI bridge compatible should be part of the actual bridge nodes
-> inside the switch. I still stand by my view that the bridge compatible doesn't
-> make sense for the top level switch node as this switch is a sort of MFD.
-> 
-> So you should do:
-> 
-> 	pcie@0,0 {
-> 		compatible = "pci1179,0623";
-> 		reg = <0x10000 0x0 0x0 0x0 0x0>;
-> 		...
-> 
-> 		pcie@1,0 {
-> 			compatible = "pciclass,0604";
-> 			reg = <0x20800 0x0 0x0 0x0 0x0>;
-> 			...
-> 		};
-> 	};
-> 
-Thanks mani for the inputs on this.
-For child nodes I will make pci-pci-bridge as a reference and for the
-main node( pcie@0,0) I will pci-bus-common.yaml as reference.
+> +
+> +  See also::
+> +    include/dt-bindings/clock/qcom,gcc-msm8917.h
 
-- Krishna Chaitanya.
-> 
-> - Mani
-> 
+typo, 8937
+
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,gcc-msm8937
+> +
+> +  clocks:
+> +    items:
+> +      - description: XO source
+> +      - description: Sleep clock source
+> +      - description: DSI phy instance 0 dsi clock
+> +      - description: DSI phy instance 0 byte clock
+> +      - description: DSI phy instance 1 dsi clock
+> +      - description: DSI phy instance 1 byte clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
+> +      - const: sleep_clk
+> +      - const: dsi0pll
+> +      - const: dsi0pllbyte
+> +      - const: dsi1pll
+> +      - const: dsi1pllbyte
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +  - '#power-domain-cells'
+> +
+> +allOf:
+> +  - $ref: qcom,gcc.yaml#
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmcc.h>
+> +
+> +    clock-controller@1800000 {
+> +      compatible =3D "qcom,gcc-msm8937";
+> +      reg =3D <0x01800000 0x80000>;
+> +      #clock-cells =3D <1>;
+> +      #reset-cells =3D <1>;
+> +      #power-domain-cells =3D <1>;
+> +      clocks =3D <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> +               <&sleep_clk>,
+> +               <&dsi0_phy 1>,
+> +               <&dsi0_phy 0>,
+> +               <&dsi1_phy 1>,
+> +               <&dsi1_phy 0>;
+> +      clock-names =3D "xo",
+> +                    "sleep_clk",
+> +                    "dsi0pll",
+> +                    "dsi0pllbyte",
+> +                    "dsi1pll",
+> +                    "dsi1pllbyte";
+> +    };
+> +...
+> diff --git a/include/dt-bindings/clock/qcom,gcc-msm8917.h b/include/dt-bi=
+ndings/clock/qcom,gcc-msm8917.h
+> index 4b421e7414b50bef2e2400f868ae5b7212a427bb..ec1f0b261dd5ccfe4896a00ff=
+a9cf86de98b9cb3 100644
+> --- a/include/dt-bindings/clock/qcom,gcc-msm8917.h
+> +++ b/include/dt-bindings/clock/qcom,gcc-msm8917.h
+> @@ -170,6 +170,22 @@
+>  #define VFE1_CLK_SRC				163
+>  #define VSYNC_CLK_SRC				164
+>  #define GPLL0_SLEEP_CLK_SRC			165
+> +#define BLSP1_QUP1_I2C_APPS_CLK_SRC		166
+> +#define BLSP1_QUP1_SPI_APPS_CLK_SRC		167
+> +#define BLSP2_QUP4_I2C_APPS_CLK_SRC		168
+> +#define BLSP2_QUP4_SPI_APPS_CLK_SRC		169
+
+Why are you adding bindings to 8917? Nothing in commit msg explains
+that.
+
+Best regards,
+Krzysztof
+
 
