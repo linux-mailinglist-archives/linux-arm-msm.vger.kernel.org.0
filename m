@@ -1,117 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-51594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F712A647EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 10:45:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1513DA647FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 10:49:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B6A631891D70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 09:45:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF91F188E054
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 09:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01DDA22A7F6;
-	Mon, 17 Mar 2025 09:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2B432248A5;
+	Mon, 17 Mar 2025 09:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vc5R1QmP"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="HjKaTdPy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAA61AAA32;
-	Mon, 17 Mar 2025 09:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4611AAA32;
+	Mon, 17 Mar 2025 09:48:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742204719; cv=none; b=JbYXAkoYpnft99qeVP3Cdo+prehtAl6VeWijJnqur5GvMAejd/0OR7Q+MCP1WgCH3EW5kF5Rxw+ktC4VhWpnE31tMDQKW/oQdA2r6ycEagGWAH/EjaAST8OspJ2k8RJ4Qrfq41k0J5GajR3zRhHZpttlF8aES10qMc5S9e1bSTw=
+	t=1742204938; cv=none; b=Iqj7l9jLQZWcDrkjch6huJIPQNyt/JXVjB/bi8uTp6a5n7kr/o02ele6DIQ0dTXkdRd2BwUhlbRnGvYrsMLvtMbChdL/QpNHVIvCBqKQIGwmg+Ryxq151VxAldfaegpoRN1B+e4YdOCGvuqDne6oHuwdZRS6RnEVm2/PxeuuHA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742204719; c=relaxed/simple;
-	bh=IDfEO9ixbAv5kWVNwF8BvMXACU0glZwpuOKgM/NINyM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nYcQFKa3IjG4UOmYswWoGGSVnKqi7q2AJ8g1lSN3pDn64r/j7I36w8j2eW6kA52gBZWhUWE+0FyfPdwYeCTFhaiSUjSCUIhSgLdO4k8e2cuXWTd7SU1TlhwQtSyekxFZxighth7aTguMpXsi3tQnbucR11kbZ10EHCCDjp1wWaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vc5R1QmP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9377C4CEF0;
-	Mon, 17 Mar 2025 09:45:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742204719;
-	bh=IDfEO9ixbAv5kWVNwF8BvMXACU0glZwpuOKgM/NINyM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Vc5R1QmPHOTrhSdJtjbXjn3Q/pVsWLlIO/2wjHWiT71fsu3wrrUDlsbP/CPZXw+mc
-	 xysGjRvhtSwfdQA7HGJt+RsKNKcxEBhM6/R8SmwI47z5/kKsgxaSoneE4b6337Kx/S
-	 q29zb4BgGaWy9Qun1/SXXBOv4DEQWAk0xS038Xs+ce/2+w3rg3YTC20kityrcogz6z
-	 YP6/VILT5UbbeNCTguFiYnXZ2Tpaqa/ZbTBIEViVGHFSJqOudQTjAM6x9yYNcJPurG
-	 VLYLFVMq+ZIaNNcvvUNSE6050QM1p9nJenFIgDe2tf1Qp4VUnagqewQiw3BvpA4WHx
-	 uGNkNd+wpqZVA==
-Date: Mon, 17 Mar 2025 10:45:16 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Andrzej Hajda <andrzej.hajda@intel.com>, 
-	David Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Hermes Wu <Hermes.wu@ite.com.tw>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Rob Clark <robdclark@gmail.com>, Robert Foss <rfoss@kernel.org>, 
-	Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>, 
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH v6 2/4] drm/bridge: add function interface for
- DisplayPort audio implementation
-Message-ID: <20250317-dancing-loyal-malkoha-ad5a36@houat>
-References: <20250314-dp-hdmi-audio-v6-2-dbd228fa73d7@oss.qualcomm.com>
- <d5b8a7fa506ed3026c19b383edf160d6@kernel.org>
- <otidtln4pjb47azr7zhllxkqmwocdnbdiay6xcg6psphz3436i@fn5hxgaflgv6>
+	s=arc-20240116; t=1742204938; c=relaxed/simple;
+	bh=h7GyFVQU2oi/Oh20M0uqm+bW9goiwku7FOLQNxE2IvQ=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=rw1+TI+Fc8k0omuF1oa0M8LeWRfwuFOH8QJwfHeq9KzvJ4ts1SfGscb391LZllTZkE5NEj3HNNtHGk4X/upva1SrXmY7pUZTtRPQcIP1qF4QE/qguLYhRv2PsREuvZ6l5Oobk6hRuv1vRUG+Yqg/l31oFcPssY4t3K/s7ebeyZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=HjKaTdPy; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from [127.0.0.1] (254C1C5A.nat.pool.telekom.hu [37.76.28.90])
+	by mail.mainlining.org (Postfix) with ESMTPSA id C8F94BBAC4;
+	Mon, 17 Mar 2025 09:48:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1742204929;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KQUc1TIqImv/gjsL1SsdE5mqG9ewHx8AMbVf5J90/JE=;
+	b=HjKaTdPyYIaSu2gQhXv0c2GnzmfZhGAMCKxZ8Uzv2knIpTsW44IwlfaN142YjxS6Iv4BkT
+	BOI+LRkkwuL9s7HKOfzGxRyBrhgO1jGgBMhSRvmqRMQOwuG1mp1bfy31tASnmODSUpT1FJ
+	hxrEu0LsLpBqMONxp69RU4XxSj68pQFGpLhacpQni5tiRINKPHc0ihgpJ029CyxqbtaLfu
+	JkyQQRm+MwhZK5/wSUDyBxA0sfU3IJXwu/yqtSwxPosBKCl1HhRBNOhVYFBCX9zihrgjmv
+	FJEHe2Qj3fyJPNV4drbURK+9avdc7rgSkmwvyENBwh5cPImGI/kwMBJ5ERHPJw==
+Date: Mon, 17 Mar 2025 10:48:47 +0100
+From: =?ISO-8859-1?Q?Barnab=E1s_Cz=E9m=E1n?= <barnabas.czeman@mainlining.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
+ =?ISO-8859-1?Q?Otto_Pfl=FCger?= <otto.pflueger@abscue.de>,
+ Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+ iommu@lists.linux.dev, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org,
+ Adam Skladowski <a39.skl@gmail.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_3/6=5D_dt-bindings=3A_drm/msm/g?=
+ =?US-ASCII?Q?pu=3A_Document_AON_clock_for_A505/A506/A510?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <20250317-hypnotic-weightless-mosquito-f489ad@krzk-bin>
+References: <20250315-msm8937-v4-0-1f132e870a49@mainlining.org> <20250315-msm8937-v4-3-1f132e870a49@mainlining.org> <20250317-hypnotic-weightless-mosquito-f489ad@krzk-bin>
+Message-ID: <73631B5F-0916-4F81-AAB4-C8E2F4B999EC@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="ixvl3eaawni5mk5e"
-Content-Disposition: inline
-In-Reply-To: <otidtln4pjb47azr7zhllxkqmwocdnbdiay6xcg6psphz3436i@fn5hxgaflgv6>
-
-
---ixvl3eaawni5mk5e
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v6 2/4] drm/bridge: add function interface for
- DisplayPort audio implementation
-MIME-Version: 1.0
 
-On Fri, Mar 14, 2025 at 08:55:05PM +0200, Dmitry Baryshkov wrote:
-> On Fri, Mar 14, 2025 at 05:54:14PM +0000, Maxime Ripard wrote:
-> > On Fri, 14 Mar 2025 11:36:49 +0200, Dmitry Baryshkov wrote:
-> > > It is common for the DisplayPort bridges to implement audio support. =
-In
-> > > preparation to providing a generic framework for DP audio, add
-> > > corresponding interface to struct drm_bridge. As suggested by Maxime
-> > > for now this is mostly c&p of the corresponding HDMI audio API.
-> > >=20
-> > >=20
-> > > [ ... ]
-> >=20
-> > Reviewed-by: Maxime Ripard <mripard@kernel.org>
->=20
-> You've sent two r-b's for patch 2. Is there a chance that one of those
-> was for patch 3?
 
-Did I? Sorry, it was indeed meant for patch 3
 
-Maxime
-
---ixvl3eaawni5mk5e
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZ9fvJwAKCRAnX84Zoj2+
-dnNVAYDhZWYDGXn7oAB0Fo0Lf64zRQfKXIpnqEHJYJiwjUC3bU8WN/EHUFxqFVpX
-epcnHMkBf1TqVVJjt8AS9ICP0MFlT1pGgiaFWa2B8bah6LI77fyFdkT67q5xD9JQ
-oz5+buRd4w==
-=mQjr
------END PGP SIGNATURE-----
-
---ixvl3eaawni5mk5e--
+On March 17, 2025 10:21:50 AM GMT+01:00, Krzysztof Kozlowski <krzk@kernel=
+=2Eorg> wrote:
+>On Sat, Mar 15, 2025 at 03:57:37PM +0100, Barnab=C3=A1s Cz=C3=A9m=C3=A1n =
+wrote:
+>> From: Adam Skladowski <a39=2Eskl@gmail=2Ecom>
+>>=20
+>> Adreno 505 (MSM8937), Adreno 506(MSM8953) and Adreno 510(MSM8976)
+>> require Always-on branch clock to be enabled, describe it=2E
+>>=20
+>> Signed-off-by: Adam Skladowski <a39=2Eskl@gmail=2Ecom>
+>> [reword commit, move alwayson on the first place]
+>> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <barnabas=2Eczeman@mainli=
+ning=2Eorg>
+>> ---
+>>  Documentation/devicetree/bindings/display/msm/gpu=2Eyaml | 6 ++++--
+>>  1 file changed, 4 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/Documentation/devicetree/bindings/display/msm/gpu=2Eyaml b=
+/Documentation/devicetree/bindings/display/msm/gpu=2Eyaml
+>> index 6ddc72fd85b04537ea270754a897b4e7eb269641=2E=2E5028398cc3b517e404a=
+92a2c30688f72eab4c1b3 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/gpu=2Eyaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/gpu=2Eyaml
+>> @@ -152,11 +152,13 @@ allOf:
+>>        properties:
+>>          clocks:
+>>            minItems: 2
+>> -          maxItems: 7
+>> +          maxItems: 8
+>> =20
+>>          clock-names:
+>>            items:
+>>              anyOf:
+>> +              - const: alwayson
+>> +                description: GPU Always-On clock
+>
+>Are you adding bindings for devices which were not described previously?
+>Then don't grow this pattern, but create if:then: with a strictly
+>ordered list for them (and keeping order of other variants)=2E
+>
+8956, 8976, 8953 schemas are failing because of missing always-on clock=2E
+>Best regards,
+>Krzysztof
+>
 
