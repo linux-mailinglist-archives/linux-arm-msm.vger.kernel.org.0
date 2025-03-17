@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-51629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D77FA6552F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:10:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F423AA6553F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:13:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA1AB163669
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 15:10:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B52CB3B598F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 15:13:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 125822459FA;
-	Mon, 17 Mar 2025 15:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECF21248879;
+	Mon, 17 Mar 2025 15:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q/VXCgWB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Swtwhy+7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FFE42070;
-	Mon, 17 Mar 2025 15:10:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B00246335;
+	Mon, 17 Mar 2025 15:13:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742224229; cv=none; b=qgOzKnJ+Il0a5fSF50jxNeFOySpOc79fvOC3wTIQU7eNYrH9yFM3vVWL63QJzbOFY5IFVM+Vojs8+rj8JrFwOjqxbMtdtaRi9wRPjFxC7JZT0naIJ7HGt2zg+yTQ+VRZAe48C2V/X4f2g3ohlxDaIh7P0VXaJlo1TrURt9ScPFU=
+	t=1742224391; cv=none; b=XIE3xxnvInix45oW6v4N0dJkd08xRR+vK9uEIRmTNW8Lz4zmGO9PEsioqRJSgJDaGLFhoULQfgqsz3taPSxHR9o9XMhVONMBZimRi8qf/uYUugrr8KFbKjKls/cBg9DfTzTGM126kebAGwqjfEbxRbgQf/UG1fSsdEA/vd3ZNh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742224229; c=relaxed/simple;
-	bh=kqYx6b0Q2AbSrlMWtByIV/qXFsF3L/buRpNOgC/su3w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aKDc1tKQXmWRjDtJexiaAFpTJ9OQA0vZNPyElVksiCoW6BtGYNzwnE/kFQ/VpvyPhvrQrdSkxitQbQpvN8kYIZz0GCUudrBFXTqPjRqwODI0xq43DlM2DsCbf34Y+gS6oeifkrMu41DrHwWlriAa9B6nRXwLiHfrt3Ia5KUId/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q/VXCgWB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF97C4CEE3;
-	Mon, 17 Mar 2025 15:10:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742224228;
-	bh=kqYx6b0Q2AbSrlMWtByIV/qXFsF3L/buRpNOgC/su3w=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Q/VXCgWBx9flKktGMWIUTFGlAe43G0ITwTm7+0NelEZG76xYgZqJyluVWVCJVk7tE
-	 K1E+OxKUIQqjySmc3D438fVyvypZCX1Q0jscm1dzhcwRoCpFZzDwhD88BINihbXO8D
-	 PPhmj8kmp5T3LQNe+8EObPRuIea+viUFvZN3PFWBAFx83tbhhmK5bYOoRZ2kpMJQGP
-	 E7moIz8VDvJbBMhb7L/5BcI0zXnyFJ1PcsUo7HpKJbYDP4SmIx7/nlrAVqrSVdVVQm
-	 1Rt5bhjooZG+GQtq04zSV8oxTpr4eqSm3/FFcsRKsGx0xy13LipZV45MRZQokn2+6S
-	 D05sCT7Zle3nA==
-Message-ID: <1b8228df-e007-4ecf-92b7-d4833efbc765@kernel.org>
-Date: Mon, 17 Mar 2025 16:10:13 +0100
+	s=arc-20240116; t=1742224391; c=relaxed/simple;
+	bh=HX4PCUaLCED9iSUiZvYAxwk0C0kfxnmjixFmmHabl2Y=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=PBSy3paJhs16kGqjB5/kNOX/UoEAaszuI3crqy1N0mqJRKfHlMru6YzWqV0dTXfvk4+tE9+t4DVhlfWD57yPTjuHB+B5Q43CD2G2i3+ndkLV/BzDty1U1AiaLIpoud8BScgC2lu48crbWKSKnMnUE0iIKiM0faMpvM+OEm1K4mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Swtwhy+7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52HAQmti013188;
+	Mon, 17 Mar 2025 15:12:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2iKmj21OTF2U5ax19j6/5quxqV8nPyrZPycPsr3WR98=; b=Swtwhy+7z0KtssYS
+	De3VCiZHRqZchaoCptyUtt2faUk2otUBYeB6RYPLaByate3mMUDOvYmcyUv8M8R5
+	lxsmHPdKs6/foODBDfaSnHm77qGbxvaCHxQtJOrGl6PMNFQ8103RsgWxxDbZRR+l
+	IGjFr3PYbTC/b1+Q8YEN7IoOrUrRSx1wGtwZQOz/k1FRMh/YtGZXTfqDKpYKDmBW
+	t8oij3aWz8KlgfOu8ri2H9PKEj5IYs9DvYS2xBCrdWb6qHSIJv5hVMCtjJgdXjCt
+	iP3pgxNnJzRc0a8Ec7YhtXZHKnpfA9yD81ubi5hG+BxBDZ6ywdxPk4KTmuVCoU2a
+	fpEZfA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45d1sxw2y2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Mar 2025 15:12:48 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52HFClKc030251
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Mar 2025 15:12:47 GMT
+Received: from [10.253.73.42] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 17 Mar
+ 2025 08:12:41 -0700
+Message-ID: <6a5dce2f-54cf-4517-b541-6941d22a25a1@quicinc.com>
+Date: Mon, 17 Mar 2025 23:11:30 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,229 +65,275 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] dt-bindings: clock: qcom: Add MSM8937 Global Clock
- Controller
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
- =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
- Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- iommu@lists.linux.dev, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org
-References: <20250315-msm8937-v4-0-1f132e870a49@mainlining.org>
- <20250315-msm8937-v4-1-1f132e870a49@mainlining.org>
- <20250317-hot-obedient-sturgeon-394cb8@krzk-bin>
- <11695D76-7CBE-41CE-A8DD-D6845D01670C@mainlining.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH net-next v5 0/5] Add PCS support for Qualcomm IPQ9574 SoC
+From: Lei Wei <quic_leiwei@quicinc.com>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+CC: Jakub Kicinski <kuba@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, "Andrew
+ Lunn" <andrew@lunn.ch>,
+        Heiner Kallweit <hkallweit1@gmail.com>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_kkumarcs@quicinc.com>,
+        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_linchen@quicinc.com>, <quic_luoj@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
+        <vsmuthu@qti.qualcomm.com>, <john@phrozen.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250207-ipq_pcs_6-14_rc1-v5-0-be2ebec32921@quicinc.com>
+ <20250211195934.47943371@kernel.org> <Z6x1xD0krK0_eycB@shell.armlinux.org.uk>
+ <71a69eb6-9e24-48ab-8301-93ec3ff43cc7@quicinc.com>
+ <Z8HGnop3ONe5mDGk@shell.armlinux.org.uk>
+ <bab2a500-f507-4ff6-bf69-753718a5f9a5@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <11695D76-7CBE-41CE-A8DD-D6845D01670C@mainlining.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <bab2a500-f507-4ff6-bf69-753718a5f9a5@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6OI106y8YPg2g3Bx0VLepeGGSG9p9VRG
+X-Proofpoint-ORIG-GUID: 6OI106y8YPg2g3Bx0VLepeGGSG9p9VRG
+X-Authority-Analysis: v=2.4 cv=XKcwSRhE c=1 sm=1 tr=0 ts=67d83bf0 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=ziiUTt8RXMPXc2AWiq0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-17_06,2025-03-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 priorityscore=1501 clxscore=1015 phishscore=0
+ impostorscore=0 adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0
+ spamscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503170110
 
-On 17/03/2025 10:57, Barnabás Czémán wrote:
+Hi Russell,
+Gentle reminder to review my responses and provide comments/suggestions. 
+Thank you.
+
+On 3/6/2025 5:12 PM, Lei Wei wrote:
 > 
 > 
-> On March 17, 2025 10:17:46 AM GMT+01:00, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->> On Sat, Mar 15, 2025 at 03:57:35PM +0100, Barnabás Czémán wrote:
->>> Add device tree bindings for the global clock controller on Qualcomm
->>> MSM8937 platform.
+> On 2/28/2025 10:22 PM, Russell King (Oracle) wrote:
+>> On Wed, Feb 19, 2025 at 06:46:57PM +0800, Lei Wei wrote:
+>>>> 2) there's yet another open coded "_get" function for getting the
+>>>> PCS given a DT node which is different from every other "_get"
+>>>> function - this one checks the parent DT node has an appropriate
+>>>> compatible whereas others don't. The whole poliferation of "_get"
+>>>> methods that are specific to each PCS still needs solving, and I
+>>>> still have the big question around what happens when the PCS driver
+>>>> gets unbound - and whether that causes the kernel to oops. I'm also
+>>>> not a fan of "look up the struct device and then get its driver data".
+>>>> There is *no* locking over accessing the driver data.
 >>>
->>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->>> ---
->>>  .../bindings/clock/qcom,gcc-msm8937.yaml           | 75 ++++++++++++++++++++++
->>>  include/dt-bindings/clock/qcom,gcc-msm8917.h       | 17 +++++
->>>  2 files changed, 92 insertions(+)
+>>> The PCS device in IPQ9574 chipset is built into the SoC chip and is not
+>>> pluggable. Also, the PCS driver module is not unloadable until the MAC
+>>> driver that depends on it is unloaded. Therefore, marking the driver
+>>> '.suppress_bind_attrs = true' to disable user unbind action may be good
+>>> enough to cover all possible scenarios of device going away for 
+>>> IPQ9574 PCS
+>>> driver.
+>>
+>> What I am concerned about is the proliferation of these various PCS
+>> specific "_get" methods. Where the PCS is looked up by firmware
+>> reference, we should have a common way to do that, rather than all
+>> these PCS specific ways.
+>>
+>> I did start work on that, but I just haven't had the time to take it
+>> forward. This is about as far as I'd got:
+>>
+>> diff --git a/drivers/net/pcs/Makefile b/drivers/net/pcs/Makefile
+>> index 4f7920618b90..0b670fee0757 100644
+>> --- a/drivers/net/pcs/Makefile
+>> +++ b/drivers/net/pcs/Makefile
+>> @@ -1,6 +1,8 @@
+>>   # SPDX-License-Identifier: GPL-2.0
+>>   # Makefile for Linux PCS drivers
+>> +obj-$(CONFIG_PHYLINK)        += pcs-core.o
+>> +
+>>   pcs_xpcs-$(CONFIG_PCS_XPCS)    := pcs-xpcs.o pcs-xpcs-plat.o \
+>>                      pcs-xpcs-nxp.o pcs-xpcs-wx.o
+>> diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+>> index 976e569feb70..1c5492dab00e 100644
+>> --- a/drivers/net/phy/phylink.c
+>> +++ b/drivers/net/phy/phylink.c
+>> @@ -2483,6 +2483,15 @@ void phylink_pcs_change(struct phylink_pcs 
+>> *pcs, bool up)
+>>   }
+>>   EXPORT_SYMBOL_GPL(phylink_pcs_change);
+>> +/**
+>> + * phylink_pcs_remove() - notify phylink that a PCS is going away
+>> + * @pcs: PCS that is going away
+>> + */
+>> +void phylink_pcs_remove(struct phylink_pcs *pcs)
+>> +{
+>> +
+>> +}
+>> +
+>>   static irqreturn_t phylink_link_handler(int irq, void *data)
+>>   {
+>>       struct phylink *pl = data;
+>> diff --git a/include/linux/phylink.h b/include/linux/phylink.h
+>> index 071ed4683c8c..1e6b7ce0fa7a 100644
+>> --- a/include/linux/phylink.h
+>> +++ b/include/linux/phylink.h
+>> @@ -1,6 +1,7 @@
+>>   #ifndef NETDEV_PCS_H
+>>   #define NETDEV_PCS_H
+>> +#include <linux/list.h>
+>>   #include <linux/phy.h>
+>>   #include <linux/spinlock.h>
+>>   #include <linux/workqueue.h>
+>> @@ -435,9 +436,11 @@ int mac_enable_tx_lpi(struct phylink_config 
+>> *config, u32 timer,
+>>   #endif
+>>   struct phylink_pcs_ops;
+>> +struct pcs_lookup;
+>>   /**
+>>    * struct phylink_pcs - PHYLINK PCS instance
+>> + * @lookup: private member for PCS core management
+>>    * @supported_interfaces: describing which PHY_INTERFACE_MODE_xxx
+>>    *                        are supported by this PCS.
+>>    * @ops: a pointer to the &struct phylink_pcs_ops structure
+>> @@ -455,6 +458,7 @@ struct phylink_pcs_ops;
+>>    * the PCS driver.
+>>    */
+>>   struct phylink_pcs {
+>> +    struct pcs_lookup *lookup;
+>>       DECLARE_PHY_INTERFACE_MASK(supported_interfaces);
+>>       const struct phylink_pcs_ops *ops;
+>>       struct phylink *phylink;
+>> @@ -692,6 +696,7 @@ int phylink_set_fixed_link(struct phylink *,
+>>   void phylink_mac_change(struct phylink *, bool up);
+>>   void phylink_pcs_change(struct phylink_pcs *, bool up);
+>> +void phylink_pcs_remove(struct phylink_pcs *);
+>>   int phylink_pcs_pre_init(struct phylink *pl, struct phylink_pcs *pcs);
+>> @@ -790,4 +795,11 @@ void phylink_mii_c45_pcs_get_state(struct 
+>> mdio_device *pcs,
+>>   void phylink_decode_usxgmii_word(struct phylink_link_state *state,
+>>                    uint16_t lpa);
+>> +
+>> +/* PCS lookup */
+>> +struct phylink_pcs *pcs_find(void *id);
+>> +void pcs_remove(struct phylink_pcs *pcs);
+>> +int pcs_add(struct phylink_pcs *pcs, void *id);
+>> +int devm_pcs_add(struct device *dev, struct phylink_pcs *pcs, void *id);
+>> +
+>>   #endif
+>>
+>> The idea is that you add the device using whatever identifier you decide
+>> (the pointer value is what's matched). For example, a fwnode. You can
+>> then find it using pcs_find().
+>>
+>> If it returns NULL, then it's not (yet) registered - if you know that it
+>> should exist (e.g. because the fwnode is marked as available) then you
+>> can return -EPROBE_DEFER or fail.
+>>
+>> There is a hook present so phylink can do something on PCS removal -
+>> that's still to be implemented with this. I envision keeping a list
+>> of phylink instances, and walking that list to discover if any phylink
+>> instances are currently using the PCS. If they are, then we can take
+>> the link down.
+>>
+> 
+> Thanks for sharing the details about this, the approach looks correct.
+> 
+> Can you suggest whether we can go ahead with the current version of the 
+> IPQ PCS driver, and update the driver later to use the common way, once 
+> the infrastructure method is supported? Else (preferably) if the patch 
+> for your change can be posted, I can modify the IPQ PCS driver patch to 
+> use the common method and rebase on top of your patch. Please suggest.
+> 
+>>> I would like to clarify on the hardware supported configurations for the
+>>> UNIPHY PCS hardware instances. [Note: There are three instances of 
+>>> 'UNIPHY
+>>> PCS' in IPQ9574. However we take the example here for PCS0]
 >>>
->>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8937.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8937.yaml
->>> new file mode 100644
->>> index 0000000000000000000000000000000000000000..3c3f6756048e195671f542b3a6cd09057558eafa
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8937.yaml
->>> @@ -0,0 +1,75 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/clock/qcom,gcc-msm8937.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm Global Clock & Reset Controller on MSM8937
->>> +
->>> +maintainers:
->>> +  - Barnabas Czeman <barnabas.czeman@mainlining.org>
->>> +
->>> +description: |
->>> +  Qualcomm global clock control module provides the clocks, resets and power
->>> +  domains on MSM8937.
+>>> UNIPHY PCS0 --> pcs0_mii0..pcs0_mii4 (5 PCS MII channels maximum).
+>>> Possible combinations: QSGMII (4x 1 SGMII)
+>>>             PSGMII (5 x 1 SGMII),
+>>>             SGMII (1 x 1 SGMII)
+>>>             USXGMII (1 x 1 USXGMII)
+>>>
+>>> As we can see above, different PCS channels in a 'UNIPHY' PCS block 
+>>> working
+>>> in different PHY interface modes is not supported by the hardware. 
+>>> So, it
+>>> might not be necessary to detect that conflict. If the interface mode
+>>> changes from one to another, the same interface mode is applicable to 
+>>> all
+>>> the PCS channels that are associated with the UNIPHY PCS block.
+>>>
+>>> Below is an example of a DTS configuration which depicts one board
+>>> configuration where one 'UNIPHY' (PCS0) is connected with a QCA8075 Quad
+>>> PHY, it has 4 MII channels enabled and connected with 4 PPE MAC 
+>>> ports, and
+>>> all the PCS MII channels are in QSGMII mode. For the 'UNIPHY' 
+>>> connected with
+>>> single SGMII or USXGMII PHY (PCS1), only one MII channel is enabled and
+>>> connected with one PPE MAC port.
+>>>
+>>> PHY:
+>>> &mdio {
+>>>     ethernet-phy-package@0 {
+>>>                  compatible = "qcom,qca8075-package";
+>>>                  #address-cells = <1>;
+>>>                  #size-cells = <0>;
+>>>                  reg = <0x10>;
+>>>                  qcom,package-mode = "qsgmii";
+>>>
+>>>                  phy0: ethernet-phy@10 {
+>>>                          reg = <0x10>;
+>>>                  };
+>>>
+>>>                  phy1: ethernet-phy@11 {
+>>>                          reg = <0x11>;
+>>>                  };
+>>>
+>>>                  phy2: ethernet-phy@12 {
+>>>                          reg = <0x12>;
+>>>                  };
+>>>
+>>>                  phy3: ethernet-phy@13 {
+>>>                          reg = <0x13>;
+>>>                  };
+>>>     };
+>>>     phy4: ethernet-phy@8 {
+>>>                  compatible ="ethernet-phy-ieee802.3-c45";
+>>>                  reg = <8>;
+>>>          };
+>>> }
+>>>
+>>> PCS:
+>>> pcs0: ethernet-pcs@7a00000 {
+>>>     ......
+>>>     pcs0_mii0: pcs-mii@0 {
+>>>         reg = <0>;
+>>>         status = "enabled";
+>>>     };
+>>>
+>>>     ......
+>>>
+>>>     pcs0_mii3: pcs-mii@3 {
+>>>         reg = <3>;
+>>>         status = "enabled";
+>>>     };
+>>> };
 >>
->> This is exactly like msm8953, so why it cannot be there?
+>> Given that this is a package of several PCS which have a global mode, I
+>> think it would be a good idea to have a property like
+>> "qcom,package-mode" which defines which of the four modes should be used
+>> for all PCS.
 >>
-> Not exactly clock names are different, msm8953 have sleep msm8937 have sleep_clk.
-
-But this is the same clock, isn't it?
-
-And while we are at this: fix the name, so "sleep" because there is no
-point to write that an entry in clock-names is a clock. There is no
-"_clk" anywhere else.
-
-
->>> +
->>> +  See also::
->>> +    include/dt-bindings/clock/qcom,gcc-msm8917.h
+>> Then the PCS driver initialises supported_interfaces for each of these
+>> PCS to only contain that mode, thereby ensuring that unsupported
+>> dissimilar modes can't be selected or the mode unexpectedly changed.
 >>
->> typo, 8937
->>
-> No
+> 
+> OK, I will add the "qcom,package-mode" property to restrict the 
+> supported_interfaces for each of the MII PCS instances.
 
-Ack
-
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,gcc-msm8937
->>> +
->>> +  clocks:
->>> +    items:
->>> +      - description: XO source
->>> +      - description: Sleep clock source
->>> +      - description: DSI phy instance 0 dsi clock
->>> +      - description: DSI phy instance 0 byte clock
->>> +      - description: DSI phy instance 1 dsi clock
->>> +      - description: DSI phy instance 1 byte clock
->>> +
->>> +  clock-names:
->>> +    items:
->>> +      - const: xo
->>> +      - const: sleep_clk
->>> +      - const: dsi0pll
->>> +      - const: dsi0pllbyte
->>> +      - const: dsi1pll
->>> +      - const: dsi1pllbyte
->>> +
->>> +required:
->>> +  - compatible
->>> +  - clocks
->>> +  - clock-names
->>> +  - '#power-domain-cells'
->>> +
->>> +allOf:
->>> +  - $ref: qcom,gcc.yaml#
->>> +
->>> +unevaluatedProperties: false
->>> +
->>> +examples:
->>> +  - |
->>> +    #include <dt-bindings/clock/qcom,rpmcc.h>
->>> +
->>> +    clock-controller@1800000 {
->>> +      compatible = "qcom,gcc-msm8937";
->>> +      reg = <0x01800000 0x80000>;
->>> +      #clock-cells = <1>;
->>> +      #reset-cells = <1>;
->>> +      #power-domain-cells = <1>;
->>> +      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
->>> +               <&sleep_clk>,
->>> +               <&dsi0_phy 1>,
->>> +               <&dsi0_phy 0>,
->>> +               <&dsi1_phy 1>,
->>> +               <&dsi1_phy 0>;
->>> +      clock-names = "xo",
->>> +                    "sleep_clk",
->>> +                    "dsi0pll",
->>> +                    "dsi0pllbyte",
->>> +                    "dsi1pll",
->>> +                    "dsi1pllbyte";
->>> +    };
->>> +...
->>> diff --git a/include/dt-bindings/clock/qcom,gcc-msm8917.h b/include/dt-bindings/clock/qcom,gcc-msm8917.h
->>> index 4b421e7414b50bef2e2400f868ae5b7212a427bb..ec1f0b261dd5ccfe4896a00ffa9cf86de98b9cb3 100644
->>> --- a/include/dt-bindings/clock/qcom,gcc-msm8917.h
->>> +++ b/include/dt-bindings/clock/qcom,gcc-msm8917.h
->>> @@ -170,6 +170,22 @@
->>>  #define VFE1_CLK_SRC				163
->>>  #define VSYNC_CLK_SRC				164
->>>  #define GPLL0_SLEEP_CLK_SRC			165
->>> +#define BLSP1_QUP1_I2C_APPS_CLK_SRC		166
->>> +#define BLSP1_QUP1_SPI_APPS_CLK_SRC		167
->>> +#define BLSP2_QUP4_I2C_APPS_CLK_SRC		168
->>> +#define BLSP2_QUP4_SPI_APPS_CLK_SRC		169
->>
->> Why are you adding bindings to 8917? Nothing in commit msg explains
->> that.
-> Because msm8917 driver was expanded with 8937 bits, i will expand the commit message.
-
-
-But this is about hardware, not driver. If you want to combine in one
-bindings devices from the same family (which I doubt these are, too many
-differences), then make it clear with prefixes, see
-61b17d072d811df5733a1570889b8c6fa6834bf8
-
-If they are not that related, then a separate file.
-
->>
->> Best regards,
->> Krzysztof
->>
-
-
-Best regards,
-Krzysztof
 
