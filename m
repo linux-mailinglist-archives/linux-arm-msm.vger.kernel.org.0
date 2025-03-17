@@ -1,222 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-51596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4908EA64865
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 10:58:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D60CA6489C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 11:02:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 739303A7264
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 09:57:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 321B03ABB1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 10:01:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 643D222D7B7;
-	Mon, 17 Mar 2025 09:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F5D3230999;
+	Mon, 17 Mar 2025 10:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="nkfwHgNI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Utl92kOC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAD222C355;
-	Mon, 17 Mar 2025 09:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EE71DA53;
+	Mon, 17 Mar 2025 10:01:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742205472; cv=none; b=FrZWCa8Cwch7FvcDfJfD91j+Bso3TiMpzzO2DfaeIIU9yMLACNcHpBcOy20dj9QJ6goVTVeYDvrIwa99jfWOu9oqbEuP8DLMZz0BpJLIo95AGYQhL+ND8L9hQyv62L7kkamSHrgptkYXNzm7gy+xQdW+aSEgbm2+XIqeGA0hkUA=
+	t=1742205681; cv=none; b=pt+p580QcqXGwhzG4RExxUhFrd7QIXKmve88k4lGmi/Wj9xbFZdiXeCxri+vjE26PjQX3WaOX8HT0I89Qz8hP3QqHY7da3u/W2q3d/hpFNgP4rhMlJNdVw9Lu917GAyciKCzJNwdmZdG4Wgr+jZWzuyr+yO3egAaKlZrBc3HuIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742205472; c=relaxed/simple;
-	bh=u4gGQHQyXKmcD/n4B9Coibe/2rVi6aB/7qBpOdGg5FU=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=p+ZW75W3IcAYoJRGo5xf9XtG3h9Osvhg0cWTNh3BxbquXXvmnJWhdgaR1kiFx95sDgUC3jyv7k8NC8/9YOaKPjckRn7n/nJuPPqjeKHAViWzC5cV5px8lzQVTIbKZPlvYOObXlEpzwIXsv7/PLqVbqwiTzWOOjwALu3KFVuRaEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=nkfwHgNI; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [127.0.0.1] (254C1C5A.nat.pool.telekom.hu [37.76.28.90])
-	by mail.mainlining.org (Postfix) with ESMTPSA id B53F0BBAC4;
-	Mon, 17 Mar 2025 09:57:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1742205468;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=FhlrRtgQ29uAkg57Izvory2SkjADGQMOEcn3oIaEafg=;
-	b=nkfwHgNIkMw6drNJf+qwgVofGWU+RQr5cydxMVJUZvLcx3uT/yiIjF68d2I6B9d2H1DydP
-	AmymPLAI6g2lw7kEDLY+0D3uDkoP9QAUPFh6TEeG/dpXpr6lEisnrxIYknRRnEID3jHCtQ
-	N7MZ+vsQz5FHOYKqC1J89V2skPUC++82H33O3InzwoQO5ZmDaFg0uwmVqxqTsBqmeJG1AS
-	lcvUWqbfk29XZM0NjItqztSvwYQH6wtwYVBMjOYLAuZB8fFOHSsD/BKYZpMHFwGxb8SSof
-	8QBPprrFFrZjZ6wirsgCU+OShkqiFfLOD11BURS2ICwXmBXo27u7e81uiLmRvw==
-Date: Mon, 17 Mar 2025 10:57:45 +0100
-From: =?ISO-8859-1?Q?Barnab=E1s_Cz=E9m=E1n?= <barnabas.czeman@mainlining.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
- =?ISO-8859-1?Q?Otto_Pfl=FCger?= <otto.pflueger@abscue.de>,
- Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- iommu@lists.linux.dev, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_1/6=5D_dt-bindings=3A_clock=3A_q?=
- =?US-ASCII?Q?com=3A_Add_MSM8937_Global_Clock_Controller?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <20250317-hot-obedient-sturgeon-394cb8@krzk-bin>
-References: <20250315-msm8937-v4-0-1f132e870a49@mainlining.org> <20250315-msm8937-v4-1-1f132e870a49@mainlining.org> <20250317-hot-obedient-sturgeon-394cb8@krzk-bin>
-Message-ID: <11695D76-7CBE-41CE-A8DD-D6845D01670C@mainlining.org>
+	s=arc-20240116; t=1742205681; c=relaxed/simple;
+	bh=g3TScb67Wqot26oruS+UjOhbLWjEbO3oQxd3CMAGUqs=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gKCM94i/Tq+yeRtu7Ia76ptZgujGKGcIl4XgN1xYHg64eMwNsD7j7lEjPu5Ozx+hRgnflGxF++aYSZrFvSopt3SV+Qd2X4YuYrlnJyqx6Mq8f32pz/Xg0UL+Qgc3TM+vxCqI8GVVQ+tx4QoaaOvHFL9sKihDIi6f1cv6rBIlAhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Utl92kOC; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52H00gRV008255;
+	Mon, 17 Mar 2025 10:01:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Nsy4a7TPZ56uAG1WvZA+r/
+	j8O7Lx3jwLPMVHovMzFqU=; b=Utl92kOCeudcxotW7IRTrZxztyseSdiGng6DzJ
+	pFwgjqyuw7J55bsakd9ojZhtQu2IjY/gyCV4Tr2qlSt2+PV+9ffg6jkQReaRJk+O
+	qbnVkcFfvRC73B/YcAVRsY7tXZR9i6tM2V6c/jqZE+dyIUSiMf6ea1lEOMIWqIn3
+	HOEJj2P8PxEPReCvJccp7EfXZM/iOjmPAeTPHKHqtrZmFEjXyFBMaJ5RdhDLl4b0
+	Z0tlJqahbgk3fu3JVVSR7jeivZePwDm08YtyGxDBJZFqvvcGhvPXqP2PgO8fk2Nf
+	cSdVupCKVdDAbPY7NcxZNCRIG7NW5JvfaxUkHeL+Ll81Z92w==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45d2u9v67y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Mar 2025 10:01:11 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52HA1BTQ028818
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Mar 2025 10:01:11 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 17 Mar 2025 03:01:07 -0700
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: [PATCH v14 0/4] Add PCIe support for Qualcomm IPQ5332
+Date: Mon, 17 Mar 2025 15:30:25 +0530
+Message-ID: <20250317100029.881286-1-quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=JsfxrN4C c=1 sm=1 tr=0 ts=67d7f2e7 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=wWAAX9LI6ptjq62IaZgA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: 5S1wAxKUJkQwkF5WoXBGVHnawTSBfFf3
+X-Proofpoint-ORIG-GUID: 5S1wAxKUJkQwkF5WoXBGVHnawTSBfFf3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-17_03,2025-03-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 impostorscore=0 suspectscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 malwarescore=0 spamscore=0
+ lowpriorityscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503170072
+
+Patch series adds support for enabling the PCIe controller and
+UNIPHY found on Qualcomm IPQ5332 platform. PCIe0 is Gen3 X1 and
+PCIe1 is Gen3 X2 are added.
+
+This series combines [1] and [2]. [1] introduces IPQ5018 PCIe
+support and [2] depends on [1] to introduce IPQ5332 PCIe support.
+Since the community was interested in [2] (please see [3]), tried
+to revive IPQ5332's PCIe support with v2 of this patch series.
+
+v2 of this series pulled in the phy driver from [1] tried to
+address comments/feedback given in both [1] and [2].
+
+1. Enable IPQ5018 PCI support (Nitheesh Sekar) - https://lore.kernel.org/all/20231003120846.28626-1-quic_nsekar@quicinc.com/
+2. Add PCIe support for Qualcomm IPQ5332 (Praveenkumar I) - https://lore.kernel.org/linux-arm-msm/20231214062847.2215542-1-quic_ipkumar@quicinc.com/
+3. Community interest - https://lore.kernel.org/linux-arm-msm/20240310132915.GE3390@thinkpad/
+
+v14: * Rebase on top of tree
+     * Change commit log to include impacted SoCs and why this is added
+
+v13: * Update commit log
+     * Fix ipq6018 related error
+	arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: pcie@20000000: reg-names: ['dbi', 'elbi', 'atu', 'parf', 'config'] is too short
+     * Remove fixes tag
+
+v12: * Skipped the following (Vinod Koul has picked them)
+		dt-bindings: phy: qcom,uniphy-pcie: Document PCIe uniphy
+		phy: qcom: Introduce PCIe UNIPHY 28LP driver
+
+     * Skipped this (merged)
+		dt-bindings: PCI: qcom: Document the IPQ5332 PCIe controller
+
+     * Undo combining sdx55 & ipq9574. Discard the following
+		dt-bindings: PCI: qcom: Use sdx55 reg description for ipq9574
+		arm64: dts: qcom: ipq9574: Reorder reg and reg-names
+
+     * Append MHI registers to ipq9574 dt-bindings and dts
+		dt-bindings: PCI: qcom: Add MHI registers for IPQ9574
+		arm64: dts: qcom: ipq9574: Add MHI to pcie nodes
+
+     * ipq5332.dtsi:
+		Align reg-names order with ipq9574
+		Dropped R-b tag per feedback
+
+     * No new warnings/errors with dt_binding_check and dtbs_check
+
+v11: * phy-qcom-uniphy-pcie-28lp.c
+	 * Remove unused #define
+	 * Use "250 * MEGA" instead of 250000000
+
+v10: * ipq5332.dtsi: Trim down the list of assigned clocks
+
+     * ipq9574 and ipq5332 DT
+	 * Fix 'simple-bus unit address format error' in ipq9574 and
+	   ipq5332 DTS
+         * Rearrange nodes w.r.t. address sort order
+
+     * Have spoken with 'Manikanta Mylavarapu' [1] for omitting similar
+       changes in qcom,pcie.yaml that are handled in this series.
+
+     * Reformat commit messages to 75 character limit
+
+     * controller bindings:
+       Fix maxItems for interrupts constraint of sdm845
+
+     1 - https://lore.kernel.org/linux-arm-msm/20250125035920.2651972-2-quic_mmanikan@quicinc.com/
+
+v9: Dont have fallback for num-lanes in driver and return error
+    Remove superfluous ipq5332 constraint as the fallback is present
+
+v8: Add reviewed by
+    Remove duplication in bindings due to ipq5424 code getting merged
+
+v7: phy bindings:
+    * Include data type definition to 'num-lanes'
+
+    controller bindings:
+    * Split the ipq9574 and ipq5332 changes into separate patches
+
+    dtsi:
+    * Add root port definitions
+
+v6: phy bindings:
+    * Fix num-lanes definition
+
+    phy driver:
+    * Fix num-lanes handling in probe to use generally followed pattern
+
+    controller bindings:
+    * Give more info in commit log
+
+    dtsi:
+    * Add assigned-clocks & assigned-clock-rates to controller nodes
+    * Add num-lanes to pcie0_phy
+
+v5: phy bindings:
+    * Drop '3x1' & '3x2' from compatible string
+    * Use 'num-lanes' to differentiate instead of '3x1' or '3x2'
+      in compatible string
+    * Describe clocks and resets instead of just maxItems
+
+    phy driver:
+    * Get num-lanes from DTS
+    * Drop compatible specific init data as there is only one
+      compatible string
+
+    controller bindings:
+    * Re-arrange 5332 and 9574 compatibles to handle fallback usage in dts
+
+    dtsi:
+    * Add 'num-lanes' to "pcie1_phy: phy@4b1000"
+    * Make ipq5332 as main and ipq9574 as fallback compatible
+    * Sort controller nodes per address
+
+    misc:
+    Add R-B tag from Konrad to dts and dtsi patches
+
+v4: * phy bindings - Create ipq5332 compatible instead of reusing ipq9574 for bindings
+    * phy bindings - Remove reset-names as the resets are handled with bulk APIs
+    * phy bindings - Fix order in the 'required' section
+    * phy bindings - Remove clock-output-names
+    * dtsi - Add missing reset for pcie1_phy
+    * dtsi - Convert 'reg-names' to a vertical list
+    * dts - Fix nodes sort order
+    * dts - Use property-n followed by property-names
+
+v3: * Update the cover letter with the sources of the patches
+    * Rename the dt-bindings yaml file similar to other phys
+    * Drop ipq5332 specific pcie controller bindings and reuse
+      ipq9574 pcie controller bindings for ipq5332
+    * Please see patches for specific changes
+    * Set GPL license for phy-qcom-uniphy-pcie-28lp.c
+
+v2: Address review comments from V1
+    Drop the 'required clocks' change that would break ABI (in dt-binding, dts, gcc-ipq5332.c)
+    Include phy driver from the dependent series
+
+v1: https://lore.kernel.org/linux-arm-msm/20231214062847.2215542-1-quic_ipkumar@quicinc.com/
 
 
+Praveenkumar I (2):
+  arm64: dts: qcom: ipq5332: Add PCIe related nodes
+  arm64: dts: qcom: ipq5332-rdp441: Enable PCIe phys and controllers
 
-On March 17, 2025 10:17:46 AM GMT+01:00, Krzysztof Kozlowski <krzk@kernel=
-=2Eorg> wrote:
->On Sat, Mar 15, 2025 at 03:57:35PM +0100, Barnab=C3=A1s Cz=C3=A9m=C3=A1n =
-wrote:
->> Add device tree bindings for the global clock controller on Qualcomm
->> MSM8937 platform=2E
->>=20
->> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <barnabas=2Eczeman@mainli=
-ning=2Eorg>
->> ---
->>  =2E=2E=2E/bindings/clock/qcom,gcc-msm8937=2Eyaml           | 75 ++++++=
-++++++++++++++++
->>  include/dt-bindings/clock/qcom,gcc-msm8917=2Eh       | 17 +++++
->>  2 files changed, 92 insertions(+)
->>=20
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8937=
-=2Eyaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8937=2Eyaml
->> new file mode 100644
->> index 0000000000000000000000000000000000000000=2E=2E3c3f6756048e195671f=
-542b3a6cd09057558eafa
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8937=2Eyaml
->> @@ -0,0 +1,75 @@
->> +# SPDX-License-Identifier: (GPL-2=2E0-only OR BSD-2-Clause)
->> +%YAML 1=2E2
->> +---
->> +$id: http://devicetree=2Eorg/schemas/clock/qcom,gcc-msm8937=2Eyaml#
->> +$schema: http://devicetree=2Eorg/meta-schemas/core=2Eyaml#
->> +
->> +title: Qualcomm Global Clock & Reset Controller on MSM8937
->> +
->> +maintainers:
->> +  - Barnabas Czeman <barnabas=2Eczeman@mainlining=2Eorg>
->> +
->> +description: |
->> +  Qualcomm global clock control module provides the clocks, resets and=
- power
->> +  domains on MSM8937=2E
->
->This is exactly like msm8953, so why it cannot be there?
->
-Not exactly clock names are different, msm8953 have sleep msm8937 have sle=
-ep_clk=2E
->> +
->> +  See also::
->> +    include/dt-bindings/clock/qcom,gcc-msm8917=2Eh
->
->typo, 8937
->
-No
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,gcc-msm8937
->> +
->> +  clocks:
->> +    items:
->> +      - description: XO source
->> +      - description: Sleep clock source
->> +      - description: DSI phy instance 0 dsi clock
->> +      - description: DSI phy instance 0 byte clock
->> +      - description: DSI phy instance 1 dsi clock
->> +      - description: DSI phy instance 1 byte clock
->> +
->> +  clock-names:
->> +    items:
->> +      - const: xo
->> +      - const: sleep_clk
->> +      - const: dsi0pll
->> +      - const: dsi0pllbyte
->> +      - const: dsi1pll
->> +      - const: dsi1pllbyte
->> +
->> +required:
->> +  - compatible
->> +  - clocks
->> +  - clock-names
->> +  - '#power-domain-cells'
->> +
->> +allOf:
->> +  - $ref: qcom,gcc=2Eyaml#
->> +
->> +unevaluatedProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,rpmcc=2Eh>
->> +
->> +    clock-controller@1800000 {
->> +      compatible =3D "qcom,gcc-msm8937";
->> +      reg =3D <0x01800000 0x80000>;
->> +      #clock-cells =3D <1>;
->> +      #reset-cells =3D <1>;
->> +      #power-domain-cells =3D <1>;
->> +      clocks =3D <&rpmcc RPM_SMD_XO_CLK_SRC>,
->> +               <&sleep_clk>,
->> +               <&dsi0_phy 1>,
->> +               <&dsi0_phy 0>,
->> +               <&dsi1_phy 1>,
->> +               <&dsi1_phy 0>;
->> +      clock-names =3D "xo",
->> +                    "sleep_clk",
->> +                    "dsi0pll",
->> +                    "dsi0pllbyte",
->> +                    "dsi1pll",
->> +                    "dsi1pllbyte";
->> +    };
->> +=2E=2E=2E
->> diff --git a/include/dt-bindings/clock/qcom,gcc-msm8917=2Eh b/include/d=
-t-bindings/clock/qcom,gcc-msm8917=2Eh
->> index 4b421e7414b50bef2e2400f868ae5b7212a427bb=2E=2Eec1f0b261dd5ccfe489=
-6a00ffa9cf86de98b9cb3 100644
->> --- a/include/dt-bindings/clock/qcom,gcc-msm8917=2Eh
->> +++ b/include/dt-bindings/clock/qcom,gcc-msm8917=2Eh
->> @@ -170,6 +170,22 @@
->>  #define VFE1_CLK_SRC				163
->>  #define VSYNC_CLK_SRC				164
->>  #define GPLL0_SLEEP_CLK_SRC			165
->> +#define BLSP1_QUP1_I2C_APPS_CLK_SRC		166
->> +#define BLSP1_QUP1_SPI_APPS_CLK_SRC		167
->> +#define BLSP2_QUP4_I2C_APPS_CLK_SRC		168
->> +#define BLSP2_QUP4_SPI_APPS_CLK_SRC		169
->
->Why are you adding bindings to 8917? Nothing in commit msg explains
->that=2E
-Because msm8917 driver was expanded with 8937 bits, i will expand the comm=
-it message=2E
->
->Best regards,
->Krzysztof
->
+Varadarajan Narayanan (2):
+  dt-bindings: PCI: qcom: Add MHI registers for IPQ9574
+  arm64: dts: qcom: ipq9574: Add MHI to pcie nodes
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |   4 +-
+ arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts   |  76 ++++++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 252 +++++++++++++++++-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  40 ++-
+ 4 files changed, 361 insertions(+), 11 deletions(-)
+
+
+base-commit: da920b7df701770e006928053672147075587fb2
+-- 
+2.34.1
+
 
