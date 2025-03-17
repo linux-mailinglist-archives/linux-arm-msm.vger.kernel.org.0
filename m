@@ -1,48 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-51632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 984E6A65552
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:19:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 920F6A655F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:40:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82FCB3AB7FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 15:18:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 979ED7A9715
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 15:39:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B21F24169F;
-	Mon, 17 Mar 2025 15:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EA4524A070;
+	Mon, 17 Mar 2025 15:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e1vhNqYb"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="vIrmcCRI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C47215666D;
-	Mon, 17 Mar 2025 15:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E937C23FC48;
+	Mon, 17 Mar 2025 15:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.177.23.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742224739; cv=none; b=N9BnEU8U/tbO0O1nTTPlzcxmvRwYggw/E2zfV1UOhht1tIZYwuT+//Qcv8HfEZZQtD80oYIC3jN//Spyz1DBqULHWr4lQMVlFsev5xCPa8JM86E7wTQxrQu3C6e3KB+Du7q6PEZFqaJgydmN7urEugeUKfeOBESHF1n6tYBqnSs=
+	t=1742225962; cv=none; b=j6m6/2ECmpe9i/rbIWSBlf+l2HdOb9FDWlMNFR9IU94UYTLTG9pOVdGkURNGR3WrhvfKtsQaHqwT4dyC/pPonj7kCtEX5RJL0fys1qh8botrUNQkVcc4vNXLGj9Ol62dqcrB8ZiCz/39gzonqWrCjJHVczI+SH37ypW9DH938dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742224739; c=relaxed/simple;
-	bh=Yhp6MvmoMi1/ByilsH9w6n1eGJJkHBkQneq+asK75qo=;
+	s=arc-20240116; t=1742225962; c=relaxed/simple;
+	bh=Sh975lz6XsISdagtutDAXsZPtuyfNLljOxdDiELNgRk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cFwIG4UieDve3jNpSPt5UZKvvbHK/W9c9/guRX2oeXKayK2NXTTEVktNjq4FYJj0WAXA316KLaUfA96bRW7c1tdi3K3+10rLJeAc9VEwYxsfdnWDNwzrW0M7R1Kpmf62pE1Fhq0j7pLBoeYO/2Eb+o59BMkAE+1UUYsgeHba2kA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e1vhNqYb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5A9C4CEE9;
-	Mon, 17 Mar 2025 15:18:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742224737;
-	bh=Yhp6MvmoMi1/ByilsH9w6n1eGJJkHBkQneq+asK75qo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=e1vhNqYbOsrWlk6GAlLMT9zJL4VCNkRi5wi9Oc/CAksl9vTVs/G8JMLHlQa4/tiQ2
-	 iolPwQsaB7BJPepWrOXi1uGVjQ45FTSc00HtubZZih9Cgp0q9LTxgPxIH+dr4nR5PP
-	 p20iN+aMQ17AbK1IYJkVYZ550oS3dv9/2zb424y4MBVK84X5TFjIC/s9qFCxPQAE1h
-	 8+vm7c9S9ffAa7KRNE3fleQGdlGVeQZE23T6x4B18GcssMfxFrjCjZz1JKaQmWfMK7
-	 3qo2uhBbPLhB0U68zlU+bTojVjELP/EFtmwfpeaeS/x1vUllkaFnnl0w2bPfL6/JZX
-	 5DxMFfvHyMQpA==
-Message-ID: <377a7af9-89da-44e6-94f9-eebdd3921c91@kernel.org>
-Date: Mon, 17 Mar 2025 16:18:43 +0100
+	 In-Reply-To:Content-Type; b=p8a0UGYvCLoDCo9qpmsCtBkIaWN4SvpPXSxg9kxKDHUgytYr0TLrTW/PDKmhVL9Ybnt1vkYkQpUVY4wG4VVRZQXymeKUm7sDJtZDGC0zIe7vMKdOs6HD+GnvBgHbOcESUgubSBF/j/YMyPUO7Z0PPeTJ4I7DOoxRLrbPq79ogkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=vIrmcCRI; arc=none smtp.client-ip=89.177.23.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [192.168.2.71] (office.icewarp.com [82.113.48.146])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 1FD3B1603F9;
+	Mon, 17 Mar 2025 16:39:10 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1742225950;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=HpMXPD7v2TVLhujP/CqwJ0vvCueRnUFka/y/qFcIY/w=;
+	b=vIrmcCRI4IJBe6jTmcXuOmAMIo+iQ1iE+GS1hQhvtvyJ/lxv8z7KDl59AkRPhd5b2NfJRy
+	jRLpVHjZw/RjFtAe7/ToGJRBlU4gLHOu/OqxzmxiO0MzllISd3U/6SJhEZkKo5jw0IExV+
+	97IOuBuwXKzmSqUe7kq6lpLfryrZmzE=
+Message-ID: <4cdb22a5-f21b-4240-afd7-822d4167e982@ixit.cz>
+Date: Mon, 17 Mar 2025 16:39:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,133 +56,155 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/6] dt-bindings: drm/msm/gpu: Document AON clock for
- A505/A506/A510
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
- =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
- Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- iommu@lists.linux.dev, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org,
- Adam Skladowski <a39.skl@gmail.com>
-References: <20250315-msm8937-v4-0-1f132e870a49@mainlining.org>
- <20250315-msm8937-v4-3-1f132e870a49@mainlining.org>
- <20250317-hypnotic-weightless-mosquito-f489ad@krzk-bin>
- <73631B5F-0916-4F81-AAB4-C8E2F4B999EC@mainlining.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v5] ARM: dts: nexus4: Initial dts
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ "Rob Herring (Arm)" <robh@kernel.org>
+Cc: devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Ivan Belokobylskiy <belokobylskij@gmail.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Tony Luck <tony.luck@intel.com>,
+ linux-hardening@vger.kernel.org, Kees Cook <kees@kernel.org>,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+References: <20250316-lg-nexus4-mako-v5-1-79feae815a85@ixit.cz>
+ <174221818190.3957236.3364090534153729086.robh@kernel.org>
+ <7z2u2almxk7rnd6cx6nq3ypgbzvttkj3jqawv5jojayjz3foix@zprthr6awbcp>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <73631B5F-0916-4F81-AAB4-C8E2F4B999EC@mainlining.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <7z2u2almxk7rnd6cx6nq3ypgbzvttkj3jqawv5jojayjz3foix@zprthr6awbcp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 17/03/2025 10:48, Barnabás Czémán wrote:
-> 
-> 
-> On March 17, 2025 10:21:50 AM GMT+01:00, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->> On Sat, Mar 15, 2025 at 03:57:37PM +0100, Barnabás Czémán wrote:
->>> From: Adam Skladowski <a39.skl@gmail.com>
+> On Mon, Mar 17, 2025 at 09:18:33AM -0500, Rob Herring (Arm) wrote:
+>>
+>> On Sun, 16 Mar 2025 23:16:55 +0100, David Heidelberg wrote:
+>>> From: Ivan Belokobylskiy <belokobylskij@gmail.com>
 >>>
->>> Adreno 505 (MSM8937), Adreno 506(MSM8953) and Adreno 510(MSM8976)
->>> require Always-on branch clock to be enabled, describe it.
+>>> Add initial support for LG Nexus 4 (mako).
 >>>
->>> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
->>> [reword commit, move alwayson on the first place]
->>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>>> Features currently working: regulators, eMMC, and volume keys.
+>>>
+>>> Signed-off-by: Ivan Belokobylskiy <belokobylskij@gmail.com>
+>>> Co-developed-by: David Heidelberg <david@ixit.cz>
+>>> Signed-off-by: David Heidelberg <david@ixit.cz>
 >>> ---
->>>  Documentation/devicetree/bindings/display/msm/gpu.yaml | 6 ++++--
->>>  1 file changed, 4 insertions(+), 2 deletions(-)
+>>> Changes in v5:
+>>> - Sorted nodes alphabetically.
+>>> - Link to v4: https://lore.kernel.org/r/20250311-lg-nexus4-mako-v4-1-3916c8ec7edb@ixit.cz
 >>>
->>> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
->>> index 6ddc72fd85b04537ea270754a897b4e7eb269641..5028398cc3b517e404a92a2c30688f72eab4c1b3 100644
->>> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
->>> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
->>> @@ -152,11 +152,13 @@ allOf:
->>>        properties:
->>>          clocks:
->>>            minItems: 2
->>> -          maxItems: 7
->>> +          maxItems: 8
->>>  
->>>          clock-names:
->>>            items:
->>>              anyOf:
->>> +              - const: alwayson
->>> +                description: GPU Always-On clock
+>>> Changes in v4:
+>>> - Sorted regulators and added regulators compatible.
+>>> - Corrected pmic include and references.
+>>> - Moved &rpm outside of / node.
+>>> - Moved and simplify pm8921 keypad.
+>>> - Added chasis-type.
+>>> - Dropped incomplete WiFi node, will be provided in future
+>>>    contributions.
+>>> - Link to v3: https://lore.kernel.org/r/20250309-lg-nexus4-mako-v3-1-1dc2807df296@ixit.cz
+>>>
+>>> Changes in v3:
+>>> - rebased against next-20250307
+>>> - dropped backlight until driver gets converted to DT
+>>>
+>>> Changes in v2:
+>>> - lge vendor doesn't exist anymore, rename to lg
+>>> - sdcc@ to mmc@ to comply with dt-schema
+>>> ---
+>>>   arch/arm/boot/dts/qcom/Makefile                    |   1 +
+>>>   .../boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts  | 341 +++++++++++++++++++++
+>>>   2 files changed, 342 insertions(+)
+>>>
 >>
->> Are you adding bindings for devices which were not described previously?
->> Then don't grow this pattern, but create if:then: with a strictly
->> ordered list for them (and keeping order of other variants).
 >>
-> 8956, 8976, 8953 schemas are failing because of missing always-on clock.
-Based on the commit msg and style of binding having a pattern instead of
-compatibles, I really cannot tell whether you add new devices or fix
-something for existing.
+>> My bot found new DTB warnings on the .dts files added or changed in this
+>> series.
+>>
+>> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+>> are fixed by another series. Ultimately, it is up to the platform
+>> maintainer whether these warnings are acceptable or not. No need to reply
+>> unless the platform maintainer has comments.
+>>
+>> If you already ran DT checks and didn't see these error(s), then
+>> make sure dt-schema is up to date:
+>>
+>>    pip3 install dtschema --upgrade
+>>
+>>
+>> New warnings running 'make CHECK_DTBS=y for arch/arm/boot/dts/qcom/' for 20250316-lg-nexus4-mako-v5-1-79feae815a85@ixit.cz:
+>>
+>> arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dtb: hwmutex: 'reg' is a required property
+>> 	from schema $id: http://devicetree.org/schemas/hwlock/qcom-hwspinlock.yaml#
+>> arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dtb: hwmutex: 'syscon' does not match any of the regexes: 'pinctrl-[0-9]+'
+>> 	from schema $id: http://devicetree.org/schemas/hwlock/qcom-hwspinlock.yaml#
+>> arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dtb: soc: replicator: 'ranges' is a required property
+>> 	from schema $id: http://devicetree.org/schemas/simple-bus.yaml#
+>> arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dtb: syscon@1200000: compatible: ['syscon'] is too short
+>> 	from schema $id: http://devicetree.org/schemas/mfd/syscon-common.yaml#
+>> arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dtb: timer@200a000: 'clocks' is a required property
+>> 	from schema $id: http://devicetree.org/schemas/watchdog/qcom-wdt.yaml#
+>> arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dtb: sps-sic-non-secure@12100000: compatible: ['syscon'] is too short
+>> 	from schema $id: http://devicetree.org/schemas/mfd/syscon-common.yaml#
+>> arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dtb: rpm@108000: 'clock-controller' does not match any of the regexes: '^regulators(-[01])?$', 'pinctrl-[0-9]+'
+>> 	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpm.yaml#
+>> arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dtb: syscon@5700000: compatible: ['syscon'] is too short
+>> 	from schema $id: http://devicetree.org/schemas/mfd/syscon-common.yaml#
+>> arch/arm/boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dtb: replicator: 'clock-names', 'clocks' do not match any of the regexes: 'pinctrl-[0-9]+'
+>> 	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-static-replicator.yaml#
+> 
+> As far as I can see, all those are generic rather than being introduced
+> by the new DT. I'll send a set of fixes soon.
+> 
+Yup, as I checked these are coming from apq8064.dtsi. I was thinking to 
+look into them, but if you're going to go trough them, I'll just drop my 
+R-b on your patchset :)
 
-and now I dug more and found:
-https://lore.kernel.org/all/f525b63f-a32c-41cf-b80f-5d85b6eb50c8@linaro.org/
+Thanks
+David
 
-There were some other patches as well :/
+-- 
+David Heidelberg
 
-Best regards,
-Krzysztof
 
