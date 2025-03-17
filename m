@@ -1,62 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-51566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2227FA63C63
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 03:59:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F049A63C6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 03:59:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 72C2C16A412
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 02:59:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6780B188B6BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 02:59:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD8F71B040D;
-	Mon, 17 Mar 2025 02:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D055D1B393A;
+	Mon, 17 Mar 2025 02:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QEP1IacX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bCOjgGeg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A661AF0CE;
-	Mon, 17 Mar 2025 02:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F11B1A8F68;
+	Mon, 17 Mar 2025 02:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742180180; cv=none; b=V690giRBFeLBfKB6M4uhVvKV230wnQmWQ/9PbOkCNgrgjlZYMr7X/8SlQv2UbJQUBvU8pVCTv+FawIfScnULwegLO6dJkxvO07zIVzht2Rh/JkhewSaWqYjDRiTNwOf990X276FG9F94xoIP4gKqZ7U4aO07EZ56XbVKwI4eoeU=
+	t=1742180181; cv=none; b=GpxQyLZ90E+3YaY4zNqm8gMd5PFWNgGZl0hLSUZk0yPIwAlXStv3+0/hTCB0jBUV7p1iZNkwABYshUtiuZiQ0tCWs4LkzunTP/SdYiSJXxzunF2Jlhy3IUgVeSvBf/wHivTq2N7lxyybIwSN5MkPkKhKdVSqdJXRIqnJFbfYpAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742180180; c=relaxed/simple;
-	bh=QjrZnLXCD4CHGqxzSJ6/0vy7n9vpaTQPlZHAYwlEIR8=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GIzXqM5J1SQwxyALwb9Der9ELo+pHN/HbiXCOaWQMkJy/85TPFbajjTUvDKiOxtp0LxY8IFjFFPMV0dqYqwjmJ/OhM4kAEi5GqjcJ1JRHHpAlX/m/FKAzDXEP9x+DzBJRwBUWoRdCxz5GXNu9x8ZTj+NlsVexVjRkOtipYYyrhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QEP1IacX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2F5C4CEEE;
-	Mon, 17 Mar 2025 02:56:19 +0000 (UTC)
+	s=arc-20240116; t=1742180181; c=relaxed/simple;
+	bh=lAznnt8Ub0g0fJn7VAfYtR0EILvS7z3VrcFUWHbFZPk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BvXYw/7mH4GPVkUoIamZpJ1g2+U85hpsNQrV8H5gqW6Mj+BqkdipP7k87SBMgFpqp7vnsDTcDhUlLCkA4voWPeI+MFhUtxZsVnbHeQmC2f8F9bzhsqDUDJyyCjM+gDoFWizOnh3C7i0KazsyIFr+TTWU5bV4DGyS+e/CK8wfq/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bCOjgGeg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50527C4CEF2;
+	Mon, 17 Mar 2025 02:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742180180;
-	bh=QjrZnLXCD4CHGqxzSJ6/0vy7n9vpaTQPlZHAYwlEIR8=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=QEP1IacXm05ECKbtH3arQSItloVQ/jnqVD8y9iHVWJyAxaRj1L7IHqMdzIWxOsza1
-	 B85QfnVD4EzP8S/a7SwKqJGqM7NrWoUQo/8/XHM523eaG5ZrDWz/xlWisFJIwlY0rC
-	 SmG/PTfNgRy81yX5SJqiMjlKenmJeTBysLSIhWy8JmOzVHklHAS7qTsLNSKbDbYvJS
-	 lQzXX1J7O/6SSKqClDXmvqJL8qhsaTlKMG1/NSOlz8qsgsMqsAJASXDI8htvpszhxK
-	 1OC1m5tdZjNAAevatQ4K7CvWmhzds8Fr7QmxbKstoKjyY0JIhjvwhO2POFUuYdZGrl
-	 /JCKEJUfo5mgw==
+	s=k20201202; t=1742180181;
+	bh=lAznnt8Ub0g0fJn7VAfYtR0EILvS7z3VrcFUWHbFZPk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bCOjgGegN08+3CvIjAYKkn0uGfactgTFFXxQwhTAfaC+Rpt23DsNQAXUxnbcCg7Gf
+	 5DWTFTx6UIqkT26Uh/FC9erAg1/Bzmofs3HrRdJ0M+7YrH7QHnt30cfwTXg0CvqIIl
+	 UpkwuOd0nbZzso6Nn7J22ap6tWqrSWi5SgaQ3JVP9KDKzrKiCzin5zZGXlSzyGZd1Z
+	 rypAh+L4Qonegtz8VcNd4dtGCwuFlHwJ0Ny1s5XVfr7tNa3gUxzDMjQS9BxtG6c/ng
+	 h5EKuJ8N9wCGkugfyULA74YYeZxx6gUEvftw9nQTmKPLG3H3PU/iD5tLdjV4DfmI3y
+	 oUKM3Ke4KSHGg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
+To: rfoss@kernel.org,
+	todor.too@gmail.com,
+	bryan.odonoghue@linaro.org,
+	mchehab@kernel.org,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	dmitry.baryshkov@linaro.org,
+	konradybcio@kernel.org,
+	cros-qcom-dts-watchers@chromium.org,
+	catalin.marinas@arm.com,
+	will@kernel.org,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Vikram Sharma <quic_vikramsa@quicinc.com>
+Cc: linux-arm-kernel@lists.infradead.org,
+	linux-media@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: Re: (subset) [PATCH v2 0/1] Fix USB vdd info for IPQ9574
-Date: Sun, 16 Mar 2025 21:55:59 -0500
-Message-ID: <174218015889.1913428.12204389155389247962.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v14 0/2] media: qcom: camss: Add sc7280 support
+Date: Sun, 16 Mar 2025 21:56:00 -0500
+Message-ID: <174218015892.1913428.13707146883622182488.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250207073545.1768990-1-quic_varada@quicinc.com>
-References: <20250207073545.1768990-1-quic_varada@quicinc.com>
+In-Reply-To: <20250208225143.2868279-1-quic_vikramsa@quicinc.com>
+References: <20250208225143.2868279-1-quic_vikramsa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,23 +76,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 07 Feb 2025 13:05:44 +0530, Varadarajan Narayanan wrote:
-> Use correct regulator for USB phy.
+On Sun, 09 Feb 2025 04:21:41 +0530, Vikram Sharma wrote:
+> SC7280 is a Qualcomm SoC. This series adds support to bring up the CSIPHY,
+> CSID, VFE/RDI interfaces in SC7280.
 > 
-> v2: * Skip the first patch as it has been pulled in
->     * Reword and fix commit message formatting for the remaining patch
-> 
-> v1: For some reason, the dt-bindings [1] patch posted and Acked long
->     time back seems to have slipped through the cracks and hasn't been
->     merged. Including it along with this patch as both are related.
->     dt_binding_check & dtbs_check passed.
+> SC7280 provides
+> - 3 x VFE, 3 RDI per VFE
+> - 2 x VFE Lite, 4 RDI per VFE
+> - 3 x CSID
+> - 2 x CSID Lite
+> - 5 x CSI PHY
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: ipq9574: Fix USB vdd info
-      commit: 4f4c905e6a2a4e884f4e9b7326c94fac3500e0f9
+[1/2] arm64: dts: qcom: sc7280: Add support for camss
+      commit: d4da3adfc560fcb55578f8564d9f5a972507b118
+[2/2] arm64: dts: qcom: qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
+      commit: 39e6ca14ace9d138e40ddd42313c2649a6f3e69f
 
 Best regards,
 -- 
