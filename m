@@ -1,66 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-51565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 004E0A63C5F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 03:59:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2227FA63C63
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 03:59:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04D653A9511
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 02:58:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 72C2C16A412
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 02:59:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E47C81ACECE;
-	Mon, 17 Mar 2025 02:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD8F71B040D;
+	Mon, 17 Mar 2025 02:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WktgQhH/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QEP1IacX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73BD1AB52F;
-	Mon, 17 Mar 2025 02:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A661AF0CE;
+	Mon, 17 Mar 2025 02:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742180179; cv=none; b=duxcYarCuouZRL6yVeDtkGicRCRyM8fALvK9w5ZcMfMT+3whTLQ5hchZ//YsqGkO/MOSjl8BOjNOj6DCEGqUw7oyN3C2cEY+eOURu+PAK8BNDL85UuFyztHx+cL7yXEAYN65WkC4xtmsGAWXSRCV48g5QYosYlPo2InfNkKxF60=
+	t=1742180180; cv=none; b=V690giRBFeLBfKB6M4uhVvKV230wnQmWQ/9PbOkCNgrgjlZYMr7X/8SlQv2UbJQUBvU8pVCTv+FawIfScnULwegLO6dJkxvO07zIVzht2Rh/JkhewSaWqYjDRiTNwOf990X276FG9F94xoIP4gKqZ7U4aO07EZ56XbVKwI4eoeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742180179; c=relaxed/simple;
-	bh=mVOnmRQi3G/9HZMHNt4Pv7yUGYnqDsRR8pQDjcat0bo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hEMRKGjgauXs7wMn013ZveVm2XOzm/PW/7qoaXtzGaC978EYEiIc/722giLo35KiZRvQbz6B8d97R6zDPw2TTkaZAD4HOMUQo34IB+rJIuWBTiAy5STMxqsL6IgPTEDdwjlgkXcMUFW7I7FKmS3ekcK9uqV8hGDrkXFDat8+SD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WktgQhH/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2B1C4CEF7;
-	Mon, 17 Mar 2025 02:56:18 +0000 (UTC)
+	s=arc-20240116; t=1742180180; c=relaxed/simple;
+	bh=QjrZnLXCD4CHGqxzSJ6/0vy7n9vpaTQPlZHAYwlEIR8=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GIzXqM5J1SQwxyALwb9Der9ELo+pHN/HbiXCOaWQMkJy/85TPFbajjTUvDKiOxtp0LxY8IFjFFPMV0dqYqwjmJ/OhM4kAEi5GqjcJ1JRHHpAlX/m/FKAzDXEP9x+DzBJRwBUWoRdCxz5GXNu9x8ZTj+NlsVexVjRkOtipYYyrhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QEP1IacX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2F5C4CEEE;
+	Mon, 17 Mar 2025 02:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742180179;
-	bh=mVOnmRQi3G/9HZMHNt4Pv7yUGYnqDsRR8pQDjcat0bo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WktgQhH/Ir4RwN7G43NWyofuw1z92D6c2mly6OKbsGuvsBlb+NpfeLl2Yodj62HVv
-	 pFYXF9ZMaaAGBXZ/8lORG1GZ7ZeFzQepJFg1IVETqIB7FkR5HcCmANc90i3oZNLuju
-	 BZRoFauqZJy7pB9fRZTxMwr0I0iqfGA+VvVRpUX+WH7XwU29mMBFABpT5WRoKwD919
-	 FvPzYW9rb8RQC8zatJD6f0u6cLXJHasdLoZec6OJEu3Bdeax2QVel30nd/JBeh6IPp
-	 MLuOfDbc9L6hGCQh6Wplrz9Y5QN0HpXIl4qOWOXnGI852SJ/qlWkJGXIFJLVLVOHU6
-	 Q4ERQf2d3+Hvg==
+	s=k20201202; t=1742180180;
+	bh=QjrZnLXCD4CHGqxzSJ6/0vy7n9vpaTQPlZHAYwlEIR8=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=QEP1IacXm05ECKbtH3arQSItloVQ/jnqVD8y9iHVWJyAxaRj1L7IHqMdzIWxOsza1
+	 B85QfnVD4EzP8S/a7SwKqJGqM7NrWoUQo/8/XHM523eaG5ZrDWz/xlWisFJIwlY0rC
+	 SmG/PTfNgRy81yX5SJqiMjlKenmJeTBysLSIhWy8JmOzVHklHAS7qTsLNSKbDbYvJS
+	 lQzXX1J7O/6SSKqClDXmvqJL8qhsaTlKMG1/NSOlz8qsgsMqsAJASXDI8htvpszhxK
+	 1OC1m5tdZjNAAevatQ4K7CvWmhzds8Fr7QmxbKstoKjyY0JIhjvwhO2POFUuYdZGrl
+	 /JCKEJUfo5mgw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: quic_fenglinw@quicinc.com,
-	quic_tingweiz@quicinc.com,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Tingguo Cheng <quic_tingguoc@quicinc.com>
-Cc: kernel@quicinc.com,
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	dmitry.baryshkov@linaro.org,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: qcs615: remove disallowed property in spmi bus node
-Date: Sun, 16 Mar 2025 21:55:58 -0500
-Message-ID: <174218015898.1913428.10971664496627843212.b4-ty@kernel.org>
+	Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: Re: (subset) [PATCH v2 0/1] Fix USB vdd info for IPQ9574
+Date: Sun, 16 Mar 2025 21:55:59 -0500
+Message-ID: <174218015889.1913428.12204389155389247962.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250117-fix-kernel-test-robot-unexpected-property-issue-v2-1-0b68cf481249@quicinc.com>
-References: <20250117-fix-kernel-test-robot-unexpected-property-issue-v2-1-0b68cf481249@quicinc.com>
+In-Reply-To: <20250207073545.1768990-1-quic_varada@quicinc.com>
+References: <20250207073545.1768990-1-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,16 +67,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 17 Jan 2025 11:24:31 +0800, Tingguo Cheng wrote:
-> Remove the unevaluated 'cell-index' property from qcs615-ride.dtb
-> spmi@c440000 to fix the kernel test robot issue.
+On Fri, 07 Feb 2025 13:05:44 +0530, Varadarajan Narayanan wrote:
+> Use correct regulator for USB phy.
 > 
+> v2: * Skip the first patch as it has been pulled in
+>     * Reword and fix commit message formatting for the remaining patch
 > 
+> v1: For some reason, the dt-bindings [1] patch posted and Acked long
+>     time back seems to have slipped through the cracks and hasn't been
+>     merged. Including it along with this patch as both are related.
+>     dt_binding_check & dtbs_check passed.
+> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: qcs615: remove disallowed property in spmi bus node
-      commit: 54040a3e3da67ef0e014e5f04f9f3fe680fc4b55
+[1/1] arm64: dts: qcom: ipq9574: Fix USB vdd info
+      commit: 4f4c905e6a2a4e884f4e9b7326c94fac3500e0f9
 
 Best regards,
 -- 
