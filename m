@@ -1,248 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-51617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28ACCA650B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 14:23:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95E08A650C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 14:23:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 800237A500B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 13:21:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5AE571897686
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 13:23:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70B7D23CEF8;
-	Mon, 17 Mar 2025 13:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B69523E33B;
+	Mon, 17 Mar 2025 13:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="ApvQoRSY";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="tCtccsA6";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="ApvQoRSY";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="tCtccsA6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OOtwng8s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE4423C390
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 13:22:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C03D23C8CE;
+	Mon, 17 Mar 2025 13:23:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742217764; cv=none; b=fCtxFeklPflizOKUYhcYs8+9I3Yxtxyte+qvOBSuD4SHMD8RK1Bk9L/2GWEyxFXsVJWB2UPSi2zI+yDt42m5a5wbaF0PgrisQWzVh4PASmPA043GFncVaRFtsM/PnnL0rB6Tr2033fY+rrhiNnIaWzuozOjBYtFqnBWAQMTlnsE=
+	t=1742217803; cv=none; b=rz//FNLv1Y3pJ9D5CwetNCZeF/oZjzDa9knYgU/j5uGY541MjzVKlktj1TnQ1dpKFwVCzaS9YVZpw95MLiWyX1sk9xqRo8NqXriLNCdmVH7ySHGNt2mz8/ZBhXsOEznKely7b5rkZbw0GHttWolcYC52IZmdDqG8uwkPeR1uKr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742217764; c=relaxed/simple;
-	bh=nA8fHiuGAJYzRNGAUrhzA0s9BddIsXFztKY7Ls+Jzv0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BrrQ7CkWhkUPjDKtIvzK4m+bfxngZ2M9Ne5x0mlCaatErqr0x+mfftXajDZv/dRJilWIYe4Avt4567rjIhJTPvtoG9zC2kr01kV9zMM0f9rFnFymICdcZI8KJRhkl9Ng2NYHgy4Z5xJGuu2aQsAPLWy4MKleZ0gtVRJnIgQ4Hrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=ApvQoRSY; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=tCtccsA6; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=ApvQoRSY; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=tCtccsA6; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 7BAC41FDF8;
-	Mon, 17 Mar 2025 13:22:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1742217760; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BvjmCGnV+8VGo3L2IiQSD86BR3ahfRZ2uwyt6V6eGuo=;
-	b=ApvQoRSY76Mslur9CGTSGVU0HFFlU1lDozgOP3lPymSQfR8CD28OmctZDWrXsBHBgDdW3B
-	GlNTnCqCShF+HUaANFu2BElAtLw/Y3FtDCJQ2iRwz3SpwazIQgvW6uKccTRwbWwTkDKEbp
-	kwDC9IGtbPYPrKjmL5HfCus7RVW5YxY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1742217760;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BvjmCGnV+8VGo3L2IiQSD86BR3ahfRZ2uwyt6V6eGuo=;
-	b=tCtccsA6t4WfkHbleV6UfAioCXfeXOA4kLg20sx/BgyCuNDcU03bsMCAyjQEkNj0J4ym+n
-	DDgH0x9aKltCmOCA==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ApvQoRSY;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=tCtccsA6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1742217760; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BvjmCGnV+8VGo3L2IiQSD86BR3ahfRZ2uwyt6V6eGuo=;
-	b=ApvQoRSY76Mslur9CGTSGVU0HFFlU1lDozgOP3lPymSQfR8CD28OmctZDWrXsBHBgDdW3B
-	GlNTnCqCShF+HUaANFu2BElAtLw/Y3FtDCJQ2iRwz3SpwazIQgvW6uKccTRwbWwTkDKEbp
-	kwDC9IGtbPYPrKjmL5HfCus7RVW5YxY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1742217760;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BvjmCGnV+8VGo3L2IiQSD86BR3ahfRZ2uwyt6V6eGuo=;
-	b=tCtccsA6t4WfkHbleV6UfAioCXfeXOA4kLg20sx/BgyCuNDcU03bsMCAyjQEkNj0J4ym+n
-	DDgH0x9aKltCmOCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2701A139D2;
-	Mon, 17 Mar 2025 13:22:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 2Nc4CCAi2GdFWQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 17 Mar 2025 13:22:40 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: airlied@gmail.com,
-	simona@ffwll.ch,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org
-Cc: dri-devel@lists.freedesktop.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH 06/15] drm/msm: Test for imported buffers with drm_gem_is_imported()
-Date: Mon, 17 Mar 2025 14:06:44 +0100
-Message-ID: <20250317131923.238374-7-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250317131923.238374-1-tzimmermann@suse.de>
-References: <20250317131923.238374-1-tzimmermann@suse.de>
+	s=arc-20240116; t=1742217803; c=relaxed/simple;
+	bh=BpyEdD917DTKrssNtjyvHazyp1gxLX2BMxDRS4uuMT8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=nuiXbkQqIUY9NnYWiZaIqwQupPRyiIxAL8o8J4kA2I2yDtOWMeU53qAtuUPzyOUBB+9aFgHsaOf3wuEZySgXATlcr09ncAPbesF7foUWiZ5l8FZnHZVTrsj5IzZ+nO9Btd2rjuWNbX5x+X3L9xhVNt5QUf+gptkDQ73Zbpi7Kg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OOtwng8s; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59904C4CEE9;
+	Mon, 17 Mar 2025 13:23:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742217803;
+	bh=BpyEdD917DTKrssNtjyvHazyp1gxLX2BMxDRS4uuMT8=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=OOtwng8s80n8AiNj2LAhGke8+KaiNxKdafKlsHRhPYzXc+QVQc5TVmKrElCFg/zWa
+	 H9DyMFazp2LZtcLlXjiztpdMKQV4u+JAWOtiNT8aRMOrhLihU7HaBwYbcVRW5NxrOw
+	 GPjkAqFHZzePBAMTXtfDNBe/doWXtsAUYEViaLjvVludR0Po1Rv5NvUYVWt2xnUXUd
+	 fSW4lHdACvaNx/twmdZH8cMs8LSxqGeeckSi/RpB90/NBy11BxL/hQzPKPhd587ajt
+	 WCYJTENFFL/TJKFkYjfRlGz+phfYrG7qcrh0Thpc9IH0D60LGwRH5IYy5HJSMhKdag
+	 1FxV+9hsgUswA==
+Message-ID: <78e580bd-420c-4e5e-9383-7919c422ab58@kernel.org>
+Date: Mon, 17 Mar 2025 14:23:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 7BAC41FDF8
-X-Spam-Level: 
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	FREEMAIL_TO(0.00)[gmail.com,ffwll.ch,linux.intel.com,kernel.org];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,lists.freedesktop.org:email,suse.de:email,suse.de:dkim,suse.de:mid];
-	FROM_EQ_ENVFROM(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,suse.de,gmail.com,quicinc.com,kernel.org,poorly.run,somainline.org,vger.kernel.org];
-	RCVD_TLS_ALL(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -3.01
-X-Spam-Flag: NO
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 1/4] dt-bindings: PCI: qcom: Add MHI registers for
+ IPQ9574
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, bhelgaas@google.com,
+ lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250317100029.881286-1-quic_varada@quicinc.com>
+ <20250317100029.881286-2-quic_varada@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250317100029.881286-2-quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Instead of testing import_attach for imported GEM buffers, invoke
-drm_gem_is_imported() to do the test. The helper tests the dma_buf
-itself while import_attach is just an artifact of the import. Prepares
-to make import_attach optional.
+On 17/03/2025 11:00, Varadarajan Narayanan wrote:
+> The MHI range is present in ipq5332, ipq6018, ipq8074 and ipq9574.
+> Append the MHI register range and complete the hardware description
+> for the above SoCs.
+> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
----
- drivers/gpu/drm/msm/msm_drv.c       | 2 +-
- drivers/gpu/drm/msm/msm_gem.c       | 4 ++--
- drivers/gpu/drm/msm/msm_gem.h       | 2 +-
- drivers/gpu/drm/msm/msm_gem_prime.c | 4 ++--
- 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index c3588dc9e537..f316e6776f67 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -671,7 +671,7 @@ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
- 		ret = msm_ioctl_gem_info_set_iova(dev, file, obj, args->value);
- 		break;
- 	case MSM_INFO_GET_FLAGS:
--		if (obj->import_attach) {
-+		if (drm_gem_is_imported(obj)) {
- 			ret = -EINVAL;
- 			break;
- 		}
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index ebc9ba66efb8..2995e80fec3b 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -735,7 +735,7 @@ static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
- 
- 	msm_gem_assert_locked(obj);
- 
--	if (obj->import_attach)
-+	if (drm_gem_is_imported(obj))
- 		return ERR_PTR(-ENODEV);
- 
- 	pages = msm_gem_get_pages_locked(obj, madv);
-@@ -1074,7 +1074,7 @@ static void msm_gem_free_object(struct drm_gem_object *obj)
- 
- 	put_iova_spaces(obj, true);
- 
--	if (obj->import_attach) {
-+	if (drm_gem_is_imported(obj)) {
- 		GEM_WARN_ON(msm_obj->vaddr);
- 
- 		/* Don't drop the pages for imported dmabuf, as they are not
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 85f0257e83da..ba5c4ff76292 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -224,7 +224,7 @@ msm_gem_assert_locked(struct drm_gem_object *obj)
- /* imported/exported objects are not purgeable: */
- static inline bool is_unpurgeable(struct msm_gem_object *msm_obj)
- {
--	return msm_obj->base.import_attach || msm_obj->pin_count;
-+	return drm_gem_is_imported(&msm_obj->base) || msm_obj->pin_count;
- }
- 
- static inline bool is_purgeable(struct msm_gem_object *msm_obj)
-diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-index ee267490c935..2e37913d5a6a 100644
---- a/drivers/gpu/drm/msm/msm_gem_prime.c
-+++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-@@ -50,7 +50,7 @@ int msm_gem_prime_pin(struct drm_gem_object *obj)
- 	struct page **pages;
- 	int ret = 0;
- 
--	if (obj->import_attach)
-+	if (drm_gem_is_imported(obj))
- 		return 0;
- 
- 	pages = msm_gem_pin_pages_locked(obj);
-@@ -62,7 +62,7 @@ int msm_gem_prime_pin(struct drm_gem_object *obj)
- 
- void msm_gem_prime_unpin(struct drm_gem_object *obj)
- {
--	if (obj->import_attach)
-+	if (drm_gem_is_imported(obj))
- 		return;
- 
- 	msm_gem_unpin_pages_locked(obj);
--- 
-2.48.1
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+Best regards,
+Krzysztof
 
