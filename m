@@ -1,180 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-51552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 633B4A63C00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 03:49:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45097A63C2D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 03:56:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9722916AD32
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 02:49:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7BFCB1889018
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 02:56:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ABC114A619;
-	Mon, 17 Mar 2025 02:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC2F155316;
+	Mon, 17 Mar 2025 02:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hthwMNUl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oO2WlGh4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF23374C14;
-	Mon, 17 Mar 2025 02:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60106433A0;
+	Mon, 17 Mar 2025 02:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742179745; cv=none; b=BhFbJNzj7VreXL2ljiBo2ZUF7zIXxctpQDv3Y+I6dp4+1SCdmlpZYqHseDIvtObxXVReoqj3XjCtonAwC01Q2+eEuIHZOjAJKqhSh9GTu+oT2NpkUKdMirk1e8nukrEHYaBZF0csprXdYzy217TIgZ/bdhkrRMwvjdVpZIMP1PY=
+	t=1742180165; cv=none; b=m6RcB2oRdrpZxYEVUaJtYff7HKq0l+3F63S3wA3n2FCgUgZ4k7FMV3B0O56qvY1MMtZE50YVJ+BLPK6MtetDzV+EHa7xY2V3ufZyHozzQhZ2NRQttqP26fT6XEIEjYqU7Ks9bn1eU1XfpdJI7Mpuh4rUvzF3ihkoAHfe6T49Zig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742179745; c=relaxed/simple;
-	bh=g0Q03lSkmQ8AQVe/rzXdaa8RKedNM5MrOTc7u7vfasU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VB3ZNvBr/cxfjKqvOwpSh6CeFLa2UfiWYMpkGLeUCWtKIUwgQx/8aTwF/IThxdiTw2FJ4mUf5U8mWYtNjBuH6yAUrduUI8/wmTR/OZhQR3nDYPB1e/Jd9hW1Lc0aZqK39K4+2ZquAVO7IjwUYmXCmQgTaNTJdnvsDriWVvppUN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hthwMNUl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB3FC4CEDD;
-	Mon, 17 Mar 2025 02:49:03 +0000 (UTC)
+	s=arc-20240116; t=1742180165; c=relaxed/simple;
+	bh=v7djMlU4UR00JbjnJzB3bQ0/Wjh7rqItX7IuQSXFbUs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qAwT/x2BYgVjKIBUQ69BbN9+gT/XjqHJf5VZ+YydBHmqFJIHgmr0+Y6pM0rL2ipqHCqv5KqHHwnI3bQEd+UVcVZds2szcTYnFheybS4Jmp/x4wt9sTt7h0PBZxp20Wovuoo1bmj9FzzT63GUM3V2jA8CJrM/h9ascFeCozPtMJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oO2WlGh4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EE6C4CEDD;
+	Mon, 17 Mar 2025 02:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742179744;
-	bh=g0Q03lSkmQ8AQVe/rzXdaa8RKedNM5MrOTc7u7vfasU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hthwMNUl1EbGSNnatSV++VoY+lzHVN3CMOoMgBSVG7LXiujtS7YVq8acV3U/MqvNs
-	 kmTOgkvVwpKhYLA51AG1Dgr9FEO7Pe/t5/+6klZ+2qgY8Ni4iNvBDmBBN9XZmlzaj7
-	 r1yoNI5TjD3zRr48YIAeo+3nB6DrPYbkz76snErKC6UN6KMMrrkZlcolpk+MMQPaos
-	 cuCp/wCkrLrmCAM0OG2ZLZ+DPlokO4gBwnuYnynjryJu1KvIDhNkeXCtIGCN8J2qoC
-	 8eMxrrC4VsHZYF2TsEZI8N4eG6sz+7BPNpzxU+IcJK1znq8drTf1YlEp4XH5RECtdI
-	 +ou8Dnx1/cO9w==
-Date: Sun, 16 Mar 2025 21:49:01 -0500
+	s=k20201202; t=1742180164;
+	bh=v7djMlU4UR00JbjnJzB3bQ0/Wjh7rqItX7IuQSXFbUs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=oO2WlGh4FGtcNAVUqsrc8i2rHn4vh3fkbr6Leh1J9z62rEY9GGBAJAg/Budhv4X6q
+	 ztj53yvPXvK0eFqHf7nvFE42uDXy6rfvbpxeB9EYUZkuKC3op1dE7SAyqDGqA2/H6y
+	 bwsZOlIq5HPG2A597L9i9aM9+2KV9uDd0HDO+p1oZM5z87cI+h7i1MQi5/8oHV3xX/
+	 WGvC5DQwVV2NiuSoaQHa1vbgMecN/b16TtrVVJ07zvxoSNudsR5FnN4ZzuSSshy9x8
+	 BIzEXA3915ag8bHguzZwRLiNfyak3mfOAXnifjzeW6eOZJUYVy9ret75M4/ZS/sTwE
+	 oS4brmEn85J8g==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Douglas Anderson <dianders@chromium.org>, 
-	Maulik Shah <quic_mkshah@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Subject: Re: [PATCH] pinctrl: qcom: Clear latched interrupt status when
- changing IRQ type
-Message-ID: <eu4zyuikust6o6ybmk4f6mxbygxa3rxijylfmskxe3q7kv7d3v@bf56p3esuvqc>
-References: <20250312-pinctrl-msm-type-latch-v1-1-ce87c561d3d7@linaro.org>
- <CAE-0n50siGEgY+NQvqBdjqg-7FaqzOUR7L9u24UiUhux1uMZcw@mail.gmail.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Martin Botka <martin.botka@somainline.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+	Adam Skladowski <a_skl39@protonmail.com>,
+	Sireesh Kodali <sireeshkodali@protonmail.com>,
+	Vladimir Lypak <junak.pub@gmail.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Vladimir Lypak <vladimir.lypak@gmail.com>
+Subject: Re: [PATCH 0/2] SDM660/MSM8953 Fix video core clock status stuck
+Date: Sun, 16 Mar 2025 21:55:45 -0500
+Message-ID: <174218015905.1913428.16606364311478799852.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250315-clock-fix-v1-0-2efdc4920dda@mainlining.org>
+References: <20250315-clock-fix-v1-0-2efdc4920dda@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n50siGEgY+NQvqBdjqg-7FaqzOUR7L9u24UiUhux1uMZcw@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Sat, Mar 15, 2025 at 12:07:14AM -0700, Stephen Boyd wrote:
-> Quoting Stephan Gerhold (2025-03-12 06:19:27)
-> > When submitting the TLMM test driver, Bjorn reported that some of the test
-> > cases are failing for GPIOs that not are backed by PDC (i.e. "non-wakeup"
-> > GPIOs that are handled directly in pinctrl-msm). Basically, lingering
-> > latched interrupt state is still being delivered at IRQ request time, e.g.:
-> >
-> >   ok 1 tlmm_test_silent_rising
-> >   tlmm_test_silent_falling: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
+
+On Sat, 15 Mar 2025 16:26:16 +0100, Barnabás Czémán wrote:
+> On SDM660 and MSM8953 video_subcore0 and venus0_core0 clocks are stuck
+> at off. This patch series fixes them.
 > 
-> I wish it was called pinctrl-msm-test.c but oh well!
-> 
-> >   Expected atomic_read(&priv->intr_count) == 0, but
-> >       atomic_read(&priv->intr_count) == 1 (0x1)
-> >   not ok 2 tlmm_test_silent_falling
-> >   tlmm_test_silent_low: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
-> >   Expected atomic_read(&priv->intr_count) == 0, but
-> >       atomic_read(&priv->intr_count) == 1 (0x1)
-> >   not ok 3 tlmm_test_silent_low
-> >   ok 4 tlmm_test_silent_high
-> >
-> > Whether to report interrupts that came in while the IRQ was unclaimed
-> > doesn't seem to be well-defined in the Linux IRQ API. However, looking
-> > closer at these specific cases, we're actually reporting events that do not
-> > match the interrupt type requested by the driver:
-> >
-> >  1. After "ok 1 tlmm_test_silent_rising", the GPIO is in low state and
-> >     configured for IRQF_TRIGGER_RISING.
-> >
-> >  2. (a) In preparation for "tlmm_test_silent_falling", the GPIO is switched
-> >         to high state. The rising interrupt gets latched.
-> 
-> Is the interrupt unmasked here while the test is driving the GPIO line
-> high and the interrupt trigger is IRQF_TRIGGER_RISING? If so, this is
-> correct behavior.
-> 
-> Why wouldn't the trigger be set to IRQF_TRIGGER_FALLING, then the GPIO
-> driven high, and then the GPIO driven low for the test to confirm
-> falling edges work?
 > 
 
-So you're saying that the interrupt consumer needs to take into
-consideration any previous interrupt handler being setup for this GPIO?
+Applied, thanks!
 
-Test #1 request the interrupt as rising then releases the interrupt,
-then before initiating test #2 the GPIO line is driven high, the
-interrupt is requested FALLING and the test is that we don't get any
-interrupts.
+[1/2] clk: qcom: mmcc-sdm660: fix stuck video_subcore0 clock
+      commit: 000cbe3896c56bf5c625e286ff096533a6b27657
+[2/2] clk: qcom: gcc-msm8953: fix stuck venus0_core0 clock
+      commit: cdc59600bccf2cb4c483645438a97d4ec55f326b
 
-> Have you seen the big comment in msm_gpio_irq_mask() and how it says we
-> want to latch edge interrupts even when the interrupt is masked?
-> 
-
-So if the bootloader (or hardware default?) configures an interrupt for
-e.g. RISING, and sometime during boot there's a rising edge, then a
-client driver should expect to get a spurious interrupt?
-
-> >     (b) The GPIO is re-configured for IRQF_TRIGGER_FALLING, but the latched
-> >         interrupt isn't cleared.
-> >     (c) The IRQ handler is called for the latched interrupt, but there
-> >         wasn't any falling edge.
-> >
-> >  3. (a) For "tlmm_test_silent_low", the GPIO remains in high state.
-> >     (b) The GPIO is re-configured for IRQF_TRIGGER_LOW. This seems to
-> >         result in a phantom interrupt that gets latched.
-> >     (c) The IRQ handler is called for the latched interrupt, but the GPIO
-> >         isn't in low state.
-> 
-> Is the test causing phantom behavior by writing to the interrupt
-> hardware?
-> 
-> >
-> >  4. (a) For "tlmm_test_silent_high", the GPIO is switched to low state.
-> >     (b) This doesn't result in a latched interrupt, because RAW_STATUS_EN
-> >         was cleared when masking the level-triggered interrupt.
-> >
-> > Fix this by clearing the interrupt state whenever making any changes to the
-> > interrupt configuration. This includes previously disabled interrupts, but
-> > also any changes to interrupt polarity or detection type.
-> 
-> How do we avoid the case where an interrupt happens to come in while the
-> polarity is being changed? Won't we ignore such an interrupt now? If
-> these are edge interrupts that's quite bad because we may never see the
-> interrupt again.
-> 
-
-Are you referring to the "both edge"-detection dance we're doing in the
-driver?
-
-> I think we erred on the side of caution here and let extra edge
-> interrupts through because a rising or falling edge usually means the
-> interrupt handler just wants to run when there's some event and it will
-> do the work to find out if it was spurious or not. It's been years
-> though so I may have forgotten how this hardware works. It just makes me
-> very nervous that we're going to miss edges now that we always clear the
-> interrupt.
-
-I'm not saying that you're wrong, or that your concerns are unwarranted.
-I wrote some simple tests to validate the behavior I expected to see. I
-didn't expect to see different results between wakeup (PDC) GPIOs and
-non-wakeup GPIOs, and now both passes the test case as written.
-
-That said, I'm not finding documentation on what the exact expectations
-are for these corner cases. If the expected behavior differs from what I
-put in the test cases, I'd be happy to see them updated - and the driver
-adjusted accordingly (for both types of GPIOs). Getting these things
-clarified was part of the reason for introducing the test cases.
-
-It certainly sounds like we need some test case for the dual-edge case
-though.
-
-Regards,
-Bjorn
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
