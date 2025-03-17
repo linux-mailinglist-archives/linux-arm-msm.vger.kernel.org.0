@@ -1,151 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-51654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB57DA65F46
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 21:37:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01020A66013
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 22:05:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B7DD37A3C4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 20:36:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 86C0D16598C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 21:03:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FB621F5852;
-	Mon, 17 Mar 2025 20:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46476204597;
+	Mon, 17 Mar 2025 21:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fNK+qsZM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vB0uk86B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4369E1F5842;
-	Mon, 17 Mar 2025 20:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A381A238A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 21:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742243863; cv=none; b=i8poimgl1Tksj3HDwxnYY4QD1wQ5UrnybmprnNQiWi33divYfhpbcw8slFc3KWqxLYO59rmRLgiHQzfyOQcbXq6jaoJEdJzXxIMZTDE4XkfyURJU1q7O1BxnkOHNYvr+rQaAlMxVBilumGWXf5qqg8SkXi99zbX4yk3s5h8trqk=
+	t=1742245320; cv=none; b=CQSF8xbiYtmy5G127k8Uqd18sx9hHvIs8ckwtATIcmhRjedGSY/E8P62OmXWG/0YIi4sNeQzotnE1RyeCVEsZjZWongVw9YPKlGVyraJo1KFHcYYU7kAuJFjwla9NQnLeUFwSHtvSZlbh0snPj2kZVnzKrB7YTVcxxutRpgrgbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742243863; c=relaxed/simple;
-	bh=EAH6DiCttghSq5ONxKx1j8unsQnFPM5gcsSzH37iVwk=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=lJUXlL9RDnzpqhvqlCNplMGechZ0lznj3qiRt+MKLLvLGhpywBO9jCwtYo6krGFa3VGaIvnYIa3fjdDHKejhHrelz880dX5OrMCGxPFWy15xjNiDHFhYhIt+aEeG3KCJO98pVp88goY+kqxmv73XvgUWA/rGn7uM47SgNEUwv7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fNK+qsZM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2036C4CEF3;
-	Mon, 17 Mar 2025 20:37:42 +0000 (UTC)
+	s=arc-20240116; t=1742245320; c=relaxed/simple;
+	bh=zG2hpe1DsFIm3tM39WuYACGLDuIt+zLz8Q5ndylkIiU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aQoNp3ucTUaeMFGBzHQGyRWwTs9ex3M00xQ7gLYpkZsEhdpMteQoUGLwKiVSZjUmSE5DUx2iOihsvnUMOAUwGnYLUMJgIGIJvhTBKVIAlV6OtTvNSJO50Ftdu+5jtkktbgUaMecnFUuKCFSeM+ZD1nHQFCmkVRvhF0ySb7PiFBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vB0uk86B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21405C4CEE3;
+	Mon, 17 Mar 2025 21:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742243863;
-	bh=EAH6DiCttghSq5ONxKx1j8unsQnFPM5gcsSzH37iVwk=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=fNK+qsZMETCsE4vmpMKLZl6mMxKbZdsm1Ao1mDGWMjmPYCVkQXEsVH09rfa1QEZCx
-	 TXKDmiRQLmQufOImGnEtGDP7Mulf2Rnm4WsbooLztBQdCpHtNPwc1Q6NB9RxZ47fO3
-	 ZwojOst6zp4Gj5Y2HczDnx1KkC6PVg+0nHIfHM/NG2IpNJkBkIwIpiydFBaU/kJhDd
-	 5+23T/UpyHw9HRtOO5TqmfrL+7fCf+AsMgNpYaYQXQ3lgiHRWuaTjQPH1gK2reI7aJ
-	 V0/tCr4gKU5y88UahVcaADEzP8z9wXgLlkpquCy/p2G3ck6oMT8ePuUc21Fl717hWQ
-	 7SDdACX9nDedQ==
-Date: Mon, 17 Mar 2025 15:37:41 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1742245319;
+	bh=zG2hpe1DsFIm3tM39WuYACGLDuIt+zLz8Q5ndylkIiU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=vB0uk86By9PGAa8OADRimQRl8EEWP7ka9vW+7+jF6qQv9BKUxAJFZtY0vzHdKwfeP
+	 uZ2Jw5b/Q6Edx/PBSOGC4BJETJcMzBho761WkgxkLoUD3lmk9fII/lqNIReS33aog2
+	 hpQwE83SeAeZ17z1aKUPtG70CtnRC4AaNsl2/tFWiATPLAo1m0XMZwKlKxkFMJE8nK
+	 Fbbw3PPTyZO286yKKjg8gPBh7XSoD66UR4uu3zUzoVP/831WzFfs229RDY+HZsJ36A
+	 wHh3Ozeb5Tu48YuGGkQqJ4AHKMjiBQzOQCdzjNGPSfq8Bj7R1BNeZlgkqVOJ+ipIew
+	 ah6yZMYsrPUAg==
+From: Bjorn Andersson <andersson@kernel.org>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jishnu Prakash <quic_jprakash@quicinc.com>
+Subject: [GIT PULL] Qualcomm driver updates for v6.15
+Date: Mon, 17 Mar 2025 16:01:57 -0500
+Message-ID: <20250317210158.2025380-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Lee Jones <lee@kernel.org>, Maxime Ripard <mripard@kernel.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Bjorn Andersson <andersson@kernel.org>, freedreno@lists.freedesktop.org, 
- Kumar Gala <galak@codeaurora.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Simona Vetter <simona@ffwll.ch>, 
- Sean Paul <sean@poorly.run>, "Ivan T. Ivanov" <ivan.ivanov@linaro.org>, 
- David Heidelberg <david@ixit.cz>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
- James Clark <james.clark@linaro.org>, David Airlie <airlied@gmail.com>, 
- Georgi Djakov <djakov@kernel.org>, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, coresight@lists.linaro.org, 
- linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@gmail.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Andy Gross <andy.gross@linaro.org>, Mike Leach <mike.leach@linaro.org>, 
- linux-arm-kernel@lists.infradead.org, Conor Dooley <conor+dt@kernel.org>, 
- Andy Gross <agross@codeaurora.org>, Leo Yan <leo.yan@linux.dev>, 
- dri-devel@lists.freedesktop.org, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <20250317-fix-nexus-4-v1-0-655c52e2ad97@oss.qualcomm.com>
-References: <20250317-fix-nexus-4-v1-0-655c52e2ad97@oss.qualcomm.com>
-Message-Id: <174224352766.683604.12560729798577306237.robh@kernel.org>
-Subject: Re: [PATCH 0/9] ARM: qcom: fix APQ8064 schema warnings
+Content-Transfer-Encoding: 8bit
 
 
-On Mon, 17 Mar 2025 19:44:35 +0200, Dmitry Baryshkov wrote:
-> Rob's bot has reported [1] several warnings for Nexus 4 submisson,
-> however none of those warnings are specific to that device. Fix all
-> those warnings for all APQ8064 platforms by extending existing schemas,
-> adding missing schemas and making APQ8064 DT follow all the schema
-> files.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/174221818190.3957236.3364090534153729086.robh@kernel.org/
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
-> Dmitry Baryshkov (9):
->       dt-bindings: soc: qcom,rpm: add missing clock-controller node
->       dt-bindings: display/msm: describe SFPB device
->       dt-bindings: soc: qcom: add Smart Peripheral System Interrupt Controller
->       dt-bindings: arm: qcom,coresight-static-replicator: add optional clocks
->       ARM: dts: qcom-apq8064: add missing clocks to the timer node
->       ARM: dts: qcom: apq8064 merge hw splinlock into corresponding syscon device
->       ARM: dts: qcom: apq8064: use new compatible for SFPB device
->       ARM: dts: qcom: apq8064: use new compatible for SPS SIC device
->       ARM: dts: qcom: apq8064: move replicator out of soc node
-> 
->  .../arm/arm,coresight-static-replicator.yaml       | 10 +++
->  .../devicetree/bindings/display/msm/qcom,sfpb.yaml | 39 ++++++++++
->  .../devicetree/bindings/soc/qcom/qcom,rpm.yaml     |  8 ++
->  .../devicetree/bindings/soc/qcom/qcom,sps-sic.yaml | 38 ++++++++++
->  arch/arm/boot/dts/qcom/qcom-apq8064.dtsi           | 85 +++++++++++-----------
->  5 files changed, 136 insertions(+), 44 deletions(-)
-> ---
-> base-commit: 2bb3cf7805af73af62ebfcbb55e350549b6a0912
-> change-id: 20250317-fix-nexus-4-dd0fe3bca987
-> 
-> Best regards,
-> --
-> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> 
-> 
-> 
+The following changes since commit 2014c95afecee3e76ca4a56956a936e23283f05b:
 
+  Linux 6.14-rc1 (2025-02-02 15:39:26 -0800)
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+are available in the Git repository at:
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-6.15
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+for you to fetch changes up to 2e14c17a2e3d697bef6b5bf49b253d6e52f3d186:
 
-  pip3 install dtschema --upgrade
+  soc: qcom: Do not expose internal servreg_location_entry_ei array (2025-02-14 11:37:30 -0600)
 
+----------------------------------------------------------------
+Qualcomm driver updates for v6.15
 
-New warnings running 'make CHECK_DTBS=y for arch/arm/boot/dts/qcom/' for 20250317-fix-nexus-4-v1-0-655c52e2ad97@oss.qualcomm.com:
+Improve the client interface for the Qualcomm ICE driver to avoid
+leaking references, including fixing the client drivers to call the new
+function.
 
-arch/arm/boot/dts/qcom/qcom-ipq8064-ap148.dtb: rpm@108000: 'clock-names', 'clocks' do not match any of the regexes: '^regulators(-[01])?$', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpm.yaml#
-arch/arm/boot/dts/qcom/qcom-ipq8064-rb3011.dtb: rpm@108000: 'clock-names', 'clocks' do not match any of the regexes: '^regulators(-[01])?$', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpm.yaml#
-arch/arm/boot/dts/qcom/qcom-apq8060-dragonboard.dtb: rpm@104000: 'clock-names', 'clocks' do not match any of the regexes: '^regulators(-[01])?$', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpm.yaml#
-arch/arm/boot/dts/qcom/qcom-msm8660-surf.dtb: rpm@104000: 'clock-names', 'clocks' do not match any of the regexes: '^regulators(-[01])?$', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpm.yaml#
+Adopt str_on_off() helper in AOSS driver and mark non-global servreg QMI
+element info array in the PDR driver static.
 
+----------------------------------------------------------------
+Jishnu Prakash (1):
+      dt-bindings: soc: qcom: qcom,pmic-glink: Document SM8750 compatible
 
+Krzysztof Kozlowski (2):
+      soc: qcom: Use str_enable_disable-like helpers
+      soc: qcom: Do not expose internal servreg_location_entry_ei array
 
+Tudor Ambarus (4):
+      soc: qcom: ice: introduce devm_of_qcom_ice_get
+      mmc: sdhci-msm: fix dev reference leaked through of_qcom_ice_get
+      scsi: ufs: qcom: fix dev reference leaked through of_qcom_ice_get
+      soc: qcom: ice: make of_qcom_ice_get() static
 
-
+ .../bindings/soc/qcom/qcom,pmic-glink.yaml         |  1 +
+ drivers/mmc/host/sdhci-msm.c                       |  2 +-
+ drivers/soc/qcom/ice.c                             | 51 +++++++++++++++++++++-
+ drivers/soc/qcom/pdr_internal.h                    |  1 -
+ drivers/soc/qcom/qcom_aoss.c                       |  3 +-
+ drivers/soc/qcom/qcom_pdr_msg.c                    |  3 +-
+ drivers/ufs/host/ufs-qcom.c                        |  2 +-
+ include/soc/qcom/ice.h                             |  3 +-
+ 8 files changed, 57 insertions(+), 9 deletions(-)
 
