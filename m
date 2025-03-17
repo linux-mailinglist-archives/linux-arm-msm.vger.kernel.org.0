@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-51635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43BC9A6583F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 17:37:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E98F6A6589A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 17:43:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6AC7D1884D0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:37:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B37AD3B41DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:41:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 189141A315F;
-	Mon, 17 Mar 2025 16:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 893861F75AC;
+	Mon, 17 Mar 2025 16:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="glS8TCai"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BtjMSEnB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC911A3147;
-	Mon, 17 Mar 2025 16:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E6F1ADFE4;
+	Mon, 17 Mar 2025 16:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742229452; cv=none; b=c3+z19HO185MNopTdR5V+VtM45XE3EGaPXDYAoiSEsGurTdvvwNtOGE8vkkbRGir62f35jK/xE6ZTz3olcja6iD+tIMlAOuaYQEfR84A/wHPrPKy0nzInoKo2eVCPzavQ1ViaKYnGXa/1tIHHvZ0G6QHY9LAx1yocdbkIMnM6wo=
+	t=1742229505; cv=none; b=tXSUlBBAbw/SBqJTfe90yKRImKEdp+s8hIenb/xSY68tLAdLY+Q0g2T92yQbODXfW7Z5V1F4E8JFkkMa9NmVTmvOT2hY5eqgTEDZ5CfXPyt2yPWYvGPkX/SMx3HY5/5w8ZOOmTxH2rv0DfjdwSBin+EEVbQFlwznD0HTCs40jyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742229452; c=relaxed/simple;
+	s=arc-20240116; t=1742229505; c=relaxed/simple;
 	bh=HR4snbWFFwiMo+npQvVU112otp9kuqyRniHfyZV8d3I=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zba8BvLPFSyEaOoqhlfFXBfiKUqNfKNdT6Vu8DnwQzZiW4YdnVB8ANPy8oHUxXpOgHG6wSVOU5rWnz5xn4C9lAhy5jhRbiBDXhQGoGnhwxLuptH8yiwBPyejIQFROHi0Xs0r1a/2qJaSSfJNZ/+cyQZ/wyFkt5kLNWyaGtm7m4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=glS8TCai; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F73C4CEEC;
-	Mon, 17 Mar 2025 16:37:29 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Ik5BGIYw7aDe7Np7aJ9n7tqQ+DNtJWyYVEk9SLDdpg8HlhXqQKSLymT1BqJr5E9jUvw24Eb1WZRvigKT04T8UYNINjXXiyxeH+SzxsK8UBHK/l/RIGBxoVyDHtjuR3knPdAFna544p9z7Mi7bA2JXXLmzCPZZsRvhDO8wlR5m7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BtjMSEnB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E01C4CEEC;
+	Mon, 17 Mar 2025 16:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742229451;
+	s=k20201202; t=1742229505;
 	bh=HR4snbWFFwiMo+npQvVU112otp9kuqyRniHfyZV8d3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glS8TCaiKvX8bXzoa/7OdDLJsDnJa8EFMIc9OVCI1J0uAgVRsxJSXmgL2cbHUPLg9
-	 N8Ve0DW35YLhPP7m7jrjsDHIqtdQGBn6BzoGPzc2XZME3NjzYEdEfN6fYjkKSKPfHN
-	 T6VOGwZedO4geRoCLjyVQOURj7KDh0idhe0435A63d1rTbgrBx9onF9j2GmwI1tOLp
-	 vX+agQihKzgS+CMmaTSZ+ALTA+3YLmR6kFlRlLEX/n8Jjv5IDm3lq/SqcWS9rHDfJS
-	 CuzuUkbDgtmRMElauNhHhEEHVtAyF3R+66qZcihWrs8TIBWYS3fXxQsBy9+FXA5p7p
-	 P1bg/8JjmDuNw==
+	b=BtjMSEnBSFhcdV6hKhpwL6WjcRXtJ9XJoHrLfFTRviGt3hT+8BoPTq7+xSAkufcg+
+	 1KN6W+QsGoGJRHNbS8QoIu9u688JdYJAfa6UKtwKDtsD1hzUm+y/Ntz/QwCT5srch+
+	 Kx/wgMXeEAPM8WPIqk5B7tnGDh5HsrQ9O8aIwhh8ie8vgLfubazF1xUkSRTofa2hzQ
+	 AZIgt5n/dB6mHSXWuITy2U6CT9snVSKpHx4GiZsPkyyCBBkDq6/2V+kK0vzv6Dhpmi
+	 vvh+vHQ8Jqpdh33EhsH7MQFMVQfhI0jKrHFA+BPr6OBDyD5sge/xg5gKmzPwtC6oBk
+	 4rgfaOLCJRAJg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -54,12 +54,12 @@ Cc: Alexey Klimov <alexey.klimov@linaro.org>,
 	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.13 02/16] ASoC: codecs: wsa884x: report temps to hwmon in millidegree of Celsius
-Date: Mon, 17 Mar 2025 12:37:11 -0400
-Message-Id: <20250317163725.1892824-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 02/13] ASoC: codecs: wsa884x: report temps to hwmon in millidegree of Celsius
+Date: Mon, 17 Mar 2025 12:38:07 -0400
+Message-Id: <20250317163818.1893102-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250317163725.1892824-1-sashal@kernel.org>
-References: <20250317163725.1892824-1-sashal@kernel.org>
+In-Reply-To: <20250317163818.1893102-1-sashal@kernel.org>
+References: <20250317163818.1893102-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,7 +69,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.13.7
+X-stable-base: Linux 6.12.19
 Content-Transfer-Encoding: 8bit
 
 From: Alexey Klimov <alexey.klimov@linaro.org>
