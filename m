@@ -1,107 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-51614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 017DDA64DAD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 13:00:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4F98A64E53
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 13:15:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 01BD11896FD8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 12:00:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B5407A4AED
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 12:13:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6716238D57;
-	Mon, 17 Mar 2025 11:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D28723BD17;
+	Mon, 17 Mar 2025 12:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dMsRMSbm"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="a+/HGoDk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A62238156;
-	Mon, 17 Mar 2025 11:58:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6387921D3DF
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 12:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742212690; cv=none; b=cfp++JcWr6oNB4wu+qV2NEAG/FGPjUdn5rSg37/C4Ag3RmfPLJ04/mLUUZQaxRVRvVd2Nd2bhSQ6qwvRMv/1j0NToGOTZfL/MSW+W0LLF6JWrgdB8Kyq9+2IOom7eJtTYPmJLx2b2SpVNmZ5fWPHyLWJCfQJRssjO0e5crsM3d4=
+	t=1742213559; cv=none; b=taqdokX//zhyXArLQxW5UbzjUxDRCfqjIW6VDEv8QfujykdTRzhhzRf5ZZQHnjK7MK6CAWmTZAxTN6OOkICOQp/94UOIV2GBUyBq0GwxHm1pCYUR1nHmGoI3EwrEe0tkKL2PC0jkvJamKNTg/mpzzcfZRRRVjsPCqkOa6Q+Y2nM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742212690; c=relaxed/simple;
-	bh=sq/y7ToMuiEYjILLs9HwScQY78qLtJ+EUzbHvYcFahE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iff4WLdxORbYviuF7a/Kg2Gq6+xXO6z4OceydbFQow9L1nya45YspfAzQRr0Zd9GU2ypfuiWBH3P9Rb7mWKsLfaaTx5HFjc7AfG4nPtOeKxAi6OEJ5Y/HxI7Cy8/HiVkPzWykcKg9me52Cz/jEa9SjEPv1fZxPuXxn7TQxIeRDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dMsRMSbm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7CFC4CEE3;
-	Mon, 17 Mar 2025 11:58:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742212690;
-	bh=sq/y7ToMuiEYjILLs9HwScQY78qLtJ+EUzbHvYcFahE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dMsRMSbmEjUg08T36jpvjIpXopIOqt3lksnDPiquVrUU+ZcuZMintWSixY1KecFBK
-	 u5IGvl1PdEgpsuAPWLllxe285atv/fUenvzZzLvSznR3p/YqdVgNwpmCq+zQRYAgPy
-	 QdFW8ftA4jVqU2xAy21Hkb/bQMgz9qoxivpkY6GBayzOG2UXTGdYZ7CmFEtSD6fpJa
-	 87zI6f37CMVxNktP7yFMy1XZCnj6WnUJElxv1htNDhpik7A0fuL9KW+WGqDaahxBNy
-	 ZnQMlFXPQc1pWKncdLkfWuFAgI9JyHRGRHqFiKXZormATHM+J5vXhNW+ct3zA/hbN6
-	 Xvn+zG5UsibLw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tu96d-000000006pl-3dZv;
-	Mon, 17 Mar 2025 12:58:08 +0100
-Date: Mon, 17 Mar 2025 12:58:07 +0100
-From: Johan Hovold <johan@kernel.org>
-To: alexandre.belloni@bootlin.com
-Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-rtc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] rtc: pm8xxx: switch to devm_device_init_wakeup
-Message-ID: <Z9gOT5WBaGkBZjl9@hovoldconsulting.com>
-References: <20250317111312.1518349-1-alexandre.belloni@bootlin.com>
+	s=arc-20240116; t=1742213559; c=relaxed/simple;
+	bh=UgTOwub6IM8lyO1PUttTb8emd3or5wxqwiyiuHKamRY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=BJHD+45K7fHVgYOZN1e7QsAa0dipxnfJJtxDE5mCBX0mQOSsmaJjhFq5phTVkwo1pmCknpMUhqZWtcXxihBsXcusZVeAvdeTi+dH03VXvocXeC66mk49BXZcyv4f/kf6N0YkgYw0tNY0dTm0abvjOwgPTHU2Rfu4sg0v7hzx+V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=a+/HGoDk; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5e535e6739bso6405714a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 05:12:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1742213555; x=1742818355; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XgQI7i+glIQS/JWP7XVCA4jeAmkUf5EqjBge8pBC6Ps=;
+        b=a+/HGoDkxXFGLkdWZcp/Qfm2f704wVxqmRhx6DWn0ylg7W1Gu81HiAzugN5cDK115z
+         qA7z7qDP6rhs4McUXcUE4wMKaXzVetLUm073SCO58Pk/NT5AsD/W1TsGPWGBrVr+aNTB
+         lG0R3x6nTvQU3dvvsr7ZmGvi7CXRmPEwabd2N0e8s3WVDVLCa3jicu9nPVc3ofJ0OrWT
+         4pj1s8Hy7r8JDkW5x1sfV3kA9c/f5mM2WbwAkWu1wai1WrifMapnVCHNmjqRIf/pDzcS
+         AvFP4aPVJeA3GoCRYBkOiMHhAqd/KUWNB+jRe0e6jU4xzOZFE70kQFo/0fji9p0BIlPE
+         WCbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742213555; x=1742818355;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XgQI7i+glIQS/JWP7XVCA4jeAmkUf5EqjBge8pBC6Ps=;
+        b=g8dh3XXGfYk5lHrvJ39QXAgTnfpcyTQdOis67tWvRO3346ER+qJB4I/73E4mvQD/iA
+         F4icx6l0hI2NJKUcPlXKdaE01nCcPAF3Q76TOKzBaUzmu2rPHfPk70t3DJXmC0oNEZFE
+         o8aVaU3DCpAplGpPu7niibbINmEDM3C5iKTIwqvsL6oUUGFt+I3x9R5jnDBqyhKXx02W
+         gkPtOm/y2gJLim6vbbrOdMbWIPJAnmCRKbBRnIYTYX5mtNFWb7iaEBl/BgG+WiTxxJha
+         dWNgkb31x6ojzTkZoHecGi+YRGMKQBxOhzX0STwxxDsRUyoktdCtxO1HR35EyzCpuKpL
+         Khiw==
+X-Forwarded-Encrypted: i=1; AJvYcCW74p13MfVcoPXhSYqFRXs+KuH5Q7cF7pcyFOU404eMgSECVFv8PsrSLOdeR7AZX0Fa4+GEvQIn2paThfeP@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJ7ocIA4EaTxO6Zj0ejIPjDEb7pWGGOvGrDu5D3ZpUOAqmvTTE
+	u6mGbE8ReKEtdQVRrEEy/jWEr6L+/ANsGXCiu45/4405E6XV4sE4mf/BWX9qfuo=
+X-Gm-Gg: ASbGnct2a4onfgPUZ+Y2uMimjLKcAqcdeSolSq9E3Nxyp9vj8a8m77ay0/V6lzz1pa6
+	tMbQwoWlO/oLqlxhWvyp7M3sNsnnEotwJXdnBgsf1xXGjfK7nNgD9dj6lTmOdi1PwshuSTqj79v
+	Dyg9D10nehlDW67yJt+NQT/AvHqQ3NOvpQoJQ6WAHdNBHmAU18mt1PA5Wb/wzWaVWENri0dfzsw
+	8HxgA7/bUAuzFounaiyTfNXa+3e7eCLoaa68Tpi4vnaMYU+ntaKDYw/H5iv5q0OIavSBtbZtiJy
+	liL/QclQfdXvxdtGnuHJQktiPm0Z3It8z73zl5IhixPbbbj/wrSQkyXmGNwfB6xnxI9syl5BCbv
+	RV7uSrrubnFts8w==
+X-Google-Smtp-Source: AGHT+IGkBMivzQV4mRjAFxSl5hkbzmyy3jCErKcn7Cl5GDE/j11zVkAXm1oq3i12rfExH1BTJTH/vg==
+X-Received: by 2002:a05:6402:518a:b0:5e5:3643:c8b5 with SMTP id 4fb4d7f45d1cf-5e8a080aa09mr12579753a12.30.1742213554535;
+        Mon, 17 Mar 2025 05:12:34 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e8169b0232sm6033780a12.38.2025.03.17.05.12.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Mar 2025 05:12:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250317111312.1518349-1-alexandre.belloni@bootlin.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 17 Mar 2025 13:12:33 +0100
+Message-Id: <D8IJ5TEHREW1.2FK88ACT1JPYQ@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ "Krzysztof Kozlowski" <krzk@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm6350: Add OPP table support to
+ UFSHC
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250314-sm6350-ufs-things-v1-0-3600362cc52c@fairphone.com>
+ <20250314-sm6350-ufs-things-v1-2-3600362cc52c@fairphone.com>
+ <cddcd851-5e8c-4202-baad-e56a09d5775a@oss.qualcomm.com>
+In-Reply-To: <cddcd851-5e8c-4202-baad-e56a09d5775a@oss.qualcomm.com>
 
-On Mon, Mar 17, 2025 at 12:13:11PM +0100, alexandre.belloni@bootlin.com wrote:
-> From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-> 
-> Switch to devm_device_init_wakeup to avoid a possible memory leak as wakeup
-> is never disabled.
+Hi Konrad,
 
-You should probably mention that this was due to a bad merge. The
-no-alarm patch moved the previous call to device_init_wakeup() into the
-conditional, but you had switched it to use devres so we ended up with
-two calls when you applied the patch.
+On Fri Mar 14, 2025 at 11:08 PM CET, Konrad Dybcio wrote:
+> On 3/14/25 10:17 AM, Luca Weiss wrote:
+>> UFS host controller, when scaling gears, should choose appropriate
+>> performance state of RPMh power domain controller along with clock
+>> frequency. So let's add the OPP table support to specify both clock
+>> frequency and RPMh performance states replacing the old "freq-table-hz"
+>> property.
+>>=20
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>
+> [...]
+>
+>> +
+>> +			ufs_opp_table: opp-table {
+>> +				compatible =3D "operating-points-v2";
+>> +
+>> +				opp-50000000 {
+>> +					opp-hz =3D /bits/ 64 <50000000>,
+>> +						 /bits/ 64 <0>,
+>> +						 /bits/ 64 <0>,
+>> +						 /bits/ 64 <37500000>,
+>
+> This rate on this clk requires opp_svs (not low_svs)
 
-Unless you want to and can rebase your tree.
+Not sure where you're seeing this?
 
-> Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-> ---
->  drivers/rtc/rtc-pm8xxx.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
-> index c6241a0c26e9..70cbac76147b 100644
-> --- a/drivers/rtc/rtc-pm8xxx.c
-> +++ b/drivers/rtc/rtc-pm8xxx.c
-> @@ -647,7 +647,7 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
->  		if (rc)
->  			return rc;
->  
-> -		device_init_wakeup(&pdev->dev, true);
-> +		devm_device_init_wakeup(&pdev->dev);
+This is from my msm-4.19 tree:
 
-So you need to remove the call to devm_device_init_wakeup() above as
-well (after platform_set_drvdata()) which the no-alarm patch moved here.
+gcc_ufs_phy_axi_clk_src:
+    .rate_max =3D (unsigned long[VDD_NUM]) { [VDD_LOWER] =3D 50000000,
+gcc_ufs_phy_unipro_core_clk_src:
+    .rate_max =3D (unsigned long[VDD_NUM]) { [VDD_LOWER] =3D 37500000,
+gcc_ufs_phy_ice_core_clk_src:
+    .rate_max =3D (unsigned long[VDD_NUM]) { [VDD_LOWER] =3D 75000000,
 
-With that fixed:
+[VDD_LOWER] =3D RPMH_REGULATOR_LEVEL_LOW_SVS,
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+My intepretation for this is we need low_svs?
 
->  	} else {
->  		clear_bit(RTC_FEATURE_ALARM, rtc_dd->rtc->features);
->  	}
+Regards
+Luca
 
-Johan
+>
+> with that:
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> Konrad
+
 
