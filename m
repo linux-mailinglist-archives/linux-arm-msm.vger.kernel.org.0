@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-51588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D9C3A64697
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 10:08:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A998A646B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 10:10:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6AA6A1893F81
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 09:08:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0551518948E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 09:10:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B37DE21E096;
-	Mon, 17 Mar 2025 09:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F22F21C175;
+	Mon, 17 Mar 2025 09:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YAPbskh2"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RX6VarsU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D6B1A9B58
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F5E21A45E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:09:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742202478; cv=none; b=R8bnFlKJPKIjhE+Iiu3rMQRzUkyU2zDuzJ1wAAZGbvkKQ5PemaTtuBzpFUM0r4IL9lWONLTECs5hPHBMpr7OdeS2mtrMmcoMHxAItfs/T7DsLZSfHmUrrnbH16Ge7dMWCI3Ts1cdERXZIEIZa1UNbQ58wZJ/XILpMM7OaDdb3Vk=
+	t=1742202592; cv=none; b=o6LdapWX9pfp9+z+Jd7VX7LM4lhjSWKsAXUJ+6ZWSf/GUKTOZ7ZIs6keHvIYwdAgJcuo/scPsPKc2UTOrRiRuaQLoT4Da0dEyrwHEcTZ+oUpgEfMe0rLuwt9b1hJ0VuY/osL7HYt6pMT0aSZ6bdXGdn/alwzWObwSYZRqQ1Z3iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742202478; c=relaxed/simple;
-	bh=+AiPVzF7b1V/vgA2zpvuQUa7wN7Ef6NyFUe8lYcs+os=;
+	s=arc-20240116; t=1742202592; c=relaxed/simple;
+	bh=/6+sTkr6a3ceKu/fxq9OWBAkUr2gpzahEt538B5Vjlg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eFNqVB14NdEizKFyfsTZgVBylmJ2Ssi+bSUXM6oGSkLNTn5vvO2VrxiuCPnG6hfUnaYsQiqC+taeXty+Ua7T7JHc/OqouI715qF09Q0HgrljeX+LeFcSXRDeTbQ3KIEKly2U/CPzkXjai4bGWPsohzWnEai0+vkQ4dNjP0gyOYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YAPbskh2; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=t4HI3+0ISQQjGwuQEryH1EPULodoMCXrjcvrqMDAjR/lYbk9CO5AkmM3BdQXAPQEADMJoopYl7XawwgTAdSjr98Q/ble/20S/xS2iaGfxew9NZfGDmD1wfZZKlgSsTrloVQxQ2sMDoxFsWJ0zzW21Tb6bhSR/YFU3WvPb6/OSpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RX6VarsU; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52GMQJQ8014765
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:07:54 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52GNiqmt011603
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:09:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YvB5W9+kgBjKeK0p1OnHFcTClNx4sp6hZOaOwkPfr5g=; b=YAPbskh2+wkbluk3
-	5cBVUNQ9k3avEdIeJktk6MZokj4tc+9OjvQUdH+lPkEo2t9Fmje3dhAEDBHfC4Gg
-	r5k3Tn49obaqtFF6wrerRo40/7sxmyDU6bfnDN/i6H6ja1M9NgV4KHb/TyJuGJqo
-	euyfof4BXRLF70ZjGN47P5PuiZoYRNHVEMrd0atI3O7/bZyvojmECKKqGlMHqzjv
-	6+EW7hFtX2axwgy5ZffqGB+LrR4jH1ACBQJkjhp2oAg32rK44yldgj51I7H+m9KY
-	nqh34nrzsLIbgrHAEylUEqxDkIDX01R9N21HBUOobTt5BmPIT1RXnf7RnqI8O5vd
-	jdjI/w==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45d2ahc29w-1
+	ahQItqeoUmWIKu5Zx43vnqgKrtzrhBRX2qch9IykP+M=; b=RX6VarsUXJVJCoJM
+	QA8l/3hkOpysMUyo19acn8fHjbnucwFU9HghBirLGNs1UjHKG83DcWn9oLbbhiwc
+	Us7olQDYJGKFnoaydGAGIZjO1FzbPCdK1Sa9poZn3YRlgMCqFVIfWZIVWTQ7Nodb
+	cUluH6cauFZpEBZ9XNj97rmUy7kYZsImy5jSmfiO+/OsaD6Yj4X8zF46HxLx9lQ6
+	TY3YwgAy1Nt1l7gjvHWan7bPFkWeAO+GBI7669M3o834GP0IKK/2jKBfmBgZUDPf
+	Z3x78yiD9mBrjZm+0mhStittj3aJPxGWy9iSfW0A5agHqWqPkmSXnEWo3uAlun53
+	R8MXFQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45d1r142n0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:07:54 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2233b764fc8so72816195ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 02:07:54 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:09:49 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-224364f2492so65340365ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 02:09:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742202474; x=1742807274;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1742202588; x=1742807388;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YvB5W9+kgBjKeK0p1OnHFcTClNx4sp6hZOaOwkPfr5g=;
-        b=QzCeG5PXhT4eo5sq4fo0+F3Be1PGh+PGMWCDenxWjyDPQZQWp1Nm/QFwbECK+KryP/
-         Q986o2M2GpqOCinkjzzA8xFhMNGvTgiFHnB4ZcdEKpy2Wu6CNanCDitja9wE88dGXRcQ
-         ZdgqTvSrO5IdxxuXSAdi2dNFS/TjM/QN0HX5tYpHhyg3OrPw5VJiGogfVUbqypa5f7c1
-         7tFSzOQap/4OQcbJ5pzZnbP6N1/7MxwT8az3O+dc/ADWh+EsfLWy4UhuomVLOTM/2W/f
-         Njdnvt2rEJBL2L/N1QQSjOxP6ah3KuJ2SEVjrc9emFVmnewq9XRhCrdtiDNzzaasOvXZ
-         voRg==
-X-Forwarded-Encrypted: i=1; AJvYcCUcAM6f16v89Jo+/wi3vxH/bZH3uNV4xKw9PdE12JUnARrE4VUuQ59e3+R86SIh0DdwTR3ApRCEeIHkFbeN@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNLNnfK91lEnNvcXFek32AIwzfkThMZe5TQ3V3Ep5MOxM9qjCL
-	PNZ6H0WMAKWLeoAczDp9bi8kwyjzGYHtb0dBYpkbCHGMLlqU9f/h6b43I01aXl3kvAE9mP5GC7z
-	+3cvT0CPj0GcN9u9Db7WsxsJ+vRzj6iXT6Ow96HDmnFua2UrQU984MfqSsc1drfrl
-X-Gm-Gg: ASbGncsLyJE2OqKSCaoVUDldbsH0eo6s7FGXmu4GPuDoqxfT+sQdcS8kfCVC6rq6SeW
-	MmPyaqNwyAvwThNjN4qYMT35B6f/KZPBXaGVmFEkHTIUjHORAZDOQRqN7fS46FOmwCqdNVRy6Oo
-	icz7pHGit0J5YZuVlRWvqDadYOfDAjVT6flHjBW88tCKlguy9mXYvGjLsw+MSmM5otZb6sZyIE8
-	ES1nccr77xRsX3qoqlj2eSzjUUKLXo47b3YHvmT0hQiljh+3LQ+0FmF6whiy5xZ5iaDIk+S177M
-	mYjw/RT42xZTNCVT+dYN5YPJJNU4v8aI9FJUn8x+Xu/r/Q==
-X-Received: by 2002:a05:6a00:2e15:b0:736:5753:12f7 with SMTP id d2e1a72fcca58-7372236c48amr15633856b3a.3.1742202473714;
-        Mon, 17 Mar 2025 02:07:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFb2/5Yz0QBAf85V3J3MJIKQQYTZZtL2r4Zp4gVmTlQYnG653reK868zYsRjio4CbC3TLgJeQ==
-X-Received: by 2002:a05:6a00:2e15:b0:736:5753:12f7 with SMTP id d2e1a72fcca58-7372236c48amr15633816b3a.3.1742202473230;
-        Mon, 17 Mar 2025 02:07:53 -0700 (PDT)
+        bh=ahQItqeoUmWIKu5Zx43vnqgKrtzrhBRX2qch9IykP+M=;
+        b=GrPWriX5TY6u9zNc3GBOdceqoa0BulZo4LOvSOaN4F7Jep9en5V6UUSHihetvfpcRU
+         t96YSl38CNreFEb808uXypVCj1/24v/MqJheEq5VpGeIGfXdUfaQG9p8/m3GHeTGxBlX
+         oj3gCSLaF00lamGEOinRXhdzNWfzBkE0P1f81D2qc+FZtDYgY2Dliy1MG4KVGIHmo7tV
+         eTMdUbnRRmcCUIJ/CaPksyWdXSe/LU2pJkpAIAc+OeyxHmjvNcRJQ4jrtMyYfYNKq1rN
+         13/82mJDHRV4Z3HY+fYN5byEqpMOZCYaRXzApZzCLDRi7Ar9zD6a8PVbqbUzCAfxMJMp
+         N+9g==
+X-Forwarded-Encrypted: i=1; AJvYcCW0SppHgDCAfudJ4BdTL5RpRpnmYAgNs/aX/d9YYxEyiPbnxRQ1yWbF9qlubd2Soeu4i4VyMyC8VQrQPiq2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMa+ymsZ7lvvxkf2x/N/eYTRlnWVJkXea9j5c1ibGmHVj3fV2b
+	wSFQosRRs2cOAYztqx3nWMcXUs9e87mTMhcEUnWsQPtpZL15rSBtZkbkLB2o1ix4EqIv0VqvC8l
+	j4tQS9jjWjAYC+pJzcZF1sudazbY8oIcBtU/6snlm9mkJZ94jzfr6oDL32XU3L8np
+X-Gm-Gg: ASbGncvnKBesbtJvT31cANNeWAgeebsBOmD9oDfG+yjvWOuqQ+5UUVsdskOpA1z4re8
+	naJt7z1+0B9mdkZtM1X04hJV5naHr2Msjh1RRcw48mL0E5qrD0yWujOhr6jAVagEkqou9B37tU0
+	DbmEXgzWflXclhqTctlcI3Tm00IE4qxR0d/wrVe1h2JXBf36bsGxnTtTl9PnVNVv/mfVt/Z0gX9
+	PFoR/AEDwFLl2Ok/Bmlm3OKjN3f9/JvPYaGXxQdxzS3H0MPgiLhtXK8BOJvtbuG8+2Y4DItgv+n
+	OtHCo3/34Gwsb23jKzBZr6A+WEP3oeqIw7W/FiOWPXqM1Q==
+X-Received: by 2002:a17:902:e545:b0:224:2384:5b40 with SMTP id d9443c01a7336-225e0aa0c3fmr153573615ad.24.1742202588258;
+        Mon, 17 Mar 2025 02:09:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF60BAHI99rtN5h8BxymtxkXdeGrP8liOg0J2LI+ZV9QRYEQpFc2bN8hoL4jPWB33wsovgGXg==
+X-Received: by 2002:a17:902:e545:b0:224:2384:5b40 with SMTP id d9443c01a7336-225e0aa0c3fmr153573275ad.24.1742202587815;
+        Mon, 17 Mar 2025 02:09:47 -0700 (PDT)
 Received: from [10.92.192.202] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73711557ee8sm7351197b3a.52.2025.03.17.02.07.46
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bd5ae4sm70180935ad.229.2025.03.17.02.09.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Mar 2025 02:07:52 -0700 (PDT)
-Message-ID: <74ff7b72-94d6-cd19-06c4-09cddc885cb0@oss.qualcomm.com>
-Date: Mon, 17 Mar 2025 14:37:45 +0530
+        Mon, 17 Mar 2025 02:09:47 -0700 (PDT)
+Message-ID: <75bd4685-a6ea-4852-f41f-fd4437383774@oss.qualcomm.com>
+Date: Mon, 17 Mar 2025 14:39:41 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,123 +90,109 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v4 08/10] PCI: pwrctrl: Add power control driver for
- tc956x
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        chaitanya chundru <quic_krichai@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Jingoo Han <jingoohan1@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: quic_vbadigan@quicnic.com, amitk@kernel.org, dmitry.baryshkov@linaro.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jorge.ramirez@oss.qualcomm.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com>
- <20250225-qps615_v4_1-v4-8-e08633a7bdf8@oss.qualcomm.com>
- <d8ef7b67-a31f-4a49-8810-90dfebd2d8e1@oss.qualcomm.com>
+Subject: Re: [PATCH v4 01/10] dt-bindings: PCI: Add binding for Toshiba TC956x
+ PCIe switch
 Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: "Rob Herring (Arm)" <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84s?=
+ =?UTF-8?Q?ki?= <kw@linux.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        chaitanya chundru <quic_krichai@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>, linux-kernel@vger.kernel.org,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Konrad Dybcio <konradybcio@kernel.org>, quic_vbadigan@quicnic.com,
+        jorge.ramirez@oss.qualcomm.com, cros-qcom-dts-watchers@chromium.org,
+        linux-pci@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, amitk@kernel.org,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>, dmitry.baryshkov@linaro.org
+References: <20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com>
+ <20250225-qps615_v4_1-v4-1-e08633a7bdf8@oss.qualcomm.com>
+ <174048982895.1892984.13694169241426640158.robh@kernel.org>
+ <f718ae90-237c-634a-111d-05f2f0240db9@oss.qualcomm.com>
+ <20250313055657.ddrzqo2edx46az7b@thinkpad>
 From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <d8ef7b67-a31f-4a49-8810-90dfebd2d8e1@oss.qualcomm.com>
+In-Reply-To: <20250313055657.ddrzqo2edx46az7b@thinkpad>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: lTFlqOFpFLeHzNKa5qkkFwnBaNRKfssh
-X-Proofpoint-GUID: lTFlqOFpFLeHzNKa5qkkFwnBaNRKfssh
-X-Authority-Analysis: v=2.4 cv=R7kDGcRX c=1 sm=1 tr=0 ts=67d7e66a cx=c_pps a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=LmMbr2wudRAhekVMzXwA:9
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22 a=cvBusfyB2V15izCimMoJ:22
+X-Authority-Analysis: v=2.4 cv=LuaSymdc c=1 sm=1 tr=0 ts=67d7e6dd cx=c_pps a=IZJwPbhc+fLeJZngyXXI0A==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=VwQbUJbxAAAA:8 a=zHEVz4YWXsmZ1JJS7FsA:9
+ a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: DM7aDCuEvlzLlGgaxIZiALapH7o6bydD
+X-Proofpoint-ORIG-GUID: DM7aDCuEvlzLlGgaxIZiALapH7o6bydD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-17_03,2025-03-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- impostorscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999 mlxscore=0
- adultscore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ mlxscore=0 suspectscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 spamscore=0 mlxlogscore=956
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2503170067
 
 
 
-On 2/25/2025 5:39 PM, Konrad Dybcio wrote:
-> On 25.02.2025 10:34 AM, Krishna Chaitanya Chundru wrote:
->> TC956x is a PCIe switch which has one upstream and three downstream
->> ports. To one of the downstream ports ethernet MAC is connected as endpoint
->> device. Other two downstream ports are supposed to connect to external
->> device. One Host can connect to TC956x by upstream port. TC956x switch
->> needs to be configured after powering on and before PCIe link was up.
+On 3/13/2025 11:26 AM, Manivannan Sadhasivam wrote:
+> On Fri, Feb 28, 2025 at 04:26:23AM +0530, Krishna Chaitanya Chundru wrote:
 >>
->> The PCIe controller driver already enables link training at the host side
->> even before this driver probe happens, due to this when driver enables
->> power to the switch it participates in the link training and PCIe link
->> may come up before configuring the switch through i2c. Once the link is
->> up the configuration done through i2c will not have any affect.To prevent
->> the host from participating in link training, disable link training on the
->> host side to ensure the link does not come up before the switch is
->> configured via I2C.
 >>
->> Based up on dt property and type of the port, tc956x is configured
->> through i2c.
+>> On 2/25/2025 6:53 PM, Rob Herring (Arm) wrote:
+>>>
+>>> On Tue, 25 Feb 2025 15:03:58 +0530, Krishna Chaitanya Chundru wrote:
+>>>> From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>>>
+>>>> Add a device tree binding for the Toshiba TC956x PCIe switch, which
+>>>> provides an Ethernet MAC integrated to the 3rd downstream port and two
+>>>> downstream PCIe ports.
+>>>>
+>>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>>> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+>>>> ---
+>>>>    .../devicetree/bindings/pci/toshiba,tc956x.yaml    | 178 +++++++++++++++++++++
+>>>>    1 file changed, 178 insertions(+)
+>>>>
+>>>
+>>> My bot found errors running 'make dt_binding_check' on your patch:
+>>>
+>>> yamllint warnings/errors:
+>>>
+>>> dtschema/dtc warnings/errors:
+>>> Warning: Duplicate compatible "pciclass,0604" found in schemas matching "$id":
+>>> 	http://devicetree.org/schemas/pci/toshiba,tc956x.yaml#
+>>> 	http://devicetree.org/schemas/pci/pci-pci-bridge.yaml#
+>> Hi Rob,
 >>
->> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
->> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
->> Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->> ---
+>> As we want to refernce pci-pci-bridge.yaml which is expecting compatible
+>> as "pciclass,0604", we modified the compatible as "pci1179,0623",
+>> "pciclass,0604". Now adding pciclass0604 is giving this warning. can you
+>> suggest correct way to represent this.
+>>
 > 
+> I think the PCI-PCI bridge compatible should be part of the actual bridge nodes
+> inside the switch. I still stand by my view that the bridge compatible doesn't
+> make sense for the top level switch node as this switch is a sort of MFD.
 > 
->> +struct tc956x_pwrctrl_cfg {
->> +	u32 l0s_delay;
->> +	u32 l1_delay;
->> +	u32 tx_amp;
->> +	u8 nfts[2]; /* GEN1 & GEN2*/
+> So you should do:
 > 
-> GEN2 */
+> 	pcie@0,0 {
+> 		compatible = "pci1179,0623";
+> 		reg = <0x10000 0x0 0x0 0x0 0x0>;
+> 		...
 > 
-> [...]
+> 		pcie@1,0 {
+> 			compatible = "pciclass,0604";
+> 			reg = <0x20800 0x0 0x0 0x0 0x0>;
+> 			...
+> 		};
+> 	};
 > 
->> +static int tc956x_pwrctrl_set_l0s_l1_entry_delay(struct tc956x_pwrctrl_ctx *ctx,
->> +						 enum tc956x_pwrctrl_ports port, bool is_l1, u32 ns)
->> +{
->> +	u32 rd_val, units;
->> +	int ret;
->> +
->> +	if (!ns)
->> +		return 0;
->> +
->> +	/* convert to units of 256ns */
->> +	units = ns / 256;
-> 
-> Should we round up here, so that values in 1 <= x < 256 give a delay
-> value of 1 unit? Or maybe such values are never expected?
-> 
-I will add a check above to return if ns < 256 as 0 is not expected
-value.
-> [...]
-> 
->> +static int tc956x_pwrctrl_set_tx_amplitude(struct tc956x_pwrctrl_ctx *ctx,
->> +					   enum tc956x_pwrctrl_ports port, u32 amp)
->> +{
->> +	int port_access;
->> +
->> +	if (amp < TC956X_TX_MARGIN_MIN_VAL)
->> +		return 0;
->> +
->> +	/*  txmargin = (Amp(uV) - 400000) / 3125 */
-> 
-> double space
-> 
->> +	amp = (amp - TC956X_TX_MARGIN_MIN_VAL) / 3125;
-> 
-> similarly here, is 0 an expected value for 1 <= x < 3125?
-> 
-Here 0 is expected value in this case.
+Thanks mani for the inputs on this.
+For child nodes I will make pci-pci-bridge as a reference and for the
+main node( pcie@0,0) I will pci-bus-common.yaml as reference.
 
 - Krishna Chaitanya.
-> Konrad
+> 
+> - Mani
+> 
 
