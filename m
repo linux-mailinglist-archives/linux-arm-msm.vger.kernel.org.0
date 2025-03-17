@@ -1,248 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-51634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9115A657FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 17:27:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43BC9A6583F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 17:37:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2690161DED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:27:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6AC7D1884D0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:37:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84BFA17A2E9;
-	Mon, 17 Mar 2025 16:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 189141A315F;
+	Mon, 17 Mar 2025 16:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="w9SreRvH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="glS8TCai"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34081537CB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 16:27:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC911A3147;
+	Mon, 17 Mar 2025 16:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742228876; cv=none; b=E5idSRz5aHN/iJTlEUeQQO+4Mp8dJeN7vOoywS2JnbX7s0uPs1IGuGGcSms4O4PWpD9AAUpFu/Nsgdc335g9o8pbpSQAZzmIa8PmJUMCQCG3ztsW00conpRTck1dIJ0AE9iJJ+wUiG6CcU8sRnSclcMO0IYZKKBuysArO01lsFc=
+	t=1742229452; cv=none; b=c3+z19HO185MNopTdR5V+VtM45XE3EGaPXDYAoiSEsGurTdvvwNtOGE8vkkbRGir62f35jK/xE6ZTz3olcja6iD+tIMlAOuaYQEfR84A/wHPrPKy0nzInoKo2eVCPzavQ1ViaKYnGXa/1tIHHvZ0G6QHY9LAx1yocdbkIMnM6wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742228876; c=relaxed/simple;
-	bh=LeEmEJJ9eGeq8YfwJZC1ZtfJPbwd3P8PaOZPDHYHIfE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=rJQjC5JgDicDPavphjn9OKlIb5dTUhs1gpl1xB58uh0WlTfqYDAVMiqZFFN9on39XfnSBXOn/LK0NfCnevEzZwkLjanso2bBBctQvpxuVJoGskGsyn4ZPaQ3rCL455KiBqznHCD9yBxXNP+oAhkdtvuGonqVIBdQvueDWYSvGh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=w9SreRvH; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-3011cfa31f6so3515135a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 09:27:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1742228874; x=1742833674; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=W8d3f9bwZb24F92RREK1YCHX2o38Tp6QBPGEvO0sKaU=;
-        b=w9SreRvHsssw11edOVYLPDQSXWlOA64JhzuDZT0tn6l3wtlBqHu+sIIw2j+E2e41iv
-         sz3fOmVX3B4/WDmB3v4/ZBtnLOdIvic0pS0hDMmshIm7EO7khc7ks6Ypm3KqXJuSJpbr
-         TCTvdaBkSbMx0SNSvFkSWsP6TmgJdxa4V1/6xHc2F6GlmJy9WYGpJ3i8cfQ+P1RfjN8h
-         u/QSkVTzEEIWx8XweA+tQQgztTeQmGVWrmTReHUuVxIUBd3MXPNk0FLyRQmztRdPk8Sh
-         gUfOUKXraeZ0/eIMvEQtgULUh1K4CC85ygN3GlOWuiE4625omKI200fYdi8n87EIA8TV
-         5kYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742228874; x=1742833674;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W8d3f9bwZb24F92RREK1YCHX2o38Tp6QBPGEvO0sKaU=;
-        b=go404JqIkXvIEZO++ws7HIftyMsedh0GgavBjFKoMCMEQ3Tm9r6B0yjnFZQbnAycqa
-         gKGwzsJA+MgrvWM2dyzt5tfHVec//fxatKcsZttO1H2r/OiwPMHMIu3b6fbxJqYSkdza
-         cbFP+oC6bAxGSSh3jI/GlRipUmN7IxljPdDo4Rj8seyIUFcCAx5skVR0XnWtnP/oBw4s
-         6pz4L9kOvMoPnA64OrZkUjPxVrUZoJrN6IcTJHAURe6A+V/dwXzm5++MYQNYZG4Vcfaf
-         PkSrXUMAdcPqka1xmKUqMPWcP0DLTrDxfcEELtBh4La/x1dHwGbNqg6kxfJy4OuSHxrj
-         ge4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXQHC/7nNMccU/i5K5rxc97IyNjbm4VGgshoASSITVu0bzOnMVkmcRJ+0DCfbZSb+Y10ERiXWd+0UbhyLzh@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3cK5rSQWsPV1Zp5mK2Mi6ETn3yroR78UZEr0cp5CfZ2HQwnDW
-	Jm2kzgKJ6eJwdLMUch1VNAkEI9MbRikOOz12j0JqBRm8rZSy7fMZGr4FlAi5IzVS5TE6Xv9Xgov
-	W8lnWzVG1eAZWpYXlTHirOA==
-X-Google-Smtp-Source: AGHT+IG4WirUOV3+r5B2lb31NOl3SYbtGGIlb7cjVN18KcQU2Z2EqVpQ/NTkkFp10CSOZgMn9KFkZaVD4S3aseWUuQ==
-X-Received: from pjn6.prod.google.com ([2002:a17:90b:5706:b0:2f9:e05f:187f])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:2e44:b0:2ff:502e:62d4 with SMTP id 98e67ed59e1d1-30151d5bcdamr14234779a91.32.1742228874055;
- Mon, 17 Mar 2025 09:27:54 -0700 (PDT)
-Date: Mon, 17 Mar 2025 16:27:52 +0000
-In-Reply-To: <fe2955d4-c0a2-411a-9e50-a25cc15c75dd@suse.cz>
+	s=arc-20240116; t=1742229452; c=relaxed/simple;
+	bh=HR4snbWFFwiMo+npQvVU112otp9kuqyRniHfyZV8d3I=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Zba8BvLPFSyEaOoqhlfFXBfiKUqNfKNdT6Vu8DnwQzZiW4YdnVB8ANPy8oHUxXpOgHG6wSVOU5rWnz5xn4C9lAhy5jhRbiBDXhQGoGnhwxLuptH8yiwBPyejIQFROHi0Xs0r1a/2qJaSSfJNZ/+cyQZ/wyFkt5kLNWyaGtm7m4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=glS8TCai; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F73C4CEEC;
+	Mon, 17 Mar 2025 16:37:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742229451;
+	bh=HR4snbWFFwiMo+npQvVU112otp9kuqyRniHfyZV8d3I=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=glS8TCaiKvX8bXzoa/7OdDLJsDnJa8EFMIc9OVCI1J0uAgVRsxJSXmgL2cbHUPLg9
+	 N8Ve0DW35YLhPP7m7jrjsDHIqtdQGBn6BzoGPzc2XZME3NjzYEdEfN6fYjkKSKPfHN
+	 T6VOGwZedO4geRoCLjyVQOURj7KDh0idhe0435A63d1rTbgrBx9onF9j2GmwI1tOLp
+	 vX+agQihKzgS+CMmaTSZ+ALTA+3YLmR6kFlRlLEX/n8Jjv5IDm3lq/SqcWS9rHDfJS
+	 CuzuUkbDgtmRMElauNhHhEEHVtAyF3R+66qZcihWrs8TIBWYS3fXxQsBy9+FXA5p7p
+	 P1bg/8JjmDuNw==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Alexey Klimov <alexey.klimov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.13 02/16] ASoC: codecs: wsa884x: report temps to hwmon in millidegree of Celsius
+Date: Mon, 17 Mar 2025 12:37:11 -0400
+Message-Id: <20250317163725.1892824-2-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250317163725.1892824-1-sashal@kernel.org>
+References: <20250317163725.1892824-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <diqzy0x9rqf4.fsf@ackerleytng-ctop.c.googlers.com> <fe2955d4-c0a2-411a-9e50-a25cc15c75dd@suse.cz>
-Message-ID: <diqzmsdjk4fr.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v6 03/10] KVM: guest_memfd: Handle kvm_gmem_handle_folio_put()
- for KVM as a module
-From: Ackerley Tng <ackerleytng@google.com>
-To: Vlastimil Babka <vbabka@suse.cz>, Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vannapurve@google.com, 
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.13.7
+Content-Transfer-Encoding: 8bit
 
-Vlastimil Babka <vbabka@suse.cz> writes:
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-> On 3/13/25 14:49, Ackerley Tng wrote:
->> Fuad Tabba <tabba@google.com> writes:
->> 
->>> In some architectures, KVM could be defined as a module. If there is a
->>> pending folio_put() while KVM is unloaded, the system could crash. By
->>> having a helper check for that and call the function only if it's
->>> available, we are able to handle that case more gracefully.
->>>
->>> Signed-off-by: Fuad Tabba <tabba@google.com>
->>>
->>> ---
->>>
->>> This patch could be squashed with the previous one of the maintainers
->>> think it would be better.
->>> ---
->>>  include/linux/kvm_host.h |  5 +----
->>>  mm/swap.c                | 20 +++++++++++++++++++-
->>>  virt/kvm/guest_memfd.c   |  8 ++++++++
->>>  3 files changed, 28 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
->>> index 7788e3625f6d..3ad0719bfc4f 100644
->>> --- a/include/linux/kvm_host.h
->>> +++ b/include/linux/kvm_host.h
->>> @@ -2572,10 +2572,7 @@ long kvm_arch_vcpu_pre_fault_memory(struct kvm_vcpu *vcpu,
->>>  #endif
->>>  
->>>  #ifdef CONFIG_KVM_GMEM_SHARED_MEM
->>> -static inline void kvm_gmem_handle_folio_put(struct folio *folio)
->>> -{
->>> -	WARN_ONCE(1, "A placeholder that shouldn't trigger. Work in progress.");
->>> -}
->>> +void kvm_gmem_handle_folio_put(struct folio *folio);
->>>  #endif
->>>  
->>>  #endif
->>> diff --git a/mm/swap.c b/mm/swap.c
->>> index 241880a46358..27dfd75536c8 100644
->>> --- a/mm/swap.c
->>> +++ b/mm/swap.c
->>> @@ -98,6 +98,24 @@ static void page_cache_release(struct folio *folio)
->>>  		unlock_page_lruvec_irqrestore(lruvec, flags);
->>>  }
->>>  
->>> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
->>> +static void gmem_folio_put(struct folio *folio)
->>> +{
->>> +#if IS_MODULE(CONFIG_KVM)
->>> +	void (*fn)(struct folio *folio);
->>> +
->>> +	fn = symbol_get(kvm_gmem_handle_folio_put);
->>> +	if (WARN_ON_ONCE(!fn))
->>> +		return;
->>> +
->>> +	fn(folio);
->>> +	symbol_put(kvm_gmem_handle_folio_put);
->>> +#else
->>> +	kvm_gmem_handle_folio_put(folio);
->>> +#endif
->>> +}
->>> +#endif
->
-> Yeah, this is not great. The vfio code isn't setting a good example to follow :(
->
->> Sorry about the premature sending earlier!
->> 
->> I was thinking about having a static function pointer in mm/swap.c that
->> will be filled in when KVM is loaded and cleared when KVM is unloaded.
->> 
->> One benefit I see is that it'll avoid the lookup that symbol_get() does
->> on every folio_put(), but some other pinning on KVM would have to be
->> done to prevent KVM from being unloaded in the middle of
->> kvm_gmem_handle_folio_put() call.
->
-> Isn't there some "natural" dependency between things such that at the point
-> the KVM module is able to unload itself, no guest_memfd areas should be
-> existing anymore at that point, and thus also not any pages that would use
-> this callback should exist? In that case it would mean there's a memory leak
-> if that happens so while we might be trying to avoid calling a function that
-> was unleaded, we don't need to try has hard as symbol_get()/put() on every
-> invocation, but a racy check would be good enough?
-> Or would such a late folio_put() be legitimate to happen because some
-> short-lived folio_get() from e.g. a pfn scanner could prolong the page's
-> lifetime beyond the KVM module? I'd hope that since you want to make pages
-> PGTY_guestmem only in certain points of their lifetime, then maybe this
-> should not be possible to happen?
->
+[ Upstream commit d776f016d24816f15033169dcd081f077b6c10f4 ]
 
-IIUC the last refcount on a guest_memfd folio may not be held by
-guest_memfd if the folios is already truncated from guest_memfd. The
-inode could already be closed. If the inode is closed then the KVM is
-free to be unloaded.
+Temperatures are reported in units of Celsius however hwmon expects
+values to be in millidegree of Celsius. Userspace tools observe values
+close to zero and report it as "Not available" or incorrect values like
+0C or 1C. Add a simple conversion to fix that.
 
-This means that someone could hold on to the last refcount, unload KVM,
-and then drop the last refcount and have the folio_put() call a
-non-existent callback.
+Before the change:
 
-If we first check that folio->mapping != NULL and then do
-kvm_gmem_handle_folio_put(), then I think what you suggested would work,
-since folio->mapping is only NULL when the folio has been disassociated
-from the inode.
+wsa884x-virtual-0
+Adapter: Virtual device
+temp1:         +0.0°C
+--
+wsa884x-virtual-0
+Adapter: Virtual device
+temp1:         +0.0°C
 
-gmem_folio_put() should probably end with
+Also reported as N/A before first amplifier power on.
 
-if (folio_ref_count(folio) == 0)
-	__folio_put(folio)
+After this change and initial wsa884x power on:
 
-so that if kvm_gmem_handle_folio_put() is done with whatever it needs to
-(e.g. complete the conversion) gmem_folio_put() will free the folio.
+wsa884x-virtual-0
+Adapter: Virtual device
+temp1:        +39.0°C
+--
+wsa884x-virtual-0
+Adapter: Virtual device
+temp1:        +37.0°C
 
->> Do you/anyone else see pros/cons either way?
->> 
->>> +
->>>  static void free_typed_folio(struct folio *folio)
->>>  {
->>>  	switch (folio_get_type(folio)) {
->>> @@ -108,7 +126,7 @@ static void free_typed_folio(struct folio *folio)
->>>  #endif
->>>  #ifdef CONFIG_KVM_GMEM_SHARED_MEM
->>>  	case PGTY_guestmem:
->>> -		kvm_gmem_handle_folio_put(folio);
->>> +		gmem_folio_put(folio);
->>>  		return;
->>>  #endif
->>>  	default:
->>> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
->>> index b2aa6bf24d3a..5fc414becae5 100644
->>> --- a/virt/kvm/guest_memfd.c
->>> +++ b/virt/kvm/guest_memfd.c
->>> @@ -13,6 +13,14 @@ struct kvm_gmem {
->>>  	struct list_head entry;
->>>  };
->>>  
->>> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
->>> +void kvm_gmem_handle_folio_put(struct folio *folio)
->>> +{
->>> +	WARN_ONCE(1, "A placeholder that shouldn't trigger. Work in progress.");
->>> +}
->>> +EXPORT_SYMBOL_GPL(kvm_gmem_handle_folio_put);
->>> +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
->>> +
->>>  /**
->>>   * folio_file_pfn - like folio_file_page, but return a pfn.
->>>   * @folio: The folio which contains this index.
+Tested on sm8550 only.
+
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/20250221044024.1207921-1-alexey.klimov@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ sound/soc/codecs/wsa884x.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
+index 86df5152c547b..560a2c04b6955 100644
+--- a/sound/soc/codecs/wsa884x.c
++++ b/sound/soc/codecs/wsa884x.c
+@@ -1875,7 +1875,7 @@ static int wsa884x_get_temp(struct wsa884x_priv *wsa884x, long *temp)
+ 		 * Reading temperature is possible only when Power Amplifier is
+ 		 * off. Report last cached data.
+ 		 */
+-		*temp = wsa884x->temperature;
++		*temp = wsa884x->temperature * 1000;
+ 		return 0;
+ 	}
+ 
+@@ -1934,7 +1934,7 @@ static int wsa884x_get_temp(struct wsa884x_priv *wsa884x, long *temp)
+ 	if ((val > WSA884X_LOW_TEMP_THRESHOLD) &&
+ 	    (val < WSA884X_HIGH_TEMP_THRESHOLD)) {
+ 		wsa884x->temperature = val;
+-		*temp = val;
++		*temp = val * 1000;
+ 		ret = 0;
+ 	} else {
+ 		ret = -EAGAIN;
+-- 
+2.39.5
+
 
