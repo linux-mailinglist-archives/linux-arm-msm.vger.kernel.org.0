@@ -1,87 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-51568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E880DA63C71
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 03:59:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9494A63FF3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 06:42:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44B6B165CC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 02:59:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 058DD7A4F0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 05:41:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 443981BEF8C;
-	Mon, 17 Mar 2025 02:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0B0A219312;
+	Mon, 17 Mar 2025 05:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hjYTRhpY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VvsG5jpe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41EB1B983F;
-	Mon, 17 Mar 2025 02:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CED7E0E4;
+	Mon, 17 Mar 2025 05:42:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742180183; cv=none; b=Bh7zIT6l4z9ZfIKrkoJPpwbNYapD2ne/i/8Qzypwcs5uxUMABj34cNUbO3AkJi7q0EpVshPEkukkiuw52yhrGEHNcWca3SZ+jUwZaERuqJLlpzXTTW2YnSBYK8lfKuFOQRaIXSZmMS4M0HpEIF6ZWJQAMq+frBvuWm1dTvBV5ps=
+	t=1742190136; cv=none; b=hda/sndWGjm+02cD4Y5d12O+e1o6yq0IkVp/0C2EPHj3LYf1MdBMgBAp9hPB3h8RY2z8Lufy0sj//mu/uoEfIscLLCulo7gYSBA3Pndm3W06R57wZXk3eLcuFhmtMjgfFzKQ4eM+O+Rnv/AMPSs7YiUam5FURCoYQR6WmjLSCd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742180183; c=relaxed/simple;
-	bh=Nvu8e/7BVeQgaTWguP+hHQ9KMgjFTA19FNA3cyENUhU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dYh2FpVsu6t/7MTaXAUu5hwuxqNS4Agv98qtQvWsDiXBEW6xnv0W9aAVE1V4F9PTSuQgYgt4yBRZHxW21P6LAXPMtis2P+CbG3qyeTmIIX4rVIHDcHYxAwnnTtPP7yC2QQPD6HdcPSWfnGjnRw1Anj9af9jt7/MSFL01vTUBTrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hjYTRhpY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C15C4CEF1;
-	Mon, 17 Mar 2025 02:56:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742180182;
-	bh=Nvu8e/7BVeQgaTWguP+hHQ9KMgjFTA19FNA3cyENUhU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hjYTRhpYj2GJOk6Mx1mRcJS5PwwPDSQPFFBhFe5IKnO+kA860slU67i7nNF7/ETFo
-	 e/4sCoFNu39wiIZjIISgIY3A9VqSJJAxI9x1otXwl9WzLr6VtHsU+fTowKqi7lQw0y
-	 WJRI2ccn/verycTKvolhF8+Dx0m5/pGf9lKdyD1aDZHc7rq/5B2H6nM6N17IGut0yC
-	 dKvS/lqQ//EeilPMnLh8aPqbVQmWalvCjSQdruX/ukvJPbRdEcFNvA/6mMzoC0s7mW
-	 HAeBK3UTBWnTYek2sJ5vhelRFbG2Un01FizKMRwJnx3XUqt4lYF6QkIi4UJMBf8C5k
-	 muDvcr5+rgu/A==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: clock: qcom,x1e80100-camcc: Fix the list of required-opps
-Date: Sun, 16 Mar 2025 21:56:01 -0500
-Message-ID: <174218015901.1913428.7605554612020111297.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250304143152.1799966-1-vladimir.zapolskiy@linaro.org>
-References: <20250304143152.1799966-1-vladimir.zapolskiy@linaro.org>
+	s=arc-20240116; t=1742190136; c=relaxed/simple;
+	bh=ad036HPVFPRhQY1wsOI3vm6xzQiUr/gmC8Xgg7LvjQk=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=lNxRT4tdWnAUB4I2yf1s/S4Q70JKO7ts0hAeCGZde6uXcc2GIhrZST/c3uE/JqMIFsdgt7+m7MP9SEpLk9lWZkY1B5NdWFqhUonh5pXPRTVYo1RRHeSRhdHhTfaX+ASLCD6XiPTPFkerx700TdKOoxbQeNA93zLEJpQ7MQOa/Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VvsG5jpe; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52GKh3Qd001103;
+	Mon, 17 Mar 2025 05:42:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:date:from:message-id:subject:to; s=qcppdkim1; bh=ukzs2O2IYaD5
+	rqT/7IAmrsuhMbWOJq1VZzl2EIKghb8=; b=VvsG5jpek88QzqkJGYJP0qMYX0Ip
+	sxzloOY6oWx32sgNOQ2CHiHRskBPqu/jeK0EM+lvJO/X4jc79eiZJ3xlDtji7h7L
+	u2MJIxPIelV/q1Sq3/tAbslkcoI5qqHhBLTgE1GA2AsuUbhjoPF0lSZYow7teFzq
+	aXI4BQFBPR7zlIXlAk2sKnhXvxJ2Ymbj2JkvO36gawY6HsKnfZ12W3Gj/TpbYtqX
+	JTpAWPX3TH0fuzPAWO/I45egBPbt/VGyGyaLmg5yaEqfK0O0T+fL8581px2KB0YO
+	gQESerw1qfbC1ON8goJBuPAUszp03i3Rxk40TSb9EYyXFa0MFn/6yb3wzA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45d1t4kge2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Mar 2025 05:42:10 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 52H5g7I6015699;
+	Mon, 17 Mar 2025 05:42:07 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 45dkgm3pnc-1;
+	Mon, 17 Mar 2025 05:42:07 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52H5g7B7015691;
+	Mon, 17 Mar 2025 05:42:07 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-pkumpatl-hyd.qualcomm.com [10.213.109.81])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 52H5g6Bt015687;
+	Mon, 17 Mar 2025 05:42:07 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 3914174)
+	id 20D765001DE; Mon, 17 Mar 2025 11:12:06 +0530 (+0530)
+From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_pkumpatl@quicinc.com, kernel@oss.qualcomm.com,
+        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Subject: [PATCH v1 0/8] Enable audio on qcs6490-RB3Gen2 and qcm6490-idp boards
+Date: Mon, 17 Mar 2025 11:11:43 +0530
+Message-Id: <20250317054151.6095-1-quic_pkumpatl@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=VLPdn8PX c=1 sm=1 tr=0 ts=67d7b632 cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=0r8ssxmbRpIe_Kuj0bQA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: uhUR1NW6zOJjsJCa4twAJMeziFBiH1-Z
+X-Proofpoint-GUID: uhUR1NW6zOJjsJCa4twAJMeziFBiH1-Z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-17_01,2025-03-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 clxscore=1011 mlxscore=0 lowpriorityscore=0
+ phishscore=0 mlxlogscore=757 impostorscore=0 suspectscore=0 malwarescore=0
+ bulkscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503170039
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
 
+From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 
-On Tue, 04 Mar 2025 16:31:52 +0200, Vladimir Zapolskiy wrote:
-> The switch to multiple power domains implies that the required-opps
-> property shall be updated accordingly, a record in one property
-> corresponds to a record in another one.
-> 
-> 
+Audio support is now enabled on the qcs6490-RB3Gen2 and qcm6490-idp boards.
+The updates include adding the necessary audio device tree support and the required
+dependencies.
 
-Applied, thanks!
+Both the qcs6490-RB3Gen2 and qcm6490-idp boards are derived from the same SoC 
+platform. Therefore, the audio support changes are included in a single patch 
+set for consistency and ease of maintenance.
 
-[1/1] dt-bindings: clock: qcom,x1e80100-camcc: Fix the list of required-opps
-      commit: d547913e87a6a40b8690c069492cddc0cef6c573
+Mohammad Rafi Shaik (8):
+  arm64: dts: qcom: sc7280: Add gpr node
+  arm64: dts: qcom: sc7280: Add WSA SoundWire and LPASS support
+  arm64: dts: qcom: qcs6490-rb3gen2: Modify WSA and VA macro clock nodes
+    for audioreach solution
+  arm64: dts: qcom: qcs6490-rb3gen2: add WSA8830 speakers
+  arm64: dts: qcom: qcs6490-rb3gen2: Add sound card
+  arm64: dts: qcom: qcm6490-idp: Modify WSA/VA/RX/TX macro clock nodes
+    for audioreach solution
+  arm64: dts: qcom: qcm6490-idp: Add WSA8830 speakers and WCD9370
+    headset codec
+  arm64: dts: qcom: qcm6490-idp: Add sound card
 
-Best regards,
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts     | 282 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 138 +++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi         | 105 +++++++
+ 3 files changed, 525 insertions(+)
+
 -- 
-Bjorn Andersson <andersson@kernel.org>
+2.34.1
+
 
