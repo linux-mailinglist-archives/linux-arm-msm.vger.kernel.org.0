@@ -1,180 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-51627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55F12A654B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:00:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19212A654FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 16:06:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46E973A3AC5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 15:00:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 08A4B188F85E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Mar 2025 15:06:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A187223F41E;
-	Mon, 17 Mar 2025 15:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DE6E2475E3;
+	Mon, 17 Mar 2025 15:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nGDa7mzj"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hlEmjMJu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80AB23FC61;
-	Mon, 17 Mar 2025 15:00:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632F1246335
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 15:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742223612; cv=none; b=hVAH2KbtwDrzHaFk8M0HKaoJMYucYYSABMFfosH2pH+pKWW+xw004yzYXR43W2IvCSP8qL1Xt6bn280vziYzHzEd64t7M/fehhVG4N9P0WqBaA8tcNT4WZOR+dnPbmRj9FpdZasHTSyw8TrN3kmL/bAEkFmjar0150gD/GJkq7Y=
+	t=1742223939; cv=none; b=az2LfJpR/IWIX9dpL7iIHI7KudN1u0u3HRyPavX665pmOLobfpVgBTRfb3z3TIDGfmUCzkXTAF8Mh8+OVQ4FBKNjh8TzYJDmrLXdHEqzkBUJY3tX85fyW/iv8PCy6c90E5M6thmzfFbFhXM9Zu2BGO8twwXCktUWjLGX9CigEUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742223612; c=relaxed/simple;
-	bh=1vuS6Rd8o+ntlyTBUnEQazfZLhY9aZtgMavV+2vj/WM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PeUxvZV5IdWhskTMMyErmK6q51d93u1SixKxAiEEtjsWVJ+p4Fxgq69vFG6Rkn5m694xkdLgKXt0JmaqPz3c5o344PBVQYXzb4WG+ttgm1W6K4u0Znh4plgMUR4nNgi7ZJSYRRFGrkIT4gNi2TmIBNgtdwlg7sKjGP138QHCeHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nGDa7mzj; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2ff615a114bso2769444a91.0;
-        Mon, 17 Mar 2025 08:00:10 -0700 (PDT)
+	s=arc-20240116; t=1742223939; c=relaxed/simple;
+	bh=pPwlz72pZYP2/MO2y+YPVVILWG4xhrWy2LDGwYGBQGY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Lvp/IJ76iSVAFEB94VIYxJvzTSYi6u2FTSQp+4PcXdN+eXT1mWlB9iftgf7Ght/8e5y7qvTTXl2gVnGX6ERpVZQq/AHc/7hsj/oNPv2dEgAx78UC0uOYt9sYQ1wrBXSJMNUPGlKq+gWw2basIfYoj5+TWhjWYWGa59DRjF2k21c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hlEmjMJu; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4769e30af66so43831cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Mar 2025 08:05:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742223610; x=1742828410; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lKg3+CntGpo2nGd/HO2S30tnDbQnjifg17kcFSnARp4=;
-        b=nGDa7mzjKu1rkE4gesphsTgUgqf5gStwa52CiTKynkmVumfq6/5f852jdFPtw3BDqy
-         ytPZYl7FD4hEetft9t+JS07L/rUy3i7/5r8wc+EsN2Xmc3hcJGLoqx+lwJhWrZXEChPK
-         srBAGdbNGgeeRYSoz76cEOT67DBhWa0rJ1IfbkpUvsKoxe9ZlqZvJ4Fknoa8xdMQp9jV
-         L+urawW6FOYMUfUo69eaGZs29deUhBimtA7BAaWC7qLhUoSPC5OO4am1ycmOar7HCOzv
-         TgbNEtR2DLIYuz3OvZADJpXKhLQL36xbD5SC9soIoOr2zO/u4HZYrtEEg/UWR1V2P3RI
-         nxmw==
+        d=google.com; s=20230601; t=1742223936; x=1742828736; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q6acMYyVpnTlWp6vf280bC/VNTF7hHxsvj81f2AtrN4=;
+        b=hlEmjMJuvVbWBvEjwpPb6OsrBeuJPA6HzzvsMk/mUoTeNGJj8yEK0PFW4Co0APaEzk
+         O46hdjMYHznfMY4Aipr1rhtpu7HMsseg22ryEafL/rr8+Cux1Vlfzd/Ht/cuksP/DLjL
+         0JNe55J2yLlJ8U9QbRasexcsDyXL9KFM+vWx3aWuvzcQvI/yOIPu8moDvxUZH+9fokGW
+         TsZpegHQc+L7vtrplhwfrHC6Y2mqmHEuXZpqAQex/t8nayidK70t7OKCVgbCFHOTnu29
+         9nOgkvPwuf0FHaBIUFGBQr98OKHFnBS74XBUZB215ORjlUmO1piU9ZikW9sxIzezqavr
+         i/BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742223610; x=1742828410;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1742223936; x=1742828736;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lKg3+CntGpo2nGd/HO2S30tnDbQnjifg17kcFSnARp4=;
-        b=f5aqrIPc8USPWLnL4homQuwhPEdd1fT0DcmUU6nSrWFcMewZAI8iHFOdLye5k/lehR
-         PZoSrMThxnEGtEtl31euiaW5Rvdz/J2CD/kZ+nHwvxEQvZaZ8aRzZjkOUoV2iMr3gIFr
-         /f2YMK2NDxmvVwluTfU2xVv99MJjbDHmzIl9Gh4S6EgrXfEeodP9xypUbgouF5BbHjzY
-         zGBgrYlWq96mYMecEznT3pd2d/RIqZaIgymcZSnO0znPAjOIBdqk3vJC+5bYITvtUobL
-         5YtCTKPnshKvsKsJRJnJm0RwDFX4YLeOly1AdbcxtljxY/txhXUeSOvM+25TqKieEY9k
-         P9Xw==
-X-Forwarded-Encrypted: i=1; AJvYcCUypMUq9oBL6pSGDkbotN01R6TRpW1n7g9VZqYZEb30bPI+mV8+OHg9raFPtR5ZmB/kqge1KUKMPXduHuo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxPGNZYjP+kGEwW1Bc9pX7OQ9J7uDAIKS5ySBhKFpRdwIwkU9zJ
-	9iKWvk2AZ1Cwx+dhhra4K1F/sS5+rSoAYBBW6sr3pnfLMlMoWH5J
-X-Gm-Gg: ASbGncvcq0NOD83858XNmc4FsJuihH80jgqUmUb5K4TKnd2fC1WU62xWFHJBoC2WSIW
-	3GJnKLxo0ura24ru097TJwgJCdJFtaOFnHClQ1fUSR8njxuo5GW/KVyQbWGQ9mLPLPT9xJA9NKh
-	eyXHmtn74n/1o45+jwrgzKSE/NmUdXzCZLegna89Iywj5zv91wxUF1QSYbTZSoepRg/8T+Ir+fj
-	6rsg6STc/zV4R61ZO0ebet2O2Y+kVbedRPHmqXC3UoRFV/H12nI8EkggB3AzOhHG4ZW2ThHwI3f
-	gBr6ED058FDyRWGdpykza2V400AvEM0q6QtsdHQ+lRLLWlHnDE3Odvke7pRxXMC43XVtvVbZcSW
-	emazjW7PwR9Q1e0PHb3c=
-X-Google-Smtp-Source: AGHT+IHpqQOthZ629rK5OBwdGCNb3YwECxZM9wivvDLCurM5eSyLS9L2K41fuMd5nLAFoGdSrLTErQ==
-X-Received: by 2002:a05:6a20:12c8:b0:1f3:2968:5ac5 with SMTP id adf61e73a8af0-1f5b095d100mr25087612637.20.1742223609746;
-        Mon, 17 Mar 2025 08:00:09 -0700 (PDT)
-Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af56e9cd03bsm7297043a12.8.2025.03.17.08.00.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Mar 2025 08:00:08 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Rob Clark <robdclark@chromium.org>,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Jordan Crouse <jordan@cosmicpenguin.net>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/a6xx+: Don't let IB_SIZE overflow
-Date: Mon, 17 Mar 2025 08:00:06 -0700
-Message-ID: <20250317150006.34084-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.48.1
+        bh=Q6acMYyVpnTlWp6vf280bC/VNTF7hHxsvj81f2AtrN4=;
+        b=k/4BlFhyc240rHStP1D/qKxSofQ5SQ1w/qpTQlKkODG4c7H1QTYKF9h+tZmskSrboi
+         TQEowFXSVtcRFe3AFGDaj6sF6JbsvPx1hfiOCpERflN2UrLs900liKhyGx94aNr4c/sf
+         pQK1IV4k/SoR+XIDnQNurOqjh+lidoVd1TbzLmGyVzoQJ9h2yrOukH5XAtbBvX2cF7aZ
+         LywWc7DQmUwZkjrsbDSqtrauos/cKDwcXXLQ6ajtbHLYcNJzbItZx0ELxwLoNMMiQfcl
+         y7tSsn0hKYL4MPVfC6Rw07efWaGBEn66OV50LXBHIjJ8H3IWnZ/bX0zwkeTwDdxVI2lE
+         dghg==
+X-Forwarded-Encrypted: i=1; AJvYcCWWsuzFnzoB7FMs6MaV8fine3SpptE4HaB6jBDHNNV/a1SVVfr7FqiwZp1/dmaOV2UjV06SFUYNXU0xrxgV@vger.kernel.org
+X-Gm-Message-State: AOJu0YygGrl/JGzZ7/Er/3KtetB5p/9canbZ3ZdUyOGDFUrvDg02WaQS
+	6Mc/RqXMtyS9uGFD8Ttd9Jw9J8nGl9dRxtTvDVEBYtQ1I47Qh/8N+CbnVIcyoiUexJctJloKYwC
+	octP9I4wpYBPWwsKZeVk3M6tuGJkJkUuQ1Rtd
+X-Gm-Gg: ASbGncvVGBXSjBVQKdjWEVgPBE9dVvL6tk4seNETGOkBn+6GqwnjTH3WLTNz1rSbrJ+
+	/Lm7FTU7iWcjtlcw3knpAXIfbAUSgYqrKW2EP6snJY3e3M2DHNreZ8oL1CkucKJahg0v+ZexsLI
+	gA39wsTr/rM4QfyEBunCNhqshF
+X-Google-Smtp-Source: AGHT+IH+SnQ4554b74aP98WRux3+caKdpTmocH4nK8o2u2lfK/Pn6Hyq/zWKssKls3zXLlkEqDdUuIxYh1b4SlHlcSs=
+X-Received: by 2002:a05:622a:6182:b0:476:fc5c:fd27 with SMTP id
+ d75a77b69052e-476fc5cfeeamr25651cf.22.1742223935968; Mon, 17 Mar 2025
+ 08:05:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <diqzy0x9rqf4.fsf@ackerleytng-ctop.c.googlers.com>
+ <fe2955d4-c0a2-411a-9e50-a25cc15c75dd@suse.cz> <Z9gz_IwHScMkFQz4@google.com>
+In-Reply-To: <Z9gz_IwHScMkFQz4@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Mon, 17 Mar 2025 15:04:59 +0000
+X-Gm-Features: AQ5f1JrRC1We58imXbf1zfAv2Rf3a2pvMKnkCv_X6pPugKz4Jk08Z4RTqdk2G-k
+Message-ID: <CA+EHjTzWBnFrG1iuoHnVeszomApri1B25YcNJ2Dk6zU3Py6zFg@mail.gmail.com>
+Subject: Re: [PATCH v6 03/10] KVM: guest_memfd: Handle kvm_gmem_handle_folio_put()
+ for KVM as a module
+To: Sean Christopherson <seanjc@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>, Ackerley Tng <ackerleytng@google.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 
-From: Rob Clark <robdclark@chromium.org>
+Hi Sean and Vlastimil,
 
-IB_SIZE is only b0..b19.  Starting with a6xx gen3, additional fields
-were added above the IB_SIZE.  Accidentially setting them can cause
-badness.  Fix this by properly defining the CP_INDIRECT_BUFFER packet
-and using the generated builder macro to ensure unintended bits are not
-set.
+On Mon, 17 Mar 2025 at 14:39, Sean Christopherson <seanjc@google.com> wrote:
+>
+> On Mon, Mar 17, 2025, Vlastimil Babka wrote:
+> > On 3/13/25 14:49, Ackerley Tng wrote:
+> > >> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> > >> +static void gmem_folio_put(struct folio *folio)
+> > >> +{
+> > >> +#if IS_MODULE(CONFIG_KVM)
+> > >> +  void (*fn)(struct folio *folio);
+> > >> +
+> > >> +  fn = symbol_get(kvm_gmem_handle_folio_put);
+> > >> +  if (WARN_ON_ONCE(!fn))
+> > >> +          return;
+> > >> +
+> > >> +  fn(folio);
+> > >> +  symbol_put(kvm_gmem_handle_folio_put);
+> > >> +#else
+> > >> +  kvm_gmem_handle_folio_put(folio);
+> > >> +#endif
+> > >> +}
+> > >> +#endif
+> >
+> > Yeah, this is not great. The vfio code isn't setting a good example to follow :(
+>
+> +1000
+>
+> I haven't been following guest_memfd development, so I've no idea what the context
+> of this patch is, but...
+>
+> NAK to any approach that requires symbol_get().  Not only is it beyond gross,
+> it's also broken on x86 as it fails to pin the vendor module, i.e. kvm-amd.ko or
+> kvm-intel.ko.
+>
+> > > Sorry about the premature sending earlier!
+> > >
+> > > I was thinking about having a static function pointer in mm/swap.c that
+> > > will be filled in when KVM is loaded and cleared when KVM is unloaded.
+> > >
+> > > One benefit I see is that it'll avoid the lookup that symbol_get() does
+> > > on every folio_put(), but some other pinning on KVM would have to be
+> > > done to prevent KVM from being unloaded in the middle of
+> > > kvm_gmem_handle_folio_put() call.
+> >
+> > Isn't there some "natural" dependency between things such that at the point
+> > the KVM module is able to unload itself, no guest_memfd areas should be
+> > existing anymore at that point, and thus also not any pages that would use
+> > this callback should exist?
+>
+> Yes.  File-backed VMAs hold a reference to the file (e.g. see get_file() usage
+> in vma.c), and keeping the guest_memfd file alive in turn prevents kvm.ko from
+> being unloaded.
+>
+> The "magic" is this bit of code in kvm_gmem_init():
+>
+>         kvm_gmem_fops.owner = module;
+>
+> The fops->owner pointer is then processed by the try_get_module() call in
+> __anon_inode_getfile() to obtain a reference to the module which owns the fops.
+> The module reference won't be put until the file is fully closed/released; see
+> __fput() => fops_put().
+>
+> On x86, that pins not only kvm.ko, but also the vendor module, because the
+> @module passed to kvm_gmem_init() points at the vendor module, not at kvm.ko.
+>
+> If that's not working, y'all broke something :-)
 
-v2: add missing type attribute for IB_BASE
-v3: fix offset attribute in xml
+Thank you for your feedback and for clarifying things. You're right,
+with a reference to the module held, no one should be able to unload
+it as long as there are in-flight references, no stragglers.
 
-Reported-by: Connor Abbott <cwabbott0@gmail.com>
-Fixes: a83366ef19ea ("drm/msm/a6xx: add A640/A650 to gpulist")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
-Backport notes, prior to commit ae22a94997b8 ("drm/msm: import A2xx-A4xx
-XML display registers database"), just open code, ie:
+Nothing is broken. Will fix this on the respin.
 
-   OUT_RING(ring, submit->cmd[i].size & 0xfffff);
-
-Prior to commit af66706accdf ("drm/msm/a6xx: Add skeleton A7xx
-support"), a7xx_submit() did not exist so that hunk can be dropped.
-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c               | 8 ++++----
- drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml | 7 +++++++
- 2 files changed, 11 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 91173bfb7e58..eeb8b5e582d5 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -244,10 +244,10 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
--			OUT_PKT7(ring, CP_INDIRECT_BUFFER_PFE, 3);
-+			OUT_PKT7(ring, CP_INDIRECT_BUFFER, 3);
- 			OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
- 			OUT_RING(ring, upper_32_bits(submit->cmd[i].iova));
--			OUT_RING(ring, submit->cmd[i].size);
-+			OUT_RING(ring, A5XX_CP_INDIRECT_BUFFER_2_IB_SIZE(submit->cmd[i].size));
- 			ibs++;
- 			break;
- 		}
-@@ -381,10 +381,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
--			OUT_PKT7(ring, CP_INDIRECT_BUFFER_PFE, 3);
-+			OUT_PKT7(ring, CP_INDIRECT_BUFFER, 3);
- 			OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
- 			OUT_RING(ring, upper_32_bits(submit->cmd[i].iova));
--			OUT_RING(ring, submit->cmd[i].size);
-+			OUT_RING(ring, A5XX_CP_INDIRECT_BUFFER_2_IB_SIZE(submit->cmd[i].size));
- 			ibs++;
- 			break;
- 		}
-diff --git a/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml b/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-index 55a35182858c..5a6ae9fc3194 100644
---- a/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-+++ b/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-@@ -2259,5 +2259,12 @@ opcode: CP_LOAD_STATE4 (30) (4 dwords)
- 	</reg32>
- </domain>
- 
-+<domain name="CP_INDIRECT_BUFFER" width="32" varset="chip" prefix="chip" variants="A5XX-">
-+	<reg64 offset="0" name="IB_BASE" type="address"/>
-+	<reg32 offset="2" name="2">
-+		<bitfield name="IB_SIZE" low="0" high="19"/>
-+	</reg32>
-+</domain>
-+
- </database>
- 
--- 
-2.48.1
-
+Cheers,
+/fuad
 
