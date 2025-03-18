@@ -1,40 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-51736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6432FA6754E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 14:38:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C1CFA67550
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 14:39:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 70407188941F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 13:37:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED87B19A3524
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 13:37:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 877F01EF377;
-	Tue, 18 Mar 2025 13:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D47820D4E8;
+	Tue, 18 Mar 2025 13:37:31 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3529520C488
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 13:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65C6020CCFF;
+	Tue, 18 Mar 2025 13:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742305024; cv=none; b=Q6Rs1GBBPyBjy/4nzKhtkOrqd4DK7uS3YcoWw8RmLZySUBDiBn57KM/LDRWVp3pjxNvQs1um0kRXDhqCyiPWrhRVUnvTmQw8Nex2yFT3Gx9YBv0MABvr355N+bKIgGtl6BkIVOAGB9J9TUz/TTmlGPKJ5i/+xMdeAPhNGImdF2k=
+	t=1742305050; cv=none; b=A9dgPYjzLUULIdNt9CimyNkR+yZOkAhbPbAui/q28gXzpPz4QBPj89NOGm5ysrRJ2PPu34HJNIK4Tji11DQWrzLOX6PtUdX6u9sQSVJaPBt9hOfHpxfS7rHUva+QpnAQs3tt6aG2Z/Bi1xb76UyOkby6mRsQ0p2/YnbsGAGWRRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742305024; c=relaxed/simple;
-	bh=wZUXHNT2YSncmvgzuJtppEaI943c7lhckMJfgQPa1nI=;
+	s=arc-20240116; t=1742305050; c=relaxed/simple;
+	bh=VmTzynLEZMwhCT3MfTXuku7wjKlEdu3eCX94MGhkA0I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N+DWhhhWoMDxgYy9/jLkklnUJ9FCLPQ9NPsAR2zL9KsQT97pzGteS4K8VnDqiDYoyuvhOqt97ueXoZvOK9qASaXoDV6n/+oijka7Xoy57DikDPBi6Pe1XxQc5jfhStwRehqRTMH3Kc9ricFRPcbodZzVgPFgdQnBRcHntsY5mRI=
+	 In-Reply-To:Content-Type; b=mE02s0VUT1SEWwQUO1GRFdZwUbLfbDNuc1wUuobnu1sNDbkek8jvha3gEADxdymBQ/8hLxZmU9RBtKNgAQZr+4x71C7B2XUzQlxeazqypin2zYuZpK5YTDU+jmQ3xV3nXqj6Pkfob6Alv2URVT+le0FGpHFIuprbKD/39P+fYIE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F274313D5;
-	Tue, 18 Mar 2025 06:37:06 -0700 (PDT)
-Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F3E503F673;
-	Tue, 18 Mar 2025 06:36:56 -0700 (PDT)
-Message-ID: <394571e1-f86d-472c-91dc-4377d512bfbe@arm.com>
-Date: Tue, 18 Mar 2025 13:36:55 +0000
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E78EC13D5;
+	Tue, 18 Mar 2025 06:37:36 -0700 (PDT)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7FEDC3F673;
+	Tue, 18 Mar 2025 06:37:24 -0700 (PDT)
+Message-ID: <eeff769a-ff81-4017-9738-98ad130980a9@arm.com>
+Date: Tue, 18 Mar 2025 13:37:23 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,110 +42,102 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/5] iommu/arm-smmu-qcom: Make set_stall work when the
- device is on
-To: Connor Abbott <cwabbott0@gmail.com>, Will Deacon <will@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, Joerg Roedel <joro@8bytes.org>,
- Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+Subject: Re: [PATCH 4/9] dt-bindings: arm: qcom,coresight-static-replicator:
+ add optional clocks
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Mike Leach <mike.leach@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Clark <robdclark@gmail.com>,
  Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- freedreno@lists.freedesktop.org
-References: <20250304-msm-gpu-fault-fixes-next-v4-0-be14be37f4c3@gmail.com>
- <20250304-msm-gpu-fault-fixes-next-v4-4-be14be37f4c3@gmail.com>
- <20250311181151.GD5216@willie-the-truck>
- <CACu1E7Gg3WpQASADAdediRzFz2wEXAnfD7tg05XkiXZQp=X8fQ@mail.gmail.com>
- <20250312124907.GB6181@willie-the-truck>
- <CACu1E7Hm=DWDC2aFdBRkT8f=8gKXJPpif_uEOA9iFZcyT-uCfQ@mail.gmail.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <CACu1E7Hm=DWDC2aFdBRkT8f=8gKXJPpif_uEOA9iFZcyT-uCfQ@mail.gmail.com>
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Leo Yan <leo.yan@linux.dev>, Kumar Gala <galak@codeaurora.org>,
+ Andy Gross <agross@codeaurora.org>, "Ivan T. Ivanov"
+ <ivan.ivanov@linaro.org>, Andy Gross <andy.gross@linaro.org>,
+ Georgi Djakov <djakov@kernel.org>, David Heidelberg <david@ixit.cz>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org
+References: <20250317-fix-nexus-4-v1-0-655c52e2ad97@oss.qualcomm.com>
+ <20250317-fix-nexus-4-v1-4-655c52e2ad97@oss.qualcomm.com>
+ <7b0af57c-a38c-4c30-9bb7-efe511d6bd1d@arm.com>
+ <klcggfxrhjqty4rktx24xmnosqnwzsbyfzgv5ea6okqbffyswn@5yei6276hlla>
+Content-Language: en-US
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <klcggfxrhjqty4rktx24xmnosqnwzsbyfzgv5ea6okqbffyswn@5yei6276hlla>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 12/03/2025 1:30 pm, Connor Abbott wrote:
-> On Wed, Mar 12, 2025 at 8:49 AM Will Deacon <will@kernel.org> wrote:
+On 18/03/2025 12:19, Dmitry Baryshkov wrote:
+> On Tue, Mar 18, 2025 at 10:38:17AM +0000, Suzuki K Poulose wrote:
+>> On 17/03/2025 17:44, Dmitry Baryshkov wrote:
 >>
->> On Tue, Mar 11, 2025 at 04:01:00PM -0400, Connor Abbott wrote:
->>> On Tue, Mar 11, 2025 at 2:11 PM Will Deacon <will@kernel.org> wrote:
->>>>
->>>> On Tue, Mar 04, 2025 at 11:56:50AM -0500, Connor Abbott wrote:
->>>>> Up until now we have only called the set_stall callback during
->>>>> initialization when the device is off. But we will soon start calling it
->>>>> to temporarily disable stall-on-fault when the device is on, so handle
->>>>> that by checking if the device is on and writing SCTLR.
->>>>>
->>>>> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
->>>>> ---
->>>>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 30 +++++++++++++++++++++++++++---
->>>>>   1 file changed, 27 insertions(+), 3 deletions(-)
->>>>>
->>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> index a428e53add08d451fb2152e3ab80e0fba936e214..d34a0d917013bb3d5a24b3ce72f48e3b38474da2 100644
->>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> @@ -77,12 +77,36 @@ static void qcom_adreno_smmu_set_stall(const void *cookie, bool enabled)
->>>>>   {
->>>>>        struct arm_smmu_domain *smmu_domain = (void *)cookie;
->>>>>        struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
->>>>> -     struct qcom_smmu *qsmmu = to_qcom_smmu(smmu_domain->smmu);
->>>>> +     struct arm_smmu_device *smmu = smmu_domain->smmu;
->>>>> +     struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
->>>>> +     u32 mask = BIT(cfg->cbndx);
->>>>> +     bool stall_changed = !!(qsmmu->stall_enabled & mask) != enabled;
->>>>> +     unsigned long flags;
->>>>>
->>>>>        if (enabled)
->>>>> -             qsmmu->stall_enabled |= BIT(cfg->cbndx);
->>>>> +             qsmmu->stall_enabled |= mask;
->>>>>        else
->>>>> -             qsmmu->stall_enabled &= ~BIT(cfg->cbndx);
->>>>> +             qsmmu->stall_enabled &= ~mask;
->>>>> +
->>>>> +     /*
->>>>> +      * If the device is on and we changed the setting, update the register.
->>>>> +      */
->>>>> +     if (stall_changed && pm_runtime_get_if_active(smmu->dev) > 0) {
->>>>> +             spin_lock_irqsave(&smmu_domain->cb_lock, flags);
->>>>> +
->>>>> +             u32 reg = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
->>>>> +
->>>>> +             if (enabled)
->>>>> +                     reg |= ARM_SMMU_SCTLR_CFCFG;
->>>>> +             else
->>>>> +                     reg &= ~ARM_SMMU_SCTLR_CFCFG;
->>>>> +
->>>>> +             arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, reg);
->>>>
->>>> Are you sure you don't need TLB invalidation for this to take effect? I
->>>> think some fields in the SCTLR can be cached in the TLB but you'll need
->>>> to check whether or not that applies to CFCFG.
->>>>
+>> nit: Subject:
+>>
+>> s/qcom,coresight-static-replicator/arm,coresight-static-replicator
+>>
+>>> As most other CoreSight devices the replicator can use either of the
+>>> optional clocks (or both). Document those optional clocks in the schema.
 >>>
->>> I think it should be fine because CFCFG only controls behavior when
->>> there's a context fault and there can't be TLB entries for entries
->>> that cause a context fault: "The architecture permits the caching of
->>> any translation table entry that has been returned from memory without
->>> a fault and that does not, as a result of that entry, cause a
->>> Translation Fault or an Access Flag fault."
+>>> Fixes: 3c15fddf3121 ("dt-bindings: arm: Convert CoreSight bindings to DT schema")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>> ---
+>>>    .../bindings/arm/arm,coresight-static-replicator.yaml          | 10 ++++++++++
+>>>    1 file changed, 10 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+>>> index a6f793ea03b6c193fc0ff72a45e0249a63a2ba3c..56e64067ed3d63c5e293a0840858f13428bacb45 100644
+>>> --- a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+>>> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+>>> @@ -30,6 +30,16 @@ properties:
+>>>      power-domains:
+>>>        maxItems: 1
+>>> +  clocks:
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>> +
 >>
->> Ok, but what about other types of fault? For example, a permission fault
->> or an address size fault?
->>
->> Will
+>> For the static replicator, you don't have an APB clock, as they can't be
+>> programmed. It may have an ATB clock. So minItems 0, maxItems: 1
 > 
-> I'm not sure, but the pseudocode for context faults mentions
-> resampling CFCFG after a fault happens ("We have a fault and must
-> resample FSR, CFCFG and HUPCF") so I don't think it would be legal to
-> cache it. Also in practice this does seem to work. Does that answer
-> it?
+> It can, see qcom-apq8064.dtsi
+> 
+> Also minItems:0 doesn't make sense to me. I'd rather keep this as an
+> optional property rather than requiring an empty set.
 
-FWIW I checked with the former MMU-500 design lead, and although he 
-doesn't remember the exact details he's pretty confident that they 
-wouldn't have cached anything fault-related, so at least from our side 
-I'd consider this OK.
+Interesting, that must be atclk in fact. Because a static replicator
+only manages ATB transactions. It doesn't have an APB interface.
 
-Thanks,
-Robin.
+I am not an expert in DTB schema. But the point is the clocks are optional.
+
+Suzuki
+
+
+> 
+>>
+>> Suzuki
+>>
+>>
+>>
+>>> +  clock-names:
+>>> +    minItems: 1
+>>> +    enum:
+>>> +      - apb_pclk
+>>> +      - atclk
+>>> +
+>>>      in-ports:
+>>>        $ref: /schemas/graph.yaml#/properties/ports
+>>>        additionalProperties: false
+>>>
+>>
+> 
+
 
