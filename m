@@ -1,195 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-51716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90BD8A673B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 13:19:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A594A673C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 13:23:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6AA733B6335
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 12:19:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5674F19A42DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 12:23:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D552B20A5D1;
-	Tue, 18 Mar 2025 12:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9631F1E8355;
+	Tue, 18 Mar 2025 12:23:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OmFSr/yi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="D+JQGd+C"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628F820AF7D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 12:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F341AA1E0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 12:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742300350; cv=none; b=rIOOPTaviDTCtuUScd3KAWivUVdhRc+nd/vYl9Lx2fGvMqkHsyX8cipwX2xgzut5miviMmhNHTfnSxqeRvPEbbNQvgv5K/rYBKxkVDHzkUlwDbpRSa6eSyMKH6+qa1hZYdYI63I0U0lH+K02zmDqMiUHdf10Ud6RPQMGFfH0ZdU=
+	t=1742300580; cv=none; b=VMSKlKZ1FHpie0bfxIfG8QcyRy/HiPw8PfeW1khWc2V/QrOUx42RhjVjznQ0kWDSKxGY5LTDHtuEEM+3b+fg7WdHUogYKJld2rVoyRXUbq4LV3AIQjKjZ5UDWPQ0vZXFljk/g4p/0fxniPv+iPSc1FH5DCYYrYAopr14xAqJhwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742300350; c=relaxed/simple;
-	bh=jMGxlGOnVCgIGPCX5WEfP8ImSD+e2Ry0iWEeWu1bmvw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fofcx9Pi3W87RkiUwnp9R0SU66NYWEH8ZvXZZo89/UwOO2Vw5ywGOEL/maeg8GulzW8jJYFaHouReWGmQ1/FyOvjz5wKY5RZlbkUJK3ZQsf4eltI6hnKdDDM6gz0LL9/EBtn2SugK9twoB2wxl0398c6pi6yEu81LzYU0qyCLE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OmFSr/yi; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1742300580; c=relaxed/simple;
+	bh=z7MHbWA8wTh6DUp+/c7Elu1kyk7stQvuEEcp95epsUc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RrWYKMGf1cR8Sp7R2O5kXy5IxYopFRLvS86j5LHoVvQOJDVXkQxlguhV0sMvgCxFhu7j6yL6QHtiaDQgOgT6TDZgiq24e1TUyCWakyRrsHDzxnLn2pdMy65A4xwDKWoo5mlPWAM6BKSbIJ4Plh4m6iSsZQ/blqYetCY7m1pO30c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=D+JQGd+C; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52IAaWh3028624
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 12:19:09 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52I9DbYC006123
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 12:22:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=hILqfklUi9PlGDk5cSktWHoM
-	g/OfnafokmfjRW4bYAE=; b=OmFSr/yiZh9e8LVMgaM1dN/BUH35vbio+fXb6R+W
-	d91HTV21fp44jHQ2j/zv0s5JZ7i5Y7rApUEXJFwwy5ez8nHhv01tMXVV9X7/VXq6
-	4jpTQjaCgszRbXTaBgFcrJGpP2CS2ToxrZJsyLxaygvuCaYlfsYBwD29BW39h3TG
-	7We9Xekrmq0UONcUsFd6IJg2X2083C8kYFelNlucCjI9zl0pcr4HwN/uj5SBCX2K
-	t6zmhwdXCjQ53SRAOWJ8JlNV1Yg2zVYhgCxgXRDAIH9V59TpWdI6kvUkYX2cHh7L
-	6Msuh+7r+5UTonzy+UjbV3v6oivKh6ATkdj+loO6zSczvA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exwthrjm-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	i14HDXOoyA3/EpN59E7vZh8BMFz4S9zJS+p548JjvvM=; b=D+JQGd+CFfFJrCIq
+	pXhAG19cTtbo93pCdEUY7l68gjFVVmHLYwkzzA8dKQwrmvVKeZdLqmZhRACAQoX7
+	u3b5sFGQ5Du4zx0EOgMcckaH/XsCdAYm6AkAuPVtWVypwXCPYirev5b3w8xm0bFi
+	jDLtMEht4aRJFRnZAaF80OfqgyYmG7PPhAGgzcteh+oIA8rJk5J8XtPA0ehrfVeK
+	8970sQxE7kVixQ2xPMManL9L6XLZflVJgDdHZvPd69FhcA9VHwSfZ2VWVdZlTUFI
+	ibG64FePKlmJKRQkg8Qrho7ZUV9yvAo/X+kPS0v4Z7AlSId9x/BV07azlAoeETHZ
+	F7VRzw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45d1rdr680-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 12:19:08 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c54e8ad9b3so1168638185a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 05:19:08 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 12:22:54 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c547ab8273so34681585a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 05:22:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742300347; x=1742905147;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hILqfklUi9PlGDk5cSktWHoMg/OfnafokmfjRW4bYAE=;
-        b=pjkYIEwNtMU/ZX1Yl8ZMxxDbGhxF4/kodjolYVpLDYPHokbmOyCz/7/RXOBWWTQ8zU
-         iE/CvAa5v4TWCKELTNdBXA6lTV3pnof4ovl7HZILP+WlU9JZSRZqfeaIEsBClH4wVV/a
-         VnxIRpsxLNaMIApkx5AXVcfm6bQy9JVlARCI9WNfHusNY+HvVPy9TEA8zovPra1zdfYn
-         gRSpQJMUKyLL9lzG7fHW9TXMRxqPYOc0+b3nlrih1YCmAFiAzLHAb/43h1v3lLJ6drmD
-         BiX30Fheknclu+T0ZD0hkh50ZvivUI1W+rMDxOV2RBsdgGH5+24VkICD3/YDgK4hGq8s
-         XOOA==
-X-Forwarded-Encrypted: i=1; AJvYcCUcMGjzXFfPLfHB8sffsJZ1wd0PaHz83/1OQnW8ftGvkFhmK/dVyi0pXDvpBejpC/30nR0ZW7TGhBqO36l9@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/BDxVn5zWJ2XqAPhnf2dwPmiXjwIjne6bDRHRpAb4k9rRfRdZ
-	sO+kU/faqSQZ5Fad7TBiRLOZ3BuDjOm1zksQT5yCD4FE+UIZILJifgElW5meLkDsHuYKx2UEEcO
-	VuVZrQ2mAndpszfjW0CtzaMB5zY/dSyzA5NnsnpQAmtZdrxrpH9JgQNWaO8JKLUP4
-X-Gm-Gg: ASbGnctkCEY0YXHKcBZR8YAraKwsusBug383L7nusrCZOBccidCXYCtQVsVHP0dDHur
-	Tmi3O3yELpsjjGxs6iO7979/Qct4VR6f0OVzXRlr7SrQuOjqavPFVN7qqDkyfsHM/jKpk631MVI
-	ouWLMRCIQy6Ka1v86LZKHkBin5WlB7i5BLde8pTSuwOw9yK/JWdP7ZEiqLg1PAy0R+KID6ywnTg
-	+s+S0IlxdsAbsdRWb9M/IF7nhwDLzKhuC57sVeo5e91QiNyqeJjyRXFpMnfMmpNbj+1bvecG9Iv
-	J7emtBx4Y1zy37mTKM31Xd9spg8EgaRcfwizCqJYsqy0lm0fvCXrm9CbZpFjLxGTKkyxTutUBGV
-	JSqM=
-X-Received: by 2002:a05:620a:288e:b0:7b6:cb3c:cb81 with SMTP id af79cd13be357-7c59b8a96cfmr452955985a.18.1742300347296;
-        Tue, 18 Mar 2025 05:19:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJww/OeoqM71hDROPaSNOo2HPiouKcRNCZZrYVpQSl8tKKuN/JdG5hgHf15pqrGPXeGO/1Vw==
-X-Received: by 2002:a05:620a:288e:b0:7b6:cb3c:cb81 with SMTP id af79cd13be357-7c59b8a96cfmr452952285a.18.1742300346954;
-        Tue, 18 Mar 2025 05:19:06 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30c3f0d2601sm20203871fa.2.2025.03.18.05.19.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Mar 2025 05:19:06 -0700 (PDT)
-Date: Tue, 18 Mar 2025 14:19:04 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Mike Leach <mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Leo Yan <leo.yan@linux.dev>, Kumar Gala <galak@codeaurora.org>,
-        Andy Gross <agross@codeaurora.org>,
-        "Ivan T. Ivanov" <ivan.ivanov@linaro.org>,
-        Andy Gross <andy.gross@linaro.org>, Georgi Djakov <djakov@kernel.org>,
-        David Heidelberg <david@ixit.cz>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 4/9] dt-bindings: arm: qcom,coresight-static-replicator:
- add optional clocks
-Message-ID: <klcggfxrhjqty4rktx24xmnosqnwzsbyfzgv5ea6okqbffyswn@5yei6276hlla>
-References: <20250317-fix-nexus-4-v1-0-655c52e2ad97@oss.qualcomm.com>
- <20250317-fix-nexus-4-v1-4-655c52e2ad97@oss.qualcomm.com>
- <7b0af57c-a38c-4c30-9bb7-efe511d6bd1d@arm.com>
+        d=1e100.net; s=20230601; t=1742300573; x=1742905373;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i14HDXOoyA3/EpN59E7vZh8BMFz4S9zJS+p548JjvvM=;
+        b=oFs0IF2qM4VreT4ChPl84e2GYQKvtHFthMVWfFZ/mx7Vf1Tz3yx9qs36spjhI/sEh/
+         bwObirfp05iYCwLJ4i8fzMXfcKQfc/snC8oO1wCINWtJ29CDNkYuPnA8h3GaoHCzsfWP
+         xRJMC5C/cC8PtQueS+lWTUicCJucYRGaUQvDxzvsEmpKnoXtJAyA/5fou46i3qKEket4
+         R1le/T1qiLa2ce97MR77yCVGdkpdZpBHthVNI5b4Zj5ZjP9+doKKFdSgAH0/CZLIOKj3
+         M40ye8I21/nCVHUtUMlH97KEdnoTIWv37DV78jAj7QtxPb3wXTCZ1e01fCTGUk4g4vwM
+         N6sw==
+X-Forwarded-Encrypted: i=1; AJvYcCXizelEi3ydZ8xOkDHD4DdOpYOYPFe3YrA5NU33HfVONKPlQTO6h7y9jMOzfyK7wIRZ35cyCIiaiqJmR/Mz@vger.kernel.org
+X-Gm-Message-State: AOJu0YyeHOgpCbIfn3u8LlgGzZE0TytPc7+WpjMpY4iIEaBjq+1G/x93
+	Dx8Y2R5uM71oo4q4hApMdJ6A8M1xtpUDh7rZVzitpv8I+2HuhF1vWmFGwguFsfE/SIBWzc0lOnA
+	Pt5FXFalHnwm4CucDbfqc32RwPIHPDji7y+3XZwloWjTsQhu2QuctKHqp1fzC2smC
+X-Gm-Gg: ASbGncuw30WktKhE1+s2LimfeKpN/pufQB7H4frowmAadRXqMroHEhYkalxQV5I11DM
+	UnWAKdwvPXXP4kdMAACxcR+HnOhMEz1C//AlcpHnFoxPDnDY6XUIkO22t2q/fLDuCGKLUuiN40n
+	BhvOiBWdwnbyAThHKQBClGG7481qFvjSIl2koWuk2YEOoZHjhFW/giRVLfACt0s+eJE248TG9Kx
+	ewzeMHSzWMUg6xS/7fPX1faNBi2emoNI4xOa7vzFXGRxnkQ/y/62pD8wy1cDCcqArKabzT8VAuv
+	a+q4UGHb8qc5HmPwuoSrRc5e6oNTs2MG7Zcq6XlOXI6hsPUtrHJ5BxcjX048vUVExQCjCA==
+X-Received: by 2002:a05:622a:513:b0:475:820:9f6f with SMTP id d75a77b69052e-476c8143179mr78084381cf.9.1742300573424;
+        Tue, 18 Mar 2025 05:22:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEPfLxajfVPWkyT//A6LLChpF9lL43u3ZMxxaO2AIrk7SMUm0YTxdb9RtAPBgHZZ4+yqvDwVQ==
+X-Received: by 2002:a05:622a:513:b0:475:820:9f6f with SMTP id d75a77b69052e-476c8143179mr78084151cf.9.1742300573022;
+        Tue, 18 Mar 2025 05:22:53 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e81692e5ebsm7519361a12.2.2025.03.18.05.22.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Mar 2025 05:22:52 -0700 (PDT)
+Message-ID: <909def95-0dc5-4002-8df3-8a4c6a8ee132@oss.qualcomm.com>
+Date: Tue, 18 Mar 2025 13:22:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7b0af57c-a38c-4c30-9bb7-efe511d6bd1d@arm.com>
-X-Proofpoint-GUID: JeKve316RRpc0iWYBM0k-aCv4d_EXmf0
-X-Proofpoint-ORIG-GUID: JeKve316RRpc0iWYBM0k-aCv4d_EXmf0
-X-Authority-Analysis: v=2.4 cv=UoJjN/wB c=1 sm=1 tr=0 ts=67d964bc cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=thsJD53E2aUhtArdJCMA:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8775p: add support for video node
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
+ <20250311-dtbinding-v1-3-5c807d33f7ae@quicinc.com>
+ <awgq7zqeqkp2iwyk7vbn3mugsaq723bisxzhaswmzpt3iyc5rw@2vsarnkjdrjr>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <awgq7zqeqkp2iwyk7vbn3mugsaq723bisxzhaswmzpt3iyc5rw@2vsarnkjdrjr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Fe83xI+6 c=1 sm=1 tr=0 ts=67d9659e cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=afI7V7Hr0sYJsfamgFsA:9 a=edriFSTTzQEwYP1i:21 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 5_vOee6qBCRwx9IVoxvGi-uLK1LFy1iY
+X-Proofpoint-GUID: 5_vOee6qBCRwx9IVoxvGi-uLK1LFy1iY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-18_06,2025-03-17_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- impostorscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
- phishscore=0 adultscore=0 clxscore=1015 spamscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 mlxlogscore=999 spamscore=0
+ clxscore=1015 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503180091
+ definitions=main-2503180092
 
-On Tue, Mar 18, 2025 at 10:38:17AM +0000, Suzuki K Poulose wrote:
-> On 17/03/2025 17:44, Dmitry Baryshkov wrote:
+On 3/17/25 12:31 PM, Dmitry Baryshkov wrote:
+> On Tue, Mar 11, 2025 at 05:33:55PM +0530, Vikash Garodia wrote:
+>> Video node enables video on Qualcomm SA8775P platform.
+>>
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 67 +++++++++++++++++++++++++++++++++++
+>>  1 file changed, 67 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> index 3394ae2d13003417a15e64c9e47833725ec779e6..09db8e2eb578f1cada0f4a15e3f844dc097bd46d 100644
+>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> @@ -10,6 +10,7 @@
+>>  #include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
+>>  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
+>>  #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
+>> +#include <dt-bindings/clock/qcom,sa8775p-videocc.h>
+>>  #include <dt-bindings/dma/qcom-gpi.h>
+>>  #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
+>>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>> @@ -3783,6 +3784,72 @@ llcc: system-cache-controller@9200000 {
+>>  			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
+>>  		};
+>>  
+>> +		iris: video-codec@aa00000 {
+>> +			compatible = "qcom,sa8775p-iris";
+>> +
+>> +			reg = <0 0x0aa00000 0 0xf0000>;
+>> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+>> +
+>> +			power-domains = <&videocc VIDEO_CC_MVS0C_GDSC>,
+>> +					<&videocc VIDEO_CC_MVS0_GDSC>,
+>> +					<&rpmhpd SA8775P_MXC>,
+>> +					<&rpmhpd SA8775P_MMCX>;
+>> +			power-domain-names = "venus",
+>> +					     "vcodec0",
+>> +					     "mx",
+>> +					     "mmcx";
+>> +			operating-points-v2 = <&iris_opp_table>;
+>> +
+>> +			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
+>> +				 <&videocc VIDEO_CC_MVS0C_CLK>,
+>> +				 <&videocc VIDEO_CC_MVS0_CLK>;
+>> +			clock-names = "iface",
+>> +				      "core",
+>> +				      "vcodec0_core";
+>> +
+>> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+>> +					&config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ALWAYS>,
+>> +					<&mmss_noc MASTER_VIDEO_P0 QCOM_ICC_TAG_ALWAYS
+>> +					&mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
+>> +			interconnect-names = "cpu-cfg",
+>> +					     "video-mem";
+>> +
+>> +			firmware-name = "qcom/vpu/vpu30_p4_s6.mbn";
+>> +			memory-region = <&pil_video_mem>;
+>> +
+>> +			resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
+>> +			reset-names = "bus";
+>> +
+>> +			iommus = <&apps_smmu 0x0880 0x0400>,
+>> +				 <&apps_smmu 0x0887 0x0400>;
+>> +			dma-coherent;
 > 
-> nit: Subject:
+> I think almost missed it:
 > 
-> s/qcom,coresight-static-replicator/arm,coresight-static-replicator
+> 	status = "disabled";
 > 
-> > As most other CoreSight devices the replicator can use either of the
-> > optional clocks (or both). Document those optional clocks in the schema.
-> > 
-> > Fixes: 3c15fddf3121 ("dt-bindings: arm: Convert CoreSight bindings to DT schema")
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > ---
-> >   .../bindings/arm/arm,coresight-static-replicator.yaml          | 10 ++++++++++
-> >   1 file changed, 10 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
-> > index a6f793ea03b6c193fc0ff72a45e0249a63a2ba3c..56e64067ed3d63c5e293a0840858f13428bacb45 100644
-> > --- a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
-> > +++ b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
-> > @@ -30,6 +30,16 @@ properties:
-> >     power-domains:
-> >       maxItems: 1
-> > +  clocks:
-> > +    minItems: 1
-> > +    maxItems: 2
-> > +
-> 
-> For the static replicator, you don't have an APB clock, as they can't be
-> programmed. It may have an ATB clock. So minItems 0, maxItems: 1
+> Don't enable the device by default, there is a chance of the firmware
+> being not present.
 
-It can, see qcom-apq8064.dtsi
+On a sidenote, venus driver broke sync_state by requesting the firmware at
+load time, instead of at the time of first open (though the latter could
+introduce some latency on first video playback, but both are debatable) -
+what does iris do here?
 
-Also minItems:0 doesn't make sense to me. I'd rather keep this as an
-optional property rather than requiring an empty set.
-
-> 
-> Suzuki
-> 
-> 
-> 
-> > +  clock-names:
-> > +    minItems: 1
-> > +    enum:
-> > +      - apb_pclk
-> > +      - atclk
-> > +
-> >     in-ports:
-> >       $ref: /schemas/graph.yaml#/properties/ports
-> >       additionalProperties: false
-> > 
-> 
-
--- 
-With best wishes
-Dmitry
+Konrad> 
 
