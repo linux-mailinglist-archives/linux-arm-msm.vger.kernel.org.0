@@ -1,196 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-51738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66688A67570
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 14:45:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49A4DA6763F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 15:23:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DFC53AD661
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 13:43:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B97F718883B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 14:16:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4067A20D50C;
-	Tue, 18 Mar 2025 13:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBF42205ADD;
+	Tue, 18 Mar 2025 14:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Nldh1obG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jmV0S5AS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A9E20D4F7;
-	Tue, 18 Mar 2025 13:43:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3650126C02;
+	Tue, 18 Mar 2025 14:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742305436; cv=none; b=tgn/udLaC/YnThC0kp/jhmcNeTVz4eY/8pZXqtiAEtVuaZW/essNS9d6Ig6sTWrAU5e0BMGhN5zu1UvZEbWng2rsUsqi9qps16FLkq1kaWUDDj8cT7Gs5AeQHdTtja+4oTdcjsLnqBfHxvt6JhziU8lpUWIWbRdZqtQpyli91R0=
+	t=1742307354; cv=none; b=TvpNAJ4PpygaYsxRjCdLXl8IWE5oi2k+s3vZRXcVgAe9m++UBEAMUh6AXL4aagRJfqq3Uon7xC6Z96JeasDwn0mhehEWBfMMPaWcIpnNp9S7mBBsnpzEqpUC8F98nc+WfwUGNM6TqQJ+P5zJE+P5J3GLJs1sne3xluHk9u+1/OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742305436; c=relaxed/simple;
-	bh=7e6tc7W6eSh5Q9IAJsKFHKDH27Fn8VMcwF2P1v6x/IM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TYB8dnj/5UAeMNyh4dVUBiiJwMB8hfOvGWGmdv1UVJvEBXkMk5obfdKYXZmzAwC5tSvHTmjMqjFjpR23PuBvMgDdDoE9GNTluRr4+iiPQWXp4z8knNy/FYgHiF7hvm8y9YyvpIx3mB15rVZP4q0zvc2ydwFoxeTRvIF9LGS/lRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Nldh1obG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52I9FExT013188;
-	Tue, 18 Mar 2025 13:43:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WHJ/UqrTULl5utTn8q7XKvZ48Ug+9OxAQ3R7JxIZpkY=; b=Nldh1obGQieTcJWE
-	xWyiYB6pk1dzaIDAal9bw8hRWm8t935sAJCCxTmALWdtbgwvuvMLa+yWhXliQQ68
-	4QXFLxxwvWWYnNHapkITvlwMjFO0EXdflGlMBD28Rhn6mRAhXFTiF3MVfPjh95eX
-	ImguYvc3Mm9rvq0CAXKd4wRRn4wqOe+wOqMYjE/QqdzXvgIpHrsaSqjcHhQ7SqUU
-	yJ8uYs+UyPFNEQfv2bq/X8U59pULPuNwsLlUormvgppLR1+Ghq/uG/k8OEaZlKdb
-	K1aB6VYRej1OO15ptLbjSW3eDN/RET4iRuCW+DDqLsGMMcY8ti7m0qyr1TSV3iyS
-	/zVIUw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45d1sy0d29-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Mar 2025 13:43:49 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52IDhmGw007028
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Mar 2025 13:43:48 GMT
-Received: from [10.216.0.149] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 18 Mar
- 2025 06:43:43 -0700
-Message-ID: <98a35a51-6351-5ebb-4207-0004e89682eb@quicinc.com>
-Date: Tue, 18 Mar 2025 19:13:38 +0530
+	s=arc-20240116; t=1742307354; c=relaxed/simple;
+	bh=UPjz8VZLsmlRm8QL0tudY2jJ5QityH3qNmJhumK1VPM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WXMoKmGQjhLdZM4xJ1DBsPi9yq7D3gkbHA7uWhTCmggxUfN6+yOIjrc6iz3Iwe2UqP5EUA4liJW9y2BLgpxYY6r70Zu+GHhhuW6LP18XWaLRVbD2MLqIBmTplihU10btH7qy86Sx+wUwQn3zuYdVPyJ7o6iP8xOIh1nPkLqODeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jmV0S5AS; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-22580c9ee0aso98308255ad.2;
+        Tue, 18 Mar 2025 07:15:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742307349; x=1742912149; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yw9gppKSxeHcWVBwaNXUHs12mj3KdYVNHxjn9Ui98is=;
+        b=jmV0S5ASI17IMU05Aw+Ta1EYvaqXcdDF5F/GLtrxq+FaThW1ouyt6fEuJlTmuQaYf3
+         LdLiV2br1IKNNSW7gmEpdV2ik6Xp/fYStJ9brQ/slWDKkYDjh6XUZifjm8hJ9ZLpPiO6
+         j512zZ71bAOA4W0uHh7bJsaiNa9H/8hvt/ekDwFSng057DzpwfpyqwgehDfiks+BWBVo
+         JQikj3+7elulFd4p7804Wkik1CHg/g9CofXdLqelM/XJun/LO02lQREFkEk4btQh5Z3n
+         ghGFsp5UcQQPxIsfxOaCoYV9vYvk3TBF/Jh1Le2UKV47kLlz+8/wb2PgDStSkXevQF2R
+         3AYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742307349; x=1742912149;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Yw9gppKSxeHcWVBwaNXUHs12mj3KdYVNHxjn9Ui98is=;
+        b=NEr0IifvLk5OJwBkRaPwb6oSWK6OQk81sELA6i1XcvDBrNIPaZgdzpTzgveu+vxzoM
+         uSQoO0iIKQGy4VJeg7BQZHlv5+C69h5QMt3m7iPTFkjBf7s/SccaPv9rpoK6xWAoBz9F
+         yJ5LO7W+cu4k78+JCwPJKG6m3Da3/5FSCQrrikYL6bI5mJL6aQUwwO90bpAfSzJYYiQh
+         l48OIOQIJvbQ0/tUcKiZoEquYwj4y3SGjripvXpOhADIr8J3qlYCXsimZqo8ZqKilWET
+         dfL4npVTzgeuaPiH0Ga4c6UF0RYt9fvl0PH1VZX933iQqh/8uFZOVDxqKQTJWeWhgkwZ
+         x5yQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU/pC6uIz3wPkavJ3LxjShTVHDJ8NIL9AK1t53HQuGgYQAs2qSZpBBD34UgZznuO5OfIpbgOtagivja6XX5@vger.kernel.org, AJvYcCVK4UmHSr36xsktwucRuFD43otMwDM8bhD0/6bkvpZ7fOt54V1WAbLiBUQP+VeZZupryTKth3de31U=@vger.kernel.org, AJvYcCXy4i179N5ny8CyDhPdQ2nwaRqDd+PWHvSTakFlmOQ6Yh0dNO37EKISpFcBcJSdirS+CcOX44VlzTnA7r8s@vger.kernel.org
+X-Gm-Message-State: AOJu0YwkxGOoFy0dj5tPW4NKgeycndvnbLmOSOkUV7CJ3XF8/LnmTF67
+	hBRQXHLNUDXgBEXbergfSp6yv37nuwSDxXCJZeK+n1c5hl3y+0NH
+X-Gm-Gg: ASbGncubVspdquLPw7jhdhOKKjMoAo9BQQCEvE8nRR5tIod12GINGPoC4WjqaQXQNR7
+	QHytVpUTf9O3qV26mkdot9gafiYvl3gjaK5YiMyLhOcLmsNbt+31Xkep4Myb2TOr03b6SUg8+my
+	B9sNUp4/OwBy9GtWGttcVpFcmjHWOSalJwG380oZciIAPtkR75y/0Tq+HgKWCPDd2TmA5kFwFx+
+	A0/+Q6KKSWuzD9LRRqkvT1xcPLSIRxl0ia77EeCqAQxQmA/0D/gBHcrenRcqJ+RaU+LzFcLy39T
+	f+h1JxhlX9yW7d9wdNKw59tSOYd4nfB8F958/9cVPhtEo4Vrh779tIFCH01f8n1J7qEZ
+X-Google-Smtp-Source: AGHT+IFi9iMKBjpAg9KEVjkwVMJon/TRhaWEAz63sZWNS5Zv3rQiYjSCerddG2l8xfiUyKGEzOgSxw==
+X-Received: by 2002:a17:902:d488:b0:223:66bb:8993 with SMTP id d9443c01a7336-225e0b1001fmr211198205ad.43.1742307348944;
+        Tue, 18 Mar 2025 07:15:48 -0700 (PDT)
+Received: from localhost.localdomain ([183.242.254.176])
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-225c6bbeb94sm94430715ad.199.2025.03.18.07.15.45
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 18 Mar 2025 07:15:48 -0700 (PDT)
+From: Miaoqian Lin <linmq006@gmail.com>
+To: "Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: linmq006@gmail.com
+Subject: [PATCH] cpuidle: qcom: Fix refcount leak in spm_cpuidle_register
+Date: Tue, 18 Mar 2025 22:15:42 +0800
+Message-Id: <20250318141542.21748-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8775p: add support for video node
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>
-CC: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
- <20250311-dtbinding-v1-3-5c807d33f7ae@quicinc.com>
- <awgq7zqeqkp2iwyk7vbn3mugsaq723bisxzhaswmzpt3iyc5rw@2vsarnkjdrjr>
- <909def95-0dc5-4002-8df3-8a4c6a8ee132@oss.qualcomm.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <909def95-0dc5-4002-8df3-8a4c6a8ee132@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nxXSx9EycH8l_4v0lrsMskTsNjXsxfM0
-X-Proofpoint-ORIG-GUID: nxXSx9EycH8l_4v0lrsMskTsNjXsxfM0
-X-Authority-Analysis: v=2.4 cv=XKcwSRhE c=1 sm=1 tr=0 ts=67d97895 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=_wXcZrkUdNFU5cDkhcgA:9 a=j9pjK8zFBowKvmVs:21
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-18_06,2025-03-17_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 priorityscore=1501 clxscore=1015 phishscore=0
- impostorscore=0 adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0
- spamscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503180102
+Content-Transfer-Encoding: 8bit
 
+Fix a reference counter leak in spm_cpuidle_register() where
+of_node_put(cpu_node) was missing when of_parse_phandle() fails.
 
-On 3/18/2025 5:52 PM, Konrad Dybcio wrote:
-> On 3/17/25 12:31 PM, Dmitry Baryshkov wrote:
->> On Tue, Mar 11, 2025 at 05:33:55PM +0530, Vikash Garodia wrote:
->>> Video node enables video on Qualcomm SA8775P platform.
->>>
->>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 67 +++++++++++++++++++++++++++++++++++
->>>  1 file changed, 67 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->>> index 3394ae2d13003417a15e64c9e47833725ec779e6..09db8e2eb578f1cada0f4a15e3f844dc097bd46d 100644
->>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->>> @@ -10,6 +10,7 @@
->>>  #include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
->>>  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
->>>  #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
->>> +#include <dt-bindings/clock/qcom,sa8775p-videocc.h>
->>>  #include <dt-bindings/dma/qcom-gpi.h>
->>>  #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
->>>  #include <dt-bindings/mailbox/qcom-ipcc.h>
->>> @@ -3783,6 +3784,72 @@ llcc: system-cache-controller@9200000 {
->>>  			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
->>>  		};
->>>  
->>> +		iris: video-codec@aa00000 {
->>> +			compatible = "qcom,sa8775p-iris";
->>> +
->>> +			reg = <0 0x0aa00000 0 0xf0000>;
->>> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
->>> +
->>> +			power-domains = <&videocc VIDEO_CC_MVS0C_GDSC>,
->>> +					<&videocc VIDEO_CC_MVS0_GDSC>,
->>> +					<&rpmhpd SA8775P_MXC>,
->>> +					<&rpmhpd SA8775P_MMCX>;
->>> +			power-domain-names = "venus",
->>> +					     "vcodec0",
->>> +					     "mx",
->>> +					     "mmcx";
->>> +			operating-points-v2 = <&iris_opp_table>;
->>> +
->>> +			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
->>> +				 <&videocc VIDEO_CC_MVS0C_CLK>,
->>> +				 <&videocc VIDEO_CC_MVS0_CLK>;
->>> +			clock-names = "iface",
->>> +				      "core",
->>> +				      "vcodec0_core";
->>> +
->>> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
->>> +					&config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ALWAYS>,
->>> +					<&mmss_noc MASTER_VIDEO_P0 QCOM_ICC_TAG_ALWAYS
->>> +					&mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
->>> +			interconnect-names = "cpu-cfg",
->>> +					     "video-mem";
->>> +
->>> +			firmware-name = "qcom/vpu/vpu30_p4_s6.mbn";
->>> +			memory-region = <&pil_video_mem>;
->>> +
->>> +			resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
->>> +			reset-names = "bus";
->>> +
->>> +			iommus = <&apps_smmu 0x0880 0x0400>,
->>> +				 <&apps_smmu 0x0887 0x0400>;
->>> +			dma-coherent;
->>
->> I think almost missed it:
->>
->> 	status = "disabled";
->>
->> Don't enable the device by default, there is a chance of the firmware
->> being not present.
-> 
-> On a sidenote, venus driver broke sync_state by requesting the firmware at
-> load time, instead of at the time of first open (though the latter could
-> introduce some latency on first video playback, but both are debatable) -
-> what does iris do here?
-iris does it on first open
-Regards,
-Vikash
-> 
-> Konrad> 
+Fixes: 60f3692b5f0b ("cpuidle: qcom_spm: Detach state machine from main SPM handling")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+---
+ drivers/cpuidle/cpuidle-qcom-spm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
+index 3ab240e0e122..c9ab49b310fd 100644
+--- a/drivers/cpuidle/cpuidle-qcom-spm.c
++++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+@@ -96,12 +96,12 @@ static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
+ 		return -ENODEV;
+ 
+ 	saw_node = of_parse_phandle(cpu_node, "qcom,saw", 0);
++	of_node_put(cpu_node);
+ 	if (!saw_node)
+ 		return -ENODEV;
+ 
+ 	pdev = of_find_device_by_node(saw_node);
+ 	of_node_put(saw_node);
+-	of_node_put(cpu_node);
+ 	if (!pdev)
+ 		return -ENODEV;
+ 
+-- 
+2.39.5 (Apple Git-154)
+
 
