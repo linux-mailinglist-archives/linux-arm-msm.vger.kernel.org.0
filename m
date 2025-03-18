@@ -1,49 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-51801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E362AA67C01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 19:35:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35FA4A67C04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 19:35:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF0F67AAF77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 18:34:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C03277A835E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 18:34:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F4A41F4167;
-	Tue, 18 Mar 2025 18:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FB082135A5;
+	Tue, 18 Mar 2025 18:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tMed8eiT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k3TDwL4Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E2D151990;
-	Tue, 18 Mar 2025 18:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529A4211A0D;
+	Tue, 18 Mar 2025 18:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742322930; cv=none; b=l7vJemeTvcdCCUQVuekKCaei9h3FrggOsCjHyE7aM7HDERoxs+6An58YP73v5z/q11O4K9Al+RUoKQDvn4BwptMFPn2k5TY2dQfHhLzGgvMLcRnAFPjMhmrSi7ljnEKhMXV6gh8O1+xiRmdfM+eUNAq/O4Z4v3rzh0jl1pwp1vU=
+	t=1742322935; cv=none; b=IzT5k6Xd56XNhTGzA6Ls3oeG5/KOygpOs8ylMlk9jEumYYtwtA/53JR0YoJWNF1TvPL1/T7sw3sEIyoZMuem05On4a5wzPxxG+qbHJL5ztLGpx4KAtFXLnQzG2Aq/xYP41UoXhvvUln1LjQ8hy9MdwkteZUocWagqobbVkDFIg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742322930; c=relaxed/simple;
-	bh=eXtDFdtsvd3ys0IxX4fueVDJob9FRzlLwnSqpAlUv94=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kjtyR15aMLeSGVFs6Mssr6/8clL8kqB5KpPjr0rIZq3yW8GhhbrqrNm94nEIkHkr30hBIe4k7TX3fjL9MftNSE69iVFp9l9aEFaBDTBoQemeXuSlRJlM39jH3u2lG/VsuNm7QJZr0FG2hQb4pygNtn2yf56jx4vdYI7kjfaLSLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tMed8eiT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661E7C4CEDD;
-	Tue, 18 Mar 2025 18:35:26 +0000 (UTC)
+	s=arc-20240116; t=1742322935; c=relaxed/simple;
+	bh=vx5/s35EbbUVo021QHu0zEtqsOnkalvl/Ooc/L2cf1c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=PqkIahMa1CRPZwq67oJtC0Bn2bXtux7FlPZJyDozY0LIbuGISnnv06+lmBU5oBe3DL1sfE+8bYANX4KCuNkw8MZt+ay01yWvMHdoG7koRE8QjpTdC3+yoT9nWuRmqvv+s0M0Q9qefMsrhyALL5tOGLfqJZP66ILb4U4f+ys2d14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k3TDwL4Z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E373C4CEE9;
+	Tue, 18 Mar 2025 18:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742322929;
-	bh=eXtDFdtsvd3ys0IxX4fueVDJob9FRzlLwnSqpAlUv94=;
-	h=From:Subject:Date:To:Cc:From;
-	b=tMed8eiTGUTprLrgaGB9nK74sObuZ5CKlfRaA9ZOm5OJBl3KmakJBbw0fHblnbt6N
-	 YsIVdH3gCyMxe4L7fLTS/h5QtYvNO5HAWUZifaGhyrrWqENhtjZFnKmFejLoBNcY2g
-	 D2PI3JFaN+wqS/dRdPy4VHPlBO9D+/STirnsroLUsJdOZvXtfgVtXAe8sAars+UuzA
-	 zNbdYC4wNPAI6iyits39tpRG9L7UmIKIpVEjVcL6gitFAOudfWh0IKQcpUwmbH4t/R
-	 3jXWEyie+j95IgFM40UlKrIefk4A8fybO9RutlW3qiMYXMVUnsgmfvkaoPi9n8LNt7
-	 QMkCBwCCHYaTw==
+	s=k20201202; t=1742322934;
+	bh=vx5/s35EbbUVo021QHu0zEtqsOnkalvl/Ooc/L2cf1c=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=k3TDwL4ZIkTxcmckI9cP1Sv7ITfsiVLSVUblX+1k1so6gSv77D1xUh2qzIa83IW5D
+	 4RYQzXYgE+FN+ox63P66kJxGxDoFhk5Nd5Fz0IufLi4F18ekQ8G9+osIkypt5EB3I/
+	 k5V+z4P3XuPVFIfF6f9bms2Ix3xPEcMrPL9h/5HjqGzB43ZNRDbVP+XpL3JIDD+khA
+	 ZUSmtdVWNfdPVFl5yagIaQv45pjVL8rVH5XO3qE2Nf4Yuz35jLv06NYBvOb/1D601d
+	 9LjFdhdsx0p8UtP08tlEbjc7IGy/ffMH0U5fFp+76u3bwgiFXGhRJJjskzoat4FZtV
+	 Vk+Dtecy/yFpw==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Subject: [PATCH 0/8] More more dt-bindings fixes for arm64/qcom
-Date: Tue, 18 Mar 2025 19:35:13 +0100
-Message-Id: <20250318-topic-more_dt_bindings_fixes-v1-0-cb36882ea9cc@oss.qualcomm.com>
+Date: Tue, 18 Mar 2025 19:35:14 +0100
+Subject: [PATCH 1/8] dt-bindings: soc: qcom,rpmh-rsc: Limit power-domains
+ requirement
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,10 +53,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAOG82WcC/x3MQQqDMBBG4avIrBswEVF7lVKCOn/iLJpIRkpBv
- HuDy48H7yRFESg9m5MKvqKSU4V9NLRuc4owwtXkWte3nR3NkXdZzScXeD78IoklRfVBflBjuwF
- sATcFprrYC+5QD6/3df0BbXOhM24AAAA=
-X-Change-ID: 20250318-topic-more_dt_bindings_fixes-137ed1ee29fd
+Message-Id: <20250318-topic-more_dt_bindings_fixes-v1-1-cb36882ea9cc@oss.qualcomm.com>
+References: <20250318-topic-more_dt_bindings_fixes-v1-0-cb36882ea9cc@oss.qualcomm.com>
+In-Reply-To: <20250318-topic-more_dt_bindings_fixes-v1-0-cb36882ea9cc@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -67,43 +67,73 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1742322925; l=1421;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1742322925; l=1853;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=eXtDFdtsvd3ys0IxX4fueVDJob9FRzlLwnSqpAlUv94=;
- b=w+WsvPOSfIxhjf5POB85wf9CWtiQtw4DJZw9zjJmYDm44EBV4wSCsMpxqXi2A7EtN0yGJuxRj
- pR5eZcpxebZAQMcor+5nxPxtOkuTRRcXh7ycH1J0LyazN0GIJiD5lK4
+ bh=4mluHYqGriOqGK+Ra9FQnEddl9mTKD4esnUO6KTyZ9g=;
+ b=KIiVhY+09nWTHExMpIvFiaxfM3diaKZrwItbiciRIY0aiaWYAjwoAC7a1wdAT+/diwzmTqeiu
+ hROhVgnIDfEBzsZSaUKLcaGYbGwLW6/JE7bz9Z2VC2yCP0Kkx7WVJIt
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Just some routine stuff, really
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
+Certain platforms (such as Chrome SDM845 and SC7180 with a TF-A running
+as secure firmware) do not have a OSI-mode capable PSCI implementation.
+
+That in turn means the PSCI-associated power domain which represents the
+system's power state can't provide enough feedback to the RSC device.
+
+Don't require power-domains on platforms where this may be the case.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
-Konrad Dybcio (8):
-      dt-bindings: soc: qcom,rpmh-rsc: Limit power-domains requirement
-      arm64: dts: qcom: sc7180: Add specific APPS RSC compatible
-      arm64: dts: qcom: sdm845: Add specific APPS RSC compatible
-      arm64: dts: qcom: msm8998: Remove mdss_hdmi_phy phandle argument
-      arm64: dts: qcom: qcs615: Remove disallowed property from AOSS_QMP node
-      arm64: dts: qcom: msm8998-fxtec: Add QUSB2PHY VDD supply
-      arm64: dts: qcom: msm8998-mtp: Add QUSB2PHY VDD supply
-      arm64: dts: qcom: msm8998-yoshino: Add QUSB2PHY VDD supply
-
  .../bindings/soc/qcom/qcom,rpmh-rsc.yaml           | 24 ++++++++++++++++++++--
- arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts    |  1 +
- arch/arm64/boot/dts/qcom/msm8998-mtp.dts           |  1 +
- .../boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi |  1 +
- arch/arm64/boot/dts/qcom/msm8998.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/qcs615.dtsi               |  1 -
- arch/arm64/boot/dts/qcom/sc7180.dtsi               |  2 +-
- arch/arm64/boot/dts/qcom/sdm845.dtsi               |  2 +-
- 8 files changed, 28 insertions(+), 6 deletions(-)
----
-base-commit: c4d4884b67802c41fd67399747165d65c770621a
-change-id: 20250318-topic-more_dt_bindings_fixes-137ed1ee29fd
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
+index af632d0e0355c56748ecac24f528dc2eec7d1193..f8b7428df6bc3caef2917b300ce47a91bb3f0fd0 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
+@@ -44,7 +44,13 @@ description: |
+ 
+ properties:
+   compatible:
+-    const: qcom,rpmh-rsc
++    oneOf:
++      - items:
++        - enum:
++          - qcom,sc7180-rpmh-apps-rsc
++          - qcom,sdm845-rpmh-apps-rsc
++        - const: qcom,rpmh-rsc
++      - const: qcom,rpmh-rsc
+ 
+   interrupts:
+     minItems: 1
+@@ -124,7 +130,21 @@ required:
+   - qcom,tcs-offset
+   - reg
+   - reg-names
+-  - power-domains
++
++allOf:
++  # Some platforms may lack a OSI-mode PSCI implementation, which implies the
++  # system power domain can't provide feedback about entering power collapse
++  - if:
++      not:
++        properties:
++          compatible:
++            contains:
++              enum:
++                - qcom,sc7180-rpmh-apps-rsc
++                - qcom,sdm845-rpmh-apps-rsc
++    then:
++      required:
++        - power-domains
+ 
+ additionalProperties: false
+ 
+
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+2.48.1
 
 
