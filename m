@@ -1,231 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-51751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8D77A676D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 15:51:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55DF1A67700
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 15:57:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9AC2A7A1411
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 14:50:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA6BB19A640B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 14:53:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37157211466;
-	Tue, 18 Mar 2025 14:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F56F20D50A;
+	Tue, 18 Mar 2025 14:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R1Z0qkrm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y4KcUKzN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B10210186;
-	Tue, 18 Mar 2025 14:50:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD4620E01E;
+	Tue, 18 Mar 2025 14:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742309408; cv=none; b=INBkDNorxvAi/LBBwE+aD8qCIwuTrMdZVugToUTFVLqSlJPNtLcopdrj8ph+/iJi9ECyXsrr2ZNRLiqQpLjuNcMgI78zhgN4y/A4SMZsACtPlZGTprt+3msDo5pYgnM2I4zk+KCSizpsU/W6U1iY07VZR6moNAyBW5aVzdb1hyo=
+	t=1742309562; cv=none; b=Qlmnh5mij8mtrB11WbtJjNFII034UBbO0fL894cyUxEq/D4H0ZWQ8Bi53EF3tMHWrLq5o/XbVXo0GXiSpbP5TPKnQNkUMVq+gSaaMqgAgaUq0wBMdWT7vSpxxZrxEJwCyACAYtqgrJpABf1aB0WS7+8AjrR/z3/HsKF7vjjKWX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742309408; c=relaxed/simple;
-	bh=ns5XGacYh+EIZsGY98O/M+pjK07EgFDJQD2Go3xbYpg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gQ1uNKrLJzDeSy1pDnci8I9bRxXSsgiyj5RTlAwF4AvvJyJdCPnjivopxcGzgYSuLoRKVCIWpT28eFi71kEgO32/yegf14uiWtY7BVMSWbe9RAZf3Cww9sfXZoLX7BSWD+jIOh+7FIR+oqS57idu9pXGklTw+GIpf0D9Kc2LgXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R1Z0qkrm; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52I8pHcP005608;
-	Tue, 18 Mar 2025 14:49:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=4bNYjrybVRl
-	RDBuG+fzQfTBGaozaDxuhECWkqz0hNe4=; b=R1Z0qkrmE1BnYbGFXJ6JDAdQno/
-	UmMa2DVF789u7E3/bBYP2zmscZDlsKEi7YWBQiybh7xsJ5cwE4Xj03shbSHf2XlN
-	MDO+zcTe6cdoe5X3iNrsNXJk3WwaiSE6DSIJITUapzenDyy0QEctqf0xq7qntCLA
-	Dg1PYed3DHO/QOuTVninDI8iMbbOQEOHphFckHZssdFQ/PZ/jqcwc84bZ+KchQgg
-	XdCGsBvpLAnLjMTM3tAhvYOs1gLMG/e2GU1DCyEBDuPB20XFZnf2/OLGT96wUTCA
-	T55UkxjZ0mx18WwNtWR/050OFFULSqWRyQ79kBo4TK92lKUjJpSr2U6eIFw==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45etmbttdx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Mar 2025 14:49:54 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 52IEnlVo004267;
-	Tue, 18 Mar 2025 14:49:51 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 45dkgmfv9d-1;
-	Tue, 18 Mar 2025 14:49:51 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52IEnmWX004296;
-	Tue, 18 Mar 2025 14:49:51 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 52IEnmLc004293;
-	Tue, 18 Mar 2025 14:49:51 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id 67007501582; Tue, 18 Mar 2025 20:19:50 +0530 (+0530)
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-To: vkoul@kernel.org, kishon@kernel.org, manivannan.sadhasivam@linaro.org,
-        James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
-        konrad.dybcio@oss.qualcomm.com
-Cc: quic_rdwivedi@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>,
-        Can Guo <quic_cang@quicinc.com>
-Subject: [PATCH V2 6/6] scsi: ufs: host : Introduce phy_power_on/off wrapper function
-Date: Tue, 18 Mar 2025 20:19:44 +0530
-Message-ID: <20250318144944.19749-7-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250318144944.19749-1-quic_nitirawa@quicinc.com>
-References: <20250318144944.19749-1-quic_nitirawa@quicinc.com>
+	s=arc-20240116; t=1742309562; c=relaxed/simple;
+	bh=pHBe+sI4FwoiGUFSRZcrNRgdkaL4FBzEE/Aou9VB2V8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
+	 In-Reply-To:Content-Type; b=eKd11C9oPNG88i7k2jhbUx11zrTYrpo7z0tR2+VP7SI+lcbQlBCpbe3mcYOazu2e25W4DFuc8T5kdS526fxH8B6QLDd7xBK+Prr+Q7YU+569LcwOX+OuLbyIvkItVMvGBWOg1jcXilsXeBHmtFaCz7+KKsOzMFNy05nLm1bIeRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y4KcUKzN; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3912d2c89ecso5292149f8f.2;
+        Tue, 18 Mar 2025 07:52:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742309558; x=1742914358; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:subject:from:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=P52+0oCRnVmD6adG2x2Zy/twFor9rxgj0GU1RvsmWOw=;
+        b=Y4KcUKzNkiyq7ARGZrNrnrOrLSqB7cQ2NfdtoUf7TOEG4hAF9DFKvcoTijVPPuyGJf
+         boWvU4CJL6H1ODldZtsY9+DkWyj1UZe3Xs7kPwYawV1TiRxM1cvmuFoAX3wX75X6QXkI
+         NtD/8vz1Upu15C/xJ+9CufeeysSDSyxL2Ep87llZ1YX5tS5rOTNIQ8Wccj+kYabdxkUm
+         xuwDDInKy5gOtYpvzUWxAw7EmlrW/97jn6e1t9o0qoleiYU9HUzKuFw2YLEfJgOcncIV
+         dOPkvWA2sAjE1XIav3dV4v5Viymck0OcmPkwutfnzWInW9gnDyieJ4dfQvHUDa43MhmV
+         goXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742309558; x=1742914358;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=P52+0oCRnVmD6adG2x2Zy/twFor9rxgj0GU1RvsmWOw=;
+        b=mc/APP1uWx8m3tLpkWjJuPpWD8JOPp2IF9tK1eLUPcI5VSptb62wz2DA1OSlrh/K/m
+         +kNJekUeSf5uzfAIBCwouPFKxskvqKknRtl1M0f8bkSVZ9rcxn/dWiC1BtYFhj0GYVAS
+         +eyJ/PmPQPW9sZPCW2DMYOk3Yp4A+aaGwSPomZNEIzioWHX1TzUL7p1IIcCMrz5krTXe
+         lGz3ze6vBNADk0XtgV+V5/K/GPSgyDi9U4lAf/t4bRNs+tLymp8FzFWQ/J8vS92rdDg8
+         3J5+6L9QTkY5ci7i14g4W7ZkdXQS9bRnMrj9D79wwhZ8YBxgCLIO+jjHosFB7k6iHSfr
+         1hpA==
+X-Forwarded-Encrypted: i=1; AJvYcCVIUQoWhtEVNuuZpubYtPwIGauX8fGBGSJEE/H2kHTtdtGHtJWBfPsSyE3HDe24qgey04KbGAaCkHeBqHZa@vger.kernel.org, AJvYcCW4/9k0XB1Hop2LAfUx0VhH+iYSBs9FKll7wj+fLwjTSzg8xW4R1KUEqM8lLZZT2cJM0jkyqlZpc3zy@vger.kernel.org, AJvYcCXlbn1rGQiqSM8zhjaZC+8UxLZBMfjgDKaBwpDchmZt7noluKk6V7J7IHGGkVDsY00Ogj3F0M4u+Bl4TWHx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3PuRLpVsQIWZd1ablQ6Gn1vhLfkzcP39DLD1dXrB5PFQAN1W0
+	n+jw6DfuXayBmqsvXSSWRQPnwBSHgyBPsycZgk2q+PqBf/WojXlB
+X-Gm-Gg: ASbGnctwdZS3jhHHcIKEJB3AsmvYrv5kTO6Dx24kgTDlolWn9oueqjxIOnRGBTFOweA
+	yQbiv49FUNNgZpaKl11v6CNxynzWs3M1cKZhI0hfgOq+Az6lSFOf6G02qTYM47OnzJ55aWWz4MB
+	uS9TsKlqTCIkZfoT9WwoaWHofE2x0pzLnLvGKrdt5KEYuc27FR7aFnIxnsRuhQ72aIPUD8Hpapo
+	GTl66trDZeXnlia2yQ9oKGEcvIKarrFkrt+kFsdQKqSLpKIju0ZRgMB/kTbAbJJB1bIS99dW0ak
+	2KxsiF0cJA+Wi0n/7Jz3V6Pi86fXInSSJiLe6HRitkTf88XQXwsASIK4QrCvGq3+3LvWQB+djJl
+	mk25hA30YEA==
+X-Google-Smtp-Source: AGHT+IGQ80YKRzqbI+bYWzTgEHSqoRgS1lsMKKEEz74wAmHtbW5UtEjm/1W1j+K4zE1tY/NoaZQL2A==
+X-Received: by 2002:a05:6000:18a8:b0:38f:4fa6:bb24 with SMTP id ffacd0b85a97d-3971f41160emr18927310f8f.39.1742309558233;
+        Tue, 18 Mar 2025 07:52:38 -0700 (PDT)
+Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395cb40cdafsm18481455f8f.62.2025.03.18.07.52.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Mar 2025 07:52:37 -0700 (PDT)
+Message-ID: <32785a6a-3f30-4d77-b32d-ee70c459de1b@gmail.com>
+Date: Tue, 18 Mar 2025 15:52:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Gabor Juhos <j4g8y7@gmail.com>
+Subject: Re: [PATCH v3 1/4] mtd: rawnand: qcom: Pass 18 bit offset from QPIC
+ base address to BAM
+To: Md Sadre Alam <quic_mdalam@quicinc.com>,
+ manivannan.sadhasivam@linaro.org, miquel.raynal@bootlin.com, richard@nod.at,
+ vigneshr@ti.com, broonie@kernel.org, bbrezillon@kernel.org,
+ linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
+References: <20250310120906.1577292-1-quic_mdalam@quicinc.com>
+ <20250310120906.1577292-2-quic_mdalam@quicinc.com>
+Content-Language: hu
+In-Reply-To: <20250310120906.1577292-2-quic_mdalam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QS5i6desbJK_NXXjAiLvF8OMGpN0-plh
-X-Proofpoint-GUID: QS5i6desbJK_NXXjAiLvF8OMGpN0-plh
-X-Authority-Analysis: v=2.4 cv=aMLwqa9m c=1 sm=1 tr=0 ts=67d98812 cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=Dj_YmL__GzIFt5dFpcoA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-18_07,2025-03-17_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0 mlxscore=0
- suspectscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503180109
 
-Introduce ufs_qcom_phy_power_on and ufs_qcom_phy_power_off wrapper
-functions with mutex protection to ensure safe usage of is_phy_pwr_on
-and prevent possible race conditions.
+2025. 03. 10. 13:09 keltezéssel, Md Sadre Alam írta:
+> Currently we are configuring lower 24 bits of address in descriptor
+> whereas QPIC design expects 18 bit register offset from QPIC base
+> address to be configured in cmd descriptors. This is leading to a
+> different address actually being used in HW, leading to wrong value
+> read.
+> 
+> the actual issue is that the NANDc base address is different from the
+> QPIC base address. But the driver doesn't take it into account and just
+> used the QPIC base as the NANDc base. This used to work as the NANDc IP
+> only considers the lower 18 bits of the address passed by the driver to
+> derive the register offset. Since the base address of QPIC used to contain
+> all 0 for lower 18 bits (like 0x07980000), the driver ended up passing the
+> actual register offset in it and NANDc worked properly. But on newer SoCs
+> like SDX75, the QPIC base address doesn't contain all 0 for lower 18 bits
+> (like 0x01C98000). So NANDc sees wrong offset as per the current logic
+> 
+> The address should be passed to BAM 0x30000 + offset. In older targets
+> the lower 18-bits are zero so that correct address being paased. But
+> in newer targets the lower 18-bits are non-zero in QPIC base so that
+> 0x300000 + offset giving the wrong value.
+> 
+> SDX75 : QPIC_QPIC | 0x01C98000 (Lower 18 bits are non zero)
+> SDX55 : QPIC_QPIC | 0x1B00000 (Lower 18 bits are zero) Same for
+> older targets.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 8d6b6d7e135e ("mtd: nand: qcom: support for command descriptor formation")
+> Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
 
-Co-developed-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 44 +++++++++++++++++++++++++++++++------
- drivers/ufs/host/ufs-qcom.h |  4 ++++
- 2 files changed, 41 insertions(+), 7 deletions(-)
+<...>
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 5c7b6c75d669..8f80724e64b9 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -421,6 +421,38 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
- 	return UFS_HS_G3;
- }
+>  /*
+> diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nand-qpic-common.h
+> index cd7172e6c1bb..6268f08b9d19 100644
+> --- a/include/linux/mtd/nand-qpic-common.h
+> +++ b/include/linux/mtd/nand-qpic-common.h
+> @@ -200,7 +200,7 @@
+>  #define dev_cmd_reg_addr(nandc, reg) ((nandc)->props->dev_cmd_reg_start + (reg))
+>  
+>  /* Returns the NAND register physical address */
+> -#define nandc_reg_phys(chip, offset) ((chip)->base_phys + (offset))
+> +#define nandc_reg_phys(chip, offset)  ((nandc)->props->nandc_offset + (offset))
 
-+static int ufs_qcom_phy_power_on(struct ufs_hba *hba)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	struct phy *phy = host->generic_phy;
-+	int ret = 0;
-+
-+	guard(mutex)(&host->phy_mutex);
-+	if (!host->is_phy_pwr_on) {
-+		ret = phy_power_on(phy);
-+		if (!ret)
-+			host->is_phy_pwr_on = true;
-+	}
-+
-+	return ret;
-+}
-+
-+static int ufs_qcom_phy_power_off(struct ufs_hba *hba)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	struct phy *phy = host->generic_phy;
-+	int ret = 0;
-+
-+	guard(mutex)(&host->phy_mutex);
-+	if (host->is_phy_pwr_on) {
-+		ret = phy_power_off(phy);
-+		if (!ret)
-+			host->is_phy_pwr_on = false;
-+	}
-+
-+	return ret;
-+}
-+
- static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-@@ -449,7 +481,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 		return ret;
+The macro has no parameter named 'nandc', so this works only when there is an
+identifier with that name in the code where the macro is used.
 
- 	if (phy->power_count) {
--		phy_power_off(phy);
-+		ufs_qcom_phy_power_off(hba);
- 		phy_exit(phy);
- 	}
+Additionally, the macro will no longer return the physical address of a register
+after the change, so both the comment before the macro and the name of the macro
+will be misleading.
 
-@@ -466,7 +498,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 		goto out_disable_phy;
+Since the macro is used only in the qcom_prep_bam_dma_desc_cmd() function to
+compute the 'addr' parameter for the bam_prep_ce{_le32}() functions, maybe it
+would be better to get rid of it completely, and do the computation directly in
+the function instead.
 
- 	/* power on phy - start serdes and phy's power and clocks */
--	ret = phy_power_on(phy);
-+	ret = ufs_qcom_phy_power_on(hba);
- 	if (ret) {
- 		dev_err(hba->dev, "%s: phy power on failed, ret = %d\n",
- 			__func__, ret);
-@@ -1017,7 +1049,6 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
- 				 enum ufs_notify_change_status status)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--	struct phy *phy = host->generic_phy;
- 	int err;
-
- 	/*
-@@ -1037,7 +1068,7 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
- 				/* disable device ref_clk */
- 				ufs_qcom_dev_ref_clk_ctrl(host, false);
- 			}
--			err = phy_power_off(phy);
-+			err = ufs_qcom_phy_power_off(hba);
- 			if (err) {
- 				dev_err(hba->dev, "phy power off failed, ret=%d\n", err);
- 					return err;
-@@ -1046,7 +1077,7 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
- 		break;
- 	case POST_CHANGE:
- 		if (on) {
--			err = phy_power_on(phy);
-+			err = ufs_qcom_phy_power_on(hba);
- 			if (err) {
- 				dev_err(hba->dev, "phy power on failed, ret = %d\n", err);
- 				return err;
-@@ -1233,10 +1264,9 @@ static int ufs_qcom_init(struct ufs_hba *hba)
- static void ufs_qcom_exit(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--	struct phy *phy = host->generic_phy;
-
- 	ufs_qcom_disable_lane_clks(host);
--	phy_power_off(phy);
-+	ufs_qcom_phy_power_off(hba);
- 	phy_exit(host->generic_phy);
- }
-
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index d0e6ec9128e7..3db29fbcd40b 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -252,6 +252,10 @@ struct ufs_qcom_host {
- 	u32 phy_gear;
-
- 	bool esi_enabled;
-+	/* flag to check if phy is powered on */
-+	bool is_phy_pwr_on;
-+	/* Protect the usage of is_phy_pwr_on against racing */
-+	struct mutex phy_mutex;
- };
-
- struct ufs_qcom_drvdata {
---
-2.48.1
-
+Regards,
+Gabor
 
