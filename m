@@ -1,117 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-51692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FBABA66F1C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 09:55:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47E57A66F48
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 10:07:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3B54164D21
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 08:55:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5AF0419A3195
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 09:07:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EE342046AF;
-	Tue, 18 Mar 2025 08:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 148FE1FFC5D;
+	Tue, 18 Mar 2025 09:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NiTfdkSh"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="URO22JY8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B629F1A3029;
-	Tue, 18 Mar 2025 08:55:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6527A1F5842;
+	Tue, 18 Mar 2025 09:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.177.23.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742288141; cv=none; b=sy0HFKUg3gQ3alImJIBYB8qHXxfbVPTBXH934nMWy6txPrXt8AAJCnexKTaCI7g8oXV80hui+MO7zgpsmWxq2lbGnJT08cf/rR0xPgiLypHdM0T1FsetNVarc19TSvZRQaCf2quI5v0Ar9JrpNq5pVIsBOlKeAJidf6jQkd3c3s=
+	t=1742288850; cv=none; b=UPQtESa38SATnv19sO2zPv6PpJmSBrpqkbPquZR313XbOyOg5HhG3ruVDqcp4eEy664nhzk1e1nr7mVqoDDD3mKH+uNex90A9OiYX8iDtx0KBSqi2NNqSVfWOiZtq6Thlp0BMtEESP8pp6V3f7ILR0cpWi6DMCogRsbnrgOC2V0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742288141; c=relaxed/simple;
-	bh=bcaaxFP1F23l0PdiW65JYiPYj/NqcM8962Z2DTxPBxc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=beA2fl31SEMOCiqAZngZ7g3SaUnvCiTsFj0HOB5irY8KVvIzalli98Nbyhx/2E5Fxxj0d+zGtYhNTpjpkPNsEtAN+Dt9zu4wMKAv7HGTYPNbkMkJP72xFTyYQCp10DpuXJD4dKO7HbXyN5Y5TS6ZAK7/fFCcWV87KYJfIbGiMtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NiTfdkSh; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2ff85fec403so5123007a91.1;
-        Tue, 18 Mar 2025 01:55:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742288139; x=1742892939; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bcaaxFP1F23l0PdiW65JYiPYj/NqcM8962Z2DTxPBxc=;
-        b=NiTfdkSh6NPf3f4gTGR/xEUwydhRHLSNuLqOGXOoR8wpeBi9QQc4ZgN/RzaRsO0d3T
-         WpvbJXm1T+GYM8RZoDJPpotPPOEBE2lTjz0Mk53WTEq1nzWpikxp2SPSdqUnFbsMPE35
-         CN0Iob3Z5wH1wZfFNhr9j9LbBSPEeIL0IYHpb+oc+fXY6vQR4jf57hsq5UIvfDSfFBNE
-         4BFjqqrxGwiT/zEkJz1E+gFZg5cDM/Co3nr7qLoq7ufAeQVjlJ26SJAoQlApGVpHrRYx
-         WrcIoSii5CaXwgqhniyMFkYiLTcHZnaxk3q9ig2+fDVl5kS4PBlLf/bglpxSofMfxwbU
-         QQiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742288139; x=1742892939;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bcaaxFP1F23l0PdiW65JYiPYj/NqcM8962Z2DTxPBxc=;
-        b=ftddwvY2b9sxaklMX1Fp3bcGxeh4WDfxx61mr1IoRGxXp5AbVprcBC6NOI94uUw9Q7
-         4EjfmihGe8UP4ZjtX5+n/imjiFZ/QQMJorisOY20h+/4c+ZZW7CU/IpINbZBx9EzKZzW
-         RDcDorxEY4sSZ3syDSpKSawsbEq+B7YRtCFPTGYqHk4SW/jApJ9VLGWhgbNIPaPPlDki
-         ik0t9kiQoHKehwsJGeOsDA8gLETnGC72p5cRB/u+mIbfa8iajlnh2IvC5XfV4OIAyvzY
-         Exq7phYih8eHb+0cpwgYW7LC1K3akgOUYo88THUwGa6nUHSKQEEfz4A5fzmzK6NRsXXu
-         GDMw==
-X-Forwarded-Encrypted: i=1; AJvYcCUlBElKyH4szZofpL2mX0iz6cD4eqJMKy1Ox8rxg4zq+8H1rT3xKtLSV2tdn4nnHLhfFB3R2x4/4FOscamo@vger.kernel.org, AJvYcCVZcc3DJ5Za6a1I/6FkKGq9dvE6jKjxS+0zlzIsFjFYS314iUhRX9qdW9BQJvS4A6RhX1nWHj6ZQvYz@vger.kernel.org, AJvYcCVa8IVNygWhkqT9HcwIKmMqJnA/uqKv5TT6b6EWTZGRjjGz0RVLOAhovFrG6yzph9mdb7RBmDHJSfAJgzvTCCHqNw==@vger.kernel.org, AJvYcCWijZnWXqo4m8O02fNuceyXGn98Jv9tPJOpIswit0yM80GBqWDHvM/zFqQje4BSswJNChbbMhordvzXlvHIUA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyqfbRZPsS0pwmwd9X+W1k8vSSE3oXOnFFm6eJ2IDPmhygrEAy8
-	0mVHemgXTOAip0tzQQkfILNSp0t0CR1/4e36oUUVqE89Z1KsPTOeJ7qyTliXpXQOAmCLQd/iFsQ
-	rFY/dUoda9Z9HgpSicnbXu4Q8JPg=
-X-Gm-Gg: ASbGnctq99Kf6dAh2khFOWzCN4JkWCgD1Qt+GBZnglcp0uq9ZNXpabZDeOcptykihFL
-	aA4NFro8xUwD+yOeUKHmi9x4pV1ulgO+rZ4FanciL/01k2e3dY6fyqZ1ktBywX5F+g1bWTaxP9z
-	vf5Tl0lVCHdfWDX4mxCiycx90=
-X-Google-Smtp-Source: AGHT+IGzUXTMu6+0f6gQ8j7WPO24H14DLLXfhIDYppHhvCBnMdLnrdfvlyQcetDDzARbEXc2mLoN0e/rL5Gkqv0Y5W8=
-X-Received: by 2002:a17:90b:2250:b0:2fa:603e:905c with SMTP id
- 98e67ed59e1d1-301a5b0441dmr2305847a91.2.1742288138990; Tue, 18 Mar 2025
- 01:55:38 -0700 (PDT)
+	s=arc-20240116; t=1742288850; c=relaxed/simple;
+	bh=9vKte3Rf21Iw8b6aLfAZMRHvokrSlAu1kseGc9TApBg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CyM1JsPcuwQ9NGsyIYE+qpYSfp7aoA3x+EK8OjwuwcDY7dk5yjI7PLm4O7tWH0fjFYNQUOl5FxfARGVqtn9qHMmULfJ+xPWlgM+Cp15N3TTH2lum5nAkgezyMGGpMDkCi1+qgD2Ah6WEzanAqoeBS2+Uat2rgy38e2NQcLltzFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=URO22JY8; arc=none smtp.client-ip=89.177.23.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [192.168.2.71] (office.icewarp.com [82.113.48.146])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 2D059166A7E;
+	Tue, 18 Mar 2025 10:07:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1742288843;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=4U8FeEOuFOM7hQ5m0++azj6eJQWZmhSlSQn1nZ5irU4=;
+	b=URO22JY8qm1BxA1WrHdf0rxBbqQl3bzlw9RPhbsehi8XDVto6l15S4Fha3tLlfLgc/7kL4
+	BMWWGTQ9AgcyEzgH/FsCunTiOw7FN72yRgsZxdCNsQhIwbuKPuFohTePevB2bjW0malFax
+	Pvizxj9FOnESLKQ8Vyoks+Higy1xc8c=
+Message-ID: <11435166-28bc-432b-9b2b-d6bff586c882@ixit.cz>
+Date: Tue, 18 Mar 2025 10:07:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250317232426.952188-1-robh@kernel.org> <20250317232426.952188-4-robh@kernel.org>
-In-Reply-To: <20250317232426.952188-4-robh@kernel.org>
-From: Daniel Baluta <daniel.baluta@gmail.com>
-Date: Tue, 18 Mar 2025 10:57:11 +0200
-X-Gm-Features: AQ5f1JoW0JUop4WUBf11_vConfYpr4BhM02aAcWePKMPfEFMJ9UWB8ZNiBwcNWg
-Message-ID: <CAEnQRZA7jEA0V4T1JSam-vV-GcBAbynP0PCfQsyejScwdgd3pg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] remoteproc: Use of_reserved_mem_region_* functions
- for "memory-region"
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Saravana Kannan <saravanak@google.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: soc: qcom,wcnss: Document local-mac-address
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250317-wcnss-local-mac-v1-1-c7c60d4427be@ixit.cz>
+ <20250318-benevolent-bat-of-politeness-119c9a@krzk-bin>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
+ 9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
+ lZxQaOl+1bY/7ttd7DapLh9rmBXJ2lKiMEaIpUwb/Nw0d7Enp4Jy2TpkhPywIpUn8CoJCv3/
+ 61qbvI9y5utB/UhfMAUXsaAgwEJyGPAqHlC0YZjaTwOu+YQUE3AFzhCbksq95CwDz4U4gdls
+ dmv9tkATfu2OmzERZQ6vJTehK0Pu4l5KmCAzYg42I9Dy4E6b17x6NncKbcByQFOXMtG0qVUk
+ F1yeeOQUHwu+8t3ZDMBUhCkRL/juuoqLmyDWKMc0hKNNeZ9BNXgB8fXkRLWEUfgDXsFyEkKp
+ NxUy5bDRlivf6XfExnikk5kj9l2gGlNQwqROti/46bfbmlmc/a2GM4k8ZyalHNEAdwtXYSpP
+ 8JJmlbQ7hNTLkc3HQLRsIocN5th/ur7pPMz1Beyp0gbE9GcOceqmdZQB80vJ01XDyCAihf6l
+ AMnzwpXZsjqIqH9r7T7tM6tVEVbPSwPt4eZYXSoJijEBC/43TBbmxDX+5+3txRaSCRQrG9dY
+ k3mMGM3xJLCps2KnaqMcgUnvb1KdTgEFUZQaItw7HyRd6RppewARAQABzSBEYXZpZCBIZWlk
+ ZWxiZXJnIDxkYXZpZEBpeGl0LmN6PsLBlAQTAQgAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIe
+ AQIXgBYhBNd6Cc/u3Cu9U6cEdGACP8TTSSByBQJl+KksBQkPDaAOAAoJEGACP8TTSSBy6IAQ
+ AMqFqVi9LLxCEcUWBn82ssQGiVSDniKpFE/tp7lMXflwhjD5xoftoWOmMYkiWE86t5x5Fsp7
+ afALx7SEDz599F1K1bLnaga+budu55JEAYGudD2WwpLJ0kPzRhqBwGFIx8k6F+goZJzxPDsf
+ loAtXQE62UvEKa4KRRcZmF0GGoRsgA7vE7OnV8LMeocdD3eb2CuXLzauHAfdvqF50IfPH/sE
+ jbzROiAZU+WgrwU946aOzrN8jVU+Cy8XAccGAZxsmPBfhTY5f2VN1IqvfaRdkKKlmWVJWGw+
+ ycFpAEJKFRdfcc5PSjUJcALn5C+hxzL2hBpIZJdfdfStn+DWHXNgBeRDiZj1x6vvyaC43RAb
+ VXvRzOQfG4EaMVMIOvBjBA/FtIpb1gtXA42ewhvPnd5RVCqD9YYUxsVpJ9d+XsAy7uib3BsV
+ W2idAEsPtoqhVhq8bCUs/G4sC2DdyGZK8MRFDJqciJSUbqA+5z1ZCuE8UOPDpZKiW6H/OuOM
+ zDcjh0lOzr4p+/1TSg1PbUh7fQ+nbMuiT044sC1lLtJK0+Zyn0GwhR82oNM4fldNsaHRW42w
+ QGD35+eNo5Pvb3We5XRMlBdhFnj7Siggp4J8/PJ6MJvRyC+RIJPGtbdMB2/RxWunFLn87e5w
+ UgwR9jPMHAstuTR1yR23c4SIYoQ2fzkrRzuazsFNBF5v1x4BEADnlrbta2WL87BlEOotZUh0
+ zXANMrNV15WxexsirLetfqbs0AGCaTRNj+uWlTUDJRXOVIwzmF76Us3I2796+Od2ocNpLheZ
+ 7EIkq8budtLVd1c06qJ+GMraz51zfgSIazVInNMPk9T6fz0lembji5yEcNPNNBA4sHiFmXfo
+ IhepHFOBApjS0CiOPqowYxSTPe/DLcJ/LDwWpTi37doKPhBwlHev1BwVCbrLEIFjY0MLM0aT
+ jiBBlyLJaTqvE48gblonu2SGaNmGtkC3VoQUQFcVYDXtlL9CVbNo7BAt5gwPcNqEqkUL60Jh
+ FtvVSKyQh6gn7HHsyMtgltjZ3NKjv8S3yQd7zxvCn79tCKwoeNevsvoMq/bzlKxc9QiKaRPO
+ aDj3FtW7R/3XoKJBY8Hckyug6uc2qYWRpnuXc0as6S0wfek6gauExUttBKrtSbPPHiuTeNHt
+ NsT4+dyvaJtQKPBTbPHkXpTO8e1+YAg7kPj3aKFToE/dakIh8iqUHLNxywDAamRVn8Ha67WO
+ AEAA3iklJ49QQk2ZyS1RJ2Ul28ePFDZ3QSr9LoJiOBZv9XkbhXS164iRB7rBZk6ZRVgCz3V6
+ hhhjkipYvpJ/fpjXNsVL8jvel1mYNf0a46T4QQDQx4KQj0zXJbC2fFikAtu1AULktF4iEXEI
+ rSjFoqhd4euZ+QARAQABwsF8BBgBCAAmAhsMFiEE13oJz+7cK71TpwR0YAI/xNNJIHIFAmX4
+ qVAFCQ8NoDIACgkQYAI/xNNJIHKN4A/+Ine2Ii7JiuGITjJkcV6pgKlfwYdEs4eFD1pTRb/K
+ 5dprUz3QSLP41u9OJQ23HnESMvn31UENk9ffebNoW7WxZ/8cTQY0JY/cgTTrlNXtyAlGbR3/
+ 3Q/VBJptf04Er7I6TaKAmqWzdVeKTw33LljpkHp02vrbOdylb4JQG/SginLV9purGAFptYRO
+ 8JNa2J4FAQtQTrfOUjulOWMxy7XRkqK3QqLcPW79/CFn7q1yxamPkpoXUJq9/fVjlhk7P+da
+ NYQpe4WQQnktBY29SkFnvfIAwqIVU8ix5Oz8rghuCcAdR7lEJ7hCX9bR0EE05FOXdZy5FWL9
+ GHvFa/Opkq3DPmFl/0nt4HJqq1Nwrr+WR6d0414oo1n2hPEllge/6iD3ZYwptTvOFKEw/v0A
+ yqOoYSiKX9F7Ko7QO+VnYeVDsDDevKic2T/4GDpcSVd9ipiKxCQvUAzKUH7RUpqDTa+rYurm
+ zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
+ fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
+ ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
+In-Reply-To: <20250318-benevolent-bat-of-politeness-119c9a@krzk-bin>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 18, 2025 at 1:25=E2=80=AFAM Rob Herring (Arm) <robh@kernel.org>=
- wrote:
->
-> Use the newly added of_reserved_mem_region_to_resource() and
-> of_reserved_mem_region_count() functions to handle "memory-region"
-> properties.
->
-> The error handling is a bit different in some cases. Often
-> "memory-region" is optional, so failed lookup is not an error. But then
-> an error in of_reserved_mem_lookup() is treated as an error. However,
-> that distinction is not really important. Either the region is available
-> and usable or it is not. So now, it is just
-> of_reserved_mem_region_to_resource() which is checked for an error.
->
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+On 18/03/2025 09:49, Krzysztof Kozlowski wrote:
+> On Mon, Mar 17, 2025 at 09:26:05PM +0100, David Heidelberg wrote:
+>> The device and driver do support setting a custom MAC address.
+>>
+>> Fixes: c49e9e95f4d1 ("dt: binding: Add Qualcomm WCNSS control binding")
+>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>> ---
+>>   Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
+>> index fd6db0ca98eb7e56d7399f55c408844d5e782805..6938dc4ccc2175a65f6f53c6d073fb72cf498b2c 100644
+>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
+>> @@ -68,6 +68,8 @@ properties:
+>>             - const: tx
+>>             - const: rx
+>>   
+>> +      local-mac-address: true
+> 
+> Which referenced binding provides the definition of this property (its
+> type)? AFAIK, that's not a property of Wifi nodes.
 
-For IMX part:
+Good catch!
 
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Would you find reasonable to add the property to  wireless/ieee80211.yaml ?
+
+I feel like this could be "shared" between ethernet and ieee80211, but 
+have it twice in these two sounds acceptable to me.
+
+Thanks
+
+> 
+> Best regards,
+> Krzysztof
+> 
+
+-- 
+David Heidelberg
+
 
