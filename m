@@ -1,158 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-51761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BFD6A677A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 16:24:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 553EFA67818
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 16:40:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCF9D16F7E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 15:24:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A568F18837DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 15:39:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 326F120E715;
-	Tue, 18 Mar 2025 15:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8ADD320CCF1;
+	Tue, 18 Mar 2025 15:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="IfjN6P8n"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HYfbISoV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB3F42AA1;
-	Tue, 18 Mar 2025 15:24:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0441A01B9;
+	Tue, 18 Mar 2025 15:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742311478; cv=none; b=MXPzjYo5qrSzESV8jhSBMh6hjJ2ldAluVmDPkn/jPvEFZPZXQ2U3N9KLLR6MtfM9eLtf5h4XkFWPyS6lYbyIJw8ikxV/iGtsVk3tblNgR0Ay5D7BZvfdGbAsc0fB3Pw9WKBgNUowysulFxTHVK+2iYJlzoEIWBrljC1x+cp2CE0=
+	t=1742312350; cv=none; b=eTOQaRuQgPztSNx6yvfdLZLIYYGm29Qm6ywzD8dJQKjGTCcj4WU+RpZfVBodGrb8CPB+tdC/Jl3DgsnAVPBvifcbt4UALAke9D+nLKD6+u5QNWzFWTtWAXvxM1iYRlu7+ff/l9nMwmZ6VDTyH9WWfe4SnvowiJJuktY77oNQaN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742311478; c=relaxed/simple;
-	bh=IGxZDkJVEFGN27ZCCJQQO/TocqfLAnobnmaWTSSKWcU=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To; b=J1wbdI4JrcdvkuN3eerXz/8IHIKsJ8mdJ4fgBGeg+ymZZsnJEkdWmPj7rpjiEvy8qD6flmalZyaBiz0IPqflWQ94fs7SnxqZ0ppDMomLJji/L3L+BKSvflbNX5kSDE9Y65PnF87BEPgo8T32s29XBK9C9vQlg8H80pRSL8m1yXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=IfjN6P8n; arc=none smtp.client-ip=157.90.84.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
-Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
-	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
-	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id 1CF2B2FC0191;
-	Tue, 18 Mar 2025 16:24:28 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
-	s=default; t=1742311468;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KPWGE/rZHIEKEK/h/2ogN6Fs8enuzcyDS0RqOiIT7Hw=;
-	b=IfjN6P8nRlwvGssUtvFg7kBXfNnN1CcaSFsGYnKYm3FAmesq6Iko0+rOqtS6C2CKOwW4+w
-	zrqIPZDk+/ANffn/VUKIY5427VphN5zCOPKW8XPXDSUtOaHnMCMJGoJwlVtb7lj5S2uMd5
-	aAKVxae2iAsLLi+2tCd51AND2DLMcJY=
-Authentication-Results: mail.tuxedocomputers.com;
-	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=g.gottleuber@tuxedocomputers.com
-Content-Type: multipart/mixed; boundary="------------Etn3kshWBFJU2f2GsmLfP7v9"
-Message-ID: <129bf442-2505-41c8-9254-ad7cacefab89@tuxedocomputers.com>
-Date: Tue, 18 Mar 2025 16:24:27 +0100
+	s=arc-20240116; t=1742312350; c=relaxed/simple;
+	bh=0kemq06UaAWn160ZWm6TTiS+n+0E4GudvzSOQ/9u8V8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lvoERlcUr0a0Qijh8EnTcbuMec4zSLE41s8QhRjvwjjN0z7UX7lfF1g16NVB21fxqe4CmfSMNUa8QQD5gsLxJ7Ykzd9Pu38CRPlHbPCGX/ve2DoS5SZy/+qhKqeBSeIk6QOIQuoFo8cX76XhPkRSKenyNnF0Jk3hVZE6JiZvcM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HYfbISoV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52IAq2RP010333;
+	Tue, 18 Mar 2025 15:39:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Z+mdXc+A/PqwsfM8/2+Rx3Sr05A2HhjCFz/lCQ7qRxI=; b=HYfbISoVbMyFiAAU
+	9cdW1nbRYoOtJlMq6IIEsUTViw9FiPvZqLoXsgLEEkKKyX0nMSeO7cpMvlHJruM2
+	UbMiMuO4MYOGdFeBshW5oZq80AkhlEuWsYdgbunKDaKGYvuA7mREyURcRxRGkMe4
+	JIVPZbczVmls6NbuCqusy7gKfhARpSIMQMIxxvdludMk/P6ACW+4XQDgzJOsmsQy
+	g6sa1KIftpJzu6e8EoHjLy89ptwfmoPV+FtKl6r0UKz1npZEpCOE6aPQwZ5maHVU
+	3qnk/XlRkmYglVGl5cKr4trc1zOCzUxjuQBJBugOfXNBa73ArHS3P16XOl+kN36j
+	OLj1xw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exx32c5r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Mar 2025 15:39:05 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52IFd4f5026010
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Mar 2025 15:39:04 GMT
+Received: from [10.216.0.149] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 18 Mar
+ 2025 08:38:59 -0700
+Message-ID: <454bd991-f610-0e9b-82a2-ab1b17498105@quicinc.com>
+Date: Tue, 18 Mar 2025 21:08:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Add device tree for TUXEDO Elite 14
- Gen1
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Georg Gottleuber <ggo@tuxedocomputers.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- wse@tuxedocomputers.com, cs@tuxedocomputers.com
-References: <57589859-fec1-4875-9127-d1f99e40a827@tuxedocomputers.com>
- <5e72992c-170c-48b9-8df4-2caf31c4ae44@oss.qualcomm.com>
- <5hvghahezqms6x4pi3acgaujyhiql6mzl2xhzph5phhki2yiyq@oi3xjatj7r64>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sa8775p: add support for video node
 Content-Language: en-US
-From: Georg Gottleuber <g.gottleuber@tuxedocomputers.com>
-In-Reply-To: <5hvghahezqms6x4pi3acgaujyhiql6mzl2xhzph5phhki2yiyq@oi3xjatj7r64>
-
-This is a multi-part message in MIME format.
---------------Etn3kshWBFJU2f2GsmLfP7v9
-Content-Type: text/plain; charset=UTF-8
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dikshita Agarwal
+	<quic_dikshita@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com>
+ <20250311-dtbinding-v1-3-5c807d33f7ae@quicinc.com>
+ <3ec71075-b1ef-4366-b595-80fe41cd1e13@oss.qualcomm.com>
+ <8f7c1c08-6776-968c-530e-b640ded940b3@quicinc.com>
+ <9940290b-6b97-4339-848d-ea95a365f74c@oss.qualcomm.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <9940290b-6b97-4339-848d-ea95a365f74c@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=b+uy4sGx c=1 sm=1 tr=0 ts=67d99399 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=MbanHTuMWJ-pqx4aQj4A:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: MoI_QtBZ8qvV0XXbs8o9obbfo6YeNN96
+X-Proofpoint-GUID: MoI_QtBZ8qvV0XXbs8o9obbfo6YeNN96
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-18_07,2025-03-17_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ bulkscore=0 clxscore=1015 mlxlogscore=999 priorityscore=1501 mlxscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503180115
 
-Am 07.03.25 um 07:45 schrieb Dmitry Baryshkov:
-[...]
->>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
->>> new file mode 100644
->>> index 000000000000..86bdec4a2dd8
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+
+On 3/18/2025 8:03 PM, Konrad Dybcio wrote:
+> On 3/18/25 3:24 PM, Vikash Garodia wrote:
 >>
->>> +&gpu {
->>> +       status = "okay";
->>> +
->>> +       zap-shader {
->>> +               firmware-name = "qcom/a740_zap.mbn";
->>
->> Are the laptop's OEM key/security fuses not blown?
+>> On 3/15/2025 7:13 PM, Konrad Dybcio wrote:
+>>> On 3/11/25 1:03 PM, Vikash Garodia wrote:
+>>>> Video node enables video on Qualcomm SA8775P platform.
+>>>>
+>>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 67 +++++++++++++++++++++++++++++++++++
+>>>>  1 file changed, 67 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>>>> index 3394ae2d13003417a15e64c9e47833725ec779e6..09db8e2eb578f1cada0f4a15e3f844dc097bd46d 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>>>> @@ -10,6 +10,7 @@
+>>>>  #include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
+>>>>  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
+>>>>  #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
+>>>> +#include <dt-bindings/clock/qcom,sa8775p-videocc.h>
+>>>>  #include <dt-bindings/dma/qcom-gpi.h>
+>>>>  #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
+>>>>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>>>> @@ -3783,6 +3784,72 @@ llcc: system-cache-controller@9200000 {
+>>>>  			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
+>>>>  		};
+>>>>  
+>>>> +		iris: video-codec@aa00000 {
+>>>> +			compatible = "qcom,sa8775p-iris";
+>>>> +
+>>>> +			reg = <0 0x0aa00000 0 0xf0000>;
+>>>> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+>>>> +
+>>>> +			power-domains = <&videocc VIDEO_CC_MVS0C_GDSC>,
+>>>> +					<&videocc VIDEO_CC_MVS0_GDSC>,
+>>>> +					<&rpmhpd SA8775P_MXC>,
+>>>> +					<&rpmhpd SA8775P_MMCX>;
+>>>> +			power-domain-names = "venus",
+>>>> +					     "vcodec0",
+>>>> +					     "mx",
+>>>> +					     "mmcx";
+>>>> +			operating-points-v2 = <&iris_opp_table>;
+>>>> +
+>>>> +			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
+>>>> +				 <&videocc VIDEO_CC_MVS0C_CLK>,
+>>>> +				 <&videocc VIDEO_CC_MVS0_CLK>;
+>>>> +			clock-names = "iface",
+>>>> +				      "core",
+>>>> +				      "vcodec0_core";
+>>>> +
+>>>> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+>>>> +					&config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ALWAYS>,
+>>>
+>>> This path should use QCOM_ICC_TAG_ACTIVE_ONLY on both endpoints
+>> What is the advantage of "ALWAYS" vs "ACTIVE_ONLY". Thinking of a possibility of
+>> APSS power collapsed, while video hardware is processing a frame ?
 > 
-> Can this laptop use "qcom/x1e80100/gen70500_zap.mbn" which is already a
-> part of linux-firmware?
-
-It seems so.
-
-Because there were no logs about loading zap.mbn, I activated dyndbg
-(dyndbg="file drivers/base/firmware_loader/main.c +fmp"). See attachment
-for dmesg output. But GUI freezes after sddm login.
-
-Best regards,
-Georg
---------------Etn3kshWBFJU2f2GsmLfP7v9
-Content-Type: text/x-log; charset=UTF-8; name="dmesg_loading_zap.log"
-Content-Disposition: attachment; filename="dmesg_loading_zap.log"
-Content-Transfer-Encoding: base64
-
-WyAgIDM4LjU4NTY5MV0gZmlybXdhcmVfY2xhc3M6ZndfbG9nX2Zpcm13YXJlX2luZm86IG1z
-bV9kcHUgYWUwMTAwMC5kaXNwbGF5LWNvbnRyb2xsZXI6IExvYWRlZCBGVzogcWNvbS9nZW43
-MDUwMF9zcWUuZncsIHNoYTI1NjogMDVhZTg5ZTZkZWE2MjI2OGNlYzNmNGFiYjVkN2Q2ZGIy
-Yzk1MjcwZmYxMDVmZDA1NmY3NzI2MmUzOWQyZTUyNwpbICAgMzguNTg1NjkzXSBtc21fZHB1
-IGFlMDEwMDAuZGlzcGxheS1jb250cm9sbGVyOiBbZHJtOmFkcmVub19yZXF1ZXN0X2Z3IFtt
-c21dXSBsb2FkZWQgcWNvbS9nZW43MDUwMF9zcWUuZncgZnJvbSBuZXcgbG9jYXRpb24KWyAg
-IDM4LjU4NTcwOF0gZmlybXdhcmVfY2xhc3M6X19hbGxvY2F0ZV9md19wcml2OiBmaXJtd2Fy
-ZV9jbGFzczogX19hbGxvY2F0ZV9md19wcml2OiBmdy1xY29tL2dlbjcwNTAwX2dtdS5iaW4g
-ZndfcHJpdj0wMDAwMDAwMDI1MTY3Y2FiClsgICAzOC41ODU4MTZdIGZpcm13YXJlX2NsYXNz
-OmZ3X2dldF9maWxlc3lzdGVtX2Zpcm13YXJlOiBtc21fZHB1IGFlMDEwMDAuZGlzcGxheS1j
-b250cm9sbGVyOiBMb2FkaW5nIGZpcm13YXJlIGZyb20gL2xpYi9maXJtd2FyZS9xY29tL2dl
-bjcwNTAwX2dtdS5iaW4KWyAgIDM4LjU4NTgxOF0gZmlybXdhcmVfY2xhc3M6ZndfZ2V0X2Zp
-bGVzeXN0ZW1fZmlybXdhcmU6IG1zbV9kcHUgYWUwMTAwMC5kaXNwbGF5LWNvbnRyb2xsZXI6
-IGRpcmVjdC1sb2FkaW5nIHFjb20vZ2VuNzA1MDBfZ211LmJpbgpbICAgMzguNTg1ODE5XSBm
-aXJtd2FyZV9jbGFzczpmd19zZXRfcGFnZV9kYXRhOiBmaXJtd2FyZV9jbGFzczogZndfc2V0
-X3BhZ2VfZGF0YTogZnctcWNvbS9nZW43MDUwMF9nbXUuYmluIGZ3X3ByaXY9MDAwMDAwMDAy
-NTE2N2NhYiBkYXRhPTAwMDAwMDAwZTkxNzg1YTkgc2l6ZT04MTMxMgpbICAgMzguNTg1ODU2
-XSBmaXJtd2FyZV9jbGFzczpmd19sb2dfZmlybXdhcmVfaW5mbzogbXNtX2RwdSBhZTAxMDAw
-LmRpc3BsYXktY29udHJvbGxlcjogTG9hZGVkIEZXOiBxY29tL2dlbjcwNTAwX2dtdS5iaW4s
-IHNoYTI1NjogNWRmYmEyNDdkNTQ4Y2FiY2I4OTJmZmE3MTZlOGRjODJhMzQ1ZmQ1NGI1ZGJh
-ZTQ2YmE1MjMyMzBlN2FlMzdkZApbICAgMzguNTg1ODU4XSBtc21fZHB1IGFlMDEwMDAuZGlz
-cGxheS1jb250cm9sbGVyOiBbZHJtOmFkcmVub19yZXF1ZXN0X2Z3IFttc21dXSBsb2FkZWQg
-cWNvbS9nZW43MDUwMF9nbXUuYmluIGZyb20gbmV3IGxvY2F0aW9uClsgICAzOC41ODg2NzFd
-IFtkcm1dIExvYWRlZCBHTVUgZmlybXdhcmUgdjQuMy4xNwpbICAgMzguNjUzMTU0XSBmaXJt
-d2FyZV9jbGFzczpfX2FsbG9jYXRlX2Z3X3ByaXY6IGZpcm13YXJlX2NsYXNzOiBfX2FsbG9j
-YXRlX2Z3X3ByaXY6IGZ3LXFjb20veDFlODAxMDAvZ2VuNzA1MDBfemFwLm1ibiBmd19wcml2
-PTAwMDAwMDAwMjNkNGJkYmEKWyAgIDM4LjY1MzMyOV0gZmlybXdhcmVfY2xhc3M6ZndfZ2V0
-X2ZpbGVzeXN0ZW1fZmlybXdhcmU6IG1zbV9kcHUgYWUwMTAwMC5kaXNwbGF5LWNvbnRyb2xs
-ZXI6IExvYWRpbmcgZmlybXdhcmUgZnJvbSAvbGliL2Zpcm13YXJlL3Fjb20veDFlODAxMDAv
-Z2VuNzA1MDBfemFwLm1ibgpbICAgMzguNjUzMzMxXSBmaXJtd2FyZV9jbGFzczpmd19nZXRf
-ZmlsZXN5c3RlbV9maXJtd2FyZTogbXNtX2RwdSBhZTAxMDAwLmRpc3BsYXktY29udHJvbGxl
-cjogZGlyZWN0LWxvYWRpbmcgcWNvbS94MWU4MDEwMC9nZW43MDUwMF96YXAubWJuClsgICAz
-OC42NTMzMzNdIGZpcm13YXJlX2NsYXNzOmZ3X3NldF9wYWdlX2RhdGE6IGZpcm13YXJlX2Ns
-YXNzOiBmd19zZXRfcGFnZV9kYXRhOiBmdy1xY29tL3gxZTgwMTAwL2dlbjcwNTAwX3phcC5t
-Ym4gZndfcHJpdj0wMDAwMDAwMDIzZDRiZGJhIGRhdGE9MDAwMDAwMDAyNzY4YjVmOSBzaXpl
-PTEyMDg4ClsgICAzOC42NTMzNDRdIGZpcm13YXJlX2NsYXNzOmZ3X2xvZ19maXJtd2FyZV9p
-bmZvOiBtc21fZHB1IGFlMDEwMDAuZGlzcGxheS1jb250cm9sbGVyOiBMb2FkZWQgRlc6IHFj
-b20veDFlODAxMDAvZ2VuNzA1MDBfemFwLm1ibiwgc2hhMjU2OiBhYmFlZjUyMjI4NTZjZTk3
-NjAxNDUxMmQ0MGY4N2Q2M2IzODBhNjA0ZGJiMDk1YzQ2OWYwMmZlYjkyNGUwYjI2ClsgICAz
-OC42NTc3ODldIGZpcm13YXJlX2NsYXNzOl9fZnJlZV9md19wcml2OiBmaXJtd2FyZV9jbGFz
-czogX19mcmVlX2Z3X3ByaXY6IGZ3LXFjb20veDFlODAxMDAvZ2VuNzA1MDBfemFwLm1ibiBm
-d19wcml2PTAwMDAwMDAwMjNkNGJkYmEgZGF0YT0wMDAwMDAwMDI3NjhiNWY5IHNpemU9MTIw
-ODgK
-
---------------Etn3kshWBFJU2f2GsmLfP7v9--
+> That's totally okay, I'm requesting ACTIVE_ONLY just on the cpu-cfg path,
+> which must not be used if APSS if offline anyway
+Agree on the CFG path. Will update in next version.
+> 
+> Konrad
 
