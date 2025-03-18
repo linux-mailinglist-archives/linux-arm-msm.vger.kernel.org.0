@@ -1,184 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-51704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFD5DA67140
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 11:28:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 580D3A67178
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 11:37:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D44A4189C163
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 10:28:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03D104220C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 10:37:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9AB8207E0E;
-	Tue, 18 Mar 2025 10:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1A58207E0E;
+	Tue, 18 Mar 2025 10:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CrzOBCL9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MpO6WvZ7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA9319F424
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 10:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFFE20764C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 10:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742293701; cv=none; b=E4n7JbBUP9ogmEHoVc/eWMi3ytaYXNExbJusiPMEh4+tY69ls12usLH19+MM03f/FMF6XzYmkiq3EhfmlityDFOBNR7O+x3brMNKcAw6xj4j6twcN+hcNB+R4dWbNTFtti+Gk53tu8Tyfw3i6M8AVBqrUck2GBLLWNrzSPkBhr0=
+	t=1742294263; cv=none; b=dU1zxnSzyOh/2WIqmcrHQlunLaFklEyohwn2E0H0WiXzWjbaHm2VwxtaqrrWzNlANG0X4V8gR+PSpZ1ZcM7Iurju+Yo3KHHQdk/gmv+JiYOHDrvBnNRHgxQ6SAx764N4NTpcS0eQ3WGQbODQpoNWLRi36//4VAyyDQLljZkd14w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742293701; c=relaxed/simple;
-	bh=YFD+5zyoQYIS6DbLnJmF31CAEz7Hg2/K2iCvbLFbfcs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E5CZaEjQy3AJ2QlcxK0RcJ0nsfuJx/zGJi4WPFqlGeeGUoRaBM7DD8NznjeMzisMITB22Fdd6uEExvtYjnKsireLoTfKL9wMl2qVc4sokz23RJKqB/GknOwKy3tnM1Wqr2FTVzpppjE6HYp0HhIAsZxFWn1oH8QwQ27QXndwkvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CrzOBCL9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52I19lYq023354
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 10:28:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/ffeju9dab3SjXkQBFykek/FOXIdiqaUl5qwjSDR5rA=; b=CrzOBCL9BxGuCYdy
-	PpGccRQNdJtgOuoSTI/Hxt7LPk/WA9gBrjFthfC2CSnlkedNUFOAIQeylhFYkELM
-	qSU4ZieuRaJ0KBbwkUh9UWU7fGBLzaMciBFljU47noP9N8wlo1/Y48/AZb+UEsxa
-	KH+nk9N6ls9ub7jHZ6vfeGP4lbFMfQ+lVXB+dhZLdMMfVoV2+nLclgns145fmsqD
-	Vr6o+a2+X5RVhDsAshIHwQH9OO8si0E3pFSLpD5/zf7D+UtJ3cj83WdoxlrEdWpA
-	nx/ZAdBVvKxM6qky/sSXxpijIGy0HjvKr+9aJX4k4bZqSDPW8Y/G/0h4PyUGJnJh
-	4gW9jw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exwx1dek-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 10:28:19 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-46e78a271d3so11104981cf.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 03:28:18 -0700 (PDT)
+	s=arc-20240116; t=1742294263; c=relaxed/simple;
+	bh=OIwqaSUyDLr1pGjfoJLDWzA4eujmiLowScIT7EzB5CY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=in2YPywHeuFFtyuPjVFb10vSgRrX9EUyKJxpVzDlxU+w474hUoOPuQQp/6oD07GkizYdJojJQNVWBKOXIalbbHeYSaBqxrtEYEHDOYu7SlVXdJ+U5IuAJR1Xeh4r8EhnLoigvqcygJucLNlGUYBaqbbhTdiS4isUYtfLXxhHe4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MpO6WvZ7; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2239c066347so112400865ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 03:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1742294257; x=1742899057; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QfGzvG173s2JG+1ZE7f0d1grE/Sw6nJFtm4+MKiVNSo=;
+        b=MpO6WvZ7z2+CMcjKsr9vFIqdCPCMB3FGDB+gRr6p7L3IPEPC8iXRcSF8oWPNLk6POR
+         DxYOVwv0OSoH/WMq8y2eiH7wZBs9ppWuWPpUda0sFPcfifcbM/dKynl7xNCmI/JYu7Sm
+         QWI2eqcm0XrHP6Jq16cOven4AFyhn2PHF9WvQFMtyvEDP8HunrnJLR3n/0VJV+l8S9FA
+         m+sGqpRfU1zRUXt8QOQumSZY+9Ow5FuB1I1DGADd8gxv3QMAtZLfJU05VcHp5PajrSAZ
+         GEwnXiMwqVsm9Du+Uen+EGWHYsSak29owA4LTVs/45j9NvLFA7dk15bLy1Ep9X44YEgF
+         uq8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742293697; x=1742898497;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1742294257; x=1742899057;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/ffeju9dab3SjXkQBFykek/FOXIdiqaUl5qwjSDR5rA=;
-        b=ht2J5lEkH7Lvw/nC6uA0hRkUpLTFLpLgArkpN69yj4V+mb4ZggeZSqvHO1fbv2uxBa
-         3E101+y4HBCIrLHsnaRfOha7zBT4WRTxnTsR+s0OhZWHnp+XUAbgREXL9r9t9OIXsSud
-         mqpvnOIKplDfugJoNamPq9umkhDbsuVaLCqQ243SHHhzGe51iBuH/hBNuRvufVr7DvnA
-         S3c2R8KapiMXKLWWS7qY7xTPOyuS0iyk5Odpt48CZACw7fGSiYs8w0EF4U4GNkLs+RXy
-         svFvQS0hEWnc/LOWlVV6CepVcZKZqCyaSqOaJmmCV4lZsJ4JQeYi0kCXIaGV6OgweOZt
-         QrrQ==
-X-Gm-Message-State: AOJu0Yx3O+OG6qJWjA8wf7aQtfJWHJ8ERYk2p4UNJbJHvyb+iP6pyun9
-	OFA8GUb2NZ8z3c+iLgYTZ6bfiJHhJTk899K3BSNuEYawA7kJ3sxupG1xBUq6Wz8EXP1v2Nf3wP0
-	imtmI9fFmnNPtW1QTiq/DhZFyV2UrRJB/Dmx+ICKc4HYtRa6fShZVfVd0Ulg5jXcq
-X-Gm-Gg: ASbGncvAF2yF9pkTURIO0uoGRyprQDRP24wlieod/dEE0vPaGwHcrNdeb0HwT9Hxu1h
-	eArGcc6G4aNsGaRsd/612wRI8QghgzNgtdTorZav74vnv2EqtqLCyN3SsUYrj8FnjT3V8DY1yfJ
-	8ps9Z0nwawS7ACq1Hvz41lKEABvOz6I3ino7lMuFMRdOXHRUPCZM41e4dJ3ZKgoKhwLmcj/k0FX
-	T1Z9iASiD3pKmk0t09F+L5IrAJcXlTvgLbJoYrCvcPOv6PhhNghQE/3dbHPNMFV+I3Y2BHsSZ9f
-	rBPh+FmfUz/w2sRJIIZrLe9CBI8qi6TFxU03omhlfAXSrA69Mv4OVkVKEYFTJl7oSZwX1A==
-X-Received: by 2002:a05:6214:252a:b0:6e4:4034:5ae8 with SMTP id 6a1803df08f44-6eaeaa5893emr88168106d6.5.1742293697531;
-        Tue, 18 Mar 2025 03:28:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHbWrHKNAmWpMHc+BHfClrKrXHiIT6z2F6YxU0JPnsWruAuabzkJG8LsnO7K1C+4bw9HqrCrw==
-X-Received: by 2002:a05:6214:252a:b0:6e4:4034:5ae8 with SMTP id 6a1803df08f44-6eaeaa5893emr88167666d6.5.1742293697087;
-        Tue, 18 Mar 2025 03:28:17 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac31485d046sm814425666b.83.2025.03.18.03.28.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Mar 2025 03:28:16 -0700 (PDT)
-Message-ID: <f1848598-c8d7-4c17-8a40-3a6828c32dbe@oss.qualcomm.com>
-Date: Tue, 18 Mar 2025 11:28:12 +0100
+        bh=QfGzvG173s2JG+1ZE7f0d1grE/Sw6nJFtm4+MKiVNSo=;
+        b=hUuyUYQjSrFyielPE4zaMwp8zGVGE9MEuG5LWa/JKUT7FbRFT3oABsZeCIfIdTx8Lr
+         0SuzKRxzr1zfJaU45JJelRnyzBGKCcgYcPmGvcFPz3oN92lDi16SdSzqVUlFvkkKCLDY
+         jFeiGPFdPGgl8ubhcmSUkSgzO7fpQHDqt0U0HPwZ9usvN6odLOAC6wFUJN7mYRfz85Fe
+         j6D54vwTDM1OqRj7joTbbLFgW+DtW8NwQxGeJ5UyOaNs/RpFcwIrziEHSAUWMHjCz3f/
+         BC9/yeYl6S2ltEsu71l6yKXedIhvbUJe0a9P1u0QlaPYiu5cbibAwdrb3lClsnNvg9WN
+         4ZKA==
+X-Forwarded-Encrypted: i=1; AJvYcCWwCskxRy6sBWrNmOvAKcbiFUIJvqtfkXN6/N4b62pe69D898vlYfCotCz64lg/SIVASQHet89U6GPzN2Xp@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJGJETXdzIo5g+Eg+ch8wAtWSnvqnd9q7uXyB/RsboudhBeJZf
+	WfzMoxRD1Spfsf0SKGEuHpocbxgfnO0PGS+VaL2MtlRJ/FCtEs/nUcmYBFw0Fg==
+X-Gm-Gg: ASbGnctUt1qX97Q95Drqbpwx0cV91jjXqqZY6zxq0M/pQi1iozwu9PL/qBOFDG2TOKI
+	WVRyioKF5CwimcV65w2doLVX6QJhM7NxXUDTtPurtS1wi79dBtBF4/STFTxs98vzOm9JoaxbTbY
+	WFTLSrUZX4QFd30yNn8Tt8nLatmilCboePGlNVAzTDWOoJ1zG2tP1fOpQ5lqFukhocNDNpw80Oh
+	1nb3Z0hnmOiov/xf0/IuOlpnRWlUMC2W5FFgt8oldlbCE1FHKbIvOS8RrLfRxK7mgPQopKmoioe
+	qFMB8+TSOi+KagypOJglGqOl4Y7aF6sPueObt93vpKSe3wuDexhST4nI
+X-Google-Smtp-Source: AGHT+IHgOk9NfxTZL90KwqvSB+P0zUVkeYvXxUz9lNWO2UX0U80pQQ0rDKVAKDBxDkeAH+rn35QsTA==
+X-Received: by 2002:a17:902:e745:b0:224:160d:3f5b with SMTP id d9443c01a7336-225e0b2a55dmr200860825ad.49.1742294257634;
+        Tue, 18 Mar 2025 03:37:37 -0700 (PDT)
+Received: from thinkpad ([120.56.195.170])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c68a7f87sm91406475ad.81.2025.03.18.03.37.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Mar 2025 03:37:37 -0700 (PDT)
+Date: Tue, 18 Mar 2025 16:07:28 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Cc: quic_carlv@quicinc.com, quic_thanson@quicinc.com, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: Re: [PATCH] bus: mhi: host: Address conflict between power_up and
+ syserr
+Message-ID: <20250318103728.enrcf6mwuxznhgbq@thinkpad>
+References: <20250306173226.857335-1-jeff.hugo@oss.qualcomm.com>
+ <20250314054651.iu6t3q3o5za2zrjs@thinkpad>
+ <6df3f39d-d736-4142-8123-b9afbe8a9848@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] dt-bindings: arm: qcom,coresight-static-replicator:
- add optional clocks
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
- <mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Leo Yan <leo.yan@linux.dev>, Kumar Gala <galak@codeaurora.org>,
-        Andy Gross <agross@codeaurora.org>,
-        "Ivan T. Ivanov" <ivan.ivanov@linaro.org>,
-        Andy Gross
- <andy.gross@linaro.org>, Georgi Djakov <djakov@kernel.org>,
-        David Heidelberg <david@ixit.cz>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20250317-fix-nexus-4-v1-0-655c52e2ad97@oss.qualcomm.com>
- <20250317-fix-nexus-4-v1-4-655c52e2ad97@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250317-fix-nexus-4-v1-4-655c52e2ad97@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: vE-_rSjG6UQv101iYFXZJjLZzXZlw2J7
-X-Authority-Analysis: v=2.4 cv=INICChvG c=1 sm=1 tr=0 ts=67d94ac3 cx=c_pps a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=iEn_WmSgXS-yHfNkfEQA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: vE-_rSjG6UQv101iYFXZJjLZzXZlw2J7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-18_05,2025-03-17_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 clxscore=1015
- mlxlogscore=999 impostorscore=0 phishscore=0 mlxscore=0 spamscore=0
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503180076
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6df3f39d-d736-4142-8123-b9afbe8a9848@oss.qualcomm.com>
 
-On 3/17/25 6:44 PM, Dmitry Baryshkov wrote:
-> As most other CoreSight devices the replicator can use either of the
-> optional clocks (or both). Document those optional clocks in the schema.
+On Fri, Mar 14, 2025 at 11:47:43AM -0600, Jeff Hugo wrote:
+> On 3/13/2025 11:46 PM, Manivannan Sadhasivam wrote:
+> > On Thu, Mar 06, 2025 at 10:32:26AM -0700, Jeff Hugo wrote:
+> > > From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> > > 
+> > > mhi_async_power_up() enables IRQs, at which point we can receive a syserr
+> > > notification from the device.  The syserr notification queues a work item
+> > > that cannot execute until the pm_mutex is released.
+> > > 
+> > > If we receive a syserr notification at the right time during
+> > > mhi_async_power_up(), we will fail to initialize the device.
+> > > 
+> > > The syserr work item will be pending.  If mhi_async_power_up() detects the
+> > > syserr, it will handle it.  If the device is in PBL, then the PBL state
+> > > transition event will be queued, resulting in a work item after the
+> > > pending syserr work item.  Once mhi_async_power_up() releases the pm_mutex
+> > > the syserr work item can run.  It will blindly attempt to reset the MHI
+> > > state machine, which is the recovery action for syserr.  PBL/SBL are not
+> > > interrupt driven and will ignore the MHI Reset unless syserr is actively
+> > > advertised.  This will cause the syserr work item to timeout waiting for
+> > > Reset to be cleared, and will leave the host state in syserr processing.
+> > > The PBL transition work item will then run, and immediately fail because
+> > > syserr processing is not a valid state for PBL transition.
+> > > 
+> > > This leaves the device uninitialized.
+> > > 
+> > > This issue has a fairly unique signature in the kernel log:
+> > > 
+> > > [  909.803598] mhi mhi3: Requested to power ON
+> > > [  909.803775] Qualcomm Cloud AI 100 0000:36:00.0: Fatal error received from device.  Attempting to recover
+> > > [  909.803945] mhi mhi3: Power on setup success
+> > > [  911.808444] mhi mhi3: Device failed to exit MHI Reset state
+> > > [  911.808448] mhi mhi3: Device MHI is not in valid state
+> > > 
+> > > We cannot remove the syserr handling from mhi_async_power_up() because the
+> > > device may be in the syserr state, but we missed the notification as the
+> > > irq was fired before irqs were enabled.  We also can't queue the syserr
+> > > work item from mhi_async_power_up() if syserr is detected because that may
+> > > result in a duplicate work item, and cause the same issue since the
+> > > duplicate item will blindly issue MHI Reset even if syserr is no longer
+> > > active.
+> > > 
+> > > Instead, add a check in the syserr work item to make sure that the device
+> > > is in the syserr state if the device is in the PBL or SBL EEs.
+> > > 
+> > 
+> > Don't we need a Fixes tag?
 > 
-> Fixes: 3c15fddf3121 ("dt-bindings: arm: Convert CoreSight bindings to DT schema")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  .../bindings/arm/arm,coresight-static-replicator.yaml          | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+> I don't recall seeing documentation saying that Fixes tags are mandatory.
+
+It is the standard practice to add the Fixes tag if the bug was introduced by a
+specific commit. But...
+
+> Yes, I agree, they are helpful and should exist.
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
-> index a6f793ea03b6c193fc0ff72a45e0249a63a2ba3c..56e64067ed3d63c5e293a0840858f13428bacb45 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
-> @@ -30,6 +30,16 @@ properties:
->    power-domains:
->      maxItems: 1
->  
-> +  clocks:
-> +    minItems: 1
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    minItems: 1
-> +    enum:
-
-I believe this should either be items: if 0/1/2 is allowed, or
-minItems should be dropped if 0/1 is allowed, but the former seems
-to be the intention
-
-Konrad
-
-> +      - apb_pclk
-> +      - atclk
-> +
->    in-ports:
->      $ref: /schemas/graph.yaml#/properties/ports
->      additionalProperties: false
+> I am finding it difficult to point to a single commit that I can say
+> introduced this issue. I believe we started seeing it with "bus: mhi: host:
+> Add MHI_PM_SYS_ERR_FAIL state", but I don't think that commit actually
+> introduced this issue. It seems like a coincidence that the issue was first
+> observed with that commit.  I suspect that this issue has been a problem
+> since the introduction of MHI, but I am not confident since the relevant
+> code paths have radically changed since then.
 > 
+> Given I don't feel confident in identifying a commit, I felt it was perhaps
+> better to not list one at all.
+> 
+> Do you have any suggestions?
+> 
+
+Fine with me. In that case, it would have been helpful if mentioned in the
+changelog area.
+
+> > 
+> > > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> > > Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+> > > ---
+> > >   drivers/bus/mhi/host/pm.c | 18 +++++++++++++++++-
+> > >   1 file changed, 17 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> > > index 11c0e751f223..3dff0f932726 100644
+> > > --- a/drivers/bus/mhi/host/pm.c
+> > > +++ b/drivers/bus/mhi/host/pm.c
+> > > @@ -602,6 +602,7 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
+> > >   	struct mhi_cmd *mhi_cmd;
+> > >   	struct mhi_event_ctxt *er_ctxt;
+> > >   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> > > +	bool reset_device = false;
+> > >   	int ret, i;
+> > >   	dev_dbg(dev, "Transitioning from PM state: %s to: %s\n",
+> > > @@ -630,8 +631,23 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
+> > >   	/* Wake up threads waiting for state transition */
+> > >   	wake_up_all(&mhi_cntrl->state_event);
+> > > -	/* Trigger MHI RESET so that the device will not access host memory */
+> > > +	/*
+> > > +	 * Trigger MHI RESET so that the device will not access host memory.
+> > 
+> > Move this comment before 'if (reset_device)'.
+> 
+> I'll move it, but seems a bit weird to have the explanation for the logic of
+> the conditionals (particularly the ones added by this patch) after them in
+> the code.
+> 
+
+I thought that the comment is better placed where we really reset the device.
+
+> > > +	 * If the device is in PBL or SBL, it will only respond to RESET if
+> > > +	 * the device is in SYSERR state.  SYSERR might already be cleared
+> > > +	 * at this point.
+> > > +	 */
+> > >   	if (MHI_REG_ACCESS_VALID(prev_state)) {
+> > > +		enum mhi_state cur_statemachine_state = mhi_get_mhi_state(mhi_cntrl);
+> > 
+> > s/cur_statemachine_state/cur_state
+> 
+> We already have a cur_state in the function, that is generally used for Host
+> state and here we are reading the Device state. I felt that avoiding mixing
+> the meanings was perhaps in the interest of the reader, but reusing
+> cur_state appears possible.
+> 
+
+It should be fine IMO.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
