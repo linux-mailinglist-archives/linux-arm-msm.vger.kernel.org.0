@@ -1,160 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-51753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55DF1A67700
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 15:57:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A013BA676FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 15:57:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA6BB19A640B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 14:53:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9D1DC7A230E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 14:56:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F56F20D50A;
-	Tue, 18 Mar 2025 14:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32CF620D4E7;
+	Tue, 18 Mar 2025 14:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y4KcUKzN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wbxAswXQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD4620E01E;
-	Tue, 18 Mar 2025 14:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9580209F27
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 14:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742309562; cv=none; b=Qlmnh5mij8mtrB11WbtJjNFII034UBbO0fL894cyUxEq/D4H0ZWQ8Bi53EF3tMHWrLq5o/XbVXo0GXiSpbP5TPKnQNkUMVq+gSaaMqgAgaUq0wBMdWT7vSpxxZrxEJwCyACAYtqgrJpABf1aB0WS7+8AjrR/z3/HsKF7vjjKWX4=
+	t=1742309828; cv=none; b=APa/GnUxk8txrykDJzrViDifowFNK8zPQvcgy6VHOXdrB+jwOv+CUGWrfOt2j3dblkrG8l2sLzNmvjPCpIsxC9uX7iDw6qloJzw5FOSXBfSYpH2wNcjiDRDhaMlPEPyvT4YYzShfvyuzxGtnjRCyojDFIc6jZmSjmhs1lVhNvKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742309562; c=relaxed/simple;
-	bh=pHBe+sI4FwoiGUFSRZcrNRgdkaL4FBzEE/Aou9VB2V8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
-	 In-Reply-To:Content-Type; b=eKd11C9oPNG88i7k2jhbUx11zrTYrpo7z0tR2+VP7SI+lcbQlBCpbe3mcYOazu2e25W4DFuc8T5kdS526fxH8B6QLDd7xBK+Prr+Q7YU+569LcwOX+OuLbyIvkItVMvGBWOg1jcXilsXeBHmtFaCz7+KKsOzMFNy05nLm1bIeRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y4KcUKzN; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3912d2c89ecso5292149f8f.2;
-        Tue, 18 Mar 2025 07:52:39 -0700 (PDT)
+	s=arc-20240116; t=1742309828; c=relaxed/simple;
+	bh=N+sFJXUfBMA0CoJhUPLBMoIsImXXvb0Qq+jGqBryElU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kD7IqggPsACiWcYxS2V/I5Fz3Ae1G+XjaRukIPMVzu/uLShQ6R1Ea+yigtJpPg2RL4I9hhyvWdafeog+rAh1pLKtZIB5Qb7FkCuwNe47ijR0Moj5+AZnlEmvJwa7oQgXCL2740IpTqRZGKXmM4e2rsAej+mXLBpCMq2NS1EhA9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wbxAswXQ; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ac25313ea37so1127460266b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 07:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742309558; x=1742914358; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:from:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P52+0oCRnVmD6adG2x2Zy/twFor9rxgj0GU1RvsmWOw=;
-        b=Y4KcUKzNkiyq7ARGZrNrnrOrLSqB7cQ2NfdtoUf7TOEG4hAF9DFKvcoTijVPPuyGJf
-         boWvU4CJL6H1ODldZtsY9+DkWyj1UZe3Xs7kPwYawV1TiRxM1cvmuFoAX3wX75X6QXkI
-         NtD/8vz1Upu15C/xJ+9CufeeysSDSyxL2Ep87llZ1YX5tS5rOTNIQ8Wccj+kYabdxkUm
-         xuwDDInKy5gOtYpvzUWxAw7EmlrW/97jn6e1t9o0qoleiYU9HUzKuFw2YLEfJgOcncIV
-         dOPkvWA2sAjE1XIav3dV4v5Viymck0OcmPkwutfnzWInW9gnDyieJ4dfQvHUDa43MhmV
-         goXA==
+        d=linaro.org; s=google; t=1742309824; x=1742914624; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1VVVI1GriwyXPsCwD+FNmlh5SAMatdc1NEjAoi7sx58=;
+        b=wbxAswXQ6h9hvVyqLzZGZhMpub+q7TrY5QLHz2CEyeAxIkiuC6eAN6HIKqth4g/gpZ
+         Xfh9Z1WDhZd0PDV2knkgsYN9LPIyZ06/dRBtUmG9YjRbjXS7NI+1IITkdTJH65/gKNr6
+         Tk5SzVktBHM3hlIuCEfSjkweQlEzWzAQYSR/SBfuVKT/bn4jsRKJ+xfIRExrdqGu6RBv
+         PbEKJ3ClFTQcCn+xUi5PrGPRleRy1VsxZ3CbtEsivxd9r3PhZes1+N/no0JztgR94sfc
+         Yh7vBRB908pmXIdte3gyeK4OsLu7FcBvsexIJhOcuKDxKyB1B9LTqjPKSdyMFpgDzfe4
+         FsGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742309558; x=1742914358;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=P52+0oCRnVmD6adG2x2Zy/twFor9rxgj0GU1RvsmWOw=;
-        b=mc/APP1uWx8m3tLpkWjJuPpWD8JOPp2IF9tK1eLUPcI5VSptb62wz2DA1OSlrh/K/m
-         +kNJekUeSf5uzfAIBCwouPFKxskvqKknRtl1M0f8bkSVZ9rcxn/dWiC1BtYFhj0GYVAS
-         +eyJ/PmPQPW9sZPCW2DMYOk3Yp4A+aaGwSPomZNEIzioWHX1TzUL7p1IIcCMrz5krTXe
-         lGz3ze6vBNADk0XtgV+V5/K/GPSgyDi9U4lAf/t4bRNs+tLymp8FzFWQ/J8vS92rdDg8
-         3J5+6L9QTkY5ci7i14g4W7ZkdXQS9bRnMrj9D79wwhZ8YBxgCLIO+jjHosFB7k6iHSfr
-         1hpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVIUQoWhtEVNuuZpubYtPwIGauX8fGBGSJEE/H2kHTtdtGHtJWBfPsSyE3HDe24qgey04KbGAaCkHeBqHZa@vger.kernel.org, AJvYcCW4/9k0XB1Hop2LAfUx0VhH+iYSBs9FKll7wj+fLwjTSzg8xW4R1KUEqM8lLZZT2cJM0jkyqlZpc3zy@vger.kernel.org, AJvYcCXlbn1rGQiqSM8zhjaZC+8UxLZBMfjgDKaBwpDchmZt7noluKk6V7J7IHGGkVDsY00Ogj3F0M4u+Bl4TWHx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3PuRLpVsQIWZd1ablQ6Gn1vhLfkzcP39DLD1dXrB5PFQAN1W0
-	n+jw6DfuXayBmqsvXSSWRQPnwBSHgyBPsycZgk2q+PqBf/WojXlB
-X-Gm-Gg: ASbGnctwdZS3jhHHcIKEJB3AsmvYrv5kTO6Dx24kgTDlolWn9oueqjxIOnRGBTFOweA
-	yQbiv49FUNNgZpaKl11v6CNxynzWs3M1cKZhI0hfgOq+Az6lSFOf6G02qTYM47OnzJ55aWWz4MB
-	uS9TsKlqTCIkZfoT9WwoaWHofE2x0pzLnLvGKrdt5KEYuc27FR7aFnIxnsRuhQ72aIPUD8Hpapo
-	GTl66trDZeXnlia2yQ9oKGEcvIKarrFkrt+kFsdQKqSLpKIju0ZRgMB/kTbAbJJB1bIS99dW0ak
-	2KxsiF0cJA+Wi0n/7Jz3V6Pi86fXInSSJiLe6HRitkTf88XQXwsASIK4QrCvGq3+3LvWQB+djJl
-	mk25hA30YEA==
-X-Google-Smtp-Source: AGHT+IGQ80YKRzqbI+bYWzTgEHSqoRgS1lsMKKEEz74wAmHtbW5UtEjm/1W1j+K4zE1tY/NoaZQL2A==
-X-Received: by 2002:a05:6000:18a8:b0:38f:4fa6:bb24 with SMTP id ffacd0b85a97d-3971f41160emr18927310f8f.39.1742309558233;
-        Tue, 18 Mar 2025 07:52:38 -0700 (PDT)
-Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395cb40cdafsm18481455f8f.62.2025.03.18.07.52.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Mar 2025 07:52:37 -0700 (PDT)
-Message-ID: <32785a6a-3f30-4d77-b32d-ee70c459de1b@gmail.com>
-Date: Tue, 18 Mar 2025 15:52:37 +0100
+        d=1e100.net; s=20230601; t=1742309824; x=1742914624;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1VVVI1GriwyXPsCwD+FNmlh5SAMatdc1NEjAoi7sx58=;
+        b=ZlnVB1dk0AzH2m3PiWhNMlRlR3c2hciwG+LPDqqhGG4LB3Vjdi0kcLfY2If0dNkWGl
+         52bLv8E3lcxwraUqUESSrx7SV9YeIt+0GgGgtH2i0bfpI/6HM6zzy5X+BuIwl1koO/Pj
+         yHmbRGyJFfTd7dztErNiQ7baLPwdTBOgjRxu9WZDhHEQzlcWgsnwYcde+5zamynW20Sc
+         wF9PgXGZlTzsSHDbIx+BoaQPwJAweoqbg3o48paq+BLGMV8i/mo+d6/TIqtVV0QOMHC0
+         4gC5av1MH+v7b5sMqNt5EyaAZCDQUF7GOXzjOqai1UF5gSbLvR5m5PDwcYpu+Aj5Skf6
+         Jw+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW3kyWr9KG6lILsQHGGM7jekjbGqXHkjsoQXuMdnee9tJsvcTxKK3PnoWz7cA2oVUs8+nb4V06tGGRFG2Fp@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw98vBM5gBQMmEwwRdbLythNJz63+A2yngJCvF9b5DicC2YpvsG
+	48gXM1vk6IIV4TPu2qpw8nv5nHFhhf3rd8t8SLf+lEcTP2mUJUB4N3b2J3SFgIk=
+X-Gm-Gg: ASbGnctSxEVMPdd86/EkWPVs0+Ru+aeknK7AKlU3KYnmVOeBrddNHzykcU6Uld7dIFT
+	Gy+a6WqftjqKWCDXRS8B8LgCgzdW9TzJyBVjNVU2XB86i63shgZWhIQ8e2wMuL3dUXa07fdiie3
+	s9xvM6bvQUcbaQg4wZVVabtruCUCEHOtzwYJtXTMJUstzoR86GOdX3N9lU2WwZ4JCs1yXu0HYQd
+	XxFvBA6KUCKIxUs51c2d4i2BKeKenFMqko+gi1p09ctw8o1p3+U3eOmjy/OB0v8xKIDMeIXHTNT
+	pyfm7hV36LFeJRq+kevU8zPlgNOdRG4GeKB6nrB1ZCr+F3WWkss4
+X-Google-Smtp-Source: AGHT+IFPBNRVXxeGQms9vMv75e9tPnzez+MLNXkizMdoSmRWOjlnAFWQdlrvFmC3VIruWWq7ehbuMQ==
+X-Received: by 2002:a17:907:3d8d:b0:abf:614a:3e48 with SMTP id a640c23a62f3a-ac3304042e6mr2319157866b.50.1742309823976;
+        Tue, 18 Mar 2025 07:57:03 -0700 (PDT)
+Received: from linaro.org ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3149cfbfasm867829366b.104.2025.03.18.07.57.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Mar 2025 07:57:03 -0700 (PDT)
+Date: Tue, 18 Mar 2025 16:57:02 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e001de-devkit: fix USB retimer reset
+ polarity
+Message-ID: <Z9mJvh2KGwhOJ6I9@linaro.org>
+References: <20250318074907.13903-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Gabor Juhos <j4g8y7@gmail.com>
-Subject: Re: [PATCH v3 1/4] mtd: rawnand: qcom: Pass 18 bit offset from QPIC
- base address to BAM
-To: Md Sadre Alam <quic_mdalam@quicinc.com>,
- manivannan.sadhasivam@linaro.org, miquel.raynal@bootlin.com, richard@nod.at,
- vigneshr@ti.com, broonie@kernel.org, bbrezillon@kernel.org,
- linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
-References: <20250310120906.1577292-1-quic_mdalam@quicinc.com>
- <20250310120906.1577292-2-quic_mdalam@quicinc.com>
-Content-Language: hu
-In-Reply-To: <20250310120906.1577292-2-quic_mdalam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250318074907.13903-1-johan+linaro@kernel.org>
 
-2025. 03. 10. 13:09 keltezéssel, Md Sadre Alam írta:
-> Currently we are configuring lower 24 bits of address in descriptor
-> whereas QPIC design expects 18 bit register offset from QPIC base
-> address to be configured in cmd descriptors. This is leading to a
-> different address actually being used in HW, leading to wrong value
-> read.
+On 25-03-18 08:49:07, Johan Hovold wrote:
+> The ps8830 retimer reset is active low.
 > 
-> the actual issue is that the NANDc base address is different from the
-> QPIC base address. But the driver doesn't take it into account and just
-> used the QPIC base as the NANDc base. This used to work as the NANDc IP
-> only considers the lower 18 bits of the address passed by the driver to
-> derive the register offset. Since the base address of QPIC used to contain
-> all 0 for lower 18 bits (like 0x07980000), the driver ended up passing the
-> actual register offset in it and NANDc worked properly. But on newer SoCs
-> like SDX75, the QPIC base address doesn't contain all 0 for lower 18 bits
-> (like 0x01C98000). So NANDc sees wrong offset as per the current logic
+> Fix up the retimer nodes which were based on an early version of the
+> driver which inverted the polarity.
 > 
-> The address should be passed to BAM 0x30000 + offset. In older targets
-> the lower 18-bits are zero so that correct address being paased. But
-> in newer targets the lower 18-bits are non-zero in QPIC base so that
-> 0x300000 + offset giving the wrong value.
-> 
-> SDX75 : QPIC_QPIC | 0x01C98000 (Lower 18 bits are non zero)
-> SDX55 : QPIC_QPIC | 0x1B00000 (Lower 18 bits are zero) Same for
-> older targets.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 8d6b6d7e135e ("mtd: nand: qcom: support for command descriptor formation")
-> Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Fixes: 019e1ee32fec ("arm64: dts: qcom: x1e001de-devkit: Enable external DP support")
+> Cc: Sibi Sankar <quic_sibis@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+
 > ---
-
-<...>
-
->  /*
-> diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nand-qpic-common.h
-> index cd7172e6c1bb..6268f08b9d19 100644
-> --- a/include/linux/mtd/nand-qpic-common.h
-> +++ b/include/linux/mtd/nand-qpic-common.h
-> @@ -200,7 +200,7 @@
->  #define dev_cmd_reg_addr(nandc, reg) ((nandc)->props->dev_cmd_reg_start + (reg))
+>  arch/arm64/boot/dts/qcom/x1e001de-devkit.dts | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+> index f92bda2d34f2..dc1a8f5d485a 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+> @@ -788,7 +788,7 @@ typec-mux@8 {
+>  		vddat-supply = <&vreg_rtmr2_1p15>;
+>  		vddio-supply = <&vreg_rtmr2_1p8>;
 >  
->  /* Returns the NAND register physical address */
-> -#define nandc_reg_phys(chip, offset) ((chip)->base_phys + (offset))
-> +#define nandc_reg_phys(chip, offset)  ((nandc)->props->nandc_offset + (offset))
-
-The macro has no parameter named 'nandc', so this works only when there is an
-identifier with that name in the code where the macro is used.
-
-Additionally, the macro will no longer return the physical address of a register
-after the change, so both the comment before the macro and the name of the macro
-will be misleading.
-
-Since the macro is used only in the qcom_prep_bam_dma_desc_cmd() function to
-compute the 'addr' parameter for the bam_prep_ce{_le32}() functions, maybe it
-would be better to get rid of it completely, and do the computation directly in
-the function instead.
-
-Regards,
-Gabor
+> -		reset-gpios = <&tlmm 185 GPIO_ACTIVE_HIGH>;
+> +		reset-gpios = <&tlmm 185 GPIO_ACTIVE_LOW>;
+>  
+>  		orientation-switch;
+>  		retimer-switch;
+> @@ -843,7 +843,7 @@ typec-mux@8 {
+>  		vddat-supply = <&vreg_rtmr0_1p15>;
+>  		vddio-supply = <&vreg_rtmr0_1p8>;
+>  
+> -		reset-gpios = <&pm8550_gpios 10 GPIO_ACTIVE_HIGH>;
+> +		reset-gpios = <&pm8550_gpios 10 GPIO_ACTIVE_LOW>;
+>  
+>  		retimer-switch;
+>  		orientation-switch;
+> @@ -898,7 +898,7 @@ typec-mux@8 {
+>  		vddat-supply = <&vreg_rtmr1_1p15>;
+>  		vddio-supply = <&vreg_rtmr1_1p8>;
+>  
+> -		reset-gpios = <&tlmm 176 GPIO_ACTIVE_HIGH>;
+> +		reset-gpios = <&tlmm 176 GPIO_ACTIVE_LOW>;
+>  
+>  		retimer-switch;
+>  		orientation-switch;
+> -- 
+> 2.48.1
+> 
 
