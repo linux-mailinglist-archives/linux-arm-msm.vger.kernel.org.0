@@ -1,110 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-51691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49E86A66F11
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 09:53:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5CC0A66F29
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 09:57:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C3C33A84FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 08:52:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC1FA19A17E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 08:58:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EE762045A1;
-	Tue, 18 Mar 2025 08:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD83D2054F7;
+	Tue, 18 Mar 2025 08:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mX+2bnAV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QgpjOeyi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7F51A3056;
-	Tue, 18 Mar 2025 08:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6285F205E1C;
+	Tue, 18 Mar 2025 08:57:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742287957; cv=none; b=FNy/xbAJmi2BVkkgc+Lh3baPTr4vGxHTOZHbXs0BAGbnHMjL/3dVopE3PbSJ/Z2ev7BrnBh5zV4o/EWxu+mdfgFGjNAkx5vcdAeZdnWQEzW368h/aWbrMf3QfoB5xivO+WdyiG2OXKTyTN1Izmn/U2XS9DNruIahxP5LjWcFp84=
+	t=1742288265; cv=none; b=s1bNFekWyGs1nxOvpA4qs4NuRFdxODndb513/Ndb+E9PZSxxguUcelPYREJqt5Hh9cDq1FLA1MbdTdgMJWzh2pgK23o19AtTfYQCUOG9rmLPuhWJQfgprYoWlmvSGQ5IGLXJ+FaAAIWNBjvExj9XSmslBIlGdu34aFZzbBEWxPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742287957; c=relaxed/simple;
-	bh=Nekzz6fBfS4uQY6xszVTs6sj5myK1wR2V9j2ijLK7eY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oHkLOfhC8/BcAenjy6Kg2cl7gZSBox96t/jna7Enf2CPxHqptNVuxPs9PcfGdlugEQ2a2OJULKxHsuieBlA69OUplRHa5UDZ57QRC/U2+kqt9EcZ18gWwEaEZTU4aI4arMnKbuRdy0C4L5RBYM7K+/dBNO5s0E+A+nxYMnWACZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mX+2bnAV; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2ff69365e1dso3551226a91.3;
-        Tue, 18 Mar 2025 01:52:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742287955; x=1742892755; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Nekzz6fBfS4uQY6xszVTs6sj5myK1wR2V9j2ijLK7eY=;
-        b=mX+2bnAVfrb24PXJzlqW7O55Hku7bGKxLp4zplWiI6DugjRUlK/BOqPubPsBBNBZaK
-         wDT0KFD/iNg+FLsErBvPCVgPM2RwTivp6teX7L9ySki5uuHWpdlZbMsIfSLtITZMrUxK
-         eFoe5/NA0BBf16sOSEx832kVgbf4z3IImA7jpIE+Lo5kfFI+dZT2coj/XJufwnkXccZW
-         ahbwG6vWl4SN54Wq8Ys8tH6HLiYEbWyvIAfJlgjn3oTrNU2QdPaQ0/tfSQDuQxjWS87o
-         wuVW/Bo6+X5YcFE3oo767B0vYsvf0i3PlEqRvjeYTXBpb2ZSn5iYEqwkaPVt/CE1BHaH
-         ffFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742287955; x=1742892755;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Nekzz6fBfS4uQY6xszVTs6sj5myK1wR2V9j2ijLK7eY=;
-        b=bSD9PfGXiLY3Q/WwW10vuOWf50e8akTdKRiuW9kXsWVERELSPuqa1h3miDqeRQFfIP
-         YwtxJdLMkInFkEgEmzDVwhq+HGQA7gfCf1G2XoNR92HTzqWUUGwgz/Tdj3HmVQWC/jzj
-         1Kv2HklBx24wAgqYRk32wvK6yozUlIxl4cYGo+tTkkoSTn4M57h0UvBU/nAh825wxIdb
-         zsD2EV5B4aSVskaacWHEiRhsh3yL9GT2tmG6bMpy7JvmRuL8TNqnIHc5nZ15gRl7OKqJ
-         lF0eYNUxT0oO//y/bl4FxfSJsGgPl5iC81szj6JGO2QkH4TAFU+0sXOiPXY/WK3iOonk
-         75yQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV/COGkzyhh4ubvOzDoLv/4PjK9TDYQifPSLAXvjHYltxk0jbpeDvlv0+Ot9bObcig0sSP833oSvsopu10X@vger.kernel.org, AJvYcCVhQmGxOKiXLydfkHQ+CD7FWjC/2ESJZZ7jczm+AcZBltwRUwyqzl1gWuNC7BbWaXvkCRYQVXfAuFk52ERvUg==@vger.kernel.org, AJvYcCWx86laTXdxIyagM1e4l5OzAj5su5B8JFShB7VYJfFcEnN8C5/ZCkJIYLz16rPf7Cu6iWqLaq76p5E4TaHoEmYhqQ==@vger.kernel.org, AJvYcCX0DpSzgMUI1lFCwLfA4wXeiKQNCbxGNCCSOLrDwlItcUVkBTKbGv7jn3QVoqCVEpuQ7q6kstv+9dqp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8bwchwrsDI3NDCE3QCMw0Yz7QIujCuUiYF4fUMOUUhMBIeO/J
-	rbHV3/ifuXBGzWNT1ipvcLSiKpux2e6ErZHjdSlHuoKvNzZtlJTtHN4FpFvsidEKpvG9qpzQmOh
-	9z+wkb8NHuGIfJzsJAITPv1HM35lmhMSYx795kQ==
-X-Gm-Gg: ASbGnctClB6QlClEHgj4OWKyZTZHV8iZqUM6NyWc7N6/O9IzfxMoUuQYk7NLSQmmFIx
-	xYKDpYWzRXmAR7sduSdg64O9w5Kl9KyeGmF1L9to4TRqSixD97jY0M6S/hM8ejUlCO744E4rLw2
-	0kNenSkRfkVTGH/nJBnHn9D5zIxvqZaGJIAg==
-X-Google-Smtp-Source: AGHT+IHxBtGTYr3jKDOjfudNcmvMSpsoyb/R4JeFGP2QOzJVyaFM9HhxQUDogb4lJVnRc6RbdFlWwMuZrsbX9LPrL68=
-X-Received: by 2002:a17:90b:1e49:b0:2ee:e518:c1d8 with SMTP id
- 98e67ed59e1d1-301a5bc1823mr1936322a91.30.1742287955176; Tue, 18 Mar 2025
- 01:52:35 -0700 (PDT)
+	s=arc-20240116; t=1742288265; c=relaxed/simple;
+	bh=2f1C8R0hIz6n+6W0nH3Z+GVlBTjFR1v8fu0TPpXUMTQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OfqwuszN9ZmFnNPVIXrkpvxk6togrsjIY/a+uXd6QrpfYpW7PeLkmyQOtlcK0aQq5tAG1LYGhMj3XQe8eMdXueejVa+tCaMYVPncn7tCW0ri9H6FsKroNEtMYd/UVQZPt/gnfpo6Yx+FIaJxPCuRsVzAGjVxxS4a4yakiI2vfaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QgpjOeyi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52I191si027058;
+	Tue, 18 Mar 2025 08:57:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Lzyz/arj6w1l3DX59ZpBFxii
+	X+gCYcK7Sb4orDZoWsY=; b=QgpjOeyiKtLNxe5Hr2tbRajqpXMEE5xRciNl0AKW
+	irOM8Wi/Ekrhy4lNGiFf1CXiW/CIFyonuqCCcN/7EJ79l89yQ47woup2TjHr2/8d
+	341ebLG0kiAN1kwBACtPxO6V+hzJMLOjCF4KYzNSUHxVs39DIlspyaKgSsSS4apR
+	pTI9vunHTlWkDxs01ocgp8v0UqRIOTzXWI+eUmK+tQ4H51Bxnt/9od4wP+kwoRxe
+	dteVL8abw4ANnHWvAgwAGwCWRdMxFTCSrX8ogXTdRuAszsMgeY5TcScvQpjdM48l
+	ZvsQnpbjcqSWvBmePOsv8t219WZGTaH1/q7G0709wUU7gQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exwth4w9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Mar 2025 08:57:33 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52I8vIkw013115
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Mar 2025 08:57:18 GMT
+Received: from hu-arakshit-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 18 Mar 2025 01:57:14 -0700
+Date: Tue, 18 Mar 2025 14:27:10 +0530
+From: Abhinaba Rakshit <quic_arakshit@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+CC: Thara Gopinath <thara.gopinath@gmail.com>,
+        Herbert Xu
+	<herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs615: add QCrypto nodes
+Message-ID: <20250318085710.zna6wbawbhb7kf44@hu-arakshit-hyd.qualcomm.com>
+References: <20250224-enable-qce-for-qcs615-v1-0-e7c665347eef@quicinc.com>
+ <20250224-enable-qce-for-qcs615-v1-2-e7c665347eef@quicinc.com>
+ <ac161039-af36-4e6c-90ea-ef858ea31e86@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250317232426.952188-1-robh@kernel.org> <20250317232426.952188-2-robh@kernel.org>
-In-Reply-To: <20250317232426.952188-2-robh@kernel.org>
-From: Daniel Baluta <daniel.baluta@gmail.com>
-Date: Tue, 18 Mar 2025 10:54:07 +0200
-X-Gm-Features: AQ5f1JqTpuM0NFbEd9b70zQbznVEgiaQyEKWqlPuOjeLEzVp-2Bgl4hMPBt9TEI
-Message-ID: <CAEnQRZAwd-e=j2bfHimx9xjQU-2=Anr7fJ_w98t3TAweZY4J8w@mail.gmail.com>
-Subject: Re: [PATCH 1/3] of: reserved_mem: Add functions to parse "memory-region"
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Saravana Kannan <saravanak@google.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ac161039-af36-4e6c-90ea-ef858ea31e86@oss.qualcomm.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 81D6mkMdXjmJwurUdxsoO0UK4yiQJS4a
+X-Proofpoint-ORIG-GUID: 81D6mkMdXjmJwurUdxsoO0UK4yiQJS4a
+X-Authority-Analysis: v=2.4 cv=UoJjN/wB c=1 sm=1 tr=0 ts=67d9357d cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=j5hbVoT8eKfuacexB9YA:9 a=CjuIK1q_8ugA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-18_04,2025-03-17_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=553
+ phishscore=0 adultscore=0 clxscore=1015 spamscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503180064
 
-On Tue, Mar 18, 2025 at 1:24=E2=80=AFAM Rob Herring (Arm) <robh@kernel.org>=
- wrote:
->
-> Drivers with "memory-region" properties currently have to do their own
-> parsing of "memory-region" properties. The result is all the drivers
-> have similar patterns of a call to parse "memory-region" and then get
-> the region's address and size. As this is a standard property, it should
-> have common functions for drivers to use. Add new functions to count the
-> number of regions and retrieve the region's address as a resource.
->
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+On Tue, Feb 25, 2025 at 02:52:36PM +0100, Konrad Dybcio wrote:
+> On 24.02.2025 11:04 AM, Abhinaba Rakshit wrote:
+> > Add the QCE and Crypto BAM DMA nodes.
+> > 
+> > Signed-off-by: Abhinaba Rakshit <quic_arakshit@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/qcs615.dtsi | 25 +++++++++++++++++++++++++
+> >  1 file changed, 25 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> > index f4abfad474ea62dea13d05eb874530947e1e8d3e..25e98d20ec1d941f0b45cc3d94f298065c9a5566 100644
+> > --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> > @@ -1114,6 +1114,31 @@ ufs_mem_phy: phy@1d87000 {
+> >  			status = "disabled";
+> >  		};
+> >  
+> > +		cryptobam: dma-controller@1dc4000 {
+> > +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
+> > +			reg = <0x0 0x01dc4000 0x0 0x24000>;
+> > +			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+> > +			#dma-cells = <1>;
+> > +			qcom,ee = <0>;
+> > +			qcom,controlled-remotely;
+> > +			num-channels = <16>;
+> > +			qcom,num-ees = <4>;
+> > +			iommus = <&apps_smmu 0x0104 0x0011>,
+> > +				 <&apps_smmu 0x0114 0x0011>;
+> 
+> (0x0114 & ~ 0x0011) == (0x0104 & ~0x0011), try dropping the second entry
+> here and below and see if things still work
+> 
 
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+With dropping the second entry, as well qcrypto is still functional,
+Will update in the patch v2
+
+> > +		};
+> > +
+> > +		crypto: crypto@1dfa000 {
+> > +			compatible = "qcom,qcs615-qce", "qcom,sm8150-qce", "qcom,qce";
+> > +			reg = <0x0 0x01dfa000 0x0 0x6000>;
+> > +			dmas = <&cryptobam 4>, <&cryptobam 5>;
+> > +			dma-names = "rx", "tx";
+> > +			iommus = <&apps_smmu 0x0104 0x0011>,
+> > +				 <&apps_smmu 0x0114 0x0011>;
+> > +			interconnects = <&aggre1_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
+> > +					&mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
+> 
+> Please align the '&'s
+
+Will update in patch v2
+
+> 
+> Konrad
 
