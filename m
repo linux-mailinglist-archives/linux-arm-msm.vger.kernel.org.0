@@ -1,144 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-51842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52E11A67F12
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 22:48:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9CB2A67F3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 23:07:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2C14173FE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 21:48:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F2CF7189EB7F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Mar 2025 22:07:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC84C205AD6;
-	Tue, 18 Mar 2025 21:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 179292066EE;
+	Tue, 18 Mar 2025 22:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cfhtXEwu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mBwDRNxy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9E71F582C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 21:48:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B182066DE;
+	Tue, 18 Mar 2025 22:07:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742334526; cv=none; b=ul+L8AlmrGTJLcBvLcFJ4nF66eA+DEGPPzc3mPmnm6/r4NomLX69rSRu+UNk8j5akYfGcq18Sc1HibhIGDu5WBaAsTwUMeZvKtksK0TaAQ5InE3kESilO9Yq3RO8g9E6ecnB+9jfldRJ8gmyihDgnGSLC5GVj/71S2IlTl0vgzM=
+	t=1742335623; cv=none; b=C5/bld6yutpeJT4YVjZIE5MtX7uYzesVzBooZ2gv3rgFOh4SPfeMqQCAepKZx0k7r1mgJZGjg1gLs/DBSHqEsOq/rxJx667159/CPzUaTxdacMJS/GHU2TIDT9rZWi6ClQ6J/L2ozywxuy3Yp4z22klwrH9FbTubPPQF/P4wLjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742334526; c=relaxed/simple;
-	bh=9QWi9Jbu2T/CyKwbiyJQWuyZbY48B9JmNpyjsuhsu70=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MhwHtqMbIb6tdPLSVzqY/ZqQ1Bt5SO90yrn3fVzf+hZoAmt9ua+WgvX94nKhEdStjvcZVLlxmWkeP3nEMNT+d1faUjXQiPlf/dkNzGcqpLf8qxlPcaszX4YMNBsC92qaRtuUl83U4qE1hSL1WV3gzf9+/FiM8HQTk/Rr3eDq+6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cfhtXEwu; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ac2aeada833so20952466b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Mar 2025 14:48:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742334523; x=1742939323; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=duoNyUPDpZ35AJzrwQXSbOfWB68wwqzf/wrWJgrnJcc=;
-        b=cfhtXEwu2LdGKmKztXYwu9hsns9j6UgYEwbAQuhomB08WLLs8Rk1jQQ75ymRgIpUev
-         Ec2lHjJu42hoRduOq0sKg2ZO4kD3lh8FVIqC6qQ74Ca286iZGsg/cgo3cE/Vj/onLc3T
-         8iV2an/UN00eyCtRs0JTlY1yvXcbd/Z6MRVlrg1cWlqPCYbnxhU0yy2OjE/QIj1xNvab
-         dibQljxjX95KFclCUeSfR3wyNHVEHqiuW7WW8LBOjs4g3UK8rcQri3XxnyjozkuUmX5e
-         4g9mwveFRzoYatgZQV6ewoS3+kjulVr7/gTGIH4d6xB03geaVyhoMhf/xAXxDlblzwWL
-         5yqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742334523; x=1742939323;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=duoNyUPDpZ35AJzrwQXSbOfWB68wwqzf/wrWJgrnJcc=;
-        b=AHyWZC2ABwgZa7znCX3WU+My2F+nPyZGKWtQFT9znaFGJNVXpzg7j+zBwZGLlodagC
-         69E1DjnQI9q43wHZfH+23XXgZGI1qTpSNso0wTyae4ulWLKrLfjCgPxLA3sa14hLiNF3
-         3P3b3zmGffix/NB8pWLSu12hlPHI/hoJXgbiqhlkhe+qC2C0VLxtOgI8PpXVVY42RRlh
-         C2EndcbvLzqO/AfsvsgAGhIiISldSTqUhs+ior8bOvkpwG3GTWWGpRmxshY9hMioyMJW
-         2s9ALT5OSEFnti1NVTDQ6O5tTDSqbUUg7VsZ1gp3XsC9oov5Xq9NvkLgzLRoJ/bqZFGA
-         1lMw==
-X-Forwarded-Encrypted: i=1; AJvYcCWs+RlUlx5tOhw5EYIvTaJCdfgvUXGh8CG7jZWTrqZkI1EYE+HU+wO87q1Y7IUUdWbo1EdHz1O8f3B7oQlA@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyeda42dlf3IR8I4VrY1RW5xFsbRvDSO6gBsTJxSI2mD22+X781
-	dW8qKy2czX/GlEW1Fx9wnAj5GZ/g8N5ShNBsksD8zDgbjagRn7MzX4yBH6b9y+4=
-X-Gm-Gg: ASbGncsJh39iTByPi/bynZBTUvv2MUzxe4vk6LpPQgDkLL3fGp9sFH2sYrf+8FAM/C5
-	PJX84Z5Ysgycv1x2JfcQH87qgR0TIqhJ7l5bgK0O3mkuvZnfHcqxN7ywwu48IrcYWUi50WypQvs
-	mNuv4h8r+2AjrkHOrQrRKwnIv+6zJqxziJFTI7kwlcZbvZkd9biEj4Qqa13BCZNEE6ahqv0qq+y
-	o5MmBL0p6EO5432+AHCtboyMZmoNeLBJyHvuZkfyVBbIITQlcQsbF4vOHAgd4X3XcU6mnIjSy+n
-	2kC+Tri39ShiztdwM3RHuamh2DArwtcGOyorgHyQPEjQFIXA2mSC7YsdfPthRSDBhRhCdNAfcn9
-	hJLAul4m5MnWr4CevMVY9ozwyh9LO8abl+aXPA1ghDRI186VhI+yN7rhXvTf6pzUBYZVMwVCXFs
-	Wkr+ZrZa3ALm4HFKttvphPKPka5Ef0z8Q=
-X-Google-Smtp-Source: AGHT+IF06W/HXbWDQcnvIov2Jj/jxhVUXmUlc3LWIaSEPfb9UpbLNwCGC29SRRaa+u05btkXLemWAA==
-X-Received: by 2002:a17:907:f50a:b0:ac3:3e43:f451 with SMTP id a640c23a62f3a-ac3b6abe286mr34843266b.5.1742334522980;
-        Tue, 18 Mar 2025 14:48:42 -0700 (PDT)
-Received: from ?IPV6:2001:1c06:2302:5600:7555:cca3:bbc4:648b? (2001-1c06-2302-5600-7555-cca3-bbc4-648b.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:7555:cca3:bbc4:648b])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3147ef34asm921171966b.68.2025.03.18.14.48.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Mar 2025 14:48:42 -0700 (PDT)
-Message-ID: <b1ea0500-595f-48d6-9358-649c25fd4ee9@linaro.org>
-Date: Tue, 18 Mar 2025 21:48:40 +0000
+	s=arc-20240116; t=1742335623; c=relaxed/simple;
+	bh=/F+eMjf09bz3lPIlV/WM3Lmoavh7yN9o2aVbStuR26w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DIS7YC39hvx7+8Qwnwd/I1Tu6BfTb2dTfuREvspcqdoAO4zeZCnjspJOfmLOMj6d7ba+0tVD/CP6Icz5wUtnaaGgv1SD7Ts2OLBEW5JunJtxGvIycTbfDM0q98UxKKYbpmconCUojEsbPqk8MAGYhA8PotXEjYbSA/2ewUh/gF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mBwDRNxy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A3BC4CEDD;
+	Tue, 18 Mar 2025 22:07:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742335622;
+	bh=/F+eMjf09bz3lPIlV/WM3Lmoavh7yN9o2aVbStuR26w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mBwDRNxyZ7N0LFxdtECH8fvhZ3Etd/uF13wwbH0mLDIqmP3BY+Jz1hmoMPmEIWsGs
+	 v989msItBTP3aKm9XfwXaw8bgvVNP4YuwIjAtwzqhsGo4kw2AqTyt9vjq8XTEIDbOJ
+	 AxG8VJEfrP3bDQtlvGB/FwpaNDuR0IxKYqB9DvSEBKmpUJESgbNZP+ICCpN15IjgxZ
+	 /KWoDEYmgioC/8s0oIuExFJDDaekOv8mmuFJAwS9my+xUFr3F22CZ9drz1j8xoqlnz
+	 KzMcCOXqSKJD4lFJTT5/cdqbWAQuWp8M0t2dQywreamAzKxpIXer+/3lHMlMwcftM2
+	 reFyFWoyL4bhA==
+Date: Tue, 18 Mar 2025 17:07:00 -0500
+From: Rob Herring <robh@kernel.org>
+To: David Heidelberg <david@ixit.cz>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Mailing List <devicetree-spec-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	van Spriel <arend@broadcom.com>,
+	=?iso-8859-1?B?Suly9G1l?= Pouiller <jerome.pouiller@silabs.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Andy Gross <agross@kernel.org>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Janne Grunau <j@jannau.net>
+Subject: Re: [PATCH v3 1/5] dt-bindings: net: Add network-class schema for
+ mac-address properties
+Message-ID: <20250318220700.GA4018133-robh@kernel.org>
+References: <20250318-dt-bindings-network-class-v3-0-4d8d04ddfb61@ixit.cz>
+ <20250318-dt-bindings-network-class-v3-1-4d8d04ddfb61@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] media: dt-bindings: Add qcom,qcs8300-camss
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Vikram Sharma <quic_vikramsa@quicinc.com>
-Cc: rfoss@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
- cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com,
- will@kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250214094747.2483058-1-quic_vikramsa@quicinc.com>
- <20250214094747.2483058-2-quic_vikramsa@quicinc.com>
- <20250223-observant-auspicious-basilisk-d78ba9@krzk-bin>
- <66c35bce-c657-4c12-ad02-58c995ae385a@quicinc.com>
- <f2899540-f9ac-4013-a703-25800429f97d@kernel.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <f2899540-f9ac-4013-a703-25800429f97d@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250318-dt-bindings-network-class-v3-1-4d8d04ddfb61@ixit.cz>
 
-On 18/03/2025 07:16, Krzysztof Kozlowski wrote:
-> On 18/03/2025 06:52, Vikram Sharma wrote:
->>
->> On 2/23/2025 5:03 PM, Krzysztof Kozlowski wrote:
->>> On Fri, Feb 14, 2025 at 03:17:46PM +0530, Vikram Sharma wrote:
->>>> +properties:
->>>> +  compatible:
->>>> +    const: qcom,qcs8300-camss
->>>> +
->>>> +  reg:
->>>> +    maxItems: 21
->>>> +
->>>> +  reg-names:
->>>> +    items:
->>>> +      - const: csid_wrapper
->>> Why different order of entries than sm8550?
->>
->> Hi Krzysztof,
->>
->> Thanks for your review.
->> I did this change to address a comment from Bryan on another series.
->> https://lore.kernel.org/linux-arm-msm/e152ff78-caa5-493a-88da-96a6670eb2a2@linaro.org/
->>
->> Please suggest if I should keep the order same as sm8550?
-> If you chosen the same order as x1e80100 then it is fine, but that file
-> is not merged so it is your responsibility to track any differences and
-> be sure whatever you send is always in sync with x1e.
+On Tue, Mar 18, 2025 at 08:56:44PM +0100, David Heidelberg wrote:
+> From: Janne Grunau <j@jannau.net>
 > 
-> Best regards,
-> Krzysztof
+> The ethernet-controller schema specifies "mac-address" and
+> "local-mac-address" but other network devices such as wireless network
+> adapters use mac addresses as well.
+> The Devicetree Specification, Release v0.3 specifies in section 4.3.1
+> a generic "Network Class Binding" with "address-bits", "mac-address",
+> "local-mac-address" and "max-frame-size". This schema specifies the
+> "address-bits" property and moves the remaining properties over from
+> the ethernet-controller.yaml schema.
+> 
+> The "max-frame-size" property is used to describe the maximal payload
+> size despite its name. Keep the description from ethernet-controller
+> specifying this property as MTU. The contradictory description in the
+> Devicetree Specification is ignored.
+> 
+> Signed-off-by: Janne Grunau <j@jannau.net>
+> ---
+>  .../bindings/net/ethernet-controller.yaml          | 25 +-----------
+>  .../devicetree/bindings/net/network-class.yaml     | 44 ++++++++++++++++++++++
+>  2 files changed, 45 insertions(+), 24 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/ethernet-controller.yaml b/Documentation/devicetree/bindings/net/ethernet-controller.yaml
+> index 45819b2358002bc75e876eddb4b2ca18017c04bd..c91b41b83d1dc1294e99ec72c7cdcc16550cb33e 100644
+> --- a/Documentation/devicetree/bindings/net/ethernet-controller.yaml
+> +++ b/Documentation/devicetree/bindings/net/ethernet-controller.yaml
+> @@ -16,30 +16,6 @@ properties:
+>    label:
+>      description: Human readable label on a port of a box.
+>  
+> -  local-mac-address:
+> -    description:
+> -      Specifies the MAC address that was assigned to the network device.
+> -    $ref: /schemas/types.yaml#/definitions/uint8-array
+> -    minItems: 6
+> -    maxItems: 6
+> -
+> -  mac-address:
+> -    description:
+> -      Specifies the MAC address that was last used by the boot
+> -      program; should be used in cases where the MAC address assigned
+> -      to the device by the boot program is different from the
+> -      local-mac-address property.
+> -    $ref: /schemas/types.yaml#/definitions/uint8-array
+> -    minItems: 6
+> -    maxItems: 6
+> -
+> -  max-frame-size:
+> -    $ref: /schemas/types.yaml#/definitions/uint32
+> -    description:
+> -      Maximum transfer unit (IEEE defined MTU), rather than the
+> -      maximum frame size (there\'s contradiction in the Devicetree
+> -      Specification).
+> -
+>    max-speed:
+>      $ref: /schemas/types.yaml#/definitions/uint32
+>      description:
+> @@ -262,6 +238,7 @@ dependencies:
+>    pcs-handle-names: [pcs-handle]
+>  
+>  allOf:
+> +  - $ref: /schemas/net/network-class.yaml#
+>    - if:
+>        properties:
+>          phy-mode:
+> diff --git a/Documentation/devicetree/bindings/net/network-class.yaml b/Documentation/devicetree/bindings/net/network-class.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..e126a02193e8cfba24215d3c850fde1e1b26480e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/network-class.yaml
+> @@ -0,0 +1,44 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/network-class.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Network Class Common Properties
+> +
+> +maintainers:
+> +  - Devicetree Specification Mailing List <devicetree-spec-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
 
-My mistake, I hadn't realised/remembered what we merged for 8550.
+Just 'devicetree-spec@vger.kernel.org'
 
-Vikram, please follow latest committed example @ 8550.
+> +
+> +properties:
+> +  address-bits:
+> +    description:
+> +      Specifies number of address bits required to address the device described
+> +      by this node. This property specifies number of bits in MAC address.
+> +    default: 48
+> +    const: 48
+> +
+> +  local-mac-address:
+> +    description:
+> +      Specifies MAC address that was assigned to the network device described by
+> +      the node containing this property.
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    minItems: 6
+> +    maxItems: 6
+> +
+> +  mac-address:
+> +    description:
+> +      Specifies the MAC address that was last used by the boot program. This
+> +      property should be used in cases where the MAC address assigned to the
+> +      device by the boot program is different from the
+> +      local-mac-address property. This property shall be used only if the value
+> +      differs from local-mac-address property value.
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    minItems: 6
+> +    maxItems: 6
+> +
+> +  max-frame-size:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      Maximum transfer unit (IEEE defined MTU).
 
----
-bod
+Can we keep the rest of the description about the contradiction?
+
+> +
+> +additionalProperties: true
+> 
+> -- 
+> 2.49.0
+> 
 
