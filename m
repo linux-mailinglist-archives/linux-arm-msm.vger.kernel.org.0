@@ -1,204 +1,368 @@
-Return-Path: <linux-arm-msm+bounces-51952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9982A68D42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 13:56:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEC7AA68DB5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:24:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C45FF426D52
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 12:55:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 27C3D172DFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 13:24:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17A202561C3;
-	Wed, 19 Mar 2025 12:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A592561D8;
+	Wed, 19 Mar 2025 13:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gLtUt1Um"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="mHoJNP10"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD9B208993
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 12:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2DA254B1F;
+	Wed, 19 Mar 2025 13:24:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742388909; cv=none; b=W7hbyvUEMSAcRRQivyUXkITfsQLAUoceyl+9681BWxSJbM/uk5s3xQXbod+wBKKFpGpxWupmrZKXwxSGIwLiwDztwsUClt6C/j1ECo5LsEUazDynfEGwXj+YmwCIqZxnhrlV1r9ZYa0LRFXA7MOU6LP//898vmG7vLQTytf3pT8=
+	t=1742390647; cv=none; b=jGAFhz75YSldX9cfZK3HASR6XjTVE2jceVwwlvsD76lqp1iUn5jOsUkggn+UpdCgCTmu48gQxtA3Lb/tmN5y2Vasudm0jfiacBOvRo/v4ncDrHa1Ml9RcAIYTUdtDufwzcTMzh1FeqQf8a+FAMImiiSGbAl3KmMKXJJSf+Mgopk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742388909; c=relaxed/simple;
-	bh=rSIL0khIm0ebl5amFqGxWLHn3SbAi8HYR2BZhgG9c4g=;
+	s=arc-20240116; t=1742390647; c=relaxed/simple;
+	bh=/q0O6SoH0MFOJQ+VtkIjMVBenhQqH+wVMIprdvwEass=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oQcw6vtpO3lUZkme7aTOuyP0aog2UHcQbNo/KFI6ISu8jcanQeZ8WT/g1GfKcwG5G8A5yhE5EiZuheb/mbpjSDlCK4AWa+CZhgzWVXcnZkeL0+AptBy8nsqMKZB3lW+6kSvc3EiA1jYn/sfHxd0vzKFb+M7jHDFndbuLzMYjKgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gLtUt1Um; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52J4lkJE020409
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 12:55:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IeEVDtRTtfm/mIgiKRKIxsL5mdTxcvp8WT7XXvQZHCo=; b=gLtUt1Um0VqJKelt
-	rKcZrQxH/YA2N2VTrhRxeULs6eF7KgF39nBpBnY9iJF82u0XRJ0T1XskJ6l9/QYt
-	qNPRxszawW6nDtPwrifjTwxcpocKbp3KrmhBRn93YnHbIjtIU2JbJ7uJkD1u4uzU
-	Cxi9AFl/7gAmwpoul8V5Bc1BKVjA1xEDjNc+ukRGmkRoURNIJ7ROocCj3ijz9Pvg
-	WZNQkVyi01NDqGDCWtC7Z+6bVVbdyZG3uvz0QtkhlU8UXSWuTUuuHf9X5DgbL6NF
-	AyTkx/VJ8XNFo3jqHA7PSDryIEPSWpUcCxeoyj54ODFMzT45ADA/VVUD68qVYOli
-	EcpmIA==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45fdmwtmur-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 12:55:05 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-2ff52e1c56fso10949319a91.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 05:55:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742388904; x=1742993704;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IeEVDtRTtfm/mIgiKRKIxsL5mdTxcvp8WT7XXvQZHCo=;
-        b=CV2/xqrM5WIExw5m2eT/VGb7W8MRBKMlt44eafT7YELta3pf63q+dVrJwdDLBI+jgN
-         VNgL5jXJ8j0eNILlOuhiRWWXbDx2FHxCooB26teBgv/6/qdCDaM3cOjoinDAo8gq+i7S
-         URpJD2DpbO2yc6PA/zxSo9a0F589/pX4ib1Phcgyps9ppuFI1M6Szdfzx6F+wAgSTwvN
-         C8onbhmxHVVPf9PScWRCPy2ZxPjj0C14dggKjspYzfmzB1U3PGv0r7CcC4rn6xmfCqiG
-         DaP4BvFhdDAseXxJFRD5pgaLbieVqlx3Te1DsKcL7K3TJG7l5p8VRaLJbMcjcDSZkDDy
-         x+rQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXQdnllcY9jNV/c9J7RUm/MK8cj3/N754Y4zqbq9javzeeT3r4u4Ht21Snr6hWK3c/Mu007YsYrXELBUtyI@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKOrBZ4cdD7BlNYvG/TvazhOCNZY1JfogXxgJ1+oi+63KJvbzZ
-	jElV0ZGoYc+B63QFlXC1+aAHOCOTGw26Z8fDd6cH2xNRTIdzEmhcYz0VnR/kV+VfsjG/oFIz8e9
-	2IvGG5nDONcm7/K8E1pirXWI9wQImcC6/DSsS4xZvYFlFoCBS8vmKHAYF+tpgQuF3
-X-Gm-Gg: ASbGncuafEzpOKKzbi4kzykkHOpHPEjz7q2XnFN1DSdsqKKOG4nW2P33CImQWHSt/Fe
-	vBNt57qeZrVyic98Qbb7XfjJkEEteatvKShGdCbWkNUZT7kE8VTtz7pnWQjTSTcUIBtizpVczxi
-	2WtD1P5omd04f4juPSPSoAuJs6Od4ziN7MNoHDhSbn0Qg8OpIP25yMI5dxtkUKEU7uBQ71V43V6
-	cspzGfJvpD8LCCOLu6HLXkaVn9brW6MiVU2+USJrsXzRMHAqf3+Q8Q9YhYIfl2sFbx5CggMzDEM
-	McstQB3KQZsyPFK1EP1NjkhBSiwg17iE5DYYWaz20buklh3qP3kfPnvIYQ==
-X-Received: by 2002:a17:90b:4e8f:b0:2ee:ee77:2263 with SMTP id 98e67ed59e1d1-301bde51fc9mr4540484a91.7.1742388904531;
-        Wed, 19 Mar 2025 05:55:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/2CAuo/R2eq5BzbQLNQBq0yPs22kdCE3hs/7Vq2U563faJ6/8KWodBXAfiVexNfvldQlfDA==
-X-Received: by 2002:a17:90b:4e8f:b0:2ee:ee77:2263 with SMTP id 98e67ed59e1d1-301bde51fc9mr4540440a91.7.1742388904132;
-        Wed, 19 Mar 2025 05:55:04 -0700 (PDT)
-Received: from [10.152.204.0] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-301bf576be5sm1463455a91.6.2025.03.19.05.55.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Mar 2025 05:55:03 -0700 (PDT)
-Message-ID: <c6e3b0c1-18fe-a9fa-0e72-d955809144e3@oss.qualcomm.com>
-Date: Wed, 19 Mar 2025 18:24:57 +0530
+	 In-Reply-To:Content-Type; b=Bzw0VTwyRGd07kc/gd8yxa/nrM8C/rDWOG5zykxgYPUNejmX5kQcW/EjthFz4WfJ2iM8ixGYoIa9n8K75MFGz7q3+dEiLT+Gelg8d0VnyXDs2dTKLXzl9NqdPHg+lyQEVvRyjNMe7bvCXfUttjZhxJ6ZV6P0aAlo9siDDJMKlxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=mHoJNP10; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1742390643;
+	bh=/q0O6SoH0MFOJQ+VtkIjMVBenhQqH+wVMIprdvwEass=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mHoJNP10AgtwqBskl0LN65UQ0xnHsutVsDDfy3bwvrJ7UMm0M6ZZyp3T9eeeuQDcT
+	 U61MCWmaVD+lTq5t62sP9iLIzxwjt/cc+hjtYS6eKJ8KYtsh+QMCGOR3UGE/GWNUTw
+	 91IymJmdEAz6lfDjUMieJohzuYGUe/PmuGdzYghW6JGDEnldNOzO5HrWPtTYnliwpm
+	 k+WLD3O+8jTVhdlIaN5Vd4gyDB2qb7GHcsh5RKnWrDj351H2uIHanGyZ0WtDwSyFzW
+	 W7m+B0KocDHuZRCzJa//B4LrvJIssR98yp96Um/C4FYjd5K/wYYfZiRzuFleORMB4E
+	 04I7dujFHkJPQ==
+Received: from [192.168.50.250] (unknown [171.76.87.92])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 2570F17E0C37;
+	Wed, 19 Mar 2025 14:23:58 +0100 (CET)
+Message-ID: <38315386-9975-4bbb-91e8-34b872487c26@collabora.com>
+Date: Wed, 19 Mar 2025 18:53:46 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH net] wifi: ath12k: properly set single_chip_mlo_supp to
- true in ath12k_core_alloc()
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/3] drm/ci: uprev mesa
+To: Helen Mae Koike Fornazier <helen.fornazier@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com,
+ airlied@gmail.com, simona.vetter@ffwll.ch, robdclark@gmail.com,
+ guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
+ valentine.burley@collabora.com, lumag@kernel.org, quic_abhinavk@quicinc.com,
+ mripard@kernel.org, jani.nikula@linux.intel.com,
+ linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, amd-gfx@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ virtualization@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20250314085858.39328-1-vignesh.raman@collabora.com>
+ <20250314085858.39328-2-vignesh.raman@collabora.com>
+ <CAPW4XYZ6+kc+Pj61_Kz8-CEy0Aed92XeXDnUiDAEGNBU+SPxAg@mail.gmail.com>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Vasanthakumar Thiagarajan <quic_vthiagar@quicinc.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, neil.armstrong@linaro.org,
-        Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Jeff Johnson
- <jjohnson@kernel.org>,
-        Aditya Kumar Singh <quic_adisi@quicinc.com>,
-        linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250303-topic-ath12k-fix-crash-v1-1-f871d4e4d968@linaro.org>
- <24b2f1f8-97bd-423a-acbd-9a5cd45e4a40@oss.qualcomm.com>
- <7901d7f0-d6d0-4bf3-89ad-d710e88477b7@linaro.org>
- <7b4b598f-bc13-aa4b-8677-71477e1f5434@quicinc.com>
- <8b05760b-db99-4b43-8444-d655b18d3699@kernel.org>
- <db232678-fa85-d75f-de72-d2b5e1ec611f@quicinc.com>
- <2a5hvicenftfiktviiofvknanyz756cbryu35gkfczdvbcdd5j@fktlzfieotgl>
-From: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-In-Reply-To: <2a5hvicenftfiktviiofvknanyz756cbryu35gkfczdvbcdd5j@fktlzfieotgl>
+From: Vignesh Raman <vignesh.raman@collabora.com>
+In-Reply-To: <CAPW4XYZ6+kc+Pj61_Kz8-CEy0Aed92XeXDnUiDAEGNBU+SPxAg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 3pyS8WIUPWghB1tE4LiynBDm9o5cUGK6
-X-Authority-Analysis: v=2.4 cv=ReKQC0tv c=1 sm=1 tr=0 ts=67dabea9 cx=c_pps a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=cXwcXxlD48ZRgq5pOxwA:9 a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-GUID: 3pyS8WIUPWghB1tE4LiynBDm9o5cUGK6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-19_04,2025-03-19_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- phishscore=0 suspectscore=0 impostorscore=0 clxscore=1011 mlxscore=0
- malwarescore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503190088
+Content-Transfer-Encoding: 8bit
 
+Hi Helen,
 
-
-On 3/19/2025 5:21 PM, Dmitry Baryshkov wrote:
-> On Wed, Mar 19, 2025 at 05:02:39PM +0530, Vasanthakumar Thiagarajan wrote:
+On 19/03/25 00:22, Helen Mae Koike Fornazier wrote:
+> Em sex., 14 de mar. de 2025 às 05:59, Vignesh Raman
+> <vignesh.raman@collabora.com> escreveu:
 >>
+>> LAVA was recently patched [1] with a fix on how parameters are parsed in
+>> `lava-test-case`, so we don't need to repeat quotes to send the
+>> arguments properly to it. Uprev mesa to fix this issue.
 >>
->> On 3/19/2025 3:57 PM, Krzysztof Kozlowski wrote:
->>> On 19/03/2025 10:06, Vasanthakumar Thiagarajan wrote:
->>>>>>> ---
->>>>>>> base-commit: 7eb172143d5508b4da468ed59ee857c6e5e01da6
->>>>>>> change-id: 20250303-topic-ath12k-fix-crash-49e9055c61a1
->>>>>>>
->>>>>>> Best regards,
->>>>>>
->>>>>> NAK since this will break QCN
->>>>>> There is a series under internal review to address MLO issues for WCN chipsets
->>>>>
->>>>> ???
->>>>>
->>>>> The original commit is wrong, this fixes the conversion, nothing else.
->>>>
->>>> Nope. Driver changes to enable MLO with WCN chipset are not there yet.
->>>> Setting the mlo capability flag without having required driver changes
->>>> for WCN chipset will likely result in firmware crash. So the recommendation
->>>> is to enable MLO (in WCN) only when all the necessary driver changes
->>>> (in development, public posting in near future) are in place.
->>> Really, these are your answers? There is regression and first reply is
->>> upstream should wait for whatever you do internally. Second answer is
->>> the same - public posting in near future?
->>>
+>> [1] https://gitlab.com/lava/lava/-/commit/18c9cf79
 >>
->> May be I was not clear in my response. I was not telling MLO bug fixes were
->> in the development. Actually the MLO feature itself is not enabled
->> yet with WCN chip sets. Any code changes enabling it without full feature
->> support would result in firmware crashes with the existing firmware binaries
->> available in upstream.
+>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+>> ---
+>>   drivers/gpu/drm/ci/build.sh       | 16 ++++++++--------
+>>   drivers/gpu/drm/ci/build.yml      |  8 ++++++++
+>>   drivers/gpu/drm/ci/container.yml  | 24 +++++++++++++++++++++++
+>>   drivers/gpu/drm/ci/gitlab-ci.yml  | 32 ++++++++++++++++++++++++++++++-
+>>   drivers/gpu/drm/ci/image-tags.yml |  4 +++-
+>>   drivers/gpu/drm/ci/lava-submit.sh |  3 ++-
+>>   drivers/gpu/drm/ci/test.yml       |  2 +-
+>>   7 files changed, 77 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
+>> index 19fe01257ab9..284873e94d8d 100644
+>> --- a/drivers/gpu/drm/ci/build.sh
+>> +++ b/drivers/gpu/drm/ci/build.sh
+>> @@ -98,14 +98,14 @@ done
+>>
+>>   make ${KERNEL_IMAGE_NAME}
+>>
+>> -mkdir -p /lava-files/
+>> +mkdir -p /kernel/
 > 
-> Is there an undocumented change of the behaviour in the commit
-> 46d16f7e1d14 ("wifi: ath12k: rename mlo_capable_flags to
-> single_chip_mlo_supp")?
+> the folder is not lava specific, correct?
+
+It is not lava specific. Only the directory name where the kernel image 
+is copied is changed and the kernel image is uploaded to S3 for lava.
+
+This is based on,
+https://gitlab.freedesktop.org/mesa/mesa/-/commit/5b65bbf72ce7024c5df2100ce4b12d59e8f3dd26
+
+> 
+>>   for image in ${KERNEL_IMAGE_NAME}; do
+>> -    cp arch/${KERNEL_ARCH}/boot/${image} /lava-files/.
+>> +    cp arch/${KERNEL_ARCH}/boot/${image} /kernel/.
+>>   done
+>>
+>>   if [[ -n ${DEVICE_TREES} ]]; then
+>>       make dtbs
+>> -    cp ${DEVICE_TREES} /lava-files/.
+>> +    cp ${DEVICE_TREES} /kernel/.
+>>   fi
+>>
+>>   make modules
+>> @@ -121,11 +121,11 @@ if [[ ${DEBIAN_ARCH} = "arm64" ]]; then
+>>           -d arch/arm64/boot/Image.lzma \
+>>           -C lzma\
+>>           -b arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dtb \
+>> -        /lava-files/cheza-kernel
+>> +        /kernel/cheza-kernel
+>>       KERNEL_IMAGE_NAME+=" cheza-kernel"
+>>
+>>       # Make a gzipped copy of the Image for db410c.
+>> -    gzip -k /lava-files/Image
+>> +    gzip -k /kernel/Image
+>>       KERNEL_IMAGE_NAME+=" Image.gz"
+>>   fi
+>>
+>> @@ -139,7 +139,7 @@ cp -rfv drivers/gpu/drm/ci/* install/.
+>>   . .gitlab-ci/container/container_post_build.sh
+>>
+>>   if [[ "$UPLOAD_TO_MINIO" = "1" ]]; then
+>> -    xz -7 -c -T${FDO_CI_CONCURRENT:-4} vmlinux > /lava-files/vmlinux.xz
+>> +    xz -7 -c -T${FDO_CI_CONCURRENT:-4} vmlinux > /kernel/vmlinux.xz
+>>       FILES_TO_UPLOAD="$KERNEL_IMAGE_NAME vmlinux.xz"
+>>
+>>       if [[ -n $DEVICE_TREES ]]; then
+>> @@ -148,7 +148,7 @@ if [[ "$UPLOAD_TO_MINIO" = "1" ]]; then
+>>
+>>       ls -l "${S3_JWT_FILE}"
+>>       for f in $FILES_TO_UPLOAD; do
+>> -        ci-fairy s3cp --token-file "${S3_JWT_FILE}" /lava-files/$f \
+>> +        ci-fairy s3cp --token-file "${S3_JWT_FILE}" /kernel/$f \
+>>                   https://${PIPELINE_ARTIFACTS_BASE}/${DEBIAN_ARCH}/$f
+>>       done
+>>
+>> @@ -165,7 +165,7 @@ ln -s common artifacts/install/ci-common
+>>   cp .config artifacts/${CI_JOB_NAME}_config
+>>
+>>   for image in ${KERNEL_IMAGE_NAME}; do
+>> -    cp /lava-files/$image artifacts/install/.
+>> +    cp /kernel/$image artifacts/install/.
+>>   done
+>>
+>>   tar -C artifacts -cf artifacts/install.tar install
+>> diff --git a/drivers/gpu/drm/ci/build.yml b/drivers/gpu/drm/ci/build.yml
+>> index 6c0dc10b547c..8eb56ebcf4aa 100644
+>> --- a/drivers/gpu/drm/ci/build.yml
+>> +++ b/drivers/gpu/drm/ci/build.yml
+>> @@ -143,6 +143,10 @@ debian-arm64-release:
+>>     rules:
+>>       - when: never
+>>
+>> +debian-arm64-ubsan:
+>> +  rules:
+>> +    - when: never
+>> +
+>>   debian-build-testing:
+>>     rules:
+>>       - when: never
+>> @@ -183,6 +187,10 @@ debian-testing-msan:
+>>     rules:
+>>       - when: never
+>>
+>> +debian-testing-ubsan:
+>> +  rules:
+>> +    - when: never
+>> +
+>>   debian-vulkan:
+>>     rules:
+>>       - when: never
+>> diff --git a/drivers/gpu/drm/ci/container.yml b/drivers/gpu/drm/ci/container.yml
+>> index 07dc13ff865d..56c95c2f91ae 100644
+>> --- a/drivers/gpu/drm/ci/container.yml
+>> +++ b/drivers/gpu/drm/ci/container.yml
+>> @@ -24,6 +24,18 @@ alpine/x86_64_build:
+>>     rules:
+>>       - when: never
+>>
+>> +debian/arm32_test-base:
+>> +  rules:
+>> +    - when: never
+>> +
+>> +debian/arm32_test-gl:
+>> +  rules:
+>> +    - when: never
+>> +
+>> +debian/arm32_test-vk:
+>> +  rules:
+>> +    - when: never
+>> +
+>>   debian/arm64_test-gl:
+>>     rules:
+>>       - when: never
+>> @@ -32,6 +44,10 @@ debian/arm64_test-vk:
+>>     rules:
+>>       - when: never
+>>
+>> +debian/baremetal_arm32_test:
+>> +  rules:
+>> +    - when: never
+>> +
+>>   debian/ppc64el_build:
+>>     rules:
+>>       - when: never
+>> @@ -40,6 +56,14 @@ debian/s390x_build:
+>>     rules:
+>>       - when: never
+>>
+>> +debian/x86_32_build:
+>> +  rules:
+>> +    - when: never
+>> +
+>> +debian/x86_64_test-android:
+>> +  rules:
+>> +    - when: never
+>> +
+>>   debian/x86_64_test-vk:
+>>     rules:
+>>       - when: never
+>> diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
+>> index b06b9e7d3d09..55b540c4cf92 100644
+>> --- a/drivers/gpu/drm/ci/gitlab-ci.yml
+>> +++ b/drivers/gpu/drm/ci/gitlab-ci.yml
+>> @@ -1,6 +1,6 @@
+>>   variables:
+>>     DRM_CI_PROJECT_PATH: &drm-ci-project-path mesa/mesa
+>> -  DRM_CI_COMMIT_SHA: &drm-ci-commit-sha 7d3062470f3ccc6cb40540e772e902c7e2248024
+>> +  DRM_CI_COMMIT_SHA: &drm-ci-commit-sha 82ab58f6c6f94fa80ca7e1615146f08356e3ba69
+>>
+>>     UPSTREAM_REPO: https://gitlab.freedesktop.org/drm/kernel.git
+>>     TARGET_BRANCH: drm-next
+>> @@ -187,6 +187,36 @@ stages:
+>>       - when: manual
+>>
+>>
+>> +# Repeat of the above but with `when: on_success` replaced with
+>> +# `when: delayed` + `start_in:`, for build-only jobs.
+>> +# Note: make sure the branches in this list are the same as in
+>> +# `.container+build-rules` above.
+>> +.build-only-delayed-rules:
+>> +  rules:
+>> +    - !reference [.common-rules, rules]
+>> +    # Run when re-enabling a disabled farm, but not when disabling it
+>> +    - !reference [.disable-farm-mr-rules, rules]
+>> +    # Never run immediately after merging, as we just ran everything
+>> +    - !reference [.never-post-merge-rules, rules]
+>> +    # Build everything in merge pipelines
+>> +    - if: *is-merge-attempt
+>> +      when: delayed
+>> +      start_in: &build-delay 5 minutes
+>> +    # Same as above, but for pre-merge pipelines
+>> +    - if: *is-pre-merge
+>> +      when: manual
+>> +    # Build everything after someone bypassed the CI
+>> +    - if: *is-direct-push
+>> +      when: manual
+>> +    # Build everything in scheduled pipelines
+>> +    - if: *is-scheduled-pipeline
+>> +      when: delayed
+>> +      start_in: *build-delay
+>> +    # Allow building everything in fork pipelines, but build nothing unless
+>> +    # manually triggered
+>> +    - when: manual
+>> +
+> 
+> Do you think we could avoid repeating code by using anchor (&) and
+> reference (*) ?
+> 
+> https://docs.gitlab.com/ci/yaml/yaml_optimization/#yaml-anchors-for-scripts
+
+We could create anchors for the repeated rules in .container+build-rules 
+and .build-only-delayed-rules, but I would prefer to first do this in 
+mesa and then adapt the same in drm-ci. Right now it is the same as 
+mesa, so maybe fix this in the next mesa uprev. What do you suggest?
+
+Regards,
+Vignesh
+
+> 
+> Regards,
+> Helen
+> 
+>> +
+>>   .ci-deqp-artifacts:
+>>     artifacts:
+>>       name: "${CI_PROJECT_NAME}_${CI_JOB_NAME}"
+>> diff --git a/drivers/gpu/drm/ci/image-tags.yml b/drivers/gpu/drm/ci/image-tags.yml
+>> index 20049f3626b2..c04ba0e69935 100644
+>> --- a/drivers/gpu/drm/ci/image-tags.yml
+>> +++ b/drivers/gpu/drm/ci/image-tags.yml
+>> @@ -1,5 +1,5 @@
+>>   variables:
+>> -   CONTAINER_TAG: "20250204-mesa-uprev"
+>> +   CONTAINER_TAG: "20250307-mesa-uprev"
+>>      DEBIAN_X86_64_BUILD_BASE_IMAGE: "debian/x86_64_build-base"
+>>      DEBIAN_BASE_TAG: "${CONTAINER_TAG}"
+>>
+>> @@ -20,3 +20,5 @@ variables:
+>>      DEBIAN_PYUTILS_TAG: "${CONTAINER_TAG}"
+>>
+>>      ALPINE_X86_64_LAVA_SSH_TAG: "${CONTAINER_TAG}"
+>> +
+>> +   CONDITIONAL_BUILD_ANGLE_TAG: fec96cc945650c5fe9f7188cabe80d8a
+>> diff --git a/drivers/gpu/drm/ci/lava-submit.sh b/drivers/gpu/drm/ci/lava-submit.sh
+>> index 6e5ac51e8c0a..f22720359b33 100755
+>> --- a/drivers/gpu/drm/ci/lava-submit.sh
+>> +++ b/drivers/gpu/drm/ci/lava-submit.sh
+>> @@ -48,7 +48,8 @@ ROOTFS_URL="$(get_path_to_artifact lava-rootfs.tar.zst)"
+>>   rm -rf results
+>>   mkdir -p results/job-rootfs-overlay/
+>>
+>> -artifacts/ci-common/generate-env.sh > results/job-rootfs-overlay/set-job-env-vars.sh
+>> +artifacts/ci-common/export-gitlab-job-env-for-dut.sh \
+>> +    > results/job-rootfs-overlay/set-job-env-vars.sh
+>>   cp artifacts/ci-common/init-*.sh results/job-rootfs-overlay/
+>>   cp "$SCRIPTS_DIR"/setup-test-env.sh results/job-rootfs-overlay/
+>>
+>> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+>> index dbc4ff50d8ff..84a25f0e783b 100644
+>> --- a/drivers/gpu/drm/ci/test.yml
+>> +++ b/drivers/gpu/drm/ci/test.yml
+>> @@ -112,7 +112,7 @@
+>>       - kvm
+>>     script:
+>>       - ln -sf $CI_PROJECT_DIR/install /install
+>> -    - mv install/bzImage /lava-files/bzImage
+>> +    - mv install/bzImage /kernel/bzImage
+>>       - mkdir -p /lib/modules
+>>       - install/crosvm-runner.sh install/igt_runner.sh
+>>     needs:
+>> --
+>> 2.47.2
+>>
+> 
 > 
 
-diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
-
--       if (resp.single_chip_mlo_support_valid) {
--               if (resp.single_chip_mlo_support)
--                       ab->mlo_capable_flags |= ATH12K_INTRA_DEVICE_MLO_SUPPORT;
--               else
--                       ab->mlo_capable_flags &= ~ATH12K_INTRA_DEVICE_MLO_SUPPORT;
--       }
-
-The above logic seems to keep the initialized intra MLO support even when
-single_chip_mlo_support_valid is not set. The above code removal is correct as
-MLO support can not be enabled in host when firmware does not advertise it.
-
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-
-+       ab->single_chip_mlo_supp = false;
-
-
-diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
-
-+       if (resp.single_chip_mlo_support_valid &&
-+           resp.single_chip_mlo_support)
-+               ab->single_chip_mlo_supp = true;
-
-The above code does it in right way. Overriding firmware MLO capability as done
-in the submitted patch under review is obviously wrong. The firmware used to report
-the issue seems to have an odd behavior: 1. it does not seem to advertise MLO
-capability in single_chip_mlo_support bit and 2. expects configurations to enable
-MLO from host. None of the WCN firmware available in upstream either advertises
-MLO capability or expects configurations to enable MLO from host.
-
-Vasanth
 
