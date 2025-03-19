@@ -1,215 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-52032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD50BA69ADE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 22:32:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71319A69C7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 00:04:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6AA933AB1F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 21:31:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DFFC37A3C5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 23:03:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8E001FF7DD;
-	Wed, 19 Mar 2025 21:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F37CF220683;
+	Wed, 19 Mar 2025 23:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4ZvwHe8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uuGe+aOw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FC9158538;
-	Wed, 19 Mar 2025 21:31:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA9F20899C;
+	Wed, 19 Mar 2025 23:04:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742419917; cv=none; b=rVsx+HkbxZMAZzGBhQH1wIvVDUgHV2fD2daSG617vsnyXzb8LdEXPAFqmNRedHvs/x434a++tCnXidlFLKQhAVLQh1Ok4pRHWdshOuYvRxsUuwmSb/Plv2NTvZS4pNw3mxAkUM5lSzkQ9mQLtntdfdkvdhDVstY4hjSfn5gHkC4=
+	t=1742425482; cv=none; b=Cnmty7IiVAfByvvfvEWZHKG9JZ8ny1Ul3dfKsEBMjE3O/+stuiQ2513ZcKnNpaTlLg0yDfqzXuviRXxmS5z045DVYgMRTFmVs2hkYFTQKJYAasqRo3tkh41mnoANslmX1MmMSrer+4tEa3yECyb3O2y3a5orwHAM7FsPN3m3SBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742419917; c=relaxed/simple;
-	bh=Wtc0/2DFHQ47q4fY+ozaPApJEHtqOC8tCA6mJYVsfOo=;
+	s=arc-20240116; t=1742425482; c=relaxed/simple;
+	bh=wh2+nbO+uhOl81kfYkAvk91jGgv0SNefhWvjy1MiI9E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bBtaUGOfPpYaO3WcjKsQr/wAR/UHxGxp0JKCWvWJr17hh7zo0aVTTbGQ2v1oGOaecQQfe40jjqtCHXyKUGloH/06b+CzKKldw6wuBnCODKUzjJwyZ9JjeqQnBPzpTKSIwECeojFsFbcYgEkzQzGp/9gvP0KYN2yap1qeW9MTWOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4ZvwHe8; arc=none smtp.client-ip=209.85.166.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3cf8e017abcso801605ab.1;
-        Wed, 19 Mar 2025 14:31:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742419915; x=1743024715; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eGXYnVlo4fA0RFIIo/kNFkQOG0FR1x2vD9pp9kcKWLQ=;
-        b=l4ZvwHe8/5mHvrtz2lT4VEcVmVETFWyAxWAmJ3RnAiqq0vRu6Ttx3ZYGXzGGpzB03U
-         tRPsVSCkjmjmrkSguHvR6FNpi7gdxO7IxrBvb5rEH3JKH4sXMucT9KGQHu/7qFHdkRTM
-         cbZ3UJAO0IwZ2m5w2WYKK20kdDpvyA9x+XsPJaRO3OWS1pXvI0vQiuVnvC+1KlGo01Lo
-         w/8r7uwUhFsQTClGy49f2IG3FYAHSabQZ6+6jsZ4GXXP6BqxLUPWy+3Kj8+YVubphl8D
-         hjEy3FEWCG7FcZ0bXAh38vnpiJNYjGCZqt23SEGH8V0bkeiHA0Idr1RDTJhFYenB8vS9
-         zKIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742419915; x=1743024715;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eGXYnVlo4fA0RFIIo/kNFkQOG0FR1x2vD9pp9kcKWLQ=;
-        b=qA4qVXeAzT/YiKOs1kMHYhrNOhthT04V3/9VmAdJ223yZ7EHIdGcI3E3oDt2kQoGZn
-         vplXEkjiKzyLU5LkDMg8xAF3zODgbjG8CEG2F4VoElRT5GakVdWH8nHR543SVbx2MQwb
-         YE2UFD7UuVQQHZVj9KaScs2T6u527zQC8AVDpA+vRpwziWLBrG+eW5TuGsadqfqfidEN
-         9xRYaJsyxUHyK2FxVp54sFz47bgjwmMxr6DSxnUcKq0KXollv+zW4+kcrkmmP6y8Q9u6
-         CXb4NU9L6A216Y3dY1OFJFp3ZcDie2hIL4sYSK9EZB9DBjjMx42gF4VLI+v0gCRxnPGB
-         wPVA==
-X-Forwarded-Encrypted: i=1; AJvYcCVrvFsYxvuddYB2YxYc64Lk8pOdjg0V5hMaTHYtE7jKEQojTvHjjvc8oFWwYPa6LwMg7yh9a5a3qBpeSVM7@vger.kernel.org, AJvYcCXlIfJW6pha04X6xvXaoz+KXxQVT6mNVkKe+eX9IRsROi+LpHeiEYRKtv6B87RrRjxYWjEqI6NSbCSdWMsl@vger.kernel.org
-X-Gm-Message-State: AOJu0YyNX7z2m+RxlKmJJ/JOkpM4AKFWZWWhXkTCJ9HFw8LOAJiczoNL
-	h7WHjpty7JBLnFOHpx2ljmv1ZqoKsHok6MgfhxSASCFH9TbpaJXmVMv8lCoM5RifmfVqwpiNDG7
-	BsOOJ8sGA1V/dVdQmbLeaBi8h3zo=
-X-Gm-Gg: ASbGncvtTvWDv/pVXP8RSafAEKC3iysVtdvvptgHClIV6Dfhhki99aCBao8IKvEoEnG
-	PZW2WJ2RCpdj6i/p6ehvEWi9oFiIf64yiuV/EubsuPRu9Pcses4fgADXEy9EgUvzFWHxtu0ooCE
-	4Jww83LMY2Xz3qN+UnKCc8r4GNp3QHm5f/Pn0+rwdp3vWkGtG883ew/fW9T+suSm/HYsMdHJg=
-X-Google-Smtp-Source: AGHT+IG6eJdQijicuz0JhXeewGnZhBud8RVqN+j9v9xBQdOBT2axAWMn8vRd7OQcpT6RTCan1DoKTU3vvrEEu2tAwIQ=
-X-Received: by 2002:a05:6e02:1a47:b0:3d3:ff09:432c with SMTP id
- e9e14a558f8ab-3d586b24451mr38482965ab.4.1742419915226; Wed, 19 Mar 2025
- 14:31:55 -0700 (PDT)
+	 To:Cc:Content-Type; b=L1NZhgBVWtfJ5ccHm1H6wn7t3utQAt6J/DDJVG1/utIFhLEdQ3HD6toaMTmcANdgGbzHP28IRzVAj9ZMfXreH3ehexm7GynBK5Sgw+VvG4ewp524Ezl1gGGKDdn78IabtfEq2Peyqrl9HjJGZ6DAzOs+PVUt2AwWejMIyxwci/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uuGe+aOw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0A3C4CEEF;
+	Wed, 19 Mar 2025 23:04:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742425482;
+	bh=wh2+nbO+uhOl81kfYkAvk91jGgv0SNefhWvjy1MiI9E=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=uuGe+aOwcgf7kb6tS+eJjVfXHyx1rbvLoZ2NOaP02SzxNs47NRpR2LVVwhgwHQXBH
+	 NltceS4U3rtwfOvmEq6YnwNECmBc2oMMbb9lU/j4Uom1lYzKvdw4wm1Yy6nW930eJu
+	 Qj9XsiBQDeLSstZ6bM2e8hq8mcmFfI/UZ91g+PDxaY6TrX2C3SXVc/S9g9siUzR7Xm
+	 hpdQQZo/klOGL1YJZWIiEqKqUyJrEUGeSc8uY7viKfW1a/4xC4CXnFy1b01yO2/l88
+	 BlSp4hn6bDt5R1zh7kce8Os/lelWqy7DrU4HRFeFfXCx+Wxz9JKCbO/8BHToR3LrOm
+	 gULLlNMRPLUag==
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5e5c9662131so282300a12.3;
+        Wed, 19 Mar 2025 16:04:42 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVnfH0M82Sk2vb4iy5ZBg7RQTrfRaRfwzj8GeES8GAoGWEW0tVyyxaDqzVQB8RUbMJzoXCI0BgX0EIUJ3/K3A==@vger.kernel.org, AJvYcCWIZQux2cbbNmcQgC/v0B04ct+6ILQkH9+IrA28STTJtgIS6485pz6sGBiExH9AtubrUWSv7dMssxYqCheC@vger.kernel.org, AJvYcCWoLncYcpXPqYzHoI6V4kuI0egb7mi0YMzDIV9s2oaUZqwiBnKimkCAFjhseAMiA1BhKaazvnJprDntlmElZ5Kwvg==@vger.kernel.org, AJvYcCX4aN4rUq2oWRD7XJxonh6B5C5AvshRbfInzsSsmOSF21yRXgK1GPt7AGwLDlczRKyT7RlgxnPSGVYn@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywww1eNfw97kdTsdvOuFA6qP2qr5N3TTYwrOtkB3/zcqDd3noKD
+	E/WoORxKU4DwtfCmt47DNqN8azuUuHFCTRr3DIHvTyZHz+Uuyd1MdUpkKEUeMwl6TuCtMBV+t8d
+	I50ud6xIorBfKec8eiJjoaVbt5g==
+X-Google-Smtp-Source: AGHT+IH1Yrc3Y5KhcKuIDvTrQ1KQbSSjJSIP+aKUctEQfy6L4vvWLzhbwAuvXFhDZUh0Wqy+O4jXTvspjUWR7fVZh34=
+X-Received: by 2002:a05:6402:d0d:b0:5dc:7643:4f3d with SMTP id
+ 4fb4d7f45d1cf-5eb9eee0416mr908900a12.1.1742425481081; Wed, 19 Mar 2025
+ 16:04:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250319145425.51935-1-robdclark@gmail.com> <20250319145425.51935-17-robdclark@gmail.com>
- <CACu1E7FduhsXY22BKpjt5WcnAcVtGu01eUiLc9T47OUR+yp_0Q@mail.gmail.com>
-In-Reply-To: <CACu1E7FduhsXY22BKpjt5WcnAcVtGu01eUiLc9T47OUR+yp_0Q@mail.gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Wed, 19 Mar 2025 14:31:43 -0700
-X-Gm-Features: AQ5f1JoLQDinqTeGHJh8TxkwUkgoOW697Nl89kftPZ83P_IL6WWPoVNwetQQV1s
-Message-ID: <CAF6AEGvkKhx2JLpNsDgYigX41QhbhXt4VvSP9n-QmO=cAvTxHw@mail.gmail.com>
-Subject: Re: [PATCH v2 16/34] drm/msm: Mark VM as unusable on faults
-To: Connor Abbott <cwabbott0@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Konrad Dybcio <konradybcio@kernel.org>, open list <linux-kernel@vger.kernel.org>
+References: <20250317232426.952188-1-robh@kernel.org> <20250317232426.952188-4-robh@kernel.org>
+ <26e72cb2-c355-4c40-bb98-fc0ff267bf4f@foss.st.com>
+In-Reply-To: <26e72cb2-c355-4c40-bb98-fc0ff267bf4f@foss.st.com>
+From: Rob Herring <robh@kernel.org>
+Date: Wed, 19 Mar 2025 18:04:30 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+7ZhMWgbFDvPB+3BG7YfiS9PweybOGNY3r=d40RbGHJA@mail.gmail.com>
+X-Gm-Features: AQ5f1JqOv9zU_NIrquP_FiizlsCH0dJCdTrTRAoIvYNPwVPq8s6b1gdkB9PCxY8
+Message-ID: <CAL_Jsq+7ZhMWgbFDvPB+3BG7YfiS9PweybOGNY3r=d40RbGHJA@mail.gmail.com>
+Subject: Re: [Linux-stm32] [PATCH 3/3] remoteproc: Use of_reserved_mem_region_*
+ functions for "memory-region"
+To: Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Cc: Saravana Kannan <saravanak@google.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	devicetree@vger.kernel.org, imx@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 19, 2025 at 9:15=E2=80=AFAM Connor Abbott <cwabbott0@gmail.com>=
- wrote:
+On Wed, Mar 19, 2025 at 10:26=E2=80=AFAM Arnaud POULIQUEN
+<arnaud.pouliquen@foss.st.com> wrote:
 >
-> On Wed, Mar 19, 2025 at 10:55=E2=80=AFAM Rob Clark <robdclark@gmail.com> =
-wrote:
+> Hello Rob,
+>
+> On 3/18/25 00:24, Rob Herring (Arm) wrote:
+> > Use the newly added of_reserved_mem_region_to_resource() and
+> > of_reserved_mem_region_count() functions to handle "memory-region"
+> > properties.
 > >
-> > From: Rob Clark <robdclark@chromium.org>
+> > The error handling is a bit different in some cases. Often
+> > "memory-region" is optional, so failed lookup is not an error. But then
+> > an error in of_reserved_mem_lookup() is treated as an error. However,
+> > that distinction is not really important. Either the region is availabl=
+e
+> > and usable or it is not. So now, it is just
+> > of_reserved_mem_region_to_resource() which is checked for an error.
 > >
-> > If userspace has opted-in to VM_BIND, then GPU faults and VM_BIND error=
-s
-> > will mark the VM as unusable.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 > > ---
-> >  drivers/gpu/drm/msm/msm_gem.h        | 17 +++++++++++++++++
-> >  drivers/gpu/drm/msm/msm_gem_submit.c |  3 +++
-> >  drivers/gpu/drm/msm/msm_gpu.c        | 16 ++++++++++++++--
-> >  3 files changed, 34 insertions(+), 2 deletions(-)
+> > For v6.16
 > >
-> > diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_ge=
-m.h
-> > index acb976722580..7cb720137548 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem.h
-> > +++ b/drivers/gpu/drm/msm/msm_gem.h
-> > @@ -82,6 +82,23 @@ struct msm_gem_vm {
+
+[...]
+
+> > diff --git a/drivers/remoteproc/stm32_rproc.c b/drivers/remoteproc/stm3=
+2_rproc.c
+> > index b02b36a3f515..9d2bd8904c49 100644
+> > --- a/drivers/remoteproc/stm32_rproc.c
+> > +++ b/drivers/remoteproc/stm32_rproc.c
+> > @@ -213,52 +213,46 @@ static int stm32_rproc_prepare(struct rproc *rpro=
+c)
+> >  {
+> >       struct device *dev =3D rproc->dev.parent;
+> >       struct device_node *np =3D dev->of_node;
+> > -     struct of_phandle_iterator it;
+> >       struct rproc_mem_entry *mem;
+> > -     struct reserved_mem *rmem;
+> >       u64 da;
+> > -     int index =3D 0;
+> > +     int index =3D 0, mr =3D 0;
 > >
-> >         /** @managed: is this a kernel managed VM? */
-> >         bool managed;
+> >       /* Register associated reserved memory regions */
+> > -     of_phandle_iterator_init(&it, np, "memory-region", NULL, 0);
+> > -     while (of_phandle_iterator_next(&it) =3D=3D 0) {
+> > -             rmem =3D of_reserved_mem_lookup(it.node);
+> > -             if (!rmem) {
+> > -                     of_node_put(it.node);
+> > -                     dev_err(dev, "unable to acquire memory-region\n")=
+;
+> > -                     return -EINVAL;
+> > -             }
+> > +     while (1) {
+> > +             struct resource res;
+> > +             int ret;
 > > +
-> > +       /**
-> > +        * @unusable: True if the VM has turned unusable because someth=
-ing
-> > +        * bad happened during an asynchronous request.
-> > +        *
-> > +        * We don't try to recover from such failures, because this imp=
-lies
-> > +        * informing userspace about the specific operation that failed=
-, and
-> > +        * hoping the userspace driver can replay things from there. Th=
-is all
-> > +        * sounds very complicated for little gain.
-> > +        *
-> > +        * Instead, we should just flag the VM as unusable, and fail an=
-y
-> > +        * further request targeting this VM.
-> > +        *
-> > +        * As an analogy, this would be mapped to a VK_ERROR_DEVICE_LOS=
-T
-> > +        * situation, where the logical device needs to be re-created.
-> > +        */
-> > +       bool unusable;
-> >  };
-> >  #define to_msm_vm(x) container_of(x, struct msm_gem_vm, base)
+> > +             ret =3D of_reserved_mem_region_to_resource(np, mr++, &res=
+);
+> > +             if (ret)
+> > +                     return 0;
 > >
-> > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm=
-/msm_gem_submit.c
-> > index 9731ad7993cf..9cef308a0ad1 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > @@ -668,6 +668,9 @@ int msm_ioctl_gem_submit(struct drm_device *dev, vo=
-id *data,
-> >         if (args->pad)
-> >                 return -EINVAL;
+> > -             if (stm32_rproc_pa_to_da(rproc, rmem->base, &da) < 0) {
+> > -                     of_node_put(it.node);
+> > -                     dev_err(dev, "memory region not valid %pa\n",
+> > -                             &rmem->base);
+> > +             if (stm32_rproc_pa_to_da(rproc, res.start, &da) < 0) {
+> > +                     dev_err(dev, "memory region not valid %pR\n", &re=
+s);
+> >                       return -EINVAL;
+> >               }
 > >
-> > +       if (to_msm_vm(ctx->vm)->unusable)
-> > +               return UERR(EPIPE, dev, "context is unusable");
-> > +
-> >         /* for now, we just have 3d pipe.. eventually this would need t=
-o
-> >          * be more clever to dispatch to appropriate gpu module:
-> >          */
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gp=
-u.c
-> > index 503e4dcc5a6f..4831f4e42fd9 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu.c
-> > +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> > @@ -386,8 +386,20 @@ static void recover_worker(struct kthread_work *wo=
-rk)
-> >
-> >         /* Increment the fault counts */
-> >         submit->queue->faults++;
-> > -       if (submit->vm)
-> > -               to_msm_vm(submit->vm)->faults++;
-> > +       if (submit->vm) {
-> > +               struct msm_gem_vm *vm =3D to_msm_vm(submit->vm);
-> > +
-> > +               vm->faults++;
-> > +
-> > +               /*
-> > +                * If userspace has opted-in to VM_BIND (and therefore =
-userspace
-> > +                * management of the VM), faults mark the VM as unusuab=
-le.  This
-> > +                * matches vulkan expectations (vulkan is the main targ=
-et for
-> > +                * VM_BIND)
+> >               /*  No need to map vdev buffer */
+> > -             if (strcmp(it.node->name, "vdev0buffer")) {
+> > +             if (strcmp(res.name, "vdev0buffer")) {
 >
-> The bit about this matching Vulkan expectations isn't exactly true.
-> Some Vulkan implementations do do this, but many will also just ignore
-> the fault and try to continue going, and the spec allows either. It's
-> a choice that we're making.
+> I tested your patches
 
-As mentioned on IRC, this is actually about GPU hangs rather then smmu
-faults.   I guess the $subject is a bit misleading.
+Thank you.
 
-BR,
--R
-
-> Connor
+> The update introduces a regression here. The strcmp function never return=
+s 0.
+> Indeed, it.node->name stores the memory region label "vdev0buffer," while
+> res.name stores the memory region name "vdev0buffer@10042000."
 >
-> > +                */
-> > +               if (!vm->managed)
-> > +                       vm->unusable =3D true;
-> > +       }
-> >
-> >         get_comm_cmdline(submit, &comm, &cmd);
-> >
-> > --
-> > 2.48.1
-> >
+> Several remoteproc drivers may face the same issue as they embed similar =
+code.
+
+Indeed. I confused myself because node 'name' is without the
+unit-address, but this is using the full name. I've replaced the
+strcmp's with strstarts() to address this. I've updated my branch with
+the changes.
+
+Rob
 
