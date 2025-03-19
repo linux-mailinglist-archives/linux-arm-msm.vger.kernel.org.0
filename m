@@ -1,142 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-51947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECBDCA68BDB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 12:38:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD170A68BF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 12:42:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA4AE16229F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 11:35:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A16616F7CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 11:39:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E84A92139C9;
-	Wed, 19 Mar 2025 11:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F078725523A;
+	Wed, 19 Mar 2025 11:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YMRe9L+1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lkm8xoUT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17161253346;
-	Wed, 19 Mar 2025 11:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330B4253F21;
+	Wed, 19 Mar 2025 11:39:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742384099; cv=none; b=lKdZXKdHUOzPTFfJMphVAlnegrnrd9LcbTyNI7q4q18qDLeENRC567eTIL4RQjuP0jlWa34HE+k82UWMp/XnoCzddJijNVyhqXlt5dLluKJpLRUZgr5pX98lrNwJ+bzkkKJFWxG1ERj35nPio+vaSlO1PnpQmcxiUAnh63h+wOE=
+	t=1742384347; cv=none; b=OsTafWZoRnZjVDoI955dJQ5SH2Uvy8PXPgocK1Sn12JeGdQuaWNc52K6zagCas6tKBCLQrPUOtXhGAKppmGzJGDYWqArBE8HsiiLv3Jtl3+loOEE9m09hB8fpaPfwKw+csbCnYm7ysAwhbA8X4lFa5YH9EIgURkH4wF/SzavNTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742384099; c=relaxed/simple;
-	bh=NQIG+KzD4JNsFjAw/KBNjDnT/1GELV0VA2GH51aFwlE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZynRUgyQcOPOi86atjbDsTH5Q5GJ1dZyhQ+vD7ItaJId0/REFV8WfE1bsnlqat4awFlvuL1SsMo9JYaOg40oM+GfFK9zGXNa3QdDi3Zmoy/1gCliTKiGVjIhwmMzSoWIEkgxMrRXyc74IdcP7F9+y42Q4TBgoQ5FjnCSGsFcsOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YMRe9L+1; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52J4lmVR001856;
-	Wed, 19 Mar 2025 11:32:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Lt0wTiNTI4glUGHJkezI5v/s0a1YIU7vra3n10KWY8U=; b=YMRe9L+1gtyZdeDX
-	k+IOFFMNDr0Kx52S+OmS86h5HBcgoLe9wAidc1qpx4uJqTu1Ve0xAAPCjgT8w+gu
-	KeTTEltPBQt6UlNron2sdgmH7RENj7pJD4NGyGomDbBweu1vNivLwr3jzRnTzK+k
-	+TzTIfyDueo7RQEnLhw9aSDedICJBCpwjMNTH4Q4QqLCe/6Vvd1atfatJL1e3YqE
-	i2AbYp0WbLEukBWhzg4AeHJweS26qV4pgziFxgbLCedW0SZPv4IPwxn4OK3wkKS8
-	3iPCc3RLm/bKFNoHItyYok2yVPG3q56cvDvf1FcSFMrpGjUqLxTcgbH9dRm2URyR
-	Sp39NA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45etmbwr4y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Mar 2025 11:32:46 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52JBWjVn030309
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Mar 2025 11:32:45 GMT
-Received: from [10.152.204.0] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 19 Mar
- 2025 04:32:42 -0700
-Message-ID: <db232678-fa85-d75f-de72-d2b5e1ec611f@quicinc.com>
-Date: Wed, 19 Mar 2025 17:02:39 +0530
+	s=arc-20240116; t=1742384347; c=relaxed/simple;
+	bh=YgB8hf2iolWIUfIlPZLhZxKEx2ip6jdR/HD25QOJOYw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q1if+N5452vIC1l4xzFKzQJtuxigi+9RIDXtEFoh6qygSqq2/kaelHAhhBGKlv6YbLAn+aU1L679+uPqc87caNfpi5UfaZ6b7FnPQQUqu+Nh/gIr+qW4rlgxV2+JL03md7AIJs5omAgCVDPqwawD4JO5V5pYd4/NHdrAoh+V4SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lkm8xoUT; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43cf0d787eeso45738045e9.3;
+        Wed, 19 Mar 2025 04:39:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742384343; x=1742989143; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=23Zzwx8dQ7ApD2OL+JFkf/rOuLI+b6JbK1FtVimJKeY=;
+        b=lkm8xoUTCbcBk9YdbWCMNsRFqAsfAisBUhAjleFTET+HsXkqPopCDUzeQYi7Jfnosp
+         VcxoWLGW5rljsYceH7DNaWpfh/QVl8MIEAy+08B1RIIUBGHe5gQmXbp8s6itW29cTyjA
+         fa9b5B219HWvdH1chNkDlCpw41pySYOMpnJlY/ypcrcDyD7Wvw3zeEe/+1JtdVUW6kV3
+         N7W1z0loHvlIT/irC3wmHVsHvmBZhVKAcOQgoZFNpbyfBMbNMf1zHl0VY8uUscDgoA9N
+         te+0ZOdbgceI7X0kXig6yEf53Oa4dBVlWL7dsGXmifkb6bjU+U6cqIbPj5CIQdnefZh6
+         e8Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742384343; x=1742989143;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=23Zzwx8dQ7ApD2OL+JFkf/rOuLI+b6JbK1FtVimJKeY=;
+        b=kC/cCrgNycHKLby4Mh0poorVTLPVeD74lKy8ULvIn84vTEgzY7QV1xIXIf/fhlthLI
+         GzG6kB4fLKnEzyvg7cTIDZ1TshMVUhB72T5ik2f/Nf+WEdKw8VpPIjDuqjK4mPULqdLY
+         n2K5/gAwAWr8ZoYOBv2D42HejKyQhhbZlSMUUuuLL+79iCIavauszFSfIafEbu8H28eZ
+         zBEtWv8xR201RKO1YipLR1hOF2pqW+5tyx11CeqlmOXO4Vu1wkT7Y+Jr1GXH/hWwWsVw
+         rMu+UPWaXuPYACIubZBA6SaNLgYMrPfk+qEH+lr5QYbTU+f7i7aMoujVc5Zn90sTffRI
+         kZrg==
+X-Forwarded-Encrypted: i=1; AJvYcCUlf7Nn5wSQD7H4FbT4rpy0V0mQt+AInSn3Qh+9D/sCJHgbjXxh9D4flSSkRas1wNx9POyx50hESECwFE7THw==@vger.kernel.org, AJvYcCUrLXleo00692tSmNfFL6w5TI2hA+9ptF2Z67O+gWPkFQGxcaSEYQe1YEbazIRBWi59UOR5wPc/OFccF524@vger.kernel.org, AJvYcCX5y/6BBaNuKg2+l+ywcHkQkYEU1J9DA/bppo/oxpkM0u03J9tL1RXSQeUquIdxJZ7U/s0LYjJfSoiE@vger.kernel.org, AJvYcCXUDCD0jqoEkyQxUJhOKMV/tZHS1WSOp7KqChoBRPviVP0fnxMi+GuzWHGitk4NrWK6/A7wB5TN/A4e4v27UuTxdQk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4LIEWH8OWLT2bkSnDWgZhYpWmmkjtdKZH5AYfqJLJMrCXlEZv
+	cbIK5Jpt3OQEqfWc04xH56Zv/WVXXcXSzly1p14trwwUgIXj/vvy
+X-Gm-Gg: ASbGncumDz8norpbGubEBBJa57/SpXRnGv8ELFoIWAjVm5IEb/eTZyc1tFwj0SmbAXy
+	xiZtV7GHBz2G8/hqefy//AMKkQH1tQBKOour4I3a9dUu5T/mSaND+3BEf7+mNyNjwElbRtdpVFA
+	/Cg+WcrfRpj9PjCfob8OYA7vymd6Stcu6dOJlko/AIGRO4b+ePM5MyAQxiWtmAv6Q9kZLXiWB3o
+	ggCDaZJ/eXwU3YpMEeaZ0TQXKAgUDOy6jWeJpMXRYmjCSfzGkuGQLjyewrdwYLa1MPuv7ZWubVZ
+	FtYvNSQeOxreyRpaUFf8Q+rMzVHZPfG4CZBZUUcRgGQhzU4w4sQTPLnxHOj/S/5lVwt8XW/hBeL
+	70Jr++qS2fQovCoexIsnLW/w=
+X-Google-Smtp-Source: AGHT+IG/uReUa1PFDrYRs3h2HIwVSGTu7IcnjWIZm5iEXhoFmvhyCo2Cbk7y/wuCyXozf5+5PQwOzQ==
+X-Received: by 2002:a05:600c:a4c:b0:43c:f63c:babb with SMTP id 5b1f17b1804b1-43d4378163cmr13761135e9.1.1742384343101;
+        Wed, 19 Mar 2025 04:39:03 -0700 (PDT)
+Received: from [192.168.1.105] (91-139-201-119.stz.ddns.bulsat.com. [91.139.201.119])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d3ae04a94sm23904475e9.0.2025.03.19.04.39.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Mar 2025 04:39:02 -0700 (PDT)
+Message-ID: <8e8bbcde-8ed4-4239-ad96-6cffd8b9d65c@gmail.com>
+Date: Wed, 19 Mar 2025 13:39:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH net] wifi: ath12k: properly set single_chip_mlo_supp to
- true in ath12k_core_alloc()
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/8] phy: phy-snps-eusb2: make repeater optional
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Abel Vesa <abel.vesa@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
+ <20250223122227.725233-6-ivo.ivanov.ivanov1@gmail.com>
+ <sxrae5pmykx6ul2y7uc24fss2kdeezkkom7ev7mavt3fbc6ckv@tghyp3whuxnu>
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>, <neil.armstrong@linaro.org>,
-        "Jeff
- Johnson" <jeff.johnson@oss.qualcomm.com>,
-        Johannes Berg
-	<johannes@sipsolutions.net>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        "Aditya
- Kumar Singh" <quic_adisi@quicinc.com>
-CC: <linux-wireless@vger.kernel.org>, <ath12k@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20250303-topic-ath12k-fix-crash-v1-1-f871d4e4d968@linaro.org>
- <24b2f1f8-97bd-423a-acbd-9a5cd45e4a40@oss.qualcomm.com>
- <7901d7f0-d6d0-4bf3-89ad-d710e88477b7@linaro.org>
- <7b4b598f-bc13-aa4b-8677-71477e1f5434@quicinc.com>
- <8b05760b-db99-4b43-8444-d655b18d3699@kernel.org>
-From: Vasanthakumar Thiagarajan <quic_vthiagar@quicinc.com>
-In-Reply-To: <8b05760b-db99-4b43-8444-d655b18d3699@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+In-Reply-To: <sxrae5pmykx6ul2y7uc24fss2kdeezkkom7ev7mavt3fbc6ckv@tghyp3whuxnu>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dX11e6KSh6o7vps5J56_VN1R0zm_LpfV
-X-Proofpoint-GUID: dX11e6KSh6o7vps5J56_VN1R0zm_LpfV
-X-Authority-Analysis: v=2.4 cv=aMLwqa9m c=1 sm=1 tr=0 ts=67daab5e cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=6gNJTce8e7Hy4Yi6jooA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-19_03,2025-03-19_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 spamscore=0 clxscore=1011 phishscore=0 mlxscore=0
- suspectscore=0 malwarescore=0 mlxlogscore=837 bulkscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503190080
 
+On 3/19/25 13:08, Dmitry Baryshkov wrote:
+> On Sun, Feb 23, 2025 at 02:22:24PM +0200, Ivaylo Ivanov wrote:
+>> Some platforms initialize their eUSB2 to USB repeater in the previous
+>> stage bootloader and leave it in a working state for linux. Make the
+>> repeater optional in order to allow for reusing that state until
+>> proper repeater drivers are introduced.
+> Generally "works as it is setup by the bootloader" is a very invalid
+> justification. Please don't do that. We should not be depending on the
+> way the bootlader sets up the devices, unless that _really_ makes sense.
 
+It does, doesn't it? We still don't even have i2c up on Exynos2200, so bringing up
+the repeater before this patchset gets merged is a no-go. Either way, we should
+follow what bindings say. I will change the commit description a bit.
 
-On 3/19/2025 3:57 PM, Krzysztof Kozlowski wrote:
-> On 19/03/2025 10:06, Vasanthakumar Thiagarajan wrote:
->>>>> ---
->>>>> base-commit: 7eb172143d5508b4da468ed59ee857c6e5e01da6
->>>>> change-id: 20250303-topic-ath12k-fix-crash-49e9055c61a1
->>>>>
->>>>> Best regards,
->>>>
->>>> NAK since this will break QCN
->>>> There is a series under internal review to address MLO issues for WCN chipsets
->>>
->>> ???
->>>
->>> The original commit is wrong, this fixes the conversion, nothing else.
+Best regards,
+Ivaylo
+
+>
+>> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+>> ---
+>>  drivers/phy/phy-snps-eusb2.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> Nope. Driver changes to enable MLO with WCN chipset are not there yet.
->> Setting the mlo capability flag without having required driver changes
->> for WCN chipset will likely result in firmware crash. So the recommendation
->> is to enable MLO (in WCN) only when all the necessary driver changes
->> (in development, public posting in near future) are in place.
-> Really, these are your answers? There is regression and first reply is
-> upstream should wait for whatever you do internally. Second answer is
-> the same - public posting in near future?
-> 
+>> diff --git a/drivers/phy/phy-snps-eusb2.c b/drivers/phy/phy-snps-eusb2.c
+>> index 4e5914a76..dcc69c00a 100644
+>> --- a/drivers/phy/phy-snps-eusb2.c
+>> +++ b/drivers/phy/phy-snps-eusb2.c
+>> @@ -461,7 +461,7 @@ static int snps_eusb2_hsphy_probe(struct platform_device *pdev)
+>>  		return dev_err_probe(dev, ret,
+>>  				     "failed to get regulator supplies\n");
+>>  
+>> -	phy->repeater = devm_of_phy_get_by_index(dev, np, 0);
+>> +	phy->repeater = devm_of_phy_optional_get(dev, np, 0);
+>>  	if (IS_ERR(phy->repeater))
+>>  		return dev_err_probe(dev, PTR_ERR(phy->repeater),
+>>  				     "failed to get repeater\n");
+>> -- 
+>> 2.43.0
+>>
 
-May be I was not clear in my response. I was not telling MLO bug fixes were
-in the development. Actually the MLO feature itself is not enabled
-yet with WCN chip sets. Any code changes enabling it without full feature
-support would result in firmware crashes with the existing firmware binaries
-available in upstream.
-
-Vasanth
 
