@@ -1,98 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-52005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 031C2A6924F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 16:06:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D04BA692C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 16:15:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF1527A9A14
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 15:05:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AEE811B67774
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:40:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FF6522156E;
-	Wed, 19 Mar 2025 14:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C7F6204F65;
+	Wed, 19 Mar 2025 14:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ExlfGZ0w"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j8OHzMxh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BA722069E;
-	Wed, 19 Mar 2025 14:56:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBC2202981
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 14:36:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742396169; cv=none; b=EjWR8crAtG09wJuI+yDNQzbtfpvqT1XEKOsagc3TOPF3xzuUKNGvqXZ/iDbW/mYVJUJpVR6T3xla1N0fPv7t1d1gH5icFxjb4FhM/PAu7M+4CrHcHGZcGPukog9yYNMyR1lK7DHkmSpHy9vXy2d8DuwZ7ykIuqpW9RN6xQKbs2w=
+	t=1742394986; cv=none; b=bzKwiVKzRxkqAT45J78BzQCqKWSzoEFijAtjrpWVAobhsDo1Ib27FBWoU15nezQuGOylRV5qfEoOorcxx0x7BikCVYnzXCApRzLT5c+NGK4qYSkHTGZo4F7qZBNzz0H5NyNy0ktpCwpnUQbi5m6DbfgD9mMSrqZdhCfdxeum76U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742396169; c=relaxed/simple;
-	bh=uIfgqD7C1i00zcyeb/y3LvhT1Dks9hkfIXrDIFz061Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SySw7/5PLZBPV2/7JiLac+jIjA+12rJeiqAimkvP6iIc+eZX4ak1k/1qoFVUTjMTzqTQOjFt1gI0ZkNFSaRQVqdCS5Dktmvyy6T/Edk7uPGSE8HMAC4/IikWBLyFyCF5HcdWceKUZEsPOWKuBgLoRYfWDI6horTKIsHscXnhulQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ExlfGZ0w; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22622ddcc35so26913765ad.2;
-        Wed, 19 Mar 2025 07:56:07 -0700 (PDT)
+	s=arc-20240116; t=1742394986; c=relaxed/simple;
+	bh=4rsTf3BvXwD90ec9+gH33rXrg6dfzVuPYlYo3v5hMos=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Q5En9ppQlJE/8GeUeM9HnroF2QgIpKO0hVh/bLJL4swUqbMCsZYKU15Kp4l0t9hfVsr9VStYDbv19Vu+2+mmV/ZJTRAFvrUL4teytkXlU0fhkL1jcHGXG3mghQWtQ5O4Zo2mYchaZ4XkIlVrN8Gx5G3rp2My8PfwtgcWkGXAktA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j8OHzMxh; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4394a0c65fcso41953065e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 07:36:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742396166; x=1743000966; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2iJJUPboSKZ/bv7FjvwLTYQiRkvsdluYBcqCTVGU80Q=;
-        b=ExlfGZ0wZiQ8kQUS46Cn3bKMsmEhRLZGbnf15639pEle6WeySI5Fuw29wEIn0uQEi3
-         D0kijxOFcHBT9uaHhrU/U/kQH20byLNWRxkEBn4AcA9fTB4SjBKWbJzCEV2yocxiVz7V
-         CX2PQJwVQNNY1f1b79ljRXJavKAfQiQtgCfmZ3n0PfmEewRaMkeBaVFrSPbNje2nEm8j
-         5EQrC+tSEZ37qKhjIv7SrihfGZ8l5HK6Se1gPvs+tsv6ReihXAydDO9vhpDCwL8xZTOY
-         satYGwKxzQ3CGrvXKk4SuJUIAVr0Mj0mIv76K/KyngPZQ05wqZPI7Yh8p2mp1YIbDc0C
-         Cx1A==
+        d=linaro.org; s=google; t=1742394982; x=1742999782; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mHell48Kd7E4scgc1k3qnnupQqZvsaoDen0sn2BgyaY=;
+        b=j8OHzMxhJAR+0GkpPEDnQMq3ziXal2pib9iwlxUU6v/qojGVG9ymuB4Yy0RP95/txv
+         tJdKQsxii0dW9Gf2DQ340NjOtfe4SoevYEg/TvByS/5ZZ0xSSNZxfJWX0PyFyDTlS0e3
+         IOccLqC9gpY2XhwQF/VfP3knwZuaq94LV1QrbV/3hNapTd+oHACxEkMkYyMZcKzp383I
+         joImM1iZ6yhNaEtRH/dY19aS7qYtkt1PPhibHC9mi4HAkhbWcq6FE+HcCvyFxzudOQQV
+         QcsDIaf/WpUnjPkOjZPyrNBhedqAWs1rAptoYXZPCTDFWA3rueVnZq+GnOM09SuYuzTX
+         i7ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742396166; x=1743000966;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2iJJUPboSKZ/bv7FjvwLTYQiRkvsdluYBcqCTVGU80Q=;
-        b=tDuL/aoPItssOIYq4heeQkbgKnZ6HFDbI//3MyO5jw2ppu6Xi0/F0jLLm4bGrvuF39
-         GpWAEX4apkn6BukEKX913wvSTZ02anBwQLrbNHpCPEaOSFB18S6QF7xmIz3QOaz8mmtD
-         6z8ExmIUNY1Pb/sadYtFLTdtoRM7ni7L4UdNvy/FSXF16zIShoYCsFuZWvZEphbRd/kY
-         HByfQw4GCxt2iJ3nOPiDpTHm9e19US1aW12nL0LuTQwLl1118q3aNoVIFsFf5jBrazur
-         6I/KW8vfTXdMvE6KGVX2rp+5xF7xfRKhbx+kPIvYDWUzuljusYM3L2R2RB8FcLpG4X/u
-         K7fw==
-X-Forwarded-Encrypted: i=1; AJvYcCUhByuAKqnz8XIpTy/FzMURHMLkElVIsA6NQwt87TWb2hOIfFyxD2rX89oHFOva90+PCiP6Np75AbPjNMn3@vger.kernel.org, AJvYcCW3Ac+wYJwcGEvplEbpOD15iJtWz3yd+4/BNbj8QQeg4yjM3tQn9mfd8FDa5q0Z+wZkSZzlMwYkOCcW4tIJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8ME9cmdBr17c6rbvP3VO8eeCTUAVVmqsepOqXY4xIictiYkRK
-	8ROgpigAiOs1RCXrZsMlzquWuJQfkAtTI7SRC4ZVtsFhqqxYrZJK
-X-Gm-Gg: ASbGncsQ1AZqUxjM6fk03fIqsPznjXJ0qFjr+JPvYl9NGBoFN3Dy9zMp+ERWLfUG4kv
-	NaKsL8g7W1dXgQg8hfM/cBJDyWB6c3i86Z9D4BZDdLVokYZNUppZhBnKK5mDIY/UUzcEWZK+vKt
-	bVjW50tnaJb7S04Ywum/vbsG/i2tOwWeKyzEO9Qr8USnfMDvMThnw4CECSlSV/cx/qw2pfZds0E
-	qhmw6mnMP1elzbD/eOC+SX8iXpeT/gPyQEKtPTDpLG6+A2mB5ScsCSX6xHnNaaeh1uMJ6WPQg+C
-	yDabZGhu37QCshgxV1stR+QkdVWMVk64ndGDQCBm9QZWEB8GXCi53wZ/eQKZPTDRGRsMNX9VZK3
-	qsrUZnt2t2/hpjL4rpVw=
-X-Google-Smtp-Source: AGHT+IHerem0/qAVd8w9wdi6CqAo+LURLK868SOtur7NURzmdVJu7fqFKbLZ4OivC08XjLdtTOT8uw==
-X-Received: by 2002:a05:6a21:78a2:b0:1f5:80a3:b008 with SMTP id adf61e73a8af0-1fbecd36bd5mr5863055637.32.1742396166652;
-        Wed, 19 Mar 2025 07:56:06 -0700 (PDT)
-Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af56ea041e7sm9254606a12.44.2025.03.19.07.56.05
+        d=1e100.net; s=20230601; t=1742394982; x=1742999782;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mHell48Kd7E4scgc1k3qnnupQqZvsaoDen0sn2BgyaY=;
+        b=L4eCDHblBOzy4xVRHXrASKXC4A1YPS5so/kLQ6g8bRU4s4MnqeKZh7ykAREQFZoJZV
+         wX6j9oT5Qo9iyuFJDFiY1cImUXDZ2yl6/W82s9DdXrLHKOWX9pn2ccxDwQ9GR7njnjGq
+         tL7TQv2AeHX8kDdg38DcChIQvYfsORxZyUs8++5WeS/eiC+wn1mO446Umij8C3uhLMme
+         Piq/5AjTFrYXNiIrYD1XWSP+lbWqz2qyv1Qcr5Rrog0UYyMQOf3kPKiPjr2kQQKVZpxL
+         AC6/fXHT2y7+j2HW042Gut4J14B6dJH1WBWMuXKecPoXdIz77eIVGR1C5859yIthd4Zo
+         UGtg==
+X-Forwarded-Encrypted: i=1; AJvYcCV9FonwqTDf54AD+NuF9Uqhs2w7UqURJuMlu3Vptevb8ebWNntO0Mhv3PLLUvA7PynEbtnwVuj4uFSXOef0@vger.kernel.org
+X-Gm-Message-State: AOJu0YwG94bsnzVZ1WSFOSwpisuKJv5Oz6VD4lws4smxpbsdF0F8rOTq
+	sRE4+LTfokMSndzBuPoqbiGkNAtie8IknvxMvaa/rZGsOpwa0mt7tJPXQ5SupuE=
+X-Gm-Gg: ASbGncvZRz9RAHMJ6wImFMvJ8xcVd+nL1ewXfMY4Hv2oUV16Nw0necCKdBjWrIiRaP9
+	8ZEqMxMBkQKDM8okshxiz5Jd/8vBaVYhH8ZWaR0RO6hpHiYUBcU2ScmE++IFlxvmiy3MRhXB69L
+	EUmVEFdmW/EXaCT0qe1UFG6PrX2SOHF+zA4Q+2K88JzCRt0cjxNlx4gGQLdtEFRCx5N02bNXBBH
+	4Q+d7vcfQBsLrDMbPJutDwTeUZ4ePYGHjdNCagSOhkAlxniD0x3EOUQcvKm0v8qWBFKsAFygORQ
+	EZKHsfB8l1/s+x3qusxqmED1kOoTNqbs1LRyC51CVGAJUS/VsZR9BK4EtV6bfrSlA8hczQ==
+X-Google-Smtp-Source: AGHT+IEHxJWdyUAwFdqQMllBWP3fWJDJ8hzp5jsaaQhbCu6LdocHLQb5V4StWO1RuGPiDrtJiYq+CA==
+X-Received: by 2002:a05:600c:a54:b0:43c:fa52:7d2d with SMTP id 5b1f17b1804b1-43d43855435mr26504815e9.20.1742394982035;
+        Wed, 19 Mar 2025 07:36:22 -0700 (PDT)
+Received: from localhost.localdomain ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d43f32fcdsm21105845e9.7.2025.03.19.07.36.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 07:56:06 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org,
+        Wed, 19 Mar 2025 07:36:21 -0700 (PDT)
+From: srinivas.kandagatla@linaro.org
+To: andersson@kernel.org,
+	konradybcio@kernel.org
+Cc: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 32/34] drm/msm: Crashdec support for sparse
-Date: Wed, 19 Mar 2025 07:52:44 -0700
-Message-ID: <20250319145425.51935-33-robdclark@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250319145425.51935-1-robdclark@gmail.com>
-References: <20250319145425.51935-1-robdclark@gmail.com>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	ggo@tuxedocomputers.com,
+	ettore.chimenti@linaro.org,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: x1e80100-tuxedo-14: add sound support
+Date: Wed, 19 Mar 2025 14:36:13 +0000
+Message-Id: <20250319143613.11177-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,111 +94,260 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-In this case, we need to iterate the VMAs looking for ones with
-MSM_VMA_DUMP flag.
+This patch adds sound support for this platform,
+support includes
+	- 2x Speakers.
+	- 2x dmic
+	- Headset
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_gpu.c | 73 +++++++++++++++++++++++++----------
- 1 file changed, 52 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index e35125d88466..aca943dc0cd7 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -257,6 +257,50 @@ static void msm_gpu_crashstate_get_bo(struct msm_gpu_state *state,
- 	state->nr_bos++;
- }
+This patch depends on
+"arm64: dts: qcom: Add device tree for TUXEDO Elite 14 Gen1" patch
+ https://lkml.org/lkml/2025/3/6/867
+
+ucm changes:
+https://github.com/Srinivas-Kandagatla/alsa-ucm-conf/tree/x1e80100-tuxedo
+
+tplg changes:
+https://github.com/Srinivas-Kandagatla/audioreach-topology/tree/tuxedo-elite-14
+
+ .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 190 ++++++++++++++++++
+ 1 file changed, 190 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+index 86bdec4a2dd8..465221b8a3fa 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+@@ -20,6 +20,34 @@ aliases {
+ 		serial0 = &uart21;
+ 	};
  
-+static void crashstate_get_bos(struct msm_gpu_state *state, struct msm_gem_submit *submit)
-+{
-+	extern bool rd_full;
 +
-+	if (!submit)
-+		return;
++	wcd938x: audio-codec {
++		compatible = "qcom,wcd9385-codec";
 +
-+	if (msm_context_is_vmbind(submit->queue->ctx)) {
-+		struct drm_gpuva *vma;
-+		unsigned cnt = 0;
++		pinctrl-0 = <&wcd_default>;
++		pinctrl-names = "default";
 +
-+		mutex_lock(&to_msm_vm(submit->vm)->vm_lock);
++		qcom,micbias1-microvolt = <1800000>;
++		qcom,micbias2-microvolt = <1800000>;
++		qcom,micbias3-microvolt = <1800000>;
++		qcom,micbias4-microvolt = <1800000>;
++		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
++		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
++		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
++		qcom,rx-device = <&wcd_rx>;
++		qcom,tx-device = <&wcd_tx>;
 +
-+		drm_gpuvm_for_each_va (vma, submit->vm)
-+			cnt++;
++		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
 +
-+		state->bos = kcalloc(cnt, sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
++		vdd-buck-supply = <&vreg_l15b_1p8>;
++		vdd-rxtx-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l15b_1p8>;
++		vdd-mic-bias-supply = <&vreg_bob1>;
 +
-+		drm_gpuvm_for_each_va (vma, submit->vm) {
-+			bool dump = rd_full || (vma->flags & MSM_VMA_DUMP);
 +
-+			/* Skip MAP_NULL/PRR VMAs: */
-+			if (!vma->gem.obj)
-+				continue;
++		#sound-dai-cells = <1>;
++	};
 +
-+			msm_gpu_crashstate_get_bo(state, vma->gem.obj, vma->va.addr,
-+						  dump, vma->gem.offset, vma->va.range);
-+		}
+ 	chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+@@ -129,6 +157,85 @@ vph_pwr: regulator-vph-pwr {
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 	};
 +
-+		mutex_unlock(&to_msm_vm(submit->vm)->vm_lock);
-+	} else {
-+		state->bos = kcalloc(submit->nr_bos,
-+			sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
++	sound {
++		compatible = "qcom,x1e80100-sndcard";
++		model = "X1E80100-TUXEDO-Elite-14";
++		audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
++				"SpkrRight IN", "WSA WSA_SPK2 OUT",
++				"IN1_HPHL", "HPHL_OUT",
++				"IN2_HPHR", "HPHR_OUT",
++				"AMIC2", "MIC BIAS2",
++				"VA DMIC0", "MIC BIAS1",
++				"VA DMIC1", "MIC BIAS1",
++				"VA DMIC0", "VA MIC BIAS1",
++				"VA DMIC1", "VA MIC BIAS1",
++				"TX SWR_INPUT1", "ADC2_OUTPUT";
 +
-+		for (int i = 0; state->bos && i < submit->nr_bos; i++) {
-+			struct drm_gem_object *obj = submit->bos[i].obj;
-+			bool dump = rd_full || (submit->bos[i].flags & MSM_SUBMIT_BO_DUMP);
++		wcd-playback-dai-link {
++			link-name = "WCD Playback";
 +
-+			msm_gpu_crashstate_get_bo(state, obj, submit->bos[i].iova,
-+						  dump, 0, obj->size);
-+		}
-+	}
-+}
++			cpu {
++				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
++			};
 +
- static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
- 		struct msm_gem_submit *submit, char *comm, char *cmd)
- {
-@@ -279,30 +323,17 @@ static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
- 	state->cmd = kstrdup(cmd, GFP_KERNEL);
- 	state->fault_info = gpu->fault_info;
++			codec {
++				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wcd-capture-dai-link {
++			link-name = "WCD Capture";
++
++			cpu {
++				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
++			};
++
++			codec {
++				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wsa-dai-link {
++			link-name = "WSA Playback";
++
++			cpu {
++				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
++			};
++
++			codec {
++				sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&lpass_wsamacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		va-dai-link {
++			link-name = "VA Capture";
++
++			cpu {
++				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
++			};
++
++			codec {
++				sound-dai = <&lpass_vamacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++	};
+ };
  
--	if (submit) {
--		extern bool rd_full;
--		int i;
--
--		if (state->fault_info.ttbr0) {
--			struct msm_gpu_fault_info *info = &state->fault_info;
--			struct msm_mmu *mmu = to_msm_vm(submit->vm)->mmu;
--
--			msm_iommu_pagetable_params(mmu, &info->pgtbl_ttbr0,
--						   &info->asid);
--			msm_iommu_pagetable_walk(mmu, info->iova, info->ptes);
--		}
-+	if (submit && state->fault_info.ttbr0) {
-+		struct msm_gpu_fault_info *info = &state->fault_info;
-+		struct msm_mmu *mmu = to_msm_vm(submit->vm)->mmu;
+ &apps_rsc {
+@@ -160,6 +267,13 @@ vreg_bob2: bob2 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
  
--		state->bos = kcalloc(submit->nr_bos,
--			sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
--
--		for (i = 0; state->bos && i < submit->nr_bos; i++) {
--			struct drm_gem_object *obj = submit->bos[i].obj;
--			bool dump = rd_full || (submit->bos[i].flags & MSM_SUBMIT_BO_DUMP);
--			msm_gpu_crashstate_get_bo(state, obj, submit->bos[i].iova,
--						  dump, 0, obj->size);
--		}
-+		msm_iommu_pagetable_params(mmu, &info->pgtbl_ttbr0,
-+					   &info->asid);
-+		msm_iommu_pagetable_walk(mmu, info->iova, info->ptes);
- 	}
- 
-+	crashstate_get_bos(state, submit);
++		vreg_l1b_1p8: ldo1 {
++			regulator-name = "vreg_l1b_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
 +
- 	/* Set the active crash state to be dumped on failure */
- 	gpu->crashstate = state;
+ 		vreg_l2b_3p0: ldo2 {
+ 			regulator-name = "vreg_l2b_3p0";
+ 			regulator-min-microvolt = <3072000>;
+@@ -534,6 +648,24 @@ eusb6_repeater: redriver@4f {
  
+ };
+ 
++&lpass_tlmm {
++	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
++		pins = "gpio12";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
++};
++
++&lpass_vamacro {
++	pinctrl-0 = <&dmic01_default>;
++	pinctrl-names = "default";
++
++	vdd-micb-supply = <&vreg_l1b_1p8>;
++	qcom,dmic-sample-rate = <4800000>;
++};
++
+ &mdss {
+ 	status = "okay";
+ };
+@@ -648,6 +780,64 @@ &smb2360_1 {
+ 	status = "okay";
+ };
+ 
++&smb2360_1_eusb2_repeater {
++	vdd18-supply = <&vreg_l3d_1p8>;
++	vdd3-supply = <&vreg_l14b_3p0>;
++};
++
++&swr0 {
++	status = "okay";
++
++	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
++	pinctrl-names = "default";
++
++	/* WSA8845, Left Speaker */
++	left_spkr: speaker@0,0 {
++		compatible = "sdw20217020400";
++		reg = <0 0>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "SpkrLeft";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <1 2 3 7 10 13>;
++	};
++
++	/* WSA8845, Right Speaker */
++	right_spkr: speaker@0,1 {
++		compatible = "sdw20217020400";
++		reg = <0 1>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "SpkrRight";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <4 5 6 7 11 13>;
++	};
++};
++
++&swr1 {
++	status = "okay";
++
++	/* WCD9385 RX */
++	wcd_rx: codec@0,4 {
++		compatible = "sdw20217010d00";
++		reg = <0 4>;
++		qcom,rx-port-mapping = <1 2 3 4 5>;
++	};
++};
++
++&swr2 {
++	status = "okay";
++
++	/* WCD9385 TX */
++	wcd_tx: codec@0,3 {
++		compatible = "sdw20217010d00";
++		reg = <0 3>;
++		qcom,tx-port-mapping = <2 2 3 4>;
++	};
++};
++
+ &tlmm {
+ 	gpio-reserved-ranges = <28 4>, /* Unused */
+ 			       <44 4>, /* SPI (TPM) */
 -- 
-2.48.1
+2.39.5
 
 
