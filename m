@@ -1,358 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-51972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 681A0A6927D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 16:10:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F00A5A6933A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 16:25:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F15D1B864DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:55:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0BACC1B63DDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:57:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9424715ECD7;
-	Wed, 19 Mar 2025 14:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33FA01E25E8;
+	Wed, 19 Mar 2025 14:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YtUkGX/T"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ht4KrR1c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF411D90DD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 14:46:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72DA15574E;
+	Wed, 19 Mar 2025 14:54:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395581; cv=none; b=N5JhxbCoXTXeus7q4f9sVZCzBeW5f8/fHNdspI+6VCjssQcS1gOSg112V8HEuV36kDyF6RD7BppU7YEF8NGspnoq8KVvBceJ4chg1wU2dne1ZB6aoc2wDr0yjWkhcd9PLHLv/G3DUcQ9wmwComo19WSJtHywP+EIup8MUU3KBo8=
+	t=1742396091; cv=none; b=B2JBiOdQmljRRonLuZLwePG4xwe9HvwGTwUAul8WdTvGDriY7q4XjfXPPceKC8xrieEeO5JdmME118Sqz/nBJWG4xOFtBRlMSSSBTVEKcu9hNrw4TZkd/ViE8zx+PPbMZkJyvO1xbdg/zwEEspeMLxkXsRnDBKWROfQHCvaynBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395581; c=relaxed/simple;
-	bh=hBrOklqwgjHinnnfZuEdnIsi5aMBvh5YuwuDFUV6gtI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NEY2uKxSWwuhQgoJN7/Z0VhxplzNKcP5wfUM8rVn2rwGlfrCNef895PG+E/6l5CY0wzQWGnb0Qrw2aeHTibQRYc1qeN3aOOutQPMYtRnqzR3E/5pfeGgUQMYNcoJGogqPBiIiFxB1m0dAcouFB/BBw4wI3XpwnWlg8/jqzBlDsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YtUkGX/T; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3912e96c8e8so4521401f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 07:46:19 -0700 (PDT)
+	s=arc-20240116; t=1742396091; c=relaxed/simple;
+	bh=0C0WG8RuFcb4duEd3LV7+fbJ5H9jCOyDqUbHqQ5OjpQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hwRKv1Y3SOBFAgSueCoxA3eFXAqKtG95zKTkar7X/Co6M8GUhRm2d0dw2usDBRYPplqXDciZxIcgMz5N3V6uGk0x/fm84HJnK//wn+kYzV8AeuIYmO157qGBEqXuJjIF2+b/o/LzPZc8RXvnle335BzETTKXtfhkELpf8E/vKYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ht4KrR1c; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2264aefc45dso23454095ad.0;
+        Wed, 19 Mar 2025 07:54:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742395578; x=1743000378; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=uY75c27hvYxi7T7rPerH8pZpgrDSKhbOeIOLlJdu6ao=;
-        b=YtUkGX/TNoOVyZ+kX/yjkYiGTadATC8SMc8ZEJb3LX8kTfJRmxFUwoPPENWO+6XErW
-         INWZ0CBUbTEHc/hM4KFT1iyDb/g0LxR+vJUmcjEDhkQrci+Ty6uVmMWdO7rPSv/OFAEh
-         gUiNPWSifGU91nmNH6TNJw4hJsS/X+HyrK+JzrWL2jw+mHIzQYmEWN0ELAutXJmLIzf3
-         qVxVS9f1eAiW8L/kNYH6GGQf4Hrvdb49cEdXDX5uGEi8RSH+IyuYU2vDnLbnvNPxVF+U
-         QEeNyyL0k1xHe9kQqQ1SfgtOUuFA0H/e1MueKqwrIBFY5f9MIjE2jseevmb8HsethGEx
-         rFLA==
+        d=gmail.com; s=20230601; t=1742396089; x=1743000889; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5dZtNKeQwhga7C/NdCHWATB5ZEqb/G6D875fLgA0Gp4=;
+        b=ht4KrR1cl/arWFhXYB5QGojq9WZGUoGfvdUYAUriqsr4pzwgBeQ0bEZIG4902tkisB
+         o68dUMlUjD06Wb1EAgP/6LRUQubwUMrelnjnvr1PJ8s2/KsYpOYXwXmClgiVkPtVIjwg
+         c0ugfrVlZH0t33Sd2xexW7xa1dthQjHqIlqR6I6CV+pba/Veu4OWovFB53gfxNfJfWbQ
+         MqmFKOHqPLxDmeej3+Gvzn0T1CPdpCs7PoMsfGLEobNEM0P/FMOKUG0wrrDYdxwaIdHt
+         YeZBF/7o80gt2JIEH9Nf1v2bKCWY4Zl62FCxfsgM2V5s3eqh4ighDcT03alHyVXbfnHy
+         NIew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742395578; x=1743000378;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uY75c27hvYxi7T7rPerH8pZpgrDSKhbOeIOLlJdu6ao=;
-        b=TJHfW2wG3pGpOGXYkftghpdGNyQ/Js/K89KpGBeXh/hcGUmJ+zg8pLdHWHNX9jHuO7
-         LdqsnopjSGYrqft2lPGE6caj16bI4H2M894SU8vgAJXhK2dC71LlGt8WO3Xl6pckviyT
-         uEEhIiZxfu30DO89FINsMe/oA6+oAO86TmcGIMdMci1p+9pb413AwzFwQsIVIlQPckZ0
-         XQ0tGHck/AOTq6baUH4iN+8syyZiM8dDQK2VMm8gDXqw11XdDoKPthbAkg06ZWRhAeNR
-         s+lEh+ETCRM23QEd1m3RaGuah0g9sLgtISd+QM3RFEH/3sGGQR3BN8d1rcNCPs6evxxr
-         ccTg==
-X-Forwarded-Encrypted: i=1; AJvYcCWSwh9l6SzKIDlS2tBBFeZu1Ql2EnLxXht0UvWBAW311CmG+J1LoeEoYnsitQewAcwKogX4NBq96iv8Dra6@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLkd+F87WUUystzB7/OM5GMIzvgWi9sMTqJ41qTFXlpoWpTqhf
-	Lffo/t6kT7YIBAGvLbxypq8F7AtYacEDYrZqa95SL1HLYwrVILxETXXA6YReaxpzCQwxf4ttQmP
-	fKiPYnyyPKWQpJut3hLnBH5U9Z57Ag8e5J0dz+YnJXmqV/D0Jwok=
-X-Gm-Gg: ASbGncscZjQuoyo26ysmQ7cqhCbo4ptjTcIzllOfcyW3EJl2BC+rXS4cRwbutQ5Np45
-	B1wnu2AjIUuXFU0w0HP/Bn6B73VprpHkHdbaQPo/OectzOapzTqXgGxI4mUU/qmh6XT8vtPm+VJ
-	aoIfS0yITeaNZLAJk+Rj8bz9j6YfYyo5WVZ2PkzctxgjJCTIbHgSwjPVg5Vp8=
-X-Google-Smtp-Source: AGHT+IH178JoZDnD1r/uZZTNtV44AHbXZSumbbPNh9ifglxv/RA9z44nfkfPlRV0a7wOqBb2k/i+fxeD0JSTTZ2gt7U=
-X-Received: by 2002:a05:6000:1fa4:b0:38d:dd52:1b5d with SMTP id
- ffacd0b85a97d-399739b672cmr2622102f8f.4.1742395577593; Wed, 19 Mar 2025
- 07:46:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742396089; x=1743000889;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5dZtNKeQwhga7C/NdCHWATB5ZEqb/G6D875fLgA0Gp4=;
+        b=VGbBnAa2TOtYTRgJVYtfxi0Zk+8Hk44nIukUYa5apeCHE9mw90HSH6Dxg0iI3x7g/d
+         zJ/7d/TwsUgUSfiU5BZcWl6KZKXcUB2JG8w6SiiJPX/NvaO0okyaJmxlQ2BuQ0FVSOKo
+         HR1trb9BmOyXHqcfxSRrkK1GWGMaEJL1GHzq2ulH8GGhwr9Y3q9xeVJEMBxapzLEZek+
+         5kFoWP/GA7mTPamOJp3V6WXHShVr8/0kZCPFmZXjYZxmkauGanfJhArnollfQU2agw5n
+         0YiFfnf8kvm20tJ/Q0wLf4uoC57KSflVl9LUWe31iJmIjoSkePpxE/U3DG0HLkF2xix8
+         yoig==
+X-Forwarded-Encrypted: i=1; AJvYcCUjJj8qvxHJ4BrtItkX2Ryiiwk+SG2GUHKp2Fy2t9t9lt0dd92LJd7y+DiP2edGe68ms1Dz2iN1fvgZjVcc@vger.kernel.org, AJvYcCVUvJRQ28FOTeL8wLwpq7DB3w8rgLBUNEYsmhbPhPFgSHwUUDs+R0GKec7NNQKbCnEqCFL+wmluRgv+HSsG@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZqKEiei4wavD41GEZ/J8OqBV7XqI9wvYjTlkFpyK6Z0XCpMWS
+	QH7LYmRrJPLMyshek4f8wkH9XHYHK7ySS0rIQEW4egFMd2l69vDF
+X-Gm-Gg: ASbGnctWwVhMNOT0recMz+oKKEan5OTsNT3LOrJGeFZmMEuqSdzW0amfYSzEfynXxAq
+	lMiVRD0A/5sIs5QrGLvKXUe49YWzSqYdBqKFzBWAaj29zulpa5Hs0i9wh8fuqkN568xH2BAWhcP
+	K3T34Sc+EtWLJj/GfkdALaiSX3oI32l8tv5KyDvqIu7r87r69BR/VgpLE41Ld1KfPHOQxsDviRT
+	XzX2ctxTT/95MFkbOe/NpcRmlfVV4jHllfiZILi0Ml3iNzxIIOey5l2dIYQIQz7A85rGwTiTrVR
+	SwdEvWsQ1poX1xQgI4QIdCyxiH5zyCge4TGAJBTn8XYNSw+akRJUtt/c7K3M41Nu/jeDYsyJyfj
+	ugE2cTzxHwOcFSVjW8aA=
+X-Google-Smtp-Source: AGHT+IFOMy8+oTohkcWuHiW4WgtVgQ/iqyS7y8TuEZyHPSXdEIIYmiy16h8Qp/B345NHcEo1TSCqRg==
+X-Received: by 2002:a05:6a00:e09:b0:737:6e1f:29da with SMTP id d2e1a72fcca58-7376e1f2ae7mr4929307b3a.21.1742396088919;
+        Wed, 19 Mar 2025 07:54:48 -0700 (PDT)
+Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7371167df97sm11699520b3a.114.2025.03.19.07.54.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Mar 2025 07:54:47 -0700 (PDT)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	Rob Clark <robdclark@chromium.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 01/34] drm/gpuvm: Don't require obj lock in destructor path
+Date: Wed, 19 Mar 2025 07:52:13 -0700
+Message-ID: <20250319145425.51935-2-robdclark@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250319145425.51935-1-robdclark@gmail.com>
+References: <20250319145425.51935-1-robdclark@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250319143613.11177-1-srinivas.kandagatla@linaro.org>
-In-Reply-To: <20250319143613.11177-1-srinivas.kandagatla@linaro.org>
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Wed, 19 Mar 2025 14:46:06 +0000
-X-Gm-Features: AQ5f1Jo5Hyz1aVgEcpD9y-ij-3B4c4dSQqYaAguffMS6ILu1gyAfkCK2nZF0K4Y
-Message-ID: <CACr-zFArEKi89Lj9iDR_Y3BKKLa=5FEnLMO36Z0MMAUSRAW7NA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-tuxedo-14: add sound support
-To: srinivas.kandagatla@linaro.org
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	ggo@tuxedocomputers.com, ettore.chimenti@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Srini,
+From: Rob Clark <robdclark@chromium.org>
 
-On Wed, 19 Mar 2025 at 14:43, <srinivas.kandagatla@linaro.org> wrote:
->
-> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->
-> This patch adds sound support for this platform,
-> support includes
->         - 2x Speakers.
->         - 2x dmic
->         - Headset
->
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->
-> This patch depends on
-> "arm64: dts: qcom: Add device tree for TUXEDO Elite 14 Gen1" patch
->  https://lkml.org/lkml/2025/3/6/867
->
-> ucm changes:
-> https://github.com/Srinivas-Kandagatla/alsa-ucm-conf/tree/x1e80100-tuxedo
->
-> tplg changes:
-> https://github.com/Srinivas-Kandagatla/audioreach-topology/tree/tuxedo-elite-14
+See commit a414fe3a2129 ("drm/msm/gem: Drop obj lock in
+msm_gem_free_object()") for justification.
 
-I think it'd be nice to create merge requests for these and include
-those links in the cover letter, what do you think?
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/drm_gpuvm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
->
->  .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 190 ++++++++++++++++++
->  1 file changed, 190 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-> index 86bdec4a2dd8..465221b8a3fa 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-> @@ -20,6 +20,34 @@ aliases {
->                 serial0 = &uart21;
->         };
->
-> +
+diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
+index f9eb56f24bef..1e89a98caad4 100644
+--- a/drivers/gpu/drm/drm_gpuvm.c
++++ b/drivers/gpu/drm/drm_gpuvm.c
+@@ -1511,7 +1511,9 @@ drm_gpuvm_bo_destroy(struct kref *kref)
+ 	drm_gpuvm_bo_list_del(vm_bo, extobj, lock);
+ 	drm_gpuvm_bo_list_del(vm_bo, evict, lock);
+ 
+-	drm_gem_gpuva_assert_lock_held(obj);
++	if (kref_read(&obj->refcount) > 0)
++		drm_gem_gpuva_assert_lock_held(obj);
++
+ 	list_del(&vm_bo->list.entry.gem);
+ 
+ 	if (ops && ops->vm_bo_free)
+@@ -1871,7 +1873,8 @@ drm_gpuva_unlink(struct drm_gpuva *va)
+ 	if (unlikely(!obj))
+ 		return;
+ 
+-	drm_gem_gpuva_assert_lock_held(obj);
++	if (kref_read(&obj->refcount) > 0)
++		drm_gem_gpuva_assert_lock_held(obj);
+ 	list_del_init(&va->gem.entry);
+ 
+ 	va->vm_bo = NULL;
+-- 
+2.48.1
 
-There's an additional new line here ?
-
-> +       wcd938x: audio-codec {
-> +               compatible = "qcom,wcd9385-codec";
-> +
-> +               pinctrl-0 = <&wcd_default>;
-> +               pinctrl-names = "default";
-> +
-> +               qcom,micbias1-microvolt = <1800000>;
-> +               qcom,micbias2-microvolt = <1800000>;
-> +               qcom,micbias3-microvolt = <1800000>;
-> +               qcom,micbias4-microvolt = <1800000>;
-> +               qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-> +               qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-> +               qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-> +               qcom,rx-device = <&wcd_rx>;
-> +               qcom,tx-device = <&wcd_tx>;
-> +
-> +               reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
-> +
-> +               vdd-buck-supply = <&vreg_l15b_1p8>;
-> +               vdd-rxtx-supply = <&vreg_l15b_1p8>;
-> +               vdd-io-supply = <&vreg_l15b_1p8>;
-> +               vdd-mic-bias-supply = <&vreg_bob1>;
-> +
-> +
-> +               #sound-dai-cells = <1>;
-> +       };
-> +
->         chosen {
->                 stdout-path = "serial0:115200n8";
->         };
-> @@ -129,6 +157,85 @@ vph_pwr: regulator-vph-pwr {
->                 regulator-always-on;
->                 regulator-boot-on;
->         };
-> +
-> +       sound {
-> +               compatible = "qcom,x1e80100-sndcard";
-> +               model = "X1E80100-TUXEDO-Elite-14";
-> +               audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
-> +                               "SpkrRight IN", "WSA WSA_SPK2 OUT",
-> +                               "IN1_HPHL", "HPHL_OUT",
-> +                               "IN2_HPHR", "HPHR_OUT",
-> +                               "AMIC2", "MIC BIAS2",
-> +                               "VA DMIC0", "MIC BIAS1",
-> +                               "VA DMIC1", "MIC BIAS1",
-> +                               "VA DMIC0", "VA MIC BIAS1",
-> +                               "VA DMIC1", "VA MIC BIAS1",
-> +                               "TX SWR_INPUT1", "ADC2_OUTPUT";
-> +
-> +               wcd-playback-dai-link {
-> +                       link-name = "WCD Playback";
-> +
-> +                       cpu {
-> +                               sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-> +                       };
-> +
-> +                       codec {
-> +                               sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
-> +                       };
-> +
-> +                       platform {
-> +                               sound-dai = <&q6apm>;
-> +                       };
-> +               };
-> +
-> +               wcd-capture-dai-link {
-> +                       link-name = "WCD Capture";
-> +
-> +                       cpu {
-> +                               sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-> +                       };
-> +
-> +                       codec {
-> +                               sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
-> +                       };
-> +
-> +                       platform {
-> +                               sound-dai = <&q6apm>;
-> +                       };
-> +               };
-> +
-> +               wsa-dai-link {
-> +                       link-name = "WSA Playback";
-> +
-> +                       cpu {
-> +                               sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-> +                       };
-> +
-> +                       codec {
-> +                               sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&lpass_wsamacro 0>;
-> +                       };
-> +
-> +                       platform {
-> +                               sound-dai = <&q6apm>;
-> +                       };
-> +               };
-> +
-> +               va-dai-link {
-> +                       link-name = "VA Capture";
-> +
-> +                       cpu {
-> +                               sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-> +                       };
-> +
-> +                       codec {
-> +                               sound-dai = <&lpass_vamacro 0>;
-> +                       };
-> +
-> +                       platform {
-> +                               sound-dai = <&q6apm>;
-> +                       };
-> +               };
-> +       };
->  };
->
->  &apps_rsc {
-> @@ -160,6 +267,13 @@ vreg_bob2: bob2 {
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->                 };
->
-> +               vreg_l1b_1p8: ldo1 {
-> +                       regulator-name = "vreg_l1b_1p8";
-> +                       regulator-min-microvolt = <1800000>;
-> +                       regulator-max-microvolt = <1800000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
->                 vreg_l2b_3p0: ldo2 {
->                         regulator-name = "vreg_l2b_3p0";
->                         regulator-min-microvolt = <3072000>;
-> @@ -534,6 +648,24 @@ eusb6_repeater: redriver@4f {
->
->  };
->
-> +&lpass_tlmm {
-> +       spkr_01_sd_n_active: spkr-01-sd-n-active-state {
-> +               pins = "gpio12";
-> +               function = "gpio";
-> +               drive-strength = <16>;
-> +               bias-disable;
-> +               output-low;
-> +       };
-> +};
-> +
-> +&lpass_vamacro {
-> +       pinctrl-0 = <&dmic01_default>;
-> +       pinctrl-names = "default";
-> +
-> +       vdd-micb-supply = <&vreg_l1b_1p8>;
-> +       qcom,dmic-sample-rate = <4800000>;
-> +};
-> +
->  &mdss {
->         status = "okay";
->  };
-> @@ -648,6 +780,64 @@ &smb2360_1 {
->         status = "okay";
->  };
->
-> +&smb2360_1_eusb2_repeater {
-> +       vdd18-supply = <&vreg_l3d_1p8>;
-> +       vdd3-supply = <&vreg_l14b_3p0>;
-> +};
-> +
-> +&swr0 {
-> +       status = "okay";
-> +
-> +       pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
-> +       pinctrl-names = "default";
-> +
-> +       /* WSA8845, Left Speaker */
-> +       left_spkr: speaker@0,0 {
-> +               compatible = "sdw20217020400";
-> +               reg = <0 0>;
-> +               reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-> +               #sound-dai-cells = <0>;
-> +               sound-name-prefix = "SpkrLeft";
-> +               vdd-1p8-supply = <&vreg_l15b_1p8>;
-> +               vdd-io-supply = <&vreg_l12b_1p2>;
-> +               qcom,port-mapping = <1 2 3 7 10 13>;
-> +       };
-> +
-> +       /* WSA8845, Right Speaker */
-> +       right_spkr: speaker@0,1 {
-> +               compatible = "sdw20217020400";
-> +               reg = <0 1>;
-> +               reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-> +               #sound-dai-cells = <0>;
-> +               sound-name-prefix = "SpkrRight";
-> +               vdd-1p8-supply = <&vreg_l15b_1p8>;
-> +               vdd-io-supply = <&vreg_l12b_1p2>;
-> +               qcom,port-mapping = <4 5 6 7 11 13>;
-> +       };
-> +};
-> +
-> +&swr1 {
-> +       status = "okay";
-> +
-> +       /* WCD9385 RX */
-> +       wcd_rx: codec@0,4 {
-> +               compatible = "sdw20217010d00";
-> +               reg = <0 4>;
-> +               qcom,rx-port-mapping = <1 2 3 4 5>;
-> +       };
-> +};
-> +
-> +&swr2 {
-> +       status = "okay";
-> +
-> +       /* WCD9385 TX */
-> +       wcd_tx: codec@0,3 {
-> +               compatible = "sdw20217010d00";
-> +               reg = <0 3>;
-> +               qcom,tx-port-mapping = <2 2 3 4>;
-> +       };
-> +};
-> +
->  &tlmm {
->         gpio-reserved-ranges = <28 4>, /* Unused */
->                                <44 4>, /* SPI (TPM) */
-> --
-> 2.39.5
->
->
 
