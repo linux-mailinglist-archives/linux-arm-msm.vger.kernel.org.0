@@ -1,342 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-51971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D0A1A6920A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 16:00:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F41C5A69229
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 16:03:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 440098A45A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:54:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90EC946632B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:57:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 907591C5F2D;
-	Wed, 19 Mar 2025 14:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D78521C7013;
+	Wed, 19 Mar 2025 14:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fjIDdjUn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gkS6uoRk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1D3214216
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 14:44:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294E41B2194;
+	Wed, 19 Mar 2025 14:54:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395455; cv=none; b=dhkPBjanNWr5X+zqSrQGnBRTDRUFae+/9AO1xktRV538gV82IMbEuRNTXbpn5nVPrdaSfQVGfbRN/Ta/cgQvXvTIW3xIeUCr3YLvMQOV6INTKqIeeFAPh75SiXwp6zkTZhYfGBz5DBliIhFGaxlb4PpKue5/Oy3DKFIzIVWHvsE=
+	t=1742396089; cv=none; b=jaFqMz1d5e9jsdsVNVL85LJ6iGaLeoNOBlSy/q7cDoxOkkUMTpT2Tb/ClcM2H8OIdBIlvzn5QNy5lloB0+zLkUSq90LvREbhqN3emAgFZrYxRRQQktJWUiD/u9wD6ETlllHYfddqxwhUB3FG+1/jzDaHzMrCQ3dURTm8N5iQKeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395455; c=relaxed/simple;
-	bh=cSu3wr2OPZA25FwTnt0uRRtX/Si/NazjUU2gfv6K0KE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aDdW0fzzNDNKEuPeij+ihPBepvNi/+9PkMociCCXjFKhtGWUJmeDu6TCfhuJxuyV+OpXz9O6erdbktRaReGDHOa8hwI4dZ/BGzp92Z1bNA/0g6N97dJOE1+MYsgSu9cU8wsywiQIBaqPiFXhCkto8DVIkyyjeWxZ64OPv7fAQu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fjIDdjUn; arc=none smtp.client-ip=209.85.222.173
+	s=arc-20240116; t=1742396089; c=relaxed/simple;
+	bh=AGyODwLobG1NCgwCezUM+zv2QHG0aN1ehA3R8olmM0U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iP6ljMKhYYk25cu0ipBYMvRX/TjZYLnm05mgD1bBh77FOYO0QTi3yiC8vLQLEdKDfQlXeUSV8w/oQ+TWpp9/I6L5jWLIWAg+g02Icj7R72b9wE/tymJwhxVaQ9TDy35WZl0/sm5oVwqmiCrXVkBtCZyWcudHGI8q37WO6ByffEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gkS6uoRk; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7c553948a30so20391885a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 07:44:13 -0700 (PDT)
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-225fbdfc17dso71123155ad.3;
+        Wed, 19 Mar 2025 07:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742395453; x=1743000253; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8nLyvaotott0DF5YTNTIkFLdWiK7/jsmUUyniYPMfxs=;
-        b=fjIDdjUnZ2/2+BNveWundygEsh0d/DsiiJkuu37SNLiwGnkJOBPZLRYtEmPcls2ezC
-         TwETumNf33dTOlbtvA2iis3fdEmcw5QQhvQEmjhSkY19CFsvTOIROt2tt1PLpWVmkPRN
-         C+o+0FtuL+W8jeXTNp7r5J2DSjyVBwAJFop0x9IH9lx2hsvvNjViqGuMWo36L9BFApxf
-         N7krHsBLiRN+iuJnZUDTtooxEQClu8E7qKxvRN0ivzIQvmA7G7zzs6bptGNcLsgQyqsP
-         o4rqBl+OYS1hFBnRJ1wor3wZzvZ8d7S2GlQ9GaWrUL2St7YTMRjKANmcBpiBzwszOB5V
-         jjBw==
+        d=gmail.com; s=20230601; t=1742396087; x=1743000887; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VqnqIl7gzMI6XYAL9+ESVwKY9TAcHFNVEaABvSsYd58=;
+        b=gkS6uoRk6h3bF095rWyO+W04ChQuNUCRRZ+XyYJw1T8WtVPuH5qoO2IgXkZ7o23Fz6
+         MqoWfh+hTB8/3rColi2pv+18qRcNqG+/TBIj/0cygVkwoyEp+zNYriIfxtxhPJvfvEJg
+         2uJArTilr9P9Hhi3VoTQ7oSEwPMguxd7Qd3WbIseW8+RoqEhn1LgxeNDsVICGLrQbNiE
+         AuZyM7iBXrGBwA3LK2wVHO2/4T7XvRAiplYPVcrWwc27t7x5XTYApZe+Y/Pe3tMvPGmr
+         Uqzh8+jyfZBwz42qHNWDIVR9gKoRCjsUNNmNuAd/84X95W23Fcvtc2OJ9706RUs/oFkh
+         UNag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742395453; x=1743000253;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8nLyvaotott0DF5YTNTIkFLdWiK7/jsmUUyniYPMfxs=;
-        b=i3awBisAL4nDvxlagU4XOrdXAdNfPZttBauPCqZmBcOvf8/4nIApGbjxVpkfacT20z
-         WI3bqihRenDwZ4s956elRzq9VH44wHvqqPaOppOzm8AjejJ4vdHoiv8rq/rcbZX1qxe0
-         Rx7KIc6K5J8s2SdUeyndIi+F92dweePkikkjjO6ivb2X3eqpoXVKRlEhPV4KWoJ+BQxg
-         NS+HuFNMZlhymek5DecXxzr8iuXO1O+58oAC1sJ6VzguYoxEjiAV0GvA94HS/XcdOT38
-         y4BNj6EEnnubI75LLncZSMxrYSFiouF/cxYC1FaGcoI1ESjlUnSAb6xvVxlif7rPmmux
-         s7yw==
-X-Forwarded-Encrypted: i=1; AJvYcCWa2GvsVLqW0C5CVyrdzsJI9+KVvWiIukHazeJnuGOCxUx5QAT+oMvMz/c4AN4o7zGcN3KWBXBaxx76kFmK@vger.kernel.org
-X-Gm-Message-State: AOJu0YzryjxQZalBmUBwspSazXjF/ClGqkLsU+QSsnYSNOWlvvtZXc3l
-	Y8IR18lfN4QaQ42UkbZRtQuQ7Mz9yokI6JVfJfiW5a+20IyqIy1K
-X-Gm-Gg: ASbGncuwCYxqGdFa/vVJrAnQpndVlvzORB4fhWu1Lxq93/1Q+UTrf5qP6PzTVAwlho7
-	hn2n9K+bBlvvQUGrDBSjsLE4/b65P7vPjMoLzXtHYJp4qDUSaGyGoUDDRAdCV55m+z2HNPfqzIA
-	XMpsdgeph2pSl4zqCW5ba4nt9GgfaP4FW1ipvqFLYupoKo0BJ3T0/ZBbqh7GmTJDo2NvaGrvRpN
-	a56HvlNzuefatA/MC5EAOI+6ZXeWzAVeZaHrMiu6Xc6ZJvMDPRT+tYcoRqucO7SrTpV4/7fKaw1
-	d0vBRmXvYR9HVg7iohGwRXIuf8yTS2e1VV8gDGQXo93y2oMnUlVORI5RTyKEj3ujtAfYiy6Z20q
-	3FQY=
-X-Google-Smtp-Source: AGHT+IHRuFKMCfRKsajCRUTe1VyWz+iBut3DjbxfT02pd7HFFQHbhJ1zfvOx01Zp7ZXE/LfFpuszxg==
-X-Received: by 2002:a05:620a:4413:b0:7c0:bd67:7dd9 with SMTP id af79cd13be357-7c5a84a8706mr118072585a.11.1742395452521;
-        Wed, 19 Mar 2025 07:44:12 -0700 (PDT)
-Received: from [192.168.1.99] (ool-4355b0da.dyn.optonline.net. [67.85.176.218])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c573c5201fsm868587485a.23.2025.03.19.07.44.11
+        d=1e100.net; s=20230601; t=1742396087; x=1743000887;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VqnqIl7gzMI6XYAL9+ESVwKY9TAcHFNVEaABvSsYd58=;
+        b=wcyp6SPS6IorWxaIC3keFad43JxC1+r7xEJczR5CiQkqi0AGO46SsqsoIGjvHP9a64
+         09KirHB9grq5ltu/tyG4N0d+JO8rzhgIUa+iXe2wVTt77Htgg3mP5FNa7eA9WTB7WK+B
+         oL4W5uhPgyo3R7kHda3s05Os0W677niCjB0Pem5NQ/BqasxYI/4MOgZtw3Gjluqn7Tv0
+         jnUwGonv+31W6btE4tUWGfSkBxlnQm1BQD/j+Xhf9RZEAaDlJPdHUUSGPcYYKFxbm3H5
+         5mwNch+y9fh6/xSt4ud9VuD2aGIuSqJ8LdNMoyopb7zMAJ1rG+sZpo8K7AXC5ioj9o+8
+         937Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUoglUHbJTTlRKVDSLRSFtIi2AjFSTty/xb8V/yrga52kdlrKqtxKBaLeM2iRW81rNIDY+42hi3W8vX4bA=@vger.kernel.org, AJvYcCVN2BoRiTnqMqyeSDQi7yuJ5RZpx6xe5JFnk7TBPeWoSU3oFmOePrMEWlHIKHU/TP2UtAKPa6SqnH54XxNt@vger.kernel.org, AJvYcCWJ7maI/f/n98IUOmxxWpU0SBV8Oy1RAsQsYOWmMRgW0/bHPyVxSoSf+dyZPvZGFQilGIe5k1nIrMHFR/wY@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVujuweXjvdWCrHm5T7hg4fkqf2K4RSyK2UJOebGTEC+Bm6uN8
+	FIjQ4he6jEE4UJn+1R7fr+3vN1oa+UF90Xdo93g9kz4g6pHDDZAL
+X-Gm-Gg: ASbGncsqCk59bgB3R0XLc0AnPlG8Ujz3IObHlUldiGycwtfIQG0f5mu8xJShmSN7M1D
+	nuxgCOfFFYrkmPuRvQ4KJgivPgxQXvBDDXw63GuUXb1l8uzx2ylbXzbZ5Hf/GyZrtvEsS8A0bLh
+	2ydIF8NNh1+MdY7BeRUidAEUbmGQLHxEs2VTBdui47xOXQa0F2CnUOlKZwXPgef8+DX2vYSOF+k
+	nKmBWPcwJhfBB+d+zhZytUKSmE7LEMiF2JGTPnhcn0pGexb52SA6uR5Q6DNzueOhb6Nl9243M+Y
+	mmSAmSnOlLne0EJuJngn7d7jR/qqg/QTyPzEj+qxUO10nfX97IfBNtijbpnD0vr675mAZoRvyKj
+	JQ1GG9egEspqwDIs53SM=
+X-Google-Smtp-Source: AGHT+IEM2Aydh8wQyAb3fV9+udMGx+2FPS+SU7qcCCvi4qn6KMqVbM+eGzMKYXiVBUkhhnlIU/lnAg==
+X-Received: by 2002:a05:6a20:12d5:b0:1ee:e2ac:5159 with SMTP id adf61e73a8af0-1fbebc87101mr5465045637.19.1742396087191;
+        Wed, 19 Mar 2025 07:54:47 -0700 (PDT)
+Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af56e9fe51asm10978709a12.36.2025.03.19.07.54.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 07:44:12 -0700 (PDT)
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Wed, 19 Mar 2025 10:44:04 -0400
-Subject: [PATCH v5 5/5] drm/msm: Temporarily disable stall-on-fault after a
- page fault
+        Wed, 19 Mar 2025 07:54:46 -0700 (PDT)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	Rob Clark <robdclark@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Christopher Snowhill <chris@kode54.net>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Eugene Lepshy <fekz115@gmail.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b),
+	linux-kernel@vger.kernel.org (open list),
+	linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b),
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Sean Paul <sean@poorly.run>
+Subject: [PATCH v2 00/34] drm/msm: sparse / "VM_BIND" support
+Date: Wed, 19 Mar 2025 07:52:12 -0700
+Message-ID: <20250319145425.51935-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250319-msm-gpu-fault-fixes-next-v5-5-97561209dd8c@gmail.com>
-References: <20250319-msm-gpu-fault-fixes-next-v5-0-97561209dd8c@gmail.com>
-In-Reply-To: <20250319-msm-gpu-fault-fixes-next-v5-0-97561209dd8c@gmail.com>
-To: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
- Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, 
- Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, freedreno@lists.freedesktop.org, 
- Connor Abbott <cwabbott0@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1742395446; l=9409;
- i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=cSu3wr2OPZA25FwTnt0uRRtX/Si/NazjUU2gfv6K0KE=;
- b=As0UrByF3rvzBnmzJ8pOaRObhsNBWExBMsVIvSu+zCnP35Nx5WeOmN7N44N8gLN85VsAP7w5P
- +CwCJc8YUxOAqvVykM+G4vyIAABsM/h86xz95SFB8GQ9KImFyT1xAZO
-X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
- pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
+Content-Transfer-Encoding: 8bit
 
-When things go wrong, the GPU is capable of quickly generating millions
-of faulting translation requests per second. When that happens, in the
-stall-on-fault model each access will stall until it wins the race to
-signal the fault and then the RESUME register is written. This slows
-processing page faults to a crawl as the GPU can generate faults much
-faster than the CPU can acknowledge them. It also means that all
-available resources in the SMMU are saturated waiting for the stalled
-transactions, so that other transactions such as transactions generated
-by the GMU, which shares translation resources with the GPU, cannot
-proceed. This causes a GMU watchdog timeout, which leads to a failed
-reset because GX cannot collapse when there is a transaction pending and
-a permanently hung GPU.
+From: Rob Clark <robdclark@chromium.org>
 
-On older platforms with qcom,smmu-v2, it seems that when one transaction
-is stalled subsequent faulting transactions are terminated, which avoids
-this problem, but the MMU-500 follows the spec here.
+Conversion to DRM GPU VA Manager[1], and adding support for Vulkan Sparse
+Memory[2] in the form of:
 
-To work around these problems, disable stall-on-fault as soon as we get a
-page fault until a cooldown period after pagefaults stop. This allows
-the GMU some guaranteed time to continue working. We only use
-stall-on-fault to halt the GPU while we collect a devcoredump and we
-always terminate the transaction afterward, so it's fine to miss some
-subsequent page faults. We also keep it disabled so long as the current
-devcoredump hasn't been deleted, because in that case we likely won't
-capture another one if there's a fault.
+1. A new VM_BIND submitqueue type for executing VM MSM_SUBMIT_BO_OP_MAP/
+   MAP_NULL/UNMAP commands
 
-After this commit HFI messages still occasionally time out, because the
-crashdump handler doesn't run fast enough to let the GMU resume, but the
-driver seems to recover from it. This will probably go away after the
-HFI timeout is increased.
+2. Extending the SUBMIT ioctl to allow submitting batches of one or more
+   MAP/MAP_NULL/UNMAP commands to a VM_BIND submitqueue
 
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  2 ++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  4 ++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 42 ++++++++++++++++++++++++++++++++-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h | 26 ++++++++++++++++++++
- drivers/gpu/drm/msm/msm_iommu.c         |  9 +++++++
- drivers/gpu/drm/msm/msm_mmu.h           |  1 +
- 6 files changed, 83 insertions(+), 1 deletion(-)
+The UABI takes a slightly different approach from what other drivers have
+done, and what would make sense if starting from a clean sheet, ie separate
+VM_BIND and EXEC ioctls.  But since we have to maintain support for the
+existing SUBMIT ioctl, and because the fence, syncobj, and BO pinning is
+largely the same between legacy "BO-table" style SUBMIT ioctls, and new-
+style VM updates submitted to a VM_BIND submitqueue, I chose to go the
+route of extending the existing `SUBMIT` ioctl rather than adding a new
+ioctl.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index 71dca78cd7a5324e9ff5b14f173e2209fa42e196..670141531112c9d29cef8ef1fd51b74759fdd6d2 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -131,6 +131,8 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	struct msm_ringbuffer *ring = submit->ring;
- 	unsigned int i, ibs = 0;
- 
-+	adreno_check_and_reenable_stall(adreno_gpu);
-+
- 	if (IS_ENABLED(CONFIG_DRM_MSM_GPU_SUDO) && submit->in_rb) {
- 		ring->cur_ctx_seqno = 0;
- 		a5xx_submit_in_rb(gpu, submit);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 0ae29a7c8a4d3f74236a35cc919f69d5c0a384a0..5a34cd2109a2d74c92841448a61ccb0d4f34e264 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -212,6 +212,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	struct msm_ringbuffer *ring = submit->ring;
- 	unsigned int i, ibs = 0;
- 
-+	adreno_check_and_reenable_stall(adreno_gpu);
-+
- 	a6xx_set_pagetable(a6xx_gpu, ring, submit);
- 
- 	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP(0),
-@@ -335,6 +337,8 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	struct msm_ringbuffer *ring = submit->ring;
- 	unsigned int i, ibs = 0;
- 
-+	adreno_check_and_reenable_stall(adreno_gpu);
-+
- 	/*
- 	 * Toggle concurrent binning for pagetable switch and set the thread to
- 	 * BR since only it can execute the pagetable switch packets.
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 1238f326597808eb28b4c6822cbd41a26e555eb9..bac586101dc0494f46b069a8440a45825dfe9b5e 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -246,16 +246,53 @@ u64 adreno_private_address_space_size(struct msm_gpu *gpu)
- 	return SZ_4G;
- }
- 
-+void adreno_check_and_reenable_stall(struct adreno_gpu *adreno_gpu)
-+{
-+	struct msm_gpu *gpu = &adreno_gpu->base;
-+	unsigned long flags;
-+
-+	/*
-+	 * Wait until the cooldown period has passed and we would actually
-+	 * collect a crashdump to re-enable stall-on-fault.
-+	 */
-+	spin_lock_irqsave(&adreno_gpu->fault_stall_lock, flags);
-+	if (!adreno_gpu->stall_enabled &&
-+			ktime_after(ktime_get(), adreno_gpu->stall_reenable_time) &&
-+			!READ_ONCE(gpu->crashstate)) {
-+		adreno_gpu->stall_enabled = true;
-+
-+		gpu->aspace->mmu->funcs->set_stall(gpu->aspace->mmu, true);
-+	}
-+	spin_unlock_irqrestore(&adreno_gpu->fault_stall_lock, flags);
-+}
-+
- #define ARM_SMMU_FSR_TF                 BIT(1)
- #define ARM_SMMU_FSR_PF			BIT(3)
- #define ARM_SMMU_FSR_EF			BIT(4)
-+#define ARM_SMMU_FSR_SS			BIT(30)
- 
- int adreno_fault_handler(struct msm_gpu *gpu, unsigned long iova, int flags,
- 			 struct adreno_smmu_fault_info *info, const char *block,
- 			 u32 scratch[4])
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	const char *type = "UNKNOWN";
--	bool do_devcoredump = info && !READ_ONCE(gpu->crashstate);
-+	bool do_devcoredump = info && (info->fsr & ARM_SMMU_FSR_SS) &&
-+		!READ_ONCE(gpu->crashstate);
-+	unsigned long irq_flags;
-+
-+	/*
-+	 * In case there is a subsequent storm of pagefaults, disable
-+	 * stall-on-fault for at least half a second.
-+	 */
-+	spin_lock_irqsave(&adreno_gpu->fault_stall_lock, irq_flags);
-+	if (adreno_gpu->stall_enabled) {
-+		adreno_gpu->stall_enabled = false;
-+
-+		gpu->aspace->mmu->funcs->set_stall(gpu->aspace->mmu, false);
-+	}
-+	adreno_gpu->stall_reenable_time = ktime_add_ms(ktime_get(), 500);
-+	spin_unlock_irqrestore(&adreno_gpu->fault_stall_lock, irq_flags);
- 
- 	/*
- 	 * If we aren't going to be resuming later from fault_worker, then do
-@@ -1143,6 +1180,9 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 		adreno_gpu->info->inactive_period);
- 	pm_runtime_use_autosuspend(dev);
- 
-+	spin_lock_init(&adreno_gpu->fault_stall_lock);
-+	adreno_gpu->stall_enabled = true;
-+
- 	return msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
- 			gpu_name, &adreno_gpu_config);
- }
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index dcf454629ce037b2a8274a6699674ad754ce1f07..868d22fde1396def35e2f46bc2b2f4eff611d8fd 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -205,6 +205,30 @@ struct adreno_gpu {
- 	/* firmware: */
- 	const struct firmware *fw[ADRENO_FW_MAX];
- 
-+	/**
-+	 * @fault_stall_lock:
-+	 *
-+	 * Serialize changes to stall-on-fault state.
-+	 */
-+	spinlock_t fault_stall_lock;
-+
-+	/**
-+	 * @fault_stall_reenable_time:
-+	 *
-+	 * If stall_enabled is false, when to reenable stall-on-fault.
-+	 * Protected by @fault_stall_lock.
-+	 */
-+	ktime_t stall_reenable_time;
-+
-+	/**
-+	 * @stall_enabled:
-+	 *
-+	 * Whether stall-on-fault is currently enabled. Protected by
-+	 * @fault_stall_lock.
-+	 */
-+	bool stall_enabled;
-+
-+
- 	struct {
- 		/**
- 		 * @rgb565_predicator: Unknown, introduced with A650 family,
-@@ -629,6 +653,8 @@ int adreno_fault_handler(struct msm_gpu *gpu, unsigned long iova, int flags,
- 			 struct adreno_smmu_fault_info *info, const char *block,
- 			 u32 scratch[4]);
- 
-+void adreno_check_and_reenable_stall(struct adreno_gpu *gpu);
-+
- int adreno_read_speedbin(struct device *dev, u32 *speedbin);
- 
- /*
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index 2a94e82316f95c5f9dcc37ef0a4664a29e3492b2..8d5380e6dcc217c7c209b51527bf15748b3ada71 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -351,6 +351,14 @@ static void msm_iommu_resume_translation(struct msm_mmu *mmu)
- 		adreno_smmu->resume_translation(adreno_smmu->cookie, true);
- }
- 
-+static void msm_iommu_set_stall(struct msm_mmu *mmu, bool enable)
-+{
-+	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(mmu->dev);
-+
-+	if (adreno_smmu->set_stall)
-+		adreno_smmu->set_stall(adreno_smmu->cookie, enable);
-+}
-+
- static void msm_iommu_detach(struct msm_mmu *mmu)
- {
- 	struct msm_iommu *iommu = to_msm_iommu(mmu);
-@@ -399,6 +407,7 @@ static const struct msm_mmu_funcs funcs = {
- 		.unmap = msm_iommu_unmap,
- 		.destroy = msm_iommu_destroy,
- 		.resume_translation = msm_iommu_resume_translation,
-+		.set_stall = msm_iommu_set_stall,
- };
- 
- struct msm_mmu *msm_iommu_new(struct device *dev, unsigned long quirks)
-diff --git a/drivers/gpu/drm/msm/msm_mmu.h b/drivers/gpu/drm/msm/msm_mmu.h
-index 88af4f490881f2a6789ae2d03e1c02d10046331a..2694a356a17904e7572b767b16ed0cee806406cf 100644
---- a/drivers/gpu/drm/msm/msm_mmu.h
-+++ b/drivers/gpu/drm/msm/msm_mmu.h
-@@ -16,6 +16,7 @@ struct msm_mmu_funcs {
- 	int (*unmap)(struct msm_mmu *mmu, uint64_t iova, size_t len);
- 	void (*destroy)(struct msm_mmu *mmu);
- 	void (*resume_translation)(struct msm_mmu *mmu);
-+	void (*set_stall)(struct msm_mmu *mmu, bool enable);
- };
- 
- enum msm_mmu_type {
+I also did not implement support for synchronous VM_BIND commands.  Since
+userspace could just immediately wait for the `SUBMIT` to complete, I don't
+think we need this extra complexity in the kernel.  Synchronous/immediate
+VM_BIND operations could be implemented with a 2nd VM_BIND submitqueue.
+
+The corresponding mesa MR: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/32533
+
+This series can be found in MR form, if you prefer:
+https://gitlab.freedesktop.org/drm/msm/-/merge_requests/144
+
+Changes in v2:
+- Dropped Bibek Kumar Patro's arm-smmu patches[3], which have since been
+  merged.
+- Pre-allocate all the things, and drop HACK patch which disabled shrinker.
+  This includes ensuring that vm_bo objects are allocated up front, pre-
+  allocating VMA objects, and pre-allocating pages used for pgtable updates.
+  The latter utilizes io_pgtable_cfg callbacks for pgtable alloc/free, that
+  were initially added for panthor. 
+- Add back support for BO dumping for devcoredump.
+- Link to v1 (RFC): https://lore.kernel.org/dri-devel/20241207161651.410556-1-robdclark@gmail.com/T/#t
+
+[1] https://www.kernel.org/doc/html/next/gpu/drm-mm.html#drm-gpuvm
+[2] https://docs.vulkan.org/spec/latest/chapters/sparsemem.html
+[3] https://patchwork.kernel.org/project/linux-arm-kernel/list/?series=909700
+
+Rob Clark (34):
+  drm/gpuvm: Don't require obj lock in destructor path
+  drm/gpuvm: Remove bogus lock assert
+  drm/gpuvm: Allow VAs to hold soft reference to BOs
+  drm/gpuvm: Add drm_gpuvm_sm_unmap_va()
+  drm/msm: Rename msm_file_private -> msm_context
+  drm/msm: Improve msm_context comments
+  drm/msm: Rename msm_gem_address_space -> msm_gem_vm
+  drm/msm: Remove vram carveout support
+  drm/msm: Collapse vma allocation and initialization
+  drm/msm: Collapse vma close and delete
+  drm/msm: drm_gpuvm conversion
+  drm/msm: Use drm_gpuvm types more
+  drm/msm: Split submit_pin_objects()
+  drm/msm: Lazily create context VM
+  drm/msm: Add opt-in for VM_BIND
+  drm/msm: Mark VM as unusable on faults
+  drm/msm: Extend SUBMIT ioctl for VM_BIND
+  drm/msm: Add VM_BIND submitqueue
+  drm/msm: Add _NO_SHARE flag
+  drm/msm: Split out helper to get iommu prot flags
+  drm/msm: Add mmu support for non-zero offset
+  drm/msm: Add PRR support
+  drm/msm: Rename msm_gem_vma_purge() -> _unmap()
+  drm/msm: Split msm_gem_vma_new()
+  drm/msm: Pre-allocate VMAs
+  drm/msm: Pre-allocate vm_bo objects
+  drm/msm: Pre-allocate pages for pgtable entries
+  drm/msm: Wire up gpuvm ops
+  drm/msm: Wire up drm_gpuvm debugfs
+  drm/msm: Crashdump prep for sparse mappings
+  drm/msm: rd dumping prep for sparse mappings
+  drm/msm: Crashdec support for sparse
+  drm/msm: rd dumping support for sparse
+  drm/msm: Bump UAPI version
+
+ drivers/gpu/drm/drm_gpuvm.c                   | 141 ++--
+ drivers/gpu/drm/msm/Kconfig                   |   1 +
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c         |  25 +-
+ drivers/gpu/drm/msm/adreno/a2xx_gpummu.c      |   5 +-
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c         |  17 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c         |  17 +-
+ drivers/gpu/drm/msm/adreno/a5xx_debugfs.c     |   4 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |  24 +-
+ drivers/gpu/drm/msm/adreno/a5xx_power.c       |   2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c     |  10 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |  32 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h         |   2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |  51 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c   |   6 +-
+ drivers/gpu/drm/msm/adreno/a6xx_preempt.c     |  10 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c    |   4 -
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  84 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h       |  23 +-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   |  18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h   |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |   4 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c     |   6 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |  28 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c    |  12 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |   4 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |  19 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c    |  12 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c            |  14 +-
+ drivers/gpu/drm/msm/msm_debugfs.c             |  20 +
+ drivers/gpu/drm/msm/msm_drv.c                 | 176 ++---
+ drivers/gpu/drm/msm/msm_drv.h                 |  35 +-
+ drivers/gpu/drm/msm/msm_fb.c                  |  18 +-
+ drivers/gpu/drm/msm/msm_fbdev.c               |   2 +-
+ drivers/gpu/drm/msm/msm_gem.c                 | 437 +++++-----
+ drivers/gpu/drm/msm/msm_gem.h                 | 226 ++++--
+ drivers/gpu/drm/msm/msm_gem_prime.c           |  15 +
+ drivers/gpu/drm/msm/msm_gem_submit.c          | 234 +++++-
+ drivers/gpu/drm/msm/msm_gem_vma.c             | 748 ++++++++++++++++--
+ drivers/gpu/drm/msm/msm_gpu.c                 | 146 ++--
+ drivers/gpu/drm/msm/msm_gpu.h                 | 132 +++-
+ drivers/gpu/drm/msm/msm_iommu.c               | 285 ++++++-
+ drivers/gpu/drm/msm/msm_kms.c                 |  18 +-
+ drivers/gpu/drm/msm/msm_kms.h                 |   2 +-
+ drivers/gpu/drm/msm/msm_mmu.h                 |  38 +-
+ drivers/gpu/drm/msm/msm_rd.c                  |  62 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.c          |   4 +-
+ drivers/gpu/drm/msm/msm_submitqueue.c         |  86 +-
+ include/drm/drm_gpuvm.h                       |  14 +-
+ include/uapi/drm/msm_drm.h                    |  98 ++-
+ 52 files changed, 2359 insertions(+), 1060 deletions(-)
 
 -- 
-2.47.1
+2.48.1
 
 
